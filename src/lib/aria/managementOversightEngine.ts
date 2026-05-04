@@ -23,6 +23,10 @@
 // ══════════════════════════════════════════════════════════════════════════════
 
 import Anthropic from "@anthropic-ai/sdk";
+import {
+  ARIA_WRITING_STYLE_PROMPT,
+  applyAriaPostprocessor,
+} from "@/lib/aria/writingStyleRules";
 
 // ─── Public types ─────────────────────────────────────────────────────────────
 
@@ -632,45 +636,78 @@ function buildTemplatedDraft(input: OversightInput, partial: {
 }): { oversightDraft: string; ofstedSummary: string } {
   const child = input.childPseudonym ?? input.childId ?? "the young person";
   const recordTypeLabel = input.recordType.replace(/_/g, " ");
+  const dateLine = input.recordDate ? ` dated ${input.recordDate}` : "";
 
-  const oversightDraft = [
-    `Aria suggested draft — management oversight of ${recordTypeLabel} for ${child}.`,
-    ``,
-    `I have read this ${recordTypeLabel} dated ${input.recordDate ?? "[date not stated]"}. Aria has graded the assessed risk as ${partial.riskLevel.toUpperCase()} and judged practice as ${partial.practiceJudgement.replace(/_/g, " ")}.`,
-    ``,
-    partial.strengths.length
-      ? `Strengths I want to acknowledge: ${partial.strengths.join(" ")}`
-      : `I have not yet identified evidenced strengths in this record — staff are asked to surface what worked.`,
-    ``,
-    partial.missingEvidence.length
-      ? `Aria has identified gaps that I want addressed before I sign this off: ${partial.missingEvidence.join(" ")}`
-      : `I am satisfied that the record evidences the required elements.`,
-    ``,
-    partial.childVoiceVisible
-      ? `${child}'s voice is captured in the record, which is the standard I expect.`
-      : `${child}'s voice is not yet visible in this record. Without their words, this record is incomplete and I am asking the author to revisit it.`,
-    ``,
-    partial.planLinksVisible
-      ? `The record cross-references the relevant plans, which evidences planning is being held alongside the day-to-day record.`
-      : `This record does not cross-reference the Care Plan, Placement Plan, Risk Assessment or Keeping Me Safe Plan. I am asking that the relevant plan link is added and that any plan changes triggered by this record are noted.`,
-    ``,
-    `Next review: I will revisit this record in supervision and confirm completion of the actions set.`,
-    ``,
-    `— This is an Aria suggested draft. It must be reviewed, edited as needed, and approved by the Registered Manager before it forms part of the regulatory record.`,
-  ]
-    .filter(Boolean)
-    .join("\n");
+  const paragraphs: string[] = [];
 
-  const ofstedSummary = [
-    `Manager's oversight evidences ${partial.practiceJudgement.replace(/_/g, " ")} practice in this ${recordTypeLabel}.`,
-    `Risk grading: ${partial.riskLevel}.`,
+  paragraphs.push(`Aria suggested draft. Management oversight of the ${recordTypeLabel} for ${child}.`);
+
+  paragraphs.push(
+    `I have read the record${dateLine}. On the evidence presented, the assessed risk sits at ${partial.riskLevel} and the practice on show reads as ${partial.practiceJudgement.replace(/_/g, " ")}. I have set that out below alongside what I think the team has done well, what is missing, and what I expect to happen next.`,
+  );
+
+  if (partial.strengths.length) {
+    paragraphs.push(
+      `What I want to acknowledge first. ${partial.strengths.join(" ")} These elements should not be lost when we look at what still needs to be addressed.`,
+    );
+  } else {
+    paragraphs.push(
+      `I have not yet been able to identify evidenced strengths in this record. That is itself a finding. The team should be invited to surface what worked, so that practice can be recognised as well as developed.`,
+    );
+  }
+
+  if (partial.missingEvidence.length) {
+    paragraphs.push(
+      `Where the record needs strengthening. ${partial.missingEvidence.join(" ")} I would like these gaps closed before this record is treated as complete.`,
+    );
+  } else {
+    paragraphs.push(
+      `On the evidence I have, the record covers the elements I would expect for a record of this type.`,
+    );
+  }
+
+  if (partial.childVoiceVisible) {
+    paragraphs.push(
+      `${child}'s voice is present in the record, which is the standard I expect across daily practice.`,
+    );
+  } else {
+    paragraphs.push(
+      `${child}'s voice is not yet visible in this record. Without their words, the record is incomplete. I am asking the author to revisit it and capture what ${child} said, expressed, or showed through behaviour.`,
+    );
+  }
+
+  if (partial.planLinksVisible) {
+    paragraphs.push(
+      `The record links to the relevant plans, which suggests that planning is being held alongside the day-to-day work rather than running on a parallel track.`,
+    );
+  } else {
+    paragraphs.push(
+      `The record does not connect to the Care Plan, Placement Plan, Risk Assessment, or Keeping Me Safe Plan. The plan reference should be added. Where this record changes the picture, the plan itself should be updated and the change noted.`,
+    );
+  }
+
+  paragraphs.push(
+    `Next steps for me. I will revisit this record in the next supervision and confirm the actions set above have been completed. This wording is an Aria suggested draft. It must be reviewed, edited, and approved by the Registered Manager before it forms part of the regulatory record.`,
+  );
+
+  const oversightDraft = applyAriaPostprocessor(paragraphs.join("\n\n"));
+
+  const summaryParts: string[] = [];
+  summaryParts.push(
+    `Practice on this ${recordTypeLabel} reads as ${partial.practiceJudgement.replace(/_/g, " ")} on the evidence presented, with the risk graded at ${partial.riskLevel}.`,
+  );
+  summaryParts.push(
     partial.childVoiceVisible
-      ? `Child's voice captured.`
-      : `Child's voice not yet captured — addressed in oversight.`,
+      ? `${child}'s voice is captured.`
+      : `${child}'s voice is not yet captured. The author has been asked to revisit the record.`,
+  );
+  summaryParts.push(
     partial.planLinksVisible
-      ? `Plan linkage evidenced.`
-      : `Plan linkage flagged for completion.`,
-  ].join(" ");
+      ? `The record links to the relevant planning.`
+      : `Plan linkage is missing and has been flagged for completion.`,
+  );
+
+  const ofstedSummary = applyAriaPostprocessor(summaryParts.join(" "));
 
   return { oversightDraft, ofstedSummary };
 }
@@ -686,12 +723,17 @@ async function enhanceWithLlm(
 
   const client = new Anthropic({ apiKey });
 
-  const system = `You are Aria — the management oversight assistant for a residential children's home. Produce a professional Registered Manager oversight draft.
-- Output must be labelled clearly as a draft for human approval.
-- Reflective, evaluative, child-centred, trauma-informed.
-- No invention of facts beyond the record.
-- No blame-based language.
-- Do not duplicate the record narrative — comment on it.`;
+  const system = [
+    `You are Aria, the management oversight assistant for a UK residential children's home. You are drafting an oversight comment for a Registered Manager to review and approve.`,
+    ``,
+    `Hard rules for this draft:`,
+    `- Label the wording clearly as an Aria suggested draft.`,
+    `- Reflective, evidence-based, accountable. Do not duplicate the record narrative. Comment on it.`,
+    `- Use only what the record provides. Do not invent facts.`,
+    `- No blame-based language about staff or the child.`,
+    ``,
+    ARIA_WRITING_STYLE_PROMPT,
+  ].join("\n");
 
   const userMessage = [
     `RECORD METADATA:`,
@@ -742,8 +784,8 @@ async function enhanceWithLlm(
     };
     if (!parsed.oversightDraft || !parsed.ofstedSummary) return null;
     return {
-      oversightDraft: parsed.oversightDraft,
-      ofstedSummary: parsed.ofstedSummary,
+      oversightDraft: applyAriaPostprocessor(parsed.oversightDraft),
+      ofstedSummary: applyAriaPostprocessor(parsed.ofstedSummary),
     };
   } catch (err) {
     console.warn("[managementOversightEngine] LLM enhancement failed:", err);

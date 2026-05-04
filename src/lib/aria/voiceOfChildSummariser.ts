@@ -23,6 +23,10 @@
 // ══════════════════════════════════════════════════════════════════════════════
 
 import Anthropic from "@anthropic-ai/sdk";
+import {
+  ARIA_WRITING_STYLE_PROMPT,
+  applyAriaPostprocessor,
+} from "@/lib/aria/writingStyleRules";
 
 // ─── Public types ─────────────────────────────────────────────────────────────
 
@@ -412,57 +416,90 @@ function buildTemplatedDraft(
   },
 ): { narrativeDraft: string; ofstedSummary: string } {
   const child = input.childPseudonym ?? input.childId;
-  const period =
+  const periodLine =
     input.periodStart && input.periodEnd
-      ? ` between ${input.periodStart} and ${input.periodEnd}`
+      ? ` covering the period from ${input.periodStart} to ${input.periodEnd}`
       : "";
+  const themesPretty = (t: VoiceTheme[]) => t.map((x) => x.replace(/_/g, " ")).join(", ");
 
-  const lines: string[] = [
-    `Aria suggested draft — voice of ${child}${period}.`,
-    ``,
-    `Across ${input.records.length} record(s), Aria has surfaced the following voice patterns. The overall voice-capture quality of these records is graded as ${computed.overallQuality.toUpperCase()}.`,
-    ``,
+  const paragraphs: string[] = [];
+
+  paragraphs.push(`Aria suggested draft. Voice of ${child}${periodLine}.`);
+
+  paragraphs.push(
+    `${input.records.length} records were considered. Taken together, the voice-capture quality across these records reads as ${computed.overallQuality}. The detail below is what Aria surfaced from the records, and what feels worth thinking through with the team.`,
+  );
+
+  if (computed.themesPresent.length > 0) {
+    paragraphs.push(
+      `Themes ${child} appears to be expressing: ${themesPretty(computed.themesPresent)}. These are the threads Aria found running through what was said and how it was said. The records suggest these matter to ${child} now.`,
+    );
+  } else {
+    paragraphs.push(
+      `Aria has not surfaced clear voice themes across the records. That is itself a finding worth sitting with, rather than a clean result. The team may need to consider whether ${child} has had room to speak, and whether the records are catching what they say when they do.`,
+    );
+  }
+
+  if (computed.themesAbsent.length > 0) {
+    paragraphs.push(
+      `Themes that did not surface (worth checking whether ${child} has been asked): ${themesPretty(computed.themesAbsent)}. Absence here is not proof that nothing is going on. It is a prompt to be curious.`,
+    );
+  }
+
+  if (computed.directQuotes.length > 0) {
+    const sample = computed.directQuotes.slice(0, 3).map((q) => `"${q.text}"`).join(", ");
+    paragraphs.push(`Sample of what ${child} has said in their own words: ${sample}.`);
+  } else {
+    paragraphs.push(
+      `No direct quotes were captured across these records. The voice work has relied on staff paraphrase only. The author of each record should be encouraged to capture ${child}'s words where they can.`,
+    );
+  }
+
+  const wantNeedFear: string[] = [];
+  if (computed.wants.length > 0) {
+    wantNeedFear.push(`What ${child} appears to want: ${computed.wants.slice(0, 5).join("; ")}.`);
+  }
+  if (computed.needs.length > 0) {
+    wantNeedFear.push(`What ${child} appears to need: ${computed.needs.slice(0, 5).join("; ")}.`);
+  }
+  if (computed.fears.length > 0) {
+    wantNeedFear.push(`What ${child} appears to fear: ${computed.fears.slice(0, 5).join("; ")}.`);
+  }
+  if (wantNeedFear.length > 0) {
+    paragraphs.push(wantNeedFear.join(" "));
+  }
+
+  if (computed.unmet.length > 0) {
+    paragraphs.push(
+      `${child} has expressed feeling unheard or that their wishes are unmet. The records show: ${computed.unmet.join(" ")} This should be triangulated with the advocate and the IRO, and considered alongside the current placement plan.`,
+    );
+  }
+
+  paragraphs.push(
+    `This wording is an Aria suggested draft. It must be reviewed, edited as needed, and approved by the Registered Manager before it forms part of the regulatory record. Once approved, it should be shared back with ${child} in a format that suits their age and communication style, so they can confirm, correct, or expand on what Aria has surfaced.`,
+  );
+
+  const narrativeDraft = applyAriaPostprocessor(paragraphs.join("\n\n"));
+
+  const summaryParts: string[] = [];
+  summaryParts.push(`Voice capture across ${input.records.length} records reads as ${computed.overallQuality}.`);
+  summaryParts.push(
     computed.themesPresent.length > 0
-      ? `Themes ${child} appears to be expressing: ${computed.themesPresent.map((t) => t.replace(/_/g, " ")).join(", ")}.`
-      : `No clear voice themes were detected across the records — this is itself a finding.`,
-    ``,
-    computed.themesAbsent.length > 0
-      ? `Themes Aria did NOT detect (worth checking whether the child has been asked): ${computed.themesAbsent.map((t) => t.replace(/_/g, " ")).join(", ")}.`
-      : ``,
+      ? `${computed.themesPresent.length} voice themes evidenced.`
+      : `No voice themes evidenced. The records may need revisiting.`,
+  );
+  summaryParts.push(
     computed.directQuotes.length > 0
-      ? `Sample direct quotes captured (in ${child}'s own words): "${computed.directQuotes.slice(0, 3).map((q) => q.text).join('"; "')}".`
-      : `No direct quotes were captured. Records relied on staff paraphrase only — this should be addressed.`,
-    ``,
-    computed.wants.length > 0
-      ? `What ${child} appears to want: ${computed.wants.slice(0, 5).join(" / ")}.`
-      : `No explicit wants were extracted.`,
-    computed.needs.length > 0
-      ? `What ${child} appears to need: ${computed.needs.slice(0, 5).join(" / ")}.`
-      : ``,
-    computed.fears.length > 0
-      ? `What ${child} appears to fear: ${computed.fears.slice(0, 5).join(" / ")}.`
-      : ``,
+      ? `${computed.directQuotes.length} direct quotes captured.`
+      : `No direct quotes captured. Author feedback set out in actions.`,
+  );
+  summaryParts.push(
     computed.unmet.length > 0
-      ? `IMPORTANT — ${child} has expressed feeling unheard or that their wishes are unmet: ${computed.unmet.join(" ")}. This must be triangulated with the advocate and IRO.`
-      : ``,
-    ``,
-    `— This is an Aria suggested draft. It must be reviewed, edited as needed, and approved by the Registered Manager before it forms part of the regulatory record. Once approved, it should be shared back with ${child} in an age-appropriate format so they can confirm, correct or expand on what Aria has surfaced.`,
-  ].filter((l) => l !== "");
+      ? `Unmet-rights signals present and flagged for triangulation with the advocate and IRO.`
+      : `No unmet-rights signals detected on this run.`,
+  );
 
-  const narrativeDraft = lines.join("\n");
-
-  const ofstedSummary = [
-    `Voice capture across ${input.records.length} records is ${computed.overallQuality}.`,
-    computed.themesPresent.length > 0
-      ? `Themes evidenced: ${computed.themesPresent.length}.`
-      : `No themes evidenced.`,
-    computed.directQuotes.length > 0
-      ? `${computed.directQuotes.length} direct quote(s) captured.`
-      : `No direct quotes captured — addressed in actions.`,
-    computed.unmet.length > 0
-      ? `Unmet-rights signals detected — flagged for triangulation.`
-      : `No unmet-rights signals detected.`,
-  ].join(" ");
+  const ofstedSummary = applyAriaPostprocessor(summaryParts.join(" "));
 
   return { narrativeDraft, ofstedSummary };
 }
@@ -478,12 +515,18 @@ async function enhanceWithLlm(
 
   const client = new Anthropic({ apiKey });
 
-  const system = `You are Aria — voice-of-the-child summariser. Produce a child-centred, trauma-informed narrative.
-- Output must be labelled clearly as a draft for human approval.
-- No invention of facts beyond the records and the deterministic analysis provided.
-- No blame-based language.
-- Where the child has expressed feeling unheard or unmet, foreground it.
-- Where voice is absent, name it as a finding.`;
+  const system = [
+    `You are Aria, the voice-of-the-child summariser for a UK residential children's home. You are drafting a narrative summary for a Registered Manager to review and approve.`,
+    ``,
+    `Hard rules for this draft:`,
+    `- Label the wording clearly as an Aria suggested draft.`,
+    `- Use only what the records and deterministic analysis provide. Do not invent facts.`,
+    `- No blame-based language about the child or staff.`,
+    `- Where the child has expressed feeling unheard or where their wishes appear unmet, foreground it.`,
+    `- Where voice is absent, name that as a finding rather than papering over it.`,
+    ``,
+    ARIA_WRITING_STYLE_PROMPT,
+  ].join("\n");
 
   const userMessage = [
     `CHILD REFERENCE: ${input.childPseudonym ?? input.childId}`,
@@ -537,8 +580,8 @@ async function enhanceWithLlm(
     };
     if (!parsed.narrativeDraft || !parsed.ofstedSummary) return null;
     return {
-      narrativeDraft: parsed.narrativeDraft,
-      ofstedSummary: parsed.ofstedSummary,
+      narrativeDraft: applyAriaPostprocessor(parsed.narrativeDraft),
+      ofstedSummary: applyAriaPostprocessor(parsed.ofstedSummary),
     };
   } catch (err) {
     console.warn("[voiceOfChildSummariser] LLM enhancement failed:", err);
