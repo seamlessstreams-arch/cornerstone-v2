@@ -202,6 +202,9 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: "Photo Portfolio",  href: "/child-photography-portfolio",icon: "Camera",        module: "young-people"  },
       { label: "Welcome Tour",     href: "/welcome-tour-checklist",    icon: "Home",           module: "young-people"  },
       { label: "Occupational Therapy",href: "/occupational-therapy-records",icon: "Activity",  module: "young-people"  },
+      { label: "CAMHS Referrals",  href: "/camhs-referral-tracker",    icon: "Brain",          module: "young-people"  },
+      { label: "Physical Activity",href: "/physical-activity-tracker", icon: "Activity",       module: "young-people"  },
+      { label: "Post-Incident Debrief",href: "/post-incident-debrief-with-child",icon: "Heart",module: "young-people"  },
       { label: "Bedroom Profile",  href: "/bedroom-personalisation",   icon: "Home",           module: "young-people"  },
       { label: "Living Skills Assessment",href: "/independent-living-skills-assessment",icon: "TrendingUp",module: "young-people"  },
       { label: "Life Story",        href: "/life-story",                icon: "BookHeart",      module: "young-people"  },
@@ -315,6 +318,8 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: "Fire Risk Assessment",href: "/fire-risk-assessment",   icon: "Flame",           module: "buildings"},
       { label: "External Visitors",href: "/external-visitor-log",      icon: "Users",           module: "buildings"},
       { label: "Transport RAs",   href: "/transport-risk-assessments",icon: "Car",             module: "vehicles"  },
+      { label: "Vehicle Pre-Use",  href: "/vehicle-pre-use-check",     icon: "Car",             module: "vehicles"  },
+      { label: "Kitchen Hygiene",  href: "/kitchen-hygiene-monitoring",icon: "Utensils",        module: "buildings" },
     ],
   },
 
@@ -706,4 +711,9 @@ export const GLOBAL_CREATE_ITEMS: CreateMenuItem[] = [
   { label: "Welcome Tour Record",icon: "Home",    href: "/welcome-tour-checklist",                  group: "Care",       module: "young-people" },
   { label: "OT Session",       icon: "Activity",  href: "/occupational-therapy-records",            group: "Care",       module: "young-people" },
   { label: "Room Allocation Review",icon: "Bed", href: "/room-allocation-rationale",                group: "Compliance", module: "ri"           },
+  { label: "CAMHS Update",    icon: "Brain",     href: "/camhs-referral-tracker",                  group: "Care",       module: "young-people" },
+  { label: "Vehicle Check",   icon: "Car",       href: "/vehicle-pre-use-check",                  group: "Team",       module: "vehicles"     },
+  { label: "Child Debrief",   icon: "Heart",     href: "/post-incident-debrief-with-child",       group: "Care",       module: "young-people" },
+  { label: "Activity Entry",  icon: "Activity",  href: "/physical-activity-tracker",              group: "Care",       module: "young-people" },
+  { label: "Hygiene Check",   icon: "Utensils",  href: "/kitchen-hygiene-monitoring",             group: "Team",       module: "buildings"    },
 ];
