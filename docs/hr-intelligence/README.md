@@ -28,13 +28,29 @@ re-migration.
 - Documentation (this file)
 - Nav entry under Intelligence > Aria
 
-### Phase 2 (next)
+### Phase 2 (in progress)
+
+Shipped in Phase 2.1:
+
+- Suspension Decision Tool — risk-factor grading across the five required
+  factors, alternatives review, advice trail (HR / RI / LADO / police /
+  social worker), welfare plan, written-reasons draft, review schedule.
+  Lives at `src/lib/hr/suspensionDecision.ts`,
+  `/api/hr/suspension-decision`, and `/intelligence/hr/suspension-decision`.
+- Letter Generator — templated drafts for all 26 letter types from
+  `hr_letters.letter_type`. Every draft is run through the HR Process
+  Guardian. The Guardian gate is enforced server-side: a letter cannot
+  be approved or sent while the fairness judgement is
+  `do_not_approve_yet`, unless an RI supplies a written
+  `seniorRiskAcceptance` of at least 30 characters. Lives at
+  `src/lib/hr/letterTemplates.ts`, `/api/hr/letters`, and
+  `/intelligence/hr/letters`.
+
+Still to ship in Phase 2:
 
 - HR Risk Command Centre dashboard
 - Safer Recruitment gate (with senior risk acceptance)
-- Suspension Decision Tool
 - Investigation Builder (terms of reference, evidence, findings)
-- Letter Generator wired to the Process Guardian gate
 - Safeguarding / LADO HR pathway
 - Probation pathway UI
 - HR Inspection Mode (PDF + spreadsheet export)
