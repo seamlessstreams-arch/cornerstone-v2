@@ -196,6 +196,9 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: "Feedback Loops",   href: "/child-feedback-loops",      icon: "RefreshCw",      module: "young-people"  },
       { label: "Leaving Care Funds",href: "/leaving-care-financial-package",icon: "Wallet",    module: "young-people"  },
       { label: "Children as Experts",href: "/children-as-experts",     icon: "Star",           module: "young-people"  },
+      { label: "Budget Tracker",   href: "/placement-budget-tracker",  icon: "Wallet",         module: "young-people"  },
+      { label: "Sibling Contact",  href: "/siblings-contact-protocol", icon: "Users",          module: "young-people"  },
+      { label: "Parental Responsibility",href: "/parental-responsibility-record",icon: "KeyRound",module: "young-people"  },
       { label: "Bedroom Profile",  href: "/bedroom-personalisation",   icon: "Home",           module: "young-people"  },
       { label: "Living Skills Assessment",href: "/independent-living-skills-assessment",icon: "TrendingUp",module: "young-people"  },
       { label: "Life Story",        href: "/life-story",                icon: "BookHeart",      module: "young-people"  },
@@ -258,6 +261,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: "Lone Working RA", href: "/lone-working-risk-assessment",icon: "UserCheck",     module: "staff"        },
       { label: "Training Matrix", href: "/mandatory-training-matrix",  icon: "GraduationCap", module: "training"     },
       { label: "Recognition Log", href: "/staff-recognition-log",      icon: "Award",         module: "staff"        },
+      { label: "Operational Meetings",href: "/operational-meetings",   icon: "Users",         module: "staff"        },
     ],
   },
 
@@ -379,6 +383,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: "Professional Fees",href: "/professional-fees-log",     icon: "Receipt",       module: "ri"         },
       { label: "Cohort Analysis", href: "/placement-cohort-analysis",  icon: "Users",         module: "ri"         },
       { label: "Policy Impact",   href: "/policy-impact-analysis",     icon: "FileText",      module: "ri"         },
+      { label: "Med Storage Audit",href: "/medication-storage-audit",  icon: "Pill",          module: "medication" },
     ],
   },
 
@@ -686,4 +691,9 @@ export const GLOBAL_CREATE_ITEMS: CreateMenuItem[] = [
   { label: "Leaving Care Update",icon: "Wallet",href: "/leaving-care-financial-package",           group: "Care",       module: "young-people" },
   { label: "Policy Change",   icon: "FileText",  href: "/policy-impact-analysis",                 group: "Compliance", module: "ri"           },
   { label: "Expert Contribution",icon: "Star",   href: "/children-as-experts",                    group: "Care",       module: "young-people" },
+  { label: "Budget Update",   icon: "Wallet",    href: "/placement-budget-tracker",               group: "Care",       module: "young-people" },
+  { label: "Sibling Contact Update",icon: "Users",href: "/siblings-contact-protocol",             group: "Care",       module: "young-people" },
+  { label: "PR Update",       icon: "KeyRound",  href: "/parental-responsibility-record",         group: "Care",       module: "young-people" },
+  { label: "Operational Meeting",icon: "Users",  href: "/operational-meetings",                   group: "Workflow",   module: "staff"        },
+  { label: "Med Storage Check",icon: "Pill",     href: "/medication-storage-audit",               group: "Compliance", module: "medication"   },
 ];
