@@ -186,6 +186,10 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: "LAC Review Prep",  href: "/lac-review-prep",           icon: "Calendar",       module: "young-people"  },
       { label: "Family Tree",      href: "/family-tree-genogram",      icon: "Users",          module: "young-people"  },
       { label: "Substance Screening",href: "/drug-and-alcohol-screening",icon: "Shield",       module: "safeguarding"  },
+      { label: "Bullying Log",     href: "/bullying-incident-log",     icon: "ShieldAlert",    module: "safeguarding"  },
+      { label: "Med Near Misses",  href: "/medication-near-miss-log",  icon: "Pill",           module: "medication"    },
+      { label: "Grief Support",    href: "/grief-and-loss-support",    icon: "Heart",          module: "young-people"  },
+      { label: "Digital Wellbeing",href: "/digital-wellbeing-plan",    icon: "Smartphone",     module: "young-people"  },
       { label: "Bedroom Profile",  href: "/bedroom-personalisation",   icon: "Home",           module: "young-people"  },
       { label: "Living Skills Assessment",href: "/independent-living-skills-assessment",icon: "TrendingUp",module: "young-people"  },
       { label: "Life Story",        href: "/life-story",                icon: "BookHeart",      module: "young-people"  },
@@ -364,6 +368,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: "Handover Audits", href: "/handover-quality-audit",     icon: "ClipboardCheck",module: "ri"         },
       { label: "Curiosity Log",   href: "/professional-curiosity-log", icon: "Lightbulb",     module: "ri"         },
       { label: "Strategic Risks", href: "/risk-management-board",      icon: "ShieldAlert",   module: "ri"         },
+      { label: "Professional Fees",href: "/professional-fees-log",     icon: "Receipt",       module: "ri"         },
     ],
   },
 
@@ -656,4 +661,9 @@ export const GLOBAL_CREATE_ITEMS: CreateMenuItem[] = [
   { label: "Curiosity Entry", icon: "Lightbulb", href: "/professional-curiosity-log",             group: "Compliance", module: "ri"           },
   { label: "Living Skills Review",icon: "TrendingUp",href: "/independent-living-skills-assessment", group: "Care",       module: "young-people" },
   { label: "Strategic Risk",  icon: "ShieldAlert",href: "/risk-management-board",                  group: "Compliance", module: "ri"           },
+  { label: "Bullying Incident",icon: "ShieldAlert",href: "/bullying-incident-log",                 group: "Care",       module: "safeguarding" },
+  { label: "Med Near Miss",   icon: "Pill",      href: "/medication-near-miss-log",               group: "Care",       module: "medication"   },
+  { label: "Grief Support Update",icon: "Heart", href: "/grief-and-loss-support",                 group: "Care",       module: "young-people" },
+  { label: "Digital Plan",    icon: "Smartphone",href: "/digital-wellbeing-plan",                 group: "Care",       module: "young-people" },
+  { label: "Professional Invoice",icon: "Receipt",href: "/professional-fees-log",                  group: "Compliance", module: "ri"           },
 ];
