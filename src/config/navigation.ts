@@ -192,6 +192,10 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: "Digital Wellbeing",href: "/digital-wellbeing-plan",    icon: "Smartphone",     module: "young-people"  },
       { label: "Wellbeing Pulse",  href: "/wellbeing-pulse-survey",    icon: "Activity",       module: "young-people"  },
       { label: "Sensory Room Use", href: "/sensory-room-usage",        icon: "Sparkles",       module: "young-people"  },
+      { label: "Needs Assessment", href: "/assessment-of-need",        icon: "ClipboardList",  module: "young-people"  },
+      { label: "Feedback Loops",   href: "/child-feedback-loops",      icon: "RefreshCw",      module: "young-people"  },
+      { label: "Leaving Care Funds",href: "/leaving-care-financial-package",icon: "Wallet",    module: "young-people"  },
+      { label: "Children as Experts",href: "/children-as-experts",     icon: "Star",           module: "young-people"  },
       { label: "Bedroom Profile",  href: "/bedroom-personalisation",   icon: "Home",           module: "young-people"  },
       { label: "Living Skills Assessment",href: "/independent-living-skills-assessment",icon: "TrendingUp",module: "young-people"  },
       { label: "Life Story",        href: "/life-story",                icon: "BookHeart",      module: "young-people"  },
@@ -374,6 +378,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: "Strategic Risks", href: "/risk-management-board",      icon: "ShieldAlert",   module: "ri"         },
       { label: "Professional Fees",href: "/professional-fees-log",     icon: "Receipt",       module: "ri"         },
       { label: "Cohort Analysis", href: "/placement-cohort-analysis",  icon: "Users",         module: "ri"         },
+      { label: "Policy Impact",   href: "/policy-impact-analysis",     icon: "FileText",      module: "ri"         },
     ],
   },
 
@@ -676,4 +681,9 @@ export const GLOBAL_CREATE_ITEMS: CreateMenuItem[] = [
   { label: "Transport RA",    icon: "Car",       href: "/transport-risk-assessments",            group: "Team",       module: "vehicles"     },
   { label: "Recognition",     icon: "Award",     href: "/staff-recognition-log",                  group: "Team",       module: "staff"        },
   { label: "Cohort Review",   icon: "Users",     href: "/placement-cohort-analysis",              group: "Compliance", module: "ri"           },
+  { label: "Needs Assessment",icon: "ClipboardList",href: "/assessment-of-need",                    group: "Care",       module: "young-people" },
+  { label: "Feedback Loop",   icon: "RefreshCw", href: "/child-feedback-loops",                   group: "Care",       module: "young-people" },
+  { label: "Leaving Care Update",icon: "Wallet",href: "/leaving-care-financial-package",           group: "Care",       module: "young-people" },
+  { label: "Policy Change",   icon: "FileText",  href: "/policy-impact-analysis",                 group: "Compliance", module: "ri"           },
+  { label: "Expert Contribution",icon: "Star",   href: "/children-as-experts",                    group: "Care",       module: "young-people" },
 ];
