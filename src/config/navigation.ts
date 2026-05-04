@@ -226,6 +226,8 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: "Sensory Inventory",href: "/sensory-equipment-inventory",icon: "Package",        module: "young-people"  },
       { label: "Photo Albums",     href: "/photo-album-tracker",       icon: "Camera",         module: "young-people"  },
       { label: "Memorial Records", href: "/memorial-occasion-records", icon: "Flower",         module: "young-people"  },
+      { label: "Welfare Protocol", href: "/welfare-check-protocol-per-child",icon: "Eye",        module: "safeguarding"  },
+      { label: "Job Tracker (16+)",href: "/young-person-job-tracker",  icon: "Briefcase",      module: "young-people"  },
       { label: "Bedroom Profile",  href: "/bedroom-personalisation",   icon: "Home",           module: "young-people"  },
       { label: "Living Skills Assessment",href: "/independent-living-skills-assessment",icon: "TrendingUp",module: "young-people"  },
       { label: "Life Story",        href: "/life-story",                icon: "BookHeart",      module: "young-people"  },
@@ -290,6 +292,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: "Recognition Log", href: "/staff-recognition-log",      icon: "Award",         module: "staff"        },
       { label: "Operational Meetings",href: "/operational-meetings",   icon: "Users",         module: "staff"        },
       { label: "Agency Induction",href: "/agency-staff-induction",     icon: "UserCheck",     module: "staff"        },
+      { label: "Agency Feedback", href: "/agency-staff-feedback",      icon: "UserCheck",     module: "staff"        },
       { label: "End-of-Shift Check",href: "/end-of-shift-checklist",   icon: "ClipboardCheck",module: "staff"        },
       { label: "On-Call Rota",    href: "/on-call-rota",                icon: "Phone",         module: "staff"        },
     ],
@@ -434,6 +437,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: "Registration Log",  href: "/registration-changes-log",  icon: "FileText",      module: "ri"         },
       { label: "Regulator Correspondence",href: "/regulatory-correspondence-tracker",icon: "Mail",module: "ri"      },
       { label: "Med Error Investigations",href: "/medication-error-investigation",icon: "Pill",module: "medication" },
+      { label: "Professional Meetings",href: "/professional-meeting-attendance",icon: "Users",module: "ri"            },
     ],
   },
 
@@ -451,6 +455,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: "KPI Dashboard",    href: "/kpi-dashboard",                  icon: "Target",     module: "reports"   },
       { label: "Annual Outcomes",  href: "/annual-outcomes-report",         icon: "TrendingUp", module: "reports"   },
       { label: "Success Factors",  href: "/placement-success-factors",      icon: "Star",       module: "reports"   },
+      { label: "Outcomes Dashboard",href: "/outcomes-dashboard",            icon: "BarChart3", module: "reports"   },
     ],
   },
 
@@ -796,4 +801,9 @@ export const GLOBAL_CREATE_ITEMS: CreateMenuItem[] = [
   { label: "Photo Album Update",icon: "Camera",  href: "/photo-album-tracker",                    group: "Care",       module: "young-people" },
   { label: "Med Error Report",icon: "Pill",      href: "/medication-error-investigation",         group: "Compliance", module: "medication"   },
   { label: "Memorial Record", icon: "Flower",    href: "/memorial-occasion-records",              group: "Care",       module: "young-people" },
+  { label: "Welfare Protocol Update",icon: "Eye",href: "/welfare-check-protocol-per-child",        group: "Care",       module: "safeguarding" },
+  { label: "Pro Meeting",     icon: "Users",     href: "/professional-meeting-attendance",         group: "Care",       module: "young-people" },
+  { label: "Outcome Metric",  icon: "BarChart3", href: "/outcomes-dashboard",                     group: "Compliance", module: "reports"      },
+  { label: "YP Job Update",   icon: "Briefcase", href: "/young-person-job-tracker",               group: "Care",       module: "young-people" },
+  { label: "Agency Feedback Entry",icon: "UserCheck",href: "/agency-staff-feedback",               group: "Team",       module: "staff"        },
 ];
