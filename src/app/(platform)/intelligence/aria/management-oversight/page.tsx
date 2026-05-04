@@ -29,6 +29,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
+import { AriaCompose } from "@/components/aria/aria-compose";
 import {
   Sparkles,
   Loader2,
@@ -358,15 +359,31 @@ export default function ManagementOversightPage() {
             </div>
           </div>
           <div>
-            <label className="block text-xs font-semibold text-slate-600 mb-1">Record narrative</label>
-            <Textarea
+            <AriaCompose
               value={recordText}
-              onChange={(e) => setRecordText(e.target.value)}
-              placeholder="Paste the full record narrative (incident, daily log, complaint, etc.) here for Aria to analyse."
-              className="min-h-[180px]"
+              onChange={setRecordText}
+              actorUserId={actorUserId}
+              actorRole="registered_manager"
+              sourceModule="management_oversight"
+              sourceRecordType={recordType}
+              sourceRecordId={recordId || undefined}
+              sourceField="record_narrative"
+              defaultCommand="professionalise_record"
+              commands={[
+                { id: "professionalise_record", label: "Professionalise record", permission: "aria.rewrite" },
+                { id: "improve_writing", label: "Improve writing", permission: "aria.rewrite" },
+                { id: "summarise_text", label: "Summarise", permission: "aria.summarise" },
+                { id: "check_missing_information", label: "Check missing information", permission: "aria.summarise" },
+                { id: "check_tone", label: "Check tone", permission: "aria.summarise" },
+                { id: "check_factuality", label: "Check factuality", permission: "aria.summarise" },
+                { id: "draft_child_voice_summary", label: "Surface child voice", permission: "aria.summarise" },
+              ]}
+              label="Record narrative"
+              placeholder="Paste the full record narrative (incident, daily log, complaint, etc.) here for Aria to analyse. Use the mic button to dictate, or run an Aria command to clean up the wording before submitting."
+              rows={8}
             />
             <div className="text-xs text-slate-500 mt-1">
-              Aria will detect: child voice, plan linkage, risk indicators, missing evidence, vague closure phrases.
+              Submit will run the specialised oversight engine: it detects child voice, plan linkage, risk indicators, missing evidence, and vague closure phrases.
             </div>
           </div>
           <div className="flex items-center justify-end gap-2">
