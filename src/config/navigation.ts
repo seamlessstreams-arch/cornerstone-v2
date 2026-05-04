@@ -217,6 +217,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: "RSE Tracker",      href: "/rse-tracker",               icon: "BookOpen",       module: "young-people"  },
       { label: "Feedback on Staff",href: "/child-feedback-on-staff",   icon: "MessageCircle",  module: "young-people"  },
       { label: "Media Consent",    href: "/media-publicity-consent",   icon: "Camera",         module: "young-people"  },
+      { label: "Cultural Visits",  href: "/museum-cultural-visits-tracker",icon: "Sparkles",   module: "young-people"  },
       { label: "Bedroom Profile",  href: "/bedroom-personalisation",   icon: "Home",           module: "young-people"  },
       { label: "Living Skills Assessment",href: "/independent-living-skills-assessment",icon: "TrendingUp",module: "young-people"  },
       { label: "Life Story",        href: "/life-story",                icon: "BookHeart",      module: "young-people"  },
@@ -335,6 +336,8 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: "Kitchen Hygiene",  href: "/kitchen-hygiene-monitoring",icon: "Utensils",        module: "buildings" },
       { label: "Insurance",       href: "/insurance-tracker",          icon: "Shield",          module: "buildings" },
       { label: "Maintenance Schedule",href: "/maintenance-schedule",    icon: "Wrench",         module: "maintenance"},
+      { label: "Utility Bills",   href: "/utility-bills-tracker",      icon: "Zap",             module: "buildings" },
+      { label: "Cleaning Rota",   href: "/cleaning-rota",              icon: "Sparkles",        module: "buildings" },
     ],
   },
 
@@ -414,6 +417,8 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: "Statutory Checks",  href: "/statutory-checks-summary",  icon: "ShieldCheck",   module: "ri"         },
       { label: "Inspection Pack",   href: "/inspection-readiness-pack", icon: "FileCheck",     module: "ri"         },
       { label: "Data Breach Log",   href: "/data-breach-log",           icon: "Lock",          module: "ri"         },
+      { label: "Ofsted Engagement", href: "/ofsted-engagement-log",     icon: "Award",         module: "ri"         },
+      { label: "Registration Log",  href: "/registration-changes-log",  icon: "FileText",      module: "ri"         },
     ],
   },
 
@@ -756,4 +761,9 @@ export const GLOBAL_CREATE_ITEMS: CreateMenuItem[] = [
   { label: "Insurance Renewal",icon: "Shield",   href: "/insurance-tracker",                     group: "Team",       module: "buildings"    },
   { label: "Maintenance Job", icon: "Wrench",    href: "/maintenance-schedule",                  group: "Team",       module: "maintenance"  },
   { label: "Media Consent",   icon: "Camera",    href: "/media-publicity-consent",                group: "Care",       module: "young-people" },
+  { label: "Cultural Visit",  icon: "Sparkles",  href: "/museum-cultural-visits-tracker",          group: "Care",       module: "young-people" },
+  { label: "Utility Bill",    icon: "Zap",       href: "/utility-bills-tracker",                  group: "Team",       module: "buildings"    },
+  { label: "Cleaning Entry",  icon: "Sparkles",  href: "/cleaning-rota",                          group: "Team",       module: "buildings"    },
+  { label: "Ofsted Contact",  icon: "Award",     href: "/ofsted-engagement-log",                  group: "Compliance", module: "ri"           },
+  { label: "Registration Update",icon: "FileText",href: "/registration-changes-log",               group: "Compliance", module: "ri"           },
 ];
