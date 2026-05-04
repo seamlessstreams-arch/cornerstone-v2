@@ -190,6 +190,8 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: "Med Near Misses",  href: "/medication-near-miss-log",  icon: "Pill",           module: "medication"    },
       { label: "Grief Support",    href: "/grief-and-loss-support",    icon: "Heart",          module: "young-people"  },
       { label: "Digital Wellbeing",href: "/digital-wellbeing-plan",    icon: "Smartphone",     module: "young-people"  },
+      { label: "Wellbeing Pulse",  href: "/wellbeing-pulse-survey",    icon: "Activity",       module: "young-people"  },
+      { label: "Sensory Room Use", href: "/sensory-room-usage",        icon: "Sparkles",       module: "young-people"  },
       { label: "Bedroom Profile",  href: "/bedroom-personalisation",   icon: "Home",           module: "young-people"  },
       { label: "Living Skills Assessment",href: "/independent-living-skills-assessment",icon: "TrendingUp",module: "young-people"  },
       { label: "Life Story",        href: "/life-story",                icon: "BookHeart",      module: "young-people"  },
@@ -251,6 +253,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: "Shadow Shifts",   href: "/staff-shadowing-log",         icon: "Eye",           module: "staff"        },
       { label: "Lone Working RA", href: "/lone-working-risk-assessment",icon: "UserCheck",     module: "staff"        },
       { label: "Training Matrix", href: "/mandatory-training-matrix",  icon: "GraduationCap", module: "training"     },
+      { label: "Recognition Log", href: "/staff-recognition-log",      icon: "Award",         module: "staff"        },
     ],
   },
 
@@ -299,6 +302,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: "Protocol Drills",href: "/emergency-protocol-drills",   icon: "AlertOctagon",    module: "buildings"},
       { label: "Fire Risk Assessment",href: "/fire-risk-assessment",   icon: "Flame",           module: "buildings"},
       { label: "External Visitors",href: "/external-visitor-log",      icon: "Users",           module: "buildings"},
+      { label: "Transport RAs",   href: "/transport-risk-assessments",icon: "Car",             module: "vehicles"  },
     ],
   },
 
@@ -369,6 +373,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: "Curiosity Log",   href: "/professional-curiosity-log", icon: "Lightbulb",     module: "ri"         },
       { label: "Strategic Risks", href: "/risk-management-board",      icon: "ShieldAlert",   module: "ri"         },
       { label: "Professional Fees",href: "/professional-fees-log",     icon: "Receipt",       module: "ri"         },
+      { label: "Cohort Analysis", href: "/placement-cohort-analysis",  icon: "Users",         module: "ri"         },
     ],
   },
 
@@ -666,4 +671,9 @@ export const GLOBAL_CREATE_ITEMS: CreateMenuItem[] = [
   { label: "Grief Support Update",icon: "Heart", href: "/grief-and-loss-support",                 group: "Care",       module: "young-people" },
   { label: "Digital Plan",    icon: "Smartphone",href: "/digital-wellbeing-plan",                 group: "Care",       module: "young-people" },
   { label: "Professional Invoice",icon: "Receipt",href: "/professional-fees-log",                  group: "Compliance", module: "ri"           },
+  { label: "Wellbeing Pulse", icon: "Activity",  href: "/wellbeing-pulse-survey",                 group: "Care",       module: "young-people" },
+  { label: "Sensory Use Log", icon: "Sparkles",  href: "/sensory-room-usage",                    group: "Care",       module: "young-people" },
+  { label: "Transport RA",    icon: "Car",       href: "/transport-risk-assessments",            group: "Team",       module: "vehicles"     },
+  { label: "Recognition",     icon: "Award",     href: "/staff-recognition-log",                  group: "Team",       module: "staff"        },
+  { label: "Cohort Review",   icon: "Users",     href: "/placement-cohort-analysis",              group: "Compliance", module: "ri"           },
 ];
