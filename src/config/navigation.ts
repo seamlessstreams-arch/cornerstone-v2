@@ -205,6 +205,9 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: "CAMHS Referrals",  href: "/camhs-referral-tracker",    icon: "Brain",          module: "young-people"  },
       { label: "Physical Activity",href: "/physical-activity-tracker", icon: "Activity",       module: "young-people"  },
       { label: "Post-Incident Debrief",href: "/post-incident-debrief-with-child",icon: "Heart",module: "young-people"  },
+      { label: "Key Documents",    href: "/child-key-document-tracker",icon: "FileText",       module: "young-people"  },
+      { label: "After-School Clubs",href: "/after-school-club-tracker",icon: "Star",            module: "young-people"  },
+      { label: "Child-Led Meetings",href: "/child-led-meeting-record",  icon: "Mic",            module: "young-people"  },
       { label: "Bedroom Profile",  href: "/bedroom-personalisation",   icon: "Home",           module: "young-people"  },
       { label: "Living Skills Assessment",href: "/independent-living-skills-assessment",icon: "TrendingUp",module: "young-people"  },
       { label: "Life Story",        href: "/life-story",                icon: "BookHeart",      module: "young-people"  },
@@ -269,6 +272,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: "Recognition Log", href: "/staff-recognition-log",      icon: "Award",         module: "staff"        },
       { label: "Operational Meetings",href: "/operational-meetings",   icon: "Users",         module: "staff"        },
       { label: "End-of-Shift Check",href: "/end-of-shift-checklist",   icon: "ClipboardCheck",module: "staff"        },
+      { label: "On-Call Rota",    href: "/on-call-rota",                icon: "Phone",         module: "staff"        },
     ],
   },
 
@@ -394,6 +398,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: "Policy Impact",   href: "/policy-impact-analysis",     icon: "FileText",      module: "ri"         },
       { label: "Med Storage Audit",href: "/medication-storage-audit",  icon: "Pill",          module: "medication" },
       { label: "Room Allocation",  href: "/room-allocation-rationale",  icon: "Bed",           module: "ri"         },
+      { label: "Community Feedback",href: "/community-feedback",        icon: "MessageCircle", module: "ri"         },
     ],
   },
 
@@ -716,4 +721,9 @@ export const GLOBAL_CREATE_ITEMS: CreateMenuItem[] = [
   { label: "Child Debrief",   icon: "Heart",     href: "/post-incident-debrief-with-child",       group: "Care",       module: "young-people" },
   { label: "Activity Entry",  icon: "Activity",  href: "/physical-activity-tracker",              group: "Care",       module: "young-people" },
   { label: "Hygiene Check",   icon: "Utensils",  href: "/kitchen-hygiene-monitoring",             group: "Team",       module: "buildings"    },
+  { label: "Document Update",icon: "FileText",   href: "/child-key-document-tracker",             group: "Care",       module: "young-people" },
+  { label: "Club Update",     icon: "Star",      href: "/after-school-club-tracker",              group: "Care",       module: "young-people" },
+  { label: "Community Feedback",icon: "MessageCircle",href: "/community-feedback",                   group: "Compliance", module: "ri"           },
+  { label: "On-Call Shift",   icon: "Phone",     href: "/on-call-rota",                            group: "Workflow",   module: "staff"        },
+  { label: "Child-Led Meeting",icon: "Mic",      href: "/child-led-meeting-record",               group: "Care",       module: "young-people" },
 ];
