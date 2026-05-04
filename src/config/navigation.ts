@@ -185,6 +185,9 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: "Emergency Meds",   href: "/emergency-medication-protocols",icon: "AlertOctagon",module: "young-people"  },
       { label: "LAC Review Prep",  href: "/lac-review-prep",           icon: "Calendar",       module: "young-people"  },
       { label: "Family Tree",      href: "/family-tree-genogram",      icon: "Users",          module: "young-people"  },
+      { label: "Substance Screening",href: "/drug-and-alcohol-screening",icon: "Shield",       module: "safeguarding"  },
+      { label: "Bedroom Profile",  href: "/bedroom-personalisation",   icon: "Home",           module: "young-people"  },
+      { label: "Living Skills Assessment",href: "/independent-living-skills-assessment",icon: "TrendingUp",module: "young-people"  },
       { label: "Life Story",        href: "/life-story",                icon: "BookHeart",      module: "young-people"  },
       { label: "Chronology",       href: "/intelligence/chronology",   icon: "ScrollText",     module: "young-people"  },
       { label: "Documents",        href: "/documents",                 icon: "FileText",       module: "documents"     },
@@ -359,6 +362,8 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: "Resolution Meetings",href: "/complaint-resolution-meetings",icon: "MessageCircle",module: "ri"      },
       { label: "Board Reports",   href: "/board-reporting",            icon: "ScrollText",    module: "ri"         },
       { label: "Handover Audits", href: "/handover-quality-audit",     icon: "ClipboardCheck",module: "ri"         },
+      { label: "Curiosity Log",   href: "/professional-curiosity-log", icon: "Lightbulb",     module: "ri"         },
+      { label: "Strategic Risks", href: "/risk-management-board",      icon: "ShieldAlert",   module: "ri"         },
     ],
   },
 
@@ -646,4 +651,9 @@ export const GLOBAL_CREATE_ITEMS: CreateMenuItem[] = [
   { label: "LAC Review Prep", icon: "Calendar",  href: "/lac-review-prep",                       group: "Care",       module: "young-people" },
   { label: "Handover Audit",  icon: "ClipboardCheck",href: "/handover-quality-audit",              group: "Compliance", module: "ri"           },
   { label: "Genogram Update", icon: "Users",     href: "/family-tree-genogram",                  group: "Care",       module: "young-people" },
+  { label: "Substance Screen",icon: "Shield",    href: "/drug-and-alcohol-screening",             group: "Care",       module: "safeguarding" },
+  { label: "Bedroom Update",  icon: "Home",      href: "/bedroom-personalisation",                group: "Care",       module: "young-people" },
+  { label: "Curiosity Entry", icon: "Lightbulb", href: "/professional-curiosity-log",             group: "Compliance", module: "ri"           },
+  { label: "Living Skills Review",icon: "TrendingUp",href: "/independent-living-skills-assessment", group: "Care",       module: "young-people" },
+  { label: "Strategic Risk",  icon: "ShieldAlert",href: "/risk-management-board",                  group: "Compliance", module: "ri"           },
 ];
