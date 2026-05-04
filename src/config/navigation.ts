@@ -223,6 +223,9 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: "Incoming Mail",    href: "/child-correspondence-incoming",icon: "Mail",        module: "young-people"  },
       { label: "Cards & Letters",  href: "/birthday-card-tracker",     icon: "Cake",           module: "young-people"  },
       { label: "Hairdressing",     href: "/hairdressing-records",      icon: "Scissors",       module: "young-people"  },
+      { label: "Sensory Inventory",href: "/sensory-equipment-inventory",icon: "Package",        module: "young-people"  },
+      { label: "Photo Albums",     href: "/photo-album-tracker",       icon: "Camera",         module: "young-people"  },
+      { label: "Memorial Records", href: "/memorial-occasion-records", icon: "Flower",         module: "young-people"  },
       { label: "Bedroom Profile",  href: "/bedroom-personalisation",   icon: "Home",           module: "young-people"  },
       { label: "Living Skills Assessment",href: "/independent-living-skills-assessment",icon: "TrendingUp",module: "young-people"  },
       { label: "Life Story",        href: "/life-story",                icon: "BookHeart",      module: "young-people"  },
@@ -347,6 +350,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: "Food Budget",     href: "/food-budget-tracker",        icon: "Utensils",        module: "buildings" },
       { label: "Fire Equipment",  href: "/fire-safety-equipment-checks",icon: "Flame",          module: "buildings" },
       { label: "Evacuation Plan", href: "/emergency-evacuation-plan",  icon: "AlertOctagon",    module: "buildings" },
+      { label: "Activity RAs",    href: "/outdoor-activity-risk-assessments",icon: "MapPin",      module: "buildings" },
     ],
   },
 
@@ -429,6 +433,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: "Ofsted Engagement", href: "/ofsted-engagement-log",     icon: "Award",         module: "ri"         },
       { label: "Registration Log",  href: "/registration-changes-log",  icon: "FileText",      module: "ri"         },
       { label: "Regulator Correspondence",href: "/regulatory-correspondence-tracker",icon: "Mail",module: "ri"      },
+      { label: "Med Error Investigations",href: "/medication-error-investigation",icon: "Pill",module: "medication" },
     ],
   },
 
@@ -786,4 +791,9 @@ export const GLOBAL_CREATE_ITEMS: CreateMenuItem[] = [
   { label: "Fire Check",      icon: "Flame",     href: "/fire-safety-equipment-checks",            group: "Team",       module: "buildings"    },
   { label: "Evacuation Update",icon: "AlertOctagon",href: "/emergency-evacuation-plan",             group: "Team",       module: "buildings"    },
   { label: "Hair Appointment",icon: "Scissors",  href: "/hairdressing-records",                   group: "Care",       module: "young-people" },
+  { label: "Activity RA",     icon: "MapPin",    href: "/outdoor-activity-risk-assessments",      group: "Team",       module: "buildings"    },
+  { label: "Sensory Item",    icon: "Package",   href: "/sensory-equipment-inventory",            group: "Care",       module: "young-people" },
+  { label: "Photo Album Update",icon: "Camera",  href: "/photo-album-tracker",                    group: "Care",       module: "young-people" },
+  { label: "Med Error Report",icon: "Pill",      href: "/medication-error-investigation",         group: "Compliance", module: "medication"   },
+  { label: "Memorial Record", icon: "Flower",    href: "/memorial-occasion-records",              group: "Care",       module: "young-people" },
 ];
