@@ -199,6 +199,9 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: "Budget Tracker",   href: "/placement-budget-tracker",  icon: "Wallet",         module: "young-people"  },
       { label: "Sibling Contact",  href: "/siblings-contact-protocol", icon: "Users",          module: "young-people"  },
       { label: "Parental Responsibility",href: "/parental-responsibility-record",icon: "KeyRound",module: "young-people"  },
+      { label: "Photo Portfolio",  href: "/child-photography-portfolio",icon: "Camera",        module: "young-people"  },
+      { label: "Welcome Tour",     href: "/welcome-tour-checklist",    icon: "Home",           module: "young-people"  },
+      { label: "Occupational Therapy",href: "/occupational-therapy-records",icon: "Activity",  module: "young-people"  },
       { label: "Bedroom Profile",  href: "/bedroom-personalisation",   icon: "Home",           module: "young-people"  },
       { label: "Living Skills Assessment",href: "/independent-living-skills-assessment",icon: "TrendingUp",module: "young-people"  },
       { label: "Life Story",        href: "/life-story",                icon: "BookHeart",      module: "young-people"  },
@@ -262,6 +265,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: "Training Matrix", href: "/mandatory-training-matrix",  icon: "GraduationCap", module: "training"     },
       { label: "Recognition Log", href: "/staff-recognition-log",      icon: "Award",         module: "staff"        },
       { label: "Operational Meetings",href: "/operational-meetings",   icon: "Users",         module: "staff"        },
+      { label: "End-of-Shift Check",href: "/end-of-shift-checklist",   icon: "ClipboardCheck",module: "staff"        },
     ],
   },
 
@@ -384,6 +388,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: "Cohort Analysis", href: "/placement-cohort-analysis",  icon: "Users",         module: "ri"         },
       { label: "Policy Impact",   href: "/policy-impact-analysis",     icon: "FileText",      module: "ri"         },
       { label: "Med Storage Audit",href: "/medication-storage-audit",  icon: "Pill",          module: "medication" },
+      { label: "Room Allocation",  href: "/room-allocation-rationale",  icon: "Bed",           module: "ri"         },
     ],
   },
 
@@ -696,4 +701,9 @@ export const GLOBAL_CREATE_ITEMS: CreateMenuItem[] = [
   { label: "PR Update",       icon: "KeyRound",  href: "/parental-responsibility-record",         group: "Care",       module: "young-people" },
   { label: "Operational Meeting",icon: "Users",  href: "/operational-meetings",                   group: "Workflow",   module: "staff"        },
   { label: "Med Storage Check",icon: "Pill",     href: "/medication-storage-audit",               group: "Compliance", module: "medication"   },
+  { label: "Shift Closedown",  icon: "ClipboardCheck",href: "/end-of-shift-checklist",               group: "Workflow",   module: "staff"        },
+  { label: "Photo Memory",     icon: "Camera",    href: "/child-photography-portfolio",             group: "Care",       module: "young-people" },
+  { label: "Welcome Tour Record",icon: "Home",    href: "/welcome-tour-checklist",                  group: "Care",       module: "young-people" },
+  { label: "OT Session",       icon: "Activity",  href: "/occupational-therapy-records",            group: "Care",       module: "young-people" },
+  { label: "Room Allocation Review",icon: "Bed", href: "/room-allocation-rationale",                group: "Compliance", module: "ri"           },
 ];
