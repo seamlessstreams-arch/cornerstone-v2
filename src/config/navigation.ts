@@ -559,6 +559,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: "Safeguarding / LADO",   href: "/intelligence/hr/safeguarding-lado",   icon: "Shield",      module: "staff"        },
       { label: "Probation Pathway",     href: "/intelligence/hr/probation-pathway",   icon: "UserCheck",   module: "recruitment"  },
       { label: "Safer Recruitment Gate",href: "/intelligence/hr/safer-recruitment",  icon: "ShieldCheck", module: "recruitment"  },
+      { label: "HR Inspection Mode", href: "/intelligence/hr/inspection-mode",    icon: "FileCheck",   module: "staff"        },
       { label: "Key Work Builder",    href: "/intelligence/aria/keywork",            icon: "ListChecks",  module: "young-people" },
       { label: "L.I.V.E.R.S. Planner",href: "/intelligence/aria/livers",            icon: "Layers",      module: "young-people" },
       { label: "Child Resources",     href: "/intelligence/aria/resources",          icon: "Puzzle",      module: "young-people" },

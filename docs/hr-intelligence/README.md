@@ -79,9 +79,13 @@ Shipped in Phase 2.3:
   confirm/extend/end decisions). Lives at
   `/intelligence/hr/probation-pathway`.
 
-Still to ship in Phase 2:
+Shipped in Phase 2.4:
 
-- HR Inspection Mode (PDF + spreadsheet export)
+- HR Inspection Mode — 8-domain structured export for Ofsted inspectors.
+  Print-to-PDF and per-section CSV download. Covers workforce summary,
+  safer recruitment position, HR cases, case chronology, suspension
+  register, safeguarding/LADO referrals, training and compliance, and RI
+  oversight. Lives at `/intelligence/hr/inspection-mode`.
 
 ### Phase 3 (later)
 
@@ -249,10 +253,9 @@ safer-wording template.
 
 ## What is stubbed
 
-After Phase 2.3, the following UIs are not yet shipped: Sickness Intelligence,
-Supervision Intelligence, Agency Compliance Panel, RI Dashboard, Inspection
-Mode, and Reports. These are scheduled into Phase 3 above. The schema is in
-place for all of them.
+After Phase 2.4, the following UIs are not yet shipped: Sickness Intelligence,
+Supervision Intelligence, Agency Compliance Panel, RI Dashboard, and Reports.
+These are scheduled into Phase 3 above. The schema is in place for all of them.
 
 The `hr_cases` POST creates the case and seeds the chronology with the
 opening event. Subsequent actions (meetings, letters, evidence uploads,
