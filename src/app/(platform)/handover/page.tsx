@@ -18,12 +18,14 @@ import { getStaffName, getYPName } from "@/lib/seed-data";
 import type { YoungPerson } from "@/types";
 import { cn, formatDate, formatDateTime, todayStr } from "@/lib/utils";
 import { useHandover, useCreateHandover } from "@/hooks/use-handover";
+import { useHandoverContext } from "@/hooks/use-handover-context";
 import { useAuthContext } from "@/contexts/auth-context";
 import type { HandoverEntry, HandoverChildUpdate } from "@/types/extended";
 import { SmartUploadButton } from "@/components/documents/smart-upload-button";
 import { PrintButton } from "@/components/common/print-button";
 import { ExportButton, type ExportColumn } from "@/components/common/export-button";
 import { ShiftSummaryCard } from "@/components/dashboard/shift-summary-card";
+import { AriaHandoverBuilder } from "@/components/handover/aria-handover-builder";
 
 const HANDOVER_EXPORT_COLS: ExportColumn<HandoverEntry>[] = [
   { header: "Shift Date", accessor: (h) => h.shift_date },
@@ -124,6 +126,8 @@ function HandoverChildCard({ cu }: { cu: HandoverChildUpdate }) {
 
 function LatestHandoverCard({ handover }: { handover: HandoverEntry }) {
   const isToday = handover.shift_date === todayStr();
+  const { data: ctxData } = useHandoverContext(handover.incoming_staff ?? []);
+  const staffContexts = ctxData?.data ?? [];
 
   return (
     <Card className="rounded-2xl border-2 border-slate-900">
@@ -165,12 +169,25 @@ function LatestHandoverCard({ handover }: { handover: HandoverEntry }) {
           </div>
           <div>
             <span className="text-[10px] font-semibold uppercase tracking-wide text-slate-400 block mb-1">Incoming</span>
-            {handover.incoming_staff.map((id) => (
-              <div key={id} className="flex items-center gap-1.5 mb-0.5">
-                <Avatar name={getStaffName(id)} size="xs" />
-                <span>{getStaffName(id)}</span>
-              </div>
-            ))}
+            {handover.incoming_staff.map((id) => {
+              const ctx = staffContexts.find((c) => c.staff_id === id);
+              return (
+                <div key={id} className="flex items-center gap-1.5 mb-0.5">
+                  <Avatar name={getStaffName(id)} size="xs" />
+                  <span>{getStaffName(id)}</span>
+                  {ctx && ctx.days_since_last_shift !== null && ctx.days_since_last_shift > 1 && (
+                    <span className={cn(
+                      "text-[9px] rounded-full px-1.5 py-0.5 font-medium",
+                      ctx.days_since_last_shift >= 4
+                        ? "bg-violet-100 text-violet-700"
+                        : "bg-blue-100 text-blue-600"
+                    )}>
+                      {ctx.days_since_last_shift}d away
+                    </span>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
 
@@ -714,6 +731,22 @@ export default function HandoverPage() {
         />
       </div>
       <div id="handover-auto-notes" className="hidden" />
+
+      {/* ARIA Handover Builder — personalised context per incoming staff */}
+      {!isLoading && (
+        <div className="mb-6">
+          <AriaHandoverBuilder
+            incomingStaffIds={
+              latest?.incoming_staff?.length
+                ? latest.incoming_staff
+                : todayShifts
+                    .filter((s) => s.shift_type === "sleep_in" || s.shift_type === "waking_night")
+                    .map((s) => s.staff_id)
+                    .filter(Boolean)
+            }
+          />
+        </div>
+      )}
 
       {/* ── Search & Filters ── */}
       {!isLoading && history.length > 0 && (

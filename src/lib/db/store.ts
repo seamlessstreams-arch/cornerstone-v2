@@ -259,6 +259,22 @@ store.vehicleChecks = [
 store.handovers = [
   {
     id: "hnd_001", home_id: "home_oak",
+    shift_date: today, shift_from: "day", shift_to: "sleep_in",
+    handover_time: "21:30", completed_at: null,
+    outgoing_staff: ["staff_darren", "staff_lackson"], incoming_staff: ["staff_anna", "staff_mirela", "staff_alex"],
+    created_by: "staff_darren", signed_off_by: null,
+    child_updates: [
+      { child_id: "yp_alex", mood_score: 6, key_notes: "Alex had a settled day overall. Engaged with education in the morning. Some low mood around 4pm — disclosed worrying about court proceedings. Supported with 1:1 time.", alerts: ["Phone usage overnight — third time this week", "Court proceedings anxiety"] },
+      { child_id: "yp_jordan", mood_score: 9, key_notes: "Jordan had an excellent day. Went to football training with Lackson. Made positive comments about feeling settled at Oak House.", alerts: [] },
+      { child_id: "yp_casey", mood_score: 4, key_notes: "Casey struggled this afternoon. Became distressed about a phone call from her mother. Supported to regulate. Refused evening medication initially — accepted 30 minutes later.", alerts: ["Contact distress", "Medication delay — administered 30 mins late"] },
+    ],
+    general_notes: "Rear gate latch needs fixing urgently — flagged to Ryan. CCTV camera still not installed. Strategy discussion tomorrow re: Alex safeguarding.",
+    flags: ["gate_security", "casey_medication_delay", "alex_safeguarding_strategy_tomorrow"],
+    linked_incident_ids: ["inc_004"],
+    created_at: new Date().toISOString(),
+  },
+  {
+    id: "hnd_002", home_id: "home_oak",
     shift_date: today, shift_from: "night", shift_to: "day",
     handover_time: "07:30", completed_at: "07:45",
     outgoing_staff: ["staff_edward"], incoming_staff: ["staff_darren", "staff_ryan"],
@@ -271,7 +287,7 @@ store.handovers = [
     general_notes: "Rear gate latch needs fixing urgently — flagged to Ryan. CCTV camera still not installed.",
     flags: ["gate_security", "alex_phone_overnight", "casey_sleep_disturbance"],
     linked_incident_ids: ["inc_001", "inc_004"],
-    created_at: new Date().toISOString(),
+    created_at: daysFromNow(0) + "T07:30:00Z",
   },
 ];
 
@@ -1940,6 +1956,7 @@ export const db = {
   shifts: {
     findAll: () => store.shifts,
     findToday: () => store.shifts.filter((s) => s.date === todayStr()),
+    findByStaff: (staffId: string) => store.shifts.filter((s) => s.staff_id === staffId),
     findOpen: () => store.shifts.filter((s) => s.is_open_shift && s.date >= todayStr()),
     findByDateAndTime: (date: string, startTime: string) =>
       store.shifts.find((s) => s.date === date && s.start_time === startTime && s.is_open_shift),
