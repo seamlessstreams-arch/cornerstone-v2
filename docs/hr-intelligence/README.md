@@ -58,12 +58,29 @@ Shipped in Phase 2.2:
   evaluation comes back approved. Senior risk acceptance requires a
   written rationale of at least 30 characters.
 
+Shipped in Phase 2.3:
+
+- HR Risk Command Centre — strategic dashboard with risk heatmap, open cases,
+  overdue tasks, RI oversight, safer recruitment position, active suspensions,
+  and ARIA professional insight. Lives at
+  `/intelligence/hr/risk-command-centre`.
+- Investigation Builder — 6-stage structured investigation tool (terms of
+  reference, investigation plan, witnesses, evidence log, findings, report).
+  Covers 8 investigation types: disciplinary, conduct, safeguarding
+  allegation, capability, grievance, whistleblowing, sickness, probation.
+  ARIA generates investigation report drafts. Lives at
+  `/intelligence/hr/investigation-builder`.
+- Safeguarding / LADO Pathway — 5-stage LADO allegation pathway (initial
+  concern, LADO consultation, strategy meeting, investigation, outcome).
+  LADO outcome categories, DBS referral tracking, Ofsted notification.
+  Lives at `/intelligence/hr/safeguarding-lado`.
+- Probation Pathway — 4-stage probation management (setup with safer
+  recruitment checks, reviews with ratings, concerns, outcome with
+  confirm/extend/end decisions). Lives at
+  `/intelligence/hr/probation-pathway`.
+
 Still to ship in Phase 2:
 
-- HR Risk Command Centre dashboard
-- Investigation Builder (terms of reference, evidence, findings)
-- Safeguarding / LADO HR pathway
-- Probation pathway UI
 - HR Inspection Mode (PDF + spreadsheet export)
 
 ### Phase 3 (later)
@@ -232,11 +249,10 @@ safer-wording template.
 
 ## What is stubbed
 
-The Phase 1 release deliberately does not ship UIs for the HR Risk Command
-Centre, Safer Recruitment, Probation, Sickness, Supervision Intelligence,
-Agency Compliance, Investigation Builder, Letter Generator, Suspension
-Decision Tool, RI Dashboard, Inspection Mode, or Reports. These are scheduled
-into Phase 2 and Phase 3 above. The schema is in place for all of them.
+After Phase 2.3, the following UIs are not yet shipped: Sickness Intelligence,
+Supervision Intelligence, Agency Compliance Panel, RI Dashboard, Inspection
+Mode, and Reports. These are scheduled into Phase 3 above. The schema is in
+place for all of them.
 
 The `hr_cases` POST creates the case and seeds the chronology with the
 opening event. Subsequent actions (meetings, letters, evidence uploads,
