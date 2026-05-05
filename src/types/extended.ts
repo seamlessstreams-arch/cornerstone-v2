@@ -168,6 +168,12 @@ export interface HandoverChildUpdate {
   alerts: string[];
 }
 
+export interface HandoverSignOff {
+  staff_id: string;
+  acknowledged_at: string;
+  notes: string | null;
+}
+
 export interface HandoverEntry {
   id: string;
   home_id: string;
@@ -180,6 +186,7 @@ export interface HandoverEntry {
   incoming_staff: string[];
   created_by: string;
   signed_off_by: string | null;
+  sign_offs: HandoverSignOff[];
   child_updates: HandoverChildUpdate[];
   general_notes: string;
   flags: string[];

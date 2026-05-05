@@ -262,7 +262,7 @@ store.handovers = [
     shift_date: today, shift_from: "day", shift_to: "sleep_in",
     handover_time: "21:30", completed_at: null,
     outgoing_staff: ["staff_darren", "staff_lackson"], incoming_staff: ["staff_anna", "staff_mirela", "staff_alex"],
-    created_by: "staff_darren", signed_off_by: null,
+    created_by: "staff_darren", signed_off_by: null, sign_offs: [],
     child_updates: [
       { child_id: "yp_alex", mood_score: 6, key_notes: "Alex had a settled day overall. Engaged with education in the morning. Some low mood around 4pm — disclosed worrying about court proceedings. Supported with 1:1 time.", alerts: ["Phone usage overnight — third time this week", "Court proceedings anxiety"] },
       { child_id: "yp_jordan", mood_score: 9, key_notes: "Jordan had an excellent day. Went to football training with Lackson. Made positive comments about feeling settled at Oak House.", alerts: [] },
@@ -279,6 +279,10 @@ store.handovers = [
     handover_time: "07:30", completed_at: "07:45",
     outgoing_staff: ["staff_edward"], incoming_staff: ["staff_darren", "staff_ryan"],
     created_by: "staff_edward", signed_off_by: "staff_darren",
+    sign_offs: [
+      { staff_id: "staff_darren", acknowledged_at: today + "T07:40:00Z", notes: null },
+      { staff_id: "staff_ryan", acknowledged_at: today + "T07:42:00Z", notes: "Noted Casey sleep issue — will follow up with key work session" },
+    ],
     child_updates: [
       { child_id: "yp_alex", mood_score: 6, key_notes: "Alex had a settled night. Some restlessness at 02:00 — checked, was on phone. Phone discussion needed. Mood okay this morning.", alerts: ["Phone usage overnight — third time this week"] },
       { child_id: "yp_jordan", mood_score: 8, key_notes: "Jordan slept well. Up at 07:00, positive this morning. Prepared own breakfast.", alerts: [] },
@@ -1872,9 +1876,16 @@ export const db = {
   handovers: {
     findAll: () => store.handovers,
     findLatest: () => store.handovers.sort((a, b) => b.created_at.localeCompare(a.created_at))[0] || null,
+    findById: (id: string) => store.handovers.find((h) => h.id === id) || null,
     findByDate: (date: string) => store.handovers.filter((h) => h.shift_date === date),
+    update: (id: string, data: Partial<HandoverEntry>): HandoverEntry | null => {
+      const idx = store.handovers.findIndex((h) => h.id === id);
+      if (idx === -1) return null;
+      store.handovers[idx] = { ...store.handovers[idx], ...data };
+      return store.handovers[idx];
+    },
     create: (data: Partial<HandoverEntry>): HandoverEntry => {
-      const entry = { ...data, id: generateId("hnd"), created_at: new Date().toISOString() } as HandoverEntry;
+      const entry = { ...data, id: generateId("hnd"), sign_offs: [], created_at: new Date().toISOString() } as HandoverEntry;
       store.handovers.push(entry);
       return entry;
     },

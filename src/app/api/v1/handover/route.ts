@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db/store";
 import { todayStr } from "@/lib/utils";
-import type { HandoverEntry } from "@/types/extended";
+import type { HandoverEntry, HandoverSignOff } from "@/types/extended";
 
 // GET /api/v1/handover
 export async function GET() {
@@ -90,5 +90,66 @@ export async function POST(req: NextRequest) {
 
   const created = db.handovers.create(newHandover);
 
+  // Create notifications for incoming staff
+  for (const staffId of (incoming_staff as string[])) {
+    db.notifications.create({
+      home_id: "home_oak",
+      recipient_id: staffId,
+      title: "New handover ready",
+      body: `A ${shift_from} → ${shift_to} handover has been created for you. Please review and acknowledge.`,
+      type: "system",
+      priority: "high",
+      read: false,
+      read_at: null,
+      action_url: "/handover",
+      entity_type: "handover",
+      entity_id: created.id,
+    });
+  }
+
   return NextResponse.json({ data: created }, { status: 201 });
+}
+
+// PATCH /api/v1/handover — sign off a handover
+export async function PATCH(req: NextRequest) {
+  let body: { handover_id: string; staff_id: string; notes?: string };
+  try {
+    body = await req.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
+  }
+
+  const { handover_id, staff_id, notes = null } = body;
+
+  if (!handover_id || !staff_id) {
+    return NextResponse.json({ error: "handover_id and staff_id are required" }, { status: 400 });
+  }
+
+  const handover = db.handovers.findById(handover_id);
+  if (!handover) {
+    return NextResponse.json({ error: "Handover not found" }, { status: 404 });
+  }
+
+  const alreadySigned = handover.sign_offs?.some((s) => s.staff_id === staff_id);
+  if (alreadySigned) {
+    return NextResponse.json({ error: "Already signed off" }, { status: 409 });
+  }
+
+  const signOff: HandoverSignOff = {
+    staff_id,
+    acknowledged_at: new Date().toISOString(),
+    notes,
+  };
+
+  const updatedSignOffs = [...(handover.sign_offs || []), signOff];
+  const allSigned = handover.incoming_staff.every(
+    (id) => updatedSignOffs.some((s) => s.staff_id === id)
+  );
+
+  const updated = db.handovers.update(handover_id, {
+    sign_offs: updatedSignOffs,
+    completed_at: allSigned ? new Date().toISOString() : handover.completed_at,
+  });
+
+  return NextResponse.json({ data: updated });
 }
