@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useEffect } from "react";
 import { useReg44Visits, useCreateReg44Visit } from "@/hooks/use-intelligence-layer";
+import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { PageShell } from "@/components/layout/page-shell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -620,6 +621,13 @@ export default function Reg44Page() {
                               <p className="text-xs text-slate-400 italic">No RI response recorded.</p>
                             )}
                           </div>
+
+                          {/* Smart Links */}
+                          <SmartLinkPanel
+                            sourceType="reg44_visit"
+                            sourceId={visit.id}
+                            homeId="oak-house"
+                          />
 
                           {/* actions for this visit */}
                           {visitActions.length > 0 && (

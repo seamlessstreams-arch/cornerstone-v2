@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useEffect } from "react";
 import { useReg45Reviews, useUpdateReg45Review } from "@/hooks/use-intelligence-layer";
+import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { PageShell } from "@/components/layout/page-shell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -704,6 +705,15 @@ export default function Reg45Page() {
           </div>
         </div>
       )}
+
+      {/* ── Smart Links ─────────────────────────────────────────────────── */}
+      <div className="mt-6">
+        <SmartLinkPanel
+          sourceType="reg44_visit"
+          sourceId={selectedReview.id}
+          homeId="oak-house"
+        />
+      </div>
 
       {/* ── regulatory footer ──────────────────────────────────────────── */}
       <div className="mt-6 bg-muted/30 rounded-lg p-4 text-xs text-muted-foreground">

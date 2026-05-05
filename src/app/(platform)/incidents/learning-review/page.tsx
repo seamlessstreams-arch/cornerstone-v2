@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useLearningReviews, useUpdateLearningReview } from "@/hooks/use-intelligence-layer";
+import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { PageShell } from "@/components/layout/page-shell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -485,6 +486,19 @@ export default function IncidentLearningReviewPage() {
                       </Button>
                     </div>
                   </CardContent>
+                )}
+
+                {/* Smart Links for this incident */}
+                {expandedId === incident.id && (
+                  <div className="px-6 pb-4">
+                    <SmartLinkPanel
+                      sourceType="incident"
+                      sourceId={incident.id}
+                      homeId="oak-house"
+                      childId={incident.child ? "child-a" : undefined}
+                      severity={incident.severity}
+                    />
+                  </div>
                 )}
               </Card>
             );

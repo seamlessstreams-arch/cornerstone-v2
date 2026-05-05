@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAttentionItems, useUpdateAttentionItem } from "@/hooks/use-intelligence-layer";
+import { SmartLinkBadge } from "@/components/intelligence/smart-link-panel";
 import type {
   AttentionCategory,
   Urgency,
@@ -647,6 +648,7 @@ export default function ManagerControlCentrePage() {
                       <span>
                         Created {formatDate(item.createdAt)}
                       </span>
+                      <SmartLinkBadge sourceType={item.category} sourceId={item.id} />
                     </div>
                   </div>
 

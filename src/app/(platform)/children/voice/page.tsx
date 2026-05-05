@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useVoiceEntries, useCreateVoiceEntry } from "@/hooks/use-intelligence-layer";
+import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { PageShell } from "@/components/layout/page-shell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -467,6 +468,16 @@ export default function VoiceOfTheChildPage() {
                     <span>Linked: {entry.linkedRecord}</span>
                   </div>
                 )}
+
+                {/* Smart Links */}
+                <SmartLinkPanel
+                  sourceType="key_work"
+                  sourceId={entry.id}
+                  homeId="oak-house"
+                  childId={selectedChild}
+                  category={entry.category}
+                  compact
+                />
               </CardContent>
             </Card>
           ))}
