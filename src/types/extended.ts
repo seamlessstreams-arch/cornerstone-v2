@@ -2122,3 +2122,30 @@ export interface OutcomeReview {
   next_steps: string | null;
   created_at: string;
 }
+
+// ══════════════════════════════════════════════════════════════════════════════
+// KEY WORKING SESSIONS — informal key-working interaction records
+// ══════════════════════════════════════════════════════════════════════════════
+
+export interface KeyWorkingSession {
+  id: string;
+  child_id: string;
+  staff_id: string;
+  date: string;
+  type: "one_to_one" | "group" | "informal" | "review" | "wellbeing_check" | "goal_setting" | "life_skills" | "therapeutic";
+  duration: number;
+  location: string;
+  topics: string[];
+  child_voice: string;
+  worker_observations: string;
+  actions_agreed: string[];
+  mood_before: 1 | 2 | 3 | 4 | 5;
+  mood_after: 1 | 2 | 3 | 4 | 5;
+  follow_up: string;
+  follow_up_date: string;
+  follow_up_completed: boolean;
+  linked_goals: string[];
+  confidential: boolean;
+  home_id: string;
+  created_at: string;
+}

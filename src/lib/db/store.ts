@@ -27,6 +27,7 @@ import type {
   OutcomeTarget, OutcomeReview,
   ShiftSwapRequest,
   Reg44VisitReport, Reg44Recommendation,
+  KeyWorkingSession,
 } from "@/types/extended";
 import type { Document, DocumentReadReceipt, Expense } from "@/types";
 import type { UploadedDocument, DocumentAuditEntry } from "@/types/documents";
@@ -101,6 +102,8 @@ const store = {
   outcomeReviews: [] as OutcomeReview[],
   // Reg 44 Visitor Reports
   reg44VisitReports: [] as Reg44VisitReport[],
+  // Key Working Sessions
+  keyWorkingSessions: [] as KeyWorkingSession[],
   // Shift Swap Requests
   shiftSwaps: [
     {
@@ -131,6 +134,90 @@ const store = {
     },
   ] as ShiftSwapRequest[],
 };
+
+// Seed key working sessions
+store.keyWorkingSessions = [
+  {
+    id: "kw_001", child_id: "yp_alex", staff_id: "staff_darren", date: daysFromNow(-1), type: "one_to_one",
+    duration: 45, location: "Quiet room",
+    topics: ["College application progress", "Anxiety about interviews", "Weekend plans"],
+    child_voice: "I'm worried about the college interview. I don't know what to say about why I want to do the course. Can we practise?",
+    worker_observations: "Alex appeared anxious initially but relaxed during the session. Engaged well with mock interview practice. Showed genuine interest in the course but lacks confidence in articulating this.",
+    actions_agreed: ["Practise interview questions together on Thursday", "Write three reasons for choosing the course", "Staff to contact college about support for LAC students"],
+    mood_before: 2, mood_after: 4, follow_up: "Mock interview session", follow_up_date: daysFromNow(2), follow_up_completed: false,
+    linked_goals: ["College application"], confidential: false, home_id: "home_oak", created_at: daysFromNow(-1),
+  },
+  {
+    id: "kw_002", child_id: "yp_alex", staff_id: "staff_darren", date: daysFromNow(-8), type: "goal_setting",
+    duration: 30, location: "Kitchen",
+    topics: ["Cooking independence goal", "Meal planning", "Budgeting for food shopping"],
+    child_voice: "I want to learn how to make a roast dinner. My nan used to make the best roasts and I want to learn.",
+    worker_observations: "Emotional connection to cooking through memories of nan. This is a strong motivator. Alex planned a shopping list independently with minimal prompting.",
+    actions_agreed: ["Plan roast dinner for Sunday", "Create shopping list together", "Alex to try making a simple dessert midweek"],
+    mood_before: 3, mood_after: 5, follow_up: "Sunday roast cooking session", follow_up_date: daysFromNow(-3), follow_up_completed: true,
+    linked_goals: ["Independent cooking skills"], confidential: false, home_id: "home_oak", created_at: daysFromNow(-8),
+  },
+  {
+    id: "kw_003", child_id: "yp_jordan", staff_id: "staff_anna", date: daysFromNow(-2), type: "wellbeing_check",
+    duration: 20, location: "Jordan's bedroom",
+    topics: ["Sleep patterns", "Contact with mum", "Football club"],
+    child_voice: "I'm not sleeping well again. I keep thinking about things. Football helps though — I feel better after training.",
+    worker_observations: "Jordan tired and quieter than usual. Sleep disruption coincides with cancelled contact with mum last week. Football clearly a positive outlet. May need referral to CAMHS if sleep issues persist.",
+    actions_agreed: ["Try relaxation techniques before bed", "Staff to follow up with social worker about contact", "Keep attending football twice weekly"],
+    mood_before: 2, mood_after: 3, follow_up: "Check in about sleep in 3 days", follow_up_date: daysFromNow(1), follow_up_completed: false,
+    linked_goals: ["Health & wellbeing"], confidential: false, home_id: "home_oak", created_at: daysFromNow(-2),
+  },
+  {
+    id: "kw_004", child_id: "yp_jordan", staff_id: "staff_ryan", date: daysFromNow(-5), type: "review",
+    duration: 40, location: "Office",
+    topics: ["Pathway plan review", "Housing options", "Leaving care entitlements"],
+    child_voice: "I don't want to think about leaving yet. It's scary. But I know I need to start looking at places.",
+    worker_observations: "Jordan is anxious about transition but willing to engage when given time. Responded well to visiting supported accommodation photos. Preferred the option with communal living spaces.",
+    actions_agreed: ["Visit supported accommodation next Tuesday", "Jordan to list three things important in a home", "Staff to arrange meeting with leaving care PA"],
+    mood_before: 2, mood_after: 3, follow_up: "Supported accommodation visit", follow_up_date: daysFromNow(-1), follow_up_completed: true,
+    linked_goals: ["Housing preparation"], confidential: false, home_id: "home_oak", created_at: daysFromNow(-5),
+  },
+  {
+    id: "kw_005", child_id: "yp_casey", staff_id: "staff_chervelle", date: daysFromNow(-3), type: "one_to_one",
+    duration: 35, location: "Garden",
+    topics: ["School friendships", "Identity exploration", "Creative writing"],
+    child_voice: "I wrote a poem about who I am. Do you want to hear it? I'm not sure if it's any good but it felt important to write it.",
+    worker_observations: "Casey shared a deeply personal poem about identity and belonging. Showed vulnerability and trust in sharing this. The poem referenced feeling 'in between two worlds'. Casey is processing complex feelings about heritage with maturity.",
+    actions_agreed: ["Casey to keep writing journal", "Consider sharing poem with therapist if comfortable", "Staff to source creative writing resources"],
+    mood_before: 3, mood_after: 4, follow_up: "Check if Casey wants to continue creative work", follow_up_date: daysFromNow(4), follow_up_completed: false,
+    linked_goals: ["Identity exploration"], confidential: true, home_id: "home_oak", created_at: daysFromNow(-3),
+  },
+  {
+    id: "kw_006", child_id: "yp_casey", staff_id: "staff_chervelle", date: daysFromNow(-10), type: "life_skills",
+    duration: 60, location: "Kitchen & utility room",
+    topics: ["Laundry skills", "Cleaning routine", "Personal hygiene"],
+    child_voice: "I didn't know you had to separate colours! No one ever showed me before.",
+    worker_observations: "Casey engaged well with practical learning. Needed step-by-step guidance but picked up quickly. Showed pride in completing a full wash cycle independently. Good opportunity for positive reinforcement.",
+    actions_agreed: ["Casey to do own laundry every Saturday", "Create visual guide for laundry steps", "Try ironing school uniform next week"],
+    mood_before: 3, mood_after: 5, follow_up: "Check laundry routine on Saturday", follow_up_date: daysFromNow(-3), follow_up_completed: true,
+    linked_goals: ["Independent living skills"], confidential: false, home_id: "home_oak", created_at: daysFromNow(-10),
+  },
+  {
+    id: "kw_007", child_id: "yp_alex", staff_id: "staff_darren", date: daysFromNow(-14), type: "therapeutic",
+    duration: 50, location: "Quiet room",
+    topics: ["Anger management strategies", "Recent frustration at school", "Coping techniques"],
+    child_voice: "I tried the breathing thing you showed me and it actually worked. I walked away instead of kicking off. I was proud of myself.",
+    worker_observations: "Significant progress with emotional regulation. Alex self-reported using calming strategies in a school situation that would previously have escalated. This is a breakthrough moment worth celebrating and recording.",
+    actions_agreed: ["Continue practising grounding techniques daily", "Create a personal calm-down plan card", "Share progress with school SENCO"],
+    mood_before: 4, mood_after: 5, follow_up: "Follow up with school about incident", follow_up_date: daysFromNow(-10), follow_up_completed: true,
+    linked_goals: ["Emotional wellbeing"], confidential: false, home_id: "home_oak", created_at: daysFromNow(-14),
+  },
+  {
+    id: "kw_008", child_id: "yp_jordan", staff_id: "staff_anna", date: daysFromNow(-12), type: "informal",
+    duration: 15, location: "Living room",
+    topics: ["Weekend activities", "TV preferences", "Family memories"],
+    child_voice: "Can we watch that cooking show together? It reminds me of when my dad used to cook.",
+    worker_observations: "Brief but meaningful interaction. Jordan initiated conversation about family memories which is rare. Didn't push further but noted the openness. Watching TV together provided a natural, low-pressure connection point.",
+    actions_agreed: ["Watch cooking show together on Wednesdays", "Consider cooking activity linked to family memories"],
+    mood_before: 3, mood_after: 4, follow_up: "", follow_up_date: "", follow_up_completed: false,
+    linked_goals: [], confidential: false, home_id: "home_oak", created_at: daysFromNow(-12),
+  },
+];
 
 // Seed missing episodes
 store.missingEpisodes = [
@@ -2661,6 +2748,30 @@ export const db = {
       if (recIdx === -1) return null;
       visit.recommendations[recIdx] = { ...visit.recommendations[recIdx], ...data };
       return visit.recommendations[recIdx];
+    },
+  },
+
+  // ── Key Working Sessions ──────────────────────────────────────────────────
+  keyWorkingSessions: {
+    findAll: () => store.keyWorkingSessions,
+    findByChild: (childId: string) => store.keyWorkingSessions.filter((s) => s.child_id === childId),
+    findByStaff: (staffId: string) => store.keyWorkingSessions.filter((s) => s.staff_id === staffId),
+    findById: (id: string) => store.keyWorkingSessions.find((s) => s.id === id),
+    create: (data: Partial<KeyWorkingSession>): KeyWorkingSession => {
+      const session = {
+        ...data,
+        id: generateId("kw"),
+        home_id: data.home_id ?? "home_oak",
+        created_at: new Date().toISOString(),
+      } as KeyWorkingSession;
+      store.keyWorkingSessions.push(session);
+      return session;
+    },
+    update: (id: string, data: Partial<KeyWorkingSession>): KeyWorkingSession | null => {
+      const idx = store.keyWorkingSessions.findIndex((s) => s.id === id);
+      if (idx === -1) return null;
+      store.keyWorkingSessions[idx] = { ...store.keyWorkingSessions[idx], ...data };
+      return store.keyWorkingSessions[idx];
     },
   },
 };

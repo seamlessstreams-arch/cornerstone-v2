@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
-import { PageShell } from "@/components/ui/page-shell";
+import React, { useState, useMemo, useRef } from "react";
+import { PageShell } from "@/components/layout/page-shell";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,27 +10,33 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
-import { ExportButton, type ExportColumn } from "@/components/ui/export-button";
-import { PrintButton } from "@/components/ui/print-button";
+import { ExportButton, type ExportColumn } from "@/components/common/export-button";
+import { PrintButton } from "@/components/common/print-button";
+import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { cn } from "@/lib/utils";
 import { getStaffName, getYPName } from "@/lib/seed-data";
+import { toast } from "sonner";
+import {
+  useKeyWorkingSessions,
+  useCreateKeyWorkingSession,
+  useUpdateKeyWorkingSession,
+} from "@/hooks/use-key-working";
+import type { KeyWorkingSession } from "@/types/extended";
 import {
   ArrowUpDown, ChevronDown, ChevronUp, Plus, Search,
   ListChecks, Heart, MessageSquare, Target, Shield,
-  AlertTriangle, CheckCircle2, Clock, Calendar, Star, BookOpen
+  AlertTriangle, CheckCircle2, Clock, Calendar, Star, BookOpen,
+  Loader2,
 } from "lucide-react";
 
-// ── Types ────────────────────────────────────────────────────────────────────
-type SessionType = "one_to_one" | "group" | "informal" | "review" | "wellbeing_check" | "goal_setting" | "life_skills" | "therapeutic";
-type MoodRating = 1 | 2 | 3 | 4 | 5;
-
-interface KeyWorkSession {
+// ── Local view-model type (camelCase for the page) ──────────────────────────
+interface SessionView {
   id: string;
   youngPersonId: string;
   keyWorker: string;
   date: string;
   type: SessionType;
-  duration: number; // minutes
+  duration: number;
   location: string;
   topicsDiscussed: string[];
   childVoice: string;
@@ -46,6 +52,35 @@ interface KeyWorkSession {
   createdAt: string;
 }
 
+// ── Types ────────────────────────────────────────────────────────────────────
+type SessionType = "one_to_one" | "group" | "informal" | "review" | "wellbeing_check" | "goal_setting" | "life_skills" | "therapeutic";
+type MoodRating = 1 | 2 | 3 | 4 | 5;
+
+// ── Mapping helpers ─────────────────────────────────────────────────────────
+function toView(s: KeyWorkingSession): SessionView {
+  return {
+    id: s.id,
+    youngPersonId: s.child_id,
+    keyWorker: s.staff_id,
+    date: s.date,
+    type: s.type,
+    duration: s.duration,
+    location: s.location,
+    topicsDiscussed: s.topics,
+    childVoice: s.child_voice,
+    workerObservations: s.worker_observations,
+    actionsAgreed: s.actions_agreed,
+    moodBefore: s.mood_before,
+    moodAfter: s.mood_after,
+    followUp: s.follow_up,
+    followUpDate: s.follow_up_date,
+    followUpCompleted: s.follow_up_completed,
+    linkedGoals: s.linked_goals,
+    confidential: s.confidential,
+    createdAt: s.created_at,
+  };
+}
+
 // ── Constants ────────────────────────────────────────────────────────────────
 const TYPE_META: Record<SessionType, { label: string; icon: React.ReactNode; color: string }> = {
   one_to_one:      { label: "1:1 Session",        icon: <MessageSquare className="h-4 w-4" />, color: "bg-blue-100 text-blue-800" },
@@ -59,117 +94,42 @@ const TYPE_META: Record<SessionType, { label: string; icon: React.ReactNode; col
 };
 
 const MOOD_LABELS: Record<MoodRating, string> = { 1: "Very Low", 2: "Low", 3: "Okay", 4: "Good", 5: "Great" };
-const MOOD_EMOJI: Record<MoodRating, string> = { 1: "😢", 2: "😟", 3: "😐", 4: "🙂", 5: "😊" };
+const MOOD_EMOJI: Record<MoodRating, string> = { 1: "\u{1F622}", 2: "\u{1F61F}", 3: "\u{1F610}", 4: "\u{1F642}", 5: "\u{1F60A}" };
 
-// ── Seed data ────────────────────────────────────────────────────────────────
+// ── Export columns ──────────────────────────────────────────────────────────
+const EXPORT_COLS: ExportColumn<SessionView>[] = [
+  { header: "ID",                accessor: (r: SessionView) => r.id },
+  { header: "Young Person",     accessor: (r: SessionView) => getYPName(r.youngPersonId) },
+  { header: "Key Worker",       accessor: (r: SessionView) => getStaffName(r.keyWorker) },
+  { header: "Date",             accessor: (r: SessionView) => r.date },
+  { header: "Type",             accessor: (r: SessionView) => TYPE_META[r.type].label },
+  { header: "Duration (mins)",  accessor: (r: SessionView) => String(r.duration) },
+  { header: "Location",         accessor: (r: SessionView) => r.location },
+  { header: "Topics",           accessor: (r: SessionView) => r.topicsDiscussed.join("; ") },
+  { header: "Child Voice",      accessor: (r: SessionView) => r.childVoice },
+  { header: "Observations",     accessor: (r: SessionView) => r.workerObservations },
+  { header: "Actions",          accessor: (r: SessionView) => r.actionsAgreed.join("; ") },
+  { header: "Mood Before",      accessor: (r: SessionView) => MOOD_LABELS[r.moodBefore] },
+  { header: "Mood After",       accessor: (r: SessionView) => MOOD_LABELS[r.moodAfter] },
+  { header: "Follow Up",        accessor: (r: SessionView) => r.followUp },
+  { header: "Follow Up Date",   accessor: (r: SessionView) => r.followUpDate },
+  { header: "Confidential",     accessor: (r: SessionView) => r.confidential ? "Yes" : "No" },
+];
+
+// ── Date helper for stats ───────────────────────────────────────────────────
 const d = (n: number) => { const dt = new Date(); dt.setDate(dt.getDate() + n); return dt.toISOString().slice(0, 10); };
-
-const SEED: KeyWorkSession[] = [
-  {
-    id: "kw_001", youngPersonId: "yp_alex", keyWorker: "staff_darren", date: d(-1), type: "one_to_one",
-    duration: 45, location: "Quiet room",
-    topicsDiscussed: ["College application progress", "Anxiety about interviews", "Weekend plans"],
-    childVoice: "I'm worried about the college interview. I don't know what to say about why I want to do the course. Can we practise?",
-    workerObservations: "Alex appeared anxious initially but relaxed during the session. Engaged well with mock interview practice. Showed genuine interest in the course but lacks confidence in articulating this.",
-    actionsAgreed: ["Practise interview questions together on Thursday", "Write three reasons for choosing the course", "Staff to contact college about support for LAC students"],
-    moodBefore: 2, moodAfter: 4, followUp: "Mock interview session", followUpDate: d(2), followUpCompleted: false,
-    linkedGoals: ["College application"], confidential: false, createdAt: d(-1),
-  },
-  {
-    id: "kw_002", youngPersonId: "yp_alex", keyWorker: "staff_darren", date: d(-8), type: "goal_setting",
-    duration: 30, location: "Kitchen",
-    topicsDiscussed: ["Cooking independence goal", "Meal planning", "Budgeting for food shopping"],
-    childVoice: "I want to learn how to make a roast dinner. My nan used to make the best roasts and I want to learn.",
-    workerObservations: "Emotional connection to cooking through memories of nan. This is a strong motivator. Alex planned a shopping list independently with minimal prompting.",
-    actionsAgreed: ["Plan roast dinner for Sunday", "Create shopping list together", "Alex to try making a simple dessert midweek"],
-    moodBefore: 3, moodAfter: 5, followUp: "Sunday roast cooking session", followUpDate: d(-3), followUpCompleted: true,
-    linkedGoals: ["Independent cooking skills"], confidential: false, createdAt: d(-8),
-  },
-  {
-    id: "kw_003", youngPersonId: "yp_jordan", keyWorker: "staff_anna", date: d(-2), type: "wellbeing_check",
-    duration: 20, location: "Jordan's bedroom",
-    topicsDiscussed: ["Sleep patterns", "Contact with mum", "Football club"],
-    childVoice: "I'm not sleeping well again. I keep thinking about things. Football helps though — I feel better after training.",
-    workerObservations: "Jordan tired and quieter than usual. Sleep disruption coincides with cancelled contact with mum last week. Football clearly a positive outlet. May need referral to CAMHS if sleep issues persist.",
-    actionsAgreed: ["Try relaxation techniques before bed", "Staff to follow up with social worker about contact", "Keep attending football twice weekly"],
-    moodBefore: 2, moodAfter: 3, followUp: "Check in about sleep in 3 days", followUpDate: d(1), followUpCompleted: false,
-    linkedGoals: ["Health & wellbeing"], confidential: false, createdAt: d(-2),
-  },
-  {
-    id: "kw_004", youngPersonId: "yp_jordan", keyWorker: "staff_ryan", date: d(-5), type: "review",
-    duration: 40, location: "Office",
-    topicsDiscussed: ["Pathway plan review", "Housing options", "Leaving care entitlements"],
-    childVoice: "I don't want to think about leaving yet. It's scary. But I know I need to start looking at places.",
-    workerObservations: "Jordan is anxious about transition but willing to engage when given time. Responded well to visiting supported accommodation photos. Preferred the option with communal living spaces.",
-    actionsAgreed: ["Visit supported accommodation next Tuesday", "Jordan to list three things important in a home", "Staff to arrange meeting with leaving care PA"],
-    moodBefore: 2, moodAfter: 3, followUp: "Supported accommodation visit", followUpDate: d(-1), followUpCompleted: true,
-    linkedGoals: ["Housing preparation"], confidential: false, createdAt: d(-5),
-  },
-  {
-    id: "kw_005", youngPersonId: "yp_casey", keyWorker: "staff_chervelle", date: d(-3), type: "one_to_one",
-    duration: 35, location: "Garden",
-    topicsDiscussed: ["School friendships", "Identity exploration", "Creative writing"],
-    childVoice: "I wrote a poem about who I am. Do you want to hear it? I'm not sure if it's any good but it felt important to write it.",
-    workerObservations: "Casey shared a deeply personal poem about identity and belonging. Showed vulnerability and trust in sharing this. The poem referenced feeling 'in between two worlds'. Casey is processing complex feelings about heritage with maturity.",
-    actionsAgreed: ["Casey to keep writing journal", "Consider sharing poem with therapist if comfortable", "Staff to source creative writing resources"],
-    moodBefore: 3, moodAfter: 4, followUp: "Check if Casey wants to continue creative work", followUpDate: d(4), followUpCompleted: false,
-    linkedGoals: ["Identity exploration"], confidential: true, createdAt: d(-3),
-  },
-  {
-    id: "kw_006", youngPersonId: "yp_casey", keyWorker: "staff_chervelle", date: d(-10), type: "life_skills",
-    duration: 60, location: "Kitchen & utility room",
-    topicsDiscussed: ["Laundry skills", "Cleaning routine", "Personal hygiene"],
-    childVoice: "I didn't know you had to separate colours! No one ever showed me before.",
-    workerObservations: "Casey engaged well with practical learning. Needed step-by-step guidance but picked up quickly. Showed pride in completing a full wash cycle independently. Good opportunity for positive reinforcement.",
-    actionsAgreed: ["Casey to do own laundry every Saturday", "Create visual guide for laundry steps", "Try ironing school uniform next week"],
-    moodBefore: 3, moodAfter: 5, followUp: "Check laundry routine on Saturday", followUpDate: d(-3), followUpCompleted: true,
-    linkedGoals: ["Independent living skills"], confidential: false, createdAt: d(-10),
-  },
-  {
-    id: "kw_007", youngPersonId: "yp_alex", keyWorker: "staff_darren", date: d(-14), type: "therapeutic",
-    duration: 50, location: "Quiet room",
-    topicsDiscussed: ["Anger management strategies", "Recent frustration at school", "Coping techniques"],
-    childVoice: "I tried the breathing thing you showed me and it actually worked. I walked away instead of kicking off. I was proud of myself.",
-    workerObservations: "Significant progress with emotional regulation. Alex self-reported using calming strategies in a school situation that would previously have escalated. This is a breakthrough moment worth celebrating and recording.",
-    actionsAgreed: ["Continue practising grounding techniques daily", "Create a personal calm-down plan card", "Share progress with school SENCO"],
-    moodBefore: 4, moodAfter: 5, followUp: "Follow up with school about incident", followUpDate: d(-10), followUpCompleted: true,
-    linkedGoals: ["Emotional wellbeing"], confidential: false, createdAt: d(-14),
-  },
-  {
-    id: "kw_008", youngPersonId: "yp_jordan", keyWorker: "staff_anna", date: d(-12), type: "informal",
-    duration: 15, location: "Living room",
-    topicsDiscussed: ["Weekend activities", "TV preferences", "Family memories"],
-    childVoice: "Can we watch that cooking show together? It reminds me of when my dad used to cook.",
-    workerObservations: "Brief but meaningful interaction. Jordan initiated conversation about family memories which is rare. Didn't push further but noted the openness. Watching TV together provided a natural, low-pressure connection point.",
-    actionsAgreed: ["Watch cooking show together on Wednesdays", "Consider cooking activity linked to family memories"],
-    moodBefore: 3, moodAfter: 4, followUp: "", followUpDate: "", followUpCompleted: false,
-    linkedGoals: [], confidential: false, createdAt: d(-12),
-  },
-];
-
-// ── Export ────────────────────────────────────────────────────────────────────
-const EXPORT_COLS: ExportColumn<KeyWorkSession>[] = [
-  { header: "ID",                accessor: (r: KeyWorkSession) => r.id },
-  { header: "Young Person",     accessor: (r: KeyWorkSession) => getYPName(r.youngPersonId) },
-  { header: "Key Worker",       accessor: (r: KeyWorkSession) => getStaffName(r.keyWorker) },
-  { header: "Date",             accessor: (r: KeyWorkSession) => r.date },
-  { header: "Type",             accessor: (r: KeyWorkSession) => TYPE_META[r.type].label },
-  { header: "Duration (mins)",  accessor: (r: KeyWorkSession) => String(r.duration) },
-  { header: "Location",         accessor: (r: KeyWorkSession) => r.location },
-  { header: "Topics",           accessor: (r: KeyWorkSession) => r.topicsDiscussed.join("; ") },
-  { header: "Child Voice",      accessor: (r: KeyWorkSession) => r.childVoice },
-  { header: "Observations",     accessor: (r: KeyWorkSession) => r.workerObservations },
-  { header: "Actions",          accessor: (r: KeyWorkSession) => r.actionsAgreed.join("; ") },
-  { header: "Mood Before",      accessor: (r: KeyWorkSession) => MOOD_LABELS[r.moodBefore] },
-  { header: "Mood After",       accessor: (r: KeyWorkSession) => MOOD_LABELS[r.moodAfter] },
-  { header: "Follow Up",        accessor: (r: KeyWorkSession) => r.followUp },
-  { header: "Follow Up Date",   accessor: (r: KeyWorkSession) => r.followUpDate },
-  { header: "Confidential",     accessor: (r: KeyWorkSession) => r.confidential ? "Yes" : "No" },
-];
 
 // ══════════════════════════════════════════════════════════════════════════════
 export default function KeyWorkingPage() {
-  const [sessions, setSessions] = useState<KeyWorkSession[]>(SEED);
+  const { data: queryData, isLoading } = useKeyWorkingSessions();
+  const createMutation = useCreateKeyWorkingSession();
+  const updateMutation = useUpdateKeyWorkingSession();
+
+  const sessions: SessionView[] = useMemo(
+    () => (queryData?.data ?? []).map(toView),
+    [queryData],
+  );
+
   const [search, setSearch] = useState("");
   const [childFilter, setChildFilter] = useState("all");
   const [typeFilter, setTypeFilter] = useState("all");
@@ -177,6 +137,13 @@ export default function KeyWorkingPage() {
   const [sortBy, setSortBy] = useState("date");
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
   const [showNew, setShowNew] = useState(false);
+
+  // Form refs
+  const formRef = useRef<HTMLFormElement>(null);
+  const [formChildId, setFormChildId] = useState("");
+  const [formType, setFormType] = useState("");
+  const [formMoodBefore, setFormMoodBefore] = useState("");
+  const [formMoodAfter, setFormMoodAfter] = useState("");
 
   const toggle = (id: string) => setExpanded((p) => ({ ...p, [id]: !p[id] }));
 
@@ -230,6 +197,70 @@ export default function KeyWorkingPage() {
       return { ...c, total: cs.length, lastDate: lastSession?.date || "—", avgMood };
     });
   }, [children, sessions]);
+
+  // ── Form submit handler ────────────────────────────────────────────────────
+  function handleNewSession(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const fd = new FormData(e.currentTarget);
+    const topicsRaw = (fd.get("topics") as string) || "";
+    const actionsRaw = (fd.get("actions") as string) || "";
+
+    createMutation.mutate(
+      {
+        child_id: formChildId,
+        staff_id: "staff_darren",
+        date: (fd.get("date") as string) || new Date().toISOString().slice(0, 10),
+        type: formType as SessionType,
+        duration: Number(fd.get("duration")) || 30,
+        location: (fd.get("location") as string) || "",
+        topics: topicsRaw.split(",").map((t) => t.trim()).filter(Boolean),
+        child_voice: (fd.get("child_voice") as string) || "",
+        worker_observations: (fd.get("worker_observations") as string) || "",
+        actions_agreed: actionsRaw.split("\n").map((a) => a.trim()).filter(Boolean),
+        mood_before: (Number(formMoodBefore) || 3) as 1 | 2 | 3 | 4 | 5,
+        mood_after: (Number(formMoodAfter) || 3) as 1 | 2 | 3 | 4 | 5,
+        follow_up: "",
+        follow_up_date: "",
+        follow_up_completed: false,
+        linked_goals: [],
+        confidential: false,
+      },
+      {
+        onSuccess: () => {
+          toast.success("Session saved", { description: "Key working session recorded successfully." });
+          setShowNew(false);
+          setFormChildId("");
+          setFormType("");
+          setFormMoodBefore("");
+          setFormMoodAfter("");
+          formRef.current?.reset();
+        },
+      },
+    );
+  }
+
+  // ── Mark follow-up done ────────────────────────────────────────────────────
+  function handleMarkDone(sessionId: string) {
+    updateMutation.mutate(
+      { id: sessionId, follow_up_completed: true },
+      {
+        onSuccess: () => {
+          toast.success("Follow-up completed", { description: "Follow-up marked as done." });
+        },
+      },
+    );
+  }
+
+  // ── Loading state ──────────────────────────────────────────────────────────
+  if (isLoading) {
+    return (
+      <PageShell title="Key Working Sessions" subtitle="Recording meaningful interactions and tracking progress with each young person">
+        <div className="flex items-center justify-center py-20">
+          <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+        </div>
+      </PageShell>
+    );
+  }
 
   return (
     <PageShell
@@ -341,7 +372,7 @@ export default function KeyWorkingPage() {
                         {s.confidential && <Badge variant="outline" className="text-xs text-red-600 border-red-300">Confidential</Badge>}
                         {s.followUp && !s.followUpCompleted && <Badge variant="outline" className="text-xs text-amber-600 border-amber-300">Follow-up needed</Badge>}
                       </div>
-                      <p className="font-semibold">{getYPName(s.youngPersonId)} — {s.topicsDiscussed.slice(0, 2).join(", ")}{s.topicsDiscussed.length > 2 ? "…" : ""}</p>
+                      <p className="font-semibold">{getYPName(s.youngPersonId)} &mdash; {s.topicsDiscussed.slice(0, 2).join(", ")}{s.topicsDiscussed.length > 2 ? "…" : ""}</p>
                       <div className="flex items-center gap-4 text-xs text-muted-foreground mt-1">
                         <span>{s.date}</span>
                         <span>{s.duration} mins</span>
@@ -350,10 +381,10 @@ export default function KeyWorkingPage() {
                       </div>
                       {/* Mood change */}
                       <div className="flex items-center gap-2 mt-2 text-xs">
-                        <span>Mood: {MOOD_EMOJI[s.moodBefore]} → {MOOD_EMOJI[s.moodAfter]}</span>
-                        {s.moodAfter > s.moodBefore && <span className="text-green-600 font-medium">↑ Improved</span>}
-                        {s.moodAfter < s.moodBefore && <span className="text-red-600 font-medium">↓ Decreased</span>}
-                        {s.moodAfter === s.moodBefore && <span className="text-gray-500">→ Same</span>}
+                        <span>Mood: {MOOD_EMOJI[s.moodBefore]} &rarr; {MOOD_EMOJI[s.moodAfter]}</span>
+                        {s.moodAfter > s.moodBefore && <span className="text-green-600 font-medium">&uarr; Improved</span>}
+                        {s.moodAfter < s.moodBefore && <span className="text-red-600 font-medium">&darr; Decreased</span>}
+                        {s.moodAfter === s.moodBefore && <span className="text-gray-500">&rarr; Same</span>}
                       </div>
                     </div>
                     {open ? <ChevronUp className="h-4 w-4 mt-1 text-muted-foreground" /> : <ChevronDown className="h-4 w-4 mt-1 text-muted-foreground" />}
@@ -391,7 +422,14 @@ export default function KeyWorkingPage() {
                           {s.followUpCompleted ? (
                             <Badge className="bg-green-100 text-green-700 text-xs">Completed</Badge>
                           ) : (
-                            <Button size="sm" variant="outline" className="text-xs h-6" onClick={() => setSessions((prev) => prev.map((x) => x.id === s.id ? { ...x, followUpCompleted: true } : x))}>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="text-xs h-6"
+                              disabled={updateMutation.isPending}
+                              onClick={() => handleMarkDone(s.id)}
+                            >
+                              {updateMutation.isPending ? <Loader2 className="h-3 w-3 animate-spin mr-1" /> : null}
                               Mark Done
                             </Button>
                           )}
@@ -403,6 +441,12 @@ export default function KeyWorkingPage() {
                         <div><p className="text-xs text-muted-foreground">Duration</p><p className="font-medium">{s.duration} minutes</p></div>
                         <div><p className="text-xs text-muted-foreground">Location</p><p className="font-medium">{s.location}</p></div>
                       </div>
+                      {/* Smart Link Panel */}
+                      <SmartLinkPanel
+                        sourceType="key_work_session"
+                        sourceId={s.id}
+                        childId={s.youngPersonId}
+                      />
                     </div>
                   )}
                 </CardContent>
@@ -426,66 +470,73 @@ export default function KeyWorkingPage() {
       <Dialog open={showNew} onOpenChange={setShowNew}>
         <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
           <DialogHeader><DialogTitle>New Key Working Session</DialogTitle></DialogHeader>
-          <form onSubmit={(e) => { e.preventDefault(); setShowNew(false); }} className="space-y-3">
+          <form ref={formRef} onSubmit={handleNewSession} className="space-y-3">
             <div>
               <label className="text-sm font-medium">Young Person</label>
-              <Select><SelectTrigger><SelectValue placeholder="Select child" /></SelectTrigger>
+              <Select value={formChildId} onValueChange={setFormChildId}>
+                <SelectTrigger><SelectValue placeholder="Select child" /></SelectTrigger>
                 <SelectContent>{children.map((c) => <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>)}</SelectContent>
               </Select>
             </div>
             <div>
               <label className="text-sm font-medium">Session Type</label>
-              <Select><SelectTrigger><SelectValue placeholder="Select type" /></SelectTrigger>
+              <Select value={formType} onValueChange={setFormType}>
+                <SelectTrigger><SelectValue placeholder="Select type" /></SelectTrigger>
                 <SelectContent>{Object.entries(TYPE_META).map(([k, v]) => <SelectItem key={k} value={k}>{v.label}</SelectItem>)}</SelectContent>
               </Select>
             </div>
             <div className="grid grid-cols-2 gap-2">
               <div>
                 <label className="text-sm font-medium">Date</label>
-                <Input type="date" />
+                <Input type="date" name="date" />
               </div>
               <div>
                 <label className="text-sm font-medium">Duration (mins)</label>
-                <Input type="number" placeholder="30" />
+                <Input type="number" name="duration" placeholder="30" />
               </div>
             </div>
             <div>
               <label className="text-sm font-medium">Location</label>
-              <Input placeholder="Where did the session take place?" />
+              <Input name="location" placeholder="Where did the session take place?" />
             </div>
             <div>
               <label className="text-sm font-medium">Topics Discussed</label>
-              <Input placeholder="Comma-separated topics" />
+              <Input name="topics" placeholder="Comma-separated topics" />
             </div>
             <div>
               <label className="text-sm font-medium">Child&apos;s Voice</label>
-              <Textarea placeholder="Record what the child said in their own words…" rows={3} />
+              <Textarea name="child_voice" placeholder="Record what the child said in their own words…" rows={3} />
             </div>
             <div>
               <label className="text-sm font-medium">Worker Observations</label>
-              <Textarea placeholder="Your professional observations…" rows={3} />
+              <Textarea name="worker_observations" placeholder="Your professional observations…" rows={3} />
             </div>
             <div>
               <label className="text-sm font-medium">Actions Agreed</label>
-              <Textarea placeholder="One action per line" rows={2} />
+              <Textarea name="actions" placeholder="One action per line" rows={2} />
             </div>
             <div className="grid grid-cols-2 gap-2">
               <div>
                 <label className="text-sm font-medium">Mood Before (1-5)</label>
-                <Select><SelectTrigger><SelectValue placeholder="Rating" /></SelectTrigger>
+                <Select value={formMoodBefore} onValueChange={setFormMoodBefore}>
+                  <SelectTrigger><SelectValue placeholder="Rating" /></SelectTrigger>
                   <SelectContent>{([1,2,3,4,5] as MoodRating[]).map((m) => <SelectItem key={m} value={String(m)}>{MOOD_EMOJI[m]} {MOOD_LABELS[m]}</SelectItem>)}</SelectContent>
                 </Select>
               </div>
               <div>
                 <label className="text-sm font-medium">Mood After (1-5)</label>
-                <Select><SelectTrigger><SelectValue placeholder="Rating" /></SelectTrigger>
+                <Select value={formMoodAfter} onValueChange={setFormMoodAfter}>
+                  <SelectTrigger><SelectValue placeholder="Rating" /></SelectTrigger>
                   <SelectContent>{([1,2,3,4,5] as MoodRating[]).map((m) => <SelectItem key={m} value={String(m)}>{MOOD_EMOJI[m]} {MOOD_LABELS[m]}</SelectItem>)}</SelectContent>
                 </Select>
               </div>
             </div>
             <DialogFooter>
               <Button type="button" variant="outline" onClick={() => setShowNew(false)}>Cancel</Button>
-              <Button type="submit">Save Session</Button>
+              <Button type="submit" disabled={createMutation.isPending}>
+                {createMutation.isPending && <Loader2 className="h-4 w-4 animate-spin mr-1" />}
+                Save Session
+              </Button>
             </DialogFooter>
           </form>
         </DialogContent>

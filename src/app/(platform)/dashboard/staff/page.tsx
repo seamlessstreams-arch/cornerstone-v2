@@ -20,6 +20,7 @@ import {
   AlarmClock, Clipboard, FileText, BadgeAlert, Info,
 } from "lucide-react";
 import { PrintButton } from "@/components/common/print-button";
+import { YourHandoverCard } from "@/components/dashboard/your-handover-card";
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 
@@ -469,6 +470,20 @@ export default function StaffDashboardPage() {
           </div>
         )}
 
+        {/* ── Handover Sign-off Banner ──────────────────────────────────────── */}
+        {d.handover.latest && d.handover.flags.length > 0 && (
+          <Link href="/handover" className="block">
+            <div className="flex items-center gap-3 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 hover:bg-amber-100 transition-colors">
+              <ArrowRightLeft className="h-5 w-5 text-amber-600 shrink-0" />
+              <div className="flex-1">
+                <p className="text-sm font-semibold text-amber-800">Handover has {d.handover.flags.length} flag{d.handover.flags.length > 1 ? "s" : ""} to review</p>
+                <p className="text-xs text-amber-600">Read the full handover and acknowledge before starting your shift</p>
+              </div>
+              <ChevronRight className="h-4 w-4 text-amber-400" />
+            </div>
+          </Link>
+        )}
+
         {/* ── Summary Counters ──────────────────────────────────────────────── */}
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
           {[
@@ -721,6 +736,9 @@ export default function StaffDashboardPage() {
                 <NotificationsList notifications={d.notifications} />
               </CardContent>
             </Card>
+
+            {/* Personalised Handover */}
+            <YourHandoverCard />
 
             {/* Home Checks */}
             <Card>
