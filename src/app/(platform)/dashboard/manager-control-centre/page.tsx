@@ -731,11 +731,29 @@ export default function ManagerControlCentrePage() {
                         <Sparkles className="h-3.5 w-3.5" />
                         Request ARIA Draft
                       </Button>
-                      <Button variant="outline" size="sm" className="gap-1.5 border-emerald-200 text-emerald-700 hover:bg-emerald-50">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="gap-1.5 border-emerald-200 text-emerald-700 hover:bg-emerald-50"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          updateItem.mutate({ id: item.id, status: "reviewed" });
+                          setItems((prev) => prev.map((i) => i.id === item.id ? { ...i, status: "reviewed" } : i));
+                        }}
+                      >
                         <CheckCircle2 className="h-3.5 w-3.5" />
                         Mark Reviewed
                       </Button>
-                      <Button variant="outline" size="sm" className="gap-1.5 border-red-200 text-red-700 hover:bg-red-50">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="gap-1.5 border-red-200 text-red-700 hover:bg-red-50"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          updateItem.mutate({ id: item.id, status: "escalated" });
+                          setItems((prev) => prev.map((i) => i.id === item.id ? { ...i, status: "escalated" } : i));
+                        }}
+                      >
                         <ArrowUpRight className="h-3.5 w-3.5" />
                         Escalate to RI
                       </Button>

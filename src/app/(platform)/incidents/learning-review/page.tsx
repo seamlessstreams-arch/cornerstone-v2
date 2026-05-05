@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useLearningReviews } from "@/hooks/use-intelligence-layer";
+import { useLearningReviews, useUpdateLearningReview } from "@/hooks/use-intelligence-layer";
 import { PageShell } from "@/components/layout/page-shell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -160,6 +160,7 @@ export default function IncidentLearningReviewPage() {
 
   /* ── API hook (soft-wire for live data) ─────────────────────────────────── */
   const { data: apiData } = useLearningReviews();
+  const updateReview = useUpdateLearningReview();
 
   useEffect(() => {
     if (apiData?.persisted && apiData.reviews.length > 0) {
@@ -411,6 +412,17 @@ export default function IncidentLearningReviewPage() {
                             size="sm"
                             disabled={currentNfa.length < 30}
                             className="text-red-600 border-red-200 hover:bg-red-50"
+                            onClick={() => {
+                              updateReview.mutate({
+                                id: incident.id,
+                                homeId: "home_oak",
+                                reviewStatus: "completed",
+                                learningSummary: `NFA: ${currentNfa}`,
+                              });
+                              setIncidents((prev) =>
+                                prev.map((i) => i.id === incident.id ? { ...i, reviewStatus: "completed" } : i)
+                              );
+                            }}
                           >
                             <XCircle className="h-3.5 w-3.5 mr-1" />
                             Mark No Further Action
@@ -454,7 +466,20 @@ export default function IncidentLearningReviewPage() {
 
                     {/* Submit */}
                     <div className="flex justify-end pt-2 border-t">
-                      <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+                      <Button
+                        className="bg-blue-600 hover:bg-blue-700 text-white"
+                        onClick={() => {
+                          updateReview.mutate({
+                            id: incident.id,
+                            homeId: "home_oak",
+                            reviewStatus: "in_progress" as ReviewStatus,
+                            learningSummary: currentLearning,
+                          });
+                          setIncidents((prev) =>
+                            prev.map((i) => i.id === incident.id ? { ...i, reviewStatus: "in_progress" as ReviewStatus } : i)
+                          );
+                        }}
+                      >
                         <Send className="h-4 w-4 mr-2" />
                         Submit for Approval
                       </Button>
