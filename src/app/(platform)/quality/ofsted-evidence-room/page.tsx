@@ -532,9 +532,12 @@ export default function OfstedEvidenceRoomPage() {
   /* ── API hook (soft-wire for live data) ─────────────────────────────────── */
   const { data: apiData } = useEvidenceItems();
 
+  const [evidenceItems, setEvidenceItems] = useState<(InspectionEvidenceItem & { sourceLabel: SourceType })[]>(DEMO_EVIDENCE);
+  const [gaps, setGaps] = useState<EvidenceGap[]>(DEMO_GAPS);
+
   useEffect(() => {
     if (apiData?.persisted && apiData.items.length > 0) {
-      // TODO: map API data to local state when Supabase is connected
+      // Live data will replace demo when Supabase connected
     }
   }, [apiData]);
 
@@ -554,7 +557,7 @@ export default function OfstedEvidenceRoomPage() {
   const filteredEvidence = useMemo(() => {
     if (showGapsOnly) return [];
 
-    return DEMO_EVIDENCE.filter((ev) => {
+    return evidenceItems.filter((ev) => {
       // judgement area tab
       if (activeTab !== "all" && ev.judgementArea !== activeTab) return false;
 
@@ -586,26 +589,26 @@ export default function OfstedEvidenceRoomPage() {
 
       return true;
     });
-  }, [activeTab, categoryFilter, periodFilter, strengthFilter, childFilter, showGapsOnly, searchQuery]);
+  }, [activeTab, categoryFilter, periodFilter, strengthFilter, childFilter, showGapsOnly, searchQuery, evidenceItems]);
 
   /* ── category counts for the filter ────────────────────────────────────── */
 
   const categoryCounts = useMemo(() => {
     const counts: Partial<Record<EvidenceCategory, number>> = {};
-    for (const ev of DEMO_EVIDENCE) {
+    for (const ev of evidenceItems) {
       counts[ev.evidenceCategory] = (counts[ev.evidenceCategory] ?? 0) + 1;
     }
     return counts;
-  }, []);
+  }, [evidenceItems]);
 
   /* ── stats ─────────────────────────────────────────────────────────────── */
 
-  const totalItems = DEMO_EVIDENCE.length;
-  const itemsThisMonth = DEMO_EVIDENCE.filter((ev) => {
+  const totalItems = evidenceItems.length;
+  const itemsThisMonth = evidenceItems.filter((ev) => {
     const cutoff = d(-30);
     return ev.evidenceDate && ev.evidenceDate >= cutoff;
   }).length;
-  const gapCount = DEMO_GAPS.length;
+  const gapCount = gaps.length;
 
   const togglePackItem = (id: string) => {
     setPackItems((prev) =>
@@ -830,7 +833,7 @@ export default function OfstedEvidenceRoomPage() {
           {/* ── show gaps only view ────────────────────────────────────── */}
           {showGapsOnly && (
             <div className="space-y-3">
-              {DEMO_GAPS.map((gap, i) => (
+              {gaps.map((gap, i) => (
                 <GapCard key={i} gap={gap} childName={childName(gap.childId)} />
               ))}
             </div>
@@ -896,13 +899,13 @@ export default function OfstedEvidenceRoomPage() {
                     <p className="text-xs text-slate-500 mt-1">
                       Covering{" "}
                       {new Set(
-                        DEMO_EVIDENCE.filter((e) => packItems.includes(e.id)).map(
+                        evidenceItems.filter((e) => packItems.includes(e.id)).map(
                           (e) => e.judgementArea,
                         ),
                       ).size}{" "}
                       judgement area
                       {new Set(
-                        DEMO_EVIDENCE.filter((e) => packItems.includes(e.id)).map(
+                        evidenceItems.filter((e) => packItems.includes(e.id)).map(
                           (e) => e.judgementArea,
                         ),
                       ).size !== 1
@@ -912,7 +915,7 @@ export default function OfstedEvidenceRoomPage() {
                   </div>
 
                   <ul className="space-y-1.5">
-                    {DEMO_EVIDENCE.filter((e) => packItems.includes(e.id)).map(
+                    {evidenceItems.filter((e) => packItems.includes(e.id)).map(
                       (ev) => (
                         <li
                           key={ev.id}
@@ -979,7 +982,7 @@ export default function OfstedEvidenceRoomPage() {
                   Areas where evidence is missing, overdue, or insufficient for
                   inspection readiness.
                 </p>
-                {DEMO_GAPS.map((gap, i) => (
+                {gaps.map((gap, i) => (
                   <GapCardCompact key={i} gap={gap} childName={childName(gap.childId)} />
                 ))}
               </CardContent>

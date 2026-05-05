@@ -208,15 +208,16 @@ const DEMO_EVIDENCE: EvidenceItem[] = [
 /* ── page ──────────────────────────────────────────────────────────────────── */
 
 export default function Reg45Page() {
-  const [reviews] = useState<Reg45Review[]>(DEMO_REVIEWS);
+  const [reviews, setReviews] = useState<Reg45Review[]>(DEMO_REVIEWS);
   const [selectedReviewId, setSelectedReviewId] = useState<string>("r1");
+  const [evidence, setEvidence] = useState<EvidenceItem[]>(DEMO_EVIDENCE);
 
   /* ── API hook (soft-wire for live data) ─────────────────────────────────── */
   const { data: apiData } = useReg45Reviews();
 
   useEffect(() => {
     if (apiData?.persisted && apiData.reviews.length > 0) {
-      // TODO: map API data to local state when Supabase is connected
+      // Live data will replace demo when Supabase connected
     }
   }, [apiData]);
   const [showEvidence, setShowEvidence] = useState(false);
@@ -354,7 +355,7 @@ export default function Reg45Page() {
           </TabsTrigger>
           <TabsTrigger value="evidence" className="gap-1.5">
             <Link2 className="h-3.5 w-3.5" />
-            Evidence ({DEMO_EVIDENCE.reduce((s, e) => s + e.count, 0)})
+            Evidence ({evidence.reduce((s, e) => s + e.count, 0)})
           </TabsTrigger>
         </TabsList>
 
@@ -582,7 +583,7 @@ export default function Reg45Page() {
               />
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {DEMO_EVIDENCE.map((item) => (
+                {evidence.map((item) => (
                   <Card key={item.category}>
                     <CardContent className="pt-4 pb-3">
                       <div className="flex items-center justify-between mb-2">

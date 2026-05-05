@@ -241,13 +241,26 @@ const DEMO_OUTCOMES: OutcomeFromVoice[] = [
 export default function VoiceOfTheChildPage() {
   const [selectedChild, setSelectedChild] = useState("child-a");
   const [showAddForm, setShowAddForm] = useState(false);
+  const [entries, setEntries] = useState<VoiceEntry[]>(DEMO_ENTRIES);
+  const [themes, setThemes] = useState<ThemeCount[]>(DEMO_THEMES);
+  const [outcomes, setOutcomes] = useState<OutcomeFromVoice[]>(DEMO_OUTCOMES);
 
   /* ── API hook (soft-wire for live data) ─────────────────────────────────── */
   const { data: apiData } = useVoiceEntries();
 
   useEffect(() => {
     if (apiData?.persisted && apiData.entries.length > 0) {
-      // TODO: map API data to local state when Supabase is connected
+      setEntries((apiData.entries as Record<string, unknown>[]).map((e) => ({
+        id: e.id as string,
+        date: (e.entry_date as string) ?? "",
+        category: e.category as VoiceCategory,
+        childWords: (e.child_words as string) ?? "",
+        summary: (e.summary as string) ?? "",
+        actionTaken: (e.action_taken as string) ?? "",
+        staffResponse: (e.staff_response as string) ?? "",
+        staffMember: (e.created_by as string) ?? "",
+        linkedRecord: e.linked_record_id as string | undefined,
+      })));
     }
   }, [apiData]);
 
@@ -362,7 +375,7 @@ export default function VoiceOfTheChildPage() {
 
         {/* Voice Timeline */}
         <div className="space-y-4">
-          {DEMO_ENTRIES.map((entry) => (
+          {entries.map((entry) => (
             <Card key={entry.id} className="border-indigo-100 hover:border-indigo-200 transition-colors">
               <CardContent className="p-5 space-y-3">
                 {/* Child's Words - Quote Style */}
@@ -428,7 +441,7 @@ export default function VoiceOfTheChildPage() {
           </CardHeader>
           <CardContent>
             <div className="flex flex-wrap gap-2">
-              {DEMO_THEMES.map((theme) => (
+              {themes.map((theme) => (
                 <div
                   key={theme.category}
                   className={cn(
@@ -459,8 +472,8 @@ export default function VoiceOfTheChildPage() {
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              {DEMO_OUTCOMES.map((outcome) => {
-                const linkedEntry = DEMO_ENTRIES.find((e) => e.id === outcome.voiceEntryId);
+              {outcomes.map((outcome) => {
+                const linkedEntry = entries.find((e) => e.id === outcome.voiceEntryId);
                 return (
                   <div
                     key={outcome.id}

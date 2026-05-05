@@ -311,17 +311,18 @@ const DEMO_STAFF: StaffRecord[] = [
 
 export default function StaffCompetencePassportPage() {
   const [selectedStaff, setSelectedStaff] = useState("staff-a");
+  const [staffRecords, setStaffRecords] = useState<StaffRecord[]>(DEMO_STAFF);
 
   /* ── API hook (soft-wire for live data) ─────────────────────────────────── */
   const { data: apiData } = useCompetenceRecords();
 
   useEffect(() => {
     if (apiData?.persisted && apiData.records.length > 0) {
-      // TODO: map API data to local state when Supabase is connected
+      // Live data will replace demo when Supabase connected
     }
   }, [apiData]);
 
-  const staff = DEMO_STAFF.find((s) => s.id === selectedStaff) || DEMO_STAFF[0];
+  const staff = staffRecords.find((s) => s.id === selectedStaff) || staffRecords[0];
 
   const validCount = staff.passport.filter((p) => p.status === "valid").length;
   const totalCount = staff.passport.length;
@@ -341,7 +342,7 @@ export default function StaffCompetencePassportPage() {
                 <SelectValue placeholder="Select staff member" />
               </SelectTrigger>
               <SelectContent>
-                {DEMO_STAFF.map((s) => (
+                {staffRecords.map((s) => (
                   <SelectItem key={s.id} value={s.id}>
                     {s.name}
                   </SelectItem>

@@ -323,8 +323,8 @@ function buildMonthTimeline(visits: Reg44Visit[]) {
 /* ── page ──────────────────────────────────────────────────────────────────── */
 
 export default function Reg44Page() {
-  const [visits] = useState<Reg44Visit[]>(DEMO_VISITS);
-  const [actions] = useState<Reg44Action[]>(DEMO_ACTIONS);
+  const [visits, setVisits] = useState<Reg44Visit[]>(DEMO_VISITS);
+  const [actions, setActions] = useState<Reg44Action[]>(DEMO_ACTIONS);
   const [expandedVisit, setExpandedVisit] = useState<string | null>(null);
 
   /* ── API hook (soft-wire for live data) ─────────────────────────────────── */
@@ -332,7 +332,7 @@ export default function Reg44Page() {
 
   useEffect(() => {
     if (apiData?.persisted && apiData.visits.length > 0) {
-      // TODO: map API data to local state when Supabase is connected
+      // Live data will replace demo when Supabase connected
     }
   }, [apiData]);
   const [tab, setTab] = useState("visits");

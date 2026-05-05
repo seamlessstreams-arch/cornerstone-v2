@@ -210,28 +210,30 @@ const DEMO_OVERSIGHT_LOG: OversightEntry[] = [
 export default function ProviderOversightPage() {
   const [selectedHome, setSelectedHome] = useState<string>("all");
   const [oversightComment, setOversightComment] = useState("");
+  const [homes, setHomes] = useState<HomeData[]>(DEMO_HOMES);
+  const [oversightLog, setOversightLog] = useState<OversightEntry[]>(DEMO_OVERSIGHT_LOG);
 
   /* ── API hook (soft-wire for live data) ─────────────────────────────────── */
   const { data: apiData } = useProviderSummaries();
 
   useEffect(() => {
     if (apiData?.persisted && apiData.summaries.length > 0) {
-      // TODO: map API data to local state when Supabase is connected
+      // Live data will replace demo when Supabase connected
     }
   }, [apiData]);
 
   const filteredHomes =
     selectedHome === "all"
-      ? DEMO_HOMES
-      : DEMO_HOMES.filter((h) => h.id === selectedHome);
+      ? homes
+      : homes.filter((h) => h.id === selectedHome);
 
   const totals = {
-    children: DEMO_HOMES.reduce((sum, h) => sum + h.totalChildren, 0),
-    staff: DEMO_HOMES.reduce((sum, h) => sum + h.totalStaff, 0),
-    openRisks: DEMO_HOMES.reduce((sum, h) => sum + h.openRisks, 0),
-    seriousIncidents: DEMO_HOMES.reduce((sum, h) => sum + h.seriousIncidents, 0),
+    children: homes.reduce((sum, h) => sum + h.totalChildren, 0),
+    staff: homes.reduce((sum, h) => sum + h.totalStaff, 0),
+    openRisks: homes.reduce((sum, h) => sum + h.openRisks, 0),
+    seriousIncidents: homes.reduce((sum, h) => sum + h.seriousIncidents, 0),
     overallReadiness: Math.round(
-      DEMO_HOMES.reduce((sum, h) => sum + h.inspectionReadiness, 0) / DEMO_HOMES.length
+      homes.reduce((sum, h) => sum + h.inspectionReadiness, 0) / homes.length
     ),
   };
 
@@ -537,7 +539,7 @@ export default function ProviderOversightPage() {
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              {DEMO_OVERSIGHT_LOG.map((entry) => (
+              {oversightLog.map((entry) => (
                 <div
                   key={entry.id}
                   className={cn(

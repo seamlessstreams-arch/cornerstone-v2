@@ -156,13 +156,14 @@ const DEFAULT_PROMPTS: ReviewPrompt[] = [
 export default function IncidentLearningReviewPage() {
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [prompts, setPrompts] = useState<Record<string, ReviewPrompt[]>>({});
+  const [incidents, setIncidents] = useState<Incident[]>(DEMO_INCIDENTS);
 
   /* ── API hook (soft-wire for live data) ─────────────────────────────────── */
   const { data: apiData } = useLearningReviews();
 
   useEffect(() => {
     if (apiData?.persisted && apiData.reviews.length > 0) {
-      // TODO: map API data to local state when Supabase is connected
+      // Live data will replace demo when Supabase connected
     }
   }, [apiData]);
   const [managerNotes, setManagerNotes] = useState<Record<string, string>>({});
@@ -185,8 +186,8 @@ export default function IncidentLearningReviewPage() {
 
   const filteredIncidents =
     statusFilter === "all"
-      ? DEMO_INCIDENTS
-      : DEMO_INCIDENTS.filter((i) => i.reviewStatus === statusFilter);
+      ? incidents
+      : incidents.filter((i) => i.reviewStatus === statusFilter);
 
   return (
     <PageShell
