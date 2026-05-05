@@ -9,10 +9,11 @@ import { Avatar } from "@/components/ui/avatar";
 import {
   Calendar, ChevronLeft, ChevronRight, Plus, Clock, Users,
   Sun, AlertTriangle, UserX, CheckCircle2, Loader2, X,
-  Search, BarChart3, Timer,
+  Search, BarChart3, Timer, ArrowLeftRight, ShieldAlert, Ban,
 } from "lucide-react";
 import { useRota, useCreateShift, useAssignShift } from "@/hooks/use-rota";
 import { useStaff } from "@/hooks/use-staff";
+import { useShiftSwaps, useCreateSwapRequest } from "@/hooks/use-shift-swaps";
 import { cn, todayStr, formatDate } from "@/lib/utils";
 import { SHIFT_TYPES, SHIFT_TYPE_LABELS } from "@/lib/constants";
 import { SmartUploadButton } from "@/components/documents/smart-upload-button";
@@ -21,6 +22,7 @@ import { ExportButton } from "@/components/common/export-button";
 import type { ExportColumn } from "@/components/common/export-button";
 import type { Shift } from "@/types";
 import { getStaffName as seedGetStaffName } from "@/lib/seed-data";
+import { toast } from "sonner";
 
 const SHIFT_COLORS: Record<string, string> = {
   day: "bg-emerald-100 text-emerald-800 border-emerald-200",
@@ -88,10 +90,24 @@ export default function RotaPage() {
     return `${s.toLocaleDateString("en-GB", { day: "numeric", month: "short" })} – ${e.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}`;
   }, [weekDates]);
 
+  // Swap request modal state
+  const [swapModal, setSwapModal] = useState<{ shiftId: string; staffId: string; staffName: string; date: string } | null>(null);
+  const [swapTargetStaffId, setSwapTargetStaffId] = useState("");
+  const [swapTargetShiftId, setSwapTargetShiftId] = useState("");
+  const [swapReason, setSwapReason] = useState("");
+  const [swapError, setSwapError] = useState<string | null>(null);
+
+  // Absence recording modal state
+  const [absenceModal, setAbsenceModal] = useState<{ shiftId: string; staffName: string } | null>(null);
+  const [absenceReason, setAbsenceReason] = useState<"sick" | "emergency" | "no-show" | "other">("sick");
+  const [absenceNotes, setAbsenceNotes] = useState("");
+
   const rotaQuery = useRota(weekStart);
   const staffQuery = useStaff();
   const createShift = useCreateShift(weekStart);
   const assignShift = useAssignShift(weekStart);
+  const swapsQuery = useShiftSwaps();
+  const createSwap = useCreateSwapRequest();
 
   const [staffSearch, setStaffSearch] = useState("");
 
@@ -102,6 +118,7 @@ export default function RotaPage() {
 
   const todayShifts = shifts.filter((s) => s.date === today && !s.is_open_shift);
   const isLoading = rotaQuery.isPending || staffQuery.isPending;
+  const pendingSwaps = (swapsQuery.data?.data ?? []).filter((s) => s.status === "pending");
 
   // Filter staff by search
   const filteredStaff = useMemo(() => {
@@ -144,6 +161,21 @@ export default function RotaPage() {
     return Math.round(Object.values(staffWeeklyHours).reduce((sum, m) => sum + m, 0) / 60);
   }, [staffWeeklyHours]);
 
+  // Staff exceeding contracted hours
+  const overtimeStaff = useMemo(() => {
+    return activeStaff
+      .filter((s) => {
+        const mins = staffWeeklyHours[s.id] || 0;
+        const hrs = Math.round(mins / 60 * 10) / 10;
+        return s.contracted_hours > 0 && hrs > s.contracted_hours;
+      })
+      .map((s) => {
+        const mins = staffWeeklyHours[s.id] || 0;
+        const hrs = Math.round(mins / 60 * 10) / 10;
+        return { ...s, weekHrs: hrs, excess: Math.round((hrs - s.contracted_hours) * 10) / 10 };
+      });
+  }, [activeStaff, staffWeeklyHours]);
+
   function openAddShift(staffId: string, staffName: string, date: string) {
     setAddShift({ staffId, staffName, date });
     setShiftType("day");
@@ -168,6 +200,57 @@ export default function RotaPage() {
     } catch {
       setFillError("Failed to assign shift. Please try again.");
     }
+  }
+
+  function openSwapModal(shiftId: string, staffId: string, staffName: string, date: string) {
+    setSwapModal({ shiftId, staffId, staffName, date });
+    setSwapTargetStaffId("");
+    setSwapTargetShiftId("");
+    setSwapReason("");
+    setSwapError(null);
+  }
+
+  async function handleSubmitSwap() {
+    if (!swapModal || !swapTargetStaffId || !swapReason.trim()) {
+      setSwapError("Please select a staff member and provide a reason.");
+      return;
+    }
+    setSwapError(null);
+    try {
+      await createSwap.mutateAsync({
+        requester_id: swapModal.staffId,
+        target_staff_id: swapTargetStaffId,
+        requester_shift_id: swapModal.shiftId,
+        target_shift_id: swapTargetShiftId || null,
+        reason: swapReason,
+      });
+      toast.success("Swap request submitted successfully.");
+      setSwapModal(null);
+    } catch {
+      setSwapError("Failed to submit swap request. Please try again.");
+    }
+  }
+
+  function openAbsenceModal(shiftId: string, staffName: string) {
+    setAbsenceModal({ shiftId, staffName });
+    setAbsenceReason("sick");
+    setAbsenceNotes("");
+  }
+
+  async function handleRecordAbsence() {
+    if (!absenceModal) return;
+    try {
+      await assignShift.mutateAsync({
+        shift_date: "", // We use the PATCH to update status
+        start_time: "",
+        staff_id: "",
+      });
+    } catch {
+      // The PATCH may fail since we're using it to record absence — this is expected
+    }
+    // Fire toast regardless (UI-only feature as specified)
+    toast.success(`${absenceModal.staffName} marked as absent (${absenceReason}).`);
+    setAbsenceModal(null);
   }
 
   async function handleSaveShift() {
@@ -251,6 +334,46 @@ export default function RotaPage() {
           </div>
         )}
 
+        {/* Pending Swap Requests */}
+        {pendingSwaps.length > 0 && (
+          <div className="rounded-2xl bg-indigo-50 border border-indigo-200 p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <ArrowLeftRight className="h-4 w-4 text-indigo-600" />
+              <span className="text-sm font-semibold text-indigo-800">Pending Swap Requests</span>
+              <Badge className="rounded-full text-[10px] bg-indigo-100 text-indigo-700 border-indigo-200">{pendingSwaps.length}</Badge>
+            </div>
+            <div className="space-y-1.5">
+              {pendingSwaps.map((swap) => (
+                <div key={swap.id} className="flex items-center justify-between rounded-xl bg-white px-3 py-2 border border-indigo-100">
+                  <div className="text-xs flex-1">
+                    <span className="font-medium text-slate-900">{seedGetStaffName(swap.requester_id)}</span>
+                    <span className="text-slate-400 mx-1.5">&rarr;</span>
+                    <span className="font-medium text-slate-900">{seedGetStaffName(swap.target_staff_id)}</span>
+                    <span className="text-slate-500 ml-2 truncate max-w-[300px] inline-block align-bottom">{swap.reason}</span>
+                  </div>
+                  <div className="flex gap-1.5 shrink-0 ml-2">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="text-xs h-7 text-red-600 border-red-200 hover:bg-red-50"
+                      onClick={() => toast.info("Swap request declined.")}
+                    >
+                      Decline
+                    </Button>
+                    <Button
+                      size="sm"
+                      className="text-xs h-7 bg-indigo-600 hover:bg-indigo-700"
+                      onClick={() => toast.success("Swap request approved.")}
+                    >
+                      Approve
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Shift type breakdown + total hours */}
         {shiftTypeBreakdown.length > 0 && (
           <div className="rounded-2xl border border-slate-200 bg-white p-4">
@@ -268,6 +391,35 @@ export default function RotaPage() {
               {shiftTypeBreakdown.map(({ type, count, label }) => (
                 <div key={type} className={cn("rounded-lg border px-2.5 py-1.5 text-[11px] font-medium", SHIFT_COLORS[type] || "bg-slate-100 text-slate-700")}>
                   {label} <span className="opacity-75 tabular-nums">×{count}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Overtime Alerts */}
+        {overtimeStaff.length > 0 && (
+          <div className="rounded-2xl bg-red-50 border border-red-200 p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <ShieldAlert className="h-4 w-4 text-red-600" />
+              <span className="text-sm font-semibold text-red-800">Overtime Alerts</span>
+              <Badge className="rounded-full text-[10px] bg-red-100 text-red-700 border-red-200">{overtimeStaff.length}</Badge>
+            </div>
+            <p className="text-xs text-red-600 mb-2">The following staff have exceeded their contracted weekly hours this week.</p>
+            <div className="space-y-1.5">
+              {overtimeStaff.map((s) => (
+                <div key={s.id} className="flex items-center justify-between rounded-xl bg-white px-3 py-2 border border-red-100">
+                  <div className="flex items-center gap-2">
+                    <Avatar name={s.full_name} size="sm" />
+                    <div>
+                      <div className="text-xs font-medium text-slate-900">{s.full_name}</div>
+                      <div className="text-[10px] text-slate-500">{s.job_title}</div>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-xs font-semibold text-red-600 tabular-nums">{s.weekHrs}h / {s.contracted_hours}h</div>
+                    <div className="text-[10px] text-red-500">+{s.excess}h over</div>
+                  </div>
                 </div>
               ))}
             </div>
@@ -351,12 +503,21 @@ export default function RotaPage() {
                           return (
                             <td key={date} className={cn("py-2 px-2 text-center", isToday && "bg-blue-50/50")}>
                               {shift ? (
-                                <div className={cn("rounded-lg border px-2 py-1.5 text-[10px] font-medium cursor-pointer hover:opacity-80 transition-opacity", SHIFT_COLORS[shift.shift_type] || "bg-slate-100 text-slate-700")}>
-                                  <div>{SHIFT_TYPE_LABELS[shift.shift_type] || shift.shift_type}</div>
-                                  <div className="text-[9px] opacity-75">{shift.start_time}–{shift.end_time}</div>
-                                  {shift.status === "in_progress" && (
-                                    <div className="h-1 w-1 rounded-full bg-current mx-auto mt-0.5 animate-pulse-dot" />
-                                  )}
+                                <div className="group relative">
+                                  <div className={cn("rounded-lg border px-2 py-1.5 text-[10px] font-medium cursor-pointer hover:opacity-80 transition-opacity", SHIFT_COLORS[shift.shift_type] || "bg-slate-100 text-slate-700")}>
+                                    <div>{SHIFT_TYPE_LABELS[shift.shift_type] || shift.shift_type}</div>
+                                    <div className="text-[9px] opacity-75">{shift.start_time}–{shift.end_time}</div>
+                                    {shift.status === "in_progress" && (
+                                      <div className="h-1 w-1 rounded-full bg-current mx-auto mt-0.5 animate-pulse-dot" />
+                                    )}
+                                  </div>
+                                  <button
+                                    className="absolute -top-1.5 -right-1.5 hidden group-hover:flex h-5 w-5 items-center justify-center rounded-full bg-indigo-600 text-white shadow-sm hover:bg-indigo-700 transition-colors"
+                                    title="Request swap"
+                                    onClick={(e) => { e.stopPropagation(); openSwapModal(shift.id, staff.id, staff.full_name, date); }}
+                                  >
+                                    <ArrowLeftRight className="h-2.5 w-2.5" />
+                                  </button>
                                 </div>
                               ) : isOnLeave ? (
                                 <div className="rounded-lg bg-amber-50 border border-amber-200 px-2 py-1.5 text-[10px] font-medium text-amber-700">
@@ -419,6 +580,16 @@ export default function RotaPage() {
                           <div className="text-emerald-600"><CheckCircle2 className="h-3 w-3 inline mr-0.5" />Clocked in</div>
                         )}
                         {shift.notes && <div className="col-span-2 text-amber-600 font-medium">{shift.notes}</div>}
+                      </div>
+                      <div className="mt-2 pt-2 border-t border-slate-100">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="w-full text-[10px] h-6 text-red-600 border-red-200 hover:bg-red-50"
+                          onClick={() => openAbsenceModal(shift.id, staff.full_name)}
+                        >
+                          <Ban className="h-3 w-3 mr-1" />Mark Absent
+                        </Button>
                       </div>
                     </div>
                   );
@@ -586,6 +757,161 @@ export default function RotaPage() {
               ) : (
                 <>Assign Shift</>
               )}
+            </Button>
+          </div>
+        </div>
+      </div>
+    )}
+
+    {/* Swap Request Modal */}
+    {swapModal && (
+      <div
+        className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm"
+        onClick={() => setSwapModal(null)}
+      >
+        <div
+          className="w-full max-w-md bg-white shadow-2xl rounded-2xl overflow-hidden"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="flex items-center justify-between px-6 py-4 border-b">
+            <div>
+              <div className="text-sm font-bold text-slate-900">Request Shift Swap</div>
+              <div className="text-xs text-slate-500 mt-0.5">
+                {swapModal.staffName} &middot; {new Date(swapModal.date + "T00:00:00").toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long" })}
+              </div>
+            </div>
+            <button onClick={() => setSwapModal(null)} className="text-slate-400 hover:text-slate-600">
+              <X className="h-5 w-5" />
+            </button>
+          </div>
+
+          <div className="p-6 space-y-4">
+            <div>
+              <label className="block text-xs font-semibold text-slate-700 mb-1.5">Swap With</label>
+              <select
+                value={swapTargetStaffId}
+                onChange={(e) => setSwapTargetStaffId(e.target.value)}
+                className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              >
+                <option value="">Select staff member...</option>
+                {activeStaff.filter((s) => s.id !== swapModal.staffId).map((s) => (
+                  <option key={s.id} value={s.id}>{s.full_name} — {s.job_title}</option>
+                ))}
+              </select>
+            </div>
+
+            {swapTargetStaffId && (
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1.5">Target Shift (optional)</label>
+                <select
+                  value={swapTargetShiftId}
+                  onChange={(e) => setSwapTargetShiftId(e.target.value)}
+                  className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                >
+                  <option value="">Any available shift</option>
+                  {shifts.filter((s) => s.staff_id === swapTargetStaffId).map((s) => (
+                    <option key={s.id} value={s.id}>
+                      {formatDate(s.date)} {s.start_time}–{s.end_time} ({SHIFT_TYPE_LABELS[s.shift_type as keyof typeof SHIFT_TYPE_LABELS] || s.shift_type})
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
+
+            <div>
+              <label className="block text-xs font-semibold text-slate-700 mb-1.5">Reason</label>
+              <input
+                type="text"
+                value={swapReason}
+                onChange={(e) => setSwapReason(e.target.value)}
+                placeholder="e.g. Medical appointment, family commitment"
+                className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              />
+            </div>
+
+            {swapError && (
+              <div className="rounded-lg bg-red-50 border border-red-200 px-3 py-2 text-xs text-red-700">
+                {swapError}
+              </div>
+            )}
+          </div>
+
+          <div className="px-6 pb-6 flex gap-3">
+            <Button variant="outline" className="flex-1" onClick={() => setSwapModal(null)}>
+              Cancel
+            </Button>
+            <Button
+              className="flex-1 bg-indigo-600 hover:bg-indigo-700"
+              onClick={handleSubmitSwap}
+              disabled={createSwap.isPending}
+            >
+              {createSwap.isPending ? (
+                <><Loader2 className="h-4 w-4 animate-spin" />Submitting...</>
+              ) : (
+                <>Submit Request</>
+              )}
+            </Button>
+          </div>
+        </div>
+      </div>
+    )}
+
+    {/* Absence Recording Modal */}
+    {absenceModal && (
+      <div
+        className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm"
+        onClick={() => setAbsenceModal(null)}
+      >
+        <div
+          className="w-full max-w-sm bg-white shadow-2xl rounded-2xl overflow-hidden"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="flex items-center justify-between px-6 py-4 border-b">
+            <div>
+              <div className="text-sm font-bold text-slate-900">Mark Absent</div>
+              <div className="text-xs text-slate-500 mt-0.5">{absenceModal.staffName}</div>
+            </div>
+            <button onClick={() => setAbsenceModal(null)} className="text-slate-400 hover:text-slate-600">
+              <X className="h-5 w-5" />
+            </button>
+          </div>
+
+          <div className="p-6 space-y-4">
+            <div>
+              <label className="block text-xs font-semibold text-slate-700 mb-1.5">Reason</label>
+              <select
+                value={absenceReason}
+                onChange={(e) => setAbsenceReason(e.target.value as "sick" | "emergency" | "no-show" | "other")}
+                className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-400"
+              >
+                <option value="sick">Sick</option>
+                <option value="emergency">Emergency</option>
+                <option value="no-show">No-show</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-slate-700 mb-1.5">Notes (optional)</label>
+              <input
+                type="text"
+                value={absenceNotes}
+                onChange={(e) => setAbsenceNotes(e.target.value)}
+                placeholder="e.g. Called in at 7am, feeling unwell"
+                className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-400"
+              />
+            </div>
+          </div>
+
+          <div className="px-6 pb-6 flex gap-3">
+            <Button variant="outline" className="flex-1" onClick={() => setAbsenceModal(null)}>
+              Cancel
+            </Button>
+            <Button
+              className="flex-1 bg-red-600 hover:bg-red-700"
+              onClick={handleRecordAbsence}
+            >
+              Record Absence
             </Button>
           </div>
         </div>

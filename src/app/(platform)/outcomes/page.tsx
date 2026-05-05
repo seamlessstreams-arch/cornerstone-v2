@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/dialog";
 import { useOutcomes, useCreateOutcomeReview, useCreateOutcomeTarget } from "@/hooks/use-outcomes";
 import { useAuthContext } from "@/contexts/auth-context";
+import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { getYPName } from "@/lib/seed-data";
 import { cn, formatDate, todayStr } from "@/lib/utils";
 import type {
@@ -267,6 +268,231 @@ function ReviewDialog({
   );
 }
 
+// ── New Target Dialog ────────────────────────────────────────────────────────
+
+function NewTargetDialog({
+  open,
+  onClose,
+  childIds,
+}: {
+  open: boolean;
+  onClose: () => void;
+  childIds: string[];
+}) {
+  const { currentUser } = useAuthContext();
+  const createTarget = useCreateOutcomeTarget();
+  const [childId, setChildId] = useState(childIds[0] ?? "");
+  const [domain, setDomain] = useState<OutcomeDomain>("health");
+  const [description, setDescription] = useState("");
+  const [successCriteria, setSuccessCriteria] = useState("");
+  const [baselineRating, setBaselineRating] = useState<OutcomeRating>(2);
+  const [targetRating, setTargetRating] = useState<OutcomeRating>(4);
+  const [ypVoice, setYpVoice] = useState("");
+  const [notes, setNotes] = useState("");
+
+  const reset = () => {
+    setChildId(childIds[0] ?? "");
+    setDomain("health");
+    setDescription("");
+    setSuccessCriteria("");
+    setBaselineRating(2);
+    setTargetRating(4);
+    setYpVoice("");
+    setNotes("");
+  };
+
+  const handleSubmit = () => {
+    if (!description.trim() || !childId) return;
+    createTarget.mutate(
+      {
+        child_id: childId,
+        domain,
+        target_description: description.trim(),
+        success_criteria: successCriteria.trim(),
+        baseline_rating: baselineRating,
+        target_rating: targetRating,
+        yp_voice: ypVoice.trim() || undefined,
+        notes: notes.trim() || undefined,
+        set_by: currentUser?.id ?? "staff_darren",
+      },
+      {
+        onSuccess: () => {
+          toast.success("Outcome target created");
+          reset();
+          onClose();
+        },
+      },
+    );
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={(o) => { if (!o) { reset(); onClose(); } }}>
+      <DialogContent className="max-w-lg max-h-[85vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle className="flex items-center gap-2 text-sm">
+            <Target className="h-4 w-4 text-indigo-600" />
+            New Outcome Target
+          </DialogTitle>
+        </DialogHeader>
+        <div className="space-y-4">
+          {/* Young person selector */}
+          <div>
+            <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1 block">
+              Young Person <span className="text-red-500">*</span>
+            </label>
+            <select
+              value={childId}
+              onChange={(e) => setChildId(e.target.value)}
+              className="w-full h-9 rounded-xl border border-slate-200 bg-white px-3 text-sm"
+            >
+              {childIds.map((cid) => (
+                <option key={cid} value={cid}>{getYPName(cid)}</option>
+              ))}
+            </select>
+          </div>
+
+          {/* Domain selector */}
+          <div>
+            <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2 block">
+              Outcome Domain <span className="text-red-500">*</span>
+            </label>
+            <div className="grid grid-cols-4 gap-1.5">
+              {(Object.entries(OUTCOME_DOMAIN_LABELS) as [OutcomeDomain, string][]).map(([key, label]) => {
+                const dc = DOMAIN_COLOURS[key];
+                const DIcon = DOMAIN_ICONS[key];
+                return (
+                  <button
+                    key={key}
+                    onClick={() => setDomain(key)}
+                    className={cn(
+                      "flex flex-col items-center gap-1 rounded-xl border-2 p-2 transition-all text-center",
+                      domain === key
+                        ? cn("shadow-sm", dc.bg, dc.border)
+                        : "border-slate-200 bg-white hover:border-slate-300",
+                    )}
+                  >
+                    <DIcon className={cn("h-4 w-4", domain === key ? dc.text : "text-slate-400")} />
+                    <span className={cn("text-[9px] font-medium leading-tight", domain === key ? dc.text : "text-slate-500")}>
+                      {label}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Target description */}
+          <div>
+            <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1 block">
+              Target Description <span className="text-red-500">*</span>
+            </label>
+            <Textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              rows={2}
+              className="text-sm"
+              placeholder="What specific outcome are we working towards?"
+            />
+          </div>
+
+          {/* Success criteria */}
+          <div>
+            <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1 block">Success Criteria</label>
+            <Textarea
+              value={successCriteria}
+              onChange={(e) => setSuccessCriteria(e.target.value)}
+              rows={2}
+              className="text-sm"
+              placeholder="How will we know this target has been achieved?"
+            />
+          </div>
+
+          {/* Rating selectors */}
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2 block">Baseline Rating</label>
+              <div className="flex gap-1">
+                {([1, 2, 3, 4, 5] as OutcomeRating[]).map((r) => (
+                  <button
+                    key={r}
+                    onClick={() => setBaselineRating(r)}
+                    className={cn(
+                      "flex-1 rounded-lg border-2 py-2 text-center transition-all",
+                      baselineRating === r
+                        ? "border-indigo-500 bg-indigo-50"
+                        : "border-slate-200 hover:border-indigo-200",
+                    )}
+                  >
+                    <Star className={cn("h-4 w-4 mx-auto", baselineRating >= r ? "text-amber-400 fill-amber-400" : "text-slate-200")} />
+                  </button>
+                ))}
+              </div>
+              <p className="text-[9px] text-slate-400 mt-1 text-center">{OUTCOME_RATING_LABELS[baselineRating]}</p>
+            </div>
+            <div>
+              <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2 block">Target Rating</label>
+              <div className="flex gap-1">
+                {([1, 2, 3, 4, 5] as OutcomeRating[]).map((r) => (
+                  <button
+                    key={r}
+                    onClick={() => setTargetRating(r)}
+                    className={cn(
+                      "flex-1 rounded-lg border-2 py-2 text-center transition-all",
+                      targetRating === r
+                        ? "border-emerald-500 bg-emerald-50"
+                        : "border-slate-200 hover:border-emerald-200",
+                    )}
+                  >
+                    <Star className={cn("h-4 w-4 mx-auto", targetRating >= r ? "text-amber-400 fill-amber-400" : "text-slate-200")} />
+                  </button>
+                ))}
+              </div>
+              <p className="text-[9px] text-slate-400 mt-1 text-center">{OUTCOME_RATING_LABELS[targetRating]}</p>
+            </div>
+          </div>
+
+          {/* YP voice */}
+          <div>
+            <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1 block">
+              <MessageSquare className="h-3 w-3 inline mr-1" />Voice of the Child
+            </label>
+            <Textarea
+              value={ypVoice}
+              onChange={(e) => setYpVoice(e.target.value)}
+              rows={2}
+              className="text-sm"
+              placeholder="What does the young person say about this target?"
+            />
+          </div>
+
+          {/* Notes */}
+          <div>
+            <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1 block">Notes</label>
+            <Textarea
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+              rows={2}
+              className="text-sm"
+              placeholder="Any additional context or observations..."
+            />
+          </div>
+        </div>
+        <DialogFooter className="gap-2">
+          <Button variant="outline" size="sm" onClick={() => { reset(); onClose(); }}>Cancel</Button>
+          <Button
+            size="sm"
+            onClick={handleSubmit}
+            disabled={!description.trim() || !childId || createTarget.isPending}
+            className="bg-indigo-600 hover:bg-indigo-700 text-white"
+          >
+            {createTarget.isPending ? "Creating..." : "Create Target"}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
 // ── Outcome Target Card ──────────────────────────────────────────────────────
 
 function TargetCard({
@@ -466,6 +692,15 @@ function TargetCard({
                 </div>
               </div>
             )}
+
+            {/* Smart Links */}
+            <SmartLinkPanel
+              sourceType="outcome_target"
+              sourceId={target.id}
+              childId={target.child_id}
+              homeId="home_oak"
+              category={target.domain}
+            />
           </div>
         )}
       </div>
@@ -620,6 +855,7 @@ export default function OutcomesPage() {
   const [showAchieved, setShowAchieved] = useState(false);
   const [search, setSearch] = useState("");
   const [sortKey, setSortKey] = useState<SortKey>("child");
+  const [showNewTarget, setShowNewTarget] = useState(false);
 
   const targets    = data?.data ?? [];
   const reviews    = data?.reviews ?? [];
@@ -684,7 +920,7 @@ export default function OutcomesPage() {
         <div className="flex items-center gap-2">
           <ExportButton data={filtered} columns={OUTCOME_EXPORT_COLS} filename="outcomes" />
           <PrintButton title="Outcomes Tracker" subtitle="Oak House" targetId="outcomes-content" />
-          <Button size="sm" className="gap-1.5 bg-indigo-600 hover:bg-indigo-700 text-white h-8 text-xs">
+          <Button size="sm" className="gap-1.5 bg-indigo-600 hover:bg-indigo-700 text-white h-8 text-xs" onClick={() => setShowNewTarget(true)}>
             <Plus className="h-3.5 w-3.5" />
             New Target
           </Button>
@@ -893,6 +1129,12 @@ export default function OutcomesPage() {
           and must include the voice of the child.
         </div>
       </div>
+
+      <NewTargetDialog
+        open={showNewTarget}
+        onClose={() => setShowNewTarget(false)}
+        childIds={childIds}
+      />
     </PageShell>
   );
 }

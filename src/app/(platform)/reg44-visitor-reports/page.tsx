@@ -6,50 +6,32 @@ import { PrintButton } from "@/components/ui/print-button";
 import { ExportButton, type ExportColumn } from "@/components/ui/export-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import {
+  Dialog, DialogContent, DialogHeader, DialogTitle,
+  DialogDescription, DialogFooter, DialogTrigger,
+} from "@/components/ui/dialog";
 import {
   Search, ChevronDown, ChevronUp, Shield, Calendar,
   Clock, CheckCircle2, AlertTriangle, FileText, Users,
-  ClipboardList, Eye,
+  ClipboardList, Eye, Plus, Loader2, ArrowRight,
+  BarChart3,
 } from "lucide-react";
-import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { getStaffName } from "@/lib/seed-data";
+import { useReg44Visits, useUpdateRecommendation, useCreateVisit } from "@/hooks/use-reg44";
+import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
+import type { Reg44VisitReport, Reg44Recommendation } from "@/types/extended";
 
-/* ── types ─────────────────────────────────────────────────────────────────── */
+/* ── helpers ───────────────────────────────────────────────────────────────── */
 
 type RecommendationPriority = "low" | "medium" | "high";
 type RecommendationStatus = "completed" | "in_progress" | "outstanding";
 
-interface Recommendation {
-  recommendation: string;
-  priority: RecommendationPriority;
-  rmResponse: string;
-  status: RecommendationStatus;
-}
-
-interface Reg44Visit {
-  id: string;
-  visitDate: string;
-  visitor: string;
-  duration: string;
-  childrenSpoken: string;
-  staffSpoken: number;
-  recordsReviewed: string[];
-  overallJudgement: string;
-  strengths: string[];
-  areasForDevelopment: string[];
-  recommendations: Recommendation[];
-  previousActionsStatus: string;
-  reportSentToOfsted: boolean;
-  reportSentDate: string;
-  notes: string;
-}
-
-/* ── helpers ───────────────────────────────────────────────────────────────── */
-
-const d = (n: number) => { const dt = new Date(); dt.setDate(dt.getDate() + n); return dt.toISOString().slice(0, 10); };
-
 const fmt = (iso: string) => {
+  if (!iso) return "";
   const [y, m, day] = iso.split("-");
   return `${day}/${m}/${y}`;
 };
@@ -79,186 +61,339 @@ const JUDGEMENT_CLR: Record<string, string> = {
   "Requires improvement in one area.": "bg-amber-100 text-amber-800",
 };
 
-/* ── seed data ─────────────────────────────────────────────────────────────── */
+/* ── New Visit Form ────────────────────────────────────────────────────────── */
 
-const SEED: Reg44Visit[] = [
-  {
-    id: "v44_1",
-    visitDate: d(-7),
-    visitor: "Margaret Thompson (Independent)",
-    duration: "4 hours",
-    childrenSpoken: "3/3",
-    staffSpoken: 4,
-    recordsReviewed: ["daily logs", "medication", "incidents"],
-    overallJudgement: "Good — no immediate concerns.",
-    strengths: [
-      "Warm, positive relationships observed between staff and young people throughout the visit",
-      "Medication records are excellent — accurate, timely, and countersigned consistently",
-      "All three children spoke positively about their care and relationships with key workers",
-    ],
-    areasForDevelopment: [
-      "Sleep log completion is inconsistent — 3 gaps identified in the past month where entries were missed on night shifts",
-      "One fire drill is overdue by 12 days — last drill was 14 weeks ago against a quarterly requirement",
-    ],
-    recommendations: [
+function NewVisitDialog({ onCreated }: { onCreated?: () => void }) {
+  const [open, setOpen] = useState(false);
+  const createVisit = useCreateVisit();
+
+  const [form, setForm] = useState({
+    visit_date: "",
+    visitor: "",
+    duration: "",
+    children_spoken: "",
+    staff_spoken: "",
+    overall_judgement: "",
+    notes: "",
+  });
+
+  const set = (field: string, value: string) =>
+    setForm((prev) => ({ ...prev, [field]: value }));
+
+  const handleSubmit = () => {
+    if (!form.visit_date || !form.visitor) return;
+    createVisit.mutate(
       {
-        recommendation: "Implement a nightly checklist to ensure sleep logs are completed before end of each night shift. Consider adding a prompt to the night staff handover template.",
-        priority: "medium",
-        rmResponse: "Accepted. Night shift checklist updated to include sleep log verification. Team briefed at handover. Will monitor compliance over next 4 weeks.",
-        status: "in_progress",
+        visit_date: form.visit_date,
+        visitor: form.visitor,
+        duration: form.duration || "0 hours",
+        children_spoken: form.children_spoken || "0/0",
+        staff_spoken: parseInt(form.staff_spoken) || 0,
+        overall_judgement: form.overall_judgement || "Pending review.",
+        notes: form.notes,
       },
       {
-        recommendation: "Conduct fire drill within 7 days and review the scheduling system to prevent future overruns. Evidence drill completion to the visitor.",
-        priority: "high",
-        rmResponse: "Fire drill completed on " + d(-5) + " (both day and evening scenarios). Calendar alerts set for 11-week intervals to provide a buffer before the quarterly deadline.",
-        status: "completed",
-      },
-      {
-        recommendation: "Consider involving young people in reviewing and updating the house rules display, which appears dated.",
-        priority: "low",
-        rmResponse: "Agreed — will add to next children's meeting agenda. Young people will co-design updated display.",
-        status: "in_progress",
-      },
-    ],
-    previousActionsStatus: "2 closed, 0 outstanding",
-    reportSentToOfsted: true,
-    reportSentDate: d(-5),
-    notes: "Visitor had unrestricted access throughout. All children were relaxed and willing to speak. Staff were open and transparent.",
-  },
-  {
-    id: "v44_2",
-    visitDate: d(-37),
-    visitor: "Margaret Thompson",
-    duration: "3.5 hours",
-    childrenSpoken: "2/3 (Casey absent — school trip)",
-    staffSpoken: 3,
-    recordsReviewed: ["daily logs", "supervision records", "key working sessions"],
-    overallJudgement: "Good.",
-    strengths: [
-      "Home is clean, warm, and welcoming — presented to a high standard throughout",
-      "Children's bedrooms are well-personalised reflecting their interests and identities",
-      "Staff morale is notably positive — team appear well-supported and cohesive",
-    ],
-    areasForDevelopment: [
-      "One staff supervision session was completed 3 days late — while content was thorough, the delay means it fell outside the 6-weekly frequency requirement",
-    ],
-    recommendations: [
-      {
-        recommendation: "Review supervision scheduling to build in buffer time. Consider a tracker that alerts the manager 1 week before supervision is due.",
-        priority: "medium",
-        rmResponse: "Cornerstone supervision tracker now set to alert 7 days before due date. Deputy to cover if RM unavailable. No supervisions will be more than 1 day late going forward.",
-        status: "completed",
-      },
-      {
-        recommendation: "Ensure Casey is spoken to at the next visit — visitor to consider scheduling an additional brief visit if Casey is unavailable again.",
-        priority: "medium",
-        rmResponse: "Noted. Casey's school schedule shared with visitor to support planning. Casey confirmed she is happy to speak at next visit.",
-        status: "completed",
-      },
-    ],
-    previousActionsStatus: "All previous actions closed",
-    reportSentToOfsted: true,
-    reportSentDate: d(-35),
-    notes: "Casey was on a school residential trip — positive that the home supports these opportunities. Spoke with Casey's key worker about her progress.",
-  },
-  {
-    id: "v44_3",
-    visitDate: d(-67),
-    visitor: "Margaret Thompson",
-    duration: "4 hours",
-    childrenSpoken: "3/3",
-    staffSpoken: 4,
-    recordsReviewed: ["key working records", "behaviour logs", "TCI records", "placement plans"],
-    overallJudgement: "Good with notable practice.",
-    strengths: [
-      "Outstanding key work records — detailed, reflective, and clearly child-centred with the young person's voice evident throughout",
-      "Casey's progress was explicitly noted — significant reduction in incidents and improved school attendance over the past 3 months",
-      "TCI (Therapeutic Crisis Intervention) use was appropriate, proportionate, and well-documented with thorough debriefs",
-    ],
-    areasForDevelopment: [
-      "Garden furniture (wooden bench and table) is weathered and one bench leg is split — this presents a minor trip hazard and should be replaced",
-    ],
-    recommendations: [
-      {
-        recommendation: "Replace or remove damaged garden furniture to eliminate trip hazard. Ensure replacement furniture is suitable for outdoor use year-round.",
-        priority: "medium",
-        rmResponse: "Damaged furniture removed immediately on day of visit. Replacement outdoor furniture ordered — weather-resistant composite material. Budget approved by RI. Expected delivery within 2 weeks.",
-        status: "completed",
-      },
-    ],
-    previousActionsStatus: "All previous actions closed",
-    reportSentToOfsted: true,
-    reportSentDate: d(-65),
-    notes: "Visitor commended the quality of key working and therapeutic approach. Recommended the home's key work model as potential good practice example for the organisation.",
-  },
-  {
-    id: "v44_4",
-    visitDate: d(-97),
-    visitor: "Margaret Thompson",
-    duration: "3 hours",
-    childrenSpoken: "3/3",
-    staffSpoken: 3,
-    recordsReviewed: ["notifications register", "staffing records", "complaints log", "activities programme"],
-    overallJudgement: "Requires improvement in one area.",
-    strengths: [
-      "Strong, trusting relationships evident between young people and their key workers",
-      "Activities programme is varied, inclusive, and reflects each child's individual interests and goals",
-      "Complaint handling is thorough — young people confirmed they know how to complain and feel heard",
-    ],
-    areasForDevelopment: [
-      "One Ofsted notification was submitted 2 days late — the notification related to a Schedule 5 event and should have been made within 24 hours without exception",
-      "The staffing plan for the home is not displayed in a location accessible to staff — regulation requires the staffing plan to be available",
-    ],
-    recommendations: [
-      {
-        recommendation: "Review the notification process to identify why the delay occurred. Implement a checklist for notifiable events that includes immediate notification as step one, before any other actions.",
-        priority: "high",
-        rmResponse: "Root cause identified — RM was on leave and deputy was unsure of the classification. Notifiable events decision tree created and laminated for office. All senior staff briefed. Deputy completed notification training refresher.",
-        status: "completed",
-      },
-      {
-        recommendation: "Display the current staffing plan in the staff office and ensure it is updated whenever changes occur. All staff should know where to find it.",
-        priority: "medium",
-        rmResponse: "Staffing plan now displayed in staff office (laminated, on noticeboard). Updated version uploaded to Cornerstone. All staff informed at team meeting.",
-        status: "completed",
-      },
-      {
-        recommendation: "Consider adding notification timescales to the staff induction pack so all staff (including agency) understand the urgency requirements.",
-        priority: "low",
-        rmResponse: "Induction pack updated to include notification timescales and decision tree. Agency staff receive a summary card on arrival.",
-        status: "completed",
-      },
-      {
-        recommendation: "Review whether the activities programme is being consistently recorded in daily logs — two activity sessions were referenced by children but not recorded in the log.",
-        priority: "low",
-        rmResponse: "Acknowledged. Staff reminded to log all structured activities. Daily log template updated to include a specific activities section to prompt recording.",
-        status: "completed",
-      },
-    ],
-    previousActionsStatus: "1 outstanding from previous visit (garden furniture — subsequently addressed)",
-    reportSentToOfsted: true,
-    reportSentDate: d(-95),
-    notes: "Visitor expressed concern about the notification delay and requested written confirmation that the process has been reviewed. This has been provided.",
-  },
-];
+        onSuccess: () => {
+          setOpen(false);
+          setForm({ visit_date: "", visitor: "", duration: "", children_spoken: "", staff_spoken: "", overall_judgement: "", notes: "" });
+          onCreated?.();
+        },
+      }
+    );
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button size="sm" className="gap-1">
+          <Plus className="h-4 w-4" />
+          New Visit
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle>Record New Reg 44 Visit</DialogTitle>
+          <DialogDescription>
+            Enter the details of the independent visitor&apos;s monthly visit.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="grid gap-4 py-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="visit_date">Visit Date *</Label>
+              <Input id="visit_date" type="date" value={form.visit_date} onChange={(e) => set("visit_date", e.target.value)} />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="duration">Duration</Label>
+              <Input id="duration" placeholder="e.g. 4 hours" value={form.duration} onChange={(e) => set("duration", e.target.value)} />
+            </div>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="visitor">Visitor Name *</Label>
+            <Input id="visitor" placeholder="e.g. Margaret Thompson (Independent)" value={form.visitor} onChange={(e) => set("visitor", e.target.value)} />
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="children_spoken">Children Spoken To</Label>
+              <Input id="children_spoken" placeholder="e.g. 3/3" value={form.children_spoken} onChange={(e) => set("children_spoken", e.target.value)} />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="staff_spoken">Staff Spoken To</Label>
+              <Input id="staff_spoken" type="number" placeholder="e.g. 4" value={form.staff_spoken} onChange={(e) => set("staff_spoken", e.target.value)} />
+            </div>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="overall_judgement">Overall Judgement</Label>
+            <Input id="overall_judgement" placeholder="e.g. Good — no immediate concerns." value={form.overall_judgement} onChange={(e) => set("overall_judgement", e.target.value)} />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="notes">Notes</Label>
+            <Textarea id="notes" placeholder="Visitor notes..." rows={3} value={form.notes} onChange={(e) => set("notes", e.target.value)} />
+          </div>
+        </div>
+        <DialogFooter>
+          <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
+          <Button onClick={handleSubmit} disabled={createVisit.isPending || !form.visit_date || !form.visitor}>
+            {createVisit.isPending && <Loader2 className="h-4 w-4 mr-1 animate-spin" />}
+            Save Visit
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+/* ── Action Plan Progress Panel ─────────────────────────────────────────────── */
+
+function ActionPlanProgress({
+  visits,
+  onUpdateStatus,
+  isPending,
+}: {
+  visits: Reg44VisitReport[];
+  onUpdateStatus: (visitId: string, recId: string, status: RecommendationStatus) => void;
+  isPending: boolean;
+}) {
+  const allRecs = visits.flatMap((v) =>
+    v.recommendations.map((r) => ({ ...r, visitId: v.id, visitDate: v.visit_date }))
+  );
+
+  const completed = allRecs.filter((r) => r.status === "completed").length;
+  const inProgress = allRecs.filter((r) => r.status === "in_progress").length;
+  const outstanding = allRecs.filter((r) => r.status === "outstanding").length;
+  const total = allRecs.length;
+  const pct = total > 0 ? Math.round((completed / total) * 100) : 0;
+
+  const openActions = allRecs.filter((r) => r.status !== "completed");
+
+  return (
+    <Card>
+      <CardHeader className="pb-3">
+        <CardTitle className="text-base flex items-center gap-2">
+          <BarChart3 className="h-4 w-4 text-indigo-600" />
+          Action Plan Progress
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        {/* Stats row */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div className="text-center">
+            <p className="text-2xl font-bold">{total}</p>
+            <p className="text-xs text-muted-foreground">Total Recommendations</p>
+          </div>
+          <div className="text-center">
+            <p className="text-2xl font-bold text-green-600">{completed}</p>
+            <p className="text-xs text-muted-foreground">Completed</p>
+          </div>
+          <div className="text-center">
+            <p className="text-2xl font-bold text-blue-600">{inProgress}</p>
+            <p className="text-xs text-muted-foreground">In Progress</p>
+          </div>
+          <div className="text-center">
+            <p className="text-2xl font-bold text-red-600">{outstanding}</p>
+            <p className="text-xs text-muted-foreground">Outstanding</p>
+          </div>
+        </div>
+
+        {/* Progress bar */}
+        <div>
+          <div className="flex items-center justify-between text-xs text-muted-foreground mb-1">
+            <span>Completion</span>
+            <span>{pct}%</span>
+          </div>
+          <div className="h-2.5 bg-gray-100 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-green-500 rounded-full transition-all duration-500"
+              style={{ width: `${pct}%` }}
+            />
+          </div>
+        </div>
+
+        {/* Outstanding actions list */}
+        {openActions.length > 0 && (
+          <div>
+            <p className="text-xs font-semibold text-muted-foreground uppercase mb-2">
+              Outstanding Actions ({openActions.length})
+            </p>
+            <div className="space-y-2 max-h-48 overflow-y-auto">
+              {openActions.map((rec) => (
+                <div
+                  key={rec.id}
+                  className="flex items-start justify-between gap-2 border rounded-lg p-2 bg-muted/20"
+                >
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs font-medium truncate">{rec.recommendation}</p>
+                    <p className="text-xs text-muted-foreground">
+                      Visit: {fmt(rec.visitDate)} &middot;{" "}
+                      <Badge variant="outline" className={cn("text-[10px] py-0", PRIORITY_CLR[rec.priority])}>
+                        {rec.priority}
+                      </Badge>
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-1 shrink-0">
+                    {rec.status !== "in_progress" && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="h-6 text-[10px] px-2 text-blue-700 border-blue-200 hover:bg-blue-50"
+                        disabled={isPending}
+                        onClick={() => onUpdateStatus(rec.visitId, rec.id, "in_progress")}
+                      >
+                        In Progress
+                      </Button>
+                    )}
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-6 text-[10px] px-2 text-green-700 border-green-200 hover:bg-green-50"
+                      disabled={isPending}
+                      onClick={() => onUpdateStatus(rec.visitId, rec.id, "completed")}
+                    >
+                      <CheckCircle2 className="h-3 w-3 mr-0.5" />
+                      Complete
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {openActions.length === 0 && total > 0 && (
+          <div className="text-center py-3">
+            <CheckCircle2 className="h-6 w-6 text-green-500 mx-auto mb-1" />
+            <p className="text-xs text-green-700 font-medium">All recommendations completed</p>
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  );
+}
+
+/* ── Recommendation with status buttons ────────────────────────────────────── */
+
+function RecommendationRow({
+  rec,
+  visitId,
+  onUpdateStatus,
+  isPending,
+}: {
+  rec: Reg44Recommendation;
+  visitId: string;
+  onUpdateStatus: (visitId: string, recId: string, status: RecommendationStatus) => void;
+  isPending: boolean;
+}) {
+  return (
+    <div className="border rounded-lg p-3 bg-muted/30">
+      <div className="flex items-start justify-between gap-2 mb-2">
+        <p className="text-xs font-medium flex-1">{rec.recommendation}</p>
+        <div className="flex items-center gap-1 shrink-0">
+          <Badge variant="outline" className={cn("text-xs", PRIORITY_CLR[rec.priority])}>
+            {rec.priority}
+          </Badge>
+          <Badge variant="outline" className={cn("text-xs", STATUS_CLR[rec.status])}>
+            {STATUS_LABEL[rec.status]}
+          </Badge>
+        </div>
+      </div>
+      <div className="bg-indigo-50 rounded p-2 mt-1">
+        <p className="text-xs text-indigo-800">
+          <span className="font-medium">RM Response:</span> {rec.rm_response}
+        </p>
+      </div>
+
+      {/* Evidence notes */}
+      {rec.evidence_notes && (
+        <div className="bg-emerald-50 rounded p-2 mt-1">
+          <p className="text-xs text-emerald-800">
+            <span className="font-medium">Evidence:</span> {rec.evidence_notes}
+          </p>
+        </div>
+      )}
+
+      {/* Status mutation buttons */}
+      {rec.status !== "completed" && (
+        <div className="flex items-center gap-2 mt-2 pt-2 border-t border-dashed">
+          <span className="text-[10px] text-muted-foreground uppercase font-semibold">Update:</span>
+          {rec.status !== "in_progress" && (
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-6 text-[10px] px-2 text-blue-700 border-blue-200 hover:bg-blue-50"
+              disabled={isPending}
+              onClick={() => onUpdateStatus(visitId, rec.id, "in_progress")}
+            >
+              <ArrowRight className="h-3 w-3 mr-0.5" />
+              In Progress
+            </Button>
+          )}
+          <Button
+            variant="outline"
+            size="sm"
+            className="h-6 text-[10px] px-2 text-green-700 border-green-200 hover:bg-green-50"
+            disabled={isPending}
+            onClick={() => onUpdateStatus(visitId, rec.id, "completed")}
+          >
+            <CheckCircle2 className="h-3 w-3 mr-0.5" />
+            Mark Completed
+          </Button>
+        </div>
+      )}
+
+      {rec.status === "completed" && rec.completed_at && (
+        <p className="text-[10px] text-muted-foreground mt-1">
+          Completed: {fmt(rec.completed_at)}
+        </p>
+      )}
+    </div>
+  );
+}
 
 /* ── page ──────────────────────────────────────────────────────────────────── */
 
 export default function Reg44VisitorReportsPage() {
-  const [data] = useState<Reg44Visit[]>(SEED);
+  const { data: queryData, isLoading } = useReg44Visits();
+  const updateRecommendation = useUpdateRecommendation();
+
+  const data: Reg44VisitReport[] = queryData?.data ?? [];
+
   const [search, setSearch] = useState("");
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
   const toggle = (id: string) => setExpandedId(expandedId === id ? null : id);
+
+  const handleUpdateStatus = (visitId: string, recId: string, status: RecommendationStatus) => {
+    updateRecommendation.mutate({ visit_id: visitId, recommendation_id: recId, status });
+  };
 
   const filtered = useMemo(() => {
     if (!search) return data;
     const q = search.toLowerCase();
     return data.filter((r) =>
       r.visitor.toLowerCase().includes(q) ||
-      r.overallJudgement.toLowerCase().includes(q) ||
+      r.overall_judgement.toLowerCase().includes(q) ||
       r.strengths.some((s) => s.toLowerCase().includes(q)) ||
-      r.areasForDevelopment.some((a) => a.toLowerCase().includes(q)) ||
+      r.areas_for_development.some((a) => a.toLowerCase().includes(q)) ||
       r.recommendations.some((rec) => rec.recommendation.toLowerCase().includes(q))
     );
   }, [data, search]);
@@ -271,32 +406,42 @@ export default function Reg44VisitorReportsPage() {
   );
   const avgInterval = useMemo(() => {
     if (data.length < 2) return 0;
-    const sorted = [...data].sort((a, b) => a.visitDate.localeCompare(b.visitDate));
+    const sorted = [...data].sort((a, b) => a.visit_date.localeCompare(b.visit_date));
     let totalDays = 0;
     for (let i = 1; i < sorted.length; i++) {
-      const prev = new Date(sorted[i - 1].visitDate).getTime();
-      const curr = new Date(sorted[i].visitDate).getTime();
+      const prev = new Date(sorted[i - 1].visit_date).getTime();
+      const curr = new Date(sorted[i].visit_date).getTime();
       totalDays += (curr - prev) / (1000 * 60 * 60 * 24);
     }
     return Math.round(totalDays / (sorted.length - 1));
   }, [data]);
 
-  const exportCols: ExportColumn<Reg44Visit>[] = [
-    { header: "Visit Date", accessor: (r: Reg44Visit) => r.visitDate },
-    { header: "Visitor", accessor: (r: Reg44Visit) => r.visitor },
-    { header: "Duration", accessor: (r: Reg44Visit) => r.duration },
-    { header: "Children Spoken To", accessor: (r: Reg44Visit) => r.childrenSpoken },
-    { header: "Staff Spoken To", accessor: (r: Reg44Visit) => String(r.staffSpoken) },
-    { header: "Records Reviewed", accessor: (r: Reg44Visit) => r.recordsReviewed.join(", ") },
-    { header: "Overall Judgement", accessor: (r: Reg44Visit) => r.overallJudgement },
-    { header: "Strengths", accessor: (r: Reg44Visit) => r.strengths.join("; ") },
-    { header: "Areas for Development", accessor: (r: Reg44Visit) => r.areasForDevelopment.join("; ") },
-    { header: "Recommendations", accessor: (r: Reg44Visit) => r.recommendations.map((rec) => rec.recommendation).join("; ") },
-    { header: "Previous Actions", accessor: (r: Reg44Visit) => r.previousActionsStatus },
-    { header: "Sent to Ofsted", accessor: (r: Reg44Visit) => r.reportSentToOfsted ? "Yes" : "No" },
-    { header: "Sent Date", accessor: (r: Reg44Visit) => r.reportSentDate },
-    { header: "Notes", accessor: (r: Reg44Visit) => r.notes },
+  const exportCols: ExportColumn<Reg44VisitReport>[] = [
+    { header: "Visit Date", accessor: (r) => r.visit_date },
+    { header: "Visitor", accessor: (r) => r.visitor },
+    { header: "Duration", accessor: (r) => r.duration },
+    { header: "Children Spoken To", accessor: (r) => r.children_spoken },
+    { header: "Staff Spoken To", accessor: (r) => String(r.staff_spoken) },
+    { header: "Records Reviewed", accessor: (r) => r.records_reviewed.join(", ") },
+    { header: "Overall Judgement", accessor: (r) => r.overall_judgement },
+    { header: "Strengths", accessor: (r) => r.strengths.join("; ") },
+    { header: "Areas for Development", accessor: (r) => r.areas_for_development.join("; ") },
+    { header: "Recommendations", accessor: (r) => r.recommendations.map((rec) => rec.recommendation).join("; ") },
+    { header: "Previous Actions", accessor: (r) => r.previous_actions_status },
+    { header: "Sent to Ofsted", accessor: (r) => r.report_sent_to_ofsted ? "Yes" : "No" },
+    { header: "Sent Date", accessor: (r) => r.report_sent_date },
+    { header: "Notes", accessor: (r) => r.notes },
   ];
+
+  if (isLoading) {
+    return (
+      <PageShell title="Reg 44 Visitor Reports" subtitle="Loading...">
+        <div className="flex items-center justify-center py-20">
+          <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+        </div>
+      </PageShell>
+    );
+  }
 
   return (
     <PageShell
@@ -304,6 +449,7 @@ export default function Reg44VisitorReportsPage() {
       subtitle="Independent Person monthly visit reports — Children's Homes Regulations 2015, Reg 44"
       actions={
         <div className="flex items-center gap-2">
+          <NewVisitDialog />
           <PrintButton title="Reg 44 Visitor Reports" />
           <ExportButton data={filtered} columns={exportCols} filename="reg44-visitor-reports" />
         </div>
@@ -311,13 +457,13 @@ export default function Reg44VisitorReportsPage() {
     >
       <div id="print-area" className="space-y-6">
 
-        {/* ── Summary stats ─────────────────────────────────────────────── */}
+        {/* -- Summary stats -------------------------------------------------- */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {[
             { label: "Visits Completed (12 months)", value: visitsCompleted, icon: Calendar, clr: "text-blue-600" },
             { label: "Outstanding Recommendations", value: outstandingRecommendations, icon: AlertTriangle, clr: outstandingRecommendations > 0 ? "text-amber-600" : "text-green-600" },
             { label: "Avg. Interval (days)", value: `${avgInterval}`, icon: Clock, clr: avgInterval > 35 ? "text-red-600" : "text-green-600" },
-            { label: "Reports Sent to Ofsted", value: data.filter((v) => v.reportSentToOfsted).length + "/" + data.length, icon: FileText, clr: "text-indigo-600" },
+            { label: "Reports Sent to Ofsted", value: data.filter((v) => v.report_sent_to_ofsted).length + "/" + data.length, icon: FileText, clr: "text-indigo-600" },
           ].map((s) => (
             <Card key={s.label}>
               <CardContent className="pt-4 pb-3 text-center">
@@ -329,7 +475,14 @@ export default function Reg44VisitorReportsPage() {
           ))}
         </div>
 
-        {/* ── Search ────────────────────────────────────────────────────── */}
+        {/* -- Action Plan Progress ------------------------------------------- */}
+        <ActionPlanProgress
+          visits={data}
+          onUpdateStatus={handleUpdateStatus}
+          isPending={updateRecommendation.isPending}
+        />
+
+        {/* -- Search --------------------------------------------------------- */}
         <div className="relative max-w-md">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
@@ -344,7 +497,7 @@ export default function Reg44VisitorReportsPage() {
           {filtered.length} visit report{filtered.length !== 1 ? "s" : ""}
         </p>
 
-        {/* ── Visit cards ───────────────────────────────────────────────── */}
+        {/* -- Visit cards ---------------------------------------------------- */}
         <div className="space-y-3">
           {filtered.length === 0 && (
             <div className="text-center py-12 text-muted-foreground">
@@ -355,7 +508,7 @@ export default function Reg44VisitorReportsPage() {
 
           {filtered.map((visit) => {
             const isOpen = expandedId === visit.id;
-            const judgementClr = JUDGEMENT_CLR[visit.overallJudgement] || "bg-gray-100 text-gray-800";
+            const judgementClr = JUDGEMENT_CLR[visit.overall_judgement] || "bg-gray-100 text-gray-800";
             const hasOutstanding = visit.recommendations.some((r) => r.status === "outstanding" || r.status === "in_progress");
 
             return (
@@ -364,13 +517,13 @@ export default function Reg44VisitorReportsPage() {
                   <div className="flex items-start justify-between">
                     <div className="space-y-1">
                       <CardTitle className="text-base flex items-center gap-2">
-                        {fmt(visit.visitDate)}
+                        {fmt(visit.visit_date)}
                         <Badge variant="outline" className={judgementClr}>
-                          {visit.overallJudgement}
+                          {visit.overall_judgement}
                         </Badge>
                       </CardTitle>
                       <p className="text-sm text-muted-foreground">
-                        {visit.visitor} · {visit.duration} · Children: {visit.childrenSpoken} · Staff: {visit.staffSpoken}
+                        {visit.visitor} &middot; {visit.duration} &middot; Children: {visit.children_spoken} &middot; Staff: {visit.staff_spoken}
                       </p>
                     </div>
                     {isOpen ? <ChevronUp className="h-4 w-4 text-muted-foreground" /> : <ChevronDown className="h-4 w-4 text-muted-foreground" />}
@@ -385,7 +538,7 @@ export default function Reg44VisitorReportsPage() {
                         <ClipboardList className="h-3.5 w-3.5" /> Records Reviewed
                       </p>
                       <div className="flex flex-wrap gap-1">
-                        {visit.recordsReviewed.map((rec) => (
+                        {visit.records_reviewed.map((rec) => (
                           <Badge key={rec} variant="outline" className="text-xs bg-slate-50">
                             {rec}
                           </Badge>
@@ -409,13 +562,13 @@ export default function Reg44VisitorReportsPage() {
                     </div>
 
                     {/* Areas for development */}
-                    {visit.areasForDevelopment.length > 0 && (
+                    {visit.areas_for_development.length > 0 && (
                       <div className="bg-amber-50 rounded-lg p-3">
                         <p className="font-medium text-amber-800 mb-2 flex items-center gap-1">
                           <AlertTriangle className="h-3.5 w-3.5" /> Areas for Development
                         </p>
                         <ul className="space-y-1">
-                          {visit.areasForDevelopment.map((a, i) => (
+                          {visit.areas_for_development.map((a, i) => (
                             <li key={i} className="text-amber-700 text-xs flex items-start gap-2">
                               <span className="mt-1 h-1.5 w-1.5 rounded-full bg-amber-400 shrink-0" />
                               {a}
@@ -432,25 +585,14 @@ export default function Reg44VisitorReportsPage() {
                           <Eye className="h-3.5 w-3.5" /> Recommendations ({visit.recommendations.length})
                         </p>
                         <div className="space-y-2">
-                          {visit.recommendations.map((rec, i) => (
-                            <div key={i} className="border rounded-lg p-3 bg-muted/30">
-                              <div className="flex items-start justify-between gap-2 mb-2">
-                                <p className="text-xs font-medium flex-1">{rec.recommendation}</p>
-                                <div className="flex items-center gap-1 shrink-0">
-                                  <Badge variant="outline" className={cn("text-xs", PRIORITY_CLR[rec.priority])}>
-                                    {rec.priority}
-                                  </Badge>
-                                  <Badge variant="outline" className={cn("text-xs", STATUS_CLR[rec.status])}>
-                                    {STATUS_LABEL[rec.status]}
-                                  </Badge>
-                                </div>
-                              </div>
-                              <div className="bg-indigo-50 rounded p-2 mt-1">
-                                <p className="text-xs text-indigo-800">
-                                  <span className="font-medium">RM Response:</span> {rec.rmResponse}
-                                </p>
-                              </div>
-                            </div>
+                          {visit.recommendations.map((rec) => (
+                            <RecommendationRow
+                              key={rec.id}
+                              rec={rec}
+                              visitId={visit.id}
+                              onUpdateStatus={handleUpdateStatus}
+                              isPending={updateRecommendation.isPending}
+                            />
                           ))}
                         </div>
                       </div>
@@ -460,13 +602,13 @@ export default function Reg44VisitorReportsPage() {
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 border-t">
                       <div>
                         <p className="text-xs font-semibold text-muted-foreground uppercase mb-1">Previous Actions</p>
-                        <p className="text-xs">{visit.previousActionsStatus}</p>
+                        <p className="text-xs">{visit.previous_actions_status}</p>
                       </div>
                       <div>
                         <p className="text-xs font-semibold text-muted-foreground uppercase mb-1">Sent to Ofsted</p>
                         <p className="text-xs flex items-center gap-1">
-                          {visit.reportSentToOfsted ? (
-                            <><CheckCircle2 className="h-3 w-3 text-green-600" /> Yes — {fmt(visit.reportSentDate)}</>
+                          {visit.report_sent_to_ofsted ? (
+                            <><CheckCircle2 className="h-3 w-3 text-green-600" /> Yes — {fmt(visit.report_sent_date)}</>
                           ) : (
                             <><AlertTriangle className="h-3 w-3 text-amber-600" /> Not yet sent</>
                           )}
@@ -475,7 +617,7 @@ export default function Reg44VisitorReportsPage() {
                       <div>
                         <p className="text-xs font-semibold text-muted-foreground uppercase mb-1">Children Spoken To</p>
                         <p className="text-xs flex items-center gap-1">
-                          <Users className="h-3 w-3" /> {visit.childrenSpoken}
+                          <Users className="h-3 w-3" /> {visit.children_spoken}
                         </p>
                       </div>
                     </div>
@@ -487,6 +629,15 @@ export default function Reg44VisitorReportsPage() {
                         <p className="text-xs text-muted-foreground">{visit.notes}</p>
                       </div>
                     )}
+
+                    {/* Smart Link Panel */}
+                    <div className="pt-2 border-t">
+                      <SmartLinkPanel
+                        sourceType="reg44"
+                        sourceId={visit.id}
+                        compact
+                      />
+                    </div>
                   </CardContent>
                 )}
               </Card>
@@ -494,7 +645,7 @@ export default function Reg44VisitorReportsPage() {
           })}
         </div>
 
-        {/* ── Regulatory note ──────────────────────────────────────────── */}
+        {/* -- Regulatory note ------------------------------------------------ */}
         <div className="rounded-lg border border-dashed p-4">
           <div className="flex items-start gap-3">
             <Shield className="h-5 w-5 text-muted-foreground shrink-0 mt-0.5" />

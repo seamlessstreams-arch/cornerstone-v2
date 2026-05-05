@@ -3,6 +3,22 @@
 // New entities: buildings, vehicles, H&S, missing episodes, chronology, etc.
 // ══════════════════════════════════════════════════════════════════════════════
 
+// ── Shift Swap Request ───────────────────────────────────────────────────────
+
+export interface ShiftSwapRequest {
+  id: string;
+  requester_id: string;
+  target_staff_id: string;
+  requester_shift_id: string;
+  target_shift_id: string | null;
+  status: "pending" | "approved" | "declined";
+  reason: string;
+  manager_notes: string | null;
+  decided_by: string | null;
+  decided_at: string | null;
+  created_at: string;
+}
+
 // ── Missing from Care Episode ─────────────────────────────────────────────────
 
 export interface MissingEpisode {
@@ -1334,6 +1350,40 @@ export interface Reg44Visit {
   created_at: string;
   created_by: string;
   updated_at: string;
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// REG 44 VISITOR REPORT TRACKER — types (action plan & compliance tracker)
+// ══════════════════════════════════════════════════════════════════════════════
+
+export interface Reg44Recommendation {
+  id: string;
+  recommendation: string;
+  priority: "low" | "medium" | "high";
+  rm_response: string;
+  status: "completed" | "in_progress" | "outstanding";
+  evidence_notes: string | null;
+  completed_at: string | null;
+}
+
+export interface Reg44VisitReport {
+  id: string;
+  home_id: string;
+  visit_date: string;
+  visitor: string;
+  duration: string;
+  children_spoken: string;
+  staff_spoken: number;
+  records_reviewed: string[];
+  overall_judgement: string;
+  strengths: string[];
+  areas_for_development: string[];
+  recommendations: Reg44Recommendation[];
+  previous_actions_status: string;
+  report_sent_to_ofsted: boolean;
+  report_sent_date: string;
+  notes: string;
+  created_at: string;
 }
 
 // ══════════════════════════════════════════════════════════════════════════════

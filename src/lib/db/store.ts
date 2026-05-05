@@ -25,6 +25,8 @@ import type {
   Audit, MaintenanceItem,
   WelfareCheck, WelfareCheckRound,
   OutcomeTarget, OutcomeReview,
+  ShiftSwapRequest,
+  Reg44VisitReport, Reg44Recommendation,
 } from "@/types/extended";
 import type { Document, DocumentReadReceipt, Expense } from "@/types";
 import type { UploadedDocument, DocumentAuditEntry } from "@/types/documents";
@@ -97,6 +99,37 @@ const store = {
   // Outcomes Tracker
   outcomeTargets: [] as OutcomeTarget[],
   outcomeReviews: [] as OutcomeReview[],
+  // Reg 44 Visitor Reports
+  reg44VisitReports: [] as Reg44VisitReport[],
+  // Shift Swap Requests
+  shiftSwaps: [
+    {
+      id: "swap_001",
+      requester_id: "staff_anna",
+      target_staff_id: "staff_edward",
+      requester_shift_id: "shift_004",
+      target_shift_id: "shift_003",
+      status: "pending",
+      reason: "Medical appointment on this date — happy to swap sleep-in for Edward's day shift.",
+      manager_notes: null,
+      decided_by: null,
+      decided_at: null,
+      created_at: new Date(Date.now() - 2 * 3600000).toISOString(),
+    },
+    {
+      id: "swap_002",
+      requester_id: "staff_lackson",
+      target_staff_id: "staff_diane",
+      requester_shift_id: "shift_005",
+      target_shift_id: null,
+      status: "pending",
+      reason: "Family commitment — need to swap my day shift, Diane has agreed informally.",
+      manager_notes: null,
+      decided_by: null,
+      decided_at: null,
+      created_at: new Date(Date.now() - 5 * 3600000).toISOString(),
+    },
+  ] as ShiftSwapRequest[],
 };
 
 // Seed missing episodes
@@ -1687,6 +1720,109 @@ store.outcomeReviews = [
   { id: "or_005", target_id: "ot_013", child_id: "yp_casey", home_id: "home_oak", review_date: daysFromNow(-10), previous_rating: 2 as const, new_rating: 3 as const, direction: "improving" as const, reviewer_id: "staff_chervelle", reviewer_role: "Key Worker", yp_participated: true, yp_voice: "Sam taught me to breathe when I feel upset. It works sometimes.", progress_notes: "Casey now using 3 regulation strategies: deep breathing, counting, and drawing. CAMHS therapist reports good therapeutic engagement.", barriers: "Difficulty generalising strategies to school environment.", next_steps: "Share strategies with school SENCO. Consider visual prompt card.", created_at: outNow },
 ] as OutcomeReview[];
 
+// ── Seed Reg 44 Visit Reports ─────────────────────────────────────────────────
+
+const r44d = (n: number) => { const dt = new Date(); dt.setDate(dt.getDate() + n); return dt.toISOString().slice(0, 10); };
+
+store.reg44VisitReports = [
+  {
+    id: "v44_1", home_id: "home_oak", visit_date: r44d(-7),
+    visitor: "Margaret Thompson (Independent)", duration: "4 hours",
+    children_spoken: "3/3", staff_spoken: 4,
+    records_reviewed: ["daily logs", "medication", "incidents"],
+    overall_judgement: "Good — no immediate concerns.",
+    strengths: [
+      "Warm, positive relationships observed between staff and young people throughout the visit",
+      "Medication records are excellent — accurate, timely, and countersigned consistently",
+      "All three children spoke positively about their care and relationships with key workers",
+    ],
+    areas_for_development: [
+      "Sleep log completion is inconsistent — 3 gaps identified in the past month where entries were missed on night shifts",
+      "One fire drill is overdue by 12 days — last drill was 14 weeks ago against a quarterly requirement",
+    ],
+    recommendations: [
+      { id: "rec44_1a", recommendation: "Implement a nightly checklist to ensure sleep logs are completed before end of each night shift. Consider adding a prompt to the night staff handover template.", priority: "medium", rm_response: "Accepted. Night shift checklist updated to include sleep log verification. Team briefed at handover. Will monitor compliance over next 4 weeks.", status: "in_progress", evidence_notes: null, completed_at: null },
+      { id: "rec44_1b", recommendation: "Conduct fire drill within 7 days and review the scheduling system to prevent future overruns. Evidence drill completion to the visitor.", priority: "high", rm_response: "Fire drill completed on " + r44d(-5) + " (both day and evening scenarios). Calendar alerts set for 11-week intervals to provide a buffer before the quarterly deadline.", status: "completed", evidence_notes: "Fire drill log signed by all staff. Photos of drill attached.", completed_at: r44d(-5) },
+      { id: "rec44_1c", recommendation: "Consider involving young people in reviewing and updating the house rules display, which appears dated.", priority: "low", rm_response: "Agreed — will add to next children's meeting agenda. Young people will co-design updated display.", status: "in_progress", evidence_notes: null, completed_at: null },
+    ],
+    previous_actions_status: "2 closed, 0 outstanding",
+    report_sent_to_ofsted: true, report_sent_date: r44d(-5),
+    notes: "Visitor had unrestricted access throughout. All children were relaxed and willing to speak. Staff were open and transparent.",
+    created_at: new Date(Date.now() - 7 * 86400000).toISOString(),
+  },
+  {
+    id: "v44_2", home_id: "home_oak", visit_date: r44d(-37),
+    visitor: "Margaret Thompson", duration: "3.5 hours",
+    children_spoken: "2/3 (Casey absent — school trip)", staff_spoken: 3,
+    records_reviewed: ["daily logs", "supervision records", "key working sessions"],
+    overall_judgement: "Good.",
+    strengths: [
+      "Home is clean, warm, and welcoming — presented to a high standard throughout",
+      "Children's bedrooms are well-personalised reflecting their interests and identities",
+      "Staff morale is notably positive — team appear well-supported and cohesive",
+    ],
+    areas_for_development: [
+      "One staff supervision session was completed 3 days late — while content was thorough, the delay means it fell outside the 6-weekly frequency requirement",
+    ],
+    recommendations: [
+      { id: "rec44_2a", recommendation: "Review supervision scheduling to build in buffer time. Consider a tracker that alerts the manager 1 week before supervision is due.", priority: "medium", rm_response: "Cornerstone supervision tracker now set to alert 7 days before due date. Deputy to cover if RM unavailable. No supervisions will be more than 1 day late going forward.", status: "completed", evidence_notes: "Tracker screenshot uploaded. Deputy coverage confirmed in team minutes.", completed_at: r44d(-30) },
+      { id: "rec44_2b", recommendation: "Ensure Casey is spoken to at the next visit — visitor to consider scheduling an additional brief visit if Casey is unavailable again.", priority: "medium", rm_response: "Noted. Casey's school schedule shared with visitor to support planning. Casey confirmed she is happy to speak at next visit.", status: "completed", evidence_notes: null, completed_at: r44d(-8) },
+    ],
+    previous_actions_status: "All previous actions closed",
+    report_sent_to_ofsted: true, report_sent_date: r44d(-35),
+    notes: "Casey was on a school residential trip — positive that the home supports these opportunities. Spoke with Casey's key worker about her progress.",
+    created_at: new Date(Date.now() - 37 * 86400000).toISOString(),
+  },
+  {
+    id: "v44_3", home_id: "home_oak", visit_date: r44d(-67),
+    visitor: "Margaret Thompson", duration: "4 hours",
+    children_spoken: "3/3", staff_spoken: 4,
+    records_reviewed: ["key working records", "behaviour logs", "TCI records", "placement plans"],
+    overall_judgement: "Good with notable practice.",
+    strengths: [
+      "Outstanding key work records — detailed, reflective, and clearly child-centred with the young person's voice evident throughout",
+      "Casey's progress was explicitly noted — significant reduction in incidents and improved school attendance over the past 3 months",
+      "TCI (Therapeutic Crisis Intervention) use was appropriate, proportionate, and well-documented with thorough debriefs",
+    ],
+    areas_for_development: [
+      "Garden furniture (wooden bench and table) is weathered and one bench leg is split — this presents a minor trip hazard and should be replaced",
+    ],
+    recommendations: [
+      { id: "rec44_3a", recommendation: "Replace or remove damaged garden furniture to eliminate trip hazard. Ensure replacement furniture is suitable for outdoor use year-round.", priority: "medium", rm_response: "Damaged furniture removed immediately on day of visit. Replacement outdoor furniture ordered — weather-resistant composite material. Budget approved by RI. Expected delivery within 2 weeks.", status: "completed", evidence_notes: "Receipt for new furniture. Before/after photos.", completed_at: r44d(-55) },
+    ],
+    previous_actions_status: "All previous actions closed",
+    report_sent_to_ofsted: true, report_sent_date: r44d(-65),
+    notes: "Visitor commended the quality of key working and therapeutic approach. Recommended the home's key work model as potential good practice example for the organisation.",
+    created_at: new Date(Date.now() - 67 * 86400000).toISOString(),
+  },
+  {
+    id: "v44_4", home_id: "home_oak", visit_date: r44d(-97),
+    visitor: "Margaret Thompson", duration: "3 hours",
+    children_spoken: "3/3", staff_spoken: 3,
+    records_reviewed: ["notifications register", "staffing records", "complaints log", "activities programme"],
+    overall_judgement: "Requires improvement in one area.",
+    strengths: [
+      "Strong, trusting relationships evident between young people and their key workers",
+      "Activities programme is varied, inclusive, and reflects each child's individual interests and goals",
+      "Complaint handling is thorough — young people confirmed they know how to complain and feel heard",
+    ],
+    areas_for_development: [
+      "One Ofsted notification was submitted 2 days late — the notification related to a Schedule 5 event and should have been made within 24 hours without exception",
+      "The staffing plan for the home is not displayed in a location accessible to staff — regulation requires the staffing plan to be available",
+    ],
+    recommendations: [
+      { id: "rec44_4a", recommendation: "Review the notification process to identify why the delay occurred. Implement a checklist for notifiable events that includes immediate notification as step one, before any other actions.", priority: "high", rm_response: "Root cause identified — RM was on leave and deputy was unsure of the classification. Notifiable events decision tree created and laminated for office. All senior staff briefed. Deputy completed notification training refresher.", status: "completed", evidence_notes: "Decision tree photographed and shared. Training attendance log.", completed_at: r44d(-90) },
+      { id: "rec44_4b", recommendation: "Display the current staffing plan in the staff office and ensure it is updated whenever changes occur. All staff should know where to find it.", priority: "medium", rm_response: "Staffing plan now displayed in staff office (laminated, on noticeboard). Updated version uploaded to Cornerstone. All staff informed at team meeting.", status: "completed", evidence_notes: "Photo of noticeboard. Team meeting minutes.", completed_at: r44d(-92) },
+      { id: "rec44_4c", recommendation: "Consider adding notification timescales to the staff induction pack so all staff (including agency) understand the urgency requirements.", priority: "low", rm_response: "Induction pack updated to include notification timescales and decision tree. Agency staff receive a summary card on arrival.", status: "completed", evidence_notes: "Updated induction pack PDF uploaded.", completed_at: r44d(-85) },
+      { id: "rec44_4d", recommendation: "Review whether the activities programme is being consistently recorded in daily logs — two activity sessions were referenced by children but not recorded in the log.", priority: "low", rm_response: "Acknowledged. Staff reminded to log all structured activities. Daily log template updated to include a specific activities section to prompt recording.", status: "completed", evidence_notes: null, completed_at: r44d(-88) },
+    ],
+    previous_actions_status: "1 outstanding from previous visit (garden furniture — subsequently addressed)",
+    report_sent_to_ofsted: true, report_sent_date: r44d(-95),
+    notes: "Visitor expressed concern about the notification delay and requested written confirmation that the process has been reviewed. This has been provided.",
+    created_at: new Date(Date.now() - 97 * 86400000).toISOString(),
+  },
+] as Reg44VisitReport[];
+
 // ── CRUD helpers ──────────────────────────────────────────────────────────────
 
 export function getStore() { return store; }
@@ -1986,6 +2122,27 @@ export const db = {
       } as Shift;
       store.shifts.push(shift);
       return shift;
+    },
+  },
+
+  // ── Shift Swaps ─────────────────────────────────────────────────────────
+  shiftSwaps: {
+    findAll: () => store.shiftSwaps,
+    findPending: () => store.shiftSwaps.filter((s) => s.status === "pending"),
+    create: (data: Partial<ShiftSwapRequest>): ShiftSwapRequest => {
+      const swap = {
+        ...data,
+        id: generateId("swap"),
+        created_at: new Date().toISOString(),
+      } as ShiftSwapRequest;
+      store.shiftSwaps.push(swap);
+      return swap;
+    },
+    update: (id: string, data: Partial<ShiftSwapRequest>): ShiftSwapRequest | null => {
+      const idx = store.shiftSwaps.findIndex((s) => s.id === id);
+      if (idx === -1) return null;
+      store.shiftSwaps[idx] = { ...store.shiftSwaps[idx], ...data };
+      return store.shiftSwaps[idx];
     },
   },
 
@@ -2479,6 +2636,31 @@ export const db = {
         };
       }
       return review;
+    },
+  },
+
+  // ── Reg 44 Visit Reports ─────────────────────────────────────────────────
+  reg44VisitReports: {
+    findAll: () => store.reg44VisitReports,
+    findById: (id: string) => store.reg44VisitReports.find((v) => v.id === id),
+    create: (data: Partial<Reg44VisitReport>): Reg44VisitReport => {
+      const visit = { ...data, id: generateId("v44"), created_at: new Date().toISOString() } as Reg44VisitReport;
+      store.reg44VisitReports.push(visit);
+      return visit;
+    },
+    update: (id: string, data: Partial<Reg44VisitReport>): Reg44VisitReport | null => {
+      const idx = store.reg44VisitReports.findIndex((v) => v.id === id);
+      if (idx === -1) return null;
+      store.reg44VisitReports[idx] = { ...store.reg44VisitReports[idx], ...data };
+      return store.reg44VisitReports[idx];
+    },
+    updateRecommendation: (visitId: string, recId: string, data: Partial<Reg44Recommendation>): Reg44Recommendation | null => {
+      const visit = store.reg44VisitReports.find((v) => v.id === visitId);
+      if (!visit) return null;
+      const recIdx = visit.recommendations.findIndex((r) => r.id === recId);
+      if (recIdx === -1) return null;
+      visit.recommendations[recIdx] = { ...visit.recommendations[recIdx], ...data };
+      return visit.recommendations[recIdx];
     },
   },
 };
