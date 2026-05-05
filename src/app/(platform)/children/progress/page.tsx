@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useProgressGoals, useProgressEntries, useProgressSnapshots } from "@/hooks/use-intelligence-layer";
 import { PageShell } from "@/components/layout/page-shell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -227,6 +228,29 @@ const DEMO_OUTCOMES: OutcomeScore[] = [
 export default function ChildProgressPage() {
   const [selectedChild, setSelectedChild] = useState("child-a");
   const [showAriaDraft, setShowAriaDraft] = useState(false);
+
+  /* ── API hooks (soft-wire for live data) ────────────────────────────────── */
+  const { data: goalsData } = useProgressGoals(selectedChild);
+  const { data: entriesData } = useProgressEntries(selectedChild);
+  const { data: snapshotsData } = useProgressSnapshots(selectedChild);
+
+  useEffect(() => {
+    if (goalsData?.persisted && goalsData.data.length > 0) {
+      // TODO: map API data to local state when Supabase is connected
+    }
+  }, [goalsData]);
+
+  useEffect(() => {
+    if (entriesData?.persisted && entriesData.data.length > 0) {
+      // TODO: map API data to local state when Supabase is connected
+    }
+  }, [entriesData]);
+
+  useEffect(() => {
+    if (snapshotsData?.persisted && snapshotsData.data.length > 0) {
+      // TODO: map API data to local state when Supabase is connected
+    }
+  }, [snapshotsData]);
 
   const getScoreColor = (score: number) => {
     if (score >= 8) return "bg-green-500";

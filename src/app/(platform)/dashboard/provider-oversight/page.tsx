@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useProviderSummaries } from "@/hooks/use-intelligence-layer";
 import { PageShell } from "@/components/layout/page-shell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -209,6 +210,15 @@ const DEMO_OVERSIGHT_LOG: OversightEntry[] = [
 export default function ProviderOversightPage() {
   const [selectedHome, setSelectedHome] = useState<string>("all");
   const [oversightComment, setOversightComment] = useState("");
+
+  /* ── API hook (soft-wire for live data) ─────────────────────────────────── */
+  const { data: apiData } = useProviderSummaries();
+
+  useEffect(() => {
+    if (apiData?.persisted && apiData.summaries.length > 0) {
+      // TODO: map API data to local state when Supabase is connected
+    }
+  }, [apiData]);
 
   const filteredHomes =
     selectedHome === "all"

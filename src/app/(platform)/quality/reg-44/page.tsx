@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
+import { useReg44Visits } from "@/hooks/use-intelligence-layer";
 import { PageShell } from "@/components/layout/page-shell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -325,6 +326,15 @@ export default function Reg44Page() {
   const [visits] = useState<Reg44Visit[]>(DEMO_VISITS);
   const [actions] = useState<Reg44Action[]>(DEMO_ACTIONS);
   const [expandedVisit, setExpandedVisit] = useState<string | null>(null);
+
+  /* ── API hook (soft-wire for live data) ─────────────────────────────────── */
+  const { data: apiData } = useReg44Visits();
+
+  useEffect(() => {
+    if (apiData?.persisted && apiData.visits.length > 0) {
+      // TODO: map API data to local state when Supabase is connected
+    }
+  }, [apiData]);
   const [tab, setTab] = useState("visits");
   const [actionFilter, setActionFilter] = useState<string>("all");
 

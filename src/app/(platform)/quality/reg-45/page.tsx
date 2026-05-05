@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
+import { useReg45Reviews } from "@/hooks/use-intelligence-layer";
 import { PageShell } from "@/components/layout/page-shell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -209,6 +210,15 @@ const DEMO_EVIDENCE: EvidenceItem[] = [
 export default function Reg45Page() {
   const [reviews] = useState<Reg45Review[]>(DEMO_REVIEWS);
   const [selectedReviewId, setSelectedReviewId] = useState<string>("r1");
+
+  /* ── API hook (soft-wire for live data) ─────────────────────────────────── */
+  const { data: apiData } = useReg45Reviews();
+
+  useEffect(() => {
+    if (apiData?.persisted && apiData.reviews.length > 0) {
+      // TODO: map API data to local state when Supabase is connected
+    }
+  }, [apiData]);
   const [showEvidence, setShowEvidence] = useState(false);
   const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set(["qualityOfCareSummary", "childrenExperiencesSummary"]));
 

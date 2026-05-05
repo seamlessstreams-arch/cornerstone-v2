@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { PageShell } from "@/components/ui/page-shell";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -18,6 +18,7 @@ import {
   FileSearch, BookOpen, Scale, Activity, Siren,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useAttentionItems, useUpdateAttentionItem } from "@/hooks/use-intelligence-layer";
 import type {
   AttentionCategory,
   Urgency,
@@ -339,12 +340,32 @@ const CATEGORY_OPTIONS: { value: AttentionCategory; label: string }[] = [
    ══════════════════════════════════════════════════════════════════════════════ */
 
 export default function ManagerControlCentrePage() {
-  const [items] = useState<AttentionItem[]>(DEMO_ITEMS);
+  const { data: apiData } = useAttentionItems();
+  const [items, setItems] = useState<AttentionItem[]>(DEMO_ITEMS);
   const [filterCategory, setFilterCategory] = useState("all");
   const [filterUrgency, setFilterUrgency] = useState("all");
   const [filterStatus, setFilterStatus] = useState("all");
   const [filterPeriod, setFilterPeriod] = useState("7d");
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const updateItem = useUpdateAttentionItem();
+
+  useEffect(() => {
+    if (apiData?.persisted && apiData.items.length > 0) {
+      setItems((apiData.items as Record<string, unknown>[]).map((item) => ({
+        id: item.id as string,
+        title: item.title as string,
+        category: item.category as AttentionCategory,
+        urgency: item.urgency as Urgency,
+        status: item.status as AttentionStatus,
+        reason: (item.reason as string) ?? "",
+        suggestedAction: (item.suggested_action as string) ?? "",
+        dueDate: item.due_date as string | undefined,
+        childName: item.child_id as string | undefined,
+        staffName: item.staff_id as string | undefined,
+        createdAt: item.created_at as string,
+      })));
+    }
+  }, [apiData]);
 
   const toggle = (id: string) => setExpandedId((prev) => (prev === id ? null : id));
 

@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useLearningReviews } from "@/hooks/use-intelligence-layer";
 import { PageShell } from "@/components/layout/page-shell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -155,6 +156,15 @@ const DEFAULT_PROMPTS: ReviewPrompt[] = [
 export default function IncidentLearningReviewPage() {
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [prompts, setPrompts] = useState<Record<string, ReviewPrompt[]>>({});
+
+  /* ── API hook (soft-wire for live data) ─────────────────────────────────── */
+  const { data: apiData } = useLearningReviews();
+
+  useEffect(() => {
+    if (apiData?.persisted && apiData.reviews.length > 0) {
+      // TODO: map API data to local state when Supabase is connected
+    }
+  }, [apiData]);
   const [managerNotes, setManagerNotes] = useState<Record<string, string>>({});
   const [learningSummaries, setLearningSummaries] = useState<Record<string, string>>({});
   const [ariaAnalysis, setAriaAnalysis] = useState<Record<string, boolean>>({});

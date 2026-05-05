@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useVoiceEntries } from "@/hooks/use-intelligence-layer";
 import { PageShell } from "@/components/layout/page-shell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -240,6 +241,15 @@ const DEMO_OUTCOMES: OutcomeFromVoice[] = [
 export default function VoiceOfTheChildPage() {
   const [selectedChild, setSelectedChild] = useState("child-a");
   const [showAddForm, setShowAddForm] = useState(false);
+
+  /* ── API hook (soft-wire for live data) ─────────────────────────────────── */
+  const { data: apiData } = useVoiceEntries();
+
+  useEffect(() => {
+    if (apiData?.persisted && apiData.entries.length > 0) {
+      // TODO: map API data to local state when Supabase is connected
+    }
+  }, [apiData]);
 
   return (
     <PageShell

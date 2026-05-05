@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
+import { useEvidenceItems } from "@/hooks/use-intelligence-layer";
 import { PageShell } from "@/components/ui/page-shell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -528,6 +529,15 @@ const PERIOD_OPTIONS = [
    ══════════════════════════════════════════════════════════════════════════════ */
 
 export default function OfstedEvidenceRoomPage() {
+  /* ── API hook (soft-wire for live data) ─────────────────────────────────── */
+  const { data: apiData } = useEvidenceItems();
+
+  useEffect(() => {
+    if (apiData?.persisted && apiData.items.length > 0) {
+      // TODO: map API data to local state when Supabase is connected
+    }
+  }, [apiData]);
+
   /* ── filter state ──────────────────────────────────────────────────────── */
   const [activeTab, setActiveTab] = useState<string>("all");
   const [categoryFilter, setCategoryFilter] = useState<string>("all");

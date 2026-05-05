@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useCompetenceRecords } from "@/hooks/use-intelligence-layer";
 import { PageShell } from "@/components/layout/page-shell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -310,6 +311,15 @@ const DEMO_STAFF: StaffRecord[] = [
 
 export default function StaffCompetencePassportPage() {
   const [selectedStaff, setSelectedStaff] = useState("staff-a");
+
+  /* ── API hook (soft-wire for live data) ─────────────────────────────────── */
+  const { data: apiData } = useCompetenceRecords();
+
+  useEffect(() => {
+    if (apiData?.persisted && apiData.records.length > 0) {
+      // TODO: map API data to local state when Supabase is connected
+    }
+  }, [apiData]);
 
   const staff = DEMO_STAFF.find((s) => s.id === selectedStaff) || DEMO_STAFF[0];
 
