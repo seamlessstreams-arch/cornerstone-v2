@@ -13,7 +13,7 @@ const healthyRecord: StaffCompetenceRecord = {
   staffId: "staff-1",
   homeId: "home-1",
   saferRecruitmentComplete: true,
-  dbsStatus: "valid",
+  dbsStatus: "current",
   dbsDate: daysAgo(100),
   dbsUpdateService: true,
   referencesReceived: true,
