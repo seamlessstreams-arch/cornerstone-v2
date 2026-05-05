@@ -2342,3 +2342,155 @@ export interface EducationRecord {
   home_id?: string;
   created_at?: string;
 }
+
+// ── Delegated Authority ─────────────────────────────────────────────────────
+
+export type DelegatedAuthStatus = "granted" | "not_granted" | "partial" | "pending";
+export type DelegatedAuthCategory = "medical" | "education" | "leisure" | "overnight_stays" | "travel" | "haircut_appearance" | "social_media" | "religion" | "pocket_money" | "contact" | "photography" | "emergency";
+
+export interface DelegatedAuthorityItem {
+  category: DelegatedAuthCategory;
+  status: DelegatedAuthStatus;
+  detail: string;
+  conditions: string;
+  granted_by: string;
+  granted_date: string;
+  review_date: string;
+}
+
+export interface DelegatedAuthority {
+  id: string;
+  child_id: string;
+  last_reviewed: string;
+  next_review: string;
+  items: DelegatedAuthorityItem[];
+  notes: string;
+}
+
+// ── House Meetings ──────────────────────────────────────────────────────────
+
+export type HouseMeetingType = "regular" | "special" | "emergency" | "welcome" | "feedback";
+
+export interface HouseMeetingAgendaItem {
+  topic: string;
+  raised_by: string;
+  discussion: string;
+  outcome: string;
+}
+
+export interface HouseMeeting {
+  id: string;
+  date: string;
+  meeting_type: HouseMeetingType;
+  chair_person: string;
+  minutes_taker: string;
+  children_present: string[];
+  children_absent: string[];
+  staff_present: string[];
+  agenda: HouseMeetingAgendaItem[];
+  child_feedback: string[];
+  actions_from_previous: { action: string; owner: string; completed: boolean }[];
+  new_actions: { action: string; owner: string; due_date: string }[];
+  general_comments: string;
+  next_meeting_date: string;
+  duration: number;
+  created_at: string;
+}
+
+// ── Sanctions & Rewards ─────────────────────────────────────────────────────
+
+export type SRDirection = "reward" | "sanction";
+export type SRRewardType = "verbal_praise" | "written_praise" | "activity_reward" | "token" | "achievement" | "privilege" | "other_reward";
+export type SRSanctionType = "loss_of_privilege" | "verbal_reminder" | "time_out" | "earlier_bedtime" | "extra_chore" | "restorative_conversation" | "other_sanction";
+
+export interface SanctionRewardEntry {
+  id: string;
+  child_id: string;
+  date: string;
+  time: string;
+  direction: SRDirection;
+  reward_type: SRRewardType | null;
+  sanction_type: SRSanctionType | null;
+  title: string;
+  description: string;
+  context: string;
+  child_response: string;
+  outcome: string;
+  proportionate: boolean;
+  recorded_by: string;
+  created_at: string;
+}
+
+// ── Young Person Feedback ───────────────────────────────────────────────────
+
+export type YPFeedbackCategory = "food" | "activities" | "staff" | "bedroom" | "rules" | "school_support" | "feeling_safe" | "being_listened_to" | "family_contact" | "general";
+export type YPFeedbackMethod = "verbal" | "written" | "art" | "meeting" | "survey" | "worry_box" | "advocate";
+export type YPFeedbackSentiment = "very_happy" | "happy" | "ok" | "unhappy" | "very_unhappy";
+
+export interface YPFeedbackEntry {
+  id: string;
+  child_id: string;
+  date: string;
+  category: YPFeedbackCategory;
+  method: YPFeedbackMethod;
+  sentiment: YPFeedbackSentiment;
+  feedback: string;
+  action_taken: string;
+  action_by: string;
+  response_given_to_child: boolean;
+  response_date: string | null;
+  response_details: string;
+  child_satisfied: boolean | null;
+  collected_by: string;
+  notes: string;
+}
+
+// ── Sleep Log ───────────────────────────────────────────────────────────────
+
+export type SleepShiftType = "sleep_in" | "waking_night";
+export type SleepDisturbanceLevel = "none" | "minor" | "moderate" | "significant";
+
+export interface SleepDisturbance {
+  time: string;
+  young_person: string;
+  description: string;
+  action_taken: string;
+  duration: number;
+}
+
+export interface SleepLogEntry {
+  id: string;
+  date: string;
+  shift_type: SleepShiftType;
+  staff_id: string;
+  start_time: string;
+  end_time: string;
+  disturbance_level: SleepDisturbanceLevel;
+  disturbances: SleepDisturbance[];
+  checks_completed: string[];
+  building_secure: boolean;
+  alarms_set: boolean;
+  handover_notes: string;
+  morning_handover: string;
+  hours_slept: number | null;
+}
+
+// ── Compliments ─────────────────────────────────────────────────────────────
+
+export type ComplimentSource = "young_person" | "parent_carer" | "social_worker" | "irp" | "school" | "health_professional" | "reg44_visitor" | "neighbour" | "other_professional";
+export type ComplimentCategory = "care_quality" | "staff_conduct" | "environment" | "communication" | "activities" | "education_support" | "health_support" | "family_contact" | "overall_experience" | "specific_staff";
+
+export interface Compliment {
+  id: string;
+  date: string;
+  source: ComplimentSource;
+  source_name: string;
+  category: ComplimentCategory;
+  related_yp: string | null;
+  related_staff: string | null;
+  compliment: string;
+  shared_with_team: boolean;
+  shared_date: string | null;
+  added_to_reg45: boolean;
+  recorded_by: string;
+}

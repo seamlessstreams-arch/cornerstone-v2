@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/select";
 import { cn, formatDate, todayStr } from "@/lib/utils";
 import { useAuthContext } from "@/contexts/auth-context";
-import { useCreateSanction } from "@/hooks/use-sanctions";
+import { useSanctionRewards, useCreateSanctionReward } from "@/hooks/use-sanction-rewards";
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { PrintButton } from "@/components/common/print-button";
 import { ExportButton, type ExportColumn } from "@/components/common/export-button";
@@ -34,160 +34,31 @@ import {
   Smile, Frown, TrendingUp, Sparkles, Loader2,
 } from "lucide-react";
 import { toast } from "sonner";
+import type { SanctionRewardEntry, SRDirection, SRRewardType, SRSanctionType } from "@/types/extended";
 
-// ── Types ─────────────────────────────────────────────────────────────────────
 
-type EntryDirection = "reward" | "sanction";
-type RewardType = "verbal_praise" | "written_praise" | "activity_reward" | "token" | "achievement" | "privilege" | "other_reward";
-type SanctionType = "loss_of_privilege" | "verbal_reminder" | "time_out" | "earlier_bedtime" | "extra_chore" | "restorative_conversation" | "other_sanction";
-
-interface SanctionRewardEntry {
-  id: string;
-  child_id: string;
-  date: string;
-  time: string;
-  direction: EntryDirection;
-  reward_type: RewardType | null;
-  sanction_type: SanctionType | null;
-  title: string;
-  description: string;
-  context: string;
-  child_response: string;
-  outcome: string;
-  proportionate: boolean;
-  recorded_by: string;
-  created_at: string;
-}
 
 // ── Config ────────────────────────────────────────────────────────────────────
 
-const REWARD_LABELS: Record<RewardType, string> = {
+const REWARD_LABELS: Record<SRRewardType, string> = {
   verbal_praise: "Verbal Praise", written_praise: "Written Praise", activity_reward: "Activity Reward",
   token: "Token / Points", achievement: "Achievement", privilege: "Privilege", other_reward: "Other",
 };
 
-const SANCTION_LABELS: Record<SanctionType, string> = {
+const SANCTION_LABELS: Record<SRSanctionType, string> = {
   loss_of_privilege: "Loss of Privilege", verbal_reminder: "Verbal Reminder", time_out: "Time Out",
   earlier_bedtime: "Earlier Bedtime", extra_chore: "Extra Chore", restorative_conversation: "Restorative Conversation",
   other_sanction: "Other",
 };
 
-// ── Seed Data ─────────────────────────────────────────────────────────────────
-
-const d = (n: number) => {
-  const dt = new Date(); dt.setDate(dt.getDate() + n); return dt.toISOString().slice(0, 10);
-};
-
-const SEED: SanctionRewardEntry[] = [
-  {
-    id: "sr_001", child_id: "yp_jordan", date: d(-1), time: "16:30",
-    direction: "reward", reward_type: "achievement", sanction_type: null,
-    title: "PE Student of the Week",
-    description: "Jordan received Student of the Week award for PE. Displayed excellent teamwork and leadership during inter-house football.",
-    context: "Jordan has been attending PE regularly and engaging more positively with peers.",
-    child_response: "Jordan was visibly proud. Brought certificate home and asked to display it in the lounge.",
-    outcome: "Certificate displayed. Achievement shared at house meeting. Positive feedback sent to social worker.",
-    proportionate: true, recorded_by: "staff_anna", created_at: d(-1) + "T16:30:00Z",
-  },
-  {
-    id: "sr_002", child_id: "yp_casey", date: d(-1), time: "19:00",
-    direction: "reward", reward_type: "verbal_praise", sanction_type: null,
-    title: "Helped new young person settle in",
-    description: "Casey voluntarily spent time with a visiting young person, showing them around the house and making them feel welcome.",
-    context: "A young person was visiting for an assessment day. Casey remembered their own experience and wanted to help.",
-    child_response: "Casey smiled and said 'I know what it feels like to be new.' Appeared proud of being helpful.",
-    outcome: "Verbal praise from staff. Casey's kindness noted in daily log. Discussed at handover as positive behaviour.",
-    proportionate: true, recorded_by: "staff_chervelle", created_at: d(-1) + "T19:00:00Z",
-  },
-  {
-    id: "sr_003", child_id: "yp_alex", date: d(-2), time: "20:15",
-    direction: "sanction", reward_type: null, sanction_type: "loss_of_privilege",
-    title: "Xbox time reduced — language towards staff",
-    description: "Alex used aggressive and offensive language towards a staff member during a disagreement about screen time limits. Despite de-escalation attempts, Alex continued for several minutes.",
-    context: "Alex had been asked to come off the Xbox as it was approaching bedtime routine. Initial refusal escalated to verbal aggression.",
-    child_response: "Alex was initially angry but calmed down after 15 minutes. Accepted the consequence and said 'I know I shouldn't have said that.'",
-    outcome: "Xbox time reduced by 30 minutes for the following day. Restorative conversation completed the next morning. Alex apologised to the staff member.",
-    proportionate: true, recorded_by: "staff_edward", created_at: d(-2) + "T20:15:00Z",
-  },
-  {
-    id: "sr_004", child_id: "yp_jordan", date: d(-3), time: "17:00",
-    direction: "reward", reward_type: "activity_reward", sanction_type: null,
-    title: "Extra community time — consistent good behaviour",
-    description: "Jordan earned an additional hour of community time at the weekend due to a week of consistent positive behaviour, completing homework, and helping with communal chores.",
-    context: "Jordan has been working towards earning additional privileges as part of their individual behaviour plan.",
-    child_response: "Jordan was excited and immediately started planning what to do with the extra time. Asked to go to the park with a friend.",
-    outcome: "Extra hour approved for Saturday afternoon. Jordan plans to visit the local park. Staff to escort.",
-    proportionate: true, recorded_by: "staff_anna", created_at: d(-3) + "T17:00:00Z",
-  },
-  {
-    id: "sr_005", child_id: "yp_casey", date: d(-4), time: "21:00",
-    direction: "sanction", reward_type: null, sanction_type: "earlier_bedtime",
-    title: "Earlier bedtime — refused to complete evening routine",
-    description: "Casey refused to complete evening routine tasks (shower, teeth, prepare uniform) despite multiple reminders over 45 minutes.",
-    context: "Casey had a difficult day at school and was tired and irritable by evening. Staff acknowledged this but explained the routine still needed to happen.",
-    child_response: "Casey initially protested the earlier bedtime but accepted it after a calm conversation about choices and consequences.",
-    outcome: "Bedtime brought forward by 20 minutes. Casey completed partial routine. Staff made hot chocolate as comfort. Discussed approach for tomorrow.",
-    proportionate: true, recorded_by: "staff_diane", created_at: d(-4) + "T21:00:00Z",
-  },
-  {
-    id: "sr_006", child_id: "yp_alex", date: d(-5), time: "15:30",
-    direction: "reward", reward_type: "written_praise", sanction_type: null,
-    title: "Excellent creative writing piece",
-    description: "Alex produced an outstanding creative writing piece in English class. Teacher sent home a written note praising Alex's imagination and emotional depth in the story.",
-    context: "Alex has been struggling with engagement at school, so this was a significant achievement.",
-    child_response: "Alex seemed surprised but pleased. Read the teacher's note twice and kept it in their room.",
-    outcome: "Teacher's note filed in education records. Positive feedback shared with social worker. Alex encouraged to enter a local writing competition.",
-    proportionate: true, recorded_by: "staff_edward", created_at: d(-5) + "T15:30:00Z",
-  },
-  {
-    id: "sr_007", child_id: "yp_alex", date: d(-6), time: "18:00",
-    direction: "sanction", reward_type: null, sanction_type: "restorative_conversation",
-    title: "Restorative conversation — damage to communal area",
-    description: "Alex threw a cushion across the lounge which knocked over a lamp. The lamp shade was dented but not broken. Alex was upset about a phone call with family.",
-    context: "Alex had just finished a difficult phone call with a family member and was visibly upset. Staff were already monitoring.",
-    child_response: "Alex initially refused to engage but after 30 minutes accepted a restorative conversation. Acknowledged that throwing things wasn't okay even when upset.",
-    outcome: "Alex helped staff straighten the lamp shade. Agreed to use the calm room when feeling overwhelmed instead of the communal area. No further consequence — emotional context considered.",
-    proportionate: true, recorded_by: "staff_ryan", created_at: d(-6) + "T18:00:00Z",
-  },
-  {
-    id: "sr_008", child_id: "yp_jordan", date: d(-7), time: "08:30",
-    direction: "reward", reward_type: "token", sanction_type: null,
-    title: "Morning routine completed independently",
-    description: "Jordan completed the full morning routine (wash, dress, breakfast, uniform, bag ready) without any prompting for the third consecutive day.",
-    context: "Independence in morning routine has been a key target on Jordan's placement plan. Previously required multiple prompts.",
-    child_response: "Jordan was pleased to have the points added to their chart. Said 'I didn't even need reminding!'",
-    outcome: "3 tokens added to reward chart. Jordan approaching the 20-token goal for a chosen activity. Progress noted in placement plan review.",
-    proportionate: true, recorded_by: "staff_anna", created_at: d(-7) + "T08:30:00Z",
-  },
-  {
-    id: "sr_009", child_id: "yp_casey", date: d(0), time: "12:00",
-    direction: "reward", reward_type: "privilege", sanction_type: null,
-    title: "Cooking choice for dinner — week of positive engagement",
-    description: "Casey earned the privilege of choosing Friday night dinner and helping to cook it. Had a positive week across school and home.",
-    context: "Casey has shown consistent improvement in engagement and communication over the past week.",
-    child_response: "Casey chose to make pasta carbonara. Very enthusiastic about the cooking session.",
-    outcome: "Cooking session planned for Friday evening with key worker. Ingredients to be bought on Thursday shopping trip.",
-    proportionate: true, recorded_by: "staff_chervelle", created_at: d(0) + "T12:00:00Z",
-  },
-  {
-    id: "sr_010", child_id: "yp_alex", date: d(0), time: "10:00",
-    direction: "reward", reward_type: "verbal_praise", sanction_type: null,
-    title: "Apologised independently to staff member",
-    description: "Alex approached a staff member independently to apologise for yesterday's verbal aggression. Apologised sincerely and asked if they could 'start fresh today.'",
-    context: "Follow-up from the sanction recorded on the previous day (SR-003). Staff did not prompt the apology.",
-    child_response: "Alex appeared relieved after apologising. Staff noted improved mood and positive engagement for the rest of the morning.",
-    outcome: "Verbal praise given. Apology acknowledged. Alex's emotional growth noted in key worker session. Positive reinforcement of repair skills.",
-    proportionate: true, recorded_by: "staff_edward", created_at: d(0) + "T10:00:00Z",
-  },
-];
 
 // ── Component ─────────────────────────────────────────────────────────────────
 
 export default function SanctionsRewardsPage() {
   const { currentUser } = useAuthContext();
-  const createSanction = useCreateSanction();
-
-  const [entries, setEntries] = useState<SanctionRewardEntry[]>(SEED);
+  const { data: srData, isLoading } = useSanctionRewards();
+  const createSR = useCreateSanctionReward();
+  const entries = srData?.data ?? [];
   const [search, setSearch] = useState("");
   const [childFilter, setChildFilter] = useState("all");
   const [dirFilter, setDirFilter] = useState("all");
@@ -198,9 +69,9 @@ export default function SanctionsRewardsPage() {
 
   // new form
   const [nChild, setNChild] = useState("");
-  const [nDir, setNDir] = useState<EntryDirection | "">("");
-  const [nRewardType, setNRewardType] = useState<RewardType | "">("");
-  const [nSanctionType, setNSanctionType] = useState<SanctionType | "">("");
+  const [nDir, setNDir] = useState<SRDirection | "">("");
+  const [nRewardType, setNRewardType] = useState<SRRewardType | "">("");
+  const [nSanctionType, setNSanctionType] = useState<SRSanctionType | "">("");
   const [nTitle, setNTitle] = useState("");
   const [nDesc, setNDesc] = useState("");
   const [nContext, setNContext] = useState("");
@@ -283,14 +154,13 @@ export default function SanctionsRewardsPage() {
   /* ── create ─────────────────────────────────────────────────────────────── */
   const handleCreate = () => {
     if (!nChild || !nDir || !nTitle || !nDesc) return;
-    const entry: SanctionRewardEntry = {
-      id: `sr_${Date.now()}`,
+    createSR.mutate({
       child_id: nChild,
       date: todayStr(),
       time: new Date().toTimeString().slice(0, 5),
-      direction: nDir as EntryDirection,
-      reward_type: nDir === "reward" && nRewardType ? (nRewardType as RewardType) : null,
-      sanction_type: nDir === "sanction" && nSanctionType ? (nSanctionType as SanctionType) : null,
+      direction: nDir as SRDirection,
+      reward_type: nDir === "reward" && nRewardType ? (nRewardType as SRRewardType) : null,
+      sanction_type: nDir === "sanction" && nSanctionType ? (nSanctionType as SRSanctionType) : null,
       title: nTitle,
       description: nDesc,
       context: nContext,
@@ -299,12 +169,15 @@ export default function SanctionsRewardsPage() {
       proportionate: true,
       recorded_by: currentUser?.id || "staff_darren",
       created_at: new Date().toISOString(),
-    };
-    setEntries(prev => [entry, ...prev]);
-    createSanction.mutate({ child_id: nChild, record_type: nDir as "sanction" | "reward" | "consequence" | "restorative", title: nTitle, date: todayStr(), description: nDesc, child_response: nChildResp, outcome: nOutcome, proportionate: true, child_informed: true, staff_id: currentUser?.id || "staff_darren", status: "active" }, { onSuccess: () => toast.success("Entry saved"), onError: () => toast.error("Failed to save entry") });
-    setShowNew(false);
-    setNChild(""); setNDir(""); setNRewardType(""); setNSanctionType("");
-    setNTitle(""); setNDesc(""); setNContext(""); setNChildResp(""); setNOutcome("");
+    } as Partial<SanctionRewardEntry>, {
+      onSuccess: () => {
+        toast.success("Entry saved");
+        setShowNew(false);
+        setNChild(""); setNDir(""); setNRewardType(""); setNSanctionType("");
+        setNTitle(""); setNDesc(""); setNContext(""); setNChildResp(""); setNOutcome("");
+      },
+      onError: () => toast.error("Failed to save entry"),
+    });
   };
 
   return (
@@ -321,6 +194,10 @@ export default function SanctionsRewardsPage() {
         </div>
       }
     >
+      {isLoading ? (
+        <div className="flex items-center justify-center py-20"><Loader2 className="h-6 w-6 animate-spin text-muted-foreground" /></div>
+      ) : (
+      <>
       {/* ── Stats ────────────────────────────────────────────────────────────── */}
       <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
         {[
@@ -531,6 +408,9 @@ export default function SanctionsRewardsPage() {
         </div>
       </div>
 
+      </>
+      )}
+
       {/* ══ New Dialog ════════════════════════════════════════════════════════ */}
       <Dialog open={showNew} onOpenChange={setShowNew}>
         <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
@@ -547,7 +427,7 @@ export default function SanctionsRewardsPage() {
             </div>
             <div>
               <label htmlFor="sr-direction" className="text-sm font-medium mb-1 block">Type *</label>
-              <Select value={nDir} onValueChange={v => { setNDir(v as EntryDirection); setNRewardType(""); setNSanctionType(""); }}>
+              <Select value={nDir} onValueChange={v => { setNDir(v as SRDirection); setNRewardType(""); setNSanctionType(""); }}>
                 <SelectTrigger id="sr-direction"><SelectValue placeholder="Reward or Sanction" /></SelectTrigger>
                 <SelectContent>
                   <SelectItem value="reward">Reward</SelectItem>
@@ -558,10 +438,10 @@ export default function SanctionsRewardsPage() {
             {nDir === "reward" && (
               <div>
                 <label htmlFor="sr-reward-type" className="text-sm font-medium mb-1 block">Reward Type</label>
-                <Select value={nRewardType} onValueChange={v => setNRewardType(v as RewardType)}>
+                <Select value={nRewardType} onValueChange={v => setNRewardType(v as SRRewardType)}>
                   <SelectTrigger id="sr-reward-type"><SelectValue placeholder="Select" /></SelectTrigger>
                   <SelectContent>
-                    {(Object.entries(REWARD_LABELS) as [RewardType, string][]).map(([k, v]) => (
+                    {(Object.entries(REWARD_LABELS) as [SRRewardType, string][]).map(([k, v]) => (
                       <SelectItem key={k} value={k}>{v}</SelectItem>
                     ))}
                   </SelectContent>
@@ -571,10 +451,10 @@ export default function SanctionsRewardsPage() {
             {nDir === "sanction" && (
               <div>
                 <label htmlFor="sr-sanction-type" className="text-sm font-medium mb-1 block">Sanction Type</label>
-                <Select value={nSanctionType} onValueChange={v => setNSanctionType(v as SanctionType)}>
+                <Select value={nSanctionType} onValueChange={v => setNSanctionType(v as SRSanctionType)}>
                   <SelectTrigger id="sr-sanction-type"><SelectValue placeholder="Select" /></SelectTrigger>
                   <SelectContent>
-                    {(Object.entries(SANCTION_LABELS) as [SanctionType, string][]).map(([k, v]) => (
+                    {(Object.entries(SANCTION_LABELS) as [SRSanctionType, string][]).map(([k, v]) => (
                       <SelectItem key={k} value={k}>{v}</SelectItem>
                     ))}
                   </SelectContent>
@@ -604,7 +484,7 @@ export default function SanctionsRewardsPage() {
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setShowNew(false)}>Cancel</Button>
-            <Button onClick={handleCreate} disabled={!nChild || !nDir || !nTitle || !nDesc || createSanction.isPending}>{createSanction.isPending ? <><Loader2 className="h-4 w-4 animate-spin mr-1" />Saving...</> : "Save Entry"}</Button>
+            <Button onClick={handleCreate} disabled={!nChild || !nDir || !nTitle || !nDesc || createSR.isPending}>{createSR.isPending ? <><Loader2 className="h-4 w-4 animate-spin mr-1" />Saving...</> : "Save Entry"}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

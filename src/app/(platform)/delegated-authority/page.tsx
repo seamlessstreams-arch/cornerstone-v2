@@ -4,7 +4,7 @@ import { useState, useMemo } from "react";
 import {
   KeyRound, Search, ArrowUpDown, Filter,
   AlertTriangle, CheckCircle2, Clock,
-  ChevronDown, ChevronUp, XCircle, HelpCircle,
+  ChevronDown, ChevronUp, XCircle, HelpCircle, Loader2,
 } from "lucide-react";
 import { PageShell } from "@/components/ui/page-shell";
 import { ExportButton, type ExportColumn } from "@/components/ui/export-button";
@@ -17,33 +17,21 @@ import {
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import { getYPName } from "@/lib/seed-data";
+import { useDelegatedAuthority } from "@/hooks/use-delegated-authority";
+import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
+import type { DelegatedAuthority, DelegatedAuthorityItem, DelegatedAuthStatus, DelegatedAuthCategory } from "@/types/extended";
 
-/* ── helpers ─────────────────────────────────────────────────────────── */
-const d = (n: number) => {
-  const dt = new Date();
-  dt.setDate(dt.getDate() + n);
-  return dt.toISOString().slice(0, 10);
-};
-
-/* ── types ───────────────────────────────────────────────────────────── */
-const AUTH_STATUSES = ["granted", "not_granted", "partial", "pending"] as const;
-type AuthStatus = typeof AUTH_STATUSES[number];
-const STATUS_COLORS: Record<AuthStatus, string> = {
+/* ── config ──────────────────────────────────────────────────────────── */
+const STATUS_COLORS: Record<DelegatedAuthStatus, string> = {
   granted: "bg-green-100 text-green-800", not_granted: "bg-red-100 text-red-800",
   partial: "bg-yellow-100 text-yellow-800", pending: "bg-slate-100 text-slate-800",
 };
-const STATUS_LABELS: Record<AuthStatus, string> = {
+const STATUS_LABELS: Record<DelegatedAuthStatus, string> = {
   granted: "Granted", not_granted: "Not Granted",
   partial: "Partial", pending: "Pending",
 };
 
-const CATEGORIES = [
-  "medical", "education", "leisure", "overnight_stays",
-  "travel", "haircut_appearance", "social_media", "religion",
-  "pocket_money", "contact", "photography", "emergency",
-] as const;
-type Category = typeof CATEGORIES[number];
-const CAT_LABELS: Record<Category, string> = {
+const CAT_LABELS: Record<DelegatedAuthCategory, string> = {
   medical: "Medical Consent", education: "Education Decisions",
   leisure: "Leisure & Activities", overnight_stays: "Overnight Stays",
   travel: "Travel & Holidays", haircut_appearance: "Haircut / Appearance",
@@ -52,82 +40,10 @@ const CAT_LABELS: Record<Category, string> = {
   photography: "Photography / Media", emergency: "Emergency Decisions",
 };
 
-interface DelegatedItem {
-  category: Category;
-  status: AuthStatus;
-  detail: string;
-  conditions: string;
-  grantedBy: string;
-  grantedDate: string;
-  reviewDate: string;
-}
-
-interface DelegatedAuthority {
-  id: string;
-  youngPersonId: string;
-  lastReviewed: string;
-  nextReview: string;
-  items: DelegatedItem[];
-  notes: string;
-}
-
-/* ── seed data ───────────────────────────────────────────────────────── */
-const SEED: DelegatedAuthority[] = [
-  {
-    id: "da_1", youngPersonId: "yp_alex", lastReviewed: d(-30), nextReview: d(60),
-    items: [
-      { category: "medical", status: "granted", detail: "Home can consent to routine medical and dental appointments. GP, dentist, optician.", conditions: "Emergency medical only — notify SW within 24 hours.", grantedBy: "Sarah Mitchell (SW)", grantedDate: d(-90), reviewDate: d(60) },
-      { category: "education", status: "granted", detail: "Home can make day-to-day education decisions. School trips within UK, parents' evenings, PEP attendance.", conditions: "School changes require LA consultation.", grantedBy: "Sarah Mitchell (SW)", grantedDate: d(-90), reviewDate: d(60) },
-      { category: "leisure", status: "granted", detail: "Home can authorise local activities, sports clubs, youth groups.", conditions: "Overnight activities require SW approval.", grantedBy: "Sarah Mitchell (SW)", grantedDate: d(-90), reviewDate: d(60) },
-      { category: "overnight_stays", status: "not_granted", detail: "Overnight stays with friends NOT delegated.", conditions: "Must be approved by SW on a case-by-case basis. Risk assessment required for each request.", grantedBy: "Sarah Mitchell (SW)", grantedDate: d(-90), reviewDate: d(60) },
-      { category: "travel", status: "partial", detail: "Day trips within England and Wales — delegated. Overseas travel — NOT delegated.", conditions: "International travel requires court order / SW written consent.", grantedBy: "Sarah Mitchell (SW)", grantedDate: d(-90), reviewDate: d(60) },
-      { category: "haircut_appearance", status: "granted", detail: "Home can consent to haircuts and reasonable appearance changes.", conditions: "Significant changes (e.g. piercings, tattoos) NOT included — must consult SW and parent.", grantedBy: "Sarah Mitchell (SW)", grantedDate: d(-90), reviewDate: d(60) },
-      { category: "social_media", status: "granted", detail: "Home manages age-appropriate social media access with agreed boundaries.", conditions: "Privacy settings must be reviewed. No public profiles. Phone boundaries as per care plan.", grantedBy: "Sarah Mitchell (SW)", grantedDate: d(-30), reviewDate: d(60) },
-      { category: "religion", status: "granted", detail: "Alex's wishes regarding religion are respected. No compulsory attendance.", conditions: "If Alex expresses interest in attending a place of worship, facilitate.", grantedBy: "Sarah Mitchell (SW)", grantedDate: d(-90), reviewDate: d(60) },
-      { category: "pocket_money", status: "granted", detail: "Home provides agreed pocket money per placement plan.", conditions: "Amount reviewed at each LAC review.", grantedBy: "Sarah Mitchell (SW)", grantedDate: d(-90), reviewDate: d(60) },
-      { category: "contact", status: "partial", detail: "Home facilitates contact as per contact plan. Additional phone contact can be agreed by home.", conditions: "Any changes to face-to-face contact must be agreed with SW.", grantedBy: "Sarah Mitchell (SW)", grantedDate: d(-90), reviewDate: d(60) },
-      { category: "photography", status: "granted", detail: "Home can include Alex in general home photos for life story and records.", conditions: "No images on social media or public platforms. School photos — consent given.", grantedBy: "Sarah Mitchell (SW)", grantedDate: d(-90), reviewDate: d(60) },
-      { category: "emergency", status: "granted", detail: "Home can make emergency decisions to safeguard Alex.", conditions: "Notify SW as soon as reasonably practicable after any emergency action.", grantedBy: "Sarah Mitchell (SW)", grantedDate: d(-90), reviewDate: d(60) },
-    ],
-    notes: "Alex's delegated authority is well-established. Overnight stays remain not delegated due to previous safeguarding concerns — reviewed at each LAC review. Social media boundaries updated following recent incident.",
-  },
-  {
-    id: "da_2", youngPersonId: "yp_jordan", lastReviewed: d(-14), nextReview: d(76),
-    items: [
-      { category: "medical", status: "granted", detail: "Routine medical appointments delegated.", conditions: "Non-routine or surgical referrals — notify SW and parent.", grantedBy: "Tom Richards (SW)", grantedDate: d(-150), reviewDate: d(76) },
-      { category: "education", status: "granted", detail: "Day-to-day education decisions delegated.", conditions: "None specified.", grantedBy: "Tom Richards (SW)", grantedDate: d(-150), reviewDate: d(76) },
-      { category: "leisure", status: "granted", detail: "All local leisure activities delegated.", conditions: "None specified.", grantedBy: "Tom Richards (SW)", grantedDate: d(-150), reviewDate: d(76) },
-      { category: "overnight_stays", status: "pending", detail: "Under discussion — Jordan has requested a sleepover at a school friend's home.", conditions: "Risk assessment to be completed. DBS not required for short stays but home visit recommended.", grantedBy: "Tom Richards (SW)", grantedDate: d(-14), reviewDate: d(30) },
-      { category: "travel", status: "granted", detail: "UK travel delegated.", conditions: "Passport held by SW. International travel not delegated.", grantedBy: "Tom Richards (SW)", grantedDate: d(-150), reviewDate: d(76) },
-      { category: "haircut_appearance", status: "granted", detail: "Standard haircuts and age-appropriate appearance changes.", conditions: "None specified.", grantedBy: "Tom Richards (SW)", grantedDate: d(-150), reviewDate: d(76) },
-      { category: "social_media", status: "granted", detail: "Age-appropriate access managed by home.", conditions: "Home to monitor. Jordan currently has minimal social media use.", grantedBy: "Tom Richards (SW)", grantedDate: d(-150), reviewDate: d(76) },
-      { category: "contact", status: "partial", detail: "Maternal contact facilitated by home. Paternal contact supervised only.", conditions: "Paternal contact must be supervised by staff. Changes require SW agreement.", grantedBy: "Tom Richards (SW)", grantedDate: d(-150), reviewDate: d(76) },
-      { category: "photography", status: "granted", detail: "Home photos for records and life story.", conditions: "No public platforms.", grantedBy: "Tom Richards (SW)", grantedDate: d(-150), reviewDate: d(76) },
-      { category: "emergency", status: "granted", detail: "Emergency safeguarding decisions delegated.", conditions: "Notify SW within 24 hours.", grantedBy: "Tom Richards (SW)", grantedDate: d(-150), reviewDate: d(76) },
-    ],
-    notes: "Jordan's delegated authority is clear. Overnight stay request is currently being discussed with SW — Jordan keen to accept a friend's invitation. Paternal contact remains supervised per court order.",
-  },
-  {
-    id: "da_3", youngPersonId: "yp_casey", lastReviewed: d(-45), nextReview: d(45),
-    items: [
-      { category: "medical", status: "granted", detail: "Routine and CAMHS appointments delegated.", conditions: "Medication changes — notify SW and mother.", grantedBy: "Lisa Park (SW)", grantedDate: d(-310), reviewDate: d(45) },
-      { category: "education", status: "granted", detail: "College decisions delegated. Course changes may be made.", conditions: "Notify SW of any course changes.", grantedBy: "Lisa Park (SW)", grantedDate: d(-310), reviewDate: d(45) },
-      { category: "leisure", status: "granted", detail: "All activities delegated. Casey has good independence skills.", conditions: "Casey can attend local activities independently where risk assessed.", grantedBy: "Lisa Park (SW)", grantedDate: d(-310), reviewDate: d(45) },
-      { category: "overnight_stays", status: "granted", detail: "Overnight stays with approved friends delegated.", conditions: "Must be risk assessed. Parent contact details obtained. Maximum 2 nights.", grantedBy: "Lisa Park (SW)", grantedDate: d(-100), reviewDate: d(45) },
-      { category: "travel", status: "granted", detail: "UK travel delegated.", conditions: "None specified.", grantedBy: "Lisa Park (SW)", grantedDate: d(-310), reviewDate: d(45) },
-      { category: "haircut_appearance", status: "granted", detail: "Full delegation.", conditions: "Casey's mother to be consulted on significant changes as a courtesy.", grantedBy: "Lisa Park (SW)", grantedDate: d(-310), reviewDate: d(45) },
-      { category: "social_media", status: "granted", detail: "Age-appropriate access. Casey manages responsibly.", conditions: "Standard monitoring by home.", grantedBy: "Lisa Park (SW)", grantedDate: d(-310), reviewDate: d(45) },
-      { category: "contact", status: "granted", detail: "Home facilitates contact per plan. Mother has open access for phone calls.", conditions: "None — positive contact arrangement.", grantedBy: "Lisa Park (SW)", grantedDate: d(-310), reviewDate: d(45) },
-      { category: "photography", status: "granted", detail: "Full consent for records, life story, and college portfolio.", conditions: "No social media posts without Casey's consent.", grantedBy: "Lisa Park (SW)", grantedDate: d(-310), reviewDate: d(45) },
-      { category: "emergency", status: "granted", detail: "Emergency decisions delegated.", conditions: "Standard notification protocol.", grantedBy: "Lisa Park (SW)", grantedDate: d(-310), reviewDate: d(45) },
-    ],
-    notes: "Casey has the most comprehensive delegated authority reflecting their age, maturity, and strong parental relationship. Mother is supportive and involved. All categories actively delegated.",
-  },
-];
-
 /* ── component ───────────────────────────────────────────────────────── */
 export default function DelegatedAuthorityPage() {
-  const [records] = useState<DelegatedAuthority[]>(SEED);
+  const { data: daData, isLoading } = useDelegatedAuthority();
+  const records = daData?.data ?? [];
   const [search, setSearch] = useState("");
   const [filterStatus, setFilterStatus] = useState("all");
   const [expanded, setExpanded] = useState<string | null>(null);
@@ -142,36 +58,36 @@ export default function DelegatedAuthorityPage() {
     const notGranted = r.items.filter((i) => i.status === "not_granted").length;
     const partial = r.items.filter((i) => i.status === "partial").length;
     const pending = r.items.filter((i) => i.status === "pending").length;
-    const reviewDue = r.nextReview < today;
-    return { id: r.youngPersonId, name: getYPName(r.youngPersonId), granted, notGranted, partial, pending, reviewDue, total: r.items.length };
+    const reviewDue = r.next_review < today;
+    return { id: r.child_id, name: getYPName(r.child_id), granted, notGranted, partial, pending, reviewDue, total: r.items.length };
   });
 
   const totalPending = records.reduce((s, r) => s + r.items.filter((i) => i.status === "pending").length, 0);
-  const reviewsDue = records.filter((r) => r.nextReview < today).length;
+  const reviewsDue = records.filter((r) => r.next_review < today).length;
 
   /* flatten for export */
   const exportData = useMemo(() => {
     return records.flatMap((r) =>
-      r.items.map((item) => ({ youngPersonId: r.youngPersonId, lastReviewed: r.lastReviewed, nextReview: r.nextReview, ...item }))
+      r.items.map((item) => ({ child_id: r.child_id, last_reviewed: r.last_reviewed, next_review: r.next_review, ...item }))
     );
   }, [records]);
 
-  type ExportRow = DelegatedItem & { youngPersonId: string; lastReviewed: string; nextReview: string };
+  type ExportRow = DelegatedAuthorityItem & { child_id: string; last_reviewed: string; next_review: string };
 
   const exportCols: ExportColumn<ExportRow>[] = [
-    { header: "Young Person", accessor: (r: ExportRow) => getYPName(r.youngPersonId) },
+    { header: "Young Person", accessor: (r: ExportRow) => getYPName(r.child_id) },
     { header: "Category", accessor: (r: ExportRow) => CAT_LABELS[r.category] },
     { header: "Status", accessor: (r: ExportRow) => STATUS_LABELS[r.status] },
     { header: "Detail", accessor: (r: ExportRow) => r.detail },
     { header: "Conditions", accessor: (r: ExportRow) => r.conditions },
-    { header: "Granted By", accessor: (r: ExportRow) => r.grantedBy },
-    { header: "Granted Date", accessor: (r: ExportRow) => r.grantedDate },
-    { header: "Review Date", accessor: (r: ExportRow) => r.reviewDate },
-    { header: "Last Reviewed", accessor: (r: ExportRow) => r.lastReviewed },
-    { header: "Next Review", accessor: (r: ExportRow) => r.nextReview },
+    { header: "Granted By", accessor: (r: ExportRow) => r.granted_by },
+    { header: "Granted Date", accessor: (r: ExportRow) => r.granted_date },
+    { header: "Review Date", accessor: (r: ExportRow) => r.review_date },
+    { header: "Last Reviewed", accessor: (r: ExportRow) => r.last_reviewed },
+    { header: "Next Review", accessor: (r: ExportRow) => r.next_review },
   ];
 
-  const StatusIcon = ({ status }: { status: AuthStatus }) => {
+  const StatusIcon = ({ status }: { status: DelegatedAuthStatus }) => {
     switch (status) {
       case "granted": return <CheckCircle2 className="h-4 w-4 text-green-600" />;
       case "not_granted": return <XCircle className="h-4 w-4 text-red-600" />;
@@ -191,6 +107,9 @@ export default function DelegatedAuthorityPage() {
         </div>
       }
     >
+      {isLoading ? (
+        <div className="flex items-center justify-center py-20"><Loader2 className="h-6 w-6 animate-spin text-muted-foreground" /></div>
+      ) : (
       <div id="print-area" className="space-y-6">
         {/* ── stats ─────────────────────────────────────────────── */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -244,7 +163,7 @@ export default function DelegatedAuthorityPage() {
         <div className="space-y-3">
           {records.map((record) => {
             const isExpanded = expanded === record.id;
-            const yp = ypStats.find((y) => y.id === record.youngPersonId)!;
+            const yp = ypStats.find((y) => y.id === record.child_id)!;
 
             return (
               <div key={record.id} className="rounded-xl border bg-white overflow-hidden">
@@ -255,9 +174,9 @@ export default function DelegatedAuthorityPage() {
                   <div className="flex items-center gap-3 flex-1 min-w-0">
                     <KeyRound className="h-5 w-5 text-blue-600 shrink-0" />
                     <div className="min-w-0">
-                      <p className="font-medium">{getYPName(record.youngPersonId)}</p>
+                      <p className="font-medium">{getYPName(record.child_id)}</p>
                       <p className="text-xs text-muted-foreground mt-0.5">
-                        Last reviewed: {record.lastReviewed} · Next: {record.nextReview} · {yp.granted}/{yp.total} granted
+                        Last reviewed: {record.last_reviewed} · Next: {record.next_review} · {yp.granted}/{yp.total} granted
                       </p>
                     </div>
                   </div>
@@ -269,7 +188,7 @@ export default function DelegatedAuthorityPage() {
 
                 {isExpanded && (
                   <div className="border-t bg-slate-50 p-4 space-y-3">
-                    {record.items.map((item: DelegatedItem, idx: number) => (
+                    {record.items.map((item: DelegatedAuthorityItem, idx: number) => (
                       <div key={idx} className={cn("rounded-lg border p-3 text-sm",
                         item.status === "granted" ? "bg-green-50 border-green-200" :
                         item.status === "not_granted" ? "bg-red-50 border-red-200" :
@@ -288,7 +207,7 @@ export default function DelegatedAuthorityPage() {
                           <p className="text-xs"><strong>Conditions:</strong> {item.conditions}</p>
                         )}
                         <p className="text-xs text-muted-foreground mt-1">
-                          Granted by: {item.grantedBy} · {item.grantedDate} · Review: {item.reviewDate}
+                          Granted by: {item.granted_by} · {item.granted_date} · Review: {item.review_date}
                         </p>
                       </div>
                     ))}
@@ -299,6 +218,7 @@ export default function DelegatedAuthorityPage() {
                         <p className="text-sm">{record.notes}</p>
                       </div>
                     )}
+                    <SmartLinkPanel sourceType="delegated_authority" sourceId={record.id} childId={record.child_id} compact />
                   </div>
                 )}
               </div>
@@ -315,6 +235,7 @@ export default function DelegatedAuthorityPage() {
           avoids unnecessary delays in day-to-day decision-making.
         </div>
       </div>
+      )}
     </PageShell>
   );
 }

@@ -32,6 +32,12 @@ import type {
   RiskAssessment,
   EducationRecord,
   BehaviourSupportPlan,
+  DelegatedAuthority,
+  HouseMeeting,
+  SanctionRewardEntry,
+  YPFeedbackEntry,
+  SleepLogEntry,
+  Compliment,
 } from "@/types/extended";
 import type { Document, DocumentReadReceipt, Expense } from "@/types";
 import type { UploadedDocument, DocumentAuditEntry } from "@/types/documents";
@@ -116,6 +122,18 @@ const store = {
   lacReviews: [] as LACReview[],
   // Behaviour Support Plans
   behaviourSupportPlans: [] as BehaviourSupportPlan[],
+  // Delegated Authority
+  delegatedAuthority: [] as DelegatedAuthority[],
+  // House Meetings
+  houseMeetings: [] as HouseMeeting[],
+  // Sanctions & Rewards
+  sanctionRewards: [] as SanctionRewardEntry[],
+  // Young Person Feedback
+  ypFeedback: [] as YPFeedbackEntry[],
+  // Sleep Log
+  sleepLog: [] as SleepLogEntry[],
+  // Compliments
+  compliments: [] as Compliment[],
   // Shift Swap Requests
   shiftSwaps: [
     {
@@ -3165,6 +3183,105 @@ export const db = {
       if (idx === -1) return null;
       store.behaviourSupportPlans[idx] = { ...store.behaviourSupportPlans[idx], ...data };
       return store.behaviourSupportPlans[idx];
+    },
+  },
+
+  delegatedAuthority: {
+    findAll: () => store.delegatedAuthority,
+    findByChild: (childId: string) => store.delegatedAuthority.filter((r) => r.child_id === childId),
+    findById: (id: string) => store.delegatedAuthority.find((r) => r.id === id),
+    create: (data: Partial<DelegatedAuthority>): DelegatedAuthority => {
+      const record = { ...data, id: generateId("da"), created_at: new Date().toISOString() } as DelegatedAuthority;
+      store.delegatedAuthority.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<DelegatedAuthority>): DelegatedAuthority | null => {
+      const idx = store.delegatedAuthority.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.delegatedAuthority[idx] = { ...store.delegatedAuthority[idx], ...data };
+      return store.delegatedAuthority[idx];
+    },
+  },
+
+  houseMeetings: {
+    findAll: () => store.houseMeetings,
+    findById: (id: string) => store.houseMeetings.find((r) => r.id === id),
+    create: (data: Partial<HouseMeeting>): HouseMeeting => {
+      const record = { ...data, id: generateId("hm"), created_at: new Date().toISOString() } as HouseMeeting;
+      store.houseMeetings.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<HouseMeeting>): HouseMeeting | null => {
+      const idx = store.houseMeetings.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.houseMeetings[idx] = { ...store.houseMeetings[idx], ...data };
+      return store.houseMeetings[idx];
+    },
+  },
+
+  sanctionRewards: {
+    findAll: () => store.sanctionRewards,
+    findByChild: (childId: string) => store.sanctionRewards.filter((r) => r.child_id === childId),
+    findById: (id: string) => store.sanctionRewards.find((r) => r.id === id),
+    create: (data: Partial<SanctionRewardEntry>): SanctionRewardEntry => {
+      const record = { ...data, id: generateId("sr"), created_at: new Date().toISOString() } as SanctionRewardEntry;
+      store.sanctionRewards.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<SanctionRewardEntry>): SanctionRewardEntry | null => {
+      const idx = store.sanctionRewards.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.sanctionRewards[idx] = { ...store.sanctionRewards[idx], ...data };
+      return store.sanctionRewards[idx];
+    },
+  },
+
+  ypFeedback: {
+    findAll: () => store.ypFeedback,
+    findByChild: (childId: string) => store.ypFeedback.filter((r) => r.child_id === childId),
+    findById: (id: string) => store.ypFeedback.find((r) => r.id === id),
+    create: (data: Partial<YPFeedbackEntry>): YPFeedbackEntry => {
+      const record = { ...data, id: generateId("fb"), created_at: new Date().toISOString() } as YPFeedbackEntry;
+      store.ypFeedback.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<YPFeedbackEntry>): YPFeedbackEntry | null => {
+      const idx = store.ypFeedback.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.ypFeedback[idx] = { ...store.ypFeedback[idx], ...data };
+      return store.ypFeedback[idx];
+    },
+  },
+
+  sleepLog: {
+    findAll: () => store.sleepLog,
+    findById: (id: string) => store.sleepLog.find((r) => r.id === id),
+    create: (data: Partial<SleepLogEntry>): SleepLogEntry => {
+      const record = { ...data, id: generateId("sl"), created_at: new Date().toISOString() } as SleepLogEntry;
+      store.sleepLog.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<SleepLogEntry>): SleepLogEntry | null => {
+      const idx = store.sleepLog.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.sleepLog[idx] = { ...store.sleepLog[idx], ...data };
+      return store.sleepLog[idx];
+    },
+  },
+
+  compliments: {
+    findAll: () => store.compliments,
+    findById: (id: string) => store.compliments.find((r) => r.id === id),
+    create: (data: Partial<Compliment>): Compliment => {
+      const record = { ...data, id: generateId("cmp"), created_at: new Date().toISOString() } as Compliment;
+      store.compliments.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<Compliment>): Compliment | null => {
+      const idx = store.compliments.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.compliments[idx] = { ...store.compliments[idx], ...data };
+      return store.compliments[idx];
     },
   },
 };

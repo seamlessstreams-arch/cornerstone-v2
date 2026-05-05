@@ -4,7 +4,7 @@ import { useState, useMemo } from "react";
 import {
   Moon, Plus, Search, ArrowUpDown, Filter,
   AlertTriangle, Clock, CheckCircle2,
-  ChevronDown, ChevronUp, CloudMoon, Sun,
+  ChevronDown, ChevronUp, CloudMoon, Sun, Loader2,
 } from "lucide-react";
 import { PageShell } from "@/components/ui/page-shell";
 import { ExportButton, type ExportColumn } from "@/components/ui/export-button";
@@ -22,156 +22,28 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { getStaffName } from "@/lib/seed-data";
+import { useSleepLog, useCreateSleepLogEntry } from "@/hooks/use-sleep-log";
+import { toast } from "sonner";
+import type { SleepLogEntry, SleepShiftType, SleepDisturbanceLevel, SleepDisturbance } from "@/types/extended";
 
-/* ── helpers ─────────────────────────────────────────────────────────── */
-const d = (n: number) => {
-  const dt = new Date();
-  dt.setDate(dt.getDate() + n);
-  return dt.toISOString().slice(0, 10);
-};
-
-/* ── types ───────────────────────────────────────────────────────────── */
-const SHIFT_TYPES = ["sleep_in", "waking_night"] as const;
-type ShiftType = typeof SHIFT_TYPES[number];
-const SHIFT_LABELS: Record<ShiftType, string> = {
+/* ── config ──────────────────────────────────────────────────────────── */
+const SHIFT_TYPES: SleepShiftType[] = ["sleep_in", "waking_night"];
+const SHIFT_LABELS: Record<SleepShiftType, string> = {
   sleep_in: "Sleep-in", waking_night: "Waking Night",
 };
 
-const DISTURBANCE_LEVELS = ["none", "minor", "moderate", "significant"] as const;
-type DisturbanceLevel = typeof DISTURBANCE_LEVELS[number];
-const DISTURBANCE_COLORS: Record<DisturbanceLevel, string> = {
+const DISTURBANCE_LEVELS: SleepDisturbanceLevel[] = ["none", "minor", "moderate", "significant"];
+const DISTURBANCE_COLORS: Record<SleepDisturbanceLevel, string> = {
   none: "bg-green-100 text-green-800", minor: "bg-yellow-100 text-yellow-800",
   moderate: "bg-orange-100 text-orange-800", significant: "bg-red-100 text-red-800",
 };
 
-interface Disturbance {
-  time: string;
-  youngPerson: string;
-  description: string;
-  actionTaken: string;
-  duration: number; // minutes
-}
-
-interface SleepLogEntry {
-  id: string;
-  date: string;
-  shiftType: ShiftType;
-  staffId: string;
-  startTime: string;
-  endTime: string;
-  disturbanceLevel: DisturbanceLevel;
-  disturbances: Disturbance[];
-  checksCompleted: string[];
-  buildingSecure: boolean;
-  alarmsSet: boolean;
-  handoverNotes: string;
-  morningHandover: string;
-  hoursSlept: number | null;
-}
-
-/* ── seed data ───────────────────────────────────────────────────────── */
-const SEED: SleepLogEntry[] = [
-  {
-    id: "sl_1", date: d(-1), shiftType: "sleep_in", staffId: "staff_anna",
-    startTime: "22:00", endTime: "07:00", disturbanceLevel: "minor",
-    disturbances: [
-      {
-        time: "01:15", youngPerson: "Alex",
-        description: "Heard moving around in room. Door opened briefly.",
-        actionTaken: "Checked on Alex — said they needed the bathroom. Returned to bed within 5 mins. No concerns.",
-        duration: 10,
-      },
-    ],
-    checksCompleted: ["22:30 — All YP in rooms", "23:00 — House quiet", "00:00 — All settled", "06:00 — Morning check"],
-    buildingSecure: true, alarmsSet: true,
-    handoverNotes: "Alex had an unsettled evening — argument with Jordan before bed. May be more restless tonight.",
-    morningHandover: "Quiet night overall. Alex woke once but settled quickly. All YP still sleeping at 06:00. Kitchen prepped for breakfast.",
-    hoursSlept: 7.5,
-  },
-  {
-    id: "sl_2", date: d(-2), shiftType: "waking_night", staffId: "staff_lackson",
-    startTime: "22:00", endTime: "07:00", disturbanceLevel: "moderate",
-    disturbances: [
-      {
-        time: "23:45", youngPerson: "Jordan",
-        description: "Came downstairs saying they couldn't sleep. Appeared anxious.",
-        actionTaken: "Made warm drink. Sat with Jordan in lounge for 20 mins. Talked about worries about contact visit tomorrow. Returned to bed at 00:10.",
-        duration: 25,
-      },
-      {
-        time: "03:30", youngPerson: "Casey",
-        description: "Shouting in sleep — possible nightmare.",
-        actionTaken: "Went to Casey's door, listened for 2 mins. Settled without intervention. Continued to monitor.",
-        duration: 5,
-      },
-    ],
-    checksCompleted: ["22:30 — All YP in rooms", "23:00 — Checks complete", "00:30 — Post-Jordan check", "02:00 — All quiet", "04:00 — Post-Casey check", "06:00 — Morning round"],
-    buildingSecure: true, alarmsSet: true,
-    handoverNotes: "Jordan has contact visit tomorrow — expressed anxiety during evening. Casey reported bad dreams recently.",
-    morningHandover: "Two disturbances overnight. Jordan settled after support. Casey had brief nightmare but self-settled. All YP sleeping at 06:00. Laundry started.",
-    hoursSlept: null,
-  },
-  {
-    id: "sl_3", date: d(-3), shiftType: "sleep_in", staffId: "staff_edward",
-    startTime: "22:00", endTime: "07:00", disturbanceLevel: "none",
-    disturbances: [],
-    checksCompleted: ["22:30 — All YP in rooms", "23:00 — House quiet", "06:00 — Morning check"],
-    buildingSecure: true, alarmsSet: true,
-    handoverNotes: "Good evening. All YP engaged well at movie night. Everyone in rooms by 21:30.",
-    morningHandover: "Completely quiet night. No disturbances. All YP sleeping soundly at 06:00. Bins put out for collection.",
-    hoursSlept: 8,
-  },
-  {
-    id: "sl_4", date: d(-4), shiftType: "waking_night", staffId: "staff_mirela",
-    startTime: "22:00", endTime: "07:00", disturbanceLevel: "significant",
-    disturbances: [
-      {
-        time: "00:30", youngPerson: "Alex",
-        description: "Heard loud music from Alex's room. Asked to turn down.",
-        actionTaken: "Knocked on door, reminded Alex of house rules re: noise after 22:00. Alex turned music off after brief protest.",
-        duration: 10,
-      },
-      {
-        time: "02:15", youngPerson: "Alex",
-        description: "Alex came downstairs, upset about social media message. Tearful and angry.",
-        actionTaken: "Spent 45 minutes with Alex in lounge. Used de-escalation. Phone placed in office for rest of night as agreed. Alex returned to bed at 03:05.",
-        duration: 50,
-      },
-      {
-        time: "04:00", youngPerson: "Jordan",
-        description: "Woken by earlier noise. Came to check what was happening.",
-        actionTaken: "Reassured Jordan everything was fine. Returned to bed within 5 mins.",
-        duration: 5,
-      },
-    ],
-    checksCompleted: ["22:30 — All in rooms", "23:00 — Music issue with Alex", "01:00 — Settled", "03:10 — Post-incident check", "04:10 — All settled", "06:00 — Morning"],
-    buildingSecure: true, alarmsSet: true,
-    handoverNotes: "Alex's phone access to be discussed at team meeting. Pattern of late-night social media distress.",
-    morningHandover: "Significant night — three disturbances, mainly Alex. Social media triggered emotional distress at 02:15. Phone now in office. Jordan also woke. All settled by 04:10. RM to be updated.",
-    hoursSlept: null,
-  },
-  {
-    id: "sl_5", date: d(-5), shiftType: "sleep_in", staffId: "staff_diane",
-    startTime: "22:00", endTime: "07:00", disturbanceLevel: "minor",
-    disturbances: [
-      {
-        time: "05:30", youngPerson: "Casey",
-        description: "Woke early, came downstairs for a drink.",
-        actionTaken: "Casey got a glass of water and returned to room independently. No concerns.",
-        duration: 5,
-      },
-    ],
-    checksCompleted: ["22:30 — All YP in rooms", "23:00 — Settled", "05:45 — Post Casey check", "06:00 — Morning"],
-    buildingSecure: true, alarmsSet: true,
-    handoverNotes: "Good evening. Casey mentioned wanting to get up early for a run — may wake before usual.",
-    morningHandover: "Quiet night. Casey woke briefly at 05:30 for water — expected as discussed in handover. All well.",
-    hoursSlept: 7,
-  },
-];
 
 /* ── component ───────────────────────────────────────────────────────── */
 export default function SleepLogPage() {
-  const [entries] = useState<SleepLogEntry[]>(SEED);
+  const { data: slData, isLoading } = useSleepLog();
+  const createEntry = useCreateSleepLogEntry();
+  const entries = slData?.data ?? [];
   const [search, setSearch] = useState("");
   const [filterType, setFilterType] = useState("all");
   const [filterLevel, setFilterLevel] = useState("all");
@@ -185,19 +57,19 @@ export default function SleepLogPage() {
       const q = search.toLowerCase();
       list = list.filter(
         (e) =>
-          getStaffName(e.staffId).toLowerCase().includes(q) ||
-          e.handoverNotes.toLowerCase().includes(q) ||
-          e.morningHandover.toLowerCase().includes(q) ||
-          e.disturbances.some((d) => d.youngPerson.toLowerCase().includes(q) || d.description.toLowerCase().includes(q))
+          getStaffName(e.staff_id).toLowerCase().includes(q) ||
+          e.handover_notes.toLowerCase().includes(q) ||
+          e.morning_handover.toLowerCase().includes(q) ||
+          e.disturbances.some((d) => d.young_person.toLowerCase().includes(q) || d.description.toLowerCase().includes(q))
       );
     }
-    if (filterType !== "all") list = list.filter((e) => e.shiftType === filterType);
-    if (filterLevel !== "all") list = list.filter((e) => e.disturbanceLevel === filterLevel);
+    if (filterType !== "all") list = list.filter((e) => e.shift_type === filterType);
+    if (filterLevel !== "all") list = list.filter((e) => e.disturbance_level === filterLevel);
 
     list.sort((a, b) => {
       switch (sortBy) {
         case "date": return b.date.localeCompare(a.date);
-        case "staff": return getStaffName(a.staffId).localeCompare(getStaffName(b.staffId));
+        case "staff": return getStaffName(a.staff_id).localeCompare(getStaffName(b.staff_id));
         case "disturbances": return b.disturbances.length - a.disturbances.length;
         default: return 0;
       }
@@ -207,25 +79,25 @@ export default function SleepLogPage() {
 
   /* stats */
   const totalNights = entries.length;
-  const quietNights = entries.filter((e) => e.disturbanceLevel === "none").length;
+  const quietNights = entries.filter((e) => e.disturbance_level === "none").length;
   const totalDisturbances = entries.reduce((s, e) => s + e.disturbances.length, 0);
-  const significantNights = entries.filter((e) => e.disturbanceLevel === "significant").length;
+  const significantNights = entries.filter((e) => e.disturbance_level === "significant").length;
 
   const exportCols: ExportColumn<SleepLogEntry>[] = [
     { header: "ID", accessor: (r: SleepLogEntry) => r.id },
     { header: "Date", accessor: (r: SleepLogEntry) => r.date },
-    { header: "Shift Type", accessor: (r: SleepLogEntry) => SHIFT_LABELS[r.shiftType] },
-    { header: "Staff", accessor: (r: SleepLogEntry) => getStaffName(r.staffId) },
-    { header: "Start", accessor: (r: SleepLogEntry) => r.startTime },
-    { header: "End", accessor: (r: SleepLogEntry) => r.endTime },
-    { header: "Disturbance Level", accessor: (r: SleepLogEntry) => r.disturbanceLevel },
+    { header: "Shift Type", accessor: (r: SleepLogEntry) => SHIFT_LABELS[r.shift_type] },
+    { header: "Staff", accessor: (r: SleepLogEntry) => getStaffName(r.staff_id) },
+    { header: "Start", accessor: (r: SleepLogEntry) => r.start_time },
+    { header: "End", accessor: (r: SleepLogEntry) => r.end_time },
+    { header: "Disturbance Level", accessor: (r: SleepLogEntry) => r.disturbance_level },
     { header: "No. Disturbances", accessor: (r: SleepLogEntry) => r.disturbances.length },
-    { header: "Disturbance Details", accessor: (r: SleepLogEntry) => r.disturbances.map((d: Disturbance) => `${d.time} — ${d.youngPerson}: ${d.description}`).join("; ") },
-    { header: "Building Secure", accessor: (r: SleepLogEntry) => r.buildingSecure ? "Yes" : "No" },
-    { header: "Alarms Set", accessor: (r: SleepLogEntry) => r.alarmsSet ? "Yes" : "No" },
-    { header: "Hours Slept", accessor: (r: SleepLogEntry) => r.hoursSlept?.toString() ?? "N/A (Waking)" },
-    { header: "Handover Notes", accessor: (r: SleepLogEntry) => r.handoverNotes },
-    { header: "Morning Handover", accessor: (r: SleepLogEntry) => r.morningHandover },
+    { header: "Disturbance Details", accessor: (r: SleepLogEntry) => r.disturbances.map((d: SleepDisturbance) => `${d.time} — ${d.young_person}: ${d.description}`).join("; ") },
+    { header: "Building Secure", accessor: (r: SleepLogEntry) => r.building_secure ? "Yes" : "No" },
+    { header: "Alarms Set", accessor: (r: SleepLogEntry) => r.alarms_set ? "Yes" : "No" },
+    { header: "Hours Slept", accessor: (r: SleepLogEntry) => r.hours_slept?.toString() ?? "N/A (Waking)" },
+    { header: "Handover Notes", accessor: (r: SleepLogEntry) => r.handover_notes },
+    { header: "Morning Handover", accessor: (r: SleepLogEntry) => r.morning_handover },
   ];
 
   return (
@@ -242,6 +114,9 @@ export default function SleepLogPage() {
         </div>
       }
     >
+      {isLoading ? (
+        <div className="flex items-center justify-center py-20"><Loader2 className="h-6 w-6 animate-spin text-muted-foreground" /></div>
+      ) : (
       <div id="print-area" className="space-y-6">
         {/* ── stats ─────────────────────────────────────────────── */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -333,21 +208,21 @@ export default function SleepLogPage() {
                   onClick={() => setExpanded(isExpanded ? null : entry.id)}
                 >
                   <div className="flex items-center gap-3 flex-1 min-w-0">
-                    {entry.shiftType === "sleep_in" ? (
+                    {entry.shift_type === "sleep_in" ? (
                       <CloudMoon className="h-5 w-5 text-indigo-600 shrink-0" />
                     ) : (
                       <Moon className="h-5 w-5 text-violet-600 shrink-0" />
                     )}
                     <div className="min-w-0">
-                      <p className="font-medium">{entry.date} — {SHIFT_LABELS[entry.shiftType]}</p>
+                      <p className="font-medium">{entry.date} — {SHIFT_LABELS[entry.shift_type]}</p>
                       <p className="text-xs text-muted-foreground mt-0.5">
-                        {getStaffName(entry.staffId)} · {entry.startTime}–{entry.endTime} · {entry.disturbances.length} disturbance(s)
+                        {getStaffName(entry.staff_id)} · {entry.start_time}–{entry.end_time} · {entry.disturbances.length} disturbance(s)
                       </p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Badge className={cn("text-xs", DISTURBANCE_COLORS[entry.disturbanceLevel])}>
-                      {entry.disturbanceLevel.charAt(0).toUpperCase() + entry.disturbanceLevel.slice(1)}
+                    <Badge className={cn("text-xs", DISTURBANCE_COLORS[entry.disturbance_level])}>
+                      {entry.disturbance_level.charAt(0).toUpperCase() + entry.disturbance_level.slice(1)}
                     </Badge>
                     {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
                   </div>
@@ -358,29 +233,29 @@ export default function SleepLogPage() {
                     {/* security checks */}
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                       <div className="flex items-center gap-1">
-                        <CheckCircle2 className={cn("h-4 w-4", entry.buildingSecure ? "text-green-600" : "text-red-600")} />
-                        <span>Building Secure: <strong>{entry.buildingSecure ? "Yes" : "No"}</strong></span>
+                        <CheckCircle2 className={cn("h-4 w-4", entry.building_secure ? "text-green-600" : "text-red-600")} />
+                        <span>Building Secure: <strong>{entry.building_secure ? "Yes" : "No"}</strong></span>
                       </div>
                       <div className="flex items-center gap-1">
-                        <CheckCircle2 className={cn("h-4 w-4", entry.alarmsSet ? "text-green-600" : "text-red-600")} />
-                        <span>Alarms Set: <strong>{entry.alarmsSet ? "Yes" : "No"}</strong></span>
+                        <CheckCircle2 className={cn("h-4 w-4", entry.alarms_set ? "text-green-600" : "text-red-600")} />
+                        <span>Alarms Set: <strong>{entry.alarms_set ? "Yes" : "No"}</strong></span>
                       </div>
-                      {entry.hoursSlept !== null && (
-                        <div><span className="text-muted-foreground">Hours Slept:</span> <strong>{entry.hoursSlept}h</strong></div>
+                      {entry.hours_slept !== null && (
+                        <div><span className="text-muted-foreground">Hours Slept:</span> <strong>{entry.hours_slept}h</strong></div>
                       )}
                     </div>
 
                     {/* evening handover */}
                     <div className="rounded-lg bg-indigo-50 border border-indigo-200 p-3">
                       <p className="text-xs font-medium text-indigo-700 mb-1">Evening Handover Notes</p>
-                      <p className="text-sm">{entry.handoverNotes}</p>
+                      <p className="text-sm">{entry.handover_notes}</p>
                     </div>
 
                     {/* checks completed */}
                     <div>
                       <p className="text-sm font-medium mb-2">Checks Completed</p>
                       <div className="grid grid-cols-2 md:grid-cols-3 gap-1">
-                        {entry.checksCompleted.map((check: string, idx: number) => (
+                        {entry.checks_completed.map((check: string, idx: number) => (
                           <div key={idx} className="flex items-center gap-1 text-sm">
                             <CheckCircle2 className="h-3 w-3 text-green-600" />
                             <span>{check}</span>
@@ -394,15 +269,15 @@ export default function SleepLogPage() {
                       <div>
                         <p className="text-sm font-medium mb-2">Disturbances</p>
                         <div className="space-y-2">
-                          {entry.disturbances.map((dist: Disturbance, idx: number) => (
+                          {entry.disturbances.map((dist: SleepDisturbance, idx: number) => (
                             <div key={idx} className="rounded-lg border bg-white p-3">
                               <div className="flex items-center gap-2 mb-1">
                                 <Badge variant="outline" className="text-xs">{dist.time}</Badge>
-                                <span className="font-medium text-sm">{dist.youngPerson}</span>
+                                <span className="font-medium text-sm">{dist.young_person}</span>
                                 <Badge variant="outline" className="text-xs">{dist.duration} min</Badge>
                               </div>
                               <p className="text-sm text-muted-foreground mb-1">{dist.description}</p>
-                              <p className="text-sm"><strong>Action:</strong> {dist.actionTaken}</p>
+                              <p className="text-sm"><strong>Action:</strong> {dist.action_taken}</p>
                             </div>
                           ))}
                         </div>
@@ -415,7 +290,7 @@ export default function SleepLogPage() {
                         <Sun className="h-4 w-4 text-amber-600" />
                         <p className="text-xs font-medium text-amber-700">Morning Handover</p>
                       </div>
-                      <p className="text-sm">{entry.morningHandover}</p>
+                      <p className="text-sm">{entry.morning_handover}</p>
                     </div>
                   </div>
                 )}
@@ -431,21 +306,56 @@ export default function SleepLogPage() {
           and are subject to Reg 44 inspection. Waking night staff must maintain hourly awareness checks.
         </div>
       </div>
+      )}
 
-      {/* ── placeholder dialog ──────────────────────────────────── */}
+      {/* ── create dialog ──────────────────────────────────── */}
       <Dialog open={showNew} onOpenChange={setShowNew}>
         <DialogContent className="max-w-lg">
           <DialogHeader>
             <DialogTitle>New Sleep / Waking Night Entry</DialogTitle>
           </DialogHeader>
-          <div className="py-6 text-center text-muted-foreground text-sm">
-            <Moon className="h-10 w-10 mx-auto mb-3 text-indigo-300" />
-            <p>Full entry form will capture shift type, security checks,</p>
-            <p>disturbance timeline, and handover notes.</p>
-          </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setShowNew(false)}>Close</Button>
-          </DialogFooter>
+          <form onSubmit={(e) => {
+            e.preventDefault();
+            const fd = new FormData(e.currentTarget);
+            createEntry.mutate({
+              date: fd.get("date") as string,
+              shift_type: fd.get("shift_type") as SleepShiftType,
+              staff_id: fd.get("staff_id") as string || "staff_darren",
+              start_time: fd.get("start_time") as string,
+              end_time: fd.get("end_time") as string,
+              disturbance_level: "none" as SleepDisturbanceLevel,
+              disturbances: [],
+              checks_completed: [],
+              building_secure: true,
+              alarms_set: true,
+              handover_notes: fd.get("handover_notes") as string,
+              morning_handover: "",
+              hours_slept: null,
+            } as Partial<SleepLogEntry>, {
+              onSuccess: () => { toast.success("Entry saved"); setShowNew(false); },
+              onError: () => toast.error("Failed to save"),
+            });
+          }} className="space-y-3 py-2">
+            <div className="grid grid-cols-2 gap-3">
+              <div><Label>Date</Label><Input type="date" name="date" defaultValue={new Date().toISOString().slice(0, 10)} required /></div>
+              <div><Label>Shift Type</Label>
+                <select name="shift_type" required className="w-full rounded-md border px-3 py-2 text-sm">
+                  {SHIFT_TYPES.map((t) => <option key={t} value={t}>{SHIFT_LABELS[t]}</option>)}
+                </select>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div><Label>Start Time</Label><Input type="time" name="start_time" defaultValue="22:00" required /></div>
+              <div><Label>End Time</Label><Input type="time" name="end_time" defaultValue="07:00" required /></div>
+            </div>
+            <div><Label>Handover Notes</Label><Textarea name="handover_notes" placeholder="Evening handover notes…" rows={3} /></div>
+            <DialogFooter>
+              <Button type="button" variant="outline" onClick={() => setShowNew(false)}>Cancel</Button>
+              <Button type="submit" disabled={createEntry.isPending}>
+                {createEntry.isPending ? <><Loader2 className="h-4 w-4 animate-spin mr-1" />Saving…</> : "Save Entry"}
+              </Button>
+            </DialogFooter>
+          </form>
         </DialogContent>
       </Dialog>
     </PageShell>
