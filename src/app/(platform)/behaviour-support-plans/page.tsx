@@ -31,6 +31,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useCreateBehaviourSupportPlan } from "@/hooks/use-behaviour-support";
+import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { getStaffName, getYPName } from "@/lib/seed-data";
 
 // -- Types --------------------------------------------------------------------
@@ -1037,6 +1038,8 @@ export default function BehaviourSupportPlansPage() {
                         ))}
                       </div>
                     </div>
+
+                    <SmartLinkPanel sourceType="behaviour_support" sourceId={plan.id} childId={plan.youngPersonId} compact />
                   </div>
                 )}
               </div>

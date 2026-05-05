@@ -23,6 +23,7 @@ import {
 import { cn, formatDate, todayStr } from "@/lib/utils";
 import { useAuthContext } from "@/contexts/auth-context";
 import { useCreateHealthRecord } from "@/hooks/use-health-records";
+import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { PrintButton } from "@/components/common/print-button";
 import { ExportButton, type ExportColumn } from "@/components/common/export-button";
 import { getStaffName, getYPName } from "@/lib/seed-data";
@@ -483,6 +484,7 @@ export default function HealthRecordsPage() {
                       </span>
                     )}
                   </div>
+                  <SmartLinkPanel sourceType="health_record" sourceId={entry.id} childId={entry.child_id} compact />
                 </div>
               )}
             </div>

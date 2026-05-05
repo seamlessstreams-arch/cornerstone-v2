@@ -14,6 +14,7 @@ import { ExportButton, type ExportColumn } from "@/components/ui/export-button";
 import { PrintButton } from "@/components/ui/print-button";
 import { cn } from "@/lib/utils";
 import { useCreateReferral, useUpdateReferral } from "@/hooks/use-admissions";
+import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { getStaffName } from "@/lib/seed-data";
 import {
   ArrowUpDown, ChevronDown, ChevronUp, Plus, Search,
@@ -358,6 +359,7 @@ export default function AdmissionsPage() {
                           )}
                         </div>
                       )}
+                      <SmartLinkPanel sourceType="admission" sourceId={r.id} compact />
                     </div>
                   )}
                 </CardContent>

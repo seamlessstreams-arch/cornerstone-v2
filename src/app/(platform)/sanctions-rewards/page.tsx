@@ -23,6 +23,7 @@ import {
 import { cn, formatDate, todayStr } from "@/lib/utils";
 import { useAuthContext } from "@/contexts/auth-context";
 import { useCreateSanction } from "@/hooks/use-sanctions";
+import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { PrintButton } from "@/components/common/print-button";
 import { ExportButton, type ExportColumn } from "@/components/common/export-button";
 import { getStaffName, getYPName } from "@/lib/seed-data";
@@ -502,6 +503,7 @@ export default function SanctionsRewardsPage() {
                       </span>
                     )}
                   </div>
+                  <SmartLinkPanel sourceType="sanction" sourceId={entry.id} childId={entry.child_id} compact />
                 </div>
               )}
             </div>

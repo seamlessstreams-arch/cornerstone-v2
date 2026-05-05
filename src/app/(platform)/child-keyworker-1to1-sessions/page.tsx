@@ -15,6 +15,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { Users, Clock, MessageCircle, ChevronUp, ChevronDown, ArrowUpDown, Search, Heart, CheckCircle, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useCreateKeyworkSession } from "@/hooks/use-keywork-sessions";
+import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { getYPName, getStaffName } from "@/lib/seed-data";
 
 /* ── types ─────────────────────────────────────────────────────────────────── */
@@ -600,6 +601,8 @@ export default function ChildKeyworker1to1SessionsPage() {
                         <p className="text-sm text-slate-900">{r.notes}</p>
                       </div>
                     )}
+
+                    <SmartLinkPanel sourceType="key_work" sourceId={r.id} childId={r.youngPerson} compact />
                   </CardContent>
                 )}
               </Card>

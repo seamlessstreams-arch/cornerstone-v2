@@ -22,6 +22,7 @@ import {
 import { cn, formatDate, todayStr } from "@/lib/utils";
 import { useAuthContext } from "@/contexts/auth-context";
 import { useCreateEducationRecord } from "@/hooks/use-education";
+import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { PrintButton } from "@/components/common/print-button";
 import { ExportButton, type ExportColumn } from "@/components/common/export-button";
 import { getStaffName, getYPName } from "@/lib/seed-data";
@@ -459,6 +460,7 @@ export default function EducationPage() {
                       <span className="flex items-center gap-1"><Clock className="h-3.5 w-3.5" />Follow-up: {formatDate(entry.follow_up_date)}</span>
                     )}
                   </div>
+                  <SmartLinkPanel sourceType="education" sourceId={entry.id} childId={entry.child_id} compact />
                 </div>
               )}
             </div>
