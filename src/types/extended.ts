@@ -3334,3 +3334,198 @@ export interface AttachmentProfile {
   notes: string;
   created_at: string;
 }
+
+/* ── Behaviour Mapping ─────────────────────────────────────────────── */
+
+export type BehaviourMappingType = "aggression" | "self_harm" | "absconding" | "property_damage" | "verbal_aggression" | "withdrawal" | "refusal" | "dysregulation";
+export type BMIntensity = "low" | "moderate" | "high" | "crisis";
+export type BMTimeOfDay = "morning" | "afternoon" | "evening" | "night";
+
+export interface BehaviourMapEntry {
+  id: string;
+  child_id: string;
+  date: string;
+  time: string;
+  time_of_day: BMTimeOfDay;
+  behaviour_type: BehaviourMappingType;
+  intensity: BMIntensity;
+  location: string;
+  antecedent: string;
+  behaviour: string;
+  consequence: string;
+  duration: string;
+  staff_present: string[];
+  de_escalation_used: string[];
+  outcome: string;
+  trigger_pattern: string | null;
+  notes: string;
+  created_at: string;
+}
+
+/* ── Bereavement & Loss Support ────────────────────────────────────── */
+
+export type BereavementLossType = "death_of_parent" | "death_of_grandparent" | "death_of_sibling" | "death_of_friend" | "death_of_pet" | "loss_of_foster_carer" | "loss_of_birth_family_contact" | "loss_of_country_community" | "loss_of_identity" | "other_significant_loss";
+export type GriefStage = "acute" | "adjusting" | "integrated" | "complicated";
+
+export interface BereavementRecord {
+  id: string;
+  child_id: string;
+  record_date: string;
+  loss_type: BereavementLossType;
+  person_or_thing: string;
+  date_of_loss?: string;
+  relationship: string;
+  grief_stage: GriefStage;
+  child_response: string[];
+  support_provided: string[];
+  external_support?: string;
+  memory_work: string[];
+  anniversary_marked: boolean;
+  anniversary_date?: string;
+  child_voice: string;
+  staff_observation: string;
+  flags_for_review: string[];
+  review_date: string;
+  key_worker: string;
+  created_at: string;
+}
+
+/* ── Bullying Incident Log ─────────────────────────────────────────── */
+
+export type BullyingContext = "in_the_home" | "school" | "online" | "community" | "travel";
+export type BullyingPerpetratorType = "peer_in_home" | "peer_at_school" | "older_child" | "online_stranger" | "group_of_peers" | "online_peer" | "adult";
+export type BullyingType = "verbal" | "physical" | "online_cyber" | "exclusion_social" | "damage_to_property" | "sexualised" | "discriminatory";
+export type BullyingStatus = "open_investigating" | "closed_resolved" | "monitoring" | "escalated";
+
+export interface BullyingIncident {
+  id: string;
+  child_id: string;
+  date: string;
+  time: string;
+  context: BullyingContext;
+  perpetrator_type: BullyingPerpetratorType;
+  bullying_type: BullyingType;
+  description: string;
+  child_impact_observed: string;
+  child_words_used: string;
+  reported_by: string;
+  child_wanted_reporting: boolean;
+  external_agencies_notified: string[];
+  school_notified: boolean;
+  police_notified: boolean;
+  parents_informed: boolean;
+  restorative_approach_attempted: string;
+  support_provided: string[];
+  perpetrator_outcome: string;
+  wellbeing_post_incident: string;
+  follow_up_date: string;
+  status: BullyingStatus;
+  pattern_indicator: string;
+  created_at: string;
+}
+
+/* ── CAMHS Referral Tracker ────────────────────────────────────────── */
+
+export type CamhsPathway = "standard_camhs" | "asd_neurodevelopmental" | "trauma_focused" | "crisis" | "routine";
+export type CamhsUrgency = "routine" | "soon" | "urgent" | "emergency";
+export type CamhsReferralStatus = "submitted" | "triaged" | "on_waiting_list" | "active_engagement" | "discharged" | "re_referred";
+export type CamhsEngagementLevel = "strong" | "building" | "inconsistent" | "disengaged";
+
+export interface CamhsReferral {
+  id: string;
+  child_id: string;
+  referral_date: string;
+  referral_reason: string;
+  referrer: string;
+  pathway_applied: CamhsPathway;
+  urgency: CamhsUrgency;
+  referral_status: CamhsReferralStatus;
+  waiting_time_weeks: number;
+  first_appointment_date: string | null;
+  current_clinician: string;
+  current_therapeutic_approach: string;
+  sessions_held: number;
+  sessions_scheduled: number;
+  current_engagement_level: CamhsEngagementLevel;
+  child_view: string;
+  parental_consent: boolean;
+  referral_outcome: string;
+  reviewed_date: string;
+  next_review_date: string;
+  escalation_options: string;
+  created_at: string;
+}
+
+/* ── CCTV Usage Log ────────────────────────────────────────────────── */
+
+export type CCTVAccessReason = "incident_review" | "safeguarding" | "police_request" | "complaint_investigation" | "maintenance_check" | "routine_review" | "sar_request" | "staff_investigation" | "other";
+export type CCTVCamera = "front_door" | "rear_garden" | "driveway" | "hallway_ground" | "hallway_first" | "kitchen" | "lounge" | "office_corridor";
+
+export interface CCTVAccess {
+  id: string;
+  date: string;
+  time_accessed: string;
+  footage_date: string;
+  footage_time_range: string;
+  cameras: CCTVCamera[];
+  reason: CCTVAccessReason;
+  detail: string;
+  accessed_by: string;
+  authorised_by: string;
+  witness_present: string | null;
+  footage_copied: boolean;
+  copied_to: string;
+  external_reference: string;
+  outcome: string;
+  created_at: string;
+}
+
+/* ── ADHD Support Plan ─────────────────────────────────────────────── */
+
+export type ADHDDiagnosisStatus = "diagnosed" | "awaiting_assessment" | "suspected_being_explored" | "self_identified" | "not_currently_considered";
+export type ADHDPresentation = "predominantly_inattentive" | "predominantly_hyperactive_impulsive" | "combined" | "unspecified";
+
+export interface ADHDMedication {
+  name: string;
+  dose: string;
+  timing: string;
+  side_effects_being_monitored: string[];
+  review_date: string;
+}
+
+export interface ADHDExternalSupport {
+  agency: string;
+  role: string;
+  frequency: string;
+}
+
+export interface ADHDPlan {
+  id: string;
+  child_id: string;
+  plan_date: string;
+  diagnosis_status: ADHDDiagnosisStatus;
+  presentation?: ADHDPresentation;
+  diagnosis_date?: string;
+  diagnosing_clinician?: string;
+  strengths: string[];
+  challenges: string[];
+  medication?: ADHDMedication;
+  medication_holiday_plan?: string;
+  executive_function_support: string[];
+  time_blindness_strategies: string[];
+  hyperfocus_management: string[];
+  rsd_awareness: string;
+  rsd_support: string[];
+  school_adjustments: string[];
+  home_adjustments: string[];
+  body_doubling_notes?: string;
+  external_support: ADHDExternalSupport[];
+  staff_do_strategies: string[];
+  staff_do_not_strategies: string[];
+  child_voice: string;
+  staff_observation: string;
+  next_step: string;
+  review_date: string;
+  key_worker: string;
+  created_at: string;
+}
