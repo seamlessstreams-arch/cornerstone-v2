@@ -6597,3 +6597,312 @@ export interface VisionCareRecord {
   key_worker: string;
   created_at: string;
 }
+
+// ── Batch 16 ──
+
+export type ExpertiseType =
+  | "care_planning_advice"
+  | "staff_training_contribution"
+  | "recruitment_panel"
+  | "policy_co_production"
+  | "service_improvement_input"
+  | "inspection_contribution"
+  | "external_speaking"
+  | "mentoring_younger_child"
+  | "research_participation";
+
+export const EXPERTISE_TYPE_LABEL: Record<ExpertiseType, string> = {
+  care_planning_advice: "Care Planning Advice",
+  staff_training_contribution: "Staff Training Contribution",
+  recruitment_panel: "Recruitment Panel",
+  policy_co_production: "Policy Co-production",
+  service_improvement_input: "Service Improvement Input",
+  inspection_contribution: "Inspection Contribution",
+  external_speaking: "External Speaking",
+  mentoring_younger_child: "Mentoring Younger Child",
+  research_participation: "Research Participation",
+};
+
+export interface ChildExpertEntry {
+  id: string;
+  child_id: string;
+  date: string;
+  expertise: ExpertiseType;
+  context: string;
+  contribution: string;
+  audience: string;
+  preparation: string;
+  accommodations: string[];
+  child_motivation: string;
+  child_reflection: string;
+  impact_recorded: string;
+  recognition_given: string;
+  token_of_thanks: string;
+  long_term_learning: string;
+  reviewed_by: string;
+  created_at: string;
+}
+
+export type CMEStatus =
+  | "in_education"
+  | "missing_education"
+  | "part_time_timetable"
+  | "exclusion"
+  | "awaiting_placement"
+  | "elective_home_ed";
+
+export const CME_STATUS_LABEL: Record<CMEStatus, string> = {
+  in_education: "In Education",
+  missing_education: "Missing Education",
+  part_time_timetable: "Part-Time Timetable",
+  exclusion: "Exclusion",
+  awaiting_placement: "Awaiting Placement",
+  elective_home_ed: "Elective Home Education",
+};
+
+export type AttendanceLevel = "good" | "concerning" | "persistent_absence" | "severe_absence";
+
+export const ATTENDANCE_LEVEL_LABEL: Record<AttendanceLevel, string> = {
+  good: "Good",
+  concerning: "Concerning",
+  persistent_absence: "Persistent Absence",
+  severe_absence: "Severe Absence",
+};
+
+export interface CMERecord {
+  id: string;
+  child_id: string;
+  school: string;
+  year_group: string;
+  current_status: CMEStatus;
+  attendance_percentage: number;
+  attendance_level: AttendanceLevel;
+  authorised_absences: number;
+  unauthorised_absences: number;
+  exclusions: { fixed_term: number; permanent: number };
+  current_exclusion: boolean;
+  exclusion_details: string;
+  part_time_timetable: boolean;
+  ptt_details: string;
+  ptt_review_date: string | null;
+  sen_status: string;
+  ehcp_in_place: boolean;
+  virtual_school_contact: string;
+  last_pep_date: string;
+  next_pep_date: string;
+  actions_taken: string[];
+  concerns: string;
+  notes: string;
+  created_at: string;
+}
+
+export type ChildrensMeetingType = "regular" | "ad_hoc" | "special_request" | "welcome" | "goodbye";
+
+export const CHILDRENS_MEETING_TYPE_LABEL: Record<ChildrensMeetingType, string> = {
+  regular: "Regular",
+  ad_hoc: "Ad Hoc",
+  special_request: "Special Request",
+  welcome: "Welcome Meeting",
+  goodbye: "Goodbye Meeting",
+};
+
+export type MeetingMood = "positive" | "mixed" | "difficult";
+
+export const MEETING_MOOD_LABEL: Record<MeetingMood, string> = {
+  positive: "Positive",
+  mixed: "Mixed",
+  difficult: "Difficult",
+};
+
+export type MeetingActionStatus = "pending" | "in_progress" | "completed" | "carried_forward";
+
+export const MEETING_ACTION_STATUS_LABEL: Record<MeetingActionStatus, string> = {
+  pending: "Pending",
+  in_progress: "In Progress",
+  completed: "Completed",
+  carried_forward: "Carried Forward",
+};
+
+export interface MeetingAgendaItem {
+  topic: string;
+  raised_by: string;
+  discussion: string;
+  outcome: string;
+  action_needed: boolean;
+}
+
+export interface MeetingActionItem {
+  id: string;
+  action: string;
+  owner: string;
+  due_date: string;
+  status: MeetingActionStatus;
+  completed_date: string | null;
+  notes: string;
+}
+
+export interface ChildrensMeetingRecord {
+  id: string;
+  date: string;
+  type: ChildrensMeetingType;
+  facilitated_by: string;
+  staff_present: string[];
+  yp_present: string[];
+  yp_absent: string[];
+  absent_reasons: Record<string, string>;
+  agenda: MeetingAgendaItem[];
+  actions: MeetingActionItem[];
+  child_chair: string | null;
+  child_minute_taker: string | null;
+  meal_or_snack: string;
+  overall_mood: MeetingMood;
+  complaints_raised: boolean;
+  complaints_details: string;
+  suggestions_box: string[];
+  next_meeting_date: string;
+  notes: string;
+  created_at: string;
+}
+
+export type ClothingPurchaseCategory =
+  | "school_uniform"
+  | "casual"
+  | "formal"
+  | "outdoor"
+  | "footwear"
+  | "underwear_socks"
+  | "nightwear"
+  | "sportswear"
+  | "accessories"
+  | "seasonal";
+
+export const CLOTHING_PURCHASE_CATEGORY_LABEL: Record<ClothingPurchaseCategory, string> = {
+  school_uniform: "School Uniform",
+  casual: "Casual Wear",
+  formal: "Formal Wear",
+  outdoor: "Outdoor / Coats",
+  footwear: "Footwear",
+  underwear_socks: "Underwear & Socks",
+  nightwear: "Nightwear",
+  sportswear: "Sportswear",
+  accessories: "Accessories",
+  seasonal: "Seasonal",
+};
+
+export interface ClothingPurchase {
+  id: string;
+  date: string;
+  category: ClothingPurchaseCategory;
+  description: string;
+  amount: number;
+  store: string;
+  purchased_by: string;
+  child_present: boolean;
+  child_chose: boolean;
+  receipt_ref: string;
+}
+
+export interface ClothingAllowanceRecord {
+  id: string;
+  child_id: string;
+  financial_year: string;
+  annual_budget: number;
+  quarterly_allowance: number;
+  current_quarter: number;
+  quarter_spend: number;
+  ytd_spend: number;
+  purchases: ClothingPurchase[];
+  preferences: string[];
+  sizes: Record<string, string>;
+  notes: string;
+  created_at: string;
+}
+
+export type CommissioningFeedbackType =
+  | "annual_review"
+  | "placement_update"
+  | "quality_concern"
+  | "compliment"
+  | "statutory_visit";
+
+export const COMMISSIONING_FEEDBACK_TYPE_LABEL: Record<CommissioningFeedbackType, string> = {
+  annual_review: "Annual Review",
+  placement_update: "Placement Update",
+  quality_concern: "Quality Concern",
+  compliment: "Compliment",
+  statutory_visit: "Statutory Visit",
+};
+
+export interface CommissioningFeedbackRecord {
+  id: string;
+  child_id: string;
+  date_received: string;
+  local_authority: string;
+  commissioner: string;
+  feedback_type: CommissioningFeedbackType;
+  overall_rating: 1 | 2 | 3 | 4 | 5;
+  strengths: string[];
+  areas_for_development: string[];
+  specific_comments: string;
+  response_required: boolean;
+  response_date: string;
+  response_given_by: string;
+  response_summary: string;
+  next_review_date: string;
+  created_at: string;
+}
+
+export type CommunicationPriority = "routine" | "important" | "urgent" | "info";
+
+export const COMMUNICATION_PRIORITY_LABEL: Record<CommunicationPriority, string> = {
+  routine: "Routine",
+  important: "Important",
+  urgent: "Urgent",
+  info: "Info",
+};
+
+export type CommunicationCategory =
+  | "general"
+  | "maintenance"
+  | "medication"
+  | "appointments"
+  | "visitors"
+  | "safeguarding"
+  | "handover_note"
+  | "management"
+  | "supplies";
+
+export const COMMUNICATION_CATEGORY_LABEL: Record<CommunicationCategory, string> = {
+  general: "General",
+  maintenance: "Maintenance",
+  medication: "Medication",
+  appointments: "Appointments",
+  visitors: "Visitors",
+  safeguarding: "Safeguarding",
+  handover_note: "Handover Note",
+  management: "Management",
+  supplies: "Supplies",
+};
+
+export interface CommunicationAcknowledgement {
+  staff_id: string;
+  date: string;
+}
+
+export interface CommunicationBookEntry {
+  id: string;
+  date: string;
+  time: string;
+  author: string;
+  priority: CommunicationPriority;
+  category: CommunicationCategory;
+  subject: string;
+  message: string;
+  pinned: boolean;
+  acknowledged_by: CommunicationAcknowledgement[];
+  related_yp: string | null;
+  action_required: boolean;
+  action_completed_by: string | null;
+  action_completed_date: string | null;
+  created_at: string;
+}
