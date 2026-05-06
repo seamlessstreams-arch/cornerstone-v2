@@ -5785,3 +5785,379 @@ export interface PhysioOtPlan {
   key_worker: string;
   created_at: string;
 }
+
+// ── Batch 14 ──
+
+export type PoliceContactType =
+  | "missing_from_care_report"
+  | "voluntary_attendance_interview"
+  | "arrest"
+  | "victim_of_crime"
+  | "witness_voluntary"
+  | "stop_and_search"
+  | "restorative_resolution"
+  | "welfare_check_by_police"
+  | "information_sharing_only"
+  | "other";
+
+export const POLICE_CONTACT_TYPE_LABEL: Record<PoliceContactType, string> = {
+  missing_from_care_report: "Missing-from-care report",
+  voluntary_attendance_interview: "Voluntary attendance — interview",
+  arrest: "Arrest",
+  victim_of_crime: "Victim of crime",
+  witness_voluntary: "Witness — voluntary",
+  stop_and_search: "Stop and search",
+  restorative_resolution: "Restorative resolution",
+  welfare_check_by_police: "Welfare check by police",
+  information_sharing_only: "Information sharing only",
+  other: "Other",
+};
+
+export type PoliceContactReportedBy =
+  | "home"
+  | "child"
+  | "school"
+  | "member_of_public"
+  | "police_initiated"
+  | "other_agency";
+
+export const POLICE_CONTACT_REPORTED_BY_LABEL: Record<PoliceContactReportedBy, string> = {
+  home: "Home",
+  child: "Child",
+  school: "School",
+  member_of_public: "Member of public",
+  police_initiated: "Police-initiated",
+  other_agency: "Other agency",
+};
+
+export type PoliceContactOutcome =
+  | "no_further_action"
+  | "voluntary_interview_only"
+  | "restorative_justice"
+  | "caution"
+  | "charged"
+  | "bail"
+  | "released_no_charge"
+  | "returned_to_home"
+  | "other";
+
+export const POLICE_CONTACT_OUTCOME_LABEL: Record<PoliceContactOutcome, string> = {
+  no_further_action: "No further action",
+  voluntary_interview_only: "Voluntary interview only",
+  restorative_justice: "Restorative justice",
+  caution: "Caution",
+  charged: "Charged",
+  bail: "Bail",
+  released_no_charge: "Released — no charge",
+  returned_to_home: "Returned to home",
+  other: "Other",
+};
+
+export interface PoliceContactRecord {
+  id: string;
+  child_id: string;
+  contact_date: string;
+  contact_type: PoliceContactType;
+  reported_by: PoliceContactReportedBy;
+  officers_involved?: string;
+  police_ref_number?: string;
+  reason_context: string;
+  home_protocol_followed: boolean;
+  concordat_principles_applied: boolean;
+  appropriate_adult_present?: boolean;
+  legal_rep_present?: boolean;
+  outcome: PoliceContactOutcome;
+  restorative_opportunity: boolean;
+  restorative_outcome?: string;
+  child_voice: string;
+  staff_observation: string;
+  follow_up_required: boolean;
+  follow_up_action?: string;
+  flags_concerns: string;
+  review_date: string;
+  recorded_by: string;
+  created_at: string;
+}
+
+export type PreventScreeningOutcome =
+  | "no_concerns"
+  | "watchful_awareness"
+  | "concerns_identified_internal_support"
+  | "channel_discussion_considered"
+  | "channel_referred"
+  | "de_escalated_closed";
+
+export const PREVENT_SCREENING_OUTCOME_LABEL: Record<PreventScreeningOutcome, string> = {
+  no_concerns: "No concerns",
+  watchful_awareness: "Watchful awareness",
+  concerns_identified_internal_support: "Concerns identified — internal support",
+  channel_discussion_considered: "Channel discussion considered",
+  channel_referred: "Channel referred",
+  de_escalated_closed: "De-escalated / closed",
+};
+
+export type PreventChannelStatus =
+  | "considered_not_made"
+  | "made_accepted"
+  | "made_rejected"
+  | "active_panel"
+  | "closed";
+
+export const PREVENT_CHANNEL_STATUS_LABEL: Record<PreventChannelStatus, string> = {
+  considered_not_made: "Considered — not made",
+  made_accepted: "Made — accepted",
+  made_rejected: "Made — rejected",
+  active_panel: "Active panel",
+  closed: "Closed",
+};
+
+export interface PreventExternalConsultation {
+  agency: string;
+  clinician?: string;
+  date: string;
+  outcome: string;
+}
+
+export interface PreventScreeningRecord {
+  id: string;
+  child_id: string;
+  recorded_date: string;
+  screening_outcome: PreventScreeningOutcome;
+  vulnerability_factors_considered: string[];
+  protective_factors_considered: string[];
+  identity_ideology_exposure_notes?: string;
+  online_activity_flags: string[];
+  peer_group_notes?: string;
+  child_voice_consulted: boolean;
+  child_voice?: string;
+  staff_observation: string;
+  external_consultation: PreventExternalConsultation[];
+  channel_referral_status?: PreventChannelStatus;
+  proportionality_reflection: string;
+  review_date: string;
+  flags_for_review: string;
+  recorded_by: string;
+  created_at: string;
+}
+
+export type CpConferenceType =
+  | "initial_cp_conference"
+  | "review_cp_conference"
+  | "pre_birth_conference"
+  | "strategy_meeting";
+
+export const CP_CONFERENCE_TYPE_LABEL: Record<CpConferenceType, string> = {
+  initial_cp_conference: "Initial CP Conference",
+  review_cp_conference: "Review CP Conference",
+  pre_birth_conference: "Pre-Birth Conference",
+  strategy_meeting: "Strategy Meeting",
+};
+
+export type CpConferenceOutcome =
+  | "subject_to_cp_plan"
+  | "plan_continued"
+  | "plan_stepped_down"
+  | "no_cp_plan_required"
+  | "strategy_decision_made";
+
+export const CP_CONFERENCE_OUTCOME_LABEL: Record<CpConferenceOutcome, string> = {
+  subject_to_cp_plan: "Subject to CP plan",
+  plan_continued: "Plan continued",
+  plan_stepped_down: "Plan stepped down",
+  no_cp_plan_required: "No CP plan required",
+  strategy_decision_made: "Strategy decision made",
+};
+
+export type CpCategory =
+  | "neglect"
+  | "physical_abuse"
+  | "sexual_abuse"
+  | "emotional_abuse"
+  | "multiple_categories"
+  | "na";
+
+export const CP_CATEGORY_LABEL: Record<CpCategory, string> = {
+  neglect: "Neglect",
+  physical_abuse: "Physical abuse",
+  sexual_abuse: "Sexual abuse",
+  emotional_abuse: "Emotional abuse",
+  multiple_categories: "Multiple categories",
+  na: "N/A",
+};
+
+export interface CpPlanAction {
+  action: string;
+  owner: string;
+  deadline: string;
+}
+
+export interface CpConferenceRecord {
+  id: string;
+  child_id: string;
+  conference_type: CpConferenceType;
+  date: string;
+  chairperson: string;
+  outcome: CpConferenceOutcome;
+  category: CpCategory;
+  attended_by: string[];
+  home_representation: string;
+  child_attended: boolean;
+  child_contribution: string;
+  agencies_present: string[];
+  key_concerns: string[];
+  protective_factors: string[];
+  decisions_agreed: string[];
+  cp_plan_actions: CpPlanAction[];
+  next_review_date: string;
+  report_submitted_date: string;
+  report_author: string;
+  follow_up_complete: boolean;
+  created_at: string;
+}
+
+export type RightsKnowledgeLevel =
+  | "doesnt_know"
+  | "has_heard_of"
+  | "understands_basics"
+  | "confident"
+  | "can_explain_to_others";
+
+export const RIGHTS_KNOWLEDGE_LEVEL_LABEL: Record<RightsKnowledgeLevel, string> = {
+  doesnt_know: "Doesn't know",
+  has_heard_of: "Has heard of",
+  understands_basics: "Understands basics",
+  confident: "Confident",
+  can_explain_to_others: "Can explain to others",
+};
+
+export interface RightsKnowledgeItem {
+  right: string;
+  level: RightsKnowledgeLevel;
+}
+
+export interface RightsUsageRecord {
+  what: string;
+  date: string;
+  outcome: string;
+}
+
+export interface RightsLiteracyRecord {
+  id: string;
+  child_id: string;
+  recorded_date: string;
+  rights_knowledge: RightsKnowledgeItem[];
+  knows_how_to_complain: boolean;
+  knows_advocate_name?: string;
+  knows_independent_visitor_name?: string;
+  knows_how_to_contact_ofsted: boolean;
+  knows_right_to_access_records: boolean;
+  knows_right_to_refuse_contact: boolean;
+  has_used_rights: RightsUsageRecord[];
+  learning_plan_this_quarter: string;
+  resources_used: string[];
+  child_voice: string;
+  staff_observation: string;
+  review_date: string;
+  key_worker: string;
+  created_at: string;
+}
+
+export type SchoolEventType =
+  | "parents_evening"
+  | "options_evening"
+  | "prize_giving_awards"
+  | "sports_day"
+  | "school_production_play"
+  | "concert_performance"
+  | "leavers_assembly"
+  | "prom"
+  | "open_evening"
+  | "pep_attendance"
+  | "subject_taster_fair";
+
+export const SCHOOL_EVENT_TYPE_LABEL: Record<SchoolEventType, string> = {
+  parents_evening: "Parents' evening",
+  options_evening: "Options evening",
+  prize_giving_awards: "Prize-giving / awards",
+  sports_day: "Sports day",
+  school_production_play: "School production / play",
+  concert_performance: "Concert / performance",
+  leavers_assembly: "Leavers' assembly",
+  prom: "Prom",
+  open_evening: "Open evening (Y6/Y11)",
+  pep_attendance: "PEP attendance",
+  subject_taster_fair: "Subject taster / fair",
+};
+
+export interface SchoolEngagementEvent {
+  id: string;
+  child_id: string;
+  event_date: string;
+  event_type: SchoolEventType;
+  school_name: string;
+  attended_by: string[];
+  birth_family_attended?: boolean;
+  social_worker_attended: boolean;
+  child_wanted_home_attendance: boolean;
+  what_happened: string;
+  child_achievements_recognised: string[];
+  photos_taken_with_consent: boolean;
+  photos_location?: string;
+  feedback_from_school: string;
+  follow_up_actions: string[];
+  child_voice: string;
+  staff_observation: string;
+  flags_concerns: string;
+  recorded_by: string;
+  created_at: string;
+}
+
+export type ArousalState = "hyperarousal" | "hypoarousal" | "mixed";
+
+export const AROUSAL_STATE_LABEL: Record<ArousalState, string> = {
+  hyperarousal: "Hyperarousal (fight/flight)",
+  hypoarousal: "Hypoarousal (freeze/dissociation)",
+  mixed: "Mixed",
+};
+
+export type WindowOfTolerance = "narrow" | "moderate" | "widening";
+
+export const WINDOW_OF_TOLERANCE_LABEL: Record<WindowOfTolerance, string> = {
+  narrow: "Narrow",
+  moderate: "Moderate",
+  widening: "Widening",
+};
+
+export type ToolkitEffectiveness = "highly_effective" | "effective" | "mixed" | "needs_review";
+
+export const TOOLKIT_EFFECTIVENESS_LABEL: Record<ToolkitEffectiveness, string> = {
+  highly_effective: "Highly effective",
+  effective: "Effective",
+  mixed: "Mixed",
+  needs_review: "Needs review",
+};
+
+export interface SelfSoothingToolkit {
+  id: string;
+  child_id: string;
+  last_updated: string;
+  primary_state: ArousalState;
+  window_of_tolerance: WindowOfTolerance;
+  sensory_strategies: string[];
+  breathing_strategies: string[];
+  movement_strategies: string[];
+  distraction_strategies: string[];
+  co_regulation_strategies: string[];
+  what_works_anxious: string[];
+  what_works_angry: string[];
+  what_works_overwhelmed: string[];
+  do_not_use: string[];
+  child_chose_all: boolean;
+  effectiveness_rating: ToolkitEffectiveness;
+  child_voice: string;
+  staff_observation: string;
+  external_support?: string;
+  review_date: string;
+  key_worker: string;
+  created_at: string;
+}

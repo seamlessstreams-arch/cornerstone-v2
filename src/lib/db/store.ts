@@ -104,6 +104,12 @@ import type {
   PhotoIdRecord,
   ChildPhotoEntry,
   PhysioOtPlan,
+  PoliceContactRecord,
+  PreventScreeningRecord,
+  CpConferenceRecord,
+  RightsLiteracyRecord,
+  SchoolEngagementEvent,
+  SelfSoothingToolkit,
 } from "@/types/extended";
 import type { Document, DocumentReadReceipt, Expense } from "@/types";
 import type { UploadedDocument, DocumentAuditEntry } from "@/types/documents";
@@ -266,6 +272,12 @@ const store = {
   photoIdRecords: [] as PhotoIdRecord[],
   childPhotoEntries: [] as ChildPhotoEntry[],
   physioOtPlans: [] as PhysioOtPlan[],
+  policeContactRecords: [] as PoliceContactRecord[],
+  preventScreenings: [] as PreventScreeningRecord[],
+  cpConferences: [] as CpConferenceRecord[],
+  rightsLiteracyRecords: [] as RightsLiteracyRecord[],
+  schoolEngagementEvents: [] as SchoolEngagementEvent[],
+  selfSoothingToolkits: [] as SelfSoothingToolkit[],
   // Shift Swap Requests
   shiftSwaps: [
     {
@@ -4526,6 +4538,108 @@ export const db = {
       if (idx === -1) return null;
       store.physioOtPlans[idx] = { ...store.physioOtPlans[idx], ...data };
       return store.physioOtPlans[idx];
+    },
+  },
+
+  policeContactRecords: {
+    findAll: () => store.policeContactRecords,
+    findById: (id: string) => store.policeContactRecords.find((r) => r.id === id),
+    findByChild: (childId: string) => store.policeContactRecords.filter((r) => r.child_id === childId),
+    create: (data: Partial<PoliceContactRecord>): PoliceContactRecord => {
+      const record = { ...data, id: generateId("pcr"), created_at: new Date().toISOString() } as PoliceContactRecord;
+      store.policeContactRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<PoliceContactRecord>): PoliceContactRecord | null => {
+      const idx = store.policeContactRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.policeContactRecords[idx] = { ...store.policeContactRecords[idx], ...data };
+      return store.policeContactRecords[idx];
+    },
+  },
+
+  preventScreenings: {
+    findAll: () => store.preventScreenings,
+    findById: (id: string) => store.preventScreenings.find((r) => r.id === id),
+    findByChild: (childId: string) => store.preventScreenings.filter((r) => r.child_id === childId),
+    create: (data: Partial<PreventScreeningRecord>): PreventScreeningRecord => {
+      const record = { ...data, id: generateId("psr"), created_at: new Date().toISOString() } as PreventScreeningRecord;
+      store.preventScreenings.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<PreventScreeningRecord>): PreventScreeningRecord | null => {
+      const idx = store.preventScreenings.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.preventScreenings[idx] = { ...store.preventScreenings[idx], ...data };
+      return store.preventScreenings[idx];
+    },
+  },
+
+  cpConferences: {
+    findAll: () => store.cpConferences,
+    findById: (id: string) => store.cpConferences.find((r) => r.id === id),
+    findByChild: (childId: string) => store.cpConferences.filter((r) => r.child_id === childId),
+    create: (data: Partial<CpConferenceRecord>): CpConferenceRecord => {
+      const record = { ...data, id: generateId("cpc"), created_at: new Date().toISOString() } as CpConferenceRecord;
+      store.cpConferences.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<CpConferenceRecord>): CpConferenceRecord | null => {
+      const idx = store.cpConferences.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.cpConferences[idx] = { ...store.cpConferences[idx], ...data };
+      return store.cpConferences[idx];
+    },
+  },
+
+  rightsLiteracyRecords: {
+    findAll: () => store.rightsLiteracyRecords,
+    findById: (id: string) => store.rightsLiteracyRecords.find((r) => r.id === id),
+    findByChild: (childId: string) => store.rightsLiteracyRecords.filter((r) => r.child_id === childId),
+    create: (data: Partial<RightsLiteracyRecord>): RightsLiteracyRecord => {
+      const record = { ...data, id: generateId("rlr"), created_at: new Date().toISOString() } as RightsLiteracyRecord;
+      store.rightsLiteracyRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<RightsLiteracyRecord>): RightsLiteracyRecord | null => {
+      const idx = store.rightsLiteracyRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.rightsLiteracyRecords[idx] = { ...store.rightsLiteracyRecords[idx], ...data };
+      return store.rightsLiteracyRecords[idx];
+    },
+  },
+
+  schoolEngagementEvents: {
+    findAll: () => store.schoolEngagementEvents,
+    findById: (id: string) => store.schoolEngagementEvents.find((r) => r.id === id),
+    findByChild: (childId: string) => store.schoolEngagementEvents.filter((r) => r.child_id === childId),
+    create: (data: Partial<SchoolEngagementEvent>): SchoolEngagementEvent => {
+      const record = { ...data, id: generateId("see"), created_at: new Date().toISOString() } as SchoolEngagementEvent;
+      store.schoolEngagementEvents.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<SchoolEngagementEvent>): SchoolEngagementEvent | null => {
+      const idx = store.schoolEngagementEvents.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.schoolEngagementEvents[idx] = { ...store.schoolEngagementEvents[idx], ...data };
+      return store.schoolEngagementEvents[idx];
+    },
+  },
+
+  selfSoothingToolkits: {
+    findAll: () => store.selfSoothingToolkits,
+    findById: (id: string) => store.selfSoothingToolkits.find((r) => r.id === id),
+    findByChild: (childId: string) => store.selfSoothingToolkits.filter((r) => r.child_id === childId),
+    create: (data: Partial<SelfSoothingToolkit>): SelfSoothingToolkit => {
+      const record = { ...data, id: generateId("sst"), created_at: new Date().toISOString() } as SelfSoothingToolkit;
+      store.selfSoothingToolkits.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<SelfSoothingToolkit>): SelfSoothingToolkit | null => {
+      const idx = store.selfSoothingToolkits.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.selfSoothingToolkits[idx] = { ...store.selfSoothingToolkits[idx], ...data };
+      return store.selfSoothingToolkits[idx];
     },
   },
 };
