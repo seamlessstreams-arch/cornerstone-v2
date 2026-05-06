@@ -50,6 +50,12 @@ import type {
   PositiveHandlingPlan,
   MedicationError,
   BodyMapEntry,
+  Activity,
+  AdoptionRecord,
+  AdvocacyRecord,
+  AfterCareRecord,
+  AgencyInduction,
+  AgencyStaffRecord,
 } from "@/types/extended";
 import type { Document, DocumentReadReceipt, Expense } from "@/types";
 import type { UploadedDocument, DocumentAuditEntry } from "@/types/documents";
@@ -158,6 +164,12 @@ const store = {
   positiveHandling: [] as PositiveHandlingPlan[],
   medicationErrors: [] as MedicationError[],
   bodyMap: [] as BodyMapEntry[],
+  activities: [] as Activity[],
+  adoptionRecords: [] as AdoptionRecord[],
+  advocacyRecords: [] as AdvocacyRecord[],
+  afterCareRecords: [] as AfterCareRecord[],
+  agencyInductions: [] as AgencyInduction[],
+  agencyStaffLog: [] as AgencyStaffRecord[],
   // Shift Swap Requests
   shiftSwaps: [
     {
@@ -3506,6 +3518,105 @@ export const db = {
       if (idx === -1) return null;
       store.bodyMap[idx] = { ...store.bodyMap[idx], ...data };
       return store.bodyMap[idx];
+    },
+  },
+
+  activities: {
+    findAll: () => store.activities,
+    findByChild: (childId: string) => store.activities.filter((r) => r.child_id === childId),
+    findById: (id: string) => store.activities.find((r) => r.id === id),
+    create: (data: Partial<Activity>): Activity => {
+      const record = { ...data, id: generateId("act"), created_at: new Date().toISOString() } as Activity;
+      store.activities.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<Activity>): Activity | null => {
+      const idx = store.activities.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.activities[idx] = { ...store.activities[idx], ...data };
+      return store.activities[idx];
+    },
+  },
+
+  adoptionRecords: {
+    findAll: () => store.adoptionRecords,
+    findById: (id: string) => store.adoptionRecords.find((r) => r.id === id),
+    create: (data: Partial<AdoptionRecord>): AdoptionRecord => {
+      const record = { ...data, id: generateId("adp"), created_at: new Date().toISOString() } as AdoptionRecord;
+      store.adoptionRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<AdoptionRecord>): AdoptionRecord | null => {
+      const idx = store.adoptionRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.adoptionRecords[idx] = { ...store.adoptionRecords[idx], ...data };
+      return store.adoptionRecords[idx];
+    },
+  },
+
+  advocacyRecords: {
+    findAll: () => store.advocacyRecords,
+    findByChild: (childId: string) => store.advocacyRecords.filter((r) => r.child_id === childId),
+    findById: (id: string) => store.advocacyRecords.find((r) => r.id === id),
+    create: (data: Partial<AdvocacyRecord>): AdvocacyRecord => {
+      const record = { ...data, id: generateId("adv"), created_at: new Date().toISOString() } as AdvocacyRecord;
+      store.advocacyRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<AdvocacyRecord>): AdvocacyRecord | null => {
+      const idx = store.advocacyRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.advocacyRecords[idx] = { ...store.advocacyRecords[idx], ...data };
+      return store.advocacyRecords[idx];
+    },
+  },
+
+  afterCareRecords: {
+    findAll: () => store.afterCareRecords,
+    findByChild: (childId: string) => store.afterCareRecords.filter((r) => r.child_id === childId),
+    findById: (id: string) => store.afterCareRecords.find((r) => r.id === id),
+    create: (data: Partial<AfterCareRecord>): AfterCareRecord => {
+      const record = { ...data, id: generateId("ac"), created_at: new Date().toISOString() } as AfterCareRecord;
+      store.afterCareRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<AfterCareRecord>): AfterCareRecord | null => {
+      const idx = store.afterCareRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.afterCareRecords[idx] = { ...store.afterCareRecords[idx], ...data };
+      return store.afterCareRecords[idx];
+    },
+  },
+
+  agencyInductions: {
+    findAll: () => store.agencyInductions,
+    findById: (id: string) => store.agencyInductions.find((r) => r.id === id),
+    create: (data: Partial<AgencyInduction>): AgencyInduction => {
+      const record = { ...data, id: generateId("agi"), created_at: new Date().toISOString() } as AgencyInduction;
+      store.agencyInductions.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<AgencyInduction>): AgencyInduction | null => {
+      const idx = store.agencyInductions.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.agencyInductions[idx] = { ...store.agencyInductions[idx], ...data };
+      return store.agencyInductions[idx];
+    },
+  },
+
+  agencyStaffLog: {
+    findAll: () => store.agencyStaffLog,
+    findById: (id: string) => store.agencyStaffLog.find((r) => r.id === id),
+    create: (data: Partial<AgencyStaffRecord>): AgencyStaffRecord => {
+      const record = { ...data, id: generateId("asl"), created_at: new Date().toISOString() } as AgencyStaffRecord;
+      store.agencyStaffLog.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<AgencyStaffRecord>): AgencyStaffRecord | null => {
+      const idx = store.agencyStaffLog.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.agencyStaffLog[idx] = { ...store.agencyStaffLog[idx], ...data };
+      return store.agencyStaffLog[idx];
     },
   },
 };

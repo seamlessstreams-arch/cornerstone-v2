@@ -2913,3 +2913,220 @@ export interface BodyMapEntry {
   reviewed_at: string | null;
   created_at: string;
 }
+
+/* ── Activities & Enrichment ────────────────────────────────────────── */
+
+export type ActivityCategory =
+  | "sport" | "creative" | "outdoor" | "educational" | "social"
+  | "life_skills" | "cultural" | "therapeutic" | "community" | "digital";
+
+export type ActivityEngagement = "enthusiastic" | "willing" | "reluctant" | "refused" | "suggested_by_yp";
+
+export interface Activity {
+  id: string;
+  date: string;
+  child_id: string;
+  category: ActivityCategory;
+  title: string;
+  description: string;
+  location: string;
+  duration_minutes: number;
+  staff_id: string;
+  engagement: ActivityEngagement;
+  yp_feedback: string | null;
+  outcome_notes: string | null;
+  is_new_experience: boolean;
+  photos_taken: boolean;
+  linked_outcome_domain: string | null;
+  created_at: string;
+}
+
+/* ── Adoption Support Records ───────────────────────────────────────── */
+
+export type AdoptionStatus =
+  | "plan_being_explored" | "placement_order_granted" | "family_finding"
+  | "matched" | "introductions" | "placed_for_adoption" | "adopted" | "plan_changed";
+
+export interface AdoptionIntroductionPhase {
+  phase: string;
+  dates: string;
+  activities: string;
+}
+
+export interface AdoptionRecord {
+  id: string;
+  child_initials: string;
+  age: number;
+  arrival_date: string;
+  adoption_status: AdoptionStatus;
+  local_authority: string;
+  placement_order_date: string;
+  matching_panel_date: string;
+  adoption_family_info: string;
+  introduction_plan: AdoptionIntroductionPhase[];
+  preparation_activities: string[];
+  life_story_completed: boolean;
+  later_life_letter: boolean;
+  goodbye_rituals_planned: string[];
+  support_provided_post_placement: string[];
+  contact_arrangements: string;
+  home_key_worker_involvement: string;
+  adoption_support_plan: string[];
+  child_contribution: string;
+  social_worker: string;
+  adoption_social_worker: string;
+  internal_lead: string;
+  review_date: string;
+  last_update: string;
+  created_at: string;
+}
+
+/* ── Advocacy ───────────────────────────────────────────────────────── */
+
+export type AdvocacyType = "independent" | "issue_based" | "peer" | "legal" | "complaints";
+export type AdvocacyStatus = "active" | "completed" | "pending_referral" | "declined_by_yp";
+
+export interface AdvocacyVisit {
+  date: string;
+  visit_type: "face_to_face" | "phone" | "virtual";
+  summary: string;
+  private_session: boolean;
+  actions_raised: string[];
+}
+
+export interface AdvocacyRecord {
+  id: string;
+  child_id: string;
+  advocacy_type: AdvocacyType;
+  status: AdvocacyStatus;
+  provider: string;
+  advocate_name: string;
+  referral_date: string;
+  start_date: string | null;
+  reason: string;
+  issues_raised: string[];
+  visits: AdvocacyVisit[];
+  child_view: string;
+  home_response: string;
+  review_date: string;
+  notes: string;
+  created_at: string;
+}
+
+/* ── After Care ─────────────────────────────────────────────────────── */
+
+export type AfterCareLeftReason = "age_18" | "moved_placement" | "reunification" | "semi_independent" | "adoption" | "other";
+export type AfterCareAccomStatus = "stable" | "at_risk" | "homeless" | "sofa_surfing" | "supported_housing";
+export type AfterCareEETStatus = "education" | "employment" | "training" | "neet" | "unknown";
+export type AfterCareRAG = "green" | "amber" | "red";
+export type AfterCareWellbeing = "good" | "fair" | "poor" | "concern";
+
+export interface AfterCareContactLog {
+  date: string;
+  contact_type: string;
+  staff_id: string;
+  summary: string;
+  wellbeing: AfterCareWellbeing;
+}
+
+export interface AfterCareSupportPkg {
+  area: string;
+  provider: string;
+  frequency: string;
+  status: "active" | "ended" | "pending";
+}
+
+export interface AfterCareRecord {
+  id: string;
+  child_id: string;
+  left_date: string;
+  left_reason: AfterCareLeftReason;
+  current_accommodation: string;
+  accommodation_status: AfterCareAccomStatus;
+  education_employment: string;
+  eet_status: AfterCareEETStatus;
+  staying_close_eligible: boolean;
+  support_package: AfterCareSupportPkg[];
+  contact_log: AfterCareContactLog[];
+  key_worker: string;
+  personal_adviser: string;
+  pathway_plan: boolean;
+  pathway_plan_review_date: string | null;
+  emergency_contact: string;
+  current_concerns: string[];
+  positives: string[];
+  overall_rag: AfterCareRAG;
+  next_contact_due: string;
+  notes: string;
+  created_at: string;
+}
+
+/* ── Agency Staff Induction ─────────────────────────────────────────── */
+
+export type AgencyInductionType = "pre_shift_brief" | "half_day_full_induction" | "returning_staff_refresh";
+
+export interface AgencyInductionTopic {
+  topic: string;
+  covered: boolean;
+  notes: string;
+}
+
+export interface AgencyInduction {
+  id: string;
+  agency_staff_name: string;
+  agency: string;
+  date_inducted: string;
+  inducted_by: string;
+  induction_duration: number;
+  induction_type: AgencyInductionType;
+  children_informed_about_agency_arrival: boolean;
+  agency_dbs_verified: boolean;
+  agency_training_verified: boolean;
+  agency_references_verified: boolean;
+  induction_topics: AgencyInductionTopic[];
+  child_information_shared: string;
+  key_policies_shared: string[];
+  photo_taken_and_verified: boolean;
+  behaviour_support_plans_briefed: boolean;
+  agency_staff_signed_induction_pack: boolean;
+  shifts_booked: number;
+  agency_staff_feedback: string;
+  home_feedback_on_agency: string;
+  repeat_booking_approved: boolean;
+  created_at: string;
+}
+
+/* ── Agency Staff Log ───────────────────────────────────────────────── */
+
+export type AgencyVettingStatus = "fully_vetted" | "partially_vetted" | "pending" | "expired";
+export type AgencyBookingReason = "sickness_cover" | "vacancy_cover" | "annual_leave" | "training_cover" | "additional_support" | "emergency";
+
+export interface AgencyStaffRecord {
+  id: string;
+  agency_name: string;
+  worker_name: string;
+  worker_ref: string;
+  date_of_shift: string;
+  shift_type: string;
+  shift_hours: number;
+  booking_reason: AgencyBookingReason;
+  covering_for_id: string | null;
+  vetting_status: AgencyVettingStatus;
+  dbs_number: string;
+  dbs_date: string;
+  dbs_enhanced: boolean;
+  induction_completed: boolean;
+  induction_date: string | null;
+  induction_by: string | null;
+  safeguarding_briefing: boolean;
+  young_people_briefing: boolean;
+  medication_trained: boolean;
+  price_trained_level: string | null;
+  feedback_score: number | null;
+  feedback_notes: string;
+  concerns: string;
+  authorised_by_id: string;
+  cost_per_hour: number;
+  notes: string;
+  created_at: string;
+}
