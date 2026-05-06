@@ -122,6 +122,12 @@ import type {
   ClothingAllowanceRecord,
   CommissioningFeedbackRecord,
   CommunicationBookEntry,
+  CommunityFeedbackRecord,
+  ComplaintOutcomeRecord,
+  ConsentRecord,
+  ContactDirectoryEntry,
+  ContactSupervisionSession,
+  ContextualSafeguardingRisk,
 } from "@/types/extended";
 import type { Document, DocumentReadReceipt, Expense } from "@/types";
 import type { UploadedDocument, DocumentAuditEntry } from "@/types/documents";
@@ -302,6 +308,12 @@ const store = {
   clothingAllowanceRecords: [] as ClothingAllowanceRecord[],
   commissioningFeedbackRecords: [] as CommissioningFeedbackRecord[],
   communicationBookEntries: [] as CommunicationBookEntry[],
+  communityFeedbackRecords: [] as CommunityFeedbackRecord[],
+  complaintOutcomeRecords: [] as ComplaintOutcomeRecord[],
+  consentRecords: [] as ConsentRecord[],
+  contactDirectoryEntries: [] as ContactDirectoryEntry[],
+  contactSupervisionSessions: [] as ContactSupervisionSession[],
+  contextualSafeguardingRisks: [] as ContextualSafeguardingRisk[],
   // Shift Swap Requests
   shiftSwaps: [
     {
@@ -4866,6 +4878,105 @@ export const db = {
       if (idx === -1) return null;
       store.communicationBookEntries[idx] = { ...store.communicationBookEntries[idx], ...data };
       return store.communicationBookEntries[idx];
+    },
+  },
+
+  communityFeedbackRecords: {
+    findAll: () => store.communityFeedbackRecords,
+    findById: (id: string) => store.communityFeedbackRecords.find((r) => r.id === id),
+    create: (data: Partial<CommunityFeedbackRecord>): CommunityFeedbackRecord => {
+      const record = { ...data, id: generateId("cfb"), created_at: new Date().toISOString() } as CommunityFeedbackRecord;
+      store.communityFeedbackRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<CommunityFeedbackRecord>): CommunityFeedbackRecord | null => {
+      const idx = store.communityFeedbackRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.communityFeedbackRecords[idx] = { ...store.communityFeedbackRecords[idx], ...data };
+      return store.communityFeedbackRecords[idx];
+    },
+  },
+
+  complaintOutcomeRecords: {
+    findAll: () => store.complaintOutcomeRecords,
+    findById: (id: string) => store.complaintOutcomeRecords.find((r) => r.id === id),
+    findByChild: (childId: string) => store.complaintOutcomeRecords.filter((r) => r.child_id === childId),
+    create: (data: Partial<ComplaintOutcomeRecord>): ComplaintOutcomeRecord => {
+      const record = { ...data, id: generateId("cor"), created_at: new Date().toISOString() } as ComplaintOutcomeRecord;
+      store.complaintOutcomeRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<ComplaintOutcomeRecord>): ComplaintOutcomeRecord | null => {
+      const idx = store.complaintOutcomeRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.complaintOutcomeRecords[idx] = { ...store.complaintOutcomeRecords[idx], ...data };
+      return store.complaintOutcomeRecords[idx];
+    },
+  },
+
+  consentRecords: {
+    findAll: () => store.consentRecords,
+    findById: (id: string) => store.consentRecords.find((r) => r.id === id),
+    findByChild: (childId: string) => store.consentRecords.filter((r) => r.child_id === childId),
+    create: (data: Partial<ConsentRecord>): ConsentRecord => {
+      const record = { ...data, id: generateId("csr"), created_at: new Date().toISOString() } as ConsentRecord;
+      store.consentRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<ConsentRecord>): ConsentRecord | null => {
+      const idx = store.consentRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.consentRecords[idx] = { ...store.consentRecords[idx], ...data };
+      return store.consentRecords[idx];
+    },
+  },
+
+  contactDirectoryEntries: {
+    findAll: () => store.contactDirectoryEntries,
+    findById: (id: string) => store.contactDirectoryEntries.find((r) => r.id === id),
+    create: (data: Partial<ContactDirectoryEntry>): ContactDirectoryEntry => {
+      const record = { ...data, id: generateId("cde"), created_at: new Date().toISOString() } as ContactDirectoryEntry;
+      store.contactDirectoryEntries.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<ContactDirectoryEntry>): ContactDirectoryEntry | null => {
+      const idx = store.contactDirectoryEntries.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.contactDirectoryEntries[idx] = { ...store.contactDirectoryEntries[idx], ...data };
+      return store.contactDirectoryEntries[idx];
+    },
+  },
+
+  contactSupervisionSessions: {
+    findAll: () => store.contactSupervisionSessions,
+    findById: (id: string) => store.contactSupervisionSessions.find((r) => r.id === id),
+    findByChild: (childId: string) => store.contactSupervisionSessions.filter((r) => r.child_id === childId),
+    create: (data: Partial<ContactSupervisionSession>): ContactSupervisionSession => {
+      const record = { ...data, id: generateId("css"), created_at: new Date().toISOString() } as ContactSupervisionSession;
+      store.contactSupervisionSessions.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<ContactSupervisionSession>): ContactSupervisionSession | null => {
+      const idx = store.contactSupervisionSessions.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.contactSupervisionSessions[idx] = { ...store.contactSupervisionSessions[idx], ...data };
+      return store.contactSupervisionSessions[idx];
+    },
+  },
+
+  contextualSafeguardingRisks: {
+    findAll: () => store.contextualSafeguardingRisks,
+    findById: (id: string) => store.contextualSafeguardingRisks.find((r) => r.id === id),
+    create: (data: Partial<ContextualSafeguardingRisk>): ContextualSafeguardingRisk => {
+      const record = { ...data, id: generateId("csg"), created_at: new Date().toISOString() } as ContextualSafeguardingRisk;
+      store.contextualSafeguardingRisks.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<ContextualSafeguardingRisk>): ContextualSafeguardingRisk | null => {
+      const idx = store.contextualSafeguardingRisks.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.contextualSafeguardingRisks[idx] = { ...store.contextualSafeguardingRisks[idx], ...data };
+      return store.contextualSafeguardingRisks[idx];
     },
   },
 };

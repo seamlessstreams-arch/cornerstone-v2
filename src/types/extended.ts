@@ -1083,7 +1083,7 @@ export type ComplaintStatus =
   | "response_sent"
   | "escalated"
   | "closed";
-export type ComplaintOutcome = "upheld" | "partially_upheld" | "not_upheld" | "inconclusive" | "withdrawn";
+export type ComplaintOutcome = "upheld" | "partially_upheld" | "not_upheld" | "inconclusive" | "withdrawn" | "ongoing";
 export type ComplaintCategory =
   | "staff_conduct"
   | "care_practice"
@@ -6904,5 +6904,363 @@ export interface CommunicationBookEntry {
   action_required: boolean;
   action_completed_by: string | null;
   action_completed_date: string | null;
+  created_at: string;
+}
+
+// ── Batch 17 ──
+
+export type CommunityFeedbackSource =
+  | "neighbour"
+  | "local_business"
+  | "member_of_public"
+  | "local_councillor"
+  | "police_community_team"
+  | "place_of_worship"
+  | "school"
+  | "anonymous";
+
+export const COMMUNITY_FEEDBACK_SOURCE_LABEL: Record<CommunityFeedbackSource, string> = {
+  neighbour: "Neighbour",
+  local_business: "Local Business",
+  member_of_public: "Member of Public",
+  local_councillor: "Local Councillor",
+  police_community_team: "Police Community Team",
+  place_of_worship: "Place of Worship",
+  school: "School",
+  anonymous: "Anonymous",
+};
+
+export type CommunityFeedbackType =
+  | "compliment"
+  | "concern"
+  | "suggestion"
+  | "question"
+  | "complaint"
+  | "recognition";
+
+export const COMMUNITY_FEEDBACK_TYPE_LABEL: Record<CommunityFeedbackType, string> = {
+  compliment: "Compliment",
+  concern: "Concern",
+  suggestion: "Suggestion",
+  question: "Question",
+  complaint: "Complaint",
+  recognition: "Recognition",
+};
+
+export interface CommunityFeedbackRecord {
+  id: string;
+  date_received: string;
+  source: CommunityFeedbackSource;
+  source_contact: string;
+  feedback_type: CommunityFeedbackType;
+  summary: string;
+  full_description: string;
+  received_by: string;
+  response_required: boolean;
+  response_sent: boolean;
+  response_date: string;
+  response_summary: string;
+  escalated_to: string;
+  pattern_indicator: string;
+  children_informed_of_positive_feedback: boolean;
+  policy_or_practice_arising: string;
+  reviewed_date: string;
+  created_at: string;
+}
+
+export const COMPLAINT_OUTCOME_LABEL: Record<ComplaintOutcome, string> = {
+  upheld: "Upheld",
+  partially_upheld: "Partially Upheld",
+  not_upheld: "Not Upheld",
+  inconclusive: "Inconclusive",
+  withdrawn: "Withdrawn",
+  ongoing: "Ongoing",
+};
+
+export type ComplaintSource = "child" | "parent_carer" | "social_worker" | "professional" | "staff" | "anonymous";
+
+export const COMPLAINT_SOURCE_LABEL: Record<ComplaintSource, string> = {
+  child: "Young Person",
+  parent_carer: "Parent / Carer",
+  social_worker: "Social Worker",
+  professional: "Professional",
+  staff: "Staff Member",
+  anonymous: "Anonymous",
+};
+
+export type ComplaintTheme =
+  | "care_quality"
+  | "staff_conduct"
+  | "environment"
+  | "food"
+  | "activities"
+  | "communication"
+  | "privacy"
+  | "medication"
+  | "other";
+
+export const COMPLAINT_THEME_LABEL: Record<ComplaintTheme, string> = {
+  care_quality: "Care Quality",
+  staff_conduct: "Staff Conduct",
+  environment: "Environment",
+  food: "Food",
+  activities: "Activities",
+  communication: "Communication",
+  privacy: "Privacy",
+  medication: "Medication",
+  other: "Other",
+};
+
+export interface ComplaintOutcomeRecord {
+  id: string;
+  complaint_date: string;
+  complainant: string;
+  source: ComplaintSource;
+  theme: ComplaintTheme;
+  outcome: ComplaintOutcome;
+  investigated_by: string;
+  date_resolved: string | null;
+  response_time_days: number;
+  child_id: string | null;
+  summary: string;
+  findings: string;
+  lessons_learned: string;
+  practice_changes: string[];
+  complainant_satisfied: boolean | null;
+  escalated: boolean;
+  escalated_to: string | null;
+  ofsted_notified: boolean;
+  created_at: string;
+}
+
+export type ConsentCategory =
+  | "medical"
+  | "education"
+  | "photography"
+  | "trips_activities"
+  | "information_sharing"
+  | "therapy"
+  | "social_media"
+  | "overnight_stays"
+  | "contact"
+  | "research";
+
+export const CONSENT_CATEGORY_LABEL: Record<ConsentCategory, string> = {
+  medical: "Medical Treatment",
+  education: "Education",
+  photography: "Photography",
+  trips_activities: "Trips & Activities",
+  information_sharing: "Information Sharing",
+  therapy: "Therapeutic Support",
+  social_media: "Social Media",
+  overnight_stays: "Overnight Stays",
+  contact: "Contact Arrangements",
+  research: "Research Participation",
+};
+
+export type ConsentStatus = "granted" | "refused" | "pending" | "expired" | "withdrawn";
+
+export const CONSENT_STATUS_LABEL: Record<ConsentStatus, string> = {
+  granted: "Granted",
+  refused: "Refused",
+  pending: "Pending",
+  expired: "Expired",
+  withdrawn: "Withdrawn",
+};
+
+export type ConsentorType = "social_worker" | "parent" | "young_person" | "local_authority" | "guardian";
+
+export const CONSENTOR_TYPE_LABEL: Record<ConsentorType, string> = {
+  social_worker: "Social Worker",
+  parent: "Parent/Carer",
+  young_person: "Young Person",
+  local_authority: "Local Authority",
+  guardian: "Guardian",
+};
+
+export interface ConsentRecord {
+  id: string;
+  child_id: string;
+  category: ConsentCategory;
+  description: string;
+  status: ConsentStatus;
+  consentor_type: ConsentorType;
+  consentor_name: string;
+  date_requested: string;
+  date_decided: string;
+  expiry_date: string;
+  conditions: string;
+  recorded_by: string;
+  notes: string;
+  review_date: string;
+  created_at: string;
+}
+
+export type ContactCategory =
+  | "social_worker"
+  | "iro"
+  | "gp"
+  | "dentist"
+  | "camhs"
+  | "school"
+  | "police"
+  | "ofsted"
+  | "local_authority"
+  | "advocate"
+  | "therapist"
+  | "emergency"
+  | "other";
+
+export const CONTACT_CATEGORY_LABEL: Record<ContactCategory, string> = {
+  social_worker: "Social Worker",
+  iro: "IRO",
+  gp: "GP",
+  dentist: "Dentist",
+  camhs: "CAMHS",
+  school: "School",
+  police: "Police",
+  ofsted: "Ofsted",
+  local_authority: "Local Authority",
+  advocate: "Advocate",
+  therapist: "Therapist",
+  emergency: "Emergency",
+  other: "Other",
+};
+
+export interface ContactDirectoryEntry {
+  id: string;
+  name: string;
+  role: string;
+  organisation: string;
+  category: ContactCategory;
+  phone: string;
+  email: string;
+  address: string;
+  linked_children: string[];
+  is_emergency: boolean;
+  notes: string;
+  last_updated: string;
+  created_at: string;
+}
+
+export type ContactSessionType = "face_to_face" | "video_call" | "phone_call" | "letterbox" | "supervised_community" | "supervised_centre";
+
+export const CONTACT_SESSION_TYPE_LABEL: Record<ContactSessionType, string> = {
+  face_to_face: "Face to Face",
+  video_call: "Video Call",
+  phone_call: "Phone Call",
+  letterbox: "Letterbox",
+  supervised_community: "Supervised (Community)",
+  supervised_centre: "Supervised (Contact Centre)",
+};
+
+export type SupervisionLevel = "supervised" | "supported" | "monitored" | "unsupervised";
+
+export const SUPERVISION_LEVEL_LABEL: Record<SupervisionLevel, string> = {
+  supervised: "Supervised",
+  supported: "Supported",
+  monitored: "Monitored",
+  unsupervised: "Unsupervised",
+};
+
+export type ContactSessionOutcome = "positive" | "mixed" | "concerning" | "did_not_attend" | "cancelled_by_family" | "cancelled_by_sw";
+
+export const CONTACT_SESSION_OUTCOME_LABEL: Record<ContactSessionOutcome, string> = {
+  positive: "Positive",
+  mixed: "Mixed",
+  concerning: "Concerning",
+  did_not_attend: "Did Not Attend",
+  cancelled_by_family: "Cancelled (Family)",
+  cancelled_by_sw: "Cancelled (SW)",
+};
+
+export type ContactSessionPerson = "birth_mother" | "birth_father" | "sibling" | "grandparent" | "extended_family" | "other";
+
+export const CONTACT_SESSION_PERSON_LABEL: Record<ContactSessionPerson, string> = {
+  birth_mother: "Birth Mother",
+  birth_father: "Birth Father",
+  sibling: "Sibling",
+  grandparent: "Grandparent",
+  extended_family: "Extended Family",
+  other: "Other",
+};
+
+export interface ContactSupervisionSession {
+  id: string;
+  child_id: string;
+  date: string;
+  start_time: string;
+  end_time: string;
+  contact_type: ContactSessionType;
+  supervision_level: SupervisionLevel;
+  contact_person: ContactSessionPerson;
+  contact_person_name: string;
+  venue: string;
+  supervising_staff: string;
+  outcome: ContactSessionOutcome;
+  child_presentation_before: string;
+  child_presentation_during: string;
+  child_presentation_after: string;
+  interaction_quality: string;
+  concerns: string[];
+  positives: string[];
+  safeguarding_concerns: boolean;
+  safeguarding_details: string;
+  child_views: string;
+  gifts_brought: string;
+  agreement_breaches: string[];
+  court_order_ref: string;
+  next_contact_date: string;
+  social_worker_notified: boolean;
+  notes: string;
+  created_at: string;
+}
+
+export type ContextualRiskLevel = "low" | "medium" | "high" | "very_high";
+
+export const CONTEXTUAL_RISK_LEVEL_LABEL: Record<ContextualRiskLevel, string> = {
+  low: "Low",
+  medium: "Medium",
+  high: "High",
+  very_high: "Very High",
+};
+
+export type ContextualContextType = "location" | "peer_group" | "online_space" | "transport_route" | "school" | "community_facility";
+
+export const CONTEXTUAL_CONTEXT_TYPE_LABEL: Record<ContextualContextType, string> = {
+  location: "Physical Location",
+  peer_group: "Peer Group",
+  online_space: "Online Space",
+  transport_route: "Transport Route",
+  school: "School / Education",
+  community_facility: "Community Facility",
+};
+
+export type ContextualSafeguardingStatus = "active" | "monitoring" | "resolved" | "escalated";
+
+export const CONTEXTUAL_SAFEGUARDING_STATUS_LABEL: Record<ContextualSafeguardingStatus, string> = {
+  active: "Active Risk",
+  monitoring: "Monitoring",
+  resolved: "Resolved",
+  escalated: "Escalated",
+};
+
+export interface ContextualSafeguardingRisk {
+  id: string;
+  date_identified: string;
+  last_reviewed: string;
+  identified_by: string;
+  context_type: ContextualContextType;
+  risk_level: ContextualRiskLevel;
+  status: ContextualSafeguardingStatus;
+  location_or_context: string;
+  description: string;
+  children_affected: string[];
+  risk_factors: string[];
+  protective_actions: string[];
+  multi_agency_actions: string[];
+  police_intelligence: string;
+  community_mapping: string;
+  review_date: string;
   created_at: string;
 }
