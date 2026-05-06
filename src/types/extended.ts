@@ -7500,3 +7500,276 @@ export interface DebriefRecord {
   support_details: string;
   created_at: string;
 }
+
+// ── Batch 19 ──────────────────────────────────────────────────────────────────
+
+// dental-records
+export type DentalRegistrationStatus = "active_nhs" | "active_private" | "awaiting_registration" | "inactive";
+export const DENTAL_REGISTRATION_STATUS_LABEL: Record<DentalRegistrationStatus, string> = {
+  active_nhs: "Active NHS", active_private: "Active Private",
+  awaiting_registration: "Awaiting Registration", inactive: "Inactive",
+};
+
+export type DentalRecallInterval = "3_monthly" | "6_monthly" | "12_monthly";
+export const DENTAL_RECALL_INTERVAL_LABEL: Record<DentalRecallInterval, string> = {
+  "3_monthly": "3 Monthly", "6_monthly": "6 Monthly", "12_monthly": "12 Monthly",
+};
+
+export interface DentalOralHygienePractice {
+  practice: string;
+  completed: boolean;
+}
+
+export interface DentalCheckUpEntry {
+  date: string;
+  dentist: string;
+  findings: string;
+  treatment_recommended: string;
+  treatment_received: string;
+}
+
+export interface DentalRecord {
+  id: string;
+  child_id: string;
+  dental_practice: string;
+  dentist_name: string;
+  registered_date: string;
+  registration_status: DentalRegistrationStatus;
+  daily_oral_hygiene: DentalOralHygienePractice[];
+  last_check_up_date: string;
+  next_check_up_due: string;
+  recall_interval: DentalRecallInterval;
+  check_ups_history: DentalCheckUpEntry[];
+  current_treatment_notes: string;
+  anxiety_around_dentistry: string;
+  reasonable_adjustments: string[];
+  child_attitude_to_dentistry: string;
+  orthodontics: string;
+  fluoride_supplements: boolean;
+  child_aware: boolean;
+  review_date: string;
+  recorded_by: string;
+  created_at: string;
+}
+
+// deprivation-of-liberty
+export type DoLRestrictionType = "locked_doors" | "window_restrictors" | "bedroom_door_alarm" | "cctv" | "confiscation" | "search" | "internet_monitoring" | "curfew" | "geographic_restriction" | "contact_restriction" | "other";
+export const DOL_RESTRICTION_TYPE_LABEL: Record<DoLRestrictionType, string> = {
+  locked_doors: "Locked Doors/Gates", window_restrictors: "Window Restrictors", bedroom_door_alarm: "Bedroom Door Alarm",
+  cctv: "CCTV Monitoring", confiscation: "Confiscation of Item", search: "Room/Person Search",
+  internet_monitoring: "Internet Monitoring/Filtering", curfew: "Curfew", geographic_restriction: "Geographic Restriction",
+  contact_restriction: "Contact Restriction", other: "Other Restriction",
+};
+
+export type DoLLegalBasis = "care_plan" | "court_order" | "parental_consent" | "best_interests" | "risk_assessment" | "behaviour_support_plan";
+export const DOL_LEGAL_BASIS_LABEL: Record<DoLLegalBasis, string> = {
+  care_plan: "Care Plan", court_order: "Court Order", parental_consent: "Parental Consent",
+  best_interests: "Best Interests", risk_assessment: "Risk Assessment", behaviour_support_plan: "Behaviour Support Plan",
+};
+
+export type DoLReviewStatus = "current" | "under_review" | "removed" | "expired" | "court_pending";
+export const DOL_REVIEW_STATUS_LABEL: Record<DoLReviewStatus, string> = {
+  current: "Current", under_review: "Under Review", removed: "Removed", expired: "Expired", court_pending: "Court Pending",
+};
+
+export interface DoLReviewHistoryEntry {
+  date: string;
+  outcome: string;
+}
+
+export interface DoLRecord {
+  id: string;
+  child_id: string;
+  restriction_type: DoLRestrictionType;
+  description: string;
+  legal_basis: DoLLegalBasis;
+  authorised_by_id: string;
+  date_imposed: string;
+  review_date: string;
+  status: DoLReviewStatus;
+  proportionate: boolean;
+  necessary_justification: string;
+  child_consulted: boolean;
+  child_views: string;
+  sw_consulted: boolean;
+  sw_views: string;
+  ilo_consulted: boolean;
+  court_authorised: boolean;
+  court_ref: string;
+  alternatives_considered: string[];
+  impact_on_child: string;
+  review_history: DoLReviewHistoryEntry[];
+  notes: string;
+  created_at: string;
+}
+
+// device-policy
+export type DevicePolicyDeviceType = "smartphone" | "tablet" | "laptop" | "games_console" | "smart_watch" | "other";
+export const DEVICE_POLICY_DEVICE_TYPE_LABEL: Record<DevicePolicyDeviceType, string> = {
+  smartphone: "Smartphone", tablet: "Tablet", laptop: "Laptop",
+  games_console: "Games Console", smart_watch: "Smart Watch", other: "Other",
+};
+
+export type DevicePolicyAgreementStatus = "active" | "suspended" | "under_review" | "expired" | "not_signed";
+export const DEVICE_POLICY_AGREEMENT_STATUS_LABEL: Record<DevicePolicyAgreementStatus, string> = {
+  active: "Active", suspended: "Suspended", under_review: "Under Review", expired: "Expired", not_signed: "Not Signed",
+};
+
+export interface DevicePolicyScreenTimeRule { day: "weekday" | "weekend"; max_hours: number; start_time: string; end_time: string }
+export interface DevicePolicyUsageLog { date: string; actual_hours: number; compliant: boolean; notes: string }
+export interface DevicePolicyIncident { date: string; description: string; action_taken: string; restriction_applied: boolean }
+
+export interface DevicePolicyRecord {
+  id: string;
+  child_id: string;
+  device_type: DevicePolicyDeviceType;
+  device_name: string;
+  owned_by: "child" | "home" | "family";
+  serial_number: string;
+  parental_controls_enabled: boolean;
+  parental_control_software: string;
+  wifi_access: boolean;
+  sim_card: boolean;
+  agreement_signed: boolean;
+  agreement_date: string | null;
+  agreement_status: DevicePolicyAgreementStatus;
+  screen_time_rules: DevicePolicyScreenTimeRule[];
+  usage_log: DevicePolicyUsageLog[];
+  incidents: DevicePolicyIncident[];
+  restrictions: string[];
+  social_media_permission: boolean;
+  social_media_platforms: string[];
+  social_worker_approval: boolean;
+  nighttime_storage: string;
+  review_date: string;
+  notes: string;
+  created_at: string;
+}
+
+// digital-literacy-skills
+export type DigitalLiteracyDomain = "device_basics" | "email" | "word_processing" | "cloud_storage" | "online_banking" | "gov_uk_services" | "scam_awareness" | "password_hygiene" | "form_completion" | "job_applications" | "browsing_safely";
+export const DIGITAL_LITERACY_DOMAIN_LABEL: Record<DigitalLiteracyDomain, string> = {
+  device_basics: "Device Basics", email: "Email", word_processing: "Word Processing",
+  cloud_storage: "Cloud Storage", online_banking: "Online Banking", gov_uk_services: "gov.uk Services",
+  scam_awareness: "Scam Awareness", password_hygiene: "Password Hygiene", form_completion: "Form Completion",
+  job_applications: "Job Applications", browsing_safely: "Browsing Safely",
+};
+
+export type DigitalLiteracyCompetency = "not_yet_introduced" | "aware" | "did_with_help" | "did_independently" | "confident";
+export const DIGITAL_LITERACY_COMPETENCY_LABEL: Record<DigitalLiteracyCompetency, string> = {
+  not_yet_introduced: "Not Yet Introduced", aware: "Aware", did_with_help: "Did with Help",
+  did_independently: "Did Independently", confident: "Confident",
+};
+
+export interface DigitalLiteracySkillRecord {
+  id: string;
+  child_id: string;
+  recorded_date: string;
+  domain: DigitalLiteracyDomain;
+  competency: DigitalLiteracyCompetency;
+  specific_skills: { skill: string; achieved: boolean }[];
+  tools_used: string[];
+  real_world_application: string[];
+  child_voice: string;
+  staff_observation: string;
+  next_step: string;
+  review_date: string;
+  key_worker: string;
+  notes: string;
+  created_at: string;
+}
+
+// discharge
+export type DischargeReason = "reunification" | "foster_care" | "other_residential" | "semi_independent" | "independent" | "adoption" | "age_18" | "placement_breakdown" | "secure_unit" | "other";
+export const DISCHARGE_REASON_LABEL: Record<DischargeReason, string> = {
+  reunification: "Return to Family", foster_care: "Foster Care",
+  other_residential: "Other Residential", semi_independent: "Semi-Independent",
+  independent: "Independent Living", adoption: "Adoption",
+  age_18: "Aged Out (18+)", placement_breakdown: "Placement Breakdown",
+  secure_unit: "Secure Unit", other: "Other",
+};
+
+export type DischargePlanStatus = "not_started" | "in_progress" | "on_track" | "at_risk" | "completed" | "cancelled";
+export const DISCHARGE_PLAN_STATUS_LABEL: Record<DischargePlanStatus, string> = {
+  not_started: "Not Started", in_progress: "In Progress", on_track: "On Track",
+  at_risk: "At Risk", completed: "Completed", cancelled: "Cancelled",
+};
+
+export interface DischargeChecklistItem {
+  id: string;
+  task: string;
+  category: string;
+  completed: boolean;
+  completed_date: string | null;
+  completed_by: string | null;
+  notes: string;
+}
+
+export interface DischargeTransitionAction {
+  id: string;
+  action: string;
+  owner: string;
+  due_date: string;
+  status: "pending" | "in_progress" | "completed" | "overdue";
+  notes: string;
+}
+
+export interface DischargeExitInterview {
+  completed: boolean;
+  date: string | null;
+  conducted_by: string | null;
+  child_views: string;
+}
+
+export interface DischargeRecord {
+  id: string;
+  child_id: string;
+  reason: DischargeReason;
+  status: DischargePlanStatus;
+  planned_date: string;
+  actual_date: string | null;
+  destination: string;
+  destination_address: string;
+  receiving_provider: string | null;
+  social_worker: string;
+  social_worker_contact: string;
+  key_worker: string;
+  checklist: DischargeChecklistItem[];
+  transition_actions: DischargeTransitionAction[];
+  risk_assessment_completed: boolean;
+  belongings_returned: boolean;
+  belongings_witnessed: string | null;
+  exit_interview: DischargeExitInterview;
+  aftercare_provision: string[];
+  stay_in_touch_plan: string;
+  child_views: string;
+  professional_views: string;
+  notes: string;
+  created_at: string;
+}
+
+// diversity-calendar
+export type DiversityEventCategory = "religious" | "cultural" | "awareness" | "national" | "lgbtq_plus" | "disability";
+export const DIVERSITY_EVENT_CATEGORY_LABEL: Record<DiversityEventCategory, string> = {
+  religious: "Religious", cultural: "Cultural", awareness: "Awareness",
+  national: "National", lgbtq_plus: "LGBTQ+", disability: "Disability",
+};
+
+export type DiversityEventStatus = "upcoming" | "completed" | "in_progress";
+export const DIVERSITY_EVENT_STATUS_LABEL: Record<DiversityEventStatus, string> = {
+  upcoming: "Upcoming", completed: "Completed", in_progress: "In Progress",
+};
+
+export interface DiversityCalendarEvent {
+  id: string;
+  name: string;
+  date: string;
+  date_range: string;
+  category: DiversityEventCategory;
+  description: string;
+  how_we_mark_it: string;
+  relevant_to_children: string;
+  resources: string[];
+  status: DiversityEventStatus;
+  created_at: string;
+}

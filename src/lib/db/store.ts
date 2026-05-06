@@ -134,6 +134,12 @@ import type {
   DataBreachRecord,
   DataProtectionRecord,
   DebriefRecord,
+  DentalRecord,
+  DoLRecord,
+  DevicePolicyRecord,
+  DigitalLiteracySkillRecord,
+  DischargeRecord,
+  DiversityCalendarEvent,
 } from "@/types/extended";
 import type { Document, DocumentReadReceipt, Expense } from "@/types";
 import type { UploadedDocument, DocumentAuditEntry } from "@/types/documents";
@@ -326,6 +332,12 @@ const store = {
   dataBreachRecords: [] as DataBreachRecord[],
   dataProtectionRecords: [] as DataProtectionRecord[],
   debriefRecords: [] as DebriefRecord[],
+  dentalRecords: [] as DentalRecord[],
+  dolRecords: [] as DoLRecord[],
+  devicePolicyRecords: [] as DevicePolicyRecord[],
+  digitalLiteracySkillRecords: [] as DigitalLiteracySkillRecord[],
+  dischargeRecords: [] as DischargeRecord[],
+  diversityCalendarEvents: [] as DiversityCalendarEvent[],
   // Shift Swap Requests
   shiftSwaps: [
     {
@@ -5088,6 +5100,107 @@ export const db = {
       if (idx === -1) return null;
       store.debriefRecords[idx] = { ...store.debriefRecords[idx], ...data };
       return store.debriefRecords[idx];
+    },
+  },
+
+  dentalRecords: {
+    findAll: () => store.dentalRecords,
+    findById: (id: string) => store.dentalRecords.find((r) => r.id === id),
+    findByChild: (childId: string) => store.dentalRecords.filter((r) => r.child_id === childId),
+    create: (data: Partial<DentalRecord>): DentalRecord => {
+      const record = { ...data, id: generateId("dnt"), created_at: new Date().toISOString() } as DentalRecord;
+      store.dentalRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<DentalRecord>): DentalRecord | null => {
+      const idx = store.dentalRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.dentalRecords[idx] = { ...store.dentalRecords[idx], ...data };
+      return store.dentalRecords[idx];
+    },
+  },
+
+  dolRecords: {
+    findAll: () => store.dolRecords,
+    findById: (id: string) => store.dolRecords.find((r) => r.id === id),
+    findByChild: (childId: string) => store.dolRecords.filter((r) => r.child_id === childId),
+    create: (data: Partial<DoLRecord>): DoLRecord => {
+      const record = { ...data, id: generateId("dol"), created_at: new Date().toISOString() } as DoLRecord;
+      store.dolRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<DoLRecord>): DoLRecord | null => {
+      const idx = store.dolRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.dolRecords[idx] = { ...store.dolRecords[idx], ...data };
+      return store.dolRecords[idx];
+    },
+  },
+
+  devicePolicyRecords: {
+    findAll: () => store.devicePolicyRecords,
+    findById: (id: string) => store.devicePolicyRecords.find((r) => r.id === id),
+    findByChild: (childId: string) => store.devicePolicyRecords.filter((r) => r.child_id === childId),
+    create: (data: Partial<DevicePolicyRecord>): DevicePolicyRecord => {
+      const record = { ...data, id: generateId("dvp"), created_at: new Date().toISOString() } as DevicePolicyRecord;
+      store.devicePolicyRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<DevicePolicyRecord>): DevicePolicyRecord | null => {
+      const idx = store.devicePolicyRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.devicePolicyRecords[idx] = { ...store.devicePolicyRecords[idx], ...data };
+      return store.devicePolicyRecords[idx];
+    },
+  },
+
+  digitalLiteracySkillRecords: {
+    findAll: () => store.digitalLiteracySkillRecords,
+    findById: (id: string) => store.digitalLiteracySkillRecords.find((r) => r.id === id),
+    findByChild: (childId: string) => store.digitalLiteracySkillRecords.filter((r) => r.child_id === childId),
+    create: (data: Partial<DigitalLiteracySkillRecord>): DigitalLiteracySkillRecord => {
+      const record = { ...data, id: generateId("dls"), created_at: new Date().toISOString() } as DigitalLiteracySkillRecord;
+      store.digitalLiteracySkillRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<DigitalLiteracySkillRecord>): DigitalLiteracySkillRecord | null => {
+      const idx = store.digitalLiteracySkillRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.digitalLiteracySkillRecords[idx] = { ...store.digitalLiteracySkillRecords[idx], ...data };
+      return store.digitalLiteracySkillRecords[idx];
+    },
+  },
+
+  dischargeRecords: {
+    findAll: () => store.dischargeRecords,
+    findById: (id: string) => store.dischargeRecords.find((r) => r.id === id),
+    findByChild: (childId: string) => store.dischargeRecords.filter((r) => r.child_id === childId),
+    create: (data: Partial<DischargeRecord>): DischargeRecord => {
+      const record = { ...data, id: generateId("dis"), created_at: new Date().toISOString() } as DischargeRecord;
+      store.dischargeRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<DischargeRecord>): DischargeRecord | null => {
+      const idx = store.dischargeRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.dischargeRecords[idx] = { ...store.dischargeRecords[idx], ...data };
+      return store.dischargeRecords[idx];
+    },
+  },
+
+  diversityCalendarEvents: {
+    findAll: () => store.diversityCalendarEvents,
+    findById: (id: string) => store.diversityCalendarEvents.find((r) => r.id === id),
+    create: (data: Partial<DiversityCalendarEvent>): DiversityCalendarEvent => {
+      const record = { ...data, id: generateId("dce"), created_at: new Date().toISOString() } as DiversityCalendarEvent;
+      store.diversityCalendarEvents.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<DiversityCalendarEvent>): DiversityCalendarEvent | null => {
+      const idx = store.diversityCalendarEvents.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.diversityCalendarEvents[idx] = { ...store.diversityCalendarEvents[idx], ...data };
+      return store.diversityCalendarEvents[idx];
     },
   },
 };
