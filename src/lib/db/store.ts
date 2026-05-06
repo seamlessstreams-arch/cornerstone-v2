@@ -86,6 +86,12 @@ import type {
   DeafHearingSupportRecord,
   DiabeticCarePlan,
   SpldSupportPlan,
+  EpilepsySeizurePlan,
+  ExtracurricularClubRecord,
+  ChildFeedbackLoop,
+  ChildStaffFeedback,
+  ChildFriendlyPolicy,
+  HeritageLanguageRecord,
 } from "@/types/extended";
 import type { Document, DocumentReadReceipt, Expense } from "@/types";
 import type { UploadedDocument, DocumentAuditEntry } from "@/types/documents";
@@ -230,6 +236,12 @@ const store = {
   deafHearingSupportRecords: [] as DeafHearingSupportRecord[],
   diabeticCarePlans: [] as DiabeticCarePlan[],
   spldSupportPlans: [] as SpldSupportPlan[],
+  epilepsySeizurePlans: [] as EpilepsySeizurePlan[],
+  extracurricularClubRecords: [] as ExtracurricularClubRecord[],
+  childFeedbackLoops: [] as ChildFeedbackLoop[],
+  childStaffFeedback: [] as ChildStaffFeedback[],
+  childFriendlyPolicies: [] as ChildFriendlyPolicy[],
+  heritageLanguageRecords: [] as HeritageLanguageRecord[],
   // Shift Swap Requests
   shiftSwaps: [
     {
@@ -4185,6 +4197,107 @@ export const db = {
       if (idx === -1) return null;
       store.spldSupportPlans[idx] = { ...store.spldSupportPlans[idx], ...data };
       return store.spldSupportPlans[idx];
+    },
+  },
+
+  epilepsySeizurePlans: {
+    findAll: () => store.epilepsySeizurePlans,
+    findById: (id: string) => store.epilepsySeizurePlans.find((r) => r.id === id),
+    findByChild: (childId: string) => store.epilepsySeizurePlans.filter((r) => r.child_id === childId),
+    create: (data: Partial<EpilepsySeizurePlan>): EpilepsySeizurePlan => {
+      const record = { ...data, id: generateId("esp"), created_at: new Date().toISOString() } as EpilepsySeizurePlan;
+      store.epilepsySeizurePlans.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<EpilepsySeizurePlan>): EpilepsySeizurePlan | null => {
+      const idx = store.epilepsySeizurePlans.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.epilepsySeizurePlans[idx] = { ...store.epilepsySeizurePlans[idx], ...data };
+      return store.epilepsySeizurePlans[idx];
+    },
+  },
+
+  extracurricularClubRecords: {
+    findAll: () => store.extracurricularClubRecords,
+    findById: (id: string) => store.extracurricularClubRecords.find((r) => r.id === id),
+    findByChild: (childId: string) => store.extracurricularClubRecords.filter((r) => r.child_id === childId),
+    create: (data: Partial<ExtracurricularClubRecord>): ExtracurricularClubRecord => {
+      const record = { ...data, id: generateId("ecr"), created_at: new Date().toISOString() } as ExtracurricularClubRecord;
+      store.extracurricularClubRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<ExtracurricularClubRecord>): ExtracurricularClubRecord | null => {
+      const idx = store.extracurricularClubRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.extracurricularClubRecords[idx] = { ...store.extracurricularClubRecords[idx], ...data };
+      return store.extracurricularClubRecords[idx];
+    },
+  },
+
+  childFeedbackLoops: {
+    findAll: () => store.childFeedbackLoops,
+    findById: (id: string) => store.childFeedbackLoops.find((r) => r.id === id),
+    findByChild: (childId: string) => store.childFeedbackLoops.filter((r) => r.child_id === childId),
+    create: (data: Partial<ChildFeedbackLoop>): ChildFeedbackLoop => {
+      const record = { ...data, id: generateId("cfl"), created_at: new Date().toISOString() } as ChildFeedbackLoop;
+      store.childFeedbackLoops.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<ChildFeedbackLoop>): ChildFeedbackLoop | null => {
+      const idx = store.childFeedbackLoops.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.childFeedbackLoops[idx] = { ...store.childFeedbackLoops[idx], ...data };
+      return store.childFeedbackLoops[idx];
+    },
+  },
+
+  childStaffFeedback: {
+    findAll: () => store.childStaffFeedback,
+    findById: (id: string) => store.childStaffFeedback.find((r) => r.id === id),
+    findByChild: (childId: string) => store.childStaffFeedback.filter((r) => r.child_id === childId),
+    create: (data: Partial<ChildStaffFeedback>): ChildStaffFeedback => {
+      const record = { ...data, id: generateId("csf"), created_at: new Date().toISOString() } as ChildStaffFeedback;
+      store.childStaffFeedback.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<ChildStaffFeedback>): ChildStaffFeedback | null => {
+      const idx = store.childStaffFeedback.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.childStaffFeedback[idx] = { ...store.childStaffFeedback[idx], ...data };
+      return store.childStaffFeedback[idx];
+    },
+  },
+
+  childFriendlyPolicies: {
+    findAll: () => store.childFriendlyPolicies,
+    findById: (id: string) => store.childFriendlyPolicies.find((r) => r.id === id),
+    create: (data: Partial<ChildFriendlyPolicy>): ChildFriendlyPolicy => {
+      const record = { ...data, id: generateId("cfp"), created_at: new Date().toISOString() } as ChildFriendlyPolicy;
+      store.childFriendlyPolicies.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<ChildFriendlyPolicy>): ChildFriendlyPolicy | null => {
+      const idx = store.childFriendlyPolicies.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.childFriendlyPolicies[idx] = { ...store.childFriendlyPolicies[idx], ...data };
+      return store.childFriendlyPolicies[idx];
+    },
+  },
+
+  heritageLanguageRecords: {
+    findAll: () => store.heritageLanguageRecords,
+    findById: (id: string) => store.heritageLanguageRecords.find((r) => r.id === id),
+    findByChild: (childId: string) => store.heritageLanguageRecords.filter((r) => r.child_id === childId),
+    create: (data: Partial<HeritageLanguageRecord>): HeritageLanguageRecord => {
+      const record = { ...data, id: generateId("hlr"), created_at: new Date().toISOString() } as HeritageLanguageRecord;
+      store.heritageLanguageRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<HeritageLanguageRecord>): HeritageLanguageRecord | null => {
+      const idx = store.heritageLanguageRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.heritageLanguageRecords[idx] = { ...store.heritageLanguageRecords[idx], ...data };
+      return store.heritageLanguageRecords[idx];
     },
   },
 };

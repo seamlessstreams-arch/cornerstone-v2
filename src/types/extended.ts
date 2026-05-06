@@ -4653,3 +4653,461 @@ export interface SpldSupportPlan {
   key_worker: string;
   created_at: string;
 }
+
+// ── Epilepsy / Seizure Plan ──────────────────────────────────────────────────
+
+export interface SeizureTypeEntry {
+  name: string;
+  description: string;
+  typical_duration: string;
+  last_observed?: string;
+}
+
+export interface PreventerMedication {
+  name: string;
+  dose: string;
+  timing: string;
+}
+
+export interface RescueMedication {
+  name: string;
+  dose: string;
+  route: string;
+  when_to_give: string;
+  second_dose_allowed: boolean;
+}
+
+export interface SeizureEmergencyContact {
+  name: string;
+  role: string;
+  phone: string;
+}
+
+export interface SeizureLogEntry {
+  date: string;
+  type: string;
+  duration_minutes: number;
+  rescue_given: boolean;
+  outcome: string;
+}
+
+export interface EpilepsySeizurePlan {
+  id: string;
+  child_id: string;
+  plan_date: string;
+  diagnosis: string;
+  seizure_types: SeizureTypeEntry[];
+  warning_signs: string[];
+  triggers: string[];
+  during_seizure_steps: string[];
+  recovery_position_steps: string[];
+  call_999_criteria: string[];
+  preventer_medication?: PreventerMedication;
+  rescue_medication?: RescueMedication;
+  staff_trained_to_admin: string[];
+  staff_training_expires?: string;
+  safe_sleeping_arrangements: string[];
+  bathing_swimming_policy: string[];
+  school_plan_in_place: boolean;
+  emergency_contacts: SeizureEmergencyContact[];
+  recent_seizure_log: SeizureLogEntry[];
+  consultant_neurologist?: string;
+  consultant_review_due?: string;
+  child_voice: string;
+  staff_observation: string;
+  review_date: string;
+  key_worker: string;
+  created_at: string;
+}
+
+// ── Extracurricular Clubs ────────────────────────────────────────────────────
+
+export type ExtracurricularCategory =
+  | "sport"
+  | "music"
+  | "drama_theatre"
+  | "faith_community"
+  | "academic_debate"
+  | "coding_tech"
+  | "art_craft"
+  | "volunteering"
+  | "youth_advocacy"
+  | "other";
+
+export const EXTRACURRICULAR_CATEGORY_LABEL: Record<ExtracurricularCategory, string> = {
+  sport: "Sport",
+  music: "Music",
+  drama_theatre: "Drama / theatre",
+  faith_community: "Faith / community",
+  academic_debate: "Academic / debate",
+  coding_tech: "Coding / tech",
+  art_craft: "Art / craft",
+  volunteering: "Volunteering",
+  youth_advocacy: "Youth advocacy",
+  other: "Other",
+};
+
+export type ClubSocialFit =
+  | "building"
+  | "settled"
+  | "strong_friendships"
+  | "mixed"
+  | "stepping_back";
+
+export const CLUB_SOCIAL_FIT_LABEL: Record<ClubSocialFit, string> = {
+  building: "Building",
+  settled: "Settled",
+  strong_friendships: "Strong friendships",
+  mixed: "Mixed",
+  stepping_back: "Stepping back",
+};
+
+export interface ExtracurricularClubRecord {
+  id: string;
+  child_id: string;
+  club_name: string;
+  category: ExtracurricularCategory;
+  joined: string;
+  ongoing: boolean;
+  ended?: string;
+  frequency: string;
+  venue: string;
+  transport_arrangement: string;
+  weekly_cost: number;
+  funding_source: string;
+  child_initiated: boolean;
+  social_fit: ClubSocialFit;
+  skills_built: string[];
+  attendance_rate: number;
+  flags_concerns: string[];
+  child_voice: string;
+  staff_observation: string;
+  review_date: string;
+  key_worker: string;
+  created_at: string;
+}
+
+// ── Child Feedback Loops ─────────────────────────────────────────────────────
+
+export type FeedbackLoopChannel =
+  | "childrens_meeting"
+  | "key_working_session"
+  | "verbal_to_staff"
+  | "written_drawing"
+  | "suggestion_box"
+  | "pulse_survey"
+  | "childrens_pledge_review"
+  | "independent_advocate"
+  | "reg_44_visit";
+
+export const FEEDBACK_LOOP_CHANNEL_LABEL: Record<FeedbackLoopChannel, string> = {
+  childrens_meeting: "Children's meeting",
+  key_working_session: "Key working session",
+  verbal_to_staff: "Verbal to staff",
+  written_drawing: "Written / drawing",
+  suggestion_box: "Suggestion box",
+  pulse_survey: "Pulse survey",
+  childrens_pledge_review: "Children's pledge review",
+  independent_advocate: "Independent advocate",
+  reg_44_visit: "Reg 44 visit",
+};
+
+export type FeedbackLoopType =
+  | "suggestion"
+  | "concern"
+  | "compliment"
+  | "question"
+  | "challenge"
+  | "idea";
+
+export const FEEDBACK_LOOP_TYPE_LABEL: Record<FeedbackLoopType, string> = {
+  suggestion: "Suggestion",
+  concern: "Concern",
+  compliment: "Compliment",
+  question: "Question",
+  challenge: "Challenge",
+  idea: "Idea",
+};
+
+export type FeedbackDecision =
+  | "acted_on_in_full"
+  | "acted_on_in_part"
+  | "discussed_and_explored"
+  | "cannot_do_explained"
+  | "pending_consideration";
+
+export const FEEDBACK_DECISION_LABEL: Record<FeedbackDecision, string> = {
+  acted_on_in_full: "Acted on - in full",
+  acted_on_in_part: "Acted on - in part",
+  discussed_and_explored: "Discussed and explored",
+  cannot_do_explained: "Cannot do - explained",
+  pending_consideration: "Pending consideration",
+};
+
+export interface ChildFeedbackLoop {
+  id: string;
+  child_id: string;
+  feedback_date: string;
+  feedback_channel: FeedbackLoopChannel;
+  feedback_topic: string;
+  child_words: string;
+  feedback_type: FeedbackLoopType;
+  acknowledged_by: string;
+  acknowledged_date: string;
+  considered_at: string;
+  decision_made: FeedbackDecision;
+  decision_maker: string;
+  decision_rationale: string;
+  actions_taken: string[];
+  when_child_was_told: string;
+  how_child_was_told: string;
+  child_response_to_outcome: string;
+  child_accepts: boolean;
+  visible_change: string;
+  duration_days_to_close: number;
+  follow_up_date: string;
+  recorded_by: string;
+  created_at: string;
+}
+
+// ── Child Feedback on Staff ──────────────────────────────────────────────────
+
+export type StaffFeedbackAttribution =
+  | "named"
+  | "anonymous_to_subject"
+  | "anonymous_to_all_but_rm";
+
+export const STAFF_FEEDBACK_ATTRIBUTION_LABEL: Record<StaffFeedbackAttribution, string> = {
+  named: "Named",
+  anonymous_to_subject: "Anonymous to subject",
+  anonymous_to_all_but_rm: "Anonymous to all but RM",
+};
+
+export type StaffFeedbackChannel =
+  | "childrens_meeting"
+  | "key_working"
+  | "suggestion_box"
+  | "independent_advocate"
+  | "reg_44_visit"
+  | "direct_to_rm";
+
+export const STAFF_FEEDBACK_CHANNEL_LABEL: Record<StaffFeedbackChannel, string> = {
+  childrens_meeting: "Children's meeting",
+  key_working: "Key working",
+  suggestion_box: "Suggestion box",
+  independent_advocate: "Independent advocate",
+  reg_44_visit: "Reg 44 visit",
+  direct_to_rm: "Direct to RM",
+};
+
+export type StaffFeedbackSentiment =
+  | "positive"
+  | "mixed"
+  | "constructive"
+  | "concern";
+
+export const STAFF_FEEDBACK_SENTIMENT_LABEL: Record<StaffFeedbackSentiment, string> = {
+  positive: "Positive",
+  mixed: "Mixed",
+  constructive: "Constructive",
+  concern: "Concern",
+};
+
+export type StaffFeedbackTopic =
+  | "relational_warmth"
+  | "boundaries_fairness"
+  | "communication_style"
+  | "cultural_awareness"
+  | "sensory_awareness"
+  | "listening"
+  | "reliability"
+  | "consistency"
+  | "specific_incident"
+  | "skill"
+  | "general_appreciation";
+
+export const STAFF_FEEDBACK_TOPIC_LABEL: Record<StaffFeedbackTopic, string> = {
+  relational_warmth: "Relational warmth",
+  boundaries_fairness: "Boundaries fairness",
+  communication_style: "Communication style",
+  cultural_awareness: "Cultural awareness",
+  sensory_awareness: "Sensory awareness",
+  listening: "Listening",
+  reliability: "Reliability",
+  consistency: "Consistency",
+  specific_incident: "Specific incident",
+  skill: "Skill",
+  general_appreciation: "General appreciation",
+};
+
+export interface ChildStaffFeedback {
+  id: string;
+  child_id: string;
+  attribution: StaffFeedbackAttribution;
+  feedback_date: string;
+  channel: StaffFeedbackChannel;
+  staff_subject: string;
+  feedback_sentiment: StaffFeedbackSentiment;
+  feedback_topic: StaffFeedbackTopic;
+  child_words: string;
+  context_of_feedback: string;
+  staff_member_informed: boolean;
+  staff_member_informed_date: string;
+  staff_response: string;
+  manager_actions: string[];
+  feedback_shared_with: string[];
+  child_wishes_for_response: string;
+  follow_up_date: string;
+  recorded_by: string;
+  protected_from_retaliation: boolean;
+  pattern_indicator: string;
+  created_at: string;
+}
+
+// ── Child-Friendly Policies ──────────────────────────────────────────────────
+
+export type PolicyArea =
+  | "safety"
+  | "behaviour"
+  | "voice"
+  | "privacy"
+  | "health"
+  | "education"
+  | "wellbeing"
+  | "rights";
+
+export const POLICY_AREA_LABEL: Record<PolicyArea, string> = {
+  safety: "Safety",
+  behaviour: "Behaviour",
+  voice: "Voice",
+  privacy: "Privacy",
+  health: "Health",
+  education: "Education",
+  wellbeing: "Wellbeing",
+  rights: "Rights",
+};
+
+export type PolicyAudienceAge =
+  | "under_11"
+  | "eleven_to_fourteen"
+  | "fifteen_plus"
+  | "all_ages_visual";
+
+export const POLICY_AUDIENCE_AGE_LABEL: Record<PolicyAudienceAge, string> = {
+  under_11: "Under 11",
+  eleven_to_fourteen: "11-14",
+  fifteen_plus: "15+",
+  all_ages_visual: "All ages (visual)",
+};
+
+export type PolicyFormat =
+  | "visual_plus_text"
+  | "easy_read"
+  | "standard_text"
+  | "audio_available"
+  | "comic_storybook";
+
+export const POLICY_FORMAT_LABEL: Record<PolicyFormat, string> = {
+  visual_plus_text: "Visual + Text",
+  easy_read: "Easy Read",
+  standard_text: "Standard Text",
+  audio_available: "Audio Available",
+  comic_storybook: "Comic/Storybook",
+};
+
+export interface ChildFriendlyPolicy {
+  id: string;
+  title: string;
+  area: PolicyArea;
+  parent_policy_name: string;
+  parent_policy_version: string;
+  child_friendly_version: string;
+  audience_age: PolicyAudienceAge;
+  format: PolicyFormat;
+  plain_english_summary: string;
+  what_this_means: string[];
+  what_you_can_expect: string[];
+  your_rights: string[];
+  your_responsibilities: string[];
+  who_can_help: string[];
+  child_feedback: string;
+  reviewed_with_children_date: string;
+  last_updated: string;
+  authored_by: string;
+  approved_by: string;
+  child_co_production_contributors: string[];
+  created_at: string;
+}
+
+// ── Heritage Language Tracker ────────────────────────────────────────────────
+
+export type HeritageLanguageStatus =
+  | "mother_tongue"
+  | "fluent"
+  | "conversational"
+  | "developing"
+  | "receptive_only"
+  | "lost_being_recovered";
+
+export const HERITAGE_LANGUAGE_STATUS_LABEL: Record<HeritageLanguageStatus, string> = {
+  mother_tongue: "Mother tongue",
+  fluent: "Fluent",
+  conversational: "Conversational",
+  developing: "Developing",
+  receptive_only: "Receptive only",
+  lost_being_recovered: "Lost — being recovered",
+};
+
+export type LanguageIdentityImportance =
+  | "central"
+  | "important"
+  | "becoming_important"
+  | "mixed_feelings"
+  | "fading";
+
+export const LANGUAGE_IDENTITY_IMPORTANCE_LABEL: Record<LanguageIdentityImportance, string> = {
+  central: "Central",
+  important: "Important",
+  becoming_important: "Becoming important",
+  mixed_feelings: "Mixed feelings",
+  fading: "Fading",
+};
+
+export type HeritageSkillLevel = 1 | 2 | 3 | 4 | 5;
+
+export interface HeritageLanguageEntry {
+  name: string;
+  status: HeritageLanguageStatus;
+  speaking_level: HeritageSkillLevel;
+  reading_level: HeritageSkillLevel;
+  writing_level: HeritageSkillLevel;
+}
+
+export interface LanguageFamilyContact {
+  person: string;
+  relationship: string;
+  language_used: string;
+}
+
+export interface HeritageLanguageRecord {
+  id: string;
+  child_id: string;
+  recorded_date: string;
+  languages: HeritageLanguageEntry[];
+  primary_language_at_placement: string;
+  home_atmosphere_supports: boolean;
+  opportunities_to_use: string[];
+  community_resources: string[];
+  family_contact_in_language: LanguageFamilyContact[];
+  reading_materials: string[];
+  films_music: string[];
+  formal_learning?: string;
+  identity_importance: LanguageIdentityImportance;
+  child_voice: string;
+  staff_observation: string;
+  flags_concerns: string[];
+  next_step: string;
+  review_date: string;
+  key_worker: string;
+  created_at: string;
+}
