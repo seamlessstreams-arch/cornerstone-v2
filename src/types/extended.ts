@@ -7773,3 +7773,337 @@ export interface DiversityCalendarEvent {
   status: DiversityEventStatus;
   created_at: string;
 }
+
+// ── Batch 20 ──────────────────────────────────────────────────────────────────
+
+// ── Document Expiry Tracker (home-level) ──
+
+export type DocExpiryCategory = "staff_compliance" | "home_compliance" | "policy_review" | "vehicle" | "equipment";
+
+export const DOC_EXPIRY_CATEGORY_LABEL: Record<DocExpiryCategory, string> = {
+  staff_compliance: "Staff Compliance",
+  home_compliance: "Home Compliance",
+  policy_review: "Policy Review",
+  vehicle: "Vehicle",
+  equipment: "Equipment",
+};
+
+export type DocExpiryStatus = "current" | "expiring_soon" | "overdue" | "renewed";
+
+export const DOC_EXPIRY_STATUS_LABEL: Record<DocExpiryStatus, string> = {
+  current: "Current",
+  expiring_soon: "Expiring Soon",
+  overdue: "Overdue",
+  renewed: "Renewed",
+};
+
+export interface TrackedDocument {
+  id: string;
+  title: string;
+  category: DocExpiryCategory;
+  related_to: string | null;
+  issued_date: string | null;
+  expiry_date: string;
+  renewal_lead_time: number;
+  status: DocExpiryStatus;
+  renewal_owner: string;
+  notes: string;
+  last_renewed: string | null;
+  created_at: string;
+}
+
+// ── Driving Lessons Tracker (child-level) ──
+
+export type DrivingStage =
+  | "awaiting_17th_birthday"
+  | "provisional_applied"
+  | "provisional_held"
+  | "theory_studying"
+  | "theory_passed"
+  | "practical_lessons"
+  | "practical_booked"
+  | "practical_passed"
+  | "full_licence";
+
+export const DRIVING_STAGE_LABEL: Record<DrivingStage, string> = {
+  awaiting_17th_birthday: "Awaiting 17th birthday",
+  provisional_applied: "Provisional applied",
+  provisional_held: "Provisional held",
+  theory_studying: "Theory studying",
+  theory_passed: "Theory passed",
+  practical_lessons: "Practical lessons",
+  practical_booked: "Practical booked",
+  practical_passed: "Practical passed",
+  full_licence: "Full licence",
+};
+
+export type DrivingFundingSource = "leaving_care_grant" | "pocket_money" | "family_contribution" | "mixed";
+
+export const DRIVING_FUNDING_SOURCE_LABEL: Record<DrivingFundingSource, string> = {
+  leaving_care_grant: "Leaving Care Grant",
+  pocket_money: "Pocket money",
+  family_contribution: "Family contribution",
+  mixed: "Mixed",
+};
+
+export type DrivingTestResult = "pass" | "fail";
+
+export interface DrivingTheoryAttempt {
+  date: string;
+  result: DrivingTestResult;
+  score?: string;
+}
+
+export interface DrivingPracticalAttempt {
+  date: string;
+  result: DrivingTestResult;
+  faults?: string;
+}
+
+export interface DrivingRecord {
+  id: string;
+  child_id: string;
+  recorded_date: string;
+  stage: DrivingStage;
+  provisional_number?: string;
+  theory_attempts: DrivingTheoryAttempt[];
+  practical_attempts: DrivingPracticalAttempt[];
+  lessons_booked_total: number;
+  lessons_completed_total: number;
+  hours_logged: number;
+  hourly_rate: number;
+  cost_so_far: number;
+  funding_source: DrivingFundingSource;
+  instructor?: string;
+  next_lesson?: string;
+  child_voice: string;
+  staff_observation: string;
+  review_date: string;
+  key_worker: string;
+  created_at: string;
+}
+
+// ── Drug and Alcohol Screening (child-level) ──
+
+export type ScreeningTool = "crafft" | "internal_brief_screen" | "conversation_based" | "audit_c_older";
+
+export const SCREENING_TOOL_LABEL: Record<ScreeningTool, string> = {
+  crafft: "CRAFFT",
+  internal_brief_screen: "Internal Brief Screen",
+  conversation_based: "Conversation-based",
+  audit_c_older: "AUDIT-C (older)",
+};
+
+export type SubstanceRiskLevel =
+  | "no_identified_risk"
+  | "awareness_only"
+  | "low_risk"
+  | "medium_risk"
+  | "high_risk"
+  | "active_concern";
+
+export const SUBSTANCE_RISK_LEVEL_LABEL: Record<SubstanceRiskLevel, string> = {
+  no_identified_risk: "No identified risk",
+  awareness_only: "Awareness only",
+  low_risk: "Low risk",
+  medium_risk: "Medium risk",
+  high_risk: "High risk",
+  active_concern: "Active concern",
+};
+
+export interface SubstanceScreening {
+  id: string;
+  child_id: string;
+  screening_date: string;
+  conducted_by: string;
+  screening_tool: ScreeningTool;
+  risk_level: SubstanceRiskLevel;
+  substances_identified: string[];
+  context_of_use: string;
+  peer_influences: string;
+  family_history: string;
+  education_provided: string[];
+  harm_reduction_approach: string[];
+  professional_support_in_place: string[];
+  child_insight: string;
+  child_motivation: string;
+  warning_signs_to_watch: string[];
+  review_schedule: string;
+  escalation_criteria: string[];
+  next_screening_date: string;
+  confidentiality_framing: string;
+  shared_with_social_worker: boolean;
+  shared_with_camhs: boolean;
+  child_authored: boolean;
+  created_at: string;
+}
+
+// ── Duty Log (home-level) ──
+
+export type DutyLogShift = "morning" | "afternoon" | "evening" | "night" | "sleep_in";
+
+export const DUTY_LOG_SHIFT_LABEL: Record<DutyLogShift, string> = {
+  morning: "Morning",
+  afternoon: "Afternoon",
+  evening: "Evening",
+  night: "Night",
+  sleep_in: "Sleep-In",
+};
+
+export type DutyLogCategory =
+  | "incident"
+  | "visitor"
+  | "phone_call"
+  | "maintenance"
+  | "staff_change"
+  | "welfare"
+  | "medication"
+  | "safeguarding"
+  | "routine"
+  | "handover"
+  | "complaint"
+  | "positive";
+
+export const DUTY_LOG_CATEGORY_LABEL: Record<DutyLogCategory, string> = {
+  incident: "Incident",
+  visitor: "Visitor",
+  phone_call: "Phone Call",
+  maintenance: "Maintenance",
+  staff_change: "Staff Change",
+  welfare: "Welfare",
+  medication: "Medication",
+  safeguarding: "Safeguarding",
+  routine: "Routine",
+  handover: "Handover",
+  complaint: "Complaint",
+  positive: "Positive",
+};
+
+export type DutyLogPriority = "routine" | "important" | "urgent" | "critical";
+
+export const DUTY_LOG_PRIORITY_LABEL: Record<DutyLogPriority, string> = {
+  routine: "Routine",
+  important: "Important",
+  urgent: "Urgent",
+  critical: "Critical",
+};
+
+export interface DutyLogEntry {
+  id: string;
+  date: string;
+  time: string;
+  shift: DutyLogShift;
+  recorded_by: string;
+  category: DutyLogCategory;
+  priority: DutyLogPriority;
+  young_person_ids: string[];
+  description: string;
+  action_taken: string;
+  follow_up_required: boolean;
+  follow_up_notes: string;
+  manager_notified: boolean;
+  linked_records: string[];
+  witnessed_by: string | null;
+  signed_off: boolean;
+  signed_off_by: string | null;
+  created_at: string;
+}
+
+// ── Eating Support Plan (child-level) ──
+
+export type EatingPresentation =
+  | "arfid"
+  | "sensory_led_restriction"
+  | "disordered_eating_restrictive"
+  | "disordered_eating_binge_pattern"
+  | "cultural_faith_dietary_needs"
+  | "allergy_medical"
+  | "recovery_post_diagnosis"
+  | "healthy_relationship_preventive"
+  | "multiple_presentations";
+
+export const EATING_PRESENTATION_LABEL: Record<EatingPresentation, string> = {
+  arfid: "ARFID",
+  sensory_led_restriction: "Sensory-led restriction",
+  disordered_eating_restrictive: "Disordered eating — restrictive",
+  disordered_eating_binge_pattern: "Disordered eating — binge pattern",
+  cultural_faith_dietary_needs: "Cultural/faith dietary needs",
+  allergy_medical: "Allergy/medical",
+  recovery_post_diagnosis: "Recovery — post diagnosis",
+  healthy_relationship_preventive: "Healthy relationship — preventive",
+  multiple_presentations: "Multiple presentations",
+};
+
+export interface EatingExternalSupport {
+  agency: string;
+  clinician: string;
+  frequency: string;
+}
+
+export interface EatingSupportPlan {
+  id: string;
+  child_id: string;
+  plan_date: string;
+  presentation: EatingPresentation;
+  external_support: EatingExternalSupport[];
+  safe_foods: string[];
+  challenge_foods: string[];
+  textures_preferred: string[];
+  textures_avoided: string[];
+  brands_that_work: string[];
+  triggers_to_avoid: string[];
+  meal_time_approach: string[];
+  eating_environment_set_up: string[];
+  staff_do_strategies: string[];
+  staff_do_not_strategies: string[];
+  weight_monitoring_frequency?: string;
+  hydration_notes?: string;
+  growth_check_notes?: string;
+  child_voice: string;
+  staff_observation: string;
+  child_chose: boolean;
+  flags_for_review: string[];
+  review_date: string;
+  key_worker: string;
+  created_at: string;
+}
+
+// ── Education Attendance Tracker (child-level) ──
+
+export type EduProvision = "school" | "college" | "pru" | "ap" | "eotas";
+
+export const EDU_PROVISION_LABEL: Record<EduProvision, string> = {
+  school: "School",
+  college: "College",
+  pru: "PRU",
+  ap: "Alternative Provision",
+  eotas: "EOTAS",
+};
+
+export type EduSession = "am" | "pm" | "full_day";
+
+export const EDU_SESSION_LABEL: Record<EduSession, string> = {
+  am: "AM",
+  pm: "PM",
+  full_day: "Full Day",
+};
+
+export type EduAttendanceCode = "/" | "\\" | "L" | "U" | "N" | "O" | "I" | "M" | "E";
+
+export interface EduAttendanceRecord {
+  id: string;
+  date: string;
+  child_id: string;
+  provision: EduProvision;
+  session: EduSession;
+  attendance_code: EduAttendanceCode;
+  code_meaning: string;
+  arrival_time: string;
+  departure_time: string;
+  reason: string;
+  authorised_absence: boolean;
+  interventions_used: string[];
+  recorded_by: string;
+  notes: string;
+  created_at: string;
+}

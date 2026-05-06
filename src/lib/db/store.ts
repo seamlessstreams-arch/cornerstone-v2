@@ -140,6 +140,12 @@ import type {
   DigitalLiteracySkillRecord,
   DischargeRecord,
   DiversityCalendarEvent,
+  TrackedDocument,
+  DrivingRecord,
+  SubstanceScreening,
+  DutyLogEntry,
+  EatingSupportPlan,
+  EduAttendanceRecord,
 } from "@/types/extended";
 import type { Document, DocumentReadReceipt, Expense } from "@/types";
 import type { UploadedDocument, DocumentAuditEntry } from "@/types/documents";
@@ -338,6 +344,12 @@ const store = {
   digitalLiteracySkillRecords: [] as DigitalLiteracySkillRecord[],
   dischargeRecords: [] as DischargeRecord[],
   diversityCalendarEvents: [] as DiversityCalendarEvent[],
+  trackedDocuments: [] as TrackedDocument[],
+  drivingRecords: [] as DrivingRecord[],
+  substanceScreenings: [] as SubstanceScreening[],
+  dutyLogEntries: [] as DutyLogEntry[],
+  eatingSupportPlans: [] as EatingSupportPlan[],
+  eduAttendanceRecords: [] as EduAttendanceRecord[],
   // Shift Swap Requests
   shiftSwaps: [
     {
@@ -5201,6 +5213,106 @@ export const db = {
       if (idx === -1) return null;
       store.diversityCalendarEvents[idx] = { ...store.diversityCalendarEvents[idx], ...data };
       return store.diversityCalendarEvents[idx];
+    },
+  },
+
+  trackedDocuments: {
+    findAll: () => store.trackedDocuments,
+    findById: (id: string) => store.trackedDocuments.find((r) => r.id === id),
+    create: (data: Partial<TrackedDocument>): TrackedDocument => {
+      const record = { ...data, id: generateId("tdoc"), created_at: new Date().toISOString() } as TrackedDocument;
+      store.trackedDocuments.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<TrackedDocument>): TrackedDocument | null => {
+      const idx = store.trackedDocuments.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.trackedDocuments[idx] = { ...store.trackedDocuments[idx], ...data };
+      return store.trackedDocuments[idx];
+    },
+  },
+
+  drivingRecords: {
+    findAll: () => store.drivingRecords,
+    findById: (id: string) => store.drivingRecords.find((r) => r.id === id),
+    findByChild: (childId: string) => store.drivingRecords.filter((r) => r.child_id === childId),
+    create: (data: Partial<DrivingRecord>): DrivingRecord => {
+      const record = { ...data, id: generateId("drv"), created_at: new Date().toISOString() } as DrivingRecord;
+      store.drivingRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<DrivingRecord>): DrivingRecord | null => {
+      const idx = store.drivingRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.drivingRecords[idx] = { ...store.drivingRecords[idx], ...data };
+      return store.drivingRecords[idx];
+    },
+  },
+
+  substanceScreenings: {
+    findAll: () => store.substanceScreenings,
+    findById: (id: string) => store.substanceScreenings.find((r) => r.id === id),
+    findByChild: (childId: string) => store.substanceScreenings.filter((r) => r.child_id === childId),
+    create: (data: Partial<SubstanceScreening>): SubstanceScreening => {
+      const record = { ...data, id: generateId("das"), created_at: new Date().toISOString() } as SubstanceScreening;
+      store.substanceScreenings.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<SubstanceScreening>): SubstanceScreening | null => {
+      const idx = store.substanceScreenings.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.substanceScreenings[idx] = { ...store.substanceScreenings[idx], ...data };
+      return store.substanceScreenings[idx];
+    },
+  },
+
+  dutyLogEntries: {
+    findAll: () => store.dutyLogEntries,
+    findById: (id: string) => store.dutyLogEntries.find((r) => r.id === id),
+    create: (data: Partial<DutyLogEntry>): DutyLogEntry => {
+      const record = { ...data, id: generateId("dl"), created_at: new Date().toISOString() } as DutyLogEntry;
+      store.dutyLogEntries.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<DutyLogEntry>): DutyLogEntry | null => {
+      const idx = store.dutyLogEntries.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.dutyLogEntries[idx] = { ...store.dutyLogEntries[idx], ...data };
+      return store.dutyLogEntries[idx];
+    },
+  },
+
+  eatingSupportPlans: {
+    findAll: () => store.eatingSupportPlans,
+    findById: (id: string) => store.eatingSupportPlans.find((r) => r.id === id),
+    findByChild: (childId: string) => store.eatingSupportPlans.filter((r) => r.child_id === childId),
+    create: (data: Partial<EatingSupportPlan>): EatingSupportPlan => {
+      const record = { ...data, id: generateId("eat"), created_at: new Date().toISOString() } as EatingSupportPlan;
+      store.eatingSupportPlans.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<EatingSupportPlan>): EatingSupportPlan | null => {
+      const idx = store.eatingSupportPlans.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.eatingSupportPlans[idx] = { ...store.eatingSupportPlans[idx], ...data };
+      return store.eatingSupportPlans[idx];
+    },
+  },
+
+  eduAttendanceRecords: {
+    findAll: () => store.eduAttendanceRecords,
+    findById: (id: string) => store.eduAttendanceRecords.find((r) => r.id === id),
+    findByChild: (childId: string) => store.eduAttendanceRecords.filter((r) => r.child_id === childId),
+    create: (data: Partial<EduAttendanceRecord>): EduAttendanceRecord => {
+      const record = { ...data, id: generateId("eat"), created_at: new Date().toISOString() } as EduAttendanceRecord;
+      store.eduAttendanceRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<EduAttendanceRecord>): EduAttendanceRecord | null => {
+      const idx = store.eduAttendanceRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.eduAttendanceRecords[idx] = { ...store.eduAttendanceRecords[idx], ...data };
+      return store.eduAttendanceRecords[idx];
     },
   },
 };
