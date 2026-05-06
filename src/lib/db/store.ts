@@ -68,6 +68,12 @@ import type {
   CamhsReferral,
   CCTVAccess,
   ADHDPlan,
+  AllergyPlan,
+  AspirationRecord,
+  AsthmaPlan,
+  AutismPlan,
+  ChildBankAccount,
+  CareAnniversaryRecord,
 } from "@/types/extended";
 import type { Document, DocumentReadReceipt, Expense } from "@/types";
 import type { UploadedDocument, DocumentAuditEntry } from "@/types/documents";
@@ -194,6 +200,12 @@ const store = {
   camhsReferrals: [] as CamhsReferral[],
   cctvAccesses: [] as CCTVAccess[],
   adhdPlans: [] as ADHDPlan[],
+  allergyPlans: [] as AllergyPlan[],
+  aspirationRecords: [] as AspirationRecord[],
+  asthmaPlans: [] as AsthmaPlan[],
+  autismPlans: [] as AutismPlan[],
+  childBankAccounts: [] as ChildBankAccount[],
+  careAnniversaryRecords: [] as CareAnniversaryRecord[],
   // Shift Swap Requests
   shiftSwaps: [
     {
@@ -3843,6 +3855,108 @@ export const db = {
       if (idx === -1) return null;
       store.adhdPlans[idx] = { ...store.adhdPlans[idx], ...data };
       return store.adhdPlans[idx];
+    },
+  },
+
+  allergyPlans: {
+    findAll: () => store.allergyPlans,
+    findById: (id: string) => store.allergyPlans.find((r) => r.id === id),
+    findByChild: (childId: string) => store.allergyPlans.filter((r) => r.child_id === childId),
+    create: (data: Partial<AllergyPlan>): AllergyPlan => {
+      const record = { ...data, id: generateId("alp"), created_at: new Date().toISOString() } as AllergyPlan;
+      store.allergyPlans.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<AllergyPlan>): AllergyPlan | null => {
+      const idx = store.allergyPlans.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.allergyPlans[idx] = { ...store.allergyPlans[idx], ...data };
+      return store.allergyPlans[idx];
+    },
+  },
+
+  aspirationRecords: {
+    findAll: () => store.aspirationRecords,
+    findById: (id: string) => store.aspirationRecords.find((r) => r.id === id),
+    findByChild: (childId: string) => store.aspirationRecords.filter((r) => r.child_id === childId),
+    create: (data: Partial<AspirationRecord>): AspirationRecord => {
+      const record = { ...data, id: generateId("asp"), created_at: new Date().toISOString() } as AspirationRecord;
+      store.aspirationRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<AspirationRecord>): AspirationRecord | null => {
+      const idx = store.aspirationRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.aspirationRecords[idx] = { ...store.aspirationRecords[idx], ...data };
+      return store.aspirationRecords[idx];
+    },
+  },
+
+  asthmaPlans: {
+    findAll: () => store.asthmaPlans,
+    findById: (id: string) => store.asthmaPlans.find((r) => r.id === id),
+    findByChild: (childId: string) => store.asthmaPlans.filter((r) => r.child_id === childId),
+    create: (data: Partial<AsthmaPlan>): AsthmaPlan => {
+      const record = { ...data, id: generateId("aap"), created_at: new Date().toISOString() } as AsthmaPlan;
+      store.asthmaPlans.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<AsthmaPlan>): AsthmaPlan | null => {
+      const idx = store.asthmaPlans.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.asthmaPlans[idx] = { ...store.asthmaPlans[idx], ...data };
+      return store.asthmaPlans[idx];
+    },
+  },
+
+  autismPlans: {
+    findAll: () => store.autismPlans,
+    findById: (id: string) => store.autismPlans.find((r) => r.id === id),
+    findByChild: (childId: string) => store.autismPlans.filter((r) => r.child_id === childId),
+    create: (data: Partial<AutismPlan>): AutismPlan => {
+      const record = { ...data, id: generateId("aut"), created_at: new Date().toISOString() } as AutismPlan;
+      store.autismPlans.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<AutismPlan>): AutismPlan | null => {
+      const idx = store.autismPlans.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.autismPlans[idx] = { ...store.autismPlans[idx], ...data };
+      return store.autismPlans[idx];
+    },
+  },
+
+  childBankAccounts: {
+    findAll: () => store.childBankAccounts,
+    findById: (id: string) => store.childBankAccounts.find((r) => r.id === id),
+    findByChild: (childId: string) => store.childBankAccounts.filter((r) => r.child_id === childId),
+    create: (data: Partial<ChildBankAccount>): ChildBankAccount => {
+      const record = { ...data, id: generateId("ba"), created_at: new Date().toISOString() } as ChildBankAccount;
+      store.childBankAccounts.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<ChildBankAccount>): ChildBankAccount | null => {
+      const idx = store.childBankAccounts.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.childBankAccounts[idx] = { ...store.childBankAccounts[idx], ...data };
+      return store.childBankAccounts[idx];
+    },
+  },
+
+  careAnniversaryRecords: {
+    findAll: () => store.careAnniversaryRecords,
+    findById: (id: string) => store.careAnniversaryRecords.find((r) => r.id === id),
+    findByChild: (childId: string) => store.careAnniversaryRecords.filter((r) => r.child_id === childId),
+    create: (data: Partial<CareAnniversaryRecord>): CareAnniversaryRecord => {
+      const record = { ...data, id: generateId("ca"), created_at: new Date().toISOString() } as CareAnniversaryRecord;
+      store.careAnniversaryRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<CareAnniversaryRecord>): CareAnniversaryRecord | null => {
+      const idx = store.careAnniversaryRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.careAnniversaryRecords[idx] = { ...store.careAnniversaryRecords[idx], ...data };
+      return store.careAnniversaryRecords[idx];
     },
   },
 };

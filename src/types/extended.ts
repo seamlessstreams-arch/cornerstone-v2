@@ -3529,3 +3529,392 @@ export interface ADHDPlan {
   key_worker: string;
   created_at: string;
 }
+
+// ── Child Allergies & Anaphylaxis (AAI / EpiPen) Plan ─────────────────
+
+export type AllergySeverity = "mild" | "moderate" | "severe" | "anaphylactic";
+export const ALLERGY_SEVERITY_LABEL: Record<AllergySeverity, string> = {
+  mild: "Mild",
+  moderate: "Moderate",
+  severe: "Severe",
+  anaphylactic: "Anaphylactic",
+};
+
+export type AAIBrand = "epipen" | "jext" | "emerade" | "other";
+export const AAI_BRAND_LABEL: Record<AAIBrand, string> = {
+  epipen: "EpiPen",
+  jext: "Jext",
+  emerade: "Emerade",
+  other: "Other",
+};
+
+export type AAIDose = "150mcg" | "300mcg" | "500mcg";
+
+export interface AllergyAllergenEntry {
+  allergen: string;
+  severity: AllergySeverity;
+  last_reaction?: string;
+}
+
+export interface AllergyAntihistamine {
+  name: string;
+  dose: string;
+  route: string;
+}
+
+export interface AllergyAAIExpiry {
+  location: string;
+  expiry: string;
+}
+
+export interface AllergyHospitalAdmission {
+  date: string;
+  reason: string;
+  outcome: string;
+}
+
+export interface AllergyEmergencyContact {
+  name: string;
+  role: string;
+  phone: string;
+}
+
+export interface AllergyPlan {
+  id: string;
+  child_id: string;
+  plan_date: string;
+  allergens: AllergyAllergenEntry[];
+  antihistamine?: AllergyAntihistamine;
+  aai_prescribed: boolean;
+  aai_brand?: AAIBrand;
+  aai_dose?: AAIDose;
+  aai_locations: string[];
+  aai_expiry_dates: AllergyAAIExpiry[];
+  staff_trained_names: string[];
+  staff_training_expires?: string;
+  emergency_protocol: string[];
+  hospital_admissions: AllergyHospitalAdmission[];
+  school_has_plan: boolean;
+  school_has_aai: boolean;
+  child_can_self_administer: boolean;
+  child_wears_medical_alert: boolean;
+  emergency_contacts: AllergyEmergencyContact[];
+  child_voice: string;
+  staff_observation: string;
+  review_date: string;
+  key_worker: string;
+  created_at: string;
+}
+
+// ── Child Aspirations Tracker ─────────────────────────────────────────
+
+export type AspirationDomain =
+  | "career"
+  | "education"
+  | "where_ill_live"
+  | "family_i_want"
+  | "skills_i_want"
+  | "travel"
+  | "identity_and_belonging"
+  | "relationships"
+  | "wellbeing"
+  | "creative";
+
+export const ASPIRATION_DOMAIN_LABEL: Record<AspirationDomain, string> = {
+  career: "Career",
+  education: "Education",
+  where_ill_live: "Where I'll live",
+  family_i_want: "Family I want",
+  skills_i_want: "Skills I want",
+  travel: "Travel",
+  identity_and_belonging: "Identity & Belonging",
+  relationships: "Relationships",
+  wellbeing: "Wellbeing",
+  creative: "Creative",
+};
+
+export type AspirationRealism =
+  | "very_achievable"
+  | "achievable_with_support"
+  | "stretch_goal"
+  | "big_dream_long_term";
+
+export const ASPIRATION_REALISM_LABEL: Record<AspirationRealism, string> = {
+  very_achievable: "Very achievable",
+  achievable_with_support: "Achievable with support",
+  stretch_goal: "Stretch goal",
+  big_dream_long_term: "Big dream — long term",
+};
+
+export interface AspirationRecord {
+  id: string;
+  child_id: string;
+  recorded_date: string;
+  domain: AspirationDomain;
+  aspiration: string;
+  why_it_matters: string;
+  current_realism: AspirationRealism;
+  steps_taken: string[];
+  steps_next: string[];
+  support_needed: string[];
+  blockers: string[];
+  evolved_from_previous?: string;
+  child_chose: boolean;
+  review_date: string;
+  key_worker: string;
+  created_at: string;
+}
+
+// ── Child Asthma Action Plan ──────────────────────────────────────────
+
+export type AsthmaDiagnosis =
+  | "mild_intermittent"
+  | "mild_persistent"
+  | "moderate_persistent"
+  | "severe_persistent"
+  | "exercise_induced_only";
+
+export const ASTHMA_DIAGNOSIS_LABEL: Record<AsthmaDiagnosis, string> = {
+  mild_intermittent: "Mild intermittent",
+  mild_persistent: "Mild persistent",
+  moderate_persistent: "Moderate persistent",
+  severe_persistent: "Severe persistent",
+  exercise_induced_only: "Exercise-induced only",
+};
+
+export interface AsthmaInhaler {
+  name: string;
+  dose: string;
+  timing?: string;
+}
+
+export interface AsthmaHospitalAdmission {
+  date: string;
+  reason: string;
+  outcome: string;
+}
+
+export interface AsthmaEmergencyContact {
+  name: string;
+  role: string;
+  phone: string;
+}
+
+export interface AsthmaPlan {
+  id: string;
+  child_id: string;
+  plan_date: string;
+  diagnosis: AsthmaDiagnosis;
+  known_triggers: string[];
+  preventer_inhaler?: AsthmaInhaler;
+  reliever_inhaler?: AsthmaInhaler;
+  spacer_needed: boolean;
+  peak_flow_best?: number;
+  peak_flow_green_zone?: string;
+  peak_flow_amber_zone?: string;
+  peak_flow_red_zone?: string;
+  green_zone_actions: string[];
+  amber_zone_actions: string[];
+  red_zone_actions: string[];
+  hospital_admissions: AsthmaHospitalAdmission[];
+  child_can_self_medicate: boolean;
+  spare_inhaler_locations: string[];
+  school_has_inhaler: boolean;
+  emergency_contacts: AsthmaEmergencyContact[];
+  child_voice: string;
+  staff_observation: string;
+  review_date: string;
+  key_worker: string;
+  created_at: string;
+}
+
+// ── Child Autism Support Plan ─────────────────────────────────────────
+
+export type AutismDiagnosisStatus =
+  | "diagnosed"
+  | "self_identified"
+  | "awaiting_assessment"
+  | "suspected_gathering_evidence"
+  | "not_currently_considered";
+
+export const AUTISM_DIAGNOSIS_STATUS_LABEL: Record<AutismDiagnosisStatus, string> = {
+  diagnosed: "Diagnosed",
+  self_identified: "Self-identified",
+  awaiting_assessment: "Awaiting assessment",
+  suspected_gathering_evidence: "Suspected — gathering evidence",
+  not_currently_considered: "Not currently considered",
+};
+
+export type AutismSensoryPattern = "seeking" | "avoiding" | "mixed" | "neutral";
+export const AUTISM_SENSORY_PATTERN_LABEL: Record<AutismSensoryPattern, string> = {
+  seeking: "Seeking",
+  avoiding: "Avoiding",
+  mixed: "Mixed",
+  neutral: "Neutral",
+};
+
+export interface AutismSensoryDomainEntry {
+  sense: string;
+  seeking_or_avoiding: AutismSensoryPattern;
+  specific_notes: string;
+}
+
+export interface AutismExternalSupport {
+  agency: string;
+  role: string;
+  frequency: string;
+}
+
+export interface AutismPlan {
+  id: string;
+  child_id: string;
+  plan_date: string;
+  diagnosis_status: AutismDiagnosisStatus;
+  diagnosis_date?: string;
+  diagnosing_clinician?: string;
+  special_interests: string[];
+  communication_preferences: string[];
+  processing_time: string;
+  sensory_profile: AutismSensoryDomainEntry[];
+  predictability_needs: string[];
+  routine_anchors: string[];
+  meltdown_triggers: string[];
+  meltdown_support: string[];
+  shutdown_indicators: string[];
+  shutdown_support: string[];
+  masking_awareness: string;
+  unmasking_permissions: string[];
+  transition_support: string[];
+  social_preferences: string[];
+  staff_do_strategies: string[];
+  staff_do_not_strategies: string[];
+  external_support: AutismExternalSupport[];
+  child_voice: string;
+  staff_observation: string;
+  next_step: string;
+  review_date: string;
+  key_worker: string;
+  created_at: string;
+}
+
+// ── Child Bank Account & Money Management ─────────────────────────────
+
+export type ChildBankAccountType =
+  | "junior_isa"
+  | "childrens_current_account"
+  | "savings_account"
+  | "cash_card_account";
+
+export const CHILD_BANK_ACCOUNT_TYPE_LABEL: Record<ChildBankAccountType, string> = {
+  junior_isa: "Junior ISA",
+  childrens_current_account: "Children's Current Account",
+  savings_account: "Savings Account",
+  cash_card_account: "Cash Card Account",
+};
+
+export type ChildBankSupportLevel = "independent" | "supervised" | "joint_signatory";
+export const CHILD_BANK_SUPPORT_LEVEL_LABEL: Record<ChildBankSupportLevel, string> = {
+  independent: "Independent",
+  supervised: "Supervised",
+  joint_signatory: "Joint signatory",
+};
+
+export type ChildBankTransactionType = "deposit" | "withdrawal" | "interest";
+export const CHILD_BANK_TRANSACTION_TYPE_LABEL: Record<ChildBankTransactionType, string> = {
+  deposit: "Deposit",
+  withdrawal: "Withdrawal",
+  interest: "Interest",
+};
+
+export interface ChildBankTransaction {
+  date: string;
+  type: ChildBankTransactionType;
+  amount: number;
+  description: string;
+  supported_by: string;
+}
+
+export interface ChildBankAccount {
+  id: string;
+  child_id: string;
+  account_type: ChildBankAccountType;
+  bank_provider: string;
+  account_last4: string;
+  opened: string;
+  child_is_account_holder: boolean;
+  corporate_parent_signatory: string;
+  deposit_schedule: string;
+  current_balance: number;
+  savings_target?: number;
+  recent_transactions: ChildBankTransaction[];
+  monthly_allowance: number;
+  financial_literacy_skills: Record<string, string>;
+  savings_goals: string[];
+  parental_contributions: string;
+  looked_after_child_entitlements: string[];
+  support_level: ChildBankSupportLevel;
+  reviewed_date: string;
+  reviewed_by: string;
+  child_agreed: boolean;
+  next_review_date: string;
+  created_at: string;
+}
+
+// ── Child Care Anniversary ────────────────────────────────────────────
+
+export type CareAnniversaryType =
+  | "entering_care"
+  | "coming_to_this_home"
+  | "leaving_prior_placement"
+  | "reuniting_with_sibling_in_care"
+  | "becoming_a_care_leaver_18"
+  | "pathway_end_21_25"
+  | "other_significant_date";
+
+export const CARE_ANNIVERSARY_TYPE_LABEL: Record<CareAnniversaryType, string> = {
+  entering_care: "Entering care",
+  coming_to_this_home: "Coming to this home",
+  leaving_prior_placement: "Leaving prior placement",
+  reuniting_with_sibling_in_care: "Reuniting with sibling in care",
+  becoming_a_care_leaver_18: "Becoming a care leaver (18)",
+  pathway_end_21_25: "Pathway end (21 / 25)",
+  other_significant_date: "Other significant date",
+};
+
+export type CareAnniversaryAttitude =
+  | "wants_celebrated"
+  | "wants_quietly_noted"
+  | "wants_ignored"
+  | "wants_reflective_space"
+  | "mixed_changes_year_by_year"
+  | "not_yet_old_enough_to_choose";
+
+export const CARE_ANNIVERSARY_ATTITUDE_LABEL: Record<CareAnniversaryAttitude, string> = {
+  wants_celebrated: "Wants celebrated",
+  wants_quietly_noted: "Wants quietly noted",
+  wants_ignored: "Wants ignored",
+  wants_reflective_space: "Wants reflective space",
+  mixed_changes_year_by_year: "Mixed / changes year by year",
+  not_yet_old_enough_to_choose: "Not yet old enough to choose",
+};
+
+export interface CareAnniversaryRecord {
+  id: string;
+  child_id: string;
+  anniversary_type: CareAnniversaryType;
+  significant_date: string;
+  years_since_event: number;
+  child_attitude: CareAnniversaryAttitude;
+  upcoming_plan?: string;
+  past_approaches_used: string[];
+  what_works: string[];
+  what_doesnt_work: string[];
+  triggers_around_date: string[];
+  support_in_place_for_date: string[];
+  child_voice: string;
+  staff_observation: string;
+  flags_for_review: string[];
+  review_date: string;
+  key_worker: string;
+  created_at: string;
+}
