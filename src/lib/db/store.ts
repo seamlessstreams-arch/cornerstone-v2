@@ -291,6 +291,12 @@ import type {
   CuriosityLogEntry,
   CPDRecord,
   ProfessionalFeeRecord,
+  ProfessionalMeetingAttendance,
+  ProfessionalNetworkContact,
+  PropertyDamageRecord,
+  QAAuditRecord,
+  QualityOfCareReview,
+  Reg46Review,
 } from "@/types/extended";
 import { generateId, todayStr, daysFromNow } from "@/lib/utils";
 
@@ -665,6 +671,12 @@ const store = {
   curiosityLogEntries: [] as CuriosityLogEntry[],
   cpdRecords: [] as CPDRecord[],
   professionalFeeRecords: [] as ProfessionalFeeRecord[],
+  professionalMeetingAttendances: [] as ProfessionalMeetingAttendance[],
+  professionalNetworkContacts: [] as ProfessionalNetworkContact[],
+  propertyDamageRecords: [] as PropertyDamageRecord[],
+  qaAuditRecords: [] as QAAuditRecord[],
+  qualityOfCareReviews: [] as QualityOfCareReview[],
+  reg46Reviews: [] as Reg46Review[],
   // Shift Swap Requests
   shiftSwaps: [
     {
@@ -8604,6 +8616,96 @@ export const db = {
       if (idx === -1) return null;
       store.professionalFeeRecords[idx] = { ...store.professionalFeeRecords[idx], ...data };
       return store.professionalFeeRecords[idx];
+    },
+  },
+
+  professionalMeetingAttendances: {
+    getAll: () => store.professionalMeetingAttendances,
+    create: (data: Partial<ProfessionalMeetingAttendance>) => {
+      const record = { ...data, id: `pma_${Date.now()}` } as ProfessionalMeetingAttendance;
+      store.professionalMeetingAttendances.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<ProfessionalMeetingAttendance>) => {
+      const idx = store.professionalMeetingAttendances.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.professionalMeetingAttendances[idx] = { ...store.professionalMeetingAttendances[idx], ...data };
+      return store.professionalMeetingAttendances[idx];
+    },
+  },
+
+  professionalNetworkContacts: {
+    getAll: () => store.professionalNetworkContacts,
+    create: (data: Partial<ProfessionalNetworkContact>) => {
+      const record = { ...data, id: `pnc_${Date.now()}` } as ProfessionalNetworkContact;
+      store.professionalNetworkContacts.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<ProfessionalNetworkContact>) => {
+      const idx = store.professionalNetworkContacts.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.professionalNetworkContacts[idx] = { ...store.professionalNetworkContacts[idx], ...data };
+      return store.professionalNetworkContacts[idx];
+    },
+  },
+
+  propertyDamageRecords: {
+    getAll: () => store.propertyDamageRecords,
+    create: (data: Partial<PropertyDamageRecord>) => {
+      const record = { ...data, id: `pdr_${Date.now()}` } as PropertyDamageRecord;
+      store.propertyDamageRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<PropertyDamageRecord>) => {
+      const idx = store.propertyDamageRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.propertyDamageRecords[idx] = { ...store.propertyDamageRecords[idx], ...data };
+      return store.propertyDamageRecords[idx];
+    },
+  },
+
+  qaAuditRecords: {
+    getAll: () => store.qaAuditRecords,
+    create: (data: Partial<QAAuditRecord>) => {
+      const record = { ...data, id: `qaa_${Date.now()}` } as QAAuditRecord;
+      store.qaAuditRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<QAAuditRecord>) => {
+      const idx = store.qaAuditRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.qaAuditRecords[idx] = { ...store.qaAuditRecords[idx], ...data };
+      return store.qaAuditRecords[idx];
+    },
+  },
+
+  qualityOfCareReviews: {
+    getAll: () => store.qualityOfCareReviews,
+    create: (data: Partial<QualityOfCareReview>) => {
+      const record = { ...data, id: `qoc_${Date.now()}` } as QualityOfCareReview;
+      store.qualityOfCareReviews.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<QualityOfCareReview>) => {
+      const idx = store.qualityOfCareReviews.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.qualityOfCareReviews[idx] = { ...store.qualityOfCareReviews[idx], ...data };
+      return store.qualityOfCareReviews[idx];
+    },
+  },
+
+  reg46Reviews: {
+    getAll: () => store.reg46Reviews,
+    create: (data: Partial<Reg46Review>) => {
+      const record = { ...data, id: `r46_${Date.now()}` } as Reg46Review;
+      store.reg46Reviews.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<Reg46Review>) => {
+      const idx = store.reg46Reviews.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.reg46Reviews[idx] = { ...store.reg46Reviews[idx], ...data };
+      return store.reg46Reviews[idx];
     },
   },
 };

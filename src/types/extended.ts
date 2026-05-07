@@ -17798,3 +17798,355 @@ export interface ProfessionalFeeRecord {
   reviewed_by: string;
   review_notes: string;
 }
+
+// ── Professional Meeting Attendance ─────────────────────────────────────────
+
+export type ProfMeetingType = "lac_review" | "cp_conference" | "strategy_meeting" | "mappa" | "taf" | "pep" | "ehcp_review" | "health" | "multi_agency" | "external_consultation";
+
+export const PROF_MEETING_TYPE_LABEL: Record<ProfMeetingType, string> = {
+  lac_review: "LAC Review",
+  cp_conference: "CP Conference",
+  strategy_meeting: "Strategy Meeting",
+  mappa: "MAPPA",
+  taf: "TAF (Team Around Family)",
+  pep: "PEP",
+  ehcp_review: "EHCP Review",
+  health: "Health",
+  multi_agency: "Multi-agency Case Discussion",
+  external_consultation: "External Professional Consultation",
+};
+
+export type ProfMeetingActionStatus = "pending" | "completed" | "overdue";
+
+export const PROF_MEETING_ACTION_STATUS_LABEL: Record<ProfMeetingActionStatus, string> = {
+  pending: "Pending",
+  completed: "Completed",
+  overdue: "Overdue",
+};
+
+export type ProfMeetingMode = "virtual" | "in_person" | "hybrid";
+
+export const PROF_MEETING_MODE_LABEL: Record<ProfMeetingMode, string> = {
+  virtual: "Virtual",
+  in_person: "In Person",
+  hybrid: "Hybrid",
+};
+
+export interface ProfMeetingAction {
+  action: string;
+  deadline: string;
+  status: ProfMeetingActionStatus;
+}
+
+export interface ProfessionalMeetingAttendance {
+  id: string;
+  meeting_date: string;
+  meeting_type: ProfMeetingType;
+  child_id: string;
+  location: string;
+  virtual_or_in_person: ProfMeetingMode;
+  duration_minutes: number;
+  organised_by: string;
+  our_representative: string;
+  home_contribution: string;
+  child_attended: boolean;
+  child_contribution: string;
+  agencies_present: string[];
+  key_decisions: string[];
+  actions_for_home: ProfMeetingAction[];
+  next_meeting: string | null;
+  report_submitted: boolean;
+  report_submitted_date: string | null;
+  recorded_by: string;
+}
+
+// ── Professional Network Map ────────────────────────────────────────────────
+
+export type NetworkContactFrequency = "weekly" | "fortnightly" | "monthly" | "termly" | "quarterly" | "annually";
+
+export const NETWORK_CONTACT_FREQUENCY_LABEL: Record<NetworkContactFrequency, string> = {
+  weekly: "Weekly",
+  fortnightly: "Fortnightly",
+  monthly: "Monthly",
+  termly: "Termly",
+  quarterly: "Quarterly",
+  annually: "Annually",
+};
+
+export interface ProfessionalNetworkContact {
+  id: string;
+  child_id: string;
+  role: string;
+  name: string;
+  organisation: string;
+  phone: string;
+  email: string;
+  last_contact: string;
+  contact_frequency: NetworkContactFrequency;
+  key_responsibilities: string[];
+  notes: string;
+  is_active: boolean;
+}
+
+// ── Property Damage ─────────────────────────────────────────────────────────
+
+export type PropertyDamageType = "accidental" | "deliberate" | "wear_and_tear" | "environmental" | "unknown";
+
+export const PROPERTY_DAMAGE_TYPE_LABEL: Record<PropertyDamageType, string> = {
+  accidental: "Accidental",
+  deliberate: "Deliberate",
+  wear_and_tear: "Wear & Tear",
+  environmental: "Environmental",
+  unknown: "Unknown",
+};
+
+export type PropertyDamageSeverity = "minor" | "moderate" | "major" | "structural";
+
+export const PROPERTY_DAMAGE_SEVERITY_LABEL: Record<PropertyDamageSeverity, string> = {
+  minor: "Minor",
+  moderate: "Moderate",
+  major: "Major",
+  structural: "Structural",
+};
+
+export type PropertyRepairStatus = "reported" | "assessed" | "repair_scheduled" | "repaired" | "write_off" | "insurance_claim";
+
+export const PROPERTY_REPAIR_STATUS_LABEL: Record<PropertyRepairStatus, string> = {
+  reported: "Reported",
+  assessed: "Assessed",
+  repair_scheduled: "Repair Scheduled",
+  repaired: "Repaired",
+  write_off: "Written Off",
+  insurance_claim: "Insurance Claim",
+};
+
+export type PropertyLocation = "bedroom" | "bathroom" | "kitchen" | "living_room" | "hallway" | "garden" | "office" | "utility" | "exterior" | "vehicle" | "communal";
+
+export const PROPERTY_LOCATION_LABEL: Record<PropertyLocation, string> = {
+  bedroom: "Bedroom",
+  bathroom: "Bathroom",
+  kitchen: "Kitchen",
+  living_room: "Living Room",
+  hallway: "Hallway",
+  garden: "Garden",
+  office: "Office",
+  utility: "Utility",
+  exterior: "Exterior",
+  vehicle: "Vehicle",
+  communal: "Communal Area",
+};
+
+export interface PropertyDamageRecord {
+  id: string;
+  date: string;
+  time: string;
+  reported_by: string;
+  location: PropertyLocation;
+  specific_area: string;
+  damage_type: PropertyDamageType;
+  severity: PropertyDamageSeverity;
+  status: PropertyRepairStatus;
+  responsible_person_id: string | null;
+  responsible_person_name: string;
+  description: string;
+  photographs_taken: boolean;
+  estimated_cost: number;
+  actual_cost: number | null;
+  insurance_claimed: boolean;
+  insurance_ref: string | null;
+  repair_details: string;
+  repair_completed_date: string | null;
+  linked_incident_id: string | null;
+  behaviour_context: string;
+  risk_assessment_updated: boolean;
+  notes: string;
+}
+
+// ── QA Audit ────────────────────────────────────────────────────────────────
+
+export type QAAuditRating = "excellent" | "good" | "requires_improvement" | "inadequate";
+
+export const QA_AUDIT_RATING_LABEL: Record<QAAuditRating, string> = {
+  excellent: "Excellent",
+  good: "Good",
+  requires_improvement: "Requires Improvement",
+  inadequate: "Inadequate",
+};
+
+export type QAAuditActionStatus = "completed" | "in_progress" | "pending" | "overdue";
+
+export const QA_AUDIT_ACTION_STATUS_LABEL: Record<QAAuditActionStatus, string> = {
+  completed: "Completed",
+  in_progress: "In Progress",
+  pending: "Pending",
+  overdue: "Overdue",
+};
+
+export interface QAAuditAction {
+  action: string;
+  owner: string;
+  deadline: string;
+  status: QAAuditActionStatus;
+}
+
+export interface QAAuditRecord {
+  id: string;
+  title: string;
+  date: string;
+  auditor: string;
+  scope: string;
+  overall_rating: QAAuditRating;
+  score: number;
+  findings: string[];
+  strengths: string[];
+  areas_for_improvement: string[];
+  actions: QAAuditAction[];
+  notes: string;
+}
+
+// ── Quality of Care Reviews ─────────────────────────────────────────────────
+
+export type QocReviewType = "monthly" | "quarterly" | "annual" | "ofsted_prep" | "post_incident" | "reg44_response";
+
+export const QOC_REVIEW_TYPE_LABEL: Record<QocReviewType, string> = {
+  monthly: "Monthly Review",
+  quarterly: "Quarterly Review",
+  annual: "Annual Review",
+  ofsted_prep: "Ofsted Prep",
+  post_incident: "Post-Incident",
+  reg44_response: "Reg 44 Response",
+};
+
+export type QocDomain = "safety" | "wellbeing" | "education" | "health" | "relationships" | "transitions" | "voice_of_child" | "environment" | "staffing" | "management";
+
+export const QOC_DOMAIN_LABEL: Record<QocDomain, string> = {
+  safety: "Safety & Protection",
+  wellbeing: "Emotional Wellbeing",
+  education: "Education & Achievement",
+  health: "Health & Development",
+  relationships: "Positive Relationships",
+  transitions: "Stability & Transitions",
+  voice_of_child: "Voice of the Child",
+  environment: "Living Environment",
+  staffing: "Staffing & Supervision",
+  management: "Leadership & Management",
+};
+
+export type QocRating = "outstanding" | "good" | "requires_improvement" | "inadequate";
+
+export const QOC_RATING_LABEL: Record<QocRating, string> = {
+  outstanding: "Outstanding",
+  good: "Good",
+  requires_improvement: "Requires Improvement",
+  inadequate: "Inadequate",
+};
+
+export type QocTrend = "improving" | "stable" | "declining";
+
+export const QOC_TREND_LABEL: Record<QocTrend, string> = {
+  improving: "Improving",
+  stable: "Stable",
+  declining: "Declining",
+};
+
+export type QocActionPriority = "high" | "medium" | "low";
+
+export const QOC_ACTION_PRIORITY_LABEL: Record<QocActionPriority, string> = {
+  high: "High",
+  medium: "Medium",
+  low: "Low",
+};
+
+export type QocActionStatus = "open" | "in_progress" | "completed";
+
+export const QOC_ACTION_STATUS_LABEL: Record<QocActionStatus, string> = {
+  open: "Open",
+  in_progress: "In Progress",
+  completed: "Completed",
+};
+
+export interface QocDomainAssessment {
+  domain: QocDomain;
+  rating: QocRating;
+  evidence: string;
+  trend: QocTrend;
+}
+
+export interface QocActionItem {
+  action: string;
+  owner: string;
+  due_date: string;
+  status: QocActionStatus;
+  priority: QocActionPriority;
+}
+
+export interface QualityOfCareReview {
+  id: string;
+  date: string;
+  type: QocReviewType;
+  lead_reviewer: string;
+  overall_rating: QocRating;
+  domains: QocDomainAssessment[];
+  strengths: string[];
+  areas_for_improvement: string[];
+  children_feedback: string;
+  staff_feedback: string;
+  actions: QocActionItem[];
+  next_review_date: string;
+  notes: string;
+}
+
+// ── Quality Review Cycle (Reg 46) ───────────────────────────────────────────
+
+export type Reg46ReviewStatus = "completed" | "planned";
+
+export const REG46_REVIEW_STATUS_LABEL: Record<Reg46ReviewStatus, string> = {
+  completed: "Completed",
+  planned: "Planned",
+};
+
+export type Reg46AreaRating = "outstanding" | "good" | "requires_improvement" | "inadequate";
+
+export const REG46_AREA_RATING_LABEL: Record<Reg46AreaRating, string> = {
+  outstanding: "Outstanding",
+  good: "Good",
+  requires_improvement: "Requires Improvement",
+  inadequate: "Inadequate",
+};
+
+export type Reg46ActionStatus = "open" | "in_progress" | "completed";
+
+export const REG46_ACTION_STATUS_LABEL: Record<Reg46ActionStatus, string> = {
+  open: "Open",
+  in_progress: "In Progress",
+  completed: "Completed",
+};
+
+export interface Reg46AreaReviewed {
+  area: string;
+  rating: Reg46AreaRating;
+  summary: string;
+  evidence: string;
+}
+
+export interface Reg46ActionArising {
+  action: string;
+  owner: string;
+  deadline: string;
+  status: Reg46ActionStatus;
+}
+
+export interface Reg46Review {
+  id: string;
+  review_period_start: string;
+  review_period_end: string;
+  completed_date: string | null;
+  reviewer: string;
+  independent_input: string;
+  overall_rating: string;
+  areas_reviewed: Reg46AreaReviewed[];
+  consultation_sources: string[];
+  actions_arising: Reg46ActionArising[];
+  shared_with: string[];
+  status: Reg46ReviewStatus;
+}
