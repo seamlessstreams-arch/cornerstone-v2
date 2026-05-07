@@ -285,6 +285,12 @@ import type {
   HomePolicy,
   PolicyImpactAnalysis,
   PolicyReviewRecord,
+  PreAdmissionChecklist,
+  PreventRecord,
+  ProfessionalConsultation,
+  CuriosityLogEntry,
+  CPDRecord,
+  ProfessionalFeeRecord,
 } from "@/types/extended";
 import { generateId, todayStr, daysFromNow } from "@/lib/utils";
 
@@ -653,6 +659,12 @@ const store = {
   alertNotifications: [] as AlertNotification[],
   positiveAchievements: [] as PositiveAchievement[],
   postIncidentChildDebriefs: [] as PostIncidentChildDebrief[],
+  preAdmissionChecklists: [] as PreAdmissionChecklist[],
+  preventRecords: [] as PreventRecord[],
+  professionalConsultations: [] as ProfessionalConsultation[],
+  curiosityLogEntries: [] as CuriosityLogEntry[],
+  cpdRecords: [] as CPDRecord[],
+  professionalFeeRecords: [] as ProfessionalFeeRecord[],
   // Shift Swap Requests
   shiftSwaps: [
     {
@@ -8508,6 +8520,90 @@ export const db = {
       if (idx === -1) return null;
       store.postIncidentChildDebriefs[idx] = { ...store.postIncidentChildDebriefs[idx], ...data };
       return store.postIncidentChildDebriefs[idx];
+    },
+  },
+  preAdmissionChecklists: {
+    getAll: () => store.preAdmissionChecklists,
+    create: (data: Partial<PreAdmissionChecklist>) => {
+      const record = { ...data, id: `pac_${Date.now()}` } as PreAdmissionChecklist;
+      store.preAdmissionChecklists.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<PreAdmissionChecklist>) => {
+      const idx = store.preAdmissionChecklists.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.preAdmissionChecklists[idx] = { ...store.preAdmissionChecklists[idx], ...data };
+      return store.preAdmissionChecklists[idx];
+    },
+  },
+  preventRecords: {
+    getAll: () => store.preventRecords,
+    create: (data: Partial<PreventRecord>) => {
+      const record = { ...data, id: `prev_${Date.now()}` } as PreventRecord;
+      store.preventRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<PreventRecord>) => {
+      const idx = store.preventRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.preventRecords[idx] = { ...store.preventRecords[idx], ...data };
+      return store.preventRecords[idx];
+    },
+  },
+  professionalConsultations: {
+    getAll: () => store.professionalConsultations,
+    create: (data: Partial<ProfessionalConsultation>) => {
+      const record = { ...data, id: `pcon_${Date.now()}` } as ProfessionalConsultation;
+      store.professionalConsultations.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<ProfessionalConsultation>) => {
+      const idx = store.professionalConsultations.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.professionalConsultations[idx] = { ...store.professionalConsultations[idx], ...data };
+      return store.professionalConsultations[idx];
+    },
+  },
+  curiosityLogEntries: {
+    getAll: () => store.curiosityLogEntries,
+    create: (data: Partial<CuriosityLogEntry>) => {
+      const record = { ...data, id: `cle_${Date.now()}` } as CuriosityLogEntry;
+      store.curiosityLogEntries.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<CuriosityLogEntry>) => {
+      const idx = store.curiosityLogEntries.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.curiosityLogEntries[idx] = { ...store.curiosityLogEntries[idx], ...data };
+      return store.curiosityLogEntries[idx];
+    },
+  },
+  cpdRecords: {
+    getAll: () => store.cpdRecords,
+    create: (data: Partial<CPDRecord>) => {
+      const record = { ...data, id: `cpd_${Date.now()}` } as CPDRecord;
+      store.cpdRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<CPDRecord>) => {
+      const idx = store.cpdRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.cpdRecords[idx] = { ...store.cpdRecords[idx], ...data };
+      return store.cpdRecords[idx];
+    },
+  },
+  professionalFeeRecords: {
+    getAll: () => store.professionalFeeRecords,
+    create: (data: Partial<ProfessionalFeeRecord>) => {
+      const record = { ...data, id: `pfr_${Date.now()}` } as ProfessionalFeeRecord;
+      store.professionalFeeRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<ProfessionalFeeRecord>) => {
+      const idx = store.professionalFeeRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.professionalFeeRecords[idx] = { ...store.professionalFeeRecords[idx], ...data };
+      return store.professionalFeeRecords[idx];
     },
   },
 };

@@ -17535,3 +17535,266 @@ export interface PostIncidentChildDebrief {
   follow_up_date: string;
   recorded_by: string;
 }
+
+// ── Batch 50 ──────────────────────────────────────────────────────────────────
+
+// pre-admission-checklist
+export type PreAdmissionStatus = "not_started" | "in_progress" | "complete" | "on_hold";
+export const PRE_ADMISSION_STATUS_LABEL: Record<PreAdmissionStatus, string> = {
+  not_started: "Not Started",
+  in_progress: "In Progress",
+  complete: "Complete",
+  on_hold: "On Hold",
+};
+
+export interface PreAdmissionChecklistItem {
+  task: string;
+  completed: boolean;
+  completed_date?: string;
+  completed_by?: string;
+  notes?: string;
+}
+
+export interface PreAdmissionChecklist {
+  id: string;
+  child_id: string;
+  referral_date: string;
+  target_admission_date: string;
+  social_worker: string;
+  local_authority: string;
+  status: PreAdmissionStatus;
+  assigned_to: string;
+  impact_assessment_done: boolean;
+  matching_panel_date?: string;
+  items: PreAdmissionChecklistItem[];
+  risk_considerations: string[];
+  special_requirements: string[];
+}
+
+// prevent-duty
+export type PreventReferralType = "prevent_referral" | "channel_referral" | "community_concern" | "online_concern" | "training_record";
+export const PREVENT_REFERRAL_TYPE_LABEL: Record<PreventReferralType, string> = {
+  prevent_referral: "Prevent Referral",
+  channel_referral: "Channel Referral",
+  community_concern: "Community Concern",
+  online_concern: "Online Concern",
+  training_record: "Training Record",
+};
+
+export type PreventRiskLevel = "low" | "medium" | "high";
+export const PREVENT_RISK_LEVEL_LABEL: Record<PreventRiskLevel, string> = {
+  low: "Low",
+  medium: "Medium",
+  high: "High",
+};
+
+export type PreventStatus = "open" | "referred" | "channel_active" | "channel_closed" | "nfa" | "monitoring";
+export const PREVENT_STATUS_LABEL: Record<PreventStatus, string> = {
+  open: "Open",
+  referred: "Referred",
+  channel_active: "Channel Active",
+  channel_closed: "Channel Closed",
+  nfa: "No Further Action",
+  monitoring: "Monitoring",
+};
+
+export interface PreventRecord {
+  id: string;
+  date: string;
+  staff_id: string;
+  child_id: string | null;
+  referral_type: PreventReferralType;
+  risk_level: PreventRiskLevel;
+  status: PreventStatus;
+  indicators: string[];
+  description: string;
+  actions_taken: string;
+  multi_agency: string[];
+  channel_outcome: string;
+  training_completed: boolean;
+  review_date: string;
+}
+
+// professional-consultations
+export type ProfConsultationType = "camhs" | "social_worker" | "iro" | "lado" | "police" | "gp" | "therapist" | "education" | "legal" | "ofsted" | "other";
+export const PROF_CONSULTATION_TYPE_LABEL: Record<ProfConsultationType, string> = {
+  camhs: "CAMHS",
+  social_worker: "Social Worker",
+  iro: "IRO",
+  lado: "LADO",
+  police: "Police",
+  gp: "GP / Medical",
+  therapist: "Therapist",
+  education: "Education / School",
+  legal: "Legal",
+  ofsted: "Ofsted",
+  other: "Other",
+};
+
+export type ProfConsultationMethod = "phone" | "email" | "video" | "in_person" | "written";
+export const PROF_CONSULTATION_METHOD_LABEL: Record<ProfConsultationMethod, string> = {
+  phone: "Phone",
+  email: "Email",
+  video: "Video Call",
+  in_person: "In Person",
+  written: "Written",
+};
+
+export interface ProfessionalConsultation {
+  id: string;
+  date: string;
+  time: string;
+  type: ProfConsultationType;
+  method: ProfConsultationMethod;
+  professional_name: string;
+  professional_role: string;
+  organisation: string;
+  child_id: string;
+  reason: string;
+  advice_given: string;
+  actions_agreed: string[];
+  follow_up_required: boolean;
+  follow_up_date: string;
+  follow_up_completed: boolean;
+  confidential: boolean;
+  recorded_by: string;
+  created_at: string;
+}
+
+// professional-curiosity-log
+export type CuriosityFocusArea = "child_presentation" | "family_dynamics" | "multi_agency_working" | "own_assumptions" | "risk_assessment" | "cultural_awareness" | "child_voice";
+export const CURIOSITY_FOCUS_AREA_LABEL: Record<CuriosityFocusArea, string> = {
+  child_presentation: "Child presentation",
+  family_dynamics: "Family dynamics",
+  multi_agency_working: "Multi-agency working",
+  own_assumptions: "Own assumptions",
+  risk_assessment: "Risk assessment",
+  cultural_awareness: "Cultural awareness",
+  child_voice: "Child voice",
+};
+
+export interface CuriosityLogEntry {
+  id: string;
+  date: string;
+  raised_by: string;
+  focus_area: CuriosityFocusArea;
+  about_child: string;
+  assumption_challenged: string;
+  original_narrative: string;
+  curious_question_raised: string;
+  evidence_considered: string[];
+  alternative_explanations: string[];
+  was_initial_assumption_wrong: boolean;
+  revised_understanding: string;
+  actions_taken: string[];
+  outcome_impact: string;
+  child_outcome_impact: string;
+  wider_learning: string;
+  discussed_in_supervision: boolean;
+  discussed_in_team_meeting: boolean;
+  embedded_in_practice: string;
+  reflection_pattern: string;
+}
+
+// professional-development
+export type CPDType = "qualification" | "training" | "conference" | "reflective_account" | "mentoring" | "shadowing";
+export const CPD_TYPE_LABEL: Record<CPDType, string> = {
+  qualification: "Qualification",
+  training: "Training",
+  conference: "Conference",
+  reflective_account: "Reflective Account",
+  mentoring: "Mentoring",
+  shadowing: "Shadowing",
+};
+
+export type CPDStatus = "completed" | "in_progress" | "planned";
+export const CPD_STATUS_LABEL: Record<CPDStatus, string> = {
+  completed: "Completed",
+  in_progress: "In Progress",
+  planned: "Planned",
+};
+
+export interface CPDRecord {
+  id: string;
+  staff_id: string;
+  title: string;
+  type: CPDType;
+  provider: string;
+  start_date: string;
+  completed_date: string | null;
+  duration: string;
+  status: CPDStatus;
+  cpd_hours: number;
+  certificate_obtained: boolean;
+  impact_on_practice: string;
+  notes: string;
+}
+
+// professional-fees-log
+export type PractitionerType = "therapist" | "advocate" | "coach" | "tutor" | "mentor" | "specialist_assessor" | "translator" | "cultural_mentor" | "activity_provider";
+export const PRACTITIONER_TYPE_LABEL: Record<PractitionerType, string> = {
+  therapist: "Therapist",
+  advocate: "Advocate",
+  coach: "Coach",
+  tutor: "Tutor",
+  mentor: "Mentor",
+  specialist_assessor: "Specialist Assessor",
+  translator: "Translator",
+  cultural_mentor: "Cultural Mentor",
+  activity_provider: "Activity Provider",
+};
+
+export type FundingSource = "home_budget" | "local_authority_funded" | "charitable_funding" | "cornerstone_care_group" | "health_funded";
+export const FUNDING_SOURCE_LABEL: Record<FundingSource, string> = {
+  home_budget: "Home budget",
+  local_authority_funded: "Local Authority funded",
+  charitable_funding: "Charitable funding",
+  cornerstone_care_group: "Cornerstone Care Group",
+  health_funded: "Health-funded",
+};
+
+export type FeePaymentMethod = "bacs" | "cheque" | "card" | "cash";
+export const FEE_PAYMENT_METHOD_LABEL: Record<FeePaymentMethod, string> = {
+  bacs: "BACS",
+  cheque: "Cheque",
+  card: "Card",
+  cash: "Cash",
+};
+
+export type FeeStatus = "pending_approval" | "approved" | "paid" | "disputed" | "refunded";
+export const FEE_STATUS_LABEL: Record<FeeStatus, string> = {
+  pending_approval: "Pending approval",
+  approved: "Approved",
+  paid: "Paid",
+  disputed: "Disputed",
+  refunded: "Refunded",
+};
+
+export interface ProfessionalFeeRecord {
+  id: string;
+  practitioner: string;
+  organisation: string;
+  practitioner_type: PractitionerType;
+  fee_for: string;
+  child_id: string;
+  invoice_date: string;
+  invoice_period: string;
+  amount_gross: number;
+  vat: number;
+  amount_net: number;
+  contract_ref: string;
+  funding_source: FundingSource;
+  funding_approved: boolean;
+  approved_by: string;
+  payment_date: string;
+  payment_method: FeePaymentMethod;
+  outcomes_evidenced: string[];
+  hours_delivered: number;
+  hourly_rate: number;
+  status: FeeStatus;
+  recurring_contract: boolean;
+  contract_end_date: string;
+  performance_review_date: string;
+  reviewed_by: string;
+  review_notes: string;
+}
