@@ -16288,3 +16288,278 @@ export interface PathwayPlan {
   statutory_16plus_review_schedule: string;
   created_at: string;
 }
+
+// ── Batch 45 ────────────────────────────────────────────────────────────────
+
+// Peer Relationships
+export type PeerRelationshipQuality = "positive" | "developing" | "strained" | "conflicted" | "neutral";
+export const PEER_RELATIONSHIP_QUALITY_LABEL: Record<PeerRelationshipQuality, string> = {
+  positive: "Positive", developing: "Developing", strained: "Strained", conflicted: "Conflicted", neutral: "Neutral",
+};
+export type PeerRiskLevel = "none" | "low" | "medium" | "high";
+export const PEER_RISK_LEVEL_LABEL: Record<PeerRiskLevel, string> = {
+  none: "None", low: "Low", medium: "Medium", high: "High",
+};
+export type PeerEntryType = "observation" | "incident" | "positive_interaction" | "mediation" | "review";
+export const PEER_ENTRY_TYPE_LABEL: Record<PeerEntryType, string> = {
+  observation: "Observation", incident: "Incident", positive_interaction: "Positive Interaction", mediation: "Mediation", review: "Review",
+};
+export type PeerGroupAtmosphere = "calm" | "mixed" | "tense" | "volatile";
+export const PEER_GROUP_ATMOSPHERE_LABEL: Record<PeerGroupAtmosphere, string> = {
+  calm: "Calm", mixed: "Mixed", tense: "Tense", volatile: "Volatile",
+};
+export interface PeerEntry {
+  id: string;
+  date: string;
+  type: PeerEntryType;
+  description: string;
+  staff_witness: string;
+  intervention_used: string;
+  outcome: string;
+}
+export interface PeerDynamic {
+  id: string;
+  child_id_1: string;
+  child_id_2: string;
+  quality: PeerRelationshipQuality;
+  risk_level: PeerRiskLevel;
+  strengths: string[];
+  concerns: string[];
+  strategies: string[];
+  entries: PeerEntry[];
+  last_review_date: string;
+  reviewed_by: string;
+  next_review_due: string;
+  notes: string;
+  created_at: string;
+}
+export interface PeerGroupDynamic {
+  id: string;
+  assessment_date: string;
+  assessed_by: string;
+  overall_atmosphere: PeerGroupAtmosphere;
+  group_strengths: string[];
+  group_concerns: string[];
+  current_dynamics: string;
+  recommendations: string[];
+  created_at: string;
+}
+
+// PEP Tracker
+export type PepAttainmentLevel = "above" | "at" | "below" | "significantly_below";
+export const PEP_ATTAINMENT_LEVEL_LABEL: Record<PepAttainmentLevel, string> = {
+  above: "Above", at: "At", below: "Below", significantly_below: "Significantly Below",
+};
+export type PepStatus = "current" | "review_due" | "overdue" | "draft";
+export const PEP_STATUS_LABEL: Record<PepStatus, string> = {
+  current: "Current", review_due: "Review Due", overdue: "Overdue", draft: "Draft",
+};
+export type PepProgress = "on_track" | "some_progress" | "limited_progress" | "exceeded";
+export const PEP_PROGRESS_LABEL: Record<PepProgress, string> = {
+  on_track: "On Track", some_progress: "Some Progress", limited_progress: "Limited Progress", exceeded: "Exceeded",
+};
+export type PepSenStatus = "none" | "sen_support" | "ehcp";
+export const PEP_SEN_STATUS_LABEL: Record<PepSenStatus, string> = {
+  none: "None", sen_support: "SEN Support", ehcp: "EHCP",
+};
+export type PepActionStatus = "pending" | "completed";
+export const PEP_ACTION_STATUS_LABEL: Record<PepActionStatus, string> = {
+  pending: "Pending", completed: "Completed",
+};
+export interface PepTarget {
+  subject: string;
+  current_level: string;
+  target_level: string;
+  attainment: PepAttainmentLevel;
+  progress: PepProgress;
+  notes: string;
+}
+export interface PepPupilPremiumItem {
+  description: string;
+  amount: number;
+  impact: string;
+}
+export interface PepPupilPremium {
+  annual_allocation: number;
+  spent_to_date: number;
+  items: PepPupilPremiumItem[];
+}
+export interface PepAction {
+  action: string;
+  owner: string;
+  deadline: string;
+  status: PepActionStatus;
+}
+export interface PepRecord {
+  id: string;
+  child_id: string;
+  school: string;
+  year_group: number;
+  key_stage: string;
+  designated_teacher: string;
+  virtual_school_contact: string;
+  pep_date: string;
+  next_review_date: string;
+  status: PepStatus;
+  attendance: number;
+  exclusions: number;
+  exclusion_days: number;
+  sen_status: PepSenStatus;
+  sen_details: string;
+  targets: PepTarget[];
+  pupil_premium: PepPupilPremium;
+  child_views: string;
+  carer_views: string;
+  social_worker_views: string;
+  strengths: string[];
+  barriers: string[];
+  key_worker: string;
+  actions: PepAction[];
+  created_at: string;
+}
+
+// Personal Belongings
+export type BelongingCategory = "clothing" | "electronics" | "furniture" | "toiletries" | "sentimental" | "documents" | "sports_equipment" | "books_media" | "jewellery" | "other";
+export const BELONGING_CATEGORY_LABEL: Record<BelongingCategory, string> = {
+  clothing: "Clothing", electronics: "Electronics", furniture: "Furniture", toiletries: "Toiletries", sentimental: "Sentimental", documents: "Documents", sports_equipment: "Sports Equipment", books_media: "Books & Media", jewellery: "Jewellery", other: "Other",
+};
+export type BelongingCondition = "new" | "good" | "fair" | "poor" | "damaged";
+export const BELONGING_CONDITION_LABEL: Record<BelongingCondition, string> = {
+  new: "New", good: "Good", fair: "Fair", poor: "Poor", damaged: "Damaged",
+};
+export type BelongingItemStatus = "in_possession" | "in_storage" | "lost" | "damaged" | "returned_to_family" | "disposed";
+export const BELONGING_ITEM_STATUS_LABEL: Record<BelongingItemStatus, string> = {
+  in_possession: "In Possession", in_storage: "In Storage", lost: "Lost", damaged: "Damaged", returned_to_family: "Returned to Family", disposed: "Disposed",
+};
+export interface BelongingItem {
+  id: string;
+  description: string;
+  category: BelongingCategory;
+  condition: BelongingCondition;
+  status: BelongingItemStatus;
+  date_logged: string;
+  logged_by: string;
+  estimated_value: number | null;
+  photo_on_file: boolean;
+  storage_location: string;
+  notes: string;
+}
+export interface BelongingsRecord {
+  id: string;
+  child_id: string;
+  admission_date: string;
+  admission_inventory_complete: boolean;
+  admission_checked_by: string;
+  admission_witnessed_by: string;
+  items: BelongingItem[];
+  last_audit_date: string;
+  last_audit_by: string;
+  next_audit_due: string;
+  notes: string;
+  created_at: string;
+}
+
+// Personal Passport
+export interface PersonalPassport {
+  id: string;
+  child_id: string;
+  preferred_name: string;
+  pronouns: string;
+  age: number;
+  my_strengths: string[];
+  what_makes_me_happy: string[];
+  what_makes_me_upset: string[];
+  what_helps_when_i_am_upset: string[];
+  my_interests: string[];
+  my_favourite_food: string[];
+  food_i_dont_like: string[];
+  my_music: string[];
+  my_friends: string;
+  my_family: string;
+  my_dreams: string[];
+  my_fears: string[];
+  important_people: string[];
+  my_routines: string[];
+  things_im_working_on: string[];
+  signs_im_not_okay: string[];
+  things_to_know_about_me: string[];
+  my_culture: string;
+  my_faith: string;
+  my_style: string;
+  my_bedroom: string;
+  school_life: string;
+  helpful_phrases: string[];
+  unhelpful_phrases: string[];
+  child_authored: boolean;
+  last_updated: string;
+  reviewed_with: string;
+  review_with_child_date: string;
+  created_at: string;
+}
+
+// Petty Cash
+export type PettyCashTransactionType = "withdrawal" | "top_up" | "refund";
+export const PETTY_CASH_TRANSACTION_TYPE_LABEL: Record<PettyCashTransactionType, string> = {
+  withdrawal: "Withdrawal", top_up: "Top Up", refund: "Refund",
+};
+export type PettyCashCategory = "food" | "activities" | "transport" | "clothing" | "personal_care" | "education" | "household" | "emergency" | "other";
+export const PETTY_CASH_CATEGORY_LABEL: Record<PettyCashCategory, string> = {
+  food: "Food", activities: "Activities", transport: "Transport", clothing: "Clothing", personal_care: "Personal Care", education: "Education", household: "Household", emergency: "Emergency", other: "Other",
+};
+export interface PettyCashEntry {
+  id: string;
+  date: string;
+  type: PettyCashTransactionType;
+  category: PettyCashCategory;
+  amount: number;
+  description: string;
+  receipt_ref: string;
+  receipt_attached: boolean;
+  child_id: string;
+  authorised_by: string;
+  recorded_by: string;
+  notes: string;
+  balance_after: number;
+  created_at: string;
+}
+
+// Photo Album Tracker
+export type PhotoAlbumType = "life_story_book" | "memory_book" | "annual_album" | "theme_album" | "achievement_album" | "family_album" | "identity_album";
+export const PHOTO_ALBUM_TYPE_LABEL: Record<PhotoAlbumType, string> = {
+  life_story_book: "Life Story Book", memory_book: "Memory book", annual_album: "Annual album", theme_album: "Theme album", achievement_album: "Achievement album", family_album: "Family album", identity_album: "Identity album",
+};
+export type PhotoAlbumFormat = "physical_book" | "cloud_digital" | "both";
+export const PHOTO_ALBUM_FORMAT_LABEL: Record<PhotoAlbumFormat, string> = {
+  physical_book: "Physical book", cloud_digital: "Cloud digital", both: "Both",
+};
+export interface PhotoAlbumRecentAddition {
+  date: string;
+  description: string;
+  added_by: string;
+  child_involved: boolean;
+}
+export interface PhotoAlbumRecord {
+  id: string;
+  child_id: string;
+  album_name: string;
+  album_type: PhotoAlbumType;
+  format: PhotoAlbumFormat;
+  started_date: string;
+  child_owns_album: boolean;
+  child_chooses_content: boolean;
+  total_photos: number;
+  recent_additions: PhotoAlbumRecentAddition[];
+  themes_covered: string[];
+  consent_record: string;
+  storage_location: string;
+  child_can_access: boolean;
+  child_can_edit: boolean;
+  shared_with_family: boolean;
+  shareable_summary: string;
+  significant_moments: string[];
+  reviewed_date: string;
+  reviewed_with: string;
+  child_reflection_on_album: string;
+  protection_measures: string[];
+  created_at: string;
+}

@@ -259,6 +259,8 @@ import type {
   OpticiansRecord,
   OutcomeStarAssessment, OutcomeMetric, OutdoorActivityRiskAssessment,
   ParentPartnershipRecord, ParentalResponsibilityRecord, PathwayPlan,
+  PeerDynamic, PeerGroupDynamic, PepRecord, BelongingsRecord,
+  PersonalPassport, PettyCashEntry, PhotoAlbumRecord,
 } from "@/types/extended";
 import { generateId, todayStr, daysFromNow } from "@/lib/utils";
 
@@ -596,6 +598,13 @@ const store = {
   parentPartnershipRecords: [] as ParentPartnershipRecord[],
   parentalResponsibilityRecords: [] as ParentalResponsibilityRecord[],
   pathwayPlans: [] as PathwayPlan[],
+  peerDynamics: [] as PeerDynamic[],
+  peerGroupDynamics: [] as PeerGroupDynamic[],
+  pepRecords: [] as PepRecord[],
+  belongingsRecords: [] as BelongingsRecord[],
+  personalPassports: [] as PersonalPassport[],
+  pettyCashEntries: [] as PettyCashEntry[],
+  photoAlbumRecords: [] as PhotoAlbumRecord[],
   // Shift Swap Requests
   shiftSwaps: [
     {
@@ -7960,6 +7969,122 @@ export const db = {
       if (idx === -1) return null;
       store.pathwayPlans[idx] = { ...store.pathwayPlans[idx], ...data };
       return store.pathwayPlans[idx];
+    },
+  },
+
+  peerDynamics: {
+    findAll: (): PeerDynamic[] => store.peerDynamics,
+    findById: (id: string): PeerDynamic | undefined => store.peerDynamics.find((r) => r.id === id),
+    create: (data: Partial<PeerDynamic>): PeerDynamic => {
+      const record = { ...data, id: generateId("pdyn"), created_at: new Date().toISOString() } as PeerDynamic;
+      store.peerDynamics.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<PeerDynamic>): PeerDynamic | null => {
+      const idx = store.peerDynamics.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.peerDynamics[idx] = { ...store.peerDynamics[idx], ...data };
+      return store.peerDynamics[idx];
+    },
+  },
+
+  peerGroupDynamics: {
+    findAll: (): PeerGroupDynamic[] => store.peerGroupDynamics,
+    findById: (id: string): PeerGroupDynamic | undefined => store.peerGroupDynamics.find((r) => r.id === id),
+    create: (data: Partial<PeerGroupDynamic>): PeerGroupDynamic => {
+      const record = { ...data, id: generateId("pgdn"), created_at: new Date().toISOString() } as PeerGroupDynamic;
+      store.peerGroupDynamics.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<PeerGroupDynamic>): PeerGroupDynamic | null => {
+      const idx = store.peerGroupDynamics.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.peerGroupDynamics[idx] = { ...store.peerGroupDynamics[idx], ...data };
+      return store.peerGroupDynamics[idx];
+    },
+  },
+
+  pepRecords: {
+    findAll: (): PepRecord[] => store.pepRecords,
+    findByChild: (childId: string): PepRecord[] => store.pepRecords.filter((r) => r.child_id === childId),
+    findById: (id: string): PepRecord | undefined => store.pepRecords.find((r) => r.id === id),
+    create: (data: Partial<PepRecord>): PepRecord => {
+      const record = { ...data, id: generateId("pepr"), created_at: new Date().toISOString() } as PepRecord;
+      store.pepRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<PepRecord>): PepRecord | null => {
+      const idx = store.pepRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.pepRecords[idx] = { ...store.pepRecords[idx], ...data };
+      return store.pepRecords[idx];
+    },
+  },
+
+  belongingsRecords: {
+    findAll: (): BelongingsRecord[] => store.belongingsRecords,
+    findByChild: (childId: string): BelongingsRecord[] => store.belongingsRecords.filter((r) => r.child_id === childId),
+    findById: (id: string): BelongingsRecord | undefined => store.belongingsRecords.find((r) => r.id === id),
+    create: (data: Partial<BelongingsRecord>): BelongingsRecord => {
+      const record = { ...data, id: generateId("blrc"), created_at: new Date().toISOString() } as BelongingsRecord;
+      store.belongingsRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<BelongingsRecord>): BelongingsRecord | null => {
+      const idx = store.belongingsRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.belongingsRecords[idx] = { ...store.belongingsRecords[idx], ...data };
+      return store.belongingsRecords[idx];
+    },
+  },
+
+  personalPassports: {
+    findAll: (): PersonalPassport[] => store.personalPassports,
+    findByChild: (childId: string): PersonalPassport[] => store.personalPassports.filter((r) => r.child_id === childId),
+    findById: (id: string): PersonalPassport | undefined => store.personalPassports.find((r) => r.id === id),
+    create: (data: Partial<PersonalPassport>): PersonalPassport => {
+      const record = { ...data, id: generateId("ppsp"), created_at: new Date().toISOString() } as PersonalPassport;
+      store.personalPassports.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<PersonalPassport>): PersonalPassport | null => {
+      const idx = store.personalPassports.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.personalPassports[idx] = { ...store.personalPassports[idx], ...data };
+      return store.personalPassports[idx];
+    },
+  },
+
+  pettyCashEntries: {
+    findAll: (): PettyCashEntry[] => store.pettyCashEntries,
+    findById: (id: string): PettyCashEntry | undefined => store.pettyCashEntries.find((r) => r.id === id),
+    create: (data: Partial<PettyCashEntry>): PettyCashEntry => {
+      const record = { ...data, id: generateId("pcen"), created_at: new Date().toISOString() } as PettyCashEntry;
+      store.pettyCashEntries.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<PettyCashEntry>): PettyCashEntry | null => {
+      const idx = store.pettyCashEntries.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.pettyCashEntries[idx] = { ...store.pettyCashEntries[idx], ...data };
+      return store.pettyCashEntries[idx];
+    },
+  },
+
+  photoAlbumRecords: {
+    findAll: (): PhotoAlbumRecord[] => store.photoAlbumRecords,
+    findByChild: (childId: string): PhotoAlbumRecord[] => store.photoAlbumRecords.filter((r) => r.child_id === childId),
+    findById: (id: string): PhotoAlbumRecord | undefined => store.photoAlbumRecords.find((r) => r.id === id),
+    create: (data: Partial<PhotoAlbumRecord>): PhotoAlbumRecord => {
+      const record = { ...data, id: generateId("parc"), created_at: new Date().toISOString() } as PhotoAlbumRecord;
+      store.photoAlbumRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<PhotoAlbumRecord>): PhotoAlbumRecord | null => {
+      const idx = store.photoAlbumRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.photoAlbumRecords[idx] = { ...store.photoAlbumRecords[idx], ...data };
+      return store.photoAlbumRecords[idx];
     },
   },
 };
