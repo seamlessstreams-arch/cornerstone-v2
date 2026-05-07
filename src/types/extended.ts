@@ -13076,3 +13076,343 @@ export interface IndependentTravelRecord {
   key_worker: string;
   created_at: string;
 }
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   BATCH 35 — Visitor Reports, Infection Control, Inspection Readiness,
+   Insurance Tracker, Inventory, IRO Correspondence
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+/* ── Visitor Reports (independent-visitor) ─────────────────────────────────── */
+
+export type VisitorVisitType = "scheduled" | "unannounced" | "follow_up";
+export const VISITOR_VISIT_TYPE_LABEL: Record<VisitorVisitType, string> = {
+  scheduled: "Scheduled",
+  unannounced: "Unannounced",
+  follow_up: "Follow-Up",
+};
+
+export type VisitorRecommendationPriority = "high" | "medium" | "low";
+
+export type VisitorRecommendationStatus = "open" | "actioned" | "noted";
+export const VISITOR_RECOMMENDATION_STATUS_LABEL: Record<VisitorRecommendationStatus, string> = {
+  open: "Open",
+  actioned: "Actioned",
+  noted: "Noted",
+};
+
+export interface VisitorRecommendation {
+  recommendation: string;
+  priority: VisitorRecommendationPriority;
+  response: string | null;
+  response_date: string | null;
+  status: VisitorRecommendationStatus;
+}
+
+export interface VisitorChildView {
+  child_id: string;
+  spoken_to: boolean;
+  private_conversation: boolean;
+  summary: string;
+  concerns: boolean;
+}
+
+export interface VisitorReport {
+  id: string;
+  date: string;
+  visitor_name: string;
+  visit_type: VisitorVisitType;
+  arrival_time: string;
+  departure_time: string;
+  areas_inspected: string[];
+  child_views: VisitorChildView[];
+  staff_on_duty: string[];
+  overall_findings: string;
+  recommendations: VisitorRecommendation[];
+  positive_observations: string[];
+  rm_response: string | null;
+  rm_response_date: string | null;
+  report_received: boolean;
+  report_date: string | null;
+  created_at: string;
+}
+
+/* ── Infection Control (infection-control) ─────────────────────────────────── */
+
+export type InfectionType = "gastro" | "respiratory" | "skin" | "covid" | "flu" | "headlice" | "chickenpox" | "conjunctivitis" | "hand_foot_mouth" | "other";
+export const INFECTION_TYPE_LABEL: Record<InfectionType, string> = {
+  gastro: "Gastroenteritis (D&V)",
+  respiratory: "Respiratory Infection",
+  skin: "Skin Infection",
+  covid: "COVID-19",
+  flu: "Influenza",
+  headlice: "Head Lice",
+  chickenpox: "Chickenpox",
+  conjunctivitis: "Conjunctivitis",
+  hand_foot_mouth: "Hand, Foot & Mouth",
+  other: "Other",
+};
+
+export type InfectionSeverity = "low" | "medium" | "high" | "outbreak";
+export const INFECTION_SEVERITY_LABEL: Record<InfectionSeverity, string> = {
+  low: "Low",
+  medium: "Medium",
+  high: "High",
+  outbreak: "Outbreak",
+};
+
+export type InfectionStatus = "active" | "monitoring" | "resolved" | "notified";
+export const INFECTION_STATUS_LABEL: Record<InfectionStatus, string> = {
+  active: "Active",
+  monitoring: "Monitoring",
+  resolved: "Resolved",
+  notified: "Notified (PHE)",
+};
+
+export interface InfectionRecord {
+  id: string;
+  date_reported: string;
+  reported_by_id: string;
+  affected_person_id: string;
+  affected_person_type: "child" | "staff";
+  infection_type: InfectionType;
+  symptoms: string[];
+  severity: InfectionSeverity;
+  status: InfectionStatus;
+  gp_consulted: boolean;
+  gp_advice: string;
+  exclusion_required: boolean;
+  exclusion_details: string;
+  control_measures: string[];
+  other_cases_in_home: number;
+  notified_bodies: string[];
+  date_resolved: string | null;
+  cleaning_actions: string[];
+  notes: string;
+  created_at: string;
+}
+
+/* ── Inspection Readiness Pack (inspection-readiness-pack) ─────────────────── */
+
+export type SccifJudgementArea = "overall_experiences" | "helped_and_protected" | "leaders_and_managers";
+export const SCCIF_JUDGEMENT_AREA_LABEL: Record<SccifJudgementArea, string> = {
+  overall_experiences: "Overall Experiences and Progress",
+  helped_and_protected: "How well children are helped and protected",
+  leaders_and_managers: "Effectiveness of leaders and managers",
+};
+
+export type ReadinessCategory = "statutory_documentation" | "records_of_practice" | "childrens_voice_evidence" | "outcome_data" | "workforce" | "environment" | "quality_assurance";
+export const READINESS_CATEGORY_LABEL: Record<ReadinessCategory, string> = {
+  statutory_documentation: "Statutory documentation",
+  records_of_practice: "Records of practice",
+  childrens_voice_evidence: "Children's voice evidence",
+  outcome_data: "Outcome data",
+  workforce: "Workforce",
+  environment: "Environment",
+  quality_assurance: "Quality assurance",
+};
+
+export type InPackStatus = "ready" | "needs_refresh" | "missing" | "in_progress";
+export const IN_PACK_STATUS_LABEL: Record<InPackStatus, string> = {
+  ready: "Ready",
+  needs_refresh: "Needs refresh",
+  missing: "Missing",
+  in_progress: "In progress",
+};
+
+export interface ReadinessItem {
+  id: string;
+  item_name: string;
+  sccif_judgement_area: SccifJudgementArea;
+  category: ReadinessCategory;
+  description: string;
+  current_version: string;
+  last_updated: string;
+  next_review_due: string;
+  location_of_document: string;
+  responsible_owner: string;
+  in_pack_status: InPackStatus;
+  evidence_quality_rating: number;
+  examples_included: string[];
+  child_voice_woven: boolean;
+  accessible_to_inspector: boolean;
+  accessible_to_children: boolean;
+  commentary: string;
+  created_at: string;
+}
+
+/* ── Insurance Tracker (insurance-tracker) ─────────────────────────────────── */
+
+export type InsurancePolicyType = "public_liability" | "employers_liability" | "buildings" | "contents" | "vehicle_fleet" | "trustees_directors" | "cyber" | "professional_indemnity" | "group_personal_accident" | "specialist";
+export const INSURANCE_POLICY_TYPE_LABEL: Record<InsurancePolicyType, string> = {
+  public_liability: "Public Liability",
+  employers_liability: "Employers' Liability",
+  buildings: "Buildings",
+  contents: "Contents",
+  vehicle_fleet: "Vehicle Fleet",
+  trustees_directors: "Trustees/Directors",
+  cyber: "Cyber",
+  professional_indemnity: "Professional Indemnity",
+  group_personal_accident: "Group Personal Accident",
+  specialist: "Specialist (e.g. abuse)",
+};
+
+export type InsurancePolicyStatus = "active" | "lapsed" | "pending_renewal" | "cancelled" | "awaiting_documents";
+export const INSURANCE_POLICY_STATUS_LABEL: Record<InsurancePolicyStatus, string> = {
+  active: "Active",
+  lapsed: "Lapsed",
+  pending_renewal: "Pending renewal",
+  cancelled: "Cancelled",
+  awaiting_documents: "Awaiting documents",
+};
+
+export interface InsuranceClaim {
+  date: string;
+  amount: number;
+  outcome: string;
+}
+
+export interface InsurancePolicy {
+  id: string;
+  policy_name: string;
+  policy_type: InsurancePolicyType;
+  insurer: string;
+  broker_or_direct: string;
+  policy_number: string;
+  coverage_summary: string;
+  sum_insured: number;
+  excess: number;
+  premium_annual: number;
+  start_date: string;
+  renewal_date: string;
+  days_to_renewal: number;
+  auto_renewal: boolean;
+  certificate_location: string;
+  policy_document_location: string;
+  certificate_displayed_required: boolean;
+  certificate_displayed: boolean;
+  responsible_owner: string;
+  recent_claims: InsuranceClaim[];
+  last_reviewed_date: string;
+  review_notes: string;
+  policy_exclusions: string[];
+  status: InsurancePolicyStatus;
+  created_at: string;
+}
+
+/* ── Inventory (inventory) ─────────────────────────────────────────────────── */
+
+export type InventoryCategory = "furniture" | "electronics" | "kitchen" | "safety_equipment" | "bedding_linen" | "cleaning" | "office" | "outdoor" | "medical" | "other";
+export const INVENTORY_CATEGORY_LABEL: Record<InventoryCategory, string> = {
+  furniture: "Furniture",
+  electronics: "Electronics",
+  kitchen: "Kitchen",
+  safety_equipment: "Safety Equipment",
+  bedding_linen: "Bedding & Linen",
+  cleaning: "Cleaning",
+  office: "Office",
+  outdoor: "Outdoor",
+  medical: "Medical",
+  other: "Other",
+};
+
+export type InventoryCondition = "new" | "good" | "fair" | "poor" | "condemned";
+export const INVENTORY_CONDITION_LABEL: Record<InventoryCondition, string> = {
+  new: "New",
+  good: "Good",
+  fair: "Fair",
+  poor: "Poor",
+  condemned: "Condemned",
+};
+
+export type InventoryLocation = "lounge" | "kitchen" | "office" | "bedroom_1" | "bedroom_2" | "bedroom_3" | "bathroom" | "garden" | "utility" | "hallway" | "storage";
+export const INVENTORY_LOCATION_LABEL: Record<InventoryLocation, string> = {
+  lounge: "Lounge",
+  kitchen: "Kitchen",
+  office: "Office",
+  bedroom_1: "Bedroom 1",
+  bedroom_2: "Bedroom 2",
+  bedroom_3: "Bedroom 3",
+  bathroom: "Bathroom",
+  garden: "Garden",
+  utility: "Utility Room",
+  hallway: "Hallway",
+  storage: "Storage",
+};
+
+export interface InventoryItem {
+  id: string;
+  name: string;
+  category: InventoryCategory;
+  location: InventoryLocation;
+  condition: InventoryCondition;
+  quantity: number;
+  purchase_date: string;
+  purchase_cost: number;
+  supplier: string;
+  warranty_expiry: string | null;
+  pat_test_due: string | null;
+  last_checked: string;
+  checked_by: string;
+  serial_number: string | null;
+  notes: string;
+  created_at: string;
+}
+
+/* ── IRO Correspondence (iro-correspondence) ───────────────────────────────── */
+
+export type IroDirection = "from_iro" | "to_iro";
+export const IRO_DIRECTION_LABEL: Record<IroDirection, string> = {
+  from_iro: "From IRO",
+  to_iro: "To IRO",
+};
+
+export type IroCorrespondenceType = "pre_lac_review" | "post_lac_review" | "formal_dispute" | "information_request" | "concern_raised" | "update_from_home" | "mid_review_check_in" | "statutory_action";
+export const IRO_CORRESPONDENCE_TYPE_LABEL: Record<IroCorrespondenceType, string> = {
+  pre_lac_review: "Pre-LAC review information",
+  post_lac_review: "Post-LAC review confirmation",
+  formal_dispute: "Formal dispute resolution",
+  information_request: "Information request",
+  concern_raised: "Concern raised by IRO",
+  update_from_home: "Update from home",
+  mid_review_check_in: "Mid-review check-in",
+  statutory_action: "Statutory action required",
+};
+
+export type IroActionStatus = "outstanding" | "in_progress" | "complete";
+export const IRO_ACTION_STATUS_LABEL: Record<IroActionStatus, string> = {
+  outstanding: "Outstanding",
+  in_progress: "In progress",
+  complete: "Complete",
+};
+
+export interface IroRequiredAction {
+  action: string;
+  owner: string;
+  deadline: string;
+  status: IroActionStatus;
+}
+
+export interface IroCorrespondence {
+  id: string;
+  date: string;
+  child_id: string;
+  iro_name: string;
+  iro_local_authority: string;
+  direction: IroDirection;
+  correspondence_type: IroCorrespondenceType;
+  subject: string;
+  summary: string;
+  key_points: string[];
+  actions_required: IroRequiredAction[];
+  response_required: boolean;
+  response_deadline: string;
+  response_sent: boolean;
+  response_sent_date: string;
+  attachments: string[];
+  formal_dispute: boolean;
+  authored_by: string;
+  received_by: string;
+  copied_to: string[];
+  filed: boolean;
+  created_at: string;
+}

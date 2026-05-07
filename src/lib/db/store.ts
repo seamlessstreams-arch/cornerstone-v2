@@ -238,6 +238,8 @@ import type {
   DailyRiskBriefing, EqualityInitiative, EqualityTrainingRecord,
   IndependencePathway, IndependenceSkillsRecord,
   IndependenceLivingAssessment, IndependentTravelRecord,
+  VisitorReport, InfectionRecord, ReadinessItem,
+  InsurancePolicy, InventoryItem, IroCorrespondence,
 } from "@/types/extended";
 import { generateId, todayStr, daysFromNow } from "@/lib/utils";
 
@@ -514,6 +516,12 @@ const store = {
   independenceSkillsRecords: [] as IndependenceSkillsRecord[],
   independenceLivingAssessments: [] as IndependenceLivingAssessment[],
   independentTravelRecords: [] as IndependentTravelRecord[],
+  visitorReports: [] as VisitorReport[],
+  infectionRecords: [] as InfectionRecord[],
+  readinessItems: [] as ReadinessItem[],
+  insurancePolicies: [] as InsurancePolicy[],
+  inventoryItems: [] as InventoryItem[],
+  iroCorrespondences: [] as IroCorrespondence[],
   // Shift Swap Requests
   shiftSwaps: [
     {
@@ -6867,6 +6875,103 @@ export const db = {
       if (idx === -1) return null;
       store.independentTravelRecords[idx] = { ...store.independentTravelRecords[idx], ...data };
       return store.independentTravelRecords[idx];
+    },
+  },
+
+  visitorReports: {
+    findAll: () => store.visitorReports,
+    findById: (id: string) => store.visitorReports.find((r) => r.id === id),
+    create: (data: Partial<VisitorReport>): VisitorReport => {
+      const record = { ...data, id: generateId("vrpt"), created_at: new Date().toISOString() } as VisitorReport;
+      store.visitorReports.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<VisitorReport>): VisitorReport | null => {
+      const idx = store.visitorReports.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.visitorReports[idx] = { ...store.visitorReports[idx], ...data };
+      return store.visitorReports[idx];
+    },
+  },
+
+  infectionRecords: {
+    findAll: () => store.infectionRecords,
+    findById: (id: string) => store.infectionRecords.find((r) => r.id === id),
+    create: (data: Partial<InfectionRecord>): InfectionRecord => {
+      const record = { ...data, id: generateId("infr"), created_at: new Date().toISOString() } as InfectionRecord;
+      store.infectionRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<InfectionRecord>): InfectionRecord | null => {
+      const idx = store.infectionRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.infectionRecords[idx] = { ...store.infectionRecords[idx], ...data };
+      return store.infectionRecords[idx];
+    },
+  },
+
+  readinessItems: {
+    findAll: () => store.readinessItems,
+    findById: (id: string) => store.readinessItems.find((r) => r.id === id),
+    create: (data: Partial<ReadinessItem>): ReadinessItem => {
+      const record = { ...data, id: generateId("rdyi"), created_at: new Date().toISOString() } as ReadinessItem;
+      store.readinessItems.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<ReadinessItem>): ReadinessItem | null => {
+      const idx = store.readinessItems.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.readinessItems[idx] = { ...store.readinessItems[idx], ...data };
+      return store.readinessItems[idx];
+    },
+  },
+
+  insurancePolicies: {
+    findAll: () => store.insurancePolicies,
+    findById: (id: string) => store.insurancePolicies.find((r) => r.id === id),
+    create: (data: Partial<InsurancePolicy>): InsurancePolicy => {
+      const record = { ...data, id: generateId("insp"), created_at: new Date().toISOString() } as InsurancePolicy;
+      store.insurancePolicies.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<InsurancePolicy>): InsurancePolicy | null => {
+      const idx = store.insurancePolicies.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.insurancePolicies[idx] = { ...store.insurancePolicies[idx], ...data };
+      return store.insurancePolicies[idx];
+    },
+  },
+
+  inventoryItems: {
+    findAll: () => store.inventoryItems,
+    findById: (id: string) => store.inventoryItems.find((r) => r.id === id),
+    create: (data: Partial<InventoryItem>): InventoryItem => {
+      const record = { ...data, id: generateId("invt"), created_at: new Date().toISOString() } as InventoryItem;
+      store.inventoryItems.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<InventoryItem>): InventoryItem | null => {
+      const idx = store.inventoryItems.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.inventoryItems[idx] = { ...store.inventoryItems[idx], ...data };
+      return store.inventoryItems[idx];
+    },
+  },
+
+  iroCorrespondences: {
+    findAll: () => store.iroCorrespondences,
+    findByChild: (childId: string) => store.iroCorrespondences.filter((r) => r.child_id === childId),
+    findById: (id: string) => store.iroCorrespondences.find((r) => r.id === id),
+    create: (data: Partial<IroCorrespondence>): IroCorrespondence => {
+      const record = { ...data, id: generateId("iroc"), created_at: new Date().toISOString() } as IroCorrespondence;
+      store.iroCorrespondences.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<IroCorrespondence>): IroCorrespondence | null => {
+      const idx = store.iroCorrespondences.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.iroCorrespondences[idx] = { ...store.iroCorrespondences[idx], ...data };
+      return store.iroCorrespondences[idx];
     },
   },
 };
