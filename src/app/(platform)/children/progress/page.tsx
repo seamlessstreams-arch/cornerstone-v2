@@ -1,6 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useProgressGoals, useProgressEntries, useProgressSnapshots, useCreateProgressRecord } from "@/hooks/use-intelligence-layer";
+import { SmartLinkBadge } from "@/components/intelligence/smart-link-panel";
 import { PageShell } from "@/components/layout/page-shell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -227,6 +229,57 @@ const DEMO_OUTCOMES: OutcomeScore[] = [
 export default function ChildProgressPage() {
   const [selectedChild, setSelectedChild] = useState("child-a");
   const [showAriaDraft, setShowAriaDraft] = useState(false);
+  const [goals, setGoals] = useState<Goal[]>(DEMO_GOALS);
+  const [progressEntries, setProgressEntries] = useState<ProgressEntry[]>(DEMO_PROGRESS);
+  const [outcomes, setOutcomes] = useState<OutcomeScore[]>(DEMO_OUTCOMES);
+
+  /* ── API hooks (soft-wire for live data) ────────────────────────────────── */
+  const { data: goalsData } = useProgressGoals(selectedChild);
+  const { data: entriesData } = useProgressEntries(selectedChild);
+  const { data: snapshotsData } = useProgressSnapshots(selectedChild);
+  const createRecord = useCreateProgressRecord();
+
+  useEffect(() => {
+    if (goalsData?.persisted && goalsData.data.length > 0) {
+      setGoals((goalsData.data as Record<string, unknown>[]).map((row) => ({
+        id: row.id as string,
+        title: (row.title as string) ?? "",
+        area: (row.goal_area as ProgressArea) ?? "education",
+        status: "on_track" as GoalStatus,
+        targetDate: (row.target_date as string) ?? "",
+        description: (row.description as string) ?? "",
+        progress: 0,
+      })));
+    }
+  }, [goalsData]);
+
+  useEffect(() => {
+    if (entriesData?.persisted && entriesData.data.length > 0) {
+      setProgressEntries((entriesData.data as Record<string, unknown>[]).map((row) => ({
+        id: row.id as string,
+        date: (row.entry_date as string) ?? "",
+        area: (row.area as ProgressArea) ?? "education",
+        description: (row.what_happened as string) ?? "",
+        impactNote: (row.impact_on_child as string) ?? "",
+        staffMember: "",
+      })));
+    }
+  }, [entriesData]);
+
+  useEffect(() => {
+    if (snapshotsData?.persisted && snapshotsData.data.length > 0) {
+      const row = snapshotsData.data[0] as Record<string, unknown>;
+      setOutcomes([
+        { domain: "Education", score: (row.education_score as number) ?? 0, previousScore: 0, trend: "stable" as const },
+        { domain: "Health", score: (row.health_score as number) ?? 0, previousScore: 0, trend: "stable" as const },
+        { domain: "Emotional Wellbeing", score: (row.emotional_wellbeing_score as number) ?? 0, previousScore: 0, trend: "stable" as const },
+        { domain: "Safety", score: (row.safety_score as number) ?? 0, previousScore: 0, trend: "stable" as const },
+        { domain: "Relationships", score: (row.relationships_score as number) ?? 0, previousScore: 0, trend: "stable" as const },
+        { domain: "Independence", score: (row.independence_score as number) ?? 0, previousScore: 0, trend: "stable" as const },
+        { domain: "Engagement", score: (row.engagement_score as number) ?? 0, previousScore: 0, trend: "stable" as const },
+      ]);
+    }
+  }, [snapshotsData]);
 
   const getScoreColor = (score: number) => {
     if (score >= 8) return "bg-green-500";
@@ -264,11 +317,32 @@ export default function ChildProgressPage() {
             </Select>
           </div>
           <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm">
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={createRecord.isPending}
+              onClick={() => createRecord.mutate({
+                childId: selectedChild,
+                homeId: "oak-house",
+                recordType: "goal",
+                title: "New Goal",
+                goalArea: "general",
+              })}
+            >
               <Plus className="h-4 w-4 mr-1" />
-              Add Goal
+              {createRecord.isPending ? "Creating..." : "Add Goal"}
             </Button>
-            <Button variant="outline" size="sm">
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={createRecord.isPending}
+              onClick={() => createRecord.mutate({
+                childId: selectedChild,
+                homeId: "oak-house",
+                recordType: "entry",
+                title: "New Progress Entry",
+              })}
+            >
               <Plus className="h-4 w-4 mr-1" />
               Add Progress Entry
             </Button>
@@ -285,7 +359,7 @@ export default function ChildProgressPage() {
           </CardHeader>
           <CardContent>
             <div className="grid gap-4 md:grid-cols-2">
-              {DEMO_GOALS.map((goal) => (
+              {goals.map((goal) => (
                 <div
                   key={goal.id}
                   className="border rounded-lg p-4 space-y-3 hover:border-blue-200 transition-colors"
@@ -319,9 +393,12 @@ export default function ChildProgressPage() {
                       />
                     </div>
                   </div>
-                  <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                    <Calendar className="h-3 w-3" />
-                    <span>Target: {new Date(goal.targetDate).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}</span>
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <span className="flex items-center gap-1">
+                      <Calendar className="h-3 w-3" />
+                      Target: {new Date(goal.targetDate).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
+                    </span>
+                    <SmartLinkBadge sourceType="child_progress" sourceId={goal.id} />
                   </div>
                 </div>
               ))}
@@ -339,7 +416,7 @@ export default function ChildProgressPage() {
           </CardHeader>
           <CardContent>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {DEMO_OUTCOMES.map((outcome) => (
+              {outcomes.map((outcome) => (
                 <div key={outcome.domain} className="border rounded-lg p-3 space-y-2">
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-medium">{outcome.domain}</span>
@@ -376,12 +453,12 @@ export default function ChildProgressPage() {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {DEMO_PROGRESS.map((entry, idx) => (
+              {progressEntries.map((entry, idx) => (
                 <div
                   key={entry.id}
                   className={cn(
                     "relative pl-6 pb-4",
-                    idx < DEMO_PROGRESS.length - 1 && "border-l-2 border-gray-200 ml-2"
+                    idx < progressEntries.length - 1 && "border-l-2 border-gray-200 ml-2"
                   )}
                 >
                   <div className="absolute left-0 top-1 w-4 h-4 rounded-full bg-white border-2 border-blue-400 -translate-x-[7px]" />

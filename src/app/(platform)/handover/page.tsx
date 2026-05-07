@@ -17,13 +17,17 @@ import {
 import { getStaffName, getYPName } from "@/lib/seed-data";
 import type { YoungPerson } from "@/types";
 import { cn, formatDate, formatDateTime, todayStr } from "@/lib/utils";
-import { useHandover, useCreateHandover } from "@/hooks/use-handover";
+import { useHandover, useCreateHandover, useSignOffHandover } from "@/hooks/use-handover";
+import { useHandoverContext } from "@/hooks/use-handover-context";
 import { useAuthContext } from "@/contexts/auth-context";
 import type { HandoverEntry, HandoverChildUpdate } from "@/types/extended";
+import { useShiftSummary } from "@/hooks/use-shift-summary";
 import { SmartUploadButton } from "@/components/documents/smart-upload-button";
 import { PrintButton } from "@/components/common/print-button";
 import { ExportButton, type ExportColumn } from "@/components/common/export-button";
 import { ShiftSummaryCard } from "@/components/dashboard/shift-summary-card";
+import { AriaHandoverBuilder } from "@/components/handover/aria-handover-builder";
+import { HandoverPrintContext } from "@/components/handover/handover-print-context";
 
 const HANDOVER_EXPORT_COLS: ExportColumn<HandoverEntry>[] = [
   { header: "Shift Date", accessor: (h) => h.shift_date },
@@ -124,6 +128,8 @@ function HandoverChildCard({ cu }: { cu: HandoverChildUpdate }) {
 
 function LatestHandoverCard({ handover }: { handover: HandoverEntry }) {
   const isToday = handover.shift_date === todayStr();
+  const { data: ctxData } = useHandoverContext(handover.incoming_staff ?? []);
+  const staffContexts = ctxData?.data ?? [];
 
   return (
     <Card className="rounded-2xl border-2 border-slate-900">
@@ -165,12 +171,25 @@ function LatestHandoverCard({ handover }: { handover: HandoverEntry }) {
           </div>
           <div>
             <span className="text-[10px] font-semibold uppercase tracking-wide text-slate-400 block mb-1">Incoming</span>
-            {handover.incoming_staff.map((id) => (
-              <div key={id} className="flex items-center gap-1.5 mb-0.5">
-                <Avatar name={getStaffName(id)} size="xs" />
-                <span>{getStaffName(id)}</span>
-              </div>
-            ))}
+            {handover.incoming_staff.map((id) => {
+              const ctx = staffContexts.find((c) => c.staff_id === id);
+              return (
+                <div key={id} className="flex items-center gap-1.5 mb-0.5">
+                  <Avatar name={getStaffName(id)} size="xs" />
+                  <span>{getStaffName(id)}</span>
+                  {ctx && ctx.days_since_last_shift !== null && ctx.days_since_last_shift > 1 && (
+                    <span className={cn(
+                      "text-[9px] rounded-full px-1.5 py-0.5 font-medium",
+                      ctx.days_since_last_shift >= 4
+                        ? "bg-violet-100 text-violet-700"
+                        : "bg-blue-100 text-blue-600"
+                    )}>
+                      {ctx.days_since_last_shift}d away
+                    </span>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
 
@@ -194,7 +213,7 @@ function LatestHandoverCard({ handover }: { handover: HandoverEntry }) {
 
         {/* Flags */}
         {handover.flags.length > 0 && (
-          <div className="flex flex-wrap gap-1.5">
+          <div className="flex flex-wrap gap-1.5 mb-4">
             {handover.flags.map((flag, i) => (
               <span key={i} className="text-[10px] bg-orange-100 text-orange-700 rounded-full px-2 py-0.5 flex items-center gap-1">
                 <Flag className="h-2.5 w-2.5" />
@@ -203,8 +222,127 @@ function LatestHandoverCard({ handover }: { handover: HandoverEntry }) {
             ))}
           </div>
         )}
+
+        {/* Sign-off section */}
+        <HandoverSignOffSection handover={handover} />
       </CardContent>
     </Card>
+  );
+}
+
+// ── Sign-off section ─────────────────────────────────────────────────────────
+
+function HandoverSignOffSection({ handover }: { handover: HandoverEntry }) {
+  const { currentUser } = useAuthContext();
+  const signOff = useSignOffHandover();
+  const [signOffNotes, setSignOffNotes] = useState("");
+  const [showNotes, setShowNotes] = useState(false);
+
+  const myId = currentUser?.id ?? "staff_darren";
+  const isIncoming = handover.incoming_staff.includes(myId);
+  const alreadySigned = handover.sign_offs?.some((s) => s.staff_id === myId);
+  const signOffs = handover.sign_offs ?? [];
+  const totalExpected = handover.incoming_staff.length;
+  const totalSigned = signOffs.length;
+
+  function handleSignOff() {
+    signOff.mutate({
+      handover_id: handover.id,
+      staff_id: myId,
+      notes: signOffNotes.trim() || undefined,
+    });
+    setShowNotes(false);
+    setSignOffNotes("");
+  }
+
+  return (
+    <div className="border-t border-slate-100 pt-4 mt-4">
+      <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center gap-2">
+          <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+          <span className="text-xs font-semibold text-slate-700">
+            Acknowledgements ({totalSigned}/{totalExpected})
+          </span>
+        </div>
+        {totalSigned === totalExpected && (
+          <Badge className="text-[9px] rounded-full bg-emerald-100 text-emerald-700">All acknowledged</Badge>
+        )}
+      </div>
+
+      {/* Existing sign-offs */}
+      <div className="space-y-1.5 mb-3">
+        {handover.incoming_staff.map((id) => {
+          const so = signOffs.find((s) => s.staff_id === id);
+          return (
+            <div key={id} className="flex items-center gap-2 text-xs">
+              <div className={cn(
+                "h-2 w-2 rounded-full shrink-0",
+                so ? "bg-emerald-500" : "bg-slate-200"
+              )} />
+              <Avatar name={getStaffName(id)} size="xs" />
+              <span className={cn("flex-1", so ? "text-slate-700" : "text-slate-400")}>
+                {getStaffName(id)}
+              </span>
+              {so ? (
+                <span className="text-[10px] text-emerald-600">
+                  {new Date(so.acknowledged_at).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" })}
+                </span>
+              ) : (
+                <span className="text-[10px] text-slate-300">Pending</span>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Sign-off notes from others */}
+      {signOffs.filter((s) => s.notes).length > 0 && (
+        <div className="space-y-1.5 mb-3">
+          {signOffs.filter((s) => s.notes).map((s) => (
+            <div key={s.staff_id} className="rounded-lg bg-emerald-50 px-3 py-2">
+              <span className="text-[10px] font-medium text-emerald-700">{getStaffName(s.staff_id).split(" ")[0]}:</span>
+              <span className="text-[11px] text-slate-600 ml-1">{s.notes}</span>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* My sign-off button */}
+      {isIncoming && !alreadySigned && (
+        <div className="space-y-2">
+          {showNotes && (
+            <input
+              type="text"
+              value={signOffNotes}
+              onChange={(e) => setSignOffNotes(e.target.value)}
+              placeholder="Optional note (e.g. 'Will follow up on Casey')..."
+              className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            />
+          )}
+          <div className="flex gap-2">
+            <Button
+              size="sm"
+              className="flex-1 bg-emerald-600 hover:bg-emerald-700"
+              onClick={handleSignOff}
+              disabled={signOff.isPending}
+            >
+              {signOff.isPending ? (
+                <><Loader2 className="h-3.5 w-3.5 animate-spin mr-1" />Signing...</>
+              ) : (
+                <><CheckCircle2 className="h-3.5 w-3.5 mr-1" />Acknowledge Handover</>
+              )}
+            </Button>
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => setShowNotes((v) => !v)}
+            >
+              {showNotes ? "Hide" : "+ Note"}
+            </Button>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -298,6 +436,48 @@ function WriteHandoverForm({ youngPeople, onClose, onSuccess }: WriteFormProps) 
   const [alertInputs, setAlertInputs] = useState<Record<string, string>>(
     Object.fromEntries(currentYP.map((yp) => [yp.id, ""]))
   );
+  const [ariaGenerating, setAriaGenerating] = useState(false);
+
+  const { data: shiftSummaryData } = useShiftSummary(undefined, shiftFrom);
+
+  async function handleAriaGenerate() {
+    setAriaGenerating(true);
+    try {
+      const summary = shiftSummaryData?.data;
+      if (!summary) return;
+
+      const lines: string[] = [];
+      lines.push(summary.auto_notes);
+      if (summary.stats.incidents_logged > 0) {
+        lines.push(`\n${summary.stats.incidents_logged} incident(s) to flag to incoming team.`);
+      }
+      setGeneralNotes(lines.join("\n"));
+
+      const newUpdates = currentYP.map((yp) => {
+        const ypData = summary.young_people.find((y) => y.id === yp.id);
+        const ypEvents = summary.events.filter((e) => e.child_id === yp.id);
+        const notes = ypEvents.map((e) => `${e.time} — ${e.title}`).join(". ") || "No significant events this shift.";
+        const alerts = ypEvents
+          .filter((e) => e.severity === "high" || e.severity === "critical")
+          .map((e) => e.title);
+        return {
+          child_id: yp.id,
+          mood_score: ypData?.mood_score ?? null,
+          key_notes: notes,
+          alerts,
+        };
+      });
+      setChildUpdates(newUpdates);
+
+      const autoFlags: string[] = [];
+      if (summary.stats.medications_missed > 0) autoFlags.push("medication_issue");
+      if (summary.stats.missing_episodes > 0) autoFlags.push("missing_from_care");
+      if (summary.stats.incidents_logged > 0) autoFlags.push("incidents_logged");
+      setFlags(autoFlags);
+    } finally {
+      setAriaGenerating(false);
+    }
+  }
 
   function updateChild(childId: string, patch: Partial<HandoverChildUpdate>) {
     setChildUpdates((prev) => prev.map((cu) => cu.child_id === childId ? { ...cu, ...patch } : cu));
@@ -343,9 +523,25 @@ function WriteHandoverForm({ youngPeople, onClose, onSuccess }: WriteFormProps) 
       <CardContent className="pt-5">
         <div className="flex items-center justify-between mb-5">
           <span className="text-sm font-semibold text-slate-900">Write Handover</span>
-          <button onClick={onClose} className="text-slate-400 hover:text-slate-600">
-            <X className="h-4 w-4" />
-          </button>
+          <div className="flex items-center gap-2">
+            <Button
+              type="button"
+              size="sm"
+              variant="outline"
+              onClick={handleAriaGenerate}
+              disabled={ariaGenerating || !shiftSummaryData}
+              className="border-violet-200 text-violet-700 hover:bg-violet-50"
+            >
+              {ariaGenerating ? (
+                <><Loader2 className="h-3.5 w-3.5 animate-spin mr-1" />Generating...</>
+              ) : (
+                <><Sparkles className="h-3.5 w-3.5 mr-1" />Generate with ARIA</>
+              )}
+            </Button>
+            <button onClick={onClose} className="text-slate-400 hover:text-slate-600">
+              <X className="h-4 w-4" />
+            </button>
+          </div>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-5">
@@ -715,6 +911,22 @@ export default function HandoverPage() {
       </div>
       <div id="handover-auto-notes" className="hidden" />
 
+      {/* ARIA Handover Builder — personalised context per incoming staff */}
+      {!isLoading && (
+        <div className="mb-6">
+          <AriaHandoverBuilder
+            incomingStaffIds={
+              latest?.incoming_staff?.length
+                ? latest.incoming_staff
+                : todayShifts
+                    .filter((s) => s.shift_type === "sleep_in" || s.shift_type === "waking_night")
+                    .map((s) => s.staff_id)
+                    .filter(Boolean)
+            }
+          />
+        </div>
+      )}
+
       {/* ── Search & Filters ── */}
       {!isLoading && history.length > 0 && (
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mb-6">
@@ -963,6 +1175,10 @@ export default function HandoverPage() {
           </Card>
         </div>
       </div>
+      {/* Print-only: ARIA personalised context for each incoming staff member */}
+      {latest && (
+        <HandoverPrintContext incomingStaffIds={latest.incoming_staff} />
+      )}
       </div>{/* close #handover-content */}
     </PageShell>
   );

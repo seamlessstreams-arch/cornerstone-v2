@@ -20,6 +20,7 @@ import { KeyDatesCard } from "@/components/dashboard/key-dates-card";
 import { DocumentSignOff } from "@/components/dashboard/document-sign-off";
 import { LeaveOverview } from "@/components/dashboard/leave-overview";
 import { NightSummary } from "@/components/dashboard/night-summary";
+import { YourHandoverCard } from "@/components/dashboard/your-handover-card";
 import { ConcernEscalation } from "@/components/dashboard/concern-escalation";
 import { ShiftChecklist } from "@/components/dashboard/shift-checklist";
 import { OutcomesSummary } from "@/components/dashboard/outcomes-summary";
@@ -827,6 +828,9 @@ export default function DashboardPage() {
 
         {/* Handover Prompt — contextual shift awareness */}
         {!config.showReadOnlyBanner && <HandoverPrompt />}
+
+        {/* Your Handover — personalised catch-up based on last shift */}
+        {!config.showReadOnlyBanner && <YourHandoverCard />}
 
         {/* ════════════════════════════════════════════════════════════════════ */}
         {/* ZONE A — WHAT NEEDS ATTENTION                                       */}

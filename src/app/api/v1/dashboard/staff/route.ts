@@ -43,6 +43,9 @@ export async function GET(req: NextRequest) {
   const handoverFlags = latestHandover
     ? latestHandover.flags.map((f) => ({ type: "flag", text: f }))
     : [];
+  const pendingMySignOff = latestHandover
+    && latestHandover.incoming_staff.includes(staffId)
+    && !(latestHandover.sign_offs ?? []).some((s) => s.staff_id === staffId);
 
   // ── Due Recordings ───────────────────────────────────────────────────────────
   // Young people I'm key worker / secondary worker for
@@ -130,6 +133,7 @@ export async function GET(req: NextRequest) {
           : null,
         child_updates: handoverItems,
         flags: handoverFlags,
+        pending_sign_off: !!pendingMySignOff,
       },
       recordings_due: {
         daily_logs_needed: logsNeeded,

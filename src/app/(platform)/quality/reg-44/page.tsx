@@ -1,6 +1,8 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
+import { useReg44Visits, useCreateReg44Visit } from "@/hooks/use-intelligence-layer";
+import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { PageShell } from "@/components/layout/page-shell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -322,9 +324,35 @@ function buildMonthTimeline(visits: Reg44Visit[]) {
 /* ── page ──────────────────────────────────────────────────────────────────── */
 
 export default function Reg44Page() {
-  const [visits] = useState<Reg44Visit[]>(DEMO_VISITS);
-  const [actions] = useState<Reg44Action[]>(DEMO_ACTIONS);
+  const [visits, setVisits] = useState<Reg44Visit[]>(DEMO_VISITS);
+  const [actions, setActions] = useState<Reg44Action[]>(DEMO_ACTIONS);
   const [expandedVisit, setExpandedVisit] = useState<string | null>(null);
+
+  /* ── API hooks ─────────────────────────────────────────────────────────── */
+  const { data: apiData } = useReg44Visits();
+  const createVisit = useCreateReg44Visit();
+
+  useEffect(() => {
+    if (apiData?.persisted && apiData.visits.length > 0) {
+      setVisits((apiData.visits as Record<string, unknown>[]).map((row) => ({
+        id: row.id as string,
+        homeId: row.home_id as string,
+        visitDate: row.visit_date as string,
+        visitorName: row.visitor_name as string,
+        reportStatus: row.status as Reg44ReportStatus,
+        summary: (row.findings as string) ?? undefined,
+        strengths: undefined,
+        concerns: undefined,
+        childrenViewsSummary: undefined,
+        staffViewsSummary: undefined,
+        managerResponse: undefined,
+        riResponse: undefined,
+        createdBy: (row.created_by as string) ?? undefined,
+        createdAt: row.created_at as string,
+        updatedAt: row.created_at as string,
+      })));
+    }
+  }, [apiData]);
   const [tab, setTab] = useState("visits");
   const [actionFilter, setActionFilter] = useState<string>("all");
 
@@ -357,9 +385,19 @@ export default function Reg44Page() {
             <Plus className="h-3.5 w-3.5" />
             Add Action
           </Button>
-          <Button size="sm" className="gap-1.5">
+          <Button
+            size="sm"
+            className="gap-1.5"
+            disabled={createVisit.isPending}
+            onClick={() => createVisit.mutate({
+              homeId: "oak-house",
+              visitDate: new Date().toISOString().split("T")[0],
+              visitorName: "Independent Visitor",
+              visitType: "announced",
+            })}
+          >
             <Plus className="h-3.5 w-3.5" />
-            Add Visit
+            {createVisit.isPending ? "Creating..." : "Add Visit"}
           </Button>
         </div>
       }
@@ -583,6 +621,13 @@ export default function Reg44Page() {
                               <p className="text-xs text-slate-400 italic">No RI response recorded.</p>
                             )}
                           </div>
+
+                          {/* Smart Links */}
+                          <SmartLinkPanel
+                            sourceType="reg44_visit"
+                            sourceId={visit.id}
+                            homeId="oak-house"
+                          />
 
                           {/* actions for this visit */}
                           {visitActions.length > 0 && (

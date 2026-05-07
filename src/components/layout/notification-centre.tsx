@@ -15,7 +15,7 @@ import { usePatternAlerts } from "@/hooks/use-intelligence";
 import {
   Bell, AlertTriangle, Pill, MapPin, Eye, Shield,
   CheckCircle2, GraduationCap, Clock, ChevronRight,
-  Building2, UserX, Flame, X, CheckCheck,
+  Building2, UserX, Flame, X, CheckCheck, ArrowRightLeft,
 } from "lucide-react";
 
 // ── Types ────────────────────────────────────────────────────────────────────
@@ -220,6 +220,19 @@ export function NotificationCentre() {
         description: "Outstanding vehicle defects need resolution.",
         href: "/vehicles",
         category: "environment",
+      });
+    }
+
+    // Handover pending sign-off
+    if (d.handover?.pending_sign_off) {
+      items.push({
+        id: "handover_pending",
+        type: "warning",
+        icon: ArrowRightLeft,
+        title: "Handover awaiting your acknowledgement",
+        description: "A shift handover has been created for you. Review and sign off to confirm receipt.",
+        href: "/handover",
+        category: "tasks",
       });
     }
 

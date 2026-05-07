@@ -1,6 +1,8 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
+import { useReg45Reviews, useUpdateReg45Review } from "@/hooks/use-intelligence-layer";
+import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { PageShell } from "@/components/layout/page-shell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -207,8 +209,42 @@ const DEMO_EVIDENCE: EvidenceItem[] = [
 /* ── page ──────────────────────────────────────────────────────────────────── */
 
 export default function Reg45Page() {
-  const [reviews] = useState<Reg45Review[]>(DEMO_REVIEWS);
+  const [reviews, setReviews] = useState<Reg45Review[]>(DEMO_REVIEWS);
   const [selectedReviewId, setSelectedReviewId] = useState<string>("r1");
+  const [evidence, setEvidence] = useState<EvidenceItem[]>(DEMO_EVIDENCE);
+
+  /* ── API hooks ─────────────────────────────────────────────────────────── */
+  const { data: apiData } = useReg45Reviews();
+  const updateReview = useUpdateReg45Review();
+
+  useEffect(() => {
+    if (apiData?.persisted && apiData.reviews.length > 0) {
+      setReviews((apiData.reviews as Record<string, unknown>[]).map((row) => ({
+        id: row.id as string,
+        homeId: row.home_id as string,
+        periodStart: row.period_start as string,
+        periodEnd: row.period_end as string,
+        status: row.status as Reg45Status,
+        qualityOfCareSummary: (row.content as string) ?? undefined,
+        childrenExperiencesSummary: undefined,
+        outcomesSummary: undefined,
+        safeguardingSummary: undefined,
+        leadershipSummary: undefined,
+        strengths: (row.findings as string) ?? undefined,
+        weaknesses: undefined,
+        improvementActions: (row.recommendations as string) ?? undefined,
+        childrenViews: undefined,
+        parentsViews: undefined,
+        placingAuthorityViews: undefined,
+        staffViews: undefined,
+        generatedBy: (row.created_by as string) ?? undefined,
+        approvedBy: (row.approved_by as string) ?? undefined,
+        approvedAt: (row.approved_at as string) ?? undefined,
+        createdAt: row.created_at as string,
+        updatedAt: row.created_at as string,
+      })));
+    }
+  }, [apiData]);
   const [showEvidence, setShowEvidence] = useState(false);
   const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set(["qualityOfCareSummary", "childrenExperiencesSummary"]));
 
@@ -259,21 +295,38 @@ export default function Reg45Page() {
       actions={
         <div className="flex items-center gap-2">
           {isDraft && selectedReview.status === "draft" && (
-            <Button size="sm" variant="outline" className="gap-1.5">
+            <Button
+              size="sm"
+              variant="outline"
+              className="gap-1.5"
+              disabled={updateReview.isPending}
+              onClick={() => updateReview.mutate({ id: selectedReview.id, homeId: "oak-house", status: "submitted" })}
+            >
               <Send className="h-3.5 w-3.5" />
-              Submit for Approval
+              {updateReview.isPending ? "Submitting..." : "Submit for Approval"}
             </Button>
           )}
           {selectedReview.status === "submitted" && (
-            <Button size="sm" className="gap-1.5 bg-green-600 hover:bg-green-700">
+            <Button
+              size="sm"
+              className="gap-1.5 bg-green-600 hover:bg-green-700"
+              disabled={updateReview.isPending}
+              onClick={() => updateReview.mutate({ id: selectedReview.id, homeId: "oak-house", status: "approved", approvedBy: "RI" })}
+            >
               <ThumbsUp className="h-3.5 w-3.5" />
-              Approve (RI)
+              {updateReview.isPending ? "Approving..." : "Approve (RI)"}
             </Button>
           )}
           {selectedReview.status === "approved" && (
-            <Button size="sm" variant="outline" className="gap-1.5">
+            <Button
+              size="sm"
+              variant="outline"
+              className="gap-1.5"
+              disabled={updateReview.isPending}
+              onClick={() => updateReview.mutate({ id: selectedReview.id, homeId: "oak-house", status: "published" })}
+            >
               <Globe className="h-3.5 w-3.5" />
-              Publish
+              {updateReview.isPending ? "Publishing..." : "Publish"}
             </Button>
           )}
         </div>
@@ -344,7 +397,7 @@ export default function Reg45Page() {
           </TabsTrigger>
           <TabsTrigger value="evidence" className="gap-1.5">
             <Link2 className="h-3.5 w-3.5" />
-            Evidence ({DEMO_EVIDENCE.reduce((s, e) => s + e.count, 0)})
+            Evidence ({evidence.reduce((s, e) => s + e.count, 0)})
           </TabsTrigger>
         </TabsList>
 
@@ -572,7 +625,7 @@ export default function Reg45Page() {
               />
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {DEMO_EVIDENCE.map((item) => (
+                {evidence.map((item) => (
                   <Card key={item.category}>
                     <CardContent className="pt-4 pb-3">
                       <div className="flex items-center justify-between mb-2">
@@ -652,6 +705,15 @@ export default function Reg45Page() {
           </div>
         </div>
       )}
+
+      {/* ── Smart Links ─────────────────────────────────────────────────── */}
+      <div className="mt-6">
+        <SmartLinkPanel
+          sourceType="reg44_visit"
+          sourceId={selectedReview.id}
+          homeId="oak-house"
+        />
+      </div>
 
       {/* ── regulatory footer ──────────────────────────────────────────── */}
       <div className="mt-6 bg-muted/30 rounded-lg p-4 text-xs text-muted-foreground">

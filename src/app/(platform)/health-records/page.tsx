@@ -22,6 +22,8 @@ import {
 } from "@/components/ui/select";
 import { cn, formatDate, todayStr } from "@/lib/utils";
 import { useAuthContext } from "@/contexts/auth-context";
+import { useCreateHealthRecord } from "@/hooks/use-health-records";
+import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { PrintButton } from "@/components/common/print-button";
 import { ExportButton, type ExportColumn } from "@/components/common/export-button";
 import { getStaffName, getYPName } from "@/lib/seed-data";
@@ -29,8 +31,9 @@ import {
   Search, ArrowUpDown, X, Plus, Stethoscope,
   CheckCircle2, AlertTriangle, Clock, User, Calendar,
   ChevronDown, ChevronUp, Shield, Heart, Brain, Eye,
-  Pill, Syringe, FileText, Activity,
+  Pill, Syringe, FileText, Activity, Loader2,
 } from "lucide-react";
+import { toast } from "sonner";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -168,6 +171,7 @@ const SEED: HealthRecord[] = [
 
 export default function HealthRecordsPage() {
   const { currentUser } = useAuthContext();
+  const createRecord = useCreateHealthRecord();
 
   const [entries, setEntries] = useState<HealthRecord[]>(SEED);
   const [search, setSearch] = useState("");
@@ -273,6 +277,7 @@ export default function HealthRecordsPage() {
       created_at: new Date().toISOString(),
     };
     setEntries(prev => [entry, ...prev]);
+    createRecord.mutate({ child_id: nChild, record_type: nType as "appointment" | "assessment" | "immunisation" | "allergy" | "action_plan" | "medication_change", title: nTitle, date: todayStr(), provider: nProfessional, notes: nDetails, staff_id: currentUser?.id || "staff_darren", status: "scheduled" }, { onSuccess: () => toast.success("Health record saved"), onError: () => toast.error("Failed to save record") });
     setShowNew(false);
     setNChild(""); setNType(""); setNTitle(""); setNDetails(""); setNProfessional(""); setNOutcome("");
   };
@@ -438,6 +443,8 @@ export default function HealthRecordsPage() {
               <button
                 onClick={() => setExpandedId(isOpen ? null : entry.id)}
                 className="w-full flex items-center gap-3 p-3 text-left hover:bg-muted/50 transition-colors"
+                aria-expanded={isOpen}
+                aria-label={`Expand health record: ${entry.title} for ${getYPName(entry.child_id)}`}
               >
                 <div className={cn("rounded-full p-1.5 shrink-0", tc.colour)}>
                   <Icon className="h-4 w-4" />
@@ -480,6 +487,7 @@ export default function HealthRecordsPage() {
                       </span>
                     )}
                   </div>
+                  <SmartLinkPanel sourceType="health_record" sourceId={entry.id} childId={entry.child_id} compact />
                 </div>
               )}
             </div>
@@ -509,18 +517,18 @@ export default function HealthRecordsPage() {
           <DialogHeader><DialogTitle>Add Health Record</DialogTitle></DialogHeader>
           <div className="space-y-4 py-2">
             <div>
-              <label className="text-sm font-medium mb-1 block">Child *</label>
+              <label htmlFor="hr-child" className="text-sm font-medium mb-1 block">Child *</label>
               <Select value={nChild} onValueChange={setNChild}>
-                <SelectTrigger><SelectValue placeholder="Select child" /></SelectTrigger>
+                <SelectTrigger id="hr-child"><SelectValue placeholder="Select child" /></SelectTrigger>
                 <SelectContent>
                   {childIds.map(c => <SelectItem key={c} value={c}>{getYPName(c)}</SelectItem>)}
                 </SelectContent>
               </Select>
             </div>
             <div>
-              <label className="text-sm font-medium mb-1 block">Record Type *</label>
+              <label htmlFor="hr-type" className="text-sm font-medium mb-1 block">Record Type *</label>
               <Select value={nType} onValueChange={v => setNType(v as RecordType)}>
-                <SelectTrigger><SelectValue placeholder="Select type" /></SelectTrigger>
+                <SelectTrigger id="hr-type"><SelectValue placeholder="Select type" /></SelectTrigger>
                 <SelectContent>
                   {(Object.entries(TYPE_CONFIG) as [RecordType, { label: string }][]).map(([k, v]) => (
                     <SelectItem key={k} value={k}>{v.label}</SelectItem>
@@ -529,25 +537,25 @@ export default function HealthRecordsPage() {
               </Select>
             </div>
             <div>
-              <label className="text-sm font-medium mb-1 block">Title *</label>
-              <Input placeholder="e.g. Annual dental check" value={nTitle} onChange={e => setNTitle(e.target.value)} />
+              <label htmlFor="hr-title" className="text-sm font-medium mb-1 block">Title *</label>
+              <Input id="hr-title" placeholder="e.g. Annual dental check" value={nTitle} onChange={e => setNTitle(e.target.value)} />
             </div>
             <div>
-              <label className="text-sm font-medium mb-1 block">Details *</label>
-              <Textarea placeholder="Full health record details..." value={nDetails} onChange={e => setNDetails(e.target.value)} rows={4} />
+              <label htmlFor="hr-details" className="text-sm font-medium mb-1 block">Details *</label>
+              <Textarea id="hr-details" placeholder="Full health record details..." value={nDetails} onChange={e => setNDetails(e.target.value)} rows={4} />
             </div>
             <div>
-              <label className="text-sm font-medium mb-1 block">Professional</label>
-              <Input placeholder="Doctor / nurse name" value={nProfessional} onChange={e => setNProfessional(e.target.value)} />
+              <label htmlFor="hr-professional" className="text-sm font-medium mb-1 block">Professional</label>
+              <Input id="hr-professional" placeholder="Doctor / nurse name" value={nProfessional} onChange={e => setNProfessional(e.target.value)} />
             </div>
             <div>
-              <label className="text-sm font-medium mb-1 block">Outcome</label>
-              <Textarea placeholder="Outcome and next steps..." value={nOutcome} onChange={e => setNOutcome(e.target.value)} rows={2} />
+              <label htmlFor="hr-outcome" className="text-sm font-medium mb-1 block">Outcome</label>
+              <Textarea id="hr-outcome" placeholder="Outcome and next steps..." value={nOutcome} onChange={e => setNOutcome(e.target.value)} rows={2} />
             </div>
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setShowNew(false)}>Cancel</Button>
-            <Button onClick={handleCreate} disabled={!nChild || !nType || !nTitle || !nDetails}>Save Record</Button>
+            <Button onClick={handleCreate} disabled={!nChild || !nType || !nTitle || !nDetails || createRecord.isPending}>{createRecord.isPending ? <><Loader2 className="h-4 w-4 animate-spin mr-1" />Saving...</> : "Save Record"}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

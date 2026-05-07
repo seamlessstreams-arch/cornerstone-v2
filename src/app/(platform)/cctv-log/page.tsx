@@ -11,6 +11,7 @@ import {
   Clock,
   Eye,
   Shield,
+  Loader2,
 } from "lucide-react";
 import { PageShell }    from "@/components/ui/page-shell";
 import { ExportButton, type ExportColumn } from "@/components/ui/export-button";
@@ -23,90 +24,20 @@ import {
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
-
-/* ── types ─────────────────────────────────────────────────────────────── */
-
-type AccessReason = "incident_review" | "safeguarding" | "police_request" | "complaint_investigation" | "maintenance_check" | "routine_review" | "sar_request" | "staff_investigation" | "other";
-type Camera = "front_door" | "rear_garden" | "driveway" | "hallway_ground" | "hallway_first" | "kitchen" | "lounge" | "office_corridor";
-
-interface CCTVAccess {
-  id: string;
-  date: string;
-  timeAccessed: string;
-  footageDate: string;
-  footageTimeRange: string;
-  cameras: Camera[];
-  reason: AccessReason;
-  detail: string;
-  accessedBy: string;
-  authorisedBy: string;
-  witnessPresent: string | null;
-  footageCopied: boolean;
-  copiedTo: string;
-  externalReference: string;
-  outcome: string;
-}
-
-/* ── seed ──────────────────────────────────────────────────────────────── */
-
-const d = (n: number) => { const dt = new Date(); dt.setDate(dt.getDate() + n); return dt.toISOString().slice(0, 10); };
-
-const SEED: CCTVAccess[] = [
-  {
-    id: "cc1", date: d(-2), timeAccessed: "14:30", footageDate: d(-2), footageTimeRange: "13:45-14:15",
-    cameras: ["lounge", "hallway_ground"], reason: "incident_review",
-    detail: "Reviewed footage following an incident between two young people in the lounge area. Footage confirmed the sequence of events as described in incident report IR-2025-034. Both young people's accounts were broadly consistent with what was observed.",
-    accessedBy: "staff_darren", authorisedBy: "staff_darren", witnessPresent: "staff_ryan",
-    footageCopied: false, copiedTo: "", externalReference: "IR-2025-034",
-    outcome: "Footage confirmed incident report accuracy. No further action regarding CCTV. Incident managed through normal process.",
-  },
-  {
-    id: "cc2", date: d(-10), timeAccessed: "10:00", footageDate: d(-11), footageTimeRange: "01:00-03:00",
-    cameras: ["front_door", "hallway_ground", "hallway_first"], reason: "safeguarding",
-    detail: "Reviewed overnight footage following concern raised by day staff that a young person may have left the building during the night. Night check records showed all YP in rooms, but kitchen showed signs of activity. Footage reviewed to verify movements.",
-    accessedBy: "staff_darren", authorisedBy: "staff_darren", witnessPresent: "staff_ryan",
-    footageCopied: true, copiedTo: "Encrypted USB — stored in secure storage. Labelled CC-2025-002.",
-    externalReference: "Whistleblowing concern WB-2025-003",
-    outcome: "Footage showed a young person leaving their room at 01:47 and going to the kitchen. Returned to room at 02:15. No staff member was observed checking during this period despite the night check log showing a check at 02:00. Footage supports the whistleblowing concern and has been preserved as evidence.",
-  },
-  {
-    id: "cc3", date: d(-15), timeAccessed: "09:00", footageDate: d(-16), footageTimeRange: "15:00-16:30",
-    cameras: ["front_door", "driveway"], reason: "police_request",
-    detail: "GMP requested footage of the front of the property following a reported car theft on the adjacent road. No connection to the home — police conducting area-wide enquiries. Data sharing agreement checked before footage released.",
-    accessedBy: "staff_darren", authorisedBy: "staff_darren", witnessPresent: null,
-    footageCopied: true, copiedTo: "Encrypted USB handed to DC Morris, GMP. Signed receipt obtained. Ref: MC-2025-EV-445.",
-    externalReference: "Police crime ref: MC-2025-5521",
-    outcome: "Footage provided to police under lawful basis. Receipt on file. No images of young people were included in the provided footage — only driveway and street view.",
-  },
-  {
-    id: "cc4", date: d(-30), timeAccessed: "16:00", footageDate: d(-30), footageTimeRange: "N/A — system check",
-    cameras: ["front_door", "rear_garden", "driveway", "hallway_ground", "hallway_first", "kitchen", "lounge", "office_corridor"],
-    reason: "maintenance_check",
-    detail: "Monthly CCTV system check. Verified all 8 cameras operational, recording quality acceptable, storage capacity sufficient (22% used). Night vision functioning on all exterior cameras. Timestamp accuracy verified against NTP server.",
-    accessedBy: "staff_darren", authorisedBy: "staff_darren", witnessPresent: null,
-    footageCopied: false, copiedTo: "", externalReference: "Maintenance log ML-2025-04",
-    outcome: "All systems operational. No issues identified. Next monthly check due " + d(0) + ".",
-  },
-  {
-    id: "cc5", date: d(-45), timeAccessed: "11:00", footageDate: d(-46), footageTimeRange: "22:00-23:30",
-    cameras: ["front_door", "driveway"], reason: "safeguarding",
-    detail: "Reviewed footage following report from a young person that an unknown vehicle was parked outside the home in the evening. Young person was anxious about this. Footage reviewed to identify the vehicle and assess any risk.",
-    accessedBy: "staff_ryan", authorisedBy: "staff_darren", witnessPresent: null,
-    footageCopied: false, copiedTo: "", externalReference: "",
-    outcome: "Vehicle identified as a delivery driver checking their phone (Deliveroo logo visible). Vehicle was present for approximately 12 minutes then departed. No risk identified. Young person reassured. No further action needed.",
-  },
-];
+import { useCCTVAccesses, useCreateCCTVAccess } from "@/hooks/use-cctv-accesses";
+import { toast } from "sonner";
+import type { CCTVAccess, CCTVAccessReason, CCTVCamera } from "@/types/extended";
 
 /* ── constants ─────────────────────────────────────────────────────────── */
 
-const REASON_LABELS: Record<AccessReason, string> = {
+const REASON_LABELS: Record<CCTVAccessReason, string> = {
   incident_review: "Incident Review", safeguarding: "Safeguarding",
   police_request: "Police Request", complaint_investigation: "Complaint Investigation",
   maintenance_check: "Maintenance Check", routine_review: "Routine Review",
   sar_request: "SAR / Data Request", staff_investigation: "Staff Investigation", other: "Other",
 };
 
-const CAMERA_LABELS: Record<Camera, string> = {
+const CAMERA_LABELS: Record<CCTVCamera, string> = {
   front_door: "Front Door", rear_garden: "Rear Garden", driveway: "Driveway",
   hallway_ground: "Ground Floor Hallway", hallway_first: "First Floor Hallway",
   kitchen: "Kitchen", lounge: "Lounge", office_corridor: "Office Corridor",
@@ -115,27 +46,33 @@ const CAMERA_LABELS: Record<Camera, string> = {
 /* ── component ─────────────────────────────────────────────────────────── */
 
 export default function CCTVLogPage() {
-  const [data] = useState<CCTVAccess[]>(SEED);
+  const { data: ccData, isLoading } = useCCTVAccesses();
+  const data = ccData?.data ?? [];
+  const createAccess = useCreateCCTVAccess();
+
   const [expanded, setExpanded] = useState<string | null>(null);
   const [search, setSearch] = useState("");
   const [filterReason, setFilterReason] = useState("all");
   const [sortBy, setSortBy] = useState("date");
   const [showDialog, setShowDialog] = useState(false);
 
+  const today = new Date().toISOString().slice(0, 10);
+  const thirtyDaysAgo = (() => { const dt = new Date(); dt.setDate(dt.getDate() - 30); return dt.toISOString().slice(0, 10); })();
+
   const stats = useMemo(() => ({
     total: data.length,
-    copied: data.filter((a) => a.footageCopied).length,
+    copied: data.filter((a) => a.footage_copied).length,
     policeRequests: data.filter((a) => a.reason === "police_request").length,
     safeguarding: data.filter((a) => a.reason === "safeguarding").length,
-    thisMonth: data.filter((a) => a.date >= d(-30)).length,
-  }), [data]);
+    thisMonth: data.filter((a) => a.date >= thirtyDaysAgo).length,
+  }), [data, thirtyDaysAgo]);
 
   const filtered = useMemo(() => {
     let list = [...data];
     if (filterReason !== "all") list = list.filter((a) => a.reason === filterReason);
     if (search) {
       const q = search.toLowerCase();
-      list = list.filter((a) => a.detail.toLowerCase().includes(q) || a.externalReference.toLowerCase().includes(q));
+      list = list.filter((a) => a.detail.toLowerCase().includes(q) || a.external_reference.toLowerCase().includes(q));
     }
     list.sort((a, b) => {
       switch (sortBy) {
@@ -148,37 +85,47 @@ export default function CCTVLogPage() {
 
   const exportData = useMemo(() => data.map((a) => ({
     date: a.date,
-    timeAccessed: a.timeAccessed,
-    footageDate: a.footageDate,
-    footageTimeRange: a.footageTimeRange,
+    time_accessed: a.time_accessed,
+    footage_date: a.footage_date,
+    footage_time_range: a.footage_time_range,
     cameras: a.cameras.map((c) => CAMERA_LABELS[c]).join(", "),
     reason: REASON_LABELS[a.reason],
     detail: a.detail,
-    accessedBy: getStaffName(a.accessedBy),
-    authorisedBy: getStaffName(a.authorisedBy),
-    witness: a.witnessPresent ? getStaffName(a.witnessPresent) : "None",
-    footageCopied: a.footageCopied ? "Yes" : "No",
-    copiedTo: a.copiedTo || "N/A",
-    externalRef: a.externalReference || "None",
+    accessed_by: getStaffName(a.accessed_by),
+    authorised_by: getStaffName(a.authorised_by),
+    witness: a.witness_present ? getStaffName(a.witness_present) : "None",
+    footage_copied: a.footage_copied ? "Yes" : "No",
+    copied_to: a.copied_to || "N/A",
+    external_ref: a.external_reference || "None",
     outcome: a.outcome,
   })), [data]);
 
   const exportCols: ExportColumn<typeof exportData[number]>[] = [
     { header: "Date",            accessor: (r: typeof exportData[number]) => r.date },
-    { header: "Time Accessed",   accessor: (r: typeof exportData[number]) => r.timeAccessed },
-    { header: "Footage Date",    accessor: (r: typeof exportData[number]) => r.footageDate },
-    { header: "Time Range",      accessor: (r: typeof exportData[number]) => r.footageTimeRange },
+    { header: "Time Accessed",   accessor: (r: typeof exportData[number]) => r.time_accessed },
+    { header: "Footage Date",    accessor: (r: typeof exportData[number]) => r.footage_date },
+    { header: "Time Range",      accessor: (r: typeof exportData[number]) => r.footage_time_range },
     { header: "Cameras",         accessor: (r: typeof exportData[number]) => r.cameras },
     { header: "Reason",          accessor: (r: typeof exportData[number]) => r.reason },
     { header: "Detail",          accessor: (r: typeof exportData[number]) => r.detail },
-    { header: "Accessed By",     accessor: (r: typeof exportData[number]) => r.accessedBy },
-    { header: "Authorised By",   accessor: (r: typeof exportData[number]) => r.authorisedBy },
+    { header: "Accessed By",     accessor: (r: typeof exportData[number]) => r.accessed_by },
+    { header: "Authorised By",   accessor: (r: typeof exportData[number]) => r.authorised_by },
     { header: "Witness",         accessor: (r: typeof exportData[number]) => r.witness },
-    { header: "Footage Copied",  accessor: (r: typeof exportData[number]) => r.footageCopied },
-    { header: "Copied To",       accessor: (r: typeof exportData[number]) => r.copiedTo },
-    { header: "External Ref",    accessor: (r: typeof exportData[number]) => r.externalRef },
+    { header: "Footage Copied",  accessor: (r: typeof exportData[number]) => r.footage_copied },
+    { header: "Copied To",       accessor: (r: typeof exportData[number]) => r.copied_to },
+    { header: "External Ref",    accessor: (r: typeof exportData[number]) => r.external_ref },
     { header: "Outcome",         accessor: (r: typeof exportData[number]) => r.outcome },
   ];
+
+  if (isLoading) {
+    return (
+      <PageShell title="CCTV Usage Log" subtitle="Footage access register — data protection compliance and audit trail">
+        <div className="flex items-center justify-center py-20">
+          <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+        </div>
+      </PageShell>
+    );
+  }
 
   return (
     <PageShell
@@ -240,10 +187,10 @@ export default function CCTVLogPage() {
                 <div className="text-left">
                   <div className="flex items-center gap-2 flex-wrap">
                     <h3 className="font-semibold">{REASON_LABELS[access.reason]}</h3>
-                    {access.footageCopied && <span className="rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-700">Footage Copied</span>}
-                    {access.externalReference && <span className="rounded-full bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-700">{access.externalReference}</span>}
+                    {access.footage_copied && <span className="rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-700">Footage Copied</span>}
+                    {access.external_reference && <span className="rounded-full bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-700">{access.external_reference}</span>}
                   </div>
-                  <p className="text-xs text-muted-foreground">{access.date} at {access.timeAccessed} · Footage: {access.footageDate} ({access.footageTimeRange}) · {getStaffName(access.accessedBy)}</p>
+                  <p className="text-xs text-muted-foreground">{access.date} at {access.time_accessed} · Footage: {access.footage_date} ({access.footage_time_range}) · {getStaffName(access.accessed_by)}</p>
                 </div>
               </div>
               {expanded === access.id ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
@@ -252,10 +199,10 @@ export default function CCTVLogPage() {
             {expanded === access.id && (
               <div className="border-t p-4 space-y-4">
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
-                  <div><span className="text-muted-foreground">Accessed By:</span> {getStaffName(access.accessedBy)}</div>
-                  <div><span className="text-muted-foreground">Authorised By:</span> {getStaffName(access.authorisedBy)}</div>
-                  <div><span className="text-muted-foreground">Witness:</span> {access.witnessPresent ? getStaffName(access.witnessPresent) : "None"}</div>
-                  <div><span className="text-muted-foreground">Footage Date:</span> {access.footageDate} ({access.footageTimeRange})</div>
+                  <div><span className="text-muted-foreground">Accessed By:</span> {getStaffName(access.accessed_by)}</div>
+                  <div><span className="text-muted-foreground">Authorised By:</span> {getStaffName(access.authorised_by)}</div>
+                  <div><span className="text-muted-foreground">Witness:</span> {access.witness_present ? getStaffName(access.witness_present) : "None"}</div>
+                  <div><span className="text-muted-foreground">Footage Date:</span> {access.footage_date} ({access.footage_time_range})</div>
                 </div>
 
                 <div>
@@ -268,10 +215,10 @@ export default function CCTVLogPage() {
                   <p className="text-sm text-muted-foreground">{access.detail}</p>
                 </div>
 
-                {access.footageCopied && (
+                {access.footage_copied && (
                   <div className="rounded-lg bg-amber-50 p-3">
                     <h4 className="text-sm font-semibold text-amber-800 mb-1">Footage Copied</h4>
-                    <p className="text-sm text-amber-900">{access.copiedTo}</p>
+                    <p className="text-sm text-amber-900">{access.copied_to}</p>
                   </div>
                 )}
 
@@ -292,24 +239,51 @@ export default function CCTVLogPage() {
       <Dialog open={showDialog} onOpenChange={setShowDialog}>
         <DialogContent className="max-w-lg">
           <DialogHeader><DialogTitle>Log CCTV Access</DialogTitle></DialogHeader>
-          <div className="grid gap-3 py-2">
-            <select className="rounded border px-3 py-2 text-sm"><option value="">Access reason…</option>{Object.entries(REASON_LABELS).map(([k, v]) => <option key={k} value={k}>{v}</option>)}</select>
+          <form onSubmit={(e) => {
+            e.preventDefault();
+            const fd = new FormData(e.currentTarget);
+            createAccess.mutate({
+              date: today,
+              time_accessed: new Date().toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" }),
+              reason: fd.get("reason") as CCTVAccessReason,
+              footage_date: fd.get("footage_date") as string,
+              footage_time_range: fd.get("footage_time_range") as string,
+              cameras: [] as CCTVCamera[],
+              detail: fd.get("detail") as string,
+              external_reference: fd.get("external_reference") as string || "",
+              footage_copied: fd.get("footage_copied") === "on",
+              copied_to: "",
+              witness_present: fd.get("witness_present") === "on" ? "staff_ryan" : null,
+              accessed_by: "staff_darren",
+              authorised_by: "staff_darren",
+              outcome: fd.get("outcome") as string || "",
+            } as Partial<CCTVAccess>, {
+              onSuccess: () => { toast.success("CCTV access logged"); setShowDialog(false); },
+              onError: () => toast.error("Failed to save"),
+            });
+          }} className="grid gap-3 py-2">
+            <select name="reason" required className="rounded border px-3 py-2 text-sm">
+              <option value="">Access reason…</option>
+              {Object.entries(REASON_LABELS).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
+            </select>
             <div className="grid grid-cols-2 gap-3">
-              <input type="date" className="rounded border px-3 py-2 text-sm" placeholder="Footage date" />
-              <input placeholder="Time range (e.g. 14:00-15:30)" className="rounded border px-3 py-2 text-sm" />
+              <input type="date" name="footage_date" className="rounded border px-3 py-2 text-sm" defaultValue={today} />
+              <input name="footage_time_range" placeholder="Time range (e.g. 14:00-15:30)" className="rounded border px-3 py-2 text-sm" />
             </div>
-            <textarea placeholder="Detail / reason for access" rows={3} className="rounded border px-3 py-2 text-sm" />
-            <input placeholder="External reference (if applicable)" className="rounded border px-3 py-2 text-sm" />
+            <textarea name="detail" placeholder="Detail / reason for access" rows={3} className="rounded border px-3 py-2 text-sm" required />
+            <input name="external_reference" placeholder="External reference (if applicable)" className="rounded border px-3 py-2 text-sm" />
             <div className="flex gap-4">
-              <label className="flex items-center gap-1 text-sm"><input type="checkbox" className="rounded border" /> Footage copied</label>
-              <label className="flex items-center gap-1 text-sm"><input type="checkbox" className="rounded border" /> Witness present</label>
+              <label className="flex items-center gap-1 text-sm"><input type="checkbox" name="footage_copied" className="rounded border" /> Footage copied</label>
+              <label className="flex items-center gap-1 text-sm"><input type="checkbox" name="witness_present" className="rounded border" /> Witness present</label>
             </div>
-            <textarea placeholder="Outcome" rows={2} className="rounded border px-3 py-2 text-sm" />
-          </div>
-          <DialogFooter>
-            <button onClick={() => setShowDialog(false)} className="rounded-md border px-4 py-2 text-sm">Cancel</button>
-            <button onClick={() => setShowDialog(false)} className="rounded-md bg-brand px-4 py-2 text-sm text-white hover:bg-brand/90">Log Access</button>
-          </DialogFooter>
+            <textarea name="outcome" placeholder="Outcome" rows={2} className="rounded border px-3 py-2 text-sm" />
+            <DialogFooter>
+              <button type="button" onClick={() => setShowDialog(false)} className="rounded-md border px-4 py-2 text-sm">Cancel</button>
+              <button type="submit" disabled={createAccess.isPending} className="rounded-md bg-brand px-4 py-2 text-sm text-white hover:bg-brand/90">
+                {createAccess.isPending ? <><Loader2 className="h-4 w-4 animate-spin mr-1 inline" />Saving…</> : "Log Access"}
+              </button>
+            </DialogFooter>
+          </form>
         </DialogContent>
       </Dialog>
     </PageShell>

@@ -13,279 +13,55 @@ import {
 } from "@/components/ui/select";
 import {
   Search, Filter, ArrowUpDown, ChevronDown, ChevronUp,
-  Heart, Users, BookOpen, Sparkles, Home, Calendar, FileText, MessageCircle,
+  Heart, Users, BookOpen, Sparkles, Home, Calendar, FileText, MessageCircle, Loader2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getStaffName } from "@/lib/seed-data";
-
-/* ── types ─────────────────────────────────────────────────────────────────── */
-
-type AdoptionStatus =
-  | "Plan being explored"
-  | "Placement order granted"
-  | "Family-finding"
-  | "Matched"
-  | "Introductions"
-  | "Placed for adoption"
-  | "Adopted"
-  | "Plan changed";
-
-interface IntroductionPhase {
-  phase: string;
-  dates: string;
-  activities: string;
-}
-
-interface AdoptionRecord {
-  id: string;
-  childInitials: string;
-  age: number;
-  arrivalDate: string;
-  adoptionStatus: AdoptionStatus;
-  localAuthority: string;
-  placementOrderDate: string;
-  matchingPanelDate: string;
-  adoptionFamilyInfo: string;
-  introductionPlan: IntroductionPhase[];
-  preparationActivities: string[];
-  lifeStoryCompleted: boolean;
-  laterLifeLetter: boolean;
-  goodbyeRitualsPlanned: string[];
-  supportProvidedPostPlacement: string[];
-  contactArrangements: string;
-  homeKeyWorkerInvolvement: string;
-  adoptionSupportPlan: string[];
-  childContribution: string;
-  socialWorker: string;
-  adoptionSocialWorker: string;
-  internalLead: string;
-  reviewDate: string;
-  lastUpdate: string;
-}
+import { useAdoptionRecords } from "@/hooks/use-adoption-records";
+import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
+import type { AdoptionStatus, AdoptionIntroductionPhase, AdoptionRecord } from "@/types/extended";
 
 /* ── helpers ───────────────────────────────────────────────────────────────── */
 
-const d = (n: number) => { const dt = new Date(); dt.setDate(dt.getDate() + n); return dt.toISOString().slice(0, 10); };
-
 const STATUS_CLR: Record<AdoptionStatus, string> = {
-  "Plan being explored": "bg-slate-100 text-slate-800",
-  "Placement order granted": "bg-blue-100 text-blue-800",
-  "Family-finding": "bg-amber-100 text-amber-800",
-  "Matched": "bg-purple-100 text-purple-800",
-  "Introductions": "bg-pink-100 text-pink-800",
-  "Placed for adoption": "bg-teal-100 text-teal-800",
-  "Adopted": "bg-green-100 text-green-800",
-  "Plan changed": "bg-gray-100 text-gray-800",
+  plan_being_explored: "bg-slate-100 text-slate-800",
+  placement_order_granted: "bg-blue-100 text-blue-800",
+  family_finding: "bg-amber-100 text-amber-800",
+  matched: "bg-purple-100 text-purple-800",
+  introductions: "bg-pink-100 text-pink-800",
+  placed_for_adoption: "bg-teal-100 text-teal-800",
+  adopted: "bg-green-100 text-green-800",
+  plan_changed: "bg-gray-100 text-gray-800",
 };
 
 const STATUS_BORDER: Record<AdoptionStatus, string> = {
-  "Plan being explored": "border-slate-400 bg-slate-50",
-  "Placement order granted": "border-blue-400 bg-blue-50",
-  "Family-finding": "border-amber-400 bg-amber-50",
-  "Matched": "border-purple-400 bg-purple-50",
-  "Introductions": "border-pink-400 bg-pink-50",
-  "Placed for adoption": "border-teal-400 bg-teal-50",
-  "Adopted": "border-green-400 bg-green-50",
-  "Plan changed": "border-gray-400 bg-gray-50",
+  plan_being_explored: "border-slate-400 bg-slate-50",
+  placement_order_granted: "border-blue-400 bg-blue-50",
+  family_finding: "border-amber-400 bg-amber-50",
+  matched: "border-purple-400 bg-purple-50",
+  introductions: "border-pink-400 bg-pink-50",
+  placed_for_adoption: "border-teal-400 bg-teal-50",
+  adopted: "border-green-400 bg-green-50",
+  plan_changed: "border-gray-400 bg-gray-50",
 };
 
-/* ── seed data ─────────────────────────────────────────────────────────────── */
-
-const SEED: AdoptionRecord[] = [
-  {
-    id: "ar1",
-    childInitials: "M.J. (age 6)",
-    age: 6,
-    arrivalDate: d(-410),
-    adoptionStatus: "Family-finding",
-    localAuthority: "Millbrook County Council",
-    placementOrderDate: d(-95),
-    matchingPanelDate: "",
-    adoptionFamilyInfo: "Awaiting matching — profile shared with regional adoption agency. Two prospective families being considered (single adopter; two-parent family with no children).",
-    introductionPlan: [],
-    preparationActivities: [
-      "Weekly life story sessions with key worker",
-      "Memory box creation — ongoing",
-      "Story books about adoption (age-appropriate)",
-      "Therapeutic play sessions with CAMHS",
-      "Conversations about families and 'forever homes'",
-    ],
-    lifeStoryCompleted: false,
-    laterLifeLetter: false,
-    goodbyeRitualsPlanned: [],
-    supportProvidedPostPlacement: [],
-    contactArrangements: "Letterbox contact with birth mother twice per year (to be continued post-adoption per care plan). No direct contact with birth father — risk-assessed.",
-    homeKeyWorkerInvolvement: "Anna leading life story work and emotional preparation. M.J. has formed strong attachment to Anna; transition planning will need to honour this relationship.",
-    adoptionSupportPlan: [
-      "Therapeutic life story work to continue post-placement",
-      "CAMHS referral to follow child to new area",
-      "Letterbox contact to be facilitated by adoption agency",
-      "Adopters to receive full attachment profile and behaviour support plan",
-    ],
-    childContribution: "M.J. has drawn pictures of 'my family I want' — included a dog. Wants a sibling. Has expressed mixed feelings about leaving Oak House.",
-    socialWorker: "Fiona Brennan — Millbrook County",
-    adoptionSocialWorker: "Helen Ashcroft — Regional Adoption Agency South",
-    internalLead: "staff_anna",
-    reviewDate: d(28),
-    lastUpdate: d(-4),
-  },
-  {
-    id: "ar2",
-    childInitials: "T.R. (age 4)",
-    age: 4,
-    arrivalDate: d(-280),
-    adoptionStatus: "Introductions",
-    localAuthority: "Southgate Borough Council",
-    placementOrderDate: d(-180),
-    matchingPanelDate: d(-35),
-    adoptionFamilyInfo: "Two-parent family, one adopted older sibling (age 7). Parents have prior experience supporting trauma-informed parenting. Live in semi-rural area.",
-    introductionPlan: [
-      { phase: "Phase 1 — First meetings", dates: `${d(-7)} to ${d(-3)}`, activities: "Adopters visit Oak House for short play sessions in T.R.'s room. Key worker present throughout. Building familiarity." },
-      { phase: "Phase 2 — Extended visits", dates: `${d(-2)} to ${d(2)}`, activities: "Half-day outings with adopters and key worker — park, café, soft play. T.R. shows toys to adopters. Bath/bedtime routines shared." },
-      { phase: "Phase 3 — Overnight stays", dates: `${d(3)} to ${d(7)}`, activities: "Overnight stays at adopters' home. Key worker available by phone. Familiar comfort items travel with T.R." },
-      { phase: "Phase 4 — Move", dates: d(8), activities: "Goodbye ceremony at Oak House. Adopters collect T.R. with all belongings. Memory book and life story shared." },
-    ],
-    preparationActivities: [
-      "Life story book completed and shared with adopters",
-      "Memory box with photos, drawings, and Oak House mementos",
-      "Sensory items moving with T.R. (familiar blanket, teddy, bedtime book)",
-      "Visits to adopters' home (virtual and in-person)",
-      "Photos and short videos of adopters' home, garden, pets",
-    ],
-    lifeStoryCompleted: true,
-    laterLifeLetter: true,
-    goodbyeRitualsPlanned: [
-      "Goodbye party with home staff and other children",
-      "Planting a small tree in the garden — 'T.R.'s tree'",
-      "Each staff member writes a short note for T.R.'s memory box",
-      "Photo wall — group photo to keep at Oak House and a copy for T.R.",
-    ],
-    supportProvidedPostPlacement: [],
-    contactArrangements: "Letterbox contact twice yearly with birth mother and maternal grandmother. Adopters supportive of indirect contact.",
-    homeKeyWorkerInvolvement: "Ryan as key worker leading transition. Will be present for all phases of introductions. Phone contact available to adopters during first month after move.",
-    adoptionSupportPlan: [
-      "Six-week post-placement visit by Oak House key worker (subject to adopter agreement)",
-      "Therapeutic post-adoption support via Regional Adoption Agency",
-      "Adoption Support Fund application for sensory therapy",
-      "School transition plan in development",
-    ],
-    childContribution: "T.R. has helped pack his memory box, chosen which toys travel with him, and drawn a picture of his 'new house' from the photos shown. Has named his new parents in conversations.",
-    socialWorker: "Michael Osei — Southgate Borough",
-    adoptionSocialWorker: "Helen Ashcroft — Regional Adoption Agency South",
-    internalLead: "staff_ryan",
-    reviewDate: d(14),
-    lastUpdate: d(-1),
-  },
-  {
-    id: "ar3",
-    childInitials: "S.L. (age 5)",
-    age: 5,
-    arrivalDate: d(-520),
-    adoptionStatus: "Placed for adoption",
-    localAuthority: "Fairfield Council",
-    placementOrderDate: d(-310),
-    matchingPanelDate: d(-95),
-    adoptionFamilyInfo: "Single adopter (female), works flexibly from home. Has extended family network nearby. Previous fostering experience.",
-    introductionPlan: [
-      { phase: "Phase 1 — First meetings", dates: `${d(-65)} to ${d(-58)}`, activities: "Initial visits at Oak House — short structured play and reading sessions. Adopter brought a small gift book." },
-      { phase: "Phase 2 — Outings", dates: `${d(-57)} to ${d(-50)}`, activities: "Visits to local park and library with key worker. Mealtimes shared at Oak House." },
-      { phase: "Phase 3 — Overnight stays", dates: `${d(-49)} to ${d(-42)}`, activities: "First overnight stays at adopter's home. Familiar bedtime routines maintained." },
-      { phase: "Phase 4 — Move", dates: d(-41), activities: "Goodbye ceremony held — staff, peers and adopter present. S.L. left with all belongings, life story book and memory box." },
-    ],
-    preparationActivities: [
-      "Life story book completed and shared with adopter",
-      "Memory box with photos and drawings from Oak House",
-      "Familiar bedtime book and blanket transferred",
-      "Pre-placement visits to adopter's home",
-    ],
-    lifeStoryCompleted: true,
-    laterLifeLetter: true,
-    goodbyeRitualsPlanned: [
-      "Farewell tea with home staff and children",
-      "Memory wall — handprint added to Oak House memory wall",
-      "Notes from each staff member placed in memory box",
-    ],
-    supportProvidedPostPlacement: [
-      "Two post-placement phone calls with adopter (week 2 and week 6)",
-      "One in-person visit by key worker at six weeks (with adopter consent)",
-      "Letterbox contact arrangements activated via adoption agency",
-      "Sensory profile and behaviour support plan transferred to adopter and new school",
-      "Adoption Support Fund application supported",
-    ],
-    contactArrangements: "Letterbox contact once yearly with birth mother. Adopter committed to maintaining indirect contact.",
-    homeKeyWorkerInvolvement: "Darren led the transition. Has had two follow-up calls with adopter. S.L. is settling well — adopter reports continuing bedtime routines from Oak House. Adoption order hearing scheduled.",
-    adoptionSupportPlan: [
-      "Therapeutic post-adoption support via Regional Adoption Agency",
-      "Adoption Support Fund — funding sensory occupational therapy",
-      "School transition supported by EHCP team",
-      "Letterbox contact reviewed annually",
-    ],
-    childContribution: "S.L. helped choose contents of memory box and contributed pages to her life story book. Asked for a photo of Oak House to keep on her bedside table — provided.",
-    socialWorker: "Jane Holloway — Fairfield",
-    adoptionSocialWorker: "Helen Ashcroft — Regional Adoption Agency South",
-    internalLead: "staff_darren",
-    reviewDate: d(45),
-    lastUpdate: d(-9),
-  },
-  {
-    id: "ar4",
-    childInitials: "K.B. (age 8)",
-    age: 8,
-    arrivalDate: d(-820),
-    adoptionStatus: "Adopted",
-    localAuthority: "Millbrook County Council",
-    placementOrderDate: d(-540),
-    matchingPanelDate: d(-380),
-    adoptionFamilyInfo: "Two-parent family, one adopted older sibling (age 11). Live in coastal town. Adopters previously known to K.B. through extended introductions.",
-    introductionPlan: [
-      { phase: "Phase 1 — Meetings", dates: `${d(-340)} to ${d(-330)}`, activities: "Initial visits at Oak House — extended given K.B.'s age and attachment needs." },
-      { phase: "Phase 2 — Outings", dates: `${d(-329)} to ${d(-318)}`, activities: "Days out together. K.B. introduced to adoptive sibling gradually." },
-      { phase: "Phase 3 — Overnight stays", dates: `${d(-317)} to ${d(-305)}`, activities: "Series of overnight stays building to weekend visits." },
-      { phase: "Phase 4 — Move", dates: d(-304), activities: "Move to adoptive family. Goodbye ceremony held with whole home community." },
-    ],
-    preparationActivities: [
-      "Extensive life story work over 14 months",
-      "Therapeutic preparation via CAMHS",
-      "Co-authored life story book with key worker",
-      "Memory box and digital photo album",
-      "Pre-placement visits and sleepovers",
-    ],
-    lifeStoryCompleted: true,
-    laterLifeLetter: true,
-    goodbyeRitualsPlanned: [
-      "Goodbye ceremony with peers and staff",
-      "Tree-planting in Oak House garden",
-      "Memory wall handprint",
-      "Personalised note from each staff member",
-    ],
-    supportProvidedPostPlacement: [
-      "Six-month post-placement visit (with adopter consent)",
-      "Quarterly phone contact with adopters during first year",
-      "Annual letter exchange — K.B. continues to receive birthday card from Oak House (with adopter consent)",
-      "Specialist therapeutic support transferred to local provider",
-      "Continued letterbox contact with birth grandparents arranged via adoption agency",
-    ],
-    contactArrangements: "Letterbox contact twice yearly with birth grandparents. No direct contact with birth parents (risk-assessed). Indirect contact reviewed annually.",
-    homeKeyWorkerInvolvement: "Anna remained involved during first year post-placement. Adopters reported this continuity helped K.B. settle. Adoption order granted six months ago. Final celebratory phone call with Anna last month.",
-    adoptionSupportPlan: [
-      "Adoption Support Fund — therapy continuing",
-      "Attachment-focused parenting programme attended by adopters",
-      "School in new area receiving ongoing support from Virtual School",
-      "Annual review of letterbox arrangements",
-    ],
-    childContribution: "K.B. wrote her own page for her life story book and chose photos to include. Asked to keep in touch with Anna — agreed via adopters and reviewed regularly. Has sent two letters to Oak House since placement.",
-    socialWorker: "Fiona Brennan — Millbrook County",
-    adoptionSocialWorker: "Helen Ashcroft — Regional Adoption Agency South",
-    internalLead: "staff_anna",
-    reviewDate: d(120),
-    lastUpdate: d(-30),
-  },
-];
+const STATUS_LABEL: Record<AdoptionStatus, string> = {
+  plan_being_explored: "Plan being explored",
+  placement_order_granted: "Placement order granted",
+  family_finding: "Family-finding",
+  matched: "Matched",
+  introductions: "Introductions",
+  placed_for_adoption: "Placed for adoption",
+  adopted: "Adopted",
+  plan_changed: "Plan changed",
+};
 
 /* ── component ─────────────────────────────────────────────────────────────── */
 
 export default function AdoptionSupportRecordsPage() {
-  const [data] = useState<AdoptionRecord[]>(SEED);
+  const { data: result, isLoading } = useAdoptionRecords();
+  const records = result?.data ?? [];
+
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [sortBy, setSortBy] = useState("status");
@@ -294,56 +70,66 @@ export default function AdoptionSupportRecordsPage() {
   const toggle = (id: string) => setExpandedId(expandedId === id ? null : id);
 
   const filtered = useMemo(() => {
-    let out = [...data];
+    let out = [...records];
     if (search) {
       const s = search.toLowerCase();
       out = out.filter(r =>
-        r.childInitials.toLowerCase().includes(s) ||
-        r.localAuthority.toLowerCase().includes(s) ||
-        r.adoptionStatus.toLowerCase().includes(s)
+        r.child_initials.toLowerCase().includes(s) ||
+        r.local_authority.toLowerCase().includes(s) ||
+        STATUS_LABEL[r.adoption_status].toLowerCase().includes(s)
       );
     }
-    if (statusFilter !== "all") out = out.filter(r => r.adoptionStatus === statusFilter);
+    if (statusFilter !== "all") out = out.filter(r => r.adoption_status === statusFilter);
     out.sort((a, b) => {
       switch (sortBy) {
-        case "initials": return a.childInitials.localeCompare(b.childInitials);
-        case "review": return a.reviewDate.localeCompare(b.reviewDate);
-        case "arrival": return a.arrivalDate.localeCompare(b.arrivalDate);
+        case "initials": return a.child_initials.localeCompare(b.child_initials);
+        case "review": return a.review_date.localeCompare(b.review_date);
+        case "arrival": return a.arrival_date.localeCompare(b.arrival_date);
         default: {
           const ord: AdoptionStatus[] = [
-            "Introductions", "Matched", "Family-finding", "Placement order granted",
-            "Plan being explored", "Placed for adoption", "Adopted", "Plan changed",
+            "introductions", "matched", "family_finding", "placement_order_granted",
+            "plan_being_explored", "placed_for_adoption", "adopted", "plan_changed",
           ];
-          return ord.indexOf(a.adoptionStatus) - ord.indexOf(b.adoptionStatus);
+          return ord.indexOf(a.adoption_status) - ord.indexOf(b.adoption_status);
         }
       }
     });
     return out;
-  }, [data, search, statusFilter, sortBy]);
+  }, [records, search, statusFilter, sortBy]);
 
-  const activeCases = data.filter(r => r.adoptionStatus !== "Adopted" && r.adoptionStatus !== "Plan changed").length;
-  const withFamily = data.filter(r => r.adoptionStatus === "Placed for adoption" || r.adoptionStatus === "Introductions").length;
-  const lifeStories = data.filter(r => r.lifeStoryCompleted).length;
-  const awaitingMatching = data.filter(r => r.adoptionStatus === "Family-finding" || r.adoptionStatus === "Placement order granted").length;
+  const activeCases = records.filter(r => r.adoption_status !== "adopted" && r.adoption_status !== "plan_changed").length;
+  const withFamily = records.filter(r => r.adoption_status === "placed_for_adoption" || r.adoption_status === "introductions").length;
+  const lifeStories = records.filter(r => r.life_story_completed).length;
+  const awaitingMatching = records.filter(r => r.adoption_status === "family_finding" || r.adoption_status === "placement_order_granted").length;
 
   const exportCols: ExportColumn<AdoptionRecord>[] = useMemo(() => [
-    { header: "Child", accessor: (r: AdoptionRecord) => r.childInitials },
+    { header: "Child", accessor: (r: AdoptionRecord) => r.child_initials },
     { header: "Age", accessor: (r: AdoptionRecord) => r.age },
-    { header: "Arrival Date", accessor: (r: AdoptionRecord) => r.arrivalDate },
-    { header: "Adoption Status", accessor: (r: AdoptionRecord) => r.adoptionStatus },
-    { header: "Local Authority", accessor: (r: AdoptionRecord) => r.localAuthority },
-    { header: "Placement Order Date", accessor: (r: AdoptionRecord) => r.placementOrderDate },
-    { header: "Matching Panel Date", accessor: (r: AdoptionRecord) => r.matchingPanelDate },
-    { header: "Adoptive Family", accessor: (r: AdoptionRecord) => r.adoptionFamilyInfo },
-    { header: "Life Story Completed", accessor: (r: AdoptionRecord) => r.lifeStoryCompleted ? "Yes" : "No" },
-    { header: "Later Life Letter", accessor: (r: AdoptionRecord) => r.laterLifeLetter ? "Yes" : "No" },
-    { header: "Contact Arrangements", accessor: (r: AdoptionRecord) => r.contactArrangements },
-    { header: "Internal Lead", accessor: (r: AdoptionRecord) => getStaffName(r.internalLead) },
-    { header: "Social Worker", accessor: (r: AdoptionRecord) => r.socialWorker },
-    { header: "Adoption Social Worker", accessor: (r: AdoptionRecord) => r.adoptionSocialWorker },
-    { header: "Review Date", accessor: (r: AdoptionRecord) => r.reviewDate },
-    { header: "Last Update", accessor: (r: AdoptionRecord) => r.lastUpdate },
+    { header: "Arrival Date", accessor: (r: AdoptionRecord) => r.arrival_date },
+    { header: "Adoption Status", accessor: (r: AdoptionRecord) => STATUS_LABEL[r.adoption_status] },
+    { header: "Local Authority", accessor: (r: AdoptionRecord) => r.local_authority },
+    { header: "Placement Order Date", accessor: (r: AdoptionRecord) => r.placement_order_date },
+    { header: "Matching Panel Date", accessor: (r: AdoptionRecord) => r.matching_panel_date },
+    { header: "Adoptive Family", accessor: (r: AdoptionRecord) => r.adoption_family_info },
+    { header: "Life Story Completed", accessor: (r: AdoptionRecord) => r.life_story_completed ? "Yes" : "No" },
+    { header: "Later Life Letter", accessor: (r: AdoptionRecord) => r.later_life_letter ? "Yes" : "No" },
+    { header: "Contact Arrangements", accessor: (r: AdoptionRecord) => r.contact_arrangements },
+    { header: "Internal Lead", accessor: (r: AdoptionRecord) => getStaffName(r.internal_lead) },
+    { header: "Social Worker", accessor: (r: AdoptionRecord) => r.social_worker },
+    { header: "Adoption Social Worker", accessor: (r: AdoptionRecord) => r.adoption_social_worker },
+    { header: "Review Date", accessor: (r: AdoptionRecord) => r.review_date },
+    { header: "Last Update", accessor: (r: AdoptionRecord) => r.last_update },
   ], []);
+
+  if (isLoading) {
+    return (
+      <PageShell title="Adoption Support Records" subtitle="Loading...">
+        <div className="flex items-center justify-center py-12">
+          <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+        </div>
+      </PageShell>
+    );
+  }
 
   return (
     <PageShell
@@ -370,7 +156,7 @@ export default function AdoptionSupportRecordsPage() {
           {[
             { label: "Active Cases", value: activeCases, icon: Users, colour: "text-blue-600" },
             { label: "Currently With Adoptive Family", value: withFamily, icon: Home, colour: "text-teal-600" },
-            { label: "Life Stories Complete", value: `${lifeStories}/${data.length}`, icon: BookOpen, colour: "text-purple-600" },
+            { label: "Life Stories Complete", value: `${lifeStories}/${records.length}`, icon: BookOpen, colour: "text-purple-600" },
             { label: "Awaiting Matching", value: awaitingMatching, icon: Sparkles, colour: "text-amber-600" },
           ].map(s => (
             <Card key={s.label}>
@@ -393,7 +179,7 @@ export default function AdoptionSupportRecordsPage() {
                 <Label className="text-xs">Search</Label>
                 <div className="relative">
                   <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                  <Input className="pl-8" placeholder="Initials, local authority, status…" value={search} onChange={e => setSearch(e.target.value)} />
+                  <Input className="pl-8" placeholder="Initials, local authority, status..." value={search} onChange={e => setSearch(e.target.value)} />
                 </div>
               </div>
               <div className="w-52">
@@ -403,7 +189,7 @@ export default function AdoptionSupportRecordsPage() {
                   <SelectContent>
                     <SelectItem value="all">All statuses</SelectItem>
                     {(Object.keys(STATUS_CLR) as AdoptionStatus[]).map(s => (
-                      <SelectItem key={s} value={s}>{s}</SelectItem>
+                      <SelectItem key={s} value={s}>{STATUS_LABEL[s]}</SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
@@ -429,18 +215,18 @@ export default function AdoptionSupportRecordsPage() {
           {filtered.map(r => {
             const open = expandedId === r.id;
             return (
-              <Card key={r.id} className={cn("border-l-4", STATUS_BORDER[r.adoptionStatus])}>
+              <Card key={r.id} className={cn("border-l-4", STATUS_BORDER[r.adoption_status])}>
                 <button className="w-full text-left" onClick={() => toggle(r.id)}>
                   <CardHeader className="pb-2">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <CardTitle className="text-base">{r.childInitials}</CardTitle>
-                        <Badge className={cn("text-xs", STATUS_CLR[r.adoptionStatus])}>{r.adoptionStatus}</Badge>
-                        {r.lifeStoryCompleted && <Badge className="text-xs bg-purple-100 text-purple-800">Life Story Complete</Badge>}
-                        {r.laterLifeLetter && <Badge className="text-xs bg-indigo-100 text-indigo-800">Later Life Letter</Badge>}
+                        <CardTitle className="text-base">{r.child_initials}</CardTitle>
+                        <Badge className={cn("text-xs", STATUS_CLR[r.adoption_status])}>{STATUS_LABEL[r.adoption_status]}</Badge>
+                        {r.life_story_completed && <Badge className="text-xs bg-purple-100 text-purple-800">Life Story Complete</Badge>}
+                        {r.later_life_letter && <Badge className="text-xs bg-indigo-100 text-indigo-800">Later Life Letter</Badge>}
                       </div>
                       <div className="flex items-center gap-2">
-                        <span className="text-xs text-muted-foreground">Lead: {getStaffName(r.internalLead)}</span>
+                        <span className="text-xs text-muted-foreground">Lead: {getStaffName(r.internal_lead)}</span>
                         {open ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
                       </div>
                     </div>
@@ -452,20 +238,20 @@ export default function AdoptionSupportRecordsPage() {
                       <div>
                         <p className="text-xs font-semibold mb-1 flex items-center gap-1"><Calendar className="h-3 w-3" />Key dates</p>
                         <ul className="text-xs space-y-0.5">
-                          <li><span className="text-muted-foreground">Arrived at Oak House:</span> <strong>{r.arrivalDate}</strong></li>
-                          <li><span className="text-muted-foreground">Placement order:</span> <strong>{r.placementOrderDate || "—"}</strong></li>
-                          <li><span className="text-muted-foreground">Matching panel:</span> <strong>{r.matchingPanelDate || "—"}</strong></li>
-                          <li><span className="text-muted-foreground">Local authority:</span> <strong>{r.localAuthority}</strong></li>
+                          <li><span className="text-muted-foreground">Arrived at Oak House:</span> <strong>{r.arrival_date}</strong></li>
+                          <li><span className="text-muted-foreground">Placement order:</span> <strong>{r.placement_order_date || "—"}</strong></li>
+                          <li><span className="text-muted-foreground">Matching panel:</span> <strong>{r.matching_panel_date || "—"}</strong></li>
+                          <li><span className="text-muted-foreground">Local authority:</span> <strong>{r.local_authority}</strong></li>
                         </ul>
                       </div>
                       <div>
                         <p className="text-xs font-semibold mb-1 flex items-center gap-1"><Home className="h-3 w-3" />Adoptive family</p>
-                        <p className="text-sm">{r.adoptionFamilyInfo}</p>
+                        <p className="text-sm">{r.adoption_family_info}</p>
                       </div>
                     </div>
 
                     {/* introductions */}
-                    {r.introductionPlan.length > 0 && (
+                    {r.introduction_plan.length > 0 && (
                       <div>
                         <p className="text-xs font-semibold mb-2 flex items-center gap-1"><Users className="h-3 w-3" />Introduction Plan</p>
                         <table className="w-full text-sm border">
@@ -477,7 +263,7 @@ export default function AdoptionSupportRecordsPage() {
                             </tr>
                           </thead>
                           <tbody>
-                            {r.introductionPlan.map((p, i) => (
+                            {r.introduction_plan.map((p: AdoptionIntroductionPhase, i: number) => (
                               <tr key={i} className="border-t align-top">
                                 <td className="p-2 font-medium">{p.phase}</td>
                                 <td className="p-2 whitespace-nowrap">{p.dates}</td>
@@ -493,56 +279,59 @@ export default function AdoptionSupportRecordsPage() {
                     <div className="grid md:grid-cols-2 gap-4">
                       <div className="rounded-lg bg-blue-50 border border-blue-200 p-3">
                         <p className="text-xs font-semibold text-blue-800 mb-1 flex items-center gap-1"><BookOpen className="h-3 w-3" />Preparation Activities</p>
-                        <ul className="text-sm text-blue-900 list-disc list-inside space-y-0.5">{r.preparationActivities.map((a, i) => <li key={i}>{a}</li>)}</ul>
+                        <ul className="text-sm text-blue-900 list-disc list-inside space-y-0.5">{r.preparation_activities.map((a: string, i: number) => <li key={i}>{a}</li>)}</ul>
                       </div>
-                      {r.goodbyeRitualsPlanned.length > 0 && (
+                      {r.goodbye_rituals_planned.length > 0 && (
                         <div className="rounded-lg bg-pink-50 border border-pink-200 p-3">
                           <p className="text-xs font-semibold text-pink-800 mb-1 flex items-center gap-1"><Heart className="h-3 w-3" />Goodbye Rituals</p>
-                          <ul className="text-sm text-pink-900 list-disc list-inside space-y-0.5">{r.goodbyeRitualsPlanned.map((g, i) => <li key={i}>{g}</li>)}</ul>
+                          <ul className="text-sm text-pink-900 list-disc list-inside space-y-0.5">{r.goodbye_rituals_planned.map((g: string, i: number) => <li key={i}>{g}</li>)}</ul>
                         </div>
                       )}
                     </div>
 
                     {/* post-placement & support plan */}
                     <div className="grid md:grid-cols-2 gap-4">
-                      {r.supportProvidedPostPlacement.length > 0 && (
+                      {r.support_provided_post_placement.length > 0 && (
                         <div className="rounded-lg bg-teal-50 border border-teal-200 p-3">
                           <p className="text-xs font-semibold text-teal-800 mb-1">Post-Placement Support Provided</p>
-                          <ul className="text-sm text-teal-900 list-disc list-inside space-y-0.5">{r.supportProvidedPostPlacement.map((s, i) => <li key={i}>{s}</li>)}</ul>
+                          <ul className="text-sm text-teal-900 list-disc list-inside space-y-0.5">{r.support_provided_post_placement.map((s: string, i: number) => <li key={i}>{s}</li>)}</ul>
                         </div>
                       )}
                       <div className="rounded-lg bg-purple-50 border border-purple-200 p-3">
                         <p className="text-xs font-semibold text-purple-800 mb-1 flex items-center gap-1"><FileText className="h-3 w-3" />Adoption Support Plan</p>
-                        <ul className="text-sm text-purple-900 list-disc list-inside space-y-0.5">{r.adoptionSupportPlan.map((s, i) => <li key={i}>{s}</li>)}</ul>
+                        <ul className="text-sm text-purple-900 list-disc list-inside space-y-0.5">{r.adoption_support_plan.map((s: string, i: number) => <li key={i}>{s}</li>)}</ul>
                       </div>
                     </div>
 
                     {/* child voice */}
                     <div className="rounded-lg bg-amber-50 border border-amber-200 p-3">
                       <p className="text-xs font-semibold text-amber-800 mb-1 flex items-center gap-1"><MessageCircle className="h-3 w-3" />Child&apos;s contribution & voice</p>
-                      <p className="text-sm text-amber-900">{r.childContribution}</p>
+                      <p className="text-sm text-amber-900">{r.child_contribution}</p>
                     </div>
 
                     {/* contact / key worker involvement */}
                     <div className="grid md:grid-cols-2 gap-4 text-sm">
                       <div>
                         <p className="text-xs font-semibold mb-1">Contact arrangements</p>
-                        <p className="text-muted-foreground">{r.contactArrangements}</p>
+                        <p className="text-muted-foreground">{r.contact_arrangements}</p>
                       </div>
                       <div>
                         <p className="text-xs font-semibold mb-1">Home key worker involvement</p>
-                        <p className="text-muted-foreground">{r.homeKeyWorkerInvolvement}</p>
+                        <p className="text-muted-foreground">{r.home_key_worker_involvement}</p>
                       </div>
                     </div>
 
                     {/* meta */}
                     <div className="flex flex-wrap gap-4 text-xs text-muted-foreground">
-                      <span>Internal lead: <strong>{getStaffName(r.internalLead)}</strong></span>
-                      <span>Social worker: <strong>{r.socialWorker}</strong></span>
-                      <span>Adoption social worker: <strong>{r.adoptionSocialWorker}</strong></span>
-                      <span>Review: <strong>{r.reviewDate}</strong></span>
-                      <span>Last update: <strong>{r.lastUpdate}</strong></span>
+                      <span>Internal lead: <strong>{getStaffName(r.internal_lead)}</strong></span>
+                      <span>Social worker: <strong>{r.social_worker}</strong></span>
+                      <span>Adoption social worker: <strong>{r.adoption_social_worker}</strong></span>
+                      <span>Review: <strong>{r.review_date}</strong></span>
+                      <span>Last update: <strong>{r.last_update}</strong></span>
                     </div>
+
+                    {/* smart links */}
+                    <SmartLinkPanel sourceType="adoption_record" sourceId={r.id} compact />
                   </CardContent>
                 )}
               </Card>

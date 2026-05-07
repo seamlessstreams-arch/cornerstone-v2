@@ -25,6 +25,49 @@ import type {
   Audit, MaintenanceItem,
   WelfareCheck, WelfareCheckRound,
   OutcomeTarget, OutcomeReview,
+  ShiftSwapRequest,
+  Reg44VisitReport, Reg44Recommendation,
+  KeyWorkingSession,
+  LACReview,
+  RiskAssessment,
+  EducationRecord,
+  BehaviourSupportPlan,
+  DelegatedAuthority,
+  HouseMeeting,
+  SanctionRewardEntry,
+  YPFeedbackEntry,
+  SleepLogEntry,
+  Compliment,
+  VisitorEntry,
+  FireDrill,
+  SignificantEvent,
+  RestraintRecord,
+  NotifiableEvent,
+  NightLogEntry,
+  BehaviourEntry,
+  AccidentRecord,
+  AbsenceRecord,
+  PositiveHandlingPlan,
+  MedicationError,
+  BodyMapEntry,
+  Activity,
+  AdoptionRecord,
+  AdvocacyRecord,
+  AfterCareRecord,
+  AgencyInduction,
+  AgencyStaffRecord,
+  AnnualDevelopmentReview,
+  AnnualHealthAssessment,
+  AnnualOutcome,
+  Appointment,
+  NeedsAssessment,
+  AttachmentProfile,
+  BehaviourMapEntry,
+  BereavementRecord,
+  BullyingIncident,
+  CamhsReferral,
+  CCTVAccess,
+  ADHDPlan,
 } from "@/types/extended";
 import type { Document, DocumentReadReceipt, Expense } from "@/types";
 import type { UploadedDocument, DocumentAuditEntry } from "@/types/documents";
@@ -97,7 +140,174 @@ const store = {
   // Outcomes Tracker
   outcomeTargets: [] as OutcomeTarget[],
   outcomeReviews: [] as OutcomeReview[],
+  // Reg 44 Visitor Reports
+  reg44VisitReports: [] as Reg44VisitReport[],
+  // Key Working Sessions
+  keyWorkingSessions: [] as KeyWorkingSession[],
+  // Education Records
+  educationRecords: [] as EducationRecord[],
+  // Risk Assessments
+  riskAssessments: [] as RiskAssessment[],
+  // LAC Reviews
+  lacReviews: [] as LACReview[],
+  // Behaviour Support Plans
+  behaviourSupportPlans: [] as BehaviourSupportPlan[],
+  // Delegated Authority
+  delegatedAuthority: [] as DelegatedAuthority[],
+  // House Meetings
+  houseMeetings: [] as HouseMeeting[],
+  // Sanctions & Rewards
+  sanctionRewards: [] as SanctionRewardEntry[],
+  // Young Person Feedback
+  ypFeedback: [] as YPFeedbackEntry[],
+  // Sleep Log
+  sleepLog: [] as SleepLogEntry[],
+  // Compliments
+  compliments: [] as Compliment[],
+  visitors: [] as VisitorEntry[],
+  fireDrills: [] as FireDrill[],
+  significantEvents: [] as SignificantEvent[],
+  restraints: [] as RestraintRecord[],
+  notifiableEvents: [] as NotifiableEvent[],
+  nightLogs: [] as NightLogEntry[],
+  behaviourLog: [] as BehaviourEntry[],
+  accidentBook: [] as AccidentRecord[],
+  absenceTracking: [] as AbsenceRecord[],
+  positiveHandling: [] as PositiveHandlingPlan[],
+  medicationErrors: [] as MedicationError[],
+  bodyMap: [] as BodyMapEntry[],
+  activities: [] as Activity[],
+  adoptionRecords: [] as AdoptionRecord[],
+  advocacyRecords: [] as AdvocacyRecord[],
+  afterCareRecords: [] as AfterCareRecord[],
+  agencyInductions: [] as AgencyInduction[],
+  agencyStaffLog: [] as AgencyStaffRecord[],
+  annualDevelopmentReviews: [] as AnnualDevelopmentReview[],
+  annualHealthAssessments: [] as AnnualHealthAssessment[],
+  annualOutcomes: [] as AnnualOutcome[],
+  appointments: [] as Appointment[],
+  needsAssessments: [] as NeedsAssessment[],
+  attachmentProfiles: [] as AttachmentProfile[],
+  behaviourMapEntries: [] as BehaviourMapEntry[],
+  bereavementRecords: [] as BereavementRecord[],
+  bullyingIncidents: [] as BullyingIncident[],
+  camhsReferrals: [] as CamhsReferral[],
+  cctvAccesses: [] as CCTVAccess[],
+  adhdPlans: [] as ADHDPlan[],
+  // Shift Swap Requests
+  shiftSwaps: [
+    {
+      id: "swap_001",
+      requester_id: "staff_anna",
+      target_staff_id: "staff_edward",
+      requester_shift_id: "shift_004",
+      target_shift_id: "shift_003",
+      status: "pending",
+      reason: "Medical appointment on this date — happy to swap sleep-in for Edward's day shift.",
+      manager_notes: null,
+      decided_by: null,
+      decided_at: null,
+      created_at: new Date(Date.now() - 2 * 3600000).toISOString(),
+    },
+    {
+      id: "swap_002",
+      requester_id: "staff_lackson",
+      target_staff_id: "staff_diane",
+      requester_shift_id: "shift_005",
+      target_shift_id: null,
+      status: "pending",
+      reason: "Family commitment — need to swap my day shift, Diane has agreed informally.",
+      manager_notes: null,
+      decided_by: null,
+      decided_at: null,
+      created_at: new Date(Date.now() - 5 * 3600000).toISOString(),
+    },
+  ] as ShiftSwapRequest[],
 };
+
+// Seed key working sessions
+store.keyWorkingSessions = [
+  {
+    id: "kw_001", child_id: "yp_alex", staff_id: "staff_darren", date: daysFromNow(-1), type: "one_to_one",
+    duration: 45, location: "Quiet room",
+    topics: ["College application progress", "Anxiety about interviews", "Weekend plans"],
+    child_voice: "I'm worried about the college interview. I don't know what to say about why I want to do the course. Can we practise?",
+    worker_observations: "Alex appeared anxious initially but relaxed during the session. Engaged well with mock interview practice. Showed genuine interest in the course but lacks confidence in articulating this.",
+    actions_agreed: ["Practise interview questions together on Thursday", "Write three reasons for choosing the course", "Staff to contact college about support for LAC students"],
+    mood_before: 2, mood_after: 4, follow_up: "Mock interview session", follow_up_date: daysFromNow(2), follow_up_completed: false,
+    linked_goals: ["College application"], confidential: false, home_id: "home_oak", created_at: daysFromNow(-1),
+  },
+  {
+    id: "kw_002", child_id: "yp_alex", staff_id: "staff_darren", date: daysFromNow(-8), type: "goal_setting",
+    duration: 30, location: "Kitchen",
+    topics: ["Cooking independence goal", "Meal planning", "Budgeting for food shopping"],
+    child_voice: "I want to learn how to make a roast dinner. My nan used to make the best roasts and I want to learn.",
+    worker_observations: "Emotional connection to cooking through memories of nan. This is a strong motivator. Alex planned a shopping list independently with minimal prompting.",
+    actions_agreed: ["Plan roast dinner for Sunday", "Create shopping list together", "Alex to try making a simple dessert midweek"],
+    mood_before: 3, mood_after: 5, follow_up: "Sunday roast cooking session", follow_up_date: daysFromNow(-3), follow_up_completed: true,
+    linked_goals: ["Independent cooking skills"], confidential: false, home_id: "home_oak", created_at: daysFromNow(-8),
+  },
+  {
+    id: "kw_003", child_id: "yp_jordan", staff_id: "staff_anna", date: daysFromNow(-2), type: "wellbeing_check",
+    duration: 20, location: "Jordan's bedroom",
+    topics: ["Sleep patterns", "Contact with mum", "Football club"],
+    child_voice: "I'm not sleeping well again. I keep thinking about things. Football helps though — I feel better after training.",
+    worker_observations: "Jordan tired and quieter than usual. Sleep disruption coincides with cancelled contact with mum last week. Football clearly a positive outlet. May need referral to CAMHS if sleep issues persist.",
+    actions_agreed: ["Try relaxation techniques before bed", "Staff to follow up with social worker about contact", "Keep attending football twice weekly"],
+    mood_before: 2, mood_after: 3, follow_up: "Check in about sleep in 3 days", follow_up_date: daysFromNow(1), follow_up_completed: false,
+    linked_goals: ["Health & wellbeing"], confidential: false, home_id: "home_oak", created_at: daysFromNow(-2),
+  },
+  {
+    id: "kw_004", child_id: "yp_jordan", staff_id: "staff_ryan", date: daysFromNow(-5), type: "review",
+    duration: 40, location: "Office",
+    topics: ["Pathway plan review", "Housing options", "Leaving care entitlements"],
+    child_voice: "I don't want to think about leaving yet. It's scary. But I know I need to start looking at places.",
+    worker_observations: "Jordan is anxious about transition but willing to engage when given time. Responded well to visiting supported accommodation photos. Preferred the option with communal living spaces.",
+    actions_agreed: ["Visit supported accommodation next Tuesday", "Jordan to list three things important in a home", "Staff to arrange meeting with leaving care PA"],
+    mood_before: 2, mood_after: 3, follow_up: "Supported accommodation visit", follow_up_date: daysFromNow(-1), follow_up_completed: true,
+    linked_goals: ["Housing preparation"], confidential: false, home_id: "home_oak", created_at: daysFromNow(-5),
+  },
+  {
+    id: "kw_005", child_id: "yp_casey", staff_id: "staff_chervelle", date: daysFromNow(-3), type: "one_to_one",
+    duration: 35, location: "Garden",
+    topics: ["School friendships", "Identity exploration", "Creative writing"],
+    child_voice: "I wrote a poem about who I am. Do you want to hear it? I'm not sure if it's any good but it felt important to write it.",
+    worker_observations: "Casey shared a deeply personal poem about identity and belonging. Showed vulnerability and trust in sharing this. The poem referenced feeling 'in between two worlds'. Casey is processing complex feelings about heritage with maturity.",
+    actions_agreed: ["Casey to keep writing journal", "Consider sharing poem with therapist if comfortable", "Staff to source creative writing resources"],
+    mood_before: 3, mood_after: 4, follow_up: "Check if Casey wants to continue creative work", follow_up_date: daysFromNow(4), follow_up_completed: false,
+    linked_goals: ["Identity exploration"], confidential: true, home_id: "home_oak", created_at: daysFromNow(-3),
+  },
+  {
+    id: "kw_006", child_id: "yp_casey", staff_id: "staff_chervelle", date: daysFromNow(-10), type: "life_skills",
+    duration: 60, location: "Kitchen & utility room",
+    topics: ["Laundry skills", "Cleaning routine", "Personal hygiene"],
+    child_voice: "I didn't know you had to separate colours! No one ever showed me before.",
+    worker_observations: "Casey engaged well with practical learning. Needed step-by-step guidance but picked up quickly. Showed pride in completing a full wash cycle independently. Good opportunity for positive reinforcement.",
+    actions_agreed: ["Casey to do own laundry every Saturday", "Create visual guide for laundry steps", "Try ironing school uniform next week"],
+    mood_before: 3, mood_after: 5, follow_up: "Check laundry routine on Saturday", follow_up_date: daysFromNow(-3), follow_up_completed: true,
+    linked_goals: ["Independent living skills"], confidential: false, home_id: "home_oak", created_at: daysFromNow(-10),
+  },
+  {
+    id: "kw_007", child_id: "yp_alex", staff_id: "staff_darren", date: daysFromNow(-14), type: "therapeutic",
+    duration: 50, location: "Quiet room",
+    topics: ["Anger management strategies", "Recent frustration at school", "Coping techniques"],
+    child_voice: "I tried the breathing thing you showed me and it actually worked. I walked away instead of kicking off. I was proud of myself.",
+    worker_observations: "Significant progress with emotional regulation. Alex self-reported using calming strategies in a school situation that would previously have escalated. This is a breakthrough moment worth celebrating and recording.",
+    actions_agreed: ["Continue practising grounding techniques daily", "Create a personal calm-down plan card", "Share progress with school SENCO"],
+    mood_before: 4, mood_after: 5, follow_up: "Follow up with school about incident", follow_up_date: daysFromNow(-10), follow_up_completed: true,
+    linked_goals: ["Emotional wellbeing"], confidential: false, home_id: "home_oak", created_at: daysFromNow(-14),
+  },
+  {
+    id: "kw_008", child_id: "yp_jordan", staff_id: "staff_anna", date: daysFromNow(-12), type: "informal",
+    duration: 15, location: "Living room",
+    topics: ["Weekend activities", "TV preferences", "Family memories"],
+    child_voice: "Can we watch that cooking show together? It reminds me of when my dad used to cook.",
+    worker_observations: "Brief but meaningful interaction. Jordan initiated conversation about family memories which is rare. Didn't push further but noted the openness. Watching TV together provided a natural, low-pressure connection point.",
+    actions_agreed: ["Watch cooking show together on Wednesdays", "Consider cooking activity linked to family memories"],
+    mood_before: 3, mood_after: 4, follow_up: "", follow_up_date: "", follow_up_completed: false,
+    linked_goals: [], confidential: false, home_id: "home_oak", created_at: daysFromNow(-12),
+  },
+];
 
 // Seed missing episodes
 store.missingEpisodes = [
@@ -259,10 +469,30 @@ store.vehicleChecks = [
 store.handovers = [
   {
     id: "hnd_001", home_id: "home_oak",
+    shift_date: today, shift_from: "day", shift_to: "sleep_in",
+    handover_time: "21:30", completed_at: null,
+    outgoing_staff: ["staff_darren", "staff_lackson"], incoming_staff: ["staff_anna", "staff_mirela", "staff_alex"],
+    created_by: "staff_darren", signed_off_by: null, sign_offs: [],
+    child_updates: [
+      { child_id: "yp_alex", mood_score: 6, key_notes: "Alex had a settled day overall. Engaged with education in the morning. Some low mood around 4pm — disclosed worrying about court proceedings. Supported with 1:1 time.", alerts: ["Phone usage overnight — third time this week", "Court proceedings anxiety"] },
+      { child_id: "yp_jordan", mood_score: 9, key_notes: "Jordan had an excellent day. Went to football training with Lackson. Made positive comments about feeling settled at Oak House.", alerts: [] },
+      { child_id: "yp_casey", mood_score: 4, key_notes: "Casey struggled this afternoon. Became distressed about a phone call from her mother. Supported to regulate. Refused evening medication initially — accepted 30 minutes later.", alerts: ["Contact distress", "Medication delay — administered 30 mins late"] },
+    ],
+    general_notes: "Rear gate latch needs fixing urgently — flagged to Ryan. CCTV camera still not installed. Strategy discussion tomorrow re: Alex safeguarding.",
+    flags: ["gate_security", "casey_medication_delay", "alex_safeguarding_strategy_tomorrow"],
+    linked_incident_ids: ["inc_004"],
+    created_at: new Date().toISOString(),
+  },
+  {
+    id: "hnd_002", home_id: "home_oak",
     shift_date: today, shift_from: "night", shift_to: "day",
     handover_time: "07:30", completed_at: "07:45",
     outgoing_staff: ["staff_edward"], incoming_staff: ["staff_darren", "staff_ryan"],
     created_by: "staff_edward", signed_off_by: "staff_darren",
+    sign_offs: [
+      { staff_id: "staff_darren", acknowledged_at: today + "T07:40:00Z", notes: null },
+      { staff_id: "staff_ryan", acknowledged_at: today + "T07:42:00Z", notes: "Noted Casey sleep issue — will follow up with key work session" },
+    ],
     child_updates: [
       { child_id: "yp_alex", mood_score: 6, key_notes: "Alex had a settled night. Some restlessness at 02:00 — checked, was on phone. Phone discussion needed. Mood okay this morning.", alerts: ["Phone usage overnight — third time this week"] },
       { child_id: "yp_jordan", mood_score: 8, key_notes: "Jordan slept well. Up at 07:00, positive this morning. Prepared own breakfast.", alerts: [] },
@@ -271,7 +501,7 @@ store.handovers = [
     general_notes: "Rear gate latch needs fixing urgently — flagged to Ryan. CCTV camera still not installed.",
     flags: ["gate_security", "alex_phone_overnight", "casey_sleep_disturbance"],
     linked_incident_ids: ["inc_001", "inc_004"],
-    created_at: new Date().toISOString(),
+    created_at: daysFromNow(0) + "T07:30:00Z",
   },
 ];
 
@@ -1667,6 +1897,416 @@ store.outcomeReviews = [
   { id: "or_005", target_id: "ot_013", child_id: "yp_casey", home_id: "home_oak", review_date: daysFromNow(-10), previous_rating: 2 as const, new_rating: 3 as const, direction: "improving" as const, reviewer_id: "staff_chervelle", reviewer_role: "Key Worker", yp_participated: true, yp_voice: "Sam taught me to breathe when I feel upset. It works sometimes.", progress_notes: "Casey now using 3 regulation strategies: deep breathing, counting, and drawing. CAMHS therapist reports good therapeutic engagement.", barriers: "Difficulty generalising strategies to school environment.", next_steps: "Share strategies with school SENCO. Consider visual prompt card.", created_at: outNow },
 ] as OutcomeReview[];
 
+// ── Seed Reg 44 Visit Reports ─────────────────────────────────────────────────
+
+const r44d = (n: number) => { const dt = new Date(); dt.setDate(dt.getDate() + n); return dt.toISOString().slice(0, 10); };
+
+store.reg44VisitReports = [
+  {
+    id: "v44_1", home_id: "home_oak", visit_date: r44d(-7),
+    visitor: "Margaret Thompson (Independent)", duration: "4 hours",
+    children_spoken: "3/3", staff_spoken: 4,
+    records_reviewed: ["daily logs", "medication", "incidents"],
+    overall_judgement: "Good — no immediate concerns.",
+    strengths: [
+      "Warm, positive relationships observed between staff and young people throughout the visit",
+      "Medication records are excellent — accurate, timely, and countersigned consistently",
+      "All three children spoke positively about their care and relationships with key workers",
+    ],
+    areas_for_development: [
+      "Sleep log completion is inconsistent — 3 gaps identified in the past month where entries were missed on night shifts",
+      "One fire drill is overdue by 12 days — last drill was 14 weeks ago against a quarterly requirement",
+    ],
+    recommendations: [
+      { id: "rec44_1a", recommendation: "Implement a nightly checklist to ensure sleep logs are completed before end of each night shift. Consider adding a prompt to the night staff handover template.", priority: "medium", rm_response: "Accepted. Night shift checklist updated to include sleep log verification. Team briefed at handover. Will monitor compliance over next 4 weeks.", status: "in_progress", evidence_notes: null, completed_at: null },
+      { id: "rec44_1b", recommendation: "Conduct fire drill within 7 days and review the scheduling system to prevent future overruns. Evidence drill completion to the visitor.", priority: "high", rm_response: "Fire drill completed on " + r44d(-5) + " (both day and evening scenarios). Calendar alerts set for 11-week intervals to provide a buffer before the quarterly deadline.", status: "completed", evidence_notes: "Fire drill log signed by all staff. Photos of drill attached.", completed_at: r44d(-5) },
+      { id: "rec44_1c", recommendation: "Consider involving young people in reviewing and updating the house rules display, which appears dated.", priority: "low", rm_response: "Agreed — will add to next children's meeting agenda. Young people will co-design updated display.", status: "in_progress", evidence_notes: null, completed_at: null },
+    ],
+    previous_actions_status: "2 closed, 0 outstanding",
+    report_sent_to_ofsted: true, report_sent_date: r44d(-5),
+    notes: "Visitor had unrestricted access throughout. All children were relaxed and willing to speak. Staff were open and transparent.",
+    created_at: new Date(Date.now() - 7 * 86400000).toISOString(),
+  },
+  {
+    id: "v44_2", home_id: "home_oak", visit_date: r44d(-37),
+    visitor: "Margaret Thompson", duration: "3.5 hours",
+    children_spoken: "2/3 (Casey absent — school trip)", staff_spoken: 3,
+    records_reviewed: ["daily logs", "supervision records", "key working sessions"],
+    overall_judgement: "Good.",
+    strengths: [
+      "Home is clean, warm, and welcoming — presented to a high standard throughout",
+      "Children's bedrooms are well-personalised reflecting their interests and identities",
+      "Staff morale is notably positive — team appear well-supported and cohesive",
+    ],
+    areas_for_development: [
+      "One staff supervision session was completed 3 days late — while content was thorough, the delay means it fell outside the 6-weekly frequency requirement",
+    ],
+    recommendations: [
+      { id: "rec44_2a", recommendation: "Review supervision scheduling to build in buffer time. Consider a tracker that alerts the manager 1 week before supervision is due.", priority: "medium", rm_response: "Cornerstone supervision tracker now set to alert 7 days before due date. Deputy to cover if RM unavailable. No supervisions will be more than 1 day late going forward.", status: "completed", evidence_notes: "Tracker screenshot uploaded. Deputy coverage confirmed in team minutes.", completed_at: r44d(-30) },
+      { id: "rec44_2b", recommendation: "Ensure Casey is spoken to at the next visit — visitor to consider scheduling an additional brief visit if Casey is unavailable again.", priority: "medium", rm_response: "Noted. Casey's school schedule shared with visitor to support planning. Casey confirmed she is happy to speak at next visit.", status: "completed", evidence_notes: null, completed_at: r44d(-8) },
+    ],
+    previous_actions_status: "All previous actions closed",
+    report_sent_to_ofsted: true, report_sent_date: r44d(-35),
+    notes: "Casey was on a school residential trip — positive that the home supports these opportunities. Spoke with Casey's key worker about her progress.",
+    created_at: new Date(Date.now() - 37 * 86400000).toISOString(),
+  },
+  {
+    id: "v44_3", home_id: "home_oak", visit_date: r44d(-67),
+    visitor: "Margaret Thompson", duration: "4 hours",
+    children_spoken: "3/3", staff_spoken: 4,
+    records_reviewed: ["key working records", "behaviour logs", "TCI records", "placement plans"],
+    overall_judgement: "Good with notable practice.",
+    strengths: [
+      "Outstanding key work records — detailed, reflective, and clearly child-centred with the young person's voice evident throughout",
+      "Casey's progress was explicitly noted — significant reduction in incidents and improved school attendance over the past 3 months",
+      "TCI (Therapeutic Crisis Intervention) use was appropriate, proportionate, and well-documented with thorough debriefs",
+    ],
+    areas_for_development: [
+      "Garden furniture (wooden bench and table) is weathered and one bench leg is split — this presents a minor trip hazard and should be replaced",
+    ],
+    recommendations: [
+      { id: "rec44_3a", recommendation: "Replace or remove damaged garden furniture to eliminate trip hazard. Ensure replacement furniture is suitable for outdoor use year-round.", priority: "medium", rm_response: "Damaged furniture removed immediately on day of visit. Replacement outdoor furniture ordered — weather-resistant composite material. Budget approved by RI. Expected delivery within 2 weeks.", status: "completed", evidence_notes: "Receipt for new furniture. Before/after photos.", completed_at: r44d(-55) },
+    ],
+    previous_actions_status: "All previous actions closed",
+    report_sent_to_ofsted: true, report_sent_date: r44d(-65),
+    notes: "Visitor commended the quality of key working and therapeutic approach. Recommended the home's key work model as potential good practice example for the organisation.",
+    created_at: new Date(Date.now() - 67 * 86400000).toISOString(),
+  },
+  {
+    id: "v44_4", home_id: "home_oak", visit_date: r44d(-97),
+    visitor: "Margaret Thompson", duration: "3 hours",
+    children_spoken: "3/3", staff_spoken: 3,
+    records_reviewed: ["notifications register", "staffing records", "complaints log", "activities programme"],
+    overall_judgement: "Requires improvement in one area.",
+    strengths: [
+      "Strong, trusting relationships evident between young people and their key workers",
+      "Activities programme is varied, inclusive, and reflects each child's individual interests and goals",
+      "Complaint handling is thorough — young people confirmed they know how to complain and feel heard",
+    ],
+    areas_for_development: [
+      "One Ofsted notification was submitted 2 days late — the notification related to a Schedule 5 event and should have been made within 24 hours without exception",
+      "The staffing plan for the home is not displayed in a location accessible to staff — regulation requires the staffing plan to be available",
+    ],
+    recommendations: [
+      { id: "rec44_4a", recommendation: "Review the notification process to identify why the delay occurred. Implement a checklist for notifiable events that includes immediate notification as step one, before any other actions.", priority: "high", rm_response: "Root cause identified — RM was on leave and deputy was unsure of the classification. Notifiable events decision tree created and laminated for office. All senior staff briefed. Deputy completed notification training refresher.", status: "completed", evidence_notes: "Decision tree photographed and shared. Training attendance log.", completed_at: r44d(-90) },
+      { id: "rec44_4b", recommendation: "Display the current staffing plan in the staff office and ensure it is updated whenever changes occur. All staff should know where to find it.", priority: "medium", rm_response: "Staffing plan now displayed in staff office (laminated, on noticeboard). Updated version uploaded to Cornerstone. All staff informed at team meeting.", status: "completed", evidence_notes: "Photo of noticeboard. Team meeting minutes.", completed_at: r44d(-92) },
+      { id: "rec44_4c", recommendation: "Consider adding notification timescales to the staff induction pack so all staff (including agency) understand the urgency requirements.", priority: "low", rm_response: "Induction pack updated to include notification timescales and decision tree. Agency staff receive a summary card on arrival.", status: "completed", evidence_notes: "Updated induction pack PDF uploaded.", completed_at: r44d(-85) },
+      { id: "rec44_4d", recommendation: "Review whether the activities programme is being consistently recorded in daily logs — two activity sessions were referenced by children but not recorded in the log.", priority: "low", rm_response: "Acknowledged. Staff reminded to log all structured activities. Daily log template updated to include a specific activities section to prompt recording.", status: "completed", evidence_notes: null, completed_at: r44d(-88) },
+    ],
+    previous_actions_status: "1 outstanding from previous visit (garden furniture — subsequently addressed)",
+    report_sent_to_ofsted: true, report_sent_date: r44d(-95),
+    notes: "Visitor expressed concern about the notification delay and requested written confirmation that the process has been reviewed. This has been provided.",
+    created_at: new Date(Date.now() - 97 * 86400000).toISOString(),
+  },
+] as Reg44VisitReport[];
+
+// Seed education records
+store.educationRecords = [
+  {
+    id: "edu_001", child_id: "yp_alex", record_type: "attendance", title: "Full day attendance",
+    date: daysFromNow(-1), school: "Derby Alternative Provision",
+    details: "Alex attended all lessons. Positive feedback from English teacher — engaged well in creative writing task.",
+    outcome: undefined, follow_up_date: undefined, staff_id: "staff_edward", status: "open",
+    home_id: "home_oak", created_at: daysFromNow(-1) + "T16:00:00Z",
+  },
+  {
+    id: "edu_002", child_id: "yp_alex", record_type: "exclusion", title: "Fixed-term exclusion — 1 day",
+    date: daysFromNow(-3), school: "Derby Alternative Provision",
+    details: "Alex excluded for one day following verbal altercation with teaching assistant. Refused to leave classroom when asked. School applied fixed-term exclusion under behaviour policy.",
+    outcome: "Reintegration meeting booked with inclusion lead. Key worker to attend.",
+    follow_up_date: daysFromNow(-1), staff_id: "staff_edward", status: "monitoring",
+    home_id: "home_oak", created_at: daysFromNow(-3) + "T14:00:00Z",
+  },
+  {
+    id: "edu_003", child_id: "yp_jordan", record_type: "attendance", title: "Full day attendance",
+    date: daysFromNow(-2), school: "Highfields Academy",
+    details: "Jordan attended full day. Completed maths assessment — scored 72%. Teacher notes improvement in concentration.",
+    outcome: undefined, follow_up_date: undefined, staff_id: "staff_anna", status: "open",
+    home_id: "home_oak", created_at: daysFromNow(-2) + "T16:00:00Z",
+  },
+  {
+    id: "edu_004", child_id: "yp_casey", record_type: "attendance", title: "Late arrival — transport issue",
+    date: daysFromNow(-2), school: "Allestree Woodlands",
+    details: "Casey arrived 25 minutes late due to vehicle breakdown on the school run. School notified in advance.",
+    outcome: undefined, follow_up_date: undefined, staff_id: "staff_chervelle", status: "open",
+    home_id: "home_oak", created_at: daysFromNow(-2) + "T09:30:00Z",
+  },
+  {
+    id: "edu_005", child_id: "yp_jordan", record_type: "pep_meeting", title: "PEP Review — Spring Term",
+    date: daysFromNow(-7), school: "Highfields Academy",
+    details: "Personal Education Plan review held with Virtual School Head, designated teacher, and key worker. Jordan making expected progress in English and exceeding in PE. Maths remains below expected — additional 1:1 tutoring agreed.",
+    outcome: "1:1 maths tutoring to start next week. Reading challenge participation agreed. Next PEP review: Summer term.",
+    follow_up_date: daysFromNow(56), staff_id: "staff_anna", status: "monitoring",
+    home_id: "home_oak", created_at: daysFromNow(-7) + "T14:30:00Z",
+  },
+  {
+    id: "edu_006", child_id: "yp_casey", record_type: "achievement", title: "English mock result — Grade 5",
+    date: daysFromNow(-5), school: "Allestree Woodlands",
+    details: "Casey achieved Grade 5 in English Language mock exam. Significant improvement from Grade 3 in autumn term. Teacher impressed with essay structure development.",
+    outcome: "Positive feedback shared with Casey. Achievement celebrated at house meeting.",
+    follow_up_date: undefined, staff_id: "staff_chervelle", status: "resolved",
+    home_id: "home_oak", created_at: daysFromNow(-5) + "T15:30:00Z",
+  },
+  {
+    id: "edu_007", child_id: "yp_alex", record_type: "pep_meeting", title: "Emergency PEP — post-exclusion",
+    date: daysFromNow(-10), school: "Derby Alternative Provision",
+    details: "Emergency PEP called following second exclusion this term. Discussed triggers, reintegration support, and whether provision remains suitable. Virtual School Head recommended additional behaviour support and possible assessment for EHCP.",
+    outcome: "EHCP assessment referral to be made. Behaviour support plan updated. Reduced timetable for 2 weeks. Key worker to do daily school check-ins.",
+    follow_up_date: daysFromNow(14), staff_id: "staff_darren", status: "monitoring",
+    home_id: "home_oak", created_at: daysFromNow(-10) + "T10:00:00Z",
+  },
+  {
+    id: "edu_008", child_id: "yp_casey", record_type: "achievement", title: "Selected for school debate team",
+    date: daysFromNow(-1), school: "Allestree Woodlands",
+    details: "Casey selected to represent Year 11 in inter-school debate competition. Topic: social media impact. Casey enthusiastic and has begun research.",
+    outcome: "Competition date: 3 weeks. Staff to support with practice sessions at home.",
+    follow_up_date: daysFromNow(21), staff_id: "staff_chervelle", status: "open",
+    home_id: "home_oak", created_at: daysFromNow(-1) + "T16:30:00Z",
+  },
+  {
+    id: "edu_009", child_id: "yp_alex", record_type: "concern", title: "Persistent absence pattern",
+    date: daysFromNow(-15), school: "Derby Alternative Provision",
+    details: "School flagged that Alex's attendance has dropped to 76% this term. Three unauthorised absences in last two weeks — Alex refusing to attend on mornings after difficult evenings. Pattern emerging.",
+    outcome: "Attendance meeting with school booked. Morning routine review with Alex. Consider transport support.",
+    follow_up_date: daysFromNow(-10), staff_id: "staff_edward", status: "monitoring",
+    home_id: "home_oak", created_at: daysFromNow(-15) + "T10:00:00Z",
+  },
+  {
+    id: "edu_010", child_id: "yp_jordan", record_type: "achievement", title: "PE Award — Student of the Week",
+    date: daysFromNow(-4), school: "Highfields Academy",
+    details: "Jordan received Student of the Week award for PE. Teacher praised leadership during team sports and positive attitude. Jordan visibly proud — brought certificate home.",
+    outcome: "Certificate displayed in Jordan's room. Achievement shared at team meeting. Positive feedback to social worker.",
+    follow_up_date: undefined, staff_id: "staff_anna", status: "resolved",
+    home_id: "home_oak", created_at: daysFromNow(-4) + "T16:00:00Z",
+  },
+];
+
+// ── Risk Assessments seed data ────────────────────────────────────────────────
+store.riskAssessments = [
+  {
+    id: "ra_001", child_id: "yp_alex", domain: "aggression", current_level: "high", previous_level: "very_high",
+    trend: "decreasing", status: "current", assessed_by: "staff_darren", assessed_date: daysFromNow(-14),
+    review_date: daysFromNow(16), triggers: ["Perceived unfairness", "Feeling ignored", "Tiredness"],
+    indicators: ["Voice raising", "Pacing", "Clenched fists"],
+    mitigations: [
+      { strategy: "1:1 de-escalation using grounding techniques", responsible: "All staff", effectiveness: "effective" },
+      { strategy: "Structured daily routine with visual schedule", responsible: "Key worker", effectiveness: "effective" },
+    ],
+    contingency_plan: "If physical aggression occurs, remove other YP from area. Use Team Teach holds only as last resort. Debrief within 24 hours.",
+    child_views: "I know I get angry but I'm getting better at walking away. The breathing thing helps.",
+    history_notes: "Significant improvement since Sept. Was very_high on arrival. Anger management sessions with CAMHS contributing to progress.",
+    linked_incidents: ["inc_001"], home_id: "home_oak", created_at: daysFromNow(-60),
+  },
+  {
+    id: "ra_002", child_id: "yp_jordan", domain: "absconding", current_level: "medium", previous_level: "high",
+    trend: "decreasing", status: "current", assessed_by: "staff_anna", assessed_date: daysFromNow(-7),
+    review_date: daysFromNow(23), triggers: ["Cancelled contact with mum", "Arguments with peers", "Boredom"],
+    indicators: ["Withdrawing to bedroom", "Asking about bus routes", "Packing bag"],
+    mitigations: [
+      { strategy: "Proactive check-ins after contact sessions", responsible: "Key worker", effectiveness: "effective" },
+      { strategy: "Evening activity programme to reduce boredom triggers", responsible: "Shift team", effectiveness: "partially_effective" },
+    ],
+    contingency_plan: "If missing, follow home missing protocol. Notify police after 1hr. Check known locations. Contact social worker.",
+    child_views: "I don't run away anymore really. Sometimes I just need space and I go for a walk.",
+    history_notes: "Missing episodes reduced from weekly to monthly. Last episode 3 weeks ago, returned voluntarily after 2 hours.",
+    linked_incidents: [], home_id: "home_oak", created_at: daysFromNow(-45),
+  },
+  {
+    id: "ra_003", child_id: "yp_casey", domain: "self_harm", current_level: "medium", previous_level: "medium",
+    trend: "stable", status: "current", assessed_by: "staff_chervelle", assessed_date: daysFromNow(-10),
+    review_date: daysFromNow(20), triggers: ["Identity-related distress", "Social media conflict", "Anniversaries"],
+    indicators: ["Wearing long sleeves in warm weather", "Withdrawal from group activities", "Changes in eating"],
+    mitigations: [
+      { strategy: "Weekly therapeutic key work sessions", responsible: "Key worker", effectiveness: "effective" },
+      { strategy: "Access to sensory toolkit in bedroom", responsible: "All staff", effectiveness: "partially_effective" },
+      { strategy: "CAMHS sessions fortnightly", responsible: "CAMHS therapist", effectiveness: "effective" },
+    ],
+    contingency_plan: "If self-harm discovered, provide first aid, record on body map, notify manager and social worker. Do not remove items without discussion.",
+    child_views: "Writing helps me more than anything. When I feel like hurting myself I try to write instead.",
+    history_notes: "No new incidents in 6 weeks. Creative writing has become a positive coping strategy. CAMHS reports good engagement.",
+    linked_incidents: [], home_id: "home_oak", created_at: daysFromNow(-90),
+  },
+  {
+    id: "ra_004", child_id: "yp_alex", domain: "exploitation", current_level: "low", previous_level: "medium",
+    trend: "decreasing", status: "current", assessed_by: "staff_darren", assessed_date: daysFromNow(-21),
+    review_date: daysFromNow(9), triggers: ["Contact with older peers outside home", "Access to social media"],
+    indicators: ["New possessions", "Secretive phone use", "Late returns"],
+    mitigations: [
+      { strategy: "Online safety sessions and phone monitoring agreement", responsible: "Key worker", effectiveness: "effective" },
+      { strategy: "Contextual safeguarding mapping updated monthly", responsible: "RM", effectiveness: "effective" },
+    ],
+    contingency_plan: "If exploitation suspected, refer to MACE panel. Complete NRM referral if trafficking indicators present.",
+    child_views: "I understand why you check my phone now. I know some people aren't really friends.",
+    history_notes: "Previously county lines concerns. Multi-agency work through MACE has been effective. Alex now recognises grooming behaviours.",
+    linked_incidents: [], home_id: "home_oak", created_at: daysFromNow(-120),
+  },
+];
+
+// ── LAC Reviews seed data ─────────────────────────────────────────────────────
+store.lacReviews = [
+  {
+    id: "lac_001", child_id: "yp_alex", date: daysFromNow(-30), review_type: "subsequent",
+    iro: "Sarah Mitchell", venue: "Oak House — Quiet Room",
+    attendees: [
+      { name: "Sarah Mitchell", role: "IRO" }, { name: "Darren Laville", role: "Registered Manager" },
+      { name: "Lisa Chen", role: "Social Worker" }, { name: "Alex", role: "Young Person" },
+    ],
+    child_participation: "attended",
+    child_views: "I like it here. I want to stay. I'm doing better at school and I want to go to college next year.",
+    key_discussions: ["Education progress and college plans", "Contact with birth family", "Anger management progress", "Pathway planning"],
+    recommendations: ["Continue placement at Oak House", "Support college application", "Maintain CAMHS sessions"],
+    outcome: "placement_continues",
+    actions_agreed: [
+      { action: "Support Alex with college application", owner: "Key worker", due_date: daysFromNow(30), completed: false },
+      { action: "Arrange meeting with leaving care PA", owner: "Social worker", due_date: daysFromNow(14), completed: true },
+      { action: "Update pathway plan", owner: "Social worker", due_date: daysFromNow(21), completed: false },
+    ],
+    next_review_date: daysFromNow(150), placement_stability: "stable", care_plan_updated: true,
+    notes: "Positive review. Alex engaged well and contributed to all discussions. IRO pleased with progress.",
+    recorded_by: "staff_darren", home_id: "home_oak", created_at: daysFromNow(-30),
+  },
+  {
+    id: "lac_002", child_id: "yp_jordan", date: daysFromNow(-45), review_type: "subsequent",
+    iro: "David Wright", venue: "Oak House — Office",
+    attendees: [
+      { name: "David Wright", role: "IRO" }, { name: "Darren Laville", role: "Registered Manager" },
+      { name: "Mark Evans", role: "Social Worker" }, { name: "Anna Kovacs", role: "Key Worker" },
+    ],
+    child_participation: "views_submitted",
+    child_views: "I don't want to come to the meeting but I wrote down what I think. I want more contact with mum and I want to stay here.",
+    key_discussions: ["Contact arrangements with mother", "Missing episodes", "Leaving care preparation", "Housing options"],
+    recommendations: ["Increase supervised contact to fortnightly", "Continue missing from care work", "Begin supported accommodation visits"],
+    outcome: "care_plan_amended",
+    actions_agreed: [
+      { action: "Arrange fortnightly supervised contact", owner: "Social worker", due_date: daysFromNow(-30), completed: true },
+      { action: "Visit two supported accommodation options", owner: "Key worker", due_date: daysFromNow(7), completed: false },
+      { action: "Complete leaving care assessment", owner: "PA", due_date: daysFromNow(30), completed: false },
+    ],
+    next_review_date: daysFromNow(135), placement_stability: "some_concerns", care_plan_updated: true,
+    notes: "Jordan chose not to attend but submitted written views. IRO noted improved engagement compared to previous review.",
+    recorded_by: "staff_darren", home_id: "home_oak", created_at: daysFromNow(-45),
+  },
+  {
+    id: "lac_003", child_id: "yp_casey", date: daysFromNow(-60), review_type: "first_review",
+    iro: "Sarah Mitchell", venue: "Oak House — Living Room",
+    attendees: [
+      { name: "Sarah Mitchell", role: "IRO" }, { name: "Darren Laville", role: "Registered Manager" },
+      { name: "Priya Sharma", role: "Social Worker" }, { name: "Casey", role: "Young Person" },
+      { name: "Chervelle Duporte", role: "Key Worker" },
+    ],
+    child_participation: "attended",
+    child_views: "I feel safe here. The staff listen to me. I want to keep going to the same school. I like my key worker.",
+    key_discussions: ["Settling in at Oak House", "School attendance", "Identity and wellbeing", "CAMHS referral", "Life story work"],
+    recommendations: ["Maintain current school placement", "Prioritise CAMHS referral", "Begin life story work when ready", "Explore cultural identity support"],
+    outcome: "placement_continues",
+    actions_agreed: [
+      { action: "Fast-track CAMHS referral", owner: "Social worker", due_date: daysFromNow(-45), completed: true },
+      { action: "Source cultural identity resources", owner: "Key worker", due_date: daysFromNow(-30), completed: true },
+      { action: "Begin life story work", owner: "Key worker", due_date: daysFromNow(14), completed: false },
+    ],
+    next_review_date: daysFromNow(120), placement_stability: "stable", care_plan_updated: true,
+    notes: "Very positive first review. Casey settling well. Strong relationship with key worker. IRO impressed with home's identity-affirming approach.",
+    recorded_by: "staff_darren", home_id: "home_oak", created_at: daysFromNow(-60),
+  },
+];
+
+// ── Behaviour Support Plans seed data ─────────────────────────────────────────
+store.behaviourSupportPlans = [
+  {
+    id: "bsp_001", child_id: "yp_alex", created_date: daysFromNow(-90), created_by: "staff_darren",
+    review_date: daysFromNow(0), last_reviewed: daysFromNow(-30), status: "active",
+    diagnosis: ["ADHD", "Attachment disorder"],
+    primary_behaviours: [
+      { behaviour: "Verbal aggression towards peers", frequency: "weekly", severity: "medium", trend: "improving" },
+      { behaviour: "Property damage when frustrated", frequency: "occasional", severity: "high", trend: "improving" },
+    ],
+    known_triggers: [
+      { trigger: "Perceived unfairness or injustice", category: "emotional", likelihood: "high" },
+      { trigger: "Transitions between activities", category: "routine_change", likelihood: "medium" },
+      { trigger: "Tiredness or hunger", category: "sensory", likelihood: "medium" },
+    ],
+    early_warnings: ["Voice gets louder", "Pacing around room", "Refusing to make eye contact", "Verbal put-downs of others"],
+    de_escalation: [
+      { stage: "green", strategies: ["Verbal praise for positive choices", "Structured routine with visual schedule"], staff_approach: "Warm, predictable interactions. Give choices where possible." },
+      { stage: "amber", strategies: ["Offer 1:1 time in quiet space", "Redirect to physical activity", "Use agreed calm-down signal"], staff_approach: "Lower voice, reduce demands, acknowledge feelings." },
+      { stage: "red", strategies: ["Clear room of other YP", "Maintain safe distance", "Team Teach holds ONLY if imminent risk"], staff_approach: "Minimal language, calm presence, wait for de-escalation." },
+    ],
+    positive_strategies: [
+      { strategy: "Daily check-in with key worker", frequency: "Daily", effectiveness: "highly_effective" },
+      { strategy: "Grounding exercises (5-4-3-2-1)", frequency: "As needed", effectiveness: "effective" },
+    ],
+    rewards: [
+      { reward: "Extra gaming time", earned_by: "Full day without verbal aggression", frequency: "Daily" },
+      { reward: "Takeaway Friday", earned_by: "Positive week at school", frequency: "Weekly" },
+    ],
+    boundaries: [
+      { boundary: "No physical aggression towards others", consequence: "Loss of evening privilege + debrief", rationale: "Safety of all residents" },
+      { boundary: "Property must be respected", consequence: "Contribute to repair/replacement", rationale: "Teaches responsibility and accountability" },
+    ],
+    safety_plan: [
+      { scenario: "Physical aggression towards peer", response: "Separate YP, Team Teach if necessary, debrief both parties within 24hrs", staff_required: 2 },
+    ],
+    communication_needs: "Alex responds best to calm, direct communication. Avoid sarcasm. Give processing time before expecting a response.",
+    sensory_considerations: "Can be overstimulated by loud environments. Benefits from quiet space access.",
+    child_views: "I know I need help with my temper. The breathing thing works. I want to stop breaking things.",
+    parent_views: "N/A — no parental contact",
+    professional_input: [
+      { name: "Dr Sarah Khan", role: "CAMHS Psychologist", recommendation: "Continue anger management programme. Consider EMDR for trauma processing.", date: daysFromNow(-45) },
+    ],
+    staff_guidance: ["Always offer choice rather than demand", "Avoid confrontation in front of peers", "Debrief privately after incidents"],
+    restrictive_interventions: [
+      { intervention: "Team Teach standing hold", last_resort: true, authorised_by: "Darren Laville (RM)", conditions: "Only when imminent risk of serious harm to self or others" },
+    ],
+    review_history: [
+      { date: daysFromNow(-30), reviewed_by: "staff_darren", changes: "Reduced frequency of verbal aggression from daily to weekly", outcome: "Plan continues with updated strategies" },
+    ],
+    home_id: "home_oak", created_at: daysFromNow(-90),
+  },
+  {
+    id: "bsp_002", child_id: "yp_jordan", created_date: daysFromNow(-60), created_by: "staff_anna",
+    review_date: daysFromNow(30), last_reviewed: daysFromNow(-15), status: "active",
+    diagnosis: [],
+    primary_behaviours: [
+      { behaviour: "Absconding from home", frequency: "occasional", severity: "high", trend: "improving" },
+      { behaviour: "Refusal to engage with routines", frequency: "weekly", severity: "low", trend: "stable" },
+    ],
+    known_triggers: [
+      { trigger: "Cancelled contact with mum", category: "emotional", likelihood: "high" },
+      { trigger: "Peer conflict", category: "social", likelihood: "medium" },
+    ],
+    early_warnings: ["Withdraws to bedroom", "Stops eating with group", "Asks about bus times"],
+    de_escalation: [
+      { stage: "green", strategies: ["Maintain predictable routine", "Proactive check-ins after contact"], staff_approach: "Gentle, non-intrusive. Respect need for space." },
+      { stage: "amber", strategies: ["Offer walk with staff member", "1:1 conversation about feelings"], staff_approach: "Acknowledge emotions without pressure." },
+      { stage: "red", strategies: ["Do not physically prevent leaving unless immediate danger", "Follow at safe distance", "Contact police if >1hr"], staff_approach: "Stay calm, state you care, give phone number." },
+    ],
+    positive_strategies: [
+      { strategy: "Evening activity choices board", frequency: "Daily", effectiveness: "effective" },
+      { strategy: "Walking group twice weekly", frequency: "Twice weekly", effectiveness: "highly_effective" },
+    ],
+    rewards: [
+      { reward: "Weekend cinema trip", earned_by: "No absconding for 2 weeks", frequency: "Fortnightly" },
+    ],
+    boundaries: [
+      { boundary: "Must tell staff before leaving the building", consequence: "Wellbeing conversation + risk assessment review", rationale: "Staff need to know where YP is for safeguarding" },
+    ],
+    safety_plan: [
+      { scenario: "Jordan leaves without telling staff", response: "Follow missing protocol. Check known locations. Police after 1hr.", staff_required: 1 },
+    ],
+    communication_needs: "Jordan responds to low-key conversations. Avoids direct questions — use side-by-side activities (walking, cooking) to facilitate discussion.",
+    sensory_considerations: "No specific sensory needs identified.",
+    child_views: "I don't run away, I just need to get out sometimes. I always come back.",
+    parent_views: "Mum wants more contact. Supports placement.",
+    professional_input: [],
+    staff_guidance: ["Don't interrogate when Jordan returns — welcome back warmly", "Offer food and drink on return", "Debrief next day, not immediately"],
+    restrictive_interventions: [],
+    review_history: [
+      { date: daysFromNow(-15), reviewed_by: "staff_anna", changes: "Walking group added as proactive strategy", outcome: "Missing episodes reduced" },
+    ],
+    home_id: "home_oak", created_at: daysFromNow(-60),
+  },
+];
+
 // ── CRUD helpers ──────────────────────────────────────────────────────────────
 
 export function getStore() { return store; }
@@ -1856,9 +2496,16 @@ export const db = {
   handovers: {
     findAll: () => store.handovers,
     findLatest: () => store.handovers.sort((a, b) => b.created_at.localeCompare(a.created_at))[0] || null,
+    findById: (id: string) => store.handovers.find((h) => h.id === id) || null,
     findByDate: (date: string) => store.handovers.filter((h) => h.shift_date === date),
+    update: (id: string, data: Partial<HandoverEntry>): HandoverEntry | null => {
+      const idx = store.handovers.findIndex((h) => h.id === id);
+      if (idx === -1) return null;
+      store.handovers[idx] = { ...store.handovers[idx], ...data };
+      return store.handovers[idx];
+    },
     create: (data: Partial<HandoverEntry>): HandoverEntry => {
-      const entry = { ...data, id: generateId("hnd"), created_at: new Date().toISOString() } as HandoverEntry;
+      const entry = { ...data, id: generateId("hnd"), sign_offs: [], created_at: new Date().toISOString() } as HandoverEntry;
       store.handovers.push(entry);
       return entry;
     },
@@ -1940,6 +2587,7 @@ export const db = {
   shifts: {
     findAll: () => store.shifts,
     findToday: () => store.shifts.filter((s) => s.date === todayStr()),
+    findByStaff: (staffId: string) => store.shifts.filter((s) => s.staff_id === staffId),
     findOpen: () => store.shifts.filter((s) => s.is_open_shift && s.date >= todayStr()),
     findByDateAndTime: (date: string, startTime: string) =>
       store.shifts.find((s) => s.date === date && s.start_time === startTime && s.is_open_shift),
@@ -1958,6 +2606,27 @@ export const db = {
       } as Shift;
       store.shifts.push(shift);
       return shift;
+    },
+  },
+
+  // ── Shift Swaps ─────────────────────────────────────────────────────────
+  shiftSwaps: {
+    findAll: () => store.shiftSwaps,
+    findPending: () => store.shiftSwaps.filter((s) => s.status === "pending"),
+    create: (data: Partial<ShiftSwapRequest>): ShiftSwapRequest => {
+      const swap = {
+        ...data,
+        id: generateId("swap"),
+        created_at: new Date().toISOString(),
+      } as ShiftSwapRequest;
+      store.shiftSwaps.push(swap);
+      return swap;
+    },
+    update: (id: string, data: Partial<ShiftSwapRequest>): ShiftSwapRequest | null => {
+      const idx = store.shiftSwaps.findIndex((s) => s.id === id);
+      if (idx === -1) return null;
+      store.shiftSwaps[idx] = { ...store.shiftSwaps[idx], ...data };
+      return store.shiftSwaps[idx];
     },
   },
 
@@ -2451,6 +3120,729 @@ export const db = {
         };
       }
       return review;
+    },
+  },
+
+  // ── Reg 44 Visit Reports ─────────────────────────────────────────────────
+  reg44VisitReports: {
+    findAll: () => store.reg44VisitReports,
+    findById: (id: string) => store.reg44VisitReports.find((v) => v.id === id),
+    create: (data: Partial<Reg44VisitReport>): Reg44VisitReport => {
+      const visit = { ...data, id: generateId("v44"), created_at: new Date().toISOString() } as Reg44VisitReport;
+      store.reg44VisitReports.push(visit);
+      return visit;
+    },
+    update: (id: string, data: Partial<Reg44VisitReport>): Reg44VisitReport | null => {
+      const idx = store.reg44VisitReports.findIndex((v) => v.id === id);
+      if (idx === -1) return null;
+      store.reg44VisitReports[idx] = { ...store.reg44VisitReports[idx], ...data };
+      return store.reg44VisitReports[idx];
+    },
+    updateRecommendation: (visitId: string, recId: string, data: Partial<Reg44Recommendation>): Reg44Recommendation | null => {
+      const visit = store.reg44VisitReports.find((v) => v.id === visitId);
+      if (!visit) return null;
+      const recIdx = visit.recommendations.findIndex((r) => r.id === recId);
+      if (recIdx === -1) return null;
+      visit.recommendations[recIdx] = { ...visit.recommendations[recIdx], ...data };
+      return visit.recommendations[recIdx];
+    },
+  },
+
+  // ── Key Working Sessions ──────────────────────────────────────────────────
+  keyWorkingSessions: {
+    findAll: () => store.keyWorkingSessions,
+    findByChild: (childId: string) => store.keyWorkingSessions.filter((s) => s.child_id === childId),
+    findByStaff: (staffId: string) => store.keyWorkingSessions.filter((s) => s.staff_id === staffId),
+    findById: (id: string) => store.keyWorkingSessions.find((s) => s.id === id),
+    create: (data: Partial<KeyWorkingSession>): KeyWorkingSession => {
+      const session = {
+        ...data,
+        id: generateId("kw"),
+        home_id: data.home_id ?? "home_oak",
+        created_at: new Date().toISOString(),
+      } as KeyWorkingSession;
+      store.keyWorkingSessions.push(session);
+      return session;
+    },
+    update: (id: string, data: Partial<KeyWorkingSession>): KeyWorkingSession | null => {
+      const idx = store.keyWorkingSessions.findIndex((s) => s.id === id);
+      if (idx === -1) return null;
+      store.keyWorkingSessions[idx] = { ...store.keyWorkingSessions[idx], ...data };
+      return store.keyWorkingSessions[idx];
+    },
+  },
+
+  // ── Education Records ────────────────────────────────────────────────────
+  educationRecords: {
+    findAll: () => store.educationRecords,
+    findByChild: (childId: string) => store.educationRecords.filter((r) => r.child_id === childId),
+    findById: (id: string) => store.educationRecords.find((r) => r.id === id),
+    create: (data: Partial<EducationRecord>): EducationRecord => {
+      const record = {
+        ...data,
+        id: generateId("edu"),
+        home_id: data.home_id ?? "home_oak",
+        created_at: new Date().toISOString(),
+      } as EducationRecord;
+      store.educationRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<EducationRecord>): EducationRecord | null => {
+      const idx = store.educationRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.educationRecords[idx] = { ...store.educationRecords[idx], ...data };
+      return store.educationRecords[idx];
+    },
+  },
+
+  riskAssessments: {
+    findAll: () => store.riskAssessments,
+    findByChild: (childId: string) => store.riskAssessments.filter((r) => r.child_id === childId),
+    findById: (id: string) => store.riskAssessments.find((r) => r.id === id),
+    create: (data: Partial<RiskAssessment>): RiskAssessment => {
+      const record = { ...data, id: generateId("ra"), home_id: data.home_id ?? "home_oak", created_at: new Date().toISOString() } as RiskAssessment;
+      store.riskAssessments.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<RiskAssessment>): RiskAssessment | null => {
+      const idx = store.riskAssessments.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.riskAssessments[idx] = { ...store.riskAssessments[idx], ...data };
+      return store.riskAssessments[idx];
+    },
+  },
+
+  lacReviews: {
+    findAll: () => store.lacReviews,
+    findByChild: (childId: string) => store.lacReviews.filter((r) => r.child_id === childId),
+    findById: (id: string) => store.lacReviews.find((r) => r.id === id),
+    create: (data: Partial<LACReview>): LACReview => {
+      const record = { ...data, id: generateId("lac"), home_id: data.home_id ?? "home_oak", created_at: new Date().toISOString() } as LACReview;
+      store.lacReviews.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<LACReview>): LACReview | null => {
+      const idx = store.lacReviews.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.lacReviews[idx] = { ...store.lacReviews[idx], ...data };
+      return store.lacReviews[idx];
+    },
+  },
+
+  behaviourSupportPlans: {
+    findAll: () => store.behaviourSupportPlans,
+    findByChild: (childId: string) => store.behaviourSupportPlans.filter((r) => r.child_id === childId),
+    findById: (id: string) => store.behaviourSupportPlans.find((r) => r.id === id),
+    create: (data: Partial<BehaviourSupportPlan>): BehaviourSupportPlan => {
+      const record = { ...data, id: generateId("bsp"), home_id: data.home_id ?? "home_oak", created_at: new Date().toISOString() } as BehaviourSupportPlan;
+      store.behaviourSupportPlans.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<BehaviourSupportPlan>): BehaviourSupportPlan | null => {
+      const idx = store.behaviourSupportPlans.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.behaviourSupportPlans[idx] = { ...store.behaviourSupportPlans[idx], ...data };
+      return store.behaviourSupportPlans[idx];
+    },
+  },
+
+  delegatedAuthority: {
+    findAll: () => store.delegatedAuthority,
+    findByChild: (childId: string) => store.delegatedAuthority.filter((r) => r.child_id === childId),
+    findById: (id: string) => store.delegatedAuthority.find((r) => r.id === id),
+    create: (data: Partial<DelegatedAuthority>): DelegatedAuthority => {
+      const record = { ...data, id: generateId("da"), created_at: new Date().toISOString() } as DelegatedAuthority;
+      store.delegatedAuthority.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<DelegatedAuthority>): DelegatedAuthority | null => {
+      const idx = store.delegatedAuthority.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.delegatedAuthority[idx] = { ...store.delegatedAuthority[idx], ...data };
+      return store.delegatedAuthority[idx];
+    },
+  },
+
+  houseMeetings: {
+    findAll: () => store.houseMeetings,
+    findById: (id: string) => store.houseMeetings.find((r) => r.id === id),
+    create: (data: Partial<HouseMeeting>): HouseMeeting => {
+      const record = { ...data, id: generateId("hm"), created_at: new Date().toISOString() } as HouseMeeting;
+      store.houseMeetings.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<HouseMeeting>): HouseMeeting | null => {
+      const idx = store.houseMeetings.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.houseMeetings[idx] = { ...store.houseMeetings[idx], ...data };
+      return store.houseMeetings[idx];
+    },
+  },
+
+  sanctionRewards: {
+    findAll: () => store.sanctionRewards,
+    findByChild: (childId: string) => store.sanctionRewards.filter((r) => r.child_id === childId),
+    findById: (id: string) => store.sanctionRewards.find((r) => r.id === id),
+    create: (data: Partial<SanctionRewardEntry>): SanctionRewardEntry => {
+      const record = { ...data, id: generateId("sr"), created_at: new Date().toISOString() } as SanctionRewardEntry;
+      store.sanctionRewards.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<SanctionRewardEntry>): SanctionRewardEntry | null => {
+      const idx = store.sanctionRewards.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.sanctionRewards[idx] = { ...store.sanctionRewards[idx], ...data };
+      return store.sanctionRewards[idx];
+    },
+  },
+
+  ypFeedback: {
+    findAll: () => store.ypFeedback,
+    findByChild: (childId: string) => store.ypFeedback.filter((r) => r.child_id === childId),
+    findById: (id: string) => store.ypFeedback.find((r) => r.id === id),
+    create: (data: Partial<YPFeedbackEntry>): YPFeedbackEntry => {
+      const record = { ...data, id: generateId("fb"), created_at: new Date().toISOString() } as YPFeedbackEntry;
+      store.ypFeedback.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<YPFeedbackEntry>): YPFeedbackEntry | null => {
+      const idx = store.ypFeedback.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.ypFeedback[idx] = { ...store.ypFeedback[idx], ...data };
+      return store.ypFeedback[idx];
+    },
+  },
+
+  sleepLog: {
+    findAll: () => store.sleepLog,
+    findById: (id: string) => store.sleepLog.find((r) => r.id === id),
+    create: (data: Partial<SleepLogEntry>): SleepLogEntry => {
+      const record = { ...data, id: generateId("sl"), created_at: new Date().toISOString() } as SleepLogEntry;
+      store.sleepLog.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<SleepLogEntry>): SleepLogEntry | null => {
+      const idx = store.sleepLog.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.sleepLog[idx] = { ...store.sleepLog[idx], ...data };
+      return store.sleepLog[idx];
+    },
+  },
+
+  compliments: {
+    findAll: () => store.compliments,
+    findById: (id: string) => store.compliments.find((r) => r.id === id),
+    create: (data: Partial<Compliment>): Compliment => {
+      const record = { ...data, id: generateId("cmp"), created_at: new Date().toISOString() } as Compliment;
+      store.compliments.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<Compliment>): Compliment | null => {
+      const idx = store.compliments.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.compliments[idx] = { ...store.compliments[idx], ...data };
+      return store.compliments[idx];
+    },
+  },
+
+  visitors: {
+    findAll: () => store.visitors,
+    findById: (id: string) => store.visitors.find((r) => r.id === id),
+    create: (data: Partial<VisitorEntry>): VisitorEntry => {
+      const record = { ...data, id: generateId("vis"), created_at: new Date().toISOString() } as VisitorEntry;
+      store.visitors.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<VisitorEntry>): VisitorEntry | null => {
+      const idx = store.visitors.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.visitors[idx] = { ...store.visitors[idx], ...data };
+      return store.visitors[idx];
+    },
+  },
+
+  fireDrills: {
+    findAll: () => store.fireDrills,
+    findById: (id: string) => store.fireDrills.find((r) => r.id === id),
+    create: (data: Partial<FireDrill>): FireDrill => {
+      const record = { ...data, id: generateId("fd"), created_at: new Date().toISOString() } as FireDrill;
+      store.fireDrills.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<FireDrill>): FireDrill | null => {
+      const idx = store.fireDrills.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.fireDrills[idx] = { ...store.fireDrills[idx], ...data };
+      return store.fireDrills[idx];
+    },
+  },
+
+  significantEvents: {
+    findAll: () => store.significantEvents,
+    findByChild: (childId: string) => store.significantEvents.filter((r) => r.child_id === childId),
+    findById: (id: string) => store.significantEvents.find((r) => r.id === id),
+    create: (data: Partial<SignificantEvent>): SignificantEvent => {
+      const record = { ...data, id: generateId("se"), created_at: new Date().toISOString() } as SignificantEvent;
+      store.significantEvents.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<SignificantEvent>): SignificantEvent | null => {
+      const idx = store.significantEvents.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.significantEvents[idx] = { ...store.significantEvents[idx], ...data };
+      return store.significantEvents[idx];
+    },
+  },
+
+  restraints: {
+    findAll: () => store.restraints,
+    findByChild: (childId: string) => store.restraints.filter((r) => r.child_id === childId),
+    findById: (id: string) => store.restraints.find((r) => r.id === id),
+    create: (data: Partial<RestraintRecord>): RestraintRecord => {
+      const record = { ...data, id: generateId("rst"), created_at: new Date().toISOString() } as RestraintRecord;
+      store.restraints.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<RestraintRecord>): RestraintRecord | null => {
+      const idx = store.restraints.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.restraints[idx] = { ...store.restraints[idx], ...data };
+      return store.restraints[idx];
+    },
+  },
+
+  notifiableEvents: {
+    findAll: () => store.notifiableEvents,
+    findByChild: (childId: string) => store.notifiableEvents.filter((r) => r.child_id === childId),
+    findById: (id: string) => store.notifiableEvents.find((r) => r.id === id),
+    create: (data: Partial<NotifiableEvent>): NotifiableEvent => {
+      const record = { ...data, id: generateId("ne") } as NotifiableEvent;
+      store.notifiableEvents.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<NotifiableEvent>): NotifiableEvent | null => {
+      const idx = store.notifiableEvents.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.notifiableEvents[idx] = { ...store.notifiableEvents[idx], ...data };
+      return store.notifiableEvents[idx];
+    },
+  },
+
+  nightLogs: {
+    findAll: () => store.nightLogs,
+    findById: (id: string) => store.nightLogs.find((r) => r.id === id),
+    create: (data: Partial<NightLogEntry>): NightLogEntry => {
+      const record = { ...data, id: generateId("nl") } as NightLogEntry;
+      store.nightLogs.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<NightLogEntry>): NightLogEntry | null => {
+      const idx = store.nightLogs.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.nightLogs[idx] = { ...store.nightLogs[idx], ...data };
+      return store.nightLogs[idx];
+    },
+  },
+
+  behaviourLog: {
+    findAll: () => store.behaviourLog,
+    findByChild: (childId: string) => store.behaviourLog.filter((r) => r.child_id === childId),
+    findById: (id: string) => store.behaviourLog.find((r) => r.id === id),
+    create: (data: Partial<BehaviourEntry>): BehaviourEntry => {
+      const record = { ...data, id: generateId("bh"), created_at: new Date().toISOString() } as BehaviourEntry;
+      store.behaviourLog.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<BehaviourEntry>): BehaviourEntry | null => {
+      const idx = store.behaviourLog.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.behaviourLog[idx] = { ...store.behaviourLog[idx], ...data };
+      return store.behaviourLog[idx];
+    },
+  },
+
+  accidentBook: {
+    findAll: () => store.accidentBook,
+    findById: (id: string) => store.accidentBook.find((r) => r.id === id),
+    create: (data: Partial<AccidentRecord>): AccidentRecord => {
+      const record = { ...data, id: generateId("acc"), created_at: new Date().toISOString() } as AccidentRecord;
+      store.accidentBook.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<AccidentRecord>): AccidentRecord | null => {
+      const idx = store.accidentBook.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.accidentBook[idx] = { ...store.accidentBook[idx], ...data };
+      return store.accidentBook[idx];
+    },
+  },
+
+  absenceTracking: {
+    findAll: () => store.absenceTracking,
+    findByChild: (childId: string) => store.absenceTracking.filter((r) => r.child_id === childId),
+    findById: (id: string) => store.absenceTracking.find((r) => r.id === id),
+    create: (data: Partial<AbsenceRecord>): AbsenceRecord => {
+      const record = { ...data, id: generateId("abs"), created_at: new Date().toISOString() } as AbsenceRecord;
+      store.absenceTracking.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<AbsenceRecord>): AbsenceRecord | null => {
+      const idx = store.absenceTracking.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.absenceTracking[idx] = { ...store.absenceTracking[idx], ...data };
+      return store.absenceTracking[idx];
+    },
+  },
+
+  positiveHandling: {
+    findAll: () => store.positiveHandling,
+    findByChild: (childId: string) => store.positiveHandling.filter((r) => r.child_id === childId),
+    findById: (id: string) => store.positiveHandling.find((r) => r.id === id),
+    create: (data: Partial<PositiveHandlingPlan>): PositiveHandlingPlan => {
+      const record = { ...data, id: generateId("php"), created_at: new Date().toISOString() } as PositiveHandlingPlan;
+      store.positiveHandling.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<PositiveHandlingPlan>): PositiveHandlingPlan | null => {
+      const idx = store.positiveHandling.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.positiveHandling[idx] = { ...store.positiveHandling[idx], ...data };
+      return store.positiveHandling[idx];
+    },
+  },
+
+  medicationErrors: {
+    findAll: () => store.medicationErrors,
+    findByChild: (childId: string) => store.medicationErrors.filter((r) => r.child_id === childId),
+    findById: (id: string) => store.medicationErrors.find((r) => r.id === id),
+    create: (data: Partial<MedicationError>): MedicationError => {
+      const record = { ...data, id: generateId("me"), created_at: new Date().toISOString() } as MedicationError;
+      store.medicationErrors.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<MedicationError>): MedicationError | null => {
+      const idx = store.medicationErrors.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.medicationErrors[idx] = { ...store.medicationErrors[idx], ...data };
+      return store.medicationErrors[idx];
+    },
+  },
+
+  bodyMap: {
+    findAll: () => store.bodyMap,
+    findByChild: (childId: string) => store.bodyMap.filter((r) => r.child_id === childId),
+    findById: (id: string) => store.bodyMap.find((r) => r.id === id),
+    create: (data: Partial<BodyMapEntry>): BodyMapEntry => {
+      const record = { ...data, id: generateId("bm"), created_at: new Date().toISOString() } as BodyMapEntry;
+      store.bodyMap.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<BodyMapEntry>): BodyMapEntry | null => {
+      const idx = store.bodyMap.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.bodyMap[idx] = { ...store.bodyMap[idx], ...data };
+      return store.bodyMap[idx];
+    },
+  },
+
+  activities: {
+    findAll: () => store.activities,
+    findByChild: (childId: string) => store.activities.filter((r) => r.child_id === childId),
+    findById: (id: string) => store.activities.find((r) => r.id === id),
+    create: (data: Partial<Activity>): Activity => {
+      const record = { ...data, id: generateId("act"), created_at: new Date().toISOString() } as Activity;
+      store.activities.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<Activity>): Activity | null => {
+      const idx = store.activities.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.activities[idx] = { ...store.activities[idx], ...data };
+      return store.activities[idx];
+    },
+  },
+
+  adoptionRecords: {
+    findAll: () => store.adoptionRecords,
+    findById: (id: string) => store.adoptionRecords.find((r) => r.id === id),
+    create: (data: Partial<AdoptionRecord>): AdoptionRecord => {
+      const record = { ...data, id: generateId("adp"), created_at: new Date().toISOString() } as AdoptionRecord;
+      store.adoptionRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<AdoptionRecord>): AdoptionRecord | null => {
+      const idx = store.adoptionRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.adoptionRecords[idx] = { ...store.adoptionRecords[idx], ...data };
+      return store.adoptionRecords[idx];
+    },
+  },
+
+  advocacyRecords: {
+    findAll: () => store.advocacyRecords,
+    findByChild: (childId: string) => store.advocacyRecords.filter((r) => r.child_id === childId),
+    findById: (id: string) => store.advocacyRecords.find((r) => r.id === id),
+    create: (data: Partial<AdvocacyRecord>): AdvocacyRecord => {
+      const record = { ...data, id: generateId("adv"), created_at: new Date().toISOString() } as AdvocacyRecord;
+      store.advocacyRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<AdvocacyRecord>): AdvocacyRecord | null => {
+      const idx = store.advocacyRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.advocacyRecords[idx] = { ...store.advocacyRecords[idx], ...data };
+      return store.advocacyRecords[idx];
+    },
+  },
+
+  afterCareRecords: {
+    findAll: () => store.afterCareRecords,
+    findByChild: (childId: string) => store.afterCareRecords.filter((r) => r.child_id === childId),
+    findById: (id: string) => store.afterCareRecords.find((r) => r.id === id),
+    create: (data: Partial<AfterCareRecord>): AfterCareRecord => {
+      const record = { ...data, id: generateId("ac"), created_at: new Date().toISOString() } as AfterCareRecord;
+      store.afterCareRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<AfterCareRecord>): AfterCareRecord | null => {
+      const idx = store.afterCareRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.afterCareRecords[idx] = { ...store.afterCareRecords[idx], ...data };
+      return store.afterCareRecords[idx];
+    },
+  },
+
+  agencyInductions: {
+    findAll: () => store.agencyInductions,
+    findById: (id: string) => store.agencyInductions.find((r) => r.id === id),
+    create: (data: Partial<AgencyInduction>): AgencyInduction => {
+      const record = { ...data, id: generateId("agi"), created_at: new Date().toISOString() } as AgencyInduction;
+      store.agencyInductions.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<AgencyInduction>): AgencyInduction | null => {
+      const idx = store.agencyInductions.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.agencyInductions[idx] = { ...store.agencyInductions[idx], ...data };
+      return store.agencyInductions[idx];
+    },
+  },
+
+  agencyStaffLog: {
+    findAll: () => store.agencyStaffLog,
+    findById: (id: string) => store.agencyStaffLog.find((r) => r.id === id),
+    create: (data: Partial<AgencyStaffRecord>): AgencyStaffRecord => {
+      const record = { ...data, id: generateId("asl"), created_at: new Date().toISOString() } as AgencyStaffRecord;
+      store.agencyStaffLog.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<AgencyStaffRecord>): AgencyStaffRecord | null => {
+      const idx = store.agencyStaffLog.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.agencyStaffLog[idx] = { ...store.agencyStaffLog[idx], ...data };
+      return store.agencyStaffLog[idx];
+    },
+  },
+
+  annualDevelopmentReviews: {
+    findAll: () => store.annualDevelopmentReviews,
+    findById: (id: string) => store.annualDevelopmentReviews.find((r) => r.id === id),
+    create: (data: Partial<AnnualDevelopmentReview>): AnnualDevelopmentReview => {
+      const record = { ...data, id: generateId("adr"), created_at: new Date().toISOString() } as AnnualDevelopmentReview;
+      store.annualDevelopmentReviews.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<AnnualDevelopmentReview>): AnnualDevelopmentReview | null => {
+      const idx = store.annualDevelopmentReviews.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.annualDevelopmentReviews[idx] = { ...store.annualDevelopmentReviews[idx], ...data };
+      return store.annualDevelopmentReviews[idx];
+    },
+  },
+
+  annualHealthAssessments: {
+    findAll: () => store.annualHealthAssessments,
+    findById: (id: string) => store.annualHealthAssessments.find((r) => r.id === id),
+    findByChild: (childId: string) => store.annualHealthAssessments.filter((r) => r.child_id === childId),
+    create: (data: Partial<AnnualHealthAssessment>): AnnualHealthAssessment => {
+      const record = { ...data, id: generateId("aha"), created_at: new Date().toISOString() } as AnnualHealthAssessment;
+      store.annualHealthAssessments.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<AnnualHealthAssessment>): AnnualHealthAssessment | null => {
+      const idx = store.annualHealthAssessments.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.annualHealthAssessments[idx] = { ...store.annualHealthAssessments[idx], ...data };
+      return store.annualHealthAssessments[idx];
+    },
+  },
+
+  annualOutcomes: {
+    findAll: () => store.annualOutcomes,
+    findById: (id: string) => store.annualOutcomes.find((r) => r.id === id),
+    findByChild: (childId: string) => store.annualOutcomes.filter((r) => r.child_id === childId),
+    create: (data: Partial<AnnualOutcome>): AnnualOutcome => {
+      const record = { ...data, id: generateId("ao"), created_at: new Date().toISOString() } as AnnualOutcome;
+      store.annualOutcomes.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<AnnualOutcome>): AnnualOutcome | null => {
+      const idx = store.annualOutcomes.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.annualOutcomes[idx] = { ...store.annualOutcomes[idx], ...data };
+      return store.annualOutcomes[idx];
+    },
+  },
+
+  appointments: {
+    findAll: () => store.appointments,
+    findById: (id: string) => store.appointments.find((r) => r.id === id),
+    findByChild: (childId: string) => store.appointments.filter((r) => r.child_id === childId),
+    create: (data: Partial<Appointment>): Appointment => {
+      const record = { ...data, id: generateId("apt"), created_at: new Date().toISOString() } as Appointment;
+      store.appointments.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<Appointment>): Appointment | null => {
+      const idx = store.appointments.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.appointments[idx] = { ...store.appointments[idx], ...data };
+      return store.appointments[idx];
+    },
+  },
+
+  needsAssessments: {
+    findAll: () => store.needsAssessments,
+    findById: (id: string) => store.needsAssessments.find((r) => r.id === id),
+    findByChild: (childId: string) => store.needsAssessments.filter((r) => r.child_id === childId),
+    create: (data: Partial<NeedsAssessment>): NeedsAssessment => {
+      const record = { ...data, id: generateId("aon"), created_at: new Date().toISOString() } as NeedsAssessment;
+      store.needsAssessments.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<NeedsAssessment>): NeedsAssessment | null => {
+      const idx = store.needsAssessments.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.needsAssessments[idx] = { ...store.needsAssessments[idx], ...data };
+      return store.needsAssessments[idx];
+    },
+  },
+
+  attachmentProfiles: {
+    findAll: () => store.attachmentProfiles,
+    findById: (id: string) => store.attachmentProfiles.find((r) => r.id === id),
+    findByChild: (childId: string) => store.attachmentProfiles.filter((r) => r.child_id === childId),
+    create: (data: Partial<AttachmentProfile>): AttachmentProfile => {
+      const record = { ...data, id: generateId("ap"), created_at: new Date().toISOString() } as AttachmentProfile;
+      store.attachmentProfiles.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<AttachmentProfile>): AttachmentProfile | null => {
+      const idx = store.attachmentProfiles.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.attachmentProfiles[idx] = { ...store.attachmentProfiles[idx], ...data };
+      return store.attachmentProfiles[idx];
+    },
+  },
+
+  behaviourMapEntries: {
+    findAll: () => store.behaviourMapEntries,
+    findById: (id: string) => store.behaviourMapEntries.find((r) => r.id === id),
+    findByChild: (childId: string) => store.behaviourMapEntries.filter((r) => r.child_id === childId),
+    create: (data: Partial<BehaviourMapEntry>): BehaviourMapEntry => {
+      const record = { ...data, id: generateId("bm"), created_at: new Date().toISOString() } as BehaviourMapEntry;
+      store.behaviourMapEntries.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<BehaviourMapEntry>): BehaviourMapEntry | null => {
+      const idx = store.behaviourMapEntries.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.behaviourMapEntries[idx] = { ...store.behaviourMapEntries[idx], ...data };
+      return store.behaviourMapEntries[idx];
+    },
+  },
+
+  bereavementRecords: {
+    findAll: () => store.bereavementRecords,
+    findById: (id: string) => store.bereavementRecords.find((r) => r.id === id),
+    findByChild: (childId: string) => store.bereavementRecords.filter((r) => r.child_id === childId),
+    create: (data: Partial<BereavementRecord>): BereavementRecord => {
+      const record = { ...data, id: generateId("br"), created_at: new Date().toISOString() } as BereavementRecord;
+      store.bereavementRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<BereavementRecord>): BereavementRecord | null => {
+      const idx = store.bereavementRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.bereavementRecords[idx] = { ...store.bereavementRecords[idx], ...data };
+      return store.bereavementRecords[idx];
+    },
+  },
+
+  bullyingIncidents: {
+    findAll: () => store.bullyingIncidents,
+    findById: (id: string) => store.bullyingIncidents.find((r) => r.id === id),
+    findByChild: (childId: string) => store.bullyingIncidents.filter((r) => r.child_id === childId),
+    create: (data: Partial<BullyingIncident>): BullyingIncident => {
+      const record = { ...data, id: generateId("bul"), created_at: new Date().toISOString() } as BullyingIncident;
+      store.bullyingIncidents.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<BullyingIncident>): BullyingIncident | null => {
+      const idx = store.bullyingIncidents.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.bullyingIncidents[idx] = { ...store.bullyingIncidents[idx], ...data };
+      return store.bullyingIncidents[idx];
+    },
+  },
+
+  camhsReferrals: {
+    findAll: () => store.camhsReferrals,
+    findById: (id: string) => store.camhsReferrals.find((r) => r.id === id),
+    findByChild: (childId: string) => store.camhsReferrals.filter((r) => r.child_id === childId),
+    create: (data: Partial<CamhsReferral>): CamhsReferral => {
+      const record = { ...data, id: generateId("camhs"), created_at: new Date().toISOString() } as CamhsReferral;
+      store.camhsReferrals.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<CamhsReferral>): CamhsReferral | null => {
+      const idx = store.camhsReferrals.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.camhsReferrals[idx] = { ...store.camhsReferrals[idx], ...data };
+      return store.camhsReferrals[idx];
+    },
+  },
+
+  cctvAccesses: {
+    findAll: () => store.cctvAccesses,
+    findById: (id: string) => store.cctvAccesses.find((r) => r.id === id),
+    create: (data: Partial<CCTVAccess>): CCTVAccess => {
+      const record = { ...data, id: generateId("cc"), created_at: new Date().toISOString() } as CCTVAccess;
+      store.cctvAccesses.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<CCTVAccess>): CCTVAccess | null => {
+      const idx = store.cctvAccesses.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.cctvAccesses[idx] = { ...store.cctvAccesses[idx], ...data };
+      return store.cctvAccesses[idx];
+    },
+  },
+
+  adhdPlans: {
+    findAll: () => store.adhdPlans,
+    findById: (id: string) => store.adhdPlans.find((r) => r.id === id),
+    findByChild: (childId: string) => store.adhdPlans.filter((r) => r.child_id === childId),
+    create: (data: Partial<ADHDPlan>): ADHDPlan => {
+      const record = { ...data, id: generateId("adhd"), created_at: new Date().toISOString() } as ADHDPlan;
+      store.adhdPlans.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<ADHDPlan>): ADHDPlan | null => {
+      const idx = store.adhdPlans.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.adhdPlans[idx] = { ...store.adhdPlans[idx], ...data };
+      return store.adhdPlans[idx];
     },
   },
 };

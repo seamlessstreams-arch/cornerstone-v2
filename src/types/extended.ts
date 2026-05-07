@@ -3,6 +3,56 @@
 // New entities: buildings, vehicles, H&S, missing episodes, chronology, etc.
 // ══════════════════════════════════════════════════════════════════════════════
 
+// ── Risk Assessment ─────────────────────────────────────────────────────────
+
+export type RiskDomain = "self_harm" | "absconding" | "aggression" | "exploitation" | "substance_use" | "online_safety" | "fire_setting" | "sexual_behaviour" | "self_neglect" | "emotional_harm";
+export type RiskLevel = "low" | "medium" | "high" | "very_high";
+export type RiskTrend = "increasing" | "stable" | "decreasing";
+
+export interface RiskMitigation {
+  strategy: string;
+  responsible: string;
+  effectiveness: "effective" | "partially_effective" | "not_effective" | "not_yet_assessed";
+}
+
+export interface RiskAssessment {
+  id: string;
+  child_id: string;
+  domain: RiskDomain;
+  current_level: RiskLevel;
+  previous_level: RiskLevel;
+  trend: RiskTrend;
+  status: "current" | "under_review" | "superseded" | "draft";
+  assessed_by: string;
+  assessed_date: string;
+  review_date: string;
+  triggers: string[];
+  indicators: string[];
+  mitigations: RiskMitigation[];
+  contingency_plan: string;
+  child_views: string;
+  history_notes: string;
+  linked_incidents: string[];
+  home_id: string;
+  created_at: string;
+}
+
+// ── Shift Swap Request ───────────────────────────────────────────────────────
+
+export interface ShiftSwapRequest {
+  id: string;
+  requester_id: string;
+  target_staff_id: string;
+  requester_shift_id: string;
+  target_shift_id: string | null;
+  status: "pending" | "approved" | "declined";
+  reason: string;
+  manager_notes: string | null;
+  decided_by: string | null;
+  decided_at: string | null;
+  created_at: string;
+}
+
 // ── Missing from Care Episode ─────────────────────────────────────────────────
 
 export interface MissingEpisode {
@@ -168,6 +218,12 @@ export interface HandoverChildUpdate {
   alerts: string[];
 }
 
+export interface HandoverSignOff {
+  staff_id: string;
+  acknowledged_at: string;
+  notes: string | null;
+}
+
 export interface HandoverEntry {
   id: string;
   home_id: string;
@@ -180,6 +236,7 @@ export interface HandoverEntry {
   incoming_staff: string[];
   created_by: string;
   signed_off_by: string | null;
+  sign_offs: HandoverSignOff[];
   child_updates: HandoverChildUpdate[];
   general_notes: string;
   flags: string[];
@@ -1330,6 +1387,40 @@ export interface Reg44Visit {
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
+// REG 44 VISITOR REPORT TRACKER — types (action plan & compliance tracker)
+// ══════════════════════════════════════════════════════════════════════════════
+
+export interface Reg44Recommendation {
+  id: string;
+  recommendation: string;
+  priority: "low" | "medium" | "high";
+  rm_response: string;
+  status: "completed" | "in_progress" | "outstanding";
+  evidence_notes: string | null;
+  completed_at: string | null;
+}
+
+export interface Reg44VisitReport {
+  id: string;
+  home_id: string;
+  visit_date: string;
+  visitor: string;
+  duration: string;
+  children_spoken: string;
+  staff_spoken: number;
+  records_reviewed: string[];
+  overall_judgement: string;
+  strengths: string[];
+  areas_for_development: string[];
+  recommendations: Reg44Recommendation[];
+  previous_actions_status: string;
+  report_sent_to_ofsted: boolean;
+  report_sent_date: string;
+  notes: string;
+  created_at: string;
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
 // ARIA LEARNING STUDIO — types
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -2063,5 +2154,1378 @@ export interface OutcomeReview {
   progress_notes: string;
   barriers: string | null;
   next_steps: string | null;
+  created_at: string;
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// LAC REVIEWS — Looked-After Children statutory review meetings
+// ══════════════════════════════════════════════════════════════════════════════
+
+export type LACReviewType = "initial" | "first_review" | "subsequent" | "emergency" | "disruption";
+export type LACReviewOutcome = "placement_continues" | "placement_change" | "care_plan_amended" | "actions_agreed" | "return_home";
+export type LACChildParticipation = "attended" | "views_submitted" | "advocate_attended" | "did_not_participate";
+export type LACPlacementStability = "stable" | "some_concerns" | "at_risk";
+
+export interface LACReviewAttendee {
+  name: string;
+  role: string;
+}
+
+export interface LACReviewAction {
+  action: string;
+  owner: string;
+  due_date: string;
+  completed: boolean;
+}
+
+export interface LACReview {
+  id: string;
+  child_id: string;
+  date: string;
+  review_type: LACReviewType;
+  iro: string;
+  venue: string;
+  attendees: LACReviewAttendee[];
+  child_participation: LACChildParticipation;
+  child_views: string;
+  key_discussions: string[];
+  recommendations: string[];
+  outcome: LACReviewOutcome;
+  actions_agreed: LACReviewAction[];
+  next_review_date: string;
+  placement_stability: LACPlacementStability;
+  care_plan_updated: boolean;
+  notes: string;
+  recorded_by: string;
+  home_id: string;
+  created_at: string;
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// BEHAVIOUR SUPPORT PLANS — formal structured plans for challenging behaviour
+// ══════════════════════════════════════════════════════════════════════════════
+
+export interface BSPPrimaryBehaviour {
+  behaviour: string;
+  frequency: "daily" | "weekly" | "occasional" | "rare";
+  severity: "low" | "medium" | "high";
+  trend: "improving" | "stable" | "worsening";
+}
+
+export interface BSPKnownTrigger {
+  trigger: string;
+  category: "environmental" | "emotional" | "social" | "sensory" | "routine_change" | "demand" | "transition";
+  likelihood: "high" | "medium" | "low";
+}
+
+export interface BSPDeEscalationStage {
+  stage: "green" | "amber" | "red";
+  strategies: string[];
+  staff_approach: string;
+}
+
+export interface BSPPositiveStrategy {
+  strategy: string;
+  frequency: string;
+  effectiveness: "highly_effective" | "effective" | "partially_effective" | "not_effective";
+}
+
+export interface BSPReward {
+  reward: string;
+  earned_by: string;
+  frequency: string;
+}
+
+export interface BSPBoundary {
+  boundary: string;
+  consequence: string;
+  rationale: string;
+}
+
+export interface BSPSafetyPlanItem {
+  scenario: string;
+  response: string;
+  staff_required: number;
+}
+
+export interface BSPProfessionalInput {
+  name: string;
+  role: string;
+  recommendation: string;
+  date: string;
+}
+
+export interface BSPRestrictiveIntervention {
+  intervention: string;
+  last_resort: boolean;
+  authorised_by: string;
+  conditions: string;
+}
+
+export interface BSPReviewHistoryEntry {
+  date: string;
+  reviewed_by: string;
+  changes: string;
+  outcome: string;
+}
+
+export interface BehaviourSupportPlan {
+  id: string;
+  child_id: string;
+  created_date: string;
+  created_by: string;
+  review_date: string;
+  last_reviewed: string | null;
+  status: "active" | "under_review" | "draft" | "archived" | "suspended";
+  diagnosis: string[];
+  primary_behaviours: BSPPrimaryBehaviour[];
+  known_triggers: BSPKnownTrigger[];
+  early_warnings: string[];
+  de_escalation: BSPDeEscalationStage[];
+  positive_strategies: BSPPositiveStrategy[];
+  rewards: BSPReward[];
+  boundaries: BSPBoundary[];
+  safety_plan: BSPSafetyPlanItem[];
+  communication_needs: string;
+  sensory_considerations: string;
+  child_views: string;
+  parent_views: string;
+  professional_input: BSPProfessionalInput[];
+  staff_guidance: string[];
+  restrictive_interventions: BSPRestrictiveIntervention[];
+  review_history: BSPReviewHistoryEntry[];
+  home_id: string;
+  created_at: string;
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// KEY WORKING SESSIONS — informal key-working interaction records
+// ══════════════════════════════════════════════════════════════════════════════
+
+export interface KeyWorkingSession {
+  id: string;
+  child_id: string;
+  staff_id: string;
+  date: string;
+  type: "one_to_one" | "group" | "informal" | "review" | "wellbeing_check" | "goal_setting" | "life_skills" | "therapeutic";
+  duration: number;
+  location: string;
+  topics: string[];
+  child_voice: string;
+  worker_observations: string;
+  actions_agreed: string[];
+  mood_before: 1 | 2 | 3 | 4 | 5;
+  mood_after: 1 | 2 | 3 | 4 | 5;
+  follow_up: string;
+  follow_up_date: string;
+  follow_up_completed: boolean;
+  linked_goals: string[];
+  confidential: boolean;
+  home_id: string;
+  created_at: string;
+}
+
+// ── Education Records ────────────────────────────────────────────────────────
+
+export interface EducationRecord {
+  id: string;
+  child_id: string;
+  record_type: "attendance" | "exclusion" | "pep_meeting" | "achievement" | "concern" | "placement_change";
+  title: string;
+  date: string;
+  school?: string;
+  details?: string;
+  outcome?: string;
+  follow_up_date?: string;
+  staff_id: string;
+  status: "open" | "resolved" | "monitoring";
+  home_id?: string;
+  created_at?: string;
+}
+
+// ── Delegated Authority ─────────────────────────────────────────────────────
+
+export type DelegatedAuthStatus = "granted" | "not_granted" | "partial" | "pending";
+export type DelegatedAuthCategory = "medical" | "education" | "leisure" | "overnight_stays" | "travel" | "haircut_appearance" | "social_media" | "religion" | "pocket_money" | "contact" | "photography" | "emergency";
+
+export interface DelegatedAuthorityItem {
+  category: DelegatedAuthCategory;
+  status: DelegatedAuthStatus;
+  detail: string;
+  conditions: string;
+  granted_by: string;
+  granted_date: string;
+  review_date: string;
+}
+
+export interface DelegatedAuthority {
+  id: string;
+  child_id: string;
+  last_reviewed: string;
+  next_review: string;
+  items: DelegatedAuthorityItem[];
+  notes: string;
+}
+
+// ── House Meetings ──────────────────────────────────────────────────────────
+
+export type HouseMeetingType = "regular" | "special" | "emergency" | "welcome" | "feedback";
+
+export interface HouseMeetingAgendaItem {
+  topic: string;
+  raised_by: string;
+  discussion: string;
+  outcome: string;
+}
+
+export interface HouseMeeting {
+  id: string;
+  date: string;
+  meeting_type: HouseMeetingType;
+  chair_person: string;
+  minutes_taker: string;
+  children_present: string[];
+  children_absent: string[];
+  staff_present: string[];
+  agenda: HouseMeetingAgendaItem[];
+  child_feedback: string[];
+  actions_from_previous: { action: string; owner: string; completed: boolean }[];
+  new_actions: { action: string; owner: string; due_date: string }[];
+  general_comments: string;
+  next_meeting_date: string;
+  duration: number;
+  created_at: string;
+}
+
+// ── Sanctions & Rewards ─────────────────────────────────────────────────────
+
+export type SRDirection = "reward" | "sanction";
+export type SRRewardType = "verbal_praise" | "written_praise" | "activity_reward" | "token" | "achievement" | "privilege" | "other_reward";
+export type SRSanctionType = "loss_of_privilege" | "verbal_reminder" | "time_out" | "earlier_bedtime" | "extra_chore" | "restorative_conversation" | "other_sanction";
+
+export interface SanctionRewardEntry {
+  id: string;
+  child_id: string;
+  date: string;
+  time: string;
+  direction: SRDirection;
+  reward_type: SRRewardType | null;
+  sanction_type: SRSanctionType | null;
+  title: string;
+  description: string;
+  context: string;
+  child_response: string;
+  outcome: string;
+  proportionate: boolean;
+  recorded_by: string;
+  created_at: string;
+}
+
+// ── Young Person Feedback ───────────────────────────────────────────────────
+
+export type YPFeedbackCategory = "food" | "activities" | "staff" | "bedroom" | "rules" | "school_support" | "feeling_safe" | "being_listened_to" | "family_contact" | "general";
+export type YPFeedbackMethod = "verbal" | "written" | "art" | "meeting" | "survey" | "worry_box" | "advocate";
+export type YPFeedbackSentiment = "very_happy" | "happy" | "ok" | "unhappy" | "very_unhappy";
+
+export interface YPFeedbackEntry {
+  id: string;
+  child_id: string;
+  date: string;
+  category: YPFeedbackCategory;
+  method: YPFeedbackMethod;
+  sentiment: YPFeedbackSentiment;
+  feedback: string;
+  action_taken: string;
+  action_by: string;
+  response_given_to_child: boolean;
+  response_date: string | null;
+  response_details: string;
+  child_satisfied: boolean | null;
+  collected_by: string;
+  notes: string;
+}
+
+// ── Sleep Log ───────────────────────────────────────────────────────────────
+
+export type SleepShiftType = "sleep_in" | "waking_night";
+export type SleepDisturbanceLevel = "none" | "minor" | "moderate" | "significant";
+
+export interface SleepDisturbance {
+  time: string;
+  young_person: string;
+  description: string;
+  action_taken: string;
+  duration: number;
+}
+
+export interface SleepLogEntry {
+  id: string;
+  date: string;
+  shift_type: SleepShiftType;
+  staff_id: string;
+  start_time: string;
+  end_time: string;
+  disturbance_level: SleepDisturbanceLevel;
+  disturbances: SleepDisturbance[];
+  checks_completed: string[];
+  building_secure: boolean;
+  alarms_set: boolean;
+  handover_notes: string;
+  morning_handover: string;
+  hours_slept: number | null;
+}
+
+// ── Compliments ─────────────────────────────────────────────────────────────
+
+export type ComplimentSource = "young_person" | "parent_carer" | "social_worker" | "irp" | "school" | "health_professional" | "reg44_visitor" | "neighbour" | "other_professional";
+export type ComplimentCategory = "care_quality" | "staff_conduct" | "environment" | "communication" | "activities" | "education_support" | "health_support" | "family_contact" | "overall_experience" | "specific_staff";
+
+export interface Compliment {
+  id: string;
+  date: string;
+  source: ComplimentSource;
+  source_name: string;
+  category: ComplimentCategory;
+  related_yp: string | null;
+  related_staff: string | null;
+  compliment: string;
+  shared_with_team: boolean;
+  shared_date: string | null;
+  added_to_reg45: boolean;
+  recorded_by: string;
+}
+
+/* ── Visitor Log ─────────────────────────────────────────────────────── */
+
+export type VisitorCategory = "professional" | "family" | "tradesperson" | "inspector" | "volunteer" | "other";
+export type VisitStatus = "signed_in" | "signed_out" | "expected";
+
+export interface VisitorEntry {
+  id: string;
+  date: string;
+  visitor_name: string;
+  organisation: string | null;
+  category: VisitorCategory;
+  purpose: string;
+  dbs_checked: boolean;
+  id_verified: boolean;
+  sign_in_time: string;
+  sign_out_time: string | null;
+  status: VisitStatus;
+  host_staff_id: string;
+  children_seen: string[];
+  notes: string | null;
+  created_at: string;
+}
+
+/* ── Fire Drills ─────────────────────────────────────────────────────── */
+
+export type FireDrillType = "fire_drill" | "evacuation" | "lockdown" | "bomb_threat" | "flood" | "equipment_check";
+export type FireDrillResult = "satisfactory" | "issues_identified" | "failed" | "not_completed";
+
+export interface FireDrill {
+  id: string;
+  date: string;
+  time: string;
+  drill_type: FireDrillType;
+  evacuation_time_seconds: number | null;
+  result: FireDrillResult;
+  all_present: boolean;
+  children_present: string[];
+  staff_present: string[];
+  issues: string;
+  actions_taken: string;
+  next_drill_due: string;
+  conducted_by: string;
+  notes: string;
+  created_at: string;
+}
+
+/* ── Significant Events ──────────────────────────────────────────────── */
+
+export type SigEventCategory = "positive_achievement" | "placement_change" | "health_event" | "safeguarding" | "legal_court" | "family_event" | "education_milestone" | "behavioural" | "disclosure" | "other";
+export type SigEventSeverity = "positive" | "routine" | "concerning" | "serious" | "critical";
+export type SigEventNotifyStatus = "not_required" | "notified" | "pending" | "escalated";
+
+export interface SignificantEvent {
+  id: string;
+  child_id: string;
+  date: string;
+  time: string;
+  category: SigEventCategory;
+  severity: SigEventSeverity;
+  title: string;
+  description: string;
+  immediate_action: string;
+  staff_present: string[];
+  witnessed_by: string[];
+  child_response: string;
+  outcome: string;
+  notifications: { party: string; status: SigEventNotifyStatus; date: string }[];
+  follow_up_required: boolean;
+  follow_up_actions: string;
+  follow_up_date: string;
+  linked_documents: string[];
+  recorded_by: string;
+  created_at: string;
+}
+
+/* ── Restraint Log ───────────────────────────────────────────────────── */
+
+export type RestraintType = "standing" | "seated" | "ground" | "escort" | "other";
+export type RestraintReason = "harm_to_self" | "harm_to_others" | "significant_damage" | "absconding_danger";
+export type RestraintReviewStatus = "pending_rm" | "pending_ri" | "reviewed" | "referred_lado";
+
+export interface RestraintStaffEntry {
+  staff_id: string;
+  role: string;
+  technique: string;
+}
+
+export interface RestraintInjury {
+  person: string;
+  injury: string;
+  treatment: string;
+}
+
+export interface RestraintRecord {
+  id: string;
+  date: string;
+  start_time: string;
+  end_time: string;
+  duration: number;
+  child_id: string;
+  staff_involved: RestraintStaffEntry[];
+  reason: RestraintReason;
+  restraint_type: RestraintType;
+  antecedent: string;
+  behaviour: string;
+  de_escalation_attempts: string[];
+  justification: string;
+  description: string;
+  injuries: RestraintInjury[];
+  child_debriefed: boolean;
+  child_debrief_notes: string;
+  staff_debriefed: boolean;
+  witnessed_by: string[];
+  review_status: RestraintReviewStatus;
+  review_notes: string;
+  reviewed_by: string;
+  linked_incident_id: string;
+  notifications_sent: { party: string; date: string }[];
+  body_map_completed: boolean;
+  medical_check_completed: boolean;
+  recorded_by: string;
+  created_at: string;
+}
+
+/* ── Notifiable Events ───────────────────────────────────────────────── */
+
+export type NotifiableEventType = "death" | "serious_illness" | "serious_injury" | "serious_incident" | "child_protection" | "police_involvement" | "absconding" | "allegation_against_staff" | "restraint" | "exclusion_from_school" | "fire" | "outbreak" | "significant_complaint" | "ofsted_referral";
+export type NotifiableStatus = "pending" | "notified_within_24h" | "notified_late" | "not_required";
+
+export interface NotifiableNotification {
+  body: string;
+  notified_date: string | null;
+  method: string;
+  reference: string | null;
+}
+
+export interface NotifiableEvent {
+  id: string;
+  date: string;
+  event_type: NotifiableEventType;
+  child_id: string | null;
+  summary: string;
+  detail: string;
+  immediate_action: string;
+  reported_by: string;
+  ofsted_status: NotifiableStatus;
+  ofsted: NotifiableNotification;
+  local_authority: NotifiableNotification;
+  placing: NotifiableNotification;
+  follow_up: string;
+  lesson_learned: string;
+}
+
+/* ── Night Log ───────────────────────────────────────────────────────── */
+
+export type NightCheckStatus = "asleep" | "awake_settled" | "awake_unsettled" | "not_in_room" | "refused_entry";
+export type NightIncidentType = "disturbance" | "self_harm_concern" | "missing" | "medication" | "property" | "visitor" | "other";
+
+export interface NightCheck {
+  time: string;
+  child_id: string;
+  status: NightCheckStatus;
+  notes: string;
+}
+
+export interface NightIncident {
+  time: string;
+  child_id: string | null;
+  incident_type: NightIncidentType;
+  description: string;
+  action_taken: string;
+  escalated: boolean;
+  escalated_to: string | null;
+}
+
+export interface NightMedication {
+  time: string;
+  child_id: string;
+  medication: string;
+  dose: string;
+  notes: string;
+}
+
+export interface NightSecurityCheck {
+  time: string;
+  item: string;
+  status: "secure" | "issue";
+}
+
+export interface NightLogEntry {
+  id: string;
+  date: string;
+  waking_night_staff: string[];
+  sleep_in_staff: string | null;
+  shift_start: string;
+  shift_end: string;
+  handover_from_day: string;
+  handover_to_morning: string;
+  checks: NightCheck[];
+  incidents: NightIncident[];
+  medication_given: NightMedication[];
+  security_checks: NightSecurityCheck[];
+  summary: string;
+  concerns: string | null;
+}
+
+/* ── Behaviour Log ──────────────────────────────────────────────────── */
+
+export type BehaviourDirection = "positive" | "concern";
+export type BehaviourIntensity = "low" | "moderate" | "high" | "critical";
+
+export interface BehaviourEntry {
+  id: string;
+  child_id: string;
+  date: string;
+  time: string;
+  direction: BehaviourDirection;
+  intensity: BehaviourIntensity;
+  title: string;
+  antecedent: string;
+  behaviour: string;
+  consequence: string;
+  trigger: string;
+  strategy_used: string;
+  outcome: string;
+  recorded_by: string;
+  created_at: string;
+}
+
+/* ── Accident Book ──────────────────────────────────────────────────── */
+
+export type AccidentPersonType = "child" | "staff" | "visitor" | "contractor";
+export type AccidentSeverity = "minor" | "moderate" | "major" | "riddor_reportable";
+export type AccidentCategory =
+  | "slip_trip_fall" | "collision" | "burn_scald" | "cut_laceration"
+  | "bite" | "self_harm_injury" | "sport_play" | "assault"
+  | "medication_related" | "other";
+export type AccidentStatus = "open" | "first_aid_given" | "medical_treatment" | "hospital" | "investigated" | "closed";
+
+export interface AccidentRecord {
+  id: string;
+  date: string;
+  time: string;
+  reported_by: string;
+  person_type: AccidentPersonType;
+  person_id: string | null;
+  person_name: string;
+  category: AccidentCategory;
+  severity: AccidentSeverity;
+  status: AccidentStatus;
+  location: string;
+  description: string;
+  injury_details: string;
+  first_aid_given: boolean;
+  first_aid_by: string | null;
+  first_aid_details: string;
+  medical_attention: boolean;
+  hospital_attendance: boolean;
+  hospital_name: string | null;
+  parent_carer_notified: boolean;
+  parent_notified_time: string | null;
+  social_worker_notified: boolean;
+  riddor_reported: boolean;
+  riddor_ref: string | null;
+  witnesses: string[];
+  root_cause: string;
+  preventive_measures: string;
+  follow_up_date: string | null;
+  photographs_taken: boolean;
+  body_map_completed: boolean;
+  signed_off_by: string | null;
+  created_at: string;
+}
+
+/* ── Absence Tracking ───────────────────────────────────────────────── */
+
+export type AbsenceType = "authorised" | "unauthorised" | "medical" | "exclusion" | "part_time_timetable" | "late_arrival" | "internal_truancy";
+export type AbsenceSetting = "school" | "college" | "pru" | "tuition" | "activity" | "appointment";
+
+export interface AbsenceRecord {
+  id: string;
+  child_id: string;
+  date: string;
+  absence_type: AbsenceType;
+  setting: AbsenceSetting;
+  setting_name: string;
+  sessions: number;
+  reason: string;
+  action_taken: string;
+  school_notified: boolean;
+  sw_notified: boolean;
+  recorded_by: string;
+  follow_up: string | null;
+  created_at: string;
+}
+
+/* ── Positive Handling Plans ────────────────────────────────────────── */
+
+export interface PHPDeEscalation {
+  technique: string;
+  effectiveness: "usually_effective" | "sometimes_effective" | "rarely_effective";
+}
+
+export interface PHPPhysicalResponse {
+  scenario: string;
+  approved_techniques: string[];
+  contraindicated: string[];
+  max_duration: string;
+  medical_considerations: string;
+}
+
+export interface PositiveHandlingPlan {
+  id: string;
+  child_id: string;
+  version: string;
+  created_date: string;
+  last_reviewed: string;
+  next_review: string;
+  reviewed_by: string;
+  triggers: string[];
+  early_warning: string[];
+  de_escalation: PHPDeEscalation[];
+  physical_responses: PHPPhysicalResponse[];
+  post_incident_support: string[];
+  child_preferences: string;
+  medical_factors: string;
+  staff_authorised: string[];
+  consent_obtained: boolean;
+  sw_consulted: boolean;
+  parent_notified: boolean;
+  notes: string;
+  created_at: string;
+}
+
+/* ── Medication Errors ──────────────────────────────────────────────── */
+
+export type MedErrorType =
+  | "wrong_dose" | "wrong_medication" | "wrong_time" | "wrong_person"
+  | "omission" | "wrong_route" | "expired_medication"
+  | "documentation_error" | "near_miss" | "adverse_reaction";
+export type MedErrorSeverity = "no_harm" | "low" | "moderate" | "severe" | "death";
+export type MedErrorStatus = "reported" | "under_investigation" | "action_required" | "closed" | "escalated";
+export type MedRemedialStatus = "pending" | "in_progress" | "completed";
+
+export interface MedRemedialAction {
+  action: string;
+  owner: string;
+  due_date: string;
+  status: MedRemedialStatus;
+}
+
+export interface MedicationError {
+  id: string;
+  child_id: string;
+  date_occurred: string;
+  time_occurred: string;
+  reported_by: string;
+  reported_date: string;
+  error_type: MedErrorType;
+  severity: MedErrorSeverity;
+  medication: string;
+  prescribed_dose: string;
+  actual_dose: string;
+  what_happened: string;
+  immediate_action: string;
+  person_informed: string[];
+  duty_of_candour: boolean;
+  duty_of_candour_completed: string | null;
+  root_cause: string;
+  contributing_factors: string[];
+  remedial_actions: MedRemedialAction[];
+  lessons_learned: string;
+  status: MedErrorStatus;
+  review_date: string | null;
+  outcome: string;
+  created_at: string;
+}
+
+/* ── Body Map ───────────────────────────────────────────────────────── */
+
+export type BodyRegion =
+  | "head_front" | "head_back" | "head_left" | "head_right"
+  | "face" | "neck"
+  | "chest" | "abdomen" | "upper_back" | "lower_back"
+  | "left_shoulder" | "right_shoulder"
+  | "left_upper_arm" | "right_upper_arm"
+  | "left_forearm" | "right_forearm"
+  | "left_hand" | "right_hand"
+  | "left_hip" | "right_hip"
+  | "left_thigh" | "right_thigh"
+  | "left_knee" | "right_knee"
+  | "left_shin" | "right_shin"
+  | "left_foot" | "right_foot";
+
+export type MarkType = "bruise" | "scratch" | "cut" | "burn" | "swelling" | "redness" | "bite_mark" | "pressure_mark" | "old_scar" | "other";
+export type MarkColour = "red" | "purple" | "blue" | "yellow" | "green" | "brown" | "black" | "mixed" | "not_applicable";
+export type BodyMapStatus = "draft" | "completed" | "reviewed" | "linked_to_incident";
+
+export interface BodyMapEntry {
+  id: string;
+  child_id: string;
+  date: string;
+  time: string;
+  recorded_by: string;
+  body_region: BodyRegion;
+  mark_type: MarkType;
+  mark_colour: MarkColour;
+  size_cm: string;
+  description: string;
+  child_explanation: string;
+  staff_observation: string;
+  status: BodyMapStatus;
+  linked_incident_id: string | null;
+  photos_attached: boolean;
+  reviewed_by: string | null;
+  reviewed_at: string | null;
+  created_at: string;
+}
+
+/* ── Activities & Enrichment ────────────────────────────────────────── */
+
+export type ActivityCategory =
+  | "sport" | "creative" | "outdoor" | "educational" | "social"
+  | "life_skills" | "cultural" | "therapeutic" | "community" | "digital";
+
+export type ActivityEngagement = "enthusiastic" | "willing" | "reluctant" | "refused" | "suggested_by_yp";
+
+export interface Activity {
+  id: string;
+  date: string;
+  child_id: string;
+  category: ActivityCategory;
+  title: string;
+  description: string;
+  location: string;
+  duration_minutes: number;
+  staff_id: string;
+  engagement: ActivityEngagement;
+  yp_feedback: string | null;
+  outcome_notes: string | null;
+  is_new_experience: boolean;
+  photos_taken: boolean;
+  linked_outcome_domain: string | null;
+  created_at: string;
+}
+
+/* ── Adoption Support Records ───────────────────────────────────────── */
+
+export type AdoptionStatus =
+  | "plan_being_explored" | "placement_order_granted" | "family_finding"
+  | "matched" | "introductions" | "placed_for_adoption" | "adopted" | "plan_changed";
+
+export interface AdoptionIntroductionPhase {
+  phase: string;
+  dates: string;
+  activities: string;
+}
+
+export interface AdoptionRecord {
+  id: string;
+  child_initials: string;
+  age: number;
+  arrival_date: string;
+  adoption_status: AdoptionStatus;
+  local_authority: string;
+  placement_order_date: string;
+  matching_panel_date: string;
+  adoption_family_info: string;
+  introduction_plan: AdoptionIntroductionPhase[];
+  preparation_activities: string[];
+  life_story_completed: boolean;
+  later_life_letter: boolean;
+  goodbye_rituals_planned: string[];
+  support_provided_post_placement: string[];
+  contact_arrangements: string;
+  home_key_worker_involvement: string;
+  adoption_support_plan: string[];
+  child_contribution: string;
+  social_worker: string;
+  adoption_social_worker: string;
+  internal_lead: string;
+  review_date: string;
+  last_update: string;
+  created_at: string;
+}
+
+/* ── Advocacy ───────────────────────────────────────────────────────── */
+
+export type AdvocacyType = "independent" | "issue_based" | "peer" | "legal" | "complaints";
+export type AdvocacyStatus = "active" | "completed" | "pending_referral" | "declined_by_yp";
+
+export interface AdvocacyVisit {
+  date: string;
+  visit_type: "face_to_face" | "phone" | "virtual";
+  summary: string;
+  private_session: boolean;
+  actions_raised: string[];
+}
+
+export interface AdvocacyRecord {
+  id: string;
+  child_id: string;
+  advocacy_type: AdvocacyType;
+  status: AdvocacyStatus;
+  provider: string;
+  advocate_name: string;
+  referral_date: string;
+  start_date: string | null;
+  reason: string;
+  issues_raised: string[];
+  visits: AdvocacyVisit[];
+  child_view: string;
+  home_response: string;
+  review_date: string;
+  notes: string;
+  created_at: string;
+}
+
+/* ── After Care ─────────────────────────────────────────────────────── */
+
+export type AfterCareLeftReason = "age_18" | "moved_placement" | "reunification" | "semi_independent" | "adoption" | "other";
+export type AfterCareAccomStatus = "stable" | "at_risk" | "homeless" | "sofa_surfing" | "supported_housing";
+export type AfterCareEETStatus = "education" | "employment" | "training" | "neet" | "unknown";
+export type AfterCareRAG = "green" | "amber" | "red";
+export type AfterCareWellbeing = "good" | "fair" | "poor" | "concern";
+
+export interface AfterCareContactLog {
+  date: string;
+  contact_type: string;
+  staff_id: string;
+  summary: string;
+  wellbeing: AfterCareWellbeing;
+}
+
+export interface AfterCareSupportPkg {
+  area: string;
+  provider: string;
+  frequency: string;
+  status: "active" | "ended" | "pending";
+}
+
+export interface AfterCareRecord {
+  id: string;
+  child_id: string;
+  left_date: string;
+  left_reason: AfterCareLeftReason;
+  current_accommodation: string;
+  accommodation_status: AfterCareAccomStatus;
+  education_employment: string;
+  eet_status: AfterCareEETStatus;
+  staying_close_eligible: boolean;
+  support_package: AfterCareSupportPkg[];
+  contact_log: AfterCareContactLog[];
+  key_worker: string;
+  personal_adviser: string;
+  pathway_plan: boolean;
+  pathway_plan_review_date: string | null;
+  emergency_contact: string;
+  current_concerns: string[];
+  positives: string[];
+  overall_rag: AfterCareRAG;
+  next_contact_due: string;
+  notes: string;
+  created_at: string;
+}
+
+/* ── Agency Staff Induction ─────────────────────────────────────────── */
+
+export type AgencyInductionType = "pre_shift_brief" | "half_day_full_induction" | "returning_staff_refresh";
+
+export interface AgencyInductionTopic {
+  topic: string;
+  covered: boolean;
+  notes: string;
+}
+
+export interface AgencyInduction {
+  id: string;
+  agency_staff_name: string;
+  agency: string;
+  date_inducted: string;
+  inducted_by: string;
+  induction_duration: number;
+  induction_type: AgencyInductionType;
+  children_informed_about_agency_arrival: boolean;
+  agency_dbs_verified: boolean;
+  agency_training_verified: boolean;
+  agency_references_verified: boolean;
+  induction_topics: AgencyInductionTopic[];
+  child_information_shared: string;
+  key_policies_shared: string[];
+  photo_taken_and_verified: boolean;
+  behaviour_support_plans_briefed: boolean;
+  agency_staff_signed_induction_pack: boolean;
+  shifts_booked: number;
+  agency_staff_feedback: string;
+  home_feedback_on_agency: string;
+  repeat_booking_approved: boolean;
+  created_at: string;
+}
+
+/* ── Agency Staff Log ───────────────────────────────────────────────── */
+
+export type AgencyVettingStatus = "fully_vetted" | "partially_vetted" | "pending" | "expired";
+export type AgencyBookingReason = "sickness_cover" | "vacancy_cover" | "annual_leave" | "training_cover" | "additional_support" | "emergency";
+
+export interface AgencyStaffRecord {
+  id: string;
+  agency_name: string;
+  worker_name: string;
+  worker_ref: string;
+  date_of_shift: string;
+  shift_type: string;
+  shift_hours: number;
+  booking_reason: AgencyBookingReason;
+  covering_for_id: string | null;
+  vetting_status: AgencyVettingStatus;
+  dbs_number: string;
+  dbs_date: string;
+  dbs_enhanced: boolean;
+  induction_completed: boolean;
+  induction_date: string | null;
+  induction_by: string | null;
+  safeguarding_briefing: boolean;
+  young_people_briefing: boolean;
+  medication_trained: boolean;
+  price_trained_level: string | null;
+  feedback_score: number | null;
+  feedback_notes: string;
+  concerns: string;
+  authorised_by_id: string;
+  cost_per_hour: number;
+  notes: string;
+  created_at: string;
+}
+
+/* ── Annual Development Reviews ──────────────────────────────────────────── */
+
+export type ADRReviewStatus = "completed" | "scheduled" | "overdue" | "deferred";
+export type ADRPerformanceRating = "outstanding" | "good" | "requires_improvement" | "inadequate";
+
+export interface ADRObjective {
+  objective: string;
+  target: string;
+  progress: string;
+}
+
+export interface AnnualDevelopmentReview {
+  id: string;
+  staff_id: string;
+  reviewer_id: string;
+  review_date: string;
+  status: ADRReviewStatus;
+  period: string;
+  performance_rating: ADRPerformanceRating;
+  strengths: string[];
+  areas_for_development: string[];
+  objectives_set: ADRObjective[];
+  qualifications_progress: string;
+  training_completed: string[];
+  training_needed: string[];
+  career_aspirations: string;
+  wellbeing_summary: string;
+  manager_comments: string;
+  staff_comments: string;
+  next_review_date: string;
+  created_at: string;
+}
+
+/* ── Annual Health Assessment ────────────────────────────────────────────── */
+
+export interface AHAHealthDomain {
+  domain: string;
+  findings: string;
+  actions: string;
+  follow_up: string;
+}
+
+export interface AnnualHealthAssessment {
+  id: string;
+  child_id: string;
+  assessment_date: string;
+  assessment_due_date: string;
+  assessor: string;
+  location: string;
+  completed_within_deadline: boolean;
+  height: string;
+  weight: string;
+  bmi_centile: string;
+  growth_on_track: boolean;
+  domains: AHAHealthDomain[];
+  immunisations_up_to_date: boolean;
+  dental_check_up_to_date: boolean;
+  optical_check_up_to_date: boolean;
+  child_contribution: string;
+  report_shared: boolean;
+  report_shared_with: string[];
+  recommendations: string[];
+  next_assessment_date: string;
+  signed_off_by_la: boolean;
+  created_at: string;
+}
+
+/* ── Annual Outcomes Report ──────────────────────────────────────────────── */
+
+export type AnnualOutcomeDomain =
+  | "health" | "education" | "emotional_wellbeing" | "relationships"
+  | "independence" | "identity" | "safety";
+
+export interface AnnualOutcome {
+  id: string;
+  child_id: string;
+  reporting_year: string;
+  domain: AnnualOutcomeDomain;
+  target_set: string;
+  progress_rating: number;
+  evidence: string;
+  barriers_faced: string[];
+  support_provided: string[];
+  child_view: string;
+  next_year_target: string;
+  reviewed_by: string;
+  review_date: string;
+  created_at: string;
+}
+
+/* ── Appointments ────────────────────────────────────────────────────────── */
+
+export type AppointmentType =
+  | "gp" | "dental" | "optician" | "camhs" | "hospital"
+  | "lac_review" | "pep_meeting" | "social_worker" | "court"
+  | "therapy" | "specialist" | "immunisation" | "other";
+
+export type AppointmentStatus = "scheduled" | "attended" | "cancelled" | "missed" | "rescheduled";
+
+export interface Appointment {
+  id: string;
+  child_id: string;
+  date: string;
+  time: string;
+  type: AppointmentType;
+  title: string;
+  location: string;
+  professional_name: string;
+  description: string;
+  status: AppointmentStatus;
+  outcome: string | null;
+  transport_arranged: boolean;
+  escort_staff: string | null;
+  follow_up_date: string | null;
+  recorded_by: string;
+  created_at: string;
+}
+
+/* ── Assessment of Need ──────────────────────────────────────────────────── */
+
+export type NeedsDomain =
+  | "health" | "education" | "identity" | "family_social"
+  | "behavioural_emotional" | "self_care_practical" | "spiritual_cultural";
+
+export type NeedsComplexity = "low" | "moderate" | "complex" | "highly_complex";
+
+export interface NeedsDomainAssessment {
+  domain: NeedsDomain;
+  presenting_needs: string[];
+  strengths: string[];
+  priorities: string[];
+  immediate_actions: string[];
+}
+
+export interface NeedsAssessment {
+  id: string;
+  child_id: string;
+  assessment_date: string;
+  completed_by: string;
+  assessment_version: number;
+  arrival_date: string;
+  statutory_deadline: string;
+  completed_within_deadline: boolean;
+  domain_assessments: NeedsDomainAssessment[];
+  overall_need_complexity: NeedsComplexity;
+  child_input_method: string;
+  child_input: string;
+  family_input: string;
+  professionals_consulted: string[];
+  key_risks: string[];
+  key_protective_factors: string[];
+  recommended_interventions: string[];
+  accommodations_recommended: string[];
+  pedagogical_approach_identified: string;
+  review_schedule: string;
+  shared_with_la: boolean;
+  shared_date: string;
+  signed_off_by_rm: boolean;
+  created_at: string;
+}
+
+/* ── Attachment Profiles ─────────────────────────────────────────────────── */
+
+export type AttachmentStyle = "secure" | "anxious_ambivalent" | "anxious_avoidant" | "disorganised" | "emerging_secure";
+export type AttachmentProfileStatus = "active" | "under_review" | "archived";
+
+export interface AttachmentBehaviour {
+  context: string;
+  behaviour: string;
+  underlying_need: string;
+  recommended_response: string;
+}
+
+export interface AttachmentKeyRelationship {
+  person: string;
+  role: string;
+  quality: "strong" | "developing" | "strained" | "absent";
+  notes: string;
+}
+
+export interface AttachmentProfile {
+  id: string;
+  child_id: string;
+  status: AttachmentProfileStatus;
+  primary_style: AttachmentStyle;
+  secondary_patterns: string[];
+  assessed_by: string;
+  assessment_date: string;
+  review_date: string;
+  assessment_source: string;
+  early_history: string;
+  placement_history: string;
+  behaviours: AttachmentBehaviour[];
+  key_relationships: AttachmentKeyRelationship[];
+  therapeutic_approach: string[];
+  staff_guidance: string[];
+  protective_factors: string[];
+  risk_factors: string[];
+  child_views: string;
+  professional_input: string;
+  notes: string;
+  created_at: string;
+}
+
+/* ── Behaviour Mapping ─────────────────────────────────────────────── */
+
+export type BehaviourMappingType = "aggression" | "self_harm" | "absconding" | "property_damage" | "verbal_aggression" | "withdrawal" | "refusal" | "dysregulation";
+export type BMIntensity = "low" | "moderate" | "high" | "crisis";
+export type BMTimeOfDay = "morning" | "afternoon" | "evening" | "night";
+
+export interface BehaviourMapEntry {
+  id: string;
+  child_id: string;
+  date: string;
+  time: string;
+  time_of_day: BMTimeOfDay;
+  behaviour_type: BehaviourMappingType;
+  intensity: BMIntensity;
+  location: string;
+  antecedent: string;
+  behaviour: string;
+  consequence: string;
+  duration: string;
+  staff_present: string[];
+  de_escalation_used: string[];
+  outcome: string;
+  trigger_pattern: string | null;
+  notes: string;
+  created_at: string;
+}
+
+/* ── Bereavement & Loss Support ────────────────────────────────────── */
+
+export type BereavementLossType = "death_of_parent" | "death_of_grandparent" | "death_of_sibling" | "death_of_friend" | "death_of_pet" | "loss_of_foster_carer" | "loss_of_birth_family_contact" | "loss_of_country_community" | "loss_of_identity" | "other_significant_loss";
+export type GriefStage = "acute" | "adjusting" | "integrated" | "complicated";
+
+export interface BereavementRecord {
+  id: string;
+  child_id: string;
+  record_date: string;
+  loss_type: BereavementLossType;
+  person_or_thing: string;
+  date_of_loss?: string;
+  relationship: string;
+  grief_stage: GriefStage;
+  child_response: string[];
+  support_provided: string[];
+  external_support?: string;
+  memory_work: string[];
+  anniversary_marked: boolean;
+  anniversary_date?: string;
+  child_voice: string;
+  staff_observation: string;
+  flags_for_review: string[];
+  review_date: string;
+  key_worker: string;
+  created_at: string;
+}
+
+/* ── Bullying Incident Log ─────────────────────────────────────────── */
+
+export type BullyingContext = "in_the_home" | "school" | "online" | "community" | "travel";
+export type BullyingPerpetratorType = "peer_in_home" | "peer_at_school" | "older_child" | "online_stranger" | "group_of_peers" | "online_peer" | "adult";
+export type BullyingType = "verbal" | "physical" | "online_cyber" | "exclusion_social" | "damage_to_property" | "sexualised" | "discriminatory";
+export type BullyingStatus = "open_investigating" | "closed_resolved" | "monitoring" | "escalated";
+
+export interface BullyingIncident {
+  id: string;
+  child_id: string;
+  date: string;
+  time: string;
+  context: BullyingContext;
+  perpetrator_type: BullyingPerpetratorType;
+  bullying_type: BullyingType;
+  description: string;
+  child_impact_observed: string;
+  child_words_used: string;
+  reported_by: string;
+  child_wanted_reporting: boolean;
+  external_agencies_notified: string[];
+  school_notified: boolean;
+  police_notified: boolean;
+  parents_informed: boolean;
+  restorative_approach_attempted: string;
+  support_provided: string[];
+  perpetrator_outcome: string;
+  wellbeing_post_incident: string;
+  follow_up_date: string;
+  status: BullyingStatus;
+  pattern_indicator: string;
+  created_at: string;
+}
+
+/* ── CAMHS Referral Tracker ────────────────────────────────────────── */
+
+export type CamhsPathway = "standard_camhs" | "asd_neurodevelopmental" | "trauma_focused" | "crisis" | "routine";
+export type CamhsUrgency = "routine" | "soon" | "urgent" | "emergency";
+export type CamhsReferralStatus = "submitted" | "triaged" | "on_waiting_list" | "active_engagement" | "discharged" | "re_referred";
+export type CamhsEngagementLevel = "strong" | "building" | "inconsistent" | "disengaged";
+
+export interface CamhsReferral {
+  id: string;
+  child_id: string;
+  referral_date: string;
+  referral_reason: string;
+  referrer: string;
+  pathway_applied: CamhsPathway;
+  urgency: CamhsUrgency;
+  referral_status: CamhsReferralStatus;
+  waiting_time_weeks: number;
+  first_appointment_date: string | null;
+  current_clinician: string;
+  current_therapeutic_approach: string;
+  sessions_held: number;
+  sessions_scheduled: number;
+  current_engagement_level: CamhsEngagementLevel;
+  child_view: string;
+  parental_consent: boolean;
+  referral_outcome: string;
+  reviewed_date: string;
+  next_review_date: string;
+  escalation_options: string;
+  created_at: string;
+}
+
+/* ── CCTV Usage Log ────────────────────────────────────────────────── */
+
+export type CCTVAccessReason = "incident_review" | "safeguarding" | "police_request" | "complaint_investigation" | "maintenance_check" | "routine_review" | "sar_request" | "staff_investigation" | "other";
+export type CCTVCamera = "front_door" | "rear_garden" | "driveway" | "hallway_ground" | "hallway_first" | "kitchen" | "lounge" | "office_corridor";
+
+export interface CCTVAccess {
+  id: string;
+  date: string;
+  time_accessed: string;
+  footage_date: string;
+  footage_time_range: string;
+  cameras: CCTVCamera[];
+  reason: CCTVAccessReason;
+  detail: string;
+  accessed_by: string;
+  authorised_by: string;
+  witness_present: string | null;
+  footage_copied: boolean;
+  copied_to: string;
+  external_reference: string;
+  outcome: string;
+  created_at: string;
+}
+
+/* ── ADHD Support Plan ─────────────────────────────────────────────── */
+
+export type ADHDDiagnosisStatus = "diagnosed" | "awaiting_assessment" | "suspected_being_explored" | "self_identified" | "not_currently_considered";
+export type ADHDPresentation = "predominantly_inattentive" | "predominantly_hyperactive_impulsive" | "combined" | "unspecified";
+
+export interface ADHDMedication {
+  name: string;
+  dose: string;
+  timing: string;
+  side_effects_being_monitored: string[];
+  review_date: string;
+}
+
+export interface ADHDExternalSupport {
+  agency: string;
+  role: string;
+  frequency: string;
+}
+
+export interface ADHDPlan {
+  id: string;
+  child_id: string;
+  plan_date: string;
+  diagnosis_status: ADHDDiagnosisStatus;
+  presentation?: ADHDPresentation;
+  diagnosis_date?: string;
+  diagnosing_clinician?: string;
+  strengths: string[];
+  challenges: string[];
+  medication?: ADHDMedication;
+  medication_holiday_plan?: string;
+  executive_function_support: string[];
+  time_blindness_strategies: string[];
+  hyperfocus_management: string[];
+  rsd_awareness: string;
+  rsd_support: string[];
+  school_adjustments: string[];
+  home_adjustments: string[];
+  body_doubling_notes?: string;
+  external_support: ADHDExternalSupport[];
+  staff_do_strategies: string[];
+  staff_do_not_strategies: string[];
+  child_voice: string;
+  staff_observation: string;
+  next_step: string;
+  review_date: string;
+  key_worker: string;
   created_at: string;
 }

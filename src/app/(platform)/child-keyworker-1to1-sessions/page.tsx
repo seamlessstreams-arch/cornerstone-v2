@@ -6,11 +6,17 @@ import { ExportButton, type ExportColumn } from "@/components/ui/export-button";
 import { PrintButton } from "@/components/ui/print-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Users, Clock, MessageCircle, ChevronUp, ChevronDown, ArrowUpDown, Search, Heart, CheckCircle } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Users, Clock, MessageCircle, ChevronUp, ChevronDown, ArrowUpDown, Search, Heart, CheckCircle, Plus, Loader2 } from "lucide-react";
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { useCreateKeyworkSession } from "@/hooks/use-keywork-sessions";
+import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { getYPName, getStaffName } from "@/lib/seed-data";
 
 /* ── types ─────────────────────────────────────────────────────────────────── */
@@ -364,12 +370,19 @@ const SEED: SessionRecord[] = [
 /* ── component ─────────────────────────────────────────────────────────────── */
 
 export default function ChildKeyworker1to1SessionsPage() {
-  const [data] = useState<SessionRecord[]>(SEED);
+  const createSession = useCreateKeyworkSession();
+  const [data, setData] = useState<SessionRecord[]>(SEED);
   const [search, setSearch] = useState("");
   const [childFilter, setChildFilter] = useState("all");
   const [formatFilter, setFormatFilter] = useState("all");
   const [sortBy, setSortBy] = useState("newest");
   const [expanded, setExpanded] = useState<string | null>(null);
+  const [showNew, setShowNew] = useState(false);
+  const [nChild, setNChild] = useState("");
+  const [nFormat, setNFormat] = useState("");
+  const [nThemes, setNThemes] = useState("");
+  const [nChildBroughtUp, setNChildBroughtUp] = useState("");
+  const [nStaffBroughtUp, setNStaffBroughtUp] = useState("");
 
   const toggle = (id: string) => setExpanded(expanded === id ? null : id);
   const childIds = [...new Set(data.map(r => r.youngPerson))];
@@ -429,6 +442,7 @@ export default function ChildKeyworker1to1SessionsPage() {
       actions={[
         <PrintButton key="p" title="1:1 Keyworker Sessions" />,
         <ExportButton key="e" data={filtered} columns={exportCols} filename="keyworker-1to1-sessions" />,
+        <Button key="n" size="sm" onClick={() => setShowNew(true)}><Plus className="h-4 w-4 mr-1" /> New Session</Button>,
       ]}
     >
       <div id="print-area" className="space-y-6">
@@ -504,7 +518,7 @@ export default function ChildKeyworker1to1SessionsPage() {
             const open = expanded === r.id;
             return (
               <Card key={r.id} className="border-rose-100">
-                <button className="w-full text-left" onClick={() => toggle(r.id)}>
+                <button className="w-full text-left" onClick={() => toggle(r.id)} aria-expanded={open} aria-label={`Expand session details for ${getYPName(r.youngPerson)}`}>
                   <CardHeader className="pb-2">
                     <div className="flex items-center justify-between gap-3">
                       <div className="flex items-center gap-2 flex-wrap">
@@ -588,6 +602,8 @@ export default function ChildKeyworker1to1SessionsPage() {
                         <p className="text-sm text-slate-900">{r.notes}</p>
                       </div>
                     )}
+
+                    <SmartLinkPanel sourceType="key_work" sourceId={r.id} childId={r.youngPerson} compact />
                   </CardContent>
                 )}
               </Card>
@@ -602,6 +618,89 @@ export default function ChildKeyworker1to1SessionsPage() {
           <p>UNCRC Article 12: every child has the right to express their views in matters affecting them and to have those views given due weight. 1:1 sessions are a primary route through which child voice is captured, evidenced and acted on.</p>
         </div>
       </div>
+
+      <Dialog open={showNew} onOpenChange={setShowNew}>
+        <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
+          <DialogHeader><DialogTitle>New 1:1 Session</DialogTitle></DialogHeader>
+          <div className="space-y-3">
+            <div>
+              <Label htmlFor="session-child">Young Person</Label>
+              <Select value={nChild} onValueChange={setNChild}>
+                <SelectTrigger id="session-child"><SelectValue placeholder="Select child" /></SelectTrigger>
+                <SelectContent>
+                  {[...new Set(data.map(r => r.youngPerson))].map(id => (
+                    <SelectItem key={id} value={id}>{getYPName(id)}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <Label htmlFor="session-format">Format</Label>
+              <Select value={nFormat} onValueChange={setNFormat}>
+                <SelectTrigger id="session-format"><SelectValue placeholder="Select format" /></SelectTrigger>
+                <SelectContent>
+                  {FORMATS.map(f => <SelectItem key={f} value={f}>{f}</SelectItem>)}
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <Label htmlFor="session-themes">Themes Covered</Label>
+              <Input id="session-themes" placeholder="Comma-separated themes" value={nThemes} onChange={e => setNThemes(e.target.value)} />
+            </div>
+            <div>
+              <Label htmlFor="session-child-brought-up">What child brought up</Label>
+              <Textarea id="session-child-brought-up" placeholder="Record what the child raised..." value={nChildBroughtUp} onChange={e => setNChildBroughtUp(e.target.value)} rows={3} />
+            </div>
+            <div>
+              <Label htmlFor="session-staff-brought-up">What staff brought up</Label>
+              <Textarea id="session-staff-brought-up" placeholder="Record what staff raised..." value={nStaffBroughtUp} onChange={e => setNStaffBroughtUp(e.target.value)} rows={3} />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowNew(false)}>Cancel</Button>
+            <Button disabled={!nChild || !nFormat} onClick={() => {
+              const session: SessionRecord = {
+                id: `s_${Date.now()}`,
+                youngPerson: nChild,
+                keyWorker: "staff_anna",
+                sessionDate: new Date().toISOString().slice(0, 10),
+                duration: 45,
+                format: nFormat as SessionFormat,
+                childChoseFormat: true,
+                themesCovered: nThemes.split(",").map(t => t.trim()).filter(Boolean),
+                childWentInWith: "",
+                childWalkedOutWith: "",
+                whatChildBroughtUp: nChildBroughtUp,
+                whatStaffBroughtUp: nStaffBroughtUp,
+                agreedActionsForStaff: [],
+                agreedActionsForChild: [],
+                childSatisfaction: 4,
+                followUpDate: d(7),
+                flagsRaised: [],
+              };
+              setData(prev => [session, ...prev]);
+              createSession.mutate({
+                child_id: nChild,
+                staff_id: "staff_anna",
+                session_date: new Date().toISOString().slice(0, 10),
+                duration_minutes: 45,
+                format: nFormat,
+                child_chose_format: true,
+                themes_covered: nThemes.split(",").map(t => t.trim()).filter(Boolean),
+                what_child_brought_up: nChildBroughtUp,
+                what_staff_brought_up: nStaffBroughtUp,
+                agreed_actions_staff: [],
+                agreed_actions_child: [],
+                child_satisfaction: 4,
+                follow_up_date: d(7),
+                flags_raised: [],
+              }, { onSuccess: () => toast.success("Session saved"), onError: () => toast.error("Failed to save session") });
+              setShowNew(false);
+              setNChild(""); setNFormat(""); setNThemes(""); setNChildBroughtUp(""); setNStaffBroughtUp("");
+            }}>{createSession.isPending ? <><Loader2 className="h-4 w-4 animate-spin mr-1" />Saving...</> : "Save Session"}</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </PageShell>
   );
 }

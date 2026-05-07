@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useCompetenceRecords, useCreateCompetenceRecord } from "@/hooks/use-intelligence-layer";
 import { PageShell } from "@/components/layout/page-shell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -310,8 +311,47 @@ const DEMO_STAFF: StaffRecord[] = [
 
 export default function StaffCompetencePassportPage() {
   const [selectedStaff, setSelectedStaff] = useState("staff-a");
+  const [staffRecords, setStaffRecords] = useState<StaffRecord[]>(DEMO_STAFF);
 
-  const staff = DEMO_STAFF.find((s) => s.id === selectedStaff) || DEMO_STAFF[0];
+  /* ── API hooks ─────────────────────────────────────────────────────────── */
+  const { data: apiData } = useCompetenceRecords();
+  const updateCompetence = useCreateCompetenceRecord();
+
+  useEffect(() => {
+    if (apiData?.persisted && apiData.records.length > 0) {
+      setStaffRecords((apiData.records as Record<string, unknown>[]).map((row) => ({
+        id: row.id as string,
+        name: (row.staff_id as string) ?? "",
+        role: "",
+        startDate: "",
+        passport: [
+          { label: "Safer Recruitment", status: row.safer_recruitment_complete ? "valid" as ComplianceStatus : "not_started" as ComplianceStatus, detail: row.safer_recruitment_complete ? "Complete" : "Incomplete" },
+          { label: "DBS Check", status: (row.dbs_status as ComplianceStatus) ?? "not_started", detail: (row.dbs_status as string) ?? "", expiryDate: (row.dbs_date as string) ?? undefined },
+          { label: "Induction", status: row.induction_complete ? "valid" as ComplianceStatus : "not_started" as ComplianceStatus, detail: row.induction_complete ? "Complete" : "Incomplete" },
+          { label: "Mandatory Training", status: row.mandatory_training_complete ? "valid" as ComplianceStatus : "not_started" as ComplianceStatus, detail: row.mandatory_training_complete ? "Complete" : "Incomplete" },
+          { label: "Safeguarding Training", status: row.safeguarding_training_date ? "valid" as ComplianceStatus : "not_started" as ComplianceStatus, detail: (row.safeguarding_training_date as string) ?? "" },
+          { label: "Medication Competency", status: row.medication_competency ? "valid" as ComplianceStatus : "not_started" as ComplianceStatus, detail: row.medication_competency ? "Passed" : "Not assessed" },
+          { label: "Supervision", status: row.last_supervision_date ? "valid" as ComplianceStatus : "not_started" as ComplianceStatus, detail: row.last_supervision_date ? `Last: ${row.last_supervision_date}` : "None recorded" },
+        ],
+        competencyFlags: [
+          { label: "Can Lead Shift", granted: (row.can_lead_shift as boolean) ?? false },
+          { label: "Can Administer Medication", granted: (row.can_administer_medication as boolean) ?? false },
+          { label: "Can Lone Work", granted: (row.can_lone_work as boolean) ?? false },
+        ],
+        warnings: (row.performance_concerns as string)
+          ? [{ id: "w1", severity: "medium" as const, title: "Performance Concern", description: row.performance_concerns as string, date: "" }]
+          : [],
+        restrictions: (row.restrictions as string)
+          ? [{ id: "r1", restriction: row.restrictions as string, reason: "", appliedDate: "", appliedBy: "" }]
+          : [],
+        compliments: (row.compliments as string)
+          ? [{ id: "c1", text: row.compliments as string, from: "", date: "" }]
+          : [],
+      })));
+    }
+  }, [apiData]);
+
+  const staff = staffRecords.find((s) => s.id === selectedStaff) || staffRecords[0];
 
   const validCount = staff.passport.filter((p) => p.status === "valid").length;
   const totalCount = staff.passport.length;
@@ -331,7 +371,7 @@ export default function StaffCompetencePassportPage() {
                 <SelectValue placeholder="Select staff member" />
               </SelectTrigger>
               <SelectContent>
-                {DEMO_STAFF.map((s) => (
+                {staffRecords.map((s) => (
                   <SelectItem key={s.id} value={s.id}>
                     {s.name}
                   </SelectItem>
@@ -546,9 +586,18 @@ export default function StaffCompetencePassportPage() {
                 <Shield className="h-4 w-4 mr-1" />
                 Restrict Duty
               </Button>
-              <Button variant="outline" size="sm">
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={updateCompetence.isPending}
+                onClick={() => updateCompetence.mutate({
+                  staffId: selectedStaff,
+                  homeId: "oak-house",
+                  mandatoryTrainingComplete: true,
+                })}
+              >
                 <Star className="h-4 w-4 mr-1" />
-                Approve Competency
+                {updateCompetence.isPending ? "Saving..." : "Approve Competency"}
               </Button>
             </div>
           </CardContent>

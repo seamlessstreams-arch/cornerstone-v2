@@ -9,240 +9,44 @@ import { Badge } from "@/components/ui/badge";
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
   ChevronDown, ChevronUp, ArrowUpDown, AlertTriangle, CheckCircle2,
-  XCircle, Search, Users, ShieldCheck, ClipboardCheck, BadgeCheck, Building2,
+  XCircle, Search, ShieldCheck, ClipboardCheck, BadgeCheck, Building2,
+  Loader2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getStaffName } from "@/lib/seed-data";
-
-/* ── types ─────────────────────────────────────────────────────────────────── */
-
-type InductionType = "Pre-shift brief" | "Half-day full induction" | "Returning staff refresh";
-
-interface InductionTopic {
-  topic: string;
-  covered: boolean;
-  notes: string;
-}
-
-interface AgencyInduction {
-  id: string;
-  agencyStaffName: string;
-  agency: string;
-  dateInducted: string;
-  inductedBy: string; // staff ID
-  inductionDuration: number; // minutes
-  inductionType: InductionType;
-  childrenInformedAboutAgencyArrival: boolean;
-  agencyDbsVerified: boolean;
-  agencyTrainingVerified: boolean;
-  agencyReferencesVerified: boolean;
-  inductionTopics: InductionTopic[];
-  childInformationShared: string;
-  keyPoliciesShared: string[];
-  photoTakenAndVerified: boolean;
-  behaviourSupportPlansBriefed: boolean;
-  agencyStaffSignedInductionPack: boolean;
-  shiftsBooked: number;
-  agencyStaffFeedback: string;
-  homeFeedbackOnAgency: string;
-  repeatBookingApproved: boolean;
-}
+import { useAgencyInductions } from "@/hooks/use-agency-inductions";
+import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
+import type { AgencyInduction, AgencyInductionType } from "@/types/extended";
 
 /* ── helpers ───────────────────────────────────────────────────────────────── */
 
-const d = (n: number) => {
-  const dt = new Date();
-  dt.setDate(dt.getDate() + n);
-  return dt.toISOString().slice(0, 10);
+const TYPE_CLR: Record<AgencyInductionType, string> = {
+  pre_shift_brief: "bg-amber-100 text-amber-800",
+  half_day_full_induction: "bg-blue-100 text-blue-800",
+  returning_staff_refresh: "bg-purple-100 text-purple-800",
 };
 
-const TYPE_CLR: Record<InductionType, string> = {
-  "Pre-shift brief": "bg-amber-100 text-amber-800",
-  "Half-day full induction": "bg-blue-100 text-blue-800",
-  "Returning staff refresh": "bg-purple-100 text-purple-800",
+const TYPE_BORDER: Record<AgencyInductionType, string> = {
+  pre_shift_brief: "border-l-amber-400",
+  half_day_full_induction: "border-l-blue-400",
+  returning_staff_refresh: "border-l-purple-400",
 };
 
-const TYPE_BORDER: Record<InductionType, string> = {
-  "Pre-shift brief": "border-l-amber-400",
-  "Half-day full induction": "border-l-blue-400",
-  "Returning staff refresh": "border-l-purple-400",
+const TYPE_LABEL: Record<AgencyInductionType, string> = {
+  pre_shift_brief: "Pre-shift brief",
+  half_day_full_induction: "Half-day full induction",
+  returning_staff_refresh: "Returning staff refresh",
 };
-
-const STANDARD_TOPICS: string[] = [
-  "Children's individual needs (high-level only)",
-  "Behaviour support principles",
-  "Sensory awareness for Casey",
-  "Restraint policy (overview)",
-  "Recording requirements",
-  "Reporting concerns",
-  "Fire procedures",
-  "Safe touch protocols",
-  "Medication policy (no admin without separate certification)",
-  "Phone/communication",
-];
-
-const buildTopics = (allCovered: boolean, exceptions: Record<string, { covered?: boolean; notes?: string }> = {}): InductionTopic[] =>
-  STANDARD_TOPICS.map((topic) => ({
-    topic,
-    covered: exceptions[topic]?.covered ?? allCovered,
-    notes: exceptions[topic]?.notes ?? "",
-  }));
-
-/* ── seed data ─────────────────────────────────────────────────────────────── */
-
-const SEED: AgencyInduction[] = [
-  {
-    id: "ind_001",
-    agencyStaffName: "Marcus Thompson",
-    agency: "CareStaff Solutions",
-    dateInducted: d(-90),
-    inductedBy: "staff_darren",
-    inductionDuration: 240,
-    inductionType: "Half-day full induction",
-    childrenInformedAboutAgencyArrival: true,
-    agencyDbsVerified: true,
-    agencyTrainingVerified: true,
-    agencyReferencesVerified: true,
-    inductionTopics: buildTopics(true, {
-      "Sensory awareness for Casey": { covered: true, notes: "Walked through Casey's sensory profile (high-level). Demonstrated low-arousal approach, dim lighting in lounge, avoidance of sudden noise. No clinical detail shared." },
-      "Restraint policy (overview)": { covered: true, notes: "Marcus is PRICE Level 2 trained via agency. Confirmed he understands Oak House's positive handling ethos — last resort, recorded, reviewed." },
-      "Phone/communication": { covered: true, notes: "Phone policy explained — phones in locker during shift. Marcus signed phone agreement." },
-    }),
-    childInformationShared: "High-level only: 3 young people aged 13–16, mixed presentations, two with EHCPs, one with sensory needs, one with attachment-related behaviours. No diagnoses, full names of family, or trauma history shared at induction stage. Detail shared shift-by-shift on a need-to-know basis at handover.",
-    keyPoliciesShared: ["Safeguarding & Child Protection", "Behaviour Support & Positive Handling", "Recording & Reporting", "Medication", "Health & Safety / Fire", "Phone & Social Media", "Whistleblowing"],
-    photoTakenAndVerified: true,
-    behaviourSupportPlansBriefed: true,
-    agencyStaffSignedInductionPack: true,
-    shiftsBooked: 6,
-    agencyStaffFeedback: "Induction was thorough and welcoming. Felt confident going into first shift. Appreciated being introduced to YP gradually rather than all at once. The behaviour support overview was clear without being overloaded with detail.",
-    homeFeedbackOnAgency: "CareStaff Solutions provided a complete vetting pack ahead of induction. Marcus arrived early, was prepared, and engaged well. Preferred worker — added to repeat booking list.",
-    repeatBookingApproved: true,
-  },
-  {
-    id: "ind_002",
-    agencyStaffName: "Priya Patel",
-    agency: "NightOwl Staffing",
-    dateInducted: d(-180),
-    inductedBy: "staff_ryan",
-    inductionDuration: 240,
-    inductionType: "Half-day full induction",
-    childrenInformedAboutAgencyArrival: true,
-    agencyDbsVerified: true,
-    agencyTrainingVerified: true,
-    agencyReferencesVerified: true,
-    inductionTopics: buildTopics(true, {
-      "Children's individual needs (high-level only)": { covered: true, notes: "Night-specific briefing — sleep routines, who needs check-ins, who is unsettled by torch light. No diagnoses shared." },
-      "Sensory awareness for Casey": { covered: true, notes: "Casey's sensitivity to noise/light covered in detail given waking night role. Priya shown how to do silent door checks." },
-      "Medication policy (no admin without separate certification)": { covered: true, notes: "Priya is medication-trained via agency. Oak House MAR system demonstrated. Witness countersign rule reinforced." },
-    }),
-    childInformationShared: "Night-shift specific: sleep routines, check frequencies, room locations, what to do if a YP is awake distressed (call on-call). High-level only — no histories or trauma detail shared at induction.",
-    keyPoliciesShared: ["Safeguarding & Child Protection", "Night Support & Lone Working", "Medication", "Behaviour Support", "Fire & Emergency", "Recording & Reporting"],
-    photoTakenAndVerified: true,
-    behaviourSupportPlansBriefed: true,
-    agencyStaffSignedInductionPack: true,
-    shiftsBooked: 17,
-    agencyStaffFeedback: "Best induction I've had in 4 years of agency work. Pack was clear, Ryan was patient, and the home felt organised. Coming back to Oak House always feels safe and prepared.",
-    homeFeedbackOnAgency: "Priya is our preferred waking night agency worker. NightOwl's vetting is rigorous and the worker matches the paperwork. Strongly recommended for repeat booking.",
-    repeatBookingApproved: true,
-  },
-  {
-    id: "ind_003",
-    agencyStaffName: "Aisha Bello",
-    agency: "CareStaff Solutions",
-    dateInducted: d(-30),
-    inductedBy: "staff_darren",
-    inductionDuration: 60,
-    inductionType: "Returning staff refresh",
-    childrenInformedAboutAgencyArrival: true,
-    agencyDbsVerified: true,
-    agencyTrainingVerified: true,
-    agencyReferencesVerified: true,
-    inductionTopics: buildTopics(true, {
-      "Children's individual needs (high-level only)": { covered: true, notes: "Updated on changes since last shift 6 months ago — one new admission, one YP moved on. High-level only." },
-      "Behaviour support principles": { covered: true, notes: "BSPs reviewed for current cohort. Updated approach for Casey explained." },
-      "Recording requirements": { covered: true, notes: "Reminder of new daily log template introduced 3 months ago. Aisha walked through example entries." },
-    }),
-    childInformationShared: "Refresh briefing — focus on what has changed since Aisha's last shift. New YP introduced at high level, BSP changes summarised, current routines confirmed.",
-    keyPoliciesShared: ["Safeguarding (refresher)", "Updated Recording Template", "Behaviour Support (current BSPs)", "Phone & Social Media (annual reminder)"],
-    photoTakenAndVerified: true,
-    behaviourSupportPlansBriefed: true,
-    agencyStaffSignedInductionPack: true,
-    shiftsBooked: 4,
-    agencyStaffFeedback: "Glad to be back. The refresh was the right length — not patronising but covered everything that had changed. Appreciated the honest update on Casey's recent BSP changes.",
-    homeFeedbackOnAgency: "Aisha is one of our most consistent agency workers. CareStaff continue to be reliable. Approved for repeat booking — preferred worker list.",
-    repeatBookingApproved: true,
-  },
-  {
-    id: "ind_004",
-    agencyStaffName: "Daniel Okafor",
-    agency: "Premier Care Agency",
-    dateInducted: d(-14),
-    inductedBy: "staff_ryan",
-    inductionDuration: 180,
-    inductionType: "Half-day full induction",
-    childrenInformedAboutAgencyArrival: true,
-    agencyDbsVerified: true,
-    agencyTrainingVerified: false,
-    agencyReferencesVerified: false,
-    inductionTopics: buildTopics(true, {
-      "Behaviour support principles": { covered: true, notes: "Daniel had limited prior experience in children's homes. Concepts explained at greater depth. Some understanding gaps remained." },
-      "Phone/communication": { covered: true, notes: "Phone policy explained twice — Daniel asked clarifying questions. Signed agreement. Note: subsequently breached during first shift (see Agency Staff Log ag_004)." },
-      "Recording requirements": { covered: true, notes: "Daniel needed extra time on recording standards. Examples provided. Concern noted re. brevity of his actual shift notes afterwards." },
-    }),
-    childInformationShared: "Full briefing pack delivered, but at high level — three young people, mixed presentations, two with EHCPs. Detailed BSP information shared on a need-to-know basis at handover.",
-    keyPoliciesShared: ["Safeguarding & Child Protection", "Behaviour Support & Positive Handling", "Recording & Reporting", "Medication", "Phone & Social Media", "Whistleblowing"],
-    photoTakenAndVerified: true,
-    behaviourSupportPlansBriefed: true,
-    agencyStaffSignedInductionPack: true,
-    shiftsBooked: 1,
-    agencyStaffFeedback: "Induction was long but useful. Felt overwhelmed by the amount of policy detail.",
-    homeFeedbackOnAgency: "Premier Care Agency vetting was incomplete — references and training matrix not verified at point of booking. Daniel performed below standard during shift (see ag_004) — phone use during shift and weak engagement. Repeat booking NOT approved. Feedback formally returned to agency in writing. Premier Care to be reviewed as a supplier.",
-    repeatBookingApproved: false,
-  },
-  {
-    id: "ind_005",
-    agencyStaffName: "Sofia Martinez",
-    agency: "Bright Futures Agency",
-    dateInducted: d(-2),
-    inductedBy: "staff_anna",
-    inductionDuration: 120,
-    inductionType: "Half-day full induction",
-    childrenInformedAboutAgencyArrival: true,
-    agencyDbsVerified: true,
-    agencyTrainingVerified: true,
-    agencyReferencesVerified: true,
-    inductionTopics: buildTopics(false, {
-      "Children's individual needs (high-level only)": { covered: true, notes: "High-level cohort overview given. Names, ages, EHCP status." },
-      "Behaviour support principles": { covered: true, notes: "Oak House positive handling ethos explained." },
-      "Recording requirements": { covered: true, notes: "Daily log template walked through." },
-      "Reporting concerns": { covered: true, notes: "Safeguarding flowchart shared. LADO process explained." },
-      "Fire procedures": { covered: true, notes: "Fire walk completed — all exits, assembly point, refuge area." },
-      "Phone/communication": { covered: true, notes: "Phone policy signed." },
-      "Sensory awareness for Casey": { covered: false, notes: "Pending — to be covered before any shift involving Casey. Sofia not yet booked." },
-      "Restraint policy (overview)": { covered: false, notes: "Pending — Sofia not yet PRICE certified. Agency confirms training booked for next week. No shift to be booked until certified." },
-      "Safe touch protocols": { covered: false, notes: "Pending — to be covered alongside restraint policy." },
-      "Medication policy (no admin without separate certification)": { covered: false, notes: "Pending — Sofia does not currently hold medication certification. Will not be administering medication regardless of completion." },
-    }),
-    childInformationShared: "First-time induction — high-level cohort overview only. No detailed BSPs or histories shared until induction is complete and first shift confirmed.",
-    keyPoliciesShared: ["Safeguarding & Child Protection (Part 1)", "Recording & Reporting", "Fire & Emergency", "Phone & Social Media"],
-    photoTakenAndVerified: true,
-    behaviourSupportPlansBriefed: false,
-    agencyStaffSignedInductionPack: false,
-    shiftsBooked: 0,
-    agencyStaffFeedback: "Two-hour first session was a good pace. Looking forward to completing the remaining topics next week before my first shift.",
-    homeFeedbackOnAgency: "Bright Futures Agency new supplier — first induction. Vetting pack complete. Sofia presents well. Induction split across two sessions due to outstanding PRICE certification. No shift to be booked until full induction signed off. Approval pending completion.",
-    repeatBookingApproved: false,
-  },
-];
 
 /* ── page ──────────────────────────────────────────────────────────────────── */
 
 export default function AgencyStaffInductionPage() {
-  const [data] = useState(SEED);
+  const { data: result, isLoading } = useAgencyInductions();
+  const data = result?.data ?? [];
+
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [search, setSearch] = useState("");
   const [filterType, setFilterType] = useState("all");
@@ -256,39 +60,39 @@ export default function AgencyStaffInductionPage() {
     if (search) {
       const q = search.toLowerCase();
       rows = rows.filter((r) =>
-        r.agencyStaffName.toLowerCase().includes(q) ||
+        r.agency_staff_name.toLowerCase().includes(q) ||
         r.agency.toLowerCase().includes(q)
       );
     }
-    if (filterType !== "all") rows = rows.filter((r) => r.inductionType === filterType);
+    if (filterType !== "all") rows = rows.filter((r) => r.induction_type === filterType);
     if (filterAgency !== "all") rows = rows.filter((r) => r.agency === filterAgency);
     rows.sort((a, b) => sortBy === "newest"
-      ? b.dateInducted.localeCompare(a.dateInducted)
-      : a.dateInducted.localeCompare(b.dateInducted));
+      ? b.date_inducted.localeCompare(a.date_inducted)
+      : a.date_inducted.localeCompare(b.date_inducted));
     return rows;
   }, [data, search, filterType, filterAgency, sortBy]);
 
   /* summary stats */
   const activeAgencies = agencies.length;
   const yearStart = new Date().toISOString().slice(0, 4) + "-01-01";
-  const inductionsThisYear = data.filter((r) => r.dateInducted >= yearStart).length;
-  const approvedForRepeat = data.filter((r) => r.repeatBookingApproved).length;
-  const dbsVerifiedCount = data.filter((r) => r.agencyDbsVerified).length;
+  const inductionsThisYear = data.filter((r) => r.date_inducted >= yearStart).length;
+  const approvedForRepeat = data.filter((r) => r.repeat_booking_approved).length;
+  const dbsVerifiedCount = data.filter((r) => r.agency_dbs_verified).length;
 
   const exportCols: ExportColumn<AgencyInduction>[] = [
-    { header: "Date", accessor: (r: AgencyInduction) => r.dateInducted },
-    { header: "Agency Worker", accessor: (r: AgencyInduction) => r.agencyStaffName },
+    { header: "Date", accessor: (r: AgencyInduction) => r.date_inducted },
+    { header: "Agency Worker", accessor: (r: AgencyInduction) => r.agency_staff_name },
     { header: "Agency", accessor: (r: AgencyInduction) => r.agency },
-    { header: "Inducted By", accessor: (r: AgencyInduction) => getStaffName(r.inductedBy) },
-    { header: "Type", accessor: (r: AgencyInduction) => r.inductionType },
-    { header: "Duration (mins)", accessor: (r: AgencyInduction) => String(r.inductionDuration) },
-    { header: "DBS Verified", accessor: (r: AgencyInduction) => r.agencyDbsVerified ? "Yes" : "No" },
-    { header: "Training Verified", accessor: (r: AgencyInduction) => r.agencyTrainingVerified ? "Yes" : "No" },
-    { header: "References Verified", accessor: (r: AgencyInduction) => r.agencyReferencesVerified ? "Yes" : "No" },
-    { header: "BSPs Briefed", accessor: (r: AgencyInduction) => r.behaviourSupportPlansBriefed ? "Yes" : "No" },
-    { header: "Pack Signed", accessor: (r: AgencyInduction) => r.agencyStaffSignedInductionPack ? "Yes" : "No" },
-    { header: "Shifts Booked", accessor: (r: AgencyInduction) => String(r.shiftsBooked) },
-    { header: "Repeat Approved", accessor: (r: AgencyInduction) => r.repeatBookingApproved ? "Yes" : "No" },
+    { header: "Inducted By", accessor: (r: AgencyInduction) => getStaffName(r.inducted_by) },
+    { header: "Type", accessor: (r: AgencyInduction) => TYPE_LABEL[r.induction_type] },
+    { header: "Duration (mins)", accessor: (r: AgencyInduction) => String(r.induction_duration) },
+    { header: "DBS Verified", accessor: (r: AgencyInduction) => r.agency_dbs_verified ? "Yes" : "No" },
+    { header: "Training Verified", accessor: (r: AgencyInduction) => r.agency_training_verified ? "Yes" : "No" },
+    { header: "References Verified", accessor: (r: AgencyInduction) => r.agency_references_verified ? "Yes" : "No" },
+    { header: "BSPs Briefed", accessor: (r: AgencyInduction) => r.behaviour_support_plans_briefed ? "Yes" : "No" },
+    { header: "Pack Signed", accessor: (r: AgencyInduction) => r.agency_staff_signed_induction_pack ? "Yes" : "No" },
+    { header: "Shifts Booked", accessor: (r: AgencyInduction) => String(r.shifts_booked) },
+    { header: "Repeat Approved", accessor: (r: AgencyInduction) => r.repeat_booking_approved ? "Yes" : "No" },
   ];
 
   return (
@@ -302,6 +106,9 @@ export default function AgencyStaffInductionPage() {
         </div>
       }
     >
+      {isLoading ? (
+        <div className="flex items-center justify-center py-20"><Loader2 className="h-6 w-6 animate-spin text-muted-foreground" /></div>
+      ) : (
       <div id="print-area">
         {/* summary stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
@@ -331,9 +138,9 @@ export default function AgencyStaffInductionPage() {
             <SelectTrigger className="w-[200px]"><SelectValue placeholder="Induction Type" /></SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Induction Types</SelectItem>
-              <SelectItem value="Pre-shift brief">Pre-shift brief</SelectItem>
-              <SelectItem value="Half-day full induction">Half-day full induction</SelectItem>
-              <SelectItem value="Returning staff refresh">Returning staff refresh</SelectItem>
+              <SelectItem value="pre_shift_brief">Pre-shift brief</SelectItem>
+              <SelectItem value="half_day_full_induction">Half-day full induction</SelectItem>
+              <SelectItem value="returning_staff_refresh">Returning staff refresh</SelectItem>
             </SelectContent>
           </Select>
           <Select value={filterAgency} onValueChange={setFilterAgency}>
@@ -359,27 +166,27 @@ export default function AgencyStaffInductionPage() {
         <div className="space-y-3">
           {filtered.map((r) => {
             const isOpen = expandedId === r.id;
-            const topicsCovered = r.inductionTopics.filter((t) => t.covered).length;
-            const topicsTotal = r.inductionTopics.length;
+            const topicsCovered = r.induction_topics.filter((t) => t.covered).length;
+            const topicsTotal = r.induction_topics.length;
             const fullyComplete =
-              r.agencyDbsVerified && r.agencyTrainingVerified && r.agencyReferencesVerified &&
-              r.behaviourSupportPlansBriefed && r.agencyStaffSignedInductionPack &&
+              r.agency_dbs_verified && r.agency_training_verified && r.agency_references_verified &&
+              r.behaviour_support_plans_briefed && r.agency_staff_signed_induction_pack &&
               topicsCovered === topicsTotal;
             return (
-              <Card key={r.id} className={cn("border-l-4", TYPE_BORDER[r.inductionType])}>
+              <Card key={r.id} className={cn("border-l-4", TYPE_BORDER[r.induction_type])}>
                 <CardHeader className="pb-2 cursor-pointer" onClick={() => setExpandedId(isOpen ? null : r.id)}>
                   <div className="flex items-start justify-between gap-3">
                     <div className="space-y-1 flex-1">
                       <CardTitle className="text-base flex items-center gap-2 flex-wrap">
-                        {r.agencyStaffName}
-                        <Badge variant="outline" className={TYPE_CLR[r.inductionType]}>{r.inductionType}</Badge>
-                        {r.repeatBookingApproved
+                        {r.agency_staff_name}
+                        <Badge variant="outline" className={TYPE_CLR[r.induction_type]}>{TYPE_LABEL[r.induction_type]}</Badge>
+                        {r.repeat_booking_approved
                           ? <Badge variant="outline" className="bg-green-100 text-green-800">Repeat OK</Badge>
                           : <Badge variant="outline" className="bg-red-100 text-red-800">Repeat Declined</Badge>}
                         {!fullyComplete && <Badge variant="outline" className="bg-amber-100 text-amber-800">Induction in progress</Badge>}
                       </CardTitle>
                       <p className="text-sm text-muted-foreground">
-                        {r.agency} · {r.dateInducted} · {r.inductionDuration} mins · By {getStaffName(r.inductedBy)} · Topics {topicsCovered}/{topicsTotal} · Shifts booked: {r.shiftsBooked}
+                        {r.agency} · {r.date_inducted} · {r.induction_duration} mins · By {getStaffName(r.inducted_by)} · Topics {topicsCovered}/{topicsTotal} · Shifts booked: {r.shifts_booked}
                       </p>
                     </div>
                     <div className="flex items-center gap-2">
@@ -395,13 +202,13 @@ export default function AgencyStaffInductionPage() {
                       <p className="font-medium mb-1">Vetting & Pre-Shift Verification</p>
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                         {[
-                          { label: "DBS Verified", ok: r.agencyDbsVerified },
-                          { label: "Training Verified", ok: r.agencyTrainingVerified },
-                          { label: "References Verified", ok: r.agencyReferencesVerified },
-                          { label: "Photo Verified", ok: r.photoTakenAndVerified },
-                          { label: "BSPs Briefed", ok: r.behaviourSupportPlansBriefed },
-                          { label: "Induction Pack Signed", ok: r.agencyStaffSignedInductionPack },
-                          { label: "Children Informed", ok: r.childrenInformedAboutAgencyArrival },
+                          { label: "DBS Verified", ok: r.agency_dbs_verified },
+                          { label: "Training Verified", ok: r.agency_training_verified },
+                          { label: "References Verified", ok: r.agency_references_verified },
+                          { label: "Photo Verified", ok: r.photo_taken_and_verified },
+                          { label: "BSPs Briefed", ok: r.behaviour_support_plans_briefed },
+                          { label: "Induction Pack Signed", ok: r.agency_staff_signed_induction_pack },
+                          { label: "Children Informed", ok: r.children_informed_about_agency_arrival },
                         ].map((c) => (
                           <div key={c.label} className="flex items-center gap-1.5 text-xs">
                             {c.ok
@@ -417,7 +224,7 @@ export default function AgencyStaffInductionPage() {
                     <div>
                       <p className="font-medium mb-1">Induction Topics ({topicsCovered}/{topicsTotal} covered)</p>
                       <div className="space-y-1.5">
-                        {r.inductionTopics.map((t) => (
+                        {r.induction_topics.map((t) => (
                           <div key={t.topic} className={cn(
                             "rounded p-2 text-xs",
                             t.covered ? "bg-green-50 border border-green-200" : "bg-amber-50 border border-amber-200"
@@ -437,49 +244,52 @@ export default function AgencyStaffInductionPage() {
                     {/* child information shared */}
                     <div>
                       <p className="font-medium mb-1">Child Information Shared (high-level only)</p>
-                      <p className="text-muted-foreground text-xs">{r.childInformationShared}</p>
+                      <p className="text-muted-foreground text-xs">{r.child_information_shared}</p>
                     </div>
 
                     {/* policies */}
                     <div>
                       <p className="font-medium mb-1">Key Policies Shared</p>
                       <div className="flex flex-wrap gap-1.5">
-                        {r.keyPoliciesShared.map((p) => (
+                        {r.key_policies_shared.map((p) => (
                           <Badge key={p} variant="outline" className="bg-muted/50 text-xs">{p}</Badge>
                         ))}
                       </div>
                     </div>
 
                     {/* feedback */}
-                    {r.agencyStaffFeedback && (
+                    {r.agency_staff_feedback && (
                       <div>
                         <p className="font-medium mb-1">Agency Staff Feedback</p>
-                        <p className="text-muted-foreground text-xs">{r.agencyStaffFeedback}</p>
+                        <p className="text-muted-foreground text-xs">{r.agency_staff_feedback}</p>
                       </div>
                     )}
-                    {r.homeFeedbackOnAgency && (
+                    {r.home_feedback_on_agency && (
                       <div>
                         <p className="font-medium mb-1">Home Feedback on Agency</p>
-                        <p className="text-muted-foreground text-xs">{r.homeFeedbackOnAgency}</p>
+                        <p className="text-muted-foreground text-xs">{r.home_feedback_on_agency}</p>
                       </div>
                     )}
 
                     {/* repeat booking */}
                     <div className={cn(
                       "rounded p-2",
-                      r.repeatBookingApproved ? "bg-green-50 border border-green-200" : "bg-red-50 border border-red-200"
+                      r.repeat_booking_approved ? "bg-green-50 border border-green-200" : "bg-red-50 border border-red-200"
                     )}>
                       <p className={cn(
                         "text-xs font-medium",
-                        r.repeatBookingApproved ? "text-green-800" : "text-red-800"
+                        r.repeat_booking_approved ? "text-green-800" : "text-red-800"
                       )}>
-                        {r.repeatBookingApproved
+                        {r.repeat_booking_approved
                           ? "Approved for repeat booking — added to preferred worker list."
-                          : r.shiftsBooked === 0
+                          : r.shifts_booked === 0
                             ? "Repeat booking pending — induction not yet fully complete."
                             : "Repeat booking declined — feedback returned to agency."}
                       </p>
                     </div>
+
+                    {/* smart links */}
+                    <SmartLinkPanel sourceType="agency_induction" sourceId={r.id} compact />
                   </CardContent>
                 )}
               </Card>
@@ -495,6 +305,7 @@ export default function AgencyStaffInductionPage() {
           </p>
         </div>
       </div>
+      )}
     </PageShell>
   );
 }

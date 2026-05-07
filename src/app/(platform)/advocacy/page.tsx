@@ -11,6 +11,7 @@ import {
   CheckCircle2,
   Clock,
   AlertTriangle,
+  Loader2,
 } from "lucide-react";
 import { PageShell }    from "@/components/ui/page-shell";
 import { ExportButton, type ExportColumn } from "@/components/ui/export-button";
@@ -23,103 +24,15 @@ import {
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
-
-/* ── types ─────────────────────────────────────────────────────────────── */
-
-type AdvocacyType = "independent" | "issue_based" | "peer" | "legal" | "complaints";
-type AdvocacyStatus = "active" | "completed" | "pending_referral" | "declined_by_yp";
-
-interface Visit {
-  date: string;
-  type: "face_to_face" | "phone" | "virtual";
-  summary: string;
-  private: boolean;
-  actionsRaised: string[];
-}
-
-interface AdvocacyRecord {
-  id: string;
-  youngPersonId: string;
-  type: AdvocacyType;
-  status: AdvocacyStatus;
-  provider: string;
-  advocateName: string;
-  referralDate: string;
-  startDate: string | null;
-  reason: string;
-  issuesRaised: string[];
-  visits: Visit[];
-  childView: string;
-  homeResponse: string;
-  reviewDate: string;
-  notes: string;
-}
-
-/* ── seed ──────────────────────────────────────────────────────────────── */
-
-const d = (n: number) => { const dt = new Date(); dt.setDate(dt.getDate() + n); return dt.toISOString().slice(0, 10); };
-
-const SEED: AdvocacyRecord[] = [
-  {
-    id: "adv1", youngPersonId: "yp_alex", type: "independent",
-    status: "active", provider: "National Youth Advocacy Service (NYAS)",
-    advocateName: "Marcus Brown", referralDate: d(-120), startDate: d(-110),
-    reason: "Alex requested an advocate to help express his views at LAC reviews. He felt his opinions were not always heard and wanted independent support.",
-    issuesRaised: [
-      "Contact with mother — Alex wanted more frequent contact than SW was arranging",
-      "Education — Alex felt he should have input into college course choices",
-      "Bedroom decoration — Alex wanted to personalise his room more",
-    ],
-    visits: [
-      { date: d(-14), type: "face_to_face", summary: "Marcus visited Alex at Oak House. They discussed Alex's preparation for the upcoming LAC review. Alex identified three key things he wanted to raise: more contact with mum, his progress at college, and wanting to learn to drive. Marcus helped Alex write bullet points for the review.", private: true, actionsRaised: ["Advocate to attend LAC review and support Alex's contributions"] },
-      { date: d(-45), type: "phone", summary: "Phone call check-in. Alex confirmed he is happy with how the bedroom decoration issue was resolved. Still wants more contact with mum. Marcus acknowledged and will raise at next review.", private: true, actionsRaised: [] },
-      { date: d(-90), type: "face_to_face", summary: "Initial meeting. Built rapport with Alex. Discussed role of advocate — independent, confidential, Alex-led. Alex identified bedroom decoration as first issue. Marcus noted contact concerns for future discussion.", private: true, actionsRaised: ["Home to support Alex in choosing room decoration within budget"] },
-    ],
-    childView: "I like having Marcus. He listens to me properly and helps me say what I want to say in meetings. I feel like people take me more seriously when Marcus is there.",
-    homeResponse: "The home fully supports Alex's advocacy relationship. Bedroom decoration was addressed within two weeks of the issue being raised — Alex chose paint colours and posters. Contact issue has been escalated via SW. The home ensures Marcus has private space to meet with Alex.",
-    reviewDate: d(30),
-    notes: "Positive advocacy relationship. Alex is more confident in meetings since Marcus started attending. The home provides a private room for visits and ensures Alex has full access to his advocate.",
-  },
-  {
-    id: "adv2", youngPersonId: "yp_jordan", type: "issue_based",
-    status: "active", provider: "Coram Voice",
-    advocateName: "Priya Sharma", referralDate: d(-30), startDate: d(-21),
-    reason: "Jordan referred by RM following the online safety incident and subsequent Snapchat restriction. Jordan expressed frustration about the restriction and wanted independent support to understand their rights and ensure the restriction was fair.",
-    issuesRaised: [
-      "Snapchat restriction — Jordan wanted to understand if this was proportionate",
-      "Right to privacy online — Jordan felt staff were being too controlling",
-      "Wanting to understand the police process and what happens next",
-    ],
-    visits: [
-      { date: d(-7), type: "face_to_face", summary: "Priya met with Jordan privately. Explained the role of advocacy and that she was independent from the home. Jordan was initially reserved but opened up about feeling frustrated. Priya explained Jordan's right to challenge decisions and that she would review the restriction with Jordan.", private: true, actionsRaised: ["Advocate to review restriction documentation and proportionality assessment with Jordan"] },
-      { date: d(-3), type: "face_to_face", summary: "Follow-up visit. Priya reviewed the restriction log with Jordan (with Jordan's consent). Priya explained that the restriction appeared proportionate given the police investigation but helped Jordan identify questions to ask about when it would be reviewed and lifted. Jordan felt more empowered.", private: true, actionsRaised: ["Jordan to ask RM directly about restriction review date — advocate will support if needed"] },
-    ],
-    childView: "Priya explained things to me in a way I understand. I still don't like not having Snapchat but I understand why now. She said I can ask questions and that's my right.",
-    homeResponse: "The home welcomes Jordan having advocacy support. The restriction was already regularly reviewed and documented. The advocate's involvement has helped Jordan feel heard and understand the process. Staff are cooperating fully with Priya's visits.",
-    reviewDate: d(14),
-    notes: "Issue-based advocacy related to a specific concern. Priya's involvement has reduced Jordan's frustration and improved Jordan's understanding of the process. The home views this as positive.",
-  },
-  {
-    id: "adv3", youngPersonId: "yp_casey", type: "legal",
-    status: "active", provider: "Coram Children's Legal Centre",
-    advocateName: "Helen Watts (Solicitor)", referralDate: d(-60), startDate: d(-50),
-    reason: "Casey approaching 18 and has questions about leaving care entitlements, housing rights, and the local authority's legal obligations. Casey wants independent legal advice to ensure they receive everything they are entitled to.",
-    issuesRaised: [
-      "Leaving care grant amount and what it should cover",
-      "Local authority duty to provide suitable accommodation",
-      "Right to PA support until age 25",
-      "Education funding entitlements post-18",
-    ],
-    visits: [
-      { date: d(-10), type: "virtual", summary: "Helen provided Casey with a clear summary of leaving care rights under the Children (Leaving Care) Act 2000 and subsequent amendments. Covered: setting up home allowance, education bursary, PA support duration, and the LA's duty to assess needs. Casey asked excellent questions.", private: true, actionsRaised: ["Helen to write to LA requesting confirmation of Casey's leaving care financial package"] },
-      { date: d(-40), type: "face_to_face", summary: "Initial consultation. Helen assessed Casey's situation and confirmed Casey is eligible for full leaving care support. Discussed timeline and what Casey should expect from the LA. Casey felt reassured.", private: true, actionsRaised: ["Casey to request a copy of their Pathway Plan from SW"] },
-    ],
-    childView: "Helen knows the law inside out. I didn't know I was entitled to so much. I feel much more confident about leaving care now because I know my rights. If the council doesn't give me what I'm entitled to, I know I can challenge it.",
-    homeResponse: "The home fully supports Casey's access to legal advocacy. Key worker has supported Casey in understanding the advice provided. The home is working with Casey's PA to ensure all entitlements are claimed. This advocacy has been empowering for Casey.",
-    reviewDate: d(20),
-    notes: "Legal advocacy supporting Casey's transition to independence. Helen's involvement has clarified entitlements and given Casey confidence. The home is ensuring all information is shared with Casey's PA for follow-through.",
-  },
-];
+import { toast } from "sonner";
+import { useAdvocacy } from "@/hooks/use-advocacy";
+import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
+import type {
+  AdvocacyType,
+  AdvocacyStatus,
+  AdvocacyVisit,
+  AdvocacyRecord,
+} from "@/types/extended";
 
 /* ── constants ─────────────────────────────────────────────────────────── */
 
@@ -142,7 +55,9 @@ const VISIT_LABELS: Record<string, string> = {
 /* ── component ─────────────────────────────────────────────────────────── */
 
 export default function AdvocacyPage() {
-  const [data] = useState<AdvocacyRecord[]>(SEED);
+  const { data: result, isLoading } = useAdvocacy();
+  const data = result?.data ?? [];
+
   const [expanded, setExpanded] = useState<string | null>(null);
   const [search, setSearch] = useState("");
   const [filterType, setFilterType] = useState("all");
@@ -154,42 +69,42 @@ export default function AdvocacyPage() {
     total: data.length,
     active: data.filter((r) => r.status === "active").length,
     visits: data.reduce((s, r) => s + r.visits.length, 0),
-    issuesRaised: data.reduce((s, r) => s + r.issuesRaised.length, 0),
-    ypWithAdvocacy: new Set(data.filter((r) => r.status === "active").map((r) => r.youngPersonId)).size,
+    issuesRaised: data.reduce((s, r) => s + r.issues_raised.length, 0),
+    ypWithAdvocacy: new Set(data.filter((r) => r.status === "active").map((r) => r.child_id)).size,
   }), [data]);
 
   const filtered = useMemo(() => {
     let list = [...data];
-    if (filterType !== "all") list = list.filter((r) => r.type === filterType);
-    if (filterYP !== "all") list = list.filter((r) => r.youngPersonId === filterYP);
+    if (filterType !== "all") list = list.filter((r) => r.advocacy_type === filterType);
+    if (filterYP !== "all") list = list.filter((r) => r.child_id === filterYP);
     if (search) {
       const q = search.toLowerCase();
-      list = list.filter((r) => r.advocateName.toLowerCase().includes(q) || r.provider.toLowerCase().includes(q) || r.reason.toLowerCase().includes(q));
+      list = list.filter((r) => r.advocate_name.toLowerCase().includes(q) || r.provider.toLowerCase().includes(q) || r.reason.toLowerCase().includes(q));
     }
     list.sort((a, b) => {
       switch (sortBy) {
-        case "type": return TYPE_LABELS[a.type].localeCompare(TYPE_LABELS[b.type]);
-        case "yp":   return a.youngPersonId.localeCompare(b.youngPersonId);
-        default:     return b.referralDate.localeCompare(a.referralDate);
+        case "type": return TYPE_LABELS[a.advocacy_type].localeCompare(TYPE_LABELS[b.advocacy_type]);
+        case "yp":   return a.child_id.localeCompare(b.child_id);
+        default:     return b.referral_date.localeCompare(a.referral_date);
       }
     });
     return list;
   }, [data, filterType, filterYP, search, sortBy]);
 
   const exportData = useMemo(() => data.map((r) => ({
-    youngPerson: getYPName(r.youngPersonId),
-    type: TYPE_LABELS[r.type],
+    youngPerson: getYPName(r.child_id),
+    type: TYPE_LABELS[r.advocacy_type],
     status: STATUS_META[r.status].label,
     provider: r.provider,
-    advocate: r.advocateName,
-    referralDate: r.referralDate,
-    startDate: r.startDate || "Pending",
+    advocate: r.advocate_name,
+    referralDate: r.referral_date,
+    startDate: r.start_date || "Pending",
     reason: r.reason,
-    issuesRaised: r.issuesRaised.join("; "),
+    issuesRaised: r.issues_raised.join("; "),
     visits: r.visits.length,
-    childView: r.childView,
-    homeResponse: r.homeResponse,
-    reviewDate: r.reviewDate,
+    childView: r.child_view,
+    homeResponse: r.home_response,
+    reviewDate: r.review_date,
     notes: r.notes,
   })), [data]);
 
@@ -210,7 +125,17 @@ export default function AdvocacyPage() {
     { header: "Notes",         accessor: (r: typeof exportData[number]) => r.notes },
   ];
 
-  const ypIds = [...new Set(data.map((r) => r.youngPersonId))];
+  const ypIds = [...new Set(data.map((r) => r.child_id))];
+
+  if (isLoading) {
+    return (
+      <PageShell title="Advocacy Tracker" subtitle="Reg 7 — Independent advocacy, children's rights and representation">
+        <div className="flex items-center justify-center py-12">
+          <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+        </div>
+      </PageShell>
+    );
+  }
 
   return (
     <PageShell
@@ -279,11 +204,11 @@ export default function AdvocacyPage() {
                 <Megaphone className="h-5 w-5 text-brand" />
                 <div className="text-left">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <h3 className="font-semibold">{getYPName(rec.youngPersonId)}</h3>
-                    <span className="text-sm text-muted-foreground">— {TYPE_LABELS[rec.type]}</span>
+                    <h3 className="font-semibold">{getYPName(rec.child_id)}</h3>
+                    <span className="text-sm text-muted-foreground">— {TYPE_LABELS[rec.advocacy_type]}</span>
                     <span className={cn("rounded-full px-2 py-0.5 text-xs font-medium", STATUS_META[rec.status].colour)}>{STATUS_META[rec.status].label}</span>
                   </div>
-                  <p className="text-xs text-muted-foreground">{rec.advocateName} · {rec.provider} · {rec.visits.length} visits</p>
+                  <p className="text-xs text-muted-foreground">{rec.advocate_name} · {rec.provider} · {rec.visits.length} visits</p>
                 </div>
               </div>
               {expanded === rec.id ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
@@ -292,9 +217,9 @@ export default function AdvocacyPage() {
             {expanded === rec.id && (
               <div className="border-t p-4 space-y-4">
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
-                  <div><span className="text-muted-foreground">Referred:</span> {rec.referralDate}</div>
-                  <div><span className="text-muted-foreground">Started:</span> {rec.startDate || "Pending"}</div>
-                  <div><span className="text-muted-foreground">Review:</span> {rec.reviewDate}</div>
+                  <div><span className="text-muted-foreground">Referred:</span> {rec.referral_date}</div>
+                  <div><span className="text-muted-foreground">Started:</span> {rec.start_date || "Pending"}</div>
+                  <div><span className="text-muted-foreground">Review:</span> {rec.review_date}</div>
                   <div><span className="text-muted-foreground">Provider:</span> {rec.provider}</div>
                 </div>
 
@@ -305,7 +230,7 @@ export default function AdvocacyPage() {
 
                 <div>
                   <h4 className="text-sm font-semibold mb-1">Issues Raised</h4>
-                  <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">{rec.issuesRaised.map((i, idx) => <li key={idx}>{i}</li>)}</ul>
+                  <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">{rec.issues_raised.map((i, idx) => <li key={idx}>{i}</li>)}</ul>
                 </div>
 
                 {rec.visits.length > 0 && (
@@ -317,15 +242,15 @@ export default function AdvocacyPage() {
                           <div className="flex items-center justify-between mb-1">
                             <div className="flex items-center gap-2">
                               <span className="text-sm font-medium">{v.date}</span>
-                              <span className="rounded bg-gray-100 px-2 py-0.5 text-xs">{VISIT_LABELS[v.type]}</span>
-                              {v.private && <span className="rounded bg-purple-100 px-2 py-0.5 text-xs text-purple-700">Private</span>}
+                              <span className="rounded bg-gray-100 px-2 py-0.5 text-xs">{VISIT_LABELS[v.visit_type]}</span>
+                              {v.private_session && <span className="rounded bg-purple-100 px-2 py-0.5 text-xs text-purple-700">Private</span>}
                             </div>
                           </div>
                           <p className="text-sm text-muted-foreground">{v.summary}</p>
-                          {v.actionsRaised.length > 0 && (
+                          {v.actions_raised.length > 0 && (
                             <div className="mt-2 rounded bg-blue-50 p-2">
                               <p className="text-xs font-semibold text-blue-800 mb-1">Actions</p>
-                              <ul className="list-disc list-inside text-xs text-blue-900">{v.actionsRaised.map((a, j) => <li key={j}>{a}</li>)}</ul>
+                              <ul className="list-disc list-inside text-xs text-blue-900">{v.actions_raised.map((a, j) => <li key={j}>{a}</li>)}</ul>
                             </div>
                           )}
                         </div>
@@ -336,12 +261,12 @@ export default function AdvocacyPage() {
 
                 <div className="rounded-lg bg-pink-50 border border-pink-200 p-3">
                   <h4 className="text-sm font-semibold text-pink-800 mb-1">Child&apos;s View</h4>
-                  <p className="text-sm text-pink-900 italic">&ldquo;{rec.childView}&rdquo;</p>
+                  <p className="text-sm text-pink-900 italic">&ldquo;{rec.child_view}&rdquo;</p>
                 </div>
 
                 <div className="rounded-lg bg-green-50 p-3">
                   <h4 className="text-sm font-semibold text-green-800 mb-1">Home Response</h4>
-                  <p className="text-sm text-green-900">{rec.homeResponse}</p>
+                  <p className="text-sm text-green-900">{rec.home_response}</p>
                 </div>
 
                 {rec.notes && (
@@ -350,6 +275,13 @@ export default function AdvocacyPage() {
                     <p className="text-sm text-muted-foreground">{rec.notes}</p>
                   </div>
                 )}
+
+                <SmartLinkPanel
+                  sourceType="advocacy"
+                  sourceId={rec.id}
+                  childId={rec.child_id}
+                  compact
+                />
               </div>
             )}
           </div>

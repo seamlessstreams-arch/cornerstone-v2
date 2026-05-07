@@ -13,12 +13,15 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { ExportButton, type ExportColumn } from "@/components/ui/export-button";
 import { PrintButton } from "@/components/ui/print-button";
 import { cn } from "@/lib/utils";
+import { useCreateReferral, useUpdateReferral } from "@/hooks/use-admissions";
+import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { getStaffName } from "@/lib/seed-data";
 import {
   ArrowUpDown, ChevronDown, ChevronUp, Plus, Search,
   UserPlus, Calendar, Clock, AlertTriangle, CheckCircle2,
-  XCircle, FileText, Shield, MapPin
+  XCircle, FileText, Shield, MapPin, Loader2,
 } from "lucide-react";
+import { toast } from "sonner";
 
 // ── Types ────────────────────────────────────────────────────────────────────
 type ReferralStatus = "new" | "under_assessment" | "impact_assessment" | "panel_decision" | "accepted" | "declined" | "withdrawn" | "placed";
@@ -161,6 +164,8 @@ const EXPORT_COLS: ExportColumn<Referral>[] = [
 
 // ══════════════════════════════════════════════════════════════════════════════
 export default function AdmissionsPage() {
+  const createReferral = useCreateReferral();
+  const updateReferral = useUpdateReferral();
   const [referrals, setReferrals] = useState<Referral[]>(SEED);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
@@ -277,7 +282,7 @@ export default function AdmissionsPage() {
             return (
               <Card key={r.id} className={cn("border-l-4", r.status === "accepted" || r.status === "placed" ? "border-l-green-500" : r.status === "declined" ? "border-l-red-500" : r.status === "withdrawn" ? "border-l-gray-400" : "border-l-blue-400")}>
                 <CardContent className="p-4">
-                  <div className="flex items-start justify-between cursor-pointer" onClick={() => toggle(r.id)}>
+                  <div className="flex items-start justify-between cursor-pointer" role="button" tabIndex={0} aria-expanded={open} aria-label={`Expand referral details for ${r.childName}`} onClick={() => toggle(r.id)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(r.id); } }}>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 flex-wrap mb-1">
                         <Badge className={cn("text-xs", statusM.color)}>{statusM.label}</Badge>
@@ -344,17 +349,18 @@ export default function AdmissionsPage() {
 
                       {!["declined", "withdrawn", "placed"].includes(r.status) && (
                         <div className="flex gap-2">
-                          {r.status === "new" && <Button size="sm" variant="outline" onClick={() => setReferrals((prev) => prev.map((x) => x.id === r.id ? { ...x, status: "under_assessment" } : x))}>Begin Assessment</Button>}
-                          {r.status === "under_assessment" && <Button size="sm" variant="outline" onClick={() => setReferrals((prev) => prev.map((x) => x.id === r.id ? { ...x, status: "impact_assessment" } : x))}>Impact Assessment</Button>}
-                          {r.status === "impact_assessment" && <Button size="sm" variant="outline" onClick={() => setReferrals((prev) => prev.map((x) => x.id === r.id ? { ...x, status: "panel_decision" } : x))}>Send to Panel</Button>}
+                          {r.status === "new" && <Button size="sm" variant="outline" onClick={() => { setReferrals((prev) => prev.map((x) => x.id === r.id ? { ...x, status: "under_assessment" } : x)); updateReferral.mutate({ id: r.id, status: "under_assessment" }, { onSuccess: () => toast.success("Assessment started") }); }}>Begin Assessment</Button>}
+                          {r.status === "under_assessment" && <Button size="sm" variant="outline" onClick={() => { setReferrals((prev) => prev.map((x) => x.id === r.id ? { ...x, status: "impact_assessment" } : x)); updateReferral.mutate({ id: r.id, status: "impact_assessment" }, { onSuccess: () => toast.success("Impact assessment started") }); }}>Impact Assessment</Button>}
+                          {r.status === "impact_assessment" && <Button size="sm" variant="outline" onClick={() => { setReferrals((prev) => prev.map((x) => x.id === r.id ? { ...x, status: "panel_decision" } : x)); updateReferral.mutate({ id: r.id, status: "panel_decision" }, { onSuccess: () => toast.success("Sent to panel") }); }}>Send to Panel</Button>}
                           {r.status === "panel_decision" && (
                             <>
-                              <Button size="sm" variant="default" onClick={() => setReferrals((prev) => prev.map((x) => x.id === r.id ? { ...x, status: "accepted", decisionDate: d(0) } : x))}>Accept</Button>
-                              <Button size="sm" variant="outline" className="text-red-600" onClick={() => setReferrals((prev) => prev.map((x) => x.id === r.id ? { ...x, status: "declined", decisionDate: d(0) } : x))}>Decline</Button>
+                              <Button size="sm" variant="default" onClick={() => { setReferrals((prev) => prev.map((x) => x.id === r.id ? { ...x, status: "accepted", decisionDate: d(0) } : x)); updateReferral.mutate({ id: r.id, status: "accepted" }, { onSuccess: () => toast.success("Referral accepted") }); }}>Accept</Button>
+                              <Button size="sm" variant="outline" className="text-red-600" onClick={() => { setReferrals((prev) => prev.map((x) => x.id === r.id ? { ...x, status: "declined", decisionDate: d(0) } : x)); updateReferral.mutate({ id: r.id, status: "declined" }, { onSuccess: () => toast.success("Referral declined") }); }}>Decline</Button>
                             </>
                           )}
                         </div>
                       )}
+                      <SmartLinkPanel sourceType="admission" sourceId={r.id} compact />
                     </div>
                   )}
                 </CardContent>
@@ -378,19 +384,19 @@ export default function AdmissionsPage() {
       <Dialog open={showNew} onOpenChange={setShowNew}>
         <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
           <DialogHeader><DialogTitle>New Referral</DialogTitle></DialogHeader>
-          <form onSubmit={(e) => { e.preventDefault(); setShowNew(false); }} className="space-y-3">
+          <form onSubmit={(e) => { e.preventDefault(); createReferral.mutate({ child_name: "New Referral", status: "new", referral_date: new Date().toISOString().slice(0, 10), staff_id: "staff_darren" }, { onSuccess: () => toast.success("Referral logged"), onError: () => toast.error("Failed to log referral") }); setShowNew(false); }} className="space-y-3">
             <div>
-              <label className="text-sm font-medium">Child&apos;s Name / Reference</label>
-              <Input placeholder="Child name or anonymised reference" />
+              <label htmlFor="ref-name" className="text-sm font-medium">Child&apos;s Name / Reference</label>
+              <Input id="ref-name" placeholder="Child name or anonymised reference" />
             </div>
             <div className="grid grid-cols-2 gap-2">
               <div>
-                <label className="text-sm font-medium">Date of Birth</label>
-                <Input type="date" />
+                <label htmlFor="ref-dob" className="text-sm font-medium">Date of Birth</label>
+                <Input id="ref-dob" type="date" />
               </div>
               <div>
-                <label className="text-sm font-medium">Gender</label>
-                <Select><SelectTrigger><SelectValue placeholder="Select" /></SelectTrigger>
+                <label htmlFor="ref-gender" className="text-sm font-medium">Gender</label>
+                <Select><SelectTrigger id="ref-gender"><SelectValue placeholder="Select" /></SelectTrigger>
                   <SelectContent>
                     <SelectItem value="male">Male</SelectItem>
                     <SelectItem value="female">Female</SelectItem>
@@ -401,30 +407,30 @@ export default function AdmissionsPage() {
               </div>
             </div>
             <div>
-              <label className="text-sm font-medium">Referred By</label>
-              <Input placeholder="Name and role of referring professional" />
+              <label htmlFor="ref-referred-by" className="text-sm font-medium">Referred By</label>
+              <Input id="ref-referred-by" placeholder="Name and role of referring professional" />
             </div>
             <div>
-              <label className="text-sm font-medium">Local Authority</label>
-              <Input placeholder="Placing local authority" />
+              <label htmlFor="ref-la" className="text-sm font-medium">Local Authority</label>
+              <Input id="ref-la" placeholder="Placing local authority" />
             </div>
             <div>
-              <label className="text-sm font-medium">Source</label>
-              <Select><SelectTrigger><SelectValue placeholder="Referral source" /></SelectTrigger>
+              <label htmlFor="ref-source" className="text-sm font-medium">Source</label>
+              <Select><SelectTrigger id="ref-source"><SelectValue placeholder="Referral source" /></SelectTrigger>
                 <SelectContent>{Object.entries(SOURCE_META).map(([k, v]) => <SelectItem key={k} value={k}>{v}</SelectItem>)}</SelectContent>
               </Select>
             </div>
             <div>
-              <label className="text-sm font-medium">Presenting Needs</label>
-              <Textarea placeholder="Key needs (one per line)" rows={3} />
+              <label htmlFor="ref-needs" className="text-sm font-medium">Presenting Needs</label>
+              <Textarea id="ref-needs" placeholder="Key needs (one per line)" rows={3} />
             </div>
             <div>
-              <label className="text-sm font-medium">Risk Factors</label>
-              <Textarea placeholder="Known risk factors (one per line)" rows={2} />
+              <label htmlFor="ref-risks" className="text-sm font-medium">Risk Factors</label>
+              <Textarea id="ref-risks" placeholder="Known risk factors (one per line)" rows={2} />
             </div>
             <DialogFooter>
               <Button type="button" variant="outline" onClick={() => setShowNew(false)}>Cancel</Button>
-              <Button type="submit">Log Referral</Button>
+              <Button type="submit" disabled={createReferral.isPending}>{createReferral.isPending ? <><Loader2 className="h-4 w-4 animate-spin mr-1" />Saving...</> : "Log Referral"}</Button>
             </DialogFooter>
           </form>
         </DialogContent>

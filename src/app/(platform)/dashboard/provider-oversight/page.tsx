@@ -1,6 +1,16 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useMemo } from "react";
+import {
+  useProviderSummaries,
+  useCreateProviderSummary,
+  useAttentionItems,
+  useReg44Visits,
+  useReg45Reviews,
+  useCompetenceRecords,
+  useVoiceEntries,
+  useEvidenceItems,
+} from "@/hooks/use-intelligence-layer";
 import { PageShell } from "@/components/layout/page-shell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -209,21 +219,93 @@ const DEMO_OVERSIGHT_LOG: OversightEntry[] = [
 export default function ProviderOversightPage() {
   const [selectedHome, setSelectedHome] = useState<string>("all");
   const [oversightComment, setOversightComment] = useState("");
+  const [homes, setHomes] = useState<HomeData[]>(DEMO_HOMES);
+  const [oversightLog, setOversightLog] = useState<OversightEntry[]>(DEMO_OVERSIGHT_LOG);
+
+  /* ── API hooks ─────────────────────────────────────────────────────────── */
+  const { data: apiData } = useProviderSummaries();
+  const createSummary = useCreateProviderSummary();
+  const { data: attentionData } = useAttentionItems();
+  const { data: reg44Data } = useReg44Visits();
+  const { data: reg45Data } = useReg45Reviews();
+  const { data: competenceData } = useCompetenceRecords();
+  const { data: voiceData } = useVoiceEntries();
+  const { data: evidenceData } = useEvidenceItems();
+
+  useEffect(() => {
+    if (apiData?.persisted && apiData.summaries.length > 0) {
+      setHomes((apiData.summaries as Record<string, unknown>[]).map((row) => ({
+        id: row.id as string,
+        name: (row.home_id as string) ?? "",
+        manager: (row.created_by as string) ?? "",
+        totalChildren: (row.occupancy as number) ?? 0,
+        capacity: 0,
+        totalStaff: (row.staffing_level as number) ?? 0,
+        inspectionReadiness: 0,
+        openRisks: (row.incident_count as number) ?? 0,
+        seriousIncidents: 0,
+        reg44Status: (row.reg44_status as HomeData["reg44Status"]) ?? "due_soon",
+        reg45Status: (row.reg45_status as HomeData["reg45Status"]) ?? "due_soon",
+        supervisionCompliance: 0,
+        trainingCompliance: 0,
+        recruitmentCompliance: 0,
+        overdueActions: 0,
+        complaints: (row.complaint_count as number) ?? 0,
+        missingEpisodes: 0,
+        ariaRiskFlags: [],
+        lastReviewed: (row.summary_date as string) ?? "",
+      })));
+    }
+  }, [apiData]);
 
   const filteredHomes =
     selectedHome === "all"
-      ? DEMO_HOMES
-      : DEMO_HOMES.filter((h) => h.id === selectedHome);
+      ? homes
+      : homes.filter((h) => h.id === selectedHome);
 
-  const totals = {
-    children: DEMO_HOMES.reduce((sum, h) => sum + h.totalChildren, 0),
-    staff: DEMO_HOMES.reduce((sum, h) => sum + h.totalStaff, 0),
-    openRisks: DEMO_HOMES.reduce((sum, h) => sum + h.openRisks, 0),
-    seriousIncidents: DEMO_HOMES.reduce((sum, h) => sum + h.seriousIncidents, 0),
-    overallReadiness: Math.round(
-      DEMO_HOMES.reduce((sum, h) => sum + h.inspectionReadiness, 0) / DEMO_HOMES.length
-    ),
-  };
+  const totals = useMemo(() => {
+    const children = homes.reduce((sum, h) => sum + h.totalChildren, 0);
+    const staff = homes.reduce((sum, h) => sum + h.totalStaff, 0);
+    const openRisks = homes.reduce((sum, h) => sum + h.openRisks, 0);
+    const seriousIncidents = homes.reduce((sum, h) => sum + h.seriousIncidents, 0);
+
+    // Compute inspection readiness from live cross-module data
+    const reg44Visits = (reg44Data?.visits as Record<string, unknown>[]) ?? [];
+    const currentMonth = new Date().toISOString().slice(0, 7);
+    const hasReg44 = reg44Visits.some((v) => ((v.visit_date as string) ?? "").startsWith(currentMonth));
+
+    const reg45Reviews = (reg45Data?.reviews as Record<string, unknown>[]) ?? [];
+    const draftReg45 = reg45Reviews.filter((r) => r.status === "draft" || r.status === "in_progress").length;
+
+    const competence = (competenceData?.records as Record<string, unknown>[]) ?? [];
+    const mandatoryIncomplete = competence.filter((r) => !r.mandatory_training_complete).length;
+
+    const voiceEntries = (voiceData?.entries as Record<string, unknown>[]) ?? [];
+    const voiceLast30 = voiceEntries.filter((e) => {
+      const d = (e.entry_date as string) ?? (e.created_at as string) ?? "";
+      return d >= new Date(Date.now() - 30 * 86400000).toISOString().split("T")[0];
+    }).length;
+
+    const evidence = (evidenceData?.items as Record<string, unknown>[]) ?? [];
+    const evidenceCount = evidence.length;
+
+    const attentionItems = (attentionData?.items as Record<string, unknown>[]) ?? [];
+    const criticalOpen = attentionItems.filter(
+      (i) => i.urgency === "critical" && i.status !== "closed" && i.status !== "reviewed"
+    ).length;
+
+    const factors = [
+      hasReg44 ? 15 : 0,
+      draftReg45 === 0 ? 15 : 7,
+      mandatoryIncomplete === 0 ? 20 : Math.max(0, 20 - mandatoryIncomplete * 4),
+      voiceLast30 >= 3 ? 15 : Math.round((voiceLast30 / 3) * 15),
+      evidenceCount >= 10 ? 15 : Math.round((evidenceCount / 10) * 15),
+      criticalOpen === 0 ? 20 : Math.max(0, 20 - criticalOpen * 5),
+    ];
+    const overallReadiness = factors.reduce((a, b) => a + b, 0);
+
+    return { children, staff, openRisks, seriousIncidents, overallReadiness };
+  }, [homes, reg44Data, reg45Data, competenceData, voiceData, evidenceData, attentionData]);
 
   const getReadinessColor = (score: number) => {
     if (score >= 85) return "text-green-600";
@@ -497,9 +579,21 @@ export default function ProviderOversightPage() {
               />
             </div>
             <div className="flex flex-wrap gap-2">
-              <Button variant="outline" size="sm">
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={!oversightComment.trim() || createSummary.isPending}
+                onClick={() => {
+                  createSummary.mutate({
+                    homeId: selectedHome === "all" ? "oak-house" : selectedHome,
+                    notes: oversightComment,
+                  }, {
+                    onSuccess: () => setOversightComment(""),
+                  });
+                }}
+              >
                 <MessageSquare className="h-4 w-4 mr-1" />
-                Add Oversight Comment
+                {createSummary.isPending ? "Saving..." : "Add Oversight Comment"}
               </Button>
               <Button variant="outline" size="sm">
                 <AlertTriangle className="h-4 w-4 mr-1" />
@@ -527,7 +621,7 @@ export default function ProviderOversightPage() {
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              {DEMO_OVERSIGHT_LOG.map((entry) => (
+              {oversightLog.map((entry) => (
                 <div
                   key={entry.id}
                   className={cn(

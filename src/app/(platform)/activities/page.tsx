@@ -24,47 +24,16 @@ import { getYPName, getStaffName } from "@/lib/seed-data";
 import { SmartUploadButton } from "@/components/documents/smart-upload-button";
 import { PrintButton } from "@/components/common/print-button";
 import { ExportButton, type ExportColumn } from "@/components/common/export-button";
+import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
+import { useActivities, useCreateActivity } from "@/hooks/use-activities";
+import { toast } from "sonner";
+import type { Activity, ActivityCategory, ActivityEngagement } from "@/types/extended";
 import {
   Palette, Search, Filter, ArrowUpDown, Star, ChevronDown, ChevronUp,
   Plus, Heart, Dumbbell, Music, BookOpen, MapPin, Users, Gamepad2,
   Mountain, Bike, Camera, UtensilsCrossed, Trophy, Target, Calendar,
   User, CheckCircle2, Clock, Loader2, Sparkles,
 } from "lucide-react";
-
-// ── Types ────────────────────────────────────────────────────────────────────
-
-type ActivityCategory =
-  | "sport"
-  | "creative"
-  | "outdoor"
-  | "educational"
-  | "social"
-  | "life_skills"
-  | "cultural"
-  | "therapeutic"
-  | "community"
-  | "digital";
-
-type ActivityEngagement = "enthusiastic" | "willing" | "reluctant" | "refused" | "suggested_by_yp";
-
-interface Activity {
-  id: string;
-  date: string;
-  child_id: string;
-  category: ActivityCategory;
-  title: string;
-  description: string;
-  location: string;
-  duration_minutes: number;
-  staff_id: string;
-  engagement: ActivityEngagement;
-  yp_feedback: string | null;
-  outcome_notes: string | null;
-  is_new_experience: boolean;
-  photos_taken: boolean;
-  linked_outcome_domain: string | null;
-  created_at: string;
-}
 
 // ── Constants ────────────────────────────────────────────────────────────────
 
@@ -88,92 +57,6 @@ const ENGAGEMENT_CONFIG: Record<ActivityEngagement, { label: string; cls: string
   refused:         { label: "Declined",         cls: "bg-slate-50 text-slate-500 border-slate-200"       },
   suggested_by_yp: { label: "YP Suggested",     cls: "bg-violet-50 text-violet-700 border-violet-200"   },
 };
-
-// ── Seed data ────────────────────────────────────────────────────────────────
-
-const now = new Date().toISOString();
-const SEED_ACTIVITIES: Activity[] = [
-  {
-    id: "act_001", date: "2026-05-01", child_id: "yp_jordan", category: "sport",
-    title: "Swimming at Moorways", description: "Weekly swimming session at Moorways leisure centre. Jordan practised backstroke and completed 10 lengths independently.",
-    location: "Moorways Swimming Complex, Derby", duration_minutes: 75, staff_id: "staff_anna",
-    engagement: "enthusiastic", yp_feedback: "I beat my record today! 10 lengths is easy now.",
-    outcome_notes: "Building physical confidence and routine. Jordan's swimming has improved significantly since starting in March.",
-    is_new_experience: false, photos_taken: true, linked_outcome_domain: "health", created_at: now,
-  },
-  {
-    id: "act_002", date: "2026-05-01", child_id: "yp_casey", category: "creative",
-    title: "Art therapy — self-portrait project", description: "Continuation of self-portrait project in Casey's art therapy session. Used mixed media to express identity and feelings about family.",
-    location: "Oak House — art room", duration_minutes: 60, staff_id: "staff_chervelle",
-    engagement: "willing", yp_feedback: "I don't like drawing my face but the collage bit was OK.",
-    outcome_notes: "Casey engaged for the full session which is an improvement. Therapist notes she was more open about family themes this week.",
-    is_new_experience: false, photos_taken: false, linked_outcome_domain: "emotional_wellbeing", created_at: now,
-  },
-  {
-    id: "act_003", date: "2026-04-30", child_id: "yp_alex", category: "life_skills",
-    title: "Cooking session — spaghetti bolognese", description: "Alex chose to cook dinner for the house. Planned the meal, wrote the shopping list, and cooked with staff support. Served to all young people and staff.",
-    location: "Oak House — kitchen", duration_minutes: 90, staff_id: "staff_lackson",
-    engagement: "enthusiastic", yp_feedback: "Everyone said it was good. I want to do a roast next.",
-    outcome_notes: "Excellent engagement. Alex showed pride in the outcome. Good opportunity for sequencing, planning, and positive peer feedback.",
-    is_new_experience: false, photos_taken: true, linked_outcome_domain: "independence", created_at: now,
-  },
-  {
-    id: "act_004", date: "2026-04-30", child_id: "yp_jordan", category: "educational",
-    title: "Library visit — GCSE revision", description: "Jordan visited Derby Central Library to revise for upcoming English mock. Used the quiet study area and borrowed two revision guides.",
-    location: "Derby Central Library", duration_minutes: 120, staff_id: "staff_anna",
-    engagement: "willing", yp_feedback: null,
-    outcome_notes: "Jordan focused well in the library environment. Showing maturity in managing own revision independently.",
-    is_new_experience: false, photos_taken: false, linked_outcome_domain: "education", created_at: now,
-  },
-  {
-    id: "act_005", date: "2026-04-29", child_id: "yp_casey", category: "outdoor",
-    title: "Walk in Darley Park", description: "Afternoon walk in Darley Park with Casey and key worker. Talked about school and upcoming family contact. Casey picked flowers and seemed relaxed.",
-    location: "Darley Park, Derby", duration_minutes: 45, staff_id: "staff_chervelle",
-    engagement: "willing", yp_feedback: "It was OK. I liked the river bit.",
-    outcome_notes: "Good 1:1 time. Casey was calmer than usual and opened up about feeling nervous about Mum's visit next week.",
-    is_new_experience: false, photos_taken: true, linked_outcome_domain: "emotional_wellbeing", created_at: now,
-  },
-  {
-    id: "act_006", date: "2026-04-29", child_id: "yp_alex", category: "social",
-    title: "Youth club at Derby Arena", description: "Alex attended youth club at Derby Arena for the first time. Staff drove and stayed nearby. Alex played football and met two peers from school.",
-    location: "Derby Arena youth hub", duration_minutes: 120, staff_id: "staff_edward",
-    engagement: "reluctant", yp_feedback: "It wasn't that bad. The football was alright.",
-    outcome_notes: "First attendance despite initial anxiety. Alex engaged once settled. This is a significant step for peer socialisation. Staff remained available but gave space.",
-    is_new_experience: true, photos_taken: false, linked_outcome_domain: "social_relationships", created_at: now,
-  },
-  {
-    id: "act_007", date: "2026-04-28", child_id: "yp_jordan", category: "cultural",
-    title: "Cooking Jamaican patties — heritage activity", description: "Jordan cooked Jamaican patties with staff as part of an identity and heritage session. Discussed family traditions and cultural background.",
-    location: "Oak House — kitchen", duration_minutes: 90, staff_id: "staff_mirela",
-    engagement: "enthusiastic", yp_feedback: "My nan used to make these. They tasted like hers!",
-    outcome_notes: "Deeply meaningful activity for Jordan. Connected to identity, heritage, and family memories. Jordan was animated and shared family stories throughout.",
-    is_new_experience: false, photos_taken: true, linked_outcome_domain: "identity", created_at: now,
-  },
-  {
-    id: "act_008", date: "2026-04-27", child_id: "yp_alex", category: "digital",
-    title: "Gaming tournament — FIFA with housemates", description: "Organised FIFA tournament in the lounge. Alex, Jordan, and Casey played. Positive peer interaction with minimal staff intervention needed.",
-    location: "Oak House — lounge", duration_minutes: 60, staff_id: "staff_ryan",
-    engagement: "enthusiastic", yp_feedback: "I won three times. Jordan was raging.",
-    outcome_notes: "Positive group activity with good-natured competition. All three young people interacting well. No conflict escalation.",
-    is_new_experience: false, photos_taken: false, linked_outcome_domain: "social_relationships", created_at: now,
-  },
-  {
-    id: "act_009", date: "2026-04-26", child_id: "yp_casey", category: "community",
-    title: "Charity shop volunteering", description: "Casey volunteered at Age UK charity shop for 2 hours, sorting donations and pricing items. Third session as a regular volunteer.",
-    location: "Age UK, Normanton Road, Derby", duration_minutes: 120, staff_id: "staff_diane",
-    engagement: "suggested_by_yp", yp_feedback: "I like the old lady who works Saturdays. She lets me choose the music.",
-    outcome_notes: "Casey's volunteering is a real strength. Building responsibility, social skills, and community connection. Casey initiated this and takes pride in attending.",
-    is_new_experience: false, photos_taken: false, linked_outcome_domain: "community", created_at: now,
-  },
-  {
-    id: "act_010", date: "2026-04-25", child_id: "yp_jordan", category: "therapeutic",
-    title: "Life story work session", description: "Structured life story work session with Jordan's therapist. Worked on the 'family tree' section. Jordan was reflective but managed emotions well.",
-    location: "Oak House — quiet room", duration_minutes: 50, staff_id: "staff_anna",
-    engagement: "willing", yp_feedback: "It's hard but I know it helps.",
-    outcome_notes: "Jordan demonstrates increasing capacity to reflect on difficult experiences. Therapist reports good progress.",
-    is_new_experience: false, photos_taken: false, linked_outcome_domain: "emotional_wellbeing", created_at: now,
-  },
-];
 
 const ACTIVITY_EXPORT_COLS: ExportColumn<Activity>[] = [
   { header: "Date", accessor: (a) => a.date },
@@ -288,6 +171,13 @@ function ActivityCard({ activity }: { activity: Activity }) {
               <span>Linked domain: {activity.linked_outcome_domain.replace(/_/g, " ")}</span>
             )}
           </div>
+
+          <SmartLinkPanel
+            sourceType="activity"
+            sourceId={activity.id}
+            childId={activity.child_id}
+            compact
+          />
         </div>
       )}
     </div>
@@ -303,7 +193,7 @@ function NewActivityDialog({
 }: {
   open: boolean;
   onClose: () => void;
-  onSave: (data: Activity) => void;
+  onSave: (data: Partial<Activity>) => void;
 }) {
   const [form, setForm] = useState({
     child_id: "yp_alex",
@@ -323,13 +213,11 @@ function NewActivityDialog({
   const handleSave = () => {
     if (!form.title.trim() || !form.description.trim()) return;
     onSave({
-      id: `act_${Date.now()}`,
       ...form,
       yp_feedback: form.yp_feedback || null,
       outcome_notes: form.outcome_notes || null,
       photos_taken: false,
       linked_outcome_domain: null,
-      created_at: new Date().toISOString(),
     });
     onClose();
     setForm((p) => ({ ...p, title: "", description: "", location: "", yp_feedback: "", outcome_notes: "" }));
@@ -450,7 +338,11 @@ function NewActivityDialog({
 // ── Main Page ────────────────────────────────────────────────────────────────
 
 export default function ActivitiesPage() {
-  const [activities, setActivities] = useState<Activity[]>(SEED_ACTIVITIES);
+  const { data: result, isLoading } = useActivities();
+  const createActivity = useCreateActivity();
+
+  const activities: Activity[] = useMemo(() => result?.data ?? [], [result]);
+
   const [showNew, setShowNew] = useState(false);
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState<"date" | "child" | "category" | "duration">("date");
@@ -513,9 +405,27 @@ export default function ActivitiesPage() {
     return list;
   }, [activities, childFilter, categoryFilter, search, sortBy]);
 
-  const handleAddActivity = (data: Activity) => {
-    setActivities((prev) => [data, ...prev]);
+  const handleAddActivity = (data: Partial<Activity>) => {
+    createActivity.mutate(data, {
+      onSuccess: () => {
+        toast.success("Activity recorded");
+        setShowNew(false);
+      },
+    });
   };
+
+  if (isLoading) {
+    return (
+      <PageShell
+        title="Activities & Enrichment"
+        subtitle="Meaningful activities, hobbies, and new experiences for young people"
+      >
+        <div className="flex items-center justify-center py-20">
+          <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+        </div>
+      </PageShell>
+    );
+  }
 
   return (
     <PageShell

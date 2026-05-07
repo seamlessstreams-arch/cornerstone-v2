@@ -10,22 +10,29 @@ import React, { useState, useMemo } from "react";
 import { PageShell } from "@/components/layout/page-shell";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { cn, formatDate } from "@/lib/utils";
+import { cn, formatDate, generateId } from "@/lib/utils";
 import { SmartUploadButton } from "@/components/documents/smart-upload-button";
 import { ExportButton, type ExportColumn } from "@/components/common/export-button";
 import { useCarePlans, useUpdateCarePlan } from "@/hooks/use-care-plans";
-import { getYPName, getStaffName } from "@/lib/seed-data";
+import { getYPName, getStaffName, STAFF } from "@/lib/seed-data";
 import type {
   CarePlan, CarePlanGoal, CarePlanGoalStatus, CarePlanDomain,
 } from "@/types/extended";
 import {
   ClipboardList, CheckCircle2, Clock, AlertTriangle, ChevronDown, ChevronUp,
   Sparkles, User, Calendar, Heart, Target, ArrowRight, BookOpen, BarChart3,
-  Search, ListCollapse, Expand, Trophy, Activity, ArrowUpDown,
+  Search, ListCollapse, Expand, Trophy, Activity, ArrowUpDown, Plus,
 } from "lucide-react";
 import Link from "next/link";
 import { api } from "@/hooks/use-api";
 import { PrintButton } from "@/components/common/print-button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
+import { toastSuccess } from "@/lib/toast";
 
 // ── Filter types ─────────────────────────────────────────────────────────────
 
@@ -197,6 +204,160 @@ function GoalRow({ goal }: { goal: CarePlanGoal }) {
   );
 }
 
+// ── New Goal Dialog ──────────────────────────────────────────────────────────
+
+function NewGoalDialog({
+  plan,
+  open,
+  onOpenChange,
+  onSave,
+}: {
+  plan: CarePlan;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  onSave: (planId: string, goal: CarePlanGoal) => void;
+}) {
+  const [domain, setDomain] = useState<CarePlanDomain>("health");
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [desiredOutcome, setDesiredOutcome] = useState("");
+  const [successCriteria, setSuccessCriteria] = useState("");
+  const [targetDate, setTargetDate] = useState("");
+  const [responsibleStaff, setResponsibleStaff] = useState("");
+  const [saving, setSaving] = useState(false);
+
+  const resetForm = () => {
+    setDomain("health");
+    setTitle("");
+    setDescription("");
+    setDesiredOutcome("");
+    setSuccessCriteria("");
+    setTargetDate("");
+    setResponsibleStaff("");
+  };
+
+  const handleSave = async () => {
+    if (!title.trim() || !description.trim()) return;
+    setSaving(true);
+    try {
+      const goal: CarePlanGoal = {
+        id: generateId("cpg"),
+        domain,
+        title: title.trim(),
+        description: description.trim(),
+        desired_outcome: desiredOutcome.trim() || successCriteria.trim(),
+        actions: successCriteria.trim() ? [successCriteria.trim()] : [],
+        status: "not_started",
+        progress_note: null,
+        target_date: targetDate || null,
+        achieved_date: null,
+        last_reviewed: null,
+        reviewed_by: responsibleStaff || null,
+        evidence: null,
+      };
+      onSave(plan.id, goal);
+      resetForm();
+      onOpenChange(false);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const staffList = STAFF.filter((s) => s.role !== "responsible_individual" && s.is_active);
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="max-w-lg">
+        <DialogHeader>
+          <DialogTitle className="text-sm font-semibold">
+            New Goal — {getYPName(plan.child_id)}
+          </DialogTitle>
+        </DialogHeader>
+
+        <div className="space-y-3 py-2">
+          <div className="space-y-1">
+            <Label className="text-xs text-slate-600">Domain</Label>
+            <Select value={domain} onValueChange={(v) => setDomain(v as CarePlanDomain)}>
+              <SelectTrigger className="text-xs"><SelectValue /></SelectTrigger>
+              <SelectContent>
+                {(Object.entries(DOMAIN_LABELS) as [CarePlanDomain, string][]).map(([k, v]) => (
+                  <SelectItem key={k} value={k} className="text-xs">{v}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-1">
+            <Label className="text-xs text-slate-600">Goal Title</Label>
+            <Input
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="e.g. Improve school attendance to 90%"
+              className="text-xs"
+            />
+          </div>
+
+          <div className="space-y-1">
+            <Label className="text-xs text-slate-600">Description</Label>
+            <Textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="Describe the goal, context, and rationale..."
+              className="text-xs min-h-[60px]"
+            />
+          </div>
+
+          <div className="space-y-1">
+            <Label className="text-xs text-slate-600">Desired Outcome / Success Criteria</Label>
+            <Textarea
+              value={desiredOutcome}
+              onChange={(e) => setDesiredOutcome(e.target.value)}
+              placeholder="What does success look like?"
+              className="text-xs min-h-[50px]"
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            <div className="space-y-1">
+              <Label className="text-xs text-slate-600">Target Date</Label>
+              <Input
+                type="date"
+                value={targetDate}
+                onChange={(e) => setTargetDate(e.target.value)}
+                className="text-xs"
+              />
+            </div>
+
+            <div className="space-y-1">
+              <Label className="text-xs text-slate-600">Responsible Staff</Label>
+              <Select value={responsibleStaff} onValueChange={setResponsibleStaff}>
+                <SelectTrigger className="text-xs"><SelectValue placeholder="Select..." /></SelectTrigger>
+                <SelectContent>
+                  {staffList.map((s) => (
+                    <SelectItem key={s.id} value={s.id} className="text-xs">{s.full_name}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+        </div>
+
+        <DialogFooter>
+          <Button variant="outline" size="sm" onClick={() => onOpenChange(false)} className="text-xs">Cancel</Button>
+          <Button
+            size="sm"
+            onClick={handleSave}
+            disabled={!title.trim() || !description.trim() || saving}
+            className="text-xs gap-1.5"
+          >
+            {saving ? "Adding..." : <><Plus className="h-3.5 w-3.5" />Add Goal</>}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
 // ── Care Plan Card ────────────────────────────────────────────────────────────
 
 function CarePlanCard({
@@ -204,11 +365,13 @@ function CarePlanCard({
   onAriaOverview,
   ariaBusy,
   defaultExpanded = true,
+  onAddGoal,
 }: {
   plan: CarePlan;
   onAriaOverview: (p: CarePlan) => void;
   ariaBusy: string | null;
   defaultExpanded?: boolean;
+  onAddGoal: (plan: CarePlan) => void;
 }) {
   const [expanded, setExpanded] = useState(defaultExpanded);
   const ypName   = getYPName(plan.child_id);
@@ -350,6 +513,24 @@ function CarePlanCard({
             </button>
           )}
 
+          {/* Add Goal button */}
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => onAddGoal(plan)}
+              className="inline-flex items-center gap-1.5 text-xs text-indigo-600 hover:text-indigo-800 font-medium"
+            >
+              <Plus className="h-3.5 w-3.5" />Add Goal
+            </button>
+          </div>
+
+          {/* Smart Links */}
+          <SmartLinkPanel
+            sourceType="care_plan"
+            sourceId={plan.id}
+            childId={plan.child_id}
+            compact
+          />
+
           {/* Sign-off */}
           {plan.rm_sign_off_date && (
             <p className="text-[10px] text-slate-400">
@@ -377,6 +558,7 @@ export default function CarePlansPage() {
   const [ragFilter, setRAGFilter] = useState<RAGFilter>("all");
   const [sortBy, setSortBy]       = useState<"rag" | "name" | "lac" | "goals">("rag");
   const [allExpanded, setAllExpanded] = useState(true);
+  const [goalDialogPlan, setGoalDialogPlan] = useState<CarePlan | null>(null);
 
   // ── Compute stats ─────────────────────────────────────────────────────────
   const stats = useMemo(() => {
@@ -477,6 +659,14 @@ Concerns: ${plan.concerns_summary ?? "not recorded"}`;
     } finally {
       setAriaBusy(null);
     }
+  };
+
+  const handleAddGoal = async (planId: string, goal: CarePlanGoal) => {
+    const plan = plans.find((p) => p.id === planId);
+    if (!plan) return;
+    const updatedGoals = [...plan.goals, goal];
+    await updatePlan.mutateAsync({ id: planId, data: { goals: updatedGoals } });
+    toastSuccess("Goal added", `"${goal.title}" added to ${getYPName(plan.child_id)}'s care plan`);
   };
 
   const RAG_TABS: { key: RAGFilter; label: string; count: number; colour: string }[] = [
@@ -675,6 +865,7 @@ Concerns: ${plan.concerns_summary ?? "not recorded"}`;
             onAriaOverview={handleAriaOverview}
             ariaBusy={ariaBusy}
             defaultExpanded={allExpanded}
+            onAddGoal={(p) => setGoalDialogPlan(p)}
           />
         ))}
         {ariaError && <p className="text-xs text-red-600 text-right">{ariaError}</p>}
@@ -776,6 +967,16 @@ Concerns: ${plan.concerns_summary ?? "not recorded"}`;
       </div>
 
       </div>{/* close #care-plans-content */}
+
+      {/* New Goal Dialog */}
+      {goalDialogPlan && (
+        <NewGoalDialog
+          plan={goalDialogPlan}
+          open={!!goalDialogPlan}
+          onOpenChange={(open) => { if (!open) setGoalDialogPlan(null); }}
+          onSave={handleAddGoal}
+        />
+      )}
     </PageShell>
   );
 }

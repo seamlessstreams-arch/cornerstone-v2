@@ -21,6 +21,8 @@ import {
 } from "@/components/ui/select";
 import { cn, formatDate, todayStr } from "@/lib/utils";
 import { useAuthContext } from "@/contexts/auth-context";
+import { useCreateEducationRecord } from "@/hooks/use-education";
+import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { PrintButton } from "@/components/common/print-button";
 import { ExportButton, type ExportColumn } from "@/components/common/export-button";
 import { getStaffName, getYPName } from "@/lib/seed-data";
@@ -28,8 +30,9 @@ import {
   Search, ArrowUpDown, X, Plus, GraduationCap, BookOpen,
   CheckCircle2, AlertTriangle, Clock, User, Calendar,
   ChevronDown, ChevronUp, School, TrendingUp, TrendingDown,
-  XCircle, Shield, Award, FileText, Target,
+  XCircle, Shield, Award, FileText, Target, Loader2,
 } from "lucide-react";
+import { toast } from "sonner";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -142,6 +145,7 @@ const SEED: EducationEntry[] = [
 
 export default function EducationPage() {
   const { currentUser } = useAuthContext();
+  const createRecord = useCreateEducationRecord();
 
   const [entries, setEntries] = useState<EducationEntry[]>(SEED);
   const [search, setSearch] = useState("");
@@ -256,6 +260,7 @@ export default function EducationPage() {
       created_at: new Date().toISOString(),
     };
     setEntries(prev => [entry, ...prev]);
+    createRecord.mutate({ child_id: nChild, record_type: nType as "attendance" | "exclusion" | "pep_meeting" | "achievement" | "concern" | "placement_change", title: nTitle, date: todayStr(), details: nDesc, staff_id: currentUser?.id || "staff_darren", status: "open" }, { onSuccess: () => toast.success("Education entry saved"), onError: () => toast.error("Failed to save entry") });
     setShowNew(false);
     setNChild(""); setNType(""); setNTitle(""); setNDesc(""); setNAttendance(""); setNOutcome("");
   };
@@ -415,6 +420,8 @@ export default function EducationPage() {
               <button
                 onClick={() => setExpandedId(isOpen ? null : entry.id)}
                 className="w-full flex items-center gap-3 p-3 text-left hover:bg-muted/50 transition-colors"
+                aria-expanded={isOpen}
+                aria-label={`Expand education entry: ${entry.title} for ${getYPName(entry.child_id)}`}
               >
                 <div className={cn("rounded-full p-1.5 shrink-0", tc.colour)}>
                   <Icon className="h-4 w-4" />
@@ -456,6 +463,7 @@ export default function EducationPage() {
                       <span className="flex items-center gap-1"><Clock className="h-3.5 w-3.5" />Follow-up: {formatDate(entry.follow_up_date)}</span>
                     )}
                   </div>
+                  <SmartLinkPanel sourceType="education" sourceId={entry.id} childId={entry.child_id} compact />
                 </div>
               )}
             </div>
@@ -485,18 +493,18 @@ export default function EducationPage() {
           <DialogHeader><DialogTitle>Add Education Entry</DialogTitle></DialogHeader>
           <div className="space-y-4 py-2">
             <div>
-              <label className="text-sm font-medium mb-1 block">Child *</label>
+              <label htmlFor="edu-child" className="text-sm font-medium mb-1 block">Child *</label>
               <Select value={nChild} onValueChange={setNChild}>
-                <SelectTrigger><SelectValue placeholder="Select child" /></SelectTrigger>
+                <SelectTrigger id="edu-child"><SelectValue placeholder="Select child" /></SelectTrigger>
                 <SelectContent>
                   {childIds.map(c => <SelectItem key={c} value={c}>{getYPName(c)}</SelectItem>)}
                 </SelectContent>
               </Select>
             </div>
             <div>
-              <label className="text-sm font-medium mb-1 block">Entry Type *</label>
+              <label htmlFor="edu-type" className="text-sm font-medium mb-1 block">Entry Type *</label>
               <Select value={nType} onValueChange={v => setNType(v as EntryType)}>
-                <SelectTrigger><SelectValue placeholder="Select type" /></SelectTrigger>
+                <SelectTrigger id="edu-type"><SelectValue placeholder="Select type" /></SelectTrigger>
                 <SelectContent>
                   {(Object.entries(TYPE_CONFIG) as [EntryType, { label: string }][]).map(([k, v]) => (
                     <SelectItem key={k} value={k}>{v.label}</SelectItem>
@@ -506,9 +514,9 @@ export default function EducationPage() {
             </div>
             {nType === "attendance" && (
               <div>
-                <label className="text-sm font-medium mb-1 block">Attendance Status</label>
+                <label htmlFor="edu-attendance" className="text-sm font-medium mb-1 block">Attendance Status</label>
                 <Select value={nAttendance} onValueChange={v => setNAttendance(v as AttendanceStatus)}>
-                  <SelectTrigger><SelectValue placeholder="Status" /></SelectTrigger>
+                  <SelectTrigger id="edu-attendance"><SelectValue placeholder="Status" /></SelectTrigger>
                   <SelectContent>
                     {(Object.entries(ATTENDANCE_LABELS) as [AttendanceStatus, string][]).map(([k, v]) => (
                       <SelectItem key={k} value={k}>{v}</SelectItem>
@@ -518,21 +526,21 @@ export default function EducationPage() {
               </div>
             )}
             <div>
-              <label className="text-sm font-medium mb-1 block">Title *</label>
-              <Input placeholder="Brief title" value={nTitle} onChange={e => setNTitle(e.target.value)} />
+              <label htmlFor="edu-title" className="text-sm font-medium mb-1 block">Title *</label>
+              <Input id="edu-title" placeholder="Brief title" value={nTitle} onChange={e => setNTitle(e.target.value)} />
             </div>
             <div>
-              <label className="text-sm font-medium mb-1 block">Description *</label>
-              <Textarea placeholder="Full details..." value={nDesc} onChange={e => setNDesc(e.target.value)} rows={3} />
+              <label htmlFor="edu-desc" className="text-sm font-medium mb-1 block">Description *</label>
+              <Textarea id="edu-desc" placeholder="Full details..." value={nDesc} onChange={e => setNDesc(e.target.value)} rows={3} />
             </div>
             <div>
-              <label className="text-sm font-medium mb-1 block">Outcome / Actions</label>
-              <Textarea placeholder="Any outcomes or follow-up actions..." value={nOutcome} onChange={e => setNOutcome(e.target.value)} rows={2} />
+              <label htmlFor="edu-outcome" className="text-sm font-medium mb-1 block">Outcome / Actions</label>
+              <Textarea id="edu-outcome" placeholder="Any outcomes or follow-up actions..." value={nOutcome} onChange={e => setNOutcome(e.target.value)} rows={2} />
             </div>
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setShowNew(false)}>Cancel</Button>
-            <Button onClick={handleCreate} disabled={!nChild || !nType || !nTitle || !nDesc}>Save Entry</Button>
+            <Button onClick={handleCreate} disabled={!nChild || !nType || !nTitle || !nDesc || createRecord.isPending}>{createRecord.isPending ? <><Loader2 className="h-4 w-4 animate-spin mr-1" />Saving...</> : "Save Entry"}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

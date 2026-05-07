@@ -2,7 +2,7 @@
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "./use-api";
-import { careToast } from "@/lib/toast";
+import { careToast, toastSuccess } from "@/lib/toast";
 import type { Task, Incident, Shift, YoungPerson } from "@/types";
 import type { HandoverEntry, HandoverChildUpdate } from "@/types/extended";
 
@@ -34,6 +34,12 @@ interface CreateHandoverPayload {
   linked_incident_ids?: string[];
 }
 
+interface SignOffPayload {
+  handover_id: string;
+  staff_id: string;
+  notes?: string;
+}
+
 export function useHandover() {
   return useQuery({
     queryKey: ["handover"],
@@ -51,5 +57,18 @@ export function useCreateHandover() {
       qc.invalidateQueries({ queryKey: ["handover"] });
     },
     onError: () => careToast.actionFailed("Create handover"),
+  });
+}
+
+export function useSignOffHandover() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (data: SignOffPayload) =>
+      api.patch<{ data: HandoverEntry }>("/handover", data),
+    onSuccess: () => {
+      toastSuccess("Handover acknowledged", "Your sign-off has been recorded.");
+      qc.invalidateQueries({ queryKey: ["handover"] });
+    },
+    onError: () => careToast.actionFailed("Sign off handover"),
   });
 }

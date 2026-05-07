@@ -1,6 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useLearningReviews, useUpdateLearningReview } from "@/hooks/use-intelligence-layer";
+import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { PageShell } from "@/components/layout/page-shell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -155,6 +157,29 @@ const DEFAULT_PROMPTS: ReviewPrompt[] = [
 export default function IncidentLearningReviewPage() {
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [prompts, setPrompts] = useState<Record<string, ReviewPrompt[]>>({});
+  const [incidents, setIncidents] = useState<Incident[]>(DEMO_INCIDENTS);
+
+  /* ── API hook (soft-wire for live data) ─────────────────────────────────── */
+  const { data: apiData } = useLearningReviews();
+  const updateReview = useUpdateLearningReview();
+
+  useEffect(() => {
+    if (apiData?.persisted && apiData.reviews.length > 0) {
+      setIncidents((apiData.reviews as Record<string, unknown>[]).map((row) => ({
+        id: row.id as string,
+        date: (row.created_at as string) ?? "",
+        title: (row.incident_id as string) ?? "",
+        child: (row.child_id as string) ?? "",
+        category: "",
+        severity: "medium" as const,
+        summary: (row.trigger_analysis as string) ?? "",
+        staffInvolved: [],
+        reviewStatus: (row.review_status as ReviewStatus) ?? "required",
+        managerNotes: (row.learning_summary as string) ?? "",
+        learningSummary: (row.learning_summary as string) ?? "",
+      })));
+    }
+  }, [apiData]);
   const [managerNotes, setManagerNotes] = useState<Record<string, string>>({});
   const [learningSummaries, setLearningSummaries] = useState<Record<string, string>>({});
   const [ariaAnalysis, setAriaAnalysis] = useState<Record<string, boolean>>({});
@@ -175,8 +200,8 @@ export default function IncidentLearningReviewPage() {
 
   const filteredIncidents =
     statusFilter === "all"
-      ? DEMO_INCIDENTS
-      : DEMO_INCIDENTS.filter((i) => i.reviewStatus === statusFilter);
+      ? incidents
+      : incidents.filter((i) => i.reviewStatus === statusFilter);
 
   return (
     <PageShell
@@ -388,6 +413,17 @@ export default function IncidentLearningReviewPage() {
                             size="sm"
                             disabled={currentNfa.length < 30}
                             className="text-red-600 border-red-200 hover:bg-red-50"
+                            onClick={() => {
+                              updateReview.mutate({
+                                id: incident.id,
+                                homeId: "home_oak",
+                                reviewStatus: "completed",
+                                learningSummary: `NFA: ${currentNfa}`,
+                              });
+                              setIncidents((prev) =>
+                                prev.map((i) => i.id === incident.id ? { ...i, reviewStatus: "completed" } : i)
+                              );
+                            }}
                           >
                             <XCircle className="h-3.5 w-3.5 mr-1" />
                             Mark No Further Action
@@ -431,12 +467,38 @@ export default function IncidentLearningReviewPage() {
 
                     {/* Submit */}
                     <div className="flex justify-end pt-2 border-t">
-                      <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+                      <Button
+                        className="bg-blue-600 hover:bg-blue-700 text-white"
+                        onClick={() => {
+                          updateReview.mutate({
+                            id: incident.id,
+                            homeId: "home_oak",
+                            reviewStatus: "in_progress" as ReviewStatus,
+                            learningSummary: currentLearning,
+                          });
+                          setIncidents((prev) =>
+                            prev.map((i) => i.id === incident.id ? { ...i, reviewStatus: "in_progress" as ReviewStatus } : i)
+                          );
+                        }}
+                      >
                         <Send className="h-4 w-4 mr-2" />
                         Submit for Approval
                       </Button>
                     </div>
                   </CardContent>
+                )}
+
+                {/* Smart Links for this incident */}
+                {expandedId === incident.id && (
+                  <div className="px-6 pb-4">
+                    <SmartLinkPanel
+                      sourceType="incident"
+                      sourceId={incident.id}
+                      homeId="oak-house"
+                      childId={incident.child ? "child-a" : undefined}
+                      severity={incident.severity}
+                    />
+                  </div>
                 )}
               </Card>
             );

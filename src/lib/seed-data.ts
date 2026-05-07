@@ -82,8 +82,24 @@ export const SHIFTS: Shift[] = [
   { ...base, id: "shift_006", staff_id: "staff_chervelle", date: today, shift_type: "sleep_in", start_time: "22:00", end_time: "07:00", break_minutes: 0, actual_start: null, actual_end: null, clock_in_at: null, clock_out_at: null, overtime_minutes: 0, notes: null, status: "scheduled", is_open_shift: false },
   // Tomorrow open shift
   { ...base, id: "shift_007", staff_id: "", date: tomorrow, shift_type: "day", start_time: "07:00", end_time: "15:00", break_minutes: 30, actual_start: null, actual_end: null, clock_in_at: null, clock_out_at: null, overtime_minutes: 0, notes: "OPEN — Diane called in sick", status: "scheduled", is_open_shift: true },
-  // Yesterday completed
+  // Yesterday
   { ...base, id: "shift_008", staff_id: "staff_diane", date: yesterday, shift_type: "day", start_time: "08:00", end_time: "20:00", break_minutes: 60, actual_start: "08:00", actual_end: "20:15", clock_in_at: daysFromNow(-1) + "T08:00:00Z", clock_out_at: daysFromNow(-1) + "T20:15:00Z", overtime_minutes: 15, notes: null, status: "completed", is_open_shift: false },
+  { ...base, id: "shift_009", staff_id: "staff_anna", date: yesterday, shift_type: "day", start_time: "07:00", end_time: "22:00", break_minutes: 60, actual_start: "07:00", actual_end: "22:00", clock_in_at: null, clock_out_at: null, overtime_minutes: 0, notes: null, status: "completed", is_open_shift: false },
+  { ...base, id: "shift_010", staff_id: "staff_ryan", date: yesterday, shift_type: "day", start_time: "08:00", end_time: "17:00", break_minutes: 60, actual_start: "08:00", actual_end: "17:00", clock_in_at: null, clock_out_at: null, overtime_minutes: 0, notes: null, status: "completed", is_open_shift: false },
+  // 2 days ago
+  { ...base, id: "shift_011", staff_id: "staff_edward", date: twoDaysAgo, shift_type: "day", start_time: "07:00", end_time: "22:00", break_minutes: 60, actual_start: "07:00", actual_end: "22:00", clock_in_at: null, clock_out_at: null, overtime_minutes: 0, notes: null, status: "completed", is_open_shift: false },
+  { ...base, id: "shift_012", staff_id: "staff_lackson", date: twoDaysAgo, shift_type: "day", start_time: "10:00", end_time: "20:00", break_minutes: 30, actual_start: "10:00", actual_end: "20:00", clock_in_at: null, clock_out_at: null, overtime_minutes: 0, notes: null, status: "completed", is_open_shift: false },
+  { ...base, id: "shift_013", staff_id: "staff_chervelle", date: twoDaysAgo, shift_type: "sleep_in", start_time: "22:00", end_time: "07:00", break_minutes: 0, actual_start: "22:00", actual_end: "07:00", clock_in_at: null, clock_out_at: null, overtime_minutes: 0, notes: null, status: "completed", is_open_shift: false },
+  // 3 days ago
+  { ...base, id: "shift_014", staff_id: "staff_darren", date: threeDaysAgo, shift_type: "day", start_time: "08:00", end_time: "17:00", break_minutes: 60, actual_start: "08:00", actual_end: "17:00", clock_in_at: null, clock_out_at: null, overtime_minutes: 0, notes: null, status: "completed", is_open_shift: false },
+  { ...base, id: "shift_015", staff_id: "staff_diane", date: threeDaysAgo, shift_type: "day", start_time: "08:00", end_time: "20:00", break_minutes: 60, actual_start: "08:00", actual_end: "20:00", clock_in_at: null, clock_out_at: null, overtime_minutes: 0, notes: null, status: "completed", is_open_shift: false },
+  { ...base, id: "shift_016", staff_id: "staff_mirela", date: threeDaysAgo, shift_type: "sleep_in", start_time: "22:00", end_time: "07:00", break_minutes: 0, actual_start: "22:00", actual_end: "07:00", clock_in_at: null, clock_out_at: null, overtime_minutes: 0, notes: null, status: "completed", is_open_shift: false },
+  // 4 days ago — Mirela's last day shift
+  { ...base, id: "shift_017", staff_id: "staff_mirela", date: daysFromNow(-4), shift_type: "day", start_time: "07:00", end_time: "22:00", break_minutes: 60, actual_start: "07:00", actual_end: "22:00", clock_in_at: null, clock_out_at: null, overtime_minutes: 0, notes: null, status: "completed", is_open_shift: false },
+  { ...base, id: "shift_018", staff_id: "staff_anna", date: daysFromNow(-4), shift_type: "sleep_in", start_time: "22:00", end_time: "07:00", break_minutes: 0, actual_start: "22:00", actual_end: "07:00", clock_in_at: null, clock_out_at: null, overtime_minutes: 0, notes: null, status: "completed", is_open_shift: false },
+  // 5 days ago — Alex Bennett last worked
+  { ...base, id: "shift_019", staff_id: "staff_alex", date: daysFromNow(-5), shift_type: "day", start_time: "07:00", end_time: "22:00", break_minutes: 60, actual_start: "07:00", actual_end: "22:00", clock_in_at: null, clock_out_at: null, overtime_minutes: 0, notes: null, status: "completed", is_open_shift: false },
+  { ...base, id: "shift_020", staff_id: "staff_lackson", date: daysFromNow(-5), shift_type: "day", start_time: "10:00", end_time: "20:00", break_minutes: 30, actual_start: "10:00", actual_end: "20:00", clock_in_at: null, clock_out_at: null, overtime_minutes: 0, notes: null, status: "completed", is_open_shift: false },
 ];
 
 // ── Tasks (full set for dashboard) ───────────────────────────────────────────
