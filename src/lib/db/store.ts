@@ -297,6 +297,12 @@ import type {
   QAAuditRecord,
   QualityOfCareReview,
   Reg46Review,
+  ReferralTrackerRecord,
+  Reg22Record,
+  Reg35Notification,
+  Reg40StaffEntry,
+  Reg44ActionRecord,
+  RegistrationChangeRecord,
 } from "@/types/extended";
 import { generateId, todayStr, daysFromNow } from "@/lib/utils";
 
@@ -677,6 +683,12 @@ const store = {
   qaAuditRecords: [] as QAAuditRecord[],
   qualityOfCareReviews: [] as QualityOfCareReview[],
   reg46Reviews: [] as Reg46Review[],
+  referralTrackerRecords: [] as ReferralTrackerRecord[],
+  reg22Records: [] as Reg22Record[],
+  reg35Notifications: [] as Reg35Notification[],
+  reg40StaffEntries: [] as Reg40StaffEntry[],
+  reg44ActionRecords: [] as Reg44ActionRecord[],
+  registrationChangeRecords: [] as RegistrationChangeRecord[],
   // Shift Swap Requests
   shiftSwaps: [
     {
@@ -8706,6 +8718,97 @@ export const db = {
       if (idx === -1) return null;
       store.reg46Reviews[idx] = { ...store.reg46Reviews[idx], ...data };
       return store.reg46Reviews[idx];
+    },
+  },
+
+  referralTrackerRecords: {
+    getAll: () => store.referralTrackerRecords,
+    create: (data: Partial<ReferralTrackerRecord>) => {
+      const record = { ...data, id: `rtr_${Date.now()}` } as ReferralTrackerRecord;
+      store.referralTrackerRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<ReferralTrackerRecord>) => {
+      const idx = store.referralTrackerRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.referralTrackerRecords[idx] = { ...store.referralTrackerRecords[idx], ...data };
+      return store.referralTrackerRecords[idx];
+    },
+  },
+
+  reg22Records: {
+    getAll: () => store.reg22Records,
+    create: (data: Partial<Reg22Record>) => {
+      const record = { ...data, id: `r22_${Date.now()}` } as Reg22Record;
+      store.reg22Records.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<Reg22Record>) => {
+      const idx = store.reg22Records.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.reg22Records[idx] = { ...store.reg22Records[idx], ...data };
+      return store.reg22Records[idx];
+    },
+  },
+
+  reg35Notifications: {
+    getAll: () => store.reg35Notifications,
+    getByChild: (childId: string) => store.reg35Notifications.filter((r) => r.child_id === childId),
+    create: (data: Partial<Reg35Notification>) => {
+      const record = { ...data, id: `r35_${Date.now()}` } as Reg35Notification;
+      store.reg35Notifications.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<Reg35Notification>) => {
+      const idx = store.reg35Notifications.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.reg35Notifications[idx] = { ...store.reg35Notifications[idx], ...data };
+      return store.reg35Notifications[idx];
+    },
+  },
+
+  reg40StaffEntries: {
+    getAll: () => store.reg40StaffEntries,
+    create: (data: Partial<Reg40StaffEntry>) => {
+      const record = { ...data, id: `r40s_${Date.now()}` } as Reg40StaffEntry;
+      store.reg40StaffEntries.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<Reg40StaffEntry>) => {
+      const idx = store.reg40StaffEntries.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.reg40StaffEntries[idx] = { ...store.reg40StaffEntries[idx], ...data };
+      return store.reg40StaffEntries[idx];
+    },
+  },
+
+  reg44ActionRecords: {
+    getAll: () => store.reg44ActionRecords,
+    create: (data: Partial<Reg44ActionRecord>) => {
+      const record = { ...data, id: `r44a_${Date.now()}` } as Reg44ActionRecord;
+      store.reg44ActionRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<Reg44ActionRecord>) => {
+      const idx = store.reg44ActionRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.reg44ActionRecords[idx] = { ...store.reg44ActionRecords[idx], ...data };
+      return store.reg44ActionRecords[idx];
+    },
+  },
+
+  registrationChangeRecords: {
+    getAll: () => store.registrationChangeRecords,
+    create: (data: Partial<RegistrationChangeRecord>) => {
+      const record = { ...data, id: `rcr_${Date.now()}` } as RegistrationChangeRecord;
+      store.registrationChangeRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<RegistrationChangeRecord>) => {
+      const idx = store.registrationChangeRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.registrationChangeRecords[idx] = { ...store.registrationChangeRecords[idx], ...data };
+      return store.registrationChangeRecords[idx];
     },
   },
 };

@@ -18150,3 +18150,325 @@ export interface Reg46Review {
   shared_with: string[];
   status: Reg46ReviewStatus;
 }
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   BATCH 52 — referral-tracker, reg22-records, reg35-notifications,
+              reg40-staffing-plan, reg44-actions, registration-changes-log
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+/* ── referral-tracker ─────────────────────────────────────────────────────── */
+
+export type ReferralTrackerStatus =
+  | "received"
+  | "screening"
+  | "under_assessment"
+  | "matching_panel"
+  | "accepted"
+  | "declined"
+  | "withdrawn"
+  | "waitlisted";
+
+export const REFERRAL_TRACKER_STATUS_LABEL: Record<ReferralTrackerStatus, string> = {
+  received: "Received",
+  screening: "Screening",
+  under_assessment: "Under Assessment",
+  matching_panel: "Matching Panel",
+  accepted: "Accepted",
+  declined: "Declined",
+  withdrawn: "Withdrawn",
+  waitlisted: "Waitlisted",
+};
+
+export interface ReferralTimelineEvent {
+  date: string;
+  event: string;
+  by: string;
+}
+
+export interface ReferralTrackerRecord {
+  id: string;
+  child_ref: string;
+  age: number;
+  gender: string;
+  referring_authority: string;
+  social_worker_name: string;
+  referral_date: string;
+  status: ReferralTrackerStatus;
+  reason_for_placement: string;
+  referral_documents_received: boolean;
+  impact_assessment_completed: boolean;
+  matching_panel_date: string | null;
+  matching_panel_outcome: string | null;
+  decision_date: string | null;
+  admission_date: string | null;
+  decline_reason: string | null;
+  notes: string;
+  timeline: ReferralTimelineEvent[];
+}
+
+/* ── reg22-records ────────────────────────────────────────────────────────── */
+
+export type Reg22ComplianceStatus = "compliant" | "partially_compliant" | "non_compliant";
+
+export const REG22_COMPLIANCE_STATUS_LABEL: Record<Reg22ComplianceStatus, string> = {
+  compliant: "Compliant",
+  partially_compliant: "Partially Compliant",
+  non_compliant: "Non-Compliant",
+};
+
+export interface Reg22Record {
+  id: string;
+  record_category: string;
+  schedule_ref: string;
+  description: string;
+  status: Reg22ComplianceStatus;
+  last_audit_date: string;
+  audited_by: string;
+  where_stored: string;
+  retention_period: string;
+  notes: string;
+}
+
+/* ── reg35-notifications ──────────────────────────────────────────────────── */
+
+export type Reg35NotificationType =
+  | "death"
+  | "serious_injury"
+  | "serious_illness"
+  | "restraint"
+  | "allegation_against_staff"
+  | "child_protection"
+  | "police_involvement"
+  | "absconding"
+  | "serious_complaint"
+  | "significant_incident"
+  | "infectious_disease"
+  | "fire"
+  | "other";
+
+export const REG35_NOTIFICATION_TYPE_LABEL: Record<Reg35NotificationType, string> = {
+  death: "Death of a Child",
+  serious_injury: "Serious Injury",
+  serious_illness: "Serious Illness",
+  restraint: "Use of Restraint",
+  allegation_against_staff: "Allegation Against Staff",
+  child_protection: "Child Protection Incident",
+  police_involvement: "Police Involvement",
+  absconding: "Absconding / Missing",
+  serious_complaint: "Serious Complaint",
+  significant_incident: "Significant Incident",
+  infectious_disease: "Infectious Disease Outbreak",
+  fire: "Fire",
+  other: "Other Notifiable Event",
+};
+
+export type Reg35NotificationMethod = "phone" | "email" | "online_form" | "letter";
+
+export const REG35_NOTIFICATION_METHOD_LABEL: Record<Reg35NotificationMethod, string> = {
+  phone: "Telephone",
+  email: "Email",
+  online_form: "Ofsted Online Form",
+  letter: "Letter",
+};
+
+export type Reg35OfstedResponse =
+  | "acknowledged"
+  | "no_further_action"
+  | "monitoring"
+  | "inspection_brought_forward"
+  | "awaiting_response";
+
+export const REG35_OFSTED_RESPONSE_LABEL: Record<Reg35OfstedResponse, string> = {
+  acknowledged: "Acknowledged",
+  no_further_action: "No Further Action",
+  monitoring: "Monitoring",
+  inspection_brought_forward: "Inspection Brought Forward",
+  awaiting_response: "Awaiting Response",
+};
+
+export interface Reg35Notification {
+  id: string;
+  date_of_event: string;
+  date_notified: string;
+  notification_type: Reg35NotificationType;
+  notified_to_ofsted: boolean;
+  notified_to_la: boolean;
+  notified_to_police: boolean;
+  notified_to_other: string[];
+  method: Reg35NotificationMethod;
+  ofsted_ref: string;
+  child_id: string | null;
+  summary: string;
+  actions_taken: string[];
+  notified_by_id: string;
+  timeliness_compliant: boolean;
+  ofsted_response: Reg35OfstedResponse;
+  follow_up_required: boolean;
+  follow_up_details: string;
+  linked_records: string[];
+  notes: string;
+}
+
+/* ── reg40-staffing-plan ──────────────────────────────────────────────────── */
+
+export type Reg40QualStatus = "complete" | "in_progress" | "due_renewal" | "current";
+
+export const REG40_QUAL_STATUS_LABEL: Record<Reg40QualStatus, string> = {
+  complete: "Complete",
+  in_progress: "In Progress",
+  due_renewal: "Due Renewal",
+  current: "Current",
+};
+
+export interface Reg40Qualification {
+  name: string;
+  status: Reg40QualStatus;
+  date: string | null;
+}
+
+export interface Reg40StaffEntry {
+  id: string;
+  staff_id: string;
+  role: string;
+  contract_hours: number;
+  qualifications: Reg40Qualification[];
+  tc_refresher_due: string;
+  first_aid_expiry: string | null;
+  shift_pattern: string;
+  key_child: string | null;
+}
+
+/* ── reg44-actions ────────────────────────────────────────────────────────── */
+
+export type Reg44ActionPriority = "low" | "medium" | "high" | "critical";
+
+export const REG44_ACTION_PRIORITY_LABEL: Record<Reg44ActionPriority, string> = {
+  low: "Low",
+  medium: "Medium",
+  high: "High",
+  critical: "Critical",
+};
+
+export type Reg44ActionStatus = "open" | "in_progress" | "completed" | "overdue" | "carried_forward";
+
+export const REG44_ACTION_STATUS_LABEL: Record<Reg44ActionStatus, string> = {
+  open: "Open",
+  in_progress: "In Progress",
+  completed: "Completed",
+  overdue: "Overdue",
+  carried_forward: "Carried Forward",
+};
+
+export type Reg44ActionTheme =
+  | "safeguarding"
+  | "health_wellbeing"
+  | "education"
+  | "staffing"
+  | "premises"
+  | "record_keeping"
+  | "medication"
+  | "complaints"
+  | "quality_care"
+  | "policies"
+  | "other";
+
+export const REG44_ACTION_THEME_LABEL: Record<Reg44ActionTheme, string> = {
+  safeguarding: "Safeguarding",
+  health_wellbeing: "Health & Wellbeing",
+  education: "Education",
+  staffing: "Staffing",
+  premises: "Premises",
+  record_keeping: "Record Keeping",
+  medication: "Medication",
+  complaints: "Complaints",
+  quality_care: "Quality of Care",
+  policies: "Policies",
+  other: "Other",
+};
+
+export interface Reg44ActionRecord {
+  id: string;
+  visit_date: string;
+  visit_ref: string;
+  visitor_name: string;
+  theme: Reg44ActionTheme;
+  priority: Reg44ActionPriority;
+  status: Reg44ActionStatus;
+  recommendation: string;
+  action_required: string;
+  assigned_to: string;
+  due_date: string;
+  completed_date: string | null;
+  evidence_of_completion: string;
+  management_response: string;
+  carried_forward_count: number;
+  notes: string;
+}
+
+/* ── registration-changes-log ─────────────────────────────────────────────── */
+
+export type RegistrationChangeType =
+  | "initial_registration"
+  | "sop_change"
+  | "manager_change"
+  | "ri_change"
+  | "premises_variation"
+  | "max_number_variation"
+  | "type_variation"
+  | "conditions"
+  | "cancellation_request"
+  | "annual_return"
+  | "reg40_notification";
+
+export const REGISTRATION_CHANGE_TYPE_LABEL: Record<RegistrationChangeType, string> = {
+  initial_registration: "Initial Registration",
+  sop_change: "Change to Statement of Purpose",
+  manager_change: "Manager Change (Reg 28)",
+  ri_change: "Responsible Individual Change",
+  premises_variation: "Premises Variation",
+  max_number_variation: "Maximum Number Variation",
+  type_variation: "Type of Accommodation Variation",
+  conditions: "Conditions of Registration",
+  cancellation_request: "Cancellation Request",
+  annual_return: "Annual Return Submission",
+  reg40_notification: "Notification to Ofsted (Reg 40)",
+};
+
+export type RegistrationChangeStatus =
+  | "submitted"
+  | "pending"
+  | "approved"
+  | "refused"
+  | "withdrawn"
+  | "active";
+
+export const REGISTRATION_CHANGE_STATUS_LABEL: Record<RegistrationChangeStatus, string> = {
+  submitted: "Submitted",
+  pending: "Pending",
+  approved: "Approved",
+  refused: "Refused",
+  withdrawn: "Withdrawn",
+  active: "Active",
+};
+
+export interface RegistrationChangeRecord {
+  id: string;
+  change_type: RegistrationChangeType;
+  date_applied: string;
+  status: RegistrationChangeStatus;
+  ofsted_reference: string;
+  change_description: string;
+  reason_for_change: string;
+  prepared_by: string;
+  documents_submitted: string[];
+  ofsted_response_date: string;
+  ofsted_response_summary: string;
+  effective_date: string;
+  children_affected: string;
+  children_informed_how: string;
+  staff_informed: boolean;
+  staff_informed_how: string;
+  la_informed: boolean;
+  review_date: string;
+  notes: string;
+}
