@@ -17341,3 +17341,197 @@ export interface PolicyReviewRecord {
   changes: string;
   approved_by: string;
 }
+
+/* ── Batch 49 ─────────────────────────────────────────────────────────────── */
+
+// ── Children's Rights ────────────────────────────────────────────────────────
+
+export type RightsComplianceLevel = "fully" | "partially" | "action_needed";
+
+export const RIGHTS_COMPLIANCE_LEVEL_LABEL: Record<RightsComplianceLevel, string> = {
+  fully: "Fully Met",
+  partially: "Partially Met",
+  action_needed: "Action Needed",
+};
+
+export interface ChildrensRightEntry {
+  id: string;
+  article: string;
+  title: string;
+  uncrc_summary: string;
+  how_we_uphold: string[];
+  evidence: string[];
+  child_feedback: string;
+  compliance_level: RightsComplianceLevel;
+  action_needed: string | null;
+}
+
+// ── Local Offer ──────────────────────────────────────────────────────────────
+
+export type LocalOfferCategory = "care" | "education" | "health" | "safety" | "activities" | "community" | "independence" | "therapeutic" | "environment" | "workforce";
+
+export const LOCAL_OFFER_CATEGORY_LABEL: Record<LocalOfferCategory, string> = {
+  care: "Care & Nurture",
+  education: "Education",
+  health: "Health & Wellbeing",
+  safety: "Safety & Protection",
+  activities: "Activities & Leisure",
+  community: "Community",
+  independence: "Independence",
+  therapeutic: "Therapeutic",
+  environment: "Environment",
+  workforce: "Workforce",
+};
+
+export interface LocalOfferSection {
+  id: string;
+  category: LocalOfferCategory;
+  title: string;
+  summary: string;
+  what_we_offer: string[];
+  how_we_deliver: string[];
+  evidence_of_impact: string[];
+}
+
+// ── Location Assessment ──────────────────────────────────────────────────────
+
+export type LocationRiskLevel = "low" | "medium" | "high";
+
+export const LOCATION_RISK_LEVEL_LABEL: Record<LocationRiskLevel, string> = {
+  low: "Low",
+  medium: "Medium",
+  high: "High",
+};
+
+export interface LocationAssessmentFactor {
+  factor: string;
+  assessment: string;
+  risk: LocationRiskLevel;
+}
+
+export interface LocationAssessmentArea {
+  id: string;
+  title: string;
+  risk_level: LocationRiskLevel;
+  factors: LocationAssessmentFactor[];
+  mitigations: string[];
+  last_updated: string;
+}
+
+// ── System Notifications ─────────────────────────────────────────────────────
+
+export type AlertNotificationType = "overdue_task" | "expiring_document" | "review_due" | "compliance_deadline" | "health_alert" | "training_expiry" | "incident_followup" | "medication_review" | "placement_review" | "fire_drill_due" | "system";
+
+export const ALERT_NOTIFICATION_TYPE_LABEL: Record<AlertNotificationType, string> = {
+  overdue_task: "Overdue Task",
+  expiring_document: "Expiring Document",
+  review_due: "Review Due",
+  compliance_deadline: "Compliance Deadline",
+  health_alert: "Health Alert",
+  training_expiry: "Training Expiry",
+  incident_followup: "Incident Follow-up",
+  medication_review: "Medication Review",
+  placement_review: "Placement Review",
+  fire_drill_due: "Fire Drill Due",
+  system: "System",
+};
+
+export type AlertSeverity = "critical" | "high" | "medium" | "low" | "info";
+
+export const ALERT_SEVERITY_LABEL: Record<AlertSeverity, string> = {
+  critical: "Critical",
+  high: "High",
+  medium: "Medium",
+  low: "Low",
+  info: "Info",
+};
+
+export type AlertStatus = "unread" | "read" | "actioned" | "dismissed";
+
+export const ALERT_STATUS_LABEL: Record<AlertStatus, string> = {
+  unread: "Unread",
+  read: "Read",
+  actioned: "Actioned",
+  dismissed: "Dismissed",
+};
+
+export interface AlertNotification {
+  id: string;
+  type: AlertNotificationType;
+  severity: AlertSeverity;
+  status: AlertStatus;
+  title: string;
+  description: string;
+  link: string | null;
+  related_child: string | null;
+  related_staff: string | null;
+  due_date: string | null;
+  created_at: string;
+}
+
+// ── Positive Achievements ────────────────────────────────────────────────────
+
+export type PositiveAchievementCategory = "sport" | "education" | "creative" | "communication" | "emotional" | "independence" | "social" | "milestone";
+
+export const POSITIVE_ACHIEVEMENT_CATEGORY_LABEL: Record<PositiveAchievementCategory, string> = {
+  sport: "Sport",
+  education: "Education",
+  creative: "Creative",
+  communication: "Communication",
+  emotional: "Emotional",
+  independence: "Independence",
+  social: "Social",
+  milestone: "Milestone",
+};
+
+export interface PositiveAchievement {
+  id: string;
+  child_id: string;
+  date: string;
+  category: PositiveAchievementCategory;
+  title: string;
+  description: string;
+  recorded_by: string;
+  shared_with: string[];
+  celebrated_how: string;
+  child_reaction: string;
+}
+
+// ── Post-Incident Child Debrief ──────────────────────────────────────────────
+
+export type ChildDebriefMethod = "conversation" | "drawing" | "visual_cards" | "walk_and_talk" | "written" | "through_advocate";
+
+export const CHILD_DEBRIEF_METHOD_LABEL: Record<ChildDebriefMethod, string> = {
+  conversation: "Conversation",
+  drawing: "Drawing",
+  visual_cards: "Visual Cards",
+  walk_and_talk: "Walk-and-Talk",
+  written: "Written",
+  through_advocate: "Through Advocate",
+};
+
+export interface PostIncidentChildDebrief {
+  id: string;
+  child_id: string;
+  incident_ref: string;
+  incident_date: string;
+  debrief_date: string;
+  debrief_staff: string;
+  debrief_method: ChildDebriefMethod;
+  child_ready_to_debrief: boolean;
+  readiness_indicators: string;
+  child_account_of_what_happened: string;
+  child_feelings_before_during: string;
+  child_feelings_now: string;
+  what_child_wishes_had_been_different: string;
+  what_helped_child: string[];
+  what_did_not_help: string[];
+  child_requests_for_future: string[];
+  apologies_offered: string;
+  apologies_received: string;
+  repairs_agreed: string[];
+  child_accepts_outcome: boolean;
+  support_needed_now: string;
+  follow_up_date: string;
+  recorded_by: string;
+}

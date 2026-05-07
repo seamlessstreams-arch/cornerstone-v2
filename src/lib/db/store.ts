@@ -223,6 +223,12 @@ import type {
   ChosenFamilyRecord,
   FamilyRelationshipRecord,
   FirstRelationshipRecord,
+  ChildrensRightEntry,
+  LocalOfferSection,
+  LocationAssessmentArea,
+  AlertNotification,
+  PositiveAchievement,
+  PostIncidentChildDebrief,
 } from "@/types/extended";
 import type { Document, DocumentReadReceipt, Expense } from "@/types";
 import type { UploadedDocument, DocumentAuditEntry } from "@/types/documents";
@@ -641,6 +647,12 @@ const store = {
   homePolicies: [] as HomePolicy[],
   policyImpactAnalyses: [] as PolicyImpactAnalysis[],
   policyReviewRecords: [] as PolicyReviewRecord[],
+  childrensRights: [] as ChildrensRightEntry[],
+  localOfferSections: [] as LocalOfferSection[],
+  locationAssessmentAreas: [] as LocationAssessmentArea[],
+  alertNotifications: [] as AlertNotification[],
+  positiveAchievements: [] as PositiveAchievement[],
+  postIncidentChildDebriefs: [] as PostIncidentChildDebrief[],
   // Shift Swap Requests
   shiftSwaps: [
     {
@@ -8412,6 +8424,90 @@ export const db = {
       if (idx === -1) return null;
       store.policyReviewRecords[idx] = { ...store.policyReviewRecords[idx], ...data };
       return store.policyReviewRecords[idx];
+    },
+  },
+  childrensRights: {
+    getAll: () => store.childrensRights,
+    create: (data: Partial<ChildrensRightEntry>) => {
+      const record = { ...data, id: `cre_${Date.now()}` } as ChildrensRightEntry;
+      store.childrensRights.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<ChildrensRightEntry>) => {
+      const idx = store.childrensRights.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.childrensRights[idx] = { ...store.childrensRights[idx], ...data };
+      return store.childrensRights[idx];
+    },
+  },
+  localOfferSections: {
+    getAll: () => store.localOfferSections,
+    create: (data: Partial<LocalOfferSection>) => {
+      const record = { ...data, id: `los_${Date.now()}` } as LocalOfferSection;
+      store.localOfferSections.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<LocalOfferSection>) => {
+      const idx = store.localOfferSections.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.localOfferSections[idx] = { ...store.localOfferSections[idx], ...data };
+      return store.localOfferSections[idx];
+    },
+  },
+  locationAssessmentAreas: {
+    getAll: () => store.locationAssessmentAreas,
+    create: (data: Partial<LocationAssessmentArea>) => {
+      const record = { ...data, id: `laa_${Date.now()}` } as LocationAssessmentArea;
+      store.locationAssessmentAreas.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<LocationAssessmentArea>) => {
+      const idx = store.locationAssessmentAreas.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.locationAssessmentAreas[idx] = { ...store.locationAssessmentAreas[idx], ...data };
+      return store.locationAssessmentAreas[idx];
+    },
+  },
+  alertNotifications: {
+    getAll: () => store.alertNotifications,
+    create: (data: Partial<AlertNotification>) => {
+      const record = { ...data, id: `an_${Date.now()}` } as AlertNotification;
+      store.alertNotifications.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<AlertNotification>) => {
+      const idx = store.alertNotifications.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.alertNotifications[idx] = { ...store.alertNotifications[idx], ...data };
+      return store.alertNotifications[idx];
+    },
+  },
+  positiveAchievements: {
+    getAll: () => store.positiveAchievements,
+    create: (data: Partial<PositiveAchievement>) => {
+      const record = { ...data, id: `pa_${Date.now()}` } as PositiveAchievement;
+      store.positiveAchievements.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<PositiveAchievement>) => {
+      const idx = store.positiveAchievements.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.positiveAchievements[idx] = { ...store.positiveAchievements[idx], ...data };
+      return store.positiveAchievements[idx];
+    },
+  },
+  postIncidentChildDebriefs: {
+    getAll: () => store.postIncidentChildDebriefs,
+    create: (data: Partial<PostIncidentChildDebrief>) => {
+      const record = { ...data, id: `picd_${Date.now()}` } as PostIncidentChildDebrief;
+      store.postIncidentChildDebriefs.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<PostIncidentChildDebrief>) => {
+      const idx = store.postIncidentChildDebriefs.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.postIncidentChildDebriefs[idx] = { ...store.postIncidentChildDebriefs[idx], ...data };
+      return store.postIncidentChildDebriefs[idx];
     },
   },
 };
