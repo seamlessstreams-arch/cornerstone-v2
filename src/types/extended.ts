@@ -14513,3 +14513,381 @@ export interface TrainingMatrixRow {
   expired_count: number;
   created_at: string;
 }
+
+/* ── Batch 39 ────────────────────────────────────────────────────────────────── */
+
+/* MAR Sheet */
+export type MarRoute = "oral" | "topical" | "inhaler" | "injection";
+
+export const MAR_ROUTE_LABEL: Record<MarRoute, string> = {
+  oral: "Oral",
+  topical: "Topical",
+  inhaler: "Inhaler",
+  injection: "Injection",
+};
+
+export type MarScheduleType = "prn" | "scheduled";
+
+export const MAR_SCHEDULE_TYPE_LABEL: Record<MarScheduleType, string> = {
+  prn: "PRN",
+  scheduled: "Scheduled",
+};
+
+export interface MarEntry {
+  id: string;
+  date: string;
+  time: string;
+  child_id: string;
+  medication_name: string;
+  dose: string;
+  route: MarRoute;
+  schedule_type: MarScheduleType;
+  administered_by: string;
+  witnessed_by: string;
+  signature: string;
+  refused: boolean;
+  refusal_reason: string;
+  missed_dose: boolean;
+  missed_reason: string;
+  notes: string;
+  batch_number: string;
+  expiry_check: boolean;
+  created_at: string;
+}
+
+/* Matching Referrals */
+export type ReferralStatus = "received" | "shortlisted" | "assessment" | "panel" | "accepted" | "declined" | "withdrawn";
+
+export const REFERRAL_STATUS_LABEL: Record<ReferralStatus, string> = {
+  received: "Received",
+  shortlisted: "Shortlisted",
+  assessment: "Assessment",
+  panel: "Panel",
+  accepted: "Accepted",
+  declined: "Declined",
+  withdrawn: "Withdrawn",
+};
+
+export type MatchScore = "strong" | "moderate" | "weak" | "unsuitable";
+
+export const MATCH_SCORE_LABEL: Record<MatchScore, string> = {
+  strong: "Strong",
+  moderate: "Moderate",
+  weak: "Weak",
+  unsuitable: "Unsuitable",
+};
+
+export interface MatchDomain {
+  domain: string;
+  score: MatchScore;
+  detail: string;
+}
+
+export type ReferralImpactRisk = "low" | "medium" | "high";
+
+export const REFERRAL_IMPACT_RISK_LABEL: Record<ReferralImpactRisk, string> = {
+  low: "Low",
+  medium: "Medium",
+  high: "High",
+};
+
+export interface ImpactOnCurrent {
+  young_person_id: string;
+  risk: ReferralImpactRisk;
+  detail: string;
+  mitigations: string[];
+}
+
+export interface MatchingReferral {
+  id: string;
+  child_name: string;
+  age: number;
+  gender: string;
+  local_authority: string;
+  social_worker: string;
+  referral_date: string;
+  status: ReferralStatus;
+  assigned_to: string;
+  overall_match: MatchScore;
+  match_domains: MatchDomain[];
+  impact_on_current: ImpactOnCurrent[];
+  strengths: string[];
+  concerns: string[];
+  conditions: string[];
+  decision_date: string | null;
+  decision_by: string | null;
+  decision_rationale: string;
+  placement_type: string;
+  presenting_needs: string[];
+  risk_factors: string[];
+  created_at: string;
+}
+
+/* Media & Publicity Consent */
+export type MediaConsentCategory =
+  | "internal_life_story_book"
+  | "internal_display_only"
+  | "school_photo_yearbook"
+  | "local_newspaper"
+  | "newsletter_anonymised"
+  | "social_media_sector_facing"
+  | "inspection_reg44_evidence"
+  | "court_legal"
+  | "personal_request";
+
+export const MEDIA_CONSENT_CATEGORY_LABEL: Record<MediaConsentCategory, string> = {
+  internal_life_story_book: "Internal Life Story Book",
+  internal_display_only: "Internal display only",
+  school_photo_yearbook: "School photo / yearbook",
+  local_newspaper: "Local newspaper",
+  newsletter_anonymised: "Newsletter (anonymised)",
+  social_media_sector_facing: "Social media (sector-facing)",
+  inspection_reg44_evidence: "Inspection / Reg 44 evidence",
+  court_legal: "Court / legal",
+  personal_request: "Personal request",
+};
+
+export type ChildConsentResponse =
+  | "yes_explicit"
+  | "yes_assenting"
+  | "declined"
+  | "unsure_withdrawn"
+  | "conditional"
+  | "not_asked_inappropriate";
+
+export const CHILD_CONSENT_RESPONSE_LABEL: Record<ChildConsentResponse, string> = {
+  yes_explicit: "Yes - explicit",
+  yes_assenting: "Yes - assenting",
+  declined: "Declined",
+  unsure_withdrawn: "Unsure - withdrawn",
+  conditional: "Conditional",
+  not_asked_inappropriate: "Not asked - inappropriate",
+};
+
+export interface MediaPublicityConsent {
+  id: string;
+  child_id: string;
+  consent_requested_date: string;
+  purpose: string;
+  category: MediaConsentCategory;
+  who_is_requesting: string;
+  age_at_request: number;
+  child_can_give_consent: boolean;
+  child_gave_consent: ChildConsentResponse;
+  parental_responsibility_consent: boolean;
+  la_consent: boolean;
+  conditions_agreed: string[];
+  expiry_of_consent: string;
+  child_can_withdraw_consent: boolean;
+  withdrawal_process: string;
+  child_identifiable: boolean;
+  anonymisation_applied: string;
+  storage_location: string;
+  retention_period: string;
+  recorded_by: string;
+  notes: string;
+  created_at: string;
+}
+
+/* Medication Audit */
+export type MedAuditType =
+  | "stock_check"
+  | "controlled_drug_check"
+  | "destruction"
+  | "expiry_review"
+  | "storage_check"
+  | "reconciliation"
+  | "return_to_pharmacy";
+
+export const MED_AUDIT_TYPE_LABEL: Record<MedAuditType, string> = {
+  stock_check: "Stock Count",
+  controlled_drug_check: "Controlled Drug Check",
+  destruction: "Medication Destruction",
+  expiry_review: "Expiry Review",
+  storage_check: "Storage Inspection",
+  reconciliation: "MAR Reconciliation",
+  return_to_pharmacy: "Return to Pharmacy",
+};
+
+export type MedAuditResult = "satisfactory" | "discrepancy_found" | "action_required" | "completed";
+
+export const MED_AUDIT_RESULT_LABEL: Record<MedAuditResult, string> = {
+  satisfactory: "Satisfactory",
+  discrepancy_found: "Discrepancy Found",
+  action_required: "Action Required",
+  completed: "Completed",
+};
+
+export type MedAuditMedicationType = "regular" | "prn" | "controlled" | "otc" | "homely_remedy";
+
+export const MED_AUDIT_MEDICATION_TYPE_LABEL: Record<MedAuditMedicationType, string> = {
+  regular: "Regular",
+  prn: "PRN (As Needed)",
+  controlled: "Controlled Drug",
+  otc: "Over the Counter",
+  homely_remedy: "Homely Remedy",
+};
+
+export interface MedicationAuditRecord {
+  id: string;
+  date: string;
+  time: string;
+  audited_by: string;
+  witnessed_by: string;
+  audit_type: MedAuditType;
+  result: MedAuditResult;
+  child_id: string;
+  medication_name: string;
+  medication_type: MedAuditMedicationType;
+  strength: string;
+  expected_count: number | null;
+  actual_count: number | null;
+  discrepancy: number;
+  expiry_date: string | null;
+  batch_number: string;
+  storage_correct: boolean;
+  temperature_ok: boolean;
+  labelling_correct: boolean;
+  destruction_method: string;
+  destruction_witness: string;
+  pharmacy_name: string;
+  notes: string;
+  action_taken: string;
+  follow_up_required: boolean;
+  follow_up_date: string | null;
+  signed_off_by: string;
+  created_at: string;
+}
+
+/* Medication Error Investigation */
+export type MedInvErrorType =
+  | "wrong_dose_given"
+  | "wrong_medication_given"
+  | "wrong_time"
+  | "missed_dose"
+  | "double_dose"
+  | "wrong_patient_averted"
+  | "allergy_ignored"
+  | "recording_error"
+  | "omission";
+
+export const MED_INV_ERROR_TYPE_LABEL: Record<MedInvErrorType, string> = {
+  wrong_dose_given: "Wrong dose given",
+  wrong_medication_given: "Wrong medication given",
+  wrong_time: "Wrong time",
+  missed_dose: "Missed dose",
+  double_dose: "Double dose",
+  wrong_patient_averted: "Wrong patient (averted)",
+  allergy_ignored: "Allergy ignored",
+  recording_error: "Recording error",
+  omission: "Omission",
+};
+
+export type MedInvSeverity = "no_harm" | "minor_harm" | "moderate_harm" | "major_harm";
+
+export const MED_INV_SEVERITY_LABEL: Record<MedInvSeverity, string> = {
+  no_harm: "No harm",
+  minor_harm: "Minor harm",
+  moderate_harm: "Moderate harm",
+  major_harm: "Major harm — referred for medical review",
+};
+
+export type MedInvStatus = "investigating" | "closed_resolved" | "reported_monitoring";
+
+export const MED_INV_STATUS_LABEL: Record<MedInvStatus, string> = {
+  investigating: "Investigating",
+  closed_resolved: "Closed - resolved",
+  reported_monitoring: "Reported - monitoring",
+};
+
+export interface MedicationErrorInvestigation {
+  id: string;
+  date_of_error: string;
+  date_discovered: string;
+  child_id: string;
+  error_type: MedInvErrorType;
+  staff_involved: string;
+  error_severity: MedInvSeverity;
+  child_impact_observed: string;
+  immediate_actions_taken: string[];
+  gp_consulted: boolean;
+  gp_advice: string;
+  parent_la_informed: boolean;
+  child_informed_age_appropriately: boolean;
+  child_response: string;
+  root_cause_analysis: string;
+  contributing_factors: string[];
+  systemic_changes: string[];
+  training_arising: string[];
+  policy_arising: string;
+  staff_emotional_impact: string;
+  debrief_held: boolean;
+  debrief_date: string;
+  ofsted_notification_required: boolean;
+  ofsted_notification_date: string;
+  status: MedInvStatus;
+  preventive_action_embedded: boolean;
+  reviewed_by: string;
+  notes: string;
+  created_at: string;
+}
+
+/* Medication Near-Miss Log */
+export type NearMissType =
+  | "wrong_medication_selected"
+  | "wrong_dose_calculated"
+  | "wrong_time"
+  | "missed_dose_almost_given_late"
+  | "allergy_nearly_missed"
+  | "expired_medication_caught"
+  | "witness_procedure_not_followed"
+  | "recording_error"
+  | "storage_issue";
+
+export const NEAR_MISS_TYPE_LABEL: Record<NearMissType, string> = {
+  wrong_medication_selected: "Wrong medication selected",
+  wrong_dose_calculated: "Wrong dose calculated",
+  wrong_time: "Wrong time",
+  missed_dose_almost_given_late: "Missed dose almost given late",
+  allergy_nearly_missed: "Allergy nearly missed",
+  expired_medication_caught: "Expired medication caught",
+  witness_procedure_not_followed: "Witness procedure not followed",
+  recording_error: "Recording error",
+  storage_issue: "Storage issue",
+};
+
+export type NearMissRiskGrade = "low" | "medium" | "high" | "critical";
+
+export const NEAR_MISS_RISK_GRADE_LABEL: Record<NearMissRiskGrade, string> = {
+  low: "Low",
+  medium: "Medium",
+  high: "High",
+  critical: "Critical",
+};
+
+export interface MedicationNearMiss {
+  id: string;
+  date: string;
+  time: string;
+  child_id: string;
+  reported_by: string;
+  near_miss_type: NearMissType;
+  what_nearly_happened: string;
+  how_caught: string;
+  contributing_factors: string[];
+  child_informed: boolean;
+  child_response: string;
+  staff_emotional_impact: string;
+  debrief_held: boolean;
+  debrief_date: string;
+  learning_points: string[];
+  systemic_changes: string[];
+  training_arising: string[];
+  policy_arising: string;
+  risk_grade: NearMissRiskGrade;
+  would_escalate_if_recurred: boolean;
+  pattern_check: string;
+  reported_to_pharmacist: boolean;
+  shareable_anonymously: boolean;
+  created_at: string;
+}

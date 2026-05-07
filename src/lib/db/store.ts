@@ -246,6 +246,8 @@ import type {
   LessonLearned, LgbtqInclusionRecord, LifeStoryEntry,
   LocalityRisk, LoneWorkingRecord, LoneWorkingRiskAssessment,
   MaintenanceScheduleItem, ManagementWalkround, TrainingMatrixRow,
+  MarEntry, MatchingReferral, MediaPublicityConsent,
+  MedicationAuditRecord, MedicationErrorInvestigation, MedicationNearMiss,
 } from "@/types/extended";
 import { generateId, todayStr, daysFromNow } from "@/lib/utils";
 
@@ -546,6 +548,12 @@ const store = {
   maintenanceScheduleItems: [] as MaintenanceScheduleItem[],
   managementWalkrounds: [] as ManagementWalkround[],
   trainingMatrixRows: [] as TrainingMatrixRow[],
+  marEntries: [] as MarEntry[],
+  matchingReferrals: [] as MatchingReferral[],
+  mediaPublicityConsents: [] as MediaPublicityConsent[],
+  medicationAuditRecords: [] as MedicationAuditRecord[],
+  medicationErrorInvestigations: [] as MedicationErrorInvestigation[],
+  medicationNearMisses: [] as MedicationNearMiss[],
   // Shift Swap Requests
   shiftSwaps: [
     {
@@ -7294,6 +7302,109 @@ export const db = {
       if (idx === -1) return null;
       store.trainingMatrixRows[idx] = { ...store.trainingMatrixRows[idx], ...data };
       return store.trainingMatrixRows[idx];
+    },
+  },
+
+  /* ── Batch 39 ──────────────────────────────────────────────────────── */
+
+  marEntries: {
+    findAll: (): MarEntry[] => store.marEntries,
+    findByChild: (childId: string): MarEntry[] => store.marEntries.filter((r) => r.child_id === childId),
+    findById: (id: string): MarEntry | undefined => store.marEntries.find((r) => r.id === id),
+    create: (data: Partial<MarEntry>): MarEntry => {
+      const record = { ...data, id: generateId("mare"), created_at: new Date().toISOString() } as MarEntry;
+      store.marEntries.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<MarEntry>): MarEntry | null => {
+      const idx = store.marEntries.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.marEntries[idx] = { ...store.marEntries[idx], ...data };
+      return store.marEntries[idx];
+    },
+  },
+
+  matchingReferrals: {
+    findAll: (): MatchingReferral[] => store.matchingReferrals,
+    findById: (id: string): MatchingReferral | undefined => store.matchingReferrals.find((r) => r.id === id),
+    create: (data: Partial<MatchingReferral>): MatchingReferral => {
+      const record = { ...data, id: generateId("mref"), created_at: new Date().toISOString() } as MatchingReferral;
+      store.matchingReferrals.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<MatchingReferral>): MatchingReferral | null => {
+      const idx = store.matchingReferrals.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.matchingReferrals[idx] = { ...store.matchingReferrals[idx], ...data };
+      return store.matchingReferrals[idx];
+    },
+  },
+
+  mediaPublicityConsents: {
+    findAll: (): MediaPublicityConsent[] => store.mediaPublicityConsents,
+    findByChild: (childId: string): MediaPublicityConsent[] => store.mediaPublicityConsents.filter((r) => r.child_id === childId),
+    findById: (id: string): MediaPublicityConsent | undefined => store.mediaPublicityConsents.find((r) => r.id === id),
+    create: (data: Partial<MediaPublicityConsent>): MediaPublicityConsent => {
+      const record = { ...data, id: generateId("mpcs"), created_at: new Date().toISOString() } as MediaPublicityConsent;
+      store.mediaPublicityConsents.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<MediaPublicityConsent>): MediaPublicityConsent | null => {
+      const idx = store.mediaPublicityConsents.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.mediaPublicityConsents[idx] = { ...store.mediaPublicityConsents[idx], ...data };
+      return store.mediaPublicityConsents[idx];
+    },
+  },
+
+  medicationAuditRecords: {
+    findAll: (): MedicationAuditRecord[] => store.medicationAuditRecords,
+    findByChild: (childId: string): MedicationAuditRecord[] => store.medicationAuditRecords.filter((r) => r.child_id === childId),
+    findById: (id: string): MedicationAuditRecord | undefined => store.medicationAuditRecords.find((r) => r.id === id),
+    create: (data: Partial<MedicationAuditRecord>): MedicationAuditRecord => {
+      const record = { ...data, id: generateId("maud"), created_at: new Date().toISOString() } as MedicationAuditRecord;
+      store.medicationAuditRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<MedicationAuditRecord>): MedicationAuditRecord | null => {
+      const idx = store.medicationAuditRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.medicationAuditRecords[idx] = { ...store.medicationAuditRecords[idx], ...data };
+      return store.medicationAuditRecords[idx];
+    },
+  },
+
+  medicationErrorInvestigations: {
+    findAll: (): MedicationErrorInvestigation[] => store.medicationErrorInvestigations,
+    findByChild: (childId: string): MedicationErrorInvestigation[] => store.medicationErrorInvestigations.filter((r) => r.child_id === childId),
+    findById: (id: string): MedicationErrorInvestigation | undefined => store.medicationErrorInvestigations.find((r) => r.id === id),
+    create: (data: Partial<MedicationErrorInvestigation>): MedicationErrorInvestigation => {
+      const record = { ...data, id: generateId("meiv"), created_at: new Date().toISOString() } as MedicationErrorInvestigation;
+      store.medicationErrorInvestigations.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<MedicationErrorInvestigation>): MedicationErrorInvestigation | null => {
+      const idx = store.medicationErrorInvestigations.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.medicationErrorInvestigations[idx] = { ...store.medicationErrorInvestigations[idx], ...data };
+      return store.medicationErrorInvestigations[idx];
+    },
+  },
+
+  medicationNearMisses: {
+    findAll: (): MedicationNearMiss[] => store.medicationNearMisses,
+    findByChild: (childId: string): MedicationNearMiss[] => store.medicationNearMisses.filter((r) => r.child_id === childId),
+    findById: (id: string): MedicationNearMiss | undefined => store.medicationNearMisses.find((r) => r.id === id),
+    create: (data: Partial<MedicationNearMiss>): MedicationNearMiss => {
+      const record = { ...data, id: generateId("mnml"), created_at: new Date().toISOString() } as MedicationNearMiss;
+      store.medicationNearMisses.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<MedicationNearMiss>): MedicationNearMiss | null => {
+      const idx = store.medicationNearMisses.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.medicationNearMisses[idx] = { ...store.medicationNearMisses[idx], ...data };
+      return store.medicationNearMisses[idx];
     },
   },
 };
