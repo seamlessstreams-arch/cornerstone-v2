@@ -15656,3 +15656,302 @@ export interface OfstedEngagementRecord {
   engagement_status: OfstedEngagementStatus;
   created_at: string;
 }
+
+// ── Ofsted Self-Evaluation ────────────────────────────────────────────────────
+
+export type SelfEvaluationGrade = "outstanding" | "good" | "requires_improvement" | "inadequate";
+export const SELF_EVALUATION_GRADE_LABEL: Record<SelfEvaluationGrade, string> = {
+  outstanding: "Outstanding",
+  good: "Good",
+  requires_improvement: "Requires Improvement",
+  inadequate: "Inadequate",
+};
+
+export interface SelfEvaluationAction {
+  action: string;
+  owner: string;
+  target_date: string;
+  status: string;
+}
+
+export interface SelfEvaluationArea {
+  id: string;
+  area: string;
+  self_grade: SelfEvaluationGrade;
+  strengths: string[];
+  evidence: string[];
+  areas_for_development: string[];
+  actions: SelfEvaluationAction[];
+  created_at: string;
+}
+
+// ── On-Call Rota ──────────────────────────────────────────────────────────────
+
+export type OnCallRole = "first_line_rm" | "second_line_deputy" | "senior_practitioner_cover";
+export const ON_CALL_ROLE_LABEL: Record<OnCallRole, string> = {
+  first_line_rm: "First-line On-Call (RM)",
+  second_line_deputy: "Second-line On-Call (Deputy)",
+  senior_practitioner_cover: "Senior Practitioner Cover",
+};
+
+export type OnCallShiftPattern = "weekday_evenings" | "weekend_full" | "bank_holiday" | "standard_rota";
+export const ON_CALL_SHIFT_PATTERN_LABEL: Record<OnCallShiftPattern, string> = {
+  weekday_evenings: "Weekday Evenings 17:00–08:00",
+  weekend_full: "Weekend Full",
+  bank_holiday: "Bank Holiday",
+  standard_rota: "Standard Rota Slot",
+};
+
+export interface OnCallCall {
+  datetime: string;
+  from_contact: string;
+  call_type: string;
+  duration_mins: number;
+  outcome: string;
+  escalated: boolean;
+}
+
+export interface OnCallShift {
+  id: string;
+  date_from: string;
+  date_to: string;
+  role: OnCallRole;
+  on_call_staff: string;
+  backup_staff: string;
+  contact_number: string;
+  shift_pattern: OnCallShiftPattern;
+  calls_received: OnCallCall[];
+  critical_incidents_handled: number;
+  routine_calls_handled: number;
+  advisory_calls_handled: number;
+  staff_wellbeing_during_on_call: string;
+  feedback_on_arrangements: string;
+  review_notes: string;
+  created_at: string;
+}
+
+// ── Online Gaming Tracker ─────────────────────────────────────────────────────
+
+export type PegiRating = "3" | "7" | "12" | "16" | "18";
+export const PEGI_RATING_LABEL: Record<PegiRating, string> = {
+  "3": "PEGI 3",
+  "7": "PEGI 7",
+  "12": "PEGI 12",
+  "16": "PEGI 16",
+  "18": "PEGI 18",
+};
+
+export interface GamingPrimaryGame {
+  title: string;
+  pegi_rating: PegiRating;
+  age_appropriate: boolean;
+}
+
+export interface OnlineGamingRecord {
+  id: string;
+  child_id: string;
+  review_date: string;
+  console: string;
+  primary_games: GamingPrimaryGame[];
+  weekly_hours: number;
+  voice_chat_used: boolean;
+  online_friends_known_in_person: number;
+  online_friends_known_only: number;
+  in_game_spend_this_month: number;
+  spend_cap: number;
+  flags_concerns: string[];
+  protective_factors: string[];
+  parental_controls_active: boolean;
+  screen_time_balance_note: string;
+  child_voice: string;
+  staff_observation: string;
+  next_review: string;
+  key_worker: string;
+  created_at: string;
+}
+
+// ── Online Safety ─────────────────────────────────────────────────────────────
+
+export type OnlineSafetyIncidentCategory = "cyberbullying" | "inappropriate_content" | "contact_risk" | "sharing_images" | "gaming_risk" | "social_media" | "radicalisation" | "financial_scam" | "data_privacy" | "excessive_use";
+export const ONLINE_SAFETY_INCIDENT_CATEGORY_LABEL: Record<OnlineSafetyIncidentCategory, string> = {
+  cyberbullying: "Cyberbullying",
+  inappropriate_content: "Inappropriate Content",
+  contact_risk: "Contact Risk",
+  sharing_images: "Sharing Images",
+  gaming_risk: "Gaming Risk",
+  social_media: "Social Media",
+  radicalisation: "Radicalisation",
+  financial_scam: "Financial Scam",
+  data_privacy: "Data Privacy",
+  excessive_use: "Excessive Use",
+};
+
+export type OnlineSafetySeverity = "low" | "medium" | "high" | "critical";
+export const ONLINE_SAFETY_SEVERITY_LABEL: Record<OnlineSafetySeverity, string> = {
+  low: "Low",
+  medium: "Medium",
+  high: "High",
+  critical: "Critical",
+};
+
+export type OnlineSafetyIncidentStatus = "open" | "monitoring" | "resolved" | "escalated";
+export const ONLINE_SAFETY_INCIDENT_STATUS_LABEL: Record<OnlineSafetyIncidentStatus, string> = {
+  open: "Open",
+  monitoring: "Monitoring",
+  resolved: "Resolved",
+  escalated: "Escalated",
+};
+
+export interface OnlineSafetyIncident {
+  id: string;
+  child_id: string;
+  date: string;
+  category: OnlineSafetyIncidentCategory;
+  severity: OnlineSafetySeverity;
+  status: OnlineSafetyIncidentStatus;
+  platform: string;
+  summary: string;
+  detail: string;
+  discovered_by: string;
+  actions_taken: string[];
+  safeguarding_referral: boolean;
+  parent_carer_notified: boolean;
+  child_discussion: string;
+  follow_up: string;
+  created_at: string;
+}
+
+export interface OnlineSafetyAgreement {
+  id: string;
+  child_id: string;
+  agreement_date: string;
+  review_date: string;
+  devices: string[];
+  allowed_platforms: string[];
+  restrictions: string[];
+  wifi_curfew: string;
+  parental_controls: string;
+  child_signature: boolean;
+  created_at: string;
+}
+
+// ── Operational Meetings ──────────────────────────────────────────────────────
+
+export type OperationalMeetingType = "morning_huddle" | "shift_change_handover" | "end_of_day_debrief" | "weekly_team_meeting" | "crisis_briefing" | "rm_121_deputy";
+export const OPERATIONAL_MEETING_TYPE_LABEL: Record<OperationalMeetingType, string> = {
+  morning_huddle: "Morning Huddle",
+  shift_change_handover: "Shift Change Handover Summary",
+  end_of_day_debrief: "End-of-Day Debrief",
+  weekly_team_meeting: "Weekly Team Meeting",
+  crisis_briefing: "Crisis Briefing",
+  rm_121_deputy: "RM 1-2-1 with Deputy",
+};
+
+export type OperationalActionStatus = "open" | "in_progress" | "complete";
+export const OPERATIONAL_ACTION_STATUS_LABEL: Record<OperationalActionStatus, string> = {
+  open: "Open",
+  in_progress: "In Progress",
+  complete: "Complete",
+};
+
+export interface OperationalMeetingAction {
+  action: string;
+  owner: string;
+  deadline: string;
+  status: OperationalActionStatus;
+}
+
+export interface OperationalMeeting {
+  id: string;
+  date: string;
+  time: string;
+  meeting_type: OperationalMeetingType;
+  duration_minutes: number;
+  chair: string;
+  attendees: string[];
+  agenda: string[];
+  key_decisions: string[];
+  child_updates: Record<string, string>;
+  risks_identified: string[];
+  staff_wellbeing_observations: string;
+  actions_agreed: OperationalMeetingAction[];
+  positive_moments_shared: string[];
+  next_meeting: string;
+  minuted_by: string;
+  created_at: string;
+}
+
+// ── Opticians Records ─────────────────────────────────────────────────────────
+
+export type OpticalStatus = "active_nhs" | "active_private" | "awaiting_registration";
+export const OPTICAL_STATUS_LABEL: Record<OpticalStatus, string> = {
+  active_nhs: "Active NHS",
+  active_private: "Active Private",
+  awaiting_registration: "Awaiting Registration",
+};
+
+export type OpticalRecallInterval = "annual" | "two_yearly" | "specialist_follow_up";
+export const OPTICAL_RECALL_INTERVAL_LABEL: Record<OpticalRecallInterval, string> = {
+  annual: "Annual",
+  two_yearly: "2-Yearly",
+  specialist_follow_up: "Specialist Follow-up",
+};
+
+export type GlassesType = "reading" | "distance" | "varifocals" | "reading_screen" | "sports" | "sunglasses_prescription";
+export const GLASSES_TYPE_LABEL: Record<GlassesType, string> = {
+  reading: "Reading",
+  distance: "Distance",
+  varifocals: "Varifocals",
+  reading_screen: "Reading + Screen",
+  sports: "Sports Glasses",
+  sunglasses_prescription: "Sunglasses (Prescription)",
+};
+
+export interface OpticalExamRecord {
+  date: string;
+  outcome: string;
+  prescription: string;
+  recommendations: string;
+}
+
+export interface OpticalPrescription {
+  right_sphere: string;
+  right_cylinder: string;
+  left_sphere: string;
+  left_cylinder: string;
+  addition: string;
+}
+
+export interface GlassesIssued {
+  date: string;
+  glasses_type: GlassesType;
+  frames_chosen: string;
+  lens_type: string;
+  cost: number;
+  child_chose: boolean;
+}
+
+export interface OpticiansRecord {
+  id: string;
+  child_id: string;
+  practice: string;
+  optometrist: string;
+  registered_date: string;
+  status: OpticalStatus;
+  recall_interval: OpticalRecallInterval;
+  exam_history: OpticalExamRecord[];
+  current_prescription: OpticalPrescription;
+  glasses_issued: GlassesIssued[];
+  contact_lenses_issued: boolean;
+  contact_lenses_notes: string;
+  visual_impairment: string;
+  school_notified_date: string;
+  reasonable_adjustments: string[];
+  last_exam_date: string;
+  next_exam_due: string;
+  child_attitude_to_optometrist: string;
+  review_date: string;
+  reviewed_by: string;
+  notes: string;
+  created_at: string;
+}

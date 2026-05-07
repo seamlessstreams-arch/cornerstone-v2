@@ -254,6 +254,9 @@ import type {
   CulturalVisit, NightCheck, NightStaffGuidanceSection,
   NightStaffHandover, NightAnxietySupportRecord, NotificationLogEntry,
   OccupationalTherapyRecord, OfstedActionItem, OfstedEngagementRecord,
+  SelfEvaluationArea, OnCallShift, OnlineGamingRecord,
+  OnlineSafetyIncident, OnlineSafetyAgreement, OperationalMeeting,
+  OpticiansRecord,
 } from "@/types/extended";
 import { generateId, todayStr, daysFromNow } from "@/lib/utils";
 
@@ -578,6 +581,13 @@ const store = {
   occupationalTherapyRecords: [] as OccupationalTherapyRecord[],
   ofstedActionItems: [] as OfstedActionItem[],
   ofstedEngagementRecords: [] as OfstedEngagementRecord[],
+  selfEvaluationAreas: [] as SelfEvaluationArea[],
+  onCallShifts: [] as OnCallShift[],
+  onlineGamingRecords: [] as OnlineGamingRecord[],
+  onlineSafetyIncidents: [] as OnlineSafetyIncident[],
+  onlineSafetyAgreements: [] as OnlineSafetyAgreement[],
+  operationalMeetings: [] as OperationalMeeting[],
+  opticiansRecords: [] as OpticiansRecord[],
   // Shift Swap Requests
   shiftSwaps: [
     {
@@ -7726,6 +7736,122 @@ export const db = {
       if (idx === -1) return null;
       store.ofstedEngagementRecords[idx] = { ...store.ofstedEngagementRecords[idx], ...data };
       return store.ofstedEngagementRecords[idx];
+    },
+  },
+
+  selfEvaluationAreas: {
+    findAll: (): SelfEvaluationArea[] => store.selfEvaluationAreas,
+    findById: (id: string): SelfEvaluationArea | undefined => store.selfEvaluationAreas.find((r) => r.id === id),
+    create: (data: Partial<SelfEvaluationArea>): SelfEvaluationArea => {
+      const record = { ...data, id: generateId("seva"), created_at: new Date().toISOString() } as SelfEvaluationArea;
+      store.selfEvaluationAreas.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<SelfEvaluationArea>): SelfEvaluationArea | null => {
+      const idx = store.selfEvaluationAreas.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.selfEvaluationAreas[idx] = { ...store.selfEvaluationAreas[idx], ...data };
+      return store.selfEvaluationAreas[idx];
+    },
+  },
+
+  onCallShifts: {
+    findAll: (): OnCallShift[] => store.onCallShifts,
+    findById: (id: string): OnCallShift | undefined => store.onCallShifts.find((r) => r.id === id),
+    create: (data: Partial<OnCallShift>): OnCallShift => {
+      const record = { ...data, id: generateId("ocsh"), created_at: new Date().toISOString() } as OnCallShift;
+      store.onCallShifts.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<OnCallShift>): OnCallShift | null => {
+      const idx = store.onCallShifts.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.onCallShifts[idx] = { ...store.onCallShifts[idx], ...data };
+      return store.onCallShifts[idx];
+    },
+  },
+
+  onlineGamingRecords: {
+    findAll: (): OnlineGamingRecord[] => store.onlineGamingRecords,
+    findByChild: (childId: string): OnlineGamingRecord[] => store.onlineGamingRecords.filter((r) => r.child_id === childId),
+    findById: (id: string): OnlineGamingRecord | undefined => store.onlineGamingRecords.find((r) => r.id === id),
+    create: (data: Partial<OnlineGamingRecord>): OnlineGamingRecord => {
+      const record = { ...data, id: generateId("ogrc"), created_at: new Date().toISOString() } as OnlineGamingRecord;
+      store.onlineGamingRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<OnlineGamingRecord>): OnlineGamingRecord | null => {
+      const idx = store.onlineGamingRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.onlineGamingRecords[idx] = { ...store.onlineGamingRecords[idx], ...data };
+      return store.onlineGamingRecords[idx];
+    },
+  },
+
+  onlineSafetyIncidents: {
+    findAll: (): OnlineSafetyIncident[] => store.onlineSafetyIncidents,
+    findByChild: (childId: string): OnlineSafetyIncident[] => store.onlineSafetyIncidents.filter((r) => r.child_id === childId),
+    findById: (id: string): OnlineSafetyIncident | undefined => store.onlineSafetyIncidents.find((r) => r.id === id),
+    create: (data: Partial<OnlineSafetyIncident>): OnlineSafetyIncident => {
+      const record = { ...data, id: generateId("osic"), created_at: new Date().toISOString() } as OnlineSafetyIncident;
+      store.onlineSafetyIncidents.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<OnlineSafetyIncident>): OnlineSafetyIncident | null => {
+      const idx = store.onlineSafetyIncidents.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.onlineSafetyIncidents[idx] = { ...store.onlineSafetyIncidents[idx], ...data };
+      return store.onlineSafetyIncidents[idx];
+    },
+  },
+
+  onlineSafetyAgreements: {
+    findAll: (): OnlineSafetyAgreement[] => store.onlineSafetyAgreements,
+    findByChild: (childId: string): OnlineSafetyAgreement[] => store.onlineSafetyAgreements.filter((r) => r.child_id === childId),
+    findById: (id: string): OnlineSafetyAgreement | undefined => store.onlineSafetyAgreements.find((r) => r.id === id),
+    create: (data: Partial<OnlineSafetyAgreement>): OnlineSafetyAgreement => {
+      const record = { ...data, id: generateId("osag"), created_at: new Date().toISOString() } as OnlineSafetyAgreement;
+      store.onlineSafetyAgreements.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<OnlineSafetyAgreement>): OnlineSafetyAgreement | null => {
+      const idx = store.onlineSafetyAgreements.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.onlineSafetyAgreements[idx] = { ...store.onlineSafetyAgreements[idx], ...data };
+      return store.onlineSafetyAgreements[idx];
+    },
+  },
+
+  operationalMeetings: {
+    findAll: (): OperationalMeeting[] => store.operationalMeetings,
+    findById: (id: string): OperationalMeeting | undefined => store.operationalMeetings.find((r) => r.id === id),
+    create: (data: Partial<OperationalMeeting>): OperationalMeeting => {
+      const record = { ...data, id: generateId("opmg"), created_at: new Date().toISOString() } as OperationalMeeting;
+      store.operationalMeetings.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<OperationalMeeting>): OperationalMeeting | null => {
+      const idx = store.operationalMeetings.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.operationalMeetings[idx] = { ...store.operationalMeetings[idx], ...data };
+      return store.operationalMeetings[idx];
+    },
+  },
+
+  opticiansRecords: {
+    findAll: (): OpticiansRecord[] => store.opticiansRecords,
+    findByChild: (childId: string): OpticiansRecord[] => store.opticiansRecords.filter((r) => r.child_id === childId),
+    findById: (id: string): OpticiansRecord | undefined => store.opticiansRecords.find((r) => r.id === id),
+    create: (data: Partial<OpticiansRecord>): OpticiansRecord => {
+      const record = { ...data, id: generateId("oprc"), created_at: new Date().toISOString() } as OpticiansRecord;
+      store.opticiansRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<OpticiansRecord>): OpticiansRecord | null => {
+      const idx = store.opticiansRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.opticiansRecords[idx] = { ...store.opticiansRecords[idx], ...data };
+      return store.opticiansRecords[idx];
     },
   },
 };
