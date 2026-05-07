@@ -17127,3 +17127,217 @@ export interface PlacementStabilityMeeting {
   notes: string;
   created_at: string;
 }
+
+// ══════════════════════════════════════════════════════════════════════════════
+// BATCH 48 — placement-success-factors, pocket-money, pocket-money-accounts,
+//            policies, policy-impact-analysis, policy-review-tracker
+// ══════════════════════════════════════════════════════════════════════════════
+
+// ── Placement Success Factors (HOME-level) ──────────────────────────────────
+
+export type SuccessFactorDomain = "relational" | "practice" | "multi_agency" | "environment" | "family" | "education" | "therapeutic" | "independence";
+export const SUCCESS_FACTOR_DOMAIN_LABEL: Record<SuccessFactorDomain, string> = {
+  relational: "Relational", practice: "Practice", multi_agency: "Multi-agency", environment: "Environment",
+  family: "Family", education: "Education", therapeutic: "Therapeutic", independence: "Independence",
+};
+
+export type EvidenceStrength = "strong" | "moderate" | "emerging";
+export const EVIDENCE_STRENGTH_LABEL: Record<EvidenceStrength, string> = {
+  strong: "Strong", moderate: "Moderate", emerging: "Emerging",
+};
+
+export type ImplementationStatus = "standard_practice" | "emerging_practice" | "identified_gap";
+export const IMPLEMENTATION_STATUS_LABEL: Record<ImplementationStatus, string> = {
+  standard_practice: "Standard practice", emerging_practice: "Emerging practice", identified_gap: "Identified gap",
+};
+
+export interface SuccessFactor {
+  id: string;
+  factor: string;
+  domain: SuccessFactorDomain;
+  evidence_strength: EvidenceStrength;
+  supporting_cases: string[];
+  counter_cases: string[];
+  key_mechanisms: string[];
+  conditions_for_success: string[];
+  recommended_actions: string[];
+  evidence_sources: string[];
+  child_voice_on_factor: string;
+  staff_perspective: string;
+  implementation_status: ImplementationStatus;
+  review_date: string;
+  reviewed_by: string;
+}
+
+// ── Pocket Money Transactions (CHILD-level) ─────────────────────────────────
+
+export type PocketMoneyTransactionType = "allowance" | "spending" | "savings_deposit" | "savings_withdrawal" | "gift" | "earnings" | "refund";
+export const POCKET_MONEY_TRANSACTION_TYPE_LABEL: Record<PocketMoneyTransactionType, string> = {
+  allowance: "Allowance", spending: "Spending", savings_deposit: "Savings In",
+  savings_withdrawal: "Savings Out", gift: "Gift", earnings: "Earnings", refund: "Refund",
+};
+
+export interface PocketMoneyTransaction {
+  id: string;
+  child_id: string;
+  date: string;
+  type: PocketMoneyTransactionType;
+  amount: number;
+  description: string;
+  category: string;
+  receipt_held: boolean;
+  approved_by: string;
+  notes: string | null;
+  created_at: string;
+}
+
+// ── Pocket Money Accounts (CHILD-level) ─────────────────────────────────────
+
+export type PocketMoneyAccountTxType = "credit" | "debit";
+export const POCKET_MONEY_ACCOUNT_TX_TYPE_LABEL: Record<PocketMoneyAccountTxType, string> = {
+  credit: "Credit", debit: "Debit",
+};
+
+export type PocketMoneyAccountCategory = "weekly_allowance" | "birthday_gift" | "savings_transfer" | "chore_bonus" | "purchase_shop" | "purchase_online" | "activity_cost" | "lost" | "adjustment";
+export const POCKET_MONEY_ACCOUNT_CATEGORY_LABEL: Record<PocketMoneyAccountCategory, string> = {
+  weekly_allowance: "Weekly Allowance", birthday_gift: "Birthday Gift", savings_transfer: "Savings Transfer",
+  chore_bonus: "Chore Bonus", purchase_shop: "Shop Purchase", purchase_online: "Online Purchase",
+  activity_cost: "Activity Cost", lost: "Lost", adjustment: "Adjustment",
+};
+
+export interface PocketMoneyAccount {
+  id: string;
+  date: string;
+  child_id: string;
+  transaction_type: PocketMoneyAccountTxType;
+  category: PocketMoneyAccountCategory;
+  amount: number;
+  running_balance: number;
+  description: string;
+  receipt_ref: string;
+  authorised_by: string;
+  witnessed_by: string | null;
+  notes: string;
+}
+
+// ── Home Policies (HOME-level) ──────────────────────────────────────────────
+
+export type HomePolicyCategory = "safeguarding" | "care_practice" | "health_safety" | "workforce" | "behaviour" | "complaints" | "data_protection" | "admissions" | "missing_persons" | "medication" | "fire_safety" | "lone_working" | "whistleblowing";
+export const HOME_POLICY_CATEGORY_LABEL: Record<HomePolicyCategory, string> = {
+  safeguarding: "Safeguarding", care_practice: "Care Practice", health_safety: "Health & Safety",
+  workforce: "Workforce", behaviour: "Behaviour Support", complaints: "Complaints",
+  data_protection: "Data Protection", admissions: "Admissions", missing_persons: "Missing Persons",
+  medication: "Medication", fire_safety: "Fire Safety", lone_working: "Lone Working",
+  whistleblowing: "Whistleblowing",
+};
+
+export type HomePolicyStatus = "current" | "due_review" | "overdue" | "draft" | "archived";
+export const HOME_POLICY_STATUS_LABEL: Record<HomePolicyStatus, string> = {
+  current: "Current", due_review: "Due Review", overdue: "Overdue", draft: "Draft", archived: "Archived",
+};
+
+export interface HomePolicyReadAck {
+  staff_id: string;
+  read_at: string;
+  acknowledged: boolean;
+}
+
+export interface HomePolicy {
+  id: string;
+  title: string;
+  category: HomePolicyCategory;
+  description: string;
+  version: string;
+  status: HomePolicyStatus;
+  owner_id: string;
+  approved_by: string | null;
+  approved_date: string | null;
+  effective_date: string;
+  next_review_date: string;
+  last_reviewed: string | null;
+  statutory_basis: string;
+  linked_standard: string;
+  key_points: string[];
+  read_acknowledgements: HomePolicyReadAck[];
+  total_staff_required: number;
+  created_at: string;
+  updated_at: string;
+}
+
+// ── Policy Impact Analysis (HOME-level) ─────────────────────────────────────
+
+export type PolicyImpactArea = "safeguarding" | "behaviour" | "voice_and_participation" | "health" | "education" | "privacy" | "cultural" | "workforce" | "recording" | "risk";
+export const POLICY_IMPACT_AREA_LABEL: Record<PolicyImpactArea, string> = {
+  safeguarding: "Safeguarding", behaviour: "Behaviour", voice_and_participation: "Voice & Participation",
+  health: "Health", education: "Education", privacy: "Privacy", cultural: "Cultural",
+  workforce: "Workforce", recording: "Recording", risk: "Risk",
+};
+
+export type PolicyChangeType = "new_policy" | "major_revision" | "minor_amendment" | "practice_clarification" | "withdrawn";
+export const POLICY_CHANGE_TYPE_LABEL: Record<PolicyChangeType, string> = {
+  new_policy: "New policy", major_revision: "Major revision", minor_amendment: "Minor amendment",
+  practice_clarification: "Practice clarification", withdrawn: "Withdrawn",
+};
+
+export type PolicyReviewVerdict = "working_as_intended" | "mostly_working" | "needs_amendment" | "withdrawn_replaced";
+export const POLICY_REVIEW_VERDICT_LABEL: Record<PolicyReviewVerdict, string> = {
+  working_as_intended: "Working as intended", mostly_working: "Mostly working",
+  needs_amendment: "Needs amendment", withdrawn_replaced: "Withdrawn / replaced",
+};
+
+export interface PolicyImpactAnalysis {
+  id: string;
+  policy_name: string;
+  policy_version: string;
+  change_date: string;
+  change_reason: string;
+  policy_area: PolicyImpactArea;
+  change_type: PolicyChangeType;
+  what_changed: string[];
+  impacted_children: string[];
+  child_involvement_in_change: string;
+  child_friendly_version_updated: boolean;
+  child_friendly_update_date: string;
+  expected_impact_positive: string[];
+  expected_impact_risks: string[];
+  staff_training_delivered: boolean;
+  staff_training_date: string;
+  staff_training_format: string;
+  children_informed_date: string;
+  children_informed_format: string;
+  outcomes_observed_at_30d: string;
+  outcomes_observed_at_90d: string;
+  outcomes_observed_at_180d: string;
+  unintended_consequences: string[];
+  child_feedback_post_change: string[];
+  review_verdict: PolicyReviewVerdict;
+  review_date: string;
+  reviewed_by: string;
+}
+
+// ── Policy Review Tracker (HOME-level) ──────────────────────────────────────
+
+export type PolicyReviewCycle = "annual" | "six_monthly" | "two_yearly";
+export const POLICY_REVIEW_CYCLE_LABEL: Record<PolicyReviewCycle, string> = {
+  annual: "Annual", six_monthly: "6-Monthly", two_yearly: "2-Yearly",
+};
+
+export type PolicyReviewStatus = "current" | "due_soon" | "overdue";
+export const POLICY_REVIEW_STATUS_LABEL: Record<PolicyReviewStatus, string> = {
+  current: "Current", due_soon: "Due Soon", overdue: "Overdue",
+};
+
+export interface PolicyReviewRecord {
+  id: string;
+  title: string;
+  owner: string;
+  last_review_date: string;
+  next_review_date: string;
+  version: string;
+  review_cycle: PolicyReviewCycle;
+  status: PolicyReviewStatus;
+  staff_signed: number;
+  staff_total: number;
+  changes: string;
+  approved_by: string;
+}

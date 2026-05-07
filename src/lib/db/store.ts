@@ -273,6 +273,12 @@ import type {
   PlacementObjective,
   PlacementStabilityRecord,
   PlacementStabilityMeeting,
+  SuccessFactor,
+  PocketMoneyTransaction,
+  PocketMoneyAccount,
+  HomePolicy,
+  PolicyImpactAnalysis,
+  PolicyReviewRecord,
 } from "@/types/extended";
 import { generateId, todayStr, daysFromNow } from "@/lib/utils";
 
@@ -629,6 +635,12 @@ const store = {
   placementObjectives: [] as PlacementObjective[],
   placementStabilityRecords: [] as PlacementStabilityRecord[],
   placementStabilityMeetings: [] as PlacementStabilityMeeting[],
+  successFactors: [] as SuccessFactor[],
+  pocketMoneyTransactions: [] as PocketMoneyTransaction[],
+  pocketMoneyAccounts: [] as PocketMoneyAccount[],
+  homePolicies: [] as HomePolicy[],
+  policyImpactAnalyses: [] as PolicyImpactAnalysis[],
+  policyReviewRecords: [] as PolicyReviewRecord[],
   // Shift Swap Requests
   shiftSwaps: [
     {
@@ -8310,6 +8322,96 @@ export const db = {
       if (idx === -1) return null;
       store.placementStabilityMeetings[idx] = { ...store.placementStabilityMeetings[idx], ...data };
       return store.placementStabilityMeetings[idx];
+    },
+  },
+  successFactors: {
+    getAll: () => store.successFactors,
+    create: (data: Partial<SuccessFactor>) => {
+      const record = { ...data, id: `psf_${Date.now()}` } as SuccessFactor;
+      store.successFactors.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<SuccessFactor>) => {
+      const idx = store.successFactors.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.successFactors[idx] = { ...store.successFactors[idx], ...data };
+      return store.successFactors[idx];
+    },
+  },
+  pocketMoneyTransactions: {
+    getAll: (childId?: string) => {
+      if (childId) return store.pocketMoneyTransactions.filter((r) => r.child_id === childId);
+      return store.pocketMoneyTransactions;
+    },
+    create: (data: Partial<PocketMoneyTransaction>) => {
+      const record = { ...data, id: `pm_${Date.now()}`, created_at: new Date().toISOString() } as PocketMoneyTransaction;
+      store.pocketMoneyTransactions.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<PocketMoneyTransaction>) => {
+      const idx = store.pocketMoneyTransactions.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.pocketMoneyTransactions[idx] = { ...store.pocketMoneyTransactions[idx], ...data };
+      return store.pocketMoneyTransactions[idx];
+    },
+  },
+  pocketMoneyAccounts: {
+    getAll: (childId?: string) => {
+      if (childId) return store.pocketMoneyAccounts.filter((r) => r.child_id === childId);
+      return store.pocketMoneyAccounts;
+    },
+    create: (data: Partial<PocketMoneyAccount>) => {
+      const record = { ...data, id: `pma_${Date.now()}` } as PocketMoneyAccount;
+      store.pocketMoneyAccounts.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<PocketMoneyAccount>) => {
+      const idx = store.pocketMoneyAccounts.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.pocketMoneyAccounts[idx] = { ...store.pocketMoneyAccounts[idx], ...data };
+      return store.pocketMoneyAccounts[idx];
+    },
+  },
+  homePolicies: {
+    getAll: () => store.homePolicies,
+    create: (data: Partial<HomePolicy>) => {
+      const record = { ...data, id: `hpol_${Date.now()}`, created_at: new Date().toISOString(), updated_at: new Date().toISOString() } as HomePolicy;
+      store.homePolicies.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<HomePolicy>) => {
+      const idx = store.homePolicies.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.homePolicies[idx] = { ...store.homePolicies[idx], ...data, updated_at: new Date().toISOString() };
+      return store.homePolicies[idx];
+    },
+  },
+  policyImpactAnalyses: {
+    getAll: () => store.policyImpactAnalyses,
+    create: (data: Partial<PolicyImpactAnalysis>) => {
+      const record = { ...data, id: `pia_${Date.now()}` } as PolicyImpactAnalysis;
+      store.policyImpactAnalyses.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<PolicyImpactAnalysis>) => {
+      const idx = store.policyImpactAnalyses.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.policyImpactAnalyses[idx] = { ...store.policyImpactAnalyses[idx], ...data };
+      return store.policyImpactAnalyses[idx];
+    },
+  },
+  policyReviewRecords: {
+    getAll: () => store.policyReviewRecords,
+    create: (data: Partial<PolicyReviewRecord>) => {
+      const record = { ...data, id: `prr_${Date.now()}` } as PolicyReviewRecord;
+      store.policyReviewRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<PolicyReviewRecord>) => {
+      const idx = store.policyReviewRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.policyReviewRecords[idx] = { ...store.policyReviewRecords[idx], ...data };
+      return store.policyReviewRecords[idx];
     },
   },
 };
