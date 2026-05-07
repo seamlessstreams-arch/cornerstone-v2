@@ -267,6 +267,12 @@ import type {
   PlacementBudgetTracker,
   CohortAnalysis,
   DisruptionPreventionPlan,
+  PlacementEndSummary,
+  PlacementImpactAssessment,
+  PlacementMeeting,
+  PlacementObjective,
+  PlacementStabilityRecord,
+  PlacementStabilityMeeting,
 } from "@/types/extended";
 import { generateId, todayStr, daysFromNow } from "@/lib/utils";
 
@@ -617,6 +623,12 @@ const store = {
   placementBudgetTrackers: [] as PlacementBudgetTracker[],
   cohortAnalyses: [] as CohortAnalysis[],
   disruptionPreventionPlans: [] as DisruptionPreventionPlan[],
+  placementEndSummaries: [] as PlacementEndSummary[],
+  placementImpactAssessments: [] as PlacementImpactAssessment[],
+  placementMeetings: [] as PlacementMeeting[],
+  placementObjectives: [] as PlacementObjective[],
+  placementStabilityRecords: [] as PlacementStabilityRecord[],
+  placementStabilityMeetings: [] as PlacementStabilityMeeting[],
   // Shift Swap Requests
   shiftSwaps: [
     {
@@ -8202,6 +8214,102 @@ export const db = {
       if (idx === -1) return null;
       store.disruptionPreventionPlans[idx] = { ...store.disruptionPreventionPlans[idx], ...data };
       return store.disruptionPreventionPlans[idx];
+    },
+  },
+  placementEndSummaries: {
+    getAll: () => store.placementEndSummaries,
+    create: (data: Partial<PlacementEndSummary>) => {
+      const record = { ...data, id: `pend_${Date.now()}`, created_at: new Date().toISOString() } as PlacementEndSummary;
+      store.placementEndSummaries.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<PlacementEndSummary>) => {
+      const idx = store.placementEndSummaries.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.placementEndSummaries[idx] = { ...store.placementEndSummaries[idx], ...data };
+      return store.placementEndSummaries[idx];
+    },
+  },
+  placementImpactAssessments: {
+    getAll: () => store.placementImpactAssessments,
+    create: (data: Partial<PlacementImpactAssessment>) => {
+      const record = { ...data, id: `pias_${Date.now()}`, created_at: new Date().toISOString() } as PlacementImpactAssessment;
+      store.placementImpactAssessments.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<PlacementImpactAssessment>) => {
+      const idx = store.placementImpactAssessments.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.placementImpactAssessments[idx] = { ...store.placementImpactAssessments[idx], ...data };
+      return store.placementImpactAssessments[idx];
+    },
+  },
+  placementMeetings: {
+    getAll: (childId?: string) => {
+      if (childId) return store.placementMeetings.filter((r) => r.child_id === childId);
+      return store.placementMeetings;
+    },
+    create: (data: Partial<PlacementMeeting>) => {
+      const record = { ...data, id: `pmtg_${Date.now()}`, created_at: new Date().toISOString() } as PlacementMeeting;
+      store.placementMeetings.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<PlacementMeeting>) => {
+      const idx = store.placementMeetings.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.placementMeetings[idx] = { ...store.placementMeetings[idx], ...data };
+      return store.placementMeetings[idx];
+    },
+  },
+  placementObjectives: {
+    getAll: (childId?: string) => {
+      if (childId) return store.placementObjectives.filter((r) => r.child_id === childId);
+      return store.placementObjectives;
+    },
+    create: (data: Partial<PlacementObjective>) => {
+      const record = { ...data, id: `pobj_${Date.now()}`, created_at: new Date().toISOString() } as PlacementObjective;
+      store.placementObjectives.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<PlacementObjective>) => {
+      const idx = store.placementObjectives.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.placementObjectives[idx] = { ...store.placementObjectives[idx], ...data };
+      return store.placementObjectives[idx];
+    },
+  },
+  placementStabilityRecords: {
+    getAll: (childId?: string) => {
+      if (childId) return store.placementStabilityRecords.filter((r) => r.child_id === childId);
+      return store.placementStabilityRecords;
+    },
+    create: (data: Partial<PlacementStabilityRecord>) => {
+      const record = { ...data, id: `psrc_${Date.now()}`, created_at: new Date().toISOString() } as PlacementStabilityRecord;
+      store.placementStabilityRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<PlacementStabilityRecord>) => {
+      const idx = store.placementStabilityRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.placementStabilityRecords[idx] = { ...store.placementStabilityRecords[idx], ...data };
+      return store.placementStabilityRecords[idx];
+    },
+  },
+  placementStabilityMeetings: {
+    getAll: (childId?: string) => {
+      if (childId) return store.placementStabilityMeetings.filter((r) => r.child_id === childId);
+      return store.placementStabilityMeetings;
+    },
+    create: (data: Partial<PlacementStabilityMeeting>) => {
+      const record = { ...data, id: `psmg_${Date.now()}`, created_at: new Date().toISOString() } as PlacementStabilityMeeting;
+      store.placementStabilityMeetings.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<PlacementStabilityMeeting>) => {
+      const idx = store.placementStabilityMeetings.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.placementStabilityMeetings[idx] = { ...store.placementStabilityMeetings[idx], ...data };
+      return store.placementStabilityMeetings[idx];
     },
   },
 };

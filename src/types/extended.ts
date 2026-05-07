@@ -16800,3 +16800,330 @@ export interface DisruptionPreventionPlan {
   interventions_deployed_history: DisruptionInterventionHistory[];
   created_at: string;
 }
+
+// ── Placement End Summary (HOME-level) ─────────────────────────────────────
+
+export type PlacementEndReason =
+  | "planned_move_home"
+  | "planned_step_down"
+  | "planned_move_on_16_plus"
+  | "adoption"
+  | "family_reunification"
+  | "placement_disruption"
+  | "age_out"
+  | "long_term_foster";
+
+export const PLACEMENT_END_REASON_LABEL: Record<PlacementEndReason, string> = {
+  planned_move_home: "Planned Move Home",
+  planned_step_down: "Planned Step-Down",
+  planned_move_on_16_plus: "Planned Move-On (16+)",
+  adoption: "Adoption",
+  family_reunification: "Family Reunification",
+  placement_disruption: "Placement Disruption",
+  age_out: "Age Out",
+  long_term_foster: "Long-term Foster",
+};
+
+export interface PlacementOutcomeDomain {
+  rating: number;
+  summary: string;
+}
+
+export interface PlacementEndOutcomes {
+  health: PlacementOutcomeDomain;
+  education: PlacementOutcomeDomain;
+  relationships: PlacementOutcomeDomain;
+  emotional: PlacementOutcomeDomain;
+  independence: PlacementOutcomeDomain;
+}
+
+export interface PlacementEndSummary {
+  id: string;
+  child_name: string;
+  admission_date: string;
+  end_date: string;
+  duration_months: number;
+  end_reason: PlacementEndReason;
+  moved_to: string;
+  outcomes: PlacementEndOutcomes;
+  significant_achievements: string[];
+  ongoing_challenges: string[];
+  what_worked_well: string[];
+  what_could_have_been_better: string[];
+  child_reflection: string;
+  staff_reflection: string;
+  sw_reflection: string;
+  legacy_for_home: string;
+  contact_arrangements: string;
+  authored_by: string;
+  reviewed_by: string;
+  approval_date: string;
+  created_at: string;
+}
+
+// ── Placement Impact Assessment (HOME-level) ───────────────────────────────
+
+export type PlacementImpactStatus = "approved" | "declined" | "pending" | "approved_with_conditions";
+export const PLACEMENT_IMPACT_STATUS_LABEL: Record<PlacementImpactStatus, string> = {
+  approved: "Approved",
+  declined: "Declined",
+  pending: "Pending",
+  approved_with_conditions: "Approved (Conditions)",
+};
+
+export type ImpactRiskLevel = "low" | "medium" | "high";
+export const IMPACT_RISK_LEVEL_LABEL: Record<ImpactRiskLevel, string> = {
+  low: "Low", medium: "Medium", high: "High",
+};
+
+export type CompatibilityRating = "positive" | "neutral" | "concern";
+export const COMPATIBILITY_RATING_LABEL: Record<CompatibilityRating, string> = {
+  positive: "Positive", neutral: "Neutral", concern: "Concern",
+};
+
+export interface ImpactOnChildAssessment {
+  child_id: string;
+  risk_level: ImpactRiskLevel;
+  considerations: string[];
+  mitigations: string[];
+  child_view: string | null;
+}
+
+export interface CompatibilityFactor {
+  factor: string;
+  rating: CompatibilityRating;
+}
+
+export interface PlacementImpactAssessment {
+  id: string;
+  referral_name: string;
+  referral_age: number;
+  referral_gender: string;
+  referral_la: string;
+  assessed_by: string;
+  assessment_date: string;
+  status: PlacementImpactStatus;
+  overall_risk: ImpactRiskLevel;
+  decision: string;
+  decision_rationale: string;
+  impact_on_existing: ImpactOnChildAssessment[];
+  compatibility_factors: CompatibilityFactor[];
+  staffing_implications: string[];
+  environmental_considerations: string[];
+  safeguarding_considerations: string[];
+  conditions: string[];
+  review_date: string | null;
+  notes: string;
+  created_at: string;
+}
+
+// ── Placement Meeting Minutes (CHILD-level) ────────────────────────────────
+
+export type PlacementMeetingType =
+  | "weekly_review"
+  | "monthly_review"
+  | "crisis_meeting"
+  | "pre_placement_plan"
+  | "pre_lac_prep"
+  | "multi_agency_update"
+  | "transition_planning";
+
+export const PLACEMENT_MEETING_TYPE_LABEL: Record<PlacementMeetingType, string> = {
+  weekly_review: "Weekly Review",
+  monthly_review: "Monthly Review",
+  crisis_meeting: "Crisis Meeting",
+  pre_placement_plan: "Pre-Placement Plan",
+  pre_lac_prep: "Pre-LAC Prep",
+  multi_agency_update: "Multi-Agency Update",
+  transition_planning: "Transition Planning",
+};
+
+export type PlacementMeetingActionStatus = "open" | "in_progress" | "done";
+export const PLACEMENT_MEETING_ACTION_STATUS_LABEL: Record<PlacementMeetingActionStatus, string> = {
+  open: "Open", in_progress: "In Progress", done: "Done",
+};
+
+export interface PlacementMeetingAction {
+  action: string;
+  owner: string;
+  deadline: string;
+  status: PlacementMeetingActionStatus;
+}
+
+export interface PlacementMeeting {
+  id: string;
+  child_id: string;
+  meeting_type: PlacementMeetingType;
+  date: string;
+  duration_minutes: number;
+  chair: string;
+  attendees: string[];
+  external_attendees: string[];
+  child_attended: boolean;
+  child_contribution: string;
+  agenda: string[];
+  progress_since_last: string[];
+  current_concerns: string[];
+  emerging_themes: string[];
+  decisions_agreed: string[];
+  actions: PlacementMeetingAction[];
+  risk_updates: string;
+  care_plan_reviewed: boolean;
+  next_meeting: string;
+  minuted_by: string;
+  approved_by: string;
+  created_at: string;
+}
+
+// ── Placement Objectives / Plan (CHILD-level) ──────────────────────────────
+
+export type ObjectiveArea =
+  | "health"
+  | "education"
+  | "emotional_wellbeing"
+  | "identity"
+  | "family_social"
+  | "social_presentation"
+  | "self_care"
+  | "stability";
+
+export const OBJECTIVE_AREA_LABEL: Record<ObjectiveArea, string> = {
+  health: "Health",
+  education: "Education",
+  emotional_wellbeing: "Emotional Wellbeing",
+  identity: "Identity",
+  family_social: "Family & Social",
+  social_presentation: "Social Presentation",
+  self_care: "Self-Care Skills",
+  stability: "Placement Stability",
+};
+
+export type PlacementObjectiveStatus =
+  | "on_track"
+  | "some_progress"
+  | "no_progress"
+  | "achieved"
+  | "not_started"
+  | "at_risk";
+
+export const PLACEMENT_OBJECTIVE_STATUS_LABEL: Record<PlacementObjectiveStatus, string> = {
+  on_track: "On Track",
+  some_progress: "Some Progress",
+  no_progress: "No Progress",
+  achieved: "Achieved",
+  not_started: "Not Started",
+  at_risk: "At Risk",
+};
+
+export interface PlacementObjective {
+  id: string;
+  child_id: string;
+  area: ObjectiveArea;
+  title: string;
+  description: string;
+  target: string;
+  current_status: PlacementObjectiveStatus;
+  responsible: string;
+  start_date: string;
+  review_date: string;
+  progress_notes: string;
+  last_updated: string;
+  created_at: string;
+}
+
+// ── Placement Stability Record (CHILD-level) ───────────────────────────────
+
+export type StabilityRiskLevel = "low" | "medium" | "high" | "critical";
+export const STABILITY_RISK_LEVEL_LABEL: Record<StabilityRiskLevel, string> = {
+  low: "Low", medium: "Medium", high: "High", critical: "Critical",
+};
+
+export type StabilityTrend = "improving" | "stable" | "declining";
+export const STABILITY_TREND_LABEL: Record<StabilityTrend, string> = {
+  improving: "Improving", stable: "Stable", declining: "Declining",
+};
+
+export type StabilityFactorStatus = "positive" | "concern" | "risk";
+export const STABILITY_FACTOR_STATUS_LABEL: Record<StabilityFactorStatus, string> = {
+  positive: "Positive", concern: "Concern", risk: "Risk",
+};
+
+export type PlacementEventImpact = "positive" | "neutral" | "negative";
+export const PLACEMENT_EVENT_IMPACT_LABEL: Record<PlacementEventImpact, string> = {
+  positive: "Positive", neutral: "Neutral", negative: "Negative",
+};
+
+export interface StabilityFactor {
+  factor: string;
+  status: StabilityFactorStatus;
+  detail: string;
+}
+
+export interface PlacementEvent {
+  date: string;
+  event: string;
+  impact: PlacementEventImpact;
+  response: string;
+}
+
+export interface PlacementStabilityRecord {
+  id: string;
+  child_id: string;
+  placement_start_date: string;
+  days_in_placement: number;
+  previous_placements: number;
+  stability_risk: StabilityRiskLevel;
+  trend: StabilityTrend;
+  key_worker: string;
+  social_worker: string;
+  last_review: string;
+  next_review: string;
+  factors: StabilityFactor[];
+  recent_events: PlacementEvent[];
+  strengths: string[];
+  concerns: string[];
+  action_plan: string;
+  notes: string;
+  created_at: string;
+}
+
+// ── Placement Stability Meeting (CHILD-level) ──────────────────────────────
+
+export type StabilityMeetingStatus = "placement_stable" | "at_risk" | "stabilised" | "ended";
+export const STABILITY_MEETING_STATUS_LABEL: Record<StabilityMeetingStatus, string> = {
+  placement_stable: "Stable",
+  at_risk: "At Risk",
+  stabilised: "Stabilised",
+  ended: "Ended",
+};
+
+export type StabilityMeetingRiskLevel = "high" | "medium" | "low";
+export const STABILITY_MEETING_RISK_LEVEL_LABEL: Record<StabilityMeetingRiskLevel, string> = {
+  high: "High", medium: "Medium", low: "Low",
+};
+
+export interface StabilityMeetingAgreement {
+  agreement: string;
+  owner: string;
+  deadline: string;
+  status: string;
+}
+
+export interface PlacementStabilityMeeting {
+  id: string;
+  child_id: string;
+  meeting_date: string;
+  chairperson: string;
+  attendees: string[];
+  trigger: string;
+  risk_level: StabilityMeetingRiskLevel;
+  status: StabilityMeetingStatus;
+  concerns: string[];
+  strengths: string[];
+  child_view: string;
+  agreements_reached: StabilityMeetingAgreement[];
+  outcome: string;
+  review_date: string | null;
+  notes: string;
+  created_at: string;
+}
