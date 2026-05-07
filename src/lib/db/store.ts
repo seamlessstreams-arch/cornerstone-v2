@@ -244,6 +244,8 @@ import type {
   KitchenHygieneCheck, KpiEntry, LacReviewPrep,
   LadoReferral, CommunicationProfile, LeavingCarePackage,
   LessonLearned, LgbtqInclusionRecord, LifeStoryEntry,
+  LocalityRisk, LoneWorkingRecord, LoneWorkingRiskAssessment,
+  MaintenanceScheduleItem, ManagementWalkround, TrainingMatrixRow,
 } from "@/types/extended";
 import { generateId, todayStr, daysFromNow } from "@/lib/utils";
 
@@ -538,6 +540,12 @@ const store = {
   lessonsLearned: [] as LessonLearned[],
   lgbtqInclusionRecords: [] as LgbtqInclusionRecord[],
   lifeStoryEntries: [] as LifeStoryEntry[],
+  localityRisks: [] as LocalityRisk[],
+  loneWorkingRecords: [] as LoneWorkingRecord[],
+  loneWorkingRiskAssessments: [] as LoneWorkingRiskAssessment[],
+  maintenanceScheduleItems: [] as MaintenanceScheduleItem[],
+  managementWalkrounds: [] as ManagementWalkround[],
+  trainingMatrixRows: [] as TrainingMatrixRow[],
   // Shift Swap Requests
   shiftSwaps: [
     {
@@ -7190,6 +7198,102 @@ export const db = {
       if (idx === -1) return null;
       store.lifeStoryEntries[idx] = { ...store.lifeStoryEntries[idx], ...data };
       return store.lifeStoryEntries[idx];
+    },
+  },
+
+  localityRisks: {
+    findAll: (): LocalityRisk[] => store.localityRisks,
+    findById: (id: string): LocalityRisk | undefined => store.localityRisks.find((r) => r.id === id),
+    create: (data: Partial<LocalityRisk>): LocalityRisk => {
+      const record = { ...data, id: generateId("lrsk"), created_at: new Date().toISOString() } as LocalityRisk;
+      store.localityRisks.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<LocalityRisk>): LocalityRisk | null => {
+      const idx = store.localityRisks.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.localityRisks[idx] = { ...store.localityRisks[idx], ...data };
+      return store.localityRisks[idx];
+    },
+  },
+
+  loneWorkingRecords: {
+    findAll: (): LoneWorkingRecord[] => store.loneWorkingRecords,
+    findById: (id: string): LoneWorkingRecord | undefined => store.loneWorkingRecords.find((r) => r.id === id),
+    create: (data: Partial<LoneWorkingRecord>): LoneWorkingRecord => {
+      const record = { ...data, id: generateId("lwrk"), created_at: new Date().toISOString() } as LoneWorkingRecord;
+      store.loneWorkingRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<LoneWorkingRecord>): LoneWorkingRecord | null => {
+      const idx = store.loneWorkingRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.loneWorkingRecords[idx] = { ...store.loneWorkingRecords[idx], ...data };
+      return store.loneWorkingRecords[idx];
+    },
+  },
+
+  loneWorkingRiskAssessments: {
+    findAll: (): LoneWorkingRiskAssessment[] => store.loneWorkingRiskAssessments,
+    findById: (id: string): LoneWorkingRiskAssessment | undefined => store.loneWorkingRiskAssessments.find((r) => r.id === id),
+    create: (data: Partial<LoneWorkingRiskAssessment>): LoneWorkingRiskAssessment => {
+      const record = { ...data, id: generateId("lwra"), created_at: new Date().toISOString() } as LoneWorkingRiskAssessment;
+      store.loneWorkingRiskAssessments.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<LoneWorkingRiskAssessment>): LoneWorkingRiskAssessment | null => {
+      const idx = store.loneWorkingRiskAssessments.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.loneWorkingRiskAssessments[idx] = { ...store.loneWorkingRiskAssessments[idx], ...data };
+      return store.loneWorkingRiskAssessments[idx];
+    },
+  },
+
+  maintenanceScheduleItems: {
+    findAll: (): MaintenanceScheduleItem[] => store.maintenanceScheduleItems,
+    findById: (id: string): MaintenanceScheduleItem | undefined => store.maintenanceScheduleItems.find((r) => r.id === id),
+    create: (data: Partial<MaintenanceScheduleItem>): MaintenanceScheduleItem => {
+      const record = { ...data, id: generateId("msit"), created_at: new Date().toISOString() } as MaintenanceScheduleItem;
+      store.maintenanceScheduleItems.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<MaintenanceScheduleItem>): MaintenanceScheduleItem | null => {
+      const idx = store.maintenanceScheduleItems.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.maintenanceScheduleItems[idx] = { ...store.maintenanceScheduleItems[idx], ...data };
+      return store.maintenanceScheduleItems[idx];
+    },
+  },
+
+  managementWalkrounds: {
+    findAll: (): ManagementWalkround[] => store.managementWalkrounds,
+    findById: (id: string): ManagementWalkround | undefined => store.managementWalkrounds.find((r) => r.id === id),
+    create: (data: Partial<ManagementWalkround>): ManagementWalkround => {
+      const record = { ...data, id: generateId("mwlk"), created_at: new Date().toISOString() } as ManagementWalkround;
+      store.managementWalkrounds.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<ManagementWalkround>): ManagementWalkround | null => {
+      const idx = store.managementWalkrounds.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.managementWalkrounds[idx] = { ...store.managementWalkrounds[idx], ...data };
+      return store.managementWalkrounds[idx];
+    },
+  },
+
+  trainingMatrixRows: {
+    findAll: (): TrainingMatrixRow[] => store.trainingMatrixRows,
+    findById: (id: string): TrainingMatrixRow | undefined => store.trainingMatrixRows.find((r) => r.id === id),
+    create: (data: Partial<TrainingMatrixRow>): TrainingMatrixRow => {
+      const record = { ...data, id: generateId("tmrw"), created_at: new Date().toISOString() } as TrainingMatrixRow;
+      store.trainingMatrixRows.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<TrainingMatrixRow>): TrainingMatrixRow | null => {
+      const idx = store.trainingMatrixRows.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.trainingMatrixRows[idx] = { ...store.trainingMatrixRows[idx], ...data };
+      return store.trainingMatrixRows[idx];
     },
   },
 };

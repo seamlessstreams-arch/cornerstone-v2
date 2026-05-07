@@ -14152,3 +14152,364 @@ export interface LifeStoryEntry {
   linked_to_book: boolean;
   created_at: string;
 }
+
+/* ── Batch 38 ──────────────────────────────────────────────────────────── */
+
+/* Locality Risk */
+export type LocalityRiskCategory =
+  | "county_lines" | "cse" | "trafficking" | "anti_social_behaviour"
+  | "drug_activity" | "gang_activity" | "road_safety" | "environmental"
+  | "community_tensions" | "online_risks" | "other";
+
+export const LOCALITY_RISK_CATEGORY_LABEL: Record<LocalityRiskCategory, string> = {
+  county_lines: "County Lines",
+  cse: "CSE Risk",
+  trafficking: "Trafficking",
+  anti_social_behaviour: "Anti-Social Behaviour",
+  drug_activity: "Drug Activity",
+  gang_activity: "Gang Activity",
+  road_safety: "Road Safety",
+  environmental: "Environmental",
+  community_tensions: "Community Tensions",
+  online_risks: "Online Risks",
+  other: "Other",
+};
+
+export type LocalityRiskLevel = "low" | "medium" | "high" | "critical";
+
+export const LOCALITY_RISK_LEVEL_LABEL: Record<LocalityRiskLevel, string> = {
+  low: "Low",
+  medium: "Medium",
+  high: "High",
+  critical: "Critical",
+};
+
+export type MitigationEffectiveness = "effective" | "partial" | "ineffective";
+
+export const MITIGATION_EFFECTIVENESS_LABEL: Record<MitigationEffectiveness, string> = {
+  effective: "Effective",
+  partial: "Partial",
+  ineffective: "Ineffective",
+};
+
+export interface LocalityMitigation {
+  measure: string;
+  effectiveness: MitigationEffectiveness;
+}
+
+export interface LocalityRisk {
+  id: string;
+  category: LocalityRiskCategory;
+  risk_level: LocalityRiskLevel;
+  location: string;
+  description: string;
+  intelligence: string;
+  mitigations: LocalityMitigation[];
+  last_reviewed: string;
+  reviewed_by: string;
+  next_review: string;
+  impact_on_yp: string;
+  notes: string;
+  created_at: string;
+}
+
+/* Lone Working */
+export type LoneWorkingScenario =
+  | "waking_night" | "sleep_in_cover" | "transport" | "community_outing"
+  | "office_admin" | "home_visit" | "on_call" | "building_check";
+
+export const LONE_WORKING_SCENARIO_LABEL: Record<LoneWorkingScenario, string> = {
+  waking_night: "Waking Night Shift",
+  sleep_in_cover: "Sleep-In (Cover Role)",
+  transport: "Transport / Driving",
+  community_outing: "Community Outing (1:1)",
+  office_admin: "Office / Admin (alone in office)",
+  home_visit: "Home Visit / Meeting Off-Site",
+  on_call: "On-Call Manager",
+  building_check: "Building / Premises Check",
+};
+
+export type LoneWorkingRiskLevel = "low" | "medium" | "high";
+
+export const LONE_WORKING_RISK_LEVEL_LABEL: Record<LoneWorkingRiskLevel, string> = {
+  low: "Low",
+  medium: "Medium",
+  high: "High",
+};
+
+export type LoneWorkingAssessmentStatus = "current" | "due_review" | "expired";
+
+export const LONE_WORKING_ASSESSMENT_STATUS_LABEL: Record<LoneWorkingAssessmentStatus, string> = {
+  current: "Current",
+  due_review: "Due Review",
+  expired: "Expired",
+};
+
+export interface LoneWorkingRecord {
+  id: string;
+  staff_id: string;
+  scenario: LoneWorkingScenario;
+  risk_level: LoneWorkingRiskLevel;
+  status: LoneWorkingAssessmentStatus;
+  assessment_date: string;
+  review_date: string;
+  assessed_by: string;
+  hazards: string[];
+  control_measures: string[];
+  check_in_protocol: string;
+  personal_alarm_issued: boolean;
+  emergency_procedure: string;
+  notes: string;
+  created_at: string;
+}
+
+/* Lone Working Risk Assessment (per-staff full assessment) */
+export type LWRAOverallRisk = "low" | "medium" | "high";
+
+export const LWRA_OVERALL_RISK_LABEL: Record<LWRAOverallRisk, string> = {
+  low: "Low",
+  medium: "Medium",
+  high: "High",
+};
+
+export interface LWRAScenario {
+  scenario: string;
+  risk: LWRAOverallRisk;
+  controls: string[];
+}
+
+export interface LWRATraining {
+  course: string;
+  date: string;
+  valid: boolean;
+}
+
+export type LWRAApprovedShift = "early" | "late" | "sleep_in" | "wake_night" | "weekend";
+
+export const LWRA_APPROVED_SHIFT_LABEL: Record<LWRAApprovedShift, string> = {
+  early: "Early",
+  late: "Late",
+  sleep_in: "Sleep-in",
+  wake_night: "Wake-night",
+  weekend: "Weekend",
+};
+
+export interface LoneWorkingRiskAssessment {
+  id: string;
+  staff_member: string;
+  role: string;
+  scenarios: LWRAScenario[];
+  competency_evidence: string[];
+  training_completed: LWRATraining[];
+  emergency_protocols: string[];
+  check_in_arrangements: string;
+  escalation_path: string[];
+  approved_activities: string[];
+  restricted_activities: string[];
+  approved_to_work_alone: boolean;
+  approved_shifts: LWRAApprovedShift[];
+  vehicle_approved: boolean;
+  community_visits_approved: boolean;
+  overall_risk_level: LWRAOverallRisk;
+  reviewed_date: string;
+  reviewed_by: string;
+  next_review_date: string;
+  individual_considerations: string;
+  staff_self_assessment: string;
+  created_at: string;
+}
+
+/* Maintenance Schedule */
+export type MaintenanceScheduleCategory =
+  | "heating_boilers" | "electrical" | "gas_safety" | "fire_safety"
+  | "water_hygiene" | "pest_control" | "roof_guttering" | "windows_doors"
+  | "external_grounds" | "plumbing" | "pat_testing" | "lifts_access";
+
+export const MAINTENANCE_SCHEDULE_CATEGORY_LABEL: Record<MaintenanceScheduleCategory, string> = {
+  heating_boilers: "Heating & boilers",
+  electrical: "Electrical",
+  gas_safety: "Gas safety",
+  fire_safety: "Fire safety",
+  water_hygiene: "Water hygiene",
+  pest_control: "Pest control",
+  roof_guttering: "Roof & guttering",
+  windows_doors: "Windows & doors",
+  external_grounds: "External grounds",
+  plumbing: "Plumbing",
+  pat_testing: "PAT testing",
+  lifts_access: "Lifts/access",
+};
+
+export type MaintenanceFrequency =
+  | "annual" | "six_monthly" | "quarterly" | "monthly" | "weekly" | "as_required";
+
+export const MAINTENANCE_FREQUENCY_LABEL: Record<MaintenanceFrequency, string> = {
+  annual: "Annual",
+  six_monthly: "6-monthly",
+  quarterly: "Quarterly",
+  monthly: "Monthly",
+  weekly: "Weekly",
+  as_required: "As required",
+};
+
+export type MaintenanceComplianceStatus = "in_date" | "due_now" | "overdue" | "booked";
+
+export const MAINTENANCE_COMPLIANCE_STATUS_LABEL: Record<MaintenanceComplianceStatus, string> = {
+  in_date: "In date",
+  due_now: "Due now",
+  overdue: "Overdue",
+  booked: "Booked",
+};
+
+export interface MaintenanceDefect {
+  date: string;
+  defect: string;
+  action: string;
+}
+
+export interface MaintenanceScheduleItem {
+  id: string;
+  item_name: string;
+  category: MaintenanceScheduleCategory;
+  regulatory_requirement: string;
+  frequency: MaintenanceFrequency;
+  contractor: string;
+  contractor_contact: string;
+  last_completed: string;
+  last_certificate_ref: string;
+  next_due: string;
+  compliance_status: MaintenanceComplianceStatus;
+  booked_date: string;
+  notes: string;
+  cost_annual: number;
+  responsible_owner: string;
+  defects_history: MaintenanceDefect[];
+  escalation_contact: string;
+  created_at: string;
+}
+
+/* Management Walkround */
+export type WalkroundType =
+  | "daily" | "weekly_themed" | "unannounced" | "pre_inspection_rehearsal" | "post_incident_review";
+
+export const WALKROUND_TYPE_LABEL: Record<WalkroundType, string> = {
+  daily: "Daily",
+  weekly_themed: "Weekly themed",
+  unannounced: "Unannounced",
+  pre_inspection_rehearsal: "Pre-inspection rehearsal",
+  post_incident_review: "Post-incident review",
+};
+
+export type EnvironmentalCheckStatus = "good" | "needs_attention" | "action_taken_in_moment";
+
+export const ENVIRONMENTAL_CHECK_STATUS_LABEL: Record<EnvironmentalCheckStatus, string> = {
+  good: "Good",
+  needs_attention: "Needs attention",
+  action_taken_in_moment: "Action taken in moment",
+};
+
+export interface WalkroundObservation {
+  area: string;
+  observation: string;
+  staff_or_child_or_thing: string;
+}
+
+export interface WalkroundImprovement {
+  area: string;
+  observation: string;
+  action_agreed: string;
+}
+
+export interface WalkroundChildInteraction {
+  child_initial: string;
+  observation: string;
+}
+
+export interface WalkroundStaffInteraction {
+  staff_member: string;
+  observation: string;
+}
+
+export interface WalkroundEnvironmentalCheck {
+  area: string;
+  status: EnvironmentalCheckStatus;
+}
+
+export interface WalkroundFollowUpAction {
+  action: string;
+  owner: string;
+  deadline: string;
+}
+
+export interface ManagementWalkround {
+  id: string;
+  date: string;
+  time: string;
+  manager: string;
+  walkround_type: WalkroundType;
+  duration_minutes: number;
+  areas_visited: string[];
+  observations_positive: WalkroundObservation[];
+  observations_for_improvement: WalkroundImprovement[];
+  child_interactions: WalkroundChildInteraction[];
+  staff_interactions: WalkroundStaffInteraction[];
+  environmental_checks: WalkroundEnvironmentalCheck[];
+  book_or_record_reviews: string[];
+  immediate_actions_taken: string[];
+  follow_up_actions_logged: WalkroundFollowUpAction[];
+  themes_emerging: string[];
+  positive_staff_practice_noted: string[];
+  follow_up_date: string;
+  created_at: string;
+}
+
+/* Mandatory Training Matrix */
+export type TrainingCourseCategory = "mandatory" | "role_specific" | "best_practice";
+
+export const TRAINING_COURSE_CATEGORY_LABEL: Record<TrainingCourseCategory, string> = {
+  mandatory: "Mandatory",
+  role_specific: "Role-specific",
+  best_practice: "Best practice",
+};
+
+export type TrainingCourseStatus = "valid" | "expiring_soon" | "expired" | "not_completed";
+
+export const TRAINING_COURSE_STATUS_LABEL: Record<TrainingCourseStatus, string> = {
+  valid: "Valid",
+  expiring_soon: "Expiring soon",
+  expired: "Expired",
+  not_completed: "Not completed",
+};
+
+export type TrainingOverallCompliance = "fully_compliant" | "action_required" | "non_compliant";
+
+export const TRAINING_OVERALL_COMPLIANCE_LABEL: Record<TrainingOverallCompliance, string> = {
+  fully_compliant: "Fully compliant",
+  action_required: "Action required",
+  non_compliant: "Non-compliant",
+};
+
+export interface TrainingStatusEntry {
+  course_name: string;
+  category: TrainingCourseCategory;
+  completed_date: string;
+  expiry_date: string;
+  validity_months: number;
+  status: TrainingCourseStatus;
+  provider: string;
+  certificate_on_file: boolean;
+}
+
+export interface TrainingMatrixRow {
+  id: string;
+  staff_id: string;
+  role: string;
+  training_statuses: TrainingStatusEntry[];
+  overall_compliance: TrainingOverallCompliance;
+  next_refresher_due: string;
+  total_courses: number;
+  valid_count: number;
+  expiring_count: number;
+  expired_count: number;
+  created_at: string;
+}
