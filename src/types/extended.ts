@@ -12741,3 +12741,338 @@ export interface FirstRelationshipRecord {
   key_worker: string;
   created_at: string;
 }
+
+/* ── Daily Risk Briefing ── */
+
+export type DailyRiskLevel = "low" | "medium" | "high";
+
+export const DAILY_RISK_LEVEL_LABEL: Record<DailyRiskLevel, string> = {
+  low: "Low",
+  medium: "Medium",
+  high: "High",
+};
+
+export type DailyAlertSeverity = "critical" | "warning" | "info";
+
+export const DAILY_ALERT_SEVERITY_LABEL: Record<DailyAlertSeverity, string> = {
+  critical: "Critical",
+  warning: "Warning",
+  info: "Info",
+};
+
+export interface ChildRiskEntry {
+  child_id: string;
+  risk_level: DailyRiskLevel;
+  alerts: string[];
+  medication: string;
+  key_info: string;
+  mood: string;
+  check_frequency_minutes: number;
+  check_frequency_reason: string;
+}
+
+export interface DailyAlert {
+  severity: DailyAlertSeverity;
+  message: string;
+}
+
+export interface DailyContact {
+  time: string;
+  what: string;
+  who: string;
+}
+
+export interface DailyRiskBriefing {
+  id: string;
+  date: string;
+  shift_type: "day" | "night";
+  shift_leader: string;
+  staff_on_shift: string[];
+  on_call: string;
+  child_risks: ChildRiskEntry[];
+  home_alerts: DailyAlert[];
+  key_contacts: DailyContact[];
+  created_at: string;
+}
+
+/* ── Equality & Diversity ── */
+
+export type EqualityInitiativeStatus = "planned" | "active" | "completed" | "ongoing";
+
+export const EQUALITY_INITIATIVE_STATUS_LABEL: Record<EqualityInitiativeStatus, string> = {
+  planned: "Planned",
+  active: "Active",
+  completed: "Completed",
+  ongoing: "Ongoing",
+};
+
+export type ProtectedCharacteristic = "age" | "disability" | "gender_reassignment" | "marriage_civil_partnership" | "pregnancy_maternity" | "race" | "religion_belief" | "sex" | "sexual_orientation";
+
+export const PROTECTED_CHARACTERISTIC_LABEL: Record<ProtectedCharacteristic, string> = {
+  age: "Age",
+  disability: "Disability",
+  gender_reassignment: "Gender Reassignment",
+  marriage_civil_partnership: "Marriage & Civil Partnership",
+  pregnancy_maternity: "Pregnancy & Maternity",
+  race: "Race",
+  religion_belief: "Religion or Belief",
+  sex: "Sex",
+  sexual_orientation: "Sexual Orientation",
+};
+
+export type EqualityActionStatus = "pending" | "in_progress" | "completed";
+
+export const EQUALITY_ACTION_STATUS_LABEL: Record<EqualityActionStatus, string> = {
+  pending: "Pending",
+  in_progress: "In Progress",
+  completed: "Completed",
+};
+
+export interface EqualityAction {
+  id: string;
+  action: string;
+  characteristic: ProtectedCharacteristic;
+  owner: string;
+  due_date: string;
+  status: EqualityActionStatus;
+  completed_date: string | null;
+  impact: string;
+}
+
+export interface EqualityTrainingRecord {
+  id: string;
+  title: string;
+  date: string;
+  provider: string;
+  attendees: string[];
+  mandatory: boolean;
+  next_due: string;
+}
+
+export interface EqualityMonitoringData {
+  staff_diversity: { characteristic: string; breakdown: Record<string, number> }[];
+  yp_diversity: { characteristic: string; breakdown: Record<string, number> }[];
+  last_audit_date: string;
+  next_audit_due: string;
+  audited_by: string;
+}
+
+export interface EqualityInitiative {
+  id: string;
+  title: string;
+  description: string;
+  status: EqualityInitiativeStatus;
+  lead_by: string;
+  start_date: string;
+  target_date: string;
+  characteristics: ProtectedCharacteristic[];
+  objectives: string[];
+  actions: EqualityAction[];
+  outcomes: string[];
+  evidence: string[];
+  notes: string;
+  created_at: string;
+}
+
+/* ── Independence Pathway ── */
+
+export type IndependencePathwayStatus = "on_track" | "attention_needed" | "not_age_appropriate";
+
+export const INDEPENDENCE_PATHWAY_STATUS_LABEL: Record<IndependencePathwayStatus, string> = {
+  on_track: "On Track",
+  attention_needed: "Attention Needed",
+  not_age_appropriate: "Not Age-Appropriate",
+};
+
+export interface PathwayDomain {
+  name: string;
+  score: number;
+  max_score: number;
+  evidence: string;
+  next_steps: string;
+}
+
+export interface IndependencePathway {
+  id: string;
+  child_id: string;
+  assessed_by: string;
+  assessment_date: string;
+  review_date: string;
+  overall_readiness: number;
+  domains: PathwayDomain[];
+  status: IndependencePathwayStatus;
+  expected_transition_age: number;
+  pathway_plan_linked: boolean;
+  notes: string;
+  created_at: string;
+}
+
+/* ── Independence Skills ── */
+
+export type IndependenceSkillProficiency = "not_started" | "emerging" | "developing" | "competent" | "independent";
+
+export const INDEPENDENCE_SKILL_PROFICIENCY_LABEL: Record<IndependenceSkillProficiency, string> = {
+  not_started: "Not Started",
+  emerging: "Emerging",
+  developing: "Developing",
+  competent: "Competent",
+  independent: "Independent",
+};
+
+export type IndependenceSkillCategory = "cooking" | "budgeting" | "hygiene" | "laundry" | "travel" | "health" | "communication" | "safety" | "digital" | "housing";
+
+export const INDEPENDENCE_SKILL_CATEGORY_LABEL: Record<IndependenceSkillCategory, string> = {
+  cooking: "Cooking & Nutrition",
+  budgeting: "Budgeting & Finance",
+  hygiene: "Personal Hygiene",
+  laundry: "Laundry & Clothing",
+  travel: "Travel & Transport",
+  health: "Health Management",
+  communication: "Communication",
+  safety: "Safety Awareness",
+  digital: "Digital Skills",
+  housing: "Housing & Tenancy",
+};
+
+export interface IndependenceSkill {
+  id: string;
+  name: string;
+  category: IndependenceSkillCategory;
+  proficiency: IndependenceSkillProficiency;
+  target_date: string;
+  last_assessed: string;
+  assessed_by: string;
+  evidence: string;
+  next_step: string;
+}
+
+export interface IndependenceSkillsRecord {
+  id: string;
+  child_id: string;
+  review_date: string;
+  reviewer: string;
+  overall_readiness: number;
+  skills: IndependenceSkill[];
+  strengths: string[];
+  areas_for_development: string[];
+  child_view: string;
+  pathway_notes: string;
+  created_at: string;
+}
+
+/* ── Independent Living Skills Assessment ── */
+
+export type LivingSkillLevel = "not_yet_started" | "emerging" | "developing" | "established" | "mastered";
+
+export const LIVING_SKILL_LEVEL_LABEL: Record<LivingSkillLevel, string> = {
+  not_yet_started: "Not yet started",
+  emerging: "Emerging",
+  developing: "Developing",
+  established: "Established",
+  mastered: "Mastered",
+};
+
+export type LivingSkillsReadiness = "early_stage" | "building_foundations" | "developing_strongly" | "approaching_ready" | "ready_for_next_step";
+
+export const LIVING_SKILLS_READINESS_LABEL: Record<LivingSkillsReadiness, string> = {
+  early_stage: "Early-stage",
+  building_foundations: "Building foundations",
+  developing_strongly: "Developing strongly",
+  approaching_ready: "Approaching ready",
+  ready_for_next_step: "Ready for next step",
+};
+
+export interface LivingSkillAssessment {
+  skill: string;
+  level: LivingSkillLevel;
+  evidence: string;
+  child_self_assessment: LivingSkillLevel;
+  staff_assessment: LivingSkillLevel;
+  agreement_between_child_and_staff: boolean;
+  next_steps: string;
+}
+
+export interface LivingSkillDomainAssessment {
+  domain: string;
+  skills: LivingSkillAssessment[];
+  domain_summary: string;
+}
+
+export interface IndependenceLivingAssessment {
+  id: string;
+  child_id: string;
+  age: number;
+  years_to_transition: number;
+  assessment_date: string;
+  assessor: string;
+  domain_assessments: LivingSkillDomainAssessment[];
+  overall_readiness: LivingSkillsReadiness;
+  child_aspirations: string;
+  child_worries: string[];
+  priority_skills_next_six_months: string[];
+  pathway_links: string[];
+  resources_allocated: string[];
+  child_agreed: boolean;
+  reviewed_date: string;
+  next_assessment_due: string;
+  notes: string;
+  created_at: string;
+}
+
+/* ── Independent Travel Training ── */
+
+export type TravelTrainingStage = "stage_1_accompanied" | "stage_2_staff_shadowing" | "stage_3_solo_familiar" | "stage_4_solo_new" | "independent_traveller";
+
+export const TRAVEL_TRAINING_STAGE_LABEL: Record<TravelTrainingStage, string> = {
+  stage_1_accompanied: "Stage 1 — Accompanied",
+  stage_2_staff_shadowing: "Stage 2 — Staff shadowing",
+  stage_3_solo_familiar: "Stage 3 — Solo familiar route",
+  stage_4_solo_new: "Stage 4 — Solo new route",
+  independent_traveller: "Independent traveller",
+};
+
+export type TravelConfidence = "anxious" | "cautious" | "building" | "confident" | "highly_confident";
+
+export const TRAVEL_CONFIDENCE_LABEL: Record<TravelConfidence, string> = {
+  anxious: "Anxious",
+  cautious: "Cautious",
+  building: "Building",
+  confident: "Confident",
+  highly_confident: "Highly confident",
+};
+
+export interface TravelRouteMastered {
+  from: string;
+  to: string;
+  mode: string;
+  achieved_date: string;
+}
+
+export interface TravelRouteLearning {
+  from: string;
+  to: string;
+  mode: string;
+  next_step: string;
+}
+
+export interface IndependentTravelRecord {
+  id: string;
+  child_id: string;
+  last_updated: string;
+  current_stage: TravelTrainingStage;
+  routes_mastered: TravelRouteMastered[];
+  routes_learning: TravelRouteLearning[];
+  travel_cards_held: string[];
+  monthly_travel_budget: number;
+  phone_and_charger_check: boolean;
+  what_if_lost_plan: string;
+  check_in_protocol: string;
+  risk_factors: string[];
+  protective_factors: string[];
+  child_confidence: TravelConfidence;
+  staff_observation: string;
+  child_voice: string;
+  review_date: string;
+  key_worker: string;
+  created_at: string;
+}

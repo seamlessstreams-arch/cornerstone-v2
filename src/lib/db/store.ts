@@ -235,6 +235,9 @@ import type {
   StaffCompetencyProfile, CompetencyScore, DevelopmentPlan,
   PracticeObservation, CareerReadinessReport, SuccessionPlan,
   AppraisalRecord, InductionRecord, QualificationRecord,
+  DailyRiskBriefing, EqualityInitiative, EqualityTrainingRecord,
+  IndependencePathway, IndependenceSkillsRecord,
+  IndependenceLivingAssessment, IndependentTravelRecord,
 } from "@/types/extended";
 import { generateId, todayStr, daysFromNow } from "@/lib/utils";
 
@@ -504,6 +507,13 @@ const store = {
   chosenFamilyRecords: [] as ChosenFamilyRecord[],
   familyRelationshipRecords: [] as FamilyRelationshipRecord[],
   firstRelationshipRecords: [] as FirstRelationshipRecord[],
+  dailyRiskBriefings: [] as DailyRiskBriefing[],
+  equalityInitiatives: [] as EqualityInitiative[],
+  equalityTraining: [] as EqualityTrainingRecord[],
+  independencePathways: [] as IndependencePathway[],
+  independenceSkillsRecords: [] as IndependenceSkillsRecord[],
+  independenceLivingAssessments: [] as IndependenceLivingAssessment[],
+  independentTravelRecords: [] as IndependentTravelRecord[],
   // Shift Swap Requests
   shiftSwaps: [
     {
@@ -6741,6 +6751,122 @@ export const db = {
       if (idx === -1) return null;
       store.firstRelationshipRecords[idx] = { ...store.firstRelationshipRecords[idx], ...data };
       return store.firstRelationshipRecords[idx];
+    },
+  },
+
+  dailyRiskBriefings: {
+    findAll: () => store.dailyRiskBriefings,
+    findById: (id: string) => store.dailyRiskBriefings.find((r) => r.id === id),
+    create: (data: Partial<DailyRiskBriefing>): DailyRiskBriefing => {
+      const record = { ...data, id: generateId("drbr"), created_at: new Date().toISOString() } as DailyRiskBriefing;
+      store.dailyRiskBriefings.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<DailyRiskBriefing>): DailyRiskBriefing | null => {
+      const idx = store.dailyRiskBriefings.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.dailyRiskBriefings[idx] = { ...store.dailyRiskBriefings[idx], ...data };
+      return store.dailyRiskBriefings[idx];
+    },
+  },
+
+  equalityInitiatives: {
+    findAll: () => store.equalityInitiatives,
+    findById: (id: string) => store.equalityInitiatives.find((r) => r.id === id),
+    create: (data: Partial<EqualityInitiative>): EqualityInitiative => {
+      const record = { ...data, id: generateId("eqin"), created_at: new Date().toISOString() } as EqualityInitiative;
+      store.equalityInitiatives.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<EqualityInitiative>): EqualityInitiative | null => {
+      const idx = store.equalityInitiatives.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.equalityInitiatives[idx] = { ...store.equalityInitiatives[idx], ...data };
+      return store.equalityInitiatives[idx];
+    },
+  },
+
+  equalityTraining: {
+    findAll: () => store.equalityTraining,
+    findById: (id: string) => store.equalityTraining.find((r) => r.id === id),
+    create: (data: Partial<EqualityTrainingRecord>): EqualityTrainingRecord => {
+      const record = { ...data, id: generateId("eqtr") } as EqualityTrainingRecord;
+      store.equalityTraining.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<EqualityTrainingRecord>): EqualityTrainingRecord | null => {
+      const idx = store.equalityTraining.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.equalityTraining[idx] = { ...store.equalityTraining[idx], ...data };
+      return store.equalityTraining[idx];
+    },
+  },
+
+  independencePathways: {
+    findAll: () => store.independencePathways,
+    findByChild: (childId: string) => store.independencePathways.filter((r) => r.child_id === childId),
+    findById: (id: string) => store.independencePathways.find((r) => r.id === id),
+    create: (data: Partial<IndependencePathway>): IndependencePathway => {
+      const record = { ...data, id: generateId("ipth"), created_at: new Date().toISOString() } as IndependencePathway;
+      store.independencePathways.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<IndependencePathway>): IndependencePathway | null => {
+      const idx = store.independencePathways.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.independencePathways[idx] = { ...store.independencePathways[idx], ...data };
+      return store.independencePathways[idx];
+    },
+  },
+
+  independenceSkillsRecords: {
+    findAll: () => store.independenceSkillsRecords,
+    findByChild: (childId: string) => store.independenceSkillsRecords.filter((r) => r.child_id === childId),
+    findById: (id: string) => store.independenceSkillsRecords.find((r) => r.id === id),
+    create: (data: Partial<IndependenceSkillsRecord>): IndependenceSkillsRecord => {
+      const record = { ...data, id: generateId("iskl"), created_at: new Date().toISOString() } as IndependenceSkillsRecord;
+      store.independenceSkillsRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<IndependenceSkillsRecord>): IndependenceSkillsRecord | null => {
+      const idx = store.independenceSkillsRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.independenceSkillsRecords[idx] = { ...store.independenceSkillsRecords[idx], ...data };
+      return store.independenceSkillsRecords[idx];
+    },
+  },
+
+  independenceLivingAssessments: {
+    findAll: () => store.independenceLivingAssessments,
+    findByChild: (childId: string) => store.independenceLivingAssessments.filter((r) => r.child_id === childId),
+    findById: (id: string) => store.independenceLivingAssessments.find((r) => r.id === id),
+    create: (data: Partial<IndependenceLivingAssessment>): IndependenceLivingAssessment => {
+      const record = { ...data, id: generateId("ilsa"), created_at: new Date().toISOString() } as IndependenceLivingAssessment;
+      store.independenceLivingAssessments.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<IndependenceLivingAssessment>): IndependenceLivingAssessment | null => {
+      const idx = store.independenceLivingAssessments.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.independenceLivingAssessments[idx] = { ...store.independenceLivingAssessments[idx], ...data };
+      return store.independenceLivingAssessments[idx];
+    },
+  },
+
+  independentTravelRecords: {
+    findAll: () => store.independentTravelRecords,
+    findByChild: (childId: string) => store.independentTravelRecords.filter((r) => r.child_id === childId),
+    findById: (id: string) => store.independentTravelRecords.find((r) => r.id === id),
+    create: (data: Partial<IndependentTravelRecord>): IndependentTravelRecord => {
+      const record = { ...data, id: generateId("ittr"), created_at: new Date().toISOString() } as IndependentTravelRecord;
+      store.independentTravelRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<IndependentTravelRecord>): IndependentTravelRecord | null => {
+      const idx = store.independentTravelRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.independentTravelRecords[idx] = { ...store.independentTravelRecords[idx], ...data };
+      return store.independentTravelRecords[idx];
     },
   },
 };
