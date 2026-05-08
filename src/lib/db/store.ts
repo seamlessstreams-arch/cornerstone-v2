@@ -372,6 +372,11 @@ import type {
   Reg45EvidenceItem, AnnexAEvidenceItem, ChildDailySummary,
   FilingCabinetItem, SavedTimeMetric,
 } from "@/types/care-events";
+import {
+  SEED_CARE_EVENTS, SEED_CARE_EVENT_ROUTES, SEED_CARE_EVENT_AUDIT,
+  SEED_REG45_EVIDENCE, SEED_ANNEX_A_EVIDENCE, SEED_CHILD_DAILY_SUMMARIES,
+  SEED_FILING_CABINET, SEED_SAVED_TIME_METRICS,
+} from "@/lib/seed-care-events";
 
 // ── Mutable collections ───────────────────────────────────────────────────────
 
@@ -819,15 +824,15 @@ const store = {
   healthRecordEntries: [] as HealthRecordEntry[],
   ypSavingsAccountRecords: [] as YPSavingsAccountRecord[],
   // ── Care Events (live update routing system) ───────────────────────────────
-  careEvents: [] as CareEvent[],
-  careEventRoutes: [] as CareEventRoute[],
+  careEvents: [...SEED_CARE_EVENTS] as CareEvent[],
+  careEventRoutes: [...SEED_CARE_EVENT_ROUTES] as CareEventRoute[],
   careEventJobs: [] as CareEventJob[],
-  careEventAuditLog: [] as CareEventAuditLog[],
-  reg45EvidenceQueue: [] as Reg45EvidenceItem[],
-  annexAEvidenceQueue: [] as AnnexAEvidenceItem[],
-  childDailySummaries: [] as ChildDailySummary[],
-  filingCabinet: [] as FilingCabinetItem[],
-  savedTimeMetrics: [] as SavedTimeMetric[],
+  careEventAuditLog: [...SEED_CARE_EVENT_AUDIT] as CareEventAuditLog[],
+  reg45EvidenceQueue: [...SEED_REG45_EVIDENCE] as Reg45EvidenceItem[],
+  annexAEvidenceQueue: [...SEED_ANNEX_A_EVIDENCE] as AnnexAEvidenceItem[],
+  childDailySummaries: [...SEED_CHILD_DAILY_SUMMARIES] as ChildDailySummary[],
+  filingCabinet: [...SEED_FILING_CABINET] as FilingCabinetItem[],
+  savedTimeMetrics: [...SEED_SAVED_TIME_METRICS] as SavedTimeMetric[],
   // Shift Swap Requests
   shiftSwaps: [
     {

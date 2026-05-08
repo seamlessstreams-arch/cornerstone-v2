@@ -16,7 +16,7 @@
 import { db } from "@/lib/db/store";
 import { generateId, todayStr } from "@/lib/utils";
 import { classifyCareEvent, buildRoutingSummary } from "./routing-engine";
-import type { CareEvent, RouteType, CareEventRoute } from "@/types/care-events";
+import type { CareEvent, RouteType, CareEventRoute, FilingCategory } from "@/types/care-events";
 
 // ── Time saved per route type (minutes) ───────────────────────────────────────
 
@@ -227,32 +227,83 @@ function processAnnexAEvidence(event: CareEvent, route: CareEventRoute): void {
 }
 
 function processFilingCabinet(event: CareEvent, route: CareEventRoute): void {
-  // Creates a chronology entry as the filing reference
-  db.chronology.create({
+  // Determine filing category from event
+  const category: FilingCategory = event.is_safeguarding
+    ? "safeguarding"
+    : (event.category as FilingCategory) ?? "other";
+
+  // Write to filing cabinet (idempotent via care_event_id + category)
+  const item = db.filingCabinet.upsert({
+    care_event_id: event.id,
+    home_id: HOME_ID,
     child_id: event.child_id,
-    date: event.event_date,
-    time: event.event_time ?? null,
-    category: (event.is_safeguarding ? "safeguarding" : event.category) as never,
+    category,
+    sub_category: event.category !== category ? event.category : null,
     title: event.title,
     description: event.content.slice(0, 500),
-    significance: event.is_significant ? "significant" : "routine",
-    recorded_by: event.staff_id,
-    linked_incident_id: null,
-    home_id: HOME_ID,
-    created_at: new Date().toISOString(),
-    care_event_id: event.id,
-  } as never);
+    source_type: "care_event",
+    linked_record_id: event.id,
+    linked_record_table: "care_events",
+    is_verified: event.status === "verified" || event.status === "locked",
+    verified_at: event.verified_at,
+    verified_by: event.verified_by,
+    tags: [
+      event.category,
+      ...(event.is_significant ? ["significant"] : []),
+      ...(event.is_safeguarding ? ["safeguarding"] : []),
+      ...(event.requires_manager_review ? ["manager_review"] : []),
+    ],
+    filed_at: new Date().toISOString(),
+  });
+
+  // Also create a chronology entry as before (dual-filing)
+  try {
+    db.chronology.create({
+      child_id: event.child_id,
+      date: event.event_date,
+      time: event.event_time ?? null,
+      category: (event.is_safeguarding ? "safeguarding" : event.category) as never,
+      title: event.title,
+      description: event.content.slice(0, 500),
+      significance: event.is_significant ? "significant" : "routine",
+      recorded_by: event.staff_id,
+      linked_incident_id: null,
+      home_id: HOME_ID,
+      created_at: new Date().toISOString(),
+      care_event_id: event.id,
+    } as never);
+  } catch {
+    // Chronology failure is non-critical — filing cabinet is the primary record
+  }
+
   db.careEventRoutes.patch(route.id, {
     status: "completed",
-    linked_record_table: "chronology",
-    processing_notes: "Auto-filed to chronology.",
+    linked_record_id: item.id,
+    linked_record_table: "filing_cabinet",
+    processing_notes: `Auto-filed to filing cabinet under '${category}'.`,
   });
 }
 
 function processSavedTime(event: CareEvent, route: CareEventRoute): void {
-  // Calculate total time saved by all completed routes
+  // Calculate total time saved by all completed routes for this event
   const routes = db.careEventRoutes.findByCareEvent(event.id);
   const totalMinutes = routes.reduce((acc, r) => acc + (TIME_SAVED_BY_ROUTE[r.route_type] ?? 0), 0);
+
+  // Write per-route metrics into savedTimeMetrics
+  for (const r of routes) {
+    const mins = TIME_SAVED_BY_ROUTE[r.route_type] ?? 0;
+    if (mins > 0) {
+      db.savedTimeMetrics.upsert({
+        care_event_id: event.id,
+        home_id: HOME_ID,
+        route_type: r.route_type,
+        minutes_saved: mins,
+        activity_description: `Auto-routing to ${r.route_type.replace(/_/g, " ")} from care event`,
+        staff_id: event.staff_id,
+        recorded_at: new Date().toISOString(),
+      });
+    }
+  }
 
   db.careEventRoutes.patch(route.id, {
     status: "completed",
