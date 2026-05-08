@@ -16,7 +16,8 @@ import {
 import {
   AlertCircle, CheckCircle2, Clock, FileText, Loader2, Plus,
   RefreshCw, Search, Shield, Zap, ChevronRight, BookOpen,
-  AlertTriangle, Lock, RotateCcw, ArrowUpRight,
+  AlertTriangle, Lock, RotateCcw, ArrowUpRight, Eye, Route,
+  FolderOpen, BarChart2, ListChecks,
 } from "lucide-react";
 import {
   useCareEvents, useCreateCareEvent, useSubmitCareEvent,
@@ -113,19 +114,167 @@ function RoutingFlags({ event }: { event: CareEvent }) {
   );
 }
 
+// ── RoutingPreviewPanel ───────────────────────────────────────────────────
+
+interface RoutingPreview {
+  routes: string[];
+  requires_manager_review: boolean;
+  requires_reg40_triage: boolean;
+  contributes_to_reg45: boolean;
+  contributes_to_annex_a: boolean;
+  evidence_prompts: EvidencePrompt[];
+  background_jobs: string[];
+}
+
+const ROUTE_LABELS: Record<string, string> = {
+  daily_log: "Daily running log",
+  child_daily_summary: "Child daily summary",
+  incident: "Incident record",
+  missing_episode: "Missing episode record",
+  physical_intervention: "Physical intervention record",
+  health_record: "Health record",
+  medication_record: "Medication record",
+  education_record: "Education record",
+  family_contact_record: "Family contact record",
+  professional_contact_record: "Professional contact record",
+  complaint_record: "Complaint record",
+  safeguarding_record: "Safeguarding record",
+  risk_assessment_task: "Risk assessment review task",
+  behaviour_plan_task: "Behaviour plan review task",
+  followup_task: "Follow-up task",
+  management_oversight: "Management oversight queue",
+  reg40_triage: "Regulation 40 triage queue",
+  reg44_evidence: "Regulation 44 evidence",
+  reg45_evidence: "Regulation 45 evidence bank",
+  annex_a_evidence: "Annex A evidence bank",
+  filing_cabinet: "Filing cabinet",
+  saved_time: "Saved-time tracker",
+};
+
+const ROUTE_ICONS: Record<string, React.ReactNode> = {
+  management_oversight: <AlertCircle className="w-3.5 h-3.5 text-amber-600" />,
+  reg40_triage: <Shield className="w-3.5 h-3.5 text-red-600" />,
+  reg45_evidence: <BookOpen className="w-3.5 h-3.5 text-indigo-600" />,
+  annex_a_evidence: <FileText className="w-3.5 h-3.5 text-purple-600" />,
+  filing_cabinet: <FolderOpen className="w-3.5 h-3.5 text-orange-600" />,
+  safeguarding_record: <Shield className="w-3.5 h-3.5 text-red-700" />,
+};
+
+function RoutingPreviewPanel({ preview }: { preview: RoutingPreview }) {
+  return (
+    <div className="space-y-4">
+      <div className="rounded-lg border border-blue-100 bg-blue-50 px-4 py-3">
+        <div className="flex items-start gap-2">
+          <Route className="w-4 h-4 text-blue-600 mt-0.5 shrink-0" />
+          <div>
+            <p className="text-sm font-medium text-blue-800">Routing preview</p>
+            <p className="text-xs text-blue-600 mt-0.5">
+              When submitted, this event will automatically update {preview.routes.length} area{preview.routes.length !== 1 ? "s" : ""}.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="space-y-1.5">
+        {preview.routes.map((route) => (
+          <div key={route} className="flex items-center gap-2 text-sm text-slate-700 bg-slate-50 rounded px-3 py-2">
+            {ROUTE_ICONS[route] ?? <Zap className="w-3.5 h-3.5 text-slate-400" />}
+            <span>{ROUTE_LABELS[route] ?? route}</span>
+          </div>
+        ))}
+      </div>
+
+      <div className="flex flex-wrap gap-1.5">
+        {preview.requires_manager_review && (
+          <span className="inline-flex items-center gap-1 text-xs bg-amber-50 text-amber-700 border border-amber-200 rounded px-2 py-1">
+            <AlertCircle className="w-3 h-3" /> Manager review required
+          </span>
+        )}
+        {preview.requires_reg40_triage && (
+          <span className="inline-flex items-center gap-1 text-xs bg-red-50 text-red-700 border border-red-200 rounded px-2 py-1">
+            <Shield className="w-3 h-3" /> Regulation 40 triage required
+          </span>
+        )}
+        {preview.contributes_to_reg45 && (
+          <span className="inline-flex items-center gap-1 text-xs bg-indigo-50 text-indigo-700 border border-indigo-200 rounded px-2 py-1">
+            <BookOpen className="w-3 h-3" /> Reg 45 evidence suggested
+          </span>
+        )}
+        {preview.contributes_to_annex_a && (
+          <span className="inline-flex items-center gap-1 text-xs bg-purple-50 text-purple-700 border border-purple-200 rounded px-2 py-1">
+            <FileText className="w-3 h-3" /> Annex A evidence suggested
+          </span>
+        )}
+      </div>
+
+      {preview.evidence_prompts.length > 0 && (
+        <div className="text-xs text-slate-500 flex items-center gap-1.5">
+          <ListChecks className="w-3.5 h-3.5" />
+          {preview.evidence_prompts.length} evidence question{preview.evidence_prompts.length !== 1 ? "s" : ""} required before submission.
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ── RoutingResultBanner ───────────────────────────────────────────────────
 
-function RoutingResultBanner({ text, areas }: { text: string; areas: string[] }) {
+interface RoutingResult {
+  text: string;
+  areas: string[];
+  records_updated?: number;
+  tasks_created?: number;
+  reg45_count?: number;
+  annex_a_count?: number;
+}
+
+function RoutingResultBanner({ result }: { result: RoutingResult }) {
+  const { text, areas, records_updated, tasks_created, reg45_count, annex_a_count } = result;
+  const stats = [
+    records_updated ? `${records_updated} record${records_updated !== 1 ? "s" : ""} updated` : null,
+    tasks_created ? `${tasks_created} task${tasks_created !== 1 ? "s" : ""} created` : null,
+    reg45_count ? `${reg45_count} Reg 45 evidence suggestion${reg45_count !== 1 ? "s" : ""}` : null,
+    annex_a_count ? `${annex_a_count} Annex A update${annex_a_count !== 1 ? "s" : ""}` : null,
+  ].filter(Boolean);
+
   return (
-    <div className="rounded-lg border border-emerald-200 bg-emerald-50 p-4">
-      <div className="flex items-start gap-3">
-        <CheckCircle2 className="w-5 h-5 text-emerald-600 mt-0.5 shrink-0" />
-        <div>
-          <p className="text-sm font-medium text-emerald-800">{text}</p>
-          {areas.length > 0 && (
-            <p className="text-xs text-emerald-600 mt-1">Areas updated: {areas.join(", ")}</p>
-          )}
+    <div className="space-y-3">
+      <div className="rounded-lg border border-emerald-200 bg-emerald-50 p-4">
+        <div className="flex items-start gap-3">
+          <CheckCircle2 className="w-5 h-5 text-emerald-600 mt-0.5 shrink-0" />
+          <div>
+            <p className="text-sm font-medium text-emerald-800">{text}</p>
+            {areas.length > 0 && (
+              <p className="text-xs text-emerald-600 mt-1">Areas updated: {areas.join(", ")}</p>
+            )}
+          </div>
         </div>
+      </div>
+      {stats.length > 0 && (
+        <div className="grid grid-cols-2 gap-2">
+          {stats.map((s) => (
+            <div key={s} className="flex items-center gap-2 bg-slate-50 rounded px-3 py-2 text-xs text-slate-700">
+              <BarChart2 className="w-3.5 h-3.5 text-slate-400" />
+              {s}
+            </div>
+          ))}
+        </div>
+      )}
+      <div className="flex flex-wrap gap-1.5 pt-1">
+        {([
+          { label: "Reg 45 Evidence", href: "/regulation-45" },
+          { label: "Annex A", href: "/annex-a" },
+          { label: "Filing Cabinet", href: "/filing-cabinet" },
+          { label: "Management Oversight", href: "/management-oversight" },
+        ] as { label: string; href: string }[]).map((link) => (
+          <a
+            key={link.href}
+            href={link.href}
+            className="text-xs text-indigo-600 hover:text-indigo-800 border border-indigo-100 bg-indigo-50 rounded px-2 py-0.5 hover:bg-indigo-100 transition-colors"
+          >
+            {link.label} →
+          </a>
+        ))}
       </div>
     </div>
   );
@@ -174,7 +323,7 @@ function CreateEventDialog({
   const createMutation = useCreateCareEvent();
   const submitMutation = useSubmitCareEvent();
 
-  const [step, setStep] = useState<"form" | "prompts" | "done">("form");
+  const [step, setStep] = useState<"form" | "routing-preview" | "prompts" | "done">("form");
   const [form, setForm] = useState({
     title: "",
     content: "",
@@ -186,9 +335,9 @@ function CreateEventDialog({
     is_significant: false,
   });
   const [createdEvent, setCreatedEvent] = useState<CareEvent | null>(null);
-  const [routingPreview, setRoutingPreview] = useState<object | null>(null);
+  const [routingPreview, setRoutingPreview] = useState<RoutingPreview | null>(null);
   const [evidenceAnswers, setEvidenceAnswers] = useState<Record<string, string>>({});
-  const [routingResult, setRoutingResult] = useState<{ text: string; areas: string[] } | null>(null);
+  const [routingResult, setRoutingResult] = useState<RoutingResult | null>(null);
 
   const yp = ypData?.data ?? [];
 
@@ -214,13 +363,18 @@ function CreateEventDialog({
       is_significant: form.is_significant,
     });
     setCreatedEvent(res.data);
-    setRoutingPreview(res.routing_preview);
+    const preview = res.routing_preview as RoutingPreview;
+    setRoutingPreview(preview);
+    // Always show routing preview so staff can see where the event will route
+    setStep("routing-preview");
+  }
 
-    const prompts = (res.data.evidence_prompts ?? []) as EvidencePrompt[];
+  async function proceedFromPreview() {
+    const prompts = (createdEvent?.evidence_prompts ?? []) as EvidencePrompt[];
     if (prompts.length > 0) {
       setStep("prompts");
     } else {
-      await doSubmit(res.data.id, {});
+      await doSubmit(createdEvent!.id, {});
     }
   }
 
@@ -234,6 +388,10 @@ function CreateEventDialog({
     setRoutingResult({
       text: result?.routing_summary_text ?? "Entry submitted.",
       areas: result?.routing_summary?.areas_updated ?? [],
+      records_updated: result?.routing_summary?.records_updated,
+      tasks_created: result?.routing_summary?.tasks_created,
+      reg45_count: result?.routing_summary?.reg45_count,
+      annex_a_count: result?.routing_summary?.annex_a_count,
     });
     setStep("done");
   }
@@ -247,8 +405,9 @@ function CreateEventDialog({
         <DialogHeader>
           <DialogTitle>
             {step === "form" && "New Care Event"}
+            {step === "routing-preview" && "Routing preview"}
             {step === "prompts" && "Evidence questions"}
-            {step === "done" && "Submitted"}
+            {step === "done" && "Submitted — routing complete"}
           </DialogTitle>
         </DialogHeader>
 
@@ -321,6 +480,12 @@ function CreateEventDialog({
           </div>
         )}
 
+        {step === "routing-preview" && routingPreview && (
+          <div className="py-2">
+            <RoutingPreviewPanel preview={routingPreview} />
+          </div>
+        )}
+
         {step === "prompts" && createdEvent && (
           <div className="space-y-4 py-2">
             <p className="text-sm text-slate-600">Please answer the following questions before submitting. Required questions are marked <span className="text-red-500">*</span></p>
@@ -333,8 +498,8 @@ function CreateEventDialog({
         )}
 
         {step === "done" && routingResult && (
-          <div className="py-2 space-y-4">
-            <RoutingResultBanner text={routingResult.text} areas={routingResult.areas} />
+          <div className="py-2">
+            <RoutingResultBanner result={routingResult} />
           </div>
         )}
 
@@ -347,8 +512,17 @@ function CreateEventDialog({
               onClick={handleCreate}
               disabled={isLoading || !form.title.trim() || !form.content.trim()}
             >
-              {isLoading ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Plus className="w-4 h-4 mr-2" />}
-              Continue
+              {isLoading ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Eye className="w-4 h-4 mr-2" />}
+              Preview routing
+            </Button>
+          )}
+          {step === "routing-preview" && createdEvent && (
+            <Button
+              onClick={proceedFromPreview}
+              disabled={isLoading}
+            >
+              {isLoading ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <CheckCircle2 className="w-4 h-4 mr-2" />}
+              {prompts.length > 0 ? "Answer evidence questions" : "Submit & route"}
             </Button>
           )}
           {step === "prompts" && createdEvent && (
@@ -386,7 +560,14 @@ function CareEventCard({ event, onAction }: {
                 <span className="text-xs font-semibold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full">Significant</span>
               )}
             </div>
-            <h3 className="font-medium text-slate-900 text-sm truncate">{event.title}</h3>
+            <h3 className="font-medium text-slate-900 text-sm truncate">
+              <a
+                href={`/care-events/${event.id}`}
+                className="hover:text-indigo-700 hover:underline"
+              >
+                {event.title}
+              </a>
+            </h3>
             <p className="text-xs text-slate-500 mt-0.5">
               {formatDate(event.event_date)}{event.event_time ? ` at ${event.event_time}` : ""} · Staff {event.staff_id}
             </p>

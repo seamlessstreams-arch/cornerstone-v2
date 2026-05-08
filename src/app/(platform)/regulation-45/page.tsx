@@ -1,9 +1,10 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — REGULATION 45 EVIDENCE BANK
+// CORNERSTONE — REGULATION 45 EVIDENCE BANK + REPORT BUILDER
 // Live-updating evidence queue from Care Event routing
 // Managers review, edit and approve suggested evidence for Reg 45 reports
+// Report Builder groups approved evidence by theme for narrative drafting
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState } from "react";
@@ -13,6 +14,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Dialog,
   DialogContent,
@@ -34,6 +36,9 @@ import {
   Eye,
   Pencil,
   BookOpen,
+  LayoutList,
+  Download,
+  Info,
 } from "lucide-react";
 import { cn, formatDate } from "@/lib/utils";
 import {
@@ -393,6 +398,219 @@ function ReviewDialog({
   );
 }
 
+// ── Report Builder ────────────────────────────────────────────────────────────
+
+const REPORT_THEMES = [
+  "behaviour",
+  "safeguarding",
+  "health",
+  "missing_episode",
+  "physical_intervention",
+  "restraint",
+  "complaint",
+  "general",
+] as const;
+
+const THEME_LABELS: Record<string, string> = {
+  behaviour: "Behaviour",
+  safeguarding: "Safeguarding",
+  health: "Health & Wellbeing",
+  missing_episode: "Missing Episodes",
+  physical_intervention: "Physical Interventions",
+  restraint: "Restraints",
+  complaint: "Complaints",
+  general: "General",
+};
+
+function ReportBuilderTab({
+  onDecide,
+}: {
+  onDecide: (item: Reg45EvidenceEnriched) => void;
+}) {
+  const { data: approvedData, isLoading } = useReg45Evidence({ decision: "approved" });
+  const { data: allData } = useReg45Evidence({});
+  const [narratives, setNarratives] = useState<Record<string, string>>({});
+  const [expandedTheme, setExpandedTheme] = useState<string | null>(null);
+
+  const approvedItems: Reg45EvidenceEnriched[] = approvedData?.data ?? [];
+  const allItems: Reg45EvidenceEnriched[] = allData?.data ?? [];
+  const counts = allData?.meta?.counts;
+
+  // Group approved items by theme
+  const byTheme: Record<string, Reg45EvidenceEnriched[]> = {};
+  for (const item of approvedItems) {
+    const theme = item.suggested_theme ?? "general";
+    if (!byTheme[theme]) byTheme[theme] = [];
+    byTheme[theme].push(item);
+  }
+
+  const pendingItems = allItems.filter((i) => i.manager_decision === "pending");
+  const deferredItems = allItems.filter((i) => i.manager_decision === "deferred");
+
+  return (
+    <div className="space-y-6">
+      {/* Status summary */}
+      <div className="grid grid-cols-3 gap-3">
+        <Card className="border-emerald-100 bg-emerald-50/50">
+          <CardContent className="p-3 text-center">
+            <p className="text-2xl font-bold text-emerald-700">{counts?.approved ?? 0}</p>
+            <p className="text-xs text-emerald-600 mt-0.5">Approved evidence</p>
+          </CardContent>
+        </Card>
+        <Card className="border-amber-100 bg-amber-50/50">
+          <CardContent className="p-3 text-center">
+            <p className="text-2xl font-bold text-amber-700">{counts?.pending ?? 0}</p>
+            <p className="text-xs text-amber-600 mt-0.5">Awaiting review</p>
+          </CardContent>
+        </Card>
+        <Card className="border-slate-100 bg-slate-50">
+          <CardContent className="p-3 text-center">
+            <p className="text-2xl font-bold text-slate-700">{counts?.deferred ?? 0}</p>
+            <p className="text-xs text-slate-500 mt-0.5">Deferred</p>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Pending banner */}
+      {pendingItems.length > 0 && (
+        <div className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 flex items-start gap-2 text-sm text-amber-800">
+          <Info className="w-4 h-4 mt-0.5 shrink-0" />
+          <div>
+            <span className="font-semibold">{pendingItems.length} item{pendingItems.length !== 1 ? "s" : ""} still awaiting manager review.</span>{" "}
+            Switch to the Evidence Queue tab to review pending items before they can appear in the report.
+          </div>
+        </div>
+      )}
+
+      {/* Report sections */}
+      {isLoading ? (
+        <div className="flex items-center justify-center py-12 text-slate-400">
+          <Loader2 className="h-6 w-6 animate-spin mr-2" />
+          Loading report builder...
+        </div>
+      ) : approvedItems.length === 0 ? (
+        <Card className="border-dashed">
+          <CardContent className="p-8 text-center">
+            <BookOpen className="h-10 w-10 text-slate-300 mx-auto mb-3" />
+            <p className="font-medium text-slate-600">No approved evidence yet</p>
+            <p className="text-sm text-slate-400 mt-1">
+              Approve evidence items from the Evidence Queue tab to start building your Regulation 45 report.
+            </p>
+          </CardContent>
+        </Card>
+      ) : (
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-semibold text-slate-700">Report Sections</h3>
+            <Button variant="outline" size="sm" className="gap-1.5 h-8 text-xs">
+              <Download className="w-3.5 h-3.5" />
+              Export draft report
+            </Button>
+          </div>
+
+          {REPORT_THEMES.filter((t) => byTheme[t]?.length > 0).map((theme) => {
+            const themeItems = byTheme[theme] ?? [];
+            const isOpen = expandedTheme === theme;
+            return (
+              <Card key={theme} className="border-slate-200">
+                <CardContent className="p-0">
+                  {/* Theme header */}
+                  <button
+                    className="w-full flex items-center justify-between px-4 py-3 text-left hover:bg-slate-50 transition-colors rounded-t-lg"
+                    onClick={() => setExpandedTheme(isOpen ? null : theme)}
+                  >
+                    <div className="flex items-center gap-2">
+                      <Badge
+                        variant="outline"
+                        className={cn(
+                          "text-xs capitalize",
+                          CATEGORY_CLR[theme] ?? "bg-slate-100 text-slate-700"
+                        )}
+                      >
+                        {THEME_LABELS[theme] ?? theme}
+                      </Badge>
+                      <span className="text-xs text-slate-500">
+                        {themeItems.length} evidence item{themeItems.length !== 1 ? "s" : ""}
+                      </span>
+                    </div>
+                    {isOpen ? (
+                      <ChevronUp className="w-4 h-4 text-slate-400" />
+                    ) : (
+                      <ChevronDown className="w-4 h-4 text-slate-400" />
+                    )}
+                  </button>
+
+                  {isOpen && (
+                    <div className="px-4 pb-4 space-y-4 border-t border-slate-100">
+                      {/* Evidence items for this theme */}
+                      <div className="space-y-2 pt-3">
+                        {themeItems.map((item) => (
+                          <div
+                            key={item.id}
+                            className="bg-slate-50 rounded-lg p-3 border border-slate-100"
+                          >
+                            <div className="flex items-start justify-between gap-2">
+                              <div className="flex-1">
+                                <p className="text-sm text-slate-800">
+                                  {item.manager_approved_text ?? item.suggested_text}
+                                </p>
+                                {item.care_event && (
+                                  <p className="text-xs text-slate-400 mt-1">
+                                    Source: {item.care_event.title} —{" "}
+                                    {formatDate(item.care_event.event_date)}
+                                  </p>
+                                )}
+                              </div>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="h-7 w-7 p-0 shrink-0"
+                                onClick={() => onDecide(item)}
+                                title="Edit approved text"
+                              >
+                                <Pencil className="w-3.5 h-3.5" />
+                              </Button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Narrative draft area */}
+                      <div>
+                        <Label className="text-xs font-medium text-slate-600 mb-1 block">
+                          Report narrative for this section{" "}
+                          <span className="text-slate-400 font-normal">(draft — not saved to report until exported)</span>
+                        </Label>
+                        <Textarea
+                          rows={4}
+                          placeholder={`Draft your Regulation 45 narrative for the ${THEME_LABELS[theme] ?? theme} section here, drawing on the evidence items above…`}
+                          value={narratives[theme] ?? ""}
+                          onChange={(e) =>
+                            setNarratives((prev) => ({ ...prev, [theme]: e.target.value }))
+                          }
+                          className="text-sm"
+                        />
+                      </div>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            );
+          })}
+
+          {/* Deferred items reminder */}
+          {deferredItems.length > 0 && (
+            <div className="rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-xs text-slate-500">
+              {deferredItems.length} deferred item{deferredItems.length !== 1 ? "s" : ""} not shown above.
+              Return to the Evidence Queue to revisit deferred evidence.
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ── Main page ─────────────────────────────────────────────────────────────────
 
 export default function Regulation45EvidencePage() {
@@ -416,7 +634,7 @@ export default function Regulation45EvidencePage() {
   return (
     <PageShell
       title="Regulation 45 Evidence Bank"
-      subtitle="AI-suggested evidence from Care Events — review and approve for the Regulation 45 report builder"
+      subtitle="AI-suggested evidence from Care Events — review, approve and draft your report"
     >
       {/* Stats bar */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
@@ -465,59 +683,90 @@ export default function Regulation45EvidencePage() {
         Review each item and approve, edit, or reject.
       </div>
 
-      {/* Filter tabs */}
-      <div className="flex flex-wrap gap-1 mb-4 border-b border-slate-100 pb-3">
-        {FILTERS.map((f) => (
-          <button
-            key={f.key}
-            onClick={() => setFilter(f.key)}
-            className={cn(
-              "px-3 py-1.5 rounded-md text-sm font-medium transition-colors flex items-center gap-1.5",
-              filter === f.key
-                ? "bg-slate-900 text-white"
-                : "text-slate-600 hover:bg-slate-100"
-            )}
-          >
-            {f.label}
-            {f.count !== undefined && f.count > 0 && (
-              <span
-                className={cn(
-                  "text-xs rounded-full px-1.5 py-0.5",
-                  filter === f.key ? "bg-white/20 text-white" : "bg-slate-100 text-slate-600"
-                )}
-              >
-                {f.count}
+      {/* Main tabs */}
+      <Tabs defaultValue="queue">
+        <TabsList className="mb-4">
+          <TabsTrigger value="queue" className="gap-1.5">
+            <LayoutList className="w-3.5 h-3.5" />
+            Evidence Queue
+            {(counts?.pending ?? 0) > 0 && (
+              <span className="ml-1 bg-amber-100 text-amber-700 text-xs rounded-full px-1.5 py-0.5">
+                {counts?.pending}
               </span>
             )}
-          </button>
-        ))}
-      </div>
+          </TabsTrigger>
+          <TabsTrigger value="builder" className="gap-1.5">
+            <BookOpen className="w-3.5 h-3.5" />
+            Report Builder
+            {(counts?.approved ?? 0) > 0 && (
+              <span className="ml-1 bg-emerald-100 text-emerald-700 text-xs rounded-full px-1.5 py-0.5">
+                {counts?.approved}
+              </span>
+            )}
+          </TabsTrigger>
+        </TabsList>
 
-      {/* Evidence list */}
-      {isLoading ? (
-        <div className="flex items-center justify-center py-12 text-slate-400">
-          <Loader2 className="h-6 w-6 animate-spin mr-2" />
-          Loading evidence bank...
-        </div>
-      ) : items.length === 0 ? (
-        <Card className="border-dashed">
-          <CardContent className="p-8 text-center">
-            <ShieldCheck className="h-10 w-10 text-slate-300 mx-auto mb-3" />
-            <p className="font-medium text-slate-600">No evidence items</p>
-            <p className="text-sm text-slate-400 mt-1">
-              {filter === "pending"
-                ? "No pending evidence — submit Care Events flagged for Regulation 45 to populate this bank."
-                : "No items for the selected filter."}
-            </p>
-          </CardContent>
-        </Card>
-      ) : (
-        <div className="space-y-3">
-          {items.map((item) => (
-            <EvidenceItemCard key={item.id} item={item} onDecide={setReviewingItem} />
-          ))}
-        </div>
-      )}
+        {/* Evidence Queue tab */}
+        <TabsContent value="queue" className="mt-0">
+          {/* Filter buttons */}
+          <div className="flex flex-wrap gap-1 mb-4 border-b border-slate-100 pb-3">
+            {FILTERS.map((f) => (
+              <button
+                key={f.key}
+                onClick={() => setFilter(f.key)}
+                className={cn(
+                  "px-3 py-1.5 rounded-md text-sm font-medium transition-colors flex items-center gap-1.5",
+                  filter === f.key
+                    ? "bg-slate-900 text-white"
+                    : "text-slate-600 hover:bg-slate-100"
+                )}
+              >
+                {f.label}
+                {f.count !== undefined && f.count > 0 && (
+                  <span
+                    className={cn(
+                      "text-xs rounded-full px-1.5 py-0.5",
+                      filter === f.key ? "bg-white/20 text-white" : "bg-slate-100 text-slate-600"
+                    )}
+                  >
+                    {f.count}
+                  </span>
+                )}
+              </button>
+            ))}
+          </div>
+
+          {isLoading ? (
+            <div className="flex items-center justify-center py-12 text-slate-400">
+              <Loader2 className="h-6 w-6 animate-spin mr-2" />
+              Loading evidence bank...
+            </div>
+          ) : items.length === 0 ? (
+            <Card className="border-dashed">
+              <CardContent className="p-8 text-center">
+                <ShieldCheck className="h-10 w-10 text-slate-300 mx-auto mb-3" />
+                <p className="font-medium text-slate-600">No evidence items</p>
+                <p className="text-sm text-slate-400 mt-1">
+                  {filter === "pending"
+                    ? "No pending evidence — submit Care Events flagged for Regulation 45 to populate this bank."
+                    : "No items for the selected filter."}
+                </p>
+              </CardContent>
+            </Card>
+          ) : (
+            <div className="space-y-3">
+              {items.map((item) => (
+                <EvidenceItemCard key={item.id} item={item} onDecide={setReviewingItem} />
+              ))}
+            </div>
+          )}
+        </TabsContent>
+
+        {/* Report Builder tab */}
+        <TabsContent value="builder" className="mt-0">
+          <ReportBuilderTab onDecide={setReviewingItem} />
+        </TabsContent>
+      </Tabs>
 
       {reviewingItem && (
         <ReviewDialog item={reviewingItem} onClose={() => setReviewingItem(null)} />
