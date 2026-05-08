@@ -363,6 +363,8 @@ import type {
   WhistleblowingRecord,
   WBInvestigationRecord,
   YPSavingsAccountRecord,
+  AdmissionReferral,
+  HealthRecordEntry,
 } from "@/types/extended";
 import { generateId, todayStr, daysFromNow } from "@/lib/utils";
 
@@ -808,6 +810,8 @@ const store = {
   wellbeingPulseSurveyRecords: [] as WellbeingPulseSurveyRecord[],
   whistleblowingRecords: [] as WhistleblowingRecord[],
   wbInvestigationRecords: [] as WBInvestigationRecord[],
+  admissionReferrals: [] as AdmissionReferral[],
+  healthRecordEntries: [] as HealthRecordEntry[],
   ypSavingsAccountRecords: [] as YPSavingsAccountRecord[],
   // Shift Swap Requests
   shiftSwaps: [
@@ -2621,6 +2625,7 @@ store.educationRecords = [
     id: "edu_001", child_id: "yp_alex", record_type: "attendance", title: "Full day attendance",
     date: daysFromNow(-1), school: "Derby Alternative Provision",
     details: "Alex attended all lessons. Positive feedback from English teacher — engaged well in creative writing task.",
+    attendance_status: "present", linked_pep: false,
     outcome: undefined, follow_up_date: undefined, staff_id: "staff_edward", status: "open",
     home_id: "home_oak", created_at: daysFromNow(-1) + "T16:00:00Z",
   },
@@ -2628,6 +2633,7 @@ store.educationRecords = [
     id: "edu_002", child_id: "yp_alex", record_type: "exclusion", title: "Fixed-term exclusion — 1 day",
     date: daysFromNow(-3), school: "Derby Alternative Provision",
     details: "Alex excluded for one day following verbal altercation with teaching assistant. Refused to leave classroom when asked. School applied fixed-term exclusion under behaviour policy.",
+    attendance_status: "excluded", linked_pep: false,
     outcome: "Reintegration meeting booked with inclusion lead. Key worker to attend.",
     follow_up_date: daysFromNow(-1), staff_id: "staff_edward", status: "monitoring",
     home_id: "home_oak", created_at: daysFromNow(-3) + "T14:00:00Z",
@@ -2636,6 +2642,7 @@ store.educationRecords = [
     id: "edu_003", child_id: "yp_jordan", record_type: "attendance", title: "Full day attendance",
     date: daysFromNow(-2), school: "Highfields Academy",
     details: "Jordan attended full day. Completed maths assessment — scored 72%. Teacher notes improvement in concentration.",
+    attendance_status: "present", linked_pep: false,
     outcome: undefined, follow_up_date: undefined, staff_id: "staff_anna", status: "open",
     home_id: "home_oak", created_at: daysFromNow(-2) + "T16:00:00Z",
   },
@@ -2643,6 +2650,7 @@ store.educationRecords = [
     id: "edu_004", child_id: "yp_casey", record_type: "attendance", title: "Late arrival — transport issue",
     date: daysFromNow(-2), school: "Allestree Woodlands",
     details: "Casey arrived 25 minutes late due to vehicle breakdown on the school run. School notified in advance.",
+    attendance_status: "late", linked_pep: false,
     outcome: undefined, follow_up_date: undefined, staff_id: "staff_chervelle", status: "open",
     home_id: "home_oak", created_at: daysFromNow(-2) + "T09:30:00Z",
   },
@@ -2650,14 +2658,16 @@ store.educationRecords = [
     id: "edu_005", child_id: "yp_jordan", record_type: "pep_meeting", title: "PEP Review — Spring Term",
     date: daysFromNow(-7), school: "Highfields Academy",
     details: "Personal Education Plan review held with Virtual School Head, designated teacher, and key worker. Jordan making expected progress in English and exceeding in PE. Maths remains below expected — additional 1:1 tutoring agreed.",
+    attendance_status: null, linked_pep: true,
     outcome: "1:1 maths tutoring to start next week. Reading challenge participation agreed. Next PEP review: Summer term.",
     follow_up_date: daysFromNow(56), staff_id: "staff_anna", status: "monitoring",
     home_id: "home_oak", created_at: daysFromNow(-7) + "T14:30:00Z",
   },
   {
-    id: "edu_006", child_id: "yp_casey", record_type: "achievement", title: "English mock result — Grade 5",
+    id: "edu_006", child_id: "yp_casey", record_type: "attainment", title: "English mock result — Grade 5",
     date: daysFromNow(-5), school: "Allestree Woodlands",
     details: "Casey achieved Grade 5 in English Language mock exam. Significant improvement from Grade 3 in autumn term. Teacher impressed with essay structure development.",
+    attendance_status: null, linked_pep: true,
     outcome: "Positive feedback shared with Casey. Achievement celebrated at house meeting.",
     follow_up_date: undefined, staff_id: "staff_chervelle", status: "resolved",
     home_id: "home_oak", created_at: daysFromNow(-5) + "T15:30:00Z",
@@ -2666,6 +2676,7 @@ store.educationRecords = [
     id: "edu_007", child_id: "yp_alex", record_type: "pep_meeting", title: "Emergency PEP — post-exclusion",
     date: daysFromNow(-10), school: "Derby Alternative Provision",
     details: "Emergency PEP called following second exclusion this term. Discussed triggers, reintegration support, and whether provision remains suitable. Virtual School Head recommended additional behaviour support and possible assessment for EHCP.",
+    attendance_status: null, linked_pep: true,
     outcome: "EHCP assessment referral to be made. Behaviour support plan updated. Reduced timetable for 2 weeks. Key worker to do daily school check-ins.",
     follow_up_date: daysFromNow(14), staff_id: "staff_darren", status: "monitoring",
     home_id: "home_oak", created_at: daysFromNow(-10) + "T10:00:00Z",
@@ -2674,6 +2685,7 @@ store.educationRecords = [
     id: "edu_008", child_id: "yp_casey", record_type: "achievement", title: "Selected for school debate team",
     date: daysFromNow(-1), school: "Allestree Woodlands",
     details: "Casey selected to represent Year 11 in inter-school debate competition. Topic: social media impact. Casey enthusiastic and has begun research.",
+    attendance_status: null, linked_pep: false,
     outcome: "Competition date: 3 weeks. Staff to support with practice sessions at home.",
     follow_up_date: daysFromNow(21), staff_id: "staff_chervelle", status: "open",
     home_id: "home_oak", created_at: daysFromNow(-1) + "T16:30:00Z",
@@ -2682,6 +2694,7 @@ store.educationRecords = [
     id: "edu_009", child_id: "yp_alex", record_type: "concern", title: "Persistent absence pattern",
     date: daysFromNow(-15), school: "Derby Alternative Provision",
     details: "School flagged that Alex's attendance has dropped to 76% this term. Three unauthorised absences in last two weeks — Alex refusing to attend on mornings after difficult evenings. Pattern emerging.",
+    attendance_status: null, linked_pep: false,
     outcome: "Attendance meeting with school booked. Morning routine review with Alex. Consider transport support.",
     follow_up_date: daysFromNow(-10), staff_id: "staff_edward", status: "monitoring",
     home_id: "home_oak", created_at: daysFromNow(-15) + "T10:00:00Z",
@@ -2690,9 +2703,178 @@ store.educationRecords = [
     id: "edu_010", child_id: "yp_jordan", record_type: "achievement", title: "PE Award — Student of the Week",
     date: daysFromNow(-4), school: "Highfields Academy",
     details: "Jordan received Student of the Week award for PE. Teacher praised leadership during team sports and positive attitude. Jordan visibly proud — brought certificate home.",
+    attendance_status: null, linked_pep: false,
     outcome: "Certificate displayed in Jordan's room. Achievement shared at team meeting. Positive feedback to social worker.",
     follow_up_date: undefined, staff_id: "staff_anna", status: "resolved",
     home_id: "home_oak", created_at: daysFromNow(-4) + "T16:00:00Z",
+  },
+];
+
+// ── Admission Referrals seed data ────────────────────────────────────────────
+store.admissionReferrals = [
+  {
+    id: "ref_001", child_name: "Child A", date_of_birth: "2011-08-15", age: 14, gender: "male",
+    ethnicity: "White British", referral_date: daysFromNow(-3), referral_source: "local_authority",
+    referred_by: "Jennifer Brooks — Placement Team", local_authority: "Nottinghamshire County Council",
+    status: "under_assessment",
+    presenting_needs: ["Emotional and behavioural difficulties", "School exclusion", "Previous placement breakdown", "Attachment difficulties"],
+    risk_factors: ["Self-harm history", "Absconding from previous placement", "Peer-on-peer aggression"],
+    placement_history: "Two foster placements (both broke down), one residential placement (six months).",
+    impact_assessment_complete: false, impact_assessment_notes: "",
+    matching_considerations: "Need to consider impact on current cohort. Age-appropriate. Gender mix would be maintained.",
+    decision_date: "", decision_by: "", decision_reason: "",
+    estimated_placement_date: "", notes: "Urgent placement needed. Current placement giving 28 days notice.",
+    staff_id: "staff_darren", home_id: "home_oak", created_at: daysFromNow(-3) + "T09:00:00Z",
+  },
+  {
+    id: "ref_002", child_name: "Child B", date_of_birth: "2010-03-22", age: 16, gender: "female",
+    ethnicity: "Mixed — White and Black Caribbean", referral_date: daysFromNow(-14), referral_source: "local_authority",
+    referred_by: "Marcus Johnson — CLA Team", local_authority: "Derby City Council",
+    status: "impact_assessment",
+    presenting_needs: ["Learning difficulties", "Low self-esteem", "Family breakdown", "Mild anxiety"],
+    risk_factors: ["Vulnerability to exploitation", "Previous missing episodes"],
+    placement_history: "Long-term foster placement ended due to carer retirement. No previous residential.",
+    impact_assessment_complete: true,
+    impact_assessment_notes: "Impact assessment shows low risk to current group. Child B's needs align well with our model. Age and maturity would be positive addition. Safeguarding considerations re exploitation risk — addressed in risk management plan.",
+    matching_considerations: "Good match for current cohort. Similar age to Casey. Would benefit from structured environment and therapeutic approach.",
+    decision_date: "", decision_by: "", decision_reason: "",
+    estimated_placement_date: daysFromNow(14),
+    notes: "Positive referral. Strong matching potential. Panel scheduled for next week.",
+    staff_id: "staff_darren", home_id: "home_oak", created_at: daysFromNow(-14) + "T10:00:00Z",
+  },
+  {
+    id: "ref_003", child_name: "Child C", date_of_birth: "2012-11-01", age: 13, gender: "male",
+    ethnicity: "Asian — Pakistani", referral_date: daysFromNow(-30), referral_source: "emergency",
+    referred_by: "Emergency Duty Team — Derbyshire", local_authority: "Derbyshire County Council",
+    status: "declined",
+    presenting_needs: ["Sexual harmful behaviour", "Fire-setting", "Severe trauma history"],
+    risk_factors: ["Sexual harmful behaviour towards peers", "History of fire-setting", "Severe emotional dysregulation"],
+    placement_history: "Three placement breakdowns in 12 months. Currently in unregulated provision.",
+    impact_assessment_complete: true,
+    impact_assessment_notes: "Impact assessment concluded that placement would pose unacceptable risk to current young people, particularly given sexual harmful behaviour. Our home is not registered for this complexity level.",
+    matching_considerations: "Not suitable for current cohort. Risk to existing children too high. Registration does not cover this level of need.",
+    decision_date: daysFromNow(-25), decision_by: "staff_darren",
+    decision_reason: "Declined — presenting needs exceed our Statement of Purpose and registration. Risk to existing children unacceptable.",
+    estimated_placement_date: "",
+    notes: "Referral declined with full rationale shared with LA. Suggested specialist provision.",
+    staff_id: "staff_darren", home_id: "home_oak", created_at: daysFromNow(-30) + "T08:00:00Z",
+  },
+  {
+    id: "ref_004", child_name: "Child D", date_of_birth: "2010-07-10", age: 15, gender: "non_binary",
+    ethnicity: "White British", referral_date: daysFromNow(-45), referral_source: "agency",
+    referred_by: "Compass Fostering — Rebecca Lane", local_authority: "Leicester City Council",
+    status: "withdrawn",
+    presenting_needs: ["Gender identity support needed", "Bullying at school", "Mild ADHD", "Attachment needs"],
+    risk_factors: ["Self-harm (historical, resolved)", "Low-level substance experimentation"],
+    placement_history: "Two foster placements. Current foster carer unable to provide gender-affirming support.",
+    impact_assessment_complete: false, impact_assessment_notes: "",
+    matching_considerations: "Good potential match. Would benefit from our therapeutic model.",
+    decision_date: daysFromNow(-35), decision_by: "",
+    decision_reason: "Withdrawn by LA — child placed with specialist foster carer.",
+    estimated_placement_date: "",
+    notes: "LA found alternative placement before we completed assessment.",
+    staff_id: "staff_darren", home_id: "home_oak", created_at: daysFromNow(-45) + "T11:00:00Z",
+  },
+  {
+    id: "ref_005", child_name: "Casey", date_of_birth: "2011-06-18", age: 14, gender: "female",
+    ethnicity: "Mixed — White and Asian", referral_date: daysFromNow(-60), referral_source: "local_authority",
+    referred_by: "Emma Watson — Derby CLA Team", local_authority: "Derby City Council",
+    status: "placed",
+    presenting_needs: ["Identity needs", "Previous placement concerns", "Low confidence", "Creative strengths"],
+    risk_factors: ["Vulnerability to emotional harm", "Difficulty trusting adults"],
+    placement_history: "One foster placement — ended due to placement concerns raised by child.",
+    impact_assessment_complete: true,
+    impact_assessment_notes: "Excellent match for current cohort. Casey's needs align with our strengths — identity work, creative expression, therapeutic model. Low risk to group.",
+    matching_considerations: "Strong match. Similar age to peers. Would benefit from structured care and creative opportunities.",
+    decision_date: daysFromNow(-50), decision_by: "staff_darren",
+    decision_reason: "Accepted — strong match. Casey's needs align well with our Statement of Purpose.",
+    estimated_placement_date: daysFromNow(-31),
+    notes: "Casey placed successfully. Settling in well.",
+    staff_id: "staff_darren", home_id: "home_oak", created_at: daysFromNow(-60) + "T09:00:00Z",
+  },
+];
+
+// ── Health Record Entries seed data ──────────────────────────────────────────
+store.healthRecordEntries = [
+  {
+    id: "hr_001", child_id: "yp_alex", date: daysFromNow(-30), record_type: "health_assessment",
+    title: "Initial Health Assessment",
+    details: "Comprehensive health assessment completed within 20 days of placement. General health good. BMI within normal range. Immunisations up to date. Dental: some decay noted — dental appointment booked. Eyesight: normal. Hearing: normal. CAMHS referral recommended due to emotional regulation difficulties.",
+    professional: "Dr. S. Patel (GP)", status: "current",
+    follow_up_date: daysFromNow(150), outcome: "Dental referral made. CAMHS referral submitted. Health action plan created.",
+    staff_id: "staff_darren", home_id: "home_oak", created_at: daysFromNow(-30) + "T10:00:00Z",
+  },
+  {
+    id: "hr_002", child_id: "yp_jordan", date: daysFromNow(-60), record_type: "allergy",
+    title: "Penicillin Allergy — documented",
+    details: "Known allergy to Penicillin documented from referral paperwork. Allergic reaction: rash and swelling. GP confirmed allergy. Allergy band provided. All staff briefed. School nurse notified. Alternative antibiotics noted in health plan.",
+    professional: "Dr. A. Khan (GP)", status: "current",
+    follow_up_date: null, outcome: "Allergy documented in health plan, MAR, and school records. EpiPen not required — reaction is mild.",
+    staff_id: "staff_anna", home_id: "home_oak", created_at: daysFromNow(-60) + "T09:00:00Z",
+  },
+  {
+    id: "hr_003", child_id: "yp_casey", date: daysFromNow(-14), record_type: "mental_health",
+    title: "CAMHS Review — anxiety management",
+    details: "CAMHS review session. Casey reports improved sleep over the past two weeks following sleep hygiene strategies. Anxiety levels reduced but still present around school transitions. Therapist recommends continuing current approach.",
+    professional: "Dr. H. Williams (CAMHS)", status: "monitoring",
+    follow_up_date: daysFromNow(42), outcome: "Continue current strategies. Next review in 6 weeks. No medication change.",
+    staff_id: "staff_chervelle", home_id: "home_oak", created_at: daysFromNow(-14) + "T14:00:00Z",
+  },
+  {
+    id: "hr_004", child_id: "yp_casey", date: daysFromNow(-7), record_type: "optical",
+    title: "Eye test — prescription change",
+    details: "Annual eye test at Specsavers. Slight prescription change detected. Casey has been reporting headaches during reading which is consistent with eye strain. New glasses ordered.",
+    professional: "Specsavers Optometrist", status: "current",
+    follow_up_date: daysFromNow(3), outcome: "New glasses ordered. 7-10 day wait. Headaches expected to resolve.",
+    staff_id: "staff_diane", home_id: "home_oak", created_at: daysFromNow(-7) + "T13:30:00Z",
+  },
+  {
+    id: "hr_005", child_id: "yp_jordan", date: daysFromNow(-90), record_type: "immunisation",
+    title: "Flu vaccination",
+    details: "Annual flu vaccination administered at school by school nurse. Jordan consented. No adverse reaction reported. Observed for 15 minutes post-vaccination.",
+    professional: "School Nurse", status: "resolved",
+    follow_up_date: null, outcome: "Vaccination recorded on health record. No side effects.",
+    staff_id: "staff_anna", home_id: "home_oak", created_at: daysFromNow(-90) + "T11:00:00Z",
+  },
+  {
+    id: "hr_006", child_id: "yp_alex", date: daysFromNow(-20), record_type: "referral",
+    title: "CAMHS Referral — emotional regulation",
+    details: "Referral submitted to Derby CAMHS for emotional regulation assessment. Referral includes history of physical interventions, self-harm risk, and trauma background. Priority assessment requested given safeguarding context.",
+    professional: "Dr. S. Patel (GP)", status: "referred",
+    follow_up_date: daysFromNow(10), outcome: "Referral accepted. Initial assessment booked — see appointments.",
+    staff_id: "staff_darren", home_id: "home_oak", created_at: daysFromNow(-20) + "T10:00:00Z",
+  },
+  {
+    id: "hr_007", child_id: "yp_casey", date: daysFromNow(-120), record_type: "dental",
+    title: "Dental check-up — routine",
+    details: "6-monthly dental check-up. No new cavities. Good oral hygiene. One small filling from previous visit holding well. Next check-up in 6 months.",
+    professional: "Mr. Ahmed (Dentist)", status: "resolved",
+    follow_up_date: daysFromNow(60), outcome: "Good dental health. Next check-up booked.",
+    staff_id: "staff_chervelle", home_id: "home_oak", created_at: daysFromNow(-120) + "T10:00:00Z",
+  },
+  {
+    id: "hr_008", child_id: "yp_alex", date: daysFromNow(-45), record_type: "condition",
+    title: "Asthma — mild, controlled",
+    details: "Pre-existing asthma documented from referral. Mild, well-controlled with salbutamol inhaler PRN. No hospital admissions. Triggers: cold weather, exercise. Asthma plan in place.",
+    professional: "Dr. S. Patel (GP)", status: "current",
+    follow_up_date: daysFromNow(90), outcome: "Inhaler available at home and school. Asthma plan reviewed annually.",
+    staff_id: "staff_darren", home_id: "home_oak", created_at: daysFromNow(-45) + "T09:00:00Z",
+  },
+  {
+    id: "hr_009", child_id: "yp_jordan", date: daysFromNow(-10), record_type: "growth",
+    title: "Height & weight check",
+    details: "Routine height and weight check. Jordan: Height 152cm (50th percentile), Weight 43kg (45th percentile). BMI within healthy range. Growth tracking normal. No concerns.",
+    professional: "School Nurse", status: "resolved",
+    follow_up_date: daysFromNow(180), outcome: "Growth within normal parameters. Next check in 6 months.",
+    staff_id: "staff_anna", home_id: "home_oak", created_at: daysFromNow(-10) + "T11:00:00Z",
+  },
+  {
+    id: "hr_010", child_id: "yp_casey", date: daysFromNow(-2), record_type: "condition",
+    title: "Sleep disturbance — ongoing monitoring",
+    details: "Casey continues to experience intermittent sleep difficulties. Current approach: consistent bedtime routine, no screens 1hr before bed, calm environment. GP reviewed — no medication change. CAMHS monitoring.",
+    professional: "Dr. L. Chen (GP)", status: "monitoring",
+    follow_up_date: daysFromNow(90), outcome: "Continue current sleep hygiene approach. Monitor and review at next GP appointment.",
+    staff_id: "staff_chervelle", home_id: "home_oak", created_at: daysFromNow(-2) + "T09:00:00Z",
   },
 ];
 
@@ -9830,6 +10012,36 @@ export const db = {
       if (idx === -1) return null;
       store.wbInvestigationRecords[idx] = { ...store.wbInvestigationRecords[idx], ...data };
       return store.wbInvestigationRecords[idx];
+    },
+  },
+
+  healthRecordEntries: {
+    getAll: () => store.healthRecordEntries,
+    create: (data: Omit<HealthRecordEntry, "id">) => {
+      const record = { ...data, id: generateId("hr_") } as HealthRecordEntry;
+      store.healthRecordEntries.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<HealthRecordEntry>) => {
+      const idx = store.healthRecordEntries.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.healthRecordEntries[idx] = { ...store.healthRecordEntries[idx], ...data };
+      return store.healthRecordEntries[idx];
+    },
+  },
+
+  admissionReferrals: {
+    getAll: () => store.admissionReferrals,
+    create: (data: Omit<AdmissionReferral, "id">) => {
+      const record = { ...data, id: generateId("ref_") } as AdmissionReferral;
+      store.admissionReferrals.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<AdmissionReferral>) => {
+      const idx = store.admissionReferrals.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.admissionReferrals[idx] = { ...store.admissionReferrals[idx], ...data };
+      return store.admissionReferrals[idx];
     },
   },
 

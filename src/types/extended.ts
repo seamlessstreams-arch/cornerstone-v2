@@ -2327,16 +2327,21 @@ export interface KeyWorkingSession {
 
 // ── Education Records ────────────────────────────────────────────────────────
 
+export type EducationRecordType = "attendance" | "exclusion" | "pep_meeting" | "attainment" | "provision_change" | "achievement" | "concern";
+export type EducationAttendanceStatus = "present" | "absent_authorised" | "absent_unauthorised" | "late" | "excluded" | "part_day";
+
 export interface EducationRecord {
   id: string;
   child_id: string;
-  record_type: "attendance" | "exclusion" | "pep_meeting" | "achievement" | "concern" | "placement_change";
+  record_type: EducationRecordType;
   title: string;
   date: string;
   school?: string;
   details?: string;
   outcome?: string;
   follow_up_date?: string;
+  attendance_status?: EducationAttendanceStatus | null;
+  linked_pep?: boolean;
   staff_id: string;
   status: "open" | "resolved" | "monitoring";
   home_id?: string;
@@ -21431,6 +21436,68 @@ export interface WBInvestigationRecord {
   status: WBInvestigationStatus;
   closed_date: string;
   data_protection_maintained: boolean;
+}
+
+// ── Health Records ──────────────────────────────────────────────────────────
+export type HealthRecordType = "health_assessment" | "immunisation" | "allergy" | "condition" | "referral" | "dental" | "optical" | "mental_health" | "growth" | "other";
+export type HealthRecordStatus = "current" | "resolved" | "monitoring" | "referred" | "overdue";
+
+export interface HealthRecordEntry {
+  id: string;
+  child_id: string;
+  date: string;
+  record_type: HealthRecordType;
+  title: string;
+  details: string;
+  professional: string;
+  status: HealthRecordStatus;
+  follow_up_date: string | null;
+  outcome: string | null;
+  staff_id: string;
+  home_id?: string;
+  created_at?: string;
+}
+
+// ── Admission Referrals ─────────────────────────────────────────────────────
+export type AdmissionReferralStatus = "new" | "under_assessment" | "impact_assessment" | "panel_decision" | "accepted" | "declined" | "withdrawn" | "placed";
+export type AdmissionReferralSource = "local_authority" | "agency" | "emergency" | "internal_transfer" | "court_directed";
+export type AdmissionGender = "male" | "female" | "non_binary" | "prefer_not_to_say";
+
+export const ADMISSION_REFERRAL_STATUS_LABEL: Record<AdmissionReferralStatus, string> = {
+  new: "New Referral", under_assessment: "Under Assessment", impact_assessment: "Impact Assessment",
+  panel_decision: "Panel Decision", accepted: "Accepted", declined: "Declined", withdrawn: "Withdrawn", placed: "Placed",
+};
+export const ADMISSION_REFERRAL_SOURCE_LABEL: Record<AdmissionReferralSource, string> = {
+  local_authority: "Local Authority", agency: "Agency", emergency: "Emergency",
+  internal_transfer: "Internal Transfer", court_directed: "Court Directed",
+};
+
+export interface AdmissionReferral {
+  id: string;
+  child_name: string;
+  date_of_birth: string;
+  age: number;
+  gender: AdmissionGender;
+  ethnicity: string;
+  referral_date: string;
+  referral_source: AdmissionReferralSource;
+  referred_by: string;
+  local_authority: string;
+  status: AdmissionReferralStatus;
+  presenting_needs: string[];
+  risk_factors: string[];
+  placement_history: string;
+  impact_assessment_complete: boolean;
+  impact_assessment_notes: string;
+  matching_considerations: string;
+  decision_date: string;
+  decision_by: string;
+  decision_reason: string;
+  estimated_placement_date: string;
+  notes: string;
+  staff_id: string;
+  home_id?: string;
+  created_at?: string;
 }
 
 // ── YP Savings ──────────────────────────────────────────────────────────────
