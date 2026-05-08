@@ -19565,3 +19565,337 @@ export interface SensoryProfileRecord {
   professional_input: string;
   notes: string;
 }
+
+/* ── sensory-room-usage ──────────────────────────────────────────────────── */
+
+export type SensoryRoomInitiatedBy = "self" | "staff_prompted" | "routine_scheduled" | "crisis_de_escalation";
+export const SENSORY_ROOM_INITIATED_BY_LABEL: Record<SensoryRoomInitiatedBy, string> = {
+  self: "Self",
+  staff_prompted: "Staff prompted",
+  routine_scheduled: "Routine scheduled",
+  crisis_de_escalation: "Crisis de-escalation",
+};
+
+export interface SensoryRoomUsageRecord {
+  id: string;
+  child_id: string;
+  date: string;
+  start_time: string;
+  end_time: string;
+  duration_minutes: number;
+  initiated_by: SensoryRoomInitiatedBy;
+  preceding_state: string;
+  pre_state_rating: number;
+  tools_used: string[];
+  staff_present: string[];
+  post_state_rating: number;
+  effectiveness_rating: number;
+  child_comment: string;
+  staff_observation: string;
+  outcomes_achieved: string[];
+  follow_up_needed: string;
+}
+
+/* ── serious-incident-reviews ────────────────────────────────────────────── */
+
+export type SeriousIncidentReviewType = "serious_incident" | "near_miss" | "safeguarding_practice" | "complaint_learning" | "external_review" | "thematic";
+export const SERIOUS_INCIDENT_REVIEW_TYPE_LABEL: Record<SeriousIncidentReviewType, string> = {
+  serious_incident: "Serious Incident",
+  near_miss: "Near Miss",
+  safeguarding_practice: "Safeguarding Practice",
+  complaint_learning: "Complaint Learning",
+  external_review: "External Review",
+  thematic: "Thematic Review",
+};
+
+export type SeriousIncidentReviewStatus = "initiated" | "under_review" | "draft_report" | "final_report" | "actions_in_progress" | "closed" | "monitoring";
+export const SERIOUS_INCIDENT_REVIEW_STATUS_LABEL: Record<SeriousIncidentReviewStatus, string> = {
+  initiated: "Initiated",
+  under_review: "Under Review",
+  draft_report: "Draft Report",
+  final_report: "Final Report",
+  actions_in_progress: "Actions In Progress",
+  closed: "Closed",
+  monitoring: "Monitoring",
+};
+
+export type SeriousIncidentReviewConfidentiality = "standard" | "restricted" | "highly_restricted";
+export const SERIOUS_INCIDENT_REVIEW_CONFIDENTIALITY_LABEL: Record<SeriousIncidentReviewConfidentiality, string> = {
+  standard: "Standard",
+  restricted: "Restricted",
+  highly_restricted: "Highly Restricted",
+};
+
+export type SeriousIncidentReviewActionStatus = "pending" | "in_progress" | "completed" | "overdue";
+export const SERIOUS_INCIDENT_REVIEW_ACTION_STATUS_LABEL: Record<SeriousIncidentReviewActionStatus, string> = {
+  pending: "Pending",
+  in_progress: "In Progress",
+  completed: "Completed",
+  overdue: "Overdue",
+};
+
+export type SeriousIncidentReviewImpactLevel = "high" | "medium" | "low";
+
+export interface SeriousIncidentReviewLessonLearned {
+  lesson: string;
+  category: string;
+  impact_level: SeriousIncidentReviewImpactLevel;
+}
+
+export interface SeriousIncidentReviewAction {
+  action: string;
+  owner: string;
+  due_date: string;
+  status: SeriousIncidentReviewActionStatus;
+  evidence: string;
+}
+
+export interface SeriousIncidentReviewPanelMember {
+  name: string;
+  role: string;
+}
+
+export interface SeriousIncidentReviewExternalNotification {
+  body: string;
+  date: string;
+  reference: string;
+}
+
+export interface SeriousIncidentReviewRecord {
+  id: string;
+  title: string;
+  review_type: SeriousIncidentReviewType;
+  incident_date: string;
+  review_commenced_date: string;
+  review_completed_date: string | null;
+  linked_incidents: string[];
+  young_people_involved: string[];
+  staff_involved: string[];
+  review_lead: string;
+  panel_members: SeriousIncidentReviewPanelMember[];
+  background_summary: string;
+  key_findings: string[];
+  lessons_learned: SeriousIncidentReviewLessonLearned[];
+  recommendations: string[];
+  actions: SeriousIncidentReviewAction[];
+  external_notifications: SeriousIncidentReviewExternalNotification[];
+  practice_changes: string[];
+  training_implications: string[];
+  policy_changes: string[];
+  status: SeriousIncidentReviewStatus;
+  next_review_date: string | null;
+  confidentiality: SeriousIncidentReviewConfidentiality;
+}
+
+/* ── service-improvement-board ───────────────────────────────────────────── */
+
+export type ServiceImprovementStatus = "proposed" | "approved" | "in_progress" | "implemented" | "embedded" | "on_hold" | "closed";
+export const SERVICE_IMPROVEMENT_STATUS_LABEL: Record<ServiceImprovementStatus, string> = {
+  proposed: "Proposed",
+  approved: "Approved",
+  in_progress: "In Progress",
+  implemented: "Implemented",
+  embedded: "Embedded",
+  on_hold: "On Hold",
+  closed: "Closed",
+};
+
+export type ServiceImprovementCategory = "practice" | "environment" | "workforce" | "childrens_experience" | "multi_agency" | "compliance" | "wellbeing" | "recording";
+export const SERVICE_IMPROVEMENT_CATEGORY_LABEL: Record<ServiceImprovementCategory, string> = {
+  practice: "Practice",
+  environment: "Environment",
+  workforce: "Workforce",
+  childrens_experience: "Children's experience",
+  multi_agency: "Multi-agency",
+  compliance: "Compliance",
+  wellbeing: "Wellbeing",
+  recording: "Recording",
+};
+
+export type ServiceImprovementSource = "reg_44_feedback" | "reg_45_review" | "childrens_voice" | "staff_suggestion" | "audit_finding" | "ofsted" | "sector_guidance";
+export const SERVICE_IMPROVEMENT_SOURCE_LABEL: Record<ServiceImprovementSource, string> = {
+  reg_44_feedback: "Reg 44 feedback",
+  reg_45_review: "Reg 45 review",
+  childrens_voice: "Children's voice",
+  staff_suggestion: "Staff suggestion",
+  audit_finding: "Audit finding",
+  ofsted: "Ofsted",
+  sector_guidance: "Sector guidance",
+};
+
+export type ServiceImprovementRagRating = "red" | "amber" | "green";
+export const SERVICE_IMPROVEMENT_RAG_RATING_LABEL: Record<ServiceImprovementRagRating, string> = {
+  red: "Red",
+  amber: "Amber",
+  green: "Green",
+};
+
+export interface ServiceImprovementMilestone {
+  milestone: string;
+  target_date: string;
+  achieved: boolean;
+  achieved_date: string;
+}
+
+export interface ServiceImprovementRecord {
+  id: string;
+  title: string;
+  category: ServiceImprovementCategory;
+  description: string;
+  problem_statement: string;
+  expected_outcome: string;
+  evidence_base: string;
+  source: ServiceImprovementSource;
+  start_date: string;
+  target_completion_date: string;
+  status: ServiceImprovementStatus;
+  owner_staff: string;
+  contributors: string[];
+  key_milestones: ServiceImprovementMilestone[];
+  child_involvement: string;
+  staff_involvement: string;
+  resources_required: string[];
+  success_measures: string[];
+  early_results: string;
+  challenges: string[];
+  risk_rag_rating: ServiceImprovementRagRating;
+  budget_allocated: number;
+  last_review_date: string;
+  next_review_date: string;
+}
+
+/* ── service-user-agreements ─────────────────────────────────────────────── */
+
+export type ServiceUserAgreementType = "house_rules" | "device_use" | "bedroom_expectations" | "kitchen_use" | "visitor_expectations" | "community_behaviour" | "chores" | "bedtime" | "rewards_framework" | "individual_boundary";
+export const SERVICE_USER_AGREEMENT_TYPE_LABEL: Record<ServiceUserAgreementType, string> = {
+  house_rules: "House Rules Agreement",
+  device_use: "Device & Phone Agreement",
+  bedroom_expectations: "Bedroom Standards",
+  kitchen_use: "Kitchen Use",
+  visitor_expectations: "Visitors & Friends",
+  community_behaviour: "Community Behaviour",
+  chores: "Chores & Responsibilities",
+  bedtime: "Bedtime Agreement",
+  rewards_framework: "Rewards Framework",
+  individual_boundary: "Individual Boundary Plan",
+};
+
+export type ServiceUserAgreementStatus = "active" | "under_review" | "expired" | "draft";
+export const SERVICE_USER_AGREEMENT_STATUS_LABEL: Record<ServiceUserAgreementStatus, string> = {
+  active: "Active",
+  under_review: "Under Review",
+  expired: "Expired",
+  draft: "Draft",
+};
+
+export interface ServiceUserAgreementRule {
+  rule: string;
+  agreed_by_yp: boolean;
+  notes: string;
+}
+
+export interface ServiceUserAgreementRecord {
+  id: string;
+  child_id: string;
+  agreement_type: ServiceUserAgreementType;
+  status: ServiceUserAgreementStatus;
+  created_date: string;
+  review_date: string;
+  last_reviewed_date: string;
+  created_by: string;
+  young_person_signed_date: string | null;
+  young_person_views: string;
+  rules: ServiceUserAgreementRule[];
+  consequences: string;
+  rewards: string;
+  modifications: string;
+  social_worker_aware: boolean;
+}
+
+/* ── shift-notes ─────────────────────────────────────────────────────────── */
+
+export type ShiftNoteShiftType = "morning" | "afternoon" | "evening" | "night" | "sleep_in";
+export const SHIFT_NOTE_SHIFT_TYPE_LABEL: Record<ShiftNoteShiftType, string> = {
+  morning: "Morning",
+  afternoon: "Afternoon",
+  evening: "Evening",
+  night: "Night",
+  sleep_in: "Sleep-In",
+};
+
+export type ShiftNoteChildMood = "great" | "good" | "okay" | "low" | "distressed";
+export const SHIFT_NOTE_CHILD_MOOD_LABEL: Record<ShiftNoteChildMood, string> = {
+  great: "Great",
+  good: "Good",
+  okay: "Okay",
+  low: "Low",
+  distressed: "Distressed",
+};
+
+export interface ShiftNoteChildNote {
+  child_id: string;
+  mood: ShiftNoteChildMood;
+  summary: string;
+  meals: string;
+  medication: boolean;
+  concerns: string;
+}
+
+export interface ShiftNoteRecord {
+  id: string;
+  date: string;
+  shift: ShiftNoteShiftType;
+  start_time: string;
+  end_time: string;
+  staff_on_duty: string[];
+  child_notes: ShiftNoteChildNote[];
+  general_notes: string;
+  maintenance_issues: string;
+  visitors_log: string;
+  handover_priorities: string[];
+  incidents_ref: string[];
+  completed_tasks: string[];
+  outstanding_tasks: string[];
+  recorded_by: string;
+  created_at: string;
+}
+
+/* ── siblings-contact-protocol ───────────────────────────────────────────── */
+
+export interface SiblingContactRecentContact {
+  date: string;
+  type: string;
+  observations: string;
+  child_mood_after: string;
+}
+
+export interface SiblingContactProtocolRecord {
+  id: string;
+  child_id: string;
+  sibling_name: string;
+  sibling_placement: string;
+  sibling_location: string;
+  relationship_pre_oak_house: string;
+  current_relationship_quality: string;
+  contact_frequency: string;
+  contact_types: string[];
+  agreed_contact_plan: string;
+  child_preferences: string;
+  sibling_preferences: string;
+  risk_factors_to_contact: string[];
+  protective_factors_to_contact: string[];
+  supervision_required: boolean;
+  supervision_level: string;
+  transport_arrangements: string;
+  contact_costs_budget: string;
+  locations_for_contact: string[];
+  favourite_sibling_activities: string[];
+  birthday_celebration_plan: string;
+  christmas_arrangements: string;
+  court_ordered_contact: boolean;
+  court_order_terms: string;
+  recent_contacts: SiblingContactRecentContact[];
+  ongoing_sibling_themes: string[];
+  review_date: string;
+  reviewed_by: string;
+}

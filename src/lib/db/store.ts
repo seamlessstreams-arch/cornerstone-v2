@@ -321,6 +321,12 @@ import type {
   SelfHarmSafetyPlanRecord,
   SensoryEquipmentRecord,
   SensoryProfileRecord,
+  SensoryRoomUsageRecord,
+  SeriousIncidentReviewRecord,
+  ServiceImprovementRecord,
+  ServiceUserAgreementRecord,
+  ShiftNoteRecord,
+  SiblingContactProtocolRecord,
 } from "@/types/extended";
 import { generateId, todayStr, daysFromNow } from "@/lib/utils";
 
@@ -725,6 +731,12 @@ const store = {
   selfHarmSafetyPlanRecords: [] as SelfHarmSafetyPlanRecord[],
   sensoryEquipmentRecords: [] as SensoryEquipmentRecord[],
   sensoryProfileRecords: [] as SensoryProfileRecord[],
+  sensoryRoomUsageRecords: [] as SensoryRoomUsageRecord[],
+  seriousIncidentReviewRecords: [] as SeriousIncidentReviewRecord[],
+  serviceImprovementRecords: [] as ServiceImprovementRecord[],
+  serviceUserAgreementRecords: [] as ServiceUserAgreementRecord[],
+  shiftNoteRecords: [] as ShiftNoteRecord[],
+  siblingContactProtocolRecords: [] as SiblingContactProtocolRecord[],
   // Shift Swap Requests
   shiftSwaps: [
     {
@@ -9126,6 +9138,99 @@ export const db = {
       if (idx === -1) return null;
       store.sensoryProfileRecords[idx] = { ...store.sensoryProfileRecords[idx], ...data };
       return store.sensoryProfileRecords[idx];
+    },
+  },
+
+  sensoryRoomUsageRecords: {
+    getAll: () => store.sensoryRoomUsageRecords,
+    getByChild: (childId: string) => store.sensoryRoomUsageRecords.filter((r) => r.child_id === childId),
+    create: (data: Omit<SensoryRoomUsageRecord, "id">) => {
+      const record = { ...data, id: generateId("srur_") } as SensoryRoomUsageRecord;
+      store.sensoryRoomUsageRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<SensoryRoomUsageRecord>) => {
+      const idx = store.sensoryRoomUsageRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.sensoryRoomUsageRecords[idx] = { ...store.sensoryRoomUsageRecords[idx], ...data };
+      return store.sensoryRoomUsageRecords[idx];
+    },
+  },
+
+  seriousIncidentReviewRecords: {
+    getAll: () => store.seriousIncidentReviewRecords,
+    create: (data: Omit<SeriousIncidentReviewRecord, "id">) => {
+      const record = { ...data, id: generateId("sirr_") } as SeriousIncidentReviewRecord;
+      store.seriousIncidentReviewRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<SeriousIncidentReviewRecord>) => {
+      const idx = store.seriousIncidentReviewRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.seriousIncidentReviewRecords[idx] = { ...store.seriousIncidentReviewRecords[idx], ...data };
+      return store.seriousIncidentReviewRecords[idx];
+    },
+  },
+
+  serviceImprovementRecords: {
+    getAll: () => store.serviceImprovementRecords,
+    create: (data: Omit<ServiceImprovementRecord, "id">) => {
+      const record = { ...data, id: generateId("sir_") } as ServiceImprovementRecord;
+      store.serviceImprovementRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<ServiceImprovementRecord>) => {
+      const idx = store.serviceImprovementRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.serviceImprovementRecords[idx] = { ...store.serviceImprovementRecords[idx], ...data };
+      return store.serviceImprovementRecords[idx];
+    },
+  },
+
+  serviceUserAgreementRecords: {
+    getAll: () => store.serviceUserAgreementRecords,
+    getByChild: (childId: string) => store.serviceUserAgreementRecords.filter((r) => r.child_id === childId),
+    create: (data: Omit<ServiceUserAgreementRecord, "id">) => {
+      const record = { ...data, id: generateId("suar_") } as ServiceUserAgreementRecord;
+      store.serviceUserAgreementRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<ServiceUserAgreementRecord>) => {
+      const idx = store.serviceUserAgreementRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.serviceUserAgreementRecords[idx] = { ...store.serviceUserAgreementRecords[idx], ...data };
+      return store.serviceUserAgreementRecords[idx];
+    },
+  },
+
+  shiftNoteRecords: {
+    getAll: () => store.shiftNoteRecords,
+    create: (data: Omit<ShiftNoteRecord, "id">) => {
+      const record = { ...data, id: generateId("snr_") } as ShiftNoteRecord;
+      store.shiftNoteRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<ShiftNoteRecord>) => {
+      const idx = store.shiftNoteRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.shiftNoteRecords[idx] = { ...store.shiftNoteRecords[idx], ...data };
+      return store.shiftNoteRecords[idx];
+    },
+  },
+
+  siblingContactProtocolRecords: {
+    getAll: () => store.siblingContactProtocolRecords,
+    getByChild: (childId: string) => store.siblingContactProtocolRecords.filter((r) => r.child_id === childId),
+    create: (data: Omit<SiblingContactProtocolRecord, "id">) => {
+      const record = { ...data, id: generateId("scpr_") } as SiblingContactProtocolRecord;
+      store.siblingContactProtocolRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<SiblingContactProtocolRecord>) => {
+      const idx = store.siblingContactProtocolRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.siblingContactProtocolRecords[idx] = { ...store.siblingContactProtocolRecords[idx], ...data };
+      return store.siblingContactProtocolRecords[idx];
     },
   },
 };
