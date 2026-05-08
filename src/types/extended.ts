@@ -19899,3 +19899,291 @@ export interface SiblingContactProtocolRecord {
   review_date: string;
   reviewed_by: string;
 }
+
+/* ── sleep-assessments ─────────────────────────────────────────────────── */
+
+export type SleepAssessmentStatus = "active" | "needs_review" | "improving" | "concern";
+export const SLEEP_ASSESSMENT_STATUS_LABEL: Record<SleepAssessmentStatus, string> = {
+  active: "Active",
+  needs_review: "Needs Review",
+  improving: "Improving",
+  concern: "Concern",
+};
+
+export type SleepAssessmentQuality = "good" | "fair" | "poor";
+export const SLEEP_ASSESSMENT_QUALITY_LABEL: Record<SleepAssessmentQuality, string> = {
+  good: "Good",
+  fair: "Fair",
+  poor: "Poor",
+};
+
+export type SleepAssessmentTrend = "improving" | "stable" | "declining";
+export const SLEEP_ASSESSMENT_TREND_LABEL: Record<SleepAssessmentTrend, string> = {
+  improving: "Improving",
+  stable: "Stable",
+  declining: "Declining",
+};
+
+export interface SleepAssessmentPattern {
+  weekday: { target: string; actual: string };
+  weekend: { target: string; actual: string };
+}
+
+export interface SleepAssessmentRecord {
+  id: string;
+  child_id: string;
+  assessed_by: string;
+  assessment_date: string;
+  review_date: string;
+  status: SleepAssessmentStatus;
+  sleep_patterns: SleepAssessmentPattern;
+  average_hours: number;
+  sleep_quality: SleepAssessmentQuality;
+  settling_time: string;
+  night_wakings: number;
+  bedtime_routine: string[];
+  barriers: string[];
+  strategies: string[];
+  environmental_factors: string[];
+  medications: string | null;
+  referrals: string | null;
+  impact_on_daytime: string;
+  trend: SleepAssessmentTrend;
+  notes: string;
+}
+
+/* ── sleep-in-log ──────────────────────────────────────────────────────── */
+
+export type SleepInStatus = "completed" | "disturbed" | "abandoned" | "in_progress";
+export const SLEEP_IN_STATUS_LABEL: Record<SleepInStatus, string> = {
+  completed: "Completed",
+  disturbed: "Disturbed",
+  abandoned: "Abandoned",
+  in_progress: "In Progress",
+};
+
+export type SleepInRoomCondition = "clean" | "acceptable" | "needs_attention";
+export const SLEEP_IN_ROOM_CONDITION_LABEL: Record<SleepInRoomCondition, string> = {
+  clean: "Clean",
+  acceptable: "Acceptable",
+  needs_attention: "Needs Attention",
+};
+
+export interface SleepInDisturbance {
+  time: string;
+  duration: number;
+  reason: string;
+  child_id: string | null;
+  response_time: number;
+  action_taken: string;
+  back_to_bed: string;
+}
+
+export interface SleepInRecord {
+  id: string;
+  date: string;
+  staff_member: string;
+  start_time: string;
+  end_time: string;
+  room_used: string;
+  disturbances: SleepInDisturbance[];
+  total_disturbance_minutes: number;
+  rest_achieved: boolean;
+  handover_notes: string;
+  handover_to: string;
+  room_condition: SleepInRoomCondition;
+  safety_check_completed: boolean;
+  alarms_working: boolean;
+  issues_reported: string[];
+  compensatory_rest: boolean;
+  compensatory_rest_date: string | null;
+  status: SleepInStatus;
+  notes: string;
+}
+
+/* ── social-worker-contact ─────────────────────────────────────────────── */
+
+export type SocialWorkerContactType = "phone_call" | "email" | "visit" | "lac_review" | "video_call" | "text" | "unplanned" | "statutory_visit";
+export const SOCIAL_WORKER_CONTACT_TYPE_LABEL: Record<SocialWorkerContactType, string> = {
+  phone_call: "Phone Call",
+  email: "Email",
+  visit: "Visit",
+  lac_review: "LAC Review",
+  video_call: "Video Call",
+  text: "Text",
+  unplanned: "Unplanned",
+  statutory_visit: "Statutory Visit",
+};
+
+export type SocialWorkerContactDirection = "incoming" | "outgoing";
+export const SOCIAL_WORKER_CONTACT_DIRECTION_LABEL: Record<SocialWorkerContactDirection, string> = {
+  incoming: "Incoming",
+  outgoing: "Outgoing",
+};
+
+export type SocialWorkerContactUrgency = "routine" | "urgent" | "emergency";
+export const SOCIAL_WORKER_CONTACT_URGENCY_LABEL: Record<SocialWorkerContactUrgency, string> = {
+  routine: "Routine",
+  urgent: "Urgent",
+  emergency: "Emergency",
+};
+
+export type SocialWorkerContactInitiatedBy = "home" | "social_worker" | "other";
+export const SOCIAL_WORKER_CONTACT_INITIATED_BY_LABEL: Record<SocialWorkerContactInitiatedBy, string> = {
+  home: "Home",
+  social_worker: "Social Worker",
+  other: "Other",
+};
+
+export type SocialWorkerContactActionStatus = "pending" | "completed" | "overdue";
+export const SOCIAL_WORKER_CONTACT_ACTION_STATUS_LABEL: Record<SocialWorkerContactActionStatus, string> = {
+  pending: "Pending",
+  completed: "Completed",
+  overdue: "Overdue",
+};
+
+export interface SocialWorkerContactActionItem {
+  action: string;
+  owner: string;
+  due_date: string;
+  status: SocialWorkerContactActionStatus;
+}
+
+export interface SocialWorkerContactRecord {
+  id: string;
+  child_id: string;
+  social_worker_name: string;
+  social_worker_team: string;
+  social_worker_email: string;
+  social_worker_phone: string;
+  date: string;
+  time: string;
+  contact_type: SocialWorkerContactType;
+  direction: SocialWorkerContactDirection;
+  initiated_by: SocialWorkerContactInitiatedBy;
+  staff_member: string;
+  purpose: string;
+  summary: string;
+  key_decisions: string[];
+  action_items: SocialWorkerContactActionItem[];
+  child_aware: boolean;
+  child_views: string;
+  follow_up_required: boolean;
+  follow_up_date: string | null;
+  documents_shared: string[];
+  urgency: SocialWorkerContactUrgency;
+  outcome: string;
+  next_scheduled_contact: string | null;
+}
+
+/* ── staff-communication-preferences ───────────────────────────────────── */
+
+export type StaffCommsContactMethod = "face_to_face" | "written" | "phone" | "teams_video";
+export const STAFF_COMMS_CONTACT_METHOD_LABEL: Record<StaffCommsContactMethod, string> = {
+  face_to_face: "Face-to-face",
+  written: "Written",
+  phone: "Phone",
+  teams_video: "Teams/Video",
+};
+
+export type StaffCommsFeedbackStyle = "direct" | "sandwiched" | "written_follow_up";
+export const STAFF_COMMS_FEEDBACK_STYLE_LABEL: Record<StaffCommsFeedbackStyle, string> = {
+  direct: "Direct",
+  sandwiched: "Sandwiched",
+  written_follow_up: "Written follow-up",
+};
+
+export interface StaffCommunicationPreferenceRecord {
+  id: string;
+  staff_id: string;
+  last_review_date: string;
+  preferred_contact_method: StaffCommsContactMethod;
+  meeting_preferences: string;
+  feedback_style: StaffCommsFeedbackStyle;
+  supervision_adjustments: string;
+  neurodivergent_needs: string;
+  language_needs: string;
+  best_time_for_discussions: string;
+  stress_indicators: string[];
+  de_escalation_preferences: string;
+  confidential_notes: string;
+  reviewed_by: string;
+}
+
+/* ── staff-competency ──────────────────────────────────────────────────── */
+
+export type StaffCompetencyLevel = "competent" | "developing" | "not_assessed" | "expired";
+export const STAFF_COMPETENCY_LEVEL_LABEL: Record<StaffCompetencyLevel, string> = {
+  competent: "Competent",
+  developing: "Developing",
+  not_assessed: "Not Assessed",
+  expired: "Expired",
+};
+
+export interface StaffCompetencyEntry {
+  id: string;
+  area: string;
+  level: StaffCompetencyLevel;
+  assessed_date: string | null;
+  assessed_by: string | null;
+  expiry_date: string | null;
+  notes: string;
+}
+
+export interface StaffCompetencyRecord {
+  id: string;
+  staff_id: string;
+  staff_name: string;
+  role: string;
+  entries: StaffCompetencyEntry[];
+}
+
+/* ── staff-debrief-log ─────────────────────────────────────────────────── */
+
+export type StaffDebriefType = "post_incident" | "post_restraint" | "post_missing" | "critical_event" | "emotional_support" | "tci_reflection";
+export const STAFF_DEBRIEF_TYPE_LABEL: Record<StaffDebriefType, string> = {
+  post_incident: "Post-Incident",
+  post_restraint: "Post-Restraint",
+  post_missing: "Post-Missing",
+  critical_event: "Critical Event",
+  emotional_support: "Emotional Support",
+  tci_reflection: "TCI Reflection",
+};
+
+export type StaffDebriefStatus = "completed" | "scheduled" | "overdue" | "declined";
+export const STAFF_DEBRIEF_STATUS_LABEL: Record<StaffDebriefStatus, string> = {
+  completed: "Completed",
+  scheduled: "Scheduled",
+  overdue: "Overdue",
+  declined: "Declined",
+};
+
+export type StaffDebriefEmotionalImpact = "low" | "moderate" | "high" | "significant";
+export const STAFF_DEBRIEF_EMOTIONAL_IMPACT_LABEL: Record<StaffDebriefEmotionalImpact, string> = {
+  low: "Low",
+  moderate: "Moderate",
+  high: "High",
+  significant: "Significant",
+};
+
+export interface StaffDebriefRecord {
+  id: string;
+  date: string;
+  type: StaffDebriefType;
+  trigger_event: string;
+  trigger_date: string;
+  staff_involved: string[];
+  facilitated_by: string;
+  status: StaffDebriefStatus;
+  emotional_impact: StaffDebriefEmotionalImpact;
+  key_themes: string[];
+  what_went_well: string[];
+  what_could_improve: string[];
+  staff_feelings: string;
+  support_offered: string[];
+  follow_up_needed: boolean;
+  follow_up_details: string | null;
+  learning_points: string[];
+  confidential: boolean;
+  notes: string;
+}

@@ -327,6 +327,12 @@ import type {
   ServiceUserAgreementRecord,
   ShiftNoteRecord,
   SiblingContactProtocolRecord,
+  SleepAssessmentRecord,
+  SleepInRecord,
+  SocialWorkerContactRecord,
+  StaffCommunicationPreferenceRecord,
+  StaffCompetencyRecord,
+  StaffDebriefRecord,
 } from "@/types/extended";
 import { generateId, todayStr, daysFromNow } from "@/lib/utils";
 
@@ -737,6 +743,12 @@ const store = {
   serviceUserAgreementRecords: [] as ServiceUserAgreementRecord[],
   shiftNoteRecords: [] as ShiftNoteRecord[],
   siblingContactProtocolRecords: [] as SiblingContactProtocolRecord[],
+  sleepAssessmentRecords: [] as SleepAssessmentRecord[],
+  sleepInRecords: [] as SleepInRecord[],
+  socialWorkerContactRecords: [] as SocialWorkerContactRecord[],
+  staffCommunicationPreferenceRecords: [] as StaffCommunicationPreferenceRecord[],
+  staffCompetencyRecords: [] as StaffCompetencyRecord[],
+  staffDebriefRecords: [] as StaffDebriefRecord[],
   // Shift Swap Requests
   shiftSwaps: [
     {
@@ -9231,6 +9243,98 @@ export const db = {
       if (idx === -1) return null;
       store.siblingContactProtocolRecords[idx] = { ...store.siblingContactProtocolRecords[idx], ...data };
       return store.siblingContactProtocolRecords[idx];
+    },
+  },
+
+  sleepAssessmentRecords: {
+    getAll: () => store.sleepAssessmentRecords,
+    getByChild: (childId: string) => store.sleepAssessmentRecords.filter((r) => r.child_id === childId),
+    create: (data: Omit<SleepAssessmentRecord, "id">) => {
+      const record = { ...data, id: generateId("sar_") } as SleepAssessmentRecord;
+      store.sleepAssessmentRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<SleepAssessmentRecord>) => {
+      const idx = store.sleepAssessmentRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.sleepAssessmentRecords[idx] = { ...store.sleepAssessmentRecords[idx], ...data };
+      return store.sleepAssessmentRecords[idx];
+    },
+  },
+
+  sleepInRecords: {
+    getAll: () => store.sleepInRecords,
+    create: (data: Omit<SleepInRecord, "id">) => {
+      const record = { ...data, id: generateId("sir_") } as SleepInRecord;
+      store.sleepInRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<SleepInRecord>) => {
+      const idx = store.sleepInRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.sleepInRecords[idx] = { ...store.sleepInRecords[idx], ...data };
+      return store.sleepInRecords[idx];
+    },
+  },
+
+  socialWorkerContactRecords: {
+    getAll: () => store.socialWorkerContactRecords,
+    getByChild: (childId: string) => store.socialWorkerContactRecords.filter((r) => r.child_id === childId),
+    create: (data: Omit<SocialWorkerContactRecord, "id">) => {
+      const record = { ...data, id: generateId("swcr_") } as SocialWorkerContactRecord;
+      store.socialWorkerContactRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<SocialWorkerContactRecord>) => {
+      const idx = store.socialWorkerContactRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.socialWorkerContactRecords[idx] = { ...store.socialWorkerContactRecords[idx], ...data };
+      return store.socialWorkerContactRecords[idx];
+    },
+  },
+
+  staffCommunicationPreferenceRecords: {
+    getAll: () => store.staffCommunicationPreferenceRecords,
+    create: (data: Omit<StaffCommunicationPreferenceRecord, "id">) => {
+      const record = { ...data, id: generateId("scpr2_") } as StaffCommunicationPreferenceRecord;
+      store.staffCommunicationPreferenceRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<StaffCommunicationPreferenceRecord>) => {
+      const idx = store.staffCommunicationPreferenceRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.staffCommunicationPreferenceRecords[idx] = { ...store.staffCommunicationPreferenceRecords[idx], ...data };
+      return store.staffCommunicationPreferenceRecords[idx];
+    },
+  },
+
+  staffCompetencyRecords: {
+    getAll: () => store.staffCompetencyRecords,
+    create: (data: Omit<StaffCompetencyRecord, "id">) => {
+      const record = { ...data, id: generateId("scr_") } as StaffCompetencyRecord;
+      store.staffCompetencyRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<StaffCompetencyRecord>) => {
+      const idx = store.staffCompetencyRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.staffCompetencyRecords[idx] = { ...store.staffCompetencyRecords[idx], ...data };
+      return store.staffCompetencyRecords[idx];
+    },
+  },
+
+  staffDebriefRecords: {
+    getAll: () => store.staffDebriefRecords,
+    create: (data: Omit<StaffDebriefRecord, "id">) => {
+      const record = { ...data, id: generateId("sdr_") } as StaffDebriefRecord;
+      store.staffDebriefRecords.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<StaffDebriefRecord>) => {
+      const idx = store.staffDebriefRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.staffDebriefRecords[idx] = { ...store.staffDebriefRecords[idx], ...data };
+      return store.staffDebriefRecords[idx];
     },
   },
 };
