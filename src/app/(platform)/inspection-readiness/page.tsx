@@ -66,10 +66,11 @@ interface FilingItem {
 }
 
 interface SavedTimeMeta {
-  total_minutes_saved: number;
-  total_events: number;
-  total_staff: number;
+  total_minutes: number;
+  total_hours: number;
+  total_entries: number;
   estimated_value_gbp: number;
+  by_staff: Record<string, { minutes: number; count: number; name: string }>;
 }
 
 // ── Hooks ─────────────────────────────────────────────────────────────────────
@@ -124,7 +125,7 @@ function useFilingCabinetSummary() {
 }
 
 function useSavedTimeSummary() {
-  return useQuery<{ data: unknown[]; meta: SavedTimeMeta }>({
+  return useQuery<{ metrics: unknown[]; meta: SavedTimeMeta }>({
     queryKey: ["saved-time-inspection"],
     queryFn: () => api.get("/api/v1/saved-time"),
     staleTime: 60_000,
@@ -352,7 +353,7 @@ export default function InspectionReadinessPage() {
             <section className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-base font-semibold text-slate-900">Regulation 45 Evidence</h2>
-                <a href="/reg45-evidence" className="text-xs text-blue-600 hover:underline">View Reg 45 →</a>
+                <a href="/regulation-45" className="text-xs text-blue-600 hover:underline">View Reg 45 →</a>
               </div>
               <div className="grid grid-cols-3 gap-3 mb-4">
                 <MetricCard title="Total" value={reg45Data?.meta?.total ?? 0} colour="neutral" />
@@ -403,7 +404,7 @@ export default function InspectionReadinessPage() {
                 <div className="border-t border-slate-100 pt-4">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-sm font-medium text-slate-700">Regulation 40 Triage</span>
-                    <a href="/reg40-triage" className="text-xs text-blue-600 hover:underline">View →</a>
+                    <a href="/regulation-40" className="text-xs text-blue-600 hover:underline">View →</a>
                   </div>
                   <div className="grid grid-cols-2 gap-3">
                     <MetricCard title="Total items" value={reg40Data?.meta?.total ?? 0} colour="neutral" />
@@ -457,29 +458,29 @@ export default function InspectionReadinessPage() {
               <div className="grid grid-cols-2 gap-3 mb-4">
                 <MetricCard
                   title="Total hours saved"
-                  value={savedTimeData?.meta ? `${Math.round((savedTimeData.meta.total_minutes_saved ?? 0) / 60 * 10) / 10}h` : "0h"}
+                  value={savedTimeData?.meta ? `${savedTimeData.meta.total_hours}h` : "0h"}
                   colour="purple"
                 />
                 <MetricCard
                   title="Estimated value"
-                  value={savedTimeData?.meta ? `£${Math.round(savedTimeData.meta.estimated_value_gbp ?? 0)}` : "£0"}
+                  value={savedTimeData?.meta ? `£${Math.round(savedTimeData.meta.estimated_value_gbp)}` : "£0"}
                   colour="green"
                 />
                 <MetricCard
                   title="Routing events"
-                  value={savedTimeData?.meta?.total_events ?? 0}
+                  value={savedTimeData?.meta?.total_entries ?? 0}
                   colour="neutral"
                 />
                 <MetricCard
                   title="Staff benefiting"
-                  value={savedTimeData?.meta?.total_staff ?? 0}
+                  value={Object.keys(savedTimeData?.meta?.by_staff ?? {}).length}
                   colour="blue"
                 />
               </div>
               {savedTimeData?.meta && (
                 <p className="text-xs text-slate-500">
-                  Auto-routing has saved an estimated {savedTimeData.meta.total_minutes_saved ?? 0} minutes of administrative time
-                  across {savedTimeData.meta.total_staff ?? 0} staff members.
+                  Auto-routing has saved an estimated {savedTimeData.meta.total_minutes} minutes of administrative time
+                  across {Object.keys(savedTimeData.meta.by_staff ?? {}).length} staff members.
                 </p>
               )}
             </section>
@@ -493,8 +494,8 @@ export default function InspectionReadinessPage() {
               {[
                 { label: "Care Events", href: "/care-events" },
                 { label: "Management Oversight", href: "/management-oversight" },
-                { label: "Reg 40 Triage", href: "/reg40-triage" },
-                { label: "Reg 45 Evidence", href: "/reg45-evidence" },
+                { label: "Reg 40 Triage", href: "/regulation-40" },
+                { label: "Reg 45 Evidence", href: "/regulation-45" },
                 { label: "Annex A", href: "/annex-a" },
                 { label: "Filing Cabinet", href: "/filing-cabinet" },
                 { label: "Saved Time", href: "/saved-time" },

@@ -6,6 +6,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React from "react";
+import Link from "next/link";
 import { PageShell } from "@/components/layout/page-shell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -220,9 +221,9 @@ export default function SavedTimePage() {
             <div className="divide-y divide-slate-100">
               {Object.entries(byStaff)
                 .sort((a, b) => b[1].minutes - a[1].minutes)
-                .map(([staffId, { minutes, count }]) => (
+                .map(([staffId, { minutes, count, name }]) => (
                   <div key={staffId} className="flex items-center justify-between py-2 text-sm">
-                    <span className="text-slate-700 font-medium">{staffId}</span>
+                    <span className="text-slate-700 font-medium">{name}</span>
                     <div className="flex items-center gap-3 text-slate-500 text-xs">
                       <span>{count} events</span>
                       <Badge variant="outline" className="bg-emerald-50 text-emerald-700 border-emerald-200">
@@ -252,7 +253,17 @@ export default function SavedTimePage() {
                     </p>
                     <p className="text-slate-400 mt-0.5">
                       {ROUTE_TYPE_LABEL[m.route_type as keyof typeof ROUTE_TYPE_LABEL] ?? m.route_type}
-                      {m.care_event ? ` · ${m.care_event.title}` : ""}
+                      {m.care_event && (
+                        <>
+                          {" · "}
+                          <Link
+                            href={`/care-events/${m.care_event.id}`}
+                            className="text-indigo-500 hover:underline"
+                          >
+                            {m.care_event.title}
+                          </Link>
+                        </>
+                      )}
                     </p>
                   </div>
                   <div className="shrink-0 text-right">

@@ -31,10 +31,17 @@ export async function GET(req: NextRequest) {
       byRoute[m.route_type].count += 1;
     }
 
-    // Per-staff breakdown
-    const byStaff: Record<string, { minutes: number; count: number }> = {};
+    // Per-staff breakdown (with resolved name)
+    const byStaff: Record<string, { minutes: number; count: number; name: string }> = {};
     for (const m of metrics) {
-      if (!byStaff[m.staff_id]) byStaff[m.staff_id] = { minutes: 0, count: 0 };
+      if (!byStaff[m.staff_id]) {
+        const staffMember = db.staff.findById(m.staff_id);
+        byStaff[m.staff_id] = {
+          minutes: 0,
+          count: 0,
+          name: staffMember ? `${staffMember.first_name} ${staffMember.last_name}` : m.staff_id,
+        };
+      }
       byStaff[m.staff_id].minutes += m.minutes_saved;
       byStaff[m.staff_id].count += 1;
     }

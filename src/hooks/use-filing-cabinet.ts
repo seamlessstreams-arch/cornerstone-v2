@@ -43,7 +43,7 @@ export interface SavedTimeMeta {
   total_hours: number;
   total_entries: number;
   by_route: Record<string, { minutes: number; count: number }>;
-  by_staff: Record<string, { minutes: number; count: number }>;
+  by_staff: Record<string, { minutes: number; count: number; name: string }>;
   daily: Array<{ date: string; minutes: number }>;
   estimated_value_gbp: number;
 }
