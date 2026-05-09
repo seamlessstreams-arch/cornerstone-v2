@@ -13,6 +13,8 @@ import {
 import { HOME, getStaffName } from "@/lib/seed-data";
 import { useHealthCheck } from "@/hooks/use-dashboard";
 import { usePatternAlerts, useActionOutcomes, useHomeClimate, useUpdateActionOutcome } from "@/hooks/use-intelligence";
+import { useAnnexAReadiness, useReg45Evidence } from "@/hooks/use-compliance-evidence";
+import { useManagementOversight, useReg40Triage } from "@/hooks/use-oversight-queues";
 import type { ActionOutcome } from "@/types/extended";
 import { cn, formatDate, daysFromNow, todayStr } from "@/lib/utils";
 import { SmartUploadButton } from "@/components/documents/smart-upload-button";
@@ -782,6 +784,18 @@ export default function InspectionPage() {
   const hcQuery = useHealthCheck();
   const hc = hcQuery.data?.data;
 
+  // Live compliance data
+  const annexAQuery = useAnnexAReadiness();
+  const reg45Query = useReg45Evidence({ decision: "pending" });
+  const oversightQuery = useManagementOversight({ status: "pending" });
+  const reg40Query = useReg40Triage({ status: "active" });
+
+  const annexAScore = annexAQuery.data?.meta?.readiness_score ?? null;
+  const annexAGaps = annexAQuery.data?.meta?.gaps?.length ?? 0;
+  const reg45Pending = reg45Query.data?.meta?.counts?.pending ?? 0;
+  const oversightPending = oversightQuery.data?.meta?.total ?? 0;
+  const reg40Active = reg40Query.data?.meta?.active ?? 0;
+
   const readinessAreas = hc
     ? [
         { area: "Outcomes for young people",           score: hc.overall,        status: hc.overall >= 85 ? "good" : "warn" },
@@ -803,7 +817,7 @@ export default function InspectionPage() {
     <PageShell
       title="Inspection Readiness"
       subtitle="Ofsted inspection tracker, readiness scoring, and evidence preparation"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Inspection Readiness", sourceType: "general" }}
       quickCreateContext={{ module: "inspection", defaultTaskCategory: "inspection", defaultFormType: "review_meeting_notes" }}
       actions={
         <div className="flex gap-2">
@@ -875,9 +889,53 @@ export default function InspectionPage() {
             <div className="text-xs text-slate-400 mt-0.5">±3 months (rolling)</div>
           </div>
           <div className="rounded-2xl border border-slate-200 bg-white p-5">
-            <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Reg 44 Visits</div>
-            <div className="mt-1 text-3xl font-bold text-violet-600">3</div>
-            <div className="text-xs text-slate-400 mt-0.5">This year</div>
+            <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Annex A Score</div>
+            {annexAQuery.isLoading ? (
+              <Loader2 className="h-5 w-5 animate-spin text-slate-300 mt-2" />
+            ) : annexAScore !== null ? (
+              <>
+                <div className={cn("mt-1 text-3xl font-bold", annexAScore >= 85 ? "text-emerald-600" : annexAScore >= 70 ? "text-amber-600" : "text-red-600")}>
+                  {annexAScore}%
+                </div>
+                <div className="text-xs text-slate-400 mt-0.5">
+                  {annexAGaps > 0 ? `${annexAGaps} gap${annexAGaps !== 1 ? "s" : ""} to resolve` : "Inspection-ready"}
+                </div>
+              </>
+            ) : (
+              <div className="mt-1 text-3xl font-bold text-slate-300">--</div>
+            )}
+          </div>
+        </div>
+
+        {/* ── Live Compliance Status ───────────────────────────────────── */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+          <div className={cn("rounded-2xl border p-4", reg45Pending > 0 ? "bg-amber-50 border-amber-200" : "bg-emerald-50 border-emerald-200")}>
+            <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Reg 45 Evidence</div>
+            <div className={cn("text-2xl font-bold mt-1", reg45Pending > 0 ? "text-amber-700" : "text-emerald-700")}>
+              {reg45Query.isLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : reg45Pending}
+            </div>
+            <div className="text-xs text-slate-500 mt-0.5">awaiting decision</div>
+          </div>
+          <div className={cn("rounded-2xl border p-4", oversightPending > 0 ? "bg-amber-50 border-amber-200" : "bg-emerald-50 border-emerald-200")}>
+            <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Management Oversight</div>
+            <div className={cn("text-2xl font-bold mt-1", oversightPending > 0 ? "text-amber-700" : "text-emerald-700")}>
+              {oversightQuery.isLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : oversightPending}
+            </div>
+            <div className="text-xs text-slate-500 mt-0.5">tasks pending</div>
+          </div>
+          <div className={cn("rounded-2xl border p-4", reg40Active > 0 ? "bg-red-50 border-red-200" : "bg-emerald-50 border-emerald-200")}>
+            <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Reg 40 Triage</div>
+            <div className={cn("text-2xl font-bold mt-1", reg40Active > 0 ? "text-red-700" : "text-emerald-700")}>
+              {reg40Query.isLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : reg40Active}
+            </div>
+            <div className="text-xs text-slate-500 mt-0.5">active notifications</div>
+          </div>
+          <div className={cn("rounded-2xl border p-4", annexAGaps > 0 ? "bg-amber-50 border-amber-200" : "bg-emerald-50 border-emerald-200")}>
+            <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Annex A Gaps</div>
+            <div className={cn("text-2xl font-bold mt-1", annexAGaps > 0 ? "text-amber-700" : "text-emerald-700")}>
+              {annexAQuery.isLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : annexAGaps}
+            </div>
+            <div className="text-xs text-slate-500 mt-0.5">sections incomplete</div>
           </div>
         </div>
 
