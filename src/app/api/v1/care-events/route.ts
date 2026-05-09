@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db/store";
+import { careEventsDb } from "@/lib/db";
 import { classifyCareEvent } from "@/lib/care-events/routing-engine";
 import { generateId, todayStr } from "@/lib/utils";
 import type { CreateCareEventPayload, CareEventCategory } from "@/types/care-events";
@@ -17,7 +18,7 @@ export async function GET(req: NextRequest) {
   const page = parseInt(searchParams.get("page") ?? "1", 10);
   const limit = Math.min(parseInt(searchParams.get("limit") ?? "50", 10), 200);
 
-  let events = db.careEvents.findCurrent();
+  let events = await careEventsDb.careEvents.findCurrent();
 
   if (child_id) events = events.filter((e) => e.child_id === child_id);
   if (status) events = events.filter((e) => e.status === status);
@@ -121,7 +122,7 @@ export async function POST(req: NextRequest) {
   // TODO: in production, extract staff_id from verified session cookie/JWT
   const staffId = "staff_darren"; // placeholder; replace with auth session lookup
 
-  const event = db.careEvents.create({
+  const event = await careEventsDb.careEvents.create({
     child_id: body.child_id ?? null,
     shift_id: body.shift_id ?? null,
     staff_id: staffId,
@@ -143,7 +144,7 @@ export async function POST(req: NextRequest) {
   });
 
   // ── Audit ─────────────────────────────────────────────────────────────────
-  db.careEventAuditLog.append({
+  await careEventsDb.careEventAuditLog.append({
     care_event_id: event.id,
     home_id: "home_oak",
     action: "care_event_created",

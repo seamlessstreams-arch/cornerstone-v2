@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db/store";
+import { careEventsDb } from "@/lib/db";
 import { processCareEvent, retryFailedRoutes } from "@/lib/care-events/processor";
 import { buildRoutingPreview } from "@/lib/care-events/routing-engine";
 import { generateId, todayStr } from "@/lib/utils";
@@ -17,18 +18,21 @@ const HOME_ID = "home_oak";
 
 // ── Notification helper ───────────────────────────────────────────────────────
 
-function createNotification(recipientId: string, title: string, body: string, link?: string) {
+async function createNotification(recipientId: string, title: string, body: string, link?: string) {
   if (!recipientId) return;
-  db.notifications.create({
-    id: generateId("notif"),
+  await careEventsDb.notifications.create({
+    home_id: HOME_ID,
     recipient_id: recipientId,
     title,
     body,
     action_url: link ?? null,
-    type: "care_event",
+    type: "system" as never,
+    priority: "normal",
     read: false,
-    created_at: new Date().toISOString(),
-  } as never);
+    read_at: null,
+    entity_type: "care_event",
+    entity_id: null,
+  });
 }
 
 // ── GET /api/v1/care-events/[id] ─────────────────────────────────────────────
@@ -38,16 +42,18 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
-  const event = db.careEvents.findById(id);
+  const event = await careEventsDb.careEvents.findById(id);
 
   if (!event) {
     return NextResponse.json({ error: "Care event not found" }, { status: 404 });
   }
 
-  const routes = db.careEventRoutes.findByCareEvent(id);
-  const auditLog = db.careEventAuditLog.findByCareEvent(id);
+  const [routes, auditLog] = await Promise.all([
+    careEventsDb.careEventRoutes.findByCareEvent(id),
+    careEventsDb.careEventAuditLog.findByCareEvent(id),
+  ]);
 
-  // Resolve names
+  // Resolve names (still from in-memory staff/YP for now — will migrate separately)
   const staffMember = event.staff_id ? db.staff.findById(event.staff_id) : null;
   const youngPerson = event.child_id ? db.youngPeople.findById(event.child_id) : null;
   const verifier    = event.verified_by ? db.staff.findById(event.verified_by) : null;
@@ -56,7 +62,7 @@ export async function GET(
   const versionHistory: Array<{ id: string; version: number; amended_at: string | null; amendment_reason: string | null; amended_by_name: string | null }> = [];
   let cursor: { previous_version_id: string | null; version: number; amended_at: string | null; amendment_reason: string | null; amended_by: string | null } | null = event;
   while (cursor?.previous_version_id) {
-    const prev = db.careEvents.findById(cursor.previous_version_id);
+    const prev = await careEventsDb.careEvents.findById(cursor.previous_version_id);
     if (!prev) break;
     const amendedByStaff = prev.amended_by ? db.staff.findById(prev.amended_by) : null;
     versionHistory.unshift({
@@ -91,7 +97,7 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
-  const event = db.careEvents.findById(id);
+  const event = await careEventsDb.careEvents.findById(id);
 
   if (!event) {
     return NextResponse.json({ error: "Care event not found" }, { status: 404 });
@@ -161,7 +167,7 @@ export async function PATCH(
         });
       }
 
-      db.careEvents.patch(id, {
+      await careEventsDb.careEvents.patch(id, {
         status: "routing",
         evidence_prompts: updatedPrompts,
         staff_signature: true,
@@ -169,17 +175,18 @@ export async function PATCH(
         submitted_by: actorId,
       });
 
-      // Run routing processor
-      const freshEvent = db.careEvents.findById(id)!;
+      // Run routing processor (uses in-memory db internally — processor will be migrated separately)
+      const freshEvent = await careEventsDb.careEvents.findById(id);
+      if (!freshEvent) return NextResponse.json({ error: "Event lost during routing" }, { status: 500 });
       const result = processCareEvent(freshEvent);
 
       // Notify manager if routing failed
       if (result.routes_failed > 0) {
         const mgr = db.staff.findAll().find(
-          (s) => s.role === "registered_manager" || s.role === "home_manager"
+          (s) => s.role === "registered_manager"
         );
         if (mgr) {
-          createNotification(
+          await createNotification(
             mgr.id,
             "Care event routing failed",
             `"${freshEvent.title}" failed to route ${result.routes_failed} area(s). Please retry.`,
@@ -188,14 +195,14 @@ export async function PATCH(
         }
       }
 
-      const finalEvent = db.careEvents.findById(id)!;
+      const finalEvent = await careEventsDb.careEvents.findById(id);
 
       return NextResponse.json({
         data: finalEvent,
         result: {
           ...result,
           routing_summary_text: buildRoutingResultText(result),
-          routes: db.careEventRoutes.findByCareEvent(id),
+          routes: await careEventsDb.careEventRoutes.findByCareEvent(id),
         },
       });
     }
@@ -219,7 +226,7 @@ export async function PATCH(
         );
       }
 
-      db.careEvents.patch(id, {
+      await careEventsDb.careEvents.patch(id, {
         status: "verified",
         manager_review_completed: true,
         manager_id: actorId,
@@ -230,32 +237,30 @@ export async function PATCH(
       });
 
       // Approve pending Reg 45 evidence
-      const reg45Items = db.reg45EvidenceQueue
-        .findAll()
+      const reg45Items = (await careEventsDb.reg45EvidenceQueue.findAll())
         .filter((item) => item.care_event_id === id && item.manager_decision === "pending");
-      for (const item of reg45Items) {
-        db.reg45EvidenceQueue.patch(item.id, {
+      await Promise.all(reg45Items.map((item) =>
+        careEventsDb.reg45EvidenceQueue.patch(item.id, {
           manager_decision: "approved",
           reviewed_by: actorId,
           reviewed_at: new Date().toISOString(),
           manager_approved_text: item.suggested_text,
-        });
-      }
+        })
+      ));
 
       // Approve pending Annex A evidence
-      const annexItems = db.annexAEvidenceQueue
-        .findAll()
-        .filter((item: { care_event_id: string; manager_decision: string }) => item.care_event_id === id && item.manager_decision === "pending");
-      for (const item of annexItems) {
-        db.annexAEvidenceQueue.patch(item.id, {
+      const annexItems = (await careEventsDb.annexAEvidenceQueue.findAll())
+        .filter((item) => item.care_event_id === id && item.manager_decision === "pending");
+      await Promise.all(annexItems.map((item) =>
+        careEventsDb.annexAEvidenceQueue.patch(item.id, {
           manager_decision: "approved",
           reviewed_by: actorId,
           reviewed_at: new Date().toISOString(),
-          manager_approved_text: (item as { suggested_text: string }).suggested_text,
-        });
-      }
+          manager_approved_text: item.suggested_text,
+        })
+      ));
 
-      db.careEventAuditLog.append({
+      await careEventsDb.careEventAuditLog.append({
         care_event_id: id,
         home_id: HOME_ID,
         action: "care_event_verified",
@@ -267,7 +272,7 @@ export async function PATCH(
 
       // Notify the original staff member of verification
       if (event.staff_id && event.staff_id !== actorId) {
-        createNotification(
+        await createNotification(
           event.staff_id,
           "Care entry verified",
           `Your entry "${event.title}" has been verified by the manager.${reg45Items.length + annexItems.length > 0 ? ` ${reg45Items.length + annexItems.length} evidence item(s) approved.` : ""}`,
@@ -275,7 +280,7 @@ export async function PATCH(
         );
       }
 
-      return NextResponse.json({ data: db.careEvents.findById(id)! });
+      return NextResponse.json({ data: await careEventsDb.careEvents.findById(id) });
     }
 
     // ── RETURN ────────────────────────────────────────────────────────────────
@@ -297,7 +302,7 @@ export async function PATCH(
         );
       }
 
-      db.careEvents.patch(id, {
+      await careEventsDb.careEvents.patch(id, {
         status: "returned",
         return_reason: returnBody.return_reason,
         returned_by: actorId,
@@ -306,7 +311,7 @@ export async function PATCH(
 
       // Notify the original staff member
       if (event.staff_id && event.staff_id !== actorId) {
-        createNotification(
+        await createNotification(
           event.staff_id,
           "Care entry returned",
           `Your entry "${event.title}" has been returned. Reason: ${returnBody.return_reason}`,
@@ -315,14 +320,13 @@ export async function PATCH(
       }
 
       // Pause evidence suggestions
-      const pendingReg45 = db.reg45EvidenceQueue
-        .findAll()
+      const pendingReg45 = (await careEventsDb.reg45EvidenceQueue.findAll())
         .filter((i) => i.care_event_id === id && i.manager_decision === "pending");
-      for (const item of pendingReg45) {
-        db.reg45EvidenceQueue.patch(item.id, { manager_decision: "deferred" });
-      }
+      await Promise.all(pendingReg45.map((item) =>
+        careEventsDb.reg45EvidenceQueue.patch(item.id, { manager_decision: "deferred" })
+      ));
 
-      db.careEventAuditLog.append({
+      await careEventsDb.careEventAuditLog.append({
         care_event_id: id,
         home_id: HOME_ID,
         action: "care_event_returned",
@@ -332,7 +336,7 @@ export async function PATCH(
         ip_address: null,
       });
 
-      return NextResponse.json({ data: db.careEvents.findById(id)! });
+      return NextResponse.json({ data: await careEventsDb.careEvents.findById(id) });
     }
 
     // ── AMEND ─────────────────────────────────────────────────────────────────
@@ -355,10 +359,10 @@ export async function PATCH(
       }
 
       // Mark old version as superseded
-      db.careEvents.patch(id, { is_current_version: false });
+      await careEventsDb.careEvents.patch(id, { is_current_version: false });
 
       // Create new version
-      const newVersion = db.careEvents.create({
+      const newVersion = await careEventsDb.careEvents.create({
         child_id: event.child_id,
         shift_id: event.shift_id,
         staff_id: actorId,
@@ -383,7 +387,7 @@ export async function PATCH(
         amended_at: new Date().toISOString(),
       });
 
-      db.careEventAuditLog.append({
+      await careEventsDb.careEventAuditLog.append({
         care_event_id: id,
         home_id: HOME_ID,
         action: "care_event_amended",
@@ -399,10 +403,10 @@ export async function PATCH(
 
       // Notify manager that amendment requires review
       const manager = db.staff.findAll().find(
-        (s) => s.role === "registered_manager" || s.role === "home_manager"
+        (s) => s.role === "registered_manager"
       );
       if (manager && manager.id !== actorId) {
-        createNotification(
+        await createNotification(
           manager.id,
           "Amendment requires review",
           `"${event.title}" has been amended (version ${newVersion.version}). Reason: ${amendBody.amendment_reason}`,
@@ -423,13 +427,13 @@ export async function PATCH(
         );
       }
 
-      db.careEvents.patch(id, {
+      await careEventsDb.careEvents.patch(id, {
         status: "locked",
         locked_at: new Date().toISOString(),
         locked_by: actorId,
       });
 
-      db.careEventAuditLog.append({
+      await careEventsDb.careEventAuditLog.append({
         care_event_id: id,
         home_id: HOME_ID,
         action: "care_event_locked",
@@ -439,7 +443,7 @@ export async function PATCH(
         ip_address: null,
       });
 
-      return NextResponse.json({ data: db.careEvents.findById(id)! });
+      return NextResponse.json({ data: await careEventsDb.careEvents.findById(id) });
     }
 
     // ── RETRY FAILED ROUTES ───────────────────────────────────────────────────
@@ -452,7 +456,7 @@ export async function PATCH(
       }
 
       const result = retryFailedRoutes(id);
-      return NextResponse.json({ data: db.careEvents.findById(id)!, result });
+      return NextResponse.json({ data: await careEventsDb.careEvents.findById(id), result });
     }
 
     // ── UPDATE EVIDENCE PROMPTS ───────────────────────────────────────────────
@@ -468,8 +472,8 @@ export async function PATCH(
         return answer !== undefined ? { ...p, completed: true, answer } : p;
       });
 
-      db.careEvents.patch(id, { evidence_prompts: updatedPrompts });
-      return NextResponse.json({ data: db.careEvents.findById(id)! });
+      await careEventsDb.careEvents.patch(id, { evidence_prompts: updatedPrompts });
+      return NextResponse.json({ data: await careEventsDb.careEvents.findById(id) });
     }
 
     default:

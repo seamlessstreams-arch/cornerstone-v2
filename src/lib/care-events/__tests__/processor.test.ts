@@ -177,7 +177,7 @@ describe("buildRoutingSummary", () => {
 
 describe("processCareEvent — idempotency", () => {
   it("does not create duplicate incident records when processed twice", () => {
-    const event = makeEvent({ category: "incident", is_significant: true });
+    const event = makeEvent({ category: "behaviour", is_significant: true });
     db.careEvents.create(event);
 
     const result1 = processCareEvent(event);
