@@ -3,6 +3,8 @@ import { db } from "@/lib/db/store";
 import { processCareEvent, retryFailedRoutes } from "@/lib/care-events/processor";
 import { buildRoutingPreview } from "@/lib/care-events/routing-engine";
 import { generateId, todayStr } from "@/lib/utils";
+import { getUserIdFromRequest, requirePermission } from "@/lib/auth-guard";
+import { PERMISSIONS } from "@/lib/permissions";
 import type {
   SubmitCareEventPayload,
   VerifyCareEventPayload,
@@ -107,8 +109,13 @@ export async function PATCH(
     return NextResponse.json({ error: "action is required" }, { status: 400 });
   }
 
-  // TODO: extract from session
-  const actorId = "staff_darren";
+  const actorId = getUserIdFromRequest(req);
+
+  // Manager-only actions require APPROVE_FORMS permission
+  if (["verify", "return", "lock"].includes(action)) {
+    const auth = requirePermission(req, PERMISSIONS.APPROVE_FORMS);
+    if (auth instanceof NextResponse) return auth;
+  }
 
   switch (action) {
 
@@ -168,12 +175,17 @@ export async function PATCH(
 
       // Notify manager if routing failed
       if (result.routes_failed > 0) {
-        createNotification(
-          "staff_darren", // TODO: use actual manager/home manager ID from session
-          "Care event routing failed",
-          `"${freshEvent.title}" failed to route ${result.routes_failed} area(s). Please retry.`,
-          `/care-events/${id}`
+        const mgr = db.staff.findAll().find(
+          (s) => s.role === "registered_manager" || s.role === "home_manager"
         );
+        if (mgr) {
+          createNotification(
+            mgr.id,
+            "Care event routing failed",
+            `"${freshEvent.title}" failed to route ${result.routes_failed} area(s). Please retry.`,
+            `/care-events/${id}`
+          );
+        }
       }
 
       const finalEvent = db.careEvents.findById(id)!;
@@ -384,6 +396,19 @@ export async function PATCH(
         },
         ip_address: null,
       });
+
+      // Notify manager that amendment requires review
+      const manager = db.staff.findAll().find(
+        (s) => s.role === "registered_manager" || s.role === "home_manager"
+      );
+      if (manager && manager.id !== actorId) {
+        createNotification(
+          manager.id,
+          "Amendment requires review",
+          `"${event.title}" has been amended (version ${newVersion.version}). Reason: ${amendBody.amendment_reason}`,
+          `/care-events/${newVersion.id}`
+        );
+      }
 
       return NextResponse.json({ data: newVersion, previous_version_id: id }, { status: 201 });
     }
