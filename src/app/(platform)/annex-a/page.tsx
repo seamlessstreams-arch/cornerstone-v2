@@ -512,6 +512,7 @@ export default function AnnexAReadinessPage() {
     <PageShell
       title="Annex A Readiness Dashboard"
       subtitle="Continuously inspection-ready — evidence from verified Care Events builds Annex A automatically"
+      ariaContext={{ pageTitle: "Annex A Readiness Dashboard", sourceType: "reg45" }}
       actions={
         <Button size="sm" variant="outline" onClick={() => setSnapshotOpen(true)}>
           <Camera className="h-3.5 w-3.5 mr-1.5" />

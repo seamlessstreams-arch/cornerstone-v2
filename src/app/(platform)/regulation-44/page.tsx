@@ -448,6 +448,7 @@ export default function Regulation44Page() {
     <PageShell
       title="Regulation 44 Visits"
       subtitle="Independent visitor reports — Oak House"
+      ariaContext={{ pageTitle: "Regulation 44 — Independent Visiting", sourceType: "reg45" }}
       actions={
         <Button className="bg-slate-900 hover:bg-slate-800 h-9 text-sm" onClick={() => setShowCreate(true)}>
           <Plus className="h-4 w-4 mr-1.5" />Record Visit

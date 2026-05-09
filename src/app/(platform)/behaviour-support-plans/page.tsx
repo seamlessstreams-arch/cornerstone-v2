@@ -167,6 +167,7 @@ export default function BehaviourSupportPlansPage() {
     <PageShell
       title="Behaviour Support Plans"
       subtitle="Formal behaviour support strategies -- triggers, de-escalation, positive reinforcement, and safety plans"
+      ariaContext={{ pageTitle: "Behaviour Support Plans", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Behaviour Support Plans" />

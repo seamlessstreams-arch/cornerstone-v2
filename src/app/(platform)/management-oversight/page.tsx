@@ -7,6 +7,7 @@
 
 import React, { useState } from "react";
 import { PageShell } from "@/components/layout/page-shell";
+import { AriaPanel } from "@/components/aria/aria-panel";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -323,7 +324,15 @@ export default function ManagementOversightPage() {
     <PageShell
       title="Management Oversight Queue"
       subtitle="Care events and tasks requiring manager review, verification or sign-off"
+      ariaContext={{ pageTitle: "Management Oversight Queue", sourceType: "general" }}
     >
+      <AriaPanel
+        mode="oversee"
+        pageContext="Management Oversight Queue"
+        recordType="management_oversight"
+        userRole="registered_manager"
+        className="mb-6"
+      />
       {/* Stats bar */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
         {[

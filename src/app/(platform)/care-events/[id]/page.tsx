@@ -533,6 +533,13 @@ export default function CareEventDetailPage({
     <PageShell
       title={event.title}
       subtitle={`${event.category.replace(/_/g, " ")} · ${formatDate(event.event_date)}`}
+      ariaContext={{
+        pageTitle: event.title,
+        sourceType: "incident",
+        sourceId: event.id,
+        childId: event.child_id ?? undefined,
+        extraContext: `Category: ${event.category}. Status: ${event.status}.`,
+      }}
     >
       {/* Back + status row */}
       <div className="flex items-center justify-between mb-5">
