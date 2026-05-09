@@ -22,8 +22,9 @@ import {
   Loader2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { getStaffName } from "@/lib/seed-data";
-import { useWaterHygieneRecords } from "@/hooks/use-water-hygiene-records";
+import { getStaffName, STAFF } from "@/lib/seed-data";
+import { useWaterHygieneRecords, useCreateWaterHygieneRecord } from "@/hooks/use-water-hygiene-records";
+import { toast } from "sonner";
 import type {
   WaterHygieneRecord,
   WaterHygieneCheckType,
@@ -50,12 +51,53 @@ const d = (n: number) => { const dt = new Date(); dt.setDate(dt.getDate() + n); 
 
 export default function WaterHygienePage() {
   const { data: records = [], isLoading } = useWaterHygieneRecords();
+  const createCheck = useCreateWaterHygieneRecord();
   const [search, setSearch] = useState("");
   const [filterCompliance, setFilterCompliance] = useState("all");
   const [filterCheckType, setFilterCheckType] = useState("all");
   const [sortBy, setSortBy] = useState("date-desc");
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
   const [showNew, setShowNew] = useState(false);
+
+  const [whForm, setWhForm] = useState({
+    date: new Date().toISOString().slice(0, 10),
+    time: new Date().toTimeString().slice(0, 5),
+    check_type: "" as WaterHygieneCheckType | "",
+    location: "" as WaterHygieneLocation | "",
+    temperature: "",
+    compliance: "" as WaterHygieneCompliance | "",
+    checked_by: "staff_darren",
+    notes: "",
+    action_required: "",
+  });
+  const setWH = (k: keyof typeof whForm, v: string) => setWhForm((p) => ({ ...p, [k]: v }));
+
+  const handleCreateCheck = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!whForm.check_type || !whForm.location || !whForm.compliance) {
+      toast.error("Check type, location and compliance result are required.");
+      return;
+    }
+    await createCheck.mutateAsync({
+      date: whForm.date,
+      time: whForm.time,
+      checked_by: whForm.checked_by,
+      check_type: whForm.check_type as WaterHygieneCheckType,
+      location: whForm.location as WaterHygieneLocation,
+      temperature: whForm.temperature ? parseFloat(whForm.temperature) : null,
+      target_min: null,
+      target_max: null,
+      compliance: whForm.compliance as WaterHygieneCompliance,
+      notes: whForm.notes,
+      action_required: whForm.action_required,
+      action_completed: false,
+      action_completed_date: null,
+      next_due_date: new Date(Date.now() + 30 * 86400000).toISOString().slice(0, 10),
+    });
+    toast.success("Water hygiene check recorded.");
+    setWhForm({ date: new Date().toISOString().slice(0, 10), time: new Date().toTimeString().slice(0, 5), check_type: "", location: "", temperature: "", compliance: "", checked_by: "staff_darren", notes: "", action_required: "" });
+    setShowNew(false);
+  };
 
   const toggle = (id: string) => setExpanded((p) => ({ ...p, [id]: !p[id] }));
 
@@ -328,17 +370,20 @@ export default function WaterHygienePage() {
       <Dialog open={showNew} onOpenChange={setShowNew}>
         <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
           <DialogHeader><DialogTitle>Record Water Hygiene Check</DialogTitle></DialogHeader>
-          <div className="grid grid-cols-2 gap-4">
-            <div><Label>Date</Label><Input type="date" /></div>
-            <div><Label>Time</Label><Input type="time" /></div>
-            <div><Label>Check Type</Label><Select><SelectTrigger><SelectValue placeholder="Select…" /></SelectTrigger><SelectContent>{(Object.keys(WATER_HYGIENE_CHECK_TYPE_LABEL) as WaterHygieneCheckType[]).map((k) => (<SelectItem key={k} value={k}>{WATER_HYGIENE_CHECK_TYPE_LABEL[k]}</SelectItem>))}</SelectContent></Select></div>
-            <div><Label>Location</Label><Select><SelectTrigger><SelectValue placeholder="Select…" /></SelectTrigger><SelectContent>{(Object.keys(WATER_HYGIENE_LOCATION_LABEL) as WaterHygieneLocation[]).map((k) => (<SelectItem key={k} value={k}>{WATER_HYGIENE_LOCATION_LABEL[k]}</SelectItem>))}</SelectContent></Select></div>
-            <div><Label>Temperature (°C)</Label><Input type="number" placeholder="e.g. 58" /></div>
-            <div><Label>Compliance</Label><Select><SelectTrigger><SelectValue placeholder="Select…" /></SelectTrigger><SelectContent>{(Object.keys(WATER_HYGIENE_COMPLIANCE_LABEL) as WaterHygieneCompliance[]).map((k) => (<SelectItem key={k} value={k}>{WATER_HYGIENE_COMPLIANCE_LABEL[k]}</SelectItem>))}</SelectContent></Select></div>
-            <div className="col-span-2"><Label>Notes</Label><Textarea placeholder="Details of the check…" rows={3} /></div>
-            <div className="col-span-2"><Label>Action Required</Label><Textarea placeholder="If non-compliant, what actions are needed?" rows={2} /></div>
-          </div>
-          <DialogFooter><Button variant="outline" onClick={() => setShowNew(false)}>Cancel</Button><Button onClick={() => setShowNew(false)}>Save Record</Button></DialogFooter>
+          <form onSubmit={handleCreateCheck} className="grid grid-cols-2 gap-4">
+            <div><Label>Date</Label><Input type="date" value={whForm.date} onChange={(e) => setWH("date", e.target.value)} /></div>
+            <div><Label>Time</Label><Input type="time" value={whForm.time} onChange={(e) => setWH("time", e.target.value)} /></div>
+            <div><Label>Checked By</Label><Select value={whForm.checked_by} onValueChange={(v) => setWH("checked_by", v)}><SelectTrigger><SelectValue /></SelectTrigger><SelectContent>{STAFF.filter((s) => s.employment_status === "active").map((s) => <SelectItem key={s.id} value={s.id}>{s.full_name}</SelectItem>)}</SelectContent></Select></div>
+            <div><Label>Check Type *</Label><Select value={whForm.check_type} onValueChange={(v) => setWH("check_type", v)}><SelectTrigger><SelectValue placeholder="Select…" /></SelectTrigger><SelectContent>{(Object.keys(WATER_HYGIENE_CHECK_TYPE_LABEL) as WaterHygieneCheckType[]).map((k) => (<SelectItem key={k} value={k}>{WATER_HYGIENE_CHECK_TYPE_LABEL[k]}</SelectItem>))}</SelectContent></Select></div>
+            <div><Label>Location *</Label><Select value={whForm.location} onValueChange={(v) => setWH("location", v)}><SelectTrigger><SelectValue placeholder="Select…" /></SelectTrigger><SelectContent>{(Object.keys(WATER_HYGIENE_LOCATION_LABEL) as WaterHygieneLocation[]).map((k) => (<SelectItem key={k} value={k}>{WATER_HYGIENE_LOCATION_LABEL[k]}</SelectItem>))}</SelectContent></Select></div>
+            <div><Label>Temperature (°C)</Label><Input type="number" step="0.1" placeholder="e.g. 58" value={whForm.temperature} onChange={(e) => setWH("temperature", e.target.value)} /></div>
+            <div><Label>Compliance *</Label><Select value={whForm.compliance} onValueChange={(v) => setWH("compliance", v)}><SelectTrigger><SelectValue placeholder="Select…" /></SelectTrigger><SelectContent>{(Object.keys(WATER_HYGIENE_COMPLIANCE_LABEL) as WaterHygieneCompliance[]).map((k) => (<SelectItem key={k} value={k}>{WATER_HYGIENE_COMPLIANCE_LABEL[k]}</SelectItem>))}</SelectContent></Select></div>
+            <div className="col-span-2"><Label>Notes</Label><Textarea placeholder="Details of the check…" rows={3} value={whForm.notes} onChange={(e) => setWH("notes", e.target.value)} /></div>
+            <div className="col-span-2"><Label>Action Required</Label><Textarea placeholder="If non-compliant, what actions are needed?" rows={2} value={whForm.action_required} onChange={(e) => setWH("action_required", e.target.value)} /></div>
+            <div className="col-span-2">
+              <DialogFooter><Button type="button" variant="outline" onClick={() => setShowNew(false)}>Cancel</Button><Button type="submit" disabled={createCheck.isPending}>{createCheck.isPending ? "Saving…" : "Save Record"}</Button></DialogFooter>
+            </div>
+          </form>
         </DialogContent>
       </Dialog>
       <CareEventsPanel

@@ -18,7 +18,8 @@ import { PageShell } from "@/components/ui/page-shell";
 import { ExportButton, type ExportColumn } from "@/components/ui/export-button";
 import { PrintButton } from "@/components/ui/print-button";
 import { cn } from "@/lib/utils";
-import { getYPName, getStaffName } from "@/lib/seed-data";
+import { getYPName, getStaffName, YOUNG_PEOPLE } from "@/lib/seed-data";
+import { toast } from "sonner";
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter,
 } from "@/components/ui/dialog";
@@ -26,7 +27,7 @@ import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
-import { useRestrictionsLogRecords } from "@/hooks/use-restrictions-log-records";
+import { useRestrictionsLogRecords, useCreateRestrictionsLogRecord } from "@/hooks/use-restrictions-log-records";
 import type {
   RestrictionsLogRecord,
   RestrictionsLogType,
@@ -53,12 +54,55 @@ const STATUS_META: Record<RestrictionsLogStatus, { colour: string }> = {
 
 export default function RestrictionsLogPage() {
   const { data: records = [], isLoading } = useRestrictionsLogRecords();
+  const createRestriction = useCreateRestrictionsLogRecord();
   const [expanded, setExpanded] = useState<string | null>(null);
   const [search, setSearch] = useState("");
   const [filterType, setFilterType] = useState("all");
   const [filterYP, setFilterYP] = useState("all");
   const [sortBy, setSortBy] = useState("date");
   const [showDialog, setShowDialog] = useState(false);
+
+  const [rlForm, setRlForm] = useState({
+    child_id: "",
+    type: "" as RestrictionsLogType | "",
+    description: "",
+    reason: "",
+    authorised_by: "" as RestrictionsLogAuthorisedBy | "",
+    authoriser_name: "",
+    proportionality: "",
+    child_view: "",
+    start_date: new Date().toISOString().slice(0, 10),
+  });
+  const setRF = (k: keyof typeof rlForm, v: string) => setRlForm((p) => ({ ...p, [k]: v }));
+
+  const handleCreateRestriction = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!rlForm.child_id || !rlForm.type || !rlForm.reason.trim()) {
+      toast.error("Young person, type and reason are required.");
+      return;
+    }
+    await createRestriction.mutateAsync({
+      child_id: rlForm.child_id,
+      type: rlForm.type as RestrictionsLogType,
+      description: rlForm.description,
+      reason: rlForm.reason.trim(),
+      status: "active" as RestrictionsLogStatus,
+      authorised_by: rlForm.authorised_by as RestrictionsLogAuthorisedBy || "manager",
+      authoriser_name: rlForm.authoriser_name,
+      start_date: rlForm.start_date,
+      end_date: null,
+      review_frequency: "monthly",
+      reviews: [],
+      child_view: rlForm.child_view,
+      proportionality: rlForm.proportionality,
+      least_restrictive: "",
+      impact_assessment: "",
+      notified_parties: [],
+    });
+    toast.success("Restriction logged.");
+    setRlForm({ child_id: "", type: "", description: "", reason: "", authorised_by: "", authoriser_name: "", proportionality: "", child_view: "", start_date: new Date().toISOString().slice(0, 10) });
+    setShowDialog(false);
+  };
 
   const stats = useMemo(() => ({
     total: records.length,
@@ -270,22 +314,31 @@ export default function RestrictionsLogPage() {
       </div>
 
       <Dialog open={showDialog} onOpenChange={setShowDialog}>
-        <DialogContent className="max-w-lg">
+        <DialogContent className="max-w-lg max-h-[85vh] overflow-y-auto">
           <DialogHeader><DialogTitle>Log Restriction</DialogTitle></DialogHeader>
-          <div className="grid gap-3 py-2">
-            <select className="rounded border px-3 py-2 text-sm"><option value="">Young Person…</option>{ypIds.map((id) => <option key={id} value={id}>{getYPName(id)}</option>)}</select>
-            <select className="rounded border px-3 py-2 text-sm"><option value="">Restriction type…</option>{(Object.keys(RESTRICTIONS_LOG_TYPE_LABEL) as RestrictionsLogType[]).map((k) => <option key={k} value={k}>{RESTRICTIONS_LOG_TYPE_LABEL[k]}</option>)}</select>
-            <input placeholder="Description" className="rounded border px-3 py-2 text-sm" />
-            <textarea placeholder="Reason for restriction" rows={3} className="rounded border px-3 py-2 text-sm" />
-            <select className="rounded border px-3 py-2 text-sm"><option value="">Authorised by…</option>{(Object.keys(RESTRICTIONS_LOG_AUTHORISED_BY_LABEL) as RestrictionsLogAuthorisedBy[]).map((k) => <option key={k} value={k}>{RESTRICTIONS_LOG_AUTHORISED_BY_LABEL[k]}</option>)}</select>
-            <input placeholder="Authoriser name" className="rounded border px-3 py-2 text-sm" />
-            <textarea placeholder="Proportionality assessment" rows={2} className="rounded border px-3 py-2 text-sm" />
-            <textarea placeholder="Child's view" rows={2} className="rounded border px-3 py-2 text-sm" />
-          </div>
-          <DialogFooter>
-            <button onClick={() => setShowDialog(false)} className="rounded-md border px-4 py-2 text-sm">Cancel</button>
-            <button onClick={() => setShowDialog(false)} className="rounded-md bg-brand px-4 py-2 text-sm text-white hover:bg-brand/90">Log Restriction</button>
-          </DialogFooter>
+          <form onSubmit={handleCreateRestriction} className="grid gap-3 py-2">
+            <Select value={rlForm.child_id} onValueChange={(v) => setRF("child_id", v)}>
+              <SelectTrigger className="text-sm"><SelectValue placeholder="Young Person…" /></SelectTrigger>
+              <SelectContent>{YOUNG_PEOPLE.filter((y) => y.status === "current").map((y) => <SelectItem key={y.id} value={y.id}>{y.first_name} {y.last_name}</SelectItem>)}</SelectContent>
+            </Select>
+            <Select value={rlForm.type} onValueChange={(v) => setRF("type", v)}>
+              <SelectTrigger className="text-sm"><SelectValue placeholder="Restriction type…" /></SelectTrigger>
+              <SelectContent>{(Object.keys(RESTRICTIONS_LOG_TYPE_LABEL) as RestrictionsLogType[]).map((k) => <SelectItem key={k} value={k}>{RESTRICTIONS_LOG_TYPE_LABEL[k]}</SelectItem>)}</SelectContent>
+            </Select>
+            <input required placeholder="Description *" className="rounded border px-3 py-2 text-sm" value={rlForm.description} onChange={(e) => setRF("description", e.target.value)} />
+            <textarea required placeholder="Reason for restriction *" rows={3} className="rounded border px-3 py-2 text-sm" value={rlForm.reason} onChange={(e) => setRF("reason", e.target.value)} />
+            <Select value={rlForm.authorised_by} onValueChange={(v) => setRF("authorised_by", v)}>
+              <SelectTrigger className="text-sm"><SelectValue placeholder="Authorised by…" /></SelectTrigger>
+              <SelectContent>{(Object.keys(RESTRICTIONS_LOG_AUTHORISED_BY_LABEL) as RestrictionsLogAuthorisedBy[]).map((k) => <SelectItem key={k} value={k}>{RESTRICTIONS_LOG_AUTHORISED_BY_LABEL[k]}</SelectItem>)}</SelectContent>
+            </Select>
+            <input placeholder="Authoriser name" className="rounded border px-3 py-2 text-sm" value={rlForm.authoriser_name} onChange={(e) => setRF("authoriser_name", e.target.value)} />
+            <textarea placeholder="Proportionality assessment" rows={2} className="rounded border px-3 py-2 text-sm" value={rlForm.proportionality} onChange={(e) => setRF("proportionality", e.target.value)} />
+            <textarea placeholder="Child's view" rows={2} className="rounded border px-3 py-2 text-sm" value={rlForm.child_view} onChange={(e) => setRF("child_view", e.target.value)} />
+            <DialogFooter>
+              <button type="button" onClick={() => setShowDialog(false)} className="rounded-md border px-4 py-2 text-sm">Cancel</button>
+              <button type="submit" disabled={createRestriction.isPending} className="rounded-md bg-brand px-4 py-2 text-sm text-white hover:bg-brand/90 disabled:opacity-50">{createRestriction.isPending ? "Logging…" : "Log Restriction"}</button>
+            </DialogFooter>
+          </form>
         </DialogContent>
       </Dialog>
       <CareEventsPanel
