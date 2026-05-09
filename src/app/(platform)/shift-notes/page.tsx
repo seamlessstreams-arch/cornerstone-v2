@@ -12,6 +12,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { ExportButton, type ExportColumn } from "@/components/ui/export-button";
 import { PrintButton } from "@/components/ui/print-button";
 import { cn } from "@/lib/utils";
+import { AriaPanel } from "@/components/aria/aria-panel";
 import { getStaffName, getYPName } from "@/lib/seed-data";
 import {
   ArrowUpDown, ChevronDown, ChevronUp, Plus, Search,
@@ -136,6 +137,7 @@ export default function ShiftNotesPage() {
       }
     >
       <div id="print-area" className="space-y-6">
+        <AriaPanel mode="assist" pageContext="Shift Notes — detailed per-shift records for continuity of care, handover observations, children's behaviour, significant events" recordType="shift_note" userRole="registered_manager" className="mb-2" />
         {/* ── Stats ────────────────────────────────────────────────────────── */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {[

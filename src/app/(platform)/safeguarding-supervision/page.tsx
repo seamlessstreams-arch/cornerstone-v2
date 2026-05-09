@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import { PageShell } from "@/components/ui/page-shell";
 import { ExportButton, type ExportColumn } from "@/components/ui/export-button";
 import { PrintButton } from "@/components/ui/print-button";
+import { AriaPanel } from "@/components/aria/aria-panel";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
@@ -78,6 +79,8 @@ export default function SafeguardingSupervisionPage() {
       }
     >
       <div id="print-area" className="space-y-6">
+
+        <AriaPanel mode="oversee" pageContext="Safeguarding Supervision — specialist reflective supervision for staff working with children at high risk, distinct from line management, safeguarding concerns" recordType="safeguarding_supervision" userRole="registered_manager" className="mb-2" />
 
         {/* info banner */}
         <div className="rounded-lg bg-indigo-50 border border-indigo-200 p-4 flex gap-3">

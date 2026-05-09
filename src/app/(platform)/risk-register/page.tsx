@@ -13,6 +13,7 @@ import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
 import { cn, formatDate, todayStr } from "@/lib/utils";
+import { AriaPanel } from "@/components/aria/aria-panel";
 import { PrintButton } from "@/components/ui/print-button";
 import { ExportButton, type ExportColumn } from "@/components/ui/export-button";
 import { getStaffName, getYPName, YOUNG_PEOPLE, STAFF } from "@/lib/seed-data";
@@ -379,6 +380,7 @@ export default function RiskRegisterPage() {
         </div>
       }
     >
+      <AriaPanel mode="oversee" pageContext="Risk Register — live risk tracking for young people, staff, and environment, risk levels, review dates, control measures" recordType="risk_register" userRole="registered_manager" className="mb-6" />
       <div className="grid grid-cols-2 sm:grid-cols-6 gap-3 mb-6">
         {[
           { label: "Total Risks",   value: stats.total,     color: "text-slate-700",   bg: "bg-slate-50",   border: "border-slate-200"   },

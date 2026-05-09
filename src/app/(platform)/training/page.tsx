@@ -30,6 +30,7 @@ import type { TrainingRecord } from "@/types";
 import { useCreateTrainingNeed } from "@/hooks/use-ri-learning";
 import { useStaff } from "@/hooks/use-staff";
 import { cn, formatDate } from "@/lib/utils";
+import { AriaPanel } from "@/components/aria/aria-panel";
 import { api } from "@/hooks/use-api";
 import { TRAINING_CATEGORIES } from "@/lib/constants";
 import type { TrainingCategory } from "@/lib/constants";
@@ -457,6 +458,9 @@ export default function TrainingPage() {
       }
     >
       <div id="training-content" className="space-y-5 animate-fade-in">
+
+        {/* ARIA panel */}
+        <AriaPanel mode="assist" pageContext="Training & Compliance — staff training records, mandatory training matrix, certificate uploads, compliance tracking" recordType="training_record" userRole="registered_manager" className="mb-2" />
 
         {/* Summary stats */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">

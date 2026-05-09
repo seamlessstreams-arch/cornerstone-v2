@@ -347,6 +347,7 @@ export default function Regulation40Page() {
     <PageShell
       title="Regulation 40 Triage Queue"
       subtitle="Events requiring triage to determine if an Ofsted notifiable event notification is required"
+      ariaContext={{ pageTitle: "Regulation 40 Triage Queue", sourceType: "general" }}
     >
       {/* Stats bar */}
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-6">

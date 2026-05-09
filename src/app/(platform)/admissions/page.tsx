@@ -13,6 +13,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { ExportButton, type ExportColumn } from "@/components/ui/export-button";
 import { PrintButton } from "@/components/ui/print-button";
 import { cn } from "@/lib/utils";
+import { AriaPanel } from "@/components/aria/aria-panel";
 import { useAdmissions, useCreateReferral, useUpdateReferral } from "@/hooks/use-admissions";
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { getStaffName } from "@/lib/seed-data";
@@ -142,6 +143,7 @@ export default function AdmissionsPage() {
       }
     >
       <div id="print-area" className="space-y-6">
+        <AriaPanel mode="assist" pageContext="Admissions & Referrals — pre-admission referrals, impact assessments, matching decisions, placement suitability" recordType="admission" userRole="registered_manager" className="mb-2" />
         {/* ── Stats ────────────────────────────────────────────────────────── */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {[

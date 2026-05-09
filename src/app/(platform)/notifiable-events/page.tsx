@@ -9,6 +9,7 @@ import {
 import { PageShell } from "@/components/ui/page-shell";
 import { ExportButton, type ExportColumn } from "@/components/ui/export-button";
 import { PrintButton } from "@/components/ui/print-button";
+import { AriaPanel } from "@/components/aria/aria-panel";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -495,6 +496,7 @@ export default function NotifiableEventsPage() {
       }
     >
       <div id="print-area" className="space-y-6">
+        <AriaPanel mode="assist" pageContext="Notifiable Events — Regulation 40 events requiring potential Ofsted notification, serious incidents, missing episodes, injuries" recordType="notifiable_event" userRole="registered_manager" className="mb-2" />
         {/* ── stats ─────────────────────────────────────────────── */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {[

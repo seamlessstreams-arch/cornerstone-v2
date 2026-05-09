@@ -689,6 +689,7 @@ export default function SupervisionPage() {
     <PageShell
       title="Supervision & Performance"
       subtitle="Supervision records, probation, appraisals, and individual goal tracking"
+      ariaContext={{ pageTitle: "Supervision & Performance", sourceType: "general" }}
       quickCreateContext={{ module: "supervision", defaultTaskCategory: "supervision", defaultFormType: "supervision_record", preferredTab: "form" }}
       actions={
         <div className="flex items-center gap-2">
