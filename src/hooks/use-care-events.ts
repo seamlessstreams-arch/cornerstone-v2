@@ -35,6 +35,14 @@ interface CareEventsResponse {
   };
 }
 
+interface CareEventVersionHistoryItem {
+  id: string;
+  version: number;
+  amended_at: string | null;
+  amendment_reason: string | null;
+  amended_by_name: string | null;
+}
+
 interface CareEventDetailResponse {
   data: CareEvent & {
     routes: CareEventRoute[];
@@ -43,6 +51,7 @@ interface CareEventDetailResponse {
     staff_name: string | null;
     child_name: string | null;
     verified_by_name: string | null;
+    version_history: CareEventVersionHistoryItem[];
   };
 }
 

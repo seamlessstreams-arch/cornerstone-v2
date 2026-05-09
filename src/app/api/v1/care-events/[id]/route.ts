@@ -50,6 +50,23 @@ export async function GET(
   const youngPerson = event.child_id ? db.youngPeople.findById(event.child_id) : null;
   const verifier    = event.verified_by ? db.staff.findById(event.verified_by) : null;
 
+  // Build version history chain (oldest first)
+  const versionHistory: Array<{ id: string; version: number; amended_at: string | null; amendment_reason: string | null; amended_by_name: string | null }> = [];
+  let cursor: { previous_version_id: string | null; version: number; amended_at: string | null; amendment_reason: string | null; amended_by: string | null } | null = event;
+  while (cursor?.previous_version_id) {
+    const prev = db.careEvents.findById(cursor.previous_version_id);
+    if (!prev) break;
+    const amendedByStaff = prev.amended_by ? db.staff.findById(prev.amended_by) : null;
+    versionHistory.unshift({
+      id: prev.id,
+      version: prev.version,
+      amended_at: prev.amended_at,
+      amendment_reason: prev.amendment_reason,
+      amended_by_name: amendedByStaff ? `${amendedByStaff.first_name} ${amendedByStaff.last_name}` : prev.amended_by,
+    });
+    cursor = prev;
+  }
+
   return NextResponse.json({
     data: {
       ...event,
@@ -59,6 +76,7 @@ export async function GET(
       staff_name:    staffMember ? `${staffMember.first_name} ${staffMember.last_name}` : event.staff_id,
       child_name:    youngPerson ? `${youngPerson.first_name} ${youngPerson.last_name}` : event.child_id ?? null,
       verified_by_name: verifier ? `${verifier.first_name} ${verifier.last_name}` : event.verified_by ?? null,
+      version_history: versionHistory,
     },
   });
 }

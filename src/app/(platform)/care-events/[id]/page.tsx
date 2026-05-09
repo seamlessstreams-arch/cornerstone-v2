@@ -655,6 +655,40 @@ export default function CareEventDetailPage({
             </Card>
           )}
 
+          {/* Version history */}
+          {(() => {
+            const vh = (event as never as { version_history?: Array<{ id: string; version: number; amended_at: string | null; amendment_reason: string | null; amended_by_name: string | null }> }).version_history;
+            if (!vh || vh.length === 0) return null;
+            return (
+              <Card className="border-slate-200">
+                <CardContent className="p-4">
+                  <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3">Version history</p>
+                  <ol className="space-y-2">
+                    {vh.map((v) => (
+                      <li key={v.id} className="flex items-start gap-3 text-sm">
+                        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-slate-100 text-[10px] font-bold text-slate-500 shrink-0 mt-0.5">
+                          {v.version}
+                        </span>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-xs text-slate-500">
+                            {v.amended_at ? formatDate(v.amended_at) : "—"}
+                            {v.amended_by_name && <> · {v.amended_by_name}</>}
+                          </p>
+                          {v.amendment_reason && (
+                            <p className="text-xs text-slate-600 mt-0.5 italic">"{v.amendment_reason}"</p>
+                          )}
+                        </div>
+                        <Link href={`/care-events/${v.id}`} className="text-[10px] text-indigo-600 hover:text-indigo-700 font-medium shrink-0 mt-0.5">
+                          View
+                        </Link>
+                      </li>
+                    ))}
+                  </ol>
+                </CardContent>
+              </Card>
+            );
+          })()}
+
           {/* ARIA suggestions */}
           <ARIASuggestionsPanel event={event} />
 
