@@ -30,9 +30,10 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    // Enrich with source care event summary
+    // Enrich with source care event summary and child name
     const enriched = items.map((item) => {
       const careEvent = db.careEvents.findById(item.care_event_id);
+      const child = item.child_id ? db.youngPeople.findById(item.child_id) : null;
       return {
         ...item,
         care_event: careEvent
@@ -45,6 +46,7 @@ export async function GET(req: NextRequest) {
               staff_id: careEvent.staff_id,
             }
           : null,
+        child_name: child ? `${child.first_name} ${child.last_name}` : null,
       };
     });
 

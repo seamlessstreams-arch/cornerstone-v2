@@ -57,9 +57,10 @@ export async function GET(req: NextRequest) {
     entries.sort((a, b) => b.created_at.localeCompare(a.created_at));
     const paged = entries.slice(0, limit);
 
-    // Enrich with care event title
+    // Enrich with care event title and actor staff name
     const enriched = paged.map((entry) => {
       const careEvent = db.careEvents.findById(entry.care_event_id);
+      const actor = entry.actor_staff_id ? db.staff.findById(entry.actor_staff_id) : null;
       return {
         ...entry,
         care_event: careEvent
@@ -71,6 +72,7 @@ export async function GET(req: NextRequest) {
               child_id: careEvent.child_id,
             }
           : null,
+        actor_staff_name: actor ? `${actor.first_name} ${actor.last_name}` : null,
       };
     });
 

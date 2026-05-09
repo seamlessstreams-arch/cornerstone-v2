@@ -20,6 +20,7 @@ export interface FilingCabinetItemEnriched extends FilingCabinetItem {
     event_date: string;
     staff_id: string;
   } | null;
+  child_name: string | null;
 }
 
 export interface FilingCabinetMeta {

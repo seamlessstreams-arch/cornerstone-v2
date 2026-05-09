@@ -6,6 +6,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { PageShell } from "@/components/layout/page-shell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -86,9 +87,12 @@ function AuditEntryRow({ entry }: { entry: AuditLogEntryEnriched }) {
       </div>
       <div className="flex-1 min-w-0">
         {entry.care_event && (
-          <p className="text-sm text-slate-700 font-medium truncate">
+          <Link
+            href={`/care-events/${entry.care_event.id}`}
+            className="text-sm text-slate-700 font-medium hover:text-indigo-600 hover:underline truncate block"
+          >
             {entry.care_event.title}
-          </p>
+          </Link>
         )}
         {Object.keys(entry.detail).length > 0 && (
           <p className="text-xs text-slate-400 mt-0.5 truncate">
@@ -104,10 +108,10 @@ function AuditEntryRow({ entry }: { entry: AuditLogEntryEnriched }) {
           <Clock className="h-3 w-3" />
           {formatDate(entry.created_at)}
         </p>
-        {entry.actor_staff_id && (
+        {(entry.actor_staff_name ?? entry.actor_staff_id) && (
           <p className="flex items-center gap-1 justify-end">
             <User className="h-3 w-3" />
-            {entry.actor_staff_id}
+            {entry.actor_staff_name ?? entry.actor_staff_id}
           </p>
         )}
         {entry.care_event && (

@@ -44,6 +44,7 @@ export interface AuditLogEntryEnriched extends CareEventAuditLog {
     status: string;
     child_id: string | null;
   } | null;
+  actor_staff_name: string | null;
 }
 
 export interface AuditLogMeta {

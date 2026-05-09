@@ -6,6 +6,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { PageShell } from "@/components/layout/page-shell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -31,15 +32,22 @@ import { toast } from "sonner";
 // ── Category filter tabs ──────────────────────────────────────────────────────
 
 const CATEGORY_TABS: Array<{ label: string; value: string }> = [
-  { label: "All", value: "all" },
-  { label: "Daily Care", value: "daily_care" },
-  { label: "Incidents", value: "incident" },
-  { label: "Health", value: "health" },
-  { label: "Medication", value: "medication" },
-  { label: "Safeguarding", value: "safeguarding" },
-  { label: "Reg 45", value: "regulation_45" },
-  { label: "Annex A", value: "annex_a" },
-  { label: "Reg 40", value: "regulation_40" },
+  { label: "All",            value: "all" },
+  { label: "Daily Care",     value: "daily_care" },
+  { label: "Incidents",      value: "incident" },
+  { label: "Health",         value: "health" },
+  { label: "Medication",     value: "medication" },
+  { label: "Safeguarding",   value: "safeguarding" },
+  { label: "Education",      value: "education" },
+  { label: "Missing",        value: "missing_episode" },
+  { label: "Family Contact", value: "family_contact" },
+  { label: "PI",             value: "physical_intervention" },
+  { label: "Complaints",     value: "complaint" },
+  { label: "Reg 45",         value: "regulation_45" },
+  { label: "Annex A",        value: "annex_a" },
+  { label: "Reg 40",         value: "regulation_40" },
+  { label: "Oversight",      value: "management_oversight" },
+  { label: "Other",          value: "other" },
 ];
 
 const CATEGORY_COLOUR: Record<FilingCategory, string> = {
@@ -110,15 +118,18 @@ function FilingItemCard({
                 Filed {formatDate(item.filed_at)}
               </span>
               {item.care_event && (
-                <span className="flex items-center gap-1">
+                <Link
+                  href={`/care-events/${item.care_event.id}`}
+                  className="flex items-center gap-1 text-indigo-500 hover:underline"
+                >
                   <Zap className="h-3 w-3" />
                   {item.care_event.title}
-                </span>
+                </Link>
               )}
-              {item.child_id && (
+              {item.child_name && (
                 <span className="flex items-center gap-1">
                   <User className="h-3 w-3" />
-                  {item.child_id}
+                  {item.child_name}
                 </span>
               )}
             </div>
