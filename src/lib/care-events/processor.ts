@@ -139,6 +139,25 @@ function processManagementOversight(event: CareEvent, route: CareEventRoute): vo
     updated_by: event.staff_id,
     linked_care_event_id: event.id,
   } as never);
+
+  // Send in-app notification to the manager (or all managers if no manager_id)
+  const notifRecipient = event.manager_id ?? event.staff_id;
+  try {
+    db.notifications.create({
+      home_id: HOME_ID,
+      recipient_id: notifRecipient,
+      title: "Management review required",
+      body: `A care event requires your review: "${event.title}". Please check the management oversight queue.`,
+      type: "task",
+      priority: event.requires_reg40_triage ? "urgent" : "high",
+      read: false,
+      read_at: null,
+      action_url: `/management-oversight`,
+      entity_type: "care_event",
+      entity_id: event.id,
+    });
+  } catch { /* non-critical */ }
+
   db.careEventRoutes.patch(route.id, {
     status: "completed",
     linked_record_id: task.id,
@@ -801,6 +820,24 @@ function processSafeguardingRecord(event: CareEvent, route: CareEventRoute): voi
       care_event_id: event.id,
       created_at: new Date().toISOString(),
     } as never);
+  } catch { /* non-critical */ }
+
+  // Urgent notification to manager
+  try {
+    const notifRecipient = event.manager_id ?? event.staff_id;
+    db.notifications.create({
+      home_id: HOME_ID,
+      recipient_id: notifRecipient,
+      title: "URGENT — Safeguarding concern logged",
+      body: `A safeguarding concern has been recorded: "${event.title}". Immediate review required. Ref: ${incident.reference}`,
+      type: "safeguarding",
+      priority: "urgent",
+      read: false,
+      read_at: null,
+      action_url: `/incidents`,
+      entity_type: "incident",
+      entity_id: incident.id,
+    });
   } catch { /* non-critical */ }
 
   db.careEventRoutes.patch(route.id, {

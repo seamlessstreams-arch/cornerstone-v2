@@ -8,6 +8,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState, useMemo } from "react";
+import Link from "next/link";
 import { PageShell } from "@/components/layout/page-shell";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -31,7 +32,7 @@ import {
   Search, ArrowUpDown, X, Plus, GraduationCap, BookOpen,
   CheckCircle2, AlertTriangle, Clock, User, Calendar,
   ChevronDown, ChevronUp, School, TrendingUp,
-  XCircle, Shield, Award, FileText, Loader2,
+  XCircle, Shield, Award, FileText, Loader2, Sparkles,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -388,6 +389,16 @@ export default function EducationPage() {
                       <span className="flex items-center gap-1"><Clock className="h-3.5 w-3.5" />Follow-up: {formatDate(entry.follow_up_date)}</span>
                     )}
                   </div>
+                  {(entry as never as { care_event_id?: string }).care_event_id && (
+                    <Link
+                      href={`/care-events/${(entry as never as { care_event_id: string }).care_event_id}`}
+                      onClick={(e) => e.stopPropagation()}
+                      className="inline-flex items-center gap-1 rounded-full bg-indigo-50 border border-indigo-200 px-2.5 py-1 text-[10px] font-medium text-indigo-700 hover:bg-indigo-100 transition-colors"
+                    >
+                      <Sparkles className="h-3 w-3" />
+                      Logged from Care Event
+                    </Link>
+                  )}
                   <SmartLinkPanel sourceType="education" sourceId={entry.id} childId={entry.child_id} compact />
                 </div>
               )}

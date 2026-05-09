@@ -9,6 +9,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState, useMemo } from "react";
+import Link from "next/link";
 import { PageShell } from "@/components/layout/page-shell";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -345,6 +346,16 @@ export default function BehaviourLogPage() {
 
               {isOpen && (
                 <div className="border-t px-4 py-3 space-y-3 bg-muted/30">
+                  {(entry as never as { care_event_id?: string }).care_event_id && (
+                    <Link
+                      href={`/care-events/${(entry as never as { care_event_id: string }).care_event_id}`}
+                      onClick={(e) => e.stopPropagation()}
+                      className="inline-flex items-center gap-1 rounded-full bg-indigo-50 border border-indigo-200 px-2.5 py-1 text-[10px] font-medium text-indigo-700 hover:bg-indigo-100 transition-colors"
+                    >
+                      <Zap className="h-3 w-3" />
+                      Logged from Care Event
+                    </Link>
+                  )}
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                     <div className="rounded-lg border p-2.5">
                       <p className="text-xs font-semibold text-muted-foreground uppercase mb-1">A — Antecedent</p>
