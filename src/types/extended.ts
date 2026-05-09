@@ -21528,3 +21528,25 @@ export interface YPSavingsAccountRecord {
   child_manages: boolean;
   notes: string;
 }
+
+// ── Inspection History ─────────────────────────────────────────────────────────
+
+export type OfstedGrade = "Outstanding" | "Good" | "Requires improvement" | "Inadequate";
+export type InspectionType = "Full inspection" | "Short notice" | "Focused visit" | "Monitoring visit";
+
+export interface InspectionRecord {
+  id: string;
+  home_id: string;
+  inspection_date: string;
+  inspection_type: InspectionType;
+  grade: OfstedGrade;
+  inspector_name: string;
+  report_reference: string | null;
+  report_url: string | null;
+  actions_required: number;
+  actions_completed: number;
+  summary: string | null;
+  published_at: string | null;
+  created_at: string;
+  updated_at: string;
+}

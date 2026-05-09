@@ -372,6 +372,7 @@ import type {
   Reg45EvidenceItem, AnnexAEvidenceItem, ChildDailySummary,
   FilingCabinetItem, SavedTimeMetric,
 } from "@/types/care-events";
+import type { InspectionRecord } from "@/types/extended";
 import {
   SEED_CARE_EVENTS, SEED_CARE_EVENT_ROUTES, SEED_CARE_EVENT_AUDIT,
   SEED_REG45_EVIDENCE, SEED_ANNEX_A_EVIDENCE, SEED_CHILD_DAILY_SUMMARIES,
@@ -806,6 +807,56 @@ const store = {
   ofstedActionItems: [] as OfstedActionItem[],
   ofstedEngagementRecords: [] as OfstedEngagementRecord[],
   selfEvaluationAreas: [] as SelfEvaluationArea[],
+  inspectionHistory: [
+    {
+      id: "insp_001",
+      home_id: "home_oak",
+      inspection_date: "2025-10-15",
+      inspection_type: "Full inspection",
+      grade: "Good",
+      inspector_name: "Jane Whitfield",
+      report_reference: "REP-2025-10-OAK",
+      report_url: null,
+      actions_required: 2,
+      actions_completed: 2,
+      summary: "Overall the home provides good care and outcomes for children. Leadership and management are effective.",
+      published_at: "2025-11-01",
+      created_at: "2025-10-15T09:00:00Z",
+      updated_at: "2025-11-01T09:00:00Z",
+    },
+    {
+      id: "insp_002",
+      home_id: "home_oak",
+      inspection_date: "2024-04-22",
+      inspection_type: "Full inspection",
+      grade: "Good",
+      inspector_name: "Mark Tanner",
+      report_reference: "REP-2024-04-OAK",
+      report_url: null,
+      actions_required: 1,
+      actions_completed: 1,
+      summary: "The home continues to provide a good standard of care. Relationships between staff and children are warm and supportive.",
+      published_at: "2024-05-10",
+      created_at: "2024-04-22T09:00:00Z",
+      updated_at: "2024-05-10T09:00:00Z",
+    },
+    {
+      id: "insp_003",
+      home_id: "home_oak",
+      inspection_date: "2023-11-08",
+      inspection_type: "Short notice",
+      grade: "Requires improvement",
+      inspector_name: "Susan Blake",
+      report_reference: "REP-2023-11-OAK",
+      report_url: null,
+      actions_required: 5,
+      actions_completed: 5,
+      summary: "Some aspects of care require improvement. Record keeping and supervision arrangements need strengthening.",
+      published_at: "2023-11-30",
+      created_at: "2023-11-08T09:00:00Z",
+      updated_at: "2023-11-30T09:00:00Z",
+    },
+  ] as InspectionRecord[],
   onCallShifts: [] as OnCallShift[],
   onlineGamingRecords: [] as OnlineGamingRecord[],
   onlineSafetyIncidents: [] as OnlineSafetyIncident[],
@@ -8398,6 +8449,49 @@ export const db = {
       if (idx === -1) return null;
       store.selfEvaluationAreas[idx] = { ...store.selfEvaluationAreas[idx], ...data };
       return store.selfEvaluationAreas[idx];
+    },
+  },
+
+  inspectionHistory: {
+    findAll: (): InspectionRecord[] =>
+      [...store.inspectionHistory].sort((a, b) =>
+        b.inspection_date.localeCompare(a.inspection_date)
+      ),
+    findById: (id: string): InspectionRecord | undefined =>
+      store.inspectionHistory.find((r) => r.id === id),
+    latest: (): InspectionRecord | undefined =>
+      store.inspectionHistory.reduce<InspectionRecord | undefined>((best, r) =>
+        !best || r.inspection_date > best.inspection_date ? r : best, undefined),
+    create: (data: Partial<InspectionRecord>): InspectionRecord => {
+      const now = new Date().toISOString();
+      const record: InspectionRecord = {
+        id: generateId("insp"),
+        home_id: "home_oak",
+        inspection_date: data.inspection_date ?? now.slice(0, 10),
+        inspection_type: data.inspection_type ?? "Full inspection",
+        grade: data.grade ?? "Good",
+        inspector_name: data.inspector_name ?? "",
+        report_reference: data.report_reference ?? null,
+        report_url: data.report_url ?? null,
+        actions_required: data.actions_required ?? 0,
+        actions_completed: data.actions_completed ?? 0,
+        summary: data.summary ?? null,
+        published_at: data.published_at ?? null,
+        created_at: now,
+        updated_at: now,
+      };
+      store.inspectionHistory.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<InspectionRecord>): InspectionRecord | null => {
+      const idx = store.inspectionHistory.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.inspectionHistory[idx] = {
+        ...store.inspectionHistory[idx],
+        ...data,
+        updated_at: new Date().toISOString(),
+      };
+      return store.inspectionHistory[idx];
     },
   },
 

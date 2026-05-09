@@ -15,6 +15,7 @@ import { useHealthCheck } from "@/hooks/use-dashboard";
 import { usePatternAlerts, useActionOutcomes, useHomeClimate, useUpdateActionOutcome } from "@/hooks/use-intelligence";
 import { useAnnexAReadiness, useReg45Evidence } from "@/hooks/use-compliance-evidence";
 import { useManagementOversight, useReg40Triage } from "@/hooks/use-oversight-queues";
+import { useInspectionHistory } from "@/hooks/use-inspection-history";
 import type { ActionOutcome } from "@/types/extended";
 import { cn, formatDate, daysFromNow, todayStr } from "@/lib/utils";
 import { SmartUploadButton } from "@/components/documents/smart-upload-button";
@@ -23,12 +24,6 @@ import { ExportButton, type ExportColumn } from "@/components/common/export-butt
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
 
 // ── Static data ───────────────────────────────────────────────────────────────
-
-const INSPECTION_HISTORY = [
-  { date: "2025-10-15", type: "Full inspection", grade: "Good", inspector: "Jane Whitfield", reportUrl: "#", actions: 2, actionsComplete: 2 },
-  { date: "2024-04-22", type: "Full inspection", grade: "Good", inspector: "Mark Tanner", reportUrl: "#", actions: 1, actionsComplete: 1 },
-  { date: "2023-11-08", type: "Short notice", grade: "Requires improvement", inspector: "Susan Blake", reportUrl: "#", actions: 5, actionsComplete: 5 },
-];
 
 const GRADE_COLORS: Record<string, string> = {
   "Outstanding": "bg-emerald-100 text-emerald-700 border-emerald-200",
@@ -796,6 +791,10 @@ export default function InspectionPage() {
   const oversightPending = oversightQuery.data?.meta?.total ?? 0;
   const reg40Active = reg40Query.data?.meta?.active ?? 0;
 
+  // Live inspection history
+  const inspHistoryQuery = useInspectionHistory();
+  const inspectionRecords = inspHistoryQuery.data?.data ?? [];
+
   const readinessAreas = hc
     ? [
         { area: "Outcomes for young people",           score: hc.overall,        status: hc.overall >= 85 ? "good" : "warn" },
@@ -986,27 +985,42 @@ export default function InspectionPage() {
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
-                {INSPECTION_HISTORY.map((insp) => (
-                  <div key={insp.date} className="rounded-xl border border-slate-200 p-3 space-y-2">
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm font-semibold text-slate-900">{insp.type}</span>
-                      <Badge className={cn("text-[9px] rounded-full border", GRADE_COLORS[insp.grade] || "bg-slate-100")}>
-                        {insp.grade}
-                      </Badge>
-                    </div>
-                    <div className="text-xs text-slate-500">{formatDate(insp.date)} · {insp.inspector}</div>
-                    <div className="text-xs text-slate-600">{insp.actionsComplete}/{insp.actions} actions completed</div>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="h-7 text-xs"
-                      disabled
-                      title="Inspection reports are stored in the Documents section."
-                    >
-                      <FileText className="h-3 w-3 mr-1" />View report
-                    </Button>
+                {inspHistoryQuery.isLoading ? (
+                  <div className="flex items-center gap-2 text-slate-400 py-4">
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    <span className="text-sm">Loading inspection history…</span>
                   </div>
-                ))}
+                ) : inspectionRecords.length === 0 ? (
+                  <p className="text-sm text-slate-400 py-2">No inspection records found.</p>
+                ) : (
+                  inspectionRecords.map((insp) => (
+                    <div key={insp.id} className="rounded-xl border border-slate-200 p-3 space-y-2">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-semibold text-slate-900">{insp.inspection_type}</span>
+                        <Badge className={cn("text-[9px] rounded-full border", GRADE_COLORS[insp.grade] || "bg-slate-100")}>
+                          {insp.grade}
+                        </Badge>
+                      </div>
+                      <div className="text-xs text-slate-500">{formatDate(insp.inspection_date)} · {insp.inspector_name}</div>
+                      {insp.report_reference && (
+                        <div className="text-xs text-slate-400">Ref: {insp.report_reference}</div>
+                      )}
+                      <div className="text-xs text-slate-600">{insp.actions_completed}/{insp.actions_required} actions completed</div>
+                      {insp.summary && (
+                        <p className="text-xs text-slate-600 border-t border-slate-100 pt-2">{insp.summary}</p>
+                      )}
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="h-7 text-xs"
+                        disabled={!insp.report_url}
+                        title={insp.report_url ? "View inspection report" : "Inspection reports are stored in the Documents section."}
+                      >
+                        <FileText className="h-3 w-3 mr-1" />View report
+                      </Button>
+                    </div>
+                  ))
+                )}
               </div>
             </CardContent>
           </Card>
