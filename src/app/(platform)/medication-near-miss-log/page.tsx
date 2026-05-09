@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import { PageShell } from "@/components/ui/page-shell";
+import { PageShell } from "@/components/layout/page-shell";
+import { AriaPanel } from "@/components/aria/aria-panel";
 import { ExportButton, type ExportColumn } from "@/components/ui/export-button";
 import { PrintButton } from "@/components/ui/print-button";
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
@@ -129,6 +130,7 @@ export default function MedicationNearMissLogPage() {
     <PageShell
       title="Medication Near-Miss Log"
       subtitle="Quality Standard 7 — blame-free reporting of medication catches"
+      ariaContext={{ pageTitle: "Medication Near-Miss Log", sourceType: "medication" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Medication Near-Miss Log" />

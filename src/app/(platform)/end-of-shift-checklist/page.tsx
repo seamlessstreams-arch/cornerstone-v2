@@ -7,7 +7,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useMemo, useState } from "react";
-import { PageShell } from "@/components/ui/page-shell";
+import { PageShell } from "@/components/layout/page-shell";
+import { AriaPanel } from "@/components/aria/aria-panel";
 import { ExportButton, type ExportColumn } from "@/components/ui/export-button";
 import { PrintButton } from "@/components/ui/print-button";
 import {
@@ -245,6 +246,7 @@ export default function EndOfShiftChecklistPage() {
     <PageShell
       title="End-of-Shift Checklist"
       subtitle="Standardised closing-down tasks completed by every member of staff before handover."
+      ariaContext={{ pageTitle: "End-of-Shift Checklist", sourceType: "general" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton

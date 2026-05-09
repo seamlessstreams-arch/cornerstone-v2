@@ -8,7 +8,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState, useMemo } from "react";
-import { PageShell } from "@/components/ui/page-shell";
+import { PageShell } from "@/components/layout/page-shell";
+import { AriaPanel } from "@/components/aria/aria-panel";
 import { ExportButton, type ExportColumn } from "@/components/ui/export-button";
 import { PrintButton } from "@/components/ui/print-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -223,6 +224,7 @@ export default function MedicationErrorsPage() {
     <PageShell
       title="Medication Errors & Near-Misses"
       subtitle="Regulation 23 — Medication error reporting and learning"
+      ariaContext={{ pageTitle: "Medication Errors & Near-Misses", sourceType: "medication" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Medication Errors Register" />

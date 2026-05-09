@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { PageShell } from "@/components/ui/page-shell";
+import { PageShell } from "@/components/layout/page-shell";
+import { AriaPanel } from "@/components/aria/aria-panel";
 import { ExportButton, type ExportColumn } from "@/components/ui/export-button";
 import { PrintButton } from "@/components/ui/print-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -150,7 +151,7 @@ export default function ContextualSafeguardingPage() {
   ];
 
   return (
-    <PageShell title="Contextual Safeguarding" subtitle="Working Together 2023 · Community Risk Mapping · Environmental Factors" actions={<div className="flex items-center gap-2"><PrintButton title="Contextual Safeguarding" /><ExportButton data={filtered} columns={exportCols} filename="contextual-safeguarding" /><Button size="sm" onClick={() => setShowNew(true)}><Plus className="h-4 w-4 mr-1" /> Add Context</Button></div>}>
+    <PageShell title="Contextual Safeguarding" subtitle="Working Together 2023 · Community Risk Mapping · Environmental Factors" ariaContext={{ pageTitle: "Contextual Safeguarding", sourceType: "child_record" }} actions={<div className="flex items-center gap-2"><PrintButton title="Contextual Safeguarding" /><ExportButton data={filtered} columns={exportCols} filename="contextual-safeguarding" /><Button size="sm" onClick={() => setShowNew(true)}><Plus className="h-4 w-4 mr-1" /> Add Context</Button></div>}>
       <div id="print-area">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
           {[

@@ -13,7 +13,8 @@ import {
   Scale, ShieldCheck, Calendar, User, Flag, FileText,
 } from "lucide-react";
 import { toast } from "sonner";
-import { PageShell } from "@/components/ui/page-shell";
+import { PageShell } from "@/components/layout/page-shell";
+import { AriaPanel } from "@/components/aria/aria-panel";
 import { ExportButton, type ExportColumn } from "@/components/ui/export-button";
 import { PrintButton } from "@/components/ui/print-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -188,6 +189,7 @@ export default function ComplaintsOutcomesPage() {
     <PageShell
       title="Complaints Outcomes"
       subtitle="Investigation outcomes, learning points, practice changes, and response timescales"
+      ariaContext={{ pageTitle: "Complaints Outcomes", sourceType: "complaint" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Complaints Outcomes" />

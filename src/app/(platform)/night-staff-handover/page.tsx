@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import { PageShell } from "@/components/ui/page-shell";
+import { PageShell } from "@/components/layout/page-shell";
+import { AriaPanel } from "@/components/aria/aria-panel";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -167,6 +168,7 @@ export default function NightStaffHandoverPage() {
     <PageShell
       title="Night Staff Handover"
       subtitle="Sleep-in / waking night handover records — distinct from main shift handover"
+      ariaContext={{ pageTitle: "Night Staff Handover", sourceType: "general" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Night Staff Handover" />
@@ -181,6 +183,7 @@ export default function NightStaffHandoverPage() {
         </div>
       }
     >
+      <AriaPanel mode="assist" pageContext="Night staff handover — sleep-in and waking night records, concerns, child status, night events" recordType="general" userRole="registered_manager" className="mb-4" />
       <div id="print-area" className="space-y-6">
         {/* ── Stats ─────────────────────────────────────────────────────── */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
