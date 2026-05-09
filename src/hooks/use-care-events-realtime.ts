@@ -15,13 +15,13 @@ import { useQueryClient } from "@tanstack/react-query";
 import { createClient } from "@supabase/supabase-js";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+const supabasePublishableKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 
 const isRealtimeEnabled =
   typeof supabaseUrl === "string" &&
   supabaseUrl.length > 0 &&
-  typeof supabaseAnonKey === "string" &&
-  supabaseAnonKey.length > 0;
+  typeof supabasePublishableKey === "string" &&
+  supabasePublishableKey.length > 0;
 
 /**
  * Subscribe to live care event changes.
@@ -39,7 +39,7 @@ export function useCareEventsRealtime(homeId?: string) {
   useEffect(() => {
     if (!isRealtimeEnabled) return;
 
-    const client = createClient(supabaseUrl!, supabaseAnonKey!);
+    const client = createClient(supabaseUrl!, supabasePublishableKey!);
 
     const filter = homeId
       ? `home_id=eq.${homeId}`
