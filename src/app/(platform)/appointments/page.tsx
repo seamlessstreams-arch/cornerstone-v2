@@ -28,6 +28,7 @@ import { getStaffName, getYPName } from "@/lib/seed-data";
 import { toast } from "sonner";
 import { useAppointments, useCreateAppointment, useUpdateAppointment } from "@/hooks/use-appointments";
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
+import { CareEventsPanel } from "@/components/care-events/care-events-panel";
 import type { Appointment, AppointmentType, AppointmentStatus } from "@/types/extended";
 import {
   Search, ArrowUpDown, X, Plus, CalendarDays,
@@ -495,6 +496,12 @@ export default function AppointmentsPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+      <CareEventsPanel
+        title="Related Care Events"
+        category="health"
+        days={60}
+        defaultCollapsed
+      />
     </PageShell>
   );
 }

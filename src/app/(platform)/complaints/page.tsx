@@ -35,6 +35,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { api } from "@/hooks/use-api";
+import { CareEventsPanel } from "@/components/care-events/care-events-panel";
 
 // ── Constants ──────────────────────────────────────────────────────────────────
 
@@ -831,6 +832,11 @@ ${complaint.lessons_learned ? `Learning: ${complaint.lessons_learned}` : ""}`;
         open={showNew}
         onClose={() => setShowNew(false)}
         onSave={handleCreate}
+      />
+      <CareEventsPanel
+        title="Related Care Events"
+        days={90}
+        defaultCollapsed
       />
     </PageShell>
   );

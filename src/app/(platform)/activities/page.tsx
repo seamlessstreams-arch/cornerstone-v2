@@ -34,6 +34,7 @@ import {
   Mountain, Bike, Camera, UtensilsCrossed, Trophy, Target, Calendar,
   User, CheckCircle2, Clock, Loader2, Sparkles,
 } from "lucide-react";
+import { CareEventsPanel } from "@/components/care-events/care-events-panel";
 
 // ── Constants ────────────────────────────────────────────────────────────────
 
@@ -565,6 +566,12 @@ export default function ActivitiesPage() {
         open={showNew}
         onClose={() => setShowNew(false)}
         onSave={handleAddActivity}
+      />
+      <CareEventsPanel
+        title="Related Care Events"
+        category="activity"
+        days={28}
+        defaultCollapsed
       />
     </PageShell>
   );

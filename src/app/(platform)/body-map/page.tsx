@@ -29,6 +29,7 @@ import { getStaffName, getYPName } from "@/lib/seed-data";
 import { toast } from "sonner";
 import { useBodyMap, useCreateBodyMapEntry, useUpdateBodyMapEntry } from "@/hooks/use-body-map";
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
+import { CareEventsPanel } from "@/components/care-events/care-events-panel";
 import type { BodyRegion, MarkType, MarkColour, BodyMapStatus, BodyMapEntry } from "@/types/extended";
 import {
   Search, Filter, ArrowUpDown, X, Plus,
@@ -680,6 +681,12 @@ export default function BodyMapPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+      <CareEventsPanel
+        title="Related Care Events"
+        category="safeguarding"
+        days={60}
+        defaultCollapsed
+      />
     </PageShell>
   );
 }

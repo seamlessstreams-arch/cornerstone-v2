@@ -36,6 +36,7 @@ import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import Link from "next/link";
 import { getStaffName, getYPName } from "@/lib/seed-data";
 import type { BehaviourSupportPlan, BSPPrimaryBehaviour, BSPKnownTrigger, BSPDeEscalationStage, BSPPositiveStrategy, BSPReward, BSPBoundary, BSPSafetyPlanItem, BSPProfessionalInput, BSPRestrictiveIntervention, BSPReviewHistoryEntry } from "@/types/extended";
+import { CareEventsPanel } from "@/components/care-events/care-events-panel";
 
 // -- Helpers ------------------------------------------------------------------
 
@@ -775,6 +776,12 @@ export default function BehaviourSupportPlansPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+      <CareEventsPanel
+        title="Related Care Events"
+        category="behaviour"
+        days={28}
+        defaultCollapsed
+      />
     </PageShell>
   );
 }

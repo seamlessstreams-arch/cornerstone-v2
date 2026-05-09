@@ -21,6 +21,7 @@ import { getYPName, getStaffName } from "@/lib/seed-data";
 import type { AnnualHealthAssessment, AHAHealthDomain } from "@/types/extended";
 import { useAnnualHealthAssessments } from "@/hooks/use-annual-health-assessments";
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
+import { CareEventsPanel } from "@/components/care-events/care-events-panel";
 
 /* ── helpers ───────────────────────────────────────────────────────────────── */
 
@@ -314,6 +315,12 @@ export default function AnnualHealthAssessmentPage() {
           </p>
         </div>
       </div>
+      <CareEventsPanel
+        title="Related Care Events"
+        category="health"
+        days={90}
+        defaultCollapsed
+      />
     </PageShell>
   );
 }

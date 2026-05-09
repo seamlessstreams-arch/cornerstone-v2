@@ -42,6 +42,7 @@ import {
 import { useAuthContext } from "@/contexts/auth-context";
 import { toast } from "sonner";
 import Link from "next/link";
+import { CareEventsPanel } from "@/components/care-events/care-events-panel";
 
 // ── Status / priority colours ─────────────────────────────────────────────────
 
@@ -415,6 +416,12 @@ export default function ManagementOversightPage() {
       {completingTask && (
         <CompleteDialog task={completingTask} onClose={() => setCompletingTask(null)} />
       )}
+      <CareEventsPanel
+        title="Care Events Awaiting Review"
+        status="submitted"
+        days={28}
+        defaultCollapsed
+      />
     </PageShell>
   );
 }
