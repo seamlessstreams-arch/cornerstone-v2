@@ -26,6 +26,7 @@ import type { Supervision, SupervisionAction } from "@/types";
 import { PrintButton } from "@/components/common/print-button";
 import { SmartUploadButton } from "@/components/documents/smart-upload-button";
 import { useDocumentIntelligence } from "@/hooks/use-doc-intelligence";
+import { CareEventsPanel } from "@/components/care-events/care-events-panel";
 import { DOCUMENT_CATEGORY_LABELS } from "@/types/documents";
 import {
   ArrowLeft, Clock, CheckCircle2, Circle, AlertTriangle,
@@ -659,6 +660,11 @@ export default function SupervisionDetailPage({
           </div>
         </div>
       </div>
+      <CareEventsPanel
+        title="Recent Care Events"
+        days={28}
+        defaultCollapsed
+      />
     </PageShell>
   );
 }

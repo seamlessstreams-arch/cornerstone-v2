@@ -418,7 +418,7 @@ export default function ManagementOversightPage() {
       )}
       <CareEventsPanel
         title="Care Events Awaiting Review"
-        status="submitted"
+        status="manager_review_required"
         days={28}
         defaultCollapsed
       />
