@@ -5,16 +5,17 @@
 // A right-side sliding drawer for contextual Aria assistance.
 // Can be opened from any page with context about the current record.
 // All Aria suggestions require human approval before saving.
+// Uses SSE streaming so text appears token-by-token like AriaPanel.
 // ══════════════════════════════════════════════════════════════════════════════
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import {
   X, Sparkles, Loader2, CheckCircle2, XCircle, ChevronDown, ChevronUp,
   ClipboardList, ShieldAlert, Eye, ListChecks, MessageSquare, FileText,
-  AlertTriangle, Lightbulb, RefreshCw,
+  AlertTriangle, Lightbulb, RefreshCw, Square,
 } from "lucide-react";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -230,13 +231,17 @@ interface AriaDrawerProps {
 }
 
 export function AriaDrawer({ open, onClose, context = {} }: AriaDrawerProps) {
-  const [activeAction, setActiveAction]   = useState<string | null>(null);
-  const [loading, setLoading]             = useState(false);
-  const [suggestion, setSuggestion]       = useState<string | null>(null);
-  const [approved, setApproved]           = useState<string | null>(null);
-  const [rejected, setRejected]           = useState(false);
-  const [freePrompt, setFreePrompt]       = useState("");
+  const [activeAction, setActiveAction]     = useState<string | null>(null);
+  // loading = waiting for first token; isStreaming = tokens arriving
+  const [loading, setLoading]               = useState(false);
+  const [isStreaming, setIsStreaming]        = useState(false);
+  const [streamingText, setStreamingText]   = useState("");
+  const [suggestion, setSuggestion]         = useState<string | null>(null);
+  const [approved, setApproved]             = useState<string | null>(null);
+  const [rejected, setRejected]             = useState(false);
+  const [freePrompt, setFreePrompt]         = useState("");
   const [showFreePrompt, setShowFreePrompt] = useState(false);
+  const abortRef = useRef<AbortController | null>(null);
 
   // Close on Escape
   useEffect(() => {
@@ -247,6 +252,11 @@ export function AriaDrawer({ open, onClose, context = {} }: AriaDrawerProps) {
     return () => document.removeEventListener("keydown", handler);
   }, [onClose]);
 
+  // Abort stream on drawer close
+  useEffect(() => {
+    if (!open) abortRef.current?.abort();
+  }, [open]);
+
   const actions = getActionsForContext(context);
 
   const groupedActions = actions.reduce<Record<string, AriaAction[]>>((acc, a) => {
@@ -255,35 +265,97 @@ export function AriaDrawer({ open, onClose, context = {} }: AriaDrawerProps) {
     return acc;
   }, {});
 
+  function stopStream() {
+    abortRef.current?.abort();
+    setIsStreaming(false);
+    setLoading(false);
+    if (streamingText) {
+      setSuggestion(streamingText);
+      setStreamingText("");
+    }
+  }
+
   async function runAction(action: AriaAction, customPrompt?: string) {
+    abortRef.current?.abort();
+    const ctrl = new AbortController();
+    abortRef.current = ctrl;
+
     setActiveAction(action.id);
     setSuggestion(null);
     setApproved(null);
     setRejected(false);
+    setStreamingText("");
     setLoading(true);
+    setIsStreaming(false);
 
     const contextStr = [
-      context.pageTitle   ? `Page: ${context.pageTitle}`   : null,
-      context.childName   ? `Child: ${context.childName}`  : null,
-      context.sourceType  ? `Record type: ${context.sourceType}` : null,
+      context.pageTitle  ? `Page: ${context.pageTitle}`        : null,
+      context.childName  ? `Child: ${context.childName}`       : null,
+      context.sourceType ? `Record type: ${context.sourceType}`: null,
       context.extraContext,
     ].filter(Boolean).join(". ");
 
     try {
       const res = await fetch("/api/v1/aria/chat", {
-        method:  "POST",
+        method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           context: contextStr || "Cornerstone Care OS — children's residential home.",
           prompt:  customPrompt ?? action.prompt,
+          stream:  true,
         }),
+        signal: ctrl.signal,
       });
-      const data = await res.json();
-      setSuggestion(data.response ?? data.content ?? "Unable to generate a suggestion at this time.");
-    } catch {
+
+      if (!res.ok || !res.body) {
+        setSuggestion("Unable to reach Aria. Please try again.");
+        setLoading(false);
+        return;
+      }
+
+      const reader  = res.body.getReader();
+      const decoder = new TextDecoder();
+      let buf      = "";
+      let fullText = "";
+
+      // eslint-disable-next-line no-constant-condition
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        // Show streaming state once first bytes arrive
+        if (loading) {
+          setLoading(false);
+          setIsStreaming(true);
+        }
+
+        buf += decoder.decode(value, { stream: true });
+        const lines = buf.split("\n");
+        buf = lines.pop() ?? "";
+
+        for (const line of lines) {
+          if (!line.startsWith("data: ")) continue;
+          const raw = line.slice(6).trim();
+          if (raw === "[DONE]") break;
+          try {
+            const evt = JSON.parse(raw) as { type: string; text?: string };
+            if (evt.type === "text_delta" && evt.text) {
+              fullText += evt.text;
+              setStreamingText(fullText);
+            }
+          } catch { /* ignore malformed */ }
+        }
+      }
+
+      setIsStreaming(false);
+      setSuggestion(fullText || "Unable to generate a suggestion at this time.");
+      setStreamingText("");
+    } catch (err) {
+      if (err instanceof Error && err.name === "AbortError") return;
       setSuggestion("An error occurred while generating the suggestion. Please try again.");
     } finally {
       setLoading(false);
+      setIsStreaming(false);
     }
   }
 
@@ -291,7 +363,7 @@ export function AriaDrawer({ open, onClose, context = {} }: AriaDrawerProps) {
     if (!suggestion) return;
     setApproved(suggestion);
     setSuggestion(null);
-    // In a real implementation, this would save to the record + write audit log
+    // In a real implementation this would save to the record + write audit log
   }
 
   function handleEdit(edited: string) {
@@ -345,22 +417,54 @@ export function AriaDrawer({ open, onClose, context = {} }: AriaDrawerProps) {
             <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 space-y-2 animate-fade-in">
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                <p className="text-xs font-semibold text-emerald-700">Approved & saved to record</p>
+                <p className="text-xs font-semibold text-emerald-700">Approved &amp; saved to record</p>
               </div>
               <p className="text-sm text-emerald-900 whitespace-pre-wrap">{approved}</p>
               <Button
                 size="sm"
                 variant="ghost"
                 className="h-7 text-xs text-emerald-600"
-                onClick={() => setApproved(null)}
+                onClick={() => { setApproved(null); setActiveAction(null); }}
               >
                 <RefreshCw className="w-3 h-3 mr-1" /> Run another
               </Button>
             </div>
           )}
 
-          {/* Suggestion */}
-          {suggestion && !approved && (
+          {/* Waiting for first token */}
+          {loading && !isStreaming && (
+            <div className="flex items-center gap-3 rounded-xl bg-indigo-50 border border-indigo-200 px-4 py-5">
+              <Loader2 className="w-4 h-4 text-indigo-500 animate-spin shrink-0" />
+              <p className="text-sm text-indigo-700">Aria is thinking…</p>
+            </div>
+          )}
+
+          {/* Live streaming text */}
+          {isStreaming && (
+            <div className="rounded-xl border border-indigo-200 bg-indigo-50 p-4 space-y-3 animate-fade-in">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-indigo-500" />
+                  <p className="text-xs font-semibold text-indigo-700">Aria is writing…</p>
+                </div>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  className="h-6 px-2 text-[11px] text-slate-500 hover:text-red-600"
+                  onClick={stopStream}
+                >
+                  <Square className="w-3 h-3 mr-1 fill-current" /> Stop
+                </Button>
+              </div>
+              <p className="text-sm text-indigo-900 leading-relaxed whitespace-pre-wrap">
+                {streamingText}
+                <span className="inline-block w-0.5 h-4 bg-indigo-400 ml-0.5 animate-pulse align-middle" />
+              </p>
+            </div>
+          )}
+
+          {/* Suggestion card (stream complete) */}
+          {suggestion && !approved && !isStreaming && (
             <SuggestionCard
               suggestion={suggestion}
               onApprove={handleApprove}
@@ -369,16 +473,16 @@ export function AriaDrawer({ open, onClose, context = {} }: AriaDrawerProps) {
             />
           )}
 
-          {/* Loading */}
-          {loading && (
-            <div className="flex items-center gap-3 rounded-xl bg-indigo-50 border border-indigo-200 px-4 py-5">
-              <Loader2 className="w-4 h-4 text-indigo-500 animate-spin shrink-0" />
-              <p className="text-sm text-indigo-700">Aria is thinking…</p>
+          {/* Rejected notice */}
+          {rejected && !suggestion && !isStreaming && !loading && (
+            <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 flex items-center gap-2 animate-fade-in">
+              <XCircle className="w-4 h-4 text-slate-400" />
+              <p className="text-xs text-slate-500">Suggestion rejected. Choose another action.</p>
             </div>
           )}
 
-          {/* Actions */}
-          {!loading && !suggestion && !approved && (
+          {/* Actions list — hidden while loading/streaming/showing result */}
+          {!loading && !isStreaming && !suggestion && !approved && (
             <>
               {Object.entries(groupedActions).map(([category, items]) => (
                 <div key={category}>
