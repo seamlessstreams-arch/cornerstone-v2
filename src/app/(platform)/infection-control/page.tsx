@@ -21,8 +21,9 @@ import {
   Clock, Search, ShieldAlert, Thermometer, Bug, Loader2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { getStaffName, getYPName } from "@/lib/seed-data";
-import { useInfectionRecords } from "@/hooks/use-infection-records";
+import { getStaffName, getYPName, YOUNG_PEOPLE, STAFF } from "@/lib/seed-data";
+import { useInfectionRecords, useCreateInfectionRecord } from "@/hooks/use-infection-records";
+import { toast } from "sonner";
 import type { InfectionRecord, InfectionType, InfectionSeverity, InfectionStatus } from "@/types/extended";
 import { INFECTION_TYPE_LABEL, INFECTION_SEVERITY_LABEL, INFECTION_STATUS_LABEL } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
@@ -37,6 +38,7 @@ const STATUS_CLR: Record<InfectionStatus, string> = { active: "bg-red-100 text-r
 
 export default function InfectionControlPage() {
   const { data: res, isLoading } = useInfectionRecords();
+  const createInfection = useCreateInfectionRecord();
   const data: InfectionRecord[] = res?.data ?? [];
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [search, setSearch] = useState("");
@@ -44,6 +46,50 @@ export default function InfectionControlPage() {
   const [filterStatus, setFilterStatus] = useState("all");
   const [sortBy, setSortBy] = useState("newest");
   const [showNew, setShowNew] = useState(false);
+
+  const [infForm, setInfForm] = useState({
+    affected_person_type: "child" as "child" | "staff",
+    affected_person_id: "",
+    infection_type: "" as InfectionType | "",
+    severity: "" as InfectionSeverity | "",
+    symptoms: "",
+    notes: "",
+    date_reported: new Date().toISOString().slice(0, 10),
+    reported_by_id: "staff_darren",
+  });
+  const setIF = (k: keyof typeof infForm, v: string) => setInfForm((p) => ({ ...p, [k]: v }));
+
+  const handleCreateInfection = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!infForm.infection_type || !infForm.severity || !infForm.affected_person_id) {
+      toast.error("Affected person, infection type and severity are required.");
+      return;
+    }
+    await createInfection.mutateAsync({
+      date_reported: infForm.date_reported,
+      reported_by_id: infForm.reported_by_id,
+      affected_person_id: infForm.affected_person_id,
+      affected_person_type: infForm.affected_person_type,
+      infection_type: infForm.infection_type as InfectionType,
+      symptoms: infForm.symptoms.split("\n").map((s) => s.trim()).filter(Boolean),
+      severity: infForm.severity as InfectionSeverity,
+      status: "active" as InfectionStatus,
+      gp_consulted: false,
+      gp_advice: "",
+      exclusion_required: false,
+      exclusion_details: "",
+      control_measures: [],
+      other_cases_in_home: 0,
+      notified_bodies: [],
+      date_resolved: null,
+      cleaning_actions: [],
+      notes: infForm.notes,
+      created_at: new Date().toISOString(),
+    });
+    toast.success("Infection record logged.");
+    setInfForm({ affected_person_type: "child", affected_person_id: "", infection_type: "", severity: "", symptoms: "", notes: "", date_reported: new Date().toISOString().slice(0, 10), reported_by_id: "staff_darren" });
+    setShowNew(false);
+  };
 
   const filtered = useMemo(() => {
     let rows = [...data];
@@ -279,10 +325,22 @@ export default function InfectionControlPage() {
       <Dialog open={showNew} onOpenChange={setShowNew}>
         <DialogContent className="max-w-lg max-h-[85vh] overflow-y-auto">
           <DialogHeader><DialogTitle>Log Infection / Illness</DialogTitle></DialogHeader>
-          <div className="space-y-3">
+          <form onSubmit={handleCreateInfection} className="space-y-3">
+            <div>
+              <Label>Date Reported</Label>
+              <Input type="date" value={infForm.date_reported} onChange={(e) => setIF("date_reported", e.target.value)} />
+            </div>
+            <div>
+              <Label>Reported By</Label>
+              <Select value={infForm.reported_by_id} onValueChange={(v) => setIF("reported_by_id", v)}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>{STAFF.filter((s) => s.employment_status === "active").map((s) => (<SelectItem key={s.id} value={s.id}>{s.full_name}</SelectItem>))}</SelectContent>
+              </Select>
+            </div>
             <div>
               <Label>Affected Person Type</Label>
-              <Select><SelectTrigger><SelectValue placeholder="Child or Staff" /></SelectTrigger>
+              <Select value={infForm.affected_person_type} onValueChange={(v) => { setIF("affected_person_type", v); setIF("affected_person_id", ""); }}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
                 <SelectContent>
                   <SelectItem value="child">Young Person</SelectItem>
                   <SelectItem value="staff">Staff Member</SelectItem>
@@ -290,25 +348,21 @@ export default function InfectionControlPage() {
               </Select>
             </div>
             <div>
-              <Label>Affected Person</Label>
-              <Select><SelectTrigger><SelectValue placeholder="Select person" /></SelectTrigger>
+              <Label>Affected Person *</Label>
+              <Select value={infForm.affected_person_id} onValueChange={(v) => setIF("affected_person_id", v)}>
+                <SelectTrigger><SelectValue placeholder="Select person" /></SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="yp_alex">{getYPName("yp_alex")}</SelectItem>
-                  <SelectItem value="yp_jordan">{getYPName("yp_jordan")}</SelectItem>
-                  <SelectItem value="yp_casey">{getYPName("yp_casey")}</SelectItem>
-                  <SelectItem value="staff_darren">{getStaffName("staff_darren")}</SelectItem>
-                  <SelectItem value="staff_ryan">{getStaffName("staff_ryan")}</SelectItem>
-                  <SelectItem value="staff_edward">{getStaffName("staff_edward")}</SelectItem>
-                  <SelectItem value="staff_anna">{getStaffName("staff_anna")}</SelectItem>
-                  <SelectItem value="staff_chervelle">{getStaffName("staff_chervelle")}</SelectItem>
-                  <SelectItem value="staff_lackson">{getStaffName("staff_lackson")}</SelectItem>
-                  <SelectItem value="staff_mirela">{getStaffName("staff_mirela")}</SelectItem>
+                  {infForm.affected_person_type === "child"
+                    ? YOUNG_PEOPLE.filter((y) => y.status === "current").map((y) => (<SelectItem key={y.id} value={y.id}>{y.first_name} {y.last_name}</SelectItem>))
+                    : STAFF.filter((s) => s.employment_status === "active").map((s) => (<SelectItem key={s.id} value={s.id}>{s.full_name}</SelectItem>))
+                  }
                 </SelectContent>
               </Select>
             </div>
             <div>
-              <Label>Infection Type</Label>
-              <Select><SelectTrigger><SelectValue placeholder="Select type" /></SelectTrigger>
+              <Label>Infection Type *</Label>
+              <Select value={infForm.infection_type} onValueChange={(v) => setIF("infection_type", v)}>
+                <SelectTrigger><SelectValue placeholder="Select type" /></SelectTrigger>
                 <SelectContent>
                   {(Object.entries(INFECTION_TYPE_LABEL) as [InfectionType, string][]).map(([k, v]) => (
                     <SelectItem key={k} value={k}>{v}</SelectItem>
@@ -317,8 +371,9 @@ export default function InfectionControlPage() {
               </Select>
             </div>
             <div>
-              <Label>Severity</Label>
-              <Select><SelectTrigger><SelectValue placeholder="Severity" /></SelectTrigger>
+              <Label>Severity *</Label>
+              <Select value={infForm.severity} onValueChange={(v) => setIF("severity", v)}>
+                <SelectTrigger><SelectValue placeholder="Severity" /></SelectTrigger>
                 <SelectContent>
                   {(Object.entries(INFECTION_SEVERITY_LABEL) as [InfectionSeverity, string][]).map(([k, v]) => (
                     <SelectItem key={k} value={k}>{v}</SelectItem>
@@ -326,13 +381,15 @@ export default function InfectionControlPage() {
                 </SelectContent>
               </Select>
             </div>
-            <div><Label>Symptoms</Label><Textarea placeholder="List symptoms observed..." /></div>
-            <div><Label>Notes</Label><Textarea placeholder="Additional notes..." /></div>
-          </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setShowNew(false)}>Cancel</Button>
-            <Button onClick={() => setShowNew(false)}>Log Record</Button>
-          </DialogFooter>
+            <div><Label>Symptoms (one per line)</Label><Textarea placeholder="List symptoms observed..." value={infForm.symptoms} onChange={(e) => setIF("symptoms", e.target.value)} /></div>
+            <div><Label>Notes</Label><Textarea placeholder="Additional notes..." value={infForm.notes} onChange={(e) => setIF("notes", e.target.value)} /></div>
+            <DialogFooter>
+              <Button type="button" variant="outline" onClick={() => setShowNew(false)}>Cancel</Button>
+              <Button type="submit" disabled={createInfection.isPending}>
+                {createInfection.isPending ? "Logging…" : "Log Record"}
+              </Button>
+            </DialogFooter>
+          </form>
         </DialogContent>
       </Dialog>
       <CareEventsPanel
