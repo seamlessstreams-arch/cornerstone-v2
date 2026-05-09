@@ -8,6 +8,7 @@
 
 import React, { useState, useMemo } from "react";
 import { PageShell } from "@/components/layout/page-shell";
+import { AriaPanel } from "@/components/aria/aria-panel";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn, formatDate, generateId } from "@/lib/utils";
@@ -682,6 +683,7 @@ Concerns: ${plan.concerns_summary ?? "not recorded"}`;
       title="Care Plans"
       subtitle="Statutory care plan goals, progress and LAC review tracking"
       showQuickCreate={false}
+      ariaContext={{ pageTitle: "Care Plans", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={filteredPlans} columns={CARE_PLAN_EXPORT_COLS} filename="care-plans" />
@@ -701,6 +703,14 @@ Concerns: ${plan.concerns_summary ?? "not recorded"}`;
       }
     >
       <div id="care-plans-content" className="space-y-5">
+
+      <AriaPanel
+        mode="assist"
+        pageContext="Care Plans — Statutory planning"
+        recordType="care_plan"
+        userRole="registered_manager"
+        className="mb-5"
+      />
 
       {/* ── LAC review alerts ── */}
       {stats.lacOverdue > 0 && (

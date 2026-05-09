@@ -9,6 +9,7 @@ import React, { useState, use, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { PageShell } from "@/components/layout/page-shell";
+import { AriaPanel } from "@/components/aria/aria-panel";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Avatar } from "@/components/ui/avatar";
@@ -401,6 +402,15 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
       }
     >
       <div id="yp-detail-content" className="space-y-4 animate-fade-in">
+
+        <AriaPanel
+          mode="assist"
+          pageContext={`Young Person Profile — ${displayName} ${yp.last_name}`}
+          recordType="child_record"
+          sourceContent={`Name: ${displayName} ${yp.last_name}. Age: ${yp.age}. Legal status: ${yp.legal_status}. Local authority: ${yp.local_authority}.`}
+          userRole="registered_manager"
+          className="mb-4"
+        />
 
         {/* ── Profile header ─────────────────────────────────────────────────── */}
         <div className={cn(

@@ -3,6 +3,7 @@
 import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import { PageShell } from "@/components/layout/page-shell";
+import { AriaPanel } from "@/components/aria/aria-panel";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -578,7 +579,15 @@ export default function DailyLogPage() {
           </Button>
         </div>
       }
+      ariaContext={{ pageTitle: "Daily Log", sourceType: "general" }}
     >
+      <AriaPanel
+        mode="write"
+        pageContext="Daily Log"
+        recordType="daily_log"
+        userRole="registered_manager"
+        className="mb-5"
+      />
       <div id="daily-log-content" className="space-y-5">
         {/* Stats row */}
         {!isLoading && entries.length > 0 && (
