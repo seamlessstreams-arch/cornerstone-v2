@@ -6,6 +6,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { PageShell } from "@/components/layout/page-shell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -109,10 +110,15 @@ function SummaryCard({ summary }: { summary: ChildDailySummaryEnriched }) {
         {expanded && summary.care_events.length > 0 && (
           <div className="mt-3 border-t border-slate-100 pt-3 space-y-2">
             {summary.care_events.map((ce) => (
-              <div key={ce.id} className="flex items-center gap-2 text-xs text-slate-600">
+              <div key={ce.id} className="flex items-center gap-2 flex-wrap text-xs text-slate-600">
                 <MoodDot score={ce.mood_score} />
                 {ce.is_significant && <Star className="h-3 w-3 text-amber-500" />}
-                <span className="font-medium">{ce.title}</span>
+                <Link
+                  href={`/care-events/${ce.id}`}
+                  className="font-medium text-slate-800 hover:text-indigo-700 hover:underline"
+                >
+                  {ce.title}
+                </Link>
                 <Badge variant="outline" className="text-xs py-0">
                   {CARE_EVENT_CATEGORY_LABEL[ce.category as keyof typeof CARE_EVENT_CATEGORY_LABEL] ?? ce.category}
                 </Badge>

@@ -37,6 +37,7 @@ import { cn, formatDate } from "@/lib/utils";
 import { useReg40Triage, useTriageReg40Task, type Reg40Task } from "@/hooks/use-oversight-queues";
 import { useAuthContext } from "@/contexts/auth-context";
 import { toast } from "sonner";
+import Link from "next/link";
 
 // ── Status colours ─────────────────────────────────────────────────────────────
 
@@ -104,7 +105,14 @@ function Reg40TaskCard({
 
             {task.care_event && (
               <p className="text-xs text-slate-500 mt-0.5">
-                Source: {task.care_event.title} — {formatDate(task.care_event.event_date)}
+                Source:{" "}
+                <Link
+                  href={`/care-events/${task.care_event.id}`}
+                  className="text-indigo-600 hover:underline"
+                >
+                  {task.care_event.title}
+                </Link>{" "}
+                — {formatDate(task.care_event.event_date)}
               </p>
             )}
 

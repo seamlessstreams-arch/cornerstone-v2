@@ -48,6 +48,7 @@ import {
 } from "@/hooks/use-compliance-evidence";
 import { useAuthContext } from "@/contexts/auth-context";
 import { toast } from "sonner";
+import Link from "next/link";
 import type { ManagerDecision } from "@/types/care-events";
 
 // ── Decision colours ──────────────────────────────────────────────────────────
@@ -132,7 +133,11 @@ function EvidenceItemCard({
 
             {item.care_event && (
               <p className="text-xs text-slate-500 mt-1.5">
-                Source: {item.care_event.title} — {formatDate(item.care_event.event_date)}
+                Source:{" "}
+                <Link href={`/care-events/${item.care_event.id}`} className="text-indigo-600 hover:underline">
+                  {item.care_event.title}
+                </Link>{" "}
+                — {formatDate(item.care_event.event_date)}
               </p>
             )}
 
@@ -556,7 +561,11 @@ function ReportBuilderTab({
                                 </p>
                                 {item.care_event && (
                                   <p className="text-xs text-slate-400 mt-1">
-                                    Source: {item.care_event.title} —{" "}
+                                    Source:{" "}
+                                    <Link href={`/care-events/${item.care_event.id}`} className="text-indigo-500 hover:underline">
+                                      {item.care_event.title}
+                                    </Link>{" "}
+                                    —{" "}
                                     {formatDate(item.care_event.event_date)}
                                   </p>
                                 )}
