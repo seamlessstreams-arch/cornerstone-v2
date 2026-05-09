@@ -3,6 +3,7 @@
 import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import { PageShell } from "@/components/ui/page-shell";
+import { AriaPanel } from "@/components/aria/aria-panel";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -123,6 +124,13 @@ export default function RestraintLogPage() {
         </div>
       ) : (
       <div id="print-area" className="space-y-6">
+        <AriaPanel
+          mode="assist"
+          pageContext="Restraint Log — physical intervention records, Regulation 35 compliance, debrief"
+          recordType="restraint"
+          userRole="registered_manager"
+          className="mb-2"
+        />
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {[
             { label: "Total Records",    value: stats.total,         icon: <ShieldAlert className="h-4 w-4" />,    color: "text-blue-600" },

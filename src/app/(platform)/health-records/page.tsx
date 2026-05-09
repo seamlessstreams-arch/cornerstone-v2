@@ -27,6 +27,7 @@ import { useHealthRecords, useCreateHealthRecord } from "@/hooks/use-health-reco
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { PrintButton } from "@/components/common/print-button";
 import { ExportButton, type ExportColumn } from "@/components/common/export-button";
+import { AriaPanel } from "@/components/aria/aria-panel";
 import { getStaffName, getYPName } from "@/lib/seed-data";
 import type { HealthRecordEntry, HealthRecordType, HealthRecordStatus } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
@@ -194,6 +195,7 @@ export default function HealthRecordsPage() {
     <PageShell
       title="Health Records"
       subtitle="Medical history, assessments, and health action plans"
+      ariaContext={{ pageTitle: "Health Records", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Health Records" subtitle="Oak House — Health & Welfare" />
@@ -204,6 +206,13 @@ export default function HealthRecordsPage() {
         </div>
       }
     >
+      <AriaPanel
+        mode="assist"
+        pageContext="Health Records — medical history, assessments, health action plans, Regulation 7"
+        recordType="health_record"
+        userRole="registered_manager"
+        className="mb-5"
+      />
       {/* ── Stats ────────────────────────────────────────────────────────────── */}
       <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
         {[

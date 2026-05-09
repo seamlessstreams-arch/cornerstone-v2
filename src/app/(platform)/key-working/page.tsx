@@ -28,6 +28,7 @@ import {
   AlertTriangle, CheckCircle2, Clock, Calendar, Star, BookOpen,
   Loader2,
 } from "lucide-react";
+import { AriaPanel } from "@/components/aria/aria-panel";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
 
 // ── Local view-model type (camelCase for the page) ──────────────────────────
@@ -267,6 +268,7 @@ export default function KeyWorkingPage() {
     <PageShell
       title="Key Working Sessions"
       subtitle="Recording meaningful interactions and tracking progress with each young person"
+      ariaContext={{ pageTitle: "Key Working Sessions", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Key Working Sessions" />
@@ -276,6 +278,13 @@ export default function KeyWorkingPage() {
       }
     >
       <div id="print-area" className="space-y-6">
+        <AriaPanel
+          mode="assist"
+          pageContext="Key Working Sessions — meaningful interactions, goal tracking, child voice"
+          recordType="key_work"
+          userRole="registered_manager"
+          className="mb-2"
+        />
         {/* ── Stats strip ──────────────────────────────────────────────────── */}
         <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
           {[

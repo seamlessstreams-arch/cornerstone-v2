@@ -24,6 +24,7 @@ import { SmartUploadButton } from "@/components/documents/smart-upload-button";
 import { PrintButton } from "@/components/common/print-button";
 import { ExportButton, type ExportColumn } from "@/components/common/export-button";
 import { useComplaints, useCreateComplaint, useUpdateComplaint } from "@/hooks/use-complaints";
+import { AriaPanel } from "@/components/aria/aria-panel";
 import { getYPName } from "@/lib/seed-data";
 import type {
   Complaint, ComplaintStatus, ComplaintOutcome, ComplaintCategory, ComplainantType,
@@ -626,6 +627,7 @@ ${complaint.lessons_learned ? `Learning: ${complaint.lessons_learned}` : ""}`;
     <PageShell
       title="Complaints & Representations"
       subtitle="Formal complaints register — statutory timelines, outcomes and learning"
+      ariaContext={{ pageTitle: "Complaints & Representations", sourceType: "general" }}
       showQuickCreate={false}
       actions={
         <div className="flex items-center gap-2">
@@ -648,6 +650,13 @@ ${complaint.lessons_learned ? `Learning: ${complaint.lessons_learned}` : ""}`;
       }
     >
       <div id="complaints-content" className="space-y-5">
+        <AriaPanel
+          mode="assist"
+          pageContext="Complaints & Representations — statutory complaints register, timelines and learning"
+          recordType="complaint"
+          userRole="registered_manager"
+          className="mb-2"
+        />
       {/* ── Summary stats ── */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {[
