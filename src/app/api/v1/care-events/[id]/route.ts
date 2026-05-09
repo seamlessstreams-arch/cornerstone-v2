@@ -22,7 +22,7 @@ function createNotification(recipientId: string, title: string, body: string, li
     recipient_id: recipientId,
     title,
     body,
-    link: link ?? null,
+    action_url: link ?? null,
     type: "care_event",
     read: false,
     created_at: new Date().toISOString(),

@@ -347,7 +347,7 @@ export function NotificationCentre() {
               {apiNotifs.map((n) => (
                 <Link
                   key={n.id}
-                  href={n.link ?? "/notifications"}
+                  href={n.action_url ?? "/notifications"}
                   onClick={() => { markRead.mutate(n.id); setOpen(false); }}
                   className="flex items-start gap-3 px-4 py-3 hover:bg-indigo-50/60 transition-colors bg-indigo-50/30"
                 >
