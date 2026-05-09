@@ -13,6 +13,22 @@ import type {
 
 const HOME_ID = "home_oak";
 
+// ── Notification helper ───────────────────────────────────────────────────────
+
+function createNotification(recipientId: string, title: string, body: string, link?: string) {
+  if (!recipientId) return;
+  db.notifications.create({
+    id: generateId("notif"),
+    recipient_id: recipientId,
+    title,
+    body,
+    link: link ?? null,
+    type: "care_event",
+    read: false,
+    created_at: new Date().toISOString(),
+  } as never);
+}
+
 // ── GET /api/v1/care-events/[id] ─────────────────────────────────────────────
 
 export async function GET(
@@ -132,6 +148,16 @@ export async function PATCH(
       const freshEvent = db.careEvents.findById(id)!;
       const result = processCareEvent(freshEvent);
 
+      // Notify manager if routing failed
+      if (result.routes_failed > 0) {
+        createNotification(
+          "staff_darren", // TODO: use actual manager/home manager ID from session
+          "Care event routing failed",
+          `"${freshEvent.title}" failed to route ${result.routes_failed} area(s). Please retry.`,
+          `/care-events/${id}`
+        );
+      }
+
       const finalEvent = db.careEvents.findById(id)!;
 
       return NextResponse.json({
@@ -209,6 +235,16 @@ export async function PATCH(
         ip_address: null,
       });
 
+      // Notify the original staff member of verification
+      if (event.staff_id && event.staff_id !== actorId) {
+        createNotification(
+          event.staff_id,
+          "Care entry verified",
+          `Your entry "${event.title}" has been verified by the manager.${reg45Items.length + annexItems.length > 0 ? ` ${reg45Items.length + annexItems.length} evidence item(s) approved.` : ""}`,
+          `/care-events/${id}`
+        );
+      }
+
       return NextResponse.json({ data: db.careEvents.findById(id)! });
     }
 
@@ -237,6 +273,16 @@ export async function PATCH(
         returned_by: actorId,
         returned_at: new Date().toISOString(),
       });
+
+      // Notify the original staff member
+      if (event.staff_id && event.staff_id !== actorId) {
+        createNotification(
+          event.staff_id,
+          "Care entry returned",
+          `Your entry "${event.title}" has been returned. Reason: ${returnBody.return_reason}`,
+          `/care-events/${id}`
+        );
+      }
 
       // Pause evidence suggestions
       const pendingReg45 = db.reg45EvidenceQueue
