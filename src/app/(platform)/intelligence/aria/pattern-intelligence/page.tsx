@@ -6,6 +6,10 @@
 // Surfaces detected patterns, child voice gaps, and proactive alerts in a
 // single intelligence view. Demonstrates to Ofsted that the home uses data
 // and professional judgement to identify and respond to emerging concerns.
+//
+// Live data: wires useIncidents + useYoungPeople + useKeyWorkingSessions into
+// the ARIA pattern engine and proactive alerts engine. Falls back to demo
+// data when no live records are available.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { useState, useMemo } from "react";
@@ -43,9 +47,20 @@ import {
   Quote,
   Calendar,
   CheckCircle2,
+  Loader2,
+  RefreshCw,
 } from "lucide-react";
+import { useIncidents } from "@/hooks/use-incidents";
+import { useYoungPeople } from "@/hooks/use-young-people";
+import { useKeyWorkingSessions } from "@/hooks/use-key-working";
+import {
+  runProactiveAlertScan,
+  type ProactiveAlert,
+} from "@/lib/aria/aria-proactive-alerts";
+import type { IncidentRecord } from "@/lib/aria/aria-pattern-engine";
+import type { ChildRecord, IncidentSummary } from "@/lib/aria/aria-voice-gap-analysis";
 
-// ── Demo data ─────────────────────────────────────────────────────────────────
+// ── Demo fallback data (shown when no live incidents are available) ────────────
 
 interface PatternItem {
   id: string;
@@ -212,42 +227,171 @@ const STATUS_CONFIG: Record<PatternItem["status"], { label: string; colour: stri
   resolved: { label: "Resolved", colour: "bg-emerald-100 text-emerald-800" },
 };
 
+// ── Helpers ───────────────────────────────────────────────────────────────────
+
+const HOME_ID = "oak-house";
+
+/** Map a live ProactiveAlert → PatternItem for the existing UI */
+function alertToItem(a: ProactiveAlert): PatternItem {
+  const sourceMap: Record<string, PatternItem["source"]> = {
+    pattern_engine: "pattern",
+    voice_gap:      "voice_gap",
+    compliance:     "compliance",
+    regulatory:     "regulatory",
+  };
+  return {
+    id:             a.id,
+    source:         sourceMap[a.source] ?? "pattern",
+    category:       a.category,
+    title:          a.title,
+    description:    a.description,
+    severity:       a.severity,
+    childName:      undefined,
+    recommendation: a.recommendation,
+    evidenceCount:  0,
+    detectedAt:     a.detectedAt,
+    status:         "active",
+  };
+}
+
 // ── Component ─────────────────────────────────────────────────────────────────
 
 export default function PatternIntelligencePage() {
-  const [filterSource, setFilterSource] = useState<string>("all");
+  const [filterSource, setFilterSource]     = useState<string>("all");
   const [filterSeverity, setFilterSeverity] = useState<string>("all");
-  const [filterStatus, setFilterStatus] = useState<string>("active");
-  const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [filterStatus, setFilterStatus]     = useState<string>("active");
+  const [expandedId, setExpandedId]         = useState<string | null>(null);
+  const [localStatuses, setLocalStatuses]   = useState<Record<string, PatternItem["status"]>>({});
+
+  // ── Live data ──────────────────────────────────────────────────────────────
+  const { data: incidentsData, isLoading: incLoading, refetch } = useIncidents();
+  const { data: ypData,        isLoading: ypLoading  } = useYoungPeople();
+  const { data: kwData,        isLoading: kwLoading  } = useKeyWorkingSessions();
+
+  const isLoading = incLoading || ypLoading || kwLoading;
+
+  /** Run the ARIA pattern + proactive alert engine against live data */
+  const liveAlerts = useMemo<PatternItem[]>(() => {
+    const incidents = incidentsData?.data ?? [];
+    const youngPeople = ypData?.data ?? [];
+    const kwSessions = kwData?.data ?? [];
+
+    if (incidents.length === 0) return [];
+
+    // Map Incident → IncidentRecord for the pattern engine
+    const incidentRecords: IncidentRecord[] = incidents.map((i) => ({
+      id:                 i.id,
+      reference:          i.reference,
+      type:               i.type,
+      severity:           i.severity,
+      child_id:           i.child_id,
+      reported_by:        i.reported_by,
+      date:               i.date,
+      time:               i.time ?? undefined,
+      location:           i.location ?? undefined,
+      description:        i.description,
+      status:             i.status,
+      requires_oversight: i.requires_oversight,
+      oversight_by:       i.oversight_by,
+      oversight_at:       i.oversight_at,
+      home_id:            HOME_ID,
+    }));
+
+    // ChildRecord (from aria-voice-gap-analysis) = individual record entries per child
+    // Map KeyWorkingSessions as child records (they contain child voice data)
+    const childRecords: ChildRecord[] = kwSessions.map((s) => ({
+      id:             s.id,
+      childId:        s.child_id,
+      childName:      youngPeople.find((yp) => yp.id === s.child_id)
+        ? `${youngPeople.find((yp) => yp.id === s.child_id)!.preferred_name ?? youngPeople.find((yp) => yp.id === s.child_id)!.first_name} ${youngPeople.find((yp) => yp.id === s.child_id)!.last_name}`
+        : s.child_id,
+      recordType:     "key_work",
+      date:           s.date,
+      hasDirectQuote: (s.child_voice?.length ?? 0) > 0,
+      themes:         s.topics ?? [],
+      wordCount:      s.child_voice?.split(/\s+/).length ?? 0,
+    }));
+
+    // Map Incident → IncidentSummary for voice gap analysis
+    const incidentSummaries: IncidentSummary[] = incidents.map((i) => ({
+      id:                  i.id,
+      childId:             i.child_id,
+      date:                i.date,
+      type:                i.type,
+      severity:            i.severity,
+      hasPostIncidentVoice: false, // not yet tracked in the Incident type
+    }));
+
+    const children = youngPeople.map((yp) => ({
+      id:   yp.id,
+      name: yp.preferred_name ?? `${yp.first_name} ${yp.last_name}`,
+    }));
+
+    try {
+      const result = runProactiveAlertScan({
+        incidents:        incidentRecords,
+        childRecords,
+        incidentSummaries,
+        children,
+        complianceChecks: [],
+        homeId:           HOME_ID,
+      });
+      return result.alerts.map(alertToItem);
+    } catch {
+      return [];
+    }
+  }, [incidentsData, ypData, kwData]);
+
+  const isLive = liveAlerts.length > 0;
+  const sourceAlerts = isLive ? liveAlerts : DEMO_ALERTS;
+
+  const allAlerts = sourceAlerts.map((a) => ({
+    ...a,
+    status: localStatuses[a.id] ?? a.status,
+  }));
 
   const filtered = useMemo(() => {
-    return DEMO_ALERTS.filter((a) => {
+    return allAlerts.filter((a) => {
       if (filterSource !== "all" && a.source !== filterSource) return false;
       if (filterSeverity !== "all" && a.severity !== filterSeverity) return false;
       if (filterStatus !== "all" && a.status !== filterStatus) return false;
       return true;
     });
-  }, [filterSource, filterSeverity, filterStatus]);
+  }, [allAlerts, filterSource, filterSeverity, filterStatus]);
 
   const counts = useMemo(() => {
-    const active = DEMO_ALERTS.filter((a) => a.status === "active");
+    const active = allAlerts.filter((a) => a.status === "active");
     return {
-      total: active.length,
-      urgent: active.filter((a) => a.severity === "urgent").length,
-      high: active.filter((a) => a.severity === "high").length,
-      patterns: active.filter((a) => a.source === "pattern").length,
-      voiceGaps: active.filter((a) => a.source === "voice_gap").length,
-      compliance: active.filter((a) => a.source === "compliance" || a.source === "regulatory").length,
+      total:            active.length,
+      urgent:           active.filter((a) => a.severity === "urgent").length,
+      high:             active.filter((a) => a.severity === "high").length,
+      patterns:         active.filter((a) => a.source === "pattern").length,
+      voiceGaps:        active.filter((a) => a.source === "voice_gap").length,
+      compliance:       active.filter((a) => a.source === "compliance" || a.source === "regulatory").length,
       childrenAffected: new Set(active.filter((a) => a.childName).map((a) => a.childName)).size,
     };
-  }, []);
+  }, [allAlerts]);
 
   return (
     <PageShell
       title="Pattern Intelligence"
       subtitle="ARIA V2 — proactive pattern detection, voice gap analysis, and compliance monitoring"
+      ariaContext={{ pageTitle: "Pattern Intelligence", sourceType: "general" }}
       actions={
         <div className="flex items-center gap-2">
+          {isLive && (
+            <Badge className="bg-emerald-100 text-emerald-800 border-emerald-200 text-[10px]">
+              Live data
+            </Badge>
+          )}
+          {!isLive && !isLoading && (
+            <Badge className="bg-amber-100 text-amber-800 border-amber-200 text-[10px]">
+              Demo data
+            </Badge>
+          )}
+          <Button size="sm" variant="outline" className="gap-1.5" onClick={() => refetch()}>
+            <RefreshCw className="h-3.5 w-3.5" />Refresh
+          </Button>
           <Link href="/patterns">
             <Button size="sm" variant="outline" className="gap-1.5">
               <Radar className="h-3.5 w-3.5" />Pattern Alerts
@@ -260,6 +404,14 @@ export default function PatternIntelligencePage() {
       }
     >
       <div className="max-w-5xl space-y-5 animate-fade-in">
+
+        {/* ── Loading state ────────────────────────────────────────────────── */}
+        {isLoading && (
+          <div className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-5 py-4">
+            <Loader2 className="h-4 w-4 animate-spin text-violet-500 shrink-0" />
+            <p className="text-sm text-slate-600">ARIA is scanning live records for patterns…</p>
+          </div>
+        )}
 
         {/* ── Headline stats ──────────────────────────────────────────────── */}
         <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3">
@@ -408,7 +560,12 @@ export default function PatternIntelligencePage() {
 
                     <div className="flex items-center gap-2 pt-2">
                       {alert.status === "active" && (
-                        <Button size="sm" variant="outline" className="gap-1.5 text-xs">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="gap-1.5 text-xs"
+                          onClick={() => setLocalStatuses((prev) => ({ ...prev, [alert.id]: "acknowledged" }))}
+                        >
                           <CheckCircle2 className="h-3.5 w-3.5" />Acknowledge
                         </Button>
                       )}
