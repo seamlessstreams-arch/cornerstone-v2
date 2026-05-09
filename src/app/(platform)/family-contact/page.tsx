@@ -43,6 +43,7 @@ import {
   CalendarDays, MapPin, UserCheck, ShieldAlert, Info, Search, ArrowUpDown, ArrowUpRight,
 } from "lucide-react";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -911,6 +912,7 @@ export default function FamilyContactPage() {
     <PageShell
       title="Family Contact"
       subtitle="Contact arrangements, session logs, and YP voice — Reg 13"
+      ariaContext={{ pageTitle: "Family Contact", sourceType: "general" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={filtered} columns={CONTACT_EXPORT_COLS} filename="family-contact" />
@@ -919,6 +921,7 @@ export default function FamilyContactPage() {
       }
     >
       <div id="family-contact-content" className="space-y-6">
+        <AriaPanel mode="assist" pageContext="Family Contact — Regulation 13, contact arrangements, session logs, child voice, supervised contact, letter-box contact" recordType="family_contact" userRole="registered_manager" className="mb-2" />
         {/* Stats bar */}
         <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
           {[

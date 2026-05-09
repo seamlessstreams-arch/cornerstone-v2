@@ -24,6 +24,7 @@ import {
   Shield, ArrowUp, ArrowDown, Minus, Loader2, ArrowUpRight,
 } from "lucide-react";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
 
 
 const DOMAIN_META: Record<RiskDomain, { label: string; color: string }> = {
@@ -147,6 +148,7 @@ export default function RiskAssessmentsPage() {
         <div className="flex items-center justify-center py-20"><Loader2 className="h-6 w-6 animate-spin text-muted-foreground" /></div>
       ) : (
       <div id="print-area" className="space-y-6">
+        <AriaPanel mode="assist" pageContext="Risk Assessments — individual risk assessment, triggers, mitigations, contingency planning, placement risk management" recordType="risk_assessment" userRole="registered_manager" className="mb-2" />
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {[
             { label: "Total Assessments", value: stats.total,     icon: <ShieldAlert className="h-4 w-4" />,    color: "text-blue-600" },

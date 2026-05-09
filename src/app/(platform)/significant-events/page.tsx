@@ -23,6 +23,7 @@ import { toast } from "sonner";
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import type { SigEventCategory, SigEventSeverity, SigEventNotifyStatus, SignificantEvent } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
 
 
 const CATEGORY_META: Record<SigEventCategory, { label: string; icon: React.ReactNode; color: string }> = {
@@ -154,6 +155,7 @@ export default function SignificantEventsPage() {
       }
     >
       <div id="print-area" className="space-y-6">
+        <AriaPanel mode="assist" pageContext="Significant Events — important milestones, positive and negative events, statutory notifications, life story recording" recordType="significant_event" userRole="registered_manager" className="mb-2" />
         {/* ── Stats strip ──────────────────────────────────────────────────── */}
         <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
           {[

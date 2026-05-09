@@ -36,6 +36,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
 
 // ── Config ────────────────────────────────────────────────────────────────────
 
@@ -196,6 +197,7 @@ export default function EducationPage() {
     <PageShell
       title="Education Tracker"
       subtitle="Attendance, attainment, PEPs, and education oversight"
+      ariaContext={{ pageTitle: "Education Tracker", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Education Tracker" subtitle="Oak House — Education Records" />
@@ -205,8 +207,7 @@ export default function EducationPage() {
           </Button>
         </div>
       }
-    >
-      {/* ── Stats ────────────────────────────────────────────────────────────── */}
+    >      <AriaPanel mode="assist" pageContext="Education Tracker — attendance, attainment, Personal Education Plans, school engagement, exclusions, Children Act 1989" recordType="education_record" userRole="registered_manager" className="mb-2" />      {/* ── Stats ────────────────────────────────────────────────────────────── */}
       <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
         {[
           { label: "Total Entries", value: stats.total, icon: BookOpen, c: "text-blue-600" },

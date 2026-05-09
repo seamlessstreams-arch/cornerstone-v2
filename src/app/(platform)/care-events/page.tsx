@@ -33,6 +33,7 @@ import type {
   CareEvent, CareEventCategory, EvidencePrompt,
 } from "@/types/care-events";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
 
 // ── Status colours ─────────────────────────────────────────────────────────
 
@@ -767,6 +768,7 @@ export default function CareEventsPage() {
     <PageShell
       title="Care Events"
       subtitle="Record, route and track care events across the home"
+      ariaContext={{ pageTitle: "Care Events", sourceType: "incident" }}
       actions={
         <div className="flex gap-2">
           <Button variant="outline" size="sm" onClick={() => refetch()}>
@@ -778,6 +780,7 @@ export default function CareEventsPage() {
         </div>
       }
     >
+      <AriaPanel mode="assist" pageContext="Care Events — record, classify and route care events; Regulation 40 triage, management oversight, evidence generation" recordType="care_event" userRole="registered_manager" className="mb-2" />
       {/* Stats bar */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
         {[

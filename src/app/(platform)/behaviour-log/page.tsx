@@ -37,6 +37,7 @@ import {
   TrendingUp, Zap, Heart, Loader2,
 } from "lucide-react";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
 
 // ── Config ────────────────────────────────────────────────────────────────────
 
@@ -190,6 +191,7 @@ export default function BehaviourLogPage() {
     <PageShell
       title="Behaviour Log"
       subtitle="ABC observations — antecedent, behaviour, consequence"
+      ariaContext={{ pageTitle: "Behaviour Log", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Behaviour Log" subtitle="Oak House — Behaviour Management" />
@@ -199,8 +201,7 @@ export default function BehaviourLogPage() {
           </Button>
         </div>
       }
-    >
-      {/* ── Stats ────────────────────────────────────────────────────────────── */}
+    >      <AriaPanel mode="assist" pageContext="Behaviour Log — ABC observations, antecedent-behaviour-consequence, intensity tracking, positive behaviour support" recordType="behaviour_log" userRole="registered_manager" className="mb-2" />      {/* ── Stats ────────────────────────────────────────────────────────────── */}
       <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
         {[
           { label: "Total Entries", value: stats.total, icon: Activity, c: "text-blue-600" },

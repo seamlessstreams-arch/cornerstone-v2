@@ -22,6 +22,7 @@ import type { AnnualHealthAssessment, AHAHealthDomain } from "@/types/extended";
 import { useAnnualHealthAssessments } from "@/hooks/use-annual-health-assessments";
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
 
 /* ── helpers ───────────────────────────────────────────────────────────────── */
 
@@ -110,6 +111,7 @@ export default function AnnualHealthAssessmentPage() {
       }
     >
       <div id="print-area">
+        <AriaPanel mode="assist" pageContext="Annual Health Assessment — statutory AHA, Care Planning Regulations 2010, Quality Standard 7, health action plans, immunisations, dental" recordType="annual_health_assessment" userRole="registered_manager" className="mb-5" />
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
           {[
             { label: "Active Assessments", value: total, icon: Heart, clr: "text-rose-600" },
