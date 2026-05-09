@@ -255,3 +255,76 @@ export function useUpdateCareEventPrompts() {
     onError: () => careToast.actionFailed("Save evidence responses"),
   });
 }
+
+// ── Background jobs ───────────────────────────────────────────────────────────
+
+import type { CareEventJob } from "@/types/care-events";
+
+interface JobsResponse {
+  data: CareEventJob[];
+  meta: {
+    total: number;
+    pending: number;
+    processing: number;
+    completed: number;
+    failed: number;
+  };
+}
+
+interface RunJobsResponse {
+  processed: number;
+  completed: number;
+  failed: number;
+  results: Array<{
+    job_id: string;
+    job_type: string;
+    care_event_id: string;
+    status: "completed" | "failed" | "skipped";
+    error?: string;
+  }>;
+}
+
+/**
+ * List background jobs for a specific care event.
+ * Polls every 5 s while any job is processing or pending.
+ */
+export function useCareEventJobs(careEventId: string | null) {
+  return useQuery({
+    queryKey: ["care-event-jobs", careEventId],
+    queryFn: () =>
+      api.get<JobsResponse>(`/care-events/jobs?care_event_id=${careEventId}`),
+    enabled: !!careEventId,
+    refetchInterval: (query) => {
+      const jobs = query.state.data?.data ?? [];
+      const hasActive = jobs.some(
+        (j) => j.status === "pending" || j.status === "processing" || j.status === "retry_required"
+      );
+      return hasActive ? 5_000 : 30_000;
+    },
+  });
+}
+
+/**
+ * Trigger background job processing for a specific care event.
+ * Manager+ permission required.
+ */
+export function useRunCareEventJobs() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ care_event_id, job_type }: { care_event_id?: string; job_type?: string }) =>
+      api.post<RunJobsResponse>("/care-events/jobs", { care_event_id, job_type }),
+    onSuccess: (response, variables) => {
+      const { processed, completed, failed } = response;
+      if (failed === 0) {
+        toast.success(`Background jobs complete: ${completed} of ${processed} processed.`);
+      } else {
+        toast.warning(`Jobs partially complete: ${completed} of ${processed} succeeded, ${failed} failed.`);
+      }
+      qc.invalidateQueries({ queryKey: ["care-event-jobs", variables.care_event_id] });
+      qc.invalidateQueries({ queryKey: ["care-events"] });
+      qc.invalidateQueries({ queryKey: ["reg45"] });
+      qc.invalidateQueries({ queryKey: ["annex-a"] });
+    },
+    onError: () => careToast.actionFailed("Run background jobs"),
+  });
+}

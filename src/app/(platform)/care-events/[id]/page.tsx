@@ -42,6 +42,8 @@ import {
   ClipboardList,
   AlertTriangle,
   ExternalLink,
+  PlayCircle,
+  RefreshCw,
 } from "lucide-react";
 import { cn, formatDate } from "@/lib/utils";
 import {
@@ -51,10 +53,12 @@ import {
   useReturnCareEvent,
   useLockCareEvent,
   useAmendCareEvent,
+  useCareEventJobs,
+  useRunCareEventJobs,
 } from "@/hooks/use-care-events";
 import { useCareEventAuditLog } from "@/hooks/use-daily-summaries";
 import { toast } from "sonner";
-import type { CareEventRoute, CareEventAuditLog, RouteStatus } from "@/types/care-events";
+import type { CareEventRoute, CareEventAuditLog, RouteStatus, CareEventJob, JobStatus } from "@/types/care-events";
 
 // ── Status helpers ─────────────────────────────────────────────────────────────
 
@@ -400,6 +404,121 @@ function AuditTab({ entries }: { entries: CareEventAuditLog[] }) {
 
 // ── ARIA suggestions panel ─────────────────────────────────────────────────────
 
+// ── Background jobs tab ────────────────────────────────────────────────────────
+
+const JOB_STATUS_CLR: Record<JobStatus, string> = {
+  pending:       "bg-slate-100 text-slate-500",
+  processing:    "bg-indigo-100 text-indigo-700",
+  completed:     "bg-emerald-100 text-emerald-700",
+  failed:        "bg-red-100 text-red-700",
+  retry_required:"bg-amber-100 text-amber-700",
+};
+
+const JOB_TYPE_LABELS: Record<string, string> = {
+  reg45_summary_update:         "Regulation 45 summary update",
+  annex_a_snapshot_update:      "Annex A snapshot update",
+  inspection_readiness_update:  "Inspection readiness update",
+  pattern_analysis:             "Pattern analysis",
+  pdf_generation:               "PDF generation",
+  evidence_pack_export:         "Evidence pack export",
+  filing_cabinet_index_rebuild: "Filing cabinet index rebuild",
+  saved_time_metrics:           "Saved-time metrics",
+};
+
+function JobsTab({ careEventId }: { careEventId: string }) {
+  const { data, isLoading } = useCareEventJobs(careEventId);
+  const runMutation = useRunCareEventJobs();
+
+  const jobs = data?.data ?? [];
+  const meta = data?.meta;
+
+  const hasActive = jobs.some(
+    (j) => j.status === "pending" || j.status === "processing" || j.status === "retry_required"
+  );
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center py-8 text-slate-400">
+        <Loader2 className="w-5 h-5 animate-spin mr-2" />
+        Loading background jobs…
+      </div>
+    );
+  }
+
+  if (jobs.length === 0) {
+    return (
+      <div className="text-center py-8 text-slate-400 text-sm">
+        No background jobs for this event.
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-4">
+      {/* Summary */}
+      <div className="flex items-center justify-between">
+        <div className="flex gap-3 text-xs text-slate-500">
+          {meta && (
+            <>
+              {meta.pending > 0 && <span className="text-amber-600 font-medium">{meta.pending} pending</span>}
+              {meta.processing > 0 && <span className="text-indigo-600 font-medium">{meta.processing} processing</span>}
+              {meta.completed > 0 && <span className="text-emerald-600">{meta.completed} completed</span>}
+              {meta.failed > 0 && <span className="text-red-600 font-medium">{meta.failed} failed</span>}
+            </>
+          )}
+        </div>
+        {hasActive && (
+          <Button
+            size="sm"
+            variant="outline"
+            className="text-xs gap-1.5"
+            onClick={() => runMutation.mutate({ care_event_id: careEventId })}
+            disabled={runMutation.isPending}
+          >
+            {runMutation.isPending ? (
+              <Loader2 className="w-3.5 h-3.5 animate-spin" />
+            ) : (
+              <PlayCircle className="w-3.5 h-3.5" />
+            )}
+            Run pending jobs
+          </Button>
+        )}
+      </div>
+
+      {/* Job list */}
+      <div className="space-y-2">
+        {jobs.map((job: CareEventJob) => (
+          <div key={job.id} className="flex items-start justify-between gap-3 border border-slate-100 rounded-lg px-3 py-2.5">
+            <div className="flex items-start gap-2 min-w-0">
+              {job.status === "processing" && <Loader2 className="w-3.5 h-3.5 text-indigo-500 animate-spin mt-0.5 shrink-0" />}
+              {job.status === "completed" && <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 mt-0.5 shrink-0" />}
+              {job.status === "failed" && <XCircle className="w-3.5 h-3.5 text-red-500 mt-0.5 shrink-0" />}
+              {job.status === "retry_required" && <RefreshCw className="w-3.5 h-3.5 text-amber-500 mt-0.5 shrink-0" />}
+              {job.status === "pending" && <Clock className="w-3.5 h-3.5 text-slate-400 mt-0.5 shrink-0" />}
+              <div className="min-w-0">
+                <p className="text-sm font-medium text-slate-700">
+                  {JOB_TYPE_LABELS[job.job_type] ?? job.job_type}
+                </p>
+                {job.error_message && (
+                  <p className="text-xs text-red-600 mt-0.5 truncate">{job.error_message}</p>
+                )}
+                {job.retry_count > 0 && (
+                  <p className="text-xs text-slate-400 mt-0.5">
+                    Attempt {job.retry_count + 1} of {job.max_retries}
+                  </p>
+                )}
+              </div>
+            </div>
+            <span className={cn("text-xs px-2 py-0.5 rounded-full shrink-0", JOB_STATUS_CLR[job.status])}>
+              {job.status.replace(/_/g, " ")}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function ARIASuggestionsPanel({
   event,
 }: {
@@ -737,6 +856,10 @@ export default function CareEventDetailPage({
                   </span>
                 )}
               </TabsTrigger>
+              <TabsTrigger value="jobs" className="gap-1.5">
+                <PlayCircle className="w-3.5 h-3.5" />
+                Background jobs
+              </TabsTrigger>
             </TabsList>
             <TabsContent value="routing" className="mt-3">
               <RoutingTab
@@ -747,6 +870,9 @@ export default function CareEventDetailPage({
             </TabsContent>
             <TabsContent value="audit" className="mt-3">
               <AuditTab entries={auditEntries} />
+            </TabsContent>
+            <TabsContent value="jobs" className="mt-3">
+              <JobsTab careEventId={event.id} />
             </TabsContent>
           </Tabs>
         </div>
