@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo, useRef } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { PageShell } from "@/components/layout/page-shell";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -15,7 +16,7 @@ import {
   AlertTriangle, Shield, Eye, Clock, CheckCircle2, FileText,
   Users, MapPin, Calendar, Plus, Search, Sparkles, Phone,
   UserCheck, X, ChevronRight, Bell, ClipboardList, Loader2,
-  TrendingUp, ArrowUpRight, Brain, Link, ArrowUpDown,
+  TrendingUp, ArrowUpRight, Brain, Link as LinkIcon, ArrowUpDown,
 } from "lucide-react";
 import { useIncidents, useAddOversight, useCreateIncident } from "@/hooks/use-incidents";
 import { useAuthContext } from "@/contexts/auth-context";
@@ -229,7 +230,7 @@ function IncidentCard({
                   onClick={(e) => e.stopPropagation()}
                   className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-50 border border-emerald-200 px-2.5 py-1 text-xs font-medium text-emerald-700 hover:bg-emerald-100 transition-colors"
                 >
-                  <Link className="h-3.5 w-3.5" />
+                  <LinkIcon className="h-3.5 w-3.5" />
                   Training need created
                 </a>
               ) : (
@@ -267,6 +268,16 @@ function IncidentCard({
               )}>
                 Body map {inc.body_map_completed ? "done" : "required"}
               </span>
+            )}
+            {(inc as never as { care_event_id?: string }).care_event_id && (
+              <Link
+                href={`/care-events/${(inc as never as { care_event_id: string }).care_event_id}`}
+                onClick={(e) => e.stopPropagation()}
+                className="inline-flex items-center gap-1 rounded-full bg-indigo-50 border border-indigo-200 px-2.5 py-1 text-[10px] font-medium text-indigo-700 hover:bg-indigo-100 transition-colors"
+              >
+                <ArrowUpRight className="h-3 w-3" />
+                From Care Event
+              </Link>
             )}
           </div>
         </div>

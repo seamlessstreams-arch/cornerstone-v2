@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
+import Link from "next/link";
 import { PageShell } from "@/components/ui/page-shell";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -145,6 +146,16 @@ export default function RestraintLogPage() {
                         <Badge variant="outline" className="text-xs">{TYPE_META[r.restraint_type]}</Badge>
                         <Badge className={cn("text-xs", reviewM.color)}>{reviewM.label}</Badge>
                         {r.injuries.length > 0 && <Badge variant="destructive" className="text-xs">Injury recorded</Badge>}
+                        {(r as never as { care_event_id?: string }).care_event_id && (
+                          <Link
+                            href={`/care-events/${(r as never as { care_event_id: string }).care_event_id}`}
+                            onClick={(e) => e.stopPropagation()}
+                            className="inline-flex items-center gap-1 rounded-full bg-indigo-50 border border-indigo-200 px-2 py-0.5 text-[10px] font-medium text-indigo-700 hover:bg-indigo-100 transition-colors"
+                          >
+                            <ShieldAlert className="h-2.5 w-2.5" />
+                            Care Event
+                          </Link>
+                        )}
                       </div>
                       <p className="font-semibold">{getYPName(r.child_id)} — {REASON_META[r.reason]}</p>
                       <div className="flex items-center gap-4 text-xs text-muted-foreground mt-1">

@@ -7,6 +7,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState, useMemo } from "react";
+import Link from "next/link";
 import { PageShell } from "@/components/layout/page-shell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -175,6 +176,16 @@ function EpisodeCard({
               <Badge className="text-[10px] h-4 px-1.5 bg-violet-100 text-violet-700">
                 RHI Outstanding
               </Badge>
+            )}
+            {(episode as never as { care_event_id?: string }).care_event_id && (
+              <Link
+                href={`/care-events/${(episode as never as { care_event_id: string }).care_event_id}`}
+                onClick={(e) => e.stopPropagation()}
+                className="inline-flex items-center gap-1 rounded-full bg-indigo-50 border border-indigo-200 px-1.5 py-px text-[10px] font-medium text-indigo-700 hover:bg-indigo-100 transition-colors"
+              >
+                <FileText className="h-2.5 w-2.5" />
+                Care Event
+              </Link>
             )}
           </div>
           <div className="mt-2 flex flex-wrap gap-3 text-[11px] text-slate-500">

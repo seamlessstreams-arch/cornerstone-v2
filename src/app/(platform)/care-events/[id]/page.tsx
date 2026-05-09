@@ -7,6 +7,7 @@
 
 import React, { use } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { PageShell } from "@/components/layout/page-shell";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -30,6 +31,7 @@ import {
   Calendar,
   ClipboardList,
   AlertTriangle,
+  ExternalLink,
 } from "lucide-react";
 import { cn, formatDate } from "@/lib/utils";
 import { useCareEvent, useRetryCareEventRouting } from "@/hooks/use-care-events";
@@ -117,6 +119,25 @@ const AUDIT_ACTION_LABELS: Record<string, string> = {
   export_generated: "Export generated",
   permission_denied: "Permission denied",
   validation_failed: "Validation failed",
+};
+
+// ── Linked record navigation ───────────────────────────────────────────────────
+
+const RECORD_TABLE_TO_PATH: Record<string, string> = {
+  incidents:                "/incidents",
+  missingEpisodes:          "/missing-from-care",
+  restraints:               "/restraint-log",
+  tasks:                    "/tasks",
+  educationRecords:         "/education",
+  healthRecordEntries:      "/health-records",
+  filing_cabinet:           "/filing-cabinet",
+  managementOversightItems: "/management-oversight",
+  reg40Queue:               "/regulation-40",
+  reg45EvidenceItems:       "/regulation-45",
+  annexAEvidence:           "/annex-a",
+  dailyLogEntries:          "/daily-log",
+  chronology:               "/daily-log",
+  childDailySummaries:      "/child-daily-summaries",
 };
 
 // ── Route status icon ──────────────────────────────────────────────────────────
@@ -269,11 +290,19 @@ function RoutingTab({
                 )}
               </div>
               <div className="flex items-center gap-2">
-                {route.linked_record_id && (
+                {route.linked_record_id && route.linked_record_table && RECORD_TABLE_TO_PATH[route.linked_record_table] ? (
+                  <Link
+                    href={RECORD_TABLE_TO_PATH[route.linked_record_table]}
+                    className="inline-flex items-center gap-1 text-xs text-indigo-600 hover:text-indigo-800 hover:underline"
+                  >
+                    <ExternalLink className="w-3 h-3" />
+                    View record
+                  </Link>
+                ) : route.linked_record_id ? (
                   <span className="text-xs text-slate-400 font-mono">
                     {route.linked_record_id.slice(0, 8)}…
                   </span>
-                )}
+                ) : null}
                 <Badge className={cn("text-xs border-0", ROUTE_STATUS_CLR[route.status])}>
                   {route.status.replace(/_/g, " ")}
                 </Badge>

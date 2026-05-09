@@ -844,7 +844,7 @@ function processTask(
     assigned_to: event.manager_id ?? event.staff_id,
     created_by: event.staff_id,
     due_date: dueDate,
-    child_id: event.child_id ?? null,
+    linked_child_id: event.child_id ?? null,
     home_id: HOME_ID,
     care_event_id: event.id,
     evidence_note: null,

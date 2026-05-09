@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { PageShell } from "@/components/layout/page-shell";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -418,6 +419,16 @@ export default function TasksPage() {
                           <Badge variant="destructive" className="text-[9px] rounded-full gap-0.5">
                             <AlertTriangle className="h-3 w-3" />{task.linked_incident_id.replace("inc_", "INC-")}
                           </Badge>
+                        )}
+                        {(task as never as { care_event_id?: string }).care_event_id && (
+                          <Link
+                            href={`/care-events/${(task as never as { care_event_id: string }).care_event_id}`}
+                            onClick={(e) => e.stopPropagation()}
+                            className="inline-flex items-center gap-1 rounded-full bg-indigo-50 border border-indigo-200 px-2 py-0.5 text-[9px] font-medium text-indigo-700 hover:bg-indigo-100 transition-colors"
+                          >
+                            <Sparkles className="h-3 w-3" />
+                            Care Event
+                          </Link>
                         )}
                       </div>
 
