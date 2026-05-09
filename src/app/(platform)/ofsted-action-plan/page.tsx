@@ -20,8 +20,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { getStaffName } from "@/lib/seed-data";
-import { useOfstedActionPlan } from "@/hooks/use-ofsted-action-plan";
+import { getStaffName, STAFF } from "@/lib/seed-data";
+import { toast } from "sonner";
+import { useOfstedActionPlan, useCreateOfstedActionItem } from "@/hooks/use-ofsted-action-plan";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import type {
   OfstedActionItem,
   OfstedActionType,
@@ -105,6 +111,20 @@ export default function OfstedActionPlanPage() {
   const [filterPriority, setFilterPriority] = useState("all");
   const [sortBy, setSortBy] = useState<"priority" | "status" | "type">("priority");
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [showNew, setShowNew] = useState(false);
+  const createItem = useCreateOfstedActionItem();
+  const [oaForm, setOaForm] = useState({ action_type: "requirement" as OfstedActionType, priority: "medium" as OfstedActionPriority, text: "", owner: "", target_date: "", evidence: "" });
+  const setOA = (k: string, v: unknown) => setOaForm((p) => ({ ...p, [k]: v }));
+
+  const handleSaveAction = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!oaForm.text.trim()) { toast.error("Action text is required."); return; }
+    const today = new Date().toISOString().slice(0, 10);
+    await createItem.mutateAsync({ inspection_date: today, action_type: oaForm.action_type, text: oaForm.text.trim(), priority: oaForm.priority, status: "not_started" as OfstedActionStatus, owner: oaForm.owner || null, target_date: oaForm.target_date || null, completed_date: null, progress: 0, evidence: oaForm.evidence.trim(), updates: [] });
+    toast.success("Action item added.");
+    setOaForm({ action_type: "requirement", priority: "medium", text: "", owner: "", target_date: "", evidence: "" });
+    setShowNew(false);
+  };
 
   /* ── filtering & sorting ────────────────────────────────────────── */
   const filtered = useMemo(() => {
@@ -191,7 +211,7 @@ export default function OfstedActionPlanPage() {
         <div className="flex items-center gap-2">
           <PrintButton title="Ofsted Action Plan" />
           <ExportButton data={filtered} columns={exportCols} filename="ofsted-action-plan" />
-          <Button>
+          <Button onClick={() => setShowNew(true)}>
             <Plus className="h-4 w-4 mr-2" /> Add Action
           </Button>
         </div>
@@ -545,6 +565,24 @@ export default function OfstedActionPlanPage() {
         days={28}
         defaultCollapsed
       />
+      <Dialog open={showNew} onOpenChange={setShowNew}>
+        <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
+          <DialogHeader><DialogTitle>Add Action Item</DialogTitle></DialogHeader>
+          <form onSubmit={handleSaveAction} className="space-y-3 py-2">
+            <div className="grid grid-cols-2 gap-3">
+              <div><Label>Type</Label><Select value={oaForm.action_type} onValueChange={(v) => setOA("action_type", v)}><SelectTrigger className="mt-1"><SelectValue /></SelectTrigger><SelectContent>{(Object.keys(OFSTED_ACTION_TYPE_LABEL) as OfstedActionType[]).map((k) => (<SelectItem key={k} value={k}>{OFSTED_ACTION_TYPE_LABEL[k]}</SelectItem>))}</SelectContent></Select></div>
+              <div><Label>Priority</Label><Select value={oaForm.priority} onValueChange={(v) => setOA("priority", v)}><SelectTrigger className="mt-1"><SelectValue /></SelectTrigger><SelectContent>{(Object.keys(OFSTED_ACTION_PRIORITY_LABEL) as OfstedActionPriority[]).map((k) => (<SelectItem key={k} value={k}>{OFSTED_ACTION_PRIORITY_LABEL[k]}</SelectItem>))}</SelectContent></Select></div>
+            </div>
+            <div><Label>Action Text *</Label><Textarea className="mt-1" rows={3} placeholder="Describe the action required…" value={oaForm.text} onChange={(e) => setOA("text", e.target.value)} /></div>
+            <div className="grid grid-cols-2 gap-3">
+              <div><Label>Owner</Label><Select value={oaForm.owner} onValueChange={(v) => setOA("owner", v)}><SelectTrigger className="mt-1"><SelectValue placeholder="Select staff…" /></SelectTrigger><SelectContent><SelectItem value="">Unassigned</SelectItem>{STAFF.filter((s) => s.employment_status === "active").map((s) => (<SelectItem key={s.id} value={s.id}>{s.full_name}</SelectItem>))}</SelectContent></Select></div>
+              <div><Label>Target Date</Label><Input type="date" className="mt-1" value={oaForm.target_date} onChange={(e) => setOA("target_date", e.target.value)} /></div>
+            </div>
+            <div><Label>Evidence / Notes</Label><Textarea className="mt-1" rows={2} placeholder="Evidence to be gathered or notes" value={oaForm.evidence} onChange={(e) => setOA("evidence", e.target.value)} /></div>
+            <DialogFooter><Button type="button" variant="outline" onClick={() => setShowNew(false)}>Cancel</Button><Button type="submit" disabled={createItem.isPending}>{createItem.isPending ? "Saving…" : "Add Action"}</Button></DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
     </PageShell>
   );
 }
