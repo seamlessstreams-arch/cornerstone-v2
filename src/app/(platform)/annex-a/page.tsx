@@ -6,6 +6,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { PageShell } from "@/components/layout/page-shell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -31,6 +32,7 @@ import {
   Loader2,
   FileText,
   Pencil,
+  Camera,
   BarChart3,
 } from "lucide-react";
 import { cn, formatDate } from "@/lib/utils";
@@ -190,7 +192,14 @@ function EvidenceRow({
           <p className="text-sm text-slate-800 line-clamp-2">{item.suggested_text}</p>
           {item.care_event && (
             <p className="text-xs text-slate-400 mt-0.5">
-              {item.care_event.title} — {formatDate(item.care_event.event_date)}
+              <Link
+                href={`/care-events/${item.care_event.id}`}
+                className="text-indigo-500 hover:underline"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {item.care_event.title}
+              </Link>{" "}
+              — {formatDate(item.care_event.event_date)}
             </p>
           )}
         </div>
@@ -353,6 +362,8 @@ function ReviewDialog({
 export default function AnnexAReadinessPage() {
   const [selectedSection, setSelectedSection] = useState<string | null>(null);
   const [reviewingItem, setReviewingItem] = useState<AnnexAEvidenceEnriched | null>(null);
+  const [snapshotOpen, setSnapshotOpen] = useState(false);
+  const snapshotDate = new Date().toISOString();
 
   const { data, isLoading } = useAnnexAReadiness({
     section: selectedSection ?? undefined,
@@ -366,6 +377,12 @@ export default function AnnexAReadinessPage() {
     <PageShell
       title="Annex A Readiness Dashboard"
       subtitle="Continuously inspection-ready — evidence from verified Care Events builds Annex A automatically"
+      actions={
+        <Button size="sm" variant="outline" onClick={() => setSnapshotOpen(true)}>
+          <Camera className="h-3.5 w-3.5 mr-1.5" />
+          Generate snapshot
+        </Button>
+      }
     >
       {isLoading ? (
         <div className="flex items-center justify-center py-16 text-slate-400">
@@ -525,6 +542,100 @@ export default function AnnexAReadinessPage() {
       {reviewingItem && (
         <ReviewDialog item={reviewingItem} onClose={() => setReviewingItem(null)} />
       )}
+
+      {/* ── Inspection Snapshot Dialog ─────────────────────────────────── */}
+      <Dialog open={snapshotOpen} onOpenChange={setSnapshotOpen}>
+        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Camera className="h-4 w-4 text-slate-600" />
+              Annex A Inspection Snapshot
+            </DialogTitle>
+            <DialogDescription>
+              Point-in-time readiness snapshot generated {new Date(snapshotDate).toLocaleString("en-GB")}.
+              Print this page for inspectors or archive in the filing cabinet.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-4 py-2">
+            {/* Overall score */}
+            <div className="rounded-lg border bg-slate-50 p-4 flex items-center gap-4">
+              <ReadinessRing score={meta?.readiness_score ?? 0} />
+              <div>
+                <p className="text-sm font-semibold text-slate-800">Overall Annex A readiness</p>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  {meta?.approved_count ?? 0} approved evidence items across{" "}
+                  {sections.filter((s) => s.approved_count > 0).length} of {sections.length} sections
+                </p>
+                {(meta?.gaps?.length ?? 0) > 0 && (
+                  <p className="text-xs text-red-600 mt-0.5">
+                    {meta?.gaps?.length} section{(meta?.gaps?.length ?? 0) !== 1 ? "s" : ""} without evidence
+                  </p>
+                )}
+              </div>
+            </div>
+
+            {/* Evidence stats */}
+            <div className="grid grid-cols-2 gap-3">
+              {[
+                { label: "Total evidence", value: meta?.total_evidence ?? 0 },
+                { label: "Approved", value: meta?.approved_count ?? 0 },
+                { label: "Pending review", value: meta?.pending_decisions ?? 0 },
+                { label: "Stale (90+ days)", value: meta?.stale_count ?? 0 },
+              ].map((s) => (
+                <div key={s.label} className="rounded border p-3">
+                  <p className="text-xs text-slate-500">{s.label}</p>
+                  <p className="text-lg font-bold text-slate-900">{s.value}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Section summary */}
+            <div>
+              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">
+                Section readiness
+              </p>
+              <div className="space-y-1.5">
+                {sections.map((s) => {
+                  const pct = s.evidence_count > 0 ? Math.round((s.approved_count / s.evidence_count) * 100) : 0;
+                  return (
+                    <div key={s.key} className="flex items-center gap-3 text-xs">
+                      <span className="flex-1 text-slate-700 truncate">{s.label}</span>
+                      <div className="w-24 h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                        <div
+                          className={cn(
+                            "h-full rounded-full",
+                            pct >= 80 ? "bg-emerald-500" : pct >= 50 ? "bg-amber-500" : s.has_gap ? "bg-red-400" : "bg-slate-300"
+                          )}
+                          style={{ width: `${pct}%` }}
+                        />
+                      </div>
+                      <span className={cn(
+                        "w-12 text-right font-medium",
+                        s.has_gap ? "text-red-600" : "text-slate-600"
+                      )}>
+                        {s.approved_count}/{s.evidence_count}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            <p className="text-[10px] text-slate-400 border-t pt-3">
+              Cornerstone \u00b7 Annex A Snapshot \u00b7 Generated {new Date(snapshotDate).toLocaleString("en-GB")} \u00b7 Home: Oak House
+            </p>
+          </div>
+
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setSnapshotOpen(false)}>Close</Button>
+            <Button onClick={() => window.print()}>
+              <FileText className="h-3.5 w-3.5 mr-1.5" />
+              Print snapshot
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </PageShell>
   );
 }
