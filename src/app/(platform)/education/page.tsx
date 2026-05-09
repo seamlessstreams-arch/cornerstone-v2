@@ -35,6 +35,7 @@ import {
   XCircle, Shield, Award, FileText, Loader2, Sparkles,
 } from "lucide-react";
 import { toast } from "sonner";
+import { CareEventsPanel } from "@/components/care-events/care-events-panel";
 
 // ── Config ────────────────────────────────────────────────────────────────────
 
@@ -480,6 +481,14 @@ export default function EducationPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Care Events pipeline — education events routed here */}
+      <CareEventsPanel
+        title="Care Events — Education"
+        category="education"
+        days={28}
+        defaultCollapsed
+      />
     </PageShell>
   );
 }

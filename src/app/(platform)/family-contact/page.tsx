@@ -42,6 +42,7 @@ import {
   XCircle, PauseCircle, RefreshCw, MessageSquare, Heart, Eye, Ban,
   CalendarDays, MapPin, UserCheck, ShieldAlert, Info, Search, ArrowUpDown, ArrowUpRight,
 } from "lucide-react";
+import { CareEventsPanel } from "@/components/care-events/care-events-panel";
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -1036,6 +1037,14 @@ export default function FamilyContactPage() {
           </div>
         )}
       </div>
+
+      {/* Care Events pipeline — family contact events routed here */}
+      <CareEventsPanel
+        title="Care Events — Family Contact"
+        category="family_contact"
+        days={28}
+        defaultCollapsed
+      />
     </PageShell>
   );
 }

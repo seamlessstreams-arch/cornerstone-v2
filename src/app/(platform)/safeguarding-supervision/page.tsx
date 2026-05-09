@@ -13,6 +13,7 @@ import { cn } from "@/lib/utils";
 import { getStaffName, getYPName } from "@/lib/seed-data";
 import { useSafeguardingSupervisionRecords } from "@/hooks/use-safeguarding-supervision-records";
 import type { SafeguardingSupervisionRecord } from "@/types/extended";
+import { CareEventsPanel } from "@/components/care-events/care-events-panel";
 
 /* ── helpers ─────────────────────────────────────────────────────────────── */
 
@@ -240,6 +241,15 @@ export default function SafeguardingSupervisionPage() {
           <p className="font-semibold">Regulatory framework</p>
           <p>Safeguarding supervision sits alongside, but is distinct from, line management supervision. It is required practice under Working Together to Safeguard Children (2023) and is a key component of meeting Quality Standard 5 — the protection of children. Specialist supervision provides reflective space focused on the emotional and clinical impact of safeguarding work, supports staff resilience, and surfaces clinical signals such as parallel process that line management is not designed to hold. Records are stored within restricted access and disclosure is governed by safeguarding statutory thresholds.</p>
         </div>
+
+        {/* Care Events pipeline — safeguarding events routed here */}
+        <CareEventsPanel
+          title="Care Events — Safeguarding"
+          category={["safeguarding", "missing_episode"]}
+          days={90}
+          defaultCollapsed
+          className="mt-2"
+        />
       </div>
     </PageShell>
   );

@@ -16,6 +16,7 @@ import {
 import { useReturnInterviews } from "@/hooks/use-return-interviews";
 import type { ReturnInterview, ReturnInterviewStatus, ReturnInterviewAction, ReturnInterviewActionStatus } from "@/types/extended";
 import { RETURN_INTERVIEW_STATUS_LABEL, RETURN_INTERVIEW_ACTION_STATUS_LABEL } from "@/types/extended";
+import { CareEventsPanel } from "@/components/care-events/care-events-panel";
 
 const d = (n: number) => { const dt = new Date(); dt.setDate(dt.getDate() + n); return dt.toISOString().slice(0, 10); };
 
@@ -284,6 +285,14 @@ export default function MissingReturnInterviewsPage() {
           person to take steps to locate missing children and report to appropriate persons.
         </p>
       </div>
+
+      {/* Care Events pipeline — missing episode events routed here */}
+      <CareEventsPanel
+        title="Care Events — Missing Episodes"
+        category="missing_episode"
+        days={90}
+        defaultCollapsed
+      />
     </PageShell>
   );
 }

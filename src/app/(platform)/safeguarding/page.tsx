@@ -27,6 +27,7 @@ import { SmartUploadButton } from "@/components/documents/smart-upload-button";
 import { PrintButton } from "@/components/common/print-button";
 import { ExportButton, type ExportColumn } from "@/components/common/export-button";
 import NextLink from "next/link";
+import { CareEventsPanel } from "@/components/care-events/care-events-panel";
 
 // ── Static seed data (display only) ──────────────────────────────────────────
 
@@ -1615,6 +1616,14 @@ export default function SafeguardingPage() {
         {activeTab === "chronology" && <ChronologyTab />}
         {activeTab === "manager" && <ManagerActionsTab />}
       </div>
+
+      {/* Care Events pipeline — safeguarding events routed here */}
+      <CareEventsPanel
+        title="Care Events — Safeguarding"
+        category={["safeguarding", "missing_episode"]}
+        days={90}
+        defaultCollapsed
+      />
     </PageShell>
   );
 }

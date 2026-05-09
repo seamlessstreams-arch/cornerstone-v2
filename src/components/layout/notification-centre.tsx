@@ -18,7 +18,7 @@ import {
   Bell, AlertTriangle, Pill, MapPin, Eye, Shield,
   CheckCircle2, GraduationCap, Clock, ChevronRight,
   Building2, UserX, Flame, X, CheckCheck, ArrowRightLeft,
-  Zap,
+  Zap, ClipboardList, RefreshCw,
 } from "lucide-react";
 
 // ── Types ────────────────────────────────────────────────────────────────────
@@ -239,6 +239,34 @@ export function NotificationCentre() {
         description: "A shift handover has been created for you. Review and sign off to confirm receipt.",
         href: "/handover",
         category: "tasks",
+      });
+    }
+
+    // Care events awaiting manager review
+    if ((d.care_events?.awaiting_manager_review ?? 0) > 0) {
+      const n = d.care_events!.awaiting_manager_review;
+      items.push({
+        id: "care_events_review",
+        type: "warning",
+        icon: ClipboardList,
+        title: `${n} care event${n > 1 ? "s" : ""} awaiting manager review`,
+        description: "Submitted care events need manager verification before evidence is finalised.",
+        href: "/management-oversight",
+        category: "compliance",
+      });
+    }
+
+    // Care events with routing failures
+    if ((d.care_events?.routing_failed ?? 0) > 0) {
+      const n = d.care_events!.routing_failed;
+      items.push({
+        id: "care_events_routing_failed",
+        type: "warning",
+        icon: RefreshCw,
+        title: `${n} care event${n > 1 ? "s" : ""} with routing failure`,
+        description: "One or more care event routes failed. Retry required to complete record linking.",
+        href: "/care-events",
+        category: "compliance",
       });
     }
 

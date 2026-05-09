@@ -39,6 +39,7 @@ import {
   TrendingUp, Activity, FileText, X, RotateCcw, Search, ArrowUpDown,
 } from "lucide-react";
 import { ExportButton, type ExportColumn } from "@/components/common/export-button";
+import { CareEventsPanel } from "@/components/care-events/care-events-panel";
 
 const MFC_EXPORT_COLS: ExportColumn<MissingEpisode>[] = [
   { header: "Reference", accessor: (e) => e.reference },
@@ -1076,6 +1077,13 @@ export default function MissingFromCarePage() {
       <LogReturnDialog episode={logReturnEp} onClose={() => setLogReturnEp(null)} />
       <RhiDialog episode={rhiEp} onClose={() => setRhiEp(null)} />
 
+      {/* Care Events pipeline — missing episode events routed here */}
+      <CareEventsPanel
+        title="Care Events — Missing Episodes"
+        category="missing_episode"
+        days={90}
+        defaultCollapsed
+      />
     </PageShell>
   );
 }

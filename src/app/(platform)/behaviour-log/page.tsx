@@ -36,6 +36,7 @@ import {
   ChevronDown, ChevronUp, Shield, Smile, Frown,
   TrendingUp, Zap, Heart, Loader2,
 } from "lucide-react";
+import { CareEventsPanel } from "@/components/care-events/care-events-panel";
 
 // ── Config ────────────────────────────────────────────────────────────────────
 
@@ -488,6 +489,14 @@ export default function BehaviourLogPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Care Events pipeline — behaviour events routed here */}
+      <CareEventsPanel
+        title="Care Events — Behaviour"
+        category={["behaviour", "physical_intervention", "restraint"]}
+        days={28}
+        defaultCollapsed
+      />
     </PageShell>
   );
 }
