@@ -314,14 +314,578 @@ function processSavedTime(event: CareEvent, route: CareEventRoute): void {
 
 // ── Route dispatch ────────────────────────────────────────────────────────────
 
+// ── Incident ──────────────────────────────────────────────────────────────────
+
+function processIncident(event: CareEvent, route: CareEventRoute): void {
+  // Idempotency: one incident per care event
+  const existing = db.incidents.findAll().find((i) => (i as never as { care_event_id?: string }).care_event_id === event.id);
+  if (existing) {
+    db.careEventRoutes.patch(route.id, {
+      status: "completed",
+      linked_record_id: existing.id,
+      linked_record_table: "incidents",
+      processing_notes: "Incident record already exists for this care event.",
+    });
+    return;
+  }
+
+  const categoryToType: Record<string, string> = {
+    safeguarding: "safeguarding_concern",
+    missing_episode: "missing_from_care",
+    physical_intervention: "physical_intervention",
+    restraint: "physical_intervention",
+    complaint: "complaint",
+    health: "other",
+    behaviour: "behaviour_incident",
+    general: "behaviour_incident",
+  };
+
+  const categoryToSeverity: Record<string, string> = {
+    safeguarding: "high",
+    missing_episode: "high",
+    physical_intervention: "medium",
+    restraint: "high",
+    complaint: "medium",
+    health: "low",
+    behaviour: "medium",
+    general: "low",
+  };
+
+  const incident = db.incidents.create({
+    reference: `INC-${new Date().getFullYear()}-${String(db.incidents.findAll().length + 1).padStart(4, "0")}`,
+    type: (categoryToType[event.category] ?? "other") as never,
+    severity: (categoryToSeverity[event.category] ?? "medium") as never,
+    child_id: event.child_id ?? "",
+    date: event.event_date,
+    time: event.event_time ?? "00:00",
+    location: null,
+    description: event.content,
+    immediate_action: `Logged via Care Event: ${event.title}`,
+    reported_by: event.staff_id,
+    witnesses: [],
+    body_map_required: false,
+    body_map_completed: false,
+    body_map_url: null,
+    notifications: [],
+    requires_oversight: event.requires_manager_review,
+    oversight_note: null,
+    oversight_by: null,
+    oversight_at: null,
+    status: "open",
+    outcome: null,
+    lessons_learned: null,
+    linked_task_ids: [],
+    linked_document_ids: [],
+    home_id: HOME_ID,
+    care_event_id: event.id,
+    created_by: event.staff_id,
+    updated_by: event.staff_id,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  } as never);
+
+  db.careEventRoutes.patch(route.id, {
+    status: "completed",
+    linked_record_id: incident.id,
+    linked_record_table: "incidents",
+    processing_notes: `Incident record created: ${incident.reference}`,
+  });
+}
+
+// ── Missing Episode ────────────────────────────────────────────────────────────
+
+function processMissingEpisode(event: CareEvent, route: CareEventRoute): void {
+  const existing = db.missingEpisodes.findAll().find((m) => (m as never as { care_event_id?: string }).care_event_id === event.id);
+  if (existing) {
+    db.careEventRoutes.patch(route.id, {
+      status: "completed",
+      linked_record_id: existing.id,
+      linked_record_table: "missingEpisodes",
+      processing_notes: "Missing episode record already exists for this care event.",
+    });
+    return;
+  }
+
+  const episode = db.missingEpisodes.create({
+    child_id: event.child_id ?? "",
+    home_id: HOME_ID,
+    date_missing: event.event_date,
+    time_missing: event.event_time ?? "00:00",
+    date_returned: null,
+    time_returned: null,
+    duration_minutes: null,
+    reported_by: event.staff_id,
+    reported_to_police: false,
+    police_reference: null,
+    return_interview_completed: false,
+    return_interview_notes: null,
+    return_interview_by: null,
+    contextual_safeguarding_risk: event.is_safeguarding,
+    last_known_location: null,
+    description: event.content,
+    risk_to_self: "medium",
+    risk_to_others: "low",
+    actions_taken: `Logged via Care Event: ${event.title}`,
+    care_event_id: event.id,
+    created_by: event.staff_id,
+  } as never);
+
+  db.careEventRoutes.patch(route.id, {
+    status: "completed",
+    linked_record_id: episode.id,
+    linked_record_table: "missingEpisodes",
+    processing_notes: `Missing episode record created: ${episode.reference}`,
+  });
+}
+
+// ── Physical Intervention / Restraint ─────────────────────────────────────────
+
+function processPhysicalIntervention(event: CareEvent, route: CareEventRoute): void {
+  const existing = db.restraints.findAll().find((r) => (r as never as { care_event_id?: string }).care_event_id === event.id);
+  if (existing) {
+    db.careEventRoutes.patch(route.id, {
+      status: "completed",
+      linked_record_id: existing.id,
+      linked_record_table: "restraints",
+      processing_notes: "Restraint record already exists for this care event.",
+    });
+    return;
+  }
+
+  const record = db.restraints.create({
+    date: event.event_date,
+    start_time: event.event_time ?? "00:00",
+    end_time: event.event_time ?? "00:00",
+    duration: 0,
+    child_id: event.child_id ?? "",
+    staff_involved: [{ staff_id: event.staff_id, role: "primary" }],
+    reason: "harm_to_others",
+    restraint_type: "standing",
+    antecedent: "",
+    behaviour: event.content,
+    de_escalation_attempts: [],
+    justification: `Recorded via Care Event: ${event.title}`,
+    description: event.content,
+    injuries: [],
+    child_debriefed: false,
+    child_debrief_notes: "",
+    staff_debriefed: false,
+    witnessed_by: [],
+    review_status: "pending_rm",
+    review_notes: "",
+    reviewed_by: "",
+    linked_incident_id: "",
+    notifications_sent: [],
+    body_map_completed: false,
+    medical_check_completed: false,
+    recorded_by: event.staff_id,
+    care_event_id: event.id,
+    created_at: new Date().toISOString(),
+  } as never);
+
+  db.careEventRoutes.patch(route.id, {
+    status: "completed",
+    linked_record_id: record.id,
+    linked_record_table: "restraints",
+    processing_notes: "Physical intervention record created — awaiting RM review.",
+  });
+}
+
+// ── Health Record ─────────────────────────────────────────────────────────────
+
+function processHealthRecord(event: CareEvent, route: CareEventRoute): void {
+  const existing = db.healthRecordEntries.getAll().find((h) => (h as never as { care_event_id?: string }).care_event_id === event.id);
+  if (existing) {
+    db.careEventRoutes.patch(route.id, {
+      status: "completed",
+      linked_record_id: existing.id,
+      linked_record_table: "healthRecordEntries",
+      processing_notes: "Health record already exists for this care event.",
+    });
+    return;
+  }
+
+  const record = db.healthRecordEntries.create({
+    child_id: event.child_id ?? "",
+    date: event.event_date,
+    record_type: "other",
+    title: event.title,
+    details: event.content,
+    professional: "",
+    status: "monitoring",
+    follow_up_date: null,
+    outcome: null,
+    staff_id: event.staff_id,
+    home_id: HOME_ID,
+    care_event_id: event.id,
+    created_at: new Date().toISOString(),
+  } as never);
+
+  db.careEventRoutes.patch(route.id, {
+    status: "completed",
+    linked_record_id: record.id,
+    linked_record_table: "healthRecordEntries",
+    processing_notes: "Health record entry created.",
+  });
+}
+
+// ── Medication Record ─────────────────────────────────────────────────────────
+
+function processMedicationRecord(event: CareEvent, route: CareEventRoute): void {
+  // Write to chronology as a medication note — full medication administration
+  // records require structured data not available from a care event narrative alone
+  const existing = db.chronology.findAll().find((c) => (c as never as { care_event_id?: string }).care_event_id === event.id && (c as never as { category?: string }).category === "medication");
+  if (existing) {
+    db.careEventRoutes.patch(route.id, {
+      status: "completed",
+      linked_record_id: existing.id,
+      linked_record_table: "chronology",
+      processing_notes: "Medication chronology entry already exists.",
+    });
+    return;
+  }
+
+  const entry = db.chronology.create({
+    child_id: event.child_id ?? "",
+    date: event.event_date,
+    time: event.event_time ?? null,
+    category: "medication" as never,
+    title: event.title,
+    description: event.content.slice(0, 500),
+    significance: event.is_significant ? "significant" : "routine",
+    recorded_by: event.staff_id,
+    linked_incident_id: null,
+    home_id: HOME_ID,
+    care_event_id: event.id,
+    created_at: new Date().toISOString(),
+  } as never);
+
+  db.careEventRoutes.patch(route.id, {
+    status: "completed",
+    linked_record_id: entry.id,
+    linked_record_table: "chronology",
+    processing_notes: "Medication note added to chronology.",
+  });
+}
+
+// ── Education Record ──────────────────────────────────────────────────────────
+
+function processEducationRecord(event: CareEvent, route: CareEventRoute): void {
+  const existing = db.educationRecords.findAll().find((r) => (r as never as { care_event_id?: string }).care_event_id === event.id);
+  if (existing) {
+    db.careEventRoutes.patch(route.id, {
+      status: "completed",
+      linked_record_id: existing.id,
+      linked_record_table: "educationRecords",
+      processing_notes: "Education record already exists for this care event.",
+    });
+    return;
+  }
+
+  const record = db.educationRecords.create({
+    child_id: event.child_id ?? "",
+    record_type: "concern",
+    title: event.title,
+    date: event.event_date,
+    details: event.content,
+    outcome: null,
+    follow_up_date: null,
+    staff_id: event.staff_id,
+    status: "open",
+    home_id: HOME_ID,
+    care_event_id: event.id,
+    created_at: new Date().toISOString(),
+  } as never);
+
+  db.careEventRoutes.patch(route.id, {
+    status: "completed",
+    linked_record_id: record.id,
+    linked_record_table: "educationRecords",
+    processing_notes: "Education record created.",
+  });
+}
+
+// ── Family Contact Record ─────────────────────────────────────────────────────
+
+function processFamilyContactRecord(event: CareEvent, route: CareEventRoute): void {
+  // Log as a chronology entry — FamilyTimeSession has many required structured fields
+  // that would need staff to complete separately
+  const existing = db.chronology.findAll().find((c) => (c as never as { care_event_id?: string }).care_event_id === event.id && (c as never as { category?: string }).category === "family");
+  if (existing) {
+    db.careEventRoutes.patch(route.id, {
+      status: "completed",
+      linked_record_id: existing.id,
+      linked_record_table: "chronology",
+      processing_notes: "Family contact chronology entry already exists.",
+    });
+    return;
+  }
+
+  const entry = db.chronology.create({
+    child_id: event.child_id ?? "",
+    date: event.event_date,
+    time: event.event_time ?? null,
+    category: "family" as never,
+    title: event.title,
+    description: event.content.slice(0, 500),
+    significance: event.is_significant ? "significant" : "routine",
+    recorded_by: event.staff_id,
+    linked_incident_id: null,
+    home_id: HOME_ID,
+    care_event_id: event.id,
+    created_at: new Date().toISOString(),
+  } as never);
+
+  db.careEventRoutes.patch(route.id, {
+    status: "completed",
+    linked_record_id: entry.id,
+    linked_record_table: "chronology",
+    processing_notes: "Family contact note added to chronology. Create a full family time session record when details are available.",
+  });
+}
+
+// ── Professional Contact Record ───────────────────────────────────────────────
+
+function processProfessionalContactRecord(event: CareEvent, route: CareEventRoute): void {
+  const existing = db.chronology.findAll().find((c) => (c as never as { care_event_id?: string }).care_event_id === event.id && (c as never as { category?: string }).category === "professional");
+  if (existing) {
+    db.careEventRoutes.patch(route.id, {
+      status: "completed",
+      linked_record_id: existing.id,
+      linked_record_table: "chronology",
+      processing_notes: "Professional contact entry already exists.",
+    });
+    return;
+  }
+
+  const entry = db.chronology.create({
+    child_id: event.child_id ?? "",
+    date: event.event_date,
+    time: event.event_time ?? null,
+    category: "professional" as never,
+    title: event.title,
+    description: event.content.slice(0, 500),
+    significance: event.is_significant ? "significant" : "routine",
+    recorded_by: event.staff_id,
+    linked_incident_id: null,
+    home_id: HOME_ID,
+    care_event_id: event.id,
+    created_at: new Date().toISOString(),
+  } as never);
+
+  db.careEventRoutes.patch(route.id, {
+    status: "completed",
+    linked_record_id: entry.id,
+    linked_record_table: "chronology",
+    processing_notes: "Professional contact note added to chronology.",
+  });
+}
+
+// ── Complaint Record ──────────────────────────────────────────────────────────
+
+function processComplaintRecord(event: CareEvent, route: CareEventRoute): void {
+  // Complaints route to incidents (type=complaint) AND chronology
+  const existing = db.incidents.findAll().find((i) => (i as never as { care_event_id?: string }).care_event_id === event.id);
+  if (existing) {
+    db.careEventRoutes.patch(route.id, {
+      status: "completed",
+      linked_record_id: existing.id,
+      linked_record_table: "incidents",
+      processing_notes: "Complaint incident record already exists.",
+    });
+    return;
+  }
+
+  const incident = db.incidents.create({
+    reference: `CMP-${new Date().getFullYear()}-${String(db.incidents.findAll().length + 1).padStart(4, "0")}`,
+    type: "complaint" as never,
+    severity: "medium" as never,
+    child_id: event.child_id ?? "",
+    date: event.event_date,
+    time: event.event_time ?? "00:00",
+    location: null,
+    description: event.content,
+    immediate_action: `Complaint logged via Care Event: ${event.title}`,
+    reported_by: event.staff_id,
+    witnesses: [],
+    body_map_required: false,
+    body_map_completed: false,
+    body_map_url: null,
+    notifications: [],
+    requires_oversight: true,
+    oversight_note: null,
+    oversight_by: null,
+    oversight_at: null,
+    status: "open",
+    outcome: null,
+    lessons_learned: null,
+    linked_task_ids: [],
+    linked_document_ids: [],
+    home_id: HOME_ID,
+    care_event_id: event.id,
+    created_by: event.staff_id,
+    updated_by: event.staff_id,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  } as never);
+
+  db.careEventRoutes.patch(route.id, {
+    status: "completed",
+    linked_record_id: incident.id,
+    linked_record_table: "incidents",
+    processing_notes: `Complaint record created: ${incident.reference}`,
+  });
+}
+
+// ── Safeguarding Record ───────────────────────────────────────────────────────
+
+function processSafeguardingRecord(event: CareEvent, route: CareEventRoute): void {
+  // Create high-severity incident (type=safeguarding_concern) + chronology entry
+  const existing = db.incidents.findAll().find((i) => (i as never as { care_event_id?: string }).care_event_id === event.id);
+  if (existing) {
+    db.careEventRoutes.patch(route.id, {
+      status: "completed",
+      linked_record_id: existing.id,
+      linked_record_table: "incidents",
+      processing_notes: "Safeguarding incident already exists.",
+    });
+    return;
+  }
+
+  const incident = db.incidents.create({
+    reference: `SG-${new Date().getFullYear()}-${String(db.incidents.findAll().length + 1).padStart(4, "0")}`,
+    type: "safeguarding_concern" as never,
+    severity: "high" as never,
+    child_id: event.child_id ?? "",
+    date: event.event_date,
+    time: event.event_time ?? "00:00",
+    location: null,
+    description: event.content,
+    immediate_action: `Safeguarding concern logged via Care Event: ${event.title}`,
+    reported_by: event.staff_id,
+    witnesses: [],
+    body_map_required: false,
+    body_map_completed: false,
+    body_map_url: null,
+    notifications: [],
+    requires_oversight: true,
+    oversight_note: null,
+    oversight_by: null,
+    oversight_at: null,
+    status: "open",
+    outcome: null,
+    lessons_learned: null,
+    linked_task_ids: [],
+    linked_document_ids: [],
+    home_id: HOME_ID,
+    care_event_id: event.id,
+    created_by: event.staff_id,
+    updated_by: event.staff_id,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  } as never);
+
+  // Also add to chronology
+  try {
+    db.chronology.create({
+      child_id: event.child_id ?? "",
+      date: event.event_date,
+      time: event.event_time ?? null,
+      category: "safeguarding" as never,
+      title: event.title,
+      description: event.content.slice(0, 500),
+      significance: "critical",
+      recorded_by: event.staff_id,
+      linked_incident_id: incident.id,
+      home_id: HOME_ID,
+      care_event_id: event.id,
+      created_at: new Date().toISOString(),
+    } as never);
+  } catch { /* non-critical */ }
+
+  db.careEventRoutes.patch(route.id, {
+    status: "completed",
+    linked_record_id: incident.id,
+    linked_record_table: "incidents",
+    processing_notes: `Safeguarding record created: ${incident.reference} — management notification required.`,
+  });
+}
+
+// ── Task processors (risk_assessment_task, behaviour_plan_task, followup_task)
+
+function processTask(
+  event: CareEvent,
+  route: CareEventRoute,
+  taskCategory: string,
+  taskTitle: string,
+  priority: string,
+  dueDaysFromNow: number
+): void {
+  const now = new Date();
+  const dueDate = new Date(now.getTime() + dueDaysFromNow * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+
+  const existing = db.tasks.findAll().find((t) => (t as never as { care_event_id?: string }).care_event_id === event.id && (t as never as { category?: string }).category === taskCategory);
+  if (existing) {
+    db.careEventRoutes.patch(route.id, {
+      status: "completed",
+      linked_record_id: existing.id,
+      linked_record_table: "tasks",
+      processing_notes: "Task already exists for this care event.",
+    });
+    return;
+  }
+
+  const task = db.tasks.create({
+    title: taskTitle,
+    description: `Auto-generated from Care Event: ${event.title}\n\n${event.content.slice(0, 200)}`,
+    category: taskCategory as never,
+    priority: priority as never,
+    status: "pending",
+    assigned_to: event.manager_id ?? event.staff_id,
+    created_by: event.staff_id,
+    due_date: dueDate,
+    child_id: event.child_id ?? null,
+    home_id: HOME_ID,
+    care_event_id: event.id,
+    evidence_note: null,
+    completed_at: null,
+    completed_by: null,
+    updated_at: new Date().toISOString(),
+    created_at: new Date().toISOString(),
+  } as never);
+
+  db.careEventRoutes.patch(route.id, {
+    status: "completed",
+    linked_record_id: task.id,
+    linked_record_table: "tasks",
+    processing_notes: `${taskCategory.replace(/_/g, " ")} task created — due ${dueDate}.`,
+  });
+}
+
+// ── Route dispatch ────────────────────────────────────────────────────────────
+
 const ROUTE_PROCESSORS: Partial<Record<RouteType, (event: CareEvent, route: CareEventRoute) => void>> = {
-  daily_log:          processDailyLog,
-  management_oversight: processManagementOversight,
-  reg40_triage:       processReg40Triage,
-  reg45_evidence:     processReg45Evidence,
-  annex_a_evidence:   processAnnexAEvidence,
-  filing_cabinet:     processFilingCabinet,
-  saved_time:         processSavedTime,
+  daily_log:                   processDailyLog,
+  management_oversight:        processManagementOversight,
+  reg40_triage:                processReg40Triage,
+  reg45_evidence:              processReg45Evidence,
+  annex_a_evidence:            processAnnexAEvidence,
+  reg44_evidence:              processReg40Triage,   // reg44 evidence routes to the reg40/44 triage queue
+  filing_cabinet:              processFilingCabinet,
+  saved_time:                  processSavedTime,
+  incident:                    processIncident,
+  missing_episode:             processMissingEpisode,
+  physical_intervention:       processPhysicalIntervention,
+  health_record:               processHealthRecord,
+  medication_record:           processMedicationRecord,
+  education_record:            processEducationRecord,
+  family_contact_record:       processFamilyContactRecord,
+  professional_contact_record: processProfessionalContactRecord,
+  complaint_record:            processComplaintRecord,
+  safeguarding_record:         processSafeguardingRecord,
+  risk_assessment_task:        (event, route) => processTask(event, route, "risk_assessment", `Review risk assessment: ${event.title}`, "high", 3),
+  behaviour_plan_task:         (event, route) => processTask(event, route, "behaviour", `Update behaviour support plan: ${event.title}`, "medium", 7),
+  followup_task:               (event, route) => processTask(event, route, "general", `Follow up: ${event.title}`, "medium", 5),
 };
 
 // ── Main process function ─────────────────────────────────────────────────────
