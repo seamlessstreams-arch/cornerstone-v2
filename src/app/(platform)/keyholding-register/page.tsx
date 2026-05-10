@@ -27,6 +27,8 @@ import { useKeyRecords, useCreateKeyRecord } from "@/hooks/use-key-records";
 import type { KeyRecord, KeyType, KeyholdingStatus } from "@/types/extended";
 import { KEY_TYPE_LABEL, KEYHOLDING_STATUS_LABEL } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── colour maps ──────────────────────────────────────────────────────── */
 
@@ -109,11 +111,12 @@ export default function KeyholdingRegisterPage() {
     <PageShell
       title="Keyholding Register"
       subtitle="Key, fob, and access device tracking — security compliance"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Keyholding Register", sourceType: "home_check" }}
       actions={[
         <PrintButton key="p" title="Keyholding Register" />,
         <ExportButton key="e" data={filtered} columns={exportCols} filename="keyholding-register" />,
         <Button key="n" size="sm" onClick={() => setDialogOpen(true)}><Plus className="h-4 w-4 mr-1" />Add Key</Button>,
+        <AriaStudioQuickActionButton key="a" context={{ record_type: "policy", record_id: "home_oak", home_id: "home_oak" }} />,
       ]}
     >
       <div id="print-area" className="space-y-6">
@@ -302,6 +305,12 @@ export default function KeyholdingRegisterPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Keyholding Register — key allocation, master keys, bedroom keys, vehicle keys, key audit, security, handover checks, lost keys, replacement, Reg 31, Ofsted evidence"
+        recordType="policy"
+        className="mt-6"
       />
     </PageShell>
   );

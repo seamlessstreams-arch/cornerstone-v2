@@ -19,6 +19,8 @@ import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import type { IroCorrespondence, IroCorrespondenceType, IroActionStatus, IroRequiredAction } from "@/types/extended";
 import { IRO_CORRESPONDENCE_TYPE_LABEL, IRO_ACTION_STATUS_LABEL, IRO_DIRECTION_LABEL } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── helpers ──────────────────────────────────────────────────────────── */
 
@@ -127,11 +129,12 @@ export default function IroCorrespondencePage() {
     <PageShell
       title="IRO Correspondence"
       subtitle="Letters, emails, and formal escalations with Independent Reviewing Officers"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "IRO Correspondence", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="IRO Correspondence" />
           <ExportButton data={filtered} columns={exportCols} filename="iro-correspondence" />
+          <AriaStudioQuickActionButton context={{ record_type: "care_plan", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -474,6 +477,12 @@ export default function IroCorrespondencePage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="IRO Correspondence — Independent Reviewing Officer, LAC review oversight, IRO challenges, care plan disputes, statutory reviews, consultation responses, Annex A evidence"
+        recordType="care_plan"
+        className="mt-6"
       />
     </PageShell>
   );

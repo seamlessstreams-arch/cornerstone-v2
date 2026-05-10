@@ -26,6 +26,8 @@ import { useInventoryItems, useCreateInventoryItem } from "@/hooks/use-inventory
 import type { InventoryItem, InventoryCategory, InventoryCondition, InventoryLocation } from "@/types/extended";
 import { INVENTORY_CATEGORY_LABEL, INVENTORY_CONDITION_LABEL, INVENTORY_LOCATION_LABEL } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── constants ─────────────────────────────────────────────────────────── */
 
@@ -155,7 +157,7 @@ export default function InventoryPage() {
     <PageShell
       title="Inventory & Assets"
       subtitle="Track all property, equipment, and supplies across the home"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Inventory & Assets", sourceType: "home_check" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Inventory & Assets" />
@@ -163,6 +165,7 @@ export default function InventoryPage() {
           <Button onClick={() => setShowNew(true)}>
             <Plus className="h-4 w-4 mr-2" /> Add Item
           </Button>
+          <AriaStudioQuickActionButton context={{ record_type: "policy", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -426,6 +429,12 @@ export default function InventoryPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Inventory & Assets — home equipment, furniture, vehicles, IT assets, therapeutic materials, sensory equipment, maintenance records, replacement schedule, Ofsted evidence"
+        recordType="policy"
+        className="mt-6"
       />
     </PageShell>
   );

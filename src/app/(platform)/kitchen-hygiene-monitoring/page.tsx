@@ -29,6 +29,8 @@ import { useKitchenHygieneChecks } from "@/hooks/use-kitchen-hygiene-checks";
 import type { KitchenHygieneCheck, HygieneShiftType, HygieneVerdict, FridgeOrganisation } from "@/types/extended";
 import { HYGIENE_SHIFT_TYPE_LABEL, HYGIENE_VERDICT_LABEL, FRIDGE_ORGANISATION_LABEL } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 const verdictColour: Record<HygieneVerdict, string> = {
   pass: "bg-green-100 text-green-800",
@@ -92,11 +94,12 @@ export default function KitchenHygieneMonitoringPage() {
     <PageShell
       title="Kitchen Hygiene Monitoring"
       subtitle="Daily kitchen hygiene checks — temperatures, cleanliness, food safety, child cooking supervision"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Kitchen Hygiene Monitoring", sourceType: "home_check" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={data} columns={exportCols} filename="kitchen-hygiene-monitoring" />
           <PrintButton title="Kitchen Hygiene Monitoring" />
+          <AriaStudioQuickActionButton context={{ record_type: "policy", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -336,6 +339,12 @@ export default function KitchenHygieneMonitoringPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Kitchen Hygiene Monitoring — food safety, temperature checks, fridge/freezer logs, cleaning schedules, HACCP, allergens, Food Standards Agency, Reg 31, Annex A evidence"
+        recordType="policy"
+        className="mt-6"
       />
     </PageShell>
   );
