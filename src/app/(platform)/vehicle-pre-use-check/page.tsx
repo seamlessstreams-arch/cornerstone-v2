@@ -45,6 +45,8 @@ import {
 import { cn } from "@/lib/utils";
 import { getStaffName } from "@/lib/seed-data";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 // ── Local date helper ────────────────────────────────────────────────────────
 const d = (n: number): string => {
@@ -601,7 +603,7 @@ export default function VehiclePreUseCheckPage() {
     <PageShell
       title="Vehicle Pre-Use Check"
       subtitle="Recorded by the driver before any journey carrying children. Defects withdraw the vehicle from use until rectified and re-inspected."
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Vehicle Pre-Use Checks", sourceType: "document" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton
@@ -610,6 +612,7 @@ export default function VehiclePreUseCheckPage() {
             filename="vehicle-pre-use-check"
           />
           <PrintButton title="Vehicle Pre-Use Checks" />
+          <AriaStudioQuickActionButton context={{ record_type: "risk_assessment", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -1184,6 +1187,12 @@ export default function VehiclePreUseCheckPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Vehicle Pre-Use Checks — daily vehicle checks, tyre pressure, lights, fuel, mileage, defect reports, driver sign-off, transport safety compliance, Reg 40 premises/safety evidence"
+        recordType="risk_assessment"
+        className="mt-6"
       />
     </PageShell>
   );

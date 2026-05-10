@@ -24,6 +24,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 interface TransPlan {
   id: string;
@@ -232,6 +234,7 @@ export default function TransAffirmingCarePlanPage() {
         <div className="flex gap-2">
           <ExportButton data={filtered} columns={exportCols} filename="trans-affirming-care-plan" />
           <PrintButton title="Trans-Affirming Care Plans" />
+          <AriaStudioQuickActionButton context={{ record_type: "care_plan", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -456,6 +459,12 @@ export default function TransAffirmingCarePlanPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Trans-Affirming Care Plans — gender identity support, social transition plans, affirming care approach, healthcare referrals, school support plans, family engagement, Reg 45 equality evidence"
+        recordType="care_plan"
+        className="mt-6"
       />
     </PageShell>
   );

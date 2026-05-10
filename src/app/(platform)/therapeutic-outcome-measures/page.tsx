@@ -27,6 +27,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 interface OutcomeMeasure {
   id: string;
@@ -284,11 +286,12 @@ export default function TherapeuticOutcomeMeasuresPage() {
     <PageShell
       title="Therapeutic Outcome Measures"
       subtitle="Validated assessment tools tracking therapeutic progress — SDQ, RCADS, Outcome Star, TSCC and others"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Therapeutic Outcome Measures", sourceType: "care_plan" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={data} columns={exportCols} filename="therapeutic-outcome-measures" />
           <PrintButton title="Therapeutic Outcome Measures" />
+          <AriaStudioQuickActionButton context={{ record_type: "care_plan", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -478,6 +481,12 @@ export default function TherapeuticOutcomeMeasuresPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Therapeutic Outcome Measures — therapy progress, SDQ scores, outcome tracking, goal achievement, wellbeing measures, Reg 45 quality evidence, Ofsted impact evidence"
+        recordType="care_plan"
+        className="mt-6"
       />
     </PageShell>
   );
