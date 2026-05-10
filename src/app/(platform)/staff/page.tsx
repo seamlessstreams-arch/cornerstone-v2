@@ -23,6 +23,8 @@ import { ExportButton, type ExportColumn } from "@/components/common/export-butt
 import { cn, todayStr, formatDate } from "@/lib/utils";
 import { ROLE_LABELS } from "@/lib/constants";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 const STAFF_EXPORT_COLS: ExportColumn<StaffEnriched>[] = [
   { header: "Name", accessor: (s) => s.full_name },
@@ -101,6 +103,7 @@ export default function StaffPage() {
           <Button size="sm" disabled title="Staff records are managed in your HR system.">
             <Plus className="h-3.5 w-3.5" /> Add Staff Member
           </Button>
+          <AriaStudioQuickActionButton context={{ record_type: "staff_training", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -441,6 +444,12 @@ export default function StaffPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Staff Register — staff records, roles, qualifications, DBS status, training compliance, supervision records, Reg 40 workforce evidence, Ofsted staffing inspection evidence"
+        recordType="staff_training"
+        className="mt-6"
       />
     </PageShell>
   );

@@ -23,6 +23,8 @@ import { useStaffMeetingRecords, useCreateStaffMeetingRecord } from "@/hooks/use
 import type { StaffMeetingRecord, StaffMeetingType, StaffMeetingAction } from "@/types/extended";
 import { STAFF_MEETING_TYPE_LABEL } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── local config (colours not serializable) ─────────────────────────────── */
 
@@ -123,12 +125,13 @@ export default function StaffMeetingsPage() {
     <PageShell
       title="Staff Meetings"
       subtitle="Team meetings, management meetings, and clinical formulations"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "general" }}
+      ariaContext={{ pageTitle: "Staff Meetings", sourceType: "general" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Staff Meetings" />
           <ExportButton data={filtered} columns={exportCols} filename="staff-meetings" />
           <Button size="sm" onClick={() => setShowNew(true)}><Plus className="h-4 w-4 mr-1" /> New Meeting</Button>
+          <AriaStudioQuickActionButton context={{ record_type: "team_meeting", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -309,6 +312,12 @@ export default function StaffMeetingsPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Staff Meetings — staff team meetings, agendas, minutes, attendance, action tracking, team communication, management oversight evidence, Reg 45 team practice evidence"
+        recordType="team_meeting"
+        className="mt-6"
       />
     </PageShell>
   );

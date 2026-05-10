@@ -24,6 +24,8 @@ import {
   STAFF_SUPERVISION_THEME_STATUS_LABEL,
 } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── local config (colours / icons not serializable) ────────────────────── */
 
@@ -140,11 +142,12 @@ export default function StaffSupervisionThemesPage() {
     <PageShell
       title="Staff Supervision Themes"
       subtitle="Aggregated learning from supervision · Organisational reflection · Training and policy implications"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "staff" }}
+      ariaContext={{ pageTitle: "Staff Supervision Themes", sourceType: "staff" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Staff Supervision Themes" />
           <ExportButton data={records} columns={exportCols} filename="staff-supervision-themes" />
+          <AriaStudioQuickActionButton context={{ record_type: "supervision", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -381,6 +384,12 @@ export default function StaffSupervisionThemesPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Staff Supervision Themes — recurring supervision themes, workforce development needs, practice concerns, management oversight, Reg 40 staff supervision evidence, Ofsted workforce quality"
+        recordType="supervision"
+        className="mt-6"
       />
     </PageShell>
   );

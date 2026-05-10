@@ -36,6 +36,8 @@ import {
   STAFF_SICKNESS_RTW_STATUS_LABEL,
 } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── local config (colours not serializable) ─────────────────────────────── */
 
@@ -140,12 +142,13 @@ export default function StaffSicknessPage() {
     <PageShell
       title="Staff Sickness & Return to Work"
       subtitle="Absence Management · Wellbeing · Workforce Planning"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Staff Sickness & Absence", sourceType: "staff" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Staff Sickness Record" />
           <ExportButton data={records} columns={exportCols} filename="staff-sickness" />
           <Button size="sm" onClick={() => setShowNew(true)}><Plus className="h-4 w-4 mr-1" />Log Absence</Button>
+          <AriaStudioQuickActionButton context={{ record_type: "staff_training", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -335,6 +338,12 @@ export default function StaffSicknessPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Staff Sickness & Absence — staff absence records, Bradford factor, trigger point monitoring, return-to-work interviews, staffing impact, Reg 40 workforce evidence, Ofsted evidence"
+        recordType="staff_training"
+        className="mt-6"
       />
     </PageShell>
   );
