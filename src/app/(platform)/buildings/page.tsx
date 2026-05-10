@@ -976,7 +976,7 @@ function HazardsTab({ data }: { data: BuildingsData }) {
       {/* Aria for contractor comms */}
       <AriaPanel
         mode="write"
-        pageContext="buildings_hazards"
+        pageContext="Buildings & Premises — property maintenance, hazards, COSHH, asbestos, pest control, fire safety, Reg 44 evidence, health and safety compliance"
         recordType="contractor_communication"
         sourceContent={ariaSrc || "No open hazards to communicate."}
         linkedRecords={`${hazards.length} open hazard(s) — Oak House`}

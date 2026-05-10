@@ -567,7 +567,7 @@ function AllIncidentsTab() {
               {/* Aria write help */}
               <AriaPanel
                 mode="oversee"
-                pageContext="Incidents — Oversight Queue"
+                pageContext="Incidents — oversight queue, management review, safeguarding triage, Regulation 40 notifications, behaviour and physical intervention monitoring"
                 recordType="incident_oversight"
                 sourceContent={`${oversightTarget.description}\n\nImmediate action: ${oversightTarget.immediate_action}`}
                 onInsert={(text) => setOversightNote(text)}
@@ -770,7 +770,7 @@ function OversightQueueTab() {
                   <div className="mt-3">
                     <AriaPanel
                       mode="oversee"
-                      pageContext="Incidents — Oversight Queue"
+                      pageContext="Incidents — oversight queue, management review, safeguarding triage, Regulation 40 notifications, behaviour and physical intervention monitoring"
                       recordType="incident_oversight"
                       sourceContent={`Description: ${inc.description}\n\nImmediate action: ${inc.immediate_action}\n\nSeverity: ${inc.severity}\nType: ${INCIDENT_TYPE_LABELS[inc.type]}\nYoung person: ${getYPName(inc.child_id)}`}
                       onInsert={(text) => setNotesById((prev) => ({ ...prev, [inc.id]: text }))}
@@ -1030,7 +1030,7 @@ function LogIncidentTab({ onSuccess }: { onSuccess?: () => void }) {
         {ariaOpen && (
           <AriaPanel
             mode="write"
-            pageContext="Log New Incident"
+            pageContext="Log New Incident — describe what happened, who was involved, immediate actions taken, injuries, witnesses, safeguarding indicators, Regulation 40 triggers"
             recordType="incident"
             sourceContent={form.type ? `Incident type: ${INCIDENT_TYPE_LABELS[form.type as keyof typeof INCIDENT_TYPE_LABELS] || form.type}, severity: ${form.severity}, child: ${getYPName(form.child_id)}` : undefined}
             onInsert={(text) => setForm((p) => ({ ...p, description: text }))}

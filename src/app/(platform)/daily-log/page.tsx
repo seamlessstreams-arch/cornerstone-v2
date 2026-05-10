@@ -585,7 +585,7 @@ export default function DailyLogPage() {
     >
       <AriaPanel
         mode="write"
-        pageContext="Daily Log"
+        pageContext="Daily Log — shift observations, significant events, behaviour, welfare, activities, mood, sleep, food, child voice, continuity of care recording"
         recordType="daily_log"
         userRole="registered_manager"
         className="mb-5"

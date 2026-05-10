@@ -956,7 +956,7 @@ export default function StaffDashboardPage() {
         {/* ── Aria Panel ────────────────────────────────────────────────────── */}
         {showAria && (
           <AriaPanel
-            pageContext="staff_dashboard"
+            pageContext="Staff Dashboard — personal task list, due recordings, shift handovers, training compliance, supervision schedule, welfare check duties, daily activity log"
             sourceContent={`Staff dashboard for ${d.staff.full_name} — ${d.tasks.total_active} active tasks, ${d.recordings_due.total_outstanding} recordings outstanding`}
             userRole={d.staff.role}
           />

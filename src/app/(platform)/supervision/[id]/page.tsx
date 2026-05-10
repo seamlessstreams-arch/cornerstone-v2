@@ -430,7 +430,7 @@ export default function SupervisionDetailPage({
                 </div>
                 <AriaPanel
                   mode="oversee"
-                  pageContext="Supervision Record Detail"
+                  pageContext="Supervision Record — reflective supervision session notes, practice standards, caseload review, staff wellbeing, development areas, actions and accountability"
                   recordType="supervision"
                   sourceContent={ariaSourceContent}
                   userRole="manager"

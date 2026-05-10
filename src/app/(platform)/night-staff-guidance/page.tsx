@@ -97,7 +97,8 @@ export default function NightStaffGuidancePage() {
         </div>
       </div>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Sleep & Wellbeing"
+        category={["sleep", "health", "medication"]}
         days={28}
         defaultCollapsed
       />

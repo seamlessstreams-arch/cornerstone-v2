@@ -730,7 +730,7 @@ function TodayScheduleTab({
                           <div className="mt-3">
                             <AriaPanel
                               mode="write"
-                              pageContext="Medication administration"
+                              pageContext="Medication Administration — record a medication administration, prescribed dose, time given, staff signature, child response, any errors or near-misses"
                               recordType="medication_note"
                               sourceContent={`${med.name} ${med.dosage} — ${admin.status} at ${formatTime(admin.actual_time ?? admin.scheduled_time)} for ${getYPName(med.child_id)}. ${admin.notes ?? ""} ${admin.reason_not_given ? "Reason: " + admin.reason_not_given : ""}`}
                               defaultStyle="professional_formal"
@@ -1384,7 +1384,7 @@ function StockOversightTab({
           {showAria && (
             <AriaPanel
               mode="oversee"
-              pageContext="Medication oversight"
+              pageContext="Medication Oversight — MAR chart review, administration accuracy, missed doses, controlled drugs, medication errors, storage checks, prescriptions, GP liaison"
               recordType="medication_exception_oversight"
               sourceContent={exceptionContext}
               linkedRecords="medication_exceptions, MAR, incidents"

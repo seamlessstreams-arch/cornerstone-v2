@@ -1012,7 +1012,7 @@ export default function Regulation45EvidencePage() {
     >
       <AriaPanel
         mode="assist"
-        pageContext="Regulation 45 Evidence Bank"
+        pageContext="Regulation 45 Evidence Bank — statutory quality of care reports, evidence bank, suggested updates, approved evidence, RI briefings, inspection readiness, Children's Homes Regulations 2015"
         recordType="regulation_45"
         userRole="registered_manager"
         className="mb-6"
