@@ -32,6 +32,8 @@ import {
 import { usePoliceContactRecords } from "@/hooks/use-police-contact-records";
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── constants ─────────────────────────────────────────────────────────── */
 
@@ -155,11 +157,12 @@ export default function ChildPoliceContactRecordsPage() {
     <PageShell
       title="Child Police Contact Records"
       subtitle="Concordat on Children in Care — proportionate response, advocacy, restorative practice"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Police Contact Records", sourceType: "incident" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={items} columns={exportCols} filename="police-contact-records" />
           <PrintButton title="Police Contact Records" />
+          <AriaStudioQuickActionButton context={{ record_type: "safeguarding", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -377,6 +380,12 @@ export default function ChildPoliceContactRecordsPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Police Contact Records — police callouts, arrests, voluntary interviews, ABE interviews, charges, cautions, custody records, YOT referral, Reg 40 trigger, Annex A evidence, safeguarding"
+        recordType="safeguarding"
+        className="mt-6"
       />
     </PageShell>
   );

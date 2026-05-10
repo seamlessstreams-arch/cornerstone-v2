@@ -24,6 +24,8 @@ import { PREVENT_SCREENING_OUTCOME_LABEL, PREVENT_CHANNEL_STATUS_LABEL } from "@
 import { usePreventScreenings } from "@/hooks/use-prevent-screenings";
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── colour maps ───────────────────────────────────────────────────────── */
 
@@ -175,11 +177,12 @@ export default function ChildPreventRadicalisationScreeningPage() {
     <PageShell
       title="Child Prevent Radicalisation Screening"
       subtitle="Per-child Prevent duty screening — child-rights based, proportionate, and explicit about not conflating identity with risk"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Prevent Screening", sourceType: "safeguarding" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Prevent Screening" />
           <ExportButton data={exportRows} columns={exportCols} filename="child-prevent-radicalisation-screening" />
+          <AriaStudioQuickActionButton context={{ record_type: "safeguarding", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -422,6 +425,12 @@ export default function ChildPreventRadicalisationScreeningPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Prevent Screening — radicalisation vulnerability, Channel referral, Prevent duty, extremism indicators, safeguarding concerns, risk assessment, action plan, multi-agency, Reg 40 notification"
+        recordType="safeguarding"
+        className="mt-6"
       />
     </PageShell>
   );

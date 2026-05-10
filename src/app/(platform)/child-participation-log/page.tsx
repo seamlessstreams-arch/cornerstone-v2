@@ -24,6 +24,8 @@ import {
   Loader2,
 } from "lucide-react";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 const exportCols: ExportColumn<ParticipationEntry>[] = [
   { header: "Date", accessor: (r) => r.date },
@@ -104,11 +106,12 @@ export default function ChildParticipationLogPage() {
     <PageShell
       title="Child Participation Log"
       subtitle="Recording how children's views influence decisions — demonstrating genuine participation"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Child Participation Log", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={entries} columns={exportCols} filename="child-participation-log" />
           <PrintButton title="Child Participation Log" />
+          <AriaStudioQuickActionButton context={{ record_type: "direct_work", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -309,6 +312,12 @@ export default function ChildParticipationLogPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Child Participation Log — participation in meetings, groups, planning, feedback, voice, advocacy, children's rights, Article 12 UNCRC, wishes and feelings, LAC review participation"
+        recordType="direct_work"
+        className="mt-6"
       />
     </PageShell>
   );

@@ -31,6 +31,8 @@ import {
 import { usePhysioOtPlans } from "@/hooks/use-physio-ot-plans";
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── colour maps ──────────────────────────────────────────────────────── */
 
@@ -231,7 +233,7 @@ export default function ChildPhysioOtPlanPage() {
     <PageShell
       title="Physio & OT Plans"
       subtitle="Per-child physiotherapy and occupational therapy plans — physical, sensory, motor and self-care needs (QS 8)"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Physio & OT Plans", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Physio & OT Plans" />
@@ -240,6 +242,7 @@ export default function ChildPhysioOtPlanPage() {
             columns={EXPORT_COLS}
             filename="child-physio-ot-plans"
           />
+          <AriaStudioQuickActionButton context={{ record_type: "health", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -486,6 +489,12 @@ export default function ChildPhysioOtPlanPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Physio & OT Plans — physiotherapy, occupational therapy, gross motor, fine motor, sensory integration, adaptive equipment, home programme, school liaison, EHCP, AHA, Annex A evidence"
+        recordType="health"
+        className="mt-6"
       />
     </PageShell>
   );
