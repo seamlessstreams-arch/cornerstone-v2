@@ -179,7 +179,8 @@ export default function OutdoorActivityRiskAssessmentsPage() {
       </div>
       <div className="mt-8 rounded-lg bg-muted/50 border p-4"><p className="text-xs text-muted-foreground"><strong>Regulatory Context:</strong> Activity RAs support Quality Standard 5 (protection), Quality Standard 25, and Reg 23. Linked to Transport Risk Assessments and Holiday Planning.</p></div>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Activities"
+        category="activity"
         days={28}
         defaultCollapsed
       />

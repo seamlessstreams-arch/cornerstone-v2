@@ -214,7 +214,8 @@ export default function MedicationTrainingPage() {
         </DialogContent>
       </Dialog>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Medication"
+        category="medication"
         days={28}
         defaultCollapsed
       />

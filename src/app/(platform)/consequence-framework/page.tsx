@@ -288,7 +288,8 @@ export default function ConsequenceFrameworkPage() {
         </p>
       </div>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Behaviour"
+        category="behaviour"
         days={28}
         defaultCollapsed
       />

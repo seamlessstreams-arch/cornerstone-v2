@@ -460,7 +460,8 @@ export default function PlacementPlanPage() {
         </DialogContent>
       </Dialog>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Care Planning"
+        category={["general", "behaviour", "health"]}
         days={28}
         defaultCollapsed
       />

@@ -400,8 +400,9 @@ export default function PostIncidentDebriefWithChildPage() {
         </div>
       </div>
       <CareEventsPanel
-        title="Related Care Events"
-        days={28}
+        title="Care Events — Behaviour & Safeguarding"
+        category={["behaviour", "safeguarding", "physical_intervention"]}
+        days={90}
         defaultCollapsed
       />
       <AriaPanel

@@ -845,7 +845,8 @@ ${complaint.lessons_learned ? `Learning: ${complaint.lessons_learned}` : ""}`;
         onSave={handleCreate}
       />
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Complaints"
+        category="complaint"
         days={90}
         defaultCollapsed
       />

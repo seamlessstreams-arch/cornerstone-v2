@@ -391,7 +391,8 @@ export default function PlacementBudgetTrackerPage() {
       </div>
       )}
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Finance"
+        category="finance"
         days={28}
         defaultCollapsed
       />

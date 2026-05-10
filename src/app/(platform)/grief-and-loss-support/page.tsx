@@ -339,7 +339,8 @@ export default function GriefAndLossSupportPage() {
         young person, and shared only with those who need to know in order to provide attuned care.
       </div>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Wellbeing"
+        category="wellbeing"
         days={28}
         defaultCollapsed
       />

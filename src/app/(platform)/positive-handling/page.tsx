@@ -296,7 +296,8 @@ export default function PositiveHandlingPage() {
         </div>
       </div>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Physical Interventions"
+        category={["physical_intervention", "restraint"]}
         days={28}
         defaultCollapsed
       />

@@ -504,7 +504,8 @@ export default function AssessmentOfNeedPage() {
       </div>
       )}
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Care Planning"
+        category="general"
         days={28}
         defaultCollapsed
       />

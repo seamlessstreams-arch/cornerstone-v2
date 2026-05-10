@@ -201,7 +201,8 @@ export default function MedicationErrorInvestigationPage() {
       </div>
       <div className="mt-8 rounded-lg bg-muted/50 border p-4"><p className="text-xs text-muted-foreground"><strong>Regulatory Context:</strong> Medication errors investigated per CQC standards, NICE NG5, and Reg 40 (notification where required). Just-culture lens. Linked to Medication Near-Miss Log, MAR Sheet, and Lessons Learned Register.</p></div>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Medication"
+        category="medication"
         days={28}
         defaultCollapsed
       />

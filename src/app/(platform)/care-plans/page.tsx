@@ -991,7 +991,8 @@ Concerns: ${plan.concerns_summary ?? "not recorded"}`;
         />
       )}
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Care Planning"
+        category={["general", "behaviour", "health"]}
         days={28}
         defaultCollapsed
       />

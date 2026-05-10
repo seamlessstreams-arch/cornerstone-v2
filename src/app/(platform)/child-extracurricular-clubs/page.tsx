@@ -430,7 +430,8 @@ export default function ChildExtracurricularClubsPage() {
         </p>
       </div>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Education & Activities"
+        category={["education", "activity"]}
         days={28}
         defaultCollapsed
       />

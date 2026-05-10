@@ -630,7 +630,8 @@ export default function RiskRegisterPage() {
         </DialogContent>
       </Dialog>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Behaviour & Risk"
+        category={["behaviour", "safeguarding"]}
         days={28}
         defaultCollapsed
       />

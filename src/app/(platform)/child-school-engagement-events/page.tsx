@@ -378,7 +378,8 @@ export default function ChildSchoolEngagementEventsPage() {
         <strong>Regulatory framework.</strong> Attendance at school events sits within the Statutory Guidance on Promoting the Education of Looked-After and Previously Looked-After Children (DfE 2018), the Children&apos;s Homes (England) Regulations 2015 — Quality Standard 5 (education) and Quality Standard 7 (positive relationships) — and the corporate parenting principles set out in the Children Act 2004 (as amended by the Children and Social Work Act 2017). UNCRC Article 12 (the right to be heard) and Article 28 (the right to education) underpin our practice. Photos are kept only with the child&apos;s informed consent and stored according to the home&apos;s privacy and life-story policy. The home turning up — in numbers, alongside birth family, social worker, mentors and friends&apos; families — is the visible evidence of corporate parenting in action.
       </div>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Education"
+        category="education"
         days={28}
         defaultCollapsed
       />

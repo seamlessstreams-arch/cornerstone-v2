@@ -720,7 +720,8 @@ export default function ChildSkinConditionsPage() {
         </p>
       </div>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Health"
+        category="health"
         days={28}
         defaultCollapsed
       />

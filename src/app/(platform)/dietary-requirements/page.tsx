@@ -360,7 +360,8 @@ export default function DietaryRequirementsPage() {
         </p>
       </div>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Food & Nutrition"
+        category="food"
         days={28}
         defaultCollapsed
       />

@@ -337,8 +337,9 @@ export default function ComplaintResolutionMeetingsPage() {
         </p>
       </div>
       <CareEventsPanel
-        title="Related Care Events"
-        days={28}
+        title="Care Events — Complaints"
+        category="complaint"
+        days={90}
         defaultCollapsed
       />
     </PageShell>

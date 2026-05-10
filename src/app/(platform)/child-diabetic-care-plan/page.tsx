@@ -427,7 +427,8 @@ export default function ChildDiabeticCarePlanPage() {
         </div>
       </div>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Health & Medication"
+        category={["health", "medication"]}
         days={28}
         defaultCollapsed
       />

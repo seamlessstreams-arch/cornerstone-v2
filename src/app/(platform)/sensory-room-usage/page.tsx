@@ -263,7 +263,8 @@ export default function SensoryRoomUsagePage() {
         </p>
       </div>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Health & Wellbeing"
+        category={["health", "wellbeing"]}
         days={28}
         defaultCollapsed
       />

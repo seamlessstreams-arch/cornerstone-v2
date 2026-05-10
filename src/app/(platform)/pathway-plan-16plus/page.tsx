@@ -505,7 +505,8 @@ export default function PathwayPlan16PlusPage() {
         </div>
       </div>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Care Planning"
+        category={["general", "education", "finance"]}
         days={28}
         defaultCollapsed
       />

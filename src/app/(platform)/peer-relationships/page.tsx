@@ -423,7 +423,8 @@ export default function PeerRelationshipsPage() {
         </DialogContent>
       </Dialog>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Behaviour & Wellbeing"
+        category={["behaviour", "wellbeing"]}
         days={28}
         defaultCollapsed
       />

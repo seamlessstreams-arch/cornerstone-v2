@@ -560,7 +560,8 @@ export default function ChildDyslexiaSpLDPlanPage() {
         </p>
       </div>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Health & Education"
+        category={["health", "education"]}
         days={28}
         defaultCollapsed
       />

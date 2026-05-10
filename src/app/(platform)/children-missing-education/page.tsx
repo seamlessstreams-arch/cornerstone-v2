@@ -397,8 +397,9 @@ export default function ChildrenMissingEducationPage() {
         </DialogContent>
       </Dialog>
       <CareEventsPanel
-        title="Related Care Events"
-        days={28}
+        title="Care Events — Education"
+        category="education"
+        days={90}
         defaultCollapsed
       />
       <AriaPanel

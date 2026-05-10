@@ -195,7 +195,8 @@ export default function FoodHygienePage() {
         </DialogContent>
       </Dialog>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Food"
+        category="food"
         days={28}
         defaultCollapsed
       />

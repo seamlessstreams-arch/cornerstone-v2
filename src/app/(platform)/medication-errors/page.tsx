@@ -647,7 +647,8 @@ export default function MedicationErrorsPage() {
         onSubmit={handleCreate}
       />
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Medication"
+        category="medication"
         days={28}
         defaultCollapsed
       />

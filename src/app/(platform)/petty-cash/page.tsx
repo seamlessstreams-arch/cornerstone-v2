@@ -300,7 +300,8 @@ export default function PettyCashPage() {
         </DialogContent>
       </Dialog>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Finance"
+        category="finance"
         days={28}
         defaultCollapsed
       />

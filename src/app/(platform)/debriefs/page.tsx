@@ -255,7 +255,8 @@ export default function DebriefsPage() {
         </DialogContent>
       </Dialog>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Behaviour"
+        category={["behaviour", "physical_intervention", "restraint"]}
         days={28}
         defaultCollapsed
       />

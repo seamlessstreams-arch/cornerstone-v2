@@ -336,7 +336,8 @@ export default function KitchenHygieneMonitoringPage() {
         </p>
       </div>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Food"
+        category="food"
         days={28}
         defaultCollapsed
       />

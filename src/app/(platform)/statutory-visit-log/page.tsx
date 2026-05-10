@@ -544,7 +544,8 @@ export default function StatutoryVisitLogPage() {
 
       </div>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Professional Contact"
+        category="professional_contact"
         days={28}
         defaultCollapsed
       />

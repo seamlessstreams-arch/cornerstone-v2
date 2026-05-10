@@ -334,7 +334,8 @@ export default function TherapeuticInputPage() {
         </DialogContent>
       </Dialog>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Health & Wellbeing"
+        category={["health", "wellbeing"]}
         days={28}
         defaultCollapsed
       />

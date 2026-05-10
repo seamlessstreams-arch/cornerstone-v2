@@ -404,7 +404,8 @@ export default function IndependencePathwayPage() {
         </div>
       </div>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Education & Finance"
+        category={["education", "finance"]}
         days={28}
         defaultCollapsed
       />

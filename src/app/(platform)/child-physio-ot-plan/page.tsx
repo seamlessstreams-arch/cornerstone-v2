@@ -486,7 +486,8 @@ export default function ChildPhysioOtPlanPage() {
         <strong>Quality Standard 8 — Children&apos;s Health and Wellbeing:</strong> Children must receive specialist therapy input where assessed need exists, with clear individualised plans, equipment provision, environmental adaptations and shared school-home implementation. Plans here align with NHS Children&apos;s Therapy Services pathways, Royal College of Occupational Therapists guidance, Chartered Society of Physiotherapy paediatric standards, the SEND Code of Practice, and UNCRC Article 23 (the right of disabled children to a full and decent life with active participation in the community). The child&apos;s voice — including their right to refuse a programme that isn&apos;t working — is central.
       </div>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Health"
+        category="health"
         days={28}
         defaultCollapsed
       />

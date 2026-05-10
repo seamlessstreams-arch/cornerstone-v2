@@ -365,7 +365,8 @@ export default function FamilyTreeGenogramPage() {
         </p>
       </div>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Family Contact"
+        category="family_contact"
         days={28}
         defaultCollapsed
       />

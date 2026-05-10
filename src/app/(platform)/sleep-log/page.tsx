@@ -364,7 +364,8 @@ export default function SleepLogPage() {
         </DialogContent>
       </Dialog>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Sleep"
+        category="sleep"
         days={28}
         defaultCollapsed
       />

@@ -377,8 +377,9 @@ export default function ChildPoliceContactRecordsPage() {
         </div>
       </div>
       <CareEventsPanel
-        title="Related Care Events"
-        days={28}
+        title="Care Events — Safeguarding"
+        category="safeguarding"
+        days={90}
         defaultCollapsed
       />
       <AriaPanel

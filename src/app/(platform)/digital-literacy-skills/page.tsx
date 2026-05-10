@@ -380,7 +380,8 @@ export default function DigitalLiteracySkillsPage() {
         </div>
       </div>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Education"
+        category="education"
         days={28}
         defaultCollapsed
       />

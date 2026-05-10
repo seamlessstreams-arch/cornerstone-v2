@@ -360,7 +360,8 @@ export default function EatingSupportPlanPage() {
         </p>
       </div>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Health & Food"
+        category={["health", "food"]}
         days={28}
         defaultCollapsed
       />

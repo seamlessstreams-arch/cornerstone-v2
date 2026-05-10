@@ -236,8 +236,9 @@ export default function ContextualSafeguardingPage() {
         </DialogContent>
       </Dialog>
       <CareEventsPanel
-        title="Related Care Events"
-        days={28}
+        title="Care Events — Safeguarding"
+        category={["safeguarding", "missing_episode"]}
+        days={90}
         defaultCollapsed
       />
     </PageShell>

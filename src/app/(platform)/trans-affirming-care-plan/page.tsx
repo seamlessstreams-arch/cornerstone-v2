@@ -456,7 +456,8 @@ export default function TransAffirmingCarePlanPage() {
         </p>
       </div>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Wellbeing & Health"
+        category={["wellbeing", "health"]}
         days={28}
         defaultCollapsed
       />

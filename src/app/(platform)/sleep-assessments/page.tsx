@@ -434,7 +434,8 @@ export default function SleepAssessmentsPage() {
         </p>
       </div>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Health & Sleep"
+        category={["health", "sleep"]}
         days={28}
         defaultCollapsed
       />

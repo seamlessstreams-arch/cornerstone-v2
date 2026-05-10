@@ -525,7 +525,8 @@ export default function OccupationalTherapyRecordsPage() {
         <strong>Quality Standard 7 — The Health and Wellbeing Standard:</strong> Children must be supported to access all health services they need, including specialist therapies. OT recommendations must be implemented consistently across the staff team, equipment provided as advised, and progress reviewed at agreed intervals. Sensory needs identified by an OT are clinical recommendations, not optional preferences — staff must be trained, supported and held accountable for implementation.
       </div>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Health"
+        category="health"
         days={28}
         defaultCollapsed
       />

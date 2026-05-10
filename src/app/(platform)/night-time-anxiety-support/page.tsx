@@ -518,7 +518,8 @@ export default function NightTimeAnxietySupportPage() {
         </p>
       </div>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Wellbeing & Sleep"
+        category={["wellbeing", "sleep"]}
         days={28}
         defaultCollapsed
       />

@@ -467,7 +467,8 @@ export default function PocketMoneyPage() {
 
       <NewTransactionDialog open={showNew} onClose={() => setShowNew(false)} onSubmit={(tx) => createTx.mutate(tx as Partial<PocketMoneyTransaction>)} />
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Finance"
+        category="finance"
         days={28}
         defaultCollapsed
       />

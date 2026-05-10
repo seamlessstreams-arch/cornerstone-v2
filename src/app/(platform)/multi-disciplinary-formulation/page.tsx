@@ -296,7 +296,8 @@ export default function MultiDisciplinaryFormulationPage() {
         Multi-disciplinary formulation aligns with the British Psychological Society&apos;s Good Practice Guidelines on the Use of Psychological Formulation (BPS, 2011) and underpins NICE-recommended care planning for children with mental health and developmental needs.
       </div>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Health & Wellbeing"
+        category={["health", "wellbeing"]}
         days={28}
         defaultCollapsed
       />

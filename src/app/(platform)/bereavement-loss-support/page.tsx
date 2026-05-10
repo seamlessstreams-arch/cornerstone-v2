@@ -407,7 +407,8 @@ export default function BereavementLossSupportPage() {
         <strong>Regulatory framework.</strong> Bereavement and loss support is held within the Children&apos;s Homes (England) Regulations 2015 — particularly Quality Standard 6 (enjoyment &amp; achievement) and Quality Standard 7 (positive relationships). Practice draws on Working Together to Safeguard Children 2023, UNCRC Article 12 (the right to be heard) and Article 16 (privacy and dignity), and NICE guidance on bereavement (NG196). All grief work is child-led, paced by the young person, and recognises the breadth of loss experienced by children in care — including disenfranchised grief that the wider world may not see.
       </div>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Wellbeing"
+        category="wellbeing"
         days={28}
         defaultCollapsed
       />

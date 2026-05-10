@@ -388,7 +388,8 @@ export default function LACReviewsPage() {
         </DialogContent>
       </Dialog>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Professional Contact"
+        category="professional_contact"
         days={28}
         defaultCollapsed
       />

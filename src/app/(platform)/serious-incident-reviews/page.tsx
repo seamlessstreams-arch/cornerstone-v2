@@ -252,8 +252,9 @@ export default function SeriousIncidentReviewsPage() {
         </DialogContent>
       </Dialog>
       <CareEventsPanel
-        title="Related Care Events"
-        days={28}
+        title="Care Events — Safeguarding & Behaviour"
+        category={["safeguarding", "behaviour", "physical_intervention"]}
+        days={90}
         defaultCollapsed
       />
       <AriaPanel

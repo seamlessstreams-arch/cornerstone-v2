@@ -345,8 +345,9 @@ export default function AccidentBookPage() {
         </DialogContent>
       </Dialog>
       <CareEventsPanel
-        title="Related Care Events"
-        days={90}
+        title="Care Events — Health"
+        category="health"
+        days={28}
         defaultCollapsed
       />      <AriaPanel
         mode="assist"

@@ -354,7 +354,8 @@ export default function IndependenceSkillsPage() {
         </DialogContent>
       </Dialog>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Activities"
+        category="activity"
         days={28}
         defaultCollapsed
       />

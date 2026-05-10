@@ -516,7 +516,8 @@ export default function IndependentTravelTrainingPage() {
         </p>
       </div>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Activities"
+        category="activity"
         days={28}
         defaultCollapsed
       />

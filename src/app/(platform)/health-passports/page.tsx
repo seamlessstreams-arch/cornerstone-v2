@@ -255,7 +255,8 @@ export default function HealthPassportsPage() {
         </div>
       </div>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Health"
+        category="health"
         days={28}
         defaultCollapsed
       />

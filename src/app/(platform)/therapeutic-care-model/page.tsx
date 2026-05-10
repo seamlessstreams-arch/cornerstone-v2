@@ -591,7 +591,8 @@ export default function TherapeuticCareModelPage() {
         <strong>Regulatory Context:</strong> The Children&apos;s Homes (England) Regulations 2015, Quality Standard 6 (Positive Relationships) requires that staff understand and apply the home&apos;s therapeutic model consistently. The SCCIF (Social Care Common Inspection Framework) evaluates whether the model is clearly articulated, understood by all staff, and evidenced in practice and outcomes. Ofsted expects that the therapeutic model is not merely a written document but a living framework — observable in daily interactions, reflected in care planning, and demonstrably improving children&apos;s outcomes. This page evidences the home&apos;s commitment to continuous development in therapeutic practice.
       </div>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Health & Wellbeing"
+        category={["health", "wellbeing"]}
         days={28}
         defaultCollapsed
       />

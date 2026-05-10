@@ -374,7 +374,8 @@ export default function LGBTQInclusionRecordPage() {
         </p>
       </div>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Wellbeing & Safeguarding"
+        category={["wellbeing", "safeguarding"]}
         days={28}
         defaultCollapsed
       />

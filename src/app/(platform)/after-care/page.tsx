@@ -375,7 +375,8 @@ export default function AfterCarePage() {
         </DialogContent>
       </Dialog>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Care Planning"
+        category={["general", "education", "finance"]}
         days={28}
         defaultCollapsed
       />

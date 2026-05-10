@@ -390,7 +390,8 @@ export default function ChildSelfSoothingToolkitPage() {
         decisions affecting them. Toolkits must be reviewed regularly and updated as the child&apos;s needs evolve.
       </div>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Wellbeing"
+        category="wellbeing"
         days={28}
         defaultCollapsed
       />

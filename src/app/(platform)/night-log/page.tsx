@@ -288,7 +288,8 @@ export default function NightLogPage() {
       </div>
       )}
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Sleep"
+        category="sleep"
         days={28}
         defaultCollapsed
       />

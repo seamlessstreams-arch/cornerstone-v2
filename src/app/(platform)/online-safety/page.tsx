@@ -392,8 +392,9 @@ export default function OnlineSafetyPage() {
         </DialogContent>
       </Dialog>
       <CareEventsPanel
-        title="Related Care Events"
-        days={28}
+        title="Care Events — Safeguarding"
+        category="safeguarding"
+        days={90}
         defaultCollapsed
       />
       <AriaPanel

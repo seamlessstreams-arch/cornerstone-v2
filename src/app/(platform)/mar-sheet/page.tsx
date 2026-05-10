@@ -299,7 +299,8 @@ export default function MarSheetPage() {
         </p>
       </div>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Medication"
+        category="medication"
         days={28}
         defaultCollapsed
       />
