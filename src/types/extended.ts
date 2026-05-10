@@ -21889,3 +21889,251 @@ export interface WelcomeTour {
   notes: string;
   created_at: string;
 }
+
+// ── Trans-Affirming Care Plan ─────────────────────────────────────────────────
+
+export type TransSocialTransitionStage =
+  | "Pre-questioning"
+  | "Questioning / exploring"
+  | "Privately identified"
+  | "Out to staff only"
+  | "Selectively out"
+  | "Fully socially transitioned"
+  | "Detransitioned / re-exploring";
+
+export type TransParentalAwareness =
+  | "Out and supported"
+  | "Out — strained"
+  | "Selectively"
+  | "Not yet — child's choice"
+  | "Not yet — risk-assessed"
+  | "Hostile family — no contact agreed";
+
+export type TransSchoolAwareness = "Fully" | "Partially" | "Not aware — child's choice";
+
+export interface TransAffirmingPlan {
+  id: string;
+  child_id: string;
+  home_id: string;
+  planDate: string;
+  identitySharedWithStaff: string;
+  pronouns: string;
+  pronounsUsedConsistently: boolean;
+  preferredName: string;
+  legalNameMatches: boolean;
+  preferredNameWhereUsed: string[];
+  whereDeadnameStillAppears: string[];
+  socialTransitionStage: TransSocialTransitionStage;
+  childPaceConfirmed: boolean;
+  affirmingActions: string[];
+  clothingAccessSupported: string[];
+  bindingPolicy?: string;
+  packerPolicy?: string;
+  voiceCoachingActive?: string;
+  hairCareAffirming: string[];
+  pronounEducationForVisitors: boolean;
+  externalSupport: { agency: string; clinician?: string; frequency: string }[];
+  giccConsidered: boolean;
+  giccStatus?: string;
+  childCanRequestPause: boolean;
+  parentalAwareness: TransParentalAwareness;
+  schoolAware: TransSchoolAwareness;
+  schoolUsingPreferredNamePronouns: boolean;
+  bathroomChangingArrangements: string;
+  safetyRiskAssessment: string[];
+  recordsLanguageUpdated: boolean;
+  childVoice: string;
+  staffObservation: string;
+  flagsForReview: string[];
+  reviewDate: string;
+  keyWorker: string;
+  created_at: string;
+}
+
+// ── Vehicle Pre-Use Check ─────────────────────────────────────────────────────
+
+export type VehicleCheckFuelLevel = "Full" | "3/4" | "1/2" | "1/4" | "Refuel needed";
+export type VehicleCheckOutcome =
+  | "Cleared for use"
+  | "Cleared with minor notes"
+  | "Withdrawn from use - defect";
+
+export interface VehiclePreUseCheckItem {
+  item: string;
+  pass: boolean;
+  notes: string;
+}
+
+export interface VehiclePreUseCheck {
+  id: string;
+  home_id: string;
+  vehicle: string;
+  driver: string;
+  dateTime: string;
+  journeyPurpose: string;
+  expectedReturn: string;
+  checks: VehiclePreUseCheckItem[];
+  fuelLevel: VehicleCheckFuelLevel;
+  mileageStart: number;
+  mileageEnd?: number;
+  defectsFound: string[];
+  defectsActionedBy: string;
+  tyresChecked: boolean;
+  tyresPressureNotedNotes: string;
+  fluidsChecked: boolean;
+  warningLightsClear: boolean;
+  windscreenAndWipersOk: boolean;
+  seatbeltsOk: boolean;
+  childCarSeatsCorrect: boolean;
+  firstAidKitPresent: boolean;
+  grabBagPresent: boolean;
+  insuranceConfirmed: boolean;
+  motValidUntil: string;
+  breakdownCoverConfirmed: boolean;
+  passengersExpected: number;
+  incidentsDuringJourney: string;
+  checkOutcome: VehicleCheckOutcome;
+  nextAction: string;
+  created_at: string;
+}
+
+// ── Voter Registration / Civic Record ────────────────────────────────────────
+
+export type VoterRegistrationStatus =
+  | "Too young"
+  | "Eligible — not registered"
+  | "Registered (attainer)"
+  | "Registered — full"
+  | "Postal vote arranged"
+  | "Voter ID confirmed";
+
+export type VoterRegistrationMethod =
+  | "gov.uk online"
+  | "Paper form"
+  | "Council assisted"
+  | "Pathway plan support";
+
+export interface CivicElection {
+  name: string;
+  date: string;
+}
+
+export interface CivicElectionParticipated {
+  name: string;
+  date: string;
+  voted: boolean;
+  firstTime?: boolean;
+}
+
+export interface CivicRecord {
+  id: string;
+  child_id: string;
+  home_id: string;
+  recordedDate: string;
+  ageAtRecord: number;
+  voterRegistrationStatus: VoterRegistrationStatus;
+  registrationDate?: string;
+  registrationMethod?: VoterRegistrationMethod;
+  voterIdHeld?: string;
+  electionsEligibleNext: CivicElection[];
+  electionsParticipated: CivicElectionParticipated[];
+  civicEducationCovered: string[];
+  causesOfInterest: string[];
+  communityActivities: string[];
+  hasContactedRepresentative: boolean;
+  representativesKnown: string[];
+  childVoice: string;
+  staffObservation: string;
+  nextStep: string;
+  reviewDate: string;
+  keyWorker: string;
+  created_at: string;
+}
+
+// ── Warm Welcome Packs ────────────────────────────────────────────────────────
+
+export type WelcomePackStatus = "delivered" | "preparing" | "template";
+export type WelcomeItemCategory =
+  | "bedroom"
+  | "toiletries"
+  | "comfort"
+  | "information"
+  | "personal"
+  | "food";
+
+export interface WarmWelcomePackItem {
+  item: string;
+  category: WelcomeItemCategory;
+  provided: boolean;
+  personalised: boolean;
+  notes: string;
+}
+
+export interface WarmWelcomePack {
+  id: string;
+  child_id: string;
+  home_id: string;
+  preparedBy: string;
+  preparedDate: string;
+  admissionDate: string;
+  status: WelcomePackStatus;
+  items: WarmWelcomePackItem[];
+  personalTouches: string[];
+  childFeedback: string | null;
+  firstNightPlan: string;
+  keyWorkerIntro: string;
+  notes: string;
+  created_at: string;
+}
+
+// ── Therapeutic Care Model ────────────────────────────────────────────────────
+
+export type TherapeuticCompetencyLevel = "foundation" | "practitioner" | "advanced";
+
+export interface TherapeuticTrainingCourse {
+  course: string;
+  date: string;
+}
+
+export interface TherapeuticStaffTraining {
+  id: string;
+  home_id: string;
+  staffId: string;
+  competencyLevel: TherapeuticCompetencyLevel;
+  trainingCompleted: TherapeuticTrainingCourse[];
+  lastReflectivePractice: string;
+  areasOfStrength: string[];
+  developmentNeeds: string[];
+  notes: string;
+  created_at: string;
+}
+
+export interface TherapeuticChildImpact {
+  id: string;
+  child_id: string;
+  home_id: string;
+  keyOutcomes: string[];
+  evidenceOfProgress: string;
+  modelApplication: string[];
+  reviewDate: string;
+  created_at: string;
+}
+
+// ── Home Emergency Contacts ───────────────────────────────────────────────────
+
+export type HomeContactCategory =
+  | "emergency_999"
+  | "on_call"
+  | "local_service"
+  | "regulatory";
+
+export interface HomeEmergencyContact {
+  id: string;
+  home_id: string;
+  label: string;
+  number: string;
+  description: string;
+  category: HomeContactCategory;
+  available: string;
+  created_at: string;
+}

@@ -16,6 +16,8 @@ import {
 import { useIncidents, useAddOversight } from "@/hooks/use-incidents";
 import { useYoungPeople } from "@/hooks/use-young-people";
 import { useCreateTrainingNeed } from "@/hooks/use-ri-learning";
+import { useMissingEpisodes } from "@/hooks/use-missing-episodes";
+import { useChronologyEntries } from "@/hooks/use-chronology-entries";
 import { api } from "@/hooks/use-api";
 import { getStaffName, getYPName, getYPById } from "@/lib/seed-data";
 import { INCIDENT_TYPE_LABELS } from "@/lib/constants";
@@ -32,79 +34,6 @@ import { CareEventsPanel } from "@/components/care-events/care-events-panel";
 
 // ── Static seed data (display only) ──────────────────────────────────────────
 
-const MFC_EPISODES: MissingEpisode[] = [
-  {
-    id: "mfc_001", reference: "MFC-2026-001", child_id: "yp_alex",
-    date_missing: "2026-01-15", time_missing: "21:30",
-    date_returned: "2026-01-15", time_returned: "23:25",
-    duration_hours: 1.9, risk_level: "medium",
-    location_last_seen: "Outside Oak House — said going to shop",
-    return_location: "Local park, returned voluntarily",
-    reported_to_police: false, police_reference: null,
-    reported_to_la: true, la_notified_at: "2026-01-16T09:00:00Z",
-    return_interview_completed: true, return_interview_by: "staff_ryan",
-    return_interview_date: "2026-01-16",
-    return_interview_notes: "Alex said he lost track of time. No safeguarding concerns disclosed. Agreed to check in next time.",
-    contextual_safeguarding_risk: false,
-    linked_incident_id: null,
-    pattern_notes: "First episode. Informal community time.",
-    status: "closed", home_id: "home_oak",
-    created_at: "2026-01-15T23:30:00Z", created_by: "staff_edward",
-  },
-  {
-    id: "mfc_002", reference: "MFC-2026-002", child_id: "yp_alex",
-    date_missing: "2026-02-28", time_missing: "19:00",
-    date_returned: "2026-02-28", time_returned: "23:10",
-    duration_hours: 4.2, risk_level: "high",
-    location_last_seen: "Leaving for 'mate's house' — no address given",
-    return_location: "Town centre, collected by staff",
-    reported_to_police: true, police_reference: "DERBYSHIRE/2026/001122",
-    reported_to_la: true, la_notified_at: "2026-02-28T20:00:00Z",
-    return_interview_completed: true, return_interview_by: "staff_darren",
-    return_interview_date: "2026-03-01",
-    return_interview_notes: "Alex disclosed spending time with a group of older males he met online. Names not provided. CS risk assessment initiated.",
-    contextual_safeguarding_risk: true,
-    linked_incident_id: null,
-    pattern_notes: "Second episode. Increasing duration. CS risk flagged — older peer network.",
-    status: "closed", home_id: "home_oak",
-    created_at: "2026-02-28T19:15:00Z", created_by: "staff_lackson",
-  },
-  {
-    id: "mfc_003", reference: "MFC-2026-003", child_id: "yp_alex",
-    date_missing: "2026-04-01", time_missing: "20:45",
-    date_returned: "2026-04-01", time_returned: "22:20",
-    duration_hours: 1.6, risk_level: "high",
-    location_last_seen: "Community — said going to shop",
-    return_location: "Local park, with unknown males",
-    reported_to_police: true, police_reference: "DERBYSHIRE/2026/002876",
-    reported_to_la: true, la_notified_at: "2026-04-01T21:00:00Z",
-    return_interview_completed: true, return_interview_by: "staff_edward",
-    return_interview_date: "2026-04-02",
-    return_interview_notes: "Alex was evasive. Wouldn't name contacts. Mobile phone observed — not usual device. Risk assessment updated. Strategy discussion arranged.",
-    contextual_safeguarding_risk: true,
-    linked_incident_id: "inc_001",
-    pattern_notes: "Third episode this year. Pattern emerging — always late evening, always community. Same unknown peer group suspected. Escalated to MASH.",
-    status: "closed", home_id: "home_oak",
-    created_at: "2026-04-01T20:55:00Z", created_by: "staff_edward",
-  },
-];
-
-const CHRONOLOGY_ENTRIES: ChronologyEntry[] = [
-  { id: "chr_001", child_id: "yp_alex", date: "2025-09-01", time: "14:00", category: "placement", title: "Placement commenced at Oak House", description: "Alex admitted to Oak House under S20. Initial placement meeting held with LA, IRO, and social worker. Risk assessment reviewed.", significance: "critical", recorded_by: "staff_darren", linked_incident_id: null, home_id: "home_oak", created_at: "2025-09-01T14:00:00Z" },
-  { id: "chr_002", child_id: "yp_alex", date: "2025-10-01", time: null, category: "education", title: "School placement arranged — Derby Alternative Provision", description: "Education arranged with Derby AP following exclusion from previous school. Alex settled well in first week.", significance: "significant", recorded_by: "staff_ryan", linked_incident_id: null, home_id: "home_oak", created_at: "2025-10-01T10:00:00Z" },
-  { id: "chr_003", child_id: "yp_alex", date: "2026-01-15", time: "21:30", category: "missing", title: "First missing from care episode (MFC-2026-001)", description: "Alex absent 1h 55m. Returned voluntarily. Low-risk return interview completed.", significance: "significant", recorded_by: "staff_edward", linked_incident_id: null, home_id: "home_oak", created_at: "2026-01-15T23:30:00Z" },
-  { id: "chr_004", child_id: "yp_alex", date: "2026-02-05", time: null, category: "review", title: "LAC Review — Alex W", description: "Looked After Child review held at Derby City Council. Placement stable. Education engagement improved. No change to Care Order.", significance: "significant", recorded_by: "staff_darren", linked_incident_id: null, home_id: "home_oak", created_at: "2026-02-05T11:00:00Z" },
-  { id: "chr_005", child_id: "yp_alex", date: "2026-02-28", time: "19:00", category: "missing", title: "Second missing from care episode (MFC-2026-002) — CS risk flagged", description: "Alex absent 4h 10m. Police informed. CS risk identified — older peer network. Strategy discussion booked.", significance: "critical", recorded_by: "staff_lackson", linked_incident_id: null, home_id: "home_oak", created_at: "2026-02-28T19:15:00Z" },
-  { id: "chr_006", child_id: "yp_alex", date: "2026-04-01", time: "20:45", category: "missing", title: "Third missing from care episode (MFC-2026-003) — pattern escalated", description: "Alex absent 1h 35m. Police informed. Contextual safeguarding escalation — MASH referral made. Unknown peer group suspected.", significance: "critical", recorded_by: "staff_edward", linked_incident_id: "inc_001", home_id: "home_oak", created_at: "2026-04-01T20:55:00Z" },
-  { id: "chr_007", child_id: "yp_alex", date: "2026-04-14", time: "19:10", category: "safeguarding", title: "Safeguarding disclosure — criminal exploitation risk", description: "Alex disclosed older peer asking him to carry items. Immediate safeguarding response. Social worker, police, and RM notified. Strategy discussion arranged.", significance: "critical", recorded_by: "staff_edward", linked_incident_id: "inc_004", home_id: "home_oak", created_at: "2026-04-14T19:15:00Z" },
-  { id: "chr_010", child_id: "yp_jordan", date: "2025-11-15", time: null, category: "placement", title: "Placement commenced at Oak House", description: "Jordan admitted under Full Care Order (S31). Placement plan agreed with Nottinghamshire CC. Halal food and dietary requirements confirmed.", significance: "critical", recorded_by: "staff_darren", linked_incident_id: null, home_id: "home_oak", created_at: "2025-11-15T12:00:00Z" },
-  { id: "chr_011", child_id: "yp_jordan", date: "2025-12-01", time: null, category: "education", title: "School placement — Highfields Academy", description: "Jordan started at Highfields Academy. Initial settling in period. Positive engagement with PE.", significance: "significant", recorded_by: "staff_ryan", linked_incident_id: null, home_id: "home_oak", created_at: "2025-12-01T09:00:00Z" },
-  { id: "chr_012", child_id: "yp_jordan", date: "2026-04-14", time: "14:30", category: "behaviour", title: "Complaint raised — noise during study time (INC-2026-0042)", description: "Jordan raised formal complaint about noise levels. Complaint logged and investigation commenced.", significance: "significant", recorded_by: "staff_chervelle", linked_incident_id: "inc_003", home_id: "home_oak", created_at: "2026-04-14T14:35:00Z" },
-  { id: "chr_020", child_id: "yp_casey", date: "2026-01-10", time: null, category: "placement", title: "Placement commenced at Oak House", description: "Casey admitted under Full Care Order. From previous placement that broke down. Settling-in plan agreed. CAMHS referral in place.", significance: "critical", recorded_by: "staff_darren", linked_incident_id: null, home_id: "home_oak", created_at: "2026-01-10T13:00:00Z" },
-  { id: "chr_021", child_id: "yp_casey", date: "2026-01-15", time: null, category: "health", title: "Melatonin prescribed — sleep support", description: "Dr Chen prescribed Melatonin 3mg for sleep difficulties. MAR commenced.", significance: "significant", recorded_by: "staff_darren", linked_incident_id: null, home_id: "home_oak", created_at: "2026-01-15T10:00:00Z" },
-  { id: "chr_022", child_id: "yp_casey", date: "2026-02-01", time: null, category: "health", title: "Fluoxetine prescribed — mood support", description: "Dr Chen prescribed Fluoxetine 10mg for low mood. Risk assessment updated. CAMHS oversight confirmed.", significance: "significant", recorded_by: "staff_darren", linked_incident_id: null, home_id: "home_oak", created_at: "2026-02-01T11:00:00Z" },
-  { id: "chr_023", child_id: "yp_casey", date: "2026-04-13", time: "08:15", category: "health", title: "Medication late administration — refusal episode (INC-2026-0040)", description: "Casey refused morning Fluoxetine. Incident logged. Late administration at 08:45 following second attempt.", significance: "significant", recorded_by: "staff_anna", linked_incident_id: "inc_002", home_id: "home_oak", created_at: "2026-04-13T08:20:00Z" },
-];
 
 // ── Design helpers ────────────────────────────────────────────────────────────
 
@@ -861,6 +790,8 @@ function MFCTab() {
   const [logPending, setLogPending] = useState(false);
   const mfcYpQuery = useYoungPeople();
   const mfcAllYP = mfcYpQuery.data?.data ?? [];
+  const { data: mfcResult } = useMissingEpisodes({ homeId: "home_oak" });
+  const MFC_EPISODES = mfcResult?.data ?? [];
 
   const alexEpisodes = MFC_EPISODES.filter((e) => e.child_id === "yp_alex");
   const csEpisodes = MFC_EPISODES.filter((e) => e.contextual_safeguarding_risk);
@@ -1077,6 +1008,8 @@ function ChronologyTab() {
   const [entryPending, setEntryPending] = useState(false);
   const chronYpQuery = useYoungPeople();
   const chronAllYP = chronYpQuery.data?.data ?? [];
+  const { data: chronResult } = useChronologyEntries(selectedChild);
+  const CHRONOLOGY_ENTRIES = chronResult?.data ?? [];
 
   const entries = useMemo(() => {
     let list = CHRONOLOGY_ENTRIES.filter((e) => e.child_id === selectedChild);
@@ -1549,6 +1482,8 @@ const SAFEGUARDING_EXPORT_COLS: ExportColumn<Incident>[] = [
 export default function SafeguardingPage() {
   const [activeTab, setActiveTab] = useState<TabId>("concerns");
   const query = useIncidents({ status: "open" });
+  const { data: mfcTopResult } = useMissingEpisodes({ homeId: "home_oak" });
+  const MFC_EPISODES = mfcTopResult?.data ?? [];
 
   const openSafeguarding = (query.data?.data ?? []).filter((i) =>
     ["safeguarding_concern", "exploitation_concern", "self_harm", "missing_from_care", "contextual_safeguarding", "allegation"].includes(i.type)

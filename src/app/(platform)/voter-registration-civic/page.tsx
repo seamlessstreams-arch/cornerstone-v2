@@ -5,6 +5,8 @@ import { PageShell } from "@/components/layout/page-shell";
 import { ExportButton, type ExportColumn } from "@/components/ui/export-button";
 import { PrintButton } from "@/components/ui/print-button";
 import { getYPName, getStaffName } from "@/lib/seed-data";
+import type { CivicRecord } from "@/types/extended";
+import { useCivicRecords } from "@/hooks/use-civic-records";
 import { cn } from "@/lib/utils";
 import {
   Vote,
@@ -28,162 +30,15 @@ import { CareEventsPanel } from "@/components/care-events/care-events-panel";
 import { AriaPanel } from "@/components/aria/aria-panel";
 import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
-interface CivicRecord {
-  id: string;
-  youngPerson: string;
-  recordedDate: string;
-  ageAtRecord: number;
-  voterRegistrationStatus:
-    | "Too young"
-    | "Eligible — not registered"
-    | "Registered (attainer)"
-    | "Registered — full"
-    | "Postal vote arranged"
-    | "Voter ID confirmed";
-  registrationDate?: string;
-  registrationMethod?: "gov.uk online" | "Paper form" | "Council assisted" | "Pathway plan support";
-  voterIdHeld?: string;
-  electionsEligibleNext: { name: string; date: string }[];
-  electionsParticipated: { name: string; date: string; voted: boolean; firstTime?: boolean }[];
-  civicEducationCovered: string[];
-  causesOfInterest: string[];
-  communityActivities: string[];
-  hasContactedRepresentative: boolean;
-  representativesKnown: string[];
-  childVoice: string;
-  staffObservation: string;
-  nextStep: string;
-  reviewDate: string;
-  keyWorker: string;
-}
-
 const d = (n: number) => {
   const dt = new Date();
   dt.setDate(dt.getDate() + n);
   return dt.toISOString().slice(0, 10);
 };
 
-const records: CivicRecord[] = [
-  {
-    id: "civ_001",
-    youngPerson: "yp_jordan",
-    recordedDate: d(-21),
-    ageAtRecord: 17,
-    voterRegistrationStatus: "Registered (attainer)",
-    registrationDate: d(-180),
-    registrationMethod: "gov.uk online",
-    voterIdHeld: "Provisional driving licence",
-    electionsEligibleNext: [
-      { name: "Local council elections", date: d(60) },
-      { name: "General Election (when called)", date: "TBC" },
-    ],
-    electionsParticipated: [],
-    civicEducationCovered: [
-      "How parliament works (school + 1:1 with Anna)",
-      "Local council vs central government",
-      "Voter ID requirements (post-2023 changes)",
-      "How to read manifestos critically",
-      "Visited polling station with Anna for council elections (observed)",
-    ],
-    causesOfInterest: [
-      "Children's social care reform",
-      "Football grassroots funding",
-      "Mosque safeguarding & community grants",
-      "Knife crime / youth services",
-    ],
-    communityActivities: [
-      "Football coaching assistant — community role",
-      "Mosque youth committee member (informal)",
-      "Wrote to MP about youth centre closure (with Anna's support)",
-    ],
-    hasContactedRepresentative: true,
-    representativesKnown: ["Local MP", "Local councillor (ward councillor for the home)"],
-    childVoice:
-      "I'm registered. I want to vote in the next council election — Anna's helping me work out who's standing. The MP wrote back about the youth centre. I felt heard. I want to be a councillor one day, maybe.",
-    staffObservation:
-      "Jordan is engaged civically — far above the average for his age. Mosque + football have given him a community lens. The MP correspondence was a real moment. Wants to do politics A-level next year.",
-    nextStep: "Attend local council meeting as observer, take Casey along too if Casey wants",
-    reviewDate: d(60),
-    keyWorker: "staff_anna",
-  },
-  {
-    id: "civ_002",
-    youngPerson: "yp_alex",
-    recordedDate: d(-14),
-    ageAtRecord: 16,
-    voterRegistrationStatus: "Registered (attainer)",
-    registrationDate: d(-30),
-    registrationMethod: "gov.uk online",
-    voterIdHeld: "Citizen Card (free, used for voting)",
-    electionsEligibleNext: [
-      { name: "Welsh Senedd / Scottish Parliament (if applicable, age 16+)", date: "TBC" },
-      { name: "Council elections (England — must be 18)", date: d(60) },
-    ],
-    electionsParticipated: [],
-    civicEducationCovered: [
-      "Voter registration at 16 (attainer)",
-      "Citizen Card application (free for care leavers)",
-      "Differences between devolved nations' voting ages",
-      "How to research candidates",
-      "LGBTQ+ rights legislative history (with Anna)",
-    ],
-    causesOfInterest: [
-      "Trans rights and self-ID",
-      "Children's social care",
-      "LGBTQ+ inclusion in schools",
-      "Mental health services for young people",
-    ],
-    communityActivities: [
-      "Proud Trust youth advocacy group",
-      "Wrote testimony for Children's Commissioner consultation on care experience (with consent and support)",
-    ],
-    hasContactedRepresentative: false,
-    representativesKnown: ["Local MP"],
-    childVoice:
-      "Voting matters. People like me get talked about a lot, not talked to. I want to be one of the people who actually votes. I'd vote on trans rights, on care leavers, on mental health.",
-    staffObservation:
-      "Alex's civic identity has emerged through advocacy work. Citizen Card application supported by Anna using leaving-care fund. Strong critical thinking about media. May benefit from a school visit to Parliament.",
-    nextStep: "Apply for Parliament Education Service tour (free)",
-    reviewDate: d(60),
-    keyWorker: "staff_anna",
-  },
-  {
-    id: "civ_003",
-    youngPerson: "yp_casey",
-    recordedDate: d(-30),
-    ageAtRecord: 12,
-    voterRegistrationStatus: "Too young",
-    electionsEligibleNext: [],
-    electionsParticipated: [],
-    civicEducationCovered: [
-      "Local councillor came to school assembly — Casey met them",
-      "What is a council, what does it do — visual lesson with Anna",
-      "Casey's voice in care planning (UNCRC Art 12)",
-      "Children's Parliament idea introduced",
-    ],
-    causesOfInterest: [
-      "Animal welfare (linked to interest in being a vet)",
-      "Disability access in playgrounds",
-      "Library opening hours (asked councillor about reduced hours)",
-    ],
-    communityActivities: [
-      "Wrote letter to local councillor about library hours (with Anna)",
-      "Children's home council representative (own home)",
-    ],
-    hasContactedRepresentative: true,
-    representativesKnown: ["Local ward councillor"],
-    childVoice:
-      "I'm too young to vote but I wrote a letter about the library being closed Saturdays and the councillor wrote back. They listened. I think when I'm 16 I'll vote.",
-    staffObservation:
-      "Casey's civic engagement is age-appropriate and meaningful. The councillor reply was a powerful experience — shows Casey her voice has weight. Will continue building civic identity through participation in home decisions and community.",
-    nextStep: "Attend the next library reopening if scheduled — see councillor advocacy work in action",
-    reviewDate: d(180),
-    keyWorker: "staff_anna",
-  },
-];
 
 const exportCols: ExportColumn<CivicRecord>[] = [
-  { header: "Young Person", accessor: (r: CivicRecord) => getYPName(r.youngPerson) },
+  { header: "Young Person", accessor: (r: CivicRecord) => getYPName(r.child_id) },
   { header: "Age", accessor: (r: CivicRecord) => `${r.ageAtRecord}` },
   { header: "Recorded", accessor: (r: CivicRecord) => r.recordedDate },
   { header: "Voter Status", accessor: (r: CivicRecord) => r.voterRegistrationStatus },
@@ -215,17 +70,20 @@ export default function VoterRegistrationCivicPage() {
   const [sortBy, setSortBy] = useState<"date" | "name" | "age" | "status">("date");
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
+  const { data: result, isLoading } = useCivicRecords(undefined, "home_oak");
+  const records = result?.data ?? [];
+
   const filtered = useMemo(() => {
     let r = records.filter((rec) => {
       const matchesSearch =
         !search ||
-        getYPName(rec.youngPerson).toLowerCase().includes(search.toLowerCase()) ||
+        getYPName(rec.child_id).toLowerCase().includes(search.toLowerCase()) ||
         rec.causesOfInterest.some((c) => c.toLowerCase().includes(search.toLowerCase()));
       const matchesStatus = statusFilter === "all" || rec.voterRegistrationStatus === statusFilter;
       return matchesSearch && matchesStatus;
     });
     r = [...r].sort((a, b) => {
-      if (sortBy === "name") return getYPName(a.youngPerson).localeCompare(getYPName(b.youngPerson));
+      if (sortBy === "name") return getYPName(a.child_id).localeCompare(getYPName(b.child_id));
       if (sortBy === "age") return b.ageAtRecord - a.ageAtRecord;
       if (sortBy === "status") return a.voterRegistrationStatus.localeCompare(b.voterRegistrationStatus);
       return b.recordedDate.localeCompare(a.recordedDate);
@@ -239,7 +97,7 @@ export default function VoterRegistrationCivicPage() {
     const repsContacted = records.filter((r) => r.hasContactedRepresentative).length;
     const reviewsDue = records.filter((r) => r.reviewDate <= d(60)).length;
     return { registered, eligibleNotRegistered, repsContacted, reviewsDue };
-  }, []);
+  }, [records]);
 
   return (
     <PageShell
@@ -335,7 +193,7 @@ export default function VoterRegistrationCivicPage() {
               >
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap mb-1">
-                    <span className="font-semibold text-slate-900">{getYPName(r.youngPerson)}</span>
+                    <span className="font-semibold text-slate-900">{getYPName(r.child_id)}</span>
                     <span className="text-slate-500">age {r.ageAtRecord}</span>
                     <span className={cn("text-xs px-2 py-0.5 rounded-full border", statusColour[r.voterRegistrationStatus])}>
                       {r.voterRegistrationStatus}

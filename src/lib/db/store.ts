@@ -383,6 +383,15 @@ import type {
   UtilityBill,
   TimelineEvent,
   WelcomeTour,
+  TransAffirmingPlan,
+  VehiclePreUseCheck,
+  VehiclePreUseCheckItem,
+  CivicRecord,
+  WarmWelcomePack,
+  WarmWelcomePackItem,
+  TherapeuticStaffTraining,
+  TherapeuticChildImpact,
+  HomeEmergencyContact,
 } from "@/types/extended";
 import {
   SEED_CARE_EVENTS, SEED_CARE_EVENT_ROUTES, SEED_CARE_EVENT_AUDIT,
@@ -744,6 +753,13 @@ const store = {
   utilityBills: [] as UtilityBill[],
   timelineEvents: [] as TimelineEvent[],
   welcomeTours: [] as WelcomeTour[],
+  transAffirmingPlans: [] as TransAffirmingPlan[],
+  vehiclePreUseChecks: [] as VehiclePreUseCheck[],
+  civicRecords: [] as CivicRecord[],
+  warmWelcomePacks: [] as WarmWelcomePack[],
+  therapeuticStaffTraining: [] as TherapeuticStaffTraining[],
+  therapeuticChildImpact: [] as TherapeuticChildImpact[],
+  homeEmergencyContacts: [] as HomeEmergencyContact[],
   cardRecords: [] as CardRecord[],
   boardReports: [] as BoardReport[],
   asbestosRecords: [] as AsbestosRecord[],
@@ -11229,6 +11245,122 @@ export const db = {
       if (idx === -1) return null;
       store.welcomeTours[idx] = { ...store.welcomeTours[idx], ...data };
       return store.welcomeTours[idx];
+    },
+  },
+  transAffirmingPlans: {
+    findAll: () => store.transAffirmingPlans,
+    findByChild: (childId: string) => store.transAffirmingPlans.filter((r) => r.child_id === childId),
+    findByHome: (homeId: string) => store.transAffirmingPlans.filter((r) => r.home_id === homeId),
+    findById: (id: string) => store.transAffirmingPlans.find((r) => r.id === id),
+    create: (data: Omit<TransAffirmingPlan, "id" | "created_at">): TransAffirmingPlan => {
+      const record: TransAffirmingPlan = { ...data, id: generateId("tap"), created_at: new Date().toISOString() };
+      store.transAffirmingPlans.push(record);
+      return record;
+    },
+    patch: (id: string, data: Partial<TransAffirmingPlan>): TransAffirmingPlan | null => {
+      const idx = store.transAffirmingPlans.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.transAffirmingPlans[idx] = { ...store.transAffirmingPlans[idx], ...data };
+      return store.transAffirmingPlans[idx];
+    },
+  },
+  vehiclePreUseChecks: {
+    findAll: () => store.vehiclePreUseChecks,
+    findByHome: (homeId: string) => store.vehiclePreUseChecks.filter((r) => r.home_id === homeId),
+    findById: (id: string) => store.vehiclePreUseChecks.find((r) => r.id === id),
+    create: (data: Omit<VehiclePreUseCheck, "id" | "created_at">): VehiclePreUseCheck => {
+      const record: VehiclePreUseCheck = { ...data, id: generateId("vpc"), created_at: new Date().toISOString() };
+      store.vehiclePreUseChecks.push(record);
+      return record;
+    },
+    patch: (id: string, data: Partial<VehiclePreUseCheck>): VehiclePreUseCheck | null => {
+      const idx = store.vehiclePreUseChecks.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.vehiclePreUseChecks[idx] = { ...store.vehiclePreUseChecks[idx], ...data };
+      return store.vehiclePreUseChecks[idx];
+    },
+  },
+  civicRecords: {
+    findAll: () => store.civicRecords,
+    findByChild: (childId: string) => store.civicRecords.filter((r) => r.child_id === childId),
+    findByHome: (homeId: string) => store.civicRecords.filter((r) => r.home_id === homeId),
+    findById: (id: string) => store.civicRecords.find((r) => r.id === id),
+    create: (data: Omit<CivicRecord, "id" | "created_at">): CivicRecord => {
+      const record: CivicRecord = { ...data, id: generateId("civ"), created_at: new Date().toISOString() };
+      store.civicRecords.push(record);
+      return record;
+    },
+    patch: (id: string, data: Partial<CivicRecord>): CivicRecord | null => {
+      const idx = store.civicRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.civicRecords[idx] = { ...store.civicRecords[idx], ...data };
+      return store.civicRecords[idx];
+    },
+  },
+  warmWelcomePacks: {
+    findAll: () => store.warmWelcomePacks,
+    findByChild: (childId: string) => store.warmWelcomePacks.filter((r) => r.child_id === childId),
+    findByHome: (homeId: string) => store.warmWelcomePacks.filter((r) => r.home_id === homeId),
+    findById: (id: string) => store.warmWelcomePacks.find((r) => r.id === id),
+    create: (data: Omit<WarmWelcomePack, "id" | "created_at">): WarmWelcomePack => {
+      const record: WarmWelcomePack = { ...data, id: generateId("wwp"), created_at: new Date().toISOString() };
+      store.warmWelcomePacks.push(record);
+      return record;
+    },
+    patch: (id: string, data: Partial<WarmWelcomePack>): WarmWelcomePack | null => {
+      const idx = store.warmWelcomePacks.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.warmWelcomePacks[idx] = { ...store.warmWelcomePacks[idx], ...data };
+      return store.warmWelcomePacks[idx];
+    },
+  },
+  therapeuticStaffTraining: {
+    findAll: () => store.therapeuticStaffTraining,
+    findByHome: (homeId: string) => store.therapeuticStaffTraining.filter((r) => r.home_id === homeId),
+    findById: (id: string) => store.therapeuticStaffTraining.find((r) => r.id === id),
+    create: (data: Omit<TherapeuticStaffTraining, "id" | "created_at">): TherapeuticStaffTraining => {
+      const record: TherapeuticStaffTraining = { ...data, id: generateId("tst"), created_at: new Date().toISOString() };
+      store.therapeuticStaffTraining.push(record);
+      return record;
+    },
+    patch: (id: string, data: Partial<TherapeuticStaffTraining>): TherapeuticStaffTraining | null => {
+      const idx = store.therapeuticStaffTraining.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.therapeuticStaffTraining[idx] = { ...store.therapeuticStaffTraining[idx], ...data };
+      return store.therapeuticStaffTraining[idx];
+    },
+  },
+  therapeuticChildImpact: {
+    findAll: () => store.therapeuticChildImpact,
+    findByChild: (childId: string) => store.therapeuticChildImpact.filter((r) => r.child_id === childId),
+    findByHome: (homeId: string) => store.therapeuticChildImpact.filter((r) => r.home_id === homeId),
+    findById: (id: string) => store.therapeuticChildImpact.find((r) => r.id === id),
+    create: (data: Omit<TherapeuticChildImpact, "id" | "created_at">): TherapeuticChildImpact => {
+      const record: TherapeuticChildImpact = { ...data, id: generateId("tci"), created_at: new Date().toISOString() };
+      store.therapeuticChildImpact.push(record);
+      return record;
+    },
+    patch: (id: string, data: Partial<TherapeuticChildImpact>): TherapeuticChildImpact | null => {
+      const idx = store.therapeuticChildImpact.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.therapeuticChildImpact[idx] = { ...store.therapeuticChildImpact[idx], ...data };
+      return store.therapeuticChildImpact[idx];
+    },
+  },
+  homeEmergencyContacts: {
+    findAll: () => store.homeEmergencyContacts,
+    findByHome: (homeId: string) => store.homeEmergencyContacts.filter((r) => r.home_id === homeId),
+    findById: (id: string) => store.homeEmergencyContacts.find((r) => r.id === id),
+    create: (data: Omit<HomeEmergencyContact, "id" | "created_at">): HomeEmergencyContact => {
+      const record: HomeEmergencyContact = { ...data, id: generateId("hec"), created_at: new Date().toISOString() };
+      store.homeEmergencyContacts.push(record);
+      return record;
+    },
+    patch: (id: string, data: Partial<HomeEmergencyContact>): HomeEmergencyContact | null => {
+      const idx = store.homeEmergencyContacts.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.homeEmergencyContacts[idx] = { ...store.homeEmergencyContacts[idx], ...data };
+      return store.homeEmergencyContacts[idx];
     },
   },
 };
