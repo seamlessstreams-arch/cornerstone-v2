@@ -373,7 +373,8 @@ export default function ChildCareAnniversaryPage() {
         <strong>Regulatory framework.</strong> Recognition of care anniversaries sits within the Children&apos;s Homes (England) Regulations 2015 — Quality Standard 6 (enjoyment &amp; achievement), Quality Standard 7 (positive relationships) and Quality Standard 8 (education). Practice is grounded in trauma-informed care, and in UNCRC Article 8 (right to identity), Article 12 (the right to be heard) and Article 16 (privacy and dignity). NICE NG196 bereavement guidance principles are applied to the grief-of-care experience — these dates are losses as well as milestones, and the child leads on whether, how, and when they are marked. A child&apos;s preference can change every year. We never assume a celebration is wanted.
       </div>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Wellbeing"
+        category="wellbeing"
         days={28}
         defaultCollapsed
       />

@@ -469,7 +469,8 @@ export default function DischargePage() {
       </>
       )}
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Family Contact & Care Planning"
+        category={["family_contact", "general"]}
         days={28}
         defaultCollapsed
       />

@@ -335,7 +335,8 @@ export default function ComplimentsPage() {
         </DialogContent>
       </Dialog>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Wellbeing"
+        category="wellbeing"
         days={28}
         defaultCollapsed
       />

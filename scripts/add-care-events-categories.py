@@ -218,6 +218,63 @@ MAPPINGS: dict[str, tuple[str, str, int | None]] = {
     "assessment-of-need":                   ("Care Events — Care Planning", '"general"', None),
     "independence-pathway":                 ("Care Events — Education & Finance", '["education", "finance"]', None),
     "after-care":                           ("Care Events — Care Planning", '["general", "education", "finance"]', None),
+
+    # ── wellbeing (batch 2) ──────────────────────────────────────────────────
+    "child-aspirations-tracker":            ("Care Events — Wellbeing", '"wellbeing"', None),
+    "child-care-anniversary":               ("Care Events — Wellbeing", '"wellbeing"', None),
+    "child-cultural-religious-mentor":      ("Care Events — Wellbeing", '"wellbeing"', None),
+    "child-feedback-loops":                 ("Care Events — Wellbeing", '"wellbeing"', None),
+    "child-feedback-on-staff":              ("Care Events — Wellbeing", '"wellbeing"', None),
+    "child-heritage-language-tracker":      ("Care Events — Wellbeing", '"wellbeing"', None),
+    "child-keyworker-1to1-sessions":        ("Care Events — Wellbeing", '"wellbeing"', None),
+    "child-laundry-self-care":              ("Care Events — Wellbeing & Activities", '["wellbeing", "activity"]', None),
+    "child-led-meeting-record":             ("Care Events — Wellbeing", '"wellbeing"', None),
+    "child-participation-log":              ("Care Events — Wellbeing", '"wellbeing"', None),
+    "child-religious-rite-milestones":      ("Care Events — Wellbeing", '"wellbeing"', None),
+    "child-rights-literacy-tracker":        ("Care Events — Wellbeing", '"wellbeing"', None),
+    "children-as-experts":                  ("Care Events — Wellbeing", '"wellbeing"', None),
+    "children-pledges":                     ("Care Events — Wellbeing", '"wellbeing"', None),
+    "childrens-guide":                      ("Care Events — Wellbeing", '"wellbeing"', None),
+    "childrens-meetings":                   ("Care Events — Wellbeing", '"wellbeing"', None),
+    "childrens-rights":                     ("Care Events — Wellbeing", '"wellbeing"', None),
+    "cultural-identity":                    ("Care Events — Wellbeing", '"wellbeing"', None),
+    "key-working":                          ("Care Events — Wellbeing", '"wellbeing"', None),
+    "life-story":                           ("Care Events — Wellbeing", '"wellbeing"', None),
+    "personal-passport":                    ("Care Events — Wellbeing", '"wellbeing"', None),
+    "voice":                                ("Care Events — Wellbeing", '"wellbeing"', None),
+    "compliments":                          ("Care Events — Wellbeing", '"wellbeing"', None),
+
+    # ── safeguarding (batch 2) ──────────────────────────────────────────────
+    "child-mobile-phone-management":        ("Care Events — Safeguarding & Behaviour", '["safeguarding", "behaviour"]', 90),
+    "child-smoking-vaping-tracker":         ("Care Events — Safeguarding & Health", '["safeguarding", "health"]', 90),
+    "child-court-attendance-support":       ("Care Events — Safeguarding", '"safeguarding"', 90),
+    "child-immigration-uasc-support":       ("Care Events — Safeguarding", '"safeguarding"', 90),
+    "daily-risk-briefing":                  ("Care Events — Behaviour & Safeguarding", '["behaviour", "safeguarding"]', None),
+    "escalation-tracker":                   ("Care Events — Safeguarding & Behaviour", '["safeguarding", "behaviour"]', 90),
+    "data-breach-log":                      ("Care Events — Safeguarding", '"safeguarding"', 90),
+    "restrictions-log":                     ("Care Events — Safeguarding & Behaviour", '["safeguarding", "behaviour", "physical_intervention"]', 90),
+    "room-searches":                        ("Care Events — Safeguarding & Behaviour", '["safeguarding", "behaviour"]', 90),
+    "online-gaming-tracker":                ("Care Events — Safeguarding", '"safeguarding"', None),
+    "child-correspondence-incoming":        ("Care Events — Safeguarding", '"safeguarding"', None),
+    "notifiable-events":                    ("Care Events — Safeguarding & Behaviour", '["safeguarding", "behaviour", "missing_episode", "physical_intervention"]', 90),
+
+    # ── finance (batch 2) ─────────────────────────────────────────────────────
+    "expenses":                             ("Care Events — Finance", '"finance"', None),
+    "delegated-authority":                  ("Care Events — Finance", '"finance"', None),
+
+    # ── activity (batch 2) ───────────────────────────────────────────────────
+    "child-friendly-policies":              ("Care Events — Activities & Wellbeing", '["activity", "wellbeing"]', None),
+    "diversity-calendar":                   ("Care Events — Activities", '"activity"', None),
+    "religious-festival-celebrations":      ("Care Events — Activities & Wellbeing", '["activity", "wellbeing"]', None),
+    "local-offer":                          ("Care Events — Activities & Education", '["activity", "education"]', None),
+
+    # ── health (batch 2) ─────────────────────────────────────────────────────
+    "infection-control":                    ("Care Events — Health", '"health"', None),
+    "child-injuries-log":                   ("Care Events — Health", '"health"', None),
+
+    # ── family contact (batch 2) ─────────────────────────────────────────────
+    "family-time":                          ("Care Events — Family Contact", '"family_contact"', None),
+    "discharge":                            ("Care Events — Family Contact & Care Planning", '["family_contact", "general"]', None),
 }
 
 # ── Patterns ─────────────────────────────────────────────────────────────────

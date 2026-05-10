@@ -212,7 +212,8 @@ export default function DailyRiskBriefingPage() {
         </div>
       </div>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Behaviour & Safeguarding"
+        category={["behaviour", "safeguarding"]}
         days={28}
         defaultCollapsed
       />

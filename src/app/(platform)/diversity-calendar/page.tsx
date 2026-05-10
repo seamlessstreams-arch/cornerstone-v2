@@ -305,7 +305,8 @@ export default function DiversityCalendarPage() {
       </div>
       )}
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Activities"
+        category="activity"
         days={28}
         defaultCollapsed
       />

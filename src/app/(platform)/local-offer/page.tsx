@@ -182,7 +182,8 @@ export default function LocalOfferPage() {
         </div>
       </div>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Activities & Education"
+        category={["activity", "education"]}
         days={28}
         defaultCollapsed
       />

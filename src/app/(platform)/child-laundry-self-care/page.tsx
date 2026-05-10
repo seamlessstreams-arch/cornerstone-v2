@@ -387,7 +387,8 @@ export default function ChildLaundrySelfCarePage() {
         </p>
       </div>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Wellbeing & Activities"
+        category={["wellbeing", "activity"]}
         days={28}
         defaultCollapsed
       />

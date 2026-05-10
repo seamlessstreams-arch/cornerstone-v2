@@ -342,8 +342,9 @@ export default function ChildSmokingVapingTrackerPage() {
         </div>
       </div>
       <CareEventsPanel
-        title="Related Care Events"
-        days={28}
+        title="Care Events — Safeguarding & Health"
+        category={["safeguarding", "health"]}
+        days={90}
         defaultCollapsed
       />
       <AriaPanel

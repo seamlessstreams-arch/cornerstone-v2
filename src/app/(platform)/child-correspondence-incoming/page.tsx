@@ -282,7 +282,8 @@ export default function ChildCorrespondenceIncomingPage() {
         </p>
       </div>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Safeguarding"
+        category="safeguarding"
         days={28}
         defaultCollapsed
       />

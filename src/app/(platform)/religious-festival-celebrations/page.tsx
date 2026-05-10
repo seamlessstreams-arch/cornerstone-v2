@@ -318,7 +318,8 @@ export default function ReligiousFestivalCelebrationsPage() {
         </p>
       </div>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Activities & Wellbeing"
+        category={["activity", "wellbeing"]}
         days={28}
         defaultCollapsed
       />

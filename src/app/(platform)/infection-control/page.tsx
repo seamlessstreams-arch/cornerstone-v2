@@ -397,7 +397,8 @@ export default function InfectionControlPage() {
         </DialogContent>
       </Dialog>
       <CareEventsPanel
-        title="Related Care Events"
+        title="Care Events — Health"
+        category="health"
         days={28}
         defaultCollapsed
       />

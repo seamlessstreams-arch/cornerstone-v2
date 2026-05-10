@@ -697,8 +697,9 @@ export default function NotifiableEventsPage() {
 
       <CreateNotifiableEventDialog open={showNew} onClose={() => setShowNew(false)} />
       <CareEventsPanel
-        title="Related Care Events"
-        days={28}
+        title="Care Events — Safeguarding & Behaviour"
+        category={["safeguarding", "behaviour", "missing_episode", "physical_intervention"]}
+        days={90}
         defaultCollapsed
       />
     </PageShell>
