@@ -29,6 +29,7 @@ import {
   Loader2,
 } from "lucide-react";
 import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
 
 // ── Local view-model type (camelCase for the page) ──────────────────────────
@@ -274,6 +275,7 @@ export default function KeyWorkingPage() {
           <PrintButton title="Key Working Sessions" />
           <ExportButton data={filtered} columns={EXPORT_COLS} filename="key-working-sessions" />
           <Button size="sm" onClick={() => setShowNew(true)}><Plus className="h-4 w-4 mr-1" /> New Session</Button>
+          <AriaStudioQuickActionButton context={{ record_type: "keywork", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >

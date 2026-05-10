@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 import {
   Mail, FileText, Search, Copy, ExternalLink, Tag, Clock, Sparkles,
   Shield, Users, AlertTriangle, CheckCircle2, X, ChevronDown, ChevronUp,
@@ -725,6 +726,7 @@ export default function TemplatesPage() {
             <Sparkles className="h-3.5 w-3.5 mr-1" />
             {showAria ? "Hide Aria" : "Ask Aria"}
           </Button>
+          <AriaStudioQuickActionButton context={{ record_type: "policy", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >

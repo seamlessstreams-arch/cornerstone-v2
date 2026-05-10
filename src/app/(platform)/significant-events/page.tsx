@@ -24,6 +24,7 @@ import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import type { SigEventCategory, SigEventSeverity, SigEventNotifyStatus, SignificantEvent } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
 import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 
 const CATEGORY_META: Record<SigEventCategory, { label: string; icon: React.ReactNode; color: string }> = {
@@ -152,6 +153,7 @@ export default function SignificantEventsPage() {
           <PrintButton title="Significant Events" />
           <ExportButton data={filtered} columns={EXPORT_COLS} filename="significant-events" />
           <Button size="sm" onClick={() => setShowNew(true)}><Plus className="h-4 w-4 mr-1" /> Record Event</Button>
+          <AriaStudioQuickActionButton context={{ record_type: "incident", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >

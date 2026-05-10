@@ -3,6 +3,7 @@
 import React, { useState, useMemo } from "react";
 import { PageShell } from "@/components/layout/page-shell";
 import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 import { ExportButton, type ExportColumn } from "@/components/ui/export-button";
 import { PrintButton } from "@/components/ui/print-button";
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
@@ -135,6 +136,7 @@ export default function MedicationNearMissLogPage() {
         <div className="flex items-center gap-2">
           <PrintButton title="Medication Near-Miss Log" />
           <ExportButton<MedicationNearMiss> data={filtered} columns={exportColumns} filename="medication-near-miss-log" />
+          <AriaStudioQuickActionButton context={{ record_type: "medication", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >

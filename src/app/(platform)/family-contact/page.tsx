@@ -44,6 +44,7 @@ import {
 } from "lucide-react";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
 import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -917,6 +918,7 @@ export default function FamilyContactPage() {
         <div className="flex items-center gap-2">
           <ExportButton data={filtered} columns={CONTACT_EXPORT_COLS} filename="family-contact" />
           <PrintButton title="Family Contact" subtitle="Oak House — Family Contact Log" targetId="family-contact-content" />
+          <AriaStudioQuickActionButton context={{ record_type: "care_plan", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >

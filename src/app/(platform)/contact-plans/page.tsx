@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import { PageShell } from "@/components/layout/page-shell";
 import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 import { PrintButton } from "@/components/ui/print-button";
 import { ExportButton, type ExportColumn } from "@/components/ui/export-button";
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
@@ -143,6 +144,7 @@ export default function ContactPlansPage() {
         <div className="flex items-center gap-2">
           <ExportButton data={records} columns={exportCols} filename="contact-plans" />
           <PrintButton title="Contact Plans" />
+          <AriaStudioQuickActionButton context={{ record_type: "care_plan", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >

@@ -25,6 +25,7 @@ import { PrintButton } from "@/components/common/print-button";
 import { ExportButton, type ExportColumn } from "@/components/common/export-button";
 import { useComplaints, useCreateComplaint, useUpdateComplaint } from "@/hooks/use-complaints";
 import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 import { getYPName } from "@/lib/seed-data";
 import type {
   Complaint, ComplaintStatus, ComplaintOutcome, ComplaintCategory, ComplainantType,
@@ -646,6 +647,7 @@ ${complaint.lessons_learned ? `Learning: ${complaint.lessons_learned}` : ""}`;
             <Plus className="h-3.5 w-3.5" />
             Log Complaint
           </Button>
+          <AriaStudioQuickActionButton context={{ record_type: "complaint", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >

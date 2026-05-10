@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 import {
   Building2, AlertTriangle, CheckCircle2, Clock, XCircle,
   Plus, Search, Shield, Flame, Zap, Droplets, Thermometer,
@@ -1068,6 +1069,7 @@ export default function BuildingsPage() {
           <Button size="sm" onClick={() => setShowAddCheck(true)}>
             <Plus className="h-3.5 w-3.5 mr-1" />Record Check
           </Button>
+          <AriaStudioQuickActionButton context={{ record_type: "management_oversight", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >

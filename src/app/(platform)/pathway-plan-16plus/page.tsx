@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import { PageShell } from "@/components/layout/page-shell";
 import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 import { ExportButton, type ExportColumn } from "@/components/ui/export-button";
 import { PrintButton } from "@/components/ui/print-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -185,6 +186,7 @@ export default function PathwayPlan16PlusPage() {
         <PrintButton key="p" title="Pathway Plan (16+)" />,
         <ExportButton key="e" data={filtered} columns={exportCols} filename="pathway-plan-16plus" />,
         <Button key="new" onClick={() => setShowNew(true)}><Plus className="h-4 w-4 mr-1" />New Plan</Button>,
+        <AriaStudioQuickActionButton key="a" context={{ record_type: "placement_plan", record_id: "home_oak", home_id: "home_oak" }} />,
       ]}
     >
       <div id="print-area" className="space-y-6">

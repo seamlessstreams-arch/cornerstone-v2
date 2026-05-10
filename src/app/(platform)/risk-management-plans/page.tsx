@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import { PageShell } from "@/components/layout/page-shell";
 import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 import { ExportButton, type ExportColumn } from "@/components/ui/export-button";
 import { PrintButton } from "@/components/ui/print-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -111,6 +112,7 @@ export default function RiskManagementPlansPage() {
         <PrintButton key="p" title="Risk Management Plans" />,
         <ExportButton key="e" data={filtered} columns={exportCols} filename="risk-management-plans" />,
         <Button key="n" size="sm" onClick={() => setDialogOpen(true)}><Plus className="h-4 w-4 mr-1" />New Plan</Button>,
+        <AriaStudioQuickActionButton key="a" context={{ record_type: "risk_assessment", record_id: "home_oak", home_id: "home_oak" }} />,
       ]}
     >
       <div id="print-area" className="space-y-6">

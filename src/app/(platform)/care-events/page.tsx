@@ -34,6 +34,7 @@ import type {
 } from "@/types/care-events";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
 import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 // ── Status colours ─────────────────────────────────────────────────────────
 
@@ -777,6 +778,7 @@ export default function CareEventsPage() {
           <Button size="sm" onClick={() => setCreateOpen(true)}>
             <Plus className="w-4 h-4 mr-2" /> New event
           </Button>
+          <AriaStudioQuickActionButton context={{ record_type: "daily_log", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >

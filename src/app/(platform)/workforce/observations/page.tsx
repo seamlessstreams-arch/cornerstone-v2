@@ -9,6 +9,7 @@ import { SmartUploadButton } from "@/components/documents/smart-upload-button";
 import { PrintButton } from "@/components/common/print-button";
 import { ExportButton, type ExportColumn } from "@/components/common/export-button";
 import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 import {
   Microscope, Sparkles, CheckCircle2, Star, Clock, Plus,
   ThumbsUp, AlertTriangle, ChevronRight, Search, Users, Eye, ArrowUpDown,
@@ -146,6 +147,7 @@ export default function PracticeObservationsPage() {
             <Plus className="h-3.5 w-3.5" />
             New Observation
           </Button>
+          <AriaStudioQuickActionButton context={{ record_type: "staff_training", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >

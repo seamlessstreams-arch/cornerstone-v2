@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import { PageShell } from "@/components/layout/page-shell";
 import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 import { PrintButton } from "@/components/ui/print-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -48,7 +49,7 @@ export default function HealthPassportsPage() {
       title="Health Passports"
       subtitle="Portable Health Summary · Key Health Information · Emergency Protocols"
       ariaContext={{ pageTitle: "Health Passports", sourceType: "child_record" }}
-      actions={<PrintButton title="Health Passports" />}
+      actions={<div className="flex items-center gap-2"><PrintButton title="Health Passports" /><AriaStudioQuickActionButton context={{ record_type: "health", record_id: "home_oak", home_id: "home_oak" }} /></div>}
     >
       <div id="print-area">
         {/* summary */}

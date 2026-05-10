@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 import {
   UserPlus, Search, Plus, Filter, AlertTriangle, AlertCircle,
   Users, Clock, Zap, TrendingUp, Briefcase, Shield, FileCheck,
@@ -787,6 +788,7 @@ export default function RecruitmentPage() {
           <Button size="sm" onClick={() => setShowAddCandidate(true)}>
             <UserPlus className="h-3.5 w-3.5 mr-1" />Add Candidate
           </Button>
+          <AriaStudioQuickActionButton context={{ record_type: "staff_training", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >

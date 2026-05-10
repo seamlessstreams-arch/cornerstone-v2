@@ -23,6 +23,7 @@ import { useAnnualHealthAssessments } from "@/hooks/use-annual-health-assessment
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
 import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── helpers ───────────────────────────────────────────────────────────────── */
 
@@ -108,6 +109,7 @@ export default function AnnualHealthAssessmentPage() {
         <div className="flex items-center gap-2">
           <PrintButton title="Annual Health Assessment" />
           <ExportButton data={data} columns={exportCols} filename="annual-health-assessment" />
+          <AriaStudioQuickActionButton context={{ record_type: "health", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >

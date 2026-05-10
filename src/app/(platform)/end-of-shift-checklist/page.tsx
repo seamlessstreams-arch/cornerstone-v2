@@ -9,6 +9,7 @@
 import React, { useMemo, useState } from "react";
 import { PageShell } from "@/components/layout/page-shell";
 import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 import { ExportButton, type ExportColumn } from "@/components/ui/export-button";
 import { PrintButton } from "@/components/ui/print-button";
 import {
@@ -255,6 +256,7 @@ export default function EndOfShiftChecklistPage() {
             filename="end-of-shift-checklist"
           />
           <PrintButton title="End-of-Shift Checklists" />
+          <AriaStudioQuickActionButton context={{ record_type: "handover", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >

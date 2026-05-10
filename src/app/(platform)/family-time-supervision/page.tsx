@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { PageShell } from "@/components/layout/page-shell";
 import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 import { ExportButton, type ExportColumn } from "@/components/ui/export-button";
 import { PrintButton } from "@/components/ui/print-button";
 import { cn } from "@/lib/utils";
@@ -151,6 +152,7 @@ export default function FamilyTimeSupervisionPage() {
         <div className="flex items-center gap-2">
           <PrintButton title="Family Time Supervision Records" />
           <ExportButton data={records} columns={EXPORT_COLS} filename="family-time-supervision" />
+          <AriaStudioQuickActionButton context={{ record_type: "supervision", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >

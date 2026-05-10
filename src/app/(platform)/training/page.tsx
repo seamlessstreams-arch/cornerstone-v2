@@ -31,6 +31,7 @@ import { useCreateTrainingNeed } from "@/hooks/use-ri-learning";
 import { useStaff } from "@/hooks/use-staff";
 import { cn, formatDate } from "@/lib/utils";
 import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 import { api } from "@/hooks/use-api";
 import { TRAINING_CATEGORIES } from "@/lib/constants";
 import type { TrainingCategory } from "@/lib/constants";
@@ -455,6 +456,7 @@ export default function TrainingPage() {
             <Plus className="h-3.5 w-3.5" />
             Add Record
           </Button>
+          <AriaStudioQuickActionButton context={{ record_type: "staff_training", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >

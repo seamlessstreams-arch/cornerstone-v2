@@ -14,6 +14,7 @@ import { cn } from "@/lib/utils";
 import { SmartUploadButton } from "@/components/documents/smart-upload-button";
 import { PrintButton } from "@/components/common/print-button";
 import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 import {
   Network, Sparkles, Users, TrendingUp, GitBranch, Milestone,
   BarChart2, UserCheck, ShieldCheck, Award, Microscope, Briefcase,
@@ -114,6 +115,7 @@ export default function WorkforceHubPage() {
             <Sparkles className="h-3.5 w-3.5" />
             ARIA Workforce Analysis
           </Button>
+          <AriaStudioQuickActionButton context={{ record_type: "staff_training", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
