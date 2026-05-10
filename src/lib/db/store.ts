@@ -378,6 +378,10 @@ import {
   SEED_REG45_EVIDENCE, SEED_ANNEX_A_EVIDENCE, SEED_CHILD_DAILY_SUMMARIES,
   SEED_FILING_CABINET, SEED_SAVED_TIME_METRICS,
 } from "@/lib/seed-care-events";
+import type {
+  AriaArtifact, AriaSource, AriaArtifactVersion, AriaArtifactReview,
+  AriaArtifactAction, AriaQualityCheck, AriaGap, AriaStudioAuditLog,
+} from "@/types/aria-studio";
 
 // ── Mutable collections ───────────────────────────────────────────────────────
 
@@ -1056,6 +1060,140 @@ const store = {
   ] as Array<Record<string, unknown>>,
   documentBrandingSnapshots: [] as Array<Record<string, unknown>>,
   brandingAuditLog: [] as Array<Record<string, unknown>>,
+
+  // ── ARIA Studio ──────────────────────────────────────────────────────────────
+  ariaArtifacts: [
+    {
+      id: "art_demo_001",
+      artifact_type: "keywork_session",
+      title: "Keywork session — managing school transitions (Alex)",
+      status: "approved",
+      child_id: "yp_alex",
+      home_id: "home_oak",
+      staff_id: null,
+      incident_id: null,
+      linked_record_id: null,
+      linked_record_type: null,
+      framework: "pace",
+      tone: "warm",
+      creative_mode: "therapeutic",
+      generated_content: `## Keywork Session Plan\n\n**Child:** Alex | **Framework:** PACE\n\n### Purpose\nTo explore Alex's feelings about the upcoming school transition and build a shared plan for managing the change.\n\n### Evidence used\nThree recent daily log entries note Alex becoming withdrawn before school days. A risk assessment flags education engagement as a current concern.\n\n### Child voice currently known\nAlex has said: "I don't want to go to a new school." This was recorded during the last keywork session.\n\n### Therapeutic rationale\nUsing PACE, we aim to hold Alex's anxiety with curiosity rather than reassurance, helping him feel understood before problem-solving begins.\n\n### Suggested opening\n"I know school changes can feel really big. I'm wondering what the hardest bit feels like for you?"\n\n### Scaling question\n"If 10 is feeling totally ready and 1 is feeling really scared, where are you today?"\n\n### Follow-up actions\n- Arrange a visit to the new school with a familiar staff member\n- Update care plan section on education\n- Review with manager\n\n**This is an ARIA draft. A human must review and approve before use.**`,
+      structured_content: null,
+      plain_text_content: null,
+      quality_score: 88,
+      evidence_confidence_score: 75,
+      safeguarding_level: "none",
+      regulation_relevance: [],
+      source_ids: [],
+      created_by: "staff_darren",
+      reviewed_by: "staff_manager",
+      approved_by: "staff_manager",
+      committed_by: null,
+      rejected_by: null,
+      created_at: new Date(Date.now() - 3 * 86400000).toISOString(),
+      submitted_for_review_at: new Date(Date.now() - 2 * 86400000).toISOString(),
+      reviewed_at: new Date(Date.now() - 86400000).toISOString(),
+      approved_at: new Date(Date.now() - 86400000).toISOString(),
+      committed_at: null,
+      rejected_at: null,
+      archived_at: null,
+      version_number: 1,
+      filing_cabinet_path: null,
+      official_record_id: null,
+      child_voice_present: true,
+      quality_checks_passed: true,
+      amendment_reason: null,
+    },
+    {
+      id: "art_demo_002",
+      artifact_type: "management_oversight",
+      title: "Management oversight — peer conflict pattern (October–November)",
+      status: "committed",
+      child_id: null,
+      home_id: "home_oak",
+      staff_id: null,
+      incident_id: null,
+      linked_record_id: null,
+      linked_record_type: null,
+      framework: "safeguarding_led",
+      tone: "professional",
+      creative_mode: "inspection_ready",
+      generated_content: `## Management Oversight Note\n\n**Period:** October–November 2026 | **Framework:** Safeguarding-led\n\n### Evidence reviewed\nSeven incident records, two risk assessment reviews, and the monthly home dynamics summary were used to prepare this oversight.\n\n### Child impact analysis\nThree children have been involved in peer conflicts this period. Incidents cluster around unsettled evenings and shifts with reduced familiar staffing.\n\n### Risk analysis\nRisk of escalation is assessed as medium. There are no current safeguarding referrals but patterns warrant monitoring.\n\n### Regulatory relevance\nTwo incidents may require consideration for Regulation 40. Reg 45 evidence has been updated.\n\n### Management decisions and actions\n1. Staffing consistency review — Action: HR lead — Due: 2 weeks\n2. Peer support plan review for all affected young people — Due: 10 days\n3. Risk assessments to be updated — Due: 7 days\n\n**Approved by registered manager. Committed to official record.**`,
+      structured_content: null,
+      plain_text_content: null,
+      quality_score: 95,
+      evidence_confidence_score: 88,
+      safeguarding_level: "low",
+      regulation_relevance: ["reg40", "reg45"],
+      source_ids: [],
+      created_by: "staff_manager",
+      reviewed_by: "staff_manager",
+      approved_by: "staff_manager",
+      committed_by: "staff_manager",
+      rejected_by: null,
+      created_at: new Date(Date.now() - 10 * 86400000).toISOString(),
+      submitted_for_review_at: new Date(Date.now() - 9 * 86400000).toISOString(),
+      reviewed_at: new Date(Date.now() - 8 * 86400000).toISOString(),
+      approved_at: new Date(Date.now() - 8 * 86400000).toISOString(),
+      committed_at: new Date(Date.now() - 7 * 86400000).toISOString(),
+      rejected_at: null,
+      archived_at: null,
+      version_number: 1,
+      filing_cabinet_path: "Home/Management Oversight/2026/November/management_oversight",
+      official_record_id: null,
+      child_voice_present: false,
+      quality_checks_passed: true,
+      amendment_reason: null,
+    },
+    {
+      id: "art_demo_003",
+      artifact_type: "risk_review",
+      title: "Risk review — missing from care indicators (Maya)",
+      status: "draft",
+      child_id: "yp_maya",
+      home_id: "home_oak",
+      staff_id: null,
+      incident_id: null,
+      linked_record_id: null,
+      linked_record_type: null,
+      framework: "safeguarding_led",
+      tone: "professional",
+      creative_mode: "conservative",
+      generated_content: `## Risk Review — Missing From Care\n\n**Child:** Maya\n\n**ARIA draft — requires human review before any action is taken.**\n\n### Current risk summary\nMaya has had two missing episodes in the past four weeks. Both returns were within three hours. Return home conversations were completed.\n\n### Recent indicators\n- Increased secrecy around phone use (noted in 4 daily logs)\n- Reluctance to attend education (3 days missed this week)\n- Emotional presentation described as "flat" by night staff\n\n### Protective factors\n- Strong relationship with key worker\n- Consistent engagement with therapeutic sessions\n- Supportive family contact\n\n### Possible escalation signs to watch\n- Overnight missing episodes\n- New adults appearing in contact\n- Unexplained money or gifts\n- Withdrawal from trusted adults\n\n### Recommended actions (for manager review)\n1. Update risk assessment — required within 5 days\n2. CSE screening review — consider request\n3. Next return home conversation to include exploitation screening questions\n4. Update key worker plan\n\n**This is an ARIA-generated draft. A manager must review and approve all content before any action is taken.**`,
+      structured_content: null,
+      plain_text_content: null,
+      quality_score: null,
+      evidence_confidence_score: 55,
+      safeguarding_level: "high",
+      regulation_relevance: ["reg45", "annex_a"],
+      source_ids: [],
+      created_by: "staff_anna",
+      reviewed_by: null,
+      approved_by: null,
+      committed_by: null,
+      rejected_by: null,
+      created_at: new Date(Date.now() - 1 * 86400000).toISOString(),
+      submitted_for_review_at: null,
+      reviewed_at: null,
+      approved_at: null,
+      committed_at: null,
+      rejected_at: null,
+      archived_at: null,
+      version_number: 1,
+      filing_cabinet_path: null,
+      official_record_id: null,
+      child_voice_present: false,
+      quality_checks_passed: false,
+      amendment_reason: null,
+    },
+  ] as AriaArtifact[],
+  ariaSources: [] as AriaSource[],
+  ariaArtifactVersions: [] as AriaArtifactVersion[],
+  ariaArtifactReviews: [] as AriaArtifactReview[],
+  ariaArtifactActions: [] as AriaArtifactAction[],
+  ariaQualityChecks: [] as AriaQualityCheck[],
+  ariaGaps: [] as AriaGap[],
+  ariaStudioAuditLog: [] as AriaStudioAuditLog[],
 
   // Shift Swap Requests
   shiftSwaps: [
@@ -10781,6 +10919,144 @@ export const db = {
       const metric: SavedTimeMetric = { ...data, id: generateId("stm"), created_at: now };
       store.savedTimeMetrics.push(metric);
       return metric;
+    },
+  },
+
+  // ── ARIA Studio ───────────────────────────────────────────────────────────────
+  ariaArtifacts: {
+    findAll: (homeId?: string) =>
+      homeId ? store.ariaArtifacts.filter((a) => a.home_id === homeId) : store.ariaArtifacts,
+    findById: (id: string) => store.ariaArtifacts.find((a) => a.id === id) ?? null,
+    findByChild: (childId: string) => store.ariaArtifacts.filter((a) => a.child_id === childId),
+    findByStatus: (status: string, homeId?: string) => {
+      let items = store.ariaArtifacts.filter((a) => a.status === status);
+      if (homeId) items = items.filter((a) => a.home_id === homeId);
+      return items;
+    },
+    findByType: (type: string, homeId?: string) => {
+      let items = store.ariaArtifacts.filter((a) => a.artifact_type === type);
+      if (homeId) items = items.filter((a) => a.home_id === homeId);
+      return items;
+    },
+    create: (data: Omit<AriaArtifact, "id" | "created_at">): AriaArtifact => {
+      const now = new Date().toISOString();
+      const artifact: AriaArtifact = {
+        ...data,
+        id: generateId("art"),
+        created_at: now,
+      };
+      store.ariaArtifacts.push(artifact);
+      return artifact;
+    },
+    patch: (id: string, data: Partial<AriaArtifact>): AriaArtifact | null => {
+      const idx = store.ariaArtifacts.findIndex((a) => a.id === id);
+      if (idx === -1) return null;
+      store.ariaArtifacts[idx] = { ...store.ariaArtifacts[idx], ...data };
+      return store.ariaArtifacts[idx];
+    },
+    stats: (homeId: string) => {
+      const items = store.ariaArtifacts.filter((a) => a.home_id === homeId);
+      return {
+        total: items.length,
+        draft: items.filter((a) => a.status === "draft").length,
+        in_review: items.filter((a) => a.status === "in_review").length,
+        approved: items.filter((a) => a.status === "approved").length,
+        committed: items.filter((a) => a.status === "committed").length,
+      };
+    },
+  },
+  ariaSources: {
+    findAll: (homeId?: string) =>
+      homeId ? store.ariaSources.filter((s) => s.home_id === homeId) : store.ariaSources,
+    findById: (id: string) => store.ariaSources.find((s) => s.id === id) ?? null,
+    findByChild: (childId: string) => store.ariaSources.filter((s) => s.child_id === childId),
+    findByIds: (ids: string[]) => store.ariaSources.filter((s) => ids.includes(s.id)),
+    create: (data: Omit<AriaSource, "id" | "created_at" | "updated_at">): AriaSource => {
+      const now = new Date().toISOString();
+      const source: AriaSource = { ...data, id: generateId("src"), created_at: now, updated_at: now };
+      store.ariaSources.push(source);
+      return source;
+    },
+    patch: (id: string, data: Partial<AriaSource>): AriaSource | null => {
+      const idx = store.ariaSources.findIndex((s) => s.id === id);
+      if (idx === -1) return null;
+      store.ariaSources[idx] = { ...store.ariaSources[idx], ...data, updated_at: new Date().toISOString() };
+      return store.ariaSources[idx];
+    },
+  },
+  ariaArtifactVersions: {
+    findByArtifact: (artifactId: string) =>
+      store.ariaArtifactVersions.filter((v) => v.artifact_id === artifactId)
+        .sort((a, b) => b.version_number - a.version_number),
+    create: (data: Omit<AriaArtifactVersion, "id">): AriaArtifactVersion => {
+      const version: AriaArtifactVersion = { ...data, id: generateId("av") };
+      store.ariaArtifactVersions.push(version);
+      return version;
+    },
+  },
+  ariaArtifactReviews: {
+    findByArtifact: (artifactId: string) =>
+      store.ariaArtifactReviews.filter((r) => r.artifact_id === artifactId),
+    create: (data: Omit<AriaArtifactReview, "id" | "created_at">): AriaArtifactReview => {
+      const review: AriaArtifactReview = { ...data, id: generateId("rev"), created_at: new Date().toISOString() };
+      store.ariaArtifactReviews.push(review);
+      return review;
+    },
+  },
+  ariaArtifactActions: {
+    findByArtifact: (artifactId: string) =>
+      store.ariaArtifactActions.filter((a) => a.artifact_id === artifactId),
+    create: (data: Omit<AriaArtifactAction, "id" | "created_at">): AriaArtifactAction => {
+      const action: AriaArtifactAction = { ...data, id: generateId("aac"), created_at: new Date().toISOString() };
+      store.ariaArtifactActions.push(action);
+      return action;
+    },
+    patch: (id: string, data: Partial<AriaArtifactAction>): AriaArtifactAction | null => {
+      const idx = store.ariaArtifactActions.findIndex((a) => a.id === id);
+      if (idx === -1) return null;
+      store.ariaArtifactActions[idx] = { ...store.ariaArtifactActions[idx], ...data };
+      return store.ariaArtifactActions[idx];
+    },
+  },
+  ariaQualityChecks: {
+    findByArtifact: (artifactId: string) =>
+      store.ariaQualityChecks.filter((q) => q.artifact_id === artifactId),
+    findLatestByArtifact: (artifactId: string) =>
+      store.ariaQualityChecks.filter((q) => q.artifact_id === artifactId)
+        .sort((a, b) => b.created_at.localeCompare(a.created_at))[0] ?? null,
+    create: (data: Omit<AriaQualityCheck, "id" | "created_at">): AriaQualityCheck => {
+      const check: AriaQualityCheck = { ...data, id: generateId("qc"), created_at: new Date().toISOString() };
+      store.ariaQualityChecks.push(check);
+      return check;
+    },
+  },
+  ariaGaps: {
+    findAll: (homeId?: string) =>
+      homeId ? store.ariaGaps.filter((g) => g.home_id === homeId) : store.ariaGaps,
+    findByChild: (childId: string) => store.ariaGaps.filter((g) => g.child_id === childId),
+    findOpen: (homeId: string) =>
+      store.ariaGaps.filter((g) => g.home_id === homeId && g.status === "open"),
+    create: (data: Omit<AriaGap, "id" | "created_at">): AriaGap => {
+      const gap: AriaGap = { ...data, id: generateId("gap"), created_at: new Date().toISOString() };
+      store.ariaGaps.push(gap);
+      return gap;
+    },
+    patch: (id: string, data: Partial<AriaGap>): AriaGap | null => {
+      const idx = store.ariaGaps.findIndex((g) => g.id === id);
+      if (idx === -1) return null;
+      store.ariaGaps[idx] = { ...store.ariaGaps[idx], ...data };
+      return store.ariaGaps[idx];
+    },
+  },
+  ariaStudioAuditLog: {
+    findAll: (homeId?: string) =>
+      homeId ? store.ariaStudioAuditLog.filter((l) => l.home_id === homeId) : store.ariaStudioAuditLog,
+    findByArtifact: (artifactId: string) =>
+      store.ariaStudioAuditLog.filter((l) => l.artifact_id === artifactId),
+    create: (data: Omit<AriaStudioAuditLog, "id" | "created_at">): AriaStudioAuditLog => {
+      const entry: AriaStudioAuditLog = { ...data, id: generateId("aal"), created_at: new Date().toISOString() };
+      store.ariaStudioAuditLog.push(entry);
+      return entry;
     },
   },
 };

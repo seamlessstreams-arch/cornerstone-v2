@@ -26,6 +26,7 @@ import { useYoungPerson } from "@/hooks/use-young-people";
 import { useCreateTrainingNeed } from "@/hooks/use-ri-learning";
 import { PrintButton } from "@/components/common/print-button";
 import { SmartUploadButton } from "@/components/documents/smart-upload-button";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 import { useDocumentIntelligence } from "@/hooks/use-doc-intelligence";
 import { api } from "@/hooks/use-api";
 import { useAuthContext } from "@/contexts/auth-context";
@@ -395,6 +396,7 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
         <div className="flex items-center gap-2">
           <PrintButton title={`${displayName} ${yp.last_name}`} subtitle="Oak House — Young Person Profile" targetId="yp-detail-content" />
           <SmartUploadButton variant="icon" linkedChildId={id} uploadContext={`Young person profile — ${yp.first_name} ${yp.last_name}`} />
+          <AriaStudioQuickActionButton context={{ record_type: "keywork", record_id: id, child_id: id, home_id: "home_oak" }} />
           <Button variant="outline" size="sm" onClick={() => router.push("/young-people")}>
             <ArrowLeft className="h-3.5 w-3.5 mr-1" />All Young People
           </Button>
