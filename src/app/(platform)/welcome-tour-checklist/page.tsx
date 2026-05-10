@@ -25,6 +25,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 interface TourStep {
   step: string;
@@ -266,11 +268,12 @@ export default function WelcomeTourChecklistPage() {
     <PageShell
       title="Welcome Tour Checklist"
       subtitle="The first hour matters. Every welcome tour, paced to the child, recorded in detail."
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Welcome Tour Checklist", sourceType: "care_plan" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={data} columns={exportCols} filename="welcome-tour-checklist" />
           <PrintButton title="Welcome Tour Checklist" />
+          <AriaStudioQuickActionButton context={{ record_type: "placement_plan", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -501,6 +504,12 @@ export default function WelcomeTourChecklistPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Welcome Tour Checklist — new admission orientation, tour of facilities, introduction to staff, room setup, safety induction, placement plan welcome evidence"
+        recordType="placement_plan"
+        className="mt-6"
       />
     </PageShell>
   );

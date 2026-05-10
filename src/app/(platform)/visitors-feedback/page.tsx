@@ -28,6 +28,8 @@ import { useVisitorsFeedbackRecords, useCreateVisitorsFeedbackRecord } from "@/h
 import type { VisitorsFeedbackRecord, VisitorsFeedbackRole } from "@/types/extended";
 import { VISITORS_FEEDBACK_ROLE_LABEL } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── local config ───────────────────────────────────────────────────────── */
 
@@ -147,7 +149,7 @@ export default function VisitorsFeedbackPage() {
     <PageShell
       title="Visitors' Feedback"
       subtitle="Feedback from Reg 44 visitors, IROs, social workers, family members, and professionals"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Visitors' Feedback", sourceType: "general" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Visitors' Feedback" />
@@ -155,6 +157,7 @@ export default function VisitorsFeedbackPage() {
           <Button onClick={() => setShowNew(true)}>
             <Plus className="h-4 w-4 mr-2" /> Record Feedback
           </Button>
+          <AriaStudioQuickActionButton context={{ record_type: "management_oversight", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -398,6 +401,12 @@ export default function VisitorsFeedbackPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Visitors' Feedback — visitor feedback forms, professional feedback, family/carer feedback, quality improvement evidence, Reg 44 feedback evidence, Reg 45 quality evidence, inspection readiness"
+        recordType="management_oversight"
+        className="mt-6"
       />
     </PageShell>
   );

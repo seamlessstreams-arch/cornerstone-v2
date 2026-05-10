@@ -20,6 +20,8 @@ import {
   ArrowUpDown,
 } from "lucide-react";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ─── date helper ─── */
 const d = (n: number) => {
@@ -253,11 +255,12 @@ export default function WarmWelcomePacksPage() {
     <PageShell
       title="Warm Welcome Packs"
       subtitle="Personalised admission preparation — making children feel expected, wanted, and valued from day one"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Warm Welcome Packs", sourceType: "care_plan" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={packs} columns={exportCols} filename="welcome-packs" />
           <PrintButton title="Warm Welcome Packs" />
+          <AriaStudioQuickActionButton context={{ record_type: "placement_plan", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -486,6 +489,12 @@ export default function WarmWelcomePacksPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Warm Welcome Packs — new admission welcome packs, placement information, house rules, key contacts, rights and entitlements, initial settling-in support, placement plan evidence"
+        recordType="placement_plan"
+        className="mt-6"
       />
     </PageShell>
   );

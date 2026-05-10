@@ -33,6 +33,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 // ── types ───────────────────────────────────────────────────────────────────
 type CheckType =
@@ -282,11 +284,12 @@ export default function WelfareCheckProtocolPerChildPage() {
     <PageShell
       title="Welfare Check Protocol — Per Child"
       subtitle="Individualised welfare check plans — frequency, method, signs to watch for. Co-produced with each child."
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Welfare Check Protocol — Per Child", sourceType: "care_plan" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={data} columns={exportCols} filename="welfare-check-protocol-per-child" />
           <PrintButton title="Welfare Check Protocol — Per Child" />
+          <AriaStudioQuickActionButton context={{ record_type: "care_plan", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -585,6 +588,12 @@ export default function WelfareCheckProtocolPerChildPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Welfare Check Protocol — individual child welfare check requirements, check frequency, overnight protocols, sleep check records, safeguarding welfare monitoring, Reg 40 evidence"
+        recordType="care_plan"
+        className="mt-6"
       />
     </PageShell>
   );

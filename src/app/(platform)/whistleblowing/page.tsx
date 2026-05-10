@@ -39,6 +39,8 @@ import {
   WHISTLEBLOWING_SEVERITY_LABEL,
 } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── local config ─────────────────────────────────────────────────────── */
 
@@ -183,7 +185,7 @@ export default function WhistleblowingPage() {
     <PageShell
       title="Whistleblowing & Concerns"
       subtitle="Confidential concern reporting — staff protection and accountability"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Whistleblowing Log", sourceType: "general" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={exportData} columns={exportCols} filename="whistleblowing" />
@@ -191,6 +193,7 @@ export default function WhistleblowingPage() {
           <button onClick={() => setShowDialog(true)} className="inline-flex items-center gap-1 rounded-md bg-brand px-3 py-1.5 text-sm font-medium text-white hover:bg-brand/90">
             <Plus className="h-4 w-4" /> Raise Concern
           </button>
+          <AriaStudioQuickActionButton context={{ record_type: "management_oversight", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -371,6 +374,12 @@ export default function WhistleblowingPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Whistleblowing Log — concerns raised, whistleblowing disclosures, safeguarding referrals, culture of transparency, management investigation, Reg 40 notifications, Ofsted evidence"
+        recordType="management_oversight"
+        className="mt-6"
       />
     </PageShell>
   );

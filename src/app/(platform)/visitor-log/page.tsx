@@ -35,6 +35,8 @@ import { useVisitors, useCreateVisitor } from "@/hooks/use-visitors";
 import type { VisitorCategory, VisitStatus, VisitorEntry } from "@/types/extended";
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 
 // ── Constants ──────────────────────────────────────────────────────────────────
@@ -310,7 +312,7 @@ export default function VisitorLogPage() {
     <PageShell
       title="Visitor Log"
       subtitle="Record of all visitors to the home"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Visitor Log", sourceType: "home_check" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={filtered} columns={VISITOR_EXPORT_COLS} filename="visitor-log" />
@@ -319,6 +321,7 @@ export default function VisitorLogPage() {
             <Plus className="h-3.5 w-3.5" />
             Sign In Visitor
           </Button>
+          <AriaStudioQuickActionButton context={{ record_type: "management_oversight", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -460,6 +463,12 @@ export default function VisitorLogPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Visitor Log — visitor sign-in/out, visitor identity checks, visiting purposes, DBS visitor status, safeguarding compliance, Reg 44 visitor evidence, Ofsted inspection visitor records"
+        recordType="management_oversight"
+        className="mt-6"
       />
     </PageShell>
   );

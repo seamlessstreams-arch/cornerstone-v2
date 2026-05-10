@@ -25,6 +25,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 interface CivicRecord {
   id: string;
@@ -243,11 +245,12 @@ export default function VoterRegistrationCivicPage() {
     <PageShell
       title="Voter Registration & Civic Participation"
       subtitle="Per-young-person civic engagement — voter registration (16+ attainer in some elections), voter ID, elections, contacting representatives, causes of interest, community activities. Children in care vote less than peers — this work changes that."
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Voter Registration & Civic Participation", sourceType: "care_plan" }}
       actions={
         <div className="flex gap-2">
           <ExportButton data={filtered} columns={exportCols} filename="voter-registration-civic" />
           <PrintButton title="Voter Registration & Civic Participation" />
+          <AriaStudioQuickActionButton context={{ record_type: "care_plan", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -437,6 +440,12 @@ export default function VoterRegistrationCivicPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Voter Registration & Civic Participation — electoral roll registration, citizenship education, civic engagement activities, rights and responsibilities, Reg 45 rights/participation evidence"
+        recordType="care_plan"
+        className="mt-6"
       />
     </PageShell>
   );
