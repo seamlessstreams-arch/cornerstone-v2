@@ -181,7 +181,6 @@ export default function ChildrensMeetingsPage() {
           </button>
           <AriaStudioQuickActionButton context={{ record_type: "direct_work", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
-        </div>
       }
     >
       {/* ── stat strip ─────────────────────────────────────────────── */}

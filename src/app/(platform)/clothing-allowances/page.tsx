@@ -171,7 +171,6 @@ export default function ClothingAllowancesPage() {
           </button>
           <AriaStudioQuickActionButton context={{ record_type: "care_plan", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
-        </div>
       }
     >
       <div id="print-area" className="space-y-6">
