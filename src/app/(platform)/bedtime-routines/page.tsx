@@ -35,6 +35,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 function ratingColour(r: number): string {
   if (r >= 4) return "text-green-600";
@@ -100,11 +102,12 @@ export default function BedtimeRoutinesPage() {
     <PageShell
       title="Bedtime Routines"
       subtitle="Personalised, co-produced bedtime plans — supporting sleep, regulation, and emotional safety"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Bedtime Routines", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={data} columns={exportCols} filename="bedtime-routines" />
           <PrintButton title="Bedtime Routines" />
+          <AriaStudioQuickActionButton context={{ record_type: "care_plan", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -329,6 +332,12 @@ export default function BedtimeRoutinesPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Bedtime Routines — sleep schedules, wind-down routines, night-time support, sleep difficulties, PTSD and sleep, medication at bedtime, safe sleeping, night log, wellbeing"
+        recordType="care_plan"
+        className="mt-6"
       />
     </PageShell>
   );

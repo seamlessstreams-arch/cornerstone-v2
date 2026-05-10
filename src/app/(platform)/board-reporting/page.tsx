@@ -41,6 +41,8 @@ import {
   Loader2,
 } from "lucide-react";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ─── helpers ─── */
 const ragColours = (rag: RagRating) => {
@@ -177,11 +179,12 @@ export default function BoardReportingPage() {
     <PageShell
       title="Board Reporting"
       subtitle="Formal reports submitted to the Responsible Individual and Cornerstone Care Group Board — required by Quality Standard 13 and Regulation 45"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "general" }}
+      ariaContext={{ pageTitle: "Board Reporting", sourceType: "general" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={reports} columns={exportCols} filename="board-reporting" />
           <PrintButton title="Board Reporting" />
+          <AriaStudioQuickActionButton context={{ record_type: "management_oversight", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -561,6 +564,12 @@ export default function BoardReportingPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Board Reporting — governance reports, trustee reports, RI oversight, key performance indicators, incidents, placements, occupancy, staffing, compliance, Reg 45 summary"
+        recordType="management_oversight"
+        className="mt-6"
       />
     </PageShell>
   );

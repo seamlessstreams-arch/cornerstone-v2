@@ -33,6 +33,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 const surveyTypeColour: Record<string, string> = {
   management_survey: "bg-indigo-100 text-indigo-800 border-indigo-200",
@@ -148,6 +150,7 @@ export default function BuildingAsbestosRegisterPage() {
         <div className="flex gap-2">
           <ExportButton data={filtered} columns={exportCols} filename="building-asbestos-register" />
           <PrintButton title="Asbestos Register" />
+          <AriaStudioQuickActionButton context={{ record_type: "ofsted_evidence", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -387,6 +390,12 @@ export default function BuildingAsbestosRegisterPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Asbestos Register — asbestos survey, ACM location, risk rating, condition, management plan, disturbance records, R&R contractor, Control of Asbestos Regulations 2012, HSE compliance"
+        recordType="ofsted_evidence"
+        className="mt-6"
       />
     </PageShell>
   );

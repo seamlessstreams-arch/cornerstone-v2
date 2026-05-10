@@ -37,6 +37,8 @@ import Link from "next/link";
 import { getStaffName, getYPName } from "@/lib/seed-data";
 import type { BehaviourSupportPlan, BSPPrimaryBehaviour, BSPKnownTrigger, BSPDeEscalationStage, BSPPositiveStrategy, BSPReward, BSPBoundary, BSPSafetyPlanItem, BSPProfessionalInput, BSPRestrictiveIntervention, BSPReviewHistoryEntry } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 // -- Helpers ------------------------------------------------------------------
 
@@ -172,6 +174,7 @@ export default function BehaviourSupportPlansPage() {
         <div className="flex items-center gap-2">
           <PrintButton title="Behaviour Support Plans" />
           <ExportButton data={filtered} columns={EXPORT_COLS} filename="behaviour-support-plans" />
+          <AriaStudioQuickActionButton context={{ record_type: "care_plan", record_id: "home_oak", home_id: "home_oak" }} />
           <Button size="sm" onClick={() => setShowNew(true)}>
             <Plus className="h-4 w-4 mr-1" /> New BSP
           </Button>

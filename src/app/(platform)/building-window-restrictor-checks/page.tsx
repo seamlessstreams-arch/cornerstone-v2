@@ -33,6 +33,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 const outcomeColour: Record<string, string> = {
   pass: "bg-emerald-100 text-emerald-800 border-emerald-200",
@@ -131,6 +133,7 @@ export default function BuildingWindowRestrictorChecksPage() {
         <div className="flex gap-2">
           <ExportButton data={filtered} columns={exportCols} filename="building-window-restrictor-checks" />
           <PrintButton title="Window Restrictor Checks" />
+          <AriaStudioQuickActionButton context={{ record_type: "ofsted_evidence", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -324,6 +327,12 @@ export default function BuildingWindowRestrictorChecksPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Window Restrictor Checks — FENSA compliance, window restrictor testing, safe opening limits, first-floor and above checks, fall prevention, HSE guidance, Reg 44 evidence"
+        recordType="ofsted_evidence"
+        className="mt-6"
       />
     </PageShell>
   );

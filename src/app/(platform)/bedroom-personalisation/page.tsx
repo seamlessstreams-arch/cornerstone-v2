@@ -30,6 +30,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 const exportCols: ExportColumn<BedroomProfile>[] = [
   { header: "Young Person", accessor: (r: BedroomProfile) => getYPName(r.child_id) },
@@ -86,11 +88,12 @@ export default function BedroomPersonalisationPage() {
     <PageShell
       title="Bedroom Personalisation"
       subtitle="Each child's bedroom — co-designed, individually meaningful, sensory-aware"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Bedroom Personalisation", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={data} columns={exportCols} filename="bedroom-personalisation" />
           <PrintButton title="Bedroom Personalisation" />
+          <AriaStudioQuickActionButton context={{ record_type: "direct_work", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -342,6 +345,12 @@ export default function BedroomPersonalisationPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Bedroom Personalisation — individual bedroom preferences, personal space, cultural expression, photos, belongings, privacy, homely environment, Reg 45 positive outcomes"
+        recordType="direct_work"
+        className="mt-6"
       />
     </PageShell>
   );

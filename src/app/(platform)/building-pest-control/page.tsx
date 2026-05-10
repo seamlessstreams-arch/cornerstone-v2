@@ -30,6 +30,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 const typeColour: Record<string, string> = {
   routine_preventive_treatment: "bg-teal-100 text-teal-800 border-teal-200",
@@ -138,6 +140,7 @@ export default function BuildingPestControlPage() {
         <div className="flex gap-2">
           <ExportButton data={filtered} columns={exportCols} filename="building-pest-control" />
           <PrintButton title="Pest Control & Prevention" />
+          <AriaStudioQuickActionButton context={{ record_type: "ofsted_evidence", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -296,6 +299,12 @@ export default function BuildingPestControlPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Pest Control & Prevention — pest inspection schedule, treatment records, contractor visits, mice, rats, bedbugs, infestation response, regulatory compliance, Reg 44 evidence"
+        recordType="ofsted_evidence"
+        className="mt-6"
       />
     </PageShell>
   );
