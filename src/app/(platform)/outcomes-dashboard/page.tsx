@@ -20,6 +20,8 @@ import { useOutcomeMetrics } from "@/hooks/use-outcome-metrics";
 import type { OutcomeMetric, OutcomeSCCIFArea, OutcomeDashboardDomain, OutcomeTrend, OutcomeRAG } from "@/types/extended";
 import { OUTCOME_SCCIF_AREA_LABEL, OUTCOME_DASHBOARD_DOMAIN_LABEL, OUTCOME_TREND_LABEL, OUTCOME_RAG_LABEL } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── helpers ───────────────────────────────────────────────────────────────── */
 
@@ -149,11 +151,12 @@ export default function OutcomesDashboardPage() {
     <PageShell
       title="Outcomes Dashboard"
       subtitle="Aggregated Quality of Care · SCCIF Judgement Areas · Reg 45 / QS 13"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Outcomes Dashboard", sourceType: "care_plan" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Outcomes Dashboard" />
           <ExportButton data={metrics} columns={exportCols} filename="outcomes-dashboard" />
+          <AriaStudioQuickActionButton context={{ record_type: "care_plan", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -371,6 +374,12 @@ export default function OutcomesDashboardPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Outcomes Dashboard — child outcomes overview, wellbeing metrics, placement stability, education outcomes, health outcomes, Reg 45 outcomes evidence, ILACS impact evidence, Ofsted inspection readiness"
+        recordType="care_plan"
+        className="mt-6"
       />
     </PageShell>
   );

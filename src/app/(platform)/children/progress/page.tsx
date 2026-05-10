@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import { useProgressGoals, useProgressEntries, useProgressSnapshots, useCreateProgressRecord } from "@/hooks/use-intelligence-layer";
 import { SmartLinkBadge } from "@/components/intelligence/smart-link-panel";
 import { PageShell } from "@/components/layout/page-shell";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -298,7 +300,8 @@ export default function ChildProgressPage() {
     <PageShell
       title="Progress & Outcomes"
       subtitle="Track goals, milestones, and outcome scores over time"
-      ariaContext={{ pageTitle: "Track goals, milestones, and outcome scores over time", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Progress & Outcomes", sourceType: "care_plan" }}
+      actions={<AriaStudioQuickActionButton context={{ record_type: "care_plan", record_id: "home_oak", home_id: "home_oak" }} />}
     >
       <div className="space-y-6">
         {/* Child Selector & Actions */}
@@ -545,6 +548,12 @@ export default function ChildProgressPage() {
           </CardContent>
         </Card>
       </div>
+      <AriaPanel
+        mode="assist"
+        pageContext="Progress & Outcomes — goals, milestones, outcome scores, SDQ scores, wellbeing measures, educational progress, Reg 45 outcomes evidence, ILACS quality of care evidence"
+        recordType="care_plan"
+        className="mt-6"
+      />
     </PageShell>
   );
 }

@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import { useVoiceEntries, useCreateVoiceEntry } from "@/hooks/use-intelligence-layer";
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { PageShell } from "@/components/layout/page-shell";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -277,7 +279,8 @@ export default function VoiceOfTheChildPage() {
     <PageShell
       title="Voice of the Child"
       subtitle="Capturing what matters most — in their own words"
-      ariaContext={{ pageTitle: "Capturing what matters most — in their own words", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Voice of the Child", sourceType: "care_plan" }}
+      actions={<AriaStudioQuickActionButton context={{ record_type: "direct_work", record_id: "home_oak", home_id: "home_oak" }} />}
     >
       <div className="space-y-6">
         {/* Child Selector */}
@@ -553,6 +556,12 @@ export default function VoiceOfTheChildPage() {
           </CardContent>
         </Card>
       </div>
+      <AriaPanel
+        mode="assist"
+        pageContext="Voice of the Child — children's wishes and feelings, direct work records, child consultations, participation activities, complaints, advocacy, Reg 45 children's views evidence"
+        recordType="direct_work"
+        className="mt-6"
+      />
     </PageShell>
   );
 }
