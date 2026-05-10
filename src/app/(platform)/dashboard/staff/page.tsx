@@ -381,7 +381,7 @@ export default function StaffDashboardPage() {
     <PageShell
       title="My Dashboard"
       subtitle={`${getGreeting()}, ${d.staff.full_name.split(" ")[0]} — ${new Date().toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long" })}`}
-      ariaContext={{ pageTitle: "Open Incidents", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "My Dashboard", sourceType: "general" }}
       actions={
         <div className="flex items-center gap-2">
           {d.summary.notifications_unread > 0 && (

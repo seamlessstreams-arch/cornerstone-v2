@@ -71,7 +71,7 @@ export default function SafeguardingSupervisionPage() {
     <PageShell
       title="Safeguarding Supervision"
       subtitle="Specialist reflective supervision for staff working with children at high risk — distinct from line management"
-      ariaContext={{ pageTitle: "Care Events — Safeguarding", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Safeguarding Supervision", sourceType: "general" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Safeguarding Supervision" />

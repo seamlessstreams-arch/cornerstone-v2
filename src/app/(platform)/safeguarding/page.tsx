@@ -1559,7 +1559,7 @@ export default function SafeguardingPage() {
     <PageShell
       title="Safeguarding"
       subtitle={`${openSafeguarding.length} open concern${openSafeguarding.length !== 1 ? "s" : ""} · ${awaitingOversight.length} awaiting oversight · MASH referral active`}
-      ariaContext={{ pageTitle: "Care Events — Safeguarding", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Safeguarding", sourceType: "general" }}
       quickCreateContext={{
         module: "safeguarding",
         defaultTaskCategory: "safeguarding",

@@ -47,7 +47,7 @@ export default function NightStaffGuidancePage() {
 
   return (
     <PageShell title="Night Staff Guidance" subtitle="Waking Night & Sleep-In Procedures — Oak House" 
-      ariaContext={{ pageTitle: "Night Staff Guidance", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Night Staff Guidance", sourceType: "staff" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Night Staff Guidance" />

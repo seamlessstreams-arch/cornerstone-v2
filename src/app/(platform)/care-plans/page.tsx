@@ -683,7 +683,7 @@ Concerns: ${plan.concerns_summary ?? "not recorded"}`;
       title="Care Plans"
       subtitle="Statutory care plan goals, progress and LAC review tracking"
       showQuickCreate={false}
-      ariaContext={{ pageTitle: "Care Plans", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Care Plans", sourceType: "care_plan" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={filteredPlans} columns={CARE_PLAN_EXPORT_COLS} filename="care-plans" />
