@@ -36,6 +36,8 @@ import type { EhcpRecord, EhcpPlanStatus } from "@/types/extended";
 import { useEhcpRecords } from "@/hooks/use-ehcp-records";
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── helpers ───────────────────────────────────────────────────────────────── */
 
@@ -146,11 +148,12 @@ export default function EhcpTrackerPage() {
     <PageShell
       title="EHCP Tracker"
       subtitle="Education, Health and Care Plans · SEND · Children and Families Act 2014"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "EHCP Tracker", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="EHCP Tracker" />
           <ExportButton data={data} columns={exportCols} filename="ehcp-tracker" />
+          <AriaStudioQuickActionButton context={{ record_type: "education", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -523,6 +526,12 @@ export default function EhcpTrackerPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="EHCP Tracker — Education Health and Care Plan, annual review dates, outcomes, placement requirements, school support, SENCO, OT, SALT, PEP, progress against targets, LA"
+        recordType="education"
+        className="mt-6"
       />
     </PageShell>
   );

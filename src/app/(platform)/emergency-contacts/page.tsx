@@ -37,6 +37,8 @@ import {
   useUpdateEmergencyChildContact,
 } from "@/hooks/use-emergency-child-contacts";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -295,9 +297,12 @@ export default function EmergencyContactsPage() {
     <PageShell
       title="Emergency Contacts Board"
       subtitle="Key contacts for Oak House — print and display in office"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "contact_log" }}
+      ariaContext={{ pageTitle: "Emergency Contacts Board", sourceType: "contact_log" }}
       actions={
-        <PrintButton title="Emergency Contacts Board" subtitle="Oak House" targetId="emergency-board" />
+        <div className="flex items-center gap-2">
+          <PrintButton title="Emergency Contacts Board" subtitle="Oak House" targetId="emergency-board" />
+          <AriaStudioQuickActionButton context={{ record_type: "task", record_id: "home_oak", home_id: "home_oak" }} />
+        </div>
       }
       showQuickCreate={false}
     >
@@ -612,6 +617,12 @@ export default function EmergencyContactsPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Emergency Contacts Board — out of hours, on-call manager, LA duty team, LADO, police, ambulance, hospital, GP, local authority emergency duty, social worker, IRO contacts"
+        recordType="task"
+        className="mt-6"
       />
     </PageShell>
   );
