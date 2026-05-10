@@ -30,6 +30,8 @@ import { useRiskAppetiteDomains } from "@/hooks/use-risk-appetite-domains";
 import type { RiskAppetiteDomain, RiskAppetiteLevel } from "@/types/extended";
 import { RISK_APPETITE_LEVEL_LABEL } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── local config (icons cannot be serialized to store) ───────────── */
 
@@ -109,11 +111,12 @@ export default function RiskAppetiteStatementPage() {
     <PageShell
       title="Risk Appetite Statement"
       subtitle="Framework for balancing proportionate risk-taking with safeguarding at Oak House"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Risk Appetite Statement", sourceType: "document" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={records} columns={exportCols} filename="risk-appetite-statement" />
           <PrintButton title="Risk Appetite Statement" />
+          <AriaStudioQuickActionButton context={{ record_type: "policy", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -224,6 +227,12 @@ export default function RiskAppetiteStatementPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Risk Appetite Statement — organisational risk tolerance, domain risk levels, decision thresholds, positive risk-taking, governance, board oversight, QA framework"
+        recordType="policy"
+        className="mt-6"
       />
     </PageShell>
   );

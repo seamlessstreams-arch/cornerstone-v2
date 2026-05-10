@@ -20,6 +20,8 @@ import { useStaffReflectionRecords, useCreateStaffReflectionRecord } from "@/hoo
 import type { StaffReflectionRecord, StaffReflectionType, StaffReflectionMood } from "@/types/extended";
 import { STAFF_REFLECTION_TYPE_LABEL, STAFF_REFLECTION_MOOD_LABEL } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── local config (colours not serializable) ─────────────────────────────── */
 
@@ -91,11 +93,12 @@ export default function StaffReflectionsPage() {
     <PageShell
       title="Staff Reflective Logs"
       subtitle="Individual reflections on practice, incidents, and professional development"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Staff Reflective Logs", sourceType: "staff" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Staff Reflective Logs" />
           <ExportButton data={filtered} columns={exportCols} filename="staff-reflections" />
+          <AriaStudioQuickActionButton context={{ record_type: "supervision", record_id: "home_oak", home_id: "home_oak" }} />
           <Button size="sm" onClick={() => setDialogOpen(true)}><Plus className="h-4 w-4 mr-1" />New Reflection</Button>
         </div>
       }
@@ -214,6 +217,12 @@ export default function StaffReflectionsPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Staff Reflective Logs — practice reflections, learning from incidents, professional development, emotional impact, supervision preparation, growth areas"
+        recordType="supervision"
+        className="mt-6"
       />
     </PageShell>
   );

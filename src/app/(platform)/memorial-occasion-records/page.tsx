@@ -18,6 +18,8 @@ import { useMemorialOccasionRecords } from "@/hooks/use-memorial-occasion-record
 import type { MemorialOccasionRecord, MemorialOccasionType } from "@/types/extended";
 import { MEMORIAL_OCCASION_TYPE_LABEL } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 const occasionColour: Record<MemorialOccasionType, string> = {
   bereavement_death: "bg-purple-100 text-purple-800",
@@ -71,11 +73,12 @@ export default function MemorialOccasionRecordsPage() {
     <PageShell
       title="Memorial Occasions"
       subtitle="How the home marks significant losses, anniversaries, and remembrance — with care, dignity, and child-led ritual"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Memorial & Occasion Records", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={data} columns={exportCols} filename="memorial-occasion-records" />
           <PrintButton title="Memorial Occasions" />
+          <AriaStudioQuickActionButton context={{ record_type: "direct_work", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -231,6 +234,12 @@ export default function MemorialOccasionRecordsPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Memorial & Occasion Records — birthdays, anniversaries, bereavements, significant dates, how we mark occasions, child preferences, cultural considerations, emotional support"
+        recordType="direct_work"
+        className="mt-6"
       />
     </PageShell>
   );
