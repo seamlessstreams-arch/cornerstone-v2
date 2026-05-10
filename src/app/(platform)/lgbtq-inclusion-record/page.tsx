@@ -34,6 +34,8 @@ import { useLgbtqInclusionRecords } from "@/hooks/use-lgbtq-inclusion-records";
 import type { LgbtqInclusionRecord, OutStatus } from "@/types/extended";
 import { OUT_STATUS_LABEL } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── UI metadata ─────────────────────────────────────────────────────────── */
 
@@ -109,11 +111,12 @@ export default function LGBTQInclusionRecordPage() {
     <PageShell
       title="LGBTQ+ Inclusion Record"
       subtitle="Per-child record of identity affirmation, pronouns, allyship and support — child-led, child-paced"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "LGBTQ+ Inclusion Record", sourceType: "care_plan" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={data} columns={exportCols} filename="lgbtq-inclusion-record" />
           <PrintButton title="LGBTQ+ Inclusion Record" />
+          <AriaStudioQuickActionButton context={{ record_type: "care_plan", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -374,6 +377,12 @@ export default function LGBTQInclusionRecordPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="LGBTQ+ Inclusion Record — gender identity support, sexual orientation records, pronoun preferences, transition support, peer support, inclusive care plans, equality evidence, Reg 45"
+        recordType="care_plan"
+        className="mt-6"
       />
     </PageShell>
   );

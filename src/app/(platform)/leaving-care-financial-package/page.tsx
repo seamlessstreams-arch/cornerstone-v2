@@ -32,6 +32,8 @@ import { useLeavingCarePackages } from "@/hooks/use-leaving-care-packages";
 import type { LeavingCarePackage, TransitionStage } from "@/types/extended";
 import { TRANSITION_STAGE_LABEL } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── helpers ──────────────────────────────────────────────────────────────── */
 
@@ -136,11 +138,12 @@ export default function LeavingCareFinancialPackagePage() {
     <PageShell
       title="Leaving Care Financial Package"
       subtitle="Children (Leaving Care) Act 2000 — Setting Up Home Allowance · Junior ISA · savings · financial literacy progression"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Leaving Care Financial Package", sourceType: "care_plan" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={data} columns={exportCols} filename="leaving-care-financial-package" />
           <PrintButton title="Leaving Care Financial Package" />
+          <AriaStudioQuickActionButton context={{ record_type: "care_plan", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -375,6 +378,12 @@ export default function LeavingCareFinancialPackagePage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Leaving Care Financial Package — personal allowance, setting up home allowance, education bursary, employment grant, pathway plan finances, financial literacy, Reg 45 care leaver evidence"
+        recordType="care_plan"
+        className="mt-6"
       />
     </PageShell>
   );

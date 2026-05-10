@@ -24,6 +24,8 @@ import { SmartUploadButton } from "@/components/documents/smart-upload-button";
 import { PrintButton } from "@/components/common/print-button";
 import { ExportButton, type ExportColumn } from "@/components/common/export-button";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 type Tab = "overview" | "requests" | "calendar" | "sickness";
 type StatusFilter = "all" | "pending" | "approved" | "declined";
@@ -243,7 +245,7 @@ export default function LeavePage() {
     <PageShell
       title="Leave & Absence"
       subtitle="Manage annual leave, sickness, lateness, and return-to-work workflows"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Staff Leave Management", sourceType: "staff" }}
       quickCreateContext={{ module: "leave", defaultTaskCategory: "staffing" }}
       actions={
         <div className="flex items-center gap-2">
@@ -253,6 +255,7 @@ export default function LeavePage() {
           <Button size="sm" disabled title="Leave requests are submitted directly by staff. Approve requests from the Leave Requests tab.">
             <Plus className="h-3.5 w-3.5 mr-1" />Request Leave
           </Button>
+          <AriaStudioQuickActionButton context={{ record_type: "rota", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -603,6 +606,12 @@ export default function LeavePage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Staff Leave Management — annual leave requests, sick leave, return to work, overtime, leave balances, staffing cover, safe staffing levels, Reg 45 workforce evidence"
+        recordType="rota"
+        className="mt-6"
       />
     </PageShell>
   );
