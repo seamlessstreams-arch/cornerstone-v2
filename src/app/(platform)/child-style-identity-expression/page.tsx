@@ -28,6 +28,8 @@ import { BODY_CONFIDENCE_LABEL } from "@/types/extended";
 import { useStyleIdentityRecords } from "@/hooks/use-style-identity-records";
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 const exportCols: ExportColumn<StyleIdentityRecord>[] = [
   { header: "Young Person", accessor: (r: StyleIdentityRecord) => getYPName(r.child_id) },
@@ -125,11 +127,12 @@ export default function ChildStyleIdentityExpressionPage() {
     <PageShell
       title="Style & Identity Expression"
       subtitle="Per-child style and identity expression — clothing, hair, accessories, cultural dress, gender expression"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Style & Identity Expression", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={items} columns={exportCols} filename="style-identity-expression" />
           <PrintButton title="Style & Identity Expression" />
+          <AriaStudioQuickActionButton context={{ record_type: "direct_work", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -401,6 +404,12 @@ export default function ChildStyleIdentityExpressionPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Style & Identity Expression — clothing choices, hair, self-expression, cultural identity, gender expression, personal style budget, shopping, self-esteem, individuality"
+        recordType="direct_work"
+        className="mt-6"
       />
     </PageShell>
   );

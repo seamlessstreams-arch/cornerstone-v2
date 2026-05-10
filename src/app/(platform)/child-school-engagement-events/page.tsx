@@ -25,6 +25,8 @@ import { SCHOOL_EVENT_TYPE_LABEL } from "@/types/extended";
 import { useSchoolEngagementEvents } from "@/hooks/use-school-engagement-events";
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── colour maps ───────────────────────────────────────────────────────── */
 
@@ -155,11 +157,12 @@ export default function ChildSchoolEngagementEventsPage() {
     <PageShell
       title="School Engagement Events"
       subtitle="Showing up — every parents&apos; evening, every prize-giving, every prom. Corporate parenting evidenced."
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "School Engagement Events", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="School Engagement Events" />
           <ExportButton data={exportRows} columns={exportCols} filename="school-engagement-events" />
+          <AriaStudioQuickActionButton context={{ record_type: "education", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -378,6 +381,12 @@ export default function ChildSchoolEngagementEventsPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="School Engagement Events — parents evenings, governors meetings, school shows, sports day, award ceremonies, attendance, school trips, PEP review, educational engagement"
+        recordType="education"
+        className="mt-6"
       />
     </PageShell>
   );

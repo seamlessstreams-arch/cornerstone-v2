@@ -34,6 +34,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 const exportCols: ExportColumn<SaltRecord>[] = [
   { header: "Young Person", accessor: (r) => getYPName(r.child_id) },
@@ -124,11 +126,12 @@ export default function ChildSpeechLanguageTherapyPage() {
     <PageShell
       title="Speech & Language Therapy"
       subtitle="Per-child SaLT plans — articulation, language, social communication, voice, fluency, AAC. Goals, strategies, home programme, school involvement, child voice. RCSLT-aligned, child-paced."
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Speech & Language Therapy", sourceType: "child_record" }}
       actions={
         <div className="flex gap-2">
           <ExportButton data={filtered} columns={exportCols} filename="child-speech-language-therapy" />
           <PrintButton title="Speech & Language Therapy" />
+          <AriaStudioQuickActionButton context={{ record_type: "health", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -340,6 +343,12 @@ export default function ChildSpeechLanguageTherapyPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Speech & Language Therapy — SALT sessions, communication targets, home programme, EHCP, school liaison, augmentative communication, AHA, developmental milestones, progress"
+        recordType="health"
+        className="mt-6"
       />
     </PageShell>
   );

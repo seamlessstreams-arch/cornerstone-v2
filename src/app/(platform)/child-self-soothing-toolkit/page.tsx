@@ -24,6 +24,8 @@ import { AROUSAL_STATE_LABEL, WINDOW_OF_TOLERANCE_LABEL, TOOLKIT_EFFECTIVENESS_L
 import { useSelfSoothingToolkits } from "@/hooks/use-self-soothing-toolkits";
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── colour helpers ────────────────────────────────────────────────────── */
 
@@ -184,11 +186,12 @@ export default function ChildSelfSoothingToolkitPage() {
     <PageShell
       title="Child Self-Soothing Toolkit"
       subtitle="Per-child library of regulation strategies — sensory, breathing, movement, distraction and co-regulation"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Self-Soothing Toolkit", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Self-Soothing Toolkit" />
           <ExportButton data={exportData} columns={EXPORT_COLS} filename="child-self-soothing-toolkit" />
+          <AriaStudioQuickActionButton context={{ record_type: "care_plan", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -390,6 +393,12 @@ export default function ChildSelfSoothingToolkitPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Self-Soothing Toolkit — regulation strategies, sensory tools, grounding techniques, breathing exercises, comfort items, co-regulation, trauma-informed approach, behaviour support plan"
+        recordType="care_plan"
+        className="mt-6"
       />
     </PageShell>
   );

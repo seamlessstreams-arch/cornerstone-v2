@@ -30,6 +30,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 const exportCols: ExportColumn<SwimRecord>[] = [
   { header: "Young Person", accessor: (r) => getYPName(r.child_id) },
@@ -129,11 +131,12 @@ export default function ChildSwimmingWaterSafetyPage() {
     <PageShell
       title="Swimming & Water Safety"
       subtitle="Per-child swimming competence and water safety — RLSS National Curriculum stages, school swimming, current lessons, open water awareness, beach safety, life jacket use. Critical life skill especially for care leavers — anti-drowning evidence base."
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Swimming & Water Safety", sourceType: "child_record" }}
       actions={
         <div className="flex gap-2">
           <ExportButton data={filtered} columns={exportCols} filename="child-swimming-water-safety" />
           <PrintButton title="Swimming & Water Safety" />
+          <AriaStudioQuickActionButton context={{ record_type: "risk_assessment", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -351,6 +354,12 @@ export default function ChildSwimmingWaterSafetyPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Swimming & Water Safety — pool sessions, lessons, open water, water safety, ability level, risk assessment, supervision ratio, consent, life skills, positive activities"
+        recordType="risk_assessment"
+        className="mt-6"
       />
     </PageShell>
   );

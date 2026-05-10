@@ -34,6 +34,8 @@ import {
 import { useTraumaTherapyLogs } from "@/hooks/use-trauma-therapy-logs";
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── colour maps ───────────────────────────────────────────────────── */
 
@@ -205,11 +207,12 @@ export default function ChildTraumaTherapyLogPage() {
     <PageShell
       title="Child Trauma Therapy Log"
       subtitle="Per-child trauma therapy attendance and observable presentation — therapeutic content stays in the therapy room"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Child Trauma Therapy Log", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Trauma Therapy Log" />
           <ExportButton data={exportRows} columns={exportCols} filename="child-trauma-therapy-log" />
+          <AriaStudioQuickActionButton context={{ record_type: "care_plan", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -444,6 +447,12 @@ export default function ChildTraumaTherapyLogPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Child Trauma Therapy Log — therapy attendance, therapist, session presentation, observable impact, CAMHS, trauma-informed care, therapeutic relationship, PEP, care plan integration"
+        recordType="care_plan"
+        className="mt-6"
       />
     </PageShell>
   );
