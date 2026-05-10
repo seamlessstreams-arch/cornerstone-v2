@@ -33,6 +33,8 @@ import {
 import { useMentalHealthCheckIns } from "@/hooks/use-mental-health-check-ins";
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── colour maps ──────────────────────────────────────────────────────── */
 const MOOD_CONFIG: Record<MoodRating, { color: string; bar: string; label: string }> = {
@@ -146,11 +148,12 @@ export default function ChildMentalHealthDailyCheckPage() {
     <PageShell
       title="Daily Mental Health Check-Ins"
       subtitle="Quick child-led mood and wellbeing pulse — a daily moment to ask, listen, and notice patterns"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Daily Mental Health Check-Ins", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Daily Mental Health Check-Ins" />
           <ExportButton data={filtered} columns={exportCols} filename="daily-mental-health-check-ins" />
+          <AriaStudioQuickActionButton context={{ record_type: "direct_work", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -397,6 +400,12 @@ export default function ChildMentalHealthDailyCheckPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Daily Mental Health Check-Ins — emotional wellbeing scores, mood tracking, self-harm risk, anxiety level, sleep quality, daily check-in, therapeutic rapport, CAMHS monitoring, Reg 45 evidence"
+        recordType="direct_work"
+        className="mt-6"
       />
     </PageShell>
   );

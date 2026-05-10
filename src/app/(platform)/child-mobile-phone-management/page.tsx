@@ -39,6 +39,8 @@ import {
 } from "@/components/ui/select";
 import { useState } from "react";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 const contractTone: Record<PhoneContractType, string> = {
   payg: "bg-slate-100 text-slate-800",
@@ -139,11 +141,12 @@ export default function ChildMobilePhoneManagementPage() {
     <PageShell
       title="Child Mobile Phone Management"
       subtitle="Per-child phone records — contracts, costs, parental controls, screen time, app inventory, hand-in protocols, and online safety"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Mobile Phone Management", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={items} columns={exportCols} filename="child-mobile-phone-management" />
           <PrintButton title="Mobile Phone Management" />
+          <AriaStudioQuickActionButton context={{ record_type: "risk_assessment", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -399,6 +402,12 @@ export default function ChildMobilePhoneManagementPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Mobile Phone Management — phone agreements, internet safety, parental controls, contacts approved, contact with birth family, grooming risk, online safety plan, confiscation, boundaries"
+        recordType="risk_assessment"
+        className="mt-6"
       />
     </PageShell>
   );

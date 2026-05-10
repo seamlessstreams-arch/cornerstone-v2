@@ -22,6 +22,8 @@ import { CHILD_INJURY_TYPE_LABEL, INJURY_SEVERITY_LABEL } from "@/types/extended
 import { useChildInjuryRecords } from "@/hooks/use-child-injury-records";
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── helpers ───────────────────────────────────────────────────────────────── */
 
@@ -164,11 +166,12 @@ export default function ChildInjuriesLogPage() {
     <PageShell
       title="Child Injuries Log"
       subtitle="Quality Standard 7 (Health) · Children's Homes Regulations 2015, Reg 22"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Child Injuries Log", sourceType: "incident" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Child Injuries Log" />
           <ExportButton data={filtered} columns={exportCols} filename="child-injuries-log" />
+          <AriaStudioQuickActionButton context={{ record_type: "incident", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -398,6 +401,12 @@ export default function ChildInjuriesLogPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Child Injuries Log — bruises, marks, cuts, burns, injury location, body map, cause, explanation, medical attention, safeguarding review, police referral, Reg 40 trigger, Annex A"
+        recordType="incident"
+        className="mt-6"
       />
     </PageShell>
   );
