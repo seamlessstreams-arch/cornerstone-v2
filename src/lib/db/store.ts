@@ -392,6 +392,7 @@ import type {
   TherapeuticStaffTraining,
   TherapeuticChildImpact,
   HomeEmergencyContact,
+  RiGovernanceReport,
 } from "@/types/extended";
 import {
   SEED_CARE_EVENTS, SEED_CARE_EVENT_ROUTES, SEED_CARE_EVENT_AUDIT,
@@ -760,6 +761,7 @@ const store = {
   therapeuticStaffTraining: [] as TherapeuticStaffTraining[],
   therapeuticChildImpact: [] as TherapeuticChildImpact[],
   homeEmergencyContacts: [] as HomeEmergencyContact[],
+  riGovernanceReports: [] as RiGovernanceReport[],
   cardRecords: [] as CardRecord[],
   boardReports: [] as BoardReport[],
   asbestosRecords: [] as AsbestosRecord[],
@@ -11361,6 +11363,24 @@ export const db = {
       if (idx === -1) return null;
       store.homeEmergencyContacts[idx] = { ...store.homeEmergencyContacts[idx], ...data };
       return store.homeEmergencyContacts[idx];
+    },
+  },
+
+  riGovernanceReports: {
+    findAll: () => store.riGovernanceReports,
+    findByHome: (homeId: string) => store.riGovernanceReports.filter((r) => r.home_id === homeId),
+    findById: (id: string) => store.riGovernanceReports.find((r) => r.id === id),
+    create: (data: Partial<RiGovernanceReport>): RiGovernanceReport => {
+      const now = new Date().toISOString();
+      const record = { ...data, id: generateId("rigr"), created_at: now, updated_at: now } as RiGovernanceReport;
+      store.riGovernanceReports.push(record);
+      return record;
+    },
+    patch: (id: string, data: Partial<RiGovernanceReport>): RiGovernanceReport | null => {
+      const idx = store.riGovernanceReports.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.riGovernanceReports[idx] = { ...store.riGovernanceReports[idx], ...data, updated_at: new Date().toISOString() };
+      return store.riGovernanceReports[idx];
     },
   },
 };
