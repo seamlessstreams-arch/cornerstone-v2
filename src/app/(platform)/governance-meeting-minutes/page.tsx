@@ -31,6 +31,8 @@ import type { GovernanceMeeting, GovernanceAction } from "@/types/extended";
 import { GOVERNANCE_ACTION_STATUS_LABEL } from "@/types/extended";
 import { useGovernanceMeetings } from "@/hooks/use-governance-meetings";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ─── date helper (for overdue checks) ─── */
 const today = () => new Date().toISOString().slice(0, 10);
@@ -136,11 +138,12 @@ export default function GovernanceMeetingMinutesPage() {
     <PageShell
       title="Governance Meeting Minutes"
       subtitle="Records of RI and management governance meetings demonstrating oversight per Regulation 45 and Quality Standard 25"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "general" }}
+      ariaContext={{ pageTitle: "Governance Meeting Minutes", sourceType: "general" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={records} columns={exportCols} filename="governance-meeting-minutes" />
           <PrintButton title="Governance Meeting Minutes" />
+          <AriaStudioQuickActionButton context={{ record_type: "management_oversight", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -437,6 +440,12 @@ export default function GovernanceMeetingMinutesPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Governance Meeting Minutes — board minutes, senior management team, RI visits, Ofsted outcomes, Reg 45 reports, quality assurance, action logs, performance review"
+        recordType="management_oversight"
+        className="mt-6"
       />
     </PageShell>
   );
