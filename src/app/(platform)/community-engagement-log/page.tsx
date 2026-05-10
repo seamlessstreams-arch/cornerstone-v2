@@ -31,6 +31,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 const typeIcons: Record<string, typeof Users> = {
   sports_fitness: Activity,
@@ -115,11 +117,12 @@ export default function CommunityEngagementLogPage() {
     <PageShell
       title="Community Engagement Log"
       subtitle="Recording integration into the local community — building belonging, connections, and citizenship"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Community Engagement Log", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={records} columns={exportCols} filename="community-engagement-log" />
           <PrintButton title="Community Engagement Log" />
+          <AriaStudioQuickActionButton context={{ record_type: "direct_work", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -267,6 +270,12 @@ export default function CommunityEngagementLogPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Community Engagement Log — volunteering, clubs, sports, faith groups, cultural events, leisure activities, social skills, normalisation, community safety, risk-managed activities"
+        recordType="direct_work"
+        className="mt-6"
       />
     </PageShell>
   );
