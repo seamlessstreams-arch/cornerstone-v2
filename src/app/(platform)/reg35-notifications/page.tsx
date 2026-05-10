@@ -38,6 +38,8 @@ import {
   REG35_OFSTED_RESPONSE_LABEL,
 } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── local colour maps ────────────────────────────────────────────────── */
 
@@ -120,12 +122,13 @@ export default function Reg35NotificationsPage() {
     <PageShell
       title="Reg 35 Notifications"
       subtitle="Children's Homes Regulations 2015 · Reg 40 · Statutory Notifications to Ofsted"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Reg 35 Notifications", sourceType: "general" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Reg 35 Notifications" />
           <ExportButton data={records} columns={exportCols} filename="reg35-notifications" />
           <Button size="sm" onClick={() => setShowNew(true)}><Plus className="h-4 w-4 mr-1" />Log Notification</Button>
+          <AriaStudioQuickActionButton context={{ record_type: "reg45", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -334,6 +337,12 @@ export default function Reg35NotificationsPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Reg 35 Notifications — Regulation 35 notification requirements, notifications to Ofsted, significant events, care episode notifications, regulatory reporting, compliance records"
+        recordType="reg45"
+        className="mt-6"
       />
     </PageShell>
   );

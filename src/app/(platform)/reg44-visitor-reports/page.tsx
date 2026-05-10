@@ -25,6 +25,8 @@ import { useReg44Visits, useUpdateRecommendation, useCreateVisit } from "@/hooks
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import type { Reg44VisitReport, Reg44Recommendation } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── helpers ───────────────────────────────────────────────────────────────── */
 
@@ -448,12 +450,13 @@ export default function Reg44VisitorReportsPage() {
     <PageShell
       title="Reg 44 Visitor Reports"
       subtitle="Independent Person monthly visit reports — Children's Homes Regulations 2015, Reg 44"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Reg 44 Visitor Reports", sourceType: "reg45" }}
       actions={
         <div className="flex items-center gap-2">
           <NewVisitDialog />
           <PrintButton title="Reg 44 Visitor Reports" />
           <ExportButton data={filtered} columns={exportCols} filename="reg44-visitor-reports" />
+          <AriaStudioQuickActionButton context={{ record_type: "reg45", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -673,6 +676,12 @@ export default function Reg44VisitorReportsPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Reg 44 Visitor Reports — independent visitor reports, monthly visits, children's views, staff interviews, premises inspection findings, action recommendations, RI responses, Ofsted evidence"
+        recordType="reg45"
+        className="mt-6"
       />
     </PageShell>
   );

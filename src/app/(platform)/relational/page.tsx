@@ -35,6 +35,8 @@ import {
   Eye, Zap, Ban, Hand, Mic, Users,
 } from "lucide-react";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 // ── Constants ──────────────────────────────────────────────────────────────────
 
@@ -365,7 +367,7 @@ export default function RelationalPracticePage() {
     <PageShell
       title="Relational Practice"
       subtitle="Trust moments, regulation strategies, preferred adults, and what works for each young person"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Relational Practice", sourceType: "care_plan" }}
       quickCreateContext={{ module: "young-people", defaultTaskCategory: "young_person_plans" }}
       actions={
         <div className="flex items-center gap-2">
@@ -375,6 +377,7 @@ export default function RelationalPracticePage() {
           <Button size="sm" onClick={() => setShowNew(true)} className="bg-emerald-600 hover:bg-emerald-700 text-white gap-1.5 h-8 text-xs">
             <Plus className="h-3.5 w-3.5" />Record Observation
           </Button>
+          <AriaStudioQuickActionButton context={{ record_type: "direct_work", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -545,6 +548,12 @@ export default function RelationalPracticePage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Relational Practice — staff-child relationships, key working, observations, therapeutic relationships, attachment-informed practice, relational records, Reg 45 outcomes evidence"
+        recordType="direct_work"
+        className="mt-6"
       />
     </PageShell>
   );

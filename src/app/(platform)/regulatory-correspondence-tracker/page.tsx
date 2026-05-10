@@ -40,6 +40,8 @@ import {
   REGULATORY_CORRESPONDENCE_CONFIDENTIALITY_LABEL,
 } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── local colour maps ────────────────────────────────────────────── */
 
@@ -147,11 +149,12 @@ export default function RegulatoryCorrespondenceTrackerPage() {
     <PageShell
       title="Regulatory Correspondence Tracker"
       subtitle="Quality Standard 13 (Leadership and Management) — written correspondence with all regulators and statutory partners"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Regulatory Correspondence Tracker", sourceType: "document" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={records} columns={exportCols} filename="regulatory-correspondence" />
           <PrintButton title="Regulatory Correspondence Tracker" />
+          <AriaStudioQuickActionButton context={{ record_type: "reg45", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -321,6 +324,12 @@ export default function RegulatoryCorrespondenceTrackerPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Regulatory Correspondence Tracker — Ofsted letters, LA correspondence, regulatory notices, enforcement actions, notifications sent, responses received, compliance history, Annex A evidence"
+        recordType="reg45"
+        className="mt-6"
       />
     </PageShell>
   );

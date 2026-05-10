@@ -31,6 +31,8 @@ import { useReg40StaffEntries } from "@/hooks/use-reg40-staff-entries";
 import type { Reg40StaffEntry, Reg40QualStatus } from "@/types/extended";
 import { REG40_QUAL_STATUS_LABEL } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── local config ─────────────────────────────────────────────────────── */
 
@@ -171,11 +173,12 @@ export default function Reg40StaffingPlanPage() {
     <PageShell
       title="Regulation 40 — Staffing Plan"
       subtitle="Staff deployment, qualifications coverage, minimum staffing levels, and adequacy assessment"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Regulation 40 — Staffing Plan", sourceType: "general" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={exportData} columns={exportCols} filename="reg40-staffing-plan" />
           <PrintButton title="Regulation 40 — Staffing Plan" />
+          <AriaStudioQuickActionButton context={{ record_type: "rota", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -505,6 +508,12 @@ export default function Reg40StaffingPlanPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Regulation 40 Staffing Plan — registered manager requirements, staff qualification levels, agency usage tracking, staff-to-child ratios, Reg 40 compliance evidence, Ofsted staffing standards"
+        recordType="rota"
+        className="mt-6"
       />
     </PageShell>
   );
