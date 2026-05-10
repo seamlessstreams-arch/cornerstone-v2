@@ -177,7 +177,7 @@ export default function ChildPreventRadicalisationScreeningPage() {
     <PageShell
       title="Child Prevent Radicalisation Screening"
       subtitle="Per-child Prevent duty screening — child-rights based, proportionate, and explicit about not conflating identity with risk"
-      ariaContext={{ pageTitle: "Prevent Screening", sourceType: "safeguarding" }}
+      ariaContext={{ pageTitle: "Prevent Screening", sourceType: "general" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Prevent Screening" />
