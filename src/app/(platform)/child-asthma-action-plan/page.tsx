@@ -20,6 +20,8 @@ import {
 import { cn, todayStr } from "@/lib/utils";
 import { getYPName, getStaffName } from "@/lib/seed-data";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── helpers ───────────────────────────────────────────────────────────────── */
 
@@ -101,11 +103,12 @@ export default function ChildAsthmaActionPlanPage() {
     <PageShell
       title="Child Asthma Action Plan"
       subtitle="Personal Asthma Action Plan · BTS/SIGN 158 · NICE NG80 · Quality Standard 8"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Asthma Action Plans", sourceType: "medication" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Asthma Action Plans" />
           <ExportButton data={data} columns={exportCols} filename="child-asthma-action-plan" />
+          <AriaStudioQuickActionButton context={{ record_type: "medication", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -360,6 +363,12 @@ export default function ChildAsthmaActionPlanPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Asthma Action Plans — asthma diagnosis, inhaler types, reliever/preventer, triggers, peak flow, emergency action, school sharing, review date, AHA, LAC health"
+        recordType="medication"
+        className="mt-6"
       />
     </PageShell>
   );

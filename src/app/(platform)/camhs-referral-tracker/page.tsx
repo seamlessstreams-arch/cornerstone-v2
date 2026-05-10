@@ -31,6 +31,8 @@ import type {
 import { useCamhsReferrals } from "@/hooks/use-camhs-referrals";
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── label maps ───────────────────────────────────────────────────────── */
 
@@ -182,11 +184,12 @@ export default function CamhsReferralTrackerPage() {
     <PageShell
       title="CAMHS Referral Tracker"
       subtitle="Quality Standard 7 (Health) — CAMHS referrals from initial concern to ongoing engagement"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "medication" }}
+      ariaContext={{ pageTitle: "CAMHS Referral Tracker", sourceType: "medication" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={data} columns={exportCols} filename="camhs-referrals" />
           <PrintButton title="CAMHS Referral Tracker" />
+          <AriaStudioQuickActionButton context={{ record_type: "health", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -336,6 +339,12 @@ export default function CamhsReferralTrackerPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="CAMHS Referral Tracker — CAMHS referrals, waiting times, tier levels, mental health assessment, therapeutic input, psychiatric review, crisis plan, AHA, LAC health"
+        recordType="health"
+        className="mt-6"
       />
     </PageShell>
   );

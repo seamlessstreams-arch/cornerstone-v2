@@ -30,6 +30,8 @@ import { AUTISM_DIAGNOSIS_STATUS_LABEL, AUTISM_SENSORY_PATTERN_LABEL } from "@/t
 import { useAutismPlans } from "@/hooks/use-autism-plans";
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── helpers ───────────────────────────────────────────────────────────── */
 
@@ -218,11 +220,12 @@ export default function ChildAutismSupportPlanPage() {
     <PageShell
       title="Autism Support Plans"
       subtitle="Per-child, strength-based, neurodiversity-affirming support — monotropism, sensory regulation, masking and unmasking, meltdown vs shutdown protocols"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Autism Support Plans", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Autism Support Plans" />
           <ExportButton data={exportData} columns={EXPORT_COLS} filename="autism-support-plans" />
+          <AriaStudioQuickActionButton context={{ record_type: "care_plan", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -629,6 +632,12 @@ export default function ChildAutismSupportPlanPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Autism Support Plans — ASD diagnosis, sensory needs, communication strategies, meltdown prevention, routine support, social skills, EHCP, occupational therapy, specialist support"
+        recordType="care_plan"
+        className="mt-6"
       />
     </PageShell>
   );

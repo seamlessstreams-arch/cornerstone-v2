@@ -39,6 +39,8 @@ import { ALLERGY_SEVERITY_LABEL, AAI_BRAND_LABEL } from "@/types/extended";
 import { useAllergyPlans } from "@/hooks/use-allergy-plans";
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -276,7 +278,7 @@ export default function ChildAllergiesEpipenPlanPage() {
     <PageShell
       title="Allergies & Anaphylaxis Plans"
       subtitle="Per-child BSACI allergy management — AAI/EpiPen protocol, training register and hospital plan"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Allergies & Anaphylaxis Plans", sourceType: "medication" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Allergies & Anaphylaxis Plans" />
@@ -285,6 +287,7 @@ export default function ChildAllergiesEpipenPlanPage() {
             columns={exportColumns}
             filename="child-allergies-epipen-plans"
           />
+          <AriaStudioQuickActionButton context={{ record_type: "medication", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -802,6 +805,12 @@ export default function ChildAllergiesEpipenPlanPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Allergies & Anaphylaxis Plans — allergy diagnosis, EpiPen location, auto-injector training, trigger avoidance, emergency action plan, expiry dates, AHA, LAC health, school sharing"
+        recordType="medication"
+        className="mt-6"
       />
     </PageShell>
   );

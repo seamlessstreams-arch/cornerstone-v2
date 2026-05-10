@@ -24,6 +24,8 @@ import { CARE_ANNIVERSARY_TYPE_LABEL, CARE_ANNIVERSARY_ATTITUDE_LABEL } from "@/
 import { useCareAnniversaryRecords } from "@/hooks/use-care-anniversary-records";
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── colour maps ───────────────────────────────────────────────────────── */
 
@@ -155,11 +157,12 @@ export default function ChildCareAnniversaryPage() {
     <PageShell
       title="Child Care Anniversary"
       subtitle="Per-child, child-led acknowledgement of the dates that shape a young person&apos;s care story"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Care Anniversaries", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Care Anniversaries" />
           <ExportButton data={exportRows} columns={exportCols} filename="child-care-anniversary" />
+          <AriaStudioQuickActionButton context={{ record_type: "direct_work", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -373,6 +376,12 @@ export default function ChildCareAnniversaryPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Care Anniversaries — acknowledging time in care, milestone celebrations, child participation, memory-making, normalising care experience, keywork, placement stability, Reg 45"
+        recordType="direct_work"
+        className="mt-6"
       />
     </PageShell>
   );
