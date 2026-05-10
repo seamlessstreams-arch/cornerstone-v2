@@ -29,6 +29,8 @@ import { YOUNG_PEOPLE } from "@/lib/seed-data";
 import type { RoomSearchRecord, RoomSearchType, RoomSearchStatus, RoomSearchDistressLevel, RoomSearchActionStatus } from "@/types/extended";
 import { ROOM_SEARCH_TYPE_LABEL, ROOM_SEARCH_STATUS_LABEL, ROOM_SEARCH_DISTRESS_LEVEL_LABEL, ROOM_SEARCH_ACTION_STATUS_LABEL } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── local config ────────────────────────────────────────────────────── */
 
@@ -194,7 +196,7 @@ export default function RoomSearchesPage() {
     <PageShell
       title="Room Searches Register"
       subtitle="Records all room searches conducted in the home — routine checks, intelligence-led, welfare concerns, and safeguarding"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Room Searches Register", sourceType: "general" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={records} columns={exportCols} filename="room-searches" />
@@ -202,6 +204,7 @@ export default function RoomSearchesPage() {
           <Button onClick={() => setShowDialog(true)} size="sm">
             <Plus className="h-4 w-4 mr-1" /> New Search
           </Button>
+          <AriaStudioQuickActionButton context={{ record_type: "management_oversight", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -608,6 +611,12 @@ export default function RoomSearchesPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Room Searches Register — Reg 22 room search records, lawful search authorisation, search outcomes, safeguarding evidence, proportionality, risk evidence, Reg 45 quality evidence"
+        recordType="management_oversight"
+        className="mt-6"
       />
     </PageShell>
   );

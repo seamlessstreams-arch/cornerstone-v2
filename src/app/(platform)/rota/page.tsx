@@ -24,6 +24,8 @@ import type { Shift } from "@/types";
 import { getStaffName as seedGetStaffName } from "@/lib/seed-data";
 import { toast } from "sonner";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 const SHIFT_COLORS: Record<string, string> = {
   day: "bg-emerald-100 text-emerald-800 border-emerald-200",
@@ -622,6 +624,12 @@ export default function RotaPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Staff Rota & Scheduling — shift patterns, staffing levels, agency usage, Reg 40 staffing evidence, ratio compliance, cover arrangements, handover scheduling, Ofsted staffing evidence"
+        recordType="rota"
+        className="mt-6"
       />
     </PageShell>
 
