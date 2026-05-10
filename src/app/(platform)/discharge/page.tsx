@@ -38,6 +38,8 @@ import {
 import { useDischargeRecords, useCreateDischargeRecord } from "@/hooks/use-discharge-records";
 import { toast } from "sonner";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── local helpers ─────────────────────────────────────────────────────── */
 
@@ -161,7 +163,7 @@ export default function DischargePage() {
     <PageShell
       title="Discharge & Moving On"
       subtitle="Transition planning, discharge checklists and aftercare provision"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Discharge & Moving On", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Discharge & Moving On" />
@@ -169,6 +171,7 @@ export default function DischargePage() {
           <button onClick={() => setDialogOpen(true)} className="inline-flex items-center gap-1 rounded-md bg-blue-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-blue-700">
             <Plus className="h-4 w-4" /> New Discharge Plan
           </button>
+          <AriaStudioQuickActionButton context={{ record_type: "placement_plan", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -469,6 +472,12 @@ export default function DischargePage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Discharge & Moving On — placement ending, moving on plan, step-down, after care, leaving care, Pathway Plan, personal education plan, housing, independence skills, transition support"
+        recordType="placement_plan"
+        className="mt-6"
       />
     </PageShell>
   );

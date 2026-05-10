@@ -26,6 +26,8 @@ import {
   ClipboardCheck, User, BookOpen, Loader2,
 } from "lucide-react";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 // ── Config ────────────────────────────────────────────────────────────────────
 
@@ -159,6 +161,7 @@ export default function DocumentExpiryTrackerPage() {
         <div className="flex items-center gap-2">
           <PrintButton title="Document Expiry Tracker" subtitle="Oak House — Compliance Management" />
           <ExportButton data={filtered} columns={exportCols} filename="document-expiry-tracker" />
+          <AriaStudioQuickActionButton context={{ record_type: "policy", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -362,6 +365,12 @@ export default function DocumentExpiryTrackerPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Document Expiry Tracker — staff DBS expiry, training certificates, Ofsted registration, insurance, care plan reviews, risk assessment reviews, compliance deadlines, Annex A"
+        recordType="policy"
+        className="mt-6"
       />
     </PageShell>
   );
