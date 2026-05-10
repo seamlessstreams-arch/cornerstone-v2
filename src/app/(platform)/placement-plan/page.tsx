@@ -190,7 +190,7 @@ export default function PlacementPlanPage() {
     <PageShell
       title="Placement Plans"
       subtitle="Objectives, targets, and progress tracking"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "care_plan" }}
+      ariaContext={{ pageTitle: "Placement Plans", sourceType: "care_plan" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Placement Plans" subtitle="Oak House — Care Planning" />

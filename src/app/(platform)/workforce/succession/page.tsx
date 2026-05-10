@@ -206,7 +206,7 @@ export default function SuccessionBoardPage() {
     <PageShell
       title="Succession Planning Board"
       subtitle="Role coverage, internal readiness & ARIA gap analysis"
-      ariaContext={{ pageTitle: "Oak House Workforce", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Succession Planning Board", sourceType: "staff" }}
       showQuickCreate={false}
       actions={
         <div className="flex items-center gap-2">

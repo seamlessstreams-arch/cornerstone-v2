@@ -145,7 +145,7 @@ export default function BuildingAsbestosRegisterPage() {
     <PageShell
       title="Asbestos Register & Management Plan"
       subtitle="Statutory asbestos register and management plan for the home premises — Control of Asbestos Regulations 2012 (CAR 2012). Records of survey type, location of any asbestos-containing materials (ACMs), condition rating per HSG264, encapsulation, removal records, contractor licence details, and pre-works tradesperson briefings before any drilling or disturbance work. Children's Homes Regs Reg 25 (premises) and Quality Standard 10."
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "home_check" }}
+      ariaContext={{ pageTitle: "Asbestos Register", sourceType: "home_check" }}
       actions={
         <div className="flex gap-2">
           <ExportButton data={filtered} columns={exportCols} filename="building-asbestos-register" />

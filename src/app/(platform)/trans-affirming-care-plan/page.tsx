@@ -229,7 +229,7 @@ export default function TransAffirmingCarePlanPage() {
     <PageShell
       title="Trans-Affirming Care Plans"
       subtitle="Per-child trans-affirming care plans for trans, non-binary and gender-questioning young people. Child-led pace, identity-affirming actions, family/school/community coordination, safety risk assessment, watchful-waiting clinical model. Distinct from broader LGBTQ+ inclusion records."
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "care_plan" }}
+      ariaContext={{ pageTitle: "Trans-Affirming Care Plans", sourceType: "care_plan" }}
       actions={
         <div className="flex gap-2">
           <ExportButton data={filtered} columns={exportCols} filename="trans-affirming-care-plan" />

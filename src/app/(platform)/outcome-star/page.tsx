@@ -76,7 +76,7 @@ export default function OutcomeStarPage() {
     <PageShell
       title="Outcome Star Assessments"
       subtitle="Outcomes Framework · Child-Centred Progress · 10-Domain Model"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Outcome Star Assessments", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Outcome Star Assessments" />

@@ -103,7 +103,7 @@ export default function AnnualHealthAssessmentPage() {
     <PageShell
       title="Annual Health Assessment"
       subtitle="Statutory AHA · Care Planning Regulations 2010 · Quality Standard 7"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Annual Health Assessment", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Annual Health Assessment" />

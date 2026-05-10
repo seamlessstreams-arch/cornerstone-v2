@@ -137,7 +137,7 @@ export default function RiskAssessmentsPage() {
     <PageShell
       title="Risk Assessments"
       subtitle="Individual risk assessments — triggers, mitigations, and contingency plans"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Risk Assessments", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Risk Assessments" />

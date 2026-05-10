@@ -369,7 +369,7 @@ export default function RiskRegisterPage() {
     <PageShell
       title="Risk Register"
       subtitle="Live risk tracking — young people, staff, and environment"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Risk Register", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={filtered} columns={RISK_EXPORT_COLS} filename="risk-register" />

@@ -128,7 +128,7 @@ export default function ShiftNotesPage() {
     <PageShell
       title="Shift Notes"
       subtitle="Detailed per-shift records for continuity of care across the team"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Shift Notes", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Shift Notes" />

@@ -716,7 +716,7 @@ export default function TemplatesPage() {
     <PageShell
       title="Communication Templates"
       subtitle="Safer recruitment correspondence — regulation-compliant email and letter templates"
-      ariaContext={{ pageTitle: "Oak House — Safer Recruitment Templates", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Communication Templates", sourceType: "document" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Communication Templates" subtitle="Oak House — Safer Recruitment Templates" targetId="templates-content" />

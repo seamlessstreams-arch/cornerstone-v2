@@ -128,7 +128,7 @@ export default function BuildingWindowRestrictorChecksPage() {
     <PageShell
       title="Building — Window Restrictor & High-Window Safety Checks"
       subtitle="Quarterly inspection of all upstairs and at-height windows. Restrictor functioning, key location, child awareness, no-tampering signage, school-age-appropriate locks. RoSPA falls-from-windows guidance and the 100mm aperture rule applied throughout."
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "home_check" }}
+      ariaContext={{ pageTitle: "Window Restrictor Checks", sourceType: "home_check" }}
       actions={
         <div className="flex gap-2">
           <ExportButton data={filtered} columns={exportCols} filename="building-window-restrictor-checks" />

@@ -135,7 +135,7 @@ export default function BuildingPestControlPage() {
     <PageShell
       title="Building Pest Control & Prevention"
       subtitle="Proactive routine treatments and reactive call-outs — mice, rats, ants, wasps, silverfish, bedbugs, cockroaches, moths. Child-safety-first protocols: chemical-free options first, no rodenticide indoors with children resident, transparency with young people."
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "home_check" }}
+      ariaContext={{ pageTitle: "Pest Control", sourceType: "home_check" }}
       actions={
         <div className="flex gap-2">
           <ExportButton data={filtered} columns={exportCols} filename="building-pest-control" />

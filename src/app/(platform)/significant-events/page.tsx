@@ -146,7 +146,7 @@ export default function SignificantEventsPage() {
     <PageShell
       title="Significant Events"
       subtitle="Recording and tracking important events in each child&apos;s journey"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Significant Events", sourceType: "incident" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Significant Events" />

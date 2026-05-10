@@ -100,7 +100,7 @@ export default function WorkforceHubPage() {
     <PageShell
       title="Workforce Intelligence"
       subtitle="Staff development, competency & succession — powered by ARIA"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Workforce Intelligence", sourceType: "staff" }}
       showQuickCreate={false}
       actions={
         <div className="flex items-center gap-2">

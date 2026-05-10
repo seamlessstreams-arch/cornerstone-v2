@@ -48,7 +48,7 @@ export default function AriaDevPlannerPage() {
     <PageShell
       title="ARIA Development Planner"
       subtitle="ARIA-generated personalised development plans for every staff member"
-      ariaContext={{ pageTitle: "Oak House — Staff Development Plans", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "ARIA Development Planner", sourceType: "staff" }}
       showQuickCreate={false}
       actions={
         <div className="flex items-center gap-2">

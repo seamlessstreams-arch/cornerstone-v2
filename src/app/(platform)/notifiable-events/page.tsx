@@ -485,7 +485,7 @@ export default function NotifiableEventsPage() {
     <PageShell
       title="Notifiable Events"
       subtitle="Regulation 40 — events requiring notification to Ofsted and authorities"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Notifiable Events", sourceType: "incident" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Notifiable Events" />

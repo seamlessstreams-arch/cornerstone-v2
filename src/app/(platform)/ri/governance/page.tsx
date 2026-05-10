@@ -713,7 +713,7 @@ export default function GovernanceReportsPage() {
     <PageShell
       title="Governance Reports"
       subtitle="RI oversight reports — strategic summaries, risk analysis, Reg 45 drafts"
-      ariaContext={{ pageTitle: "Oak House — RI Oversight", sourceType: "general" }}
+      ariaContext={{ pageTitle: "RI Governance", sourceType: "general" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={filtered} columns={REPORT_EXPORT_COLS} filename="governance-reports" />

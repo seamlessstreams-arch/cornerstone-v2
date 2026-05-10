@@ -134,7 +134,7 @@ export default function AdmissionsPage() {
     <PageShell
       title="Admissions & Referrals"
       subtitle="Pre-admission referrals, impact assessments, and matching decisions"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Admissions & Referrals", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Admissions & Referrals" />
