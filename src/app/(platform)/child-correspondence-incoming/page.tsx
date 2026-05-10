@@ -35,6 +35,8 @@ import {
 import { useIncomingCorrespondence } from "@/hooks/use-incoming-correspondence";
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 const senderColour: Record<CorrespondenceSenderType, string> = {
   mother: "bg-pink-100 text-pink-800",
@@ -106,11 +108,12 @@ export default function ChildCorrespondenceIncomingPage() {
     <PageShell
       title="Incoming Correspondence"
       subtitle="Mail received for children — handled with respect, reviewed only when safeguarding requires"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Incoming Correspondence", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={data} columns={exportCols} filename="child-correspondence-incoming" />
           <PrintButton title="Incoming Correspondence" />
+          <AriaStudioQuickActionButton context={{ record_type: "care_plan", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -282,6 +285,12 @@ export default function ChildCorrespondenceIncomingPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Incoming Correspondence — letters to children from family, social workers, courts, legal, LA, professionals, letterbox contact, safe opening, redaction, information sharing"
+        recordType="care_plan"
+        className="mt-6"
       />
     </PageShell>
   );

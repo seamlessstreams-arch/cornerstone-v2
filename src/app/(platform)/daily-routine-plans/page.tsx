@@ -23,6 +23,8 @@ import {
   Loader2,
 } from "lucide-react";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ─── export columns ─── */
 const exportCols: ExportColumn<DailyRoutinePlan>[] = [
@@ -68,11 +70,12 @@ export default function DailyRoutinePlansPage() {
     <PageShell
       title="Daily Routine Plans"
       subtitle="Personalised daily structures for each young person — predictability, choice, and age-appropriate independence"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Daily Routine Plans", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={records} columns={exportCols} filename="daily-routine-plans" />
           <PrintButton title="Daily Routine Plans" />
+          <AriaStudioQuickActionButton context={{ record_type: "care_plan", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -280,6 +283,12 @@ export default function DailyRoutinePlansPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Daily Routine Plans — morning routines, bedtime, meals, school, activities, structure, therapeutic parenting, predictability, trauma-informed care, child-specific routines"
+        recordType="care_plan"
+        className="mt-6"
       />
     </PageShell>
   );
