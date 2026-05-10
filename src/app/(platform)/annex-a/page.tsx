@@ -516,11 +516,13 @@ export default function AnnexAReadinessPage() {
       subtitle="Continuously inspection-ready — evidence from verified Care Events builds Annex A automatically"
       ariaContext={{ pageTitle: "Annex A Readiness Dashboard", sourceType: "reg45" }}
       actions={
-        <Button size="sm" variant="outline" onClick={() => setSnapshotOpen(true)}>
-          <Camera className="h-3.5 w-3.5 mr-1.5" />
-          Generate snapshot
-        </Button>
-        <AriaStudioQuickActionButton context={{ record_type: "annex_a", record_id: "home_oak", home_id: "home_oak" }} />
+        <div className="flex items-center gap-2">
+          <Button size="sm" variant="outline" onClick={() => setSnapshotOpen(true)}>
+            <Camera className="h-3.5 w-3.5 mr-1.5" />
+            Generate snapshot
+          </Button>
+          <AriaStudioQuickActionButton context={{ record_type: "annex_a", record_id: "home_oak", home_id: "home_oak" }} />
+        </div>
       }
     >
       {isLoading ? (
