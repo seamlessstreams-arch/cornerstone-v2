@@ -17,6 +17,8 @@ import { useKpiEntries } from "@/hooks/use-kpi-entries";
 import type { KpiEntry, KpiRag, KpiTrend, KpiCategory } from "@/types/extended";
 import { KPI_RAG_LABEL, KPI_TREND_LABEL, KPI_CATEGORY_LABEL } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── UI metadata ──────────────────────────────────────────────────────── */
 
@@ -89,11 +91,12 @@ export default function KPIDashboardPage() {
     <PageShell
       title="KPI Dashboard"
       subtitle="Ofsted-aligned key performance indicators across care quality, safeguarding, education, staffing, and compliance"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "pi_debrief" }}
+      ariaContext={{ pageTitle: "KPI Dashboard", sourceType: "general" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="KPI Dashboard" />
           <ExportButton data={kpis} columns={exportCols} filename="kpi-dashboard" />
+          <AriaStudioQuickActionButton context={{ record_type: "ofsted_evidence", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -230,6 +233,12 @@ export default function KPIDashboardPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="KPI Dashboard — Ofsted SCCIF performance indicators, RAG ratings, trends across care quality, safeguarding, education, staffing and compliance"
+        recordType="ofsted_evidence"
+        className="mt-6"
       />
     </PageShell>
   );
