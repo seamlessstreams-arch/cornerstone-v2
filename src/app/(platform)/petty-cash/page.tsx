@@ -24,6 +24,8 @@ import type { PettyCashEntry, PettyCashTransactionType, PettyCashCategory } from
 import { PETTY_CASH_TRANSACTION_TYPE_LABEL, PETTY_CASH_CATEGORY_LABEL } from "@/types/extended";
 import { usePettyCashEntries, useCreatePettyCashEntry } from "@/hooks/use-petty-cash-entries";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 // ── Category UI metadata ────────────────────────────────────────────────────
 const CATEGORY_META: Record<PettyCashCategory, { label: string; color: string }> = {
@@ -118,12 +120,13 @@ export default function PettyCashPage() {
     <PageShell
       title="Petty Cash"
       subtitle="Tracking all petty cash transactions — withdrawals, top-ups, and receipts"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Petty Cash", sourceType: "general" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Petty Cash" />
           <ExportButton data={filtered} columns={EXPORT_COLS} filename="petty-cash" />
           <Button size="sm" onClick={() => setShowNew(true)}><Plus className="h-4 w-4 mr-1" /> New Entry</Button>
+          <AriaStudioQuickActionButton context={{ record_type: "task", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -300,6 +303,12 @@ export default function PettyCashPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Petty Cash — cash transactions, receipts, pocket money, activities spending, clothing allowance, emergency funds, reconciliation, float balance, financial accountability, Reg 44 evidence"
+        recordType="task"
+        className="mt-6"
       />
     </PageShell>
   );

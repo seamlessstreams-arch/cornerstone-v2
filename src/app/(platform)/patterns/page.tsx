@@ -38,6 +38,8 @@ import {
   TrendingDown, Zap, BookOpen, RefreshCw, X,
 } from "lucide-react";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 // ── Constants ──────────────────────────────────────────────────────────────────
 
@@ -445,7 +447,7 @@ export default function PatternAlertsPage() {
     <PageShell
       title="Pattern Alerts"
       subtitle="ARIA-detected behavioural & environmental patterns"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Pattern Alerts", sourceType: "general" }}
       actions={
         <div className="flex items-center gap-2">
           <Button
@@ -459,6 +461,7 @@ export default function PatternAlertsPage() {
           </Button>
           <ExportButton data={filtered} columns={PATTERN_EXPORT_COLS} filename="pattern-alerts" />
           <PrintButton title="Pattern Alerts" subtitle="Oak House — ARIA Pattern Detection" />
+          <AriaStudioQuickActionButton context={{ record_type: "management_oversight", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -640,6 +643,12 @@ export default function PatternAlertsPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Pattern Alerts — ARIA pattern detection, behaviour trends, incident patterns, missing episodes patterns, safeguarding themes, risk escalation signals, Reg 45 intelligence evidence"
+        recordType="management_oversight"
+        className="mt-6"
       />
     </PageShell>
   );

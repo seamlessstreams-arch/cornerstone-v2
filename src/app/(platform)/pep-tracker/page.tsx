@@ -24,6 +24,8 @@ import type { PepRecord, PepStatus, PepAttainmentLevel, PepProgress, PepSenStatu
 import { PEP_STATUS_LABEL, PEP_ATTAINMENT_LEVEL_LABEL, PEP_PROGRESS_LABEL, PEP_SEN_STATUS_LABEL, PEP_ACTION_STATUS_LABEL } from "@/types/extended";
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── helpers ───────────────────────────────────────────────────────────────── */
 
@@ -130,12 +132,13 @@ export default function PepTrackerPage() {
     <PageShell
       title="PEP Tracker"
       subtitle="Personal Education Plans · Pupil Premium · Educational Attainment"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "PEP Tracker", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="PEP Tracker" />
           <ExportButton data={exportData} columns={exportCols} filename="pep-tracker" />
           <Button onClick={() => setShowNew(true)}><Plus className="h-4 w-4 mr-1" />New PEP</Button>
+          <AriaStudioQuickActionButton context={{ record_type: "education", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -411,6 +414,12 @@ export default function PepTrackerPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="PEP Tracker — Personal Education Plans, school attendance, attainment, virtual school head, designated teacher, exclusions, PEP reviews, education targets, Annex A evidence"
+        recordType="education"
+        className="mt-6"
       />
       <Dialog open={showNew} onOpenChange={setShowNew}>
         <DialogContent className="max-w-md">

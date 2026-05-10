@@ -44,6 +44,8 @@ import {
   PEER_GROUP_ATMOSPHERE_LABEL,
 } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── colour maps ──────────────────────────────────────────────────────── */
 
@@ -192,7 +194,7 @@ export default function PeerRelationshipsPage() {
     <PageShell
       title="Peer Relationships"
       subtitle="Peer dynamic mapping, group living assessments and relationship tracking"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Peer Relationships", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Peer Relationships" />
@@ -200,6 +202,7 @@ export default function PeerRelationshipsPage() {
           <button onClick={() => setDialogOpen(true)} className="inline-flex items-center gap-1 rounded-md bg-blue-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-blue-700">
             <Plus className="h-4 w-4" /> Log Entry
           </button>
+          <AriaStudioQuickActionButton context={{ record_type: "direct_work", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -423,6 +426,12 @@ export default function PeerRelationshipsPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Peer Relationships — friendships, peer dynamics, conflict, bullying, positive relationships, peer group concerns, peer support, social development, care plan evidence, Reg 45"
+        recordType="direct_work"
+        className="mt-6"
       />
     </PageShell>
   );
