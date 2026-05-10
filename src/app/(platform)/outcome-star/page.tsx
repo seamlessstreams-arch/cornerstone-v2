@@ -17,6 +17,8 @@ import type { OutcomeStarAssessment, OutcomeStarDomain } from "@/types/extended"
 import { OUTCOME_STAR_DOMAIN_LABEL } from "@/types/extended";
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── helpers ───────────────────────────────────────────────────────────────── */
 
@@ -79,10 +81,18 @@ export default function OutcomeStarPage() {
         <div className="flex items-center gap-2">
           <PrintButton title="Outcome Star Assessments" />
           <ExportButton data={exportData} columns={exportCols} filename="outcome-star" />
+          <AriaStudioQuickActionButton context={{ record_type: "direct_work", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
       <div id="print-area">
+        <AriaPanel
+          mode="assist"
+          pageContext="Outcome Star Assessments — 10-domain outcomes framework, child-centred progress measurement, LAC review evidence, care planning"
+          recordType="direct_work"
+          userRole="registered_manager"
+          className="mb-6"
+        />
         {/* per-child summary cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
           {entries.map((a) => {

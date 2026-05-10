@@ -31,6 +31,7 @@ import { cn, formatDate, todayStr } from "@/lib/utils";
 import { getStaffName, getYPName } from "@/lib/seed-data";
 import { api } from "@/hooks/use-api";
 import { SmartUploadButton } from "@/components/documents/smart-upload-button";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 import { PrintButton } from "@/components/common/print-button";
 import { EmptyState } from "@/components/ui/empty-state";
 import { AriaPanel } from "@/components/aria/aria-panel";
@@ -864,6 +865,7 @@ export default function MissingFromCarePage() {
         <div className="flex items-center gap-2">
           <PrintButton title="Missing from Care Log" subtitle="Oak House — Missing Episodes & Return Interviews" targetId="mfc-content" />
           <SmartUploadButton variant="inline" label="Upload Document" uploadContext="Missing From Care — return interview or episode upload" />
+          <AriaStudioQuickActionButton context={{ record_type: "missing_from_care", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >

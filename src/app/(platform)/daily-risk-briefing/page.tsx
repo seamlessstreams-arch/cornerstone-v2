@@ -16,6 +16,7 @@ import { useDailyRiskBriefings } from "@/hooks/use-daily-risk-briefings";
 import type { DailyRiskBriefing, ChildRiskEntry, DailyAlert, DailyContact, DailyRiskLevel } from "@/types/extended";
 import { DAILY_RISK_LEVEL_LABEL } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── helpers ───────────────────────────────────────────────────────────────── */
 
@@ -36,7 +37,7 @@ const AlertIconComponent = ({ severity }: { severity: string }) =>
 export default function DailyRiskBriefingPage() {
   const { data: res, isLoading } = useDailyRiskBriefings();
   const briefings = res?.data ?? [];
-  const [shift] = useState<"day" | "night">("day");
+  const [shift, setShift] = useState<"day" | "night">("day");
 
   if (isLoading) return <PageShell title="Daily Risk Briefing" subtitle="Loading…"><div className="flex items-center justify-center py-12"><Loader2 className="h-8 w-8 animate-spin text-muted-foreground" /></div></PageShell>;
 
@@ -52,14 +53,39 @@ export default function DailyRiskBriefingPage() {
       title="Daily Risk Briefing"
       subtitle={`${today} · ${shift === "day" ? "Day Shift" : "Waking Night"} · Handover & Risk Summary`}
       ariaContext={{ pageTitle: "Daily Risk Briefing", sourceType: "general" }}
-      actions={<PrintButton title="Daily Risk Briefing" />}
+      actions={
+        <div className="flex items-center gap-2">
+          <div className="flex items-center rounded-lg border overflow-hidden">
+            <button
+              onClick={() => setShift("day")}
+              className={cn(
+                "px-3 py-1.5 text-xs font-medium flex items-center gap-1.5 transition-colors",
+                shift === "day" ? "bg-amber-100 text-amber-800" : "bg-white text-slate-500 hover:bg-slate-50"
+              )}
+            >
+              <Sun className="h-3.5 w-3.5" /> Day
+            </button>
+            <button
+              onClick={() => setShift("night")}
+              className={cn(
+                "px-3 py-1.5 text-xs font-medium flex items-center gap-1.5 transition-colors border-l",
+                shift === "night" ? "bg-blue-100 text-blue-800" : "bg-white text-slate-500 hover:bg-slate-50"
+              )}
+            >
+              <Moon className="h-3.5 w-3.5" /> Night
+            </button>
+          </div>
+          <PrintButton title="Daily Risk Briefing" />
+          <AriaStudioQuickActionButton context={{ record_type: "daily_log", record_id: "home_oak", home_id: "home_oak" }} />
+        </div>
+      }
     >
       <div id="print-area">
         {/* shift info */}
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-6 flex items-start gap-2">
           {shift === "day" ? <Sun className="h-5 w-5 text-amber-500 shrink-0 mt-0.5" /> : <Moon className="h-5 w-5 text-blue-600 shrink-0 mt-0.5" />}
           <div className="text-sm">
-            <p className="font-semibold text-blue-800">Day Shift Briefing — {today}</p>
+            <p className="font-semibold text-blue-800">{shift === "day" ? "Day Shift" : "Waking Night"} Briefing — {today}</p>
             <p className="text-blue-700">
               Shift Leader: {briefing ? getStaffName(briefing.shift_leader) : "—"} ·
               Staff on shift: {briefing ? briefing.staff_on_shift.map(getStaffName).join(", ") : "—"} ·

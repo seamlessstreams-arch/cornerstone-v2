@@ -26,6 +26,7 @@ import { useAuthContext } from "@/contexts/auth-context";
 import { SmartUploadButton } from "@/components/documents/smart-upload-button";
 import { PrintButton } from "@/components/common/print-button";
 import { ExportButton, type ExportColumn } from "@/components/common/export-button";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 import NextLink from "next/link";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
 
@@ -1570,6 +1571,7 @@ export default function SafeguardingPage() {
           <ExportButton data={openSafeguarding} columns={SAFEGUARDING_EXPORT_COLS} filename="safeguarding-concerns" />
           <PrintButton title="Safeguarding Records" subtitle="Oak House — Safeguarding & Child Protection" targetId="safeguarding-content" />
           <SmartUploadButton variant="inline" label="Upload Document" uploadContext="Safeguarding — evidence upload" />
+          <AriaStudioQuickActionButton context={{ record_type: "safeguarding", record_id: "home_oak", home_id: "home_oak" }} />
           <Button size="sm" className="bg-rose-600 hover:bg-rose-700">
             <Plus className="h-3.5 w-3.5" />
             Log Concern

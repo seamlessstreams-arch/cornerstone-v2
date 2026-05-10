@@ -44,6 +44,7 @@ import { useAuthContext } from "@/contexts/auth-context";
 import { toast } from "sonner";
 import Link from "next/link";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 // ── Status / priority colours ─────────────────────────────────────────────────
 
@@ -325,6 +326,9 @@ export default function ManagementOversightPage() {
       title="Management Oversight Queue"
       subtitle="Care events and tasks requiring manager review, verification or sign-off"
       ariaContext={{ pageTitle: "Management Oversight Queue", sourceType: "general" }}
+      actions={
+        <AriaStudioQuickActionButton context={{ record_type: "management_oversight", record_id: "home_oak", home_id: "home_oak" }} />
+      }
     >
       <AriaPanel
         mode="oversee"
