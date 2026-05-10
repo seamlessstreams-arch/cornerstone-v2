@@ -15,6 +15,8 @@ import { useLocalOfferSections } from "@/hooks/use-local-offer-sections";
 import type { LocalOfferSection, LocalOfferCategory } from "@/types/extended";
 import { LOCAL_OFFER_CATEGORY_LABEL } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── helpers ───────────────────────────────────────────────────────────────── */
 
@@ -51,9 +53,13 @@ export default function LocalOfferPage() {
     <PageShell
       title="Local Offer"
       subtitle="What Oak House Offers · Our Strengths · Our Commitments"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
-      actions={<PrintButton title="Oak House — Local Offer" />}
-    >
+      ariaContext={{ pageTitle: "Local Offer", sourceType: "child_record" }}
+      actions={
+        <div className="flex items-center gap-2">
+          <PrintButton title="Oak House — Local Offer" />
+          <AriaStudioQuickActionButton context={{ record_type: "ofsted_evidence", record_id: "home_oak", home_id: "home_oak" }} />
+        </div>
+      }>
       <div id="print-area">
         {/* intro */}
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
@@ -179,6 +185,12 @@ export default function LocalOfferPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Local Offer — what Oak House provides to children and families, care commitments, education, health, therapeutic services, activities, community links, independence, workforce"
+        recordType="ofsted_evidence"
+        className="mt-6"
       />
     </PageShell>
   );

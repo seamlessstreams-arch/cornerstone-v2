@@ -9,6 +9,8 @@ import { cn } from "@/lib/utils";
 import { ChevronDown, ChevronUp, ArrowUpDown, Briefcase, Heart, Star, Wallet, Clock } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 interface YpJob {
   id: string;
@@ -108,7 +110,13 @@ export default function YoungPersonJobTrackerPage() {
   return (
     <PageShell title="Young Person Job Tracker" subtitle="Part-time work, volunteering, and apprenticeships — supporting independence, identity, and earnings"
       ariaContext={{ pageTitle: "Young Person Job Tracker", sourceType: "child_record" }}
-      actions={<div className="flex items-center gap-2"><ExportButton data={data} columns={exportCols} filename="young-person-jobs" /><PrintButton title="Young Person Jobs" /></div>}>
+      actions={
+        <div className="flex items-center gap-2">
+          <ExportButton data={data} columns={exportCols} filename="young-person-jobs" />
+          <PrintButton title="Young Person Jobs" />
+          <AriaStudioQuickActionButton context={{ record_type: "direct_work", record_id: "home_oak", home_id: "home_oak" }} />
+        </div>
+      }>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
         <div className="rounded-xl border bg-white p-4 text-center"><p className="text-2xl font-bold">{total}</p><p className="text-xs text-muted-foreground">Active Jobs</p></div>
         <div className="rounded-xl border bg-white p-4 text-center"><p className="text-2xl font-bold text-green-600">{active}</p><p className="text-xs text-muted-foreground">Currently Working</p></div>
@@ -153,6 +161,12 @@ export default function YoungPersonJobTrackerPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Young Person Job Tracker — part-time work, volunteering, apprenticeships, legal checks, work permits, LA consent, earnings, school impact, independence development"
+        recordType="direct_work"
+        className="mt-6"
       />
     </PageShell>
   );
