@@ -27,6 +27,8 @@ import { useAgencyStaffLog, useCreateAgencyStaffRecord } from "@/hooks/use-agenc
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import type { AgencyVettingStatus, AgencyBookingReason, AgencyStaffRecord } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── helpers ───────────────────────────────────────────────────────────────── */
 
@@ -154,11 +156,12 @@ export default function AgencyStaffLogPage() {
     <PageShell
       title="Agency Staff Log"
       subtitle="Reg 32 · Fitness of Workers · Safer Recruitment · Agency Vetting"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "staff" }}
+      ariaContext={{ pageTitle: "Agency Staff Log", sourceType: "staff" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Agency Staff Log" />
           <ExportButton data={records} columns={exportCols} filename="agency-staff-log" />
+          <AriaStudioQuickActionButton context={{ record_type: "rota", record_id: "home_oak", home_id: "home_oak" }} />
           <Button size="sm" onClick={() => setShowNew(true)}><Plus className="h-4 w-4 mr-1" />Log Agency Shift</Button>
         </div>
       }
@@ -398,6 +401,12 @@ export default function AgencyStaffLogPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Agency Staff Log — agency worker bookings, hours worked, induction status, performance concerns, overspend, cost tracking, safe staffing ratios, Reg 44 evidence"
+        recordType="rota"
+        className="mt-6"
       />
     </PageShell>
   );

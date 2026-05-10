@@ -35,6 +35,8 @@ import type {
   ADRObjective,
 } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── helpers ───────────────────────────────────────────────────────────────── */
 
@@ -92,11 +94,12 @@ export default function AnnualDevelopmentReviewsPage() {
     <PageShell
       title="Annual Development Reviews"
       subtitle="Staff Appraisals · Professional Development · Performance Management"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Annual Development Reviews", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Annual Development Reviews" />
           <ExportButton data={data} columns={exportCols} filename="annual-development-reviews" />
+          <AriaStudioQuickActionButton context={{ record_type: "care_plan", record_id: "home_oak", home_id: "home_oak" }} />
           <Button size="sm" onClick={() => setShowNew(true)}><Plus className="h-4 w-4 mr-1" />Schedule Review</Button>
         </div>
       }
@@ -336,6 +339,12 @@ export default function AnnualDevelopmentReviewsPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Annual Development Reviews — LAC review, IRO-chaired reviews, looked-after child review, placement plan updates, care plan amendments, Reg 36 reviews, Annex A evidence"
+        recordType="care_plan"
+        className="mt-6"
       />
     </PageShell>
   );

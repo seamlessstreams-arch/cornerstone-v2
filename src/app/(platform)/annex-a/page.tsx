@@ -62,6 +62,8 @@ import { useReg45Evidence } from "@/hooks/use-compliance-evidence";
 import { toast } from "sonner";
 import type { ManagerDecision } from "@/types/care-events";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 // ── Period activity stat tile ─────────────────────────────────────────────────
 
@@ -518,6 +520,7 @@ export default function AnnexAReadinessPage() {
           <Camera className="h-3.5 w-3.5 mr-1.5" />
           Generate snapshot
         </Button>
+        <AriaStudioQuickActionButton context={{ record_type: "annex_a", record_id: "home_oak", home_id: "home_oak" }} />
       }
     >
       {isLoading ? (
@@ -888,6 +891,12 @@ export default function AnnexAReadinessPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Annex A Readiness Dashboard — inspection readiness, children and staff information, incidents, restraints, complaints, missing episodes, Ofsted evidence, SCCIF"
+        recordType="annex_a"
+        className="mt-6"
       />
     </PageShell>
   );
