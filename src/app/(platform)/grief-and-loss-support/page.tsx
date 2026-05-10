@@ -25,6 +25,8 @@ import { LOSS_TYPE_LABEL } from "@/types/extended";
 import { useGriefRecords } from "@/hooks/use-grief-records";
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── constants ────────────────────────────────────────────────────────── */
 
@@ -113,11 +115,12 @@ export default function GriefAndLossSupportPage() {
     <PageShell
       title="Grief & Loss Support"
       subtitle="Bereavement, separation, placement loss, pet loss and identity loss — supporting each child individually"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Grief & Loss Support", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Grief & Loss Support" />
           <ExportButton data={data} columns={EXPORT_COLS} filename="grief-and-loss-support" />
+          <AriaStudioQuickActionButton context={{ record_type: "care_plan", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -339,6 +342,12 @@ export default function GriefAndLossSupportPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Grief & Loss Support — bereavement, loss of family contact, placement loss, pet loss, therapeutic support, CAMHS referral, loss and attachment, life story, memorial activities"
+        recordType="care_plan"
+        className="mt-6"
       />
     </PageShell>
   );

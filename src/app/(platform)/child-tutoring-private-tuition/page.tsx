@@ -38,6 +38,8 @@ import {
 import { useTutoringRecords } from "@/hooks/use-tutoring-records";
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 const motivationColour: Record<TutoringMotivation, string> = {
   high: "bg-emerald-100 text-emerald-800",
@@ -140,11 +142,12 @@ export default function ChildTutoringPrivateTuitionPage() {
     <PageShell
       title="Tutoring & Private Tuition"
       subtitle="Per-child academic support — closing the attainment gap with intentional, funded, monitored tuition"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Tutoring & Private Tuition", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={items} columns={exportCols} filename="child-tutoring" />
           <PrintButton title="Tutoring & Private Tuition" />
+          <AriaStudioQuickActionButton context={{ record_type: "education", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -437,6 +440,12 @@ export default function ChildTutoringPrivateTuitionPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Tutoring & Private Tuition — catch-up support, maths/English tutoring, exam preparation, SEND support, LAC education entitlement, PEP targets, virtual school head, attainment"
+        recordType="education"
+        className="mt-6"
       />
     </PageShell>
   );

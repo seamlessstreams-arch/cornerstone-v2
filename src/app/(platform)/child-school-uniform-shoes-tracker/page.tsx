@@ -34,6 +34,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 const exportCols: ExportColumn<UniformRecord>[] = [
   { header: "Young Person", accessor: (r) => getYPName(r.child_id) },
@@ -127,11 +129,12 @@ export default function ChildSchoolUniformShoesTrackerPage() {
     <PageShell
       title="School Uniform & Shoes Tracker"
       subtitle="Per-child school clothing — uniform, PE kit, shoes, trainers, outerwear. Sensory considerations, child-chosen styles, growth tracking, sustainable funding (Pupil Premium Plus, Virtual School grant, leaving care fund, school uniform exchange)."
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "School Uniform & Shoes Tracker", sourceType: "child_record" }}
       actions={
         <div className="flex gap-2">
           <ExportButton data={filtered} columns={exportCols} filename="child-school-uniform-shoes-tracker" />
           <PrintButton title="School Uniform & Shoes Tracker" />
+          <AriaStudioQuickActionButton context={{ record_type: "education", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -307,6 +310,12 @@ export default function ChildSchoolUniformShoesTrackerPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="School Uniform & Shoes Tracker — LAC clothing allowance for school, uniform purchases, shoe sizes, seasonal replacements, PE kit, budget spent, school readiness"
+        recordType="education"
+        className="mt-6"
       />
     </PageShell>
   );

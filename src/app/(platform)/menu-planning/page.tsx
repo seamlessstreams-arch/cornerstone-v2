@@ -25,6 +25,8 @@ import { STAFF } from "@/lib/seed-data";
 import type { MealPlan, MealType, DietaryFlag, MealChildPreference } from "@/types/extended";
 import { MEAL_TYPE_LABEL, DIETARY_FLAG_LABEL } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 const MEAL_META: Record<MealType, { label: string; icon: React.ReactNode; time: string }> = {
   breakfast: { label: "Breakfast", icon: <Clock className="h-4 w-4" />,               time: "7:30 AM" },
@@ -124,11 +126,12 @@ export default function MenuPlanningPage() {
     <PageShell
       title="Menu Planning"
       subtitle="Nutritious meals, dietary needs, and children&apos;s food preferences"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Menu Planning", sourceType: "home_check" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Menu Planning" />
           <ExportButton data={filtered} columns={EXPORT_COLS} filename="menu-planning" />
+          <AriaStudioQuickActionButton context={{ record_type: "ofsted_evidence", record_id: "home_oak", home_id: "home_oak" }} />
           <Button size="sm" onClick={() => setShowNew(true)}><Plus className="h-4 w-4 mr-1" /> Add Meal</Button>
         </div>
       }
@@ -341,6 +344,12 @@ export default function MenuPlanningPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Menu Planning — weekly menus, dietary requirements, cultural food needs, allergies, balanced nutrition, halal/vegetarian, children's preferences, Reg 44 evidence, food hygiene"
+        recordType="ofsted_evidence"
+        className="mt-6"
       />
     </PageShell>
   );
