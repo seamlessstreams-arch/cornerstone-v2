@@ -41,6 +41,8 @@ import {
   OFSTED_ACTION_STATUS_LABEL,
 } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── helpers ─────────────────────────────────────────────────────────── */
 const d = (n: number) => {
@@ -207,7 +209,7 @@ export default function OfstedActionPlanPage() {
     <PageShell
       title="Ofsted Action Plan"
       subtitle="Tracking responses to inspection requirements, recommendations, and areas for improvement"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Ofsted Action Plan", sourceType: "general" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Ofsted Action Plan" />
@@ -215,6 +217,7 @@ export default function OfstedActionPlanPage() {
           <Button onClick={() => setShowNew(true)}>
             <Plus className="h-4 w-4 mr-2" /> Add Action
           </Button>
+          <AriaStudioQuickActionButton context={{ record_type: "ofsted_evidence", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >

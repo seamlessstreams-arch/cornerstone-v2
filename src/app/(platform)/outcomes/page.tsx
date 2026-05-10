@@ -38,6 +38,8 @@ import {
   ChevronRight, Loader2, Eye, Search, ArrowUpDown,
 } from "lucide-react";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 const OUTCOME_EXPORT_COLS: ExportColumn<OutcomeTarget>[] = [
   { header: "Young Person", accessor: (t) => getYPName(t.child_id) },
@@ -916,7 +918,7 @@ export default function OutcomesPage() {
     <PageShell
       title="Outcomes Tracker"
       subtitle="Are children making progress? — Care plan targets, reviews and voice of the child"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Outcomes Tracker", sourceType: "child_record" }}
       showQuickCreate={false}
       actions={
         <div className="flex items-center gap-2">
@@ -926,6 +928,7 @@ export default function OutcomesPage() {
             <Plus className="h-3.5 w-3.5" />
             New Target
           </Button>
+          <AriaStudioQuickActionButton context={{ record_type: "care_plan", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -1141,6 +1144,12 @@ export default function OutcomesPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Outcomes Tracker — SMART targets, care goals, wellbeing outcomes, education outcomes, health outcomes, independence skills, placement aims, review progress, Reg 45 outcomes evidence"
+        recordType="care_plan"
+        className="mt-6"
       />
     </PageShell>
   );

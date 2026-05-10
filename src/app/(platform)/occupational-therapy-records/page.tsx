@@ -29,6 +29,8 @@ import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import type { OccupationalTherapyRecord, OtSessionType, OtRecommendation } from "@/types/extended";
 import { OT_SESSION_TYPE_LABEL } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── helpers ───────────────────────────────────────────────────────────── */
 
@@ -238,7 +240,7 @@ export default function OccupationalTherapyRecordsPage() {
     <PageShell
       title="Occupational Therapy Records"
       subtitle="OT input per child — assessments, recommendations, sensory diets and progress (QS 7)"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Occupational Therapy Records", sourceType: "care_plan" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Occupational Therapy Records" />
@@ -247,6 +249,7 @@ export default function OccupationalTherapyRecordsPage() {
             columns={EXPORT_COLS}
             filename="occupational-therapy-records"
           />
+          <AriaStudioQuickActionButton context={{ record_type: "health", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -525,6 +528,12 @@ export default function OccupationalTherapyRecordsPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Occupational Therapy Records — OT assessment, sensory processing, fine motor skills, daily living skills, adaptive equipment, OT referrals, therapy goals, progress, care plan evidence"
+        recordType="health"
+        className="mt-6"
       />
     </PageShell>
   );

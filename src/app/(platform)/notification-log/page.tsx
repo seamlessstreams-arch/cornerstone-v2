@@ -22,6 +22,8 @@ import { getStaffName } from "@/lib/seed-data";
 import { useNotificationLog } from "@/hooks/use-notification-log";
 import type { NotificationLogEntry } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 const RECIPIENTS = ["Ofsted", "Placing Authority", "LADO", "Police"] as const;
 
@@ -116,11 +118,12 @@ export default function NotificationLogPage() {
     <PageShell
       title="Notification Log"
       subtitle="Statutory notifications to regulatory bodies — tracking compliance with Regulation 40 and related requirements"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Notification Log", sourceType: "general" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Notification Log" />
           <ExportButton data={filtered} columns={exportCols} filename="notification-log" />
+          <AriaStudioQuickActionButton context={{ record_type: "management_oversight", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -379,6 +382,12 @@ export default function NotificationLogPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Notification Log — Regulation 40 notifications, serious incident notifications, Ofsted notifications, local authority notifications, statutory duty notifications, regulatory compliance"
+        recordType="management_oversight"
+        className="mt-6"
       />
     </PageShell>
   );

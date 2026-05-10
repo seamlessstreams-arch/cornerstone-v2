@@ -38,6 +38,8 @@ import type {
 import { ONLINE_SAFETY_INCIDENT_CATEGORY_LABEL, ONLINE_SAFETY_SEVERITY_LABEL, ONLINE_SAFETY_INCIDENT_STATUS_LABEL } from "@/types/extended";
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── display maps ─────────────────────────────────────────────────────── */
 
@@ -179,7 +181,7 @@ export default function OnlineSafetyPage() {
     <PageShell
       title="Online Safety"
       subtitle="Digital safeguarding — incidents, agreements and monitoring"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Online Safety", sourceType: "incident" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={exportData} columns={exportCols} filename="online-safety" />
@@ -187,6 +189,7 @@ export default function OnlineSafetyPage() {
           <button onClick={() => setShowDialog(true)} className="inline-flex items-center gap-1 rounded-md bg-brand px-3 py-1.5 text-sm font-medium text-white hover:bg-brand/90">
             <Plus className="h-4 w-4" /> Log Incident
           </button>
+          <AriaStudioQuickActionButton context={{ record_type: "safeguarding", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -392,6 +395,12 @@ export default function OnlineSafetyPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Online Safety — internet safety incidents, cyberbullying, inappropriate content, social media concerns, gaming concerns, sexting, online grooming, exploitation risk, safeguarding, Reg 45"
+        recordType="safeguarding"
+        className="mt-6"
       />
     </PageShell>
   );

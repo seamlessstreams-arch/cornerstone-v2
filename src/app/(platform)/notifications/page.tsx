@@ -35,6 +35,8 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 // ── Config ────────────────────────────────────────────────────────────────────
 
@@ -154,11 +156,12 @@ export default function NotificationsPage() {
     <PageShell
       title="Notifications & Alerts"
       subtitle="System alerts, deadlines, and action items"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Notifications", sourceType: "general" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Notifications" />
           <ExportButton data={filtered} columns={exportCols} filename="notifications" />
+          <AriaStudioQuickActionButton context={{ record_type: "task", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -378,6 +381,12 @@ export default function NotificationsPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Notifications — system alerts, task reminders, review deadlines, incident alerts, management notifications, regulatory deadlines, in-app notifications, action required"
+        recordType="task"
+        className="mt-6"
       />
     </PageShell>
   );
