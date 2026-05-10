@@ -40,6 +40,8 @@ import {
   FEE_PAYMENT_METHOD_LABEL,
 } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 const STATUS_COLOUR: Record<FeeStatus, string> = {
   pending_approval: "bg-amber-100 text-amber-800",
@@ -109,11 +111,12 @@ export default function ProfessionalFeesLogPage() {
     <PageShell
       title="Professional Fees Log"
       subtitle="Records of payments to external practitioners — therapists, advocates, coaches, tutors, mentors"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Professional Fees Log", sourceType: "document" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={records} columns={exportCols} filename="professional-fees-log" />
           <PrintButton title="Professional Fees Log" />
+          <AriaStudioQuickActionButton context={{ record_type: "ofsted_evidence", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -291,6 +294,12 @@ export default function ProfessionalFeesLogPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Professional Fees Log — CAMHS fees, therapy costs, educational psychology, solicitor costs, court fees, medical reports, consultant invoices, financial governance"
+        recordType="ofsted_evidence"
+        className="mt-6"
       />
     </PageShell>
   );

@@ -22,6 +22,8 @@ import {
   Home, Users, Award, TrendingUp, Loader2,
 } from "lucide-react";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 // ── Config ────────────────────────────────────────────────────────────────────
 
@@ -122,11 +124,12 @@ export default function PositiveAchievementsPage() {
     <PageShell
       title="Positive Achievements"
       subtitle="Celebrating strengths, progress, and moments of pride"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Positive Achievements", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Positive Achievements" />
           <ExportButton data={filtered} columns={exportCols} filename="positive-achievements" />
+          <AriaStudioQuickActionButton context={{ record_type: "direct_work", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -293,6 +296,12 @@ export default function PositiveAchievementsPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Positive Achievements — celebrating children's successes, certificates, awards, milestones, first times, progress, strengths-based practice, Reg 45 positive outcomes evidence"
+        recordType="direct_work"
+        className="mt-6"
       />
     </PageShell>
   );

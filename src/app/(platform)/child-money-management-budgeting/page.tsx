@@ -30,6 +30,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 const exportCols: ExportColumn<MoneyRecord>[] = [
   { header: "Young Person", accessor: (r) => getYPName(r.child_id) },
@@ -110,11 +112,12 @@ export default function ChildMoneyManagementBudgetingPage() {
     <PageShell
       title="Money Management & Budgeting"
       subtitle="Per-child practical money management — bank app fluency, weekly budget, payslip reading, scam recognition, BNPL risks, comparison shopping, debt awareness. Critical preparation for leaving care."
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Money Management & Budgeting", sourceType: "child_record" }}
       actions={
         <div className="flex gap-2">
           <ExportButton data={filtered} columns={exportCols} filename="child-money-management-budgeting" />
           <PrintButton title="Money Management & Budgeting" />
+          <AriaStudioQuickActionButton context={{ record_type: "direct_work", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -290,6 +293,12 @@ export default function ChildMoneyManagementBudgetingPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Money Management & Budgeting — pocket money, savings, spending records, independent living skills, financial education, benefit transitions, Pathway Plan finance, LAC entitlements"
+        recordType="direct_work"
+        className="mt-6"
       />
     </PageShell>
   );
