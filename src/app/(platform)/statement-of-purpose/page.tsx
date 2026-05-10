@@ -13,6 +13,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── types ───────────────────────────────────────────────────────────── */
 interface SoPSection {
@@ -134,10 +136,11 @@ export default function StatementOfPurposePage() {
     <PageShell
       title="Statement of Purpose"
       subtitle="Regulation 16 — The home's aims, objectives, and operational details"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Statement of Purpose", sourceType: "document" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Statement of Purpose — Oak House" />
+          <AriaStudioQuickActionButton context={{ record_type: "ofsted_evidence", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -255,6 +258,12 @@ export default function StatementOfPurposePage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Statement of Purpose — Reg 16, home description, ethos, capacity, age range, staffing, care provided, behaviour management, complaints, review schedule, Ofsted submission"
+        recordType="ofsted_evidence"
+        className="mt-6"
       />
     </PageShell>
   );

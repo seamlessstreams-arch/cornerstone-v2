@@ -9,6 +9,8 @@ import { cn } from "@/lib/utils";
 import { ChevronDown, ChevronUp, ArrowUpDown, Heart, Shield, AlertCircle, CheckCircle, Users } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 interface YoungCarerRecord {
   id: string;
@@ -195,8 +197,8 @@ export default function YoungCarerStatusPage() {
     <PageShell
       title="Young Carer Status"
       subtitle="Identifying and supporting children with caring responsibilities — past, present, or risk-of"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
-      actions={<div className="flex items-center gap-2"><ExportButton data={data} columns={exportCols} filename="young-carer-status" /><PrintButton title="Young Carer Status" /></div>}>
+      ariaContext={{ pageTitle: "Young Carer Status", sourceType: "child_record" }}
+      actions={<div className="flex items-center gap-2"><ExportButton data={data} columns={exportCols} filename="young-carer-status" /><PrintButton title="Young Carer Status" /><AriaStudioQuickActionButton context={{ record_type: "care_plan", record_id: "home_oak", home_id: "home_oak" }} /></div>}>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
         <div className="rounded-xl border bg-white p-4 text-center"><p className="text-2xl font-bold">{total}</p><p className="text-xs text-muted-foreground">Records</p></div>
         <div className="rounded-xl border bg-white p-4 text-center"><p className="text-2xl font-bold text-amber-600">{identified}/{total}</p><p className="text-xs text-muted-foreground">Carer Status Identified</p></div>
@@ -255,6 +257,12 @@ export default function YoungCarerStatusPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Young Carer Status — children with caring responsibilities for a parent or sibling, carer support, school impact, LA assessment, respite, plan, wellbeing"
+        recordType="care_plan"
+        className="mt-6"
       />
     </PageShell>
   );

@@ -21,6 +21,8 @@ import { useLocalityRisks, useUpdateLocalityRisk } from "@/hooks/use-locality-ri
 import type { LocalityRisk, LocalityRiskCategory, LocalityRiskLevel, LocalityMitigation } from "@/types/extended";
 import { LOCALITY_RISK_CATEGORY_LABEL, LOCALITY_RISK_LEVEL_LABEL } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── UI metadata ──────────────────────────────────────────────────────── */
 
@@ -91,11 +93,12 @@ export default function LocalityRiskPage() {
     <PageShell
       title="Locality Risk Assessment"
       subtitle="Environmental and community risks affecting the children's home"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Locality Risk Assessment", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Locality Risk Assessment" />
           <ExportButton data={filtered} columns={exportCols} filename="locality-risk" />
+          <AriaStudioQuickActionButton context={{ record_type: "risk_assessment", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -258,6 +261,12 @@ export default function LocalityRiskPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Locality Risk Assessment — CSE, CCE, criminal exploitation, missing episodes, county lines, local gangs, online risks, substance misuse, peer groups, community safety"
+        recordType="risk_assessment"
+        className="mt-6"
       />
     </PageShell>
   );

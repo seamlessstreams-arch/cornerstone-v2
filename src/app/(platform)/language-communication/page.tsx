@@ -16,6 +16,8 @@ import { useCommunicationProfiles } from "@/hooks/use-communication-profiles";
 import type { CommunicationProfile, CommLevel, CommSupportLevel, CommEffectiveness, SendStatus } from "@/types/extended";
 import { COMM_LEVEL_LABEL, COMM_SUPPORT_LEVEL_LABEL, COMM_EFFECTIVENESS_LABEL, SEND_STATUS_LABEL } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── UI metadata ─────────────────────────────────────────────────────────── */
 
@@ -56,8 +58,13 @@ export default function LanguageCommunicationPage() {
     <PageShell
       title="Language & Communication"
       subtitle="Communication Profiles · SEND · AAC · Staff Guidance"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
-      actions={<PrintButton title="Communication Profiles" />}
+      ariaContext={{ pageTitle: "Language & Communication", sourceType: "child_record" }}
+      actions={
+        <div className="flex items-center gap-2">
+          <PrintButton title="Communication Profiles" />
+          <AriaStudioQuickActionButton context={{ record_type: "care_plan", record_id: "home_oak", home_id: "home_oak" }} />
+        </div>
+      }
     >
       <div id="print-area">
         {/* summary */}
@@ -253,6 +260,12 @@ export default function LanguageCommunicationPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Language & Communication — child communication profiles, verbal/non-verbal, SEND, AAC devices, EHCP, speech therapy, staff communication strategies, interpreters"
+        recordType="care_plan"
+        className="mt-6"
       />
     </PageShell>
   );

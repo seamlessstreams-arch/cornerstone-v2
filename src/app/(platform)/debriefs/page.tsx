@@ -24,6 +24,8 @@ import { REFLECTIVE_DEBRIEF_TYPE_LABEL } from "@/types/extended";
 import { useDebriefRecords, useCreateDebriefRecord } from "@/hooks/use-debrief-records";
 import { toast } from "sonner";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 const TYPE_META: Record<ReflectiveDebriefType, { label: string; color: string }> = {
   post_incident:   { label: "Post-Incident",    color: "bg-red-100 text-red-800" },
@@ -96,11 +98,12 @@ export default function DebriefsPage() {
     <PageShell
       title="Debriefs & Reflections"
       subtitle="Post-incident debriefs, team reflections, and lessons learned"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "pi_debrief" }}
+      ariaContext={{ pageTitle: "Debriefs & Reflections", sourceType: "pi_debrief" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Debriefs & Reflections" />
           <ExportButton data={filtered} columns={EXPORT_COLS} filename="debriefs" />
+          <AriaStudioQuickActionButton context={{ record_type: "incident", record_id: "home_oak", home_id: "home_oak" }} />
           <Button size="sm" onClick={() => setShowNew(true)}><Plus className="h-4 w-4 mr-1" /> New Debrief</Button>
         </div>
       }
@@ -255,6 +258,12 @@ export default function DebriefsPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Debriefs & Reflections — post-incident debriefs, physical intervention reviews, emotional check-ins, team learning, wellbeing, safe practice, culture of openness"
+        recordType="incident"
+        className="mt-6"
       />
     </PageShell>
   );
