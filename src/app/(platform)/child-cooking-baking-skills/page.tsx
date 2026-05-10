@@ -35,6 +35,8 @@ import {
 import { useCookingBakingRecords } from "@/hooks/use-cooking-baking-records";
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 const exportCols: ExportColumn<CookingBakingRecord>[] = [
   { header: "Young Person", accessor: (r: CookingBakingRecord) => getYPName(r.child_id) },
@@ -116,11 +118,12 @@ export default function ChildCookingBakingSkillsPage() {
     <PageShell
       title="Cooking & Baking Skills"
       subtitle="Per-child progression of cooking and baking skills — knife work, hob/oven, recipe planning, hygiene, cultural cooking. Heritage food connection, family meals led, and the journey from observed → assisted → independent → can teach others."
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Cooking & Baking Skills", sourceType: "child_record" }}
       actions={
         <div className="flex gap-2">
           <ExportButton data={filtered} columns={exportCols} filename="child-cooking-baking-skills" />
           <PrintButton title="Cooking & Baking Skills" />
+          <AriaStudioQuickActionButton context={{ record_type: "direct_work", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -312,6 +315,12 @@ export default function ChildCookingBakingSkillsPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Cooking & Baking Skills — life skills, independence, nutrition, meal planning, food safety, allergen awareness, preparing leaving care, practical skills development, Reg 45 positive outcomes"
+        recordType="direct_work"
+        className="mt-6"
       />
     </PageShell>
   );

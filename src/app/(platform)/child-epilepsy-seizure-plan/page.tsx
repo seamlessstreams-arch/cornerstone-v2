@@ -30,6 +30,8 @@ import type { EpilepsySeizurePlan } from "@/types/extended";
 import { useEpilepsySeizurePlans } from "@/hooks/use-epilepsy-seizure-plans";
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ─── export columns ─── */
 const exportCols: ExportColumn<EpilepsySeizurePlan>[] = [
@@ -132,11 +134,12 @@ export default function ChildEpilepsySeizurePlanPage() {
     <PageShell
       title="Epilepsy & Seizure Plans"
       subtitle="Per-child epilepsy and seizure management plan · Epilepsy12 format · NICE NG217 · Quality Standard 8"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Epilepsy & Seizure Plans", sourceType: "medication" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={items} columns={exportCols} filename="epilepsy-seizure-plans" />
           <PrintButton title="Epilepsy & Seizure Plans" />
+          <AriaStudioQuickActionButton context={{ record_type: "medication", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -566,6 +569,12 @@ export default function ChildEpilepsySeizurePlanPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Epilepsy & Seizure Plans — seizure type, rescue medication, seizure diary, triggers, post-ictal care, emergency action, school sharing, specialist review, AHA, LAC health"
+        recordType="medication"
+        className="mt-6"
       />
     </PageShell>
   );

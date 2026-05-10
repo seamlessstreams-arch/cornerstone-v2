@@ -30,6 +30,8 @@ import { EXTRACURRICULAR_CATEGORY_LABEL, CLUB_SOCIAL_FIT_LABEL } from "@/types/e
 import type { ExtracurricularCategory, ClubSocialFit } from "@/types/extended";
 import { useExtracurricularClubRecords } from "@/hooks/use-extracurricular-club-records";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 const categoryColour: Record<ExtracurricularCategory, string> = {
   sport: "bg-sky-100 text-sky-800",
@@ -171,11 +173,12 @@ export default function ChildExtracurricularClubsPage() {
     <PageShell
       title="Extracurricular Clubs & Societies"
       subtitle="Per-child clubs, societies and after-school activities — attendance, social fit, skill building, transport and cost"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Extracurricular Clubs & Societies", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={items} columns={exportCols} filename="extracurricular-clubs" />
           <PrintButton title="Extracurricular Clubs & Societies" />
+          <AriaStudioQuickActionButton context={{ record_type: "education", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -430,6 +433,12 @@ export default function ChildExtracurricularClubsPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Extracurricular Clubs & Societies — clubs, societies, teams, music, drama, sport, scouts, cadets, participation tracking, transport, consent, cost, LAC entitlement, PEP targets"
+        recordType="education"
+        className="mt-6"
       />
     </PageShell>
   );
