@@ -27,6 +27,8 @@ import { useSleepInRecords, useCreateSleepInRecord } from "@/hooks/use-sleep-in-
 import type { SleepInRecord, SleepInStatus, SleepInRoomCondition } from "@/types/extended";
 import { SLEEP_IN_STATUS_LABEL, SLEEP_IN_ROOM_CONDITION_LABEL } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── local config ─────────────────────────────────────────────────────── */
 
@@ -116,12 +118,13 @@ export default function SleepInLogPage() {
     <PageShell
       title="Staff Sleep-In Log"
       subtitle="Sleep-in shift records, disturbances, and compensatory rest tracking"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Sleep-In Log", sourceType: "staff" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Staff Sleep-In Log" />
           <ExportButton data={filtered} columns={exportCols} filename="sleep-in-log" />
           <Button size="sm" onClick={() => setDialogOpen(true)}><Plus className="h-4 w-4 mr-1" />Log Sleep-In</Button>
+          <AriaStudioQuickActionButton context={{ record_type: "rota", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -295,6 +298,12 @@ export default function SleepInLogPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Sleep-In Log — staff sleep-in duty records, waking night cover, sleep-in entitlements, staffing compliance, Reg 40 staffing evidence, overnight incident evidence, Ofsted evidence"
+        recordType="rota"
+        className="mt-6"
       />
     </PageShell>
   );

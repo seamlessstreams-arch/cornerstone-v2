@@ -24,6 +24,8 @@ import {
   STAFF_COMMS_FEEDBACK_STYLE_LABEL,
 } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── local config ───────────────────────────────────────────────────── */
 
@@ -123,11 +125,12 @@ export default function StaffCommunicationPreferencesPage() {
     <PageShell
       title="Staff Communication Preferences"
       subtitle="Recording individual communication needs and reasonable adjustments for all team members"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Staff Communication Preferences", sourceType: "staff" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Staff Communication Preferences" />
           <ExportButton data={filtered} columns={exportCols} filename="staff-communication-preferences" />
+          <AriaStudioQuickActionButton context={{ record_type: "staff_training", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -318,6 +321,12 @@ export default function StaffCommunicationPreferencesPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Staff Communication Preferences — staff communication styles, preferred contact methods, accessibility requirements, reasonable adjustments, HR records, staff wellbeing, Reg 40 workforce evidence"
+        recordType="staff_training"
+        className="mt-6"
       />
     </PageShell>
   );

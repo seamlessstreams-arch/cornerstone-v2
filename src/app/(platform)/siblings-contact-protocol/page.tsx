@@ -22,6 +22,8 @@ import { getStaffName, getYPName } from "@/lib/seed-data";
 import { useSiblingContactProtocolRecords } from "@/hooks/use-sibling-contact-protocol-records";
 import type { SiblingContactProtocolRecord } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── local config (icons are React.ElementType — cannot serialize) ───────── */
 
@@ -154,11 +156,12 @@ export default function SiblingsContactProtocolPage() {
     <PageShell
       title="Siblings Contact Protocol"
       subtitle="Children Act 1989 s23(7) — sibling duty · Quality Standard 9 (Care Planning)"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "contact_log" }}
+      ariaContext={{ pageTitle: "Siblings Contact Protocol", sourceType: "contact_log" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Siblings Contact Protocol" />
           <ExportButton data={filtered} columns={exportCols} filename="siblings-contact-protocol" />
+          <AriaStudioQuickActionButton context={{ record_type: "care_plan", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -467,6 +470,12 @@ export default function SiblingsContactProtocolPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Siblings Contact Protocol — sibling contact arrangements, frequency, supervised contact, contact conditions, care plan contact evidence, LA contact agreements, Reg 45 relationship evidence"
+        recordType="care_plan"
+        className="mt-6"
       />
     </PageShell>
   );

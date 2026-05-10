@@ -30,6 +30,8 @@ import {
   STAFF_EXIT_INTERVIEW_STATUS_LABEL,
 } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── local colour maps ─────────────────────────────────────────────── */
 
@@ -154,7 +156,7 @@ export default function StaffExitInterviewsPage() {
     <PageShell
       title="Staff Exit Interviews"
       subtitle="Record and analyse feedback from departing staff to support retention and workforce stability"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Staff Exit Interviews", sourceType: "staff" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Staff Exit Interviews" />
@@ -162,6 +164,7 @@ export default function StaffExitInterviewsPage() {
           <Button onClick={() => setShowNew(true)}>
             <Plus className="h-4 w-4 mr-2" /> Record Exit Interview
           </Button>
+          <AriaStudioQuickActionButton context={{ record_type: "staff_training", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -437,6 +440,12 @@ export default function StaffExitInterviewsPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Staff Exit Interviews — exit interview records, staff turnover themes, retention analysis, workforce feedback, organisational learning, management oversight, Reg 40 workforce evidence"
+        recordType="staff_training"
+        className="mt-6"
       />
     </PageShell>
   );
