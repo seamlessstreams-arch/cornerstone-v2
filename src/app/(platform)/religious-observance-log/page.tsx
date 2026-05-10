@@ -36,6 +36,8 @@ import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { useReligiousObservanceRecords } from "@/hooks/use-religious-observance-records";
 import type { ReligiousObservanceRecord } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── helpers ───────────────────────────────────────────────────────── */
 
@@ -141,11 +143,12 @@ export default function ReligiousObservanceLogPage() {
     <PageShell
       title="Religious & Belief Observance Log"
       subtitle="Recording and supporting each child's religious, spiritual or belief practices — at their pace, on their terms"
-      ariaContext={{ pageTitle: "Related Care Events", sourceType: "child_record" }}
+      ariaContext={{ pageTitle: "Religious & Belief Observance Log", sourceType: "care_plan" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={records} columns={exportCols} filename="religious-observance-log" />
           <PrintButton title="Religious & Belief Observance Log" />
+          <AriaStudioQuickActionButton context={{ record_type: "care_plan", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -328,6 +331,12 @@ export default function ReligiousObservanceLogPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Religious & Belief Observance Log — faith practices, prayer, worship, religious education, religious diet, religious dress, faith communities, cultural identity, care plan evidence, Reg 45"
+        recordType="care_plan"
+        className="mt-6"
       />
     </PageShell>
   );

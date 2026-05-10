@@ -9,6 +9,8 @@
 
 import React, { useState, useMemo } from "react";
 import { PageShell } from "@/components/layout/page-shell";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -724,6 +726,7 @@ export default function GovernanceReportsPage() {
             <Plus className="h-3.5 w-3.5" />
             New Report
           </Button>
+          <AriaStudioQuickActionButton context={{ record_type: "management_oversight", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -866,6 +869,12 @@ export default function GovernanceReportsPage() {
         open={showNew}
         onClose={() => setShowNew(false)}
         onSubmit={handleCreate}
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="RI Governance — responsible individual governance reports, oversight visits, management oversight, Reg 45 governance, board reporting, regulatory compliance, Ofsted evidence"
+        recordType="management_oversight"
+        className="mt-6"
       />
     </PageShell>
   );

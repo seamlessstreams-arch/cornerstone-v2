@@ -29,6 +29,8 @@ import { useReligiousFestivalRecords } from "@/hooks/use-religious-festival-reco
 import type { ReligiousFestivalRecord, ReligiousFestivalFaith } from "@/types/extended";
 import { RELIGIOUS_FESTIVAL_FAITH_LABEL } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 /* ── local colour map ─────────────────────────────────────────────── */
 
@@ -120,6 +122,7 @@ export default function ReligiousFestivalCelebrationsPage() {
         <div className="flex gap-2">
           <ExportButton data={filtered} columns={exportCols} filename="religious-festival-celebrations" />
           <PrintButton title="Religious & Cultural Festival Celebrations" />
+          <AriaStudioQuickActionButton context={{ record_type: "care_plan", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -318,6 +321,12 @@ export default function ReligiousFestivalCelebrationsPage() {
         title="Related Care Events"
         days={28}
         defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Religious & Cultural Festival Celebrations — cultural celebrations, religious observance, identity, faith practices, cultural planning, care plan cultural needs, diversity evidence, Reg 45"
+        recordType="care_plan"
+        className="mt-6"
       />
     </PageShell>
   );

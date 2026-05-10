@@ -6,6 +6,8 @@
 
 import React, { useState } from "react";
 import { PageShell } from "@/components/layout/page-shell";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -129,6 +131,7 @@ export default function OfstedReadinessPage() {
             targetId="ofsted-content"
           />
           <SmartUploadButton variant="inline" label="Upload Evidence" uploadContext="Ofsted readiness — inspection evidence upload" />
+          <AriaStudioQuickActionButton context={{ record_type: "ofsted_evidence", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -301,6 +304,12 @@ export default function OfstedReadinessPage() {
           </div>
         )}
       </div>
+      <AriaPanel
+        mode="assist"
+        pageContext="Ofsted Readiness — ILACS inspection preparation, mock review, inspection evidence, judgement prediction, practice evidence, compliance evidence, self-evaluation, Annex A readiness"
+        recordType="ofsted_evidence"
+        className="mt-6"
+      />
     </PageShell>
   );
 }
