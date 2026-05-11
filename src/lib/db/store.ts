@@ -428,6 +428,20 @@ export interface PersistedInspectionSnapshot {
   payload: unknown;
 }
 
+// Per-user notification read/dismiss state (M34). Notification ids are
+// deterministic ("source:source_id") and produced by
+// src/lib/care-events/notifications.ts. We persist only the per-user
+// envelope so the derived stream remains the source of truth.
+export interface UserNotificationState {
+  id: string;                 // `${user_id}::${notification_id}`
+  user_id: string;
+  notification_id: string;
+  home_id: string;
+  read_at: string | null;
+  dismissed_at: string | null;
+  updated_at: string;
+}
+
 // ── Mutable collections ───────────────────────────────────────────────────────
 
 const store = {
@@ -1059,6 +1073,9 @@ const store = {
 
   // ── Inspection Snapshots (M31) ───────────────────────────────────────────
   inspectionSnapshots: [] as PersistedInspectionSnapshot[],
+
+  // ── User Notification State (M34) ────────────────────────────────────────
+  userNotificationStates: [] as UserNotificationState[],
 
   // ── Branding ─────────────────────────────────────────────────────────────
   systemBranding: {
@@ -11015,6 +11032,53 @@ export const db = {
       if (store.inspectionSnapshots.some((s) => s.id === snap.id)) return snap;
       store.inspectionSnapshots.push(snap);
       return snap;
+    },
+  },
+
+  // ── User Notification State (M34) ────────────────────────────────────────
+  userNotificationStates: {
+    findForUser: (userId: string, homeId?: string): UserNotificationState[] => {
+      let items = store.userNotificationStates.filter((s) => s.user_id === userId);
+      if (homeId) items = items.filter((s) => s.home_id === homeId);
+      return items;
+    },
+    findOne: (userId: string, notificationId: string): UserNotificationState | null =>
+      store.userNotificationStates.find(
+        (s) => s.user_id === userId && s.notification_id === notificationId,
+      ) ?? null,
+    upsert: (input: {
+      user_id: string;
+      notification_id: string;
+      home_id: string;
+      read_at?: string | null;
+      dismissed_at?: string | null;
+    }): UserNotificationState => {
+      const id = `${input.user_id}::${input.notification_id}`;
+      const now = new Date().toISOString();
+      const idx = store.userNotificationStates.findIndex((s) => s.id === id);
+      if (idx === -1) {
+        const row: UserNotificationState = {
+          id,
+          user_id: input.user_id,
+          notification_id: input.notification_id,
+          home_id: input.home_id,
+          read_at: input.read_at ?? null,
+          dismissed_at: input.dismissed_at ?? null,
+          updated_at: now,
+        };
+        store.userNotificationStates.push(row);
+        return row;
+      }
+      const existing = store.userNotificationStates[idx];
+      const merged: UserNotificationState = {
+        ...existing,
+        read_at: input.read_at !== undefined ? input.read_at : existing.read_at,
+        dismissed_at:
+          input.dismissed_at !== undefined ? input.dismissed_at : existing.dismissed_at,
+        updated_at: now,
+      };
+      store.userNotificationStates[idx] = merged;
+      return merged;
     },
   },
 

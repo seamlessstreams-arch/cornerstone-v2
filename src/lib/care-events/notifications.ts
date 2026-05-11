@@ -51,6 +51,10 @@ export interface NotificationItem {
   body: string;
   created_at: string;             // for ordering
   link_href: string;
+  // Per-user envelope (M34). Populated by `loadNotificationsForUser`; the
+  // base `loadNotifications` leaves these as null for backward compatibility.
+  read_at: string | null;
+  dismissed_at: string | null;
 }
 
 export interface NotificationStream {
@@ -61,6 +65,11 @@ export interface NotificationStream {
   for_staff: number;
   by_severity: Record<NotificationSeverity, number>;
   items: NotificationItem[];      // newest first
+  // Per-user counters (M34). Populated by `loadNotificationsForUser`; the
+  // base `loadNotifications` leaves these as null.
+  viewer_user_id: string | null;
+  unread: number | null;
+  dismissed: number | null;
 }
 
 const SEVERITY_ORDER: Record<NotificationSeverity, number> = {
@@ -68,12 +77,13 @@ const SEVERITY_ORDER: Record<NotificationSeverity, number> = {
 };
 
 export function loadNotifications(homeId: string): NotificationStream {
-  const items: NotificationItem[] = [];
+  type Builder = Omit<NotificationItem, "read_at" | "dismissed_at">;
+  const built: Builder[] = [];
 
   // ── Returned records: notify the original staff author ────────────────────
   const returned = loadReturnedRecordsQueue(homeId);
   for (const r of returned.rows) {
-    items.push({
+    built.push({
       id: `returned_record:${r.care_event_id}`,
       source: "returned_record",
       source_id: r.care_event_id,
@@ -96,7 +106,7 @@ export function loadNotifications(homeId: string): NotificationStream {
 
   // ── Sensitive amendments awaiting manager re-verification ─────────────────
   for (const a of loadAmendmentReviewQueue(homeId).rows) {
-    items.push({
+    built.push({
       id: `sensitive_amendment:${a.care_event_id}`,
       source: "sensitive_amendment",
       source_id: a.care_event_id,
@@ -115,7 +125,7 @@ export function loadNotifications(homeId: string): NotificationStream {
   // ── Reg 40 triages pending ────────────────────────────────────────────────
   for (const t of db.ariaReg40Triages.findAll(homeId)) {
     if (t.status !== "pending") continue;
-    items.push({
+    built.push({
       id: `reg40_triage_pending:${t.id}`,
       source: "reg40_triage_pending",
       source_id: t.id,
@@ -141,7 +151,7 @@ export function loadNotifications(homeId: string): NotificationStream {
         e.contributes_to_reg45 ||
         e.contributes_to_annex_a,
     );
-    items.push({
+    built.push({
       id: `manager_review_required:${e.id}`,
       source: "manager_review_required",
       source_id: e.id,
@@ -165,7 +175,7 @@ export function loadNotifications(homeId: string): NotificationStream {
       ce.care_event_category === "missing_episode" ||
       ce.care_event_category === "physical_intervention" ||
       ce.care_event_category === "restraint";
-    items.push({
+    built.push({
       id: `routing_failure:${ce.care_event_id}`,
       source: "routing_failure",
       source_id: ce.care_event_id,
@@ -183,11 +193,18 @@ export function loadNotifications(homeId: string): NotificationStream {
   }
 
   // Sort: severity asc, then newest first
-  items.sort((a, b) => {
+  built.sort((a, b) => {
     const s = SEVERITY_ORDER[a.severity] - SEVERITY_ORDER[b.severity];
     if (s !== 0) return s;
     return b.created_at.localeCompare(a.created_at);
   });
+
+  // Decorate with empty per-user state — base loader is viewer-agnostic.
+  const items: NotificationItem[] = built.map((b) => ({
+    ...b,
+    read_at: null,
+    dismissed_at: null,
+  }));
 
   const by_severity: Record<NotificationSeverity, number> =
     { critical: 0, warning: 0, info: 0 };
@@ -206,6 +223,65 @@ export function loadNotifications(homeId: string): NotificationStream {
     for_staff,
     by_severity,
     items,
+    viewer_user_id: null,
+    unread: null,
+    dismissed: null,
+  };
+}
+
+// ── Per-user variant (M34) ────────────────────────────────────────────────────
+//
+// Wraps `loadNotifications` and merges per-user read/dismiss state from
+// `db.userNotificationStates`. Notification ids are deterministic so the
+// envelope survives across reloads even though the stream is re-derived.
+//
+// Options:
+//   - includeDismissed (default false): hide dismissed entries unless asked.
+export interface LoadNotificationsForUserOptions {
+  includeDismissed?: boolean;
+}
+
+export function loadNotificationsForUser(
+  homeId: string,
+  userId: string,
+  opts: LoadNotificationsForUserOptions = {},
+): NotificationStream {
+  const { includeDismissed = false } = opts;
+  const base = loadNotifications(homeId);
+  const states = db.userNotificationStates.findForUser(userId, homeId);
+  const byId = new Map(states.map((s) => [s.notification_id, s]));
+
+  const merged: NotificationItem[] = [];
+  for (const i of base.items) {
+    const s = byId.get(i.id);
+    const read_at = s?.read_at ?? null;
+    const dismissed_at = s?.dismissed_at ?? null;
+    if (dismissed_at && !includeDismissed) continue;
+    merged.push({ ...i, read_at, dismissed_at });
+  }
+
+  const by_severity: Record<NotificationSeverity, number> =
+    { critical: 0, warning: 0, info: 0 };
+  let for_managers = 0, for_staff = 0, unread = 0, dismissed = 0;
+  for (const i of merged) {
+    by_severity[i.severity] += 1;
+    if (i.audience === "manager") for_managers += 1;
+    else for_staff += 1;
+    if (!i.read_at && !i.dismissed_at) unread += 1;
+    if (i.dismissed_at) dismissed += 1;
+  }
+
+  return {
+    home_id: homeId,
+    generated_at: base.generated_at,
+    total: merged.length,
+    for_managers,
+    for_staff,
+    by_severity,
+    items: merged,
+    viewer_user_id: userId,
+    unread,
+    dismissed,
   };
 }
 
