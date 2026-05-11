@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useMemo, useEffect } from "react";
-import { useEvidenceItems, useCreateEvidence } from "@/hooks/use-intelligence-layer";
+import { useEvidenceItems, useCreateEvidence, useEvidenceGaps } from "@/hooks/use-intelligence-layer";
 import { PageShell } from "@/components/layout/page-shell";
 import { AriaPanel } from "@/components/aria/aria-panel";
 import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
@@ -232,74 +232,6 @@ const CHILDREN = [
 
 /* ── demo evidence gaps ────────────────────────────────────────────────────── */
 
-const DEMO_GAPS: EvidenceGap[] = [
-  {
-    type: "no_recent_key_work",
-    title: "No key work session recorded for Reece in 3 weeks",
-    description:
-      "Reece has not had a documented key work session since the placement plan review. The expected frequency is weekly.",
-    severity: "high",
-    childId: "c3",
-    sourceRecordType: "key_work",
-    recommendation:
-      "Schedule a key work session with Reece this week and ensure it is recorded in the system. Consider whether the gap was due to staffing or oversight.",
-  },
-  {
-    type: "no_child_voice",
-    title: "No child voice entry for Jordan this month",
-    description:
-      "Jordan's voice has not been captured through any formal mechanism (key work, house meeting, or wishes and feelings) this month.",
-    severity: "medium",
-    childId: "c1",
-    sourceRecordType: "child_voice",
-    recommendation:
-      "Capture Jordan's views in the next key work session or through an informal check-in. Record in the child voice log.",
-  },
-  {
-    type: "incident_no_oversight",
-    title: "Two incidents awaiting manager oversight",
-    description:
-      "Two low-level incidents from the past week have not yet received manager oversight or analysis. Oversight should be completed within 48 hours.",
-    severity: "high",
-    sourceRecordType: "incident",
-    recommendation:
-      "Complete manager oversight for both outstanding incidents today. Review whether the 48-hour standard is being communicated to deputies.",
-  },
-  {
-    type: "reg44_overdue",
-    title: "Reg 44 action response overdue by 5 days",
-    description:
-      "One action from the last Regulation 44 visit has not yet received a manager response. The expected response window is 14 days.",
-    severity: "medium",
-    sourceRecordType: "reg44_report",
-    sourceRecordId: "r44_012",
-    recommendation:
-      "Draft and submit the manager response to the outstanding Reg 44 action. Ensure all future actions are responded to within the 14-day window.",
-  },
-  {
-    type: "risk_not_reviewed",
-    title: "Casey's risk assessment not reviewed since last incident",
-    description:
-      "Casey was involved in a behaviour incident 10 days ago but her risk assessment has not been updated to reflect any changes or new control measures.",
-    severity: "high",
-    childId: "c2",
-    sourceRecordType: "risk_assessment",
-    recommendation:
-      "Review and update Casey's risk assessment in light of the recent incident. Involve Casey in the review process where appropriate.",
-  },
-  {
-    type: "supervision_overdue",
-    title: "One staff member due supervision in 3 days",
-    description:
-      "James Connor's supervision is due within 3 days. If not completed, it will breach the 6-weekly cycle.",
-    severity: "low",
-    staffId: "s3",
-    sourceRecordType: "supervision",
-    recommendation:
-      "Confirm the scheduled supervision date with James. If the RM is unavailable, arrange for the deputy to cover.",
-  },
-];
-
 /* ── period options ────────────────────────────────────────────────────────── */
 
 const PERIOD_OPTIONS = [
@@ -318,10 +250,17 @@ const PERIOD_OPTIONS = [
 export default function OfstedEvidenceRoomPage() {
   /* ── API hooks ─────────────────────────────────────────────────────────── */
   const { data: apiData } = useEvidenceItems();
+  const { data: gapsData } = useEvidenceGaps();
   const createEvidence = useCreateEvidence();
 
   const [evidenceItems, setEvidenceItems] = useState<(InspectionEvidenceItem & { sourceLabel: SourceType })[]>([]);
-  const [gaps, setGaps] = useState<EvidenceGap[]>(DEMO_GAPS);
+  const [gaps, setGaps] = useState<EvidenceGap[]>([]);
+
+  useEffect(() => {
+    if (gapsData?.persisted && Array.isArray(gapsData.gaps)) {
+      setGaps(gapsData.gaps as EvidenceGap[]);
+    }
+  }, [gapsData]);
 
   useEffect(() => {
     if (apiData?.persisted && Array.isArray(apiData.items)) {

@@ -154,6 +154,24 @@ export function useCreateEvidence() {
   });
 }
 
+export function useEvidenceGaps(params?: { homeId?: string }) {
+  const query = new URLSearchParams();
+  if (params?.homeId) query.set("homeId", params.homeId);
+  return useQuery({
+    queryKey: ["il", "evidence-gaps", params],
+    queryFn: () =>
+      ilFetch<{
+        ok: boolean;
+        gaps: unknown[];
+        totalGaps: number;
+        criticalCount: number;
+        highCount: number;
+        gapsByType: Record<string, number>;
+        persisted: boolean;
+      }>(`/evidence-gaps?${query}`),
+  });
+}
+
 // ── Progress (Child Progress & Outcomes) ─────────────────────────────────────
 
 export function useProgressGoals(childId?: string) {
