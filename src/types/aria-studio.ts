@@ -907,6 +907,81 @@ export interface AriaReg45Report {
   lock_note: string | null;
 }
 
+// ── Suggested Records (commit queue) ──────────────────────────────────────────
+//
+// ARIA proposes a record. A human edits if needed, and an authorised human
+// commits it to the official record. Until commit, the suggestion has no
+// statutory weight. Once committed, an immutable AriaCommittedRecord row
+// is the record of truth in this in-memory backend (in production this
+// writes to the appropriate domain table).
+
+export type AriaSuggestedRecordType =
+  | "daily_log_summary"
+  | "reflection"
+  | "keywork_summary"
+  | "behaviour_note"
+  | "risk_update"
+  | "care_plan_update"
+  | "incident_summary";
+
+export type AriaSuggestedRecordStatus =
+  | "pending"
+  | "committed"
+  | "rejected"
+  | "superseded";
+
+export const ARIA_SUGGESTED_RECORD_LABELS: Record<AriaSuggestedRecordType, string> = {
+  daily_log_summary: "Daily log summary",
+  reflection: "Reflection",
+  keywork_summary: "Keywork summary",
+  behaviour_note: "Behaviour note",
+  risk_update: "Risk assessment update",
+  care_plan_update: "Care plan update",
+  incident_summary: "Incident summary",
+};
+
+export interface AriaSuggestedSourceRef {
+  type: string;
+  id: string;
+  label: string;
+}
+
+export interface AriaSuggestedRecord {
+  id: string;
+  home_id: string;
+  child_id: string | null;
+  record_type: AriaSuggestedRecordType;
+  target_label: string;
+  suggested_title: string;
+  suggested_body: string;
+  suggested_fields: Record<string, string | number | boolean | null>;
+  source_evidence: AriaSuggestedSourceRef[];
+  status: AriaSuggestedRecordStatus;
+  generated_at: string;
+  generated_by: string;
+  decided_by: string | null;
+  decided_at: string | null;
+  decision_note: string | null;
+  committed_record_id: string | null;
+  committed_at: string | null;
+  edits_count: number;
+}
+
+export interface AriaCommittedRecord {
+  id: string;
+  suggested_record_id: string;
+  home_id: string;
+  child_id: string | null;
+  record_type: AriaSuggestedRecordType;
+  target_label: string;
+  title: string;
+  body: string;
+  fields: Record<string, string | number | boolean | null>;
+  committed_by: string;
+  committed_at: string;
+  commit_note: string | null;
+}
+
 // ── Home Dynamics ─────────────────────────────────────────────────────────────
 
 export type AriaIndicatorStatus = "green" | "amber" | "red";

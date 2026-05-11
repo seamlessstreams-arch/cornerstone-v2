@@ -569,6 +569,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: "Reg 45 Evidence",     href: "/intelligence/aria/reg45-evidence",     icon: "ClipboardCheck", module: "dashboard" },
       { label: "Reg 45 Report",       href: "/intelligence/aria/reg45-report",       icon: "FileText",    module: "dashboard"    },
       { label: "Annex A Snapshot",    href: "/intelligence/aria/annex-a-snapshot",   icon: "Award",       module: "dashboard"    },
+      { label: "Suggested Records",   href: "/intelligence/aria/suggested-records",  icon: "FileSignature", module: "dashboard"  },
       { label: "Review Queue",       href: "/aria/review",                          icon: "ClipboardCheck", module: "dashboard" },
       { label: "Pattern Alerts",     href: "/patterns",                             icon: "Radar",       module: "dashboard"    },
       { label: "Situation Review",    href: "/intelligence/aria/situation",          icon: "Eye",         module: "dashboard"    },

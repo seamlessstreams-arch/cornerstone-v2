@@ -408,6 +408,8 @@ import type {
   AriaFormulation, AriaDecisionRecommendation, AriaReg45EvidenceItem,
   AriaAnnexASnapshot,
   AriaReg45Report,
+  AriaSuggestedRecord,
+  AriaCommittedRecord,
 } from "@/types/aria-studio";
 
 // ── Mutable collections ───────────────────────────────────────────────────────
@@ -1248,6 +1250,8 @@ const store = {
   ariaReg45EvidenceItems: [] as AriaReg45EvidenceItem[],
   ariaAnnexASnapshots: [] as AriaAnnexASnapshot[],
   ariaReg45Reports: [] as AriaReg45Report[],
+  ariaSuggestedRecords: [] as AriaSuggestedRecord[],
+  ariaCommittedRecords: [] as AriaCommittedRecord[],
 
   // Shift Swap Requests
   shiftSwaps: [
@@ -11378,6 +11382,46 @@ export const db = {
       if (idx === -1) return null;
       store.ariaReg45Reports[idx] = { ...store.ariaReg45Reports[idx], ...data };
       return store.ariaReg45Reports[idx];
+    },
+  },
+  ariaSuggestedRecords: {
+    findAll: (homeId?: string) =>
+      homeId
+        ? store.ariaSuggestedRecords.filter((s) => s.home_id === homeId)
+        : store.ariaSuggestedRecords,
+    findById: (id: string) => store.ariaSuggestedRecords.find((s) => s.id === id),
+    findByStatus: (homeId: string, status: AriaSuggestedRecord["status"]) =>
+      store.ariaSuggestedRecords.filter(
+        (s) => s.home_id === homeId && s.status === status,
+      ),
+    create: (data: Omit<AriaSuggestedRecord, "id">): AriaSuggestedRecord => {
+      const rec: AriaSuggestedRecord = { ...data, id: generateId("asug") };
+      store.ariaSuggestedRecords.push(rec);
+      return rec;
+    },
+    patch: (
+      id: string,
+      data: Partial<AriaSuggestedRecord>,
+    ): AriaSuggestedRecord | null => {
+      const idx = store.ariaSuggestedRecords.findIndex((s) => s.id === id);
+      if (idx === -1) return null;
+      store.ariaSuggestedRecords[idx] = {
+        ...store.ariaSuggestedRecords[idx],
+        ...data,
+      };
+      return store.ariaSuggestedRecords[idx];
+    },
+  },
+  ariaCommittedRecords: {
+    findAll: (homeId?: string) =>
+      homeId
+        ? store.ariaCommittedRecords.filter((c) => c.home_id === homeId)
+        : store.ariaCommittedRecords,
+    findById: (id: string) => store.ariaCommittedRecords.find((c) => c.id === id),
+    create: (data: Omit<AriaCommittedRecord, "id">): AriaCommittedRecord => {
+      const rec: AriaCommittedRecord = { ...data, id: generateId("acom") };
+      store.ariaCommittedRecords.push(rec);
+      return rec;
     },
   },
   wakeUpRoutines: {
