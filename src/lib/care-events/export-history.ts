@@ -75,6 +75,7 @@ export function loadExportHistory(homeId: string): ExportHistorySummary {
     inspection_snapshot: 0,
     reg44_pack: 0,
     filing_cabinet_index: 0,
+    inspection_bundle: 0,
   };
   const by_user: Record<string, number> = {};
   let safeguarding_sensitive = 0;

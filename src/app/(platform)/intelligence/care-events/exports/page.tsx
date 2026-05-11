@@ -22,6 +22,7 @@ const KIND_LABEL: Record<ExportHistoryKind, string> = {
   inspection_snapshot: "Inspection Snapshot",
   reg44_pack: "Reg 44 Pack",
   filing_cabinet_index: "Filing Cabinet",
+  inspection_bundle: "Inspection Bundle",
 };
 
 export default function ExportHistoryPage() {
@@ -42,7 +43,7 @@ export default function ExportHistoryPage() {
       {isLoading && <p className="text-sm text-slate-500">Loading…</p>}
       {summary && (
         <div className="space-y-6">
-          <div className="grid grid-cols-2 gap-3 md:grid-cols-5">
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-6">
             <Card>
               <CardHeader className="pb-2">
                 <CardTitle className="text-xs uppercase tracking-wide text-slate-500">Total exports</CardTitle>
@@ -66,6 +67,12 @@ export default function ExportHistoryPage() {
                 <CardTitle className="text-xs uppercase tracking-wide text-slate-500">Filing cabinet</CardTitle>
               </CardHeader>
               <CardContent><p className="text-3xl font-semibold">{summary.by_kind.filing_cabinet_index}</p></CardContent>
+            </Card>
+            <Card>
+              <CardHeader className="pb-2">
+                <CardTitle className="text-xs uppercase tracking-wide text-slate-500">Inspection bundles</CardTitle>
+              </CardHeader>
+              <CardContent><p className="text-3xl font-semibold">{summary.by_kind.inspection_bundle}</p></CardContent>
             </Card>
             <Card>
               <CardHeader className="pb-2">

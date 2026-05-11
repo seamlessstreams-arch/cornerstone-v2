@@ -10,6 +10,7 @@ import type { InspectionSnapshot } from "@/lib/care-events/inspection-snapshot";
 import type { Reg44Pack } from "@/lib/care-events/reg44-pack";
 import type { FilingCabinetIndex } from "@/lib/care-events/filing-cabinet-index";
 import type { FilingCategory } from "@/types/care-events";
+import type { InspectionBundle } from "@/lib/care-events/inspection-bundle";
 
 interface SummaryResponse { data: ExportHistorySummary }
 
@@ -82,6 +83,20 @@ export function useExportFilingCabinet() {
           category: input.category ?? null,
           reason: input.reason ?? null,
         },
+      ),
+  });
+}
+
+interface InspectionBundleExportResponse {
+  data: { export: ExportHistoryEntry; bundle: InspectionBundle };
+}
+
+export function useExportInspectionBundle() {
+  return useMutation({
+    mutationFn: (input: { homeId: string; reason?: string }) =>
+      api.post<InspectionBundleExportResponse>(
+        `/api/v1/care-events/inspection-bundle/export`,
+        { home_id: input.homeId, reason: input.reason ?? null },
       ),
   });
 }

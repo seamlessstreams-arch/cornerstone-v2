@@ -209,7 +209,9 @@ export function loadNotifications(homeId: string): NotificationStream {
       ? "Reg 44 pack"
       : ex.kind === "inspection_snapshot"
         ? "Inspection snapshot"
-        : "Filing cabinet";
+        : ex.kind === "inspection_bundle"
+          ? "Inspection bundle"
+          : "Filing cabinet";
     built.push({
       id: `sensitive_export:${ex.id}`,
       source: "sensitive_export",

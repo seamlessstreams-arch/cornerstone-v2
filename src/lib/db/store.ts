@@ -463,7 +463,8 @@ export interface PersistedReg44Pack {
 export type ExportHistoryKind =
   | "inspection_snapshot"
   | "reg44_pack"
-  | "filing_cabinet_index";
+  | "filing_cabinet_index"
+  | "inspection_bundle";
 export type ExportHistoryFormat = "json";
 export interface ExportHistoryEntry {
   id: string;
