@@ -47,6 +47,7 @@ const SOURCE_LABEL: Record<NotificationSource, string> = {
   manager_review_required: "Manager review",
   routing_failure:         "Routing failure",
   sensitive_export:        "Sensitive export",
+  export_abuse:            "Export risk",
 };
 
 const AUDIENCE_LABEL: Record<NotificationAudience, string> = {

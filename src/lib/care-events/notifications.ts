@@ -25,6 +25,7 @@ import { db } from "@/lib/db/store";
 import { loadReturnedRecordsQueue } from "@/lib/care-events/returned-records";
 import { loadAmendmentReviewQueue } from "@/lib/care-events/amendment-review";
 import { loadRoutingHealth } from "@/lib/care-events/routing-health";
+import { detectExportAbuse } from "@/lib/care-events/export-abuse";
 
 export type NotificationSeverity = "info" | "warning" | "critical";
 export type NotificationAudience = "manager" | "staff";
@@ -34,7 +35,8 @@ export type NotificationSource =
   | "reg40_triage_pending"
   | "manager_review_required"
   | "routing_failure"
-  | "sensitive_export";
+  | "sensitive_export"
+  | "export_abuse";
 
 export interface NotificationItem {
   id: string;                     // source:source_id
@@ -221,6 +223,30 @@ export function loadNotifications(homeId: string): NotificationStream {
       body: `Exported by ${ex.exported_by} (${ex.exported_by_role}) · ${ex.byte_size.toLocaleString()} bytes${ex.reason ? ` · ${ex.reason.slice(0, 120)}` : ""}`,
       created_at: ex.exported_at,
       link_href: `/intelligence/care-events/exports`,
+    });
+  }
+
+  // ── Export abuse flags (M41) ────────────────────────────────────────────────
+  //
+  // Promotes derived export-abuse signals (high volume, sensitive bursts,
+  // off-hours sensitive, unreasoned sensitive) into managers' notification
+  // stream so a manager sees suspicious export patterns at a glance, not
+  // only when they remember to visit the Export Risk page.
+  const abuse = detectExportAbuse(homeId);
+  for (const flag of abuse.flags) {
+    built.push({
+      id: `export_abuse:${flag.id}`,
+      source: "export_abuse",
+      source_id: flag.id,
+      home_id: homeId,
+      child_id: null,
+      audience: "manager",
+      target_staff_id: null,
+      severity: flag.severity,
+      title: `Export risk: ${flag.kind.replace(/_/g, " ")}`,
+      body: flag.message,
+      created_at: flag.detected_at,
+      link_href: `/intelligence/care-events/export-risk`,
     });
   }
 
