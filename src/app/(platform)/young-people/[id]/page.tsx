@@ -40,6 +40,8 @@ import type {
 } from "@/types/extended";
 import { useKeyWorkSessions, useCreateKeyWorkSession } from "@/hooks/use-intelligence";
 import { EmptyState } from "@/components/ui/empty-state";
+import { AriaInsightCard } from "@/components/ui/aria-insight-card";
+import { ProgressiveSection } from "@/components/ui/progressive-section";
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
@@ -378,7 +380,7 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
     {
       label: "Intelligence",
       tabs: [
-        { id: "aria", label: "Aria", icon: Sparkles },
+        { id: "aria", label: "ARIA", icon: Sparkles },
       ],
     },
   ];
@@ -489,7 +491,7 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
                   className={cn(
                     "flex items-center gap-1.5 px-3 py-2 text-[12px] font-medium border-b-2 whitespace-nowrap transition-all shrink-0",
                     tab === tabId
-                      ? "border-indigo-500 text-indigo-700"
+                      ? "border-[var(--cs-aria-gold)] text-[var(--cs-navy)]"
                       : "border-transparent text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] hover:bg-[var(--cs-surface)]"
                   )}
                 >
@@ -498,7 +500,7 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
                   {count !== undefined && count > 0 && (
                     <span className={cn(
                       "rounded-full px-1.5 text-[9px] font-bold",
-                      tab === tabId ? "bg-indigo-100 text-indigo-700" : "bg-slate-200 text-[var(--cs-text-secondary)]",
+                      tab === tabId ? "bg-[var(--cs-aria-gold-bg)] text-[var(--cs-aria-gold)]" : "bg-slate-200 text-[var(--cs-text-secondary)]",
                     )}>
                       {count}
                     </span>
@@ -570,6 +572,28 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
                 </div>
               )}
             </div>
+
+            {/* ARIA intelligence insight */}
+            {hasRisk && (
+              <AriaInsightCard
+                title={`${displayName} has ${yp.risk_flags.length} active risk flag${yp.risk_flags.length > 1 ? "s" : ""}`}
+                summary={`Risk flags: ${yp.risk_flags.join(", ")}. Review the risk assessment and ensure mitigation strategies are current. Consider whether care plan goals address these risks.`}
+                severity="warning"
+                actionLabel="Review Risk Assessment"
+                actionHref="/risk-assessments"
+                className="sm:col-span-2"
+              />
+            )}
+            {meta?.open_incidents && meta.open_incidents > 2 && !hasRisk && (
+              <AriaInsightCard
+                title={`${displayName} has ${meta.open_incidents} open incidents`}
+                summary="Multiple open incidents may indicate an escalating pattern. ARIA recommends reviewing the chronology for underlying triggers and considering a multi-agency discussion."
+                severity="suggestion"
+                actionLabel="View Chronology"
+                actionHref="#"
+                className="sm:col-span-2"
+              />
+            )}
 
             {/* Active tasks widget */}
             {(related?.tasks?.length ?? 0) > 0 && (
@@ -1344,7 +1368,7 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
               <EmptyTabState
                 icon={FileText}
                 label="No documents yet"
-                description="Upload placement plans, risk assessments, LAC reviews, and more — Aria will classify and extract intelligence automatically."
+                description="Upload placement plans, risk assessments, LAC reviews, and more — ARIA will classify and extract intelligence automatically."
                 action={<SmartUploadButton variant="button" label="Upload First Document" linkedChildId={id} uploadContext={`${displayName} ${yp.last_name} — first document`} />}
               />
             ) : (

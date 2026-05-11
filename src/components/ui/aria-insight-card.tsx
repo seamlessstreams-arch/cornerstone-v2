@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Sparkles, ArrowRight, AlertTriangle, TrendingUp, Lightbulb, Shield } from "lucide-react";
 
@@ -11,6 +12,7 @@ interface AriaInsightCardProps {
   summary: string;
   severity?: InsightSeverity;
   actionLabel?: string;
+  actionHref?: string;
   onAction?: () => void;
   onDismiss?: () => void;
   className?: string;
@@ -51,6 +53,7 @@ export function AriaInsightCard({
   summary,
   severity = "suggestion",
   actionLabel,
+  actionHref,
   onAction,
   onDismiss,
   className,
@@ -97,7 +100,19 @@ export function AriaInsightCard({
 
           {(actionLabel || onDismiss) && (
             <div className="mt-3 flex items-center gap-3">
-              {actionLabel && onAction && (
+              {actionLabel && actionHref && (
+                <Link
+                  href={actionHref}
+                  className={cn(
+                    "inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-medium transition-colors",
+                    "bg-[var(--cs-aria-gold)] text-[var(--cs-navy)] hover:bg-[var(--cs-aria-gold)]/90",
+                  )}
+                >
+                  {actionLabel}
+                  <ArrowRight className="h-3 w-3" />
+                </Link>
+              )}
+              {actionLabel && onAction && !actionHref && (
                 <button
                   onClick={onAction}
                   className={cn(

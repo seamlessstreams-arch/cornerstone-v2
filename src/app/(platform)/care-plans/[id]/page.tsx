@@ -27,6 +27,8 @@ import {
   BookOpen, Loader2, X, Activity, User,
 } from "lucide-react";
 import Link from "next/link";
+import { ProgressiveSection } from "@/components/ui/progressive-section";
+import { PageGuidance } from "@/components/ui/page-guidance";
 
 // ── Domain config ─────────────────────────────────────────────────────────────
 
@@ -203,9 +205,9 @@ function GoalCard({
             <p className="text-sm text-[var(--cs-text-secondary)] leading-relaxed">{goal.description}</p>
           </div>
 
-          <div className="rounded-xl border border-indigo-100 bg-indigo-50/60 p-3">
+          <div className="rounded-xl border border-[var(--cs-aria-gold-soft)] bg-[var(--cs-aria-gold-bg)]/60 p-3">
             <p className="text-[10px] font-semibold text-indigo-700 uppercase tracking-wide mb-1">Desired Outcome</p>
-            <p className="text-sm text-indigo-900 leading-relaxed">{goal.desired_outcome}</p>
+            <p className="text-sm text-[var(--cs-navy)] leading-relaxed">{goal.desired_outcome}</p>
           </div>
 
           {goal.actions.length > 0 && (
@@ -408,7 +410,7 @@ export default function CarePlanDetailPage({ params }: { params: Promise<{ id: s
         <div className="text-center py-16 text-[var(--cs-text-muted)]">
           <BookOpen className="h-10 w-10 mx-auto mb-3 text-[var(--cs-text-gentle)]" />
           <p className="text-sm font-medium text-[var(--cs-text-secondary)]">Care plan not found</p>
-          <Link href="/care-plans" className="text-xs text-indigo-600 hover:underline mt-2 inline-block">
+          <Link href="/care-plans" className="text-xs text-[var(--cs-aria-gold)] hover:underline mt-2 inline-block">
             Back to Care Plans
           </Link>
         </div>
@@ -439,7 +441,7 @@ export default function CarePlanDetailPage({ params }: { params: Promise<{ id: s
           />
           <Button
             size="sm"
-            className="gap-1.5 bg-indigo-600 hover:bg-indigo-700 text-white"
+            className="gap-1.5 bg-[var(--cs-aria-gold)] hover:bg-[var(--cs-aria-gold)]/90 text-white"
             onClick={generateAriaOverview}
             disabled={ariaLoading}
           >
@@ -451,19 +453,28 @@ export default function CarePlanDetailPage({ params }: { params: Promise<{ id: s
     >
       <div id="care-plan-detail-content" className="space-y-6 animate-fade-in">
 
+        <PageGuidance
+          title="Care plan goals & outcomes"
+          description="Track progress across all 8 care domains. Goals should be specific, measurable, and reviewed at every LAC review. Evidence from daily logs and key work sessions is linked automatically."
+          evidenceTip="Inspectors look for SMART goals with clear evidence of progress. Link daily observations to specific goals to build a compelling evidence trail."
+          ariaTip="ARIA can analyse daily logs and incident data to suggest which goals need attention and identify unrecognised progress."
+          regulationRef="Care Planning, Placement and Case Review Regulations 2010"
+          variant="aria"
+        />
+
         {/* ── ARIA Overview (when generated) ── */}
         {ariaOverview && (
-          <div className="rounded-2xl border border-indigo-100 bg-gradient-to-r from-indigo-50 to-violet-50 p-5 space-y-2">
+          <div className="rounded-2xl border border-[var(--cs-aria-gold-soft)] bg-gradient-to-r from-[var(--cs-aria-gold-bg)] to-violet-50/30 p-5 space-y-2">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Sparkles className="h-4 w-4 text-indigo-600" />
-                <p className="text-sm font-semibold text-indigo-900">ARIA Care Plan Overview</p>
+                <Sparkles className="h-4 w-4 text-[var(--cs-aria-gold)]" />
+                <p className="text-sm font-semibold text-[var(--cs-navy)]">ARIA Care Plan Overview</p>
               </div>
               <button onClick={() => setAriaOverview(null)} className="text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)]">
                 <X className="h-4 w-4" />
               </button>
             </div>
-            <p className="text-sm text-indigo-800 leading-relaxed">{ariaOverview}</p>
+            <p className="text-sm text-[var(--cs-navy)] leading-relaxed">{ariaOverview}</p>
           </div>
         )}
 
@@ -554,7 +565,7 @@ export default function CarePlanDetailPage({ params }: { params: Promise<{ id: s
             {selectedDomain !== "all" && (
               <button
                 onClick={() => setSelectedDomain("all")}
-                className="text-xs text-indigo-600 hover:underline"
+                className="text-xs text-[var(--cs-aria-gold)] hover:underline"
               >
                 Show all
               </button>
@@ -581,7 +592,7 @@ export default function CarePlanDetailPage({ params }: { params: Promise<{ id: s
                 ? `All Goals (${filteredGoals.length})`
                 : `${DOMAIN_CONFIG[selectedDomain].label} Goals (${filteredGoals.length})`}
             </h2>
-            <Link href={`/young-people/${plan.child_id}`} className="text-xs text-indigo-600 hover:underline">
+            <Link href={`/young-people/${plan.child_id}`} className="text-xs text-[var(--cs-aria-gold)] hover:underline">
               View YP profile →
             </Link>
           </div>
@@ -607,6 +618,12 @@ export default function CarePlanDetailPage({ params }: { params: Promise<{ id: s
         </div>
 
         {/* ── Evidence strip: recent logs + incidents ── */}
+        <ProgressiveSection
+          title="Evidence trail"
+          subtitle="Recent daily logs and incidents linked to this care plan"
+          badge={recentLogs.length + openIncidents.length}
+          hint="Inspectors look for evidence that care plans are actively used. Linked logs and incidents show the plan drives day-to-day care."
+        >
         <div className="grid gap-4 md:grid-cols-2">
 
           {/* Recent daily log entries */}
@@ -648,7 +665,7 @@ export default function CarePlanDetailPage({ params }: { params: Promise<{ id: s
             <div className="flex items-center gap-2 px-4 py-3 border-b border-[var(--cs-border-subtle)] bg-slate-50">
               <AlertTriangle className="h-4 w-4 text-[var(--cs-text-muted)]" />
               <p className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Open Incidents</p>
-              <Link href="/incidents" className="ml-auto text-[10px] text-indigo-600 hover:underline">View all →</Link>
+              <Link href="/incidents" className="ml-auto text-[10px] text-[var(--cs-aria-gold)] hover:underline">View all →</Link>
             </div>
             {openIncidents.length === 0 ? (
               <div className="p-6 text-center text-[var(--cs-text-muted)]">
@@ -683,6 +700,7 @@ export default function CarePlanDetailPage({ params }: { params: Promise<{ id: s
             )}
           </div>
         </div>
+        </ProgressiveSection>
 
         {/* Regulatory footer */}
         <div className="rounded-xl border border-[var(--cs-border-subtle)] bg-slate-50 px-4 py-3 text-xs text-[var(--cs-text-muted)]">

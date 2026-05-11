@@ -25,6 +25,8 @@ import { SmartUploadButton } from "@/components/documents/smart-upload-button";
 import { PrintButton } from "@/components/common/print-button";
 import { ExportButton, type ExportColumn } from "@/components/common/export-button";
 import { PageGuidance } from "@/components/ui/page-guidance";
+import { ApprovalBanner } from "@/components/ui/approval-banner";
+import { EvidenceLink } from "@/components/ui/evidence-link";
 import { getStaffName, getYPName, getYPById } from "@/lib/seed-data";
 import { INCIDENT_TYPE_LABELS, INCIDENT_TYPES, INCIDENT_SEVERITIES } from "@/lib/constants";
 import { cn, formatDate, formatRelative, todayStr } from "@/lib/utils";
@@ -248,10 +250,12 @@ function IncidentCard({
               )
             )}
             {inc.oversight_by && (
-              <span className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-50 border border-emerald-200 px-2.5 py-1 text-xs font-medium text-emerald-700">
-                <CheckCircle2 className="h-3.5 w-3.5" />
-                Oversight by {getStaffName(inc.oversight_by)} · {formatDate(inc.oversight_at)}
-              </span>
+              <ApprovalBanner
+                status="approved"
+                reviewedBy={getStaffName(inc.oversight_by)}
+                reviewedAt={formatDate(inc.oversight_at)}
+                className="w-full mt-1"
+              />
             )}
             {inc.linked_task_ids.length > 0 && (
               <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2.5 py-1 text-[10px] font-medium text-blue-700">
@@ -660,7 +664,7 @@ function OversightQueueTab() {
             {queue.length} incident{queue.length !== 1 ? "s" : ""} awaiting management oversight
           </div>
           <div className="text-xs text-amber-700 mt-0.5">
-            Oversight must be recorded by the Registered Manager. Aria can help you draft your comments.
+            Oversight must be recorded by the Registered Manager. ARIA can help you draft your comments.
           </div>
         </div>
       </div>
@@ -672,12 +676,13 @@ function OversightQueueTab() {
 
         if (submitted) {
           return (
-            <div key={inc.id} className="rounded-2xl border border-emerald-200 bg-emerald-50 p-5 flex items-center gap-3">
-              <CheckCircle2 className="h-5 w-5 text-emerald-600 shrink-0" />
-              <div>
-                <div className="text-sm font-semibold text-emerald-800">{inc.reference} — Oversight recorded</div>
-                <div className="text-xs text-emerald-600 mt-0.5">Oversight saved. This incident will clear from the queue when you refresh.</div>
-              </div>
+            <div key={inc.id} className="space-y-0">
+              <ApprovalBanner
+                status="approved"
+                reviewedBy={currentUser?.full_name ?? "Manager"}
+                reviewedAt="Just now"
+                comment={`${inc.reference} — Oversight recorded. This incident will clear from the queue on refresh.`}
+              />
             </div>
           );
         }
@@ -744,6 +749,33 @@ function OversightQueueTab() {
                 </div>
               )}
 
+              {/* Linked evidence */}
+              {(inc.body_map_required || inc.linked_task_ids.length > 0) && (
+                <div>
+                  <div className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-2">Linked Evidence</div>
+                  <div className="space-y-1.5">
+                    {inc.body_map_required && (
+                      <EvidenceLink
+                        type="document"
+                        title={`Body map ${inc.body_map_completed ? "(completed)" : "(required)"}`}
+                        href="/body-map"
+                        date={inc.date}
+                        author={getStaffName(inc.reported_by)}
+                      />
+                    )}
+                    {inc.linked_task_ids.map((taskId) => (
+                      <EvidenceLink
+                        key={taskId}
+                        type="log_entry"
+                        title={`Follow-up task ${taskId}`}
+                        href="/tasks"
+                        date={inc.date}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {/* Aria panel */}
               <div>
                 <button
@@ -751,7 +783,7 @@ function OversightQueueTab() {
                   className="flex items-center gap-2 rounded-xl border border-violet-200 bg-violet-50 px-3 py-2 text-xs font-semibold text-violet-700 hover:bg-violet-100 transition-colors"
                 >
                   <Sparkles className="h-3.5 w-3.5" />
-                  {ariaPanelId === inc.id ? "Close Aria" : "Ask ARIA to help draft oversight"}
+                  {ariaPanelId === inc.id ? "Close ARIA" : "Ask ARIA to help draft oversight"}
                 </button>
 
                 {ariaPanelId === inc.id && (
