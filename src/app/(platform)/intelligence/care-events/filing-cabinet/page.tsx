@@ -12,9 +12,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { RefreshCw, FolderOpen, CheckCircle2, AlertCircle } from "lucide-react";
+import { RefreshCw, FolderOpen, CheckCircle2, AlertCircle, Share2, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useFilingCabinetIndex } from "@/hooks/use-filing-cabinet-index";
+import { useExportFilingCabinet } from "@/hooks/use-export-history";
 
 const HOME_ID = "home_oak";
 
@@ -24,17 +25,42 @@ function pretty(category: string): string {
 
 export default function FilingCabinetIndexPage() {
   const { data, refetch, isFetching, isLoading } = useFilingCabinetIndex(HOME_ID);
+  const exportCabinet = useExportFilingCabinet();
   const idx = data?.data;
+
+  async function exportNow() {
+    const reason = window.prompt(
+      "Reason for export (recorded in immutable export history):",
+      "",
+    );
+    if (reason === null) return;
+    const r = await exportCabinet.mutateAsync({ homeId: HOME_ID, reason });
+    const payload = r.data.payload;
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `filing_cabinet_${HOME_ID}_${new Date().toISOString().replace(/[:.]/g, "")}.json`;
+    document.body.appendChild(a); a.click(); a.remove();
+    URL.revokeObjectURL(url);
+  }
 
   return (
     <PageShell
       title="Filing Cabinet"
       subtitle="Live index of every record auto-filed by the routing engine. Verified records are inspection-ready."
       actions={
-        <Button variant="outline" size="sm" onClick={() => refetch()} disabled={isFetching}>
-          <RefreshCw className={`mr-1 h-4 w-4 ${isFetching ? "animate-spin" : ""}`} />
-          Refresh
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button variant="outline" size="sm" onClick={() => refetch()} disabled={isFetching}>
+            <RefreshCw className={`mr-1 h-4 w-4 ${isFetching ? "animate-spin" : ""}`} />
+            Refresh
+          </Button>
+          <Button size="sm" onClick={exportNow} disabled={exportCabinet.isPending || !idx}>
+            {exportCabinet.isPending
+              ? <><Loader2 className="mr-1 h-4 w-4 animate-spin" />Exporting…</>
+              : <><Share2 className="mr-1 h-4 w-4" />Export &amp; record</>}
+          </Button>
+        </div>
       }
     >
       {isLoading && <p className="text-sm text-slate-500">Loading filing cabinet…</p>}

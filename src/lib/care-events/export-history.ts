@@ -74,6 +74,7 @@ export function loadExportHistory(homeId: string): ExportHistorySummary {
   const by_kind: Record<ExportHistoryKind, number> = {
     inspection_snapshot: 0,
     reg44_pack: 0,
+    filing_cabinet_index: 0,
   };
   const by_user: Record<string, number> = {};
   let safeguarding_sensitive = 0;

@@ -462,7 +462,8 @@ export interface PersistedReg44Pack {
 // permissions" + audit / traceability.
 export type ExportHistoryKind =
   | "inspection_snapshot"
-  | "reg44_pack";
+  | "reg44_pack"
+  | "filing_cabinet_index";
 export type ExportHistoryFormat = "json";
 export interface ExportHistoryEntry {
   id: string;

@@ -8,6 +8,8 @@ import type {
 import type { ExportHistoryEntry } from "@/lib/db/store";
 import type { InspectionSnapshot } from "@/lib/care-events/inspection-snapshot";
 import type { Reg44Pack } from "@/lib/care-events/reg44-pack";
+import type { FilingCabinetIndex } from "@/lib/care-events/filing-cabinet-index";
+import type { FilingCategory } from "@/types/care-events";
 
 interface SummaryResponse { data: ExportHistorySummary }
 
@@ -45,6 +47,27 @@ export function useExportReg44Pack() {
       api.post<Reg44ExportResponse>(
         `/api/v1/care-events/reg44-pack/${encodeURIComponent(input.id)}/export`,
         { reason: input.reason ?? null },
+      ),
+  });
+}
+
+interface FilingExportResponse {
+  data: {
+    export: ExportHistoryEntry;
+    payload: FilingCabinetIndex & { filtered_to_category?: FilingCategory };
+  };
+}
+
+export function useExportFilingCabinet() {
+  return useMutation({
+    mutationFn: (input: { homeId: string; category?: FilingCategory; reason?: string }) =>
+      api.post<FilingExportResponse>(
+        `/api/v1/care-events/filing-cabinet/export`,
+        {
+          home_id: input.homeId,
+          category: input.category ?? null,
+          reason: input.reason ?? null,
+        },
       ),
   });
 }
