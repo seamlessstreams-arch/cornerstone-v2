@@ -15,11 +15,14 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
-  Activity, AlertTriangle, RefreshCw, TrendingUp, Users, Clock, Sparkles, CheckCircle2,
+  Activity, AlertTriangle, RefreshCw, TrendingUp, Users, Clock, Sparkles, CheckCircle2, Send,
 } from "lucide-react";
 import {
   useCareEventPatterns,
 } from "@/hooks/use-care-event-patterns";
+import { usePromotePatternsToReg45 } from "@/hooks/use-promote-patterns-to-reg45";
+import { useAuthContext } from "@/contexts/auth-context";
+import { appRoleToAriaRole } from "@/lib/aria/aria-permissions";
 import type {
   CareEventPattern,
   CareEventPatternSeverity,
@@ -56,8 +59,12 @@ export default function CareEventPatternsPage() {
   const { data, isLoading, refetch, isFetching } = useCareEventPatterns(HOME_ID, {
     lookbackDays, minCluster,
   });
+  const { currentUser } = useAuthContext();
+  const ariaRole = appRoleToAriaRole(currentUser?.role ?? "registered_manager");
+  const promote = usePromotePatternsToReg45();
 
   const summary = data?.data;
+  const promoteResult = promote.data?.data;
 
   return (
     <PageShell
@@ -89,9 +96,33 @@ export default function CareEventPatternsPage() {
             <RefreshCw className={`mr-1 h-4 w-4 ${isFetching ? "animate-spin" : ""}`} />
             Rescan
           </Button>
+          <Button
+            size="sm"
+            onClick={() =>
+              promote.mutate({
+                home_id: HOME_ID,
+                lookback_days: lookbackDays,
+                min_cluster: minCluster,
+                actor_id: currentUser?.id,
+                actor_role: ariaRole,
+              })
+            }
+            disabled={promote.isPending || (summary?.total_patterns ?? 0) === 0}
+          >
+            <Send className="mr-1 h-4 w-4" />
+            Promote to Reg 45
+          </Button>
         </div>
       }
     >
+      {promoteResult && (
+        <div className="mb-3 rounded border border-violet-200 bg-violet-50 px-3 py-2 text-xs text-violet-900">
+          Promoted {promoteResult.scanned} pattern{promoteResult.scanned === 1 ? "" : "s"} into Reg 45 evidence —{" "}
+          {promoteResult.created} new draft chip{promoteResult.created === 1 ? "" : "s"},{" "}
+          {promoteResult.refreshed} refreshed,{" "}
+          {promoteResult.skipped_locked} kept locked. All chips remain provisional until a manager accepts them in the Reg 45 evidence bank.
+        </div>
+      )}
       <div className="grid gap-3 md:grid-cols-4">
         <SummaryCard label="Patterns" value={summary?.total_patterns ?? 0} icon={<Sparkles className="h-4 w-4" />} tone="bg-violet-50" />
         <SummaryCard label="High" value={summary?.by_severity.high ?? 0} icon={<AlertTriangle className="h-4 w-4 text-rose-700" />} tone="bg-rose-50" />
