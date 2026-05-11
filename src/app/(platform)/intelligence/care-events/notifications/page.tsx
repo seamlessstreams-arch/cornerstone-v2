@@ -50,11 +50,13 @@ const SOURCE_LABEL: Record<NotificationSource, string> = {
   export_abuse:            "Export risk",
   trajectory_alert:        "Readiness trajectory",
   trajectory_ack_overdue:  "Trajectory ack overdue",
+  trajectory_ack_overdue_ri: "RI escalation",
 };
 
 const AUDIENCE_LABEL: Record<NotificationAudience, string> = {
   manager: "Manager",
   staff:   "Staff",
+  responsible_individual: "RI",
 };
 
 const SEVERITY_ORDER: NotificationSeverity[] = ["critical", "warning", "info"];

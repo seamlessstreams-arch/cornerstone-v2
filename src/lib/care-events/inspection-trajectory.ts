@@ -258,6 +258,9 @@ export function listTrajectoryAlertAcks(homeId: string): TrajectoryAlertAck[] {
 
 export const ACK_OVERDUE_CRITICAL_HOURS = 48;
 export const ACK_OVERDUE_WARNING_DAYS = 7;
+// Escalation tier: a critical reminder still unacked this many hours past the
+// reminder threshold escalates to the Responsible Individual.
+export const ACK_OVERDUE_RI_ESCALATION_HOURS = 72;
 
 export interface TrajectoryAckOverdueReminder {
   id: string;                       // deterministic; safe for notification dedup
@@ -300,6 +303,54 @@ export function detectTrajectoryAckOverdueReminders(
           ? `Critical trajectory alert "${a.kind.replace(/_/g, " ")}" unacknowledged for ${age_hours}h (threshold ${ACK_OVERDUE_CRITICAL_HOURS}h).`
           : `Warning trajectory alert "${a.kind.replace(/_/g, " ")}" unacknowledged for ${Math.floor(age_hours / 24)}d (threshold ${ACK_OVERDUE_WARNING_DAYS}d).`,
       detected_at: a.detected_at,
+    });
+  }
+
+  return out;
+}
+
+// ── RI escalation tier (M51) ──────────────────────────────────────────────────
+//
+// A critical reminder that itself sits unacked beyond
+// ACK_OVERDUE_RI_ESCALATION_HOURS past the original reminder threshold becomes
+// a Responsible Individual escalation so oversight isn't blind to a manager who
+// has gone quiet on a critical readiness signal.
+
+export interface TrajectoryRiEscalation {
+  id: string;
+  home_id: string;
+  alert_id: string;
+  alert_kind: TrajectoryAlertKind;
+  bundle_id: string | null;
+  age_hours: number;
+  message: string;
+  detected_at: string;
+}
+
+export function detectTrajectoryRiEscalations(
+  homeId: string,
+): TrajectoryRiEscalation[] {
+  const reminders = detectTrajectoryAckOverdueReminders(homeId);
+  const out: TrajectoryRiEscalation[] = [];
+  const escalateAfterMs =
+    (ACK_OVERDUE_CRITICAL_HOURS + ACK_OVERDUE_RI_ESCALATION_HOURS) * 60 * 60 * 1000;
+  const now = Date.now();
+  const HOUR = 60 * 60 * 1000;
+
+  for (const r of reminders) {
+    if (r.severity !== "critical") continue;
+    const ageMs = now - new Date(r.detected_at).getTime();
+    if (ageMs < escalateAfterMs) continue;
+    const age_hours = Math.floor(ageMs / HOUR);
+    out.push({
+      id: `traj_ri_escalation_${r.alert_id}`,
+      home_id: r.home_id,
+      alert_id: r.alert_id,
+      alert_kind: r.alert_kind,
+      bundle_id: r.bundle_id,
+      age_hours,
+      message: `RI escalation: critical trajectory alert "${r.alert_kind.replace(/_/g, " ")}" unacknowledged by management for ${age_hours}h.`,
+      detected_at: r.detected_at,
     });
   }
 

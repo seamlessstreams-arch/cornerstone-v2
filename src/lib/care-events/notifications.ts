@@ -26,10 +26,10 @@ import { loadReturnedRecordsQueue } from "@/lib/care-events/returned-records";
 import { loadAmendmentReviewQueue } from "@/lib/care-events/amendment-review";
 import { loadRoutingHealth } from "@/lib/care-events/routing-health";
 import { detectExportAbuse } from "@/lib/care-events/export-abuse";
-import { detectTrajectoryAlerts, detectTrajectoryAckOverdueReminders } from "@/lib/care-events/inspection-trajectory";
+import { detectTrajectoryAlerts, detectTrajectoryAckOverdueReminders, detectTrajectoryRiEscalations } from "@/lib/care-events/inspection-trajectory";
 
 export type NotificationSeverity = "info" | "warning" | "critical";
-export type NotificationAudience = "manager" | "staff";
+export type NotificationAudience = "manager" | "staff" | "responsible_individual";
 export type NotificationSource =
   | "returned_record"
   | "sensitive_amendment"
@@ -39,7 +39,8 @@ export type NotificationSource =
   | "sensitive_export"
   | "export_abuse"
   | "trajectory_alert"
-  | "trajectory_ack_overdue";
+  | "trajectory_ack_overdue"
+  | "trajectory_ack_overdue_ri";
 
 export interface NotificationItem {
   id: string;                     // source:source_id
@@ -69,6 +70,7 @@ export interface NotificationStream {
   total: number;
   for_managers: number;
   for_staff: number;
+  for_responsible_individual: number;
   by_severity: Record<NotificationSeverity, number>;
   items: NotificationItem[];      // newest first
   // Per-user counters (M34). Populated by `loadNotificationsForUser`; the
@@ -301,6 +303,29 @@ export function loadNotifications(homeId: string): NotificationStream {
     });
   }
 
+  // ── Trajectory RI escalations (M51) ─────────────────────────────────
+  //
+  // Critical reminders left unacked past the escalation threshold are
+  // re-promoted into the Responsible Individual audience so external
+  // oversight sees signals management has not actioned. Audience-routed
+  // separately so the manager queue does not double-count escalations.
+  for (const e of detectTrajectoryRiEscalations(homeId)) {
+    built.push({
+      id: `trajectory_ack_overdue_ri:${e.id}`,
+      source: "trajectory_ack_overdue_ri",
+      source_id: e.id,
+      home_id: e.home_id,
+      child_id: null,
+      audience: "responsible_individual",
+      target_staff_id: null,
+      severity: "critical",
+      title: `RI escalation: ${e.alert_kind.replace(/_/g, " ")}`,
+      body: e.message,
+      created_at: e.detected_at,
+      link_href: `/intelligence/care-events/inspection-bundle/trajectory`,
+    });
+  }
+
   // Sort: severity asc, then newest first
   built.sort((a, b) => {
     const s = SEVERITY_ORDER[a.severity] - SEVERITY_ORDER[b.severity];
@@ -317,10 +342,11 @@ export function loadNotifications(homeId: string): NotificationStream {
 
   const by_severity: Record<NotificationSeverity, number> =
     { critical: 0, warning: 0, info: 0 };
-  let for_managers = 0, for_staff = 0;
+  let for_managers = 0, for_staff = 0, for_responsible_individual = 0;
   for (const i of items) {
     by_severity[i.severity] += 1;
     if (i.audience === "manager") for_managers += 1;
+    else if (i.audience === "responsible_individual") for_responsible_individual += 1;
     else for_staff += 1;
   }
 
@@ -330,6 +356,7 @@ export function loadNotifications(homeId: string): NotificationStream {
     total: items.length,
     for_managers,
     for_staff,
+    for_responsible_individual,
     by_severity,
     items,
     viewer_user_id: null,
@@ -371,10 +398,11 @@ export function loadNotificationsForUser(
 
   const by_severity: Record<NotificationSeverity, number> =
     { critical: 0, warning: 0, info: 0 };
-  let for_managers = 0, for_staff = 0, unread = 0, dismissed = 0;
+  let for_managers = 0, for_staff = 0, for_responsible_individual = 0, unread = 0, dismissed = 0;
   for (const i of merged) {
     by_severity[i.severity] += 1;
     if (i.audience === "manager") for_managers += 1;
+    else if (i.audience === "responsible_individual") for_responsible_individual += 1;
     else for_staff += 1;
     if (!i.read_at && !i.dismissed_at) unread += 1;
     if (i.dismissed_at) dismissed += 1;
@@ -386,6 +414,7 @@ export function loadNotificationsForUser(
     total: merged.length,
     for_managers,
     for_staff,
+    for_responsible_individual,
     by_severity,
     items: merged,
     viewer_user_id: userId,
