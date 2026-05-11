@@ -484,6 +484,67 @@ export interface AriaStudioAuditLog {
   created_at: string;
 }
 
+// ── Safeguarding patterns + early warnings ───────────────────────────────────
+
+export type AriaSafeguardingPatternType =
+  | "repeat_missing"
+  | "repeat_restraint"
+  | "escalating_severity"
+  | "night_time_cluster"
+  | "contextual_safeguarding"
+  | "cross_child_trend"
+  | "oversight_gap"
+  | "unexplained_injury_cluster";
+
+export type AriaPatternSeverity = "low" | "medium" | "high" | "critical";
+
+export interface AriaSafeguardingEvidenceRef {
+  source_table: string;
+  source_id: string;
+  date: string;
+  excerpt: string;
+}
+
+export interface AriaSafeguardingPattern {
+  id: string;
+  home_id: string;
+  child_id: string | null;
+  pattern_type: AriaSafeguardingPatternType;
+  title: string;
+  description: string;
+  severity: AriaPatternSeverity;
+  window_start: string;
+  window_end: string;
+  evidence_refs: AriaSafeguardingEvidenceRef[];
+  reflective_prompt: string;
+  status: "open" | "acknowledged" | "actioned" | "dismissed";
+  acknowledged_by: string | null;
+  acknowledged_at: string | null;
+  resolution_note: string | null;
+  is_ai_draft: boolean;
+  detected_at: string;
+}
+
+export interface AriaEarlyWarning {
+  id: string;
+  home_id: string;
+  child_id: string | null;
+  source_pattern_id: string | null;
+  warning_type: AriaSafeguardingPatternType;
+  title: string;
+  rationale: string;
+  severity: AriaPatternSeverity;
+  recommended_action: string;
+  status: "active" | "acknowledged" | "escalated" | "closed";
+  acknowledged_by: string | null;
+  acknowledged_at: string | null;
+  closed_by: string | null;
+  closed_at: string | null;
+  closure_note: string | null;
+  is_ai_draft: boolean;
+  created_at: string;
+}
+
 // ── Home Dynamics ─────────────────────────────────────────────────────────────
 
 export type AriaIndicatorStatus = "green" | "amber" | "red";

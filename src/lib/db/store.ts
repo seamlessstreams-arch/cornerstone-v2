@@ -403,6 +403,7 @@ import type {
   AriaArtifact, AriaSource, AriaArtifactVersion, AriaArtifactReview,
   AriaArtifactAction, AriaQualityCheck, AriaGap, AriaStudioAuditLog,
   AriaHomeDynamicsSnapshot,
+  AriaSafeguardingPattern, AriaEarlyWarning,
 } from "@/types/aria-studio";
 
 // ── Mutable collections ───────────────────────────────────────────────────────
@@ -1234,6 +1235,8 @@ const store = {
   ariaGaps: [] as AriaGap[],
   ariaStudioAuditLog: [] as AriaStudioAuditLog[],
   ariaHomeDynamicsSnapshots: [] as AriaHomeDynamicsSnapshot[],
+  ariaSafeguardingPatterns: [] as AriaSafeguardingPattern[],
+  ariaEarlyWarnings: [] as AriaEarlyWarning[],
 
   // Shift Swap Requests
   shiftSwaps: [
@@ -11115,6 +11118,54 @@ export const db = {
       const snap: AriaHomeDynamicsSnapshot = { ...data, id: generateId("hds") };
       store.ariaHomeDynamicsSnapshots.push(snap);
       return snap;
+    },
+  },
+  ariaSafeguardingPatterns: {
+    findAll: (homeId?: string) =>
+      homeId
+        ? store.ariaSafeguardingPatterns.filter((p) => p.home_id === homeId)
+        : store.ariaSafeguardingPatterns,
+    findById: (id: string) => store.ariaSafeguardingPatterns.find((p) => p.id === id),
+    findOpen: (homeId: string) =>
+      store.ariaSafeguardingPatterns.filter(
+        (p) => p.home_id === homeId && p.status === "open",
+      ),
+    create: (data: Omit<AriaSafeguardingPattern, "id">): AriaSafeguardingPattern => {
+      const rec: AriaSafeguardingPattern = { ...data, id: generateId("sgp") };
+      store.ariaSafeguardingPatterns.push(rec);
+      return rec;
+    },
+    patch: (id: string, data: Partial<AriaSafeguardingPattern>): AriaSafeguardingPattern | null => {
+      const idx = store.ariaSafeguardingPatterns.findIndex((p) => p.id === id);
+      if (idx === -1) return null;
+      store.ariaSafeguardingPatterns[idx] = { ...store.ariaSafeguardingPatterns[idx], ...data };
+      return store.ariaSafeguardingPatterns[idx];
+    },
+  },
+  ariaEarlyWarnings: {
+    findAll: (homeId?: string) =>
+      homeId
+        ? store.ariaEarlyWarnings.filter((w) => w.home_id === homeId)
+        : store.ariaEarlyWarnings,
+    findById: (id: string) => store.ariaEarlyWarnings.find((w) => w.id === id),
+    findActive: (homeId: string) =>
+      store.ariaEarlyWarnings.filter(
+        (w) => w.home_id === homeId && w.status === "active",
+      ),
+    create: (data: Omit<AriaEarlyWarning, "id" | "created_at">): AriaEarlyWarning => {
+      const rec: AriaEarlyWarning = {
+        ...data,
+        id: generateId("ewn"),
+        created_at: new Date().toISOString(),
+      };
+      store.ariaEarlyWarnings.push(rec);
+      return rec;
+    },
+    patch: (id: string, data: Partial<AriaEarlyWarning>): AriaEarlyWarning | null => {
+      const idx = store.ariaEarlyWarnings.findIndex((w) => w.id === id);
+      if (idx === -1) return null;
+      store.ariaEarlyWarnings[idx] = { ...store.ariaEarlyWarnings[idx], ...data };
+      return store.ariaEarlyWarnings[idx];
     },
   },
   wakeUpRoutines: {
