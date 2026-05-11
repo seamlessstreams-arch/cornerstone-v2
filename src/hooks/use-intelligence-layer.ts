@@ -58,6 +58,22 @@ export function useUpdateAttentionItem() {
   });
 }
 
+// ── HR Risk Command Centre ───────────────────────────────────────────────────
+
+export function useHrRisk() {
+  return useQuery({
+    queryKey: ["il", "hr-risk"],
+    queryFn: () =>
+      ilFetch<{
+        ok: boolean;
+        cases: unknown[];
+        overdueTasks: unknown[];
+        recruitment: unknown[];
+        persisted: boolean;
+      }>(`/hr-risk`),
+  });
+}
+
 // ── ARIA suggestions (review queue + detail) ─────────────────────────────────
 
 export function useAriaSuggestions(params?: { homeId?: string; status?: string }) {

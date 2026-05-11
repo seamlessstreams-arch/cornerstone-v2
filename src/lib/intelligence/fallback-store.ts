@@ -1324,6 +1324,64 @@ export const ariaSuggestions: AriaSuggestionRow[] = [
   _ariaBase({ id: "as_009", title: "Management oversight — minor damage incident", summary: "A minor damage incident was recorded. Management oversight should confirm the response was proportionate and the child was supported.", reason: "All incidents benefit from management oversight, even where severity is low.", suggestion_type: "management_oversight", related_record_id: "inc_037", child_name: "Casey T", risk_level: "low", confidence_level: "high", status: "committed", created_at: "2026-05-01T09:00:00Z" }),
 ];
 
+// ─── HR Risk Command Centre ──────────────────────────────────────────────────
+
+export interface HrCaseSummaryRow {
+  id: string;
+  staffName: string;
+  caseType: string;
+  riskLevel: string;
+  status: string;
+  safeguardingStatus: string;
+  openedAt: string;
+  daysSinceOpened: number;
+  lastActionAt: string;
+  caseOwner: string;
+  riOversightRequired: boolean;
+  riOversightCompleted: boolean;
+  overdueTaskCount: number;
+}
+
+export interface HrTaskSummaryRow {
+  id: string;
+  title: string;
+  linkedCaseId?: string;
+  assignedTo: string;
+  dueDate: string;
+  daysOverdue: number;
+  priority: string;
+}
+
+export interface HrRecruitmentSummaryRow {
+  staffName: string;
+  completedChecks: number;
+  totalChecks: number;
+  gateOutcome: string;
+  criticalMissing: string[];
+}
+
+export const hrCases: HrCaseSummaryRow[] = [
+  { id: "hrc_001", staffName: "Staff Member A", caseType: "safeguarding_allegation", riskLevel: "black", status: "investigation", safeguardingStatus: "lado_consulted", openedAt: "2026-04-28", daysSinceOpened: 7, lastActionAt: "2026-05-04", caseOwner: "Registered Manager", riOversightRequired: true, riOversightCompleted: false, overdueTaskCount: 1 },
+  { id: "hrc_002", staffName: "Staff Member B", caseType: "disciplinary", riskLevel: "red", status: "meeting_scheduled", safeguardingStatus: "not_safeguarding", openedAt: "2026-04-15", daysSinceOpened: 20, lastActionAt: "2026-05-02", caseOwner: "Registered Manager", riOversightRequired: false, riOversightCompleted: false, overdueTaskCount: 0 },
+  { id: "hrc_003", staffName: "Staff Member C", caseType: "sickness_absence", riskLevel: "amber", status: "open", safeguardingStatus: "not_safeguarding", openedAt: "2026-03-20", daysSinceOpened: 46, lastActionAt: "2026-04-28", caseOwner: "Deputy Manager", riOversightRequired: false, riOversightCompleted: false, overdueTaskCount: 2 },
+  { id: "hrc_004", staffName: "Staff Member D", caseType: "suspension", riskLevel: "red", status: "suspended", safeguardingStatus: "safeguarding_open", openedAt: "2026-04-22", daysSinceOpened: 13, lastActionAt: "2026-05-01", caseOwner: "Registered Manager", riOversightRequired: true, riOversightCompleted: true, overdueTaskCount: 0 },
+  { id: "hrc_005", staffName: "Staff Member E", caseType: "probation", riskLevel: "green", status: "open", safeguardingStatus: "not_safeguarding", openedAt: "2026-02-10", daysSinceOpened: 84, lastActionAt: "2026-04-30", caseOwner: "Deputy Manager", riOversightRequired: false, riOversightCompleted: false, overdueTaskCount: 0 },
+  { id: "hrc_006", staffName: "Staff Member F", caseType: "grievance", riskLevel: "amber", status: "outcome_pending", safeguardingStatus: "not_safeguarding", openedAt: "2026-04-01", daysSinceOpened: 34, lastActionAt: "2026-04-25", caseOwner: "Registered Manager", riOversightRequired: false, riOversightCompleted: false, overdueTaskCount: 1 },
+];
+
+export const hrOverdueTasks: HrTaskSummaryRow[] = [
+  { id: "hrt_001", title: "Schedule LADO strategy discussion", linkedCaseId: "hrc_001", assignedTo: "Registered Manager", dueDate: "2026-05-03", daysOverdue: 2, priority: "urgent" },
+  { id: "hrt_002", title: "Send return-to-work meeting invite", linkedCaseId: "hrc_003", assignedTo: "Deputy Manager", dueDate: "2026-05-01", daysOverdue: 4, priority: "high" },
+  { id: "hrt_003", title: "Chase occupational health referral", linkedCaseId: "hrc_003", assignedTo: "Deputy Manager", dueDate: "2026-04-28", daysOverdue: 7, priority: "medium" },
+  { id: "hrt_004", title: "Outcome letter to be drafted", linkedCaseId: "hrc_006", assignedTo: "Registered Manager", dueDate: "2026-05-02", daysOverdue: 3, priority: "high" },
+];
+
+export const hrRecruitment: HrRecruitmentSummaryRow[] = [
+  { staffName: "New Starter G", completedChecks: 14, totalChecks: 14, gateOutcome: "approved", criticalMissing: [] },
+  { staffName: "New Starter H", completedChecks: 9, totalChecks: 14, gateOutcome: "blocked", criticalMissing: ["Enhanced DBS", "Second reference", "Barred list check", "Health declaration", "Manager sign-off"] },
+  { staffName: "New Starter I", completedChecks: 12, totalChecks: 14, gateOutcome: "senior_risk_acceptance", criticalMissing: ["Qualification verification", "Induction plan"] },
+];
+
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 let idCounter = 1000;
 export function nextFallbackId(prefix: string): string {
