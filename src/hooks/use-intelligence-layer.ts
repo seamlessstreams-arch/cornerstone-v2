@@ -58,6 +58,38 @@ export function useUpdateAttentionItem() {
   });
 }
 
+// ── ARIA suggestions (review queue + detail) ─────────────────────────────────
+
+export function useAriaSuggestions(params?: { homeId?: string; status?: string }) {
+  const query = new URLSearchParams();
+  if (params?.homeId) query.set("homeId", params.homeId);
+  if (params?.status) query.set("status", params.status);
+  return useQuery({
+    queryKey: ["il", "aria-suggestions", params],
+    queryFn: () => ilFetch<{ ok: boolean; items: unknown[]; persisted: boolean }>(`/aria-suggestions?${query}`),
+  });
+}
+
+export function useAriaSuggestion(id?: string) {
+  return useQuery({
+    queryKey: ["il", "aria-suggestion", id],
+    queryFn: () => ilFetch<{ ok: boolean; item: unknown; persisted: boolean }>(`/aria-suggestions?id=${id}`),
+    enabled: !!id,
+  });
+}
+
+export function useUpdateAriaSuggestion() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (data: Record<string, unknown>) =>
+      ilFetch("/aria-suggestions", { method: "PATCH", body: JSON.stringify(data) }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["il", "aria-suggestions"] });
+      qc.invalidateQueries({ queryKey: ["il", "aria-suggestion"] });
+    },
+  });
+}
+
 // ── Evidence (Ofsted Evidence Room) ──────────────────────────────────────────
 
 export function useEvidenceItems(params?: {

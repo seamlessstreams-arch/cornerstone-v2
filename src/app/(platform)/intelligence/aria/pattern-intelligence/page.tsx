@@ -76,134 +76,6 @@ interface PatternItem {
   status: "active" | "acknowledged" | "resolved";
 }
 
-const DEMO_ALERTS: PatternItem[] = [
-  {
-    id: "pi_001",
-    source: "voice_gap",
-    category: "silent_child",
-    title: "No voice presence in 30 days — Casey T",
-    description: "Casey has 12 records in the last 30 days, but none contain the child's voice — no key work, no direct quotes, no one-to-one sessions. The child is present in the records but invisible as a person.",
-    severity: "urgent",
-    childName: "Casey T",
-    recommendation: "The child's key worker should arrange dedicated time with Casey. Explore how they are feeling about their placement, their relationships, their future. Record what Casey says, not what staff think Casey feels.",
-    evidenceCount: 12,
-    detectedAt: "2026-05-05T07:00:00Z",
-    status: "active",
-  },
-  {
-    id: "pi_002",
-    source: "pattern",
-    category: "escalation",
-    title: "Escalating incident severity — Alex W",
-    description: "4 incidents with increasing severity over 14 days. The most recent incident was high severity. This pattern may indicate that current strategies are not effectively managing risk.",
-    severity: "high",
-    childName: "Alex W",
-    recommendation: "Review the risk assessment and behaviour support plan. Consider whether triggers have changed or whether the current approach needs adjusting.",
-    evidenceCount: 4,
-    detectedAt: "2026-05-04T19:30:00Z",
-    status: "active",
-  },
-  {
-    id: "pi_003",
-    source: "pattern",
-    category: "time_of_day",
-    title: "65% of incidents occur during evening (6–9pm)",
-    description: "9 of 14 incidents occurred during the evening period. This concentration suggests environmental or routine-related triggers during this time.",
-    severity: "medium",
-    recommendation: "Review staffing levels, routine structure, and transition support during the evening. Consider whether children need more structured activity or wind-down support.",
-    evidenceCount: 9,
-    detectedAt: "2026-05-04T08:00:00Z",
-    status: "active",
-  },
-  {
-    id: "pi_004",
-    source: "voice_gap",
-    category: "post_incident_voice_missing",
-    title: "Child's voice not captured after physical intervention — Alex W",
-    description: "A high severity physical intervention incident occurred on 3 May. Alex's experience, feelings, and wishes have not been recorded within 3 days.",
-    severity: "high",
-    childName: "Alex W",
-    recommendation: "Arrange a key work session focused on the incident. Ask Alex how they felt, what they need, and whether they feel safe.",
-    evidenceCount: 1,
-    detectedAt: "2026-05-05T07:00:00Z",
-    status: "active",
-  },
-  {
-    id: "pi_005",
-    source: "pattern",
-    category: "missing_oversight",
-    title: "3 incidents without management oversight",
-    description: "3 incidents requiring management oversight have not been reviewed within 2 days. Timely oversight is a regulatory requirement.",
-    severity: "high",
-    recommendation: "Prioritise the critical and high severity incidents first. Record oversight with reflective commentary and next actions.",
-    evidenceCount: 3,
-    detectedAt: "2026-05-05T06:00:00Z",
-    status: "active",
-  },
-  {
-    id: "pi_006",
-    source: "voice_gap",
-    category: "narrow_voice_coverage",
-    title: "Voice coverage gaps — Jordan M",
-    description: "Records for Jordan cover 3 of 10 key wellbeing themes. Missing: identity, family relationships, health, future aspirations, fears and concerns.",
-    severity: "medium",
-    childName: "Jordan M",
-    recommendation: "Plan key work sessions that explore the missing themes using age-appropriate tools.",
-    evidenceCount: 8,
-    detectedAt: "2026-05-05T07:00:00Z",
-    status: "active",
-  },
-  {
-    id: "pi_007",
-    source: "compliance",
-    category: "risk_assessment_review",
-    title: "Risk assessment review overdue by 12 days — Alex W",
-    description: "Alex's risk assessment review was due on 23 April and is now 12 days overdue. Given recent incident patterns, this is a priority.",
-    severity: "high",
-    childName: "Alex W",
-    recommendation: "Schedule and complete the risk assessment review. Consider the recent incident pattern when updating the assessment.",
-    evidenceCount: 1,
-    detectedAt: "2026-05-05T06:00:00Z",
-    status: "active",
-  },
-  {
-    id: "pi_008",
-    source: "pattern",
-    category: "trigger_pattern",
-    title: "Recurring physical intervention — Alex W",
-    description: "3 physical intervention incidents for Alex in 30 days. Recurring incidents of the same type indicate an unaddressed trigger or ineffective strategy.",
-    severity: "high",
-    childName: "Alex W",
-    recommendation: "Review the behaviour support plan with a focus on de-escalation strategies. Has the child been involved in reviewing their support?",
-    evidenceCount: 3,
-    detectedAt: "2026-05-04T19:30:00Z",
-    status: "active",
-  },
-  {
-    id: "pi_009",
-    source: "regulatory",
-    category: "reg44",
-    title: "Regulation 44 visit overdue",
-    description: "The monthly Reg 44 independent visitor report is 5 days overdue. This is a regulatory requirement.",
-    severity: "medium",
-    recommendation: "Contact the independent visitor to arrange the visit as soon as possible.",
-    evidenceCount: 0,
-    detectedAt: "2026-05-05T06:00:00Z",
-    status: "active",
-  },
-  {
-    id: "pi_010",
-    source: "pattern",
-    category: "staff_correlation",
-    title: "Disproportionate incident reporting — Staff Member S3",
-    description: "7 incidents reported by this staff member compared to an average of 2.3 per staff member. May reflect shift patterns or diligent reporting.",
-    severity: "medium",
-    recommendation: "Explore the context before drawing conclusions. Is this staff member working more shifts or allocated to higher-need children?",
-    evidenceCount: 7,
-    detectedAt: "2026-05-04T08:00:00Z",
-    status: "acknowledged",
-  },
-];
 
 // ── Config ────────────────────────────────────────────────────────────────────
 
@@ -342,8 +214,8 @@ export default function PatternIntelligencePage() {
     }
   }, [incidentsData, ypData, kwData]);
 
-  const isLive = liveAlerts.length > 0;
-  const sourceAlerts = isLive ? liveAlerts : DEMO_ALERTS;
+  const isLive = true;
+  const sourceAlerts = liveAlerts;
 
   const allAlerts = sourceAlerts.map((a) => ({
     ...a,

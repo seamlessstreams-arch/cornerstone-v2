@@ -1178,6 +1178,152 @@ export const attentionItems: IntelligenceAttentionItemRow[] = [
   { id: "att_015", home_id: "home_oak", title: "Reg 45 report — evidence gap in quality of care", category: "reg45_evidence_gap", urgency: "low", status: "open", child_id: null, staff_id: null, source_record_type: "reg45", source_record_id: null, reason: "The upcoming Reg 45 half-yearly report has a gap in evidencing quality of care outcomes for the current period. Specifically, there are limited recorded examples of how the home has responded to children's individual needs.", suggested_action: "Gather evidence from key work records, daily logs, and activity records that demonstrate individualised care. Ask staff to provide specific examples for each child. Compile into the evidence folder.", due_date: _dRel2(14), reviewed_by: null, reviewed_at: null, escalated_to: null, escalated_at: null, created_by: null, created_at: _dRel2(-7), updated_at: _dRel2(-7) },
 ];
 
+// ─── ARIA suggestions (review queue + detail) ────────────────────────────────
+
+export interface AriaSuggestionLinkedRecord {
+  id: string;
+  linked_record_type: string;
+  reason: string;
+  suggested_action: string;
+  risk_level: string;
+}
+
+export interface AriaSuggestionAuditEntry {
+  id: string;
+  action: string;
+  actor_role: string;
+  metadata?: Record<string, unknown>;
+  created_at: string;
+}
+
+export interface AriaSuggestionRow {
+  id: string;
+  home_id: string;
+  title: string;
+  summary: string;
+  reason: string;
+  suggestion_type: string;
+  related_record_type: string;
+  related_record_id: string;
+  child_name: string | null;
+  risk_level: string;
+  confidence_level: string;
+  status: string;
+  draft_text: string;
+  final_text: string | null;
+  rejection_reason: string | null;
+  reviewer_role: string | null;
+  created_at: string;
+  approved_at: string | null;
+  rejected_at: string | null;
+  committed_at: string | null;
+  mock_mode: boolean;
+  linked_records: AriaSuggestionLinkedRecord[];
+  audit_timeline: AriaSuggestionAuditEntry[];
+}
+
+const _draft1 = `Aria suggested draft — requires manager review before saving.
+
+I have reviewed this incident involving a physical intervention with Alex on 5 May 2026.
+
+What was reviewed:
+The incident record, the immediate action taken, the staff accounts, and the child's response following the incident.
+
+What happened:
+Alex became increasingly distressed during the evening routine. Staff report that verbal de-escalation, distraction, and offers of alternative activity were attempted before any physical intervention was considered. When Alex moved towards the kitchen area where other children were present and began throwing items, staff made the decision to use a brief physical intervention to guide Alex to a quieter space.
+
+Impact on the child:
+Alex was visibly distressed during and immediately after the intervention. Staff remained with Alex and offered comfort. Alex was able to talk about what happened approximately 30 minutes later. Alex's voice should be formally captured through key work.
+
+Staff response:
+Staff attempted proportionate de-escalation strategies before physical intervention. The intervention described appears brief and proportionate to the immediate risk. Staff remained with Alex afterwards and offered support.
+
+Were existing plans followed:
+The behaviour support plan includes guidance on de-escalation. The records suggest staff followed the plan. However, the plan may need reviewing if the triggers described are not currently captured in the plan.
+
+Safeguarding considerations:
+Any physical intervention involving a child requires consideration of whether the LADO threshold is met. On the basis of what is recorded, the intervention appears proportionate, but the manager should satisfy themselves of this and record their reasoning.
+
+Has risk changed:
+Three incidents involving similar behaviour within 14 days suggest the risk assessment may not fully reflect Alex's current presentation. A review of the risk assessment is recommended.
+
+Management decision:
+[To be completed by the Registered Manager]
+
+Next actions:
+- Key work session with Alex to capture wishes and feelings
+- Risk assessment review
+- Staff debrief
+- Consider whether behaviour support plan update is needed
+- Consider whether social worker and placing authority should be updated
+
+Review timeframe:
+Next review within 48 hours to confirm actions have been progressed.`;
+
+const _ariaBase = (overrides: Partial<AriaSuggestionRow>): AriaSuggestionRow => ({
+  id: overrides.id ?? "as_x",
+  home_id: "home_oak",
+  title: "",
+  summary: "",
+  reason: "",
+  suggestion_type: "management_oversight",
+  related_record_type: "incident",
+  related_record_id: "inc_000",
+  child_name: null,
+  risk_level: "medium",
+  confidence_level: "medium",
+  status: "awaiting_review",
+  draft_text: "",
+  final_text: null,
+  rejection_reason: null,
+  reviewer_role: null,
+  created_at: new Date().toISOString(),
+  approved_at: null,
+  rejected_at: null,
+  committed_at: null,
+  mock_mode: false,
+  linked_records: [],
+  audit_timeline: [],
+  ...overrides,
+});
+
+export const ariaSuggestions: AriaSuggestionRow[] = [
+  _ariaBase({
+    id: "as_001",
+    title: "Management oversight required — physical intervention incident",
+    summary: "A physical intervention was recorded. The Registered Manager should review the response, consider whether the intervention was proportionate, check that the child's voice has been captured, and record oversight.",
+    reason: "Physical intervention incidents require immediate management oversight under Regulation 35 and the Quality Standards. The manager should evidence that the response was proportionate, that less restrictive measures were considered first, that the child was supported afterwards, and that staff are clear on the learning.",
+    suggestion_type: "management_oversight",
+    related_record_id: "inc_042",
+    child_name: "Alex W",
+    risk_level: "urgent",
+    confidence_level: "high",
+    reviewer_role: "Registered Manager",
+    draft_text: _draft1,
+    created_at: "2026-05-05T08:15:00Z",
+    linked_records: [
+      { id: "asl_001", linked_record_type: "risk_assessment", reason: "Three incidents in 14 days suggest the risk assessment may need updating to reflect Alex's current presentation.", suggested_action: "Review risk assessment — consider whether current risk level and strategies remain appropriate.", risk_level: "high" },
+      { id: "asl_002", linked_record_type: "behaviour_support_plan", reason: "The triggers described in this incident may not be fully captured in the current behaviour support plan.", suggested_action: "Review behaviour support plan — check whether de-escalation strategies and triggers are current.", risk_level: "medium" },
+      { id: "asl_003", linked_record_type: "key_work", reason: "The child's voice is not yet visible in the post-incident records.", suggested_action: "Arrange key work session to capture Alex's wishes, feelings, and experience of the incident.", risk_level: "medium" },
+      { id: "asl_004", linked_record_type: "staff_debrief", reason: "Staff involved in physical interventions benefit from structured debrief.", suggested_action: "Arrange staff debrief to reflect on practice, explore what went well, and consider learning.", risk_level: "medium" },
+    ],
+    audit_timeline: [
+      { id: "aud_001", action: "suggestion_created", actor_role: "system", created_at: "2026-05-05T08:15:00Z" },
+      { id: "aud_002", action: "draft_generated", actor_role: "system", created_at: "2026-05-05T08:15:01Z", metadata: { ai_provider: "openai", mock_mode: false } },
+      { id: "aud_003", action: "linked_records_suggested", actor_role: "system", created_at: "2026-05-05T08:15:02Z", metadata: { count: 4 } },
+      { id: "aud_004", action: "suggestion_viewed", actor_role: "registered_manager", created_at: "2026-05-05T09:30:00Z" },
+    ],
+  }),
+  _ariaBase({ id: "as_002", title: "Risk assessment review — escalating behaviour pattern", summary: "Three incidents involving similar behaviour within 14 days. The current risk assessment may not reflect the child's present needs.", reason: "Pattern of three incidents in 14 days suggests the risk assessment requires review to ensure it reflects the child's current presentation.", suggestion_type: "risk_review", related_record_id: "inc_042", child_name: "Alex W", risk_level: "high", confidence_level: "high", reviewer_role: "Registered Manager", created_at: "2026-05-05T08:15:00Z" }),
+  _ariaBase({ id: "as_003", title: "Safeguarding review — consider whether threshold for LADO is met", summary: "The incident involves a staff member and a child. The manager should consider whether the threshold for LADO consultation has been met.", reason: "Any incident involving physical contact between staff and a child should be considered against the LADO threshold, even where the intervention was proportionate.", suggestion_type: "safeguarding_review", related_record_id: "inc_042", child_name: "Alex W", risk_level: "high", confidence_level: "medium", reviewer_role: "Registered Manager", created_at: "2026-05-05T08:15:00Z" }),
+  _ariaBase({ id: "as_004", title: "Staff debrief recommended — emotional incident", summary: "Staff involved in the incident should be offered a debrief to reflect on practice, consider what went well, what could be different, and whether support is needed.", reason: "Staff involved in emotional or high-intensity incidents benefit from structured debrief. This supports wellbeing and reflective practice.", suggestion_type: "staff_debrief", related_record_id: "inc_039", child_name: "Jordan M", risk_level: "medium", confidence_level: "high", reviewer_role: "Registered Manager", created_at: "2026-05-04T16:30:00Z" }),
+  _ariaBase({ id: "as_005", title: "Key work session — capture child's wishes and feelings", summary: "Following this incident, a key work session should be offered to the child to explore how they are feeling and what they need.", reason: "The child's voice is not yet visible in the post-incident records. A key work session provides the opportunity to capture wishes and feelings.", suggestion_type: "key_work", related_record_id: "inc_038", child_name: "Casey T", risk_level: "medium", confidence_level: "high", reviewer_role: "Registered Manager", created_at: "2026-05-04T14:00:00Z" }),
+  _ariaBase({ id: "as_006", title: "Behaviour support plan review — changed presentation", summary: "The child's recent behaviour pattern differs from what the current behaviour support plan describes. The plan may need updating.", reason: "When a child's presentation changes, the behaviour support plan should be reviewed to ensure strategies remain appropriate and trauma-informed.", suggestion_type: "behaviour_support_review", related_record_id: "inc_038", child_name: "Casey T", risk_level: "medium", confidence_level: "medium", created_at: "2026-05-04T14:00:00Z" }),
+  _ariaBase({ id: "as_007", title: "Placement plan review — changed presentation", summary: "Following the pattern of incidents, the placement plan should be reviewed to ensure it reflects the child's current needs and that support is appropriate.", reason: "Placement stability review should be considered where incident patterns suggest changed need.", suggestion_type: "plan_review", related_record_id: "inc_042", child_name: "Alex W", risk_level: "high", confidence_level: "medium", status: "approved", created_at: "2026-05-03T10:00:00Z" }),
+  _ariaBase({ id: "as_008", title: "Notification consideration — repeated incidents", summary: "Three incidents involving the same child in two weeks. Consider whether the social worker and placing authority should be updated.", reason: "Repeated incidents may require notification under Regulation 40. The social worker should be kept informed of patterns, not just individual events.", suggestion_type: "notification", related_record_id: "inc_040", child_name: "Jordan M", risk_level: "high", confidence_level: "high", status: "rejected", created_at: "2026-05-02T11:00:00Z" }),
+  _ariaBase({ id: "as_009", title: "Management oversight — minor damage incident", summary: "A minor damage incident was recorded. Management oversight should confirm the response was proportionate and the child was supported.", reason: "All incidents benefit from management oversight, even where severity is low.", suggestion_type: "management_oversight", related_record_id: "inc_037", child_name: "Casey T", risk_level: "low", confidence_level: "high", status: "committed", created_at: "2026-05-01T09:00:00Z" }),
+];
+
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 let idCounter = 1000;
 export function nextFallbackId(prefix: string): string {

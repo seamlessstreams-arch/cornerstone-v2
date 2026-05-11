@@ -10,10 +10,11 @@
 // ARIA never commits to a record without explicit manager approval.
 // ══════════════════════════════════════════════════════════════════════════════
 
-import React, { useState, useMemo, useCallback } from "react";
+import React, { useState, useMemo, useCallback, useEffect } from "react";
 import Link from "next/link";
 import { PageShell } from "@/components/layout/page-shell";
 import { AriaHealthPanel } from "@/components/aria/aria-health-panel";
+import { useAriaSuggestions, useUpdateAriaSuggestion } from "@/hooks/use-intelligence-layer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -76,149 +77,6 @@ interface ReviewItem {
 
 // ─── Demo data ──────────────────────────────────────────────────────────────
 
-const DEMO_ITEMS: ReviewItem[] = [
-  {
-    id: "as_001",
-    title: "Management oversight required — physical intervention incident",
-    summary: "A physical intervention was recorded. The Registered Manager should review the response, consider whether the intervention was proportionate, check that the child's voice has been captured, and record oversight.",
-    suggestion_type: "management_oversight",
-    related_record_type: "incident",
-    related_record_id: "inc_042",
-    child_name: "Alex W",
-    risk_level: "urgent",
-    confidence_level: "high",
-    status: "awaiting_review",
-    reason: "Physical intervention incidents require immediate management oversight under Regulation 35 and the Quality Standards.",
-    draft_text: "I have reviewed this incident involving a physical intervention with Alex. The records show that staff attempted verbal de-escalation and distraction before any physical intervention was considered...",
-    created_at: "2026-05-05T08:15:00Z",
-    reviewer_role: "Registered Manager",
-    linked_count: 4,
-  },
-  {
-    id: "as_002",
-    title: "Risk assessment review — escalating behaviour pattern",
-    summary: "Three incidents involving similar behaviour within 14 days. The current risk assessment may not reflect the child's present needs.",
-    suggestion_type: "risk_review",
-    related_record_type: "incident",
-    related_record_id: "inc_042",
-    child_name: "Alex W",
-    risk_level: "high",
-    confidence_level: "high",
-    status: "awaiting_review",
-    reason: "Pattern of three incidents in 14 days suggests the risk assessment requires review to ensure it reflects the child's current presentation.",
-    created_at: "2026-05-05T08:15:00Z",
-    reviewer_role: "Registered Manager",
-    linked_count: 2,
-  },
-  {
-    id: "as_003",
-    title: "Safeguarding review — consider whether threshold for LADO is met",
-    summary: "The incident involves a staff member and a child. The manager should consider whether the threshold for LADO consultation has been met.",
-    suggestion_type: "safeguarding_review",
-    related_record_type: "incident",
-    related_record_id: "inc_042",
-    child_name: "Alex W",
-    risk_level: "high",
-    confidence_level: "medium",
-    status: "awaiting_review",
-    reason: "Any incident involving physical contact between staff and a child should be considered against the LADO threshold, even where the intervention was proportionate.",
-    created_at: "2026-05-05T08:15:00Z",
-    reviewer_role: "Registered Manager",
-    linked_count: 1,
-  },
-  {
-    id: "as_004",
-    title: "Staff debrief recommended — emotional incident",
-    summary: "Staff involved in the incident should be offered a debrief to reflect on practice, consider what went well, what could be different, and whether support is needed.",
-    suggestion_type: "staff_debrief",
-    related_record_type: "incident",
-    related_record_id: "inc_039",
-    child_name: "Jordan M",
-    risk_level: "medium",
-    confidence_level: "high",
-    status: "awaiting_review",
-    reason: "Staff involved in emotional or high-intensity incidents benefit from structured debrief. This supports wellbeing and reflective practice.",
-    created_at: "2026-05-04T16:30:00Z",
-    reviewer_role: "Registered Manager",
-    linked_count: 1,
-  },
-  {
-    id: "as_005",
-    title: "Key work session — capture child's wishes and feelings",
-    summary: "Following this incident, a key work session should be offered to the child to explore how they are feeling and what they need.",
-    suggestion_type: "key_work",
-    related_record_type: "incident",
-    related_record_id: "inc_038",
-    child_name: "Casey T",
-    risk_level: "medium",
-    confidence_level: "high",
-    status: "awaiting_review",
-    reason: "The child's voice is not yet visible in the post-incident records. A key work session provides the opportunity to capture wishes and feelings.",
-    created_at: "2026-05-04T14:00:00Z",
-    reviewer_role: "Registered Manager",
-    linked_count: 2,
-  },
-  {
-    id: "as_006",
-    title: "Behaviour support plan review — changed presentation",
-    summary: "The child's recent behaviour pattern differs from what the current behaviour support plan describes. The plan may need updating.",
-    suggestion_type: "behaviour_support_review",
-    related_record_type: "incident",
-    related_record_id: "inc_038",
-    child_name: "Casey T",
-    risk_level: "medium",
-    confidence_level: "medium",
-    status: "awaiting_review",
-    reason: "When a child's presentation changes, the behaviour support plan should be reviewed to ensure strategies remain appropriate and trauma-informed.",
-    created_at: "2026-05-04T14:00:00Z",
-    linked_count: 1,
-  },
-  {
-    id: "as_007",
-    title: "Placement plan review — changed presentation",
-    summary: "Following the pattern of incidents, the placement plan should be reviewed to ensure it reflects the child's current needs and that support is appropriate.",
-    suggestion_type: "plan_review",
-    related_record_type: "incident",
-    related_record_id: "inc_042",
-    child_name: "Alex W",
-    risk_level: "high",
-    confidence_level: "medium",
-    status: "approved",
-    reason: "Placement stability review should be considered where incident patterns suggest changed need.",
-    created_at: "2026-05-03T10:00:00Z",
-    linked_count: 3,
-  },
-  {
-    id: "as_008",
-    title: "Notification consideration — repeated incidents",
-    summary: "Three incidents involving the same child in two weeks. Consider whether the social worker and placing authority should be updated.",
-    suggestion_type: "notification",
-    related_record_type: "incident",
-    related_record_id: "inc_040",
-    child_name: "Jordan M",
-    risk_level: "high",
-    confidence_level: "high",
-    status: "rejected",
-    reason: "Repeated incidents may require notification under Regulation 40. The social worker should be kept informed of patterns, not just individual events.",
-    created_at: "2026-05-02T11:00:00Z",
-    linked_count: 0,
-  },
-  {
-    id: "as_009",
-    title: "Management oversight — minor damage incident",
-    summary: "A minor damage incident was recorded. Management oversight should confirm the response was proportionate and the child was supported.",
-    suggestion_type: "management_oversight",
-    related_record_type: "incident",
-    related_record_id: "inc_037",
-    child_name: "Casey T",
-    risk_level: "low",
-    confidence_level: "high",
-    status: "committed",
-    reason: "All incidents benefit from management oversight, even where severity is low.",
-    created_at: "2026-05-01T09:00:00Z",
-    linked_count: 1,
-  },
-];
 
 // ─── Config ─────────────────────────────────────────────────────────────────
 
@@ -258,7 +116,33 @@ const TYPE_CONFIG: Record<SuggestionType, { label: string; icon: React.ElementTy
 // ─── Component ──────────────────────────────────────────────────────────────
 
 export default function AriaReviewQueuePage() {
-  const [items, setItems] = useState<ReviewItem[]>(DEMO_ITEMS);
+  const [items, setItems] = useState<ReviewItem[]>([]);
+  const { data: apiData } = useAriaSuggestions();
+  const updateMutation = useUpdateAriaSuggestion();
+
+  useEffect(() => {
+    if (apiData?.persisted && Array.isArray(apiData.items)) {
+      setItems(
+        (apiData.items as Record<string, unknown>[]).map((r) => ({
+          id: r.id as string,
+          title: r.title as string,
+          summary: r.summary as string,
+          suggestion_type: r.suggestion_type as SuggestionType,
+          related_record_type: r.related_record_type as string,
+          related_record_id: r.related_record_id as string,
+          child_name: (r.child_name as string) ?? undefined,
+          risk_level: r.risk_level as RiskLevel,
+          confidence_level: r.confidence_level as "low" | "medium" | "high",
+          status: r.status as SuggestionStatus,
+          reason: r.reason as string,
+          draft_text: (r.draft_text as string) ?? undefined,
+          created_at: r.created_at as string,
+          reviewer_role: (r.reviewer_role as string) ?? undefined,
+          linked_count: Array.isArray(r.linked_records) ? (r.linked_records as unknown[]).length : 0,
+        })),
+      );
+    }
+  }, [apiData]);
   const [statusFilter, setStatusFilter] = useState<SuggestionStatus | "all">("awaiting_review");
   const [riskFilter, setRiskFilter] = useState<RiskLevel | "all">("all");
   const [typeFilter, setTypeFilter] = useState<SuggestionType | "all">("all");
@@ -269,8 +153,9 @@ export default function AriaReviewQueuePage() {
       setItems((prev) =>
         prev.map((item) => (item.id === id ? { ...item, status: newStatus } : item)),
       );
+      updateMutation.mutate({ id, status: newStatus });
     },
-    [],
+    [updateMutation],
   );
 
   const filtered = useMemo(() => {
