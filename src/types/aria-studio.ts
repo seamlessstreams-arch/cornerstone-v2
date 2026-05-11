@@ -980,6 +980,15 @@ export interface AriaCommittedRecord {
   committed_by: string;
   committed_at: string;
   commit_note: string | null;
+  // Versioning (Milestone 13). Original commits have version 1,
+  // previous_version_id null and is_current_version true.
+  version: number;
+  previous_version_id: string | null;
+  is_current_version: boolean;
+  amended_by: string | null;
+  amended_at: string | null;
+  amendment_reason: string | null;
+  amendment_requires_manager_review: boolean;
 }
 
 // ── Home Dynamics ─────────────────────────────────────────────────────────────

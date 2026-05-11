@@ -123,6 +123,13 @@ export function commitSuggestedRecord(
     committed_by: actorId,
     committed_at: now,
     commit_note: note,
+    version: 1,
+    previous_version_id: null,
+    is_current_version: true,
+    amended_by: null,
+    amended_at: null,
+    amendment_reason: null,
+    amendment_requires_manager_review: false,
   });
 
   const suggestion = db.ariaSuggestedRecords.patch(id, {
@@ -148,9 +155,9 @@ export function loadSuggestedRecords(
 }
 
 export function loadCommittedRecords(homeId: string): AriaCommittedRecord[] {
-  return [...db.ariaCommittedRecords.findAll(homeId)].sort((a, b) =>
-    b.committed_at.localeCompare(a.committed_at),
-  );
+  return [...db.ariaCommittedRecords.findAll(homeId)]
+    .filter((c) => c.is_current_version)
+    .sort((a, b) => b.committed_at.localeCompare(a.committed_at));
 }
 
 /**

@@ -18,6 +18,7 @@ import {
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import {
   Inbox, CheckCircle2, XCircle, FileSignature, Save, Sparkles,
+  History, Pencil, ShieldAlert,
 } from "lucide-react";
 import {
   useSuggestedRecords,
@@ -28,10 +29,15 @@ import {
   useProposeSuggestedRecord,
 } from "@/hooks/use-aria-suggested-records";
 import { useBridgeCareEvents } from "@/hooks/use-aria-care-event-bridge";
+import {
+  useAmendCommittedRecord,
+  useCommittedVersionHistory,
+} from "@/hooks/use-aria-committed-amendments";
 import { useAuthContext } from "@/contexts/auth-context";
 import { appRoleToAriaRole } from "@/lib/aria/aria-permissions";
 import {
   ARIA_SUGGESTED_RECORD_LABELS,
+  type AriaCommittedRecord,
   type AriaSuggestedRecord,
 } from "@/types/aria-studio";
 
@@ -171,6 +177,186 @@ function PendingCard({
   );
 }
 
+function CommittedCard({
+  rec,
+  actorId,
+  actorRole,
+}: {
+  rec: AriaCommittedRecord;
+  actorId: string | undefined;
+  actorRole: string;
+}) {
+  const [editing, setEditing] = useState(false);
+  const [showHistory, setShowHistory] = useState(false);
+  const [title, setTitle] = useState(rec.title);
+  const [body, setBody] = useState(rec.body);
+  const [reason, setReason] = useState("");
+  const amend = useAmendCommittedRecord();
+  const history = useCommittedVersionHistory(showHistory ? rec.id : null);
+
+  const onAmend = () => {
+    if (!reason.trim()) return;
+    amend.mutate(
+      {
+        record_id: rec.id,
+        amendment_reason: reason.trim(),
+        new_title: title !== rec.title ? title : undefined,
+        new_body: body !== rec.body ? body : undefined,
+        actor_id: actorId,
+        actor_role: actorRole,
+      },
+      {
+        onSuccess: () => {
+          setEditing(false);
+          setReason("");
+        },
+      },
+    );
+  };
+
+  return (
+    <Card>
+      <CardHeader>
+        <div className="flex items-start justify-between gap-2">
+          <div>
+            <CardTitle className="text-sm">{rec.title}</CardTitle>
+            <CardDescription className="text-xs">
+              {ARIA_SUGGESTED_RECORD_LABELS[rec.record_type]} · v{rec.version}
+              {" · committed "}
+              {new Date(rec.committed_at).toLocaleString()} by {rec.committed_by}
+              {rec.amended_at && (
+                <>
+                  {" · amended "}
+                  {new Date(rec.amended_at).toLocaleString()} by {rec.amended_by}
+                </>
+              )}
+            </CardDescription>
+          </div>
+          <div className="flex gap-1">
+            <Badge variant="outline" className="bg-emerald-100 text-emerald-800">
+              v{rec.version}
+            </Badge>
+            {rec.amendment_requires_manager_review && (
+              <Badge variant="outline" className="bg-amber-100 text-amber-800">
+                <ShieldAlert className="mr-1 h-3 w-3" />
+                manager review
+              </Badge>
+            )}
+          </div>
+        </div>
+      </CardHeader>
+      <CardContent className="space-y-3">
+        {editing ? (
+          <>
+            <input
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              className="w-full rounded border px-2 py-1 text-sm"
+            />
+            <Textarea value={body} onChange={(e) => setBody(e.target.value)} rows={6} />
+            <input
+              value={reason}
+              onChange={(e) => setReason(e.target.value)}
+              placeholder="Amendment reason (required)"
+              className="w-full rounded border px-2 py-1 text-xs"
+            />
+            <div className="flex gap-2">
+              <Button
+                size="sm"
+                onClick={onAmend}
+                disabled={!reason.trim() || amend.isPending}
+              >
+                <Save className="mr-1 h-3 w-3" />
+                {amend.isPending ? "Amending…" : "Save amendment"}
+              </Button>
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => {
+                  setEditing(false);
+                  setTitle(rec.title);
+                  setBody(rec.body);
+                  setReason("");
+                }}
+              >
+                Cancel
+              </Button>
+            </div>
+            {amend.isError && (
+              <p className="text-xs text-rose-700">
+                Amendment failed. The original is preserved.
+              </p>
+            )}
+          </>
+        ) : (
+          <>
+            <div className="whitespace-pre-wrap text-sm">{rec.body}</div>
+            {rec.commit_note && (
+              <div className="text-xs text-muted-foreground">
+                Note: {rec.commit_note}
+              </div>
+            )}
+            {rec.amendment_reason && (
+              <div className="text-xs text-amber-800">
+                Amendment reason: {rec.amendment_reason}
+              </div>
+            )}
+            <div className="flex gap-2">
+              <Button size="sm" variant="outline" onClick={() => setEditing(true)}>
+                <Pencil className="mr-1 h-3 w-3" />
+                Amend
+              </Button>
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => setShowHistory((v) => !v)}
+              >
+                <History className="mr-1 h-3 w-3" />
+                {showHistory ? "Hide history" : `History (v${rec.version})`}
+              </Button>
+            </div>
+            {showHistory && (
+              <div className="mt-2 space-y-2 rounded border bg-slate-50 p-2 text-xs">
+                {history.isLoading ? (
+                  <p className="text-muted-foreground">Loading…</p>
+                ) : (
+                  (history.data?.data ?? []).map((v) => (
+                    <div
+                      key={v.id}
+                      className={`rounded border bg-white p-2 ${
+                        v.is_current_version ? "border-emerald-400" : ""
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="font-medium">
+                          v{v.version}
+                          {v.is_current_version && " (current)"}
+                        </span>
+                        <span className="text-muted-foreground">
+                          {v.amended_at
+                            ? `amended ${new Date(v.amended_at).toLocaleString()}`
+                            : `committed ${new Date(v.committed_at).toLocaleString()}`}
+                        </span>
+                      </div>
+                      <div className="mt-1 font-medium">{v.title}</div>
+                      <div className="mt-1 whitespace-pre-wrap text-xs">{v.body}</div>
+                      {v.amendment_reason && (
+                        <div className="mt-1 text-amber-800">
+                          Reason: {v.amendment_reason}
+                        </div>
+                      )}
+                    </div>
+                  ))
+                )}
+              </div>
+            )}
+          </>
+        )}
+      </CardContent>
+    </Card>
+  );
+}
+
 export default function SuggestedRecordsPage() {
   const { currentUser } = useAuthContext();
   const ariaRole = appRoleToAriaRole(currentUser?.role ?? "registered_manager");
@@ -274,31 +460,12 @@ export default function SuggestedRecordsPage() {
             </Card>
           ) : (
             committedItems.map((c) => (
-              <Card key={c.id}>
-                <CardHeader>
-                  <div className="flex items-start justify-between gap-2">
-                    <div>
-                      <CardTitle className="text-sm">{c.title}</CardTitle>
-                      <CardDescription className="text-xs">
-                        {ARIA_SUGGESTED_RECORD_LABELS[c.record_type]} · committed{" "}
-                        {new Date(c.committed_at).toLocaleString()} by{" "}
-                        {c.committed_by}
-                      </CardDescription>
-                    </div>
-                    <Badge variant="outline" className="bg-emerald-100 text-emerald-800">
-                      committed
-                    </Badge>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="whitespace-pre-wrap text-sm">{c.body}</div>
-                  {c.commit_note && (
-                    <div className="mt-2 text-xs text-muted-foreground">
-                      Note: {c.commit_note}
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
+              <CommittedCard
+                key={c.id}
+                rec={c}
+                actorId={currentUser?.id}
+                actorRole={ariaRole}
+              />
             ))
           )}
         </TabsContent>
