@@ -588,6 +588,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: "Export History",       href: "/intelligence/care-events/exports", icon: "Share2", module: "dashboard" },
       { label: "Export Risk",          href: "/intelligence/care-events/export-risk", icon: "ShieldAlert", module: "dashboard" },
       { label: "Inspection Bundle",    href: "/intelligence/care-events/inspection-bundle", icon: "FolderArchive", module: "dashboard" },
+      { label: "Bundle Diff",          href: "/intelligence/care-events/inspection-bundle/diff", icon: "GitCompare", module: "dashboard" },
       { label: "Audit Trail",         href: "/intelligence/aria/audit-trail",        icon: "ScrollText",  module: "dashboard"    },
       { label: "Review Queue",       href: "/aria/review",                          icon: "ClipboardCheck", module: "dashboard" },
       { label: "Pattern Alerts",     href: "/patterns",                             icon: "Radar",       module: "dashboard"    },
