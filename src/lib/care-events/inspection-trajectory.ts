@@ -14,7 +14,7 @@ import {
   type PersistedInspectionBundleRow,
 } from "@/lib/care-events/inspection-bundle";
 import { db } from "@/lib/db/store";
-import type { TrajectoryAlertAck } from "@/lib/db/store";
+import type { TrajectoryAlertAck, TrajectoryRiEscalationAck } from "@/lib/db/store";
 
 export interface TrajectoryPoint {
   bundle_id: string;
@@ -354,5 +354,44 @@ export function detectTrajectoryRiEscalations(
     });
   }
 
-  return out;
+  // Filter out escalations already acknowledged by an RI.
+  const ackedIds = new Set(
+    db.trajectoryRiEscalationAcks.findAll(homeId).map((a) => a.escalation_id),
+  );
+  return out.filter((e) => !ackedIds.has(e.id));
+}
+
+// ── RI escalation acknowledgement (M52) ───────────────────────────
+//
+// An RI ack closes the RI-audience escalation but deliberately does NOT
+// silence the underlying manager-facing alert. Management is still expected
+// to record their own acknowledgement on the trajectory page.
+
+export function recordTrajectoryRiEscalationAck(input: {
+  escalation: TrajectoryRiEscalation;
+  acked_by_user: string;
+  acked_by_role: string;
+  note: string;
+}): TrajectoryRiEscalationAck {
+  const { escalation, acked_by_user, acked_by_role, note } = input;
+  return db.trajectoryRiEscalationAcks.create({
+    id: `${escalation.id}::${acked_by_user}`,
+    escalation_id: escalation.id,
+    alert_id: escalation.alert_id,
+    home_id: escalation.home_id,
+    bundle_id: escalation.bundle_id,
+    alert_kind: escalation.alert_kind,
+    acked_by_user,
+    acked_by_role,
+    note,
+    acked_at: new Date().toISOString(),
+  });
+}
+
+export function listTrajectoryRiEscalationAcks(
+  homeId: string,
+): TrajectoryRiEscalationAck[] {
+  return [...db.trajectoryRiEscalationAcks.findAll(homeId)].sort((a, b) =>
+    b.acked_at.localeCompare(a.acked_at),
+  );
 }

@@ -494,6 +494,23 @@ export interface TrajectoryAlertAck {
   acked_at: string;
 }
 
+// Trajectory RI escalation acknowledgement (M52). Parallel to the manager ack
+// but scoped to the RI audience: an RI ack does not silence the underlying
+// manager-facing alert, only the RI-escalation item, so management is still
+// expected to acknowledge separately.
+export interface TrajectoryRiEscalationAck {
+  id: string;                  // escalation_id::user_id
+  escalation_id: string;
+  alert_id: string;
+  home_id: string;
+  bundle_id: string | null;
+  alert_kind: string;
+  acked_by_user: string;
+  acked_by_role: string;
+  note: string;
+  acked_at: string;
+}
+
 // Immutable export history entry (M36). One row per successful export of a
 // persisted artifact. Used to satisfy CLAUDE.md "restricted export
 // permissions" + audit / traceability.
@@ -1156,6 +1173,7 @@ const store = {
   reg44Packs: [] as PersistedReg44Pack[],
   inspectionBundles: [] as PersistedInspectionBundle[],
   trajectoryAlertAcks: [] as TrajectoryAlertAck[],
+  trajectoryRiEscalationAcks: [] as TrajectoryRiEscalationAck[],
 
   // ── Export History (M36) ─────────────────────────────────────────────────────
   exportHistory: [] as ExportHistoryEntry[],
@@ -11163,6 +11181,23 @@ export const db = {
         return store.trajectoryAlertAcks.find((x) => x.id === a.id)!;
       }
       store.trajectoryAlertAcks.push(a);
+      return a;
+    },
+  },
+
+  // ── Trajectory RI Escalation Acks (M52) ─────────────────────────────────
+  trajectoryRiEscalationAcks: {
+    findAll: (homeId?: string): TrajectoryRiEscalationAck[] =>
+      homeId
+        ? store.trajectoryRiEscalationAcks.filter((a) => a.home_id === homeId)
+        : store.trajectoryRiEscalationAcks,
+    findByEscalationId: (escalationId: string): TrajectoryRiEscalationAck[] =>
+      store.trajectoryRiEscalationAcks.filter((a) => a.escalation_id === escalationId),
+    create: (a: TrajectoryRiEscalationAck): TrajectoryRiEscalationAck => {
+      if (store.trajectoryRiEscalationAcks.some((x) => x.id === a.id)) {
+        return store.trajectoryRiEscalationAcks.find((x) => x.id === a.id)!;
+      }
+      store.trajectoryRiEscalationAcks.push(a);
       return a;
     },
   },
