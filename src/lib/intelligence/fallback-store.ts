@@ -1382,6 +1382,77 @@ export const hrRecruitment: HrRecruitmentSummaryRow[] = [
   { staffName: "New Starter I", completedChecks: 12, totalChecks: 14, gateOutcome: "senior_risk_acceptance", criticalMissing: ["Qualification verification", "Induction plan"] },
 ];
 
+// ─── HR Inspection Mode ──────────────────────────────────────────────────────
+
+export interface HrInspectionWorkforce {
+  totalStaff: number;
+  permanentStaff: number;
+  agencyStaff: number;
+  vacancies: number;
+  staffInProbation: number;
+  staffSuspended: number;
+  averageTenureMonths: number;
+  turnoverLast12Months: number;
+}
+
+export const hrInspectionWorkforce: HrInspectionWorkforce = {
+  totalStaff: 18, permanentStaff: 14, agencyStaff: 4, vacancies: 2,
+  staffInProbation: 3, staffSuspended: 1, averageTenureMonths: 22, turnoverLast12Months: 4,
+};
+
+export const hrInspectionRecruitment: Array<Record<string, unknown>> = [
+  { staffRef: "Staff Member G", startDate: "2026-04-01", dbsCleared: true, dbsDate: "2026-03-20", referencesReceived: true, referenceCount: 2, rightToWork: true, qualificationsVerified: true, healthDeclaration: true, safeguardingTraining: true, gateOutcome: "approved", outstandingItems: [] },
+  { staffRef: "Staff Member H", startDate: "2026-04-15", dbsCleared: true, dbsDate: "2026-04-10", referencesReceived: false, referenceCount: 1, rightToWork: true, qualificationsVerified: true, healthDeclaration: true, safeguardingTraining: false, gateOutcome: "blocked", outstandingItems: ["Second reference", "Safeguarding training"] },
+  { staffRef: "Staff Member I", startDate: "2026-03-10", dbsCleared: true, dbsDate: "2026-03-05", referencesReceived: true, referenceCount: 2, rightToWork: true, qualificationsVerified: false, healthDeclaration: true, safeguardingTraining: true, gateOutcome: "senior_risk_acceptance", outstandingItems: ["Qualification certificate — RI risk accepted pending verification"] },
+];
+
+export const hrInspectionCases: Array<Record<string, unknown>> = [
+  { id: "hrc_001", staffRef: "Staff Member A", caseType: "safeguarding_allegation", riskLevel: "black", status: "investigation", safeguardingStatus: "lado_consulted", openedAt: "2026-04-28", daysDuration: 7, actionCount: 8, lettersIssued: 2, guardianReviews: 2, riOversightRequired: true, riOversightCompleted: false },
+  { id: "hrc_002", staffRef: "Staff Member B", caseType: "disciplinary", riskLevel: "red", status: "meeting_scheduled", safeguardingStatus: "not_safeguarding", openedAt: "2026-04-15", daysDuration: 20, actionCount: 5, lettersIssued: 1, guardianReviews: 1, riOversightRequired: false, riOversightCompleted: false },
+  { id: "hrc_003", staffRef: "Staff Member C", caseType: "sickness_absence", riskLevel: "amber", status: "open", safeguardingStatus: "not_safeguarding", openedAt: "2026-03-20", daysDuration: 46, actionCount: 3, lettersIssued: 1, guardianReviews: 0, riOversightRequired: false, riOversightCompleted: false },
+  { id: "hrc_004", staffRef: "Staff Member D", caseType: "suspension", riskLevel: "red", status: "suspended", safeguardingStatus: "safeguarding_open", openedAt: "2026-04-22", daysDuration: 13, actionCount: 6, lettersIssued: 1, guardianReviews: 1, riOversightRequired: true, riOversightCompleted: true },
+  { id: "hrc_006", staffRef: "Staff Member F", caseType: "grievance", riskLevel: "amber", status: "outcome_pending", safeguardingStatus: "not_safeguarding", openedAt: "2026-04-01", daysDuration: 34, actionCount: 7, lettersIssued: 2, guardianReviews: 1, riOversightRequired: false, riOversightCompleted: false },
+  { id: "hrc_closed_001", staffRef: "Staff Member J", caseType: "conduct", riskLevel: "green", status: "closed", safeguardingStatus: "not_safeguarding", openedAt: "2026-01-10", closedAt: "2026-03-05", daysDuration: 54, actionCount: 9, lettersIssued: 3, guardianReviews: 2, riOversightRequired: false, riOversightCompleted: false, outcome: "Written warning issued" },
+];
+
+export const hrInspectionChronology: Array<Record<string, unknown>> = [
+  { date: "2026-04-28", caseRef: "hrc_001", staffRef: "Staff Member A", event: "Safeguarding allegation received — child disclosed concern to key worker", significance: "critical" },
+  { date: "2026-04-28", caseRef: "hrc_001", staffRef: "Staff Member A", event: "LADO consultation initiated within 1 hour of disclosure", significance: "critical" },
+  { date: "2026-04-28", caseRef: "hrc_001", staffRef: "Staff Member A", event: "Staff member informed of allegation and precautionary measures", significance: "significant" },
+  { date: "2026-04-22", caseRef: "hrc_004", staffRef: "Staff Member D", event: "Suspension decision taken — five risk factors assessed, alternatives considered and recorded", significance: "critical" },
+  { date: "2026-04-22", caseRef: "hrc_004", staffRef: "Staff Member D", event: "Welfare plan established for suspended staff member", significance: "significant" },
+  { date: "2026-04-15", caseRef: "hrc_002", staffRef: "Staff Member B", event: "Disciplinary concern raised following pattern of recording failures", significance: "significant" },
+  { date: "2026-04-15", caseRef: "hrc_002", staffRef: "Staff Member B", event: "Investigation commenced — terms of reference drafted and shared", significance: "significant" },
+  { date: "2026-04-01", caseRef: "hrc_006", staffRef: "Staff Member F", event: "Formal grievance submitted in writing", significance: "significant" },
+  { date: "2026-03-20", caseRef: "hrc_003", staffRef: "Staff Member C", event: "Sickness absence exceeds trigger point (10 days rolling)", significance: "routine" },
+  { date: "2026-03-05", caseRef: "hrc_closed_001", staffRef: "Staff Member J", event: "Conduct case closed — written warning issued following investigation", significance: "significant" },
+];
+
+export const hrInspectionSuspensions: Array<Record<string, unknown>> = [
+  { staffRef: "Staff Member D", startDate: "2026-04-22", daysActive: 13, reason: "Safeguarding allegation — precautionary pending investigation", riskFactorsConsidered: true, alternativesConsidered: true, welfarePlanInPlace: true, reviewsDue: 2, reviewsCompleted: 1, ladoLinked: true, resolved: false },
+  { staffRef: "Staff Member K", startDate: "2026-02-10", endDate: "2026-03-15", daysActive: 33, reason: "Serious conduct allegation", riskFactorsConsidered: true, alternativesConsidered: true, welfarePlanInPlace: true, reviewsDue: 3, reviewsCompleted: 3, ladoLinked: false, resolved: true, resolutionOutcome: "Returned to work with support plan" },
+];
+
+export const hrInspectionLado: Array<Record<string, unknown>> = [
+  { staffRef: "Staff Member A", referralDate: "2026-04-28", allegationCategory: "Behaviour that may have harmed a child", status: "open", dbsReferralMade: false, ofstedNotified: true },
+  { staffRef: "Staff Member L", referralDate: "2026-01-15", allegationCategory: "Conduct towards a child", ladoOutcome: "Unsubstantiated", status: "closed", dbsReferralMade: false, ofstedNotified: true, daysToResolution: 42 },
+];
+
+export const hrInspectionCompliance: Array<Record<string, unknown>> = [
+  { staffRef: "Staff Member A", dbsStatus: "current", dbsUpdateServiceRegistered: true, mandatoryTrainingComplete: true, mandatoryTrainingGaps: [], lastSupervisionDate: "2026-04-20", supervisionOverdueDays: 0, lastAppraisalDate: "2025-11-15", appraisalOverdueDays: 0 },
+  { staffRef: "Staff Member B", dbsStatus: "current", dbsUpdateServiceRegistered: false, mandatoryTrainingComplete: true, mandatoryTrainingGaps: [], lastSupervisionDate: "2026-04-18", supervisionOverdueDays: 0, lastAppraisalDate: "2025-10-20", appraisalOverdueDays: 0 },
+  { staffRef: "Staff Member C", dbsStatus: "current", dbsUpdateServiceRegistered: true, mandatoryTrainingComplete: false, mandatoryTrainingGaps: ["First aid refresher"], lastSupervisionDate: "2026-03-10", supervisionOverdueDays: 12, lastAppraisalDate: "2025-09-15", appraisalOverdueDays: 0 },
+  { staffRef: "Staff Member D", dbsStatus: "current", dbsUpdateServiceRegistered: true, mandatoryTrainingComplete: true, mandatoryTrainingGaps: [], lastSupervisionDate: "2026-04-10", supervisionOverdueDays: 0, lastAppraisalDate: "2025-08-01", appraisalOverdueDays: 90 },
+  { staffRef: "Staff Member E", dbsStatus: "due_renewal", dbsUpdateServiceRegistered: false, mandatoryTrainingComplete: true, mandatoryTrainingGaps: [], lastSupervisionDate: "2026-04-25", supervisionOverdueDays: 0, lastAppraisalDate: "2026-01-10", appraisalOverdueDays: 0 },
+  { staffRef: "Staff Member F", dbsStatus: "current", dbsUpdateServiceRegistered: true, mandatoryTrainingComplete: false, mandatoryTrainingGaps: ["Safeguarding refresher", "Medication administration"], lastSupervisionDate: "2026-02-20", supervisionOverdueDays: 30, lastAppraisalDate: "2025-12-05", appraisalOverdueDays: 0 },
+];
+
+export const hrInspectionOversight: Array<Record<string, unknown>> = [
+  { caseRef: "hrc_004", staffRef: "Staff Member D", oversightType: "ri_review", completedBy: "Responsible Individual", completedAt: "2026-04-25", findingSummary: "Suspension decision proportionate. Welfare plan in place. LADO consultation timely.", actionsRequired: 1, actionsCompleted: 1 },
+  { caseRef: "hrc_closed_001", staffRef: "Staff Member J", oversightType: "rm_quality_check", completedBy: "Registered Manager", completedAt: "2026-03-06", findingSummary: "Investigation thorough. Outcome proportionate. Learning actions identified and logged.", actionsRequired: 2, actionsCompleted: 2 },
+  { caseRef: "hrc_001", staffRef: "Staff Member A", oversightType: "ri_review", completedBy: "Responsible Individual", completedAt: "2026-04-30", findingSummary: "LADO referral timely. Ofsted notified. Investigation in progress — next review 5 May.", actionsRequired: 2, actionsCompleted: 1 },
+];
+
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 let idCounter = 1000;
 export function nextFallbackId(prefix: string): string {

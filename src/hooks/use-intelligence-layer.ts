@@ -74,6 +74,25 @@ export function useHrRisk() {
   });
 }
 
+export function useHrInspection() {
+  return useQuery({
+    queryKey: ["il", "hr-inspection"],
+    queryFn: () =>
+      ilFetch<{
+        ok: boolean;
+        workforce: unknown;
+        recruitment: unknown[];
+        cases: unknown[];
+        chronology: unknown[];
+        suspensions: unknown[];
+        lado: unknown[];
+        compliance: unknown[];
+        oversight: unknown[];
+        persisted: boolean;
+      }>(`/hr-inspection`),
+  });
+}
+
 // ── ARIA suggestions (review queue + detail) ─────────────────────────────────
 
 export function useAriaSuggestions(params?: { homeId?: string; status?: string }) {
