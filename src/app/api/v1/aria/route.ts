@@ -1,15 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
-import Anthropic from "@anthropic-ai/sdk";
 import {
   ARIA_WRITING_STYLE_PROMPT,
   applyAriaPostprocessor,
 } from "@/lib/aria/writingStyleRules";
+import Anthropic from "@anthropic-ai/sdk";
+import { getAnthropicClient } from "@/lib/anthropic-client";
 
-// Client is created lazily per request so process.env is always resolved at
-// runtime rather than at module-load time (important for Turbopack / Next.js 16).
-function getClient() {
-  return new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-}
+// Alias for backward compat — all call sites now go through the shared client
+const getClient = getAnthropicClient;
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 

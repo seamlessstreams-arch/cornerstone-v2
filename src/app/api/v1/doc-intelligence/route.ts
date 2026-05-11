@@ -8,11 +8,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db/store";
 import { generateId } from "@/lib/utils";
 import type { UploadedDocument, DocumentIntelCategory, DocumentIntelFileType, DocumentAiResult } from "@/types/documents";
-import Anthropic from "@anthropic-ai/sdk";
-
-function getClient() {
-  return new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-}
+import { getAnthropicClient } from "@/lib/anthropic-client";
 
 // ── GET — list uploaded documents ─────────────────────────────────────────────
 export async function GET(req: NextRequest) {
@@ -158,7 +154,7 @@ Return this exact JSON structure:
 ${upload_context ? `Upload context: ${upload_context}\n` : ""}Document content:
 ${extracted_text}`;
 
-    const message = await getClient().messages.create({
+    const message = await getAnthropicClient().messages.create({
       model: "claude-sonnet-4-6",
       max_tokens: 4096,
       system: systemPrompt,
