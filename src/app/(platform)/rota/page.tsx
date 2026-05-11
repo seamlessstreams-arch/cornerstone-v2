@@ -370,7 +370,7 @@ export default function RotaPage() {
                     </Button>
                     <Button
                       size="sm"
-                      className="text-xs h-7 bg-indigo-600 hover:bg-indigo-700"
+                      className="text-xs h-7 bg-[var(--cs-navy)] hover:bg-[var(--cs-navy)]/90"
                       onClick={() => toast.success("Swap request approved.")}
                     >
                       Approve
@@ -849,7 +849,7 @@ export default function RotaPage() {
               Cancel
             </Button>
             <Button
-              className="flex-1 bg-indigo-600 hover:bg-indigo-700"
+              className="flex-1 bg-[var(--cs-navy)] hover:bg-[var(--cs-navy)]/90"
               onClick={handleSubmitSwap}
               disabled={createSwap.isPending}
             >

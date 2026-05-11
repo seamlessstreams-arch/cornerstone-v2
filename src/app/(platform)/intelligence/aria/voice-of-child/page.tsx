@@ -2,7 +2,7 @@
 
 // ══════════════════════════════════════════════════════════════════════════════
 // ARIA — VOICE OF THE CHILD (UI)
-// Manager-facing screen for the Aria Voice of the Child Summariser.
+// Manager-facing screen for the ARIA Voice of the Child Summariser.
 //
 // Flow:
 //   1. Identify the child + period; add 1+ records (recordType, date, text)
@@ -336,7 +336,7 @@ export default function VoiceOfChildPage() {
 
   return (
     <PageShell title="ARIA — Voice of the Child">
-      {/* Aria draft banner */}
+      {/* ARIA draft banner */}
       <div className="mb-6 flex items-start gap-3 rounded-lg border border-violet-200 bg-violet-50 p-4 text-sm text-violet-900">
         <Sparkles className="h-5 w-5 mt-0.5 text-violet-600" />
         <div>
@@ -435,7 +435,7 @@ export default function VoiceOfChildPage() {
               <Textarea
                 value={r.recordText}
                 onChange={(e) => updateRecord(i, { recordText: e.target.value })}
-                placeholder="Paste the record narrative — Aria will extract direct quotes, paraphrased expressions, themes, wants/needs/fears, and unmet-rights signals."
+                placeholder="Paste the record narrative — ARIA will extract direct quotes, paraphrased expressions, themes, wants/needs/fears, and unmet-rights signals."
                 className="min-h-[100px] text-sm"
               />
             </div>
@@ -446,7 +446,7 @@ export default function VoiceOfChildPage() {
             </span>
             <Button onClick={handleAnalyse} disabled={!canSubmit || analysing} className="gap-2">
               {analysing ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
-              {analysing ? "Analysing..." : "Generate Aria voice summary"}
+              {analysing ? "Analysing..." : "Generate ARIA voice summary"}
             </Button>
           </div>
           {error ? (
@@ -486,7 +486,7 @@ export default function VoiceOfChildPage() {
             </Card>
             <Card>
               <CardContent className="p-4">
-                <div className="text-xs uppercase text-[var(--cs-text-muted)] mb-1">Aria confidence</div>
+                <div className="text-xs uppercase text-[var(--cs-text-muted)] mb-1">ARIA confidence</div>
                 <div className="text-3xl font-semibold text-[var(--cs-navy)]">
                   {Math.round(summary.ariaConfidence * 100)}%
                 </div>
@@ -630,7 +630,7 @@ export default function VoiceOfChildPage() {
                 <CardHeader>
                   <CardTitle className="flex items-center justify-between gap-2 text-base">
                     <span className="flex items-center gap-2">
-                      <Sparkles className="h-4 w-4 text-violet-500" /> Aria narrative draft
+                      <Sparkles className="h-4 w-4 text-violet-500" /> ARIA narrative draft
                     </span>
                     <Button variant="outline" size="sm" onClick={() => setEditing((v) => !v)} className="gap-1.5">
                       <Pencil className="h-3.5 w-3.5" /> {editing ? "Stop editing" : "Edit"}

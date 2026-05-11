@@ -3,7 +3,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // AriaMicrophoneButton
 //
-// A small, drop-in microphone button that opens the Aria dictation panel
+// A small, drop-in microphone button that opens the ARIA dictation panel
 // when clicked. The dictation panel handles capability checks and shows the
 // appropriate state (insecure context, browser unsupported, permission
 // denied, etc).
@@ -34,7 +34,7 @@ export interface AriaMicrophoneButtonProps {
   // Called when the user accepts the transcript (insert into the field).
   onTranscript: (transcript: string) => void;
   // Called when the user wants the transcript handed to an ARIA command
-  // instead. Optional — if not provided, "Use with Aria" is hidden.
+  // instead. Optional — if not provided, "Use with ARIA" is hidden.
   onSendToAria?: (transcript: string) => void;
   // Optional: hide the button entirely if the role does not have
   // aria.dictate. The dictation panel itself enforces server-side, but
@@ -78,8 +78,8 @@ export function AriaMicrophoneButton({
         size={size}
         className={className}
         onClick={() => setOpen(true)}
-        aria-label="Dictate with Aria"
-        title="Dictate with Aria"
+        aria-label="Dictate with ARIA"
+        title="Dictate with ARIA"
       >
         <Mic className="h-4 w-4" />
       </Button>

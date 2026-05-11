@@ -475,7 +475,7 @@ function NewComplaintDialog({
             size="sm"
             onClick={handleSave}
             disabled={saving || !form.summary.trim() || !form.complainant_name.trim()}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white"
+            className="bg-[var(--cs-navy)] hover:bg-[var(--cs-navy)]/90 text-white"
           >
             {saving ? "Saving…" : "Log Complaint"}
           </Button>
@@ -628,7 +628,7 @@ ${complaint.lessons_learned ? `Learning: ${complaint.lessons_learned}` : ""}`;
           <Button
             size="sm"
             onClick={() => setShowNew(true)}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white gap-1.5 h-8 text-xs"
+            className="bg-[var(--cs-navy)] hover:bg-[var(--cs-navy)]/90 text-white gap-1.5 h-8 text-xs"
           >
             <Plus className="h-3.5 w-3.5" />
             Log Complaint

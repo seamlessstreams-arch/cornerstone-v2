@@ -3,7 +3,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // AriaDictationPanel
 //
-// Modal/drawer for Aria voice dictation. Handles every state the spec calls
+// Modal/drawer for ARIA voice dictation. Handles every state the spec calls
 // out: insecure context, browser unsupported, permission denied, no
 // microphone found, recording, paused, transcribing, transcript editor,
 // transcription not configured, retry on error.
@@ -122,13 +122,13 @@ export function AriaDictationPanel(props: AriaDictationPanelProps) {
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4"
       role="dialog"
       aria-modal="true"
-      aria-label="Aria voice dictation"
+      aria-label="ARIA voice dictation"
     >
       <Card className="w-full max-w-xl">
         <CardHeader>
           <CardTitle className="flex items-center justify-between gap-2 text-base">
             <span className="flex items-center gap-2">
-              <Mic className="h-4 w-4 text-violet-600" /> Aria voice dictation
+              <Mic className="h-4 w-4 text-violet-600" /> ARIA voice dictation
             </span>
             <Button type="button" variant="ghost" size="icon" onClick={onClose} aria-label="Close">
               <X className="h-4 w-4" />
@@ -280,7 +280,7 @@ export function AriaDictationPanel(props: AriaDictationPanelProps) {
                     </Button>
                     {onSendToAria ? (
                       <Button variant="outline" onClick={() => onSendToAria(transcript)} className="gap-1.5">
-                        <Sparkles className="h-4 w-4" /> Use with Aria
+                        <Sparkles className="h-4 w-4" /> Use with ARIA
                       </Button>
                     ) : null}
                     <Button variant="outline" onClick={() => setTranscript("")} className="gap-1.5">

@@ -1506,7 +1506,7 @@ function ManagerActionsTab() {
       <div>
         <div className="flex items-center gap-2 mb-4">
           <Sparkles className="h-4 w-4 text-violet-600" />
-          <span className="text-sm font-bold text-[var(--cs-navy)]">Aria — Manager Support</span>
+          <span className="text-sm font-bold text-[var(--cs-navy)]">ARIA — Manager Support</span>
         </div>
         <AriaPanel
           mode="oversee"

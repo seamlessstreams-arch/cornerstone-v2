@@ -3,7 +3,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // Aria Compose — worked example
 //
-// Demonstrates the AriaCompose widget against three of the most common
+// Demonstrates the ARIACompose widget against three of the most common
 // children's-home long-text fields: a daily log entry, an incident note, and
 // a management oversight comment. Any other module can drop AriaCompose into
 // its existing forms with one line.
@@ -59,9 +59,9 @@ export default function AriaComposePage() {
         <div>
           <div className="font-semibold">ARIA suggested draft, never final</div>
           <p className="text-violet-800">
-            This page demonstrates the universal Aria layer in action. Each field
-            below has the Aria microphone button and the Ask ARIA command picker.
-            Aria runs on the server, every output is labelled as a draft, and
+            This page demonstrates the universal ARIA layer in action. Each field
+            below has the ARIA microphone button and the Ask ARIA command picker.
+            ARIA runs on the server, every output is labelled as a draft, and
             every approve, edit, reject or rewrite-request is audit-logged. The
             same widget drops into any long-text field across Cornerstone.
           </p>
@@ -98,7 +98,7 @@ export default function AriaComposePage() {
             </div>
           </div>
           <p className="text-xs text-[var(--cs-text-muted)] mt-3">
-            Aria respects roles. Mic button, Ask-Aria picker, and HR-permissioned
+            ARIA respects roles. Mic button, Ask-ARIA picker, and HR-permissioned
             commands all hide for roles that don&apos;t hold the relevant Aria
             permission. The server enforces every check independently.
           </p>
@@ -155,7 +155,7 @@ export default function AriaComposePage() {
               { id: "draft_parent_carer_update", label: "Draft parent / carer update", permission: "aria.generate_drafts" },
             ]}
             label="Notes"
-            placeholder="Note what happened, who was involved, and when. Aria can structure this into an incident record."
+            placeholder="Note what happened, who was involved, and when. ARIA can structure this into an incident record."
           />
         </CardContent>
       </Card>
@@ -187,7 +187,7 @@ export default function AriaComposePage() {
               { id: "identify_management_actions", label: "Identify management actions", permission: "aria.summarise" },
             ]}
             label="Oversight"
-            placeholder="Note what you have read and what you want to say. Aria will draft a reflective oversight for you to review."
+            placeholder="Note what you have read and what you want to say. ARIA will draft a reflective oversight for you to review."
           />
         </CardContent>
       </Card>

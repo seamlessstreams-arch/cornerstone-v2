@@ -143,7 +143,7 @@ function ChildVoiceSummarySection({ childId, childName }: { childId: string; chi
         <div className="flex items-center justify-between gap-3">
           <div>
             <div className="text-sm font-semibold text-emerald-900">Child Voice Summary</div>
-            <div className="text-xs text-emerald-700 mt-0.5">Aria synthesis of what {childName} has said, felt, and expressed</div>
+            <div className="text-xs text-emerald-700 mt-0.5">ARIA synthesis of what {childName} has said, felt, and expressed</div>
           </div>
           <Button onClick={generate} disabled={generating} className="bg-emerald-600 hover:bg-emerald-700 shrink-0 gap-1.5" size="sm">
             {generating ? <><Loader2 className="h-3.5 w-3.5 animate-spin" />Generating…</> : <><Sparkles className="h-3.5 w-3.5" />Generate</>}
@@ -199,7 +199,7 @@ function WhatChangedSection({ childName, incidents, chronology, recentLog }: {
         <div className="flex items-center justify-between gap-3">
           <div>
             <div className="text-sm font-semibold text-violet-900">What Has Changed?</div>
-            <div className="text-xs text-violet-700 mt-0.5">Aria analysis of progress, regression, risks and relationships over time</div>
+            <div className="text-xs text-violet-700 mt-0.5">ARIA analysis of progress, regression, risks and relationships over time</div>
           </div>
           <Button onClick={generate} disabled={generating} className="bg-violet-600 hover:bg-violet-700 shrink-0 gap-1.5" size="sm">
             {generating ? <><Loader2 className="h-3.5 w-3.5 animate-spin" />Analysing…</> : <><Sparkles className="h-3.5 w-3.5" />Analyse</>}
@@ -916,7 +916,7 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
               <div className="flex items-center gap-2">
                 <Link href="/intelligence/aria/keywork">
                   <Button variant="outline" size="sm" className="gap-1.5 text-xs">
-                    <Sparkles className="h-3.5 w-3.5 text-violet-500" />Aria Planner
+                    <Sparkles className="h-3.5 w-3.5 text-violet-500" />ARIA Planner
                   </Button>
                 </Link>
                 <Button size="sm" className="gap-1.5 text-xs" onClick={() => setShowKWForm((p) => !p)}>
@@ -991,11 +991,11 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
               <EmptyTabState
                 icon={MessageCircle}
                 label="No key work sessions recorded"
-                description="Log sessions here or plan them using the Aria Key Work Builder."
+                description="Log sessions here or plan them using the ARIA Key Work Builder."
                 action={
                   <div className="flex items-center justify-center gap-2">
                     <Button size="sm" variant="outline" onClick={() => setShowKWForm(true)} className="gap-1.5 text-xs"><Plus className="h-3.5 w-3.5" />Log Session</Button>
-                    <Link href="/intelligence/aria/keywork"><Button size="sm" variant="outline" className="gap-1.5 text-xs"><Sparkles className="h-3.5 w-3.5 text-violet-500" />Aria Planner</Button></Link>
+                    <Link href="/intelligence/aria/keywork"><Button size="sm" variant="outline" className="gap-1.5 text-xs"><Sparkles className="h-3.5 w-3.5 text-violet-500" />ARIA Planner</Button></Link>
                   </div>
                 }
               />
@@ -1035,7 +1035,7 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
                       {session.staff_reflection && <div><p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-0.5">Staff Reflection</p><p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed">{session.staff_reflection}</p></div>}
                       {session.aria_summary && (
                         <div className="rounded-xl border border-violet-100 bg-violet-50/40 px-3 py-2">
-                          <p className="text-[10px] font-semibold text-violet-600 uppercase tracking-wide mb-0.5 flex items-center gap-1"><Sparkles className="h-2.5 w-2.5" />Aria Summary</p>
+                          <p className="text-[10px] font-semibold text-violet-600 uppercase tracking-wide mb-0.5 flex items-center gap-1"><Sparkles className="h-2.5 w-2.5" />ARIA Summary</p>
                           <p className="text-xs text-[var(--cs-text-secondary)]">{session.aria_summary}</p>
                         </div>
                       )}
@@ -1278,7 +1278,7 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
                 <div>
                   <p className="text-sm font-semibold text-indigo-900">Placement Outcomes</p>
                   <p className="text-xs text-indigo-700 mt-0.5">
-                    Outcomes are tracked against the care plan and pathway plan. Use Aria to generate a progress summary against stated outcomes.
+                    Outcomes are tracked against the care plan and pathway plan. Use ARIA to generate a progress summary against stated outcomes.
                   </p>
                 </div>
               </div>

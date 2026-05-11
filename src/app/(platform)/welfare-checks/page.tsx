@@ -307,7 +307,7 @@ function NewCheckForm({
         <Button
           onClick={handleSubmit}
           disabled={createRound.isPending}
-          className="w-full gap-2 bg-indigo-600 hover:bg-indigo-700"
+          className="w-full gap-2 bg-[var(--cs-navy)] hover:bg-[var(--cs-navy)]/90"
         >
           {createRound.isPending ? (
             <Loader2 className="h-4 w-4 animate-spin" />
@@ -559,7 +559,7 @@ export default function WelfareChecksPage() {
           <Button
             size="sm"
             onClick={() => setShowForm(true)}
-            className="gap-1.5 bg-indigo-600 hover:bg-indigo-700"
+            className="gap-1.5 bg-[var(--cs-navy)] hover:bg-[var(--cs-navy)]/90"
           >
             <Plus className="h-3.5 w-3.5" />
             New Check
@@ -691,7 +691,7 @@ export default function WelfareChecksPage() {
               className={cn(
                 "px-3 py-1 rounded-full text-xs font-medium border transition-all",
                 selectedDate === f.value
-                  ? "bg-indigo-600 text-white border-indigo-600"
+                  ? "bg-[var(--cs-navy)] text-white border-[var(--cs-navy)]"
                   : "bg-white text-[var(--cs-text-secondary)] border-[var(--cs-border)] hover:border-indigo-300",
               )}
             >
@@ -710,7 +710,7 @@ export default function WelfareChecksPage() {
             </p>
             <Button
               size="sm"
-              className="mt-4 gap-1.5 bg-indigo-600 hover:bg-indigo-700"
+              className="mt-4 gap-1.5 bg-[var(--cs-navy)] hover:bg-[var(--cs-navy)]/90"
               onClick={() => setShowForm(true)}
             >
               <Plus className="h-3.5 w-3.5" />

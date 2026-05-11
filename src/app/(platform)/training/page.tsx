@@ -259,7 +259,7 @@ function ComplianceReportPanel({
           size="sm"
           onClick={generate}
           disabled={loading}
-          className="gap-1.5 bg-indigo-600 hover:bg-indigo-700 text-white shrink-0"
+          className="gap-1.5 bg-[var(--cs-navy)] hover:bg-[var(--cs-navy)]/90 text-white shrink-0"
         >
           <Sparkles className={cn("h-3.5 w-3.5", loading && "animate-pulse")} />
           {loading ? "Generating…" : report ? "Regenerate" : "Generate Report"}

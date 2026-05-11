@@ -15,7 +15,7 @@ interface PageShellProps {
   quickCreateContext?: QuickCreateContext;
   /** Set to false to suppress the automatic QuickCreate buttons */
   showQuickCreate?:  boolean;
-  /** Aria context — passed to the Aria drawer for contextual suggestions */
+  /** Aria context — passed to the ARIA drawer for contextual suggestions */
   ariaContext?:      AriaDrawerContext;
   children:          React.ReactNode;
   fullWidth?:        boolean;

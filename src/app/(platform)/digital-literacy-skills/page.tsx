@@ -288,7 +288,7 @@ export default function DigitalLiteracySkillsPage() {
                               className={cn(
                                 "mt-0.5 inline-flex h-4 w-4 shrink-0 items-center justify-center rounded border text-[10px] font-bold",
                                 s.achieved
-                                  ? "bg-indigo-600 text-white border-indigo-600"
+                                  ? "bg-[var(--cs-navy)] text-white border-[var(--cs-navy)]"
                                   : "bg-white text-transparent border-gray-300",
                               )}
                               aria-hidden
@@ -334,7 +334,7 @@ export default function DigitalLiteracySkillsPage() {
                     </div>
 
                     {/* next step */}
-                    <div className="rounded-lg border-l-4 border-indigo-500 bg-indigo-50 p-3">
+                    <div className="rounded-lg border-l-4 border-[var(--cs-aria-gold)] bg-[var(--cs-aria-gold-bg)] p-3">
                       <h4 className="text-sm font-semibold text-indigo-800 mb-1">Next step</h4>
                       <p className="text-sm text-indigo-900">{rec.next_step}</p>
                     </div>

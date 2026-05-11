@@ -1043,7 +1043,7 @@ function LogIncidentTab({ onSuccess }: { onSuccess?: () => void }) {
             className="flex items-center gap-1.5 rounded-xl border border-violet-200 bg-violet-50 px-3 py-1.5 text-xs font-semibold text-violet-700 hover:bg-violet-100 transition-colors"
           >
             <Sparkles className="h-3.5 w-3.5" />
-            Aria Write
+            ARIA Write
           </button>
         </div>
 

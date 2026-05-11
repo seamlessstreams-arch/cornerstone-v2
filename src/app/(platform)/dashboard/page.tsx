@@ -642,7 +642,7 @@ function getDashboardConfig(role: AppRole): DashboardConfig {
       zoneALabel:          "A  ·  What needs attention",
       zoneADescription:    "Priority items requiring immediate action",
       zoneBLabel:          "B  ·  Today's operation",
-      zoneBDescription:    "Shift coverage, tasks, medication, and Aria intelligence",
+      zoneBDescription:    "Shift coverage, tasks, medication, and ARIA intelligence",
     };
   }
 

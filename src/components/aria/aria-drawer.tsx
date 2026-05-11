@@ -2,9 +2,9 @@
 
 // ══════════════════════════════════════════════════════════════════════════════
 // CORNERSTONE — ARIA DRAWER
-// A right-side sliding drawer for contextual Aria assistance.
+// A right-side sliding drawer for contextual ARIA assistance.
 // Can be opened from any page with context about the current record.
-// All Aria suggestions require human approval before saving.
+// All ARIA suggestions require human approval before saving.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState, useEffect, useCallback } from "react";

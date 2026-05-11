@@ -193,11 +193,11 @@ export function AriaPanel({
           {/* Prompt input */}
           <div>
             <label className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider block mb-1.5">
-              {mode === "write"             ? "What would you like Aria to write?" :
+              {mode === "write"             ? "What would you like ARIA to write?" :
                mode === "review"            ? "Any specific concerns to check?" :
-               mode === "oversee"           ? "What should Aria focus on?" :
+               mode === "oversee"           ? "What should ARIA focus on?" :
                mode === "document_classify" ? "Any specific focus for classification?" :
-               mode === "document_to_form"  ? "Which form type should Aria create?" :
+               mode === "document_to_form"  ? "Which form type should ARIA create?" :
                "What do you need help with?"}
             </label>
             <div className="relative">
@@ -232,7 +232,7 @@ export function AriaPanel({
           {/* Context indicator */}
           {(sourceContent || linkedRecords) && (
             <div className="rounded-xl bg-slate-50 border border-[var(--cs-border)] px-3 py-2">
-              <div className="text-[10px] text-[var(--cs-text-muted)] font-medium">Aria can see</div>
+              <div className="text-[10px] text-[var(--cs-text-muted)] font-medium">ARIA can see</div>
               <div className="flex flex-wrap gap-1.5 mt-1">
                 {sourceContent && (
                   <Badge className="text-[9px] rounded-full bg-blue-100 text-blue-700 border-0">Source record</Badge>
@@ -289,7 +289,7 @@ export function AriaPanel({
               </div>
               <div className="flex items-start gap-1.5 text-[10px] text-[var(--cs-text-muted)]">
                 <AlertTriangle className="h-3 w-3 shrink-0 mt-0.5" />
-                <span>Always review before use. Aria uses only the information you provided — never fabricates facts.</span>
+                <span>Always review before use. ARIA uses only the information you provided — never fabricates facts.</span>
               </div>
             </div>
           )}

@@ -385,7 +385,7 @@ export default function VoiceOfTheChildPage() {
                 </Button>
                 <Button
                   size="sm"
-                  className="bg-indigo-600 hover:bg-indigo-700 text-white"
+                  className="bg-[var(--cs-navy)] hover:bg-[var(--cs-navy)]/90 text-white"
                   disabled={!newChildWords.trim() || createEntry.isPending}
                   onClick={() => {
                     createEntry.mutate({

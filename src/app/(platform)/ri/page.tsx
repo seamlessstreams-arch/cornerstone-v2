@@ -315,7 +315,7 @@ export default function RiHubPage() {
             </p>
             <div className="flex flex-wrap gap-2 pt-1">
               <Link href="/ri/scorecard?mode=strategic">
-                <Button size="sm" className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs h-8 gap-1.5">
+                <Button size="sm" className="bg-[var(--cs-navy)] hover:bg-[var(--cs-navy)]/90 text-white text-xs h-8 gap-1.5">
                   <Sparkles className="h-3.5 w-3.5" />
                   Strategic Analysis
                 </Button>

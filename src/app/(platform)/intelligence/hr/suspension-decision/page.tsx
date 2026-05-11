@@ -266,7 +266,7 @@ export default function SuspensionDecisionPage() {
           <div className="font-semibold">ARIA suggested draft, never final</div>
           <p className="text-violet-800">
             Use this tool to think through whether suspension is the proportionate response. Suspension is a neutral
-            act pending investigation. The output is a structured risk assessment, a welfare plan, and an Aria
+            act pending investigation. The output is a structured risk assessment, a welfare plan, and an ARIA
             suggested draft of written reasons. The Registered Manager remains the decision-maker. The suspension
             letter itself should be drafted separately and run through the HR Process Guardian before sending.
           </p>
@@ -558,7 +558,7 @@ export default function SuspensionDecisionPage() {
             </Card>
             <Card>
               <CardContent className="p-4">
-                <div className="text-xs uppercase text-[var(--cs-text-muted)] mb-1">Aria confidence</div>
+                <div className="text-xs uppercase text-[var(--cs-text-muted)] mb-1">ARIA confidence</div>
                 <div className="text-3xl font-semibold text-[var(--cs-navy)]">{Math.round(analysis.ariaConfidence * 100)}%</div>
               </CardContent>
             </Card>

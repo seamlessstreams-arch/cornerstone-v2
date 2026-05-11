@@ -144,7 +144,7 @@ export default function StaffCompetencyProfilePage({ params }: { params: Promise
           />
           <Button
             size="sm"
-            className="gap-1.5 bg-indigo-600 hover:bg-indigo-700 text-white"
+            className="gap-1.5 bg-[var(--cs-navy)] hover:bg-[var(--cs-navy)]/90 text-white"
             onClick={() => setShowAria((p) => !p)}
           >
             <Sparkles className="h-3.5 w-3.5" />
@@ -246,7 +246,7 @@ export default function StaffCompetencyProfilePage({ params }: { params: Promise
               className={cn(
                 "flex items-center gap-1.5 px-3 py-2.5 text-xs font-medium border-b-2 transition-all whitespace-nowrap",
                 tab === t.id
-                  ? "border-indigo-500 text-indigo-700"
+                  ? "border-[var(--cs-aria-gold)] text-[var(--cs-navy)]"
                   : "border-transparent text-[var(--cs-text-muted)] hover:text-[var(--cs-navy)] hover:border-slate-300",
               )}
             >

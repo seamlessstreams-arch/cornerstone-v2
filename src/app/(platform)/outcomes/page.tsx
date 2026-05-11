@@ -181,7 +181,7 @@ function ReviewDialog({
                   className={cn(
                     "flex-1 rounded-xl border-2 px-2 py-3 text-center transition-all",
                     newRating === r
-                      ? "border-indigo-500 bg-indigo-50 shadow-sm"
+                      ? "border-[var(--cs-aria-gold)] bg-[var(--cs-aria-gold-bg)] shadow-sm"
                       : "border-[var(--cs-border)] bg-white hover:border-indigo-200",
                   )}
                 >
@@ -258,7 +258,7 @@ function ReviewDialog({
             size="sm"
             onClick={handleSubmit}
             disabled={!notes.trim() || createReview.isPending}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white"
+            className="bg-[var(--cs-navy)] hover:bg-[var(--cs-navy)]/90 text-white"
           >
             {createReview.isPending ? "Saving..." : "Record Review"}
           </Button>
@@ -419,7 +419,7 @@ function NewTargetDialog({
                     className={cn(
                       "flex-1 rounded-lg border-2 py-2 text-center transition-all",
                       baselineRating === r
-                        ? "border-indigo-500 bg-indigo-50"
+                        ? "border-[var(--cs-aria-gold)] bg-[var(--cs-aria-gold-bg)]"
                         : "border-[var(--cs-border)] hover:border-indigo-200",
                     )}
                   >
@@ -483,7 +483,7 @@ function NewTargetDialog({
             size="sm"
             onClick={handleSubmit}
             disabled={!description.trim() || !childId || createTarget.isPending}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white"
+            className="bg-[var(--cs-navy)] hover:bg-[var(--cs-navy)]/90 text-white"
           >
             {createTarget.isPending ? "Creating..." : "Create Target"}
           </Button>
@@ -920,7 +920,7 @@ export default function OutcomesPage() {
         <div className="flex items-center gap-2">
           <ExportButton data={filtered} columns={OUTCOME_EXPORT_COLS} filename="outcomes" />
           <PrintButton title="Outcomes Tracker" subtitle="Oak House" targetId="outcomes-content" />
-          <Button size="sm" className="gap-1.5 bg-indigo-600 hover:bg-indigo-700 text-white h-8 text-xs" onClick={() => setShowNewTarget(true)}>
+          <Button size="sm" className="gap-1.5 bg-[var(--cs-navy)] hover:bg-[var(--cs-navy)]/90 text-white h-8 text-xs" onClick={() => setShowNewTarget(true)}>
             <Plus className="h-3.5 w-3.5" />
             New Target
           </Button>

@@ -106,7 +106,7 @@ export default function WorkforceHubPage() {
           <SmartUploadButton variant="inline" label="Upload Evidence" uploadContext="Workforce Hub — staff evidence or qualification upload" />
           <Button
             size="sm"
-            className="gap-1.5 bg-indigo-600 hover:bg-indigo-700 text-white"
+            className="gap-1.5 bg-[var(--cs-navy)] hover:bg-[var(--cs-navy)]/90 text-white"
             onClick={() => setShowAria((p) => !p)}
           >
             <Sparkles className="h-3.5 w-3.5" />

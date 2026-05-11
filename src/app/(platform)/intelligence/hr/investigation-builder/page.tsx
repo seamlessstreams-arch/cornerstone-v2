@@ -10,7 +10,7 @@
 //   3. Witness Interviews — structured questions, key points, notes
 //   4. Evidence Log — documents, CCTV, records, statements
 //   5. Findings — analysis against each allegation, on balance of probability
-//   6. Report — Aria drafts the investigation report
+//   6. Report — ARIA drafts the investigation report
 //
 // Aria supports at every stage but the investigating officer remains the
 // decision-maker. All outputs are labelled as drafts requiring review.
@@ -376,7 +376,7 @@ The following should be appended to the final report:
 - Any correspondence with the staff member
 
 ═══════════════════════════════════════════════════════════════
-This report was drafted with support from Aria. The investigating
+This report was drafted with support from ARIA. The investigating
 officer is responsible for the accuracy and completeness of the
 content and for ensuring that findings are based on the evidence
 gathered during the investigation.
@@ -624,7 +624,7 @@ gathered during the investigation.
         <div className="rounded-2xl bg-blue-50 border border-blue-200 px-4 py-3 flex items-start gap-3 text-sm text-blue-800">
           <Sparkles className="h-4 w-4 shrink-0 mt-0.5 text-blue-500" />
           <div>
-            <strong>Aria guidance.</strong> Consider whether you need to interview the subject of the investigation.
+            <strong>ARIA guidance.</strong> Consider whether you need to interview the subject of the investigation.
             Best practice is to interview the subject last, after all other evidence has been gathered, so that
             you can put specific points to them. Ensure the subject is offered the right to be accompanied.
           </div>

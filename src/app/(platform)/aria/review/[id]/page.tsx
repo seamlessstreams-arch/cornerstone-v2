@@ -3,7 +3,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // ARIA SUGGESTION DETAIL + APPROVAL WORKFLOW
 //
-// Full view of a single Aria suggestion with:
+// Full view of a single ARIA suggestion with:
 // - Suggestion detail (title, summary, reason, risk, confidence)
 // - Draft text (editable before approval)
 // - Linked record suggestions
@@ -284,7 +284,7 @@ export default function AriaSuggestionDetailPage({
   return (
     <PageShell
       title="ARIA Suggestion"
-      subtitle="Review, edit and approve or reject this Aria suggestion."
+      subtitle="Review, edit and approve or reject this ARIA suggestion."
     >
       {/* Back link */}
       <Link
@@ -370,7 +370,7 @@ export default function AriaSuggestionDetailPage({
               </div>
 
               <div className="p-3 bg-amber-50 rounded-lg text-sm mt-3">
-                <p className="font-medium text-amber-800 mb-1">Reason Aria raised this</p>
+                <p className="font-medium text-amber-800 mb-1">Reason ARIA raised this</p>
                 <p className="text-amber-700">{suggestion.reason}</p>
               </div>
             </CardContent>
@@ -382,7 +382,7 @@ export default function AriaSuggestionDetailPage({
               <div className="flex items-center justify-between">
                 <CardTitle className="flex items-center gap-2 text-base">
                   <Sparkles className="h-4 w-4 text-blue-600" />
-                  Aria draft
+                  ARIA draft
                 </CardTitle>
                 {!isReviewed && (
                   <Button

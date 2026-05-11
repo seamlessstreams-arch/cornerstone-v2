@@ -260,7 +260,7 @@ export default function HrProcessGuardianPage() {
 
   return (
     <PageShell title="ARIA — HR Process Guardian">
-      {/* Aria draft banner */}
+      {/* ARIA draft banner */}
       <div className="mb-6 flex items-start gap-3 rounded-lg border border-violet-200 bg-violet-50 p-4 text-sm text-violet-900">
         <Sparkles className="h-5 w-5 mt-0.5 text-violet-600" />
         <div>
@@ -428,7 +428,7 @@ export default function HrProcessGuardianPage() {
             </Card>
             <Card>
               <CardContent className="p-4">
-                <div className="text-xs uppercase text-[var(--cs-text-muted)] mb-1">Aria confidence</div>
+                <div className="text-xs uppercase text-[var(--cs-text-muted)] mb-1">ARIA confidence</div>
                 <div className="text-3xl font-semibold text-[var(--cs-navy)]">{Math.round(review.ariaConfidence * 100)}%</div>
                 <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">{review.llmUsed ? "LLM-enhanced" : "Deterministic only"}</div>
               </CardContent>

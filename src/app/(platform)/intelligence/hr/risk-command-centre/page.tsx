@@ -763,12 +763,12 @@ export default function HrRiskCommandCentrePage() {
         </Card>
       )}
 
-      {/* ── Aria professional insight ────────────────────────────────────── */}
+      {/* ── ARIA professional insight ────────────────────────────────────── */}
       <Card className="border-blue-200 dark:border-blue-900">
         <CardHeader className="pb-3">
           <CardTitle className="flex items-center gap-2 text-base">
             <Sparkles className="h-5 w-5 text-blue-600" />
-            Aria — command centre insight
+            ARIA — command centre insight
           </CardTitle>
         </CardHeader>
         <CardContent>

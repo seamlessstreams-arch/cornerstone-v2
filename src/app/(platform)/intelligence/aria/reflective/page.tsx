@@ -137,7 +137,7 @@ export default function ReflectivePracticePage() {
     setDescription((prev) => prev ? `${prev} ${text}` : text);
   }, []);
 
-  // Pre-fill from query params (source_id passed by AriaQuickActions "Reflective Debrief" button)
+  // Pre-fill from query params (source_id passed by ARIAQuickActions "Reflective Debrief" button)
   useEffect(() => {
     const p = new URLSearchParams(window.location.search);
     const c = p.get("child_id");

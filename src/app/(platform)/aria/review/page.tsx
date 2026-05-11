@@ -291,7 +291,7 @@ export default function AriaReviewQueuePage() {
   return (
     <PageShell
       title="ARIA Review Queue"
-      subtitle="Every Aria suggestion requires human review. Approve, reject, amend or mark as no action required."
+      subtitle="Every ARIA suggestion requires human review. Approve, reject, amend or mark as no action required."
     >
       {/* Stat strip */}
       <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
@@ -362,7 +362,7 @@ export default function AriaReviewQueuePage() {
           <CardContent className="py-12 text-center">
             <Sparkles className="h-8 w-8 text-[var(--cs-text-gentle)] mx-auto mb-3" />
             <p className="text-sm text-[var(--cs-text-muted)] font-medium">No suggestions match your filters</p>
-            <p className="text-xs text-[var(--cs-text-muted)] mt-1">Adjust your filters or check back after Aria reviews new records.</p>
+            <p className="text-xs text-[var(--cs-text-muted)] mt-1">Adjust your filters or check back after ARIA reviews new records.</p>
           </CardContent>
         </Card>
       ) : (
@@ -375,9 +375,9 @@ export default function AriaReviewQueuePage() {
 
       {/* Regulatory note */}
       <div className="mt-8 p-4 bg-muted/50 rounded-lg text-xs text-muted-foreground">
-        <p className="font-medium mb-1">Aria Review Queue</p>
+        <p className="font-medium mb-1">ARIA Review Queue</p>
         <p>
-          Every Aria suggestion is labelled as an ARIA suggested draft. The Registered Manager
+          Every ARIA suggestion is labelled as an ARIA suggested draft. The Registered Manager
           remains the decision-maker. Suggestions are generated to support professional judgement
           and to prompt oversight where practice, regulation or safeguarding considerations indicate
           it is needed. No suggestion is committed to a statutory record without explicit human approval.

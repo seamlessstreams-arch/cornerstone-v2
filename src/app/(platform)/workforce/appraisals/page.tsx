@@ -621,7 +621,7 @@ export default function AppraisalsPage() {
                   className={cn(
                     "px-2.5 py-1 rounded-full text-[10px] font-medium border transition-all",
                     filter === f
-                      ? "bg-indigo-600 text-white border-indigo-600"
+                      ? "bg-[var(--cs-navy)] text-white border-[var(--cs-navy)]"
                       : "bg-white text-[var(--cs-text-muted)] border-[var(--cs-border)] hover:border-indigo-300",
                   )}
                 >

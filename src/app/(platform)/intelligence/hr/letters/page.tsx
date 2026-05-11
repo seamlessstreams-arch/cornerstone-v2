@@ -258,7 +258,7 @@ export default function HrLettersPage() {
         <div>
           <div className="font-semibold">ARIA suggested draft, never final</div>
           <p className="text-violet-800">
-            Pick a letter type, fill in the context, and Aria will produce a starting-point draft and run it through
+            Pick a letter type, fill in the context, and ARIA will produce a starting-point draft and run it through
             the HR Process Guardian. The Guardian checks fairness, ACAS alignment, safeguarding handling,
             proportionality, discrimination risk, evidence quality, representation rights, appeal rights, and the
             wording itself. Letters cannot be approved or sent while the fairness judgement is
@@ -398,7 +398,7 @@ export default function HrLettersPage() {
               </Card>
               <Card>
                 <CardContent className="p-4">
-                  <div className="text-xs uppercase text-[var(--cs-text-muted)] mb-1">Aria confidence</div>
+                  <div className="text-xs uppercase text-[var(--cs-text-muted)] mb-1">ARIA confidence</div>
                   <div className="text-3xl font-semibold text-[var(--cs-navy)]">{Math.round(guardian.ariaConfidence * 100)}%</div>
                   <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">{guardian.llmUsed ? "LLM-enhanced" : "Deterministic only"}</div>
                 </CardContent>
@@ -552,7 +552,7 @@ export default function HrLettersPage() {
         <Card>
           <CardContent className="p-6 text-sm text-[var(--cs-text-secondary)]">
             <p className="font-medium text-[var(--cs-navy)] mb-1">Empty state</p>
-            <p>Pick a letter type and fill in the context. Aria generates a starting-point draft and runs it through the Process Guardian.</p>
+            <p>Pick a letter type and fill in the context. ARIA generates a starting-point draft and runs it through the Process Guardian.</p>
           </CardContent>
         </Card>
       )}

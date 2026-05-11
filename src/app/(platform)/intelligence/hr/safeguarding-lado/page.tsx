@@ -500,7 +500,7 @@ export default function SafeguardingLADOPage() {
         <div className="rounded-2xl bg-blue-50 border border-blue-200 px-4 py-3 flex items-start gap-3 text-sm text-blue-800">
           <Sparkles className="h-4 w-4 shrink-0 mt-0.5 text-blue-500" />
           <div>
-            <strong>Aria guidance.</strong> Keep the LADO updated throughout the investigation. If the investigation
+            <strong>ARIA guidance.</strong> Keep the LADO updated throughout the investigation. If the investigation
             reveals new information that changes the nature or seriousness of the allegation, reconvene the strategy
             meeting. The employer&apos;s investigation should not prejudice the police investigation.
           </div>

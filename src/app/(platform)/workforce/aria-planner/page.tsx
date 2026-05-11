@@ -55,7 +55,7 @@ export default function AriaDevPlannerPage() {
           <SmartUploadButton variant="inline" label="Upload Development Plan" uploadContext="Workforce Intelligence — staff development plan or evidence document upload" />
           <Button
             size="sm"
-            className="gap-1.5 bg-indigo-600 hover:bg-indigo-700 text-white"
+            className="gap-1.5 bg-[var(--cs-navy)] hover:bg-[var(--cs-navy)]/90 text-white"
             onClick={() => setShowAria((p) => !p)}
           >
             <Sparkles className="h-3.5 w-3.5" />
@@ -95,7 +95,7 @@ export default function AriaDevPlannerPage() {
             </p>
             <Button
               size="sm"
-              className="gap-1.5 bg-indigo-600 hover:bg-indigo-700 text-white"
+              className="gap-1.5 bg-[var(--cs-navy)] hover:bg-[var(--cs-navy)]/90 text-white"
               onClick={() => setShowAria(true)}
             >
               <Sparkles className="h-3.5 w-3.5" />
@@ -112,7 +112,7 @@ export default function AriaDevPlannerPage() {
           className={cn(
             "px-3 py-1 rounded-full text-xs font-medium border transition-all",
             selectedStaff === "all"
-              ? "bg-indigo-600 text-white border-indigo-600"
+              ? "bg-[var(--cs-navy)] text-white border-[var(--cs-navy)]"
               : "bg-white text-[var(--cs-text-secondary)] border-[var(--cs-border)] hover:border-indigo-300",
           )}
         >
@@ -125,7 +125,7 @@ export default function AriaDevPlannerPage() {
             className={cn(
               "px-3 py-1 rounded-full text-xs font-medium border transition-all",
               selectedStaff === id
-                ? "bg-indigo-600 text-white border-indigo-600"
+                ? "bg-[var(--cs-navy)] text-white border-[var(--cs-navy)]"
                 : "bg-white text-[var(--cs-text-secondary)] border-[var(--cs-border)] hover:border-indigo-300",
             )}
           >

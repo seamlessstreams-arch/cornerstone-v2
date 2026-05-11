@@ -391,7 +391,7 @@ function CreateForm({
           </div>
         </div>
 
-        {/* Convert source banner — shown when navigated from AriaQuickActions "Child-Friendly Version" */}
+        {/* Convert source banner — shown when navigated from ARIAQuickActions "Child-Friendly Version" */}
         {prefilling && (
           <div className="flex items-center gap-2 rounded-xl border border-pink-200 bg-pink-50 px-3 py-2.5 text-xs text-pink-700">
             <Loader2 className="h-3.5 w-3.5 animate-spin shrink-0" />

@@ -268,7 +268,7 @@ function VisitCard({
             <Button
               size="sm"
               onClick={() => onRespondClick(visit)}
-              className="bg-indigo-600 hover:bg-indigo-700 text-white gap-1.5 h-8 text-xs"
+              className="bg-[var(--cs-navy)] hover:bg-[var(--cs-navy)]/90 text-white gap-1.5 h-8 text-xs"
             >
               <MessageSquare className="h-3.5 w-3.5" />
               Respond

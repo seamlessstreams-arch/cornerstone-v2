@@ -211,7 +211,7 @@ export default function EvidencePortfolioPage() {
                 className={cn(
                   "px-2.5 py-1 rounded-full text-[11px] font-medium border transition-all",
                   categoryFilter === key
-                    ? "bg-indigo-600 text-white border-indigo-600"
+                    ? "bg-[var(--cs-navy)] text-white border-[var(--cs-navy)]"
                     : "bg-white text-[var(--cs-text-secondary)] border-[var(--cs-border)] hover:border-indigo-300",
                 )}
               >

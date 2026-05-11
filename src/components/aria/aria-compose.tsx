@@ -4,7 +4,7 @@
 // AriaCompose
 //
 // A reusable composer for any long-text field in Cornerstone. Pairs a
-// textarea with the Aria microphone button and an "Ask ARIA" command picker,
+// textarea with the ARIA microphone button and an "Ask ARIA" command picker,
 // then renders the suggested draft for the manager to insert, send back to
 // Aria for refinement, or discard.
 //

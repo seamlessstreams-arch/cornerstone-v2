@@ -615,7 +615,7 @@ function TemplateModal({ template, onClose }: { template: Template; onClose: () 
         <div className="flex items-center justify-between gap-3 p-4 border-t border-[var(--cs-border-subtle)]">
           <div className="flex items-center gap-2">
             <Sparkles className="h-3.5 w-3.5 text-violet-500" />
-            <span className="text-xs text-[var(--cs-text-muted)]">Aria can draft a personalised version for a specific candidate</span>
+            <span className="text-xs text-[var(--cs-text-muted)]">ARIA can draft a personalised version for a specific candidate</span>
           </div>
           <div className="flex gap-2">
             <Button variant="outline" size="sm" onClick={onClose}>Close</Button>
@@ -818,13 +818,13 @@ export default function TemplatesPage() {
           </div>
         )}
 
-        {/* Aria guidance */}
+        {/* ARIA guidance */}
         <div className="rounded-2xl border border-violet-100 bg-violet-50 p-4 flex items-start gap-3">
           <Sparkles className="h-4 w-4 text-violet-500 mt-0.5 shrink-0" />
           <div>
-            <p className="text-sm font-semibold text-violet-800">Aria can personalise any template</p>
+            <p className="text-sm font-semibold text-violet-800">ARIA can personalise any template</p>
             <p className="text-xs text-violet-600 mt-0.5">
-              Select a template, then ask Aria to draft a personalised version for a specific candidate — Aria will populate merge fields from the candidate&apos;s record and adjust the tone for the context.
+              Select a template, then ask Aria to draft a personalised version for a specific candidate — ARIA will populate merge fields from the candidate&apos;s record and adjust the tone for the context.
             </p>
           </div>
         </div>
