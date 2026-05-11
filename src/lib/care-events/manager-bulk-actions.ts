@@ -12,6 +12,7 @@
 
 import { db } from "@/lib/db/store";
 import { appendAriaAudit } from "@/lib/aria/aria-audit-trail";
+import { upsertReg45EvidenceForCareEvent } from "@/lib/aria/aria-reg45-evidence";
 import type { CareEventStatus } from "@/types/care-events";
 
 const VERIFIABLE: ReadonlySet<CareEventStatus> = new Set<CareEventStatus>([
@@ -68,6 +69,13 @@ export function verifyCareEventsBulk(
       verified_by: actorId,
       manager_notes: opts.manager_notes ?? e.manager_notes ?? null,
     });
+
+    // M32: verified care event flagged contributes_to_reg45 → distinct chip.
+    // Created here so the post-verify accept-loop below picks it up and flips
+    // it from ai_draft to accepted in the same transaction.
+    if (e.contributes_to_reg45) {
+      upsertReg45EvidenceForCareEvent(homeId, id);
+    }
 
     // Approve pending Reg 45 evidence drafted from this event
     for (const item of db.ariaReg45EvidenceItems

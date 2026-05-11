@@ -269,8 +269,78 @@ function collectKeywork(homeId: string, start: string, end: string): DraftItem[]
     }));
 }
 
-function collectFamilyTime(homeId: string, start: string, end: string): DraftItem[] {
-  const childrenForHome = new Set(
+// ── Verified Care Event direct evidence (M32) ────────────────────────────────
+//
+// When a Care Event has been verified by a manager AND was flagged as
+// `contributes_to_reg45`, the verified record itself becomes a Reg 45
+// evidence chip — distinct from any pattern/safeguarding chip that may
+// already have been derived from the same incident. The chip points back
+// to the source care event so the manager can see the full record before
+// accepting/deferring/rejecting.
+
+const REG45_THEME_BY_CATEGORY: Record<import("@/types/care-events").CareEventCategory, AriaReg45Theme> = {
+  general:               "quality_of_care",
+  behaviour:             "quality_of_care",
+  health:                "health",
+  medication:            "health",
+  education:             "education",
+  family_contact:        "contact_with_family",
+  professional_contact:  "leadership_management",
+  safeguarding:          "safeguarding",
+  missing_episode:       "safeguarding",
+  physical_intervention: "safeguarding",
+  restraint:             "safeguarding",
+  complaint:             "complaints_voice",
+  activity:              "outcomes",
+  wellbeing:             "quality_of_care",
+  sleep:                 "quality_of_care",
+  food:                  "quality_of_care",
+  finance:               "outcomes",
+  other:                 "quality_of_care",
+};
+
+const REG45_SAFEGUARDING_CATEGORIES = new Set<import("@/types/care-events").CareEventCategory>([
+  "safeguarding",
+  "missing_episode",
+  "physical_intervention",
+  "restraint",
+]);
+
+function collectVerifiedCareEvents(homeId: string, start: string, end: string): DraftItem[] {
+  return db.careEvents
+    .findCurrent()
+    .filter((e) =>
+      e.home_id === homeId
+      && e.contributes_to_reg45
+      && e.status === "verified"
+      && inPeriod((e.verified_at ?? e.event_date).slice(0, 10), start, end),
+    )
+    .map<DraftItem>((e) => {
+      const isConcern = e.is_safeguarding || REG45_SAFEGUARDING_CATEGORIES.has(e.category);
+      const severity: AriaPatternSeverity | "positive" =
+        e.is_safeguarding
+          ? "high"
+          : REG45_SAFEGUARDING_CATEGORIES.has(e.category)
+            ? "medium"
+            : e.is_significant
+              ? "medium"
+              : "low";
+      return {
+        child_id: e.child_id,
+        theme: REG45_THEME_BY_CATEGORY[e.category],
+        title: `Verified care event — ${e.title}`,
+        summary: e.content.slice(0, 300),
+        severity,
+        sentiment: isConcern ? "concern" : "neutral",
+        source_type: "management_oversight",
+        source_table: "care_events",
+        source_id: e.id,
+        occurred_at: (e.verified_at ?? e.event_date).slice(0, 10),
+      };
+    });
+}
+
+function collectFamilyTime(homeId: string, start: string, end: string): DraftItem[] {  const childrenForHome = new Set(
     db.youngPeople.findAll().filter((y) => y.home_id === homeId).map((y) => y.id),
   );
   return db.familyTimeSessions
@@ -412,6 +482,7 @@ export function runReg45EvidenceBuild(homeId: string, options: RunOptions = {}):
     ...collectComplaints(homeId, periodStart, periodEnd),
     ...collectKeywork(homeId, periodStart, periodEnd),
     ...collectFamilyTime(homeId, periodStart, periodEnd),
+    ...collectVerifiedCareEvents(homeId, periodStart, periodEnd),
   ];
 
   for (const d of drafts) {
@@ -438,4 +509,29 @@ export function loadReg45Evidence(
     .filter((e) => e.period_start === periodStart && e.period_end === periodEnd);
 
   return buildSnapshot(homeId, periodStart, periodEnd, items);
+}
+
+// ── Direct bridge: verified care event → Reg 45 evidence chip (M32) ──────────
+//
+// Called from manager bulk-verify so a verified Care Event flagged as
+// `contributes_to_reg45` immediately appears as its own chip in the Reg 45
+// evidence bank, separate from any pattern/safeguarding chip already derived
+// from the same incident. Returns the upserted item, or null if the event
+// is not eligible (missing, wrong home, not contributing, not yet verified).
+export function upsertReg45EvidenceForCareEvent(
+  homeId: string,
+  careEventId: string,
+): AriaReg45EvidenceItem | null {
+  const e = db.careEvents.findById(careEventId);
+  if (!e) return null;
+  if (e.home_id !== homeId) return null;
+  if (!e.contributes_to_reg45) return null;
+  if (e.status !== "verified") return null;
+
+  const drafts = collectVerifiedCareEvents(homeId, "0000-01-01", "9999-12-31")
+    .filter((d) => d.source_id === careEventId);
+  if (drafts.length === 0) return null;
+
+  const { start, end } = defaultPeriod();
+  return upsertEvidenceItem(homeId, drafts[0], start, end);
 }
