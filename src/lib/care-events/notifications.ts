@@ -26,6 +26,7 @@ import { loadReturnedRecordsQueue } from "@/lib/care-events/returned-records";
 import { loadAmendmentReviewQueue } from "@/lib/care-events/amendment-review";
 import { loadRoutingHealth } from "@/lib/care-events/routing-health";
 import { detectExportAbuse } from "@/lib/care-events/export-abuse";
+import { detectTrajectoryAlerts } from "@/lib/care-events/inspection-trajectory";
 
 export type NotificationSeverity = "info" | "warning" | "critical";
 export type NotificationAudience = "manager" | "staff";
@@ -36,7 +37,8 @@ export type NotificationSource =
   | "manager_review_required"
   | "routing_failure"
   | "sensitive_export"
-  | "export_abuse";
+  | "export_abuse"
+  | "trajectory_alert";
 
 export interface NotificationItem {
   id: string;                     // source:source_id
@@ -249,6 +251,29 @@ export function loadNotifications(homeId: string): NotificationStream {
       body: flag.message,
       created_at: flag.detected_at,
       link_href: `/intelligence/care-events/export-risk`,
+    });
+  }
+
+  // ── Trajectory alerts (M46) ───────────────────────────────────────
+  //
+  // Promotes regressing trajectory, latest-bundle severity flips, and large
+  // single-step drops in readiness into managers' notification stream so
+  // trajectory signals reach the queue without managers having to open the
+  // Readiness Trajectory page.
+  for (const alert of detectTrajectoryAlerts(homeId)) {
+    built.push({
+      id: `trajectory_alert:${alert.id}`,
+      source: "trajectory_alert",
+      source_id: alert.id,
+      home_id: alert.home_id,
+      child_id: null,
+      audience: "manager",
+      target_staff_id: null,
+      severity: alert.severity,
+      title: `Readiness trajectory: ${alert.kind.replace(/_/g, " ")}`,
+      body: alert.message,
+      created_at: alert.detected_at,
+      link_href: `/intelligence/care-events/inspection-bundle/trajectory`,
     });
   }
 

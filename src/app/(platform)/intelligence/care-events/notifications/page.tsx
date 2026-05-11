@@ -48,6 +48,7 @@ const SOURCE_LABEL: Record<NotificationSource, string> = {
   routing_failure:         "Routing failure",
   sensitive_export:        "Sensitive export",
   export_abuse:            "Export risk",
+  trajectory_alert:        "Readiness trajectory",
 };
 
 const AUDIENCE_LABEL: Record<NotificationAudience, string> = {

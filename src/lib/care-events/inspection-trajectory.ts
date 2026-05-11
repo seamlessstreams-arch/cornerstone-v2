@@ -108,3 +108,73 @@ export function loadInspectionTrajectory(homeId: string): TrajectorySummary {
     points,
   };
 }
+
+// ── Trajectory alerts (M46) ───────────────────────────────────────────────────
+//
+// Derives manager-facing alert flags from the trajectory so a notification
+// surfaces automatically when readiness regresses, severity flips on the
+// latest bundle, or a single-step drop is large. Read-only.
+
+export type TrajectoryAlertKind =
+  | "regressing"
+  | "severity_flip_latest"
+  | "large_step_drop";
+
+export type TrajectoryAlertSeverity = "warning" | "critical";
+
+export interface TrajectoryAlert {
+  id: string;                       // deterministic; safe for notification dedup
+  home_id: string;
+  kind: TrajectoryAlertKind;
+  severity: TrajectoryAlertSeverity;
+  message: string;
+  detected_at: string;              // latest point's generated_at
+  bundle_id: string;                // latest point's bundle id
+}
+
+export const LARGE_STEP_DROP_THRESHOLD = 10;
+
+export function detectTrajectoryAlerts(homeId: string): TrajectoryAlert[] {
+  const t = loadInspectionTrajectory(homeId);
+  if (t.points.length === 0) return [];
+  const latest = t.points[t.points.length - 1];
+  const out: TrajectoryAlert[] = [];
+
+  if (t.direction === "regressing") {
+    out.push({
+      id: `traj_regressing_${homeId}_${latest.bundle_id}`,
+      home_id: homeId,
+      kind: "regressing",
+      severity: "critical",
+      message: `Readiness has regressed by ${Math.abs(t.net_score_delta ?? 0)} across ${t.bundles_total} bundles (now ${t.latest_score}).`,
+      detected_at: latest.generated_at,
+      bundle_id: latest.bundle_id,
+    });
+  }
+
+  if (latest.severity_changed) {
+    out.push({
+      id: `traj_sevflip_${homeId}_${latest.bundle_id}`,
+      home_id: homeId,
+      kind: "severity_flip_latest",
+      severity: "warning",
+      message: `Latest bundle severity changed to "${latest.readiness_severity}".`,
+      detected_at: latest.generated_at,
+      bundle_id: latest.bundle_id,
+    });
+  }
+
+  if (latest.delta_readiness_score <= -LARGE_STEP_DROP_THRESHOLD) {
+    out.push({
+      id: `traj_largedrop_${homeId}_${latest.bundle_id}`,
+      home_id: homeId,
+      kind: "large_step_drop",
+      severity: "critical",
+      message: `Readiness dropped by ${Math.abs(latest.delta_readiness_score)} since the previous bundle.`,
+      detected_at: latest.generated_at,
+      bundle_id: latest.bundle_id,
+    });
+  }
+
+  return out;
+}
