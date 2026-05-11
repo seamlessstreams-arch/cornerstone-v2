@@ -381,6 +381,300 @@ export const reg45Evidence: IntelligenceReg45EvidenceRow[] = [
   { id: "e10", home_id: "home_oak", category: "Complaints & Compliments", count: 5, examples: ["1 complaint resolved", "4 compliments received"] },
 ];
 
+// ─── Incident Learning Reviews ───────────────────────────────────────────────
+
+export interface IntelligenceLearningReviewRow {
+  id: string;
+  home_id: string;
+  child_id: string;
+  incident_id: string;
+  incident_date: string;
+  incident_title: string;
+  incident_category: string;
+  severity: string; // low | medium | high | critical
+  summary: string;
+  staff_involved: string[];
+  review_status: string; // required | in_progress | completed
+  manager_notes: string;
+  learning_summary: string;
+  trigger_analysis: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export const incidentLearningReviews: IntelligenceLearningReviewRow[] = [
+  {
+    id: "inc-1",
+    home_id: "home_oak",
+    child_id: "Child A",
+    incident_id: "inc-1",
+    incident_date: "2026-05-04",
+    incident_title: "Physical intervention during peer conflict",
+    incident_category: "Physical Intervention",
+    severity: "high",
+    summary:
+      "Staff intervened using Team Teach holds after Child A attempted to assault Child B in the lounge. De-escalation attempted for 8 minutes prior. Hold lasted 3 minutes. Child calmed and went to quiet room.",
+    staff_involved: ["James Cooper", "Sarah Mitchell"],
+    review_status: "required",
+    manager_notes: "",
+    learning_summary: "",
+    trigger_analysis: null,
+    created_at: "2026-05-04",
+    updated_at: "2026-05-04",
+  },
+  {
+    id: "inc-2",
+    home_id: "home_oak",
+    child_id: "Child B",
+    incident_id: "inc-2",
+    incident_date: "2026-05-03",
+    incident_title: "Absent without permission - 45 minutes",
+    incident_category: "Missing Episode",
+    severity: "medium",
+    summary:
+      "Child B left the home without informing staff at 19:30. Located at local park by staff at 20:15. Returned willingly. No safeguarding concerns identified.",
+    staff_involved: ["Tom Richards"],
+    review_status: "in_progress",
+    manager_notes:
+      "Need to review whether boundary agreements are clear enough. Check if there is a pattern around evening times.",
+    learning_summary: "",
+    trigger_analysis: null,
+    created_at: "2026-05-03",
+    updated_at: "2026-05-03",
+  },
+  {
+    id: "inc-3",
+    home_id: "home_oak",
+    child_id: "Child A",
+    incident_id: "inc-3",
+    incident_date: "2026-05-01",
+    incident_title: "Property damage - bedroom door",
+    incident_category: "Property Damage",
+    severity: "medium",
+    summary:
+      "Child A kicked bedroom door causing damage to frame. Triggered by being asked to turn off gaming console at agreed bedtime. No injury. Child apologised next morning.",
+    staff_involved: ["Sarah Mitchell"],
+    review_status: "required",
+    manager_notes: "",
+    learning_summary: "",
+    trigger_analysis: null,
+    created_at: "2026-05-01",
+    updated_at: "2026-05-01",
+  },
+  {
+    id: "inc-4",
+    home_id: "home_oak",
+    child_id: "Child C",
+    incident_id: "inc-4",
+    incident_date: "2026-04-28",
+    incident_title: "Verbal aggression towards staff",
+    incident_category: "Verbal Aggression",
+    severity: "low",
+    summary:
+      "Child C became verbally aggressive during homework time, using threatening language towards staff. Staff maintained calm approach. Child de-escalated within 10 minutes and completed work.",
+    staff_involved: ["James Cooper"],
+    review_status: "completed",
+    manager_notes:
+      "Discussed with James. His calm response was excellent. Child struggles with transitions — consider visual timer for homework sessions.",
+    learning_summary:
+      "Visual timers to be trialled for homework transitions. Staff response was proportionate and effective. No concerns raised.",
+    trigger_analysis: null,
+    created_at: "2026-04-28",
+    updated_at: "2026-04-28",
+  },
+  {
+    id: "inc-5",
+    home_id: "home_oak",
+    child_id: "Child B",
+    incident_id: "inc-5",
+    incident_date: "2026-04-25",
+    incident_title: "Self-harm disclosure during key work",
+    incident_category: "Safeguarding",
+    severity: "critical",
+    summary:
+      "During key work session, Child B disclosed historical self-harm. No current marks observed. Child stated they feel safer now. CAMHS referral discussed and agreed.",
+    staff_involved: ["Sarah Mitchell", "Tom Richards"],
+    review_status: "in_progress",
+    manager_notes:
+      "CAMHS referral made same day. Placement plan updated. Supervision scheduled with Sarah to debrief.",
+    learning_summary: "",
+    trigger_analysis: null,
+    created_at: "2026-04-25",
+    updated_at: "2026-04-25",
+  },
+];
+
+// ─── Voice of the Child entries ──────────────────────────────────────────────
+
+export interface IntelligenceVoiceEntryRow {
+  id: string;
+  home_id: string;
+  child_id: string;
+  entry_date: string;
+  category: string;
+  child_words: string;
+  summary: string;
+  action_taken: string;
+  staff_response: string;
+  created_by: string; // staff member name
+  linked_record_id: string | null;
+  linked_record_type: string | null;
+  created_at: string;
+}
+
+export const voiceEntries: IntelligenceVoiceEntryRow[] = [
+  {
+    id: "v1",
+    home_id: "home_oak",
+    child_id: "child-a",
+    entry_date: "2026-05-04",
+    category: "wishes_and_feelings",
+    child_words: "I want to see my nan more. She always makes me feel calm and I miss her Sunday dinners.",
+    summary: "Child expressed wish for increased contact with maternal grandmother.",
+    action_taken: "Contact schedule reviewed. Additional fortnightly face-to-face visit arranged alongside weekly video calls.",
+    staff_response: "We hear you. We have arranged an extra visit with your nan every two weeks. Would you like to help plan what you do together?",
+    created_by: "Sarah Mitchell",
+    linked_record_id: "Placement Plan - Family Time section",
+    linked_record_type: "placement_plan",
+    created_at: "2026-05-04",
+  },
+  {
+    id: "v2",
+    home_id: "home_oak",
+    child_id: "child-a",
+    entry_date: "2026-05-02",
+    category: "food",
+    child_words: "The food has been really good this week. I loved the pasta bake on Tuesday.",
+    summary: "Positive feedback about meals this week.",
+    action_taken: "Recipe added to regular rotation. Child invited to help cook next week.",
+    staff_response: "That is great to hear! We will make sure we have pasta bake regularly. Would you like to help make it next Tuesday?",
+    created_by: "Tom Richards",
+    linked_record_id: null,
+    linked_record_type: null,
+    created_at: "2026-05-02",
+  },
+  {
+    id: "v3",
+    home_id: "home_oak",
+    child_id: "child-a",
+    entry_date: "2026-04-30",
+    category: "safety",
+    child_words: "I feel safe here now. I did not feel safe at my last place but here the staff actually listen.",
+    summary: "Child expressed feeling safe at current placement. Positive comparison to previous placement.",
+    action_taken: "Recorded as positive outcome. Shared with social worker (with consent). Discussed what makes them feel safe to inform practice.",
+    staff_response: "We are so glad you feel safe here. That is really important to us. We will always listen to you.",
+    created_by: "Sarah Mitchell",
+    linked_record_id: "LAC Review - Safety & Wellbeing",
+    linked_record_type: "lac_review",
+    created_at: "2026-04-30",
+  },
+  {
+    id: "v4",
+    home_id: "home_oak",
+    child_id: "child-a",
+    entry_date: "2026-04-27",
+    category: "activity",
+    child_words: "Can we go swimming more? I used to go with my dad and it makes me feel happy.",
+    summary: "Request for more swimming. Connection to positive memories with father.",
+    action_taken: "Weekly swimming session arranged at local pool. Exploring whether father contact could include swimming as shared activity.",
+    staff_response: "We would love to take you swimming more. How about every Saturday morning? We are also talking to your social worker about whether your dad could take you sometimes.",
+    created_by: "James Cooper",
+    linked_record_id: "Activity Plan",
+    linked_record_type: "activity_plan",
+    created_at: "2026-04-27",
+  },
+  {
+    id: "v5",
+    home_id: "home_oak",
+    child_id: "child-a",
+    entry_date: "2026-04-25",
+    category: "complaint",
+    child_words: "I do not like being told to go to bed so early. None of my friends have to be in bed by nine.",
+    summary: "Complaint about bedtime. Child feels it is too early compared to peers.",
+    action_taken: "Bedtime reviewed in consultation with child. Agreed 9:30pm on school nights, 10pm on weekends. Reading time in room from 9pm.",
+    staff_response: "We have heard your views and we have adjusted your bedtime. You can read in your room from 9pm and lights out at 9:30 on school nights.",
+    created_by: "Sarah Mitchell",
+    linked_record_id: "House Rules Review",
+    linked_record_type: "house_rules",
+    created_at: "2026-04-25",
+  },
+  {
+    id: "v6",
+    home_id: "home_oak",
+    child_id: "child-a",
+    entry_date: "2026-04-22",
+    category: "relationship_with_staff",
+    child_words: "James is really sound. He does not talk to me like I am a little kid. He actually gets it.",
+    summary: "Positive feedback about relationship with staff member James.",
+    action_taken: "Shared with James (with consent). Noted in supervision. Highlights importance of age-appropriate communication.",
+    staff_response: "James will be pleased to hear that. It is important to us that you feel respected and understood.",
+    created_by: "Sarah Mitchell",
+    linked_record_id: null,
+    linked_record_type: null,
+    created_at: "2026-04-22",
+  },
+  {
+    id: "v7",
+    home_id: "home_oak",
+    child_id: "child-a",
+    entry_date: "2026-04-19",
+    category: "bedroom",
+    child_words: "Can I get some new posters for my room? I want to make it feel more like mine.",
+    summary: "Request to personalise bedroom space.",
+    action_taken: "Budget of twenty pounds allocated from personalisation fund. Shopping trip planned for weekend.",
+    staff_response: "Absolutely! Your room should feel like yours. We have some money set aside for exactly this. Shall we go shopping on Saturday?",
+    created_by: "Tom Richards",
+    linked_record_id: null,
+    linked_record_type: null,
+    created_at: "2026-04-19",
+  },
+  {
+    id: "v8",
+    home_id: "home_oak",
+    child_id: "child-a",
+    entry_date: "2026-04-16",
+    category: "education",
+    child_words: "School is getting better. My new tutor actually explains things properly and does not shout.",
+    summary: "Positive feedback about educational progress and tutor relationship.",
+    action_taken: "Positive update shared with Virtual School. Tutor arrangement confirmed as ongoing.",
+    staff_response: "That is brilliant news. We are really proud of how hard you have been working. Keep it up.",
+    created_by: "James Cooper",
+    linked_record_id: "PEP - Education Progress",
+    linked_record_type: "pep",
+    created_at: "2026-04-16",
+  },
+  {
+    id: "v9",
+    home_id: "home_oak",
+    child_id: "child-a",
+    entry_date: "2026-04-12",
+    category: "house_meeting",
+    child_words: "I think we should have a movie night every Friday. Everyone in the house would like it.",
+    summary: "Suggestion for weekly house activity raised at house meeting.",
+    action_taken: "Voted on at house meeting - all young people agreed. Friday Movie Night added to weekly schedule from following week.",
+    staff_response: "Great idea! Everyone voted yes so Friday Movie Night starts this week. You can take turns choosing the film.",
+    created_by: "Sarah Mitchell",
+    linked_record_id: null,
+    linked_record_type: null,
+    created_at: "2026-04-12",
+  },
+  {
+    id: "v10",
+    home_id: "home_oak",
+    child_id: "child-a",
+    entry_date: "2026-04-08",
+    category: "general_wellbeing",
+    child_words: "I am feeling a lot better than when I first came here. Things are not perfect but they are getting better.",
+    summary: "Reflective statement about overall progress and wellbeing improvement.",
+    action_taken: "Recorded as significant positive self-reflection. Discussed in key work what has helped. Shared at LAC review.",
+    staff_response: "It takes courage to say that. You have worked really hard and we can see how far you have come. We are here for whatever comes next.",
+    created_by: "Sarah Mitchell",
+    linked_record_id: "Key Work Session - April",
+    linked_record_type: "key_work",
+    created_at: "2026-04-08",
+  },
+];
+
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 let idCounter = 1000;
 export function nextFallbackId(prefix: string): string {

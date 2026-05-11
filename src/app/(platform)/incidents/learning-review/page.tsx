@@ -75,73 +75,6 @@ const STATUS_META: Record<ReviewStatus, { label: string; color: string; icon: Re
 
 // ── Demo Data ────────────────────────────────────────────────────────────────
 
-const DEMO_INCIDENTS: Incident[] = [
-  {
-    id: "inc-1",
-    date: "2026-05-04",
-    title: "Physical intervention during peer conflict",
-    child: "Child A",
-    category: "Physical Intervention",
-    severity: "high",
-    summary: "Staff intervened using Team Teach holds after Child A attempted to assault Child B in the lounge. De-escalation attempted for 8 minutes prior. Hold lasted 3 minutes. Child calmed and went to quiet room.",
-    staffInvolved: ["James Cooper", "Sarah Mitchell"],
-    reviewStatus: "required",
-    managerNotes: "",
-    learningSummary: "",
-  },
-  {
-    id: "inc-2",
-    date: "2026-05-03",
-    title: "Absent without permission - 45 minutes",
-    child: "Child B",
-    category: "Missing Episode",
-    severity: "medium",
-    summary: "Child B left the home without informing staff at 19:30. Located at local park by staff at 20:15. Returned willingly. No safeguarding concerns identified.",
-    staffInvolved: ["Tom Richards"],
-    reviewStatus: "in_progress",
-    managerNotes: "Need to review whether boundary agreements are clear enough. Check if there is a pattern around evening times.",
-    learningSummary: "",
-  },
-  {
-    id: "inc-3",
-    date: "2026-05-01",
-    title: "Property damage - bedroom door",
-    child: "Child A",
-    category: "Property Damage",
-    severity: "medium",
-    summary: "Child A kicked bedroom door causing damage to frame. Triggered by being asked to turn off gaming console at agreed bedtime. No injury. Child apologised next morning.",
-    staffInvolved: ["Sarah Mitchell"],
-    reviewStatus: "required",
-    managerNotes: "",
-    learningSummary: "",
-  },
-  {
-    id: "inc-4",
-    date: "2026-04-28",
-    title: "Verbal aggression towards staff",
-    child: "Child C",
-    category: "Verbal Aggression",
-    severity: "low",
-    summary: "Child C became verbally aggressive during homework time, using threatening language towards staff. Staff maintained calm approach. Child de-escalated within 10 minutes and completed work.",
-    staffInvolved: ["James Cooper"],
-    reviewStatus: "completed",
-    managerNotes: "Discussed with James. His calm response was excellent. Child struggles with transitions — consider visual timer for homework sessions.",
-    learningSummary: "Visual timers to be trialled for homework transitions. Staff response was proportionate and effective. No concerns raised.",
-  },
-  {
-    id: "inc-5",
-    date: "2026-04-25",
-    title: "Self-harm disclosure during key work",
-    child: "Child B",
-    category: "Safeguarding",
-    severity: "critical",
-    summary: "During key work session, Child B disclosed historical self-harm. No current marks observed. Child stated they feel safer now. CAMHS referral discussed and agreed.",
-    staffInvolved: ["Sarah Mitchell", "Tom Richards"],
-    reviewStatus: "in_progress",
-    managerNotes: "CAMHS referral made same day. Placement plan updated. Supervision scheduled with Sarah to debrief.",
-    learningSummary: "",
-  },
-];
 
 const DEFAULT_PROMPTS: ReviewPrompt[] = [
   { id: "risk", label: "Risk assessment needs updating?", checked: false },
@@ -159,25 +92,25 @@ const DEFAULT_PROMPTS: ReviewPrompt[] = [
 export default function IncidentLearningReviewPage() {
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [prompts, setPrompts] = useState<Record<string, ReviewPrompt[]>>({});
-  const [incidents, setIncidents] = useState<Incident[]>(DEMO_INCIDENTS);
+  const [incidents, setIncidents] = useState<Incident[]>([]);
 
-  /* ── API hook (soft-wire for live data) ─────────────────────────────────── */
+  /* ── API hook (live data via intelligence-layer fallback store) ─────────── */
   const { data: apiData } = useLearningReviews();
   const updateReview = useUpdateLearningReview();
 
   useEffect(() => {
-    if (apiData?.persisted && apiData.reviews.length > 0) {
+    if (apiData?.persisted && Array.isArray(apiData.reviews)) {
       setIncidents((apiData.reviews as Record<string, unknown>[]).map((row) => ({
         id: row.id as string,
-        date: (row.created_at as string) ?? "",
-        title: (row.incident_id as string) ?? "",
+        date: ((row.incident_date as string) ?? (row.created_at as string)) ?? "",
+        title: ((row.incident_title as string) ?? (row.incident_id as string)) ?? "",
         child: (row.child_id as string) ?? "",
-        category: "",
-        severity: "medium" as const,
-        summary: (row.trigger_analysis as string) ?? "",
-        staffInvolved: [],
+        category: (row.incident_category as string) ?? "",
+        severity: ((row.severity as Incident["severity"]) ?? "medium"),
+        summary: ((row.summary as string) ?? (row.trigger_analysis as string)) ?? "",
+        staffInvolved: (row.staff_involved as string[]) ?? [],
         reviewStatus: (row.review_status as ReviewStatus) ?? "required",
-        managerNotes: (row.learning_summary as string) ?? "",
+        managerNotes: (row.manager_notes as string) ?? "",
         learningSummary: (row.learning_summary as string) ?? "",
       })));
     }

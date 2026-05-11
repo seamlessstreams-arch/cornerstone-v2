@@ -106,114 +106,6 @@ const CHILDREN = [
 
 // ── Demo Data ────────────────────────────────────────────────────────────────
 
-const DEMO_ENTRIES: VoiceEntry[] = [
-  {
-    id: "v1",
-    date: "2026-05-04",
-    category: "wishes_and_feelings",
-    childWords: "I want to see my nan more. She always makes me feel calm and I miss her Sunday dinners.",
-    summary: "Child expressed wish for increased contact with maternal grandmother.",
-    actionTaken: "Contact schedule reviewed. Additional fortnightly face-to-face visit arranged alongside weekly video calls.",
-    staffResponse: "We hear you. We have arranged an extra visit with your nan every two weeks. Would you like to help plan what you do together?",
-    staffMember: "Sarah Mitchell",
-    linkedRecord: "Placement Plan - Family Time section",
-  },
-  {
-    id: "v2",
-    date: "2026-05-02",
-    category: "food",
-    childWords: "The food has been really good this week. I loved the pasta bake on Tuesday.",
-    summary: "Positive feedback about meals this week.",
-    actionTaken: "Recipe added to regular rotation. Child invited to help cook next week.",
-    staffResponse: "That is great to hear! We will make sure we have pasta bake regularly. Would you like to help make it next Tuesday?",
-    staffMember: "Tom Richards",
-  },
-  {
-    id: "v3",
-    date: "2026-04-30",
-    category: "safety",
-    childWords: "I feel safe here now. I did not feel safe at my last place but here the staff actually listen.",
-    summary: "Child expressed feeling safe at current placement. Positive comparison to previous placement.",
-    actionTaken: "Recorded as positive outcome. Shared with social worker (with consent). Discussed what makes them feel safe to inform practice.",
-    staffResponse: "We are so glad you feel safe here. That is really important to us. We will always listen to you.",
-    staffMember: "Sarah Mitchell",
-    linkedRecord: "LAC Review - Safety & Wellbeing",
-  },
-  {
-    id: "v4",
-    date: "2026-04-27",
-    category: "activity",
-    childWords: "Can we go swimming more? I used to go with my dad and it makes me feel happy.",
-    summary: "Request for more swimming. Connection to positive memories with father.",
-    actionTaken: "Weekly swimming session arranged at local pool. Exploring whether father contact could include swimming as shared activity.",
-    staffResponse: "We would love to take you swimming more. How about every Saturday morning? We are also talking to your social worker about whether your dad could take you sometimes.",
-    staffMember: "James Cooper",
-    linkedRecord: "Activity Plan",
-  },
-  {
-    id: "v5",
-    date: "2026-04-25",
-    category: "complaint",
-    childWords: "I do not like being told to go to bed so early. None of my friends have to be in bed by nine.",
-    summary: "Complaint about bedtime. Child feels it is too early compared to peers.",
-    actionTaken: "Bedtime reviewed in consultation with child. Agreed 9:30pm on school nights, 10pm on weekends. Reading time in room from 9pm.",
-    staffResponse: "We have heard your views and we have adjusted your bedtime. You can read in your room from 9pm and lights out at 9:30 on school nights.",
-    staffMember: "Sarah Mitchell",
-    linkedRecord: "House Rules Review",
-  },
-  {
-    id: "v6",
-    date: "2026-04-22",
-    category: "relationship_with_staff",
-    childWords: "James is really sound. He does not talk to me like I am a little kid. He actually gets it.",
-    summary: "Positive feedback about relationship with staff member James.",
-    actionTaken: "Shared with James (with consent). Noted in supervision. Highlights importance of age-appropriate communication.",
-    staffResponse: "James will be pleased to hear that. It is important to us that you feel respected and understood.",
-    staffMember: "Sarah Mitchell",
-  },
-  {
-    id: "v7",
-    date: "2026-04-19",
-    category: "bedroom",
-    childWords: "Can I get some new posters for my room? I want to make it feel more like mine.",
-    summary: "Request to personalise bedroom space.",
-    actionTaken: "Budget of twenty pounds allocated from personalisation fund. Shopping trip planned for weekend.",
-    staffResponse: "Absolutely! Your room should feel like yours. We have some money set aside for exactly this. Shall we go shopping on Saturday?",
-    staffMember: "Tom Richards",
-  },
-  {
-    id: "v8",
-    date: "2026-04-16",
-    category: "education",
-    childWords: "School is getting better. My new tutor actually explains things properly and does not shout.",
-    summary: "Positive feedback about educational progress and tutor relationship.",
-    actionTaken: "Positive update shared with Virtual School. Tutor arrangement confirmed as ongoing.",
-    staffResponse: "That is brilliant news. We are really proud of how hard you have been working. Keep it up.",
-    staffMember: "James Cooper",
-    linkedRecord: "PEP - Education Progress",
-  },
-  {
-    id: "v9",
-    date: "2026-04-12",
-    category: "house_meeting",
-    childWords: "I think we should have a movie night every Friday. Everyone in the house would like it.",
-    summary: "Suggestion for weekly house activity raised at house meeting.",
-    actionTaken: "Voted on at house meeting - all young people agreed. Friday Movie Night added to weekly schedule from following week.",
-    staffResponse: "Great idea! Everyone voted yes so Friday Movie Night starts this week. You can take turns choosing the film.",
-    staffMember: "Sarah Mitchell",
-  },
-  {
-    id: "v10",
-    date: "2026-04-08",
-    category: "general_wellbeing",
-    childWords: "I am feeling a lot better than when I first came here. Things are not perfect but they are getting better.",
-    summary: "Reflective statement about overall progress and wellbeing improvement.",
-    actionTaken: "Recorded as significant positive self-reflection. Discussed in key work what has helped. Shared at LAC review.",
-    staffResponse: "It takes courage to say that. You have worked really hard and we can see how far you have come. We are here for whatever comes next.",
-    staffMember: "Sarah Mitchell",
-    linkedRecord: "Key Work Session - April",
-  },
-];
 
 const DEMO_THEMES: ThemeCount[] = [
   { category: "wishes_and_feelings", count: 8 },
@@ -244,7 +136,7 @@ const DEMO_OUTCOMES: OutcomeFromVoice[] = [
 export default function VoiceOfTheChildPage() {
   const [selectedChild, setSelectedChild] = useState("child-a");
   const [showAddForm, setShowAddForm] = useState(false);
-  const [entries, setEntries] = useState<VoiceEntry[]>(DEMO_ENTRIES);
+  const [entries, setEntries] = useState<VoiceEntry[]>([]);
   const [themes, setThemes] = useState<ThemeCount[]>(DEMO_THEMES);
   const [outcomes, setOutcomes] = useState<OutcomeFromVoice[]>(DEMO_OUTCOMES);
 
@@ -260,7 +152,7 @@ export default function VoiceOfTheChildPage() {
   const createEntry = useCreateVoiceEntry();
 
   useEffect(() => {
-    if (apiData?.persisted && apiData.entries.length > 0) {
+    if (apiData?.persisted && Array.isArray(apiData.entries)) {
       setEntries((apiData.entries as Record<string, unknown>[]).map((e) => ({
         id: e.id as string,
         date: (e.entry_date as string) ?? "",
