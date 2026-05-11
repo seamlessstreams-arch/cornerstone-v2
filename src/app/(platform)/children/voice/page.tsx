@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useVoiceEntries, useCreateVoiceEntry } from "@/hooks/use-intelligence-layer";
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { PageShell } from "@/components/layout/page-shell";
@@ -104,32 +104,6 @@ const CHILDREN = [
   { id: "child-c", name: "Child C" },
 ];
 
-// ── Demo Data ────────────────────────────────────────────────────────────────
-
-
-const DEMO_THEMES: ThemeCount[] = [
-  { category: "wishes_and_feelings", count: 8 },
-  { category: "food", count: 6 },
-  { category: "activity", count: 5 },
-  { category: "safety", count: 4 },
-  { category: "relationship_with_staff", count: 4 },
-  { category: "education", count: 3 },
-  { category: "bedroom", count: 3 },
-  { category: "complaint", count: 2 },
-  { category: "general_wellbeing", count: 2 },
-  { category: "house_meeting", count: 2 },
-  { category: "family_time", count: 1 },
-  { category: "compliment", count: 1 },
-  { category: "health", count: 1 },
-];
-
-const DEMO_OUTCOMES: OutcomeFromVoice[] = [
-  { id: "o1", voiceEntryId: "v1", whatChanged: "Additional fortnightly grandmother visits arranged. Child reported feeling much happier after first extra visit.", date: "2026-05-01" },
-  { id: "o2", voiceEntryId: "v5", whatChanged: "Bedtime adjusted from 9pm to 9:30pm. No increase in tiredness at school. Child stopped challenging boundary.", date: "2026-04-28" },
-  { id: "o3", voiceEntryId: "v4", whatChanged: "Weekly swimming now established. Father agreed to join one session per month as part of contact plan.", date: "2026-04-30" },
-  { id: "o4", voiceEntryId: "v9", whatChanged: "Friday Movie Night running for 3 weeks. House atmosphere noticeably more positive on Friday evenings.", date: "2026-05-02" },
-  { id: "o5", voiceEntryId: "v7", whatChanged: "Bedroom personalised with posters and fairy lights. Child showing more pride in their space and keeping it tidier.", date: "2026-04-22" },
-];
 
 // ── Component ────────────────────────────────────────────────────────────────
 
@@ -137,8 +111,26 @@ export default function VoiceOfTheChildPage() {
   const [selectedChild, setSelectedChild] = useState("child-a");
   const [showAddForm, setShowAddForm] = useState(false);
   const [entries, setEntries] = useState<VoiceEntry[]>([]);
-  const [themes, setThemes] = useState<ThemeCount[]>(DEMO_THEMES);
-  const [outcomes, setOutcomes] = useState<OutcomeFromVoice[]>(DEMO_OUTCOMES);
+
+  const themes = useMemo<ThemeCount[]>(() => {
+    const counts = new Map<VoiceCategory, number>();
+    for (const e of entries) counts.set(e.category, (counts.get(e.category) ?? 0) + 1);
+    return Array.from(counts.entries())
+      .map(([category, count]) => ({ category, count }))
+      .sort((a, b) => b.count - a.count);
+  }, [entries]);
+
+  const outcomes = useMemo<OutcomeFromVoice[]>(() => {
+    return entries
+      .filter((e) => e.actionTaken && e.actionTaken.trim().length > 0)
+      .map((e) => ({
+        id: `o_${e.id}`,
+        voiceEntryId: e.id,
+        whatChanged: e.actionTaken,
+        date: e.date,
+      }))
+      .sort((a, b) => b.date.localeCompare(a.date));
+  }, [entries]);
 
   const [newCategory, setNewCategory] = useState<VoiceCategory>("wishes_and_feelings");
   const [newDate, setNewDate] = useState("2026-05-05");
