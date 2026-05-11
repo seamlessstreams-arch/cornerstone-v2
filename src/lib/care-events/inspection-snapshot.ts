@@ -22,6 +22,7 @@ import { loadReturnedRecordsQueue, type ReturnedRecordsSummary } from "./returne
 import { loadNotifications, type NotificationStream } from "./notifications";
 import { loadSavedTimeDashboard, type SavedTimeDashboard } from "./saved-time-dashboard";
 import { db } from "@/lib/db/store";
+import type { PersistedInspectionSnapshot } from "@/lib/db/store";
 
 export interface InspectionSnapshotHeadline {
   readiness_score: number;
@@ -149,3 +150,45 @@ export function generateInspectionSnapshot(
     saved_time,
   };
 }
+
+// ── Persistence (M31) ────────────────────────────────────────────────────────
+//
+// Snapshots are immutable evidence. Once persisted they are never modified.
+// The id is deterministic per home + generated_at so re-saving the same
+// snapshot is a no-op. Read APIs surface them in newest-first order.
+
+export interface PersistedSnapshotRow {
+  id: string;
+  home_id: string;
+  generated_at: string;
+  generated_by: string | null;
+  schema_version: number;
+  readiness_score: number;
+  readiness_severity: string;
+}
+
+export function persistInspectionSnapshot(snap: InspectionSnapshot): PersistedInspectionSnapshot {
+  const row: PersistedInspectionSnapshot = {
+    id: snap.id,
+    home_id: snap.home_id,
+    generated_at: snap.generated_at,
+    generated_by: snap.generated_by,
+    schema_version: snap.schema_version,
+    readiness_score: snap.headline.readiness_score,
+    readiness_severity: snap.headline.readiness_severity,
+    payload: snap,
+  };
+  return db.inspectionSnapshots.create(row);
+}
+
+export function listPersistedSnapshots(homeId: string): PersistedSnapshotRow[] {
+  return db.inspectionSnapshots
+    .findAll(homeId)
+    .map(({ payload: _payload, ...row }) => row)
+    .sort((a, b) => b.generated_at.localeCompare(a.generated_at));
+}
+
+export function getPersistedSnapshot(id: string): PersistedInspectionSnapshot | null {
+  return db.inspectionSnapshots.findById(id);
+}
+

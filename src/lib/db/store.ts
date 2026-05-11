@@ -413,6 +413,21 @@ import type {
   AriaReg40Triage,
 } from "@/types/aria-studio";
 
+// ── Persisted inspection snapshot envelope (M31) ─────────────────────────────
+// Self-contained immutable record. Payload is the full InspectionSnapshot
+// captured by src/lib/care-events/inspection-snapshot.ts; we keep it loosely
+// typed here to avoid a circular import with the engine that consumes the db.
+export interface PersistedInspectionSnapshot {
+  id: string;
+  home_id: string;
+  generated_at: string;
+  generated_by: string | null;
+  schema_version: number;
+  readiness_score: number;
+  readiness_severity: string;
+  payload: unknown;
+}
+
 // ── Mutable collections ───────────────────────────────────────────────────────
 
 const store = {
@@ -1041,6 +1056,9 @@ const store = {
   childDailySummaries: [...SEED_CHILD_DAILY_SUMMARIES] as ChildDailySummary[],
   filingCabinet: [...SEED_FILING_CABINET] as FilingCabinetItem[],
   savedTimeMetrics: [...SEED_SAVED_TIME_METRICS] as SavedTimeMetric[],
+
+  // ── Inspection Snapshots (M31) ───────────────────────────────────────────
+  inspectionSnapshots: [] as PersistedInspectionSnapshot[],
 
   // ── Branding ─────────────────────────────────────────────────────────────
   systemBranding: {
@@ -10981,6 +10999,22 @@ export const db = {
       const metric: SavedTimeMetric = { ...data, id: generateId("stm"), created_at: now };
       store.savedTimeMetrics.push(metric);
       return metric;
+    },
+  },
+
+  // ── Inspection Snapshots (M31) ───────────────────────────────────────────
+  inspectionSnapshots: {
+    findAll: (homeId?: string) =>
+      homeId
+        ? store.inspectionSnapshots.filter((s) => s.home_id === homeId)
+        : store.inspectionSnapshots,
+    findById: (id: string) =>
+      store.inspectionSnapshots.find((s) => s.id === id) ?? null,
+    create: (snap: PersistedInspectionSnapshot): PersistedInspectionSnapshot => {
+      // immutable: reject duplicate ids
+      if (store.inspectionSnapshots.some((s) => s.id === snap.id)) return snap;
+      store.inspectionSnapshots.push(snap);
+      return snap;
     },
   },
 
