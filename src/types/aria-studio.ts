@@ -1028,6 +1028,47 @@ export interface ManagerOversightQueue {
   items: ManagerOversightItem[];
 }
 
+// ── Reg 40 Triage (Milestone 15) ──────────────────────────────────────────────
+//
+// Regulation 40 of the Children's Homes (England) Regulations 2015 sets out
+// notifiable events the registered person must report to Ofsted. The triage
+// queue surfaces care events that may require a Reg 40 notification so that
+// an authorised human can decide whether to notify, dismiss or escalate.
+
+export type Reg40TriageStatus =
+  | "pending"
+  | "notified"
+  | "dismissed"
+  | "escalated";
+
+export type Reg40SuggestedCategory =
+  | "child_protection_concern"
+  | "serious_illness_or_accident"
+  | "death_of_child"
+  | "child_missing"
+  | "police_involvement"
+  | "serious_incident"
+  | "allegation_against_staff"
+  | "other";
+
+export interface AriaReg40Triage {
+  id: string;
+  home_id: string;
+  child_id: string | null;
+  source_event_id: string;
+  source_category: string;
+  source_title: string;
+  source_event_date: string;
+  suggested_category: Reg40SuggestedCategory;
+  reasoning: string;
+  status: Reg40TriageStatus;
+  created_at: string;
+  decided_by: string | null;
+  decided_at: string | null;
+  decision_note: string | null;
+  notification_ref: string | null;
+}
+
 // ── Home Dynamics ─────────────────────────────────────────────────────────────
 
 export type AriaIndicatorStatus = "green" | "amber" | "red";

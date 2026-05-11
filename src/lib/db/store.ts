@@ -410,6 +410,7 @@ import type {
   AriaReg45Report,
   AriaSuggestedRecord,
   AriaCommittedRecord,
+  AriaReg40Triage,
 } from "@/types/aria-studio";
 
 // ── Mutable collections ───────────────────────────────────────────────────────
@@ -1252,6 +1253,7 @@ const store = {
   ariaReg45Reports: [] as AriaReg45Report[],
   ariaSuggestedRecords: [] as AriaSuggestedRecord[],
   ariaCommittedRecords: [] as AriaCommittedRecord[],
+  ariaReg40Triages: [] as AriaReg40Triage[],
 
   // Shift Swap Requests
   shiftSwaps: [
@@ -11422,6 +11424,26 @@ export const db = {
       const rec: AriaCommittedRecord = { ...data, id: generateId("acom") };
       store.ariaCommittedRecords.push(rec);
       return rec;
+    },
+  },
+  ariaReg40Triages: {
+    findAll: (homeId?: string) =>
+      homeId
+        ? store.ariaReg40Triages.filter((t) => t.home_id === homeId)
+        : store.ariaReg40Triages,
+    findById: (id: string) => store.ariaReg40Triages.find((t) => t.id === id),
+    findBySourceEvent: (eventId: string) =>
+      store.ariaReg40Triages.find((t) => t.source_event_id === eventId),
+    create: (data: Omit<AriaReg40Triage, "id">): AriaReg40Triage => {
+      const rec: AriaReg40Triage = { ...data, id: generateId("reg40") };
+      store.ariaReg40Triages.push(rec);
+      return rec;
+    },
+    patch: (id: string, data: Partial<AriaReg40Triage>): AriaReg40Triage | null => {
+      const idx = store.ariaReg40Triages.findIndex((t) => t.id === id);
+      if (idx === -1) return null;
+      store.ariaReg40Triages[idx] = { ...store.ariaReg40Triages[idx], ...data };
+      return store.ariaReg40Triages[idx];
     },
   },
   wakeUpRoutines: {
