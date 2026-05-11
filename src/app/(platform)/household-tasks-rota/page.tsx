@@ -51,7 +51,7 @@ function categoryColour(c: TaskCategory): string {
     case "personal_room":
       return "bg-indigo-50 text-indigo-700";
     case "shared_space":
-      return "bg-slate-100 text-slate-700";
+      return "bg-slate-100 text-[var(--cs-text-secondary)]";
     case "kitchen":
       return "bg-orange-50 text-orange-700";
     case "laundry":
@@ -230,7 +230,7 @@ export default function HouseholdTasksRotaPage() {
           return (
             <div key={task.id} className="rounded-xl border bg-white overflow-hidden">
               <button
-                className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                 onClick={() => setExpandedId(isExpanded ? null : task.id)}
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0">

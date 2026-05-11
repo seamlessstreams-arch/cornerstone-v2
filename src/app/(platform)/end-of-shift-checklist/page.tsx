@@ -61,7 +61,7 @@ const shiftColour = (s: EndOfShiftType): string => {
     case "sleep_in":
       return "bg-violet-100 text-violet-800 border-violet-200";
     case "wake_night":
-      return "bg-slate-200 text-slate-800 border-slate-300";
+      return "bg-slate-200 text-[var(--cs-navy)] border-slate-300";
   }
 };
 
@@ -234,7 +234,7 @@ export default function EndOfShiftChecklistPage() {
     return (
       <PageShell title="End-of-Shift Checklist" subtitle="Loading...">
         <div className="flex items-center justify-center py-12">
-          <Loader2 className="h-8 w-8 animate-spin text-slate-400" />
+          <Loader2 className="h-8 w-8 animate-spin text-[var(--cs-text-muted)]" />
         </div>
       </PageShell>
     );
@@ -276,17 +276,17 @@ export default function EndOfShiftChecklistPage() {
 
       {/* Summary stats */}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-4 mb-6">
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-xs text-slate-600 uppercase tracking-wide">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-xs text-[var(--cs-text-secondary)] uppercase tracking-wide">
             <CalendarClock className="h-4 w-4" /> Shifts logged
           </div>
-          <div className="mt-2 text-3xl font-semibold text-slate-900">
+          <div className="mt-2 text-3xl font-semibold text-[var(--cs-navy)]">
             {summary.shiftsLogged}
           </div>
-          <div className="mt-1 text-xs text-slate-500">recent shifts</div>
+          <div className="mt-1 text-xs text-[var(--cs-text-muted)]">recent shifts</div>
         </div>
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-xs text-slate-600 uppercase tracking-wide">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-xs text-[var(--cs-text-secondary)] uppercase tracking-wide">
             <CheckCircle2 className="h-4 w-4" /> Completion rate
           </div>
           <div
@@ -301,10 +301,10 @@ export default function EndOfShiftChecklistPage() {
           >
             {summary.completionRate}%
           </div>
-          <div className="mt-1 text-xs text-slate-500">across all tasks</div>
+          <div className="mt-1 text-xs text-[var(--cs-text-muted)]">across all tasks</div>
         </div>
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-xs text-slate-600 uppercase tracking-wide">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-xs text-[var(--cs-text-secondary)] uppercase tracking-wide">
             <AlertTriangle className="h-4 w-4" /> Escalations (week)
           </div>
           <div
@@ -315,23 +315,23 @@ export default function EndOfShiftChecklistPage() {
           >
             {summary.escalations}
           </div>
-          <div className="mt-1 text-xs text-slate-500">last 7 days</div>
+          <div className="mt-1 text-xs text-[var(--cs-text-muted)]">last 7 days</div>
         </div>
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-xs text-slate-600 uppercase tracking-wide">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-xs text-[var(--cs-text-secondary)] uppercase tracking-wide">
             <Sparkles className="h-4 w-4" /> Avg tasks complete
           </div>
-          <div className="mt-2 text-3xl font-semibold text-slate-900">
+          <div className="mt-2 text-3xl font-semibold text-[var(--cs-navy)]">
             {summary.avgComplete}%
           </div>
-          <div className="mt-1 text-xs text-slate-500">per shift</div>
+          <div className="mt-1 text-xs text-[var(--cs-text-muted)]">per shift</div>
         </div>
       </div>
 
       {/* Filters / sort */}
-      <div className="mb-4 flex flex-wrap items-center gap-3 rounded-lg border border-slate-200 bg-white p-3">
+      <div className="mb-4 flex flex-wrap items-center gap-3 rounded-lg border border-[var(--cs-border)] bg-white p-3">
         <div className="flex items-center gap-2">
-          <span className="text-xs font-medium text-slate-600">Shift</span>
+          <span className="text-xs font-medium text-[var(--cs-text-secondary)]">Shift</span>
           <Select value={filterShift} onValueChange={setFilterShift}>
             <SelectTrigger className="w-[160px] h-9">
               <SelectValue placeholder="All" />
@@ -345,8 +345,8 @@ export default function EndOfShiftChecklistPage() {
           </Select>
         </div>
         <div className="flex items-center gap-2">
-          <ArrowUpDown className="h-4 w-4 text-slate-500" />
-          <span className="text-xs font-medium text-slate-600">Sort by</span>
+          <ArrowUpDown className="h-4 w-4 text-[var(--cs-text-muted)]" />
+          <span className="text-xs font-medium text-[var(--cs-text-secondary)]">Sort by</span>
           <Select
             value={sortKey}
             onValueChange={(v: string) => setSortKey(v as SortKey)}
@@ -367,7 +367,7 @@ export default function EndOfShiftChecklistPage() {
             </SelectContent>
           </Select>
         </div>
-        <div className="ml-auto text-xs text-slate-500">
+        <div className="ml-auto text-xs text-[var(--cs-text-muted)]">
           Showing {visible.length} of {records.length}
         </div>
       </div>
@@ -381,7 +381,7 @@ export default function EndOfShiftChecklistPage() {
           return (
             <div
               key={r.id}
-              className="rounded-lg border border-slate-200 bg-white shadow-sm"
+              className="rounded-lg border border-[var(--cs-border)] bg-white shadow-sm"
             >
               {/* Header */}
               <button
@@ -393,7 +393,7 @@ export default function EndOfShiftChecklistPage() {
               >
                 <div className="flex-1 min-w-0">
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="font-semibold text-slate-900">
+                    <span className="font-semibold text-[var(--cs-navy)]">
                       {getStaffName(r.staff_member)}
                     </span>
                     <span
@@ -421,11 +421,11 @@ export default function EndOfShiftChecklistPage() {
                         Escalation
                       </span>
                     )}
-                    <span className="text-sm font-semibold text-slate-700">
+                    <span className="text-sm font-semibold text-[var(--cs-text-secondary)]">
                       {totalDone}/{r.checks.length} ({pct}%)
                     </span>
                   </div>
-                  <div className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-600">
+                  <div className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-[var(--cs-text-secondary)]">
                     <span className="flex items-center gap-1">
                       <CalendarClock className="h-3.5 w-3.5" />
                       {formatPretty(r.date)}
@@ -442,16 +442,16 @@ export default function EndOfShiftChecklistPage() {
                 </div>
                 <div className="flex-shrink-0 pt-1">
                   {isOpen ? (
-                    <ChevronUp className="h-5 w-5 text-slate-400" />
+                    <ChevronUp className="h-5 w-5 text-[var(--cs-text-muted)]" />
                   ) : (
-                    <ChevronDown className="h-5 w-5 text-slate-400" />
+                    <ChevronDown className="h-5 w-5 text-[var(--cs-text-muted)]" />
                   )}
                 </div>
               </button>
 
               {/* Body */}
               {isOpen && (
-                <div className="border-t border-slate-200 p-4 space-y-5">
+                <div className="border-t border-[var(--cs-border)] p-4 space-y-5">
                   {/* Closing-down summary */}
                   <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
                     <div
@@ -462,7 +462,7 @@ export default function EndOfShiftChecklistPage() {
                           : "border-rose-200 bg-rose-50",
                       )}
                     >
-                      <div className="flex items-center gap-2 text-xs font-medium text-slate-700">
+                      <div className="flex items-center gap-2 text-xs font-medium text-[var(--cs-text-secondary)]">
                         <Lock className="h-4 w-4" /> Building secured
                       </div>
                       <div
@@ -484,7 +484,7 @@ export default function EndOfShiftChecklistPage() {
                           : "border-rose-200 bg-rose-50",
                       )}
                     >
-                      <div className="flex items-center gap-2 text-xs font-medium text-slate-700">
+                      <div className="flex items-center gap-2 text-xs font-medium text-[var(--cs-text-secondary)]">
                         <Pill className="h-4 w-4" /> Med cabinet locked
                       </div>
                       <div
@@ -506,7 +506,7 @@ export default function EndOfShiftChecklistPage() {
                           : "border-rose-200 bg-rose-50",
                       )}
                     >
-                      <div className="flex items-center gap-2 text-xs font-medium text-slate-700">
+                      <div className="flex items-center gap-2 text-xs font-medium text-[var(--cs-text-secondary)]">
                         <ChefHat className="h-4 w-4" /> Kitchen closed
                       </div>
                       <div
@@ -528,7 +528,7 @@ export default function EndOfShiftChecklistPage() {
                           : "border-rose-200 bg-rose-50",
                       )}
                     >
-                      <div className="flex items-center gap-2 text-xs font-medium text-slate-700">
+                      <div className="flex items-center gap-2 text-xs font-medium text-[var(--cs-text-secondary)]">
                         <PawPrint className="h-4 w-4" /> Pets cared for
                       </div>
                       <div
@@ -546,7 +546,7 @@ export default function EndOfShiftChecklistPage() {
 
                   {/* Checks grouped by category */}
                   <div>
-                    <h3 className="text-sm font-semibold text-slate-900 flex items-center gap-2 mb-2">
+                    <h3 className="text-sm font-semibold text-[var(--cs-navy)] flex items-center gap-2 mb-2">
                       <ClipboardCheck className="h-4 w-4" /> Checklist items
                     </h3>
                     <div className="space-y-3">
@@ -565,9 +565,9 @@ export default function EndOfShiftChecklistPage() {
                         return (
                           <div
                             key={cat}
-                            className="rounded-md border border-slate-200"
+                            className="rounded-md border border-[var(--cs-border)]"
                           >
-                            <div className="flex items-center gap-2 border-b border-slate-100 bg-slate-50 px-3 py-2 text-xs font-semibold text-slate-700 uppercase tracking-wide">
+                            <div className="flex items-center gap-2 border-b border-[var(--cs-border-subtle)] bg-slate-50 px-3 py-2 text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">
                               {categoryIcon[cat]}
                               {CHECKLIST_CATEGORY_LABEL[cat]}
                             </div>
@@ -585,14 +585,14 @@ export default function EndOfShiftChecklistPage() {
                                   <div className="flex-1">
                                     <div
                                       className={cn(
-                                        "text-slate-800",
+                                        "text-[var(--cs-navy)]",
                                         !it.completed && "font-medium",
                                       )}
                                     >
                                       {it.item}
                                     </div>
                                     {it.notes && (
-                                      <div className="mt-1 text-xs text-slate-600 italic">
+                                      <div className="mt-1 text-xs text-[var(--cs-text-secondary)] italic">
                                         {it.notes}
                                       </div>
                                     )}
@@ -641,26 +641,26 @@ export default function EndOfShiftChecklistPage() {
 
                   {/* Observations + wellbeing */}
                   <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-                    <div className="rounded-md border border-slate-200 p-3">
-                      <h4 className="text-sm font-semibold text-slate-900 flex items-center gap-2">
+                    <div className="rounded-md border border-[var(--cs-border)] p-3">
+                      <h4 className="text-sm font-semibold text-[var(--cs-navy)] flex items-center gap-2">
                         <Heart className="h-4 w-4" /> Child observations
                       </h4>
-                      <p className="mt-1 text-sm text-slate-700">
+                      <p className="mt-1 text-sm text-[var(--cs-text-secondary)]">
                         {r.child_observations}
                       </p>
                     </div>
-                    <div className="rounded-md border border-slate-200 p-3">
-                      <h4 className="text-sm font-semibold text-slate-900 flex items-center gap-2">
+                    <div className="rounded-md border border-[var(--cs-border)] p-3">
+                      <h4 className="text-sm font-semibold text-[var(--cs-navy)] flex items-center gap-2">
                         <Users className="h-4 w-4" /> Staff wellbeing check-in
                       </h4>
-                      <p className="mt-1 text-sm text-slate-700">
+                      <p className="mt-1 text-sm text-[var(--cs-text-secondary)]">
                         {r.staff_wellbeing_check_in}
                       </p>
                     </div>
                   </div>
 
                   {/* Footer line */}
-                  <div className="flex flex-wrap items-center gap-x-6 gap-y-1 text-xs text-slate-500 border-t border-slate-100 pt-3">
+                  <div className="flex flex-wrap items-center gap-x-6 gap-y-1 text-xs text-[var(--cs-text-muted)] border-t border-[var(--cs-border-subtle)] pt-3">
                     <span className="flex items-center gap-1">
                       <MessageSquare className="h-3.5 w-3.5" />
                       Record ID: {r.id}
@@ -687,15 +687,15 @@ export default function EndOfShiftChecklistPage() {
         })}
 
         {visible.length === 0 && (
-          <div className="rounded-lg border border-dashed border-slate-300 bg-white p-8 text-center text-sm text-slate-500">
+          <div className="rounded-lg border border-dashed border-slate-300 bg-white p-8 text-center text-sm text-[var(--cs-text-muted)]">
             No checklists match the current filters.
           </div>
         )}
       </div>
 
       {/* Regulatory note */}
-      <div className="mt-8 rounded-lg border border-slate-200 bg-slate-50 p-4 text-sm text-slate-700">
-        <h3 className="font-semibold text-slate-900 mb-1 flex items-center gap-2">
+      <div className="mt-8 rounded-lg border border-[var(--cs-border)] bg-slate-50 p-4 text-sm text-[var(--cs-text-secondary)]">
+        <h3 className="font-semibold text-[var(--cs-navy)] mb-1 flex items-center gap-2">
           <BookOpen className="h-4 w-4" /> Regulatory basis
         </h3>
         <p>

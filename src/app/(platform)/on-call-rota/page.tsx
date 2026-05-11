@@ -174,25 +174,25 @@ export default function OnCallRotaPage() {
                 {open && (
                   <CardContent className="space-y-3 pt-0">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                      <div className="rounded-lg bg-slate-50 border border-slate-200 p-3 flex items-start gap-2">
-                        <Users className="h-4 w-4 text-slate-600 mt-0.5 shrink-0" />
+                      <div className="rounded-lg bg-slate-50 border border-[var(--cs-border)] p-3 flex items-start gap-2">
+                        <Users className="h-4 w-4 text-[var(--cs-text-secondary)] mt-0.5 shrink-0" />
                         <div>
-                          <p className="text-xs font-semibold text-slate-700">Backup</p>
-                          <p className="text-sm text-slate-900">{getStaffName(r.backup_staff)}</p>
+                          <p className="text-xs font-semibold text-[var(--cs-text-secondary)]">Backup</p>
+                          <p className="text-sm text-[var(--cs-navy)]">{getStaffName(r.backup_staff)}</p>
                         </div>
                       </div>
-                      <div className="rounded-lg bg-slate-50 border border-slate-200 p-3 flex items-start gap-2">
-                        <Phone className="h-4 w-4 text-slate-600 mt-0.5 shrink-0" />
+                      <div className="rounded-lg bg-slate-50 border border-[var(--cs-border)] p-3 flex items-start gap-2">
+                        <Phone className="h-4 w-4 text-[var(--cs-text-secondary)] mt-0.5 shrink-0" />
                         <div>
-                          <p className="text-xs font-semibold text-slate-700">Contact number</p>
-                          <p className="text-sm text-slate-900 font-mono">{r.contact_number}</p>
+                          <p className="text-xs font-semibold text-[var(--cs-text-secondary)]">Contact number</p>
+                          <p className="text-sm text-[var(--cs-navy)] font-mono">{r.contact_number}</p>
                         </div>
                       </div>
-                      <div className="rounded-lg bg-slate-50 border border-slate-200 p-3 flex items-start gap-2">
-                        <Clock className="h-4 w-4 text-slate-600 mt-0.5 shrink-0" />
+                      <div className="rounded-lg bg-slate-50 border border-[var(--cs-border)] p-3 flex items-start gap-2">
+                        <Clock className="h-4 w-4 text-[var(--cs-text-secondary)] mt-0.5 shrink-0" />
                         <div>
-                          <p className="text-xs font-semibold text-slate-700">Pattern</p>
-                          <p className="text-sm text-slate-900">{ON_CALL_SHIFT_PATTERN_LABEL[r.shift_pattern]}</p>
+                          <p className="text-xs font-semibold text-[var(--cs-text-secondary)]">Pattern</p>
+                          <p className="text-sm text-[var(--cs-navy)]">{ON_CALL_SHIFT_PATTERN_LABEL[r.shift_pattern]}</p>
                         </div>
                       </div>
                     </div>
@@ -213,21 +213,21 @@ export default function OnCallRotaPage() {
                     </div>
 
                     {r.calls_received.length > 0 ? (
-                      <div className="rounded-lg bg-slate-50 border border-slate-200 p-3">
-                        <p className="text-xs font-semibold text-slate-700 mb-2 flex items-center gap-1">
+                      <div className="rounded-lg bg-slate-50 border border-[var(--cs-border)] p-3">
+                        <p className="text-xs font-semibold text-[var(--cs-text-secondary)] mb-2 flex items-center gap-1">
                           <PhoneCall className="h-3 w-3" />Call log ({r.calls_received.length})
                         </p>
                         <ul className="space-y-2">
                           {r.calls_received.map((c, i) => (
                             <li key={i} className="border-l-2 border-slate-300 pl-3">
                               <div className="flex items-center gap-2 flex-wrap">
-                                <span className="text-xs font-mono text-slate-600">{c.datetime}</span>
+                                <span className="text-xs font-mono text-[var(--cs-text-secondary)]">{c.datetime}</span>
                                 <Badge variant="outline" className="text-xs">{c.call_type}</Badge>
                                 <Badge variant="outline" className="text-xs">{c.duration_mins} min</Badge>
                                 {c.escalated && <Badge className="text-xs bg-amber-100 text-amber-800">Escalated</Badge>}
                               </div>
-                              <p className="text-xs text-slate-700 mt-0.5">From: {c.from_contact}</p>
-                              <p className="text-sm text-slate-900 mt-1">{c.outcome}</p>
+                              <p className="text-xs text-[var(--cs-text-secondary)] mt-0.5">From: {c.from_contact}</p>
+                              <p className="text-sm text-[var(--cs-navy)] mt-1">{c.outcome}</p>
                             </li>
                           ))}
                         </ul>

@@ -48,7 +48,7 @@ const STATUS_COLOURS: Record<BehaviourSupportPlan["status"], string> = {
   active: "bg-green-100 text-green-800",
   under_review: "bg-amber-100 text-amber-800",
   draft: "bg-gray-100 text-gray-700",
-  archived: "bg-slate-100 text-slate-700",
+  archived: "bg-slate-100 text-[var(--cs-text-secondary)]",
   suspended: "bg-red-100 text-red-800",
 };
 
@@ -311,7 +311,7 @@ export default function BehaviourSupportPlansPage() {
               <div key={plan.id} className={cn("rounded-xl border bg-white overflow-hidden", reviewOverdue && "border-l-4 border-l-red-400")}>
                 {/* -- Header ------------------------------------------------ */}
                 <button
-                  className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                  className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                   onClick={() => toggle(plan.id)}
                   aria-expanded={isExpanded}
                   aria-label={`Expand behaviour support plan for ${getYPName(plan.child_id)}`}
@@ -494,13 +494,13 @@ export default function BehaviourSupportPlansPage() {
                         </div>
                       </div>
                       {/* Boundaries */}
-                      <div className="rounded-lg bg-slate-50 border border-slate-200 p-3">
-                        <p className="text-xs font-semibold text-slate-800 mb-2">Boundaries</p>
+                      <div className="rounded-lg bg-slate-50 border border-[var(--cs-border)] p-3">
+                        <p className="text-xs font-semibold text-[var(--cs-navy)] mb-2">Boundaries</p>
                         <div className="space-y-2">
                           {plan.boundaries.map((b, i) => (
                             <div key={i} className="text-sm">
                               <p className="font-medium">{b.boundary}</p>
-                              <p className="text-xs text-slate-600">Consequence: {b.consequence}</p>
+                              <p className="text-xs text-[var(--cs-text-secondary)]">Consequence: {b.consequence}</p>
                               <p className="text-xs text-muted-foreground">Rationale: {b.rationale}</p>
                             </div>
                           ))}
@@ -528,7 +528,7 @@ export default function BehaviourSupportPlansPage() {
                     {/* Restrictive Interventions */}
                     <div className="rounded-lg bg-slate-800 text-white p-3">
                       <div className="flex items-center gap-2 mb-2">
-                        <Shield className="h-4 w-4 text-slate-300" />
+                        <Shield className="h-4 w-4 text-[var(--cs-text-gentle)]" />
                         <p className="text-xs font-semibold text-slate-200">Restrictive Interventions</p>
                       </div>
                       <div className="space-y-2">
@@ -540,8 +540,8 @@ export default function BehaviourSupportPlansPage() {
                                 <Badge className="text-xs bg-red-500/20 text-red-300 border border-red-500/30">LAST RESORT</Badge>
                               )}
                             </div>
-                            <p className="text-slate-300 text-xs">Authorised by: {getStaffName(ri.authorised_by)}</p>
-                            <p className="text-slate-300 text-xs mt-0.5">{ri.conditions}</p>
+                            <p className="text-[var(--cs-text-gentle)] text-xs">Authorised by: {getStaffName(ri.authorised_by)}</p>
+                            <p className="text-[var(--cs-text-gentle)] text-xs mt-0.5">{ri.conditions}</p>
                           </div>
                         ))}
                       </div>

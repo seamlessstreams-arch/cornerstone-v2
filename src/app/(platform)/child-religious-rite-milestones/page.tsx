@@ -66,16 +66,16 @@ const faithColour: Record<RiteFaithTradition, string> = {
   buddhism: "bg-yellow-100 text-yellow-800 border-yellow-200",
   rastafari: "bg-green-100 text-green-800 border-green-200",
   multi_faith_family_choice: "bg-purple-100 text-purple-800 border-purple-200",
-  other: "bg-slate-100 text-slate-800 border-slate-200",
+  other: "bg-slate-100 text-[var(--cs-navy)] border-[var(--cs-border)]",
 };
 
 const statusColour: Record<RiteStatus, string> = {
   already_done_pre_care: "bg-teal-100 text-teal-800 border-teal-200",
   planned_with_home_support: "bg-amber-100 text-amber-800 border-amber-200",
   considering_child_led: "bg-sky-100 text-sky-800 border-sky-200",
-  declined_by_child: "bg-slate-100 text-slate-700 border-slate-200",
+  declined_by_child: "bg-slate-100 text-[var(--cs-text-secondary)] border-[var(--cs-border)]",
   postponed: "bg-stone-100 text-stone-800 border-stone-200",
-  not_applicable: "bg-slate-100 text-slate-600 border-slate-200",
+  not_applicable: "bg-slate-100 text-[var(--cs-text-secondary)] border-[var(--cs-border)]",
   done_in_care: "bg-emerald-100 text-emerald-800 border-emerald-200",
 };
 
@@ -83,7 +83,7 @@ const choiceColour: Record<RiteChildChoice, string> = {
   strongly_chose: "bg-rose-100 text-rose-800 border-rose-200",
   family_influenced_choice: "bg-amber-100 text-amber-800 border-amber-200",
   choosing_between_options: "bg-sky-100 text-sky-800 border-sky-200",
-  not_yet_old_enough_to_choose: "bg-slate-100 text-slate-700 border-slate-200",
+  not_yet_old_enough_to_choose: "bg-slate-100 text-[var(--cs-text-secondary)] border-[var(--cs-border)]",
 };
 
 const dFromNow = (n: number) => {
@@ -132,7 +132,7 @@ export default function ChildReligiousRiteMilestonesPage() {
     return (
       <PageShell title="Religious Rites & Milestones" subtitle="Loading...">
         <div className="flex items-center justify-center py-12">
-          <Loader2 className="h-8 w-8 animate-spin text-slate-400" />
+          <Loader2 className="h-8 w-8 animate-spin text-[var(--cs-text-muted)]" />
         </div>
       </PageShell>
     );
@@ -171,24 +171,24 @@ export default function ChildReligiousRiteMilestonesPage() {
           </div>
           <div className="text-2xl font-semibold text-rose-900">{stats.childChose}</div>
         </div>
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-slate-600 text-sm mb-1">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-[var(--cs-text-secondary)] text-sm mb-1">
             <Calendar className="h-4 w-4" />
             <span>Reviews due (90d)</span>
           </div>
-          <div className="text-2xl font-semibold text-slate-900">{stats.reviewSoon}</div>
+          <div className="text-2xl font-semibold text-[var(--cs-navy)]">{stats.reviewSoon}</div>
         </div>
       </div>
 
       <div className="flex flex-col sm:flex-row gap-3 mb-4">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--cs-text-muted)]" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search rite, child or significance..."
-            className="w-full pl-9 pr-3 py-2 text-sm border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full pl-9 pr-3 py-2 text-sm border border-[var(--cs-border)] rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
         <Select value={faithFilter} onValueChange={setFaithFilter}>
@@ -220,57 +220,57 @@ export default function ChildReligiousRiteMilestonesPage() {
         {filtered.map((r) => {
           const isOpen = expandedId === r.id;
           return (
-            <div key={r.id} className="rounded-lg border border-slate-200 bg-white overflow-hidden">
+            <div key={r.id} className="rounded-lg border border-[var(--cs-border)] bg-white overflow-hidden">
               <button
                 onClick={() => setExpandedId(isOpen ? null : r.id)}
-                className="w-full p-4 flex items-start justify-between gap-3 hover:bg-slate-50 text-left"
+                className="w-full p-4 flex items-start justify-between gap-3 hover:bg-[var(--cs-surface)] text-left"
               >
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap mb-1">
                     <Star className="h-4 w-4 text-amber-500 shrink-0" />
-                    <span className="font-semibold text-slate-900">{r.rite_name}</span>
+                    <span className="font-semibold text-[var(--cs-navy)]">{r.rite_name}</span>
                     <span className={cn("text-xs px-2 py-0.5 rounded-full border", faithColour[r.faith_tradition])}>{RITE_FAITH_TRADITION_LABEL[r.faith_tradition]}</span>
                     <span className={cn("text-xs px-2 py-0.5 rounded-full border", statusColour[r.status])}>{RITE_STATUS_LABEL[r.status]}</span>
                     <span className={cn("text-xs px-2 py-0.5 rounded-full border", choiceColour[r.child_choice])}>{RITE_CHILD_CHOICE_LABEL[r.child_choice]}</span>
                   </div>
-                  <div className="text-sm text-slate-600">
+                  <div className="text-sm text-[var(--cs-text-secondary)]">
                     {getYPName(r.child_id)}
                     {r.child_age_at_rite !== undefined ? ` · age ${r.child_age_at_rite} at rite` : ""}
                     {" · recorded "}
                     {r.recorded_date} · review {r.review_date}
                   </div>
                 </div>
-                {isOpen ? <ChevronUp className="h-5 w-5 text-slate-400 shrink-0" /> : <ChevronDown className="h-5 w-5 text-slate-400 shrink-0" />}
+                {isOpen ? <ChevronUp className="h-5 w-5 text-[var(--cs-text-muted)] shrink-0" /> : <ChevronDown className="h-5 w-5 text-[var(--cs-text-muted)] shrink-0" />}
               </button>
               {isOpen ? (
-                <div className="px-4 pb-4 border-t border-slate-100 bg-slate-50/50">
+                <div className="px-4 pb-4 border-t border-[var(--cs-border-subtle)] bg-slate-50/50">
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 pt-4">
                     <div className="rounded-md border border-amber-200 bg-amber-50 p-3 lg:col-span-2">
                       <div className="text-xs font-semibold text-amber-800 uppercase mb-2">Rite & significance</div>
                       <div className="text-sm font-semibold text-amber-900 mb-1">{r.rite_name}</div>
                       <p className="text-sm text-amber-900">{r.significance}</p>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Preparation</div>
-                      <ul className="text-sm text-slate-700 space-y-1">
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Preparation</div>
+                      <ul className="text-sm text-[var(--cs-text-secondary)] space-y-1">
                         {r.preparation.map((t, i) => (
-                          <li key={i} className="flex gap-2"><span className="text-slate-400">·</span><span>{t}</span></li>
+                          <li key={i} className="flex gap-2"><span className="text-[var(--cs-text-muted)]">·</span><span>{t}</span></li>
                         ))}
                       </ul>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Officiant & venue</div>
-                      <div className="text-sm text-slate-700 space-y-1">
-                        <div><span className="text-slate-500">Officiant: </span><span>{r.who_officiates ?? "—"}</span></div>
-                        <div><span className="text-slate-500">Venue: </span><span>{r.venue ?? "—"}</span></div>
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Officiant & venue</div>
+                      <div className="text-sm text-[var(--cs-text-secondary)] space-y-1">
+                        <div><span className="text-[var(--cs-text-muted)]">Officiant: </span><span>{r.who_officiates ?? "—"}</span></div>
+                        <div><span className="text-[var(--cs-text-muted)]">Venue: </span><span>{r.venue ?? "—"}</span></div>
                       </div>
                     </div>
                     {r.guests_involved.length ? (
-                      <div className="rounded-md border border-slate-200 bg-white p-3">
-                        <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Guests involved</div>
-                        <ul className="text-sm text-slate-700 space-y-1">
+                      <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                        <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Guests involved</div>
+                        <ul className="text-sm text-[var(--cs-text-secondary)] space-y-1">
                           {r.guests_involved.map((t, i) => (
-                            <li key={i} className="flex gap-2"><span className="text-slate-400">·</span><span>{t}</span></li>
+                            <li key={i} className="flex gap-2"><span className="text-[var(--cs-text-muted)]">·</span><span>{t}</span></li>
                           ))}
                         </ul>
                       </div>
@@ -283,21 +283,21 @@ export default function ChildReligiousRiteMilestonesPage() {
                         ))}
                       </ul>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Cost / funding</div>
-                      <p className="text-sm text-slate-700">{r.cost_funding ? `£${r.cost_funding.amount.toFixed(2)} — ${r.cost_funding.source}` : "No cost / not applicable"}</p>
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Cost / funding</div>
+                      <p className="text-sm text-[var(--cs-text-secondary)]">{r.cost_funding ? `£${r.cost_funding.amount.toFixed(2)} — ${r.cost_funding.source}` : "No cost / not applicable"}</p>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Child choice</div>
-                      <p className="text-sm text-slate-700">{RITE_CHILD_CHOICE_LABEL[r.child_choice]}</p>
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Child choice</div>
+                      <p className="text-sm text-[var(--cs-text-secondary)]">{RITE_CHILD_CHOICE_LABEL[r.child_choice]}</p>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Birth family involvement</div>
-                      <p className="text-sm text-slate-700">{r.birth_family_involvement ?? "—"}</p>
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Birth family involvement</div>
+                      <p className="text-sm text-[var(--cs-text-secondary)]">{r.birth_family_involvement ?? "—"}</p>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3 lg:col-span-2">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Record kept (where stored)</div>
-                      <ul className="text-sm text-slate-700 space-y-1">
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3 lg:col-span-2">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Record kept (where stored)</div>
+                      <ul className="text-sm text-[var(--cs-text-secondary)] space-y-1">
                         {r.record_kept.map((t, i) => (
                           <li key={i} className="flex gap-2"><span className="text-amber-500">·</span><span>{t}</span></li>
                         ))}
@@ -307,9 +307,9 @@ export default function ChildReligiousRiteMilestonesPage() {
                       <div className="text-xs font-semibold text-rose-800 uppercase mb-2">Child voice</div>
                       <p className="text-sm text-rose-900 italic">&ldquo;{r.child_voice}&rdquo;</p>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Staff observation</div>
-                      <p className="text-sm text-slate-700">{r.staff_observation}</p>
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Staff observation</div>
+                      <p className="text-sm text-[var(--cs-text-secondary)]">{r.staff_observation}</p>
                     </div>
                     {r.flags_for_review.length ? (
                       <div className="rounded-md border border-amber-200 bg-amber-50 p-3 lg:col-span-2">
@@ -321,7 +321,7 @@ export default function ChildReligiousRiteMilestonesPage() {
                         </ul>
                       </div>
                     ) : null}
-                    <div className="rounded-md border border-slate-200 bg-white p-3 lg:col-span-2 text-xs text-slate-500 flex flex-wrap gap-x-4 gap-y-1">
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3 lg:col-span-2 text-xs text-[var(--cs-text-muted)] flex flex-wrap gap-x-4 gap-y-1">
                       <span>Recorded: {r.recorded_date}</span>
                       <span>Review: {r.review_date}</span>
                       <span>Key worker: {getStaffName(r.key_worker)}</span>

@@ -88,7 +88,7 @@ export function ComplaintsSummaryCard() {
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-center py-6">
-            <Loader2 className="h-5 w-5 animate-spin text-slate-400" />
+            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
           </div>
         </CardContent>
       </Card>
@@ -114,14 +114,14 @@ export function ComplaintsSummaryCard() {
         {/* KPI strip */}
         <div className="grid grid-cols-3 gap-2">
           <div className={cn("rounded-xl p-2 text-center", open > 0 ? "bg-orange-50" : "bg-slate-50")}>
-            <MessageCircleWarning className={cn("h-3 w-3 mx-auto mb-0.5", open > 0 ? "text-orange-500" : "text-slate-400")} />
-            <div className={cn("text-sm font-bold tabular-nums", open > 0 ? "text-orange-700" : "text-slate-400")}>{open}</div>
-            <div className={cn("text-[9px]", open > 0 ? "text-orange-500" : "text-slate-400")}>Open</div>
+            <MessageCircleWarning className={cn("h-3 w-3 mx-auto mb-0.5", open > 0 ? "text-orange-500" : "text-[var(--cs-text-muted)]")} />
+            <div className={cn("text-sm font-bold tabular-nums", open > 0 ? "text-orange-700" : "text-[var(--cs-text-muted)]")}>{open}</div>
+            <div className={cn("text-[9px]", open > 0 ? "text-orange-500" : "text-[var(--cs-text-muted)]")}>Open</div>
           </div>
           <div className={cn("rounded-xl p-2 text-center", overdue > 0 ? "bg-red-50" : "bg-slate-50")}>
-            <Clock className={cn("h-3 w-3 mx-auto mb-0.5", overdue > 0 ? "text-red-500" : "text-slate-400")} />
-            <div className={cn("text-sm font-bold tabular-nums", overdue > 0 ? "text-red-700" : "text-slate-400")}>{overdue}</div>
-            <div className={cn("text-[9px]", overdue > 0 ? "text-red-500" : "text-slate-400")}>Overdue</div>
+            <Clock className={cn("h-3 w-3 mx-auto mb-0.5", overdue > 0 ? "text-red-500" : "text-[var(--cs-text-muted)]")} />
+            <div className={cn("text-sm font-bold tabular-nums", overdue > 0 ? "text-red-700" : "text-[var(--cs-text-muted)]")}>{overdue}</div>
+            <div className={cn("text-[9px]", overdue > 0 ? "text-red-500" : "text-[var(--cs-text-muted)]")}>Overdue</div>
           </div>
           <div className={cn("rounded-xl p-2 text-center", escalated > 0 ? "bg-amber-50" : "bg-emerald-50")}>
             <ArrowUpRight className={cn("h-3 w-3 mx-auto mb-0.5", escalated > 0 ? "text-amber-500" : "text-emerald-500")} />
@@ -163,15 +163,15 @@ export function ComplaintsSummaryCard() {
         {/* Urgent items list */}
         {urgentItems.length > 0 && (
           <div className="space-y-1">
-            <span className="text-[10px] font-medium text-slate-500 px-1">Action Required</span>
+            <span className="text-[10px] font-medium text-[var(--cs-text-muted)] px-1">Action Required</span>
             {urgentItems.map((c) => (
               <Link key={c.id} href="/complaints">
-                <div className="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-slate-50 transition-colors bg-orange-50/50">
+                <div className="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-[var(--cs-surface)] transition-colors bg-orange-50/50">
                   <Scale className="h-3 w-3 text-orange-500 shrink-0" />
-                  <span className="text-[11px] font-medium text-slate-700 flex-1 truncate">
+                  <span className="text-[11px] font-medium text-[var(--cs-text-secondary)] flex-1 truncate">
                     {c.reference}: {c.summary.length > 40 ? c.summary.slice(0, 40) + "…" : c.summary}
                   </span>
-                  <span className="text-[9px] text-slate-500 shrink-0">
+                  <span className="text-[9px] text-[var(--cs-text-muted)] shrink-0">
                     {STAGE_LABELS[c.stage] ?? c.stage}
                   </span>
                 </div>

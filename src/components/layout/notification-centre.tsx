@@ -295,16 +295,16 @@ export function NotificationCentre() {
         className={cn(
           "relative flex h-8 w-8 items-center justify-center rounded-xl transition-colors",
           open
-            ? "bg-slate-100 text-slate-700"
-            : "text-slate-400 hover:bg-slate-100 hover:text-slate-600",
+            ? "bg-[var(--cs-surface)] text-[var(--cs-text-secondary)]"
+            : "text-[var(--cs-text-muted)] hover:bg-[var(--cs-surface)] hover:text-[var(--cs-text-secondary)]",
         )}
         title={`${totalCount} notification${totalCount !== 1 ? "s" : ""}`}
       >
         <Bell className="h-4 w-4" />
         {totalCount > 0 && (
           <span className={cn(
-            "absolute -top-0.5 -right-0.5 flex h-4 min-w-4 items-center justify-center rounded-full px-1 text-[9px] font-bold text-white ring-2 ring-white",
-            criticalCount > 0 ? "bg-red-500" : "bg-amber-500",
+            "absolute -top-0.5 -right-0.5 flex h-4 min-w-4 items-center justify-center rounded-full px-1 text-[9px] font-bold text-white ring-2 ring-[var(--cs-surface-elevated)]",
+            criticalCount > 0 ? "bg-[var(--cs-risk)]" : "bg-[var(--cs-warning)]",
           )}>
             {totalCount}
           </span>
@@ -313,14 +313,14 @@ export function NotificationCentre() {
 
       {/* ── Dropdown panel ── */}
       {open && (
-        <div className="absolute right-0 top-full mt-2 w-[380px] max-h-[70vh] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl z-50 flex flex-col animate-fade-in">
+        <div className="absolute right-0 top-full mt-2 w-[380px] max-h-[70vh] overflow-hidden rounded-2xl border border-[var(--cs-border)] bg-[var(--cs-surface-elevated)] shadow-[var(--cs-shadow-elevated)] z-50 flex flex-col animate-fade-in">
           {/* Header */}
-          <div className="flex items-center justify-between px-4 py-3 border-b border-slate-100 shrink-0">
+          <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--cs-border-subtle)] shrink-0">
             <div className="flex items-center gap-2">
-              <Bell className="h-4 w-4 text-slate-500" />
-              <span className="text-sm font-semibold text-slate-800">Notifications</span>
+              <Bell className="h-4 w-4 text-[var(--cs-text-muted)]" />
+              <span className="text-sm font-semibold text-[var(--cs-navy)]">Notifications</span>
               {totalCount > 0 && (
-                <span className="text-[10px] font-medium text-slate-400 bg-slate-100 rounded-full px-2 py-0.5">
+                <span className="text-[10px] font-medium text-[var(--cs-text-muted)] bg-[var(--cs-surface)] rounded-full px-2 py-0.5">
                   {totalCount}
                 </span>
               )}
@@ -328,7 +328,7 @@ export function NotificationCentre() {
             {dismissedIds.size > 0 && (
               <button
                 onClick={() => setDismissedIds(new Set())}
-                className="text-[10px] text-blue-600 hover:text-blue-700 font-medium"
+                className="text-[10px] text-[var(--cs-info)] hover:text-[var(--cs-info)]/80 font-medium"
               >
                 Show all
               </button>
@@ -408,11 +408,11 @@ export function NotificationCentre() {
           </div>
 
           {/* Footer */}
-          <div className="border-t border-slate-100 px-4 py-2.5 shrink-0">
+          <div className="border-t border-[var(--cs-border-subtle)] px-4 py-2.5 shrink-0">
             <Link
               href="/dashboard"
               onClick={() => setOpen(false)}
-              className="flex items-center justify-center gap-1.5 text-[11px] font-medium text-blue-600 hover:text-blue-700 transition-colors"
+              className="flex items-center justify-center gap-1.5 text-[11px] font-medium text-[var(--cs-info)] hover:text-[var(--cs-info)]/80 transition-colors"
             >
               View Command Centre
               <ChevronRight className="h-3 w-3" />

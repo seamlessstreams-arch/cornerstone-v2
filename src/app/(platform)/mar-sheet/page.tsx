@@ -31,7 +31,7 @@ const ROUTE_CONFIG: Record<MarRoute, { color: string; bg: string; border: string
 };
 
 const TYPE_CONFIG: Record<MarScheduleType, { color: string; bg: string; border: string }> = {
-  scheduled: { color: "text-slate-700", bg: "bg-slate-100", border: "border-slate-200" },
+  scheduled: { color: "text-[var(--cs-text-secondary)]", bg: "bg-slate-100", border: "border-[var(--cs-border)]" },
   prn:       { color: "text-violet-700", bg: "bg-violet-50", border: "border-violet-200" },
 };
 
@@ -143,10 +143,10 @@ export default function MarSheetPage() {
       }
     >
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
-        <Card className="border-slate-200"><CardContent className="p-3"><div className="text-[10px] font-medium text-slate-500 uppercase tracking-wide">Doses Today</div><div className="text-2xl font-bold text-emerald-600 mt-0.5">{stats.dosesToday}</div></CardContent></Card>
-        <Card className="border-slate-200"><CardContent className="p-3"><div className="text-[10px] font-medium text-slate-500 uppercase tracking-wide">Refusals (7d)</div><div className={cn("text-2xl font-bold mt-0.5", stats.refusalsThisWeek > 0 ? "text-rose-600" : "text-slate-900")}>{stats.refusalsThisWeek}</div></CardContent></Card>
-        <Card className="border-slate-200"><CardContent className="p-3"><div className="text-[10px] font-medium text-slate-500 uppercase tracking-wide">Missed Doses (7d)</div><div className={cn("text-2xl font-bold mt-0.5", stats.missedThisWeek > 0 ? "text-amber-600" : "text-slate-900")}>{stats.missedThisWeek}</div></CardContent></Card>
-        <Card className="border-slate-200"><CardContent className="p-3"><div className="text-[10px] font-medium text-slate-500 uppercase tracking-wide">Audit Compliance</div><div className={cn("text-2xl font-bold mt-0.5", stats.auditPct === 100 ? "text-emerald-600" : "text-amber-600")}>{stats.auditPct}<span className="text-sm font-normal text-slate-400">%</span></div></CardContent></Card>
+        <Card className="border-[var(--cs-border)]"><CardContent className="p-3"><div className="text-[10px] font-medium text-[var(--cs-text-muted)] uppercase tracking-wide">Doses Today</div><div className="text-2xl font-bold text-emerald-600 mt-0.5">{stats.dosesToday}</div></CardContent></Card>
+        <Card className="border-[var(--cs-border)]"><CardContent className="p-3"><div className="text-[10px] font-medium text-[var(--cs-text-muted)] uppercase tracking-wide">Refusals (7d)</div><div className={cn("text-2xl font-bold mt-0.5", stats.refusalsThisWeek > 0 ? "text-rose-600" : "text-[var(--cs-navy)]")}>{stats.refusalsThisWeek}</div></CardContent></Card>
+        <Card className="border-[var(--cs-border)]"><CardContent className="p-3"><div className="text-[10px] font-medium text-[var(--cs-text-muted)] uppercase tracking-wide">Missed Doses (7d)</div><div className={cn("text-2xl font-bold mt-0.5", stats.missedThisWeek > 0 ? "text-amber-600" : "text-[var(--cs-navy)]")}>{stats.missedThisWeek}</div></CardContent></Card>
+        <Card className="border-[var(--cs-border)]"><CardContent className="p-3"><div className="text-[10px] font-medium text-[var(--cs-text-muted)] uppercase tracking-wide">Audit Compliance</div><div className={cn("text-2xl font-bold mt-0.5", stats.auditPct === 100 ? "text-emerald-600" : "text-amber-600")}>{stats.auditPct}<span className="text-sm font-normal text-[var(--cs-text-muted)]">%</span></div></CardContent></Card>
       </div>
 
       {followUps.length > 0 && (
@@ -163,7 +163,7 @@ export default function MarSheetPage() {
 
       <div className="flex flex-wrap items-center gap-2 mb-4">
         <Select value={ypFilter} onValueChange={setYpFilter}>
-          <SelectTrigger className="h-8 text-xs w-[160px]"><Filter className="h-3 w-3 mr-1 text-slate-400" /><SelectValue placeholder="Young person" /></SelectTrigger>
+          <SelectTrigger className="h-8 text-xs w-[160px]"><Filter className="h-3 w-3 mr-1 text-[var(--cs-text-muted)]" /><SelectValue placeholder="Young person" /></SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All Young People</SelectItem>
             <SelectItem value="yp_alex">{getYPName("yp_alex")}</SelectItem>
@@ -188,7 +188,7 @@ export default function MarSheetPage() {
           </SelectContent>
         </Select>
         <Select value={sortBy} onValueChange={(v) => setSortBy(v as typeof sortBy)}>
-          <SelectTrigger className="h-8 text-xs w-[150px]"><ArrowUpDown className="h-3 w-3 mr-1 text-slate-400" /><SelectValue /></SelectTrigger>
+          <SelectTrigger className="h-8 text-xs w-[150px]"><ArrowUpDown className="h-3 w-3 mr-1 text-[var(--cs-text-muted)]" /><SelectValue /></SelectTrigger>
           <SelectContent>
             <SelectItem value="newest">Newest first</SelectItem>
             <SelectItem value="oldest">Oldest first</SelectItem>
@@ -196,16 +196,16 @@ export default function MarSheetPage() {
           </SelectContent>
         </Select>
         {hasFilters && (
-          <Button variant="ghost" size="sm" className="h-8 text-xs text-slate-400 hover:text-slate-600" onClick={() => { setYpFilter("all"); setDateFilter("all"); setStatusFilter("all"); }}>
+          <Button variant="ghost" size="sm" className="h-8 text-xs text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)]" onClick={() => { setYpFilter("all"); setDateFilter("all"); setStatusFilter("all"); }}>
             <XCircle className="h-3 w-3 mr-1" /> Clear
           </Button>
         )}
       </div>
 
-      <p className="text-[11px] text-slate-400 mb-3">Showing {filtered.length} of {entries.length} record{entries.length !== 1 ? "s" : ""}</p>
+      <p className="text-[11px] text-[var(--cs-text-muted)] mb-3">Showing {filtered.length} of {entries.length} record{entries.length !== 1 ? "s" : ""}</p>
 
       <div className="space-y-2">
-        {filtered.length === 0 && (<div className="text-center py-12 text-sm text-slate-400">No MAR entries match the current filters.</div>)}
+        {filtered.length === 0 && (<div className="text-center py-12 text-sm text-[var(--cs-text-muted)]">No MAR entries match the current filters.</div>)}
 
         {filtered.map((entry) => {
           const isExpanded = expandedId === entry.id;
@@ -216,21 +216,21 @@ export default function MarSheetPage() {
 
           return (
             <div key={entry.id} className={cn("rounded-lg border bg-white transition-all", status === "refused" && "border-rose-300", status === "missed" && "border-amber-300", !isCompliant && status === "given" && "border-orange-300")}>
-              <div className="flex items-center gap-3 p-3 cursor-pointer hover:bg-slate-50/50" onClick={() => setExpandedId(isExpanded ? null : entry.id)}>
+              <div className="flex items-center gap-3 p-3 cursor-pointer hover:bg-[var(--cs-surface)]/50" onClick={() => setExpandedId(isExpanded ? null : entry.id)}>
                 <div className="flex-shrink-0">
                   {status === "given" && <CheckCircle2 className="h-5 w-5 text-emerald-600" />}
                   {status === "refused" && <XCircle className="h-5 w-5 text-rose-600" />}
                   {status === "missed" && <AlertTriangle className="h-5 w-5 text-amber-600" />}
                 </div>
                 <div className="flex-shrink-0 w-[110px]">
-                  <div className="text-xs font-medium text-slate-700">{formatDate(entry.date)}</div>
-                  <div className="text-[10px] text-slate-400 flex items-center gap-1"><Clock className="h-2.5 w-2.5" />{entry.time}</div>
+                  <div className="text-xs font-medium text-[var(--cs-text-secondary)]">{formatDate(entry.date)}</div>
+                  <div className="text-[10px] text-[var(--cs-text-muted)] flex items-center gap-1"><Clock className="h-2.5 w-2.5" />{entry.time}</div>
                 </div>
-                <div className="flex-shrink-0 w-[110px]"><div className="text-xs font-semibold text-slate-900">{getYPName(entry.child_id)}</div></div>
+                <div className="flex-shrink-0 w-[110px]"><div className="text-xs font-semibold text-[var(--cs-navy)]">{getYPName(entry.child_id)}</div></div>
                 <div className="flex-1 min-w-0">
-                  <div className="text-xs font-semibold text-slate-900 truncate flex items-center gap-1.5">
-                    <Pill className="h-3 w-3 text-slate-400 flex-shrink-0" /> {entry.medication_name}
-                    <span className="text-slate-500 font-normal">— {entry.dose}</span>
+                  <div className="text-xs font-semibold text-[var(--cs-navy)] truncate flex items-center gap-1.5">
+                    <Pill className="h-3 w-3 text-[var(--cs-text-muted)] flex-shrink-0" /> {entry.medication_name}
+                    <span className="text-[var(--cs-text-muted)] font-normal">— {entry.dose}</span>
                   </div>
                   <div className="flex items-center gap-1.5 mt-0.5">
                     <Badge className={cn("text-[9px] px-1.5 py-0 border", routeCfg.bg, routeCfg.color, routeCfg.border)}>{MAR_ROUTE_LABEL[entry.route]}</Badge>
@@ -240,10 +240,10 @@ export default function MarSheetPage() {
                   </div>
                 </div>
                 <div className="flex-shrink-0 hidden md:block text-right">
-                  <div className="text-[10px] text-slate-400">Signed</div>
-                  <div className="text-xs font-medium text-slate-700">{getStaffName(entry.signature)}</div>
+                  <div className="text-[10px] text-[var(--cs-text-muted)]">Signed</div>
+                  <div className="text-xs font-medium text-[var(--cs-text-secondary)]">{getStaffName(entry.signature)}</div>
                 </div>
-                <div className="flex-shrink-0">{isExpanded ? <ChevronUp className="h-4 w-4 text-slate-400" /> : <ChevronDown className="h-4 w-4 text-slate-400" />}</div>
+                <div className="flex-shrink-0">{isExpanded ? <ChevronUp className="h-4 w-4 text-[var(--cs-text-muted)]" /> : <ChevronDown className="h-4 w-4 text-[var(--cs-text-muted)]" />}</div>
               </div>
 
               {isExpanded && (
@@ -261,18 +261,18 @@ export default function MarSheetPage() {
                     </div>
                   )}
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                    <div><div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wide mb-0.5">Administered By</div><div className="text-xs text-slate-800">{getStaffName(entry.administered_by)}</div></div>
-                    <div><div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wide mb-0.5">Witnessed By</div><div className="text-xs text-slate-800">{getStaffName(entry.witnessed_by)}</div></div>
-                    <div><div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wide mb-0.5">Signature</div><div className="text-xs text-slate-800 font-medium">{getStaffName(entry.signature)}</div></div>
-                    <div><div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wide mb-0.5">Route / Type</div><div className="text-xs text-slate-800">{MAR_ROUTE_LABEL[entry.route]} — {MAR_SCHEDULE_TYPE_LABEL[entry.schedule_type]}</div></div>
+                    <div><div className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-0.5">Administered By</div><div className="text-xs text-[var(--cs-navy)]">{getStaffName(entry.administered_by)}</div></div>
+                    <div><div className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-0.5">Witnessed By</div><div className="text-xs text-[var(--cs-navy)]">{getStaffName(entry.witnessed_by)}</div></div>
+                    <div><div className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-0.5">Signature</div><div className="text-xs text-[var(--cs-navy)] font-medium">{getStaffName(entry.signature)}</div></div>
+                    <div><div className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-0.5">Route / Type</div><div className="text-xs text-[var(--cs-navy)]">{MAR_ROUTE_LABEL[entry.route]} — {MAR_SCHEDULE_TYPE_LABEL[entry.schedule_type]}</div></div>
                   </div>
-                  {entry.notes && (<div><h4 className="text-[10px] font-semibold text-slate-500 uppercase tracking-wide mb-1">Notes</h4><p className="text-xs text-slate-700 leading-relaxed">{entry.notes}</p></div>)}
-                  <div className="rounded-lg bg-slate-50 border border-slate-200 p-3 flex items-center justify-between gap-3">
+                  {entry.notes && (<div><h4 className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-1">Notes</h4><p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed">{entry.notes}</p></div>)}
+                  <div className="rounded-lg bg-slate-50 border border-[var(--cs-border)] p-3 flex items-center justify-between gap-3">
                     <div className="flex items-center gap-2">
                       <ShieldCheck className={cn("h-4 w-4", entry.expiry_check ? "text-emerald-600" : "text-amber-600")} />
-                      <div><div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wide">Batch Number</div><div className="text-xs font-mono text-slate-800">{entry.batch_number || "—"}</div></div>
+                      <div><div className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide">Batch Number</div><div className="text-xs font-mono text-[var(--cs-navy)]">{entry.batch_number || "—"}</div></div>
                     </div>
-                    <div className="text-right"><div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wide">Expiry Verified</div><div className={cn("text-xs font-medium", entry.expiry_check ? "text-emerald-700" : "text-amber-700")}>{entry.expiry_check ? "Yes — checked at administration" : "Not verified"}</div></div>
+                    <div className="text-right"><div className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide">Expiry Verified</div><div className={cn("text-xs font-medium", entry.expiry_check ? "text-emerald-700" : "text-amber-700")}>{entry.expiry_check ? "Yes — checked at administration" : "Not verified"}</div></div>
                   </div>
                   <SmartLinkPanel sourceType="mar-sheet" sourceId={entry.id} childId={entry.child_id} compact />
                 </div>
@@ -282,8 +282,8 @@ export default function MarSheetPage() {
         })}
       </div>
 
-      <div className="mt-6 rounded-lg border border-slate-200 bg-slate-50 p-3">
-        <p className="text-[10px] text-slate-500 leading-relaxed">
+      <div className="mt-6 rounded-lg border border-[var(--cs-border)] bg-slate-50 p-3">
+        <p className="text-[10px] text-[var(--cs-text-muted)] leading-relaxed">
           <strong>Regulatory context:</strong> The Medication Administration Record supports compliance with{" "}
           <strong>Quality Standard 7 (Health and wellbeing)</strong> of the Children&apos;s Homes (England)
           Regulations 2015 and the home&apos;s medication policy. Every dose — given, refused, or missed —

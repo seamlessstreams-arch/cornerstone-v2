@@ -43,7 +43,7 @@ const RESPONSE_CLR: Record<Reg35OfstedResponse, string> = {
   no_further_action: "bg-green-100 text-green-800",
   monitoring: "bg-amber-100 text-amber-800",
   inspection_brought_forward: "bg-red-100 text-red-800",
-  awaiting_response: "bg-slate-100 text-slate-700",
+  awaiting_response: "bg-slate-100 text-[var(--cs-text-secondary)]",
 };
 
 /* ── page ─────────────────────────────────────────────────────────────── */

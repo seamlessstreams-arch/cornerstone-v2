@@ -30,7 +30,7 @@ export function YourHandoverCard() {
   if (isLoading) {
     return (
       <Card className="rounded-2xl">
-        <CardContent className="pt-4 pb-3 flex items-center justify-center gap-2 text-slate-400">
+        <CardContent className="pt-4 pb-3 flex items-center justify-center gap-2 text-[var(--cs-text-muted)]">
           <Loader2 className="h-4 w-4 animate-spin" />
           <span className="text-xs">Loading your handover...</span>
         </CardContent>
@@ -56,7 +56,7 @@ export function YourHandoverCard() {
       <CardContent>
         {/* Quick stats row */}
         <div className="flex items-center gap-3 mb-3">
-          <div className="flex items-center gap-1 text-[11px] text-slate-500">
+          <div className="flex items-center gap-1 text-[11px] text-[var(--cs-text-muted)]">
             <Clock className="h-3 w-3" />
             {ctx.days_since_last_shift === null
               ? "No recent shift"
@@ -71,7 +71,7 @@ export function YourHandoverCard() {
             </div>
           )}
           {ctx.missed_events.daily_logs > 0 && (
-            <div className="flex items-center gap-1 text-[11px] text-slate-500">
+            <div className="flex items-center gap-1 text-[11px] text-[var(--cs-text-muted)]">
               <BookOpen className="h-3 w-3" />
               {ctx.missed_events.daily_logs} logs
             </div>
@@ -86,7 +86,7 @@ export function YourHandoverCard() {
               <span className="text-[10px] font-semibold text-violet-700">ARIA catch-up</span>
             </div>
             <pre className={cn(
-              "text-[10px] text-slate-600 whitespace-pre-wrap font-sans leading-relaxed",
+              "text-[10px] text-[var(--cs-text-secondary)] whitespace-pre-wrap font-sans leading-relaxed",
               !expanded && "line-clamp-4"
             )}>
               {ctx.aria_summary}
@@ -103,7 +103,7 @@ export function YourHandoverCard() {
         )}
 
         {ctx.context_depth === "brief" && (
-          <p className="text-xs text-slate-500 mb-3">
+          <p className="text-xs text-[var(--cs-text-muted)] mb-3">
             You&apos;re up to date — no major changes since your last shift.
           </p>
         )}

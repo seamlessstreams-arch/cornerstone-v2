@@ -73,7 +73,7 @@ const roleColour: Record<CulturalMentorRole, string> = {
   heritage_language_teacher: "bg-teal-100 text-teal-800 border-teal-200",
   faith_aware_therapist: "bg-purple-100 text-purple-800 border-purple-200",
   diaspora_mentor: "bg-pink-100 text-pink-800 border-pink-200",
-  other: "bg-slate-100 text-slate-800 border-slate-200",
+  other: "bg-slate-100 text-[var(--cs-navy)] border-[var(--cs-border)]",
 };
 
 export default function ChildCulturalReligiousMentorPage() {
@@ -131,45 +131,45 @@ export default function ChildCulturalReligiousMentorPage() {
       ) : (
       <>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-slate-600 text-sm mb-1">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-[var(--cs-text-secondary)] text-sm mb-1">
             <Users className="h-4 w-4" />
             <span>Mentors matched</span>
           </div>
-          <div className="text-2xl font-semibold text-slate-900">{stats.matched}</div>
+          <div className="text-2xl font-semibold text-[var(--cs-navy)]">{stats.matched}</div>
         </div>
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-slate-600 text-sm mb-1">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-[var(--cs-text-secondary)] text-sm mb-1">
             <Star className="h-4 w-4" />
             <span>Central / strong</span>
           </div>
-          <div className="text-2xl font-semibold text-slate-900">{stats.central}</div>
+          <div className="text-2xl font-semibold text-[var(--cs-navy)]">{stats.central}</div>
         </div>
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-slate-600 text-sm mb-1">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-[var(--cs-text-secondary)] text-sm mb-1">
             <ShieldCheck className="h-4 w-4" />
             <span>Safeguarding checked</span>
           </div>
-          <div className="text-2xl font-semibold text-slate-900">{stats.safeguardingChecked}</div>
+          <div className="text-2xl font-semibold text-[var(--cs-navy)]">{stats.safeguardingChecked}</div>
         </div>
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-slate-600 text-sm mb-1">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-[var(--cs-text-secondary)] text-sm mb-1">
             <Award className="h-4 w-4" />
             <span>Reviews due (90d)</span>
           </div>
-          <div className="text-2xl font-semibold text-slate-900">{stats.reviewsDue}</div>
+          <div className="text-2xl font-semibold text-[var(--cs-navy)]">{stats.reviewsDue}</div>
         </div>
       </div>
 
       <div className="flex flex-col sm:flex-row gap-3 mb-4">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--cs-text-muted)]" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search young person, mentor, faith / culture..."
-            className="w-full pl-9 pr-3 py-2 text-sm border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full pl-9 pr-3 py-2 text-sm border border-[var(--cs-border)] rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
         <Select value={roleFilter} onValueChange={setRoleFilter}>
@@ -208,15 +208,15 @@ export default function ChildCulturalReligiousMentorPage() {
         {filtered.map((r) => {
           const isOpen = expandedId === r.id;
           return (
-            <div key={r.id} className="rounded-lg border border-slate-200 bg-white overflow-hidden">
+            <div key={r.id} className="rounded-lg border border-[var(--cs-border)] bg-white overflow-hidden">
               <button
                 onClick={() => setExpandedId(isOpen ? null : r.id)}
-                className="w-full p-4 flex items-start justify-between gap-3 hover:bg-slate-50 text-left"
+                className="w-full p-4 flex items-start justify-between gap-3 hover:bg-[var(--cs-surface)] text-left"
               >
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap mb-1">
-                    <span className="font-semibold text-slate-900">{getYPName(r.child_id)}</span>
-                    <span className="text-slate-700">— {r.mentor_name}</span>
+                    <span className="font-semibold text-[var(--cs-navy)]">{getYPName(r.child_id)}</span>
+                    <span className="text-[var(--cs-text-secondary)]">— {r.mentor_name}</span>
                     <span className={cn("text-xs px-2 py-0.5 rounded-full border", roleColour[r.mentor_role])}>
                       {CULTURAL_MENTOR_ROLE_LABEL[r.mentor_role]}
                     </span>
@@ -229,33 +229,33 @@ export default function ChildCulturalReligiousMentorPage() {
                       </span>
                     ) : null}
                   </div>
-                  <div className="text-sm text-slate-600">
+                  <div className="text-sm text-[var(--cs-text-secondary)]">
                     {r.faith_culture} · {MENTOR_CONTACT_FREQUENCY_LABEL[r.contact_frequency]} · {getStaffName(r.key_worker)}
                   </div>
                 </div>
-                {isOpen ? <ChevronUp className="h-5 w-5 text-slate-400" /> : <ChevronDown className="h-5 w-5 text-slate-400" />}
+                {isOpen ? <ChevronUp className="h-5 w-5 text-[var(--cs-text-muted)]" /> : <ChevronDown className="h-5 w-5 text-[var(--cs-text-muted)]" />}
               </button>
               {isOpen ? (
-                <div className="px-4 pb-4 border-t border-slate-100 bg-slate-50/50">
+                <div className="px-4 pb-4 border-t border-[var(--cs-border-subtle)] bg-slate-50/50">
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 pt-4">
                     <div className="rounded-md border border-amber-200 bg-amber-50 p-3 lg:col-span-2">
                       <div className="text-xs font-semibold text-amber-700 uppercase mb-2">Child Voice</div>
                       <p className="text-sm text-amber-900 italic">&ldquo;{r.child_voice}&rdquo;</p>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3 lg:col-span-2">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Staff Observation</div>
-                      <p className="text-sm text-slate-700">{r.staff_observation}</p>
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3 lg:col-span-2">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Staff Observation</div>
+                      <p className="text-sm text-[var(--cs-text-secondary)]">{r.staff_observation}</p>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">How matched</div>
-                      <p className="text-sm text-slate-700">{r.introduction_method}</p>
-                      <div className="text-xs text-slate-500 mt-2">Matched {r.matched_date}</div>
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">How matched</div>
+                      <p className="text-sm text-[var(--cs-text-secondary)]">{r.introduction_method}</p>
+                      <div className="text-xs text-[var(--cs-text-muted)] mt-2">Matched {r.matched_date}</div>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Contact settings</div>
-                      <ul className="text-sm text-slate-700 space-y-1">
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Contact settings</div>
+                      <ul className="text-sm text-[var(--cs-text-secondary)] space-y-1">
                         {r.contact_settings.map((s, i) => (
-                          <li key={i} className="flex gap-2"><span className="text-slate-400">·</span><span>{s}</span></li>
+                          <li key={i} className="flex gap-2"><span className="text-[var(--cs-text-muted)]">·</span><span>{s}</span></li>
                         ))}
                       </ul>
                     </div>
@@ -267,32 +267,32 @@ export default function ChildCulturalReligiousMentorPage() {
                         ))}
                       </ul>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3 lg:col-span-2">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Safeguarding checks</div>
-                      <ul className="text-sm text-slate-700 space-y-1.5">
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3 lg:col-span-2">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Safeguarding checks</div>
+                      <ul className="text-sm text-[var(--cs-text-secondary)] space-y-1.5">
                         {r.safeguarding_checks_done.map((c, i) => (
                           <li key={i} className="flex gap-2 justify-between">
                             <span>{c.check}</span>
-                            <span className="text-xs text-slate-500">{c.date} · {c.outcome}</span>
+                            <span className="text-xs text-[var(--cs-text-muted)]">{c.date} · {c.outcome}</span>
                           </li>
                         ))}
                       </ul>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3 lg:col-span-2">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Recent meetings</div>
-                      <ul className="text-sm text-slate-700 space-y-1.5">
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3 lg:col-span-2">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Recent meetings</div>
+                      <ul className="text-sm text-[var(--cs-text-secondary)] space-y-1.5">
                         {r.meetings_record.map((m, i) => (
                           <li key={i}>
-                            <div className="text-xs text-slate-500">{m.date}</div>
+                            <div className="text-xs text-[var(--cs-text-muted)]">{m.date}</div>
                             <div><span className="font-medium">{m.topic}</span> — {m.outcome}</div>
                           </li>
                         ))}
                       </ul>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3 lg:col-span-2">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Home awareness</div>
-                      <p className="text-sm text-slate-700">{r.home_awareness}</p>
-                      <div className="text-xs text-slate-500 mt-2">Parent / SW aware: {r.parent_sw_aware ? "Yes" : "No"}</div>
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3 lg:col-span-2">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Home awareness</div>
+                      <p className="text-sm text-[var(--cs-text-secondary)]">{r.home_awareness}</p>
+                      <div className="text-xs text-[var(--cs-text-muted)] mt-2">Parent / SW aware: {r.parent_sw_aware ? "Yes" : "No"}</div>
                     </div>
                     {r.challenges_noted.length ? (
                       <div className="rounded-md border border-amber-200 bg-amber-50 p-3 lg:col-span-2">

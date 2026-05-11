@@ -40,9 +40,9 @@ import {
 
 /* ── local colour maps ───────────────────────────────────────────────────── */
 
-const TYPE_CLR: Record<PropertyDamageType, string> = { accidental: "bg-blue-100 text-blue-800", deliberate: "bg-red-100 text-red-800", wear_and_tear: "bg-slate-100 text-slate-800", environmental: "bg-amber-100 text-amber-800", unknown: "bg-gray-100 text-gray-800" };
+const TYPE_CLR: Record<PropertyDamageType, string> = { accidental: "bg-blue-100 text-blue-800", deliberate: "bg-red-100 text-red-800", wear_and_tear: "bg-slate-100 text-[var(--cs-navy)]", environmental: "bg-amber-100 text-amber-800", unknown: "bg-gray-100 text-gray-800" };
 const SEVERITY_CLR: Record<PropertyDamageSeverity, string> = { minor: "bg-green-100 text-green-800", moderate: "bg-yellow-100 text-yellow-800", major: "bg-orange-100 text-orange-800", structural: "bg-red-100 text-red-800" };
-const STATUS_CLR: Record<PropertyRepairStatus, string> = { reported: "bg-blue-100 text-blue-800", assessed: "bg-indigo-100 text-indigo-800", repair_scheduled: "bg-purple-100 text-purple-800", repaired: "bg-green-100 text-green-800", write_off: "bg-slate-100 text-slate-800", insurance_claim: "bg-amber-100 text-amber-800" };
+const STATUS_CLR: Record<PropertyRepairStatus, string> = { reported: "bg-blue-100 text-blue-800", assessed: "bg-indigo-100 text-indigo-800", repair_scheduled: "bg-purple-100 text-purple-800", repaired: "bg-green-100 text-green-800", write_off: "bg-slate-100 text-[var(--cs-navy)]", insurance_claim: "bg-amber-100 text-amber-800" };
 const BORDER_TYPE: Record<PropertyDamageType, string> = { accidental: "border-l-blue-400", deliberate: "border-l-red-500", wear_and_tear: "border-l-slate-400", environmental: "border-l-amber-400", unknown: "border-l-gray-400" };
 
 /* ── page ────────────────────────────────────────────────────────────────── */

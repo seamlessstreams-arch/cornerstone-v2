@@ -25,7 +25,7 @@ const STATUS_META: Record<PepStatus, { label: string; color: string }> = {
   current: { label: PEP_STATUS_LABEL.current, color: "bg-green-100 text-green-800" },
   review_due: { label: PEP_STATUS_LABEL.review_due, color: "bg-amber-100 text-amber-800" },
   overdue: { label: PEP_STATUS_LABEL.overdue, color: "bg-red-100 text-red-800" },
-  draft: { label: PEP_STATUS_LABEL.draft, color: "bg-slate-100 text-slate-700" },
+  draft: { label: PEP_STATUS_LABEL.draft, color: "bg-slate-100 text-[var(--cs-text-secondary)]" },
 };
 
 const ATT_META: Record<PepAttainmentLevel, { label: string; color: string }> = {

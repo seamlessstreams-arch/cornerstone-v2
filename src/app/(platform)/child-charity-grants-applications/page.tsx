@@ -55,7 +55,7 @@ const CATEGORY_COLOUR: Record<CharityGrantCategory, string> = {
   sports_equipment: "bg-emerald-100 text-emerald-800",
   music_arts: "bg-purple-100 text-purple-700",
   driving_lessons: "bg-orange-100 text-orange-800",
-  it_tech: "bg-slate-100 text-slate-700",
+  it_tech: "bg-slate-100 text-[var(--cs-text-secondary)]",
   travel_experience: "bg-sky-100 text-sky-800",
   family_support: "bg-rose-100 text-rose-700",
   other: "bg-gray-100 text-gray-700",

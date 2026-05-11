@@ -24,7 +24,7 @@ import { getStaffName as seedGetStaffName } from "@/lib/seed-data";
 import type { StaffCompetencyProfile } from "@/types/extended";
 
 const LEVEL_COLOUR: Record<CompetencyLevel, string> = {
-  0: "bg-slate-100 text-slate-400",
+  0: "bg-slate-100 text-[var(--cs-text-muted)]",
   1: "bg-red-100 text-red-600",
   2: "bg-amber-100 text-amber-700",
   3: "bg-blue-100 text-blue-700",
@@ -217,7 +217,7 @@ export default function CompetencyFrameworkPage() {
           <PrintButton title="Competency Framework" subtitle="Oak House — Staff Competency Matrix" targetId="competency-content" />
           <SmartUploadButton variant="inline" label="Upload Competency Evidence" uploadContext="Workforce Intelligence — competency evidence or assessment document upload" />
           <Link href="/workforce">
-            <button className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50 transition-colors">
+            <button className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--cs-border)] bg-white px-3 py-1.5 text-xs font-medium text-[var(--cs-text-secondary)] hover:bg-[var(--cs-surface)] transition-colors">
               <BarChart2 className="h-3.5 w-3.5" />
               Workforce Hub
             </button>
@@ -229,57 +229,57 @@ export default function CompetencyFrameworkPage() {
 
       {/* Summary stats */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-        <div className="rounded-xl border border-slate-200 bg-white p-3 text-center">
+        <div className="rounded-xl border border-[var(--cs-border)] bg-white p-3 text-center">
           <Users className="h-4 w-4 text-indigo-500 mx-auto mb-1" />
-          <div className="text-lg font-bold text-slate-800 tabular-nums">{stats.profiled}</div>
-          <div className="text-[10px] text-slate-500">Staff Profiled</div>
+          <div className="text-lg font-bold text-[var(--cs-navy)] tabular-nums">{stats.profiled}</div>
+          <div className="text-[10px] text-[var(--cs-text-muted)]">Staff Profiled</div>
         </div>
-        <div className="rounded-xl border border-slate-200 bg-white p-3 text-center">
+        <div className="rounded-xl border border-[var(--cs-border)] bg-white p-3 text-center">
           <TrendingUp className={cn("h-4 w-4 mx-auto mb-1", stats.avgReadiness >= 70 ? "text-emerald-500" : stats.avgReadiness >= 50 ? "text-amber-500" : "text-red-500")} />
           <div className={cn("text-lg font-bold tabular-nums", stats.avgReadiness >= 70 ? "text-emerald-700" : stats.avgReadiness >= 50 ? "text-amber-700" : "text-red-700")}>
             {stats.avgReadiness}%
           </div>
-          <div className="text-[10px] text-slate-500">Avg Readiness</div>
+          <div className="text-[10px] text-[var(--cs-text-muted)]">Avg Readiness</div>
         </div>
-        <div className="rounded-xl border border-slate-200 bg-white p-3 text-center">
+        <div className="rounded-xl border border-[var(--cs-border)] bg-white p-3 text-center">
           <ShieldAlert className={cn("h-4 w-4 mx-auto mb-1", stats.gapCount > 0 ? "text-red-500" : "text-emerald-500")} />
           <div className={cn("text-lg font-bold tabular-nums", stats.gapCount > 0 ? "text-red-700" : "text-emerald-700")}>{stats.gapCount}</div>
-          <div className="text-[10px] text-slate-500">Competency Gaps</div>
+          <div className="text-[10px] text-[var(--cs-text-muted)]">Competency Gaps</div>
         </div>
-        <div className="rounded-xl border border-slate-200 bg-white p-3 text-center">
+        <div className="rounded-xl border border-[var(--cs-border)] bg-white p-3 text-center">
           <AlertTriangle className={cn("h-4 w-4 mx-auto mb-1", stats.belowThreshold > 0 ? "text-amber-500" : "text-emerald-500")} />
           <div className={cn("text-lg font-bold tabular-nums", stats.belowThreshold > 0 ? "text-amber-700" : "text-emerald-700")}>{stats.belowThreshold}</div>
-          <div className="text-[10px] text-slate-500">Below Threshold</div>
+          <div className="text-[10px] text-[var(--cs-text-muted)]">Below Threshold</div>
         </div>
-        <div className="rounded-xl border border-slate-200 bg-white p-3 text-center">
+        <div className="rounded-xl border border-[var(--cs-border)] bg-white p-3 text-center">
           <Award className="h-4 w-4 text-emerald-500 mx-auto mb-1" />
           <div className="text-xs font-bold text-emerald-700 truncate">
             {stats.strongestDomain ? COMPETENCY_DOMAIN_LABELS[stats.strongestDomain].split(" ")[0] : "—"}
           </div>
-          <div className="text-[10px] text-slate-500">Strongest</div>
+          <div className="text-[10px] text-[var(--cs-text-muted)]">Strongest</div>
         </div>
-        <div className="rounded-xl border border-slate-200 bg-white p-3 text-center">
+        <div className="rounded-xl border border-[var(--cs-border)] bg-white p-3 text-center">
           <Target className="h-4 w-4 text-red-500 mx-auto mb-1" />
           <div className="text-xs font-bold text-red-700 truncate">
             {stats.weakestDomain ? COMPETENCY_DOMAIN_LABELS[stats.weakestDomain].split(" ")[0] : "—"}
           </div>
-          <div className="text-[10px] text-slate-500">Weakest</div>
+          <div className="text-[10px] text-[var(--cs-text-muted)]">Weakest</div>
         </div>
       </div>
 
       {/* Search + Stage filter */}
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1 max-w-sm">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
           <input
             type="text"
             placeholder="Search by name, role or stage..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full rounded-lg border border-slate-200 bg-white py-1.5 pl-9 pr-3 text-xs text-slate-700 placeholder:text-slate-400 focus:border-indigo-300 focus:ring-1 focus:ring-indigo-200 outline-none transition-all"
+            className="w-full rounded-lg border border-[var(--cs-border)] bg-white py-1.5 pl-9 pr-3 text-xs text-[var(--cs-text-secondary)] placeholder:text-[var(--cs-text-muted)] focus:border-[var(--cs-aria-gold)] focus:ring-1 focus:ring-[var(--cs-aria-gold)]/30 outline-none transition-all"
           />
         </div>
-        <div className="flex items-center gap-1.5 text-xs text-slate-500 shrink-0">
+        <div className="flex items-center gap-1.5 text-xs text-[var(--cs-text-muted)] shrink-0">
           <ArrowUpDown className="h-3.5 w-3.5" />
           <select value={sortBy} onChange={(e) => setSortBy(e.target.value as typeof sortBy)} className="bg-white border rounded-md px-2 py-1.5 text-xs">
             <option value="readiness">Readiness (lowest first)</option>
@@ -294,7 +294,7 @@ export default function CompetencyFrameworkPage() {
               "px-2.5 py-1 rounded-full text-[11px] font-medium border transition-all",
               stageFilter === "all"
                 ? "bg-slate-800 text-white border-slate-800"
-                : "bg-white text-slate-600 border-slate-200 hover:border-slate-400",
+                : "bg-white text-[var(--cs-text-secondary)] border-[var(--cs-border)] hover:border-slate-400",
             )}
           >
             All Stages ({profiles.length})
@@ -307,7 +307,7 @@ export default function CompetencyFrameworkPage() {
                 "px-2.5 py-1 rounded-full text-[11px] font-medium border transition-all",
                 stageFilter === stage
                   ? "bg-slate-800 text-white border-slate-800"
-                  : "bg-white text-slate-600 border-slate-200 hover:border-slate-400",
+                  : "bg-white text-[var(--cs-text-secondary)] border-[var(--cs-border)] hover:border-slate-400",
               )}
             >
               {PATHWAY_STAGE_LABELS[stage].split(" ")[0]} ({stageCounts[stage]})
@@ -324,7 +324,7 @@ export default function CompetencyFrameworkPage() {
             "px-3 py-1 rounded-full text-xs font-medium border transition-all",
             selectedDomain === "all"
               ? "bg-indigo-600 text-white border-indigo-600"
-              : "bg-white text-slate-600 border-slate-200 hover:border-indigo-300",
+              : "bg-white text-[var(--cs-text-secondary)] border-[var(--cs-border)] hover:border-indigo-300",
           )}
         >
           All Domains
@@ -337,7 +337,7 @@ export default function CompetencyFrameworkPage() {
               "px-3 py-1 rounded-full text-xs font-medium border transition-all",
               selectedDomain === d
                 ? "bg-indigo-600 text-white border-indigo-600"
-                : "bg-white text-slate-600 border-slate-200 hover:border-indigo-300",
+                : "bg-white text-[var(--cs-text-secondary)] border-[var(--cs-border)] hover:border-indigo-300",
             )}
           >
             {COMPETENCY_DOMAIN_LABELS[d].split(" ").slice(0, 2).join(" ")}
@@ -346,8 +346,8 @@ export default function CompetencyFrameworkPage() {
       </div>
 
       {/* Team average bars */}
-      <div className="rounded-2xl border border-slate-200 bg-white p-4">
-        <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-3">Team Averages</p>
+      <div className="rounded-2xl border border-[var(--cs-border)] bg-white p-4">
+        <p className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-widest mb-3">Team Averages</p>
         <div className="space-y-2.5">
           {domainAverages
             .filter((d) => selectedDomain === "all" || d.domain === selectedDomain)
@@ -356,7 +356,7 @@ export default function CompetencyFrameworkPage() {
               return (
                 <div key={domain}>
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-xs text-slate-600">{COMPETENCY_DOMAIN_LABELS[domain]}</span>
+                    <span className="text-xs text-[var(--cs-text-secondary)]">{COMPETENCY_DOMAIN_LABELS[domain]}</span>
                     <span className={cn("text-xs font-bold px-1.5 rounded", LEVEL_COLOUR[level])}>
                       {avg.toFixed(1)} — {COMPETENCY_LEVEL_LABELS[level]}
                     </span>
@@ -375,27 +375,27 @@ export default function CompetencyFrameworkPage() {
 
       {/* Per-staff grid */}
       {filteredProfiles.length > 0 && (
-        <div className="rounded-2xl border border-slate-200 bg-white overflow-hidden">
-          <div className="flex items-center justify-between px-4 py-3 border-b border-slate-100">
-            <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest">
+        <div className="rounded-2xl border border-[var(--cs-border)] bg-white overflow-hidden">
+          <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--cs-border-subtle)]">
+            <p className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-widest">
               Individual Scores
             </p>
-            <span className="text-[10px] text-slate-400">
+            <span className="text-[10px] text-[var(--cs-text-muted)]">
               {filteredProfiles.length} staff · Cells below stage threshold shown with warning ring
             </span>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-xs">
               <thead>
-                <tr className="border-b border-slate-100 bg-slate-50">
-                  <th className="text-left px-4 py-2 text-xs font-semibold text-slate-500 min-w-[160px]">Staff Member</th>
+                <tr className="border-b border-[var(--cs-border-subtle)] bg-slate-50">
+                  <th className="text-left px-4 py-2 text-xs font-semibold text-[var(--cs-text-muted)] min-w-[160px]">Staff Member</th>
                   {(selectedDomain === "all" ? ALL_COMPETENCY_DOMAINS : [selectedDomain]).map((d) => (
-                    <th key={d} className="px-2 py-2 text-center text-[10px] font-semibold text-slate-400 min-w-[52px]">
+                    <th key={d} className="px-2 py-2 text-center text-[10px] font-semibold text-[var(--cs-text-muted)] min-w-[52px]">
                       {COMPETENCY_DOMAIN_LABELS[d].split(" ")[0]}
                     </th>
                   ))}
-                  <th className="px-3 py-2 text-center text-[10px] font-semibold text-slate-400">Stage</th>
-                  <th className="px-3 py-2 text-center text-[10px] font-semibold text-slate-400">Readiness</th>
+                  <th className="px-3 py-2 text-center text-[10px] font-semibold text-[var(--cs-text-muted)]">Stage</th>
+                  <th className="px-3 py-2 text-center text-[10px] font-semibold text-[var(--cs-text-muted)]">Readiness</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-50">
@@ -405,15 +405,15 @@ export default function CompetencyFrameworkPage() {
                     return score < getMinimumForStage(profile.current_stage, d);
                   });
                   return (
-                    <tr key={profile.id} className={cn("hover:bg-slate-50 transition-colors", hasGap && "bg-red-50/30")}>
+                    <tr key={profile.id} className={cn("hover:bg-[var(--cs-surface)] transition-colors", hasGap && "bg-red-50/30")}>
                       <td className="px-4 py-2.5">
                         <Link href={`/workforce/staff/${profile.staff_id}`} className="flex items-center gap-2 hover:text-indigo-600 transition-colors">
                           <div className="w-6 h-6 rounded-full bg-indigo-100 flex items-center justify-center text-[10px] font-bold text-indigo-700 shrink-0">
                             {getStaffName(profile.staff_id).split(" ").map((n) => n[0]).join("").slice(0, 2)}
                           </div>
                           <div className="min-w-0">
-                            <span className="font-medium text-slate-700 text-xs block truncate">{getStaffName(profile.staff_id)}</span>
-                            <span className="text-[10px] text-slate-400 block truncate">{getStaffRole(profile.staff_id)}</span>
+                            <span className="font-medium text-[var(--cs-text-secondary)] text-xs block truncate">{getStaffName(profile.staff_id)}</span>
+                            <span className="text-[10px] text-[var(--cs-text-muted)] block truncate">{getStaffRole(profile.staff_id)}</span>
                           </div>
                         </Link>
                       </td>
@@ -474,8 +474,8 @@ export default function CompetencyFrameworkPage() {
       )}
 
       {filteredProfiles.length === 0 && profiles.length > 0 && (
-        <div className="text-center py-8 text-slate-400">
-          <Search className="h-6 w-6 mx-auto mb-2 text-slate-300" />
+        <div className="text-center py-8 text-[var(--cs-text-muted)]">
+          <Search className="h-6 w-6 mx-auto mb-2 text-[var(--cs-text-gentle)]" />
           <p className="text-sm">No profiles match your filters</p>
           <p className="text-xs mt-1">Try adjusting the search or stage filter</p>
         </div>
@@ -516,8 +516,8 @@ export default function CompetencyFrameworkPage() {
         ))}
       </div>
 
-      <div className="rounded-xl border border-slate-100 bg-slate-50 px-4 py-3 text-xs text-slate-500">
-        <span className="font-semibold text-slate-600">Regulatory Basis — </span>
+      <div className="rounded-xl border border-[var(--cs-border-subtle)] bg-slate-50 px-4 py-3 text-xs text-[var(--cs-text-muted)]">
+        <span className="font-semibold text-[var(--cs-text-secondary)]">Regulatory Basis — </span>
         Children&apos;s Homes Regulations 2015: Reg 34 (managers must assess and develop staff competency through
         regular supervision). ILACS — Quality of Care: workforce capability and competency directly assessed by inspectors.
       </div>

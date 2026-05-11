@@ -41,7 +41,7 @@ import {
 const CT_CLR: Record<SocialWorkerContactType, string> = {
   phone_call: "bg-blue-100 text-blue-800", email: "bg-gray-100 text-gray-800",
   visit: "bg-green-100 text-green-800", lac_review: "bg-purple-100 text-purple-800",
-  video_call: "bg-indigo-100 text-indigo-800", text: "bg-slate-100 text-slate-800",
+  video_call: "bg-indigo-100 text-indigo-800", text: "bg-slate-100 text-[var(--cs-navy)]",
   unplanned: "bg-amber-100 text-amber-800", statutory_visit: "bg-emerald-100 text-emerald-800",
 };
 const DIR_CLR: Record<SocialWorkerContactDirection, string> = { incoming: "bg-teal-100 text-teal-800", outgoing: "bg-sky-100 text-sky-800" };

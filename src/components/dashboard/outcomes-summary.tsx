@@ -32,7 +32,7 @@ export function OutcomesSummary() {
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-center py-6">
-            <Loader2 className="h-5 w-5 animate-spin text-slate-400" />
+            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
           </div>
         </CardContent>
       </Card>
@@ -74,7 +74,7 @@ export function OutcomesSummary() {
           </div>
           <div className="flex items-center gap-1 text-[11px]">
             <TrendingDown className="h-3 w-3 text-red-500" />
-            <span className={cn("font-semibold", meta.declining > 0 ? "text-red-700" : "text-slate-400")}>{meta.declining}</span>
+            <span className={cn("font-semibold", meta.declining > 0 ? "text-red-700" : "text-[var(--cs-text-muted)]")}>{meta.declining}</span>
           </div>
           <div className="ml-auto flex items-center gap-1">
             {Array.from({ length: 5 }).map((_, i) => (
@@ -86,7 +86,7 @@ export function OutcomesSummary() {
                 )}
               />
             ))}
-            <span className="text-[10px] text-slate-400 ml-1">{meta.avg_rating}</span>
+            <span className="text-[10px] text-[var(--cs-text-muted)] ml-1">{meta.avg_rating}</span>
           </div>
         </div>
 
@@ -99,13 +99,13 @@ export function OutcomesSummary() {
           const declPct   = 100 - improvPct - stablePct;
           return (
             <Link key={child.child_id} href={`/outcomes?child=${child.child_id}`}>
-              <div className="flex items-center gap-2.5 rounded-lg px-2 py-1.5 hover:bg-slate-50 transition-colors">
+              <div className="flex items-center gap-2.5 rounded-lg px-2 py-1.5 hover:bg-[var(--cs-surface)] transition-colors">
                 <div className="w-5 h-5 rounded-full bg-indigo-100 flex items-center justify-center shrink-0">
                   <User className="h-3 w-3 text-indigo-600" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between mb-0.5">
-                    <p className="text-[11px] font-medium text-slate-700">{getYPName(child.child_id)}</p>
+                    <p className="text-[11px] font-medium text-[var(--cs-text-secondary)]">{getYPName(child.child_id)}</p>
                     <span className={cn(
                       "text-[10px] font-semibold",
                       child.avg_rating >= 3.5 ? "text-emerald-600" : child.avg_rating >= 2.5 ? "text-amber-600" : "text-red-600",
@@ -119,7 +119,7 @@ export function OutcomesSummary() {
                     {declPct > 0 && <div className="bg-red-400" style={{ width: `${declPct}%` }} />}
                   </div>
                 </div>
-                <ChevronRight className="h-3 w-3 text-slate-300 shrink-0" />
+                <ChevronRight className="h-3 w-3 text-[var(--cs-text-gentle)] shrink-0" />
               </div>
             </Link>
           );

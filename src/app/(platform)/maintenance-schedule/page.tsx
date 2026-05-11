@@ -209,11 +209,11 @@ export default function MaintenanceSchedulePage() {
               )}
             >
               <button
-                className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                 onClick={() => setExpandedId(isExpanded ? null : m.id)}
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0">
-                  <Icon className={cn("h-5 w-5 shrink-0", isAlert ? "text-red-600" : "text-slate-600")} />
+                  <Icon className={cn("h-5 w-5 shrink-0", isAlert ? "text-red-600" : "text-[var(--cs-text-secondary)]")} />
                   <div className="min-w-0">
                     <p className="font-medium truncate">{m.item_name}</p>
                     <p className="text-xs text-muted-foreground mt-0.5">
@@ -306,8 +306,8 @@ export default function MaintenanceSchedulePage() {
         })}
       </div>
 
-      <div className="mt-6 rounded-lg bg-slate-50 border border-slate-200 p-4 text-xs text-slate-600">
-        <p className="font-semibold text-slate-800 mb-1">Regulatory framework</p>
+      <div className="mt-6 rounded-lg bg-slate-50 border border-[var(--cs-border)] p-4 text-xs text-[var(--cs-text-secondary)]">
+        <p className="font-semibold text-[var(--cs-navy)] mb-1">Regulatory framework</p>
         <p>
           Children&apos;s Homes (England) Regulations 2015 Quality Standard 25 (premises) requires the home is
           maintained to a standard appropriate for the care of children. Fire Safety Order 2005, Gas Safety

@@ -55,7 +55,7 @@ const ROLE_COLOURS: Record<CourtChildRole, string> = {
   witness: "bg-teal-100 text-teal-800",
   defendant: "bg-amber-100 text-amber-800",
   special_party_re_w: "bg-purple-100 text-purple-800",
-  observer_familiarisation: "bg-slate-100 text-slate-700",
+  observer_familiarisation: "bg-slate-100 text-[var(--cs-text-secondary)]",
 };
 
 /* ── component ─────────────────────────────────────────────────────────── */
@@ -435,9 +435,9 @@ export default function ChildCourtAttendanceSupportPage() {
                 </div>
 
                 {/* staff observation */}
-                <div className="rounded-lg bg-slate-50 border border-slate-200 p-3">
-                  <h4 className="text-sm font-semibold text-slate-900 mb-1">Staff Observation</h4>
-                  <p className="text-sm text-slate-800">{rec.staff_observation}</p>
+                <div className="rounded-lg bg-slate-50 border border-[var(--cs-border)] p-3">
+                  <h4 className="text-sm font-semibold text-[var(--cs-navy)] mb-1">Staff Observation</h4>
+                  <p className="text-sm text-[var(--cs-navy)]">{rec.staff_observation}</p>
                 </div>
 
                 {/* flags */}

@@ -271,9 +271,9 @@ export default function ProfessionalCuriosityLogPage() {
                 </button>
                 {open && (
                   <CardContent className="space-y-3 pt-0">
-                    <div className="rounded-lg bg-slate-50 border border-slate-200 p-3">
-                      <p className="text-xs font-semibold text-slate-700 mb-1">Original narrative</p>
-                      <p className="text-sm text-slate-900">{r.original_narrative}</p>
+                    <div className="rounded-lg bg-slate-50 border border-[var(--cs-border)] p-3">
+                      <p className="text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Original narrative</p>
+                      <p className="text-sm text-[var(--cs-navy)]">{r.original_narrative}</p>
                     </div>
                     <div className="rounded-lg bg-indigo-50 border border-indigo-200 p-3">
                       <p className="text-xs font-semibold text-indigo-800 mb-1">The curious question raised</p>

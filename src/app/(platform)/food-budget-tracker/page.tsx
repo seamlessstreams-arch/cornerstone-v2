@@ -132,7 +132,7 @@ export default function FoodBudgetTrackerPage() {
               return (
                 <div key={w.id} className="rounded-xl border bg-white overflow-hidden">
                   <button
-                    className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                    className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                     onClick={() => setExpandedId(isExpanded ? null : w.id)}
                   >
                     <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -194,7 +194,7 @@ export default function FoodBudgetTrackerPage() {
                       </div>
 
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                        <div className={cn("rounded-lg p-2 text-center text-sm", w.cultural_ingredients_included ? "bg-emerald-50 text-emerald-800" : "bg-slate-100 text-slate-600")}>
+                        <div className={cn("rounded-lg p-2 text-center text-sm", w.cultural_ingredients_included ? "bg-emerald-50 text-emerald-800" : "bg-slate-100 text-[var(--cs-text-secondary)]")}>
                           Cultural: {w.cultural_ingredients_included ? "Yes" : "No"}
                         </div>
                         <div className={cn("rounded-lg p-2 text-center text-sm", w.sensory_friendly_options_included ? "bg-emerald-50 text-emerald-800" : "bg-amber-50 text-amber-800")}>
@@ -223,13 +223,13 @@ export default function FoodBudgetTrackerPage() {
                       )}
 
                       <div className="bg-slate-50 rounded-lg p-3 border text-sm">
-                        <p className="text-xs font-semibold text-slate-800 uppercase tracking-wide mb-1">Waste &amp; Efficiency</p>
+                        <p className="text-xs font-semibold text-[var(--cs-navy)] uppercase tracking-wide mb-1">Waste &amp; Efficiency</p>
                         <p>{w.waste_noted}</p>
                       </div>
 
                       {w.notes && (
                         <div className="bg-slate-50 rounded-lg p-3 border">
-                          <p className="text-xs font-semibold text-slate-800 uppercase tracking-wide mb-1">Notes</p>
+                          <p className="text-xs font-semibold text-[var(--cs-navy)] uppercase tracking-wide mb-1">Notes</p>
                           <p className="text-sm">{w.notes}</p>
                         </div>
                       )}

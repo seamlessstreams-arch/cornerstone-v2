@@ -65,7 +65,7 @@ function ActionIcon({ actionType }: { actionType: AuditActionType }) {
   if (actionType === "record_approved" || actionType.includes("approved") || actionType.includes("reviewed")) {
     return <CheckCircle2 className={cn(iconClass, "text-emerald-500")} />;
   }
-  return <Brain className={cn(iconClass, "text-slate-400")} />;
+  return <Brain className={cn(iconClass, "text-[var(--cs-text-muted)]")} />;
 }
 
 function formatActionType(t: string): string {
@@ -91,7 +91,7 @@ function AuditTimelineItem({ entry }: { entry: AriaAuditEntry }) {
     <div className="flex gap-3">
       {/* Icon + line */}
       <div className="flex flex-col items-center">
-        <div className="flex h-8 w-8 items-center justify-center rounded-full border border-slate-200 bg-white shadow-sm shrink-0">
+        <div className="flex h-8 w-8 items-center justify-center rounded-full border border-[var(--cs-border)] bg-white shadow-sm shrink-0">
           <ActionIcon actionType={entry.action_type} />
         </div>
         <div className="w-px flex-1 bg-slate-100 mt-1" />
@@ -99,37 +99,37 @@ function AuditTimelineItem({ entry }: { entry: AriaAuditEntry }) {
 
       {/* Content */}
       <div className="pb-5 flex-1 min-w-0">
-        <div className="rounded-xl border border-slate-100 bg-white p-3 space-y-1.5">
+        <div className="rounded-xl border border-[var(--cs-border-subtle)] bg-white p-3 space-y-1.5">
           <div className="flex items-start justify-between gap-2">
             <div className="space-y-0.5 flex-1 min-w-0">
-              <p className="text-sm font-semibold text-slate-900">
+              <p className="text-sm font-semibold text-[var(--cs-navy)]">
                 {formatActionType(entry.action_type)}
               </p>
-              <div className="flex items-center gap-2 flex-wrap text-[10px] text-slate-500">
+              <div className="flex items-center gap-2 flex-wrap text-[10px] text-[var(--cs-text-muted)]">
                 <span>{entry.user_id.replace("staff_", "").replace(/_/g, " ")}</span>
                 {childName && (
                   <>
-                    <span className="text-slate-300">·</span>
+                    <span className="text-[var(--cs-text-gentle)]">·</span>
                     <span className="text-violet-600 font-medium">{childName}</span>
                   </>
                 )}
                 {entry.source_table && (
                   <>
-                    <span className="text-slate-300">·</span>
+                    <span className="text-[var(--cs-text-gentle)]">·</span>
                     <span>{formatActionType(entry.source_table)}</span>
                   </>
                 )}
                 {entry.approval_status && (
                   <>
-                    <span className="text-slate-300">·</span>
+                    <span className="text-[var(--cs-text-gentle)]">·</span>
                     <span className="capitalize font-medium">{entry.approval_status}</span>
                   </>
                 )}
               </div>
             </div>
             <div className="text-right shrink-0">
-              <div className="text-[10px] text-slate-400">{formatDate(entry.created_at)}</div>
-              <div className="text-[10px] text-slate-400">{formatTime(entry.created_at)}</div>
+              <div className="text-[10px] text-[var(--cs-text-muted)]">{formatDate(entry.created_at)}</div>
+              <div className="text-[10px] text-[var(--cs-text-muted)]">{formatTime(entry.created_at)}</div>
             </div>
           </div>
 
@@ -138,26 +138,26 @@ function AuditTimelineItem({ entry }: { entry: AriaAuditEntry }) {
             <>
               <button
                 onClick={() => setExpanded((v) => !v)}
-                className="flex items-center gap-1 text-[10px] text-slate-400 hover:text-slate-600 transition-colors"
+                className="flex items-center gap-1 text-[10px] text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] transition-colors"
               >
                 {expanded ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
                 {expanded ? "Hide details" : "Show details"}
               </button>
 
               {expanded && (
-                <div className="space-y-2 border-t border-slate-100 pt-2">
+                <div className="space-y-2 border-t border-[var(--cs-border-subtle)] pt-2">
                   {entry.ai_prompt && (
                     <div>
-                      <p className="text-[9px] font-semibold text-slate-400 uppercase tracking-wider mb-0.5">AI Prompt</p>
-                      <p className="text-[11px] text-slate-600 leading-relaxed line-clamp-3 font-mono bg-slate-50 rounded-lg px-2 py-1.5">
+                      <p className="text-[9px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-0.5">AI Prompt</p>
+                      <p className="text-[11px] text-[var(--cs-text-secondary)] leading-relaxed line-clamp-3 font-mono bg-slate-50 rounded-lg px-2 py-1.5">
                         {entry.ai_prompt.slice(0, 200)}{entry.ai_prompt.length > 200 ? "…" : ""}
                       </p>
                     </div>
                   )}
                   {entry.ai_response && (
                     <div>
-                      <p className="text-[9px] font-semibold text-slate-400 uppercase tracking-wider mb-0.5">AI Response</p>
-                      <p className="text-[11px] text-slate-600 leading-relaxed line-clamp-3 bg-violet-50 rounded-lg px-2 py-1.5">
+                      <p className="text-[9px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-0.5">AI Response</p>
+                      <p className="text-[11px] text-[var(--cs-text-secondary)] leading-relaxed line-clamp-3 bg-violet-50 rounded-lg px-2 py-1.5">
                         {entry.ai_response.slice(0, 200)}{entry.ai_response.length > 200 ? "…" : ""}
                       </p>
                     </div>
@@ -165,7 +165,7 @@ function AuditTimelineItem({ entry }: { entry: AriaAuditEntry }) {
                   {entry.human_edit && (
                     <div>
                       <p className="text-[9px] font-semibold text-blue-500 uppercase tracking-wider mb-0.5">Human Edit</p>
-                      <p className="text-[11px] text-slate-600 leading-relaxed bg-blue-50 rounded-lg px-2 py-1.5">
+                      <p className="text-[11px] text-[var(--cs-text-secondary)] leading-relaxed bg-blue-50 rounded-lg px-2 py-1.5">
                         {entry.human_edit.slice(0, 200)}{entry.human_edit.length > 200 ? "…" : ""}
                       </p>
                     </div>
@@ -221,9 +221,9 @@ export default function AuditTrailPage() {
     >
       <div className="space-y-6 animate-fade-in">
         {/* Notice */}
-        <div className="flex items-start gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-4">
-          <Layers className="h-4 w-4 text-slate-400 shrink-0 mt-0.5" />
-          <p className="text-xs text-slate-600 leading-relaxed">
+        <div className="flex items-start gap-3 rounded-2xl border border-[var(--cs-border)] bg-slate-50 p-4">
+          <Layers className="h-4 w-4 text-[var(--cs-text-muted)] shrink-0 mt-0.5" />
+          <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed">
             This audit trail is a full record of all AI-assisted actions taken in ARIA Intelligence.
             It cannot be edited or deleted and forms part of the evidence base for the child&apos;s record.
           </p>
@@ -234,11 +234,11 @@ export default function AuditTrailPage() {
           <CardContent className="p-4">
             <div className="grid gap-3 sm:grid-cols-3">
               <div className="space-y-1.5">
-                <label className="text-xs font-medium text-slate-600">Child</label>
+                <label className="text-xs font-medium text-[var(--cs-text-secondary)]">Child</label>
                 <select
                   value={childFilter}
                   onChange={(e) => setChildFilter(e.target.value)}
-                  className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-300"
+                  className="w-full rounded-lg border border-[var(--cs-border)] bg-white px-3 py-2 text-sm text-[var(--cs-navy)] focus:outline-none focus:ring-2 focus:ring-slate-300"
                 >
                   {youngPeople.map((yp) => (
                     <option key={yp.id} value={yp.id}>{yp.name}</option>
@@ -246,11 +246,11 @@ export default function AuditTrailPage() {
                 </select>
               </div>
               <div className="space-y-1.5">
-                <label className="text-xs font-medium text-slate-600">Action Type</label>
+                <label className="text-xs font-medium text-[var(--cs-text-secondary)]">Action Type</label>
                 <select
                   value={actionFilter}
                   onChange={(e) => setActionFilter(e.target.value)}
-                  className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-300"
+                  className="w-full rounded-lg border border-[var(--cs-border)] bg-white px-3 py-2 text-sm text-[var(--cs-navy)] focus:outline-none focus:ring-2 focus:ring-slate-300"
                 >
                   {ACTION_TYPE_OPTIONS.map((opt) => (
                     <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -258,7 +258,7 @@ export default function AuditTrailPage() {
                 </select>
               </div>
               <div className="space-y-1.5">
-                <label className="text-xs font-medium text-slate-600">Date Range</label>
+                <label className="text-xs font-medium text-[var(--cs-text-secondary)]">Date Range</label>
                 <div className="flex gap-1.5">
                   {DATE_FILTERS.map((f) => (
                     <button
@@ -266,7 +266,7 @@ export default function AuditTrailPage() {
                       onClick={() => setDateFilter(f.value)}
                       className={cn(
                         "flex-1 rounded-lg border px-2 py-1.5 text-xs font-medium transition-colors",
-                        dateFilter === f.value ? "border-slate-700 bg-slate-900 text-white" : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50"
+                        dateFilter === f.value ? "border-slate-700 bg-slate-900 text-white" : "border-[var(--cs-border)] bg-white text-[var(--cs-text-secondary)] hover:bg-[var(--cs-surface)]"
                       )}
                     >
                       {f.label}
@@ -280,11 +280,11 @@ export default function AuditTrailPage() {
 
         {/* Count */}
         <div className="flex items-center gap-2">
-          <span className="text-sm font-semibold text-slate-700">
+          <span className="text-sm font-semibold text-[var(--cs-text-secondary)]">
             {filtered.length} audit {filtered.length === 1 ? "entry" : "entries"}
           </span>
           {!isLoading && (
-            <span className="text-xs text-slate-400">· {entries.length} total across all time</span>
+            <span className="text-xs text-[var(--cs-text-muted)]">· {entries.length} total across all time</span>
           )}
         </div>
 
@@ -296,8 +296,8 @@ export default function AuditTrailPage() {
         ) : filtered.length === 0 ? (
           <div className="flex flex-col items-center gap-3 py-14 text-center">
             <Layers className="h-12 w-12 text-slate-200" />
-            <p className="text-sm font-semibold text-slate-700">No audit entries found</p>
-            <p className="text-xs text-slate-400">Adjust the filters or try a different date range</p>
+            <p className="text-sm font-semibold text-[var(--cs-text-secondary)]">No audit entries found</p>
+            <p className="text-xs text-[var(--cs-text-muted)]">Adjust the filters or try a different date range</p>
           </div>
         ) : (
           <div className="relative">

@@ -55,7 +55,7 @@ const PHASES = [
 ];
 
 const STATUS_CONFIG: Record<InductionCheckStatus, { label: string; colour: string; icon: React.ElementType }> = {
-  not_started: { label: "Not Started", colour: "text-slate-600 bg-slate-50 border-slate-200",       icon: Clock       },
+  not_started: { label: "Not Started", colour: "text-[var(--cs-text-secondary)] bg-slate-50 border-[var(--cs-border)]",       icon: Clock       },
   in_progress: { label: "In Progress", colour: "text-amber-600 bg-amber-50 border-amber-200",       icon: Clock       },
   completed:   { label: "Completed",   colour: "text-emerald-600 bg-emerald-50 border-emerald-200", icon: CheckCircle2 },
   signed_off:  { label: "Signed Off",  colour: "text-blue-600 bg-blue-50 border-blue-200",           icon: ShieldCheck },
@@ -101,14 +101,14 @@ function PhaseTimeline({ items, startDate }: {
                 )}
               </div>
 
-              <div className="rounded-xl border border-slate-200 bg-white overflow-hidden">
+              <div className="rounded-xl border border-[var(--cs-border)] bg-white overflow-hidden">
                 {/* Phase header */}
-                <div className="flex items-center justify-between px-4 py-3 bg-slate-50 border-b border-slate-100">
+                <div className="flex items-center justify-between px-4 py-3 bg-slate-50 border-b border-[var(--cs-border-subtle)]">
                   <div className="flex items-center gap-2">
-                    <span className="text-sm font-semibold text-slate-800">{phase.label}</span>
+                    <span className="text-sm font-semibold text-[var(--cs-navy)]">{phase.label}</span>
                     <Badge className={cn(
                       "text-[10px] rounded-full border-0",
-                      isComplete ? "bg-emerald-100 text-emerald-700" : "bg-slate-100 text-slate-600",
+                      isComplete ? "bg-emerald-100 text-emerald-700" : "bg-slate-100 text-[var(--cs-text-secondary)]",
                     )}>
                       {phase.completed}/{phase.total}
                     </Badge>
@@ -117,7 +117,7 @@ function PhaseTimeline({ items, startDate }: {
                     <Progress value={pct} className="h-1.5 flex-1" />
                     <span className={cn(
                       "text-[10px] font-bold tabular-nums",
-                      isComplete ? "text-emerald-600" : "text-slate-500",
+                      isComplete ? "text-emerald-600" : "text-[var(--cs-text-muted)]",
                     )}>
                       {pct}%
                     </span>
@@ -142,11 +142,11 @@ function PhaseTimeline({ items, startDate }: {
                         )}
                         <span className={cn(
                           "flex-1",
-                          done ? "text-emerald-700 line-through decoration-emerald-300" : "text-slate-700",
+                          done ? "text-emerald-700 line-through decoration-emerald-300" : "text-[var(--cs-text-secondary)]",
                         )}>
                           {item.title}
                         </span>
-                        <span className="text-slate-400 tabular-nums shrink-0">
+                        <span className="text-[var(--cs-text-muted)] tabular-nums shrink-0">
                           Day {item.required_by_day}
                         </span>
                         {done && item.completed_at && (
@@ -197,15 +197,15 @@ function InductionCard({
       "rounded-2xl border bg-white overflow-hidden transition-all",
       record.overall_status === "signed_off" ? "border-blue-200" :
       isOverdue ? "border-red-200" :
-      "border-slate-200",
+      "border-[var(--cs-border)]",
     )}>
       {/* Header */}
-      <div className="px-5 py-4 bg-slate-50 border-b border-slate-100">
+      <div className="px-5 py-4 bg-slate-50 border-b border-[var(--cs-border-subtle)]">
         <div className="flex items-start justify-between gap-4">
           <div className="flex items-center gap-3">
             <Avatar name={getStaffName(record.staff_id)} size="md" />
             <div>
-              <p className="text-base font-bold text-slate-800">{getStaffName(record.staff_id)}</p>
+              <p className="text-base font-bold text-[var(--cs-navy)]">{getStaffName(record.staff_id)}</p>
               <div className="flex items-center gap-2 mt-0.5 flex-wrap">
                 <Badge variant="outline" className={cn("text-[10px] border", statusCfg.colour)}>
                   <StatusIcon className="h-2.5 w-2.5 mr-1" />
@@ -230,10 +230,10 @@ function InductionCard({
             </div>
           </div>
           <div className="text-right shrink-0">
-            <p className="text-xs text-slate-500">Day {daysSinceStart}</p>
+            <p className="text-xs text-[var(--cs-text-muted)]">Day {daysSinceStart}</p>
             <p className={cn(
               "text-[10px]",
-              isOverdue ? "text-red-600 font-semibold" : "text-slate-400",
+              isOverdue ? "text-red-600 font-semibold" : "text-[var(--cs-text-muted)]",
             )}>
               {isOverdue ? `${Math.abs(daysToTarget)} days overdue` : `${daysToTarget} days remaining`}
             </p>
@@ -243,7 +243,7 @@ function InductionCard({
         {/* Overall progress */}
         <div className="mt-4">
           <div className="flex items-center justify-between mb-1.5">
-            <span className="text-xs text-slate-500">Overall Progress</span>
+            <span className="text-xs text-[var(--cs-text-muted)]">Overall Progress</span>
             <span className={cn(
               "text-xs font-bold",
               pct === 100 ? "text-emerald-600" : pct >= 60 ? "text-blue-600" : "text-amber-600",
@@ -271,13 +271,13 @@ function InductionCard({
                 "flex-1 rounded-lg p-2 text-center border",
                 phasePct === 100 ? "bg-emerald-50 border-emerald-200" :
                 daysSinceStart >= (PHASES[PHASES.indexOf(phase) - 1]?.maxDay ?? 0) ? "bg-blue-50 border-blue-200" :
-                "bg-slate-50 border-slate-200",
+                "bg-slate-50 border-[var(--cs-border)]",
               )}>
                 <PhaseIcon className={cn("h-3 w-3 mx-auto mb-0.5", phasePct === 100 ? "text-emerald-500" : phase.color)} />
-                <div className="text-[9px] font-medium text-slate-600">{phase.label}</div>
+                <div className="text-[9px] font-medium text-[var(--cs-text-secondary)]">{phase.label}</div>
                 <div className={cn(
                   "text-[10px] font-bold",
-                  phasePct === 100 ? "text-emerald-600" : "text-slate-500",
+                  phasePct === 100 ? "text-emerald-600" : "text-[var(--cs-text-muted)]",
                 )}>
                   {phasePct}%
                 </div>
@@ -287,15 +287,15 @@ function InductionCard({
         </div>
 
         {/* Buddy & manager */}
-        <div className="flex items-center gap-4 mt-3 text-xs text-slate-500">
+        <div className="flex items-center gap-4 mt-3 text-xs text-[var(--cs-text-muted)]">
           <span className="flex items-center gap-1">
             <Users className="h-3 w-3" />
-            Manager: <strong className="text-slate-700">{getStaffName(record.line_manager_id)}</strong>
+            Manager: <strong className="text-[var(--cs-text-secondary)]">{getStaffName(record.line_manager_id)}</strong>
           </span>
           {record.buddy_id && (
             <span className="flex items-center gap-1">
               <Heart className="h-3 w-3" />
-              Buddy: <strong className="text-slate-700">{getStaffName(record.buddy_id)}</strong>
+              Buddy: <strong className="text-[var(--cs-text-secondary)]">{getStaffName(record.buddy_id)}</strong>
             </span>
           )}
           <span className="flex items-center gap-1">
@@ -308,7 +308,7 @@ function InductionCard({
       {/* Expand/collapse */}
       <button
         onClick={() => setExpanded(!expanded)}
-        className="w-full flex items-center justify-center gap-2 py-2.5 text-[11px] font-medium text-slate-500 hover:bg-slate-50 transition-colors"
+        className="w-full flex items-center justify-center gap-2 py-2.5 text-[11px] font-medium text-[var(--cs-text-muted)] hover:bg-[var(--cs-surface)] transition-colors"
       >
         {expanded ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
         {expanded ? "Hide checklist timeline" : `Show all ${totalItems} checklist items`}
@@ -387,7 +387,7 @@ export default function InductionTrackerPage() {
     return (
       <PageShell title="Induction Tracker" subtitle="Loading…">
         <div className="flex items-center justify-center py-20">
-          <Loader2 className="h-6 w-6 animate-spin text-slate-400" />
+          <Loader2 className="h-6 w-6 animate-spin text-[var(--cs-text-muted)]" />
         </div>
       </PageShell>
     );
@@ -420,15 +420,15 @@ export default function InductionTrackerPage() {
           {[
             { label: "In Progress", value: inProgress, colour: "text-amber-600", bg: "border-amber-200 bg-amber-50", icon: Clock },
             { label: "Completed", value: completed, colour: "text-emerald-600", bg: "border-emerald-200 bg-emerald-50", icon: CheckCircle2 },
-            { label: "Not Started", value: notStarted, colour: "text-slate-600", bg: "border-slate-200 bg-slate-50", icon: Briefcase },
-            { label: "Overdue", value: overdue, colour: overdue > 0 ? "text-red-600" : "text-slate-400", bg: overdue > 0 ? "border-red-200 bg-red-50" : "border-slate-200 bg-slate-50", icon: AlertTriangle },
+            { label: "Not Started", value: notStarted, colour: "text-[var(--cs-text-secondary)]", bg: "border-[var(--cs-border)] bg-slate-50", icon: Briefcase },
+            { label: "Overdue", value: overdue, colour: overdue > 0 ? "text-red-600" : "text-[var(--cs-text-muted)]", bg: overdue > 0 ? "border-red-200 bg-red-50" : "border-[var(--cs-border)] bg-slate-50", icon: AlertTriangle },
           ].map((k) => {
             const KIcon = k.icon;
             return (
               <div key={k.label} className={cn("rounded-2xl border p-4 text-center", k.bg)}>
                 <KIcon className={cn("h-4 w-4 mx-auto mb-1", k.colour)} />
                 <p className={cn("text-2xl font-bold", k.colour)}>{k.value}</p>
-                <p className="text-xs text-slate-500 mt-0.5">{k.label}</p>
+                <p className="text-xs text-[var(--cs-text-muted)] mt-0.5">{k.label}</p>
               </div>
             );
           })}
@@ -452,7 +452,7 @@ export default function InductionTrackerPage() {
 
                   return (
                     <div key={record.id} className="flex items-center gap-3 py-1.5">
-                      <div className="w-24 text-xs font-medium text-slate-700 truncate">
+                      <div className="w-24 text-xs font-medium text-[var(--cs-text-secondary)] truncate">
                         {getStaffName(record.staff_id).split(" ")[0]}
                       </div>
                       <div className="flex-1">
@@ -464,7 +464,7 @@ export default function InductionTrackerPage() {
                       )}>
                         {pct}%
                       </span>
-                      <span className="text-[10px] text-slate-400 w-12 text-right">
+                      <span className="text-[10px] text-[var(--cs-text-muted)] w-12 text-right">
                         Day {daysSinceStart}
                       </span>
                     </div>
@@ -477,7 +477,7 @@ export default function InductionTrackerPage() {
 
         {/* Search + Filter tabs */}
         <div className="relative max-w-sm">
-          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
           <Input
             placeholder="Search staff name, induction items…"
             value={search}
@@ -485,7 +485,7 @@ export default function InductionTrackerPage() {
             className="pl-8 h-8 text-xs rounded-lg"
           />
         </div>
-        <div className="flex items-center gap-1.5 text-xs text-slate-500 shrink-0">
+        <div className="flex items-center gap-1.5 text-xs text-[var(--cs-text-muted)] shrink-0">
           <ArrowUpDown className="h-3.5 w-3.5" />
           <select value={sortBy} onChange={(e) => setSortBy(e.target.value as typeof sortBy)} className="bg-white border rounded-md px-2 py-1.5 text-xs">
             <option value="progress">Progress (least first)</option>
@@ -503,7 +503,7 @@ export default function InductionTrackerPage() {
                 "px-3 py-1 rounded-full text-xs font-medium border transition-all",
                 filter === f
                   ? "bg-indigo-600 text-white border-indigo-600"
-                  : "bg-white text-slate-600 border-slate-200 hover:border-indigo-300",
+                  : "bg-white text-[var(--cs-text-secondary)] border-[var(--cs-border)] hover:border-indigo-300",
               )}
             >
               {f === "all" ? "All" : STATUS_CONFIG[f]?.label ?? f}
@@ -517,17 +517,17 @@ export default function InductionTrackerPage() {
         </div>
 
         {(search || filter !== "all") && (
-          <p className="text-xs text-slate-400">{filtered.length} result{filtered.length !== 1 ? "s" : ""}</p>
+          <p className="text-xs text-[var(--cs-text-muted)]">{filtered.length} result{filtered.length !== 1 ? "s" : ""}</p>
         )}
 
         {/* Induction records */}
         {filtered.length === 0 ? (
-          <div className="text-center py-12 text-slate-400">
-            <ShieldCheck className="h-10 w-10 mx-auto mb-3 text-slate-300" />
-            <p className="text-sm font-medium text-slate-600">
+          <div className="text-center py-12 text-[var(--cs-text-muted)]">
+            <ShieldCheck className="h-10 w-10 mx-auto mb-3 text-[var(--cs-text-gentle)]" />
+            <p className="text-sm font-medium text-[var(--cs-text-secondary)]">
               {search || filter !== "all" ? "No records match your filters" : "No induction records found"}
             </p>
-            <p className="text-xs text-slate-400 mt-1">Create a new induction to begin tracking staff onboarding</p>
+            <p className="text-xs text-[var(--cs-text-muted)] mt-1">Create a new induction to begin tracking staff onboarding</p>
           </div>
         ) : (
           <div className="space-y-4">
@@ -542,8 +542,8 @@ export default function InductionTrackerPage() {
         )}
 
         {/* Regulatory note */}
-        <div className="rounded-xl border border-slate-100 bg-slate-50 px-4 py-3 text-xs text-slate-500">
-          <span className="font-semibold text-slate-600">Regulatory Basis — </span>
+        <div className="rounded-xl border border-[var(--cs-border-subtle)] bg-slate-50 px-4 py-3 text-xs text-[var(--cs-text-muted)]">
+          <span className="font-semibold text-[var(--cs-text-secondary)]">Regulatory Basis — </span>
           Children&apos;s Homes Regulations 2015: Reg 33 (induction — all staff must complete a structured induction
           before working unsupervised). The registered person must ensure induction covers safeguarding, medication,
           and the home&apos;s statement of purpose. Induction evidence is routinely checked at Ofsted inspection

@@ -27,7 +27,7 @@ const PRIORITY_CONFIG: Record<string, { label: string; colour: string; dot: stri
   urgent:  { label: "Urgent",  colour: "text-red-700",    dot: "bg-red-500"     },
   high:    { label: "High",    colour: "text-orange-700",  dot: "bg-orange-400"  },
   medium:  { label: "Medium",  colour: "text-amber-700",   dot: "bg-amber-400"   },
-  low:     { label: "Low",     colour: "text-slate-600",   dot: "bg-slate-400"   },
+  low:     { label: "Low",     colour: "text-[var(--cs-text-secondary)]",   dot: "bg-slate-400"   },
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -70,7 +70,7 @@ export function TasksSummaryCard() {
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-center py-6">
-            <Loader2 className="h-5 w-5 animate-spin text-slate-400" />
+            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
           </div>
         </CardContent>
       </Card>
@@ -106,9 +106,9 @@ export function TasksSummaryCard() {
             <div className={cn("text-[9px]", overdue > 0 ? "text-red-500" : "text-emerald-500")}>Overdue</div>
           </div>
           <div className={cn("rounded-xl p-2 text-center", dueToday > 0 ? "bg-amber-50" : "bg-slate-50")}>
-            <Clock className={cn("h-3 w-3 mx-auto mb-0.5", dueToday > 0 ? "text-amber-500" : "text-slate-400")} />
-            <div className={cn("text-sm font-bold tabular-nums", dueToday > 0 ? "text-amber-700" : "text-slate-400")}>{dueToday}</div>
-            <div className={cn("text-[9px]", dueToday > 0 ? "text-amber-500" : "text-slate-400")}>Due Today</div>
+            <Clock className={cn("h-3 w-3 mx-auto mb-0.5", dueToday > 0 ? "text-amber-500" : "text-[var(--cs-text-muted)]")} />
+            <div className={cn("text-sm font-bold tabular-nums", dueToday > 0 ? "text-amber-700" : "text-[var(--cs-text-muted)]")}>{dueToday}</div>
+            <div className={cn("text-[9px]", dueToday > 0 ? "text-amber-500" : "text-[var(--cs-text-muted)]")}>Due Today</div>
           </div>
         </div>
 
@@ -162,27 +162,27 @@ export function TasksSummaryCard() {
         {priorityQueue.length > 0 && (
           <div className="space-y-1">
             <div className="flex items-center justify-between px-1">
-              <span className="text-[10px] font-medium text-slate-500">Priority Queue</span>
+              <span className="text-[10px] font-medium text-[var(--cs-text-muted)]">Priority Queue</span>
             </div>
             {priorityQueue.slice(0, 5).map((task) => {
               const priConfig = PRIORITY_CONFIG[task.priority] ?? {
-                label: task.priority, colour: "text-slate-600", dot: "bg-slate-400",
+                label: task.priority, colour: "text-[var(--cs-text-secondary)]", dot: "bg-slate-400",
               };
               const isTaskOverdue = task.due_date && new Date(task.due_date) < new Date();
               return (
                 <Link key={task.id} href={`/tasks/${task.id}`}>
                   <div className={cn(
-                    "flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-slate-50 transition-colors",
+                    "flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-[var(--cs-surface)] transition-colors",
                     isTaskOverdue && "bg-red-50/50",
                   )}>
                     <span className={cn("w-2 h-2 rounded-full shrink-0", priConfig.dot)} />
-                    <span className="text-[11px] font-medium text-slate-700 flex-1 truncate">
+                    <span className="text-[11px] font-medium text-[var(--cs-text-secondary)] flex-1 truncate">
                       {task.title}
                     </span>
                     {task.due_date && (
                       <span className={cn(
                         "text-[9px] tabular-nums shrink-0",
-                        isTaskOverdue ? "text-red-500 font-semibold" : "text-slate-400",
+                        isTaskOverdue ? "text-red-500 font-semibold" : "text-[var(--cs-text-muted)]",
                       )}>
                         {formatRelative(task.due_date)}
                       </span>
@@ -191,7 +191,7 @@ export function TasksSummaryCard() {
                       "text-[8px] px-1.5 py-0 rounded-full border-0",
                       isTaskOverdue ? "bg-red-100 text-red-700"
                       : task.status === "in_progress" ? "bg-blue-100 text-blue-700"
-                      : task.status === "not_started" ? "bg-slate-100 text-slate-600"
+                      : task.status === "not_started" ? "bg-slate-100 text-[var(--cs-text-secondary)]"
                       : task.status === "blocked" ? "bg-orange-100 text-orange-700"
                       : "bg-emerald-100 text-emerald-700",
                     )}>

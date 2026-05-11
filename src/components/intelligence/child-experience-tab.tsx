@@ -89,7 +89,7 @@ function scoreBg(score: number): string {
 
 function DeltaArrow({ delta }: { delta: number | null }) {
   if (delta === null || delta === 0) {
-    return <Minus className="h-3 w-3 text-slate-400" />;
+    return <Minus className="h-3 w-3 text-[var(--cs-text-muted)]" />;
   }
   if (delta > 0) {
     return <TrendingUp className="h-3 w-3 text-emerald-500" />;
@@ -122,7 +122,7 @@ const SEV_CLASSES: Record<string, string> = {
   critical: "bg-red-100 text-red-800",
   high:     "bg-orange-100 text-orange-800",
   medium:   "bg-amber-100 text-amber-800",
-  low:      "bg-slate-100 text-slate-700",
+  low:      "bg-slate-100 text-[var(--cs-text-secondary)]",
 };
 
 // ── Intervention status badge ─────────────────────────────────────────────────
@@ -131,7 +131,7 @@ const INT_STATUS_CLASSES: Record<string, string> = {
   active:       "bg-emerald-100 text-emerald-800",
   paused:       "bg-amber-100 text-amber-800",
   completed:    "bg-blue-100 text-blue-800",
-  stopped:      "bg-slate-100 text-slate-600",
+  stopped:      "bg-slate-100 text-[var(--cs-text-secondary)]",
   under_review: "bg-violet-100 text-violet-800",
 };
 
@@ -139,7 +139,7 @@ const INT_OUTCOME_CLASSES: Record<string, string> = {
   working:           "bg-emerald-100 text-emerald-800",
   not_working:       "bg-red-100 text-red-800",
   partially_working: "bg-amber-100 text-amber-800",
-  too_early:         "bg-slate-100 text-slate-600",
+  too_early:         "bg-slate-100 text-[var(--cs-text-secondary)]",
   unknown:           "",
 };
 
@@ -332,7 +332,7 @@ function ExperienceScoresPanel({ childId }: { childId: string }) {
                     </span>
                   )}
                 </div>
-                <span className="text-[10px] text-slate-400">overall</span>
+                <span className="text-[10px] text-[var(--cs-text-muted)]">overall</span>
               </div>
             )}
 
@@ -372,8 +372,8 @@ function ExperienceScoresPanel({ childId }: { childId: string }) {
         {!snapshot && !isError ? (
           <div className="flex flex-col items-center gap-3 py-6 text-center">
             <Cpu className="h-10 w-10 text-slate-200" />
-            <p className="text-xs text-slate-400 italic">No experience snapshot yet</p>
-            <p className="text-[10px] text-slate-400">
+            <p className="text-xs text-[var(--cs-text-muted)] italic">No experience snapshot yet</p>
+            <p className="text-[10px] text-[var(--cs-text-muted)]">
               Click <strong>Compute Snapshot</strong> to have ARIA analyse all available data for this child.
             </p>
           </div>
@@ -389,7 +389,7 @@ function ExperienceScoresPanel({ childId }: { childId: string }) {
                     <div className="flex items-center justify-between gap-1">
                       <div className="flex items-center gap-1.5">
                         <Icon className={cn("h-3.5 w-3.5 shrink-0", scoreColor(score))} />
-                        <span className="text-[11px] font-semibold text-slate-700">{label}</span>
+                        <span className="text-[11px] font-semibold text-[var(--cs-text-secondary)]">{label}</span>
                       </div>
                       <div className="flex items-center gap-1">
                         <span className={cn("text-sm font-bold tabular-nums", scoreColor(score))}>{score}</span>
@@ -412,7 +412,7 @@ function ExperienceScoresPanel({ childId }: { childId: string }) {
                 <div className="text-[10px] font-semibold text-violet-600 uppercase tracking-wider mb-1">
                   ARIA Narrative
                 </div>
-                <p className="text-xs text-slate-700 leading-relaxed">{snapshot.narrative}</p>
+                <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed">{snapshot.narrative}</p>
               </div>
             )}
 
@@ -426,7 +426,7 @@ function ExperienceScoresPanel({ childId }: { childId: string }) {
                     </div>
                     <ul className="space-y-1">
                       {(snapshot.strengths ?? []).map((s: string, i: number) => (
-                        <li key={i} className="text-[11px] text-slate-700 flex items-start gap-1">
+                        <li key={i} className="text-[11px] text-[var(--cs-text-secondary)] flex items-start gap-1">
                           <CheckCircle2 className="h-3 w-3 text-emerald-500 mt-0.5 shrink-0" />
                           {s}
                         </li>
@@ -441,7 +441,7 @@ function ExperienceScoresPanel({ childId }: { childId: string }) {
                     </div>
                     <ul className="space-y-1">
                       {(snapshot.concerns ?? []).map((c: string, i: number) => (
-                        <li key={i} className="text-[11px] text-slate-700 flex items-start gap-1">
+                        <li key={i} className="text-[11px] text-[var(--cs-text-secondary)] flex items-start gap-1">
                           <AlertTriangle className="h-3 w-3 text-amber-500 mt-0.5 shrink-0" />
                           {c}
                         </li>
@@ -452,7 +452,7 @@ function ExperienceScoresPanel({ childId }: { childId: string }) {
               </div>
             )}
 
-            <div className="text-[10px] text-slate-400 text-right">
+            <div className="text-[10px] text-[var(--cs-text-muted)] text-right">
               Period: {formatDate(snapshot.period_start)} – {formatDate(snapshot.period_end)}
             </div>
           </>
@@ -488,24 +488,24 @@ function PatternAlertsPanel({ childId }: { childId: string }) {
         {alerts.length === 0 ? (
           <div className="flex flex-col items-center gap-2 py-6 text-center">
             <CheckCircle2 className="h-8 w-8 text-slate-200" />
-            <p className="text-xs text-slate-400 italic">No patterns currently detected for this child</p>
+            <p className="text-xs text-[var(--cs-text-muted)] italic">No patterns currently detected for this child</p>
           </div>
         ) : (
           <div className="space-y-3">
             {alerts.map((alert) => (
-              <div key={alert.id} className="rounded-xl border border-slate-100 bg-slate-50 p-3 space-y-1.5">
+              <div key={alert.id} className="rounded-xl border border-[var(--cs-border-subtle)] bg-slate-50 p-3 space-y-1.5">
                 <div className="flex items-center gap-2 flex-wrap">
                   <span className={cn("rounded-full px-2 py-0.5 text-[10px] font-semibold capitalize", SEV_CLASSES[alert.severity])}>
                     {alert.severity}
                   </span>
-                  <span className="text-xs font-semibold text-slate-800">{alert.title}</span>
+                  <span className="text-xs font-semibold text-[var(--cs-navy)]">{alert.title}</span>
                 </div>
                 {alert.reflective_prompt && (
-                  <p className="text-[11px] text-slate-500 italic leading-relaxed">
+                  <p className="text-[11px] text-[var(--cs-text-muted)] italic leading-relaxed">
                     "{alert.reflective_prompt}"
                   </p>
                 )}
-                <div className="text-[10px] text-slate-400">{formatDate(alert.detected_at)}</div>
+                <div className="text-[10px] text-[var(--cs-text-muted)]">{formatDate(alert.detected_at)}</div>
               </div>
             ))}
           </div>
@@ -539,7 +539,7 @@ function InterventionsPanel({ childId, childName }: { childId: string; childName
         {interventions.length === 0 ? (
           <div className="flex flex-col items-center gap-2 py-6 text-center">
             <Wrench className="h-8 w-8 text-slate-200" />
-            <p className="text-xs text-slate-400 italic">No interventions recorded</p>
+            <p className="text-xs text-[var(--cs-text-muted)] italic">No interventions recorded</p>
           </div>
         ) : (
           <div className="space-y-2">
@@ -547,12 +547,12 @@ function InterventionsPanel({ childId, childName }: { childId: string; childName
               <div key={intervention.id} className={cn(
                 "rounded-xl border p-3 space-y-1.5",
                 intervention.status === "stopped" || intervention.status === "completed"
-                  ? "border-slate-100 bg-slate-50/50 opacity-70"
-                  : "border-slate-100 bg-white"
+                  ? "border-[var(--cs-border-subtle)] bg-slate-50/50 opacity-70"
+                  : "border-[var(--cs-border-subtle)] bg-white"
               )}>
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex-1 min-w-0 space-y-1">
-                    <span className="text-xs font-semibold text-slate-900 leading-snug block">{intervention.title}</span>
+                    <span className="text-xs font-semibold text-[var(--cs-navy)] leading-snug block">{intervention.title}</span>
                     <div className="flex items-center gap-1 flex-wrap">
                       <span className={cn("rounded-full px-2 py-0.5 text-[10px] font-semibold capitalize", INT_STATUS_CLASSES[intervention.status])}>
                         {intervention.status.replace("_", " ")}
@@ -567,14 +567,14 @@ function InterventionsPanel({ childId, childName }: { childId: string; childName
                   <InterventionUpdateModal intervention={intervention} />
                 </div>
                 {intervention.outcome_notes && (
-                  <p className="text-[11px] text-slate-600 leading-relaxed border-l-2 border-blue-200 pl-2">
+                  <p className="text-[11px] text-[var(--cs-text-secondary)] leading-relaxed border-l-2 border-blue-200 pl-2">
                     {intervention.outcome_notes}
                   </p>
                 )}
                 {!intervention.outcome_notes && intervention.intended_outcome && (
-                  <p className="text-[11px] text-slate-400 leading-relaxed">{intervention.intended_outcome}</p>
+                  <p className="text-[11px] text-[var(--cs-text-muted)] leading-relaxed">{intervention.intended_outcome}</p>
                 )}
-                <div className="text-[10px] text-slate-400">
+                <div className="text-[10px] text-[var(--cs-text-muted)]">
                   Started {formatDate(intervention.started_at)}
                   {intervention.review_date && ` · Review ${formatDate(intervention.review_date)}`}
                 </div>
@@ -632,7 +632,7 @@ function PracticeBankPanel({ childId, childName }: { childId: string; childName:
         {entries.length === 0 ? (
           <div className="flex flex-col items-center gap-2 py-6 text-center">
             <Star className="h-8 w-8 text-slate-200" />
-            <p className="text-xs text-slate-400 italic">No practice bank entries yet</p>
+            <p className="text-xs text-[var(--cs-text-muted)] italic">No practice bank entries yet</p>
           </div>
         ) : (
           <div className="space-y-4">
@@ -642,8 +642,8 @@ function PracticeBankPanel({ childId, childName }: { childId: string; childName:
               return (
                 <div key={category}>
                   <div className="flex items-center gap-1.5 mb-2">
-                    <CatIcon className="h-3.5 w-3.5 text-slate-400" />
-                    <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
+                    <CatIcon className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
+                    <span className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider">
                       {config.label}
                     </span>
                   </div>
@@ -656,24 +656,24 @@ function PracticeBankPanel({ childId, childName }: { childId: string; childName:
                           className={cn(
                             "rounded-xl border p-3 flex items-start gap-2 transition-opacity",
                             entry.is_active
-                              ? "border-slate-100 bg-slate-50"
-                              : "border-slate-100 bg-slate-50/40 opacity-60"
+                              ? "border-[var(--cs-border-subtle)] bg-slate-50"
+                              : "border-[var(--cs-border-subtle)] bg-slate-50/40 opacity-60"
                           )}
                         >
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 flex-wrap">
                               <span className={cn(
                                 "text-xs font-semibold",
-                                entry.is_active ? "text-slate-800" : "text-slate-500"
+                                entry.is_active ? "text-[var(--cs-navy)]" : "text-[var(--cs-text-muted)]"
                               )}>
                                 {entry.title}
                               </span>
                             </div>
                             {entry.description && (
-                              <p className="text-[11px] text-slate-500 mt-1 leading-relaxed">{entry.description}</p>
+                              <p className="text-[11px] text-[var(--cs-text-muted)] mt-1 leading-relaxed">{entry.description}</p>
                             )}
                             {entry.evidence && (
-                              <p className="text-[10px] text-slate-400 mt-1 italic">Evidence: {entry.evidence}</p>
+                              <p className="text-[10px] text-[var(--cs-text-muted)] mt-1 italic">Evidence: {entry.evidence}</p>
                             )}
                           </div>
 
@@ -688,7 +688,7 @@ function PracticeBankPanel({ childId, childName }: { childId: string; childName:
                               "disabled:opacity-50 disabled:cursor-wait",
                               entry.is_active
                                 ? "border-emerald-200 bg-emerald-50 text-emerald-700 hover:bg-emerald-100"
-                                : "border-slate-200 bg-slate-100 text-slate-500 hover:bg-slate-200"
+                                : "border-[var(--cs-border)] bg-slate-100 text-[var(--cs-text-muted)] hover:bg-slate-200"
                             )}
                           >
                             {isToggling ? (
@@ -738,7 +738,7 @@ function VoiceRecordsPanel({ childId, childName }: { childId: string; childName:
         {records.length === 0 ? (
           <div className="flex flex-col items-center gap-2 py-6 text-center">
             <MessageSquareQuote className="h-8 w-8 text-slate-200" />
-            <p className="text-xs text-slate-400 italic">No voice records captured yet</p>
+            <p className="text-xs text-[var(--cs-text-muted)] italic">No voice records captured yet</p>
           </div>
         ) : (
           <div className="space-y-3">
@@ -761,14 +761,14 @@ function VoiceRecordsPanel({ childId, childName }: { childId: string; childName:
                       }
                     </span>
                   )}
-                  <span className="ml-auto text-[10px] text-slate-400">{formatDate(record.recorded_at)}</span>
+                  <span className="ml-auto text-[10px] text-[var(--cs-text-muted)]">{formatDate(record.recorded_at)}</span>
                 </div>
                 {record.direct_quote ? (
-                  <blockquote className="text-xs text-slate-700 italic border-l-2 border-violet-300 pl-2 leading-relaxed">
+                  <blockquote className="text-xs text-[var(--cs-text-secondary)] italic border-l-2 border-violet-300 pl-2 leading-relaxed">
                     "{record.direct_quote}"
                   </blockquote>
                 ) : record.paraphrase ? (
-                  <p className="text-xs text-slate-600 leading-relaxed">{record.paraphrase}</p>
+                  <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed">{record.paraphrase}</p>
                 ) : null}
               </div>
             ))}
@@ -807,27 +807,27 @@ function TrustedAdultMapPanel({ childId, childName }: { childId: string; childNa
       <CardContent className="space-y-4">
         {/* Trusted adults */}
         <div>
-          <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2">
+          <div className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-2">
             Preferred Adults
           </div>
           {trustedAdults.length === 0 ? (
-            <p className="text-xs text-slate-400 italic">No preferred adults recorded</p>
+            <p className="text-xs text-[var(--cs-text-muted)] italic">No preferred adults recorded</p>
           ) : (
             <div className="grid gap-2 sm:grid-cols-2">
               {trustedAdults.map((record) => (
                 <div key={record.id} className={cn(
                   "rounded-xl border p-3 space-y-1",
-                  record.is_positive ? "border-teal-100 bg-teal-50/50" : "border-slate-100 bg-slate-50"
+                  record.is_positive ? "border-teal-100 bg-teal-50/50" : "border-[var(--cs-border-subtle)] bg-slate-50"
                 )}>
                   <div className="flex items-center gap-1.5">
                     <span className={cn(
                       "h-2 w-2 rounded-full shrink-0",
                       record.is_positive ? "bg-teal-500" : "bg-slate-400"
                     )} />
-                    <span className="text-xs font-semibold text-slate-800">{record.title}</span>
+                    <span className="text-xs font-semibold text-[var(--cs-navy)]">{record.title}</span>
                   </div>
                   {record.description && (
-                    <p className="text-[11px] text-slate-500 leading-relaxed pl-3.5">{record.description}</p>
+                    <p className="text-[11px] text-[var(--cs-text-muted)] leading-relaxed pl-3.5">{record.description}</p>
                   )}
                 </div>
               ))}
@@ -838,7 +838,7 @@ function TrustedAdultMapPanel({ childId, childName }: { childId: string; childNa
         {/* What helps */}
         {whatHelps.length > 0 && (
           <div>
-            <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2">
+            <div className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-2">
               What Helps
             </div>
             <div className="space-y-2">
@@ -846,9 +846,9 @@ function TrustedAdultMapPanel({ childId, childName }: { childId: string; childNa
                 <div key={record.id} className="rounded-xl border border-emerald-100 bg-emerald-50/50 p-3 flex items-start gap-2">
                   <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500 mt-0.5 shrink-0" />
                   <div className="min-w-0">
-                    <div className="text-xs font-semibold text-slate-800">{record.title}</div>
+                    <div className="text-xs font-semibold text-[var(--cs-navy)]">{record.title}</div>
                     {record.description && (
-                      <p className="text-[11px] text-slate-500 mt-0.5 leading-relaxed">{record.description}</p>
+                      <p className="text-[11px] text-[var(--cs-text-muted)] mt-0.5 leading-relaxed">{record.description}</p>
                     )}
                   </div>
                 </div>
@@ -868,9 +868,9 @@ function TrustedAdultMapPanel({ childId, childName }: { childId: string; childNa
                 <div key={record.id} className="rounded-xl border border-amber-100 bg-amber-50/50 p-3 flex items-start gap-2">
                   <AlertTriangle className="h-3.5 w-3.5 text-amber-500 mt-0.5 shrink-0" />
                   <div className="min-w-0">
-                    <div className="text-xs font-semibold text-slate-800">{record.title}</div>
+                    <div className="text-xs font-semibold text-[var(--cs-navy)]">{record.title}</div>
                     {record.description && (
-                      <p className="text-[11px] text-slate-500 mt-0.5 leading-relaxed">{record.description}</p>
+                      <p className="text-[11px] text-[var(--cs-text-muted)] mt-0.5 leading-relaxed">{record.description}</p>
                     )}
                   </div>
                 </div>
@@ -882,7 +882,7 @@ function TrustedAdultMapPanel({ childId, childName }: { childId: string; childNa
         {/* Regulation strategies */}
         {strategies.length > 0 && (
           <div>
-            <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2">
+            <div className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-2">
               Regulation Strategies
             </div>
             <div className="space-y-2">
@@ -890,11 +890,11 @@ function TrustedAdultMapPanel({ childId, childName }: { childId: string; childNa
                 <div key={record.id} className="rounded-xl border border-blue-100 bg-blue-50/50 p-3 flex items-start gap-2">
                   <Brain className="h-3.5 w-3.5 text-blue-500 mt-0.5 shrink-0" />
                   <div className="min-w-0">
-                    <div className="text-xs font-semibold text-slate-800">{record.title}</div>
+                    <div className="text-xs font-semibold text-[var(--cs-navy)]">{record.title}</div>
                     {record.description && (
-                      <p className="text-[11px] text-slate-500 mt-0.5 leading-relaxed">{record.description}</p>
+                      <p className="text-[11px] text-[var(--cs-text-muted)] mt-0.5 leading-relaxed">{record.description}</p>
                     )}
-                    <span className="text-[9px] text-slate-400 capitalize">{record.confidence} confidence</span>
+                    <span className="text-[9px] text-[var(--cs-text-muted)] capitalize">{record.confidence} confidence</span>
                   </div>
                 </div>
               ))}
@@ -905,8 +905,8 @@ function TrustedAdultMapPanel({ childId, childName }: { childId: string; childNa
         {records.length === 0 && (
           <div className="flex flex-col items-center gap-2 py-6 text-center">
             <Users className="h-8 w-8 text-slate-200" />
-            <p className="text-xs text-slate-400 italic">No relational records yet</p>
-            <p className="text-[10px] text-slate-400">Use <strong>Add Record</strong> to log trusted adults, what helps, or regulation strategies.</p>
+            <p className="text-xs text-[var(--cs-text-muted)] italic">No relational records yet</p>
+            <p className="text-[10px] text-[var(--cs-text-muted)]">Use <strong>Add Record</strong> to log trusted adults, what helps, or regulation strategies.</p>
           </div>
         )}
       </CardContent>
@@ -1082,7 +1082,7 @@ function AriaChildPanel({ childId, childName }: AriaChildPanelProps) {
           <Brain className="h-4 w-4 text-violet-500" />
           Ask ARIA about {childName}
         </CardTitle>
-        <p className="text-[11px] text-slate-500 leading-relaxed mt-0.5">
+        <p className="text-[11px] text-[var(--cs-text-muted)] leading-relaxed mt-0.5">
           ARIA can analyse {childName}&apos;s records, suggest approaches,
           review what&apos;s working, and support your reflective practice.
         </p>
@@ -1118,8 +1118,8 @@ function AriaChildPanel({ childId, childName }: AriaChildPanelProps) {
               placeholder="Ask ARIA a custom question about this young person…"
               disabled={isLoading}
               className={cn(
-                "w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5",
-                "text-xs text-slate-800 placeholder:text-slate-400",
+                "w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2.5",
+                "text-xs text-[var(--cs-navy)] placeholder:text-[var(--cs-text-muted)]",
                 "resize-none focus:outline-none focus:ring-2 focus:ring-violet-300 focus:border-transparent",
                 "disabled:opacity-50"
               )}
@@ -1175,14 +1175,14 @@ function AriaChildPanel({ childId, childName }: AriaChildPanelProps) {
                 <div className="flex items-center gap-2">
                   <button
                     onClick={handleCopy}
-                    className="flex items-center gap-1 rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 text-[11px] font-medium text-slate-600 hover:bg-slate-100 transition-colors"
+                    className="flex items-center gap-1 rounded-lg border border-[var(--cs-border)] bg-slate-50 px-2.5 py-1 text-[11px] font-medium text-[var(--cs-text-secondary)] hover:bg-[var(--cs-surface)] transition-colors"
                   >
                     <Copy className="h-3 w-3" />
                     {copied ? "Copied!" : "Copy"}
                   </button>
                   <button
                     onClick={handleClear}
-                    className="flex items-center gap-1 rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 text-[11px] font-medium text-slate-600 hover:bg-slate-100 transition-colors"
+                    className="flex items-center gap-1 rounded-lg border border-[var(--cs-border)] bg-slate-50 px-2.5 py-1 text-[11px] font-medium text-[var(--cs-text-secondary)] hover:bg-[var(--cs-surface)] transition-colors"
                   >
                     <RotateCcw className="h-3 w-3" />
                     Clear
@@ -1191,13 +1191,13 @@ function AriaChildPanel({ childId, childName }: AriaChildPanelProps) {
               </div>
 
               {/* Response text */}
-              <div className="text-xs text-slate-800 leading-relaxed whitespace-pre-wrap">
+              <div className="text-xs text-[var(--cs-navy)] leading-relaxed whitespace-pre-wrap">
                 {response}
               </div>
             </div>
 
             {/* Disclaimer */}
-            <p className="text-[10px] text-slate-400 leading-relaxed">
+            <p className="text-[10px] text-[var(--cs-text-muted)] leading-relaxed">
               AI-generated content. Always subject to professional judgement —
               ARIA does not replace practitioner decision-making.
             </p>

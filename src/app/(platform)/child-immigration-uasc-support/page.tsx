@@ -35,7 +35,7 @@ const STATUS_CLR: Record<ImmigrationStatus, string> = {
   appeal_pending: "bg-rose-100 text-rose-800",
   refused_appeals_exhausted: "bg-red-100 text-red-800",
   naturalisation_in_progress: "bg-indigo-100 text-indigo-800",
-  other: "bg-slate-100 text-slate-800",
+  other: "bg-slate-100 text-[var(--cs-navy)]",
 };
 
 const STATUS_BORDER: Record<ImmigrationStatus, string> = {
@@ -322,15 +322,15 @@ export default function ChildImmigrationUascSupportPage() {
                           </ul>
                         ) : <p className="text-sm text-indigo-900">Not engaged.</p>}
                       </div>
-                      <div className="rounded-lg bg-slate-50 border border-slate-200 p-3">
-                        <p className="text-xs font-semibold text-slate-800 mb-1">Home Office references</p>
+                      <div className="rounded-lg bg-slate-50 border border-[var(--cs-border)] p-3">
+                        <p className="text-xs font-semibold text-[var(--cs-navy)] mb-1">Home Office references</p>
                         {r.home_office_references.length > 0 ? (
-                          <ul className="text-sm text-slate-900 space-y-0.5">
+                          <ul className="text-sm text-[var(--cs-navy)] space-y-0.5">
                             {r.home_office_references.map((h, i) => (
-                              <li key={i} className="text-xs"><span className="text-slate-600">{h.type}:</span> <strong className="font-mono">{h.reference}</strong></li>
+                              <li key={i} className="text-xs"><span className="text-[var(--cs-text-secondary)]">{h.type}:</span> <strong className="font-mono">{h.reference}</strong></li>
                             ))}
                           </ul>
-                        ) : <p className="text-sm text-slate-900">No Home Office references — not applicable.</p>}
+                        ) : <p className="text-sm text-[var(--cs-navy)]">No Home Office references — not applicable.</p>}
                       </div>
                     </div>
 

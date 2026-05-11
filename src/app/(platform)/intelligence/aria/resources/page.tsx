@@ -73,10 +73,10 @@ const WRITING_STYLES: { value: ResourceWritingStyle; label: string; description:
 const READING_LEVELS = ["basic", "standard", "advanced"];
 
 const STATUS_COLOURS: Record<string, string> = {
-  draft: "bg-slate-100 text-slate-700",
+  draft: "bg-slate-100 text-[var(--cs-text-secondary)]",
   reviewed: "bg-blue-100 text-blue-800",
   approved: "bg-emerald-100 text-emerald-800",
-  archived: "bg-slate-50 text-slate-400",
+  archived: "bg-slate-50 text-[var(--cs-text-muted)]",
 };
 
 const STARTER_TEMPLATES = [
@@ -109,7 +109,7 @@ function ResourceCard({ resource, onApprove }: { resource: ChildResource; onAppr
   const childName = getYPName(resource.child_id) || resource.child_id;
   const typeInfo = RESOURCE_TYPES.find((t) => t.value === resource.resource_type);
   return (
-    <div className="rounded-xl border border-slate-100 bg-white p-4 space-y-2">
+    <div className="rounded-xl border border-[var(--cs-border-subtle)] bg-white p-4 space-y-2">
       <div className="flex items-start gap-3">
         <span className="text-2xl">{typeInfo?.icon ?? "📄"}</span>
         <div className="flex-1 min-w-0 space-y-1">
@@ -121,8 +121,8 @@ function ResourceCard({ resource, onApprove }: { resource: ChildResource; onAppr
               {typeInfo?.label ?? resource.resource_type}
             </span>
           </div>
-          <p className="text-sm font-semibold text-slate-900">{resource.title}</p>
-          <p className="text-xs text-slate-500">{childName} · {resource.theme} · {formatDate(resource.created_at)}</p>
+          <p className="text-sm font-semibold text-[var(--cs-navy)]">{resource.title}</p>
+          <p className="text-xs text-[var(--cs-text-muted)]">{childName} · {resource.theme} · {formatDate(resource.created_at)}</p>
         </div>
       </div>
       <div className="flex items-center gap-2 flex-wrap pt-1">
@@ -165,17 +165,17 @@ function ContentPreview({ content }: { content: ChildResourceContent }) {
         if (!value || (Array.isArray(value) && value.length === 0)) return null;
         return (
           <div key={label} className="space-y-1.5">
-            <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">{label}</p>
+            <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider">{label}</p>
             {Array.isArray(value) ? (
               <ul className="space-y-1">
                 {value.map((v: string, i: number) => (
-                  <li key={i} className="flex items-start gap-2 text-sm text-slate-800">
-                    <span className="text-slate-400 shrink-0">{i + 1}.</span>{v}
+                  <li key={i} className="flex items-start gap-2 text-sm text-[var(--cs-navy)]">
+                    <span className="text-[var(--cs-text-muted)] shrink-0">{i + 1}.</span>{v}
                   </li>
                 ))}
               </ul>
             ) : (
-              <p className="text-sm text-slate-800 leading-relaxed">{value}</p>
+              <p className="text-sm text-[var(--cs-navy)] leading-relaxed">{value}</p>
             )}
           </div>
         );
@@ -338,7 +338,7 @@ function CreateForm({
             <FileText className="h-4 w-4 text-pink-500" />
             Create Resource
           </CardTitle>
-          <button onClick={onClose} className="rounded-lg p-1 text-slate-400 hover:text-slate-600 hover:bg-slate-100">
+          <button onClick={onClose} className="rounded-lg p-1 text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] hover:bg-[var(--cs-surface)]">
             <X className="h-4 w-4" />
           </button>
         </div>
@@ -347,11 +347,11 @@ function CreateForm({
         {/* Child + type */}
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-1.5">
-            <label className="text-xs font-medium text-slate-600">Young Person</label>
+            <label className="text-xs font-medium text-[var(--cs-text-secondary)]">Young Person</label>
             <select
               value={childId}
               onChange={(e) => setChildId(e.target.value)}
-              className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-pink-300"
+              className="w-full rounded-lg border border-[var(--cs-border)] bg-white px-3 py-2 text-sm text-[var(--cs-navy)] focus:outline-none focus:ring-2 focus:ring-pink-300"
             >
               <option value="">Select young person</option>
               {youngPeople.map((yp) => (
@@ -360,20 +360,20 @@ function CreateForm({
             </select>
           </div>
           <div className="space-y-1.5">
-            <label className="text-xs font-medium text-slate-600">Age Range</label>
+            <label className="text-xs font-medium text-[var(--cs-text-secondary)]">Age Range</label>
             <input
               type="text"
               value={ageRange}
               onChange={(e) => setAgeRange(e.target.value)}
               placeholder="e.g. 13-15, 16+"
-              className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-pink-300"
+              className="w-full rounded-lg border border-[var(--cs-border)] bg-white px-3 py-2 text-sm text-[var(--cs-navy)] focus:outline-none focus:ring-2 focus:ring-pink-300"
             />
           </div>
         </div>
 
         {/* Resource type grid */}
         <div className="space-y-1.5">
-          <label className="text-xs font-medium text-slate-600">Resource Type</label>
+          <label className="text-xs font-medium text-[var(--cs-text-secondary)]">Resource Type</label>
           <div className="grid gap-2 grid-cols-2 sm:grid-cols-3 max-h-56 overflow-y-auto pr-1">
             {RESOURCE_TYPES.map((t) => (
               <button
@@ -381,11 +381,11 @@ function CreateForm({
                 onClick={() => setResourceType(t.value)}
                 className={cn(
                   "rounded-xl border p-2.5 text-left transition-all",
-                  resourceType === t.value ? "border-pink-400 bg-pink-50" : "border-slate-200 bg-white hover:border-slate-300"
+                  resourceType === t.value ? "border-pink-400 bg-pink-50" : "border-[var(--cs-border)] bg-white hover:border-slate-300"
                 )}
               >
                 <span className="text-xl">{t.icon}</span>
-                <div className="text-[11px] font-medium text-slate-800 mt-1 leading-tight">{t.label}</div>
+                <div className="text-[11px] font-medium text-[var(--cs-navy)] mt-1 leading-tight">{t.label}</div>
               </button>
             ))}
           </div>
@@ -403,7 +403,7 @@ function CreateForm({
             <p className="text-[10px] font-semibold text-pink-700 uppercase tracking-wider flex items-center gap-1.5">
               <FileText className="h-3 w-3" />Source record to convert
             </p>
-            <p className="text-xs text-slate-700 line-clamp-4 leading-relaxed italic">{convertSourceText}</p>
+            <p className="text-xs text-[var(--cs-text-secondary)] line-clamp-4 leading-relaxed italic">{convertSourceText}</p>
             <p className="text-[10px] text-pink-600">
               ARIA will convert this into child-friendly language. You can edit the theme below to guide the style.
             </p>
@@ -413,7 +413,7 @@ function CreateForm({
         {/* Theme + reading level */}
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-1.5">
-            <label className="text-xs font-medium text-slate-600">
+            <label className="text-xs font-medium text-[var(--cs-text-secondary)]">
               {convertSourceText ? "Theme / Conversion Instructions" : "Theme"}
             </label>
             <input
@@ -421,11 +421,11 @@ function CreateForm({
               value={theme}
               onChange={(e) => setTheme(e.target.value)}
               placeholder={convertSourceText ? "e.g. explain what happened in simple words for a 14 year old" : "e.g. staying safe online, emotions"}
-              className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-pink-300"
+              className="w-full rounded-lg border border-[var(--cs-border)] bg-white px-3 py-2 text-sm text-[var(--cs-navy)] focus:outline-none focus:ring-2 focus:ring-pink-300"
             />
           </div>
           <div className="space-y-1.5">
-            <label className="text-xs font-medium text-slate-600">Reading Level</label>
+            <label className="text-xs font-medium text-[var(--cs-text-secondary)]">Reading Level</label>
             <div className="flex gap-1.5">
               {READING_LEVELS.map((l) => (
                 <button
@@ -433,7 +433,7 @@ function CreateForm({
                   onClick={() => setReadingLevel(l)}
                   className={cn(
                     "flex-1 rounded-lg border px-2 py-1.5 text-xs font-medium capitalize transition-colors",
-                    readingLevel === l ? "border-pink-400 bg-pink-100 text-pink-800" : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50"
+                    readingLevel === l ? "border-pink-400 bg-pink-100 text-pink-800" : "border-[var(--cs-border)] bg-white text-[var(--cs-text-secondary)] hover:bg-[var(--cs-surface)]"
                   )}
                 >
                   {l}
@@ -445,7 +445,7 @@ function CreateForm({
 
         {/* Writing style */}
         <div className="space-y-1.5">
-          <label className="text-xs font-medium text-slate-600">Writing Style</label>
+          <label className="text-xs font-medium text-[var(--cs-text-secondary)]">Writing Style</label>
           <div className="grid gap-2 sm:grid-cols-2">
             {WRITING_STYLES.map((s) => (
               <button
@@ -453,11 +453,11 @@ function CreateForm({
                 onClick={() => setTone(s.value)}
                 className={cn(
                   "rounded-xl border p-2.5 text-left transition-all",
-                  tone === s.value ? "border-pink-400 bg-pink-50" : "border-slate-200 bg-white hover:border-slate-300"
+                  tone === s.value ? "border-pink-400 bg-pink-50" : "border-[var(--cs-border)] bg-white hover:border-slate-300"
                 )}
               >
-                <div className="text-[11px] font-semibold text-slate-900">{s.label}</div>
-                <div className="text-[10px] text-slate-500">{s.description}</div>
+                <div className="text-[11px] font-semibold text-[var(--cs-navy)]">{s.label}</div>
+                <div className="text-[10px] text-[var(--cs-text-muted)]">{s.description}</div>
               </button>
             ))}
           </div>
@@ -484,10 +484,10 @@ function CreateForm({
 
         {/* Preview */}
         {generatedContent && (
-          <div className="border-t border-slate-100 pt-4 space-y-4">
+          <div className="border-t border-[var(--cs-border-subtle)] pt-4 space-y-4">
             <div className="flex items-center gap-2">
               <Sparkles className="h-4 w-4 text-pink-500" />
-              <span className="text-sm font-semibold text-slate-900">{generatedTitle}</span>
+              <span className="text-sm font-semibold text-[var(--cs-navy)]">{generatedTitle}</span>
               <span className="rounded-full bg-violet-100 text-violet-700 px-2 py-0.5 text-[10px]">AI-generated</span>
             </div>
             <ContentPreview content={generatedContent} />
@@ -587,7 +587,7 @@ export default function ChildResourcesPage() {
 
         {/* Starter templates */}
         <div>
-          <h3 className="text-sm font-semibold text-slate-700 mb-3 flex items-center gap-2">
+          <h3 className="text-sm font-semibold text-[var(--cs-text-secondary)] mb-3 flex items-center gap-2">
             <Star className="h-4 w-4 text-amber-500" />Starter Templates
           </h3>
           <div className="grid gap-4 sm:grid-cols-3">
@@ -595,8 +595,8 @@ export default function ChildResourcesPage() {
               <div key={t.type} className={cn("rounded-2xl border p-4 space-y-3", t.colour)}>
                 <span className="text-3xl">{t.icon}</span>
                 <div>
-                  <p className="text-sm font-semibold text-slate-900">{t.title}</p>
-                  <p className="text-xs text-slate-600 mt-0.5">{t.description}</p>
+                  <p className="text-sm font-semibold text-[var(--cs-navy)]">{t.title}</p>
+                  <p className="text-xs text-[var(--cs-text-secondary)] mt-0.5">{t.description}</p>
                 </div>
                 <Button
                   size="sm"
@@ -617,7 +617,7 @@ export default function ChildResourcesPage() {
             <CardTitle className="text-sm font-semibold flex items-center gap-2">
               <FileText className="h-4 w-4 text-pink-500" />
               All Resources
-              <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-bold text-slate-600">{resources.length}</span>
+              <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-bold text-[var(--cs-text-secondary)]">{resources.length}</span>
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -628,7 +628,7 @@ export default function ChildResourcesPage() {
             ) : resources.length === 0 ? (
               <div className="flex flex-col items-center gap-2 py-10 text-center">
                 <FileText className="h-10 w-10 text-slate-200" />
-                <p className="text-sm text-slate-500">No resources created yet</p>
+                <p className="text-sm text-[var(--cs-text-muted)]">No resources created yet</p>
               </div>
             ) : (
               <div className="space-y-6">
@@ -636,7 +636,7 @@ export default function ChildResourcesPage() {
                   const childName = getYPName(cid) || cid;
                   return (
                     <div key={cid} className="space-y-2">
-                      <p className="text-xs font-semibold text-slate-600 flex items-center gap-1.5">
+                      <p className="text-xs font-semibold text-[var(--cs-text-secondary)] flex items-center gap-1.5">
                         <span className="h-2 w-2 rounded-full bg-pink-400 inline-block" />
                         {childName}
                       </p>

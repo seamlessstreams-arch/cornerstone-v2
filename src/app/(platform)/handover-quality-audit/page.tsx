@@ -242,17 +242,17 @@ export default function HandoverQualityAuditPage() {
 
       {/* Summary stats */}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-4 mb-6">
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-xs text-slate-600 uppercase tracking-wide">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-xs text-[var(--cs-text-secondary)] uppercase tracking-wide">
             <CalendarClock className="h-4 w-4" /> Audits this quarter
           </div>
-          <div className="mt-2 text-3xl font-semibold text-slate-900">
+          <div className="mt-2 text-3xl font-semibold text-[var(--cs-navy)]">
             {summary.thisQuarter}
           </div>
-          <div className="mt-1 text-xs text-slate-500">last 90 days</div>
+          <div className="mt-1 text-xs text-[var(--cs-text-muted)]">last 90 days</div>
         </div>
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-xs text-slate-600 uppercase tracking-wide">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-xs text-[var(--cs-text-secondary)] uppercase tracking-wide">
             <Star className="h-4 w-4" /> Average score
           </div>
           <div
@@ -263,36 +263,36 @@ export default function HandoverQualityAuditPage() {
           >
             {summary.avg.toFixed(1)}
           </div>
-          <div className="mt-1 text-xs text-slate-500">out of 5.0</div>
+          <div className="mt-1 text-xs text-[var(--cs-text-muted)]">out of 5.0</div>
         </div>
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-xs text-slate-600 uppercase tracking-wide">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-xs text-[var(--cs-text-secondary)] uppercase tracking-wide">
             <CheckCircle2 className="h-4 w-4" /> Green-rated handovers
           </div>
           <div className="mt-2 text-3xl font-semibold text-emerald-700">
             {summary.green}
-            <span className="text-base font-normal text-slate-500">
+            <span className="text-base font-normal text-[var(--cs-text-muted)]">
               {" "}
               / {audits.length}
             </span>
           </div>
-          <div className="mt-1 text-xs text-slate-500">overall RAG</div>
+          <div className="mt-1 text-xs text-[var(--cs-text-muted)]">overall RAG</div>
         </div>
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-xs text-slate-600 uppercase tracking-wide">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-xs text-[var(--cs-text-secondary)] uppercase tracking-wide">
             <Lightbulb className="h-4 w-4" /> Recommendations open
           </div>
-          <div className="mt-2 text-3xl font-semibold text-slate-900">
+          <div className="mt-2 text-3xl font-semibold text-[var(--cs-navy)]">
             {summary.recOpen}
           </div>
-          <div className="mt-1 text-xs text-slate-500">across all audits</div>
+          <div className="mt-1 text-xs text-[var(--cs-text-muted)]">across all audits</div>
         </div>
       </div>
 
       {/* Filters / sort */}
-      <div className="mb-4 flex flex-wrap items-center gap-3 rounded-lg border border-slate-200 bg-white p-3">
+      <div className="mb-4 flex flex-wrap items-center gap-3 rounded-lg border border-[var(--cs-border)] bg-white p-3">
         <div className="flex items-center gap-2">
-          <span className="text-xs font-medium text-slate-600">RAG</span>
+          <span className="text-xs font-medium text-[var(--cs-text-secondary)]">RAG</span>
           <Select value={filterRag} onValueChange={setFilterRag}>
             <SelectTrigger className="w-[140px] h-9">
               <SelectValue placeholder="All" />
@@ -306,8 +306,8 @@ export default function HandoverQualityAuditPage() {
           </Select>
         </div>
         <div className="flex items-center gap-2">
-          <ArrowUpDown className="h-4 w-4 text-slate-500" />
-          <span className="text-xs font-medium text-slate-600">Sort by</span>
+          <ArrowUpDown className="h-4 w-4 text-[var(--cs-text-muted)]" />
+          <span className="text-xs font-medium text-[var(--cs-text-secondary)]">Sort by</span>
           <Select
             value={sortKey}
             onValueChange={(v: string) => setSortKey(v as SortKey)}
@@ -324,7 +324,7 @@ export default function HandoverQualityAuditPage() {
             </SelectContent>
           </Select>
         </div>
-        <div className="ml-auto text-xs text-slate-500">
+        <div className="ml-auto text-xs text-[var(--cs-text-muted)]">
           Showing {visible.length} of {audits.length}
         </div>
       </div>
@@ -336,7 +336,7 @@ export default function HandoverQualityAuditPage() {
           return (
             <div
               key={a.id}
-              className="rounded-lg border border-slate-200 bg-white shadow-sm"
+              className="rounded-lg border border-[var(--cs-border)] bg-white shadow-sm"
             >
               {/* Card header */}
               <button
@@ -348,7 +348,7 @@ export default function HandoverQualityAuditPage() {
               >
                 <div className="flex-1 min-w-0">
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="font-semibold text-slate-900">
+                    <span className="font-semibold text-[var(--cs-navy)]">
                       {a.handover_observed}
                     </span>
                     <span
@@ -368,7 +368,7 @@ export default function HandoverQualityAuditPage() {
                       {a.overall_score.toFixed(1)} / 5.0
                     </span>
                   </div>
-                  <div className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-600">
+                  <div className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-[var(--cs-text-secondary)]">
                     <span className="flex items-center gap-1">
                       <CalendarClock className="h-3.5 w-3.5" />
                       {formatPretty(a.audit_date)} · {a.audit_period}
@@ -402,28 +402,28 @@ export default function HandoverQualityAuditPage() {
                 </div>
                 <div className="flex-shrink-0 pt-1">
                   {isOpen ? (
-                    <ChevronUp className="h-5 w-5 text-slate-400" />
+                    <ChevronUp className="h-5 w-5 text-[var(--cs-text-muted)]" />
                   ) : (
-                    <ChevronDown className="h-5 w-5 text-slate-400" />
+                    <ChevronDown className="h-5 w-5 text-[var(--cs-text-muted)]" />
                   )}
                 </div>
               </button>
 
               {/* Expanded body */}
               {isOpen && (
-                <div className="border-t border-slate-200 p-4 space-y-5">
+                <div className="border-t border-[var(--cs-border)] p-4 space-y-5">
                   {/* Headline blocks */}
                   <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
                     <div className="rounded-md bg-slate-50 p-3">
-                      <div className="text-xs font-medium text-slate-600">
+                      <div className="text-xs font-medium text-[var(--cs-text-secondary)]">
                         Staff on duty
                       </div>
-                      <div className="mt-1 text-sm text-slate-900">
+                      <div className="mt-1 text-sm text-[var(--cs-navy)]">
                         {a.staff_on_duty.map((id) => getStaffName(id)).join(", ")}
                       </div>
                     </div>
                     <div className="rounded-md bg-slate-50 p-3">
-                      <div className="text-xs font-medium text-slate-600">
+                      <div className="text-xs font-medium text-[var(--cs-text-secondary)]">
                         Safety information covered
                       </div>
                       <div
@@ -438,7 +438,7 @@ export default function HandoverQualityAuditPage() {
                       </div>
                     </div>
                     <div className="rounded-md bg-slate-50 p-3">
-                      <div className="text-xs font-medium text-slate-600">
+                      <div className="text-xs font-medium text-[var(--cs-text-secondary)]">
                         Risk information covered
                       </div>
                       <div
@@ -456,12 +456,12 @@ export default function HandoverQualityAuditPage() {
 
                   {/* Domain scores */}
                   <div>
-                    <h3 className="text-sm font-semibold text-slate-900 flex items-center gap-2 mb-2">
+                    <h3 className="text-sm font-semibold text-[var(--cs-navy)] flex items-center gap-2 mb-2">
                       <BookOpen className="h-4 w-4" /> Domain scores
                     </h3>
-                    <div className="overflow-hidden rounded-md border border-slate-200">
+                    <div className="overflow-hidden rounded-md border border-[var(--cs-border)]">
                       <table className="w-full text-sm">
-                        <thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-600">
+                        <thead className="bg-slate-50 text-xs uppercase tracking-wide text-[var(--cs-text-secondary)]">
                           <tr>
                             <th className="px-3 py-2 text-left">Domain</th>
                             <th className="px-3 py-2 text-left w-16">Score</th>
@@ -472,7 +472,7 @@ export default function HandoverQualityAuditPage() {
                         <tbody className="divide-y divide-slate-100">
                           {a.scoring_domains.map((dom: HandoverDomainScore) => (
                             <tr key={dom.domain}>
-                              <td className="px-3 py-2 align-top font-medium text-slate-800">
+                              <td className="px-3 py-2 align-top font-medium text-[var(--cs-navy)]">
                                 {dom.domain}
                               </td>
                               <td className="px-3 py-2 align-top">
@@ -485,10 +485,10 @@ export default function HandoverQualityAuditPage() {
                                   {dom.score} / 5
                                 </span>
                               </td>
-                              <td className="px-3 py-2 align-top text-slate-700">
+                              <td className="px-3 py-2 align-top text-[var(--cs-text-secondary)]">
                                 {dom.observation}
                               </td>
-                              <td className="px-3 py-2 align-top text-slate-500 italic">
+                              <td className="px-3 py-2 align-top text-[var(--cs-text-muted)] italic">
                                 {dom.evidence}
                               </td>
                             </tr>
@@ -535,12 +535,12 @@ export default function HandoverQualityAuditPage() {
                   </div>
 
                   {/* Documentation quality */}
-                  <div className="rounded-md border border-slate-200 p-3">
-                    <h4 className="text-sm font-semibold text-slate-900 flex items-center gap-2">
+                  <div className="rounded-md border border-[var(--cs-border)] p-3">
+                    <h4 className="text-sm font-semibold text-[var(--cs-navy)] flex items-center gap-2">
                       <BookOpen className="h-4 w-4" /> Handover documentation
                       quality
                     </h4>
-                    <p className="mt-1 text-sm text-slate-700">
+                    <p className="mt-1 text-sm text-[var(--cs-text-secondary)]">
                       {a.handover_documentation_quality}
                     </p>
                   </div>
@@ -618,18 +618,18 @@ export default function HandoverQualityAuditPage() {
                   {/* Confidential notes (RM only) */}
                   {a.confidential_notes && (
                     <div className="rounded-md border border-slate-300 bg-slate-50 p-3">
-                      <h4 className="text-sm font-semibold text-slate-800 flex items-center gap-2">
+                      <h4 className="text-sm font-semibold text-[var(--cs-navy)] flex items-center gap-2">
                         <EyeOff className="h-4 w-4" /> Confidential note
                         (Registered Manager only)
                       </h4>
-                      <p className="mt-1 text-sm text-slate-700">
+                      <p className="mt-1 text-sm text-[var(--cs-text-secondary)]">
                         {a.confidential_notes}
                       </p>
                     </div>
                   )}
 
                   {/* Footer line */}
-                  <div className="flex flex-wrap items-center gap-x-6 gap-y-1 text-xs text-slate-500 border-t border-slate-100 pt-3">
+                  <div className="flex flex-wrap items-center gap-x-6 gap-y-1 text-xs text-[var(--cs-text-muted)] border-t border-[var(--cs-border-subtle)] pt-3">
                     <span className="flex items-center gap-1">
                       <MessageSquare className="h-3.5 w-3.5" />
                       Audit ID: {a.id}
@@ -646,15 +646,15 @@ export default function HandoverQualityAuditPage() {
         })}
 
         {visible.length === 0 && (
-          <div className="rounded-lg border border-dashed border-slate-300 bg-white p-8 text-center text-sm text-slate-500">
+          <div className="rounded-lg border border-dashed border-slate-300 bg-white p-8 text-center text-sm text-[var(--cs-text-muted)]">
             No audits match the current filters.
           </div>
         )}
       </div>
 
       {/* Regulatory note */}
-      <div className="mt-8 rounded-lg border border-slate-200 bg-slate-50 p-4 text-sm text-slate-700">
-        <h3 className="font-semibold text-slate-900 mb-1 flex items-center gap-2">
+      <div className="mt-8 rounded-lg border border-[var(--cs-border)] bg-slate-50 p-4 text-sm text-[var(--cs-text-secondary)]">
+        <h3 className="font-semibold text-[var(--cs-navy)] mb-1 flex items-center gap-2">
           <BookOpen className="h-4 w-4" /> Regulatory basis
         </h3>
         <p>

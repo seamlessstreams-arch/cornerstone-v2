@@ -32,7 +32,7 @@ function formatTheme(theme: string): string {
 }
 
 const STATUS_COLOURS: Record<KeyWorkSessionStatus, string> = {
-  planned: "bg-slate-100 text-slate-700",
+  planned: "bg-slate-100 text-[var(--cs-text-secondary)]",
   in_progress: "bg-blue-100 text-blue-800",
   completed: "bg-green-100 text-green-700",
   reviewed: "bg-violet-100 text-violet-800",
@@ -50,18 +50,18 @@ function PlanSection({ title, content, accent = false }: {
 }) {
   if (!content || (Array.isArray(content) && content.length === 0)) return null;
   return (
-    <div className={cn("rounded-xl border p-4 space-y-2", accent ? "border-violet-200 bg-violet-50" : "border-slate-100 bg-white")}>
-      <p className={cn("text-[10px] font-semibold uppercase tracking-wider", accent ? "text-violet-600" : "text-slate-500")}>{title}</p>
+    <div className={cn("rounded-xl border p-4 space-y-2", accent ? "border-violet-200 bg-violet-50" : "border-[var(--cs-border-subtle)] bg-white")}>
+      <p className={cn("text-[10px] font-semibold uppercase tracking-wider", accent ? "text-violet-600" : "text-[var(--cs-text-muted)]")}>{title}</p>
       {Array.isArray(content) ? (
         <ul className="space-y-1">
           {content.map((item, i) => (
-            <li key={i} className="flex items-start gap-2 text-sm text-slate-800">
-              <span className="text-slate-400 shrink-0 mt-0.5">{i + 1}.</span>{item}
+            <li key={i} className="flex items-start gap-2 text-sm text-[var(--cs-navy)]">
+              <span className="text-[var(--cs-text-muted)] shrink-0 mt-0.5">{i + 1}.</span>{item}
             </li>
           ))}
         </ul>
       ) : (
-        <p className="text-sm text-slate-800 leading-relaxed">{content}</p>
+        <p className="text-sm text-[var(--cs-navy)] leading-relaxed">{content}</p>
       )}
     </div>
   );
@@ -100,13 +100,13 @@ function StatusBar({ current }: { current: KeyWorkSessionStatus }) {
         <React.Fragment key={step}>
           <div className={cn(
             "flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-medium capitalize",
-            i <= idx ? "bg-slate-900 text-white" : "bg-slate-100 text-slate-400"
+            i <= idx ? "bg-slate-900 text-white" : "bg-slate-100 text-[var(--cs-text-muted)]"
           )}>
             {i < idx && <CheckCircle2 className="h-3 w-3" />}
             {step.replace("_", " ")}
           </div>
           {i < STATUS_STEPS.length - 1 && (
-            <ChevronRight className={cn("h-3.5 w-3.5", i < idx ? "text-slate-700" : "text-slate-300")} />
+            <ChevronRight className={cn("h-3.5 w-3.5", i < idx ? "text-[var(--cs-text-secondary)]" : "text-[var(--cs-text-gentle)]")} />
           )}
         </React.Fragment>
       ))}
@@ -162,7 +162,7 @@ function ActionPanel({ session, onUpdate }: {
         <div className="space-y-3">
           <div className="space-y-1.5">
             <div className="flex items-center justify-between">
-              <label className="text-xs font-medium text-slate-600">Child&apos;s Voice / What they said</label>
+              <label className="text-xs font-medium text-[var(--cs-text-secondary)]">Child&apos;s Voice / What they said</label>
               <DictationButton
                 onTranscript={(t) => setChildVoice((p) => p ? `${p} ${t}` : t)}
                 size="sm"
@@ -173,12 +173,12 @@ function ActionPanel({ session, onUpdate }: {
               onChange={(e) => setChildVoice(e.target.value)}
               rows={4}
               placeholder="Record the child's words, reactions, and participation…"
-              className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-green-300 resize-none"
+              className="w-full rounded-lg border border-[var(--cs-border)] bg-white px-3 py-2 text-sm text-[var(--cs-navy)] placeholder:text-[var(--cs-text-muted)] focus:outline-none focus:ring-2 focus:ring-green-300 resize-none"
             />
           </div>
           <div className="space-y-1.5">
             <div className="flex items-center justify-between">
-              <label className="text-xs font-medium text-slate-600">Staff Reflection</label>
+              <label className="text-xs font-medium text-[var(--cs-text-secondary)]">Staff Reflection</label>
               <DictationButton
                 onTranscript={(t) => setStaffReflection((p) => p ? `${p} ${t}` : t)}
                 size="sm"
@@ -189,7 +189,7 @@ function ActionPanel({ session, onUpdate }: {
               onChange={(e) => setStaffReflection(e.target.value)}
               rows={4}
               placeholder="Reflect on how the session went, what worked, what you observed…"
-              className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-green-300 resize-none"
+              className="w-full rounded-lg border border-[var(--cs-border)] bg-white px-3 py-2 text-sm text-[var(--cs-navy)] placeholder:text-[var(--cs-text-muted)] focus:outline-none focus:ring-2 focus:ring-green-300 resize-none"
             />
           </div>
           <Button
@@ -265,7 +265,7 @@ export default function KeyWorkSessionDetailPage() {
   if (isLoading) {
     return (
       <PageShell title="Key Work Session" showQuickCreate={false}>
-        <div className="flex items-center gap-3 py-16 justify-center text-sm text-slate-500">
+        <div className="flex items-center gap-3 py-16 justify-center text-sm text-[var(--cs-text-muted)]">
           <Loader2 className="h-5 w-5 animate-spin" />Loading session…
         </div>
       </PageShell>
@@ -276,8 +276,8 @@ export default function KeyWorkSessionDetailPage() {
     return (
       <PageShell title="Key Work Session" showQuickCreate={false}>
         <div className="flex flex-col items-center gap-3 py-16 text-center">
-          <AlertTriangle className="h-10 w-10 text-slate-300" />
-          <p className="text-sm font-semibold text-slate-700">Session not found</p>
+          <AlertTriangle className="h-10 w-10 text-[var(--cs-text-gentle)]" />
+          <p className="text-sm font-semibold text-[var(--cs-text-secondary)]">Session not found</p>
           <Link href="/intelligence/aria/keywork">
             <Button variant="outline" className="gap-2"><ArrowLeft className="h-4 w-4" />Back to Key Work</Button>
           </Link>
@@ -310,8 +310,8 @@ export default function KeyWorkSessionDetailPage() {
           <CardContent className="p-4 space-y-3">
             <div className="flex items-center gap-3 flex-wrap">
               <div className="flex items-center gap-2">
-                <User className="h-4 w-4 text-slate-400" />
-                <span className="text-sm font-semibold text-slate-900">{childName}</span>
+                <User className="h-4 w-4 text-[var(--cs-text-muted)]" />
+                <span className="text-sm font-semibold text-[var(--cs-navy)]">{childName}</span>
               </div>
               <span className={cn("rounded-full px-2.5 py-1 text-[11px] font-bold capitalize", STATUS_COLOURS[session.status])}>
                 {session.status.replace("_", " ")}
@@ -319,10 +319,10 @@ export default function KeyWorkSessionDetailPage() {
               <span className="rounded-full bg-amber-100 text-amber-800 px-2.5 py-1 text-[11px] font-medium">
                 {formatTheme(session.theme)}
               </span>
-              <span className="text-xs text-slate-500 ml-auto">{formatDate(session.created_at)}</span>
+              <span className="text-xs text-[var(--cs-text-muted)] ml-auto">{formatDate(session.created_at)}</span>
             </div>
             <StatusBar current={session.status} />
-            {session.reason && <p className="text-xs text-slate-600 leading-relaxed">{session.reason}</p>}
+            {session.reason && <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed">{session.reason}</p>}
           </CardContent>
         </Card>
 
@@ -332,8 +332,8 @@ export default function KeyWorkSessionDetailPage() {
             <CardContent className="p-8 flex flex-col items-center gap-4 text-center">
               <BookOpen className="h-10 w-10 text-amber-300" />
               <div>
-                <p className="text-sm font-semibold text-slate-700">No session plan generated yet</p>
-                <p className="text-xs text-slate-500 mt-1">Go back to generate a plan using ARIA</p>
+                <p className="text-sm font-semibold text-[var(--cs-text-secondary)]">No session plan generated yet</p>
+                <p className="text-xs text-[var(--cs-text-muted)] mt-1">Go back to generate a plan using ARIA</p>
               </div>
               <Link href="/intelligence/aria/keywork">
                 <Button className="bg-amber-600 hover:bg-amber-700 text-white gap-2">
@@ -356,12 +356,12 @@ export default function KeyWorkSessionDetailPage() {
 
             <Card>
               <CardHeader className="pb-2">
-                <CardTitle className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Discussion Questions</CardTitle>
+                <CardTitle className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider">Discussion Questions</CardTitle>
               </CardHeader>
               <CardContent>
                 <ul className="space-y-2">
                   {plan.main_discussion_questions?.map((q, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm text-slate-800">
+                    <li key={i} className="flex items-start gap-2 text-sm text-[var(--cs-navy)]">
                       <span className="text-amber-400 font-bold shrink-0 mt-0.5">{i + 1}.</span>{q}
                     </li>
                   ))}
@@ -378,15 +378,15 @@ export default function KeyWorkSessionDetailPage() {
 
             <Card>
               <CardHeader className="pb-2">
-                <CardTitle className="text-xs font-semibold text-slate-500 uppercase tracking-wider flex items-center gap-2">
+                <CardTitle className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider flex items-center gap-2">
                   <Brain className="h-3.5 w-3.5" />Staff Prompts
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <ul className="space-y-2">
                   {plan.staff_prompts?.map((p, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm text-slate-800">
-                      <span className="text-slate-400 shrink-0 mt-0.5">•</span>{p}
+                    <li key={i} className="flex items-start gap-2 text-sm text-[var(--cs-navy)]">
+                      <span className="text-[var(--cs-text-muted)] shrink-0 mt-0.5">•</span>{p}
                     </li>
                   ))}
                 </ul>
@@ -397,7 +397,7 @@ export default function KeyWorkSessionDetailPage() {
 
             {/* ARC links */}
             <div>
-              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">ARC Framework Links</p>
+              <p className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-3">ARC Framework Links</p>
               <ARCSection
                 arc_attachment={plan.arc_attachment}
                 arc_regulation={plan.arc_regulation}
@@ -430,7 +430,7 @@ export default function KeyWorkSessionDetailPage() {
               <CardTitle className="text-xs font-semibold text-violet-700 uppercase tracking-wider">Child&apos;s Voice</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-slate-800 leading-relaxed italic">&ldquo;{session.child_voice}&rdquo;</p>
+              <p className="text-sm text-[var(--cs-navy)] leading-relaxed italic">&ldquo;{session.child_voice}&rdquo;</p>
             </CardContent>
           </Card>
         )}
@@ -438,10 +438,10 @@ export default function KeyWorkSessionDetailPage() {
         {session.staff_reflection && (
           <Card>
             <CardHeader className="pb-2">
-              <CardTitle className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Staff Reflection</CardTitle>
+              <CardTitle className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider">Staff Reflection</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-slate-800 leading-relaxed">{session.staff_reflection}</p>
+              <p className="text-sm text-[var(--cs-navy)] leading-relaxed">{session.staff_reflection}</p>
             </CardContent>
           </Card>
         )}
@@ -449,7 +449,7 @@ export default function KeyWorkSessionDetailPage() {
         {/* Action panel */}
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-semibold text-slate-900">Session Actions</CardTitle>
+            <CardTitle className="text-sm font-semibold text-[var(--cs-navy)]">Session Actions</CardTitle>
           </CardHeader>
           <CardContent>
             <ActionPanel session={session} onUpdate={handleUpdate} />

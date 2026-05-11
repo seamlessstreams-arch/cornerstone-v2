@@ -40,7 +40,7 @@ const statusColour: Record<string, string> = {
   early_relationship: "bg-rose-100 text-rose-800 border-rose-200",
   established_first_relationship: "bg-red-100 text-red-800 border-red-200",
   recently_ended: "bg-amber-100 text-amber-800 border-amber-200",
-  not_currently_interested: "bg-slate-100 text-slate-800 border-slate-200",
+  not_currently_interested: "bg-slate-100 text-[var(--cs-navy)] border-[var(--cs-border)]",
 };
 
 const screenColour: Record<string, string> = {
@@ -51,7 +51,7 @@ const screenColour: Record<string, string> = {
 };
 
 const consentColour: Record<string, string> = {
-  not_yet_introduced: "bg-slate-100 text-slate-800 border-slate-200",
+  not_yet_introduced: "bg-slate-100 text-[var(--cs-navy)] border-[var(--cs-border)]",
   foundational: "bg-amber-100 text-amber-800 border-amber-200",
   developing: "bg-blue-100 text-blue-800 border-blue-200",
   confident: "bg-emerald-100 text-emerald-800 border-emerald-200",
@@ -121,7 +121,7 @@ export default function FirstRelationshipSupportPage() {
     return (
       <PageShell title="First Relationship Support" subtitle="Loading...">
         <div className="flex items-center justify-center py-12">
-          <Loader2 className="h-8 w-8 animate-spin text-slate-400" />
+          <Loader2 className="h-8 w-8 animate-spin text-[var(--cs-text-muted)]" />
         </div>
       </PageShell>
     );
@@ -138,45 +138,45 @@ export default function FirstRelationshipSupportPage() {
       }
     >
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-slate-600 text-sm mb-1">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-[var(--cs-text-secondary)] text-sm mb-1">
             <Heart className="h-4 w-4" />
             <span>In a relationship</span>
           </div>
-          <div className="text-2xl font-semibold text-slate-900">{stats.inRelationship}</div>
+          <div className="text-2xl font-semibold text-[var(--cs-navy)]">{stats.inRelationship}</div>
         </div>
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-slate-600 text-sm mb-1">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-[var(--cs-text-secondary)] text-sm mb-1">
             <Shield className="h-4 w-4" />
             <span>Watch</span>
           </div>
-          <div className="text-2xl font-semibold text-slate-900">{stats.watching}</div>
+          <div className="text-2xl font-semibold text-[var(--cs-navy)]">{stats.watching}</div>
         </div>
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-slate-600 text-sm mb-1">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-[var(--cs-text-secondary)] text-sm mb-1">
             <AlertTriangle className="h-4 w-4" />
             <span>Concerns flagged</span>
           </div>
-          <div className="text-2xl font-semibold text-slate-900">{stats.concerns}</div>
+          <div className="text-2xl font-semibold text-[var(--cs-navy)]">{stats.concerns}</div>
         </div>
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-slate-600 text-sm mb-1">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-[var(--cs-text-secondary)] text-sm mb-1">
             <Users className="h-4 w-4" />
             <span>Follow-ups due (7d)</span>
           </div>
-          <div className="text-2xl font-semibold text-slate-900">{stats.followUpsDue}</div>
+          <div className="text-2xl font-semibold text-[var(--cs-navy)]">{stats.followUpsDue}</div>
         </div>
       </div>
 
       <div className="flex flex-col sm:flex-row gap-3 mb-4">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--cs-text-muted)]" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search young person, status, partner..."
-            className="w-full pl-9 pr-3 py-2 text-sm border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full pl-9 pr-3 py-2 text-sm border border-[var(--cs-border)] rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
         <Select value={screenFilter} onValueChange={setScreenFilter}>
@@ -208,21 +208,21 @@ export default function FirstRelationshipSupportPage() {
         {filtered.map((r) => {
           const isOpen = expandedId === r.id;
           return (
-            <div key={r.id} className="rounded-lg border border-slate-200 bg-white overflow-hidden">
+            <div key={r.id} className="rounded-lg border border-[var(--cs-border)] bg-white overflow-hidden">
               <button
                 onClick={() => setExpandedId(isOpen ? null : r.id)}
-                className="w-full p-4 flex items-start justify-between gap-3 hover:bg-slate-50 text-left"
+                className="w-full p-4 flex items-start justify-between gap-3 hover:bg-[var(--cs-surface)] text-left"
               >
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap mb-1">
-                    <span className="font-semibold text-slate-900">{getYPName(r.child_id)}</span>
-                    <span className={cn("text-xs px-2 py-0.5 rounded-full border", statusColour[r.relationship_status] ?? "bg-slate-100 text-slate-800 border-slate-200")}>
+                    <span className="font-semibold text-[var(--cs-navy)]">{getYPName(r.child_id)}</span>
+                    <span className={cn("text-xs px-2 py-0.5 rounded-full border", statusColour[r.relationship_status] ?? "bg-slate-100 text-[var(--cs-navy)] border-[var(--cs-border)]")}>
                       {FIRST_RELATIONSHIP_STATUS_LABEL[r.relationship_status]}
                     </span>
-                    <span className={cn("text-xs px-2 py-0.5 rounded-full border", screenColour[r.exploitation_risk_screen] ?? "bg-slate-100 text-slate-800 border-slate-200")}>
+                    <span className={cn("text-xs px-2 py-0.5 rounded-full border", screenColour[r.exploitation_risk_screen] ?? "bg-slate-100 text-[var(--cs-navy)] border-[var(--cs-border)]")}>
                       {EXPLOITATION_RISK_SCREEN_LABEL[r.exploitation_risk_screen]}
                     </span>
-                    <span className={cn("text-xs px-2 py-0.5 rounded-full border", consentColour[r.consent_education_level] ?? "bg-slate-100 text-slate-800 border-slate-200")}>
+                    <span className={cn("text-xs px-2 py-0.5 rounded-full border", consentColour[r.consent_education_level] ?? "bg-slate-100 text-[var(--cs-navy)] border-[var(--cs-border)]")}>
                       Consent: {CONSENT_EDUCATION_LEVEL_LABEL[r.consent_education_level]}
                     </span>
                     {r.child_led_disclosure ? (
@@ -231,33 +231,33 @@ export default function FirstRelationshipSupportPage() {
                       </span>
                     ) : null}
                   </div>
-                  <div className="text-sm text-slate-600">
+                  <div className="text-sm text-[var(--cs-text-secondary)]">
                     Recorded {r.record_date} · Follow-up {r.follow_up_date} · {getStaffName(r.key_worker)}
                   </div>
                   {r.partner_info ? (
-                    <div className="text-sm text-slate-700 mt-1">{r.partner_info}</div>
+                    <div className="text-sm text-[var(--cs-text-secondary)] mt-1">{r.partner_info}</div>
                   ) : null}
                 </div>
-                {isOpen ? <ChevronUp className="h-5 w-5 text-slate-400" /> : <ChevronDown className="h-5 w-5 text-slate-400" />}
+                {isOpen ? <ChevronUp className="h-5 w-5 text-[var(--cs-text-muted)]" /> : <ChevronDown className="h-5 w-5 text-[var(--cs-text-muted)]" />}
               </button>
               {isOpen ? (
-                <div className="px-4 pb-4 border-t border-slate-100 bg-slate-50/50">
+                <div className="px-4 pb-4 border-t border-[var(--cs-border-subtle)] bg-slate-50/50">
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 pt-4">
-                    <div className="rounded-md border border-slate-200 bg-white p-3">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2 flex items-center gap-1">
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2 flex items-center gap-1">
                         <Heart className="h-3.5 w-3.5" /> Child Voice
                       </div>
-                      <p className="text-sm text-slate-700 italic">&ldquo;{r.child_voice}&rdquo;</p>
+                      <p className="text-sm text-[var(--cs-text-secondary)] italic">&ldquo;{r.child_voice}&rdquo;</p>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Staff Observation</div>
-                      <p className="text-sm text-slate-700">{r.staff_observation}</p>
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Staff Observation</div>
+                      <p className="text-sm text-[var(--cs-text-secondary)]">{r.staff_observation}</p>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2 flex items-center gap-1">
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2 flex items-center gap-1">
                         <BookOpen className="h-3.5 w-3.5" /> RSE Topics Covered
                       </div>
-                      <ul className="text-sm text-slate-700 space-y-1">
+                      <ul className="text-sm text-[var(--cs-text-secondary)] space-y-1">
                         {r.rse_topics_covered.map((t, i) => (
                           <li key={i} className="flex gap-2">
                             <span className="text-blue-500">·</span>
@@ -266,9 +266,9 @@ export default function FirstRelationshipSupportPage() {
                         ))}
                       </ul>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Support Offered</div>
-                      <ul className="text-sm text-slate-700 space-y-1">
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Support Offered</div>
+                      <ul className="text-sm text-[var(--cs-text-secondary)] space-y-1">
                         {r.support_offered.map((t, i) => (
                           <li key={i} className="flex gap-2">
                             <span className="text-emerald-500">·</span>
@@ -303,12 +303,12 @@ export default function FirstRelationshipSupportPage() {
                         </ul>
                       </div>
                     ) : null}
-                    <div className="rounded-md border border-slate-200 bg-white p-3 lg:col-span-2">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Context &amp; Escalation</div>
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3 lg:col-span-2">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Context &amp; Escalation</div>
                       <div className="grid grid-cols-2 gap-3 text-sm">
                         {r.partner_age ? (
                           <div>
-                            <span className="text-slate-500">Partner age:</span> <span className="text-slate-800">{r.partner_age}</span>
+                            <span className="text-[var(--cs-text-muted)]">Partner age:</span> <span className="text-[var(--cs-navy)]">{r.partner_age}</span>
                             {typeof r.age_gap_ok === "boolean" ? (
                               <span className={cn("ml-2 text-xs", r.age_gap_ok ? "text-emerald-700" : "text-red-700")}>
                                 {r.age_gap_ok ? "Age-appropriate" : "Age gap concern"}
@@ -318,18 +318,18 @@ export default function FirstRelationshipSupportPage() {
                         ) : null}
                         {r.how_they_met ? (
                           <div>
-                            <span className="text-slate-500">How met:</span> <span className="text-slate-800">{r.how_they_met}</span>
+                            <span className="text-[var(--cs-text-muted)]">How met:</span> <span className="text-[var(--cs-navy)]">{r.how_they_met}</span>
                           </div>
                         ) : null}
                         {r.parent_carer_involved ? (
                           <div>
-                            <span className="text-slate-500">Family aware:</span>{" "}
-                            <span className="text-slate-800">{r.parent_carer_involved}</span>
+                            <span className="text-[var(--cs-text-muted)]">Family aware:</span>{" "}
+                            <span className="text-[var(--cs-navy)]">{r.parent_carer_involved}</span>
                           </div>
                         ) : null}
                         <div>
-                          <span className="text-slate-500">SW notified:</span>{" "}
-                          <span className="text-slate-800">{r.social_worker_notified ? "Yes" : "No"}</span>
+                          <span className="text-[var(--cs-text-muted)]">SW notified:</span>{" "}
+                          <span className="text-[var(--cs-navy)]">{r.social_worker_notified ? "Yes" : "No"}</span>
                         </div>
                       </div>
                     </div>

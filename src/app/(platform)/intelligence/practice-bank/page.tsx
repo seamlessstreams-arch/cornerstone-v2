@@ -40,7 +40,7 @@ const CATEGORY_COLORS: Record<string, string> = {
   regulation:    "bg-teal-100 text-teal-800",
   engagement:    "bg-amber-100 text-amber-800",
   education:     "bg-indigo-100 text-indigo-800",
-  general:       "bg-slate-100 text-slate-700",
+  general:       "bg-slate-100 text-[var(--cs-text-secondary)]",
 };
 
 const CATEGORY_ORDER: Array<PracticeBankEntry["category"]> = [
@@ -157,7 +157,7 @@ function YPPracticeBankCard({ yp }: { yp: YPEnriched }) {
   return (
     <Link
       href={`/young-people/${yp.id}?tab=intelligence`}
-      className="block rounded-2xl border border-slate-200 bg-white p-5 hover:shadow-md hover:-translate-y-0.5 transition-all group focus:outline-none focus:ring-2 focus:ring-violet-400"
+      className="block rounded-2xl border border-[var(--cs-border)] bg-white p-5 hover:shadow-md hover:-translate-y-0.5 transition-all group focus:outline-none focus:ring-2 focus:ring-violet-400"
     >
       {/* Header */}
       <div className="flex items-center gap-3 mb-4">
@@ -165,20 +165,20 @@ function YPPracticeBankCard({ yp }: { yp: YPEnriched }) {
           <span className="text-sm font-bold text-violet-700">{initial}</span>
         </div>
         <div className="flex-1 min-w-0">
-          <div className="text-sm font-semibold text-slate-900">
+          <div className="text-sm font-semibold text-[var(--cs-navy)]">
             {displayName} {yp.last_name}
           </div>
-          <div className="text-[11px] text-slate-400">Age {yp.age} · {yp.local_authority}</div>
+          <div className="text-[11px] text-[var(--cs-text-muted)]">Age {yp.age} · {yp.local_authority}</div>
         </div>
         <div className="flex flex-col items-end gap-1">
           {isLoading ? (
-            <Loader2 className="h-4 w-4 animate-spin text-slate-300" />
+            <Loader2 className="h-4 w-4 animate-spin text-[var(--cs-text-gentle)]" />
           ) : (
             <span className="text-lg font-bold text-violet-700">{entries.length}</span>
           )}
-          <span className="text-[10px] text-slate-400 leading-none">entries</span>
+          <span className="text-[10px] text-[var(--cs-text-muted)] leading-none">entries</span>
         </div>
-        <ChevronRight className="h-4 w-4 text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity shrink-0 ml-1" />
+        <ChevronRight className="h-4 w-4 text-[var(--cs-text-gentle)] opacity-0 group-hover:opacity-100 transition-opacity shrink-0 ml-1" />
       </div>
 
       {/* Category breakdown */}
@@ -189,7 +189,7 @@ function YPPracticeBankCard({ yp }: { yp: YPEnriched }) {
           ))}
         </div>
       ) : entries.length === 0 ? (
-        <div className="mb-3 text-xs text-slate-400 italic">No entries recorded yet</div>
+        <div className="mb-3 text-xs text-[var(--cs-text-muted)] italic">No entries recorded yet</div>
       ) : (
         <div className="flex flex-wrap gap-1.5 mb-3">
           {CATEGORY_ORDER.filter((cat) => (categoryCounts[cat] ?? 0) > 0).map((cat) => (
@@ -214,9 +214,9 @@ function YPPracticeBankCard({ yp }: { yp: YPEnriched }) {
 
       {/* Latest entry */}
       {latestEntry && (
-        <div className="mt-2 rounded-lg bg-slate-50 px-3 py-2 text-[11px] text-slate-600">
-          <div className="font-medium text-slate-700 truncate">{latestEntry.title}</div>
-          <div className="text-slate-400 mt-0.5">Updated {formatDate(latestEntry.updated_at)}</div>
+        <div className="mt-2 rounded-lg bg-slate-50 px-3 py-2 text-[11px] text-[var(--cs-text-secondary)]">
+          <div className="font-medium text-[var(--cs-text-secondary)] truncate">{latestEntry.title}</div>
+          <div className="text-[var(--cs-text-muted)] mt-0.5">Updated {formatDate(latestEntry.updated_at)}</div>
         </div>
       )}
 
@@ -245,22 +245,22 @@ function YPPracticeBankCard({ yp }: { yp: YPEnriched }) {
       {/* Suggestions Modal */}
       {suggestions && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm" onClick={(e) => { e.stopPropagation(); setSuggestions(null); }}>
-          <div className="w-full max-w-xl bg-white shadow-2xl rounded-2xl overflow-hidden" onClick={(e) => e.stopPropagation()}>
+          <div className="w-full max-w-xl bg-white shadow-[var(--cs-shadow-elevated)] rounded-2xl overflow-hidden" onClick={(e) => e.stopPropagation()}>
             <div className="sticky top-0 z-10 bg-white border-b px-6 py-4 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Sparkles className="h-5 w-5 text-violet-600" />
-                <span className="text-lg font-bold text-slate-900">ARIA — What Works Suggestions</span>
+                <span className="text-lg font-bold text-[var(--cs-navy)]">ARIA — What Works Suggestions</span>
               </div>
-              <button onClick={() => setSuggestions(null)} className="text-slate-400 hover:text-slate-600"><X className="h-5 w-5" /></button>
+              <button onClick={() => setSuggestions(null)} className="text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)]"><X className="h-5 w-5" /></button>
             </div>
 
             <div className="max-h-[60vh] overflow-y-auto p-6 space-y-4">
-              <div className="text-sm font-semibold text-slate-900 mb-4">
+              <div className="text-sm font-semibold text-[var(--cs-navy)] mb-4">
                 Evidence-based "what works" approaches for {displayName}:
               </div>
               {suggestions.map((suggestion, i) => (
                 <div key={i} className="rounded-xl border border-violet-200 bg-violet-50 p-4">
-                  <div className="text-sm text-slate-900 leading-relaxed">{suggestion}</div>
+                  <div className="text-sm text-[var(--cs-navy)] leading-relaxed">{suggestion}</div>
                   <button
                     onClick={() => addToBank(suggestion, i)}
                     disabled={saved.has(i) || saving === i}
@@ -310,7 +310,7 @@ function HomeSummaryStrip({ youngPeople }: { youngPeople: YPEnriched[] }) {
       ].map((stat) => (
         <div key={stat.label} className={cn("rounded-xl p-3 text-center", stat.bg)}>
           <div className={cn("text-xl font-bold", stat.colour)}>{stat.value}</div>
-          <div className="text-[10px] text-slate-500 leading-tight mt-0.5">{stat.label}</div>
+          <div className="text-[10px] text-[var(--cs-text-muted)] leading-tight mt-0.5">{stat.label}</div>
         </div>
       ))}
     </div>
@@ -385,7 +385,7 @@ export default function PracticeBankPage() {
 
         {/* Category legend */}
         <div>
-          <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-2">
+          <div className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-2">
             Entry categories
           </div>
           <div className="flex flex-wrap gap-2">
@@ -400,18 +400,18 @@ export default function PracticeBankPage() {
         {/* YP cards */}
         <div>
           <div className="flex items-center justify-between mb-3">
-            <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider flex items-center gap-2">
+            <div className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider flex items-center gap-2">
               <Layers className="h-3.5 w-3.5" />
               Current Placements
               {search.trim() && !ypLoading && (
-                <span className="ml-1 text-[10px] text-slate-400 normal-case tracking-normal">
+                <span className="ml-1 text-[10px] text-[var(--cs-text-muted)] normal-case tracking-normal">
                   · {filteredYP.length} of {youngPeople.length}
                 </span>
               )}
             </div>
             {!ypLoading && youngPeople.length > 0 && (
               <div className="relative w-56">
-                <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+                <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
                 <Input
                   placeholder="Search young people…"
                   value={search}
@@ -431,10 +431,10 @@ export default function PracticeBankPage() {
           ) : filteredYP.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-16 text-center">
               <User className="h-10 w-10 text-slate-200 mb-3" />
-              <div className="text-slate-500 font-medium">
+              <div className="text-[var(--cs-text-muted)] font-medium">
                 {search.trim() ? "No young people match your search" : "No current placements"}
               </div>
-              <div className="text-sm text-slate-400 mt-1">
+              <div className="text-sm text-[var(--cs-text-muted)] mt-1">
                 {search.trim() ? "Try a different name or local authority" : "Young people will appear here once placed."}
               </div>
             </div>
@@ -448,10 +448,10 @@ export default function PracticeBankPage() {
         </div>
 
         {/* Tip */}
-        <div className="rounded-xl bg-slate-50 border border-slate-100 px-4 py-3 flex items-start gap-2.5">
+        <div className="rounded-xl bg-slate-50 border border-[var(--cs-border-subtle)] px-4 py-3 flex items-start gap-2.5">
           <CheckCircle2 className="h-4 w-4 text-emerald-500 mt-0.5 shrink-0" />
-          <div className="text-xs text-slate-600">
-            <strong className="text-slate-800">Staff tip:</strong> Practice bank entries can be added from any young
+          <div className="text-xs text-[var(--cs-text-secondary)]">
+            <strong className="text-[var(--cs-navy)]">Staff tip:</strong> Practice bank entries can be added from any young
             person's intelligence tab. ARIA will automatically surface relevant entries when generating care
             recommendations, keywork plans, and shift briefings.
           </div>
@@ -461,7 +461,7 @@ export default function PracticeBankPage() {
         <div className="text-center pt-2">
           <Link
             href="/young-people"
-            className="inline-flex items-center gap-1.5 text-xs text-slate-500 hover:text-slate-700 transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] transition-colors"
           >
             <User className="h-3.5 w-3.5" />
             View all young people

@@ -57,7 +57,7 @@ const exportCols: ExportColumn<FuneralRecord>[] = [
 const decisionColour: Record<FuneralAttendanceDecision, string> = {
   attended: "bg-emerald-100 text-emerald-800 border-emerald-200",
   did_not_attend_chose: "bg-blue-100 text-blue-800 border-blue-200",
-  did_not_attend_not_invited: "bg-slate-100 text-slate-800 border-slate-200",
+  did_not_attend_not_invited: "bg-slate-100 text-[var(--cs-navy)] border-[var(--cs-border)]",
   attended_remotely: "bg-purple-100 text-purple-800 border-purple-200",
   pending: "bg-amber-100 text-amber-800 border-amber-200",
 };
@@ -118,45 +118,45 @@ export default function FuneralAttendanceRecordsPage() {
       ) : (
       <>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-slate-600 text-sm mb-1">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-[var(--cs-text-secondary)] text-sm mb-1">
             <Flower className="h-4 w-4" />
             <span>Funerals attended</span>
           </div>
-          <div className="text-2xl font-semibold text-slate-900">{stats.attended}</div>
+          <div className="text-2xl font-semibold text-[var(--cs-navy)]">{stats.attended}</div>
         </div>
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-slate-600 text-sm mb-1">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-[var(--cs-text-secondary)] text-sm mb-1">
             <Heart className="h-4 w-4" />
             <span>Child-led decisions</span>
           </div>
-          <div className="text-2xl font-semibold text-slate-900">{stats.childLed}</div>
+          <div className="text-2xl font-semibold text-[var(--cs-navy)]">{stats.childLed}</div>
         </div>
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-slate-600 text-sm mb-1">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-[var(--cs-text-secondary)] text-sm mb-1">
             <Users className="h-4 w-4" />
             <span>Flagged for follow-up</span>
           </div>
-          <div className="text-2xl font-semibold text-slate-900">{stats.flagged}</div>
+          <div className="text-2xl font-semibold text-[var(--cs-navy)]">{stats.flagged}</div>
         </div>
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-slate-600 text-sm mb-1">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-[var(--cs-text-secondary)] text-sm mb-1">
             <Calendar className="h-4 w-4" />
             <span>Follow-ups due (60d)</span>
           </div>
-          <div className="text-2xl font-semibold text-slate-900">{stats.followUpsDue}</div>
+          <div className="text-2xl font-semibold text-[var(--cs-navy)]">{stats.followUpsDue}</div>
         </div>
       </div>
 
       <div className="flex flex-col sm:flex-row gap-3 mb-4">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--cs-text-muted)]" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search young person, deceased, relationship..."
-            className="w-full pl-9 pr-3 py-2 text-sm border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full pl-9 pr-3 py-2 text-sm border border-[var(--cs-border)] rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
         <Select value={decisionFilter} onValueChange={setDecisionFilter}>
@@ -189,15 +189,15 @@ export default function FuneralAttendanceRecordsPage() {
         {filtered.map((r) => {
           const isOpen = expandedId === r.id;
           return (
-            <div key={r.id} className="rounded-lg border border-slate-200 bg-white overflow-hidden">
+            <div key={r.id} className="rounded-lg border border-[var(--cs-border)] bg-white overflow-hidden">
               <button
                 onClick={() => setExpandedId(isOpen ? null : r.id)}
-                className="w-full p-4 flex items-start justify-between gap-3 hover:bg-slate-50 text-left"
+                className="w-full p-4 flex items-start justify-between gap-3 hover:bg-[var(--cs-surface)] text-left"
               >
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap mb-1">
-                    <span className="font-semibold text-slate-900">{getYPName(r.child_id)}</span>
-                    <span className="text-slate-700">— {r.deceased_name}</span>
+                    <span className="font-semibold text-[var(--cs-navy)]">{getYPName(r.child_id)}</span>
+                    <span className="text-[var(--cs-text-secondary)]">— {r.deceased_name}</span>
                     <span className={cn("text-xs px-2 py-0.5 rounded-full border", decisionColour[r.attendance_decision])}>
                       {FUNERAL_ATTENDANCE_DECISION_LABEL[r.attendance_decision]}
                     </span>
@@ -212,45 +212,45 @@ export default function FuneralAttendanceRecordsPage() {
                       </span>
                     ) : null}
                   </div>
-                  <div className="text-sm text-slate-600">
+                  <div className="text-sm text-[var(--cs-text-secondary)]">
                     {r.relationship_to_child} · Funeral {r.funeral_date} · {getStaffName(r.key_worker)}
                   </div>
                 </div>
-                {isOpen ? <ChevronUp className="h-5 w-5 text-slate-400" /> : <ChevronDown className="h-5 w-5 text-slate-400" />}
+                {isOpen ? <ChevronUp className="h-5 w-5 text-[var(--cs-text-muted)]" /> : <ChevronDown className="h-5 w-5 text-[var(--cs-text-muted)]" />}
               </button>
               {isOpen ? (
-                <div className="px-4 pb-4 border-t border-slate-100 bg-slate-50/50">
+                <div className="px-4 pb-4 border-t border-[var(--cs-border-subtle)] bg-slate-50/50">
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 pt-4">
                     <div className="rounded-md border border-rose-200 bg-rose-50 p-3 lg:col-span-2">
                       <div className="text-xs font-semibold text-rose-700 uppercase mb-2">Child Voice</div>
                       <p className="text-sm text-rose-900 italic">&ldquo;{r.child_voice}&rdquo;</p>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3 lg:col-span-2">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Staff Observation</div>
-                      <p className="text-sm text-slate-700">{r.staff_observation}</p>
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3 lg:col-span-2">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Staff Observation</div>
+                      <p className="text-sm text-[var(--cs-text-secondary)]">{r.staff_observation}</p>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Pre-funeral preparation</div>
-                      <ul className="text-sm text-slate-700 space-y-1">
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Pre-funeral preparation</div>
+                      <ul className="text-sm text-[var(--cs-text-secondary)] space-y-1">
                         {r.pre_funeral_preparation.map((t, i) => (
-                          <li key={i} className="flex gap-2"><span className="text-slate-400">·</span><span>{t}</span></li>
+                          <li key={i} className="flex gap-2"><span className="text-[var(--cs-text-muted)]">·</span><span>{t}</span></li>
                         ))}
                       </ul>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Rituals observed</div>
-                      <ul className="text-sm text-slate-700 space-y-1">
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Rituals observed</div>
+                      <ul className="text-sm text-[var(--cs-text-secondary)] space-y-1">
                         {r.rituals_observed.map((t, i) => (
                           <li key={i} className="flex gap-2"><span className="text-emerald-500">·</span><span>{t}</span></li>
                         ))}
                       </ul>
                     </div>
                     {r.who_attended_with_child.length ? (
-                      <div className="rounded-md border border-slate-200 bg-white p-3">
-                        <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Who attended with child</div>
-                        <ul className="text-sm text-slate-700 space-y-1">
+                      <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                        <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Who attended with child</div>
+                        <ul className="text-sm text-[var(--cs-text-secondary)] space-y-1">
                           {r.who_attended_with_child.map((t, i) => (
-                            <li key={i} className="flex gap-2"><span className="text-slate-400">·</span><span>{t}</span></li>
+                            <li key={i} className="flex gap-2"><span className="text-[var(--cs-text-muted)]">·</span><span>{t}</span></li>
                           ))}
                         </ul>
                       </div>
@@ -263,24 +263,24 @@ export default function FuneralAttendanceRecordsPage() {
                         ))}
                       </ul>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3 lg:col-span-2">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Context</div>
-                      <div className="grid grid-cols-2 gap-3 text-sm text-slate-700">
-                        <div><span className="text-slate-500">Informed by:</span> {r.child_was_informed_by}</div>
-                        <div><span className="text-slate-500">Decision-maker:</span> {FUNERAL_DECISION_MAKER_LABEL[r.decision_maker]}</div>
-                        <div><span className="text-slate-500">Date of death:</span> {r.date_of_death}</div>
-                        <div><span className="text-slate-500">Funeral type:</span> {FUNERAL_TYPE_LABEL[r.funeral_type]}</div>
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3 lg:col-span-2">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Context</div>
+                      <div className="grid grid-cols-2 gap-3 text-sm text-[var(--cs-text-secondary)]">
+                        <div><span className="text-[var(--cs-text-muted)]">Informed by:</span> {r.child_was_informed_by}</div>
+                        <div><span className="text-[var(--cs-text-muted)]">Decision-maker:</span> {FUNERAL_DECISION_MAKER_LABEL[r.decision_maker]}</div>
+                        <div><span className="text-[var(--cs-text-muted)]">Date of death:</span> {r.date_of_death}</div>
+                        <div><span className="text-[var(--cs-text-muted)]">Funeral type:</span> {FUNERAL_TYPE_LABEL[r.funeral_type]}</div>
                         {r.travel_arrangements ? (
-                          <div className="col-span-2"><span className="text-slate-500">Travel:</span> {r.travel_arrangements}</div>
+                          <div className="col-span-2"><span className="text-[var(--cs-text-muted)]">Travel:</span> {r.travel_arrangements}</div>
                         ) : null}
                         {r.child_role_at_funeral ? (
-                          <div className="col-span-2"><span className="text-slate-500">Child&rsquo;s role:</span> {r.child_role_at_funeral}</div>
+                          <div className="col-span-2"><span className="text-[var(--cs-text-muted)]">Child&rsquo;s role:</span> {r.child_role_at_funeral}</div>
                         ) : null}
                         {r.birth_family_contact ? (
-                          <div className="col-span-2"><span className="text-slate-500">Birth family:</span> {r.birth_family_contact}</div>
+                          <div className="col-span-2"><span className="text-[var(--cs-text-muted)]">Birth family:</span> {r.birth_family_contact}</div>
                         ) : null}
-                        <div><span className="text-slate-500">SW informed:</span> {r.social_worker_informed ? "Yes" : "No"}</div>
-                        <div><span className="text-slate-500">Follow-up:</span> {r.follow_up_date}</div>
+                        <div><span className="text-[var(--cs-text-muted)]">SW informed:</span> {r.social_worker_informed ? "Yes" : "No"}</div>
+                        <div><span className="text-[var(--cs-text-muted)]">Follow-up:</span> {r.follow_up_date}</div>
                       </div>
                     </div>
                     {r.flags_concerns.length ? (

@@ -64,7 +64,7 @@ const MARK_TYPE_CONFIG: Record<MarkType, { label: string; colour: string }> = {
   bite_mark:     { label: "Bite Mark",     colour: "bg-amber-100 text-amber-700" },
   pressure_mark: { label: "Pressure Mark", colour: "bg-yellow-100 text-yellow-700" },
   old_scar:      { label: "Old Scar",      colour: "bg-gray-100 text-gray-600"   },
-  other:         { label: "Other",         colour: "bg-slate-100 text-slate-600" },
+  other:         { label: "Other",         colour: "bg-slate-100 text-[var(--cs-text-secondary)]" },
 };
 
 const COLOUR_LABELS: Record<MarkColour, string> = {

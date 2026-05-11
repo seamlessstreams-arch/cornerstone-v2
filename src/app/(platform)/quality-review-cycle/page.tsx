@@ -216,7 +216,7 @@ export default function QualityReviewCyclePage() {
             return (
               <div key={review.id} className="rounded-xl border bg-white overflow-hidden">
                 <button
-                  className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                  className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                   onClick={() => setExpandedId(isExpanded ? null : review.id)}
                 >
                   <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -281,7 +281,7 @@ export default function QualityReviewCyclePage() {
                                 const AreaIcon = getAreaIcon(area.area);
                                 return (
                                   <div key={area.area} className="flex items-start gap-2 rounded-lg border bg-white p-3">
-                                    <AreaIcon className="h-4 w-4 text-slate-500 mt-0.5 shrink-0" />
+                                    <AreaIcon className="h-4 w-4 text-[var(--cs-text-muted)] mt-0.5 shrink-0" />
                                     <div className="flex-1 min-w-0">
                                       <div className="flex items-center gap-2 mb-1">
                                         <p className="text-sm font-medium">{area.area}</p>
@@ -289,7 +289,7 @@ export default function QualityReviewCyclePage() {
                                           {REG46_AREA_RATING_LABEL[area.rating]}
                                         </Badge>
                                       </div>
-                                      <p className="text-sm text-slate-700 mb-1">{area.summary}</p>
+                                      <p className="text-sm text-[var(--cs-text-secondary)] mb-1">{area.summary}</p>
                                       <p className="text-xs text-muted-foreground">{area.evidence}</p>
                                     </div>
                                   </div>
@@ -325,7 +325,7 @@ export default function QualityReviewCyclePage() {
                               {review.actions_arising.map((action: Reg46ActionArising, idx: number) => (
                                 <div key={idx} className="flex items-start gap-2 rounded-lg border bg-white p-2.5">
                                   <CheckCircle2 className={cn("h-4 w-4 mt-0.5 shrink-0",
-                                    action.status === "completed" ? "text-green-600" : action.status === "in_progress" ? "text-blue-600" : "text-slate-400"
+                                    action.status === "completed" ? "text-green-600" : action.status === "in_progress" ? "text-blue-600" : "text-[var(--cs-text-muted)]"
                                   )} />
                                   <div className="flex-1 min-w-0">
                                     <p className={cn("text-sm", action.status === "completed" && "line-through text-muted-foreground")}>{action.action}</p>
@@ -338,7 +338,7 @@ export default function QualityReviewCyclePage() {
                                   <Badge variant="outline" className={cn("text-xs",
                                     action.status === "completed" ? "border-green-300 text-green-700" :
                                     action.status === "in_progress" ? "border-blue-300 text-blue-700" :
-                                    "border-slate-300 text-slate-700"
+                                    "border-slate-300 text-[var(--cs-text-secondary)]"
                                   )}>{REG46_ACTION_STATUS_LABEL[action.status]}</Badge>
                                 </div>
                               ))}

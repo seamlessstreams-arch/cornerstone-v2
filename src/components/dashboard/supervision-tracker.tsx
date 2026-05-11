@@ -46,17 +46,17 @@ function SupervisionRow({ staff }: { staff: StaffEnriched }) {
   return (
     <Link
       href={`/staff/${staff.id}`}
-      className="flex items-center gap-3 rounded-xl px-3 py-2.5 hover:bg-slate-50 transition-colors group"
+      className="flex items-center gap-3 rounded-xl px-3 py-2.5 hover:bg-[var(--cs-surface)] transition-colors group"
     >
       <Avatar name={staff.full_name} size="sm" />
       <div className="flex-1 min-w-0">
-        <div className="text-sm font-medium text-slate-900 truncate">
+        <div className="text-sm font-medium text-[var(--cs-navy)] truncate">
           {staff.full_name}
         </div>
         <div className="flex items-center gap-2 mt-0.5">
-          <span className="text-[10px] text-slate-400 truncate">{staff.job_title}</span>
+          <span className="text-[10px] text-[var(--cs-text-muted)] truncate">{staff.job_title}</span>
           {staff.next_supervision_due && (
-            <span className="text-[10px] text-slate-400 flex items-center gap-0.5">
+            <span className="text-[10px] text-[var(--cs-text-muted)] flex items-center gap-0.5">
               <Calendar className="h-2.5 w-2.5" />
               {formatRelative(staff.next_supervision_due)}
             </span>
@@ -70,7 +70,7 @@ function SupervisionRow({ staff }: { staff: StaffEnriched }) {
         <StatusIcon className="h-3 w-3" />
         {statusLabel}
       </Badge>
-      <ChevronRight className="h-3.5 w-3.5 text-slate-300 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
+      <ChevronRight className="h-3.5 w-3.5 text-[var(--cs-text-gentle)] shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
     </Link>
   );
 }
@@ -112,7 +112,7 @@ export function SupervisionTracker() {
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-center py-8">
-            <Loader2 className="h-5 w-5 animate-spin text-slate-400" />
+            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
           </div>
         </CardContent>
       </Card>

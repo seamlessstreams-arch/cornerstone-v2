@@ -171,7 +171,7 @@ const PRIORITY_COLOUR: Record<SuggestedAction["priority"], string> = {
   urgent: "bg-red-100 text-red-800 border-red-200",
   high: "bg-orange-100 text-orange-800 border-orange-200",
   medium: "bg-amber-100 text-amber-800 border-amber-200",
-  low: "bg-slate-100 text-slate-700 border-slate-200",
+  low: "bg-slate-100 text-[var(--cs-text-secondary)] border-[var(--cs-border)]",
 };
 
 function emptyRecord(): SourceRecordInput {
@@ -335,12 +335,12 @@ export default function VoiceOfChildPage() {
   const summary = result?.summary;
 
   return (
-    <PageShell title="Aria — Voice of the Child">
+    <PageShell title="ARIA — Voice of the Child">
       {/* Aria draft banner */}
       <div className="mb-6 flex items-start gap-3 rounded-lg border border-violet-200 bg-violet-50 p-4 text-sm text-violet-900">
         <Sparkles className="h-5 w-5 mt-0.5 text-violet-600" />
         <div>
-          <div className="font-semibold">Aria suggested draft — never final</div>
+          <div className="font-semibold">ARIA suggested draft — never final</div>
           <p className="text-violet-800">
             Aggregates the child&apos;s voice across multiple records. The output
             stays in draft until a Registered Manager (or delegate) approves,
@@ -360,23 +360,23 @@ export default function VoiceOfChildPage() {
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1">Child ID *</label>
+              <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Child ID *</label>
               <Input value={childId} onChange={(e) => setChildId(e.target.value)} placeholder="e.g. yp_casey" />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1">Child reference (pseudonym)</label>
+              <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Child reference (pseudonym)</label>
               <Input value={childPseudonym} onChange={(e) => setChildPseudonym(e.target.value)} placeholder="e.g. Casey" />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1">Period start</label>
+              <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Period start</label>
               <Input type="date" value={periodStart} onChange={(e) => setPeriodStart(e.target.value)} />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1">Period end</label>
+              <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Period end</label>
               <Input type="date" value={periodEnd} onChange={(e) => setPeriodEnd(e.target.value)} />
             </div>
             <div className="lg:col-span-4">
-              <label className="block text-xs font-semibold text-slate-600 mb-1">
+              <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">
                 Actor user ID (your sign-in for audit log)
               </label>
               <Input value={actorUserId} onChange={(e) => setActorUserId(e.target.value)} />
@@ -399,9 +399,9 @@ export default function VoiceOfChildPage() {
         </CardHeader>
         <CardContent className="space-y-4">
           {records.map((r, i) => (
-            <div key={i} className="rounded-md border border-slate-200 p-3 space-y-2">
+            <div key={i} className="rounded-md border border-[var(--cs-border)] p-3 space-y-2">
               <div className="flex items-center justify-between gap-2">
-                <span className="text-xs font-semibold text-slate-500 uppercase">Record {i + 1}</span>
+                <span className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase">Record {i + 1}</span>
                 {records.length > 1 ? (
                   <Button variant="ghost" size="sm" onClick={() => removeRecord(i)} className="gap-1 text-red-600">
                     <Trash2 className="h-3.5 w-3.5" /> Remove
@@ -441,7 +441,7 @@ export default function VoiceOfChildPage() {
             </div>
           ))}
           <div className="flex items-center justify-end gap-2 pt-2">
-            <span className="text-xs text-slate-500 mr-auto">
+            <span className="text-xs text-[var(--cs-text-muted)] mr-auto">
               {validRecords.length} of {records.length} records ready
             </span>
             <Button onClick={handleAnalyse} disabled={!canSubmit || analysing} className="gap-2">
@@ -464,7 +464,7 @@ export default function VoiceOfChildPage() {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
             <Card>
               <CardContent className="p-4">
-                <div className="text-xs uppercase text-slate-500 mb-1">Voice capture</div>
+                <div className="text-xs uppercase text-[var(--cs-text-muted)] mb-1">Voice capture</div>
                 <Badge className={cn("border", QUALITY_COLOUR[summary.overallVoiceCaptureQuality])}>
                   {summary.overallVoiceCaptureQuality}
                 </Badge>
@@ -472,25 +472,25 @@ export default function VoiceOfChildPage() {
             </Card>
             <Card>
               <CardContent className="p-4">
-                <div className="text-xs uppercase text-slate-500 mb-1">Records considered</div>
-                <div className="text-3xl font-semibold text-slate-900">{summary.recordsConsidered}</div>
+                <div className="text-xs uppercase text-[var(--cs-text-muted)] mb-1">Records considered</div>
+                <div className="text-3xl font-semibold text-[var(--cs-navy)]">{summary.recordsConsidered}</div>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="p-4">
-                <div className="text-xs uppercase text-slate-500 mb-1">Direct quotes / paraphrased</div>
-                <div className="text-2xl font-semibold text-slate-900">
+                <div className="text-xs uppercase text-[var(--cs-text-muted)] mb-1">Direct quotes / paraphrased</div>
+                <div className="text-2xl font-semibold text-[var(--cs-navy)]">
                   {summary.directQuotes.length} / {summary.paraphrasedExpressions.length}
                 </div>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="p-4">
-                <div className="text-xs uppercase text-slate-500 mb-1">Aria confidence</div>
-                <div className="text-3xl font-semibold text-slate-900">
+                <div className="text-xs uppercase text-[var(--cs-text-muted)] mb-1">Aria confidence</div>
+                <div className="text-3xl font-semibold text-[var(--cs-navy)]">
                   {Math.round(summary.ariaConfidence * 100)}%
                 </div>
-                <div className="text-xs text-slate-500 mt-1">
+                <div className="text-xs text-[var(--cs-text-muted)] mt-1">
                   {summary.llmUsed ? "LLM-enhanced narrative" : "Deterministic only"}
                 </div>
               </CardContent>
@@ -521,7 +521,7 @@ export default function VoiceOfChildPage() {
                 </CardHeader>
                 <CardContent>
                   {summary.themesPresent.length === 0 ? (
-                    <p className="text-sm text-slate-500">No themes detected.</p>
+                    <p className="text-sm text-[var(--cs-text-muted)]">No themes detected.</p>
                   ) : (
                     <div className="flex flex-wrap gap-1.5">
                       {summary.themesPresent.map((t) => (
@@ -537,16 +537,16 @@ export default function VoiceOfChildPage() {
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2 text-base">
-                    <XCircle className="h-4 w-4 text-slate-400" /> Themes absent (worth checking)
+                    <XCircle className="h-4 w-4 text-[var(--cs-text-muted)]" /> Themes absent (worth checking)
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   {summary.themesAbsent.length === 0 ? (
-                    <p className="text-sm text-slate-500">All themes evidenced.</p>
+                    <p className="text-sm text-[var(--cs-text-muted)]">All themes evidenced.</p>
                   ) : (
                     <div className="flex flex-wrap gap-1.5">
                       {summary.themesAbsent.map((t) => (
-                        <Badge key={t} className="border bg-slate-50 text-slate-600 border-slate-200">
+                        <Badge key={t} className="border bg-slate-50 text-[var(--cs-text-secondary)] border-[var(--cs-border)]">
                           {THEME_LABEL[t] ?? t}
                         </Badge>
                       ))}
@@ -570,8 +570,8 @@ export default function VoiceOfChildPage() {
                     <ul className="space-y-2 text-sm">
                       {summary.directQuotes.map((q, i) => (
                         <li key={i} className="border-l-2 border-rose-200 pl-3">
-                          <div className="italic text-slate-800">&ldquo;{q.text}&rdquo;</div>
-                          <div className="text-xs text-slate-500 mt-0.5">
+                          <div className="italic text-[var(--cs-navy)]">&ldquo;{q.text}&rdquo;</div>
+                          <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">
                             {q.recordType} · {q.recordDate} · {q.recordId}
                           </div>
                         </li>
@@ -587,13 +587,13 @@ export default function VoiceOfChildPage() {
                 </CardHeader>
                 <CardContent>
                   {summary.paraphrasedExpressions.length === 0 ? (
-                    <p className="text-sm text-slate-500">None detected.</p>
+                    <p className="text-sm text-[var(--cs-text-muted)]">None detected.</p>
                   ) : (
                     <ul className="space-y-2 text-sm">
                       {summary.paraphrasedExpressions.slice(0, 8).map((q, i) => (
                         <li key={i} className="border-l-2 border-blue-200 pl-3">
-                          <div className="text-slate-800">{q.text}</div>
-                          <div className="text-xs text-slate-500 mt-0.5">
+                          <div className="text-[var(--cs-navy)]">{q.text}</div>
+                          <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">
                             {q.recordType} · {q.recordDate} · {q.recordId}
                           </div>
                         </li>
@@ -611,9 +611,9 @@ export default function VoiceOfChildPage() {
                   <ul className="space-y-1.5 text-sm">
                     {summary.perRecordContributions.map((c) => (
                       <li key={c.recordId} className="flex items-center justify-between gap-2">
-                        <span className="text-slate-700">
+                        <span className="text-[var(--cs-text-secondary)]">
                           {c.recordType} · {c.recordDate}
-                          <span className="text-xs text-slate-500"> · {c.recordId}</span>
+                          <span className="text-xs text-[var(--cs-text-muted)]"> · {c.recordId}</span>
                         </span>
                         <Badge className={cn("border text-xs", QUALITY_COLOUR[c.voiceCaptureQuality])}>
                           {c.voiceCaptureQuality}
@@ -645,7 +645,7 @@ export default function VoiceOfChildPage() {
                       className="min-h-[260px] text-sm"
                     />
                   ) : (
-                    <pre className="whitespace-pre-wrap text-sm text-slate-800 font-sans">{editedNarrative}</pre>
+                    <pre className="whitespace-pre-wrap text-sm text-[var(--cs-navy)] font-sans">{editedNarrative}</pre>
                   )}
                 </CardContent>
               </Card>
@@ -662,7 +662,7 @@ export default function VoiceOfChildPage() {
                       className="min-h-[80px] text-sm"
                     />
                   ) : (
-                    <p className="text-sm text-slate-700">{editedOfsted}</p>
+                    <p className="text-sm text-[var(--cs-text-secondary)]">{editedOfsted}</p>
                   )}
                 </CardContent>
               </Card>
@@ -709,11 +709,11 @@ export default function VoiceOfChildPage() {
                             <Badge className={cn("border text-xs", PRIORITY_COLOUR[a.priority])}>
                               {a.priority}
                             </Badge>
-                            <span className="text-xs text-slate-500">
+                            <span className="text-xs text-[var(--cs-text-muted)]">
                               due {a.dueDays}d · {a.assignedRole}
                             </span>
                           </div>
-                          <p className="text-sm text-slate-600">{a.description}</p>
+                          <p className="text-sm text-[var(--cs-text-secondary)]">{a.description}</p>
                         </li>
                       ))}
                     </ul>
@@ -724,11 +724,11 @@ export default function VoiceOfChildPage() {
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2 text-base">
-                    <Scale className="h-4 w-4 text-slate-500" /> Regulatory links
+                    <Scale className="h-4 w-4 text-[var(--cs-text-muted)]" /> Regulatory links
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <ul className="text-xs text-slate-600 space-y-1">
+                  <ul className="text-xs text-[var(--cs-text-secondary)] space-y-1">
                     {summary.regulatoryLinks.map((s, i) => (
                       <li key={i}>· {s}</li>
                     ))}
@@ -744,15 +744,15 @@ export default function VoiceOfChildPage() {
               <CardTitle className="text-base">Manager decision</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="text-xs text-slate-500">
-                Acting as <span className="font-medium text-slate-700">{actorUserId}</span> ·
+              <div className="text-xs text-[var(--cs-text-muted)]">
+                Acting as <span className="font-medium text-[var(--cs-text-secondary)]">{actorUserId}</span> ·
                 {result?.summaryId
                   ? ` summary ${result.summaryId}`
                   : " persistence not active — decisions cannot be audit-logged in this environment"}
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-600 mb-1">
+                  <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">
                     Rejection reason (required for Reject)
                   </label>
                   <Textarea
@@ -763,7 +763,7 @@ export default function VoiceOfChildPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-slate-600 mb-1">
+                  <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">
                     Rewrite instructions (required for Request rewrite)
                   </label>
                   <Textarea
@@ -837,7 +837,7 @@ export default function VoiceOfChildPage() {
                 </Button>
               </div>
               {decisionMessage ? (
-                <div className="text-sm text-slate-700 bg-slate-50 border border-slate-200 rounded-md px-3 py-2">
+                <div className="text-sm text-[var(--cs-text-secondary)] bg-slate-50 border border-[var(--cs-border)] rounded-md px-3 py-2">
                   {decisionMessage}
                 </div>
               ) : null}
@@ -848,32 +848,32 @@ export default function VoiceOfChildPage() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-base">
-                <History className="h-4 w-4 text-slate-500" /> Audit trail
+                <History className="h-4 w-4 text-[var(--cs-text-muted)]" /> Audit trail
               </CardTitle>
             </CardHeader>
             <CardContent>
               {auditTrail.length === 0 ? (
-                <p className="text-xs text-slate-500">
+                <p className="text-xs text-[var(--cs-text-muted)]">
                   No audit entries — either persistence is not configured, or no events have been logged yet.
                 </p>
               ) : (
                 <ol className="space-y-3">
                   {auditTrail.map((e) => (
-                    <li key={e.id} className="border-l-2 border-slate-200 pl-3">
+                    <li key={e.id} className="border-l-2 border-[var(--cs-border)] pl-3">
                       <div className="flex items-center gap-2 mb-0.5">
-                        <Badge className="bg-slate-100 text-slate-700 border-slate-200 border text-xs">
+                        <Badge className="bg-slate-100 text-[var(--cs-text-secondary)] border-[var(--cs-border)] border text-xs">
                           {e.event_type.replace(/_/g, " ")}
                         </Badge>
-                        <span className="text-xs text-slate-500">
+                        <span className="text-xs text-[var(--cs-text-muted)]">
                           {new Date(e.created_at).toLocaleString()}
                         </span>
                       </div>
-                      <div className="text-xs text-slate-600">
+                      <div className="text-xs text-[var(--cs-text-secondary)]">
                         {e.actor_user_id ? `by ${e.actor_user_id}` : "system"}
                         {e.actor_role ? ` · ${e.actor_role}` : ""}
                       </div>
                       {Object.keys(e.event_detail).length > 0 ? (
-                        <pre className="mt-1 text-xs text-slate-500 bg-slate-50 rounded p-2 overflow-x-auto">
+                        <pre className="mt-1 text-xs text-[var(--cs-text-muted)] bg-slate-50 rounded p-2 overflow-x-auto">
                           {JSON.stringify(e.event_detail, null, 2)}
                         </pre>
                       ) : null}
@@ -908,7 +908,7 @@ function ChipList({
   };
   return (
     <div>
-      <div className="text-xs font-semibold text-slate-500 uppercase mb-1">{label}</div>
+      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-1">{label}</div>
       <div className="flex flex-wrap gap-1.5">
         {items.map((s, i) => (
           <span key={i} className={cn("text-xs px-2 py-0.5 rounded-full border", colourClass[colour])}>

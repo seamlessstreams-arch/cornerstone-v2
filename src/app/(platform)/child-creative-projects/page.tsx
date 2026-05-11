@@ -49,7 +49,7 @@ const mediumIcon = (m: CreativeProjectMedium) => {
 };
 
 const statusColour: Record<string, string> = {
-  idea: "bg-slate-100 text-slate-700",
+  idea: "bg-slate-100 text-[var(--cs-text-secondary)]",
   active: "bg-teal-100 text-teal-800",
   paused: "bg-amber-100 text-amber-800",
   completed: "bg-purple-100 text-purple-800",
@@ -170,7 +170,7 @@ export default function ChildCreativeProjectsPage() {
 
       <div className="flex flex-wrap items-center gap-3 mb-6">
         <div className="relative">
-          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
           <Input
             placeholder="Search projects…"
             value={search}
@@ -215,7 +215,7 @@ export default function ChildCreativeProjectsPage() {
           return (
             <div key={p.id} className="rounded-xl border bg-white overflow-hidden">
               <button
-                className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                 onClick={() => setExpandedId(isExpanded ? null : p.id)}
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -289,7 +289,7 @@ export default function ChildCreativeProjectsPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       {p.collaborators && (
                         <div className="bg-white rounded-lg p-3 border">
-                          <p className="text-xs font-semibold text-slate-700 uppercase tracking-wide mb-1">
+                          <p className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide mb-1">
                             Collaborators
                           </p>
                           <p className="text-sm">{p.collaborators}</p>

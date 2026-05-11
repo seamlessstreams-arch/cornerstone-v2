@@ -293,7 +293,7 @@ export default function ChildAllergiesEpipenPlanPage() {
             label: "Anaphylaxis Plans",
             value: stats.anaphylactic,
             icon: ShieldAlert,
-            colour: stats.anaphylactic > 0 ? "text-red-600" : "text-slate-500",
+            colour: stats.anaphylactic > 0 ? "text-red-600" : "text-[var(--cs-text-muted)]",
           },
           {
             label: "AAIs In-Date",
@@ -311,7 +311,7 @@ export default function ChildAllergiesEpipenPlanPage() {
             label: "Reviews Due (30d)",
             value: stats.reviewsDue,
             icon: AlertTriangle,
-            colour: stats.reviewsDue > 0 ? "text-amber-600" : "text-slate-500",
+            colour: stats.reviewsDue > 0 ? "text-amber-600" : "text-[var(--cs-text-muted)]",
           },
         ].map((s) => (
           <div
@@ -436,7 +436,7 @@ export default function ChildAllergiesEpipenPlanPage() {
                           {ALLERGY_SEVERITY_LABEL[peakSeverity]}
                         </span>
                       ) : (
-                        <span className="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium bg-slate-100 text-slate-600">
+                        <span className="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium bg-slate-100 text-[var(--cs-text-secondary)]">
                           No known allergies
                         </span>
                       )}

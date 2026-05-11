@@ -121,45 +121,45 @@ export default function EatingSupportPlanPage() {
       }
     >
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-slate-600 text-sm mb-1">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-[var(--cs-text-secondary)] text-sm mb-1">
             <Utensils className="h-4 w-4" />
             <span>Active plans</span>
           </div>
-          <div className="text-2xl font-semibold text-slate-900">{stats.activePlans}</div>
+          <div className="text-2xl font-semibold text-[var(--cs-navy)]">{stats.activePlans}</div>
         </div>
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-slate-600 text-sm mb-1">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-[var(--cs-text-secondary)] text-sm mb-1">
             <Heart className="h-4 w-4" />
             <span>CAMHS-involved</span>
           </div>
-          <div className="text-2xl font-semibold text-slate-900">{stats.camhsInvolved}</div>
+          <div className="text-2xl font-semibold text-[var(--cs-navy)]">{stats.camhsInvolved}</div>
         </div>
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-slate-600 text-sm mb-1">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-[var(--cs-text-secondary)] text-sm mb-1">
             <CheckCircle className="h-4 w-4" />
             <span>Child co-produced</span>
           </div>
-          <div className="text-2xl font-semibold text-slate-900">{stats.childChose}</div>
+          <div className="text-2xl font-semibold text-[var(--cs-navy)]">{stats.childChose}</div>
         </div>
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-slate-600 text-sm mb-1">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-[var(--cs-text-secondary)] text-sm mb-1">
             <Apple className="h-4 w-4" />
             <span>Reviews due (30d)</span>
           </div>
-          <div className="text-2xl font-semibold text-slate-900">{stats.reviewsDue}</div>
+          <div className="text-2xl font-semibold text-[var(--cs-navy)]">{stats.reviewsDue}</div>
         </div>
       </div>
 
       <div className="flex flex-col sm:flex-row gap-3 mb-4">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--cs-text-muted)]" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search young person or presentation..."
-            className="w-full pl-9 pr-3 py-2 text-sm border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full pl-9 pr-3 py-2 text-sm border border-[var(--cs-border)] rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
         <Select value={presentationFilter} onValueChange={setPresentationFilter}>
@@ -196,14 +196,14 @@ export default function EatingSupportPlanPage() {
         {filtered.map((r) => {
           const isOpen = expandedId === r.id;
           return (
-            <div key={r.id} className="rounded-lg border border-slate-200 bg-white overflow-hidden">
+            <div key={r.id} className="rounded-lg border border-[var(--cs-border)] bg-white overflow-hidden">
               <button
                 onClick={() => setExpandedId(isOpen ? null : r.id)}
-                className="w-full p-4 flex items-start justify-between gap-3 hover:bg-slate-50 text-left"
+                className="w-full p-4 flex items-start justify-between gap-3 hover:bg-[var(--cs-surface)] text-left"
               >
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap mb-1">
-                    <span className="font-semibold text-slate-900">{getYPName(r.child_id)}</span>
+                    <span className="font-semibold text-[var(--cs-navy)]">{getYPName(r.child_id)}</span>
                     <span className={cn("text-xs px-2 py-0.5 rounded-full border", presentationColour[r.presentation])}>
                       {EATING_PRESENTATION_LABEL[r.presentation]}
                     </span>
@@ -218,22 +218,22 @@ export default function EatingSupportPlanPage() {
                       </span>
                     ) : null}
                   </div>
-                  <div className="text-sm text-slate-600">
+                  <div className="text-sm text-[var(--cs-text-secondary)]">
                     Plan {r.plan_date} · Review {r.review_date} · {getStaffName(r.key_worker)}
                   </div>
                 </div>
-                {isOpen ? <ChevronUp className="h-5 w-5 text-slate-400" /> : <ChevronDown className="h-5 w-5 text-slate-400" />}
+                {isOpen ? <ChevronUp className="h-5 w-5 text-[var(--cs-text-muted)]" /> : <ChevronDown className="h-5 w-5 text-[var(--cs-text-muted)]" />}
               </button>
               {isOpen ? (
-                <div className="px-4 pb-4 border-t border-slate-100 bg-slate-50/50">
+                <div className="px-4 pb-4 border-t border-[var(--cs-border-subtle)] bg-slate-50/50">
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 pt-4">
-                    <div className="rounded-md border border-slate-200 bg-white p-3 lg:col-span-2">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Child Voice</div>
-                      <p className="text-sm text-slate-700 italic">&ldquo;{r.child_voice}&rdquo;</p>
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3 lg:col-span-2">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Child Voice</div>
+                      <p className="text-sm text-[var(--cs-text-secondary)] italic">&ldquo;{r.child_voice}&rdquo;</p>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3 lg:col-span-2">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Staff Observation</div>
-                      <p className="text-sm text-slate-700">{r.staff_observation}</p>
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3 lg:col-span-2">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Staff Observation</div>
+                      <p className="text-sm text-[var(--cs-text-secondary)]">{r.staff_observation}</p>
                     </div>
                     <div className="rounded-md border border-emerald-200 bg-emerald-50 p-3">
                       <div className="text-xs font-semibold text-emerald-700 uppercase mb-2">Safe foods</div>
@@ -277,46 +277,46 @@ export default function EatingSupportPlanPage() {
                         ))}
                       </ul>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3 lg:col-span-2">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Meal time approach</div>
-                      <ul className="text-sm text-slate-700 space-y-1">
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3 lg:col-span-2">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Meal time approach</div>
+                      <ul className="text-sm text-[var(--cs-text-secondary)] space-y-1">
                         {r.meal_time_approach.map((m, i) => (
-                          <li key={i} className="flex gap-2"><span className="text-slate-400">·</span><span>{m}</span></li>
+                          <li key={i} className="flex gap-2"><span className="text-[var(--cs-text-muted)]">·</span><span>{m}</span></li>
                         ))}
                       </ul>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Environment set up</div>
-                      <ul className="text-sm text-slate-700 space-y-1">
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Environment set up</div>
+                      <ul className="text-sm text-[var(--cs-text-secondary)] space-y-1">
                         {r.eating_environment_set_up.map((m, i) => (
-                          <li key={i} className="flex gap-2"><span className="text-slate-400">·</span><span>{m}</span></li>
+                          <li key={i} className="flex gap-2"><span className="text-[var(--cs-text-muted)]">·</span><span>{m}</span></li>
                         ))}
                       </ul>
                     </div>
                     {r.external_support.length ? (
-                      <div className="rounded-md border border-slate-200 bg-white p-3">
-                        <div className="text-xs font-semibold text-slate-500 uppercase mb-2">External support</div>
-                        <ul className="text-sm text-slate-700 space-y-1.5">
+                      <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                        <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">External support</div>
+                        <ul className="text-sm text-[var(--cs-text-secondary)] space-y-1.5">
                           {r.external_support.map((s, i) => (
                             <li key={i}>
                               <div className="font-medium">{s.agency}</div>
-                              <div className="text-slate-500">{s.clinician} · {s.frequency}</div>
+                              <div className="text-[var(--cs-text-muted)]">{s.clinician} · {s.frequency}</div>
                             </li>
                           ))}
                         </ul>
                       </div>
                     ) : null}
-                    <div className="rounded-md border border-slate-200 bg-white p-3 lg:col-span-2">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Monitoring</div>
-                      <div className="grid grid-cols-2 gap-3 text-sm text-slate-700">
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3 lg:col-span-2">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Monitoring</div>
+                      <div className="grid grid-cols-2 gap-3 text-sm text-[var(--cs-text-secondary)]">
                         {r.weight_monitoring_frequency ? (
-                          <div><span className="text-slate-500">Weight:</span> {r.weight_monitoring_frequency}</div>
+                          <div><span className="text-[var(--cs-text-muted)]">Weight:</span> {r.weight_monitoring_frequency}</div>
                         ) : null}
                         {r.hydration_notes ? (
-                          <div><span className="text-slate-500">Hydration:</span> {r.hydration_notes}</div>
+                          <div><span className="text-[var(--cs-text-muted)]">Hydration:</span> {r.hydration_notes}</div>
                         ) : null}
                         {r.growth_check_notes ? (
-                          <div className="col-span-2"><span className="text-slate-500">Growth:</span> {r.growth_check_notes}</div>
+                          <div className="col-span-2"><span className="text-[var(--cs-text-muted)]">Growth:</span> {r.growth_check_notes}</div>
                         ) : null}
                       </div>
                     </div>

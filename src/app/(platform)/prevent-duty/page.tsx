@@ -42,7 +42,7 @@ const REFERRAL_TYPE_COLOURS: Record<PreventReferralType, string> = {
 };
 
 const RISK_COLOURS: Record<PreventRiskLevel, string> = {
-  low: "bg-slate-100 text-slate-700",
+  low: "bg-slate-100 text-[var(--cs-text-secondary)]",
   medium: "bg-amber-100 text-amber-800",
   high: "bg-red-100 text-red-800",
 };
@@ -58,7 +58,7 @@ const STATUS_COLOURS: Record<PreventStatus, string> = {
   referred: "bg-orange-100 text-orange-800",
   channel_active: "bg-violet-100 text-violet-800",
   channel_closed: "bg-green-100 text-green-800",
-  nfa: "bg-slate-100 text-slate-700",
+  nfa: "bg-slate-100 text-[var(--cs-text-secondary)]",
   monitoring: "bg-amber-100 text-amber-800",
 };
 
@@ -196,7 +196,7 @@ export default function PreventDutyPage() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {[
             { label: "Total Records", value: totalRecords, icon: FileText, colour: "text-blue-600" },
-            { label: "Referrals", value: referralCount, icon: Shield, colour: referralCount > 0 ? "text-red-600" : "text-slate-400" },
+            { label: "Referrals", value: referralCount, icon: Shield, colour: referralCount > 0 ? "text-red-600" : "text-[var(--cs-text-muted)]" },
             { label: "Active Monitoring", value: activeMonitoring, icon: Eye, colour: activeMonitoring > 0 ? "text-orange-600" : "text-green-600" },
             { label: "Training Compliance", value: `${trainingCompliance}%`, icon: BookOpen, colour: trainingCompliance === 100 ? "text-green-600" : "text-amber-600" },
           ].map((s) => (
@@ -272,11 +272,11 @@ export default function PreventDutyPage() {
               >
                 {/* collapsed header */}
                 <button
-                  className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                  className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                   onClick={() => setExpanded(isExpanded ? null : rec.id)}
                 >
                   <div className="flex items-center gap-3 flex-1 min-w-0">
-                    <Shield className="h-5 w-5 text-slate-500 shrink-0" />
+                    <Shield className="h-5 w-5 text-[var(--cs-text-muted)] shrink-0" />
                     <div className="min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
                         <span className="font-medium text-sm">
@@ -316,10 +316,10 @@ export default function PreventDutyPage() {
                   <div className="border-t bg-slate-50 p-4 space-y-4">
                     {/* description */}
                     <div>
-                      <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-1">
+                      <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-1">
                         Description
                       </p>
-                      <p className="text-sm text-slate-700 leading-relaxed">
+                      <p className="text-sm text-[var(--cs-text-secondary)] leading-relaxed">
                         {rec.description}
                       </p>
                     </div>
@@ -327,7 +327,7 @@ export default function PreventDutyPage() {
                     {/* indicators */}
                     {rec.indicators.length > 0 && (
                       <div>
-                        <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-1">
+                        <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-1">
                           Indicators
                         </p>
                         <div className="flex flex-wrap gap-1.5">
@@ -347,17 +347,17 @@ export default function PreventDutyPage() {
                     {/* actions taken */}
                     {rec.actions_taken && (
                       <div className="rounded-xl bg-white border p-3">
-                        <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-1">
+                        <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-1">
                           Actions Taken
                         </p>
-                        <p className="text-xs text-slate-700">{rec.actions_taken}</p>
+                        <p className="text-xs text-[var(--cs-text-secondary)]">{rec.actions_taken}</p>
                       </div>
                     )}
 
                     {/* multi-agency involvement */}
                     {rec.multi_agency.length > 0 && (
                       <div>
-                        <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-1">
+                        <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-1">
                           Multi-Agency Involvement
                         </p>
                         <div className="flex flex-wrap gap-1.5">
@@ -420,10 +420,10 @@ export default function PreventDutyPage() {
         </div>
 
         {/* ── regulatory note ────────────────────────────────────── */}
-        <Card className="bg-slate-50 border-slate-200">
+        <Card className="bg-slate-50 border-[var(--cs-border)]">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm flex items-center gap-2">
-              <Activity className="h-4 w-4 text-slate-500" />
+              <Activity className="h-4 w-4 text-[var(--cs-text-muted)]" />
               Regulatory Framework
             </CardTitle>
           </CardHeader>

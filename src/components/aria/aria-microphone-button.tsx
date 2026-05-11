@@ -33,7 +33,7 @@ export interface AriaMicrophoneButtonProps {
   sourceField?: string;
   // Called when the user accepts the transcript (insert into the field).
   onTranscript: (transcript: string) => void;
-  // Called when the user wants the transcript handed to an Aria command
+  // Called when the user wants the transcript handed to an ARIA command
   // instead. Optional — if not provided, "Use with Aria" is hidden.
   onSendToAria?: (transcript: string) => void;
   // Optional: hide the button entirely if the role does not have

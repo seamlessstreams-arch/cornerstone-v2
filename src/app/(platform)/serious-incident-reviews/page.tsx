@@ -198,9 +198,9 @@ export default function SeriousIncidentReviewsPage() {
                         </div>
                       )}
                       {r.policy_changes.length > 0 && (
-                        <div className="rounded-lg bg-slate-50 border border-slate-200 p-3">
-                          <p className="text-xs font-semibold text-slate-800 mb-1">Policy Changes</p>
-                          <ul className="text-xs text-slate-900 list-disc list-inside">{r.policy_changes.map((p, i) => <li key={i}>{p}</li>)}</ul>
+                        <div className="rounded-lg bg-slate-50 border border-[var(--cs-border)] p-3">
+                          <p className="text-xs font-semibold text-[var(--cs-navy)] mb-1">Policy Changes</p>
+                          <ul className="text-xs text-[var(--cs-navy)] list-disc list-inside">{r.policy_changes.map((p, i) => <li key={i}>{p}</li>)}</ul>
                         </div>
                       )}
                     </div>

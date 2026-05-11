@@ -69,7 +69,7 @@ function daysOverdue(dueDate: string): number {
 /* ── status maps ───────────────────────────────────────────────────────────── */
 
 const REPORT_STATUS_CLR: Record<Reg44ReportStatus, string> = {
-  draft: "bg-slate-100 text-slate-700",
+  draft: "bg-slate-100 text-[var(--cs-text-secondary)]",
   submitted: "bg-blue-100 text-blue-800",
   reviewed: "bg-green-100 text-green-800",
   closed: "bg-purple-100 text-purple-800",
@@ -80,7 +80,7 @@ const ACTION_STATUS_CLR: Record<Reg44ActionStatus, string> = {
   in_progress: "bg-amber-100 text-amber-800",
   completed: "bg-green-100 text-green-800",
   overdue: "bg-red-100 text-red-800",
-  cancelled: "bg-slate-100 text-slate-600",
+  cancelled: "bg-slate-100 text-[var(--cs-text-secondary)]",
 };
 
 const ACTION_STATUS_LABEL: Record<Reg44ActionStatus, string> = {
@@ -92,7 +92,7 @@ const ACTION_STATUS_LABEL: Record<Reg44ActionStatus, string> = {
 };
 
 const PRIORITY_CLR: Record<Reg44ActionPriority, string> = {
-  low: "bg-slate-100 text-slate-600",
+  low: "bg-slate-100 text-[var(--cs-text-secondary)]",
   medium: "bg-blue-100 text-blue-700",
   high: "bg-amber-100 text-amber-800",
   urgent: "bg-red-100 text-red-800",
@@ -439,7 +439,7 @@ export default function Reg44Page() {
       <Card className="mb-6">
         <CardHeader className="pb-2">
           <CardTitle className="text-sm font-semibold flex items-center gap-2">
-            <Calendar className="h-4 w-4 text-slate-500" />
+            <Calendar className="h-4 w-4 text-[var(--cs-text-muted)]" />
             Monthly Visit Tracker — Last 12 Months
           </CardTitle>
         </CardHeader>
@@ -454,14 +454,14 @@ export default function Reg44Page() {
                     ? "border-green-200 bg-green-50"
                     : m.key === currentMonthKey
                       ? "border-red-300 bg-red-50"
-                      : "border-slate-200 bg-slate-50",
+                      : "border-[var(--cs-border)] bg-slate-50",
                 )}
               >
-                <p className="text-[11px] font-medium text-slate-600 mb-1">{m.label}</p>
+                <p className="text-[11px] font-medium text-[var(--cs-text-secondary)] mb-1">{m.label}</p>
                 {m.hasVisit ? (
                   <CheckCircle2 className="h-5 w-5 text-green-600" />
                 ) : (
-                  <XCircle className={cn("h-5 w-5", m.key === currentMonthKey ? "text-red-500" : "text-slate-300")} />
+                  <XCircle className={cn("h-5 w-5", m.key === currentMonthKey ? "text-red-500" : "text-[var(--cs-text-gentle)]")} />
                 )}
                 {m.visitDate && (
                   <p className="text-[10px] text-green-700 mt-0.5">{fmt(m.visitDate).split(" ").slice(0, 2).join(" ")}</p>
@@ -506,7 +506,7 @@ export default function Reg44Page() {
                       <div className="flex items-start justify-between">
                         <div className="space-y-1 flex-1">
                           <CardTitle className="text-base flex items-center gap-2 flex-wrap">
-                            <Calendar className="h-4 w-4 text-slate-500" />
+                            <Calendar className="h-4 w-4 text-[var(--cs-text-muted)]" />
                             {fmt(visit.visitDate)}
                             <Badge variant="outline" className={REPORT_STATUS_CLR[visit.reportStatus]}>
                               {visit.reportStatus.charAt(0).toUpperCase() + visit.reportStatus.slice(1)}
@@ -541,14 +541,14 @@ export default function Reg44Page() {
                       {/* summary always visible */}
                       {visit.summary && (
                         <div>
-                          <p className="font-medium text-slate-700 mb-1">Summary</p>
+                          <p className="font-medium text-[var(--cs-text-secondary)] mb-1">Summary</p>
                           <p className="text-muted-foreground text-xs leading-relaxed">{visit.summary}</p>
                         </div>
                       )}
 
                       {/* expanded detail */}
                       {isExpanded && (
-                        <div className="space-y-4 pt-2 border-t border-slate-100">
+                        <div className="space-y-4 pt-2 border-t border-[var(--cs-border-subtle)]">
                           {/* strengths */}
                           {visit.strengths && (
                             <div className="bg-green-50 rounded-lg p-3">
@@ -595,12 +595,12 @@ export default function Reg44Page() {
 
                           {/* manager response */}
                           <div className="bg-slate-50 rounded-lg p-3">
-                            <p className="font-medium text-slate-700 text-xs mb-1 flex items-center gap-1.5">
+                            <p className="font-medium text-[var(--cs-text-secondary)] text-xs mb-1 flex items-center gap-1.5">
                               <Shield className="h-3.5 w-3.5" />
                               Manager Response
                             </p>
                             {visit.managerResponse ? (
-                              <p className="text-slate-600 text-xs leading-relaxed">{visit.managerResponse}</p>
+                              <p className="text-[var(--cs-text-secondary)] text-xs leading-relaxed">{visit.managerResponse}</p>
                             ) : (
                               <Button variant="outline" size="sm" className="mt-1 text-xs gap-1.5">
                                 <Plus className="h-3 w-3" />
@@ -611,14 +611,14 @@ export default function Reg44Page() {
 
                           {/* RI response */}
                           <div className="bg-slate-50 rounded-lg p-3">
-                            <p className="font-medium text-slate-700 text-xs mb-1 flex items-center gap-1.5">
+                            <p className="font-medium text-[var(--cs-text-secondary)] text-xs mb-1 flex items-center gap-1.5">
                               <Shield className="h-3.5 w-3.5" />
                               Responsible Individual Response
                             </p>
                             {visit.riResponse ? (
-                              <p className="text-slate-600 text-xs leading-relaxed">{visit.riResponse}</p>
+                              <p className="text-[var(--cs-text-secondary)] text-xs leading-relaxed">{visit.riResponse}</p>
                             ) : (
-                              <p className="text-xs text-slate-400 italic">No RI response recorded.</p>
+                              <p className="text-xs text-[var(--cs-text-muted)] italic">No RI response recorded.</p>
                             )}
                           </div>
 
@@ -632,7 +632,7 @@ export default function Reg44Page() {
                           {/* actions for this visit */}
                           {visitActions.length > 0 && (
                             <div>
-                              <p className="font-medium text-slate-700 text-xs mb-2 flex items-center gap-1.5">
+                              <p className="font-medium text-[var(--cs-text-secondary)] text-xs mb-2 flex items-center gap-1.5">
                                 <ClipboardList className="h-3.5 w-3.5" />
                                 Actions from this Visit ({visitActions.length})
                               </p>
@@ -642,11 +642,11 @@ export default function Reg44Page() {
                                     key={action.id}
                                     className={cn(
                                       "rounded-lg border p-3 text-xs",
-                                      action.status === "overdue" ? "border-red-200 bg-red-50/50" : "border-slate-200",
+                                      action.status === "overdue" ? "border-red-200 bg-red-50/50" : "border-[var(--cs-border)]",
                                     )}
                                   >
                                     <div className="flex items-start justify-between gap-2">
-                                      <p className="font-medium text-slate-800">{action.title}</p>
+                                      <p className="font-medium text-[var(--cs-navy)]">{action.title}</p>
                                       <div className="flex items-center gap-1.5 shrink-0">
                                         <Badge variant="outline" className={cn("text-[10px]", PRIORITY_CLR[action.priority])}>
                                           {action.priority.charAt(0).toUpperCase() + action.priority.slice(1)}
@@ -715,13 +715,13 @@ export default function Reg44Page() {
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-slate-200 text-left">
-                    <th className="pb-2 font-medium text-slate-600 text-xs">Title</th>
-                    <th className="pb-2 font-medium text-slate-600 text-xs">Priority</th>
-                    <th className="pb-2 font-medium text-slate-600 text-xs">Assigned To</th>
-                    <th className="pb-2 font-medium text-slate-600 text-xs">Due Date</th>
-                    <th className="pb-2 font-medium text-slate-600 text-xs">Status</th>
-                    <th className="pb-2 font-medium text-slate-600 text-xs">Manager Response</th>
+                  <tr className="border-b border-[var(--cs-border)] text-left">
+                    <th className="pb-2 font-medium text-[var(--cs-text-secondary)] text-xs">Title</th>
+                    <th className="pb-2 font-medium text-[var(--cs-text-secondary)] text-xs">Priority</th>
+                    <th className="pb-2 font-medium text-[var(--cs-text-secondary)] text-xs">Assigned To</th>
+                    <th className="pb-2 font-medium text-[var(--cs-text-secondary)] text-xs">Due Date</th>
+                    <th className="pb-2 font-medium text-[var(--cs-text-secondary)] text-xs">Status</th>
+                    <th className="pb-2 font-medium text-[var(--cs-text-secondary)] text-xs">Manager Response</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
@@ -742,7 +742,7 @@ export default function Reg44Page() {
                         )}
                       >
                         <td className="py-3 pr-3">
-                          <p className="font-medium text-slate-800">{action.title}</p>
+                          <p className="font-medium text-[var(--cs-navy)]">{action.title}</p>
                           {action.description && (
                             <p className="text-muted-foreground mt-0.5 max-w-xs truncate">{action.description}</p>
                           )}

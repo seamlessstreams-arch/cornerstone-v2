@@ -77,7 +77,7 @@ const RISK_BORDER: Record<string, string> = {
 const STATUS_COLOURS: Record<string, string> = {
   active:   "bg-red-100 text-red-800",
   returned: "bg-amber-100 text-amber-800",
-  closed:   "bg-slate-100 text-slate-700",
+  closed:   "bg-slate-100 text-[var(--cs-text-secondary)]",
 };
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
@@ -134,7 +134,7 @@ function EpisodeCard({
     <div
       className={cn(
         "rounded-2xl border bg-white transition-all",
-        RISK_BORDER[episode.risk_level] ?? "border-slate-200",
+        RISK_BORDER[episode.risk_level] ?? "border-[var(--cs-border)]",
         episode.status === "active" && "ring-1 ring-red-300"
       )}
     >
@@ -156,8 +156,8 @@ function EpisodeCard({
 
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-sm font-bold text-slate-900">{ypName}</span>
-            <span className="text-[10px] font-mono text-slate-400">{episode.reference}</span>
+            <span className="text-sm font-bold text-[var(--cs-navy)]">{ypName}</span>
+            <span className="text-[10px] font-mono text-[var(--cs-text-muted)]">{episode.reference}</span>
           </div>
           <div className="flex flex-wrap items-center gap-2 mt-1.5">
             <Badge className={cn("text-[10px] h-4 px-1.5 border", RISK_COLOURS[episode.risk_level])}>
@@ -177,7 +177,7 @@ function EpisodeCard({
               </Badge>
             )}
           </div>
-          <div className="mt-2 flex flex-wrap gap-3 text-[11px] text-slate-500">
+          <div className="mt-2 flex flex-wrap gap-3 text-[11px] text-[var(--cs-text-muted)]">
             <span className="flex items-center gap-1">
               <Calendar className="h-3 w-3" />
               Missing: {formatDate(episode.date_missing)} {episode.time_missing && `at ${episode.time_missing}`}
@@ -221,7 +221,7 @@ function EpisodeCard({
           )}
           <button
             onClick={() => setExpanded((v) => !v)}
-            className="text-slate-400 hover:text-slate-600"
+            className="text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)]"
           >
             {expanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
           </button>
@@ -230,29 +230,29 @@ function EpisodeCard({
 
       {/* Expanded detail */}
       {expanded && (
-        <div className="border-t border-slate-100 px-4 py-4 space-y-3 bg-slate-50/50">
+        <div className="border-t border-[var(--cs-border-subtle)] px-4 py-4 space-y-3 bg-slate-50/50">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[12px]">
             <div>
-              <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wide mb-1">Last seen location</div>
-              <p className="text-slate-700">{episode.location_last_seen || "—"}</p>
+              <div className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-1">Last seen location</div>
+              <p className="text-[var(--cs-text-secondary)]">{episode.location_last_seen || "—"}</p>
             </div>
             {episode.return_location && (
               <div>
-                <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wide mb-1">Return location</div>
-                <p className="text-slate-700">{episode.return_location}</p>
+                <div className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-1">Return location</div>
+                <p className="text-[var(--cs-text-secondary)]">{episode.return_location}</p>
               </div>
             )}
             <div>
-              <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wide mb-1">Police reported</div>
-              <p className={cn("font-medium", episode.reported_to_police ? "text-orange-700" : "text-slate-500")}>
+              <div className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-1">Police reported</div>
+              <p className={cn("font-medium", episode.reported_to_police ? "text-orange-700" : "text-[var(--cs-text-muted)]")}>
                 {episode.reported_to_police
                   ? `Yes — ${episode.police_reference ?? "ref pending"}`
                   : "No"}
               </p>
             </div>
             <div>
-              <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wide mb-1">LA notified</div>
-              <p className={cn("font-medium", episode.reported_to_la ? "text-blue-700" : "text-slate-500")}>
+              <div className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-1">LA notified</div>
+              <p className={cn("font-medium", episode.reported_to_la ? "text-blue-700" : "text-[var(--cs-text-muted)]")}>
                 {episode.reported_to_la
                   ? `Yes — ${episode.la_notified_at ? formatDate(episode.la_notified_at) : "date unknown"}`
                   : "No"}
@@ -262,10 +262,10 @@ function EpisodeCard({
 
           {episode.return_interview_completed && episode.return_interview_notes && (
             <div>
-              <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wide mb-1">
+              <div className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-1">
                 Return interview notes ({episode.return_interview_by ? getStaffName(episode.return_interview_by) : "Unknown"} · {episode.return_interview_date ? formatDate(episode.return_interview_date) : ""})
               </div>
-              <p className="text-[12px] text-slate-700 leading-relaxed bg-white rounded-lg p-3 border border-slate-100">
+              <p className="text-[12px] text-[var(--cs-text-secondary)] leading-relaxed bg-white rounded-lg p-3 border border-[var(--cs-border-subtle)]">
                 {episode.return_interview_notes}
               </p>
             </div>
@@ -273,12 +273,12 @@ function EpisodeCard({
 
           {episode.pattern_notes && (
             <div>
-              <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wide mb-1">Pattern notes</div>
-              <p className="text-[12px] text-slate-700 leading-relaxed">{episode.pattern_notes}</p>
+              <div className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-1">Pattern notes</div>
+              <p className="text-[12px] text-[var(--cs-text-secondary)] leading-relaxed">{episode.pattern_notes}</p>
             </div>
           )}
 
-          <div className="text-[10px] text-slate-400">
+          <div className="text-[10px] text-[var(--cs-text-muted)]">
             Recorded by {getStaffName(episode.created_by)} · {formatDate(episode.created_at)}
           </div>
         </div>
@@ -297,13 +297,13 @@ function PatternRow({ p }: { p: PatternAnalysis }) {
     : "text-emerald-700";
 
   return (
-    <div className="flex items-center gap-4 p-3 rounded-xl border border-slate-100 bg-white hover:bg-slate-50 transition-colors">
+    <div className="flex items-center gap-4 p-3 rounded-xl border border-[var(--cs-border-subtle)] bg-white hover:bg-[var(--cs-surface)] transition-colors">
       <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-violet-100">
         <User className="h-3.5 w-3.5 text-violet-700" />
       </div>
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-sm font-semibold text-slate-900">{p.child_name}</span>
+          <span className="text-sm font-semibold text-[var(--cs-navy)]">{p.child_name}</span>
           {p.contextual_risk && (
             <Badge className="text-[10px] h-4 px-1.5 bg-red-100 text-red-700 border border-red-200">CS Risk</Badge>
           )}
@@ -311,7 +311,7 @@ function PatternRow({ p }: { p: PatternAnalysis }) {
             <Badge className="text-[10px] h-4 px-1.5 bg-violet-100 text-violet-700">RHI Outstanding</Badge>
           )}
         </div>
-        <div className="flex flex-wrap gap-3 mt-1 text-[11px] text-slate-500">
+        <div className="flex flex-wrap gap-3 mt-1 text-[11px] text-[var(--cs-text-muted)]">
           <span>{p.total_episodes} episode{p.total_episodes !== 1 ? "s" : ""}</span>
           {p.avg_duration_hours > 0 && <span>avg {durationLabel(p.avg_duration_hours)}</span>}
           {p.last_episode_date && <span>last: {formatDate(p.last_episode_date)}</span>}
@@ -379,7 +379,7 @@ function ReportMissingDialog({
         </DialogHeader>
         <div className="space-y-4">
           <div>
-            <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Young Person *</label>
+            <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Young Person *</label>
             <Select value={childId} onValueChange={setChildId}>
               <SelectTrigger className="mt-1"><SelectValue placeholder="Select young person…" /></SelectTrigger>
               <SelectContent>
@@ -393,16 +393,16 @@ function ReportMissingDialog({
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Date Missing *</label>
+              <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Date Missing *</label>
               <Input type="date" className="mt-1" value={dateMissing} onChange={(e) => setDateMissing(e.target.value)} />
             </div>
             <div>
-              <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Time</label>
+              <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Time</label>
               <Input type="time" className="mt-1" value={timeMissing} onChange={(e) => setTimeMissing(e.target.value)} />
             </div>
           </div>
           <div>
-            <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Risk Level *</label>
+            <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Risk Level *</label>
             <Select value={riskLevel} onValueChange={(v) => setRiskLevel(v as typeof riskLevel)}>
               <SelectTrigger className="mt-1"><SelectValue /></SelectTrigger>
               <SelectContent>
@@ -414,20 +414,20 @@ function ReportMissingDialog({
             </Select>
           </div>
           <div>
-            <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Last seen location</label>
+            <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Last seen location</label>
             <Input className="mt-1" placeholder="e.g. Outside Oak House — said going to shop" value={locationLastSeen} onChange={(e) => setLocationLastSeen(e.target.value)} />
           </div>
           <div className="space-y-2">
             <label className="flex items-center gap-2 cursor-pointer">
               <input type="checkbox" checked={reportedToPolice} onChange={(e) => setReportedToPolice(e.target.checked)} className="rounded" />
-              <span className="text-sm text-slate-700">Reported to police</span>
+              <span className="text-sm text-[var(--cs-text-secondary)]">Reported to police</span>
             </label>
             {reportedToPolice && (
               <Input placeholder="Police reference number" value={policeRef} onChange={(e) => setPoliceRef(e.target.value)} />
             )}
             <label className="flex items-center gap-2 cursor-pointer">
               <input type="checkbox" checked={reportedToLA} onChange={(e) => setReportedToLA(e.target.checked)} className="rounded" />
-              <span className="text-sm text-slate-700">Local Authority notified</span>
+              <span className="text-sm text-[var(--cs-text-secondary)]">Local Authority notified</span>
             </label>
           </div>
         </div>
@@ -494,21 +494,21 @@ function LogReturnDialog({
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Date returned</label>
+              <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Date returned</label>
               <Input type="date" className="mt-1" value={dateReturned} onChange={(e) => setDateReturned(e.target.value)} />
             </div>
             <div>
-              <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Time returned</label>
+              <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Time returned</label>
               <Input type="time" className="mt-1" value={timeReturned} onChange={(e) => setTimeReturned(e.target.value)} />
             </div>
           </div>
           <div>
-            <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Return location</label>
+            <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Return location</label>
             <Input className="mt-1" placeholder="e.g. Home voluntarily / Town centre collected by staff" value={returnLocation} onChange={(e) => setReturnLocation(e.target.value)} />
           </div>
           <label className="flex items-center gap-2 cursor-pointer">
             <input type="checkbox" checked={csRisk} onChange={(e) => setCsRisk(e.target.checked)} className="rounded" />
-            <span className="text-sm text-slate-700">Contextual safeguarding risk identified</span>
+            <span className="text-sm text-[var(--cs-text-secondary)]">Contextual safeguarding risk identified</span>
           </label>
         </div>
         <DialogFooter>
@@ -610,7 +610,7 @@ function RhiDialog({
 
         <div className="space-y-4">
           {/* Episode summary */}
-          <div className="rounded-lg bg-slate-50 border border-slate-100 p-3 text-xs text-slate-600 grid grid-cols-2 gap-2">
+          <div className="rounded-lg bg-slate-50 border border-[var(--cs-border-subtle)] p-3 text-xs text-[var(--cs-text-secondary)] grid grid-cols-2 gap-2">
             <span><strong>Reference:</strong> {episode.reference}</span>
             <span><strong>Risk:</strong> <span className="font-semibold uppercase">{episode.risk_level}</span></span>
             <span><strong>Duration:</strong> {durationLabel(episode.duration_hours)}</span>
@@ -620,7 +620,7 @@ function RhiDialog({
           {/* Context input */}
           {!rhiResult && (
             <div>
-              <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">
+              <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">
                 Additional context for ARIA (optional)
               </label>
               <Textarea
@@ -674,8 +674,8 @@ function RhiDialog({
 
               {rhiResult.interview_summary && (
                 <div>
-                  <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide mb-1">ARIA Summary</div>
-                  <p className="text-sm text-slate-700 leading-relaxed">{rhiResult.interview_summary}</p>
+                  <div className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-1">ARIA Summary</div>
+                  <p className="text-sm text-[var(--cs-text-secondary)] leading-relaxed">{rhiResult.interview_summary}</p>
                 </div>
               )}
 
@@ -695,17 +695,17 @@ function RhiDialog({
 
               {rhiResult.child_support_needs && (
                 <div>
-                  <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide mb-1">Child Support Needs</div>
-                  <p className="text-sm text-slate-700">{rhiResult.child_support_needs}</p>
+                  <div className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-1">Child Support Needs</div>
+                  <p className="text-sm text-[var(--cs-text-secondary)]">{rhiResult.child_support_needs}</p>
                 </div>
               )}
 
               {rhiResult.recommended_follow_up && rhiResult.recommended_follow_up.length > 0 && (
                 <div>
-                  <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide mb-1">Recommended Follow-Up</div>
+                  <div className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-1">Recommended Follow-Up</div>
                   <ul className="space-y-1">
                     {rhiResult.recommended_follow_up.map((a, i) => (
-                      <li key={i} className="text-sm text-slate-700 flex gap-2">
+                      <li key={i} className="text-sm text-[var(--cs-text-secondary)] flex gap-2">
                         <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500 mt-0.5 shrink-0" />
                         {a}
                       </li>
@@ -735,7 +735,7 @@ function RhiDialog({
 
           {/* Interview notes */}
           <div>
-            <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">
+            <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">
               Interview Notes *
             </label>
             <Textarea
@@ -779,9 +779,9 @@ function StatChip({
   label, value, colour, bg,
 }: { label: string; value: number | string; colour: string; bg: string }) {
   return (
-    <div className={cn("rounded-xl border border-slate-100 p-4 text-center", bg)}>
+    <div className={cn("rounded-xl border border-[var(--cs-border-subtle)] p-4 text-center", bg)}>
       <div className={cn("text-2xl font-bold tabular-nums", colour)}>{value}</div>
-      <div className="text-[10px] text-slate-500 mt-0.5 leading-tight">{label}</div>
+      <div className="text-[10px] text-[var(--cs-text-muted)] mt-0.5 leading-tight">{label}</div>
     </div>
   );
 }
@@ -897,16 +897,16 @@ export default function MissingFromCarePage() {
 
         {/* Stats */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          <StatChip label="Total episodes" value={meta?.total ?? 0} colour="text-slate-700" bg="bg-slate-50" />
-          <StatChip label="Active / missing" value={meta?.active ?? 0} colour={meta?.active ? "text-red-700" : "text-slate-500"} bg={meta?.active ? "bg-red-50" : "bg-slate-50"} />
-          <StatChip label="CS risk episodes" value={meta?.contextual_risk ?? 0} colour={meta?.contextual_risk ? "text-orange-700" : "text-slate-500"} bg={meta?.contextual_risk ? "bg-orange-50" : "bg-slate-50"} />
-          <StatChip label="RHI outstanding" value={meta?.unresolved ?? 0} colour={meta?.unresolved ? "text-violet-700" : "text-slate-500"} bg={meta?.unresolved ? "bg-violet-50" : "bg-slate-50"} />
+          <StatChip label="Total episodes" value={meta?.total ?? 0} colour="text-[var(--cs-text-secondary)]" bg="bg-slate-50" />
+          <StatChip label="Active / missing" value={meta?.active ?? 0} colour={meta?.active ? "text-red-700" : "text-[var(--cs-text-muted)]"} bg={meta?.active ? "bg-red-50" : "bg-slate-50"} />
+          <StatChip label="CS risk episodes" value={meta?.contextual_risk ?? 0} colour={meta?.contextual_risk ? "text-orange-700" : "text-[var(--cs-text-muted)]"} bg={meta?.contextual_risk ? "bg-orange-50" : "bg-slate-50"} />
+          <StatChip label="RHI outstanding" value={meta?.unresolved ?? 0} colour={meta?.unresolved ? "text-violet-700" : "text-[var(--cs-text-muted)]"} bg={meta?.unresolved ? "bg-violet-50" : "bg-slate-50"} />
         </div>
 
         {/* Controls */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
           <div className="relative flex-1 w-full sm:max-w-sm">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
             <Input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -922,20 +922,20 @@ export default function MissingFromCarePage() {
                 className={cn(
                   "rounded-lg px-3 py-1.5 text-xs font-medium transition-colors capitalize",
                   statusFilter === s
-                    ? "bg-white shadow-sm text-slate-900"
-                    : "text-slate-500 hover:text-slate-700"
+                    ? "bg-white shadow-sm text-[var(--cs-navy)]"
+                    : "text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)]"
                 )}
               >
                 {s === "active" ? "Active (missing)" : s}
               </button>
             ))}
           </div>
-          <div className="flex items-center gap-1.5 text-xs text-slate-500">
+          <div className="flex items-center gap-1.5 text-xs text-[var(--cs-text-muted)]">
             <ArrowUpDown className="h-3.5 w-3.5" />
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
-              className="rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-300"
+              className="rounded-lg border border-[var(--cs-border)] bg-white px-2 py-1.5 text-xs text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-emerald-300"
             >
               <option value="date">Date Missing</option>
               <option value="risk">Risk Level</option>
@@ -958,7 +958,7 @@ export default function MissingFromCarePage() {
 
         {/* Results count */}
         {isSearchActive && (
-          <div className="text-xs text-slate-500">
+          <div className="text-xs text-[var(--cs-text-muted)]">
             Showing {filteredEpisodes.length} of {episodes.length} episode{episodes.length !== 1 ? "s" : ""}
           </div>
         )}
@@ -1014,7 +1014,7 @@ export default function MissingFromCarePage() {
             {/* Closed */}
             {closedEpisodes.length > 0 && statusFilter !== "active" && (
               <>
-                <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider flex items-center gap-1.5 pt-2">
+                <div className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider flex items-center gap-1.5 pt-2">
                   <CheckCircle2 className="h-3.5 w-3.5" />
                   Closed Episodes ({closedEpisodes.length})
                 </div>
@@ -1029,7 +1029,7 @@ export default function MissingFromCarePage() {
         {/* Pattern Analysis */}
         {patterns.length > 0 && (
           <div>
-            <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider flex items-center gap-1.5 mb-3">
+            <div className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider flex items-center gap-1.5 mb-3">
               <TrendingUp className="h-3.5 w-3.5" />
               Pattern Analysis
             </div>
@@ -1039,7 +1039,7 @@ export default function MissingFromCarePage() {
               ))}
             </div>
             {highRiskPatterns.length > 0 && (
-              <p className="text-[11px] text-slate-400 mt-2">
+              <p className="text-[11px] text-[var(--cs-text-muted)] mt-2">
                 Showing {highRiskPatterns.length} high-risk pattern{highRiskPatterns.length !== 1 ? "s" : ""} (3+ episodes or CS risk flagged).
               </p>
             )}

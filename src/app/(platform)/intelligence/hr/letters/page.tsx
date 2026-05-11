@@ -114,7 +114,7 @@ const JUDGEMENT_COLOUR: Record<GuardianReview["fairnessJudgement"], string> = {
 };
 
 const SEVERITY_COLOUR: Record<Flag["severity"], string> = {
-  info: "bg-slate-100 text-slate-700 border-slate-200",
+  info: "bg-slate-100 text-[var(--cs-text-secondary)] border-[var(--cs-border)]",
   advisory: "bg-blue-100 text-blue-800 border-blue-200",
   warning: "bg-amber-100 text-amber-800 border-amber-200",
   block: "bg-red-100 text-red-800 border-red-200",
@@ -256,7 +256,7 @@ export default function HrLettersPage() {
       <div className="mb-6 flex items-start gap-3 rounded-lg border border-violet-200 bg-violet-50 p-4 text-sm text-violet-900">
         <Sparkles className="h-5 w-5 mt-0.5 text-violet-600" />
         <div>
-          <div className="font-semibold">Aria suggested draft, never final</div>
+          <div className="font-semibold">ARIA suggested draft, never final</div>
           <p className="text-violet-800">
             Pick a letter type, fill in the context, and Aria will produce a starting-point draft and run it through
             the HR Process Guardian. The Guardian checks fairness, ACAS alignment, safeguarding handling,
@@ -276,7 +276,7 @@ export default function HrLettersPage() {
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1">Letter type</label>
+              <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Letter type</label>
               <Select value={letterType} onValueChange={setLetterType}>
                 <SelectTrigger><SelectValue /></SelectTrigger>
                 <SelectContent>
@@ -287,15 +287,15 @@ export default function HrLettersPage() {
               </Select>
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1">Staff id</label>
+              <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Staff id</label>
               <Input value={staffId} onChange={(e) => setStaffId(e.target.value)} placeholder="e.g. staff_123" />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1">Case id (optional)</label>
+              <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Case id (optional)</label>
               <Input value={caseId} onChange={(e) => setCaseId(e.target.value)} />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1">Acting as</label>
+              <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Acting as</label>
               <Select value={actorRole} onValueChange={setActorRole}>
                 <SelectTrigger><SelectValue /></SelectTrigger>
                 <SelectContent>
@@ -306,7 +306,7 @@ export default function HrLettersPage() {
               </Select>
             </div>
             <div className="sm:col-span-2">
-              <label className="block text-xs font-semibold text-slate-600 mb-1">Actor user id (audit log)</label>
+              <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Actor user id (audit log)</label>
               <Input value={actorUserId} onChange={(e) => setActorUserId(e.target.value)} />
             </div>
           </div>
@@ -335,23 +335,23 @@ export default function HrLettersPage() {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1">Concern narrative</label>
+              <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Concern narrative</label>
               <Textarea value={concernNarrative} onChange={(e) => setConcernNarrative(e.target.value)} className="min-h-[80px] text-sm" />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1">Outcome narrative</label>
+              <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Outcome narrative</label>
               <Textarea value={outcomeNarrative} onChange={(e) => setOutcomeNarrative(e.target.value)} className="min-h-[80px] text-sm" />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1">Basis narrative</label>
+              <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Basis narrative</label>
               <Textarea value={basisNarrative} onChange={(e) => setBasisNarrative(e.target.value)} className="min-h-[80px] text-sm" />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1">Improvements expected</label>
+              <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Improvements expected</label>
               <Textarea value={improvementsExpected} onChange={(e) => setImprovementsExpected(e.target.value)} className="min-h-[80px] text-sm" />
             </div>
             <div className="lg:col-span-2">
-              <label className="block text-xs font-semibold text-slate-600 mb-1">Support that will be provided</label>
+              <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Support that will be provided</label>
               <Textarea value={supportProvided} onChange={(e) => setSupportProvided(e.target.value)} className="min-h-[80px] text-sm" />
             </div>
           </div>
@@ -377,13 +377,13 @@ export default function HrLettersPage() {
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
               <Card>
                 <CardContent className="p-4">
-                  <div className="text-xs uppercase text-slate-500 mb-1">Fairness score</div>
-                  <div className="text-3xl font-semibold text-slate-900">{guardian.fairnessScore}<span className="text-base text-slate-500">/100</span></div>
+                  <div className="text-xs uppercase text-[var(--cs-text-muted)] mb-1">Fairness score</div>
+                  <div className="text-3xl font-semibold text-[var(--cs-navy)]">{guardian.fairnessScore}<span className="text-base text-[var(--cs-text-muted)]">/100</span></div>
                 </CardContent>
               </Card>
               <Card>
                 <CardContent className="p-4">
-                  <div className="text-xs uppercase text-slate-500 mb-1">Judgement</div>
+                  <div className="text-xs uppercase text-[var(--cs-text-muted)] mb-1">Judgement</div>
                   <Badge className={cn("border", JUDGEMENT_COLOUR[guardian.fairnessJudgement])}>
                     {guardian.fairnessJudgement.replace(/_/g, " ")}
                   </Badge>
@@ -391,16 +391,16 @@ export default function HrLettersPage() {
               </Card>
               <Card>
                 <CardContent className="p-4">
-                  <div className="text-xs uppercase text-slate-500 mb-1">Proportionality</div>
-                  <div className="text-sm text-slate-900">{guardian.proportionality.rating}</div>
-                  <div className="text-xs text-slate-500 mt-0.5 line-clamp-2">{guardian.proportionality.rationale}</div>
+                  <div className="text-xs uppercase text-[var(--cs-text-muted)] mb-1">Proportionality</div>
+                  <div className="text-sm text-[var(--cs-navy)]">{guardian.proportionality.rating}</div>
+                  <div className="text-xs text-[var(--cs-text-muted)] mt-0.5 line-clamp-2">{guardian.proportionality.rationale}</div>
                 </CardContent>
               </Card>
               <Card>
                 <CardContent className="p-4">
-                  <div className="text-xs uppercase text-slate-500 mb-1">Aria confidence</div>
-                  <div className="text-3xl font-semibold text-slate-900">{Math.round(guardian.ariaConfidence * 100)}%</div>
-                  <div className="text-xs text-slate-500 mt-0.5">{guardian.llmUsed ? "LLM-enhanced" : "Deterministic only"}</div>
+                  <div className="text-xs uppercase text-[var(--cs-text-muted)] mb-1">Aria confidence</div>
+                  <div className="text-3xl font-semibold text-[var(--cs-navy)]">{Math.round(guardian.ariaConfidence * 100)}%</div>
+                  <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">{guardian.llmUsed ? "LLM-enhanced" : "Deterministic only"}</div>
                 </CardContent>
               </Card>
             </div>
@@ -422,7 +422,7 @@ export default function HrLettersPage() {
                 {editing ? (
                   <Textarea value={editedBody} onChange={(e) => setEditedBody(e.target.value)} className="min-h-[360px] text-sm" />
                 ) : (
-                  <pre className="whitespace-pre-wrap text-sm text-slate-800 font-sans">{editedBody}</pre>
+                  <pre className="whitespace-pre-wrap text-sm text-[var(--cs-navy)] font-sans">{editedBody}</pre>
                 )}
               </CardContent>
             </Card>
@@ -431,7 +431,7 @@ export default function HrLettersPage() {
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2 text-base">
-                    <ShieldCheck className="h-4 w-4 text-slate-500" /> Rights check
+                    <ShieldCheck className="h-4 w-4 text-[var(--cs-text-muted)]" /> Rights check
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -442,7 +442,7 @@ export default function HrLettersPage() {
                       <RightsLine label="Representation offered" ok={guardian.rightsCheck.representationOffered} />
                     </ul>
                   ) : (
-                    <p className="text-xs text-slate-500">Guardian was not run.</p>
+                    <p className="text-xs text-[var(--cs-text-muted)]">Guardian was not run.</p>
                   )}
                 </CardContent>
               </Card>
@@ -455,7 +455,7 @@ export default function HrLettersPage() {
                 </CardHeader>
                 <CardContent>
                   {!guardian ? (
-                    <p className="text-xs text-slate-500">Guardian was not run.</p>
+                    <p className="text-xs text-[var(--cs-text-muted)]">Guardian was not run.</p>
                   ) : guardian.flags.length === 0 ? (
                     <p className="text-sm text-emerald-700">No issues flagged.</p>
                   ) : (
@@ -464,10 +464,10 @@ export default function HrLettersPage() {
                         <li key={i} className="border-l-2 pl-3" style={{ borderColor: f.severity === "block" ? "#fecaca" : f.severity === "warning" ? "#fde68a" : "#bfdbfe" }}>
                           <div className="flex items-center gap-2 mb-1 flex-wrap">
                             <Badge className={cn("border text-xs", SEVERITY_COLOUR[f.severity])}>{f.severity}</Badge>
-                            <span className="text-xs text-slate-500">{f.category}</span>
+                            <span className="text-xs text-[var(--cs-text-muted)]">{f.category}</span>
                           </div>
-                          <p className="text-sm text-slate-800">{f.message}</p>
-                          {f.suggestion ? <p className="text-xs text-slate-600 mt-1 italic">Suggestion: {f.suggestion}</p> : null}
+                          <p className="text-sm text-[var(--cs-navy)]">{f.message}</p>
+                          {f.suggestion ? <p className="text-xs text-[var(--cs-text-secondary)] mt-1 italic">Suggestion: {f.suggestion}</p> : null}
                         </li>
                       ))}
                     </ul>
@@ -479,11 +479,11 @@ export default function HrLettersPage() {
                 <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2 text-base">
-                      <Scale className="h-4 w-4 text-slate-500" /> Suggested safer wording
+                      <Scale className="h-4 w-4 text-[var(--cs-text-muted)]" /> Suggested safer wording
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <pre className="whitespace-pre-wrap text-sm text-slate-800 font-sans">{guardian.suggestedSaferWording}</pre>
+                    <pre className="whitespace-pre-wrap text-sm text-[var(--cs-navy)] font-sans">{guardian.suggestedSaferWording}</pre>
                     <Button variant="outline" size="sm" className="mt-3 gap-1.5" onClick={() => setEditedBody(guardian.suggestedSaferWording ?? editedBody)}>
                       <Pencil className="h-3.5 w-3.5" /> Use as draft
                     </Button>
@@ -498,8 +498,8 @@ export default function HrLettersPage() {
               <CardTitle className="text-base">Decision</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="text-xs text-slate-500">
-                Acting as <span className="font-medium text-slate-700">{actorUserId}</span> ({actorRole}).
+              <div className="text-xs text-[var(--cs-text-muted)]">
+                Acting as <span className="font-medium text-[var(--cs-text-secondary)]">{actorUserId}</span> ({actorRole}).
                 {result.letterId ? ` Letter ${result.letterId}.` : " Persistence not active."}
               </div>
 
@@ -543,15 +543,15 @@ export default function HrLettersPage() {
               </div>
 
               {decisionMessage ? (
-                <div className="text-sm text-slate-700 bg-slate-50 border border-slate-200 rounded-md px-3 py-2">{decisionMessage}</div>
+                <div className="text-sm text-[var(--cs-text-secondary)] bg-slate-50 border border-[var(--cs-border)] rounded-md px-3 py-2">{decisionMessage}</div>
               ) : null}
             </CardContent>
           </Card>
         </>
       ) : (
         <Card>
-          <CardContent className="p-6 text-sm text-slate-600">
-            <p className="font-medium text-slate-800 mb-1">Empty state</p>
+          <CardContent className="p-6 text-sm text-[var(--cs-text-secondary)]">
+            <p className="font-medium text-[var(--cs-navy)] mb-1">Empty state</p>
             <p>Pick a letter type and fill in the context. Aria generates a starting-point draft and runs it through the Process Guardian.</p>
           </CardContent>
         </Card>
@@ -564,7 +564,7 @@ function RightsLine({ label, ok }: { label: string; ok: boolean }) {
   return (
     <li className="flex items-center gap-2">
       {ok ? <CheckCircle2 className="h-4 w-4 text-emerald-500" /> : <XCircle className="h-4 w-4 text-amber-500" />}
-      <span className={cn("text-sm", ok ? "text-slate-800" : "text-amber-800")}>{label}</span>
+      <span className={cn("text-sm", ok ? "text-[var(--cs-navy)]" : "text-amber-800")}>{label}</span>
     </li>
   );
 }

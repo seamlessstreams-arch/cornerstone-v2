@@ -213,18 +213,18 @@ export default function SafeguardingSupervisionPage() {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      <div className="rounded-lg bg-slate-50 border border-slate-200 p-3 flex items-start gap-2">
-                        <Calendar className="h-4 w-4 text-slate-600 mt-0.5 shrink-0" />
+                      <div className="rounded-lg bg-slate-50 border border-[var(--cs-border)] p-3 flex items-start gap-2">
+                        <Calendar className="h-4 w-4 text-[var(--cs-text-secondary)] mt-0.5 shrink-0" />
                         <div>
-                          <p className="text-xs font-semibold text-slate-700">Next session</p>
-                          <p className="text-sm text-slate-900">{r.next_session}</p>
+                          <p className="text-xs font-semibold text-[var(--cs-text-secondary)]">Next session</p>
+                          <p className="text-sm text-[var(--cs-navy)]">{r.next_session}</p>
                         </div>
                       </div>
-                      <div className="rounded-lg bg-slate-50 border border-slate-200 p-3 flex items-start gap-2">
-                        <Lock className="h-4 w-4 text-slate-600 mt-0.5 shrink-0" />
+                      <div className="rounded-lg bg-slate-50 border border-[var(--cs-border)] p-3 flex items-start gap-2">
+                        <Lock className="h-4 w-4 text-[var(--cs-text-secondary)] mt-0.5 shrink-0" />
                         <div>
-                          <p className="text-xs font-semibold text-slate-700">Confidentiality</p>
-                          <p className="text-sm text-slate-900">{r.confidentiality_note}</p>
+                          <p className="text-xs font-semibold text-[var(--cs-text-secondary)]">Confidentiality</p>
+                          <p className="text-sm text-[var(--cs-navy)]">{r.confidentiality_note}</p>
                         </div>
                       </div>
                     </div>

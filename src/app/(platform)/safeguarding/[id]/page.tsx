@@ -39,7 +39,7 @@ import type { DocumentIntelRisk } from "@/types/documents";
 const SEV_CONFIG: Record<string, {
   label: string; color: string; bg: string; badge: string; border: string; ring: string;
 }> = {
-  low:      { label: "Low",      color: "text-slate-600",  bg: "bg-slate-100",  badge: "bg-slate-100 text-slate-700",   border: "border-l-slate-400",  ring: "ring-slate-200"  },
+  low:      { label: "Low",      color: "text-[var(--cs-text-secondary)]",  bg: "bg-slate-100",  badge: "bg-slate-100 text-[var(--cs-text-secondary)]",   border: "border-l-slate-400",  ring: "ring-slate-200"  },
   medium:   { label: "Medium",   color: "text-amber-700",  bg: "bg-amber-50",   badge: "bg-amber-100 text-amber-800",   border: "border-l-amber-500",  ring: "ring-amber-200"  },
   high:     { label: "High",     color: "text-orange-700", bg: "bg-orange-50",  badge: "bg-orange-100 text-orange-800", border: "border-l-orange-500", ring: "ring-orange-200" },
   critical: { label: "Critical", color: "text-red-700",    bg: "bg-red-50",     badge: "bg-red-100 text-red-800",       border: "border-l-red-600",    ring: "ring-red-200"    },
@@ -56,22 +56,22 @@ function NotificationRow({ n }: { n: { role: string; name: string; method: strin
     n.role.toLowerCase().includes("police") ? <Phone className="h-3 w-3 text-blue-500" /> :
     n.role.toLowerCase().includes("social") ? <UserCheck className="h-3 w-3 text-violet-500" /> :
     n.role.toLowerCase().includes("lado") || n.role.toLowerCase().includes("manager") ? <Gavel className="h-3 w-3 text-amber-500" /> :
-    <Bell className="h-3 w-3 text-slate-400" />;
+    <Bell className="h-3 w-3 text-[var(--cs-text-muted)]" />;
 
   return (
     <div className={cn(
       "flex items-center justify-between rounded-xl px-3 py-2.5 border text-xs",
-      n.acknowledged ? "bg-emerald-50 border-emerald-200" : "bg-slate-50 border-slate-200"
+      n.acknowledged ? "bg-emerald-50 border-emerald-200" : "bg-slate-50 border-[var(--cs-border)]"
     )}>
       <div className="flex items-center gap-2">
         {icon}
         <div>
-          <span className="font-semibold text-slate-900">{n.role}:</span>
-          <span className="text-slate-700 ml-1">{n.name} — {n.method}</span>
+          <span className="font-semibold text-[var(--cs-navy)]">{n.role}:</span>
+          <span className="text-[var(--cs-text-secondary)] ml-1">{n.name} — {n.method}</span>
         </div>
       </div>
       <div className="flex items-center gap-2 shrink-0">
-        <span className="text-slate-400">{formatRelative(n.notified_at.slice(0, 10))}</span>
+        <span className="text-[var(--cs-text-muted)]">{formatRelative(n.notified_at.slice(0, 10))}</span>
         {n.acknowledged
           ? <span className="flex items-center gap-0.5 text-emerald-600 font-medium"><CheckCircle2 className="h-3.5 w-3.5" />Confirmed</span>
           : <span className="flex items-center gap-0.5 text-amber-600"><Clock className="h-3.5 w-3.5" />Awaiting</span>
@@ -113,7 +113,7 @@ function OversightPanel({ concernId, onSaved }: { concernId: string; onSaved: ()
         onChange={(e) => setNote(e.target.value)}
         rows={3}
         placeholder="Oversight comments — referrals, strategy discussions, lessons, further actions…"
-        className="w-full rounded-xl border border-rose-200 bg-white px-3.5 py-3 text-sm text-slate-700 resize-none focus:outline-none focus:ring-2 focus:ring-rose-300 placeholder:text-slate-400"
+        className="w-full rounded-xl border border-rose-200 bg-white px-3.5 py-3 text-sm text-[var(--cs-text-secondary)] resize-none focus:outline-none focus:ring-2 focus:ring-rose-300 placeholder:text-[var(--cs-text-muted)]"
       />
       {error && (
         <p className="text-xs text-red-600 font-medium flex items-center gap-1.5">
@@ -176,7 +176,7 @@ export default function SafeguardingConcernPage({ params }: { params: Promise<{ 
   if (incidentQ.isLoading) {
     return (
       <PageShell title="Safeguarding Concern" showQuickCreate={false}>
-        <div className="flex items-center justify-center py-24 gap-2 text-slate-400">
+        <div className="flex items-center justify-center py-24 gap-2 text-[var(--cs-text-muted)]">
           <Loader2 className="h-5 w-5 animate-spin" />
           <span className="text-sm">Loading concern…</span>
         </div>
@@ -189,7 +189,7 @@ export default function SafeguardingConcernPage({ params }: { params: Promise<{ 
       <PageShell title="Safeguarding Concern" showQuickCreate={false}>
         <div className="flex flex-col items-center gap-3 py-24 text-center">
           <AlertCircle className="h-10 w-10 text-red-400" />
-          <p className="text-sm font-medium text-slate-600">Concern record not found</p>
+          <p className="text-sm font-medium text-[var(--cs-text-secondary)]">Concern record not found</p>
           <Button size="sm" variant="outline" onClick={() => router.push("/safeguarding")}>
             <ArrowLeft className="h-3.5 w-3.5 mr-1" />Back to Safeguarding
           </Button>
@@ -256,7 +256,7 @@ export default function SafeguardingConcernPage({ params }: { params: Promise<{ 
           <div className="relative">
             <button
               onClick={() => setShowAria(false)}
-              className="absolute top-3 right-3 z-10 text-slate-400 hover:text-slate-600 text-xs"
+              className="absolute top-3 right-3 z-10 text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] text-xs"
             >✕ Close</button>
             <AriaPanel
               mode="safeguarding_scan"
@@ -293,7 +293,7 @@ export default function SafeguardingConcernPage({ params }: { params: Promise<{ 
                   </Badge>
                 )}
               </div>
-              <div className="text-xs text-slate-600 mt-0.5">
+              <div className="text-xs text-[var(--cs-text-secondary)] mt-0.5">
                 {formatDate(concern.date)} at {concern.time}
                 {concern.location && ` · ${concern.location}`}
               </div>
@@ -321,15 +321,15 @@ export default function SafeguardingConcernPage({ params }: { params: Promise<{ 
 
         {/* ── Young person ──────────────────────────────────────────────────── */}
         <div className="rounded-2xl border bg-white p-4">
-          <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 flex items-center gap-2">
+          <h3 className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-3 flex items-center gap-2">
             <Heart className="h-3.5 w-3.5 text-violet-500" />Young Person
           </h3>
           <div className="flex items-center gap-3">
             <Avatar name={ypName} size="md" className="bg-violet-100" />
             <div>
-              <div className="text-sm font-semibold text-slate-900">{ypName}</div>
+              <div className="text-sm font-semibold text-[var(--cs-navy)]">{ypName}</div>
               {yp && (
-                <div className="text-xs text-slate-500">
+                <div className="text-xs text-[var(--cs-text-muted)]">
                   Age {Math.floor((new Date().getTime() - new Date(yp.date_of_birth).getTime()) / (365.25 * 86400000))}
                   {" · "}{yp.legal_status}{" · "}{yp.local_authority}
                 </div>
@@ -357,47 +357,47 @@ export default function SafeguardingConcernPage({ params }: { params: Promise<{ 
 
         {/* ── Concern detail ─────────────────────────────────────────────────── */}
         <div className="rounded-2xl border bg-white p-5 space-y-4">
-          <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider flex items-center gap-2">
+          <h3 className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider flex items-center gap-2">
             <FileText className="h-3.5 w-3.5" />Concern Record
           </h3>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
             <div className="rounded-xl bg-slate-50 p-3">
-              <div className="text-slate-400 mb-0.5">Reported by</div>
-              <div className="font-semibold text-slate-900">{getStaffName(concern.reported_by)}</div>
+              <div className="text-[var(--cs-text-muted)] mb-0.5">Reported by</div>
+              <div className="font-semibold text-[var(--cs-navy)]">{getStaffName(concern.reported_by)}</div>
             </div>
             <div className="rounded-xl bg-slate-50 p-3">
-              <div className="text-slate-400 mb-0.5">Date &amp; Time</div>
-              <div className="font-semibold text-slate-900">{formatDate(concern.date)} · {concern.time}</div>
+              <div className="text-[var(--cs-text-muted)] mb-0.5">Date &amp; Time</div>
+              <div className="font-semibold text-[var(--cs-navy)]">{formatDate(concern.date)} · {concern.time}</div>
             </div>
             {concern.location && (
               <div className="rounded-xl bg-slate-50 p-3">
-                <div className="text-slate-400 mb-0.5 flex items-center gap-1">
+                <div className="text-[var(--cs-text-muted)] mb-0.5 flex items-center gap-1">
                   <MapPin className="h-3 w-3" />Location
                 </div>
-                <div className="font-semibold text-slate-900">{concern.location}</div>
+                <div className="font-semibold text-[var(--cs-navy)]">{concern.location}</div>
               </div>
             )}
             {concern.witnesses.length > 0 && (
               <div className="rounded-xl bg-slate-50 p-3 col-span-2 sm:col-span-1">
-                <div className="text-slate-400 mb-0.5 flex items-center gap-1">
+                <div className="text-[var(--cs-text-muted)] mb-0.5 flex items-center gap-1">
                   <User className="h-3 w-3" />Witnesses
                 </div>
-                <div className="font-semibold text-slate-900">{concern.witnesses.join(", ")}</div>
+                <div className="font-semibold text-[var(--cs-navy)]">{concern.witnesses.join(", ")}</div>
               </div>
             )}
           </div>
 
           <div>
-            <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2">Disclosure / Description</div>
-            <p className="text-sm text-slate-700 leading-relaxed whitespace-pre-line">{concern.description}</p>
+            <div className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-2">Disclosure / Description</div>
+            <p className="text-sm text-[var(--cs-text-secondary)] leading-relaxed whitespace-pre-line">{concern.description}</p>
           </div>
 
           {concern.immediate_action && (
             <div>
-              <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2">Immediate Action Taken</div>
+              <div className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-2">Immediate Action Taken</div>
               <div className="rounded-xl border border-rose-100 bg-rose-50 p-3">
-                <p className="text-sm text-slate-700 leading-relaxed whitespace-pre-line">{concern.immediate_action}</p>
+                <p className="text-sm text-[var(--cs-text-secondary)] leading-relaxed whitespace-pre-line">{concern.immediate_action}</p>
               </div>
             </div>
           )}
@@ -405,15 +405,15 @@ export default function SafeguardingConcernPage({ params }: { params: Promise<{ 
 
         {/* ── Notifications ─────────────────────────────────────────────────── */}
         <div className="rounded-2xl border bg-white p-5 space-y-3">
-          <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider flex items-center gap-2">
+          <h3 className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider flex items-center gap-2">
             <Bell className="h-3.5 w-3.5" />
             Notifications & Referrals
             {concern.notifications.length > 0 && (
-              <span className="ml-auto text-[10px] text-slate-400 font-normal">{concern.notifications.length} made</span>
+              <span className="ml-auto text-[10px] text-[var(--cs-text-muted)] font-normal">{concern.notifications.length} made</span>
             )}
           </h3>
           {concern.notifications.length === 0 ? (
-            <p className="text-xs text-slate-400 py-2">
+            <p className="text-xs text-[var(--cs-text-muted)] py-2">
               No notifications recorded. Add notifications via the incident record if referrals have been made.
             </p>
           ) : (
@@ -429,28 +429,28 @@ export default function SafeguardingConcernPage({ params }: { params: Promise<{ 
             <h3 className="text-xs font-semibold text-emerald-700 uppercase tracking-wider mb-3 flex items-center gap-2">
               <Shield className="h-3.5 w-3.5" />Manager Oversight Recorded
             </h3>
-            <div className="text-xs text-slate-500 mb-2">
-              By <strong className="text-slate-700">{getStaffName(concern.oversight_by)}</strong>
+            <div className="text-xs text-[var(--cs-text-muted)] mb-2">
+              By <strong className="text-[var(--cs-text-secondary)]">{getStaffName(concern.oversight_by)}</strong>
               {concern.oversight_at && <span className="ml-1">· {formatRelative(concern.oversight_at.slice(0, 10))}</span>}
             </div>
-            <p className="text-sm text-slate-700 leading-relaxed whitespace-pre-line">{concern.oversight_note}</p>
+            <p className="text-sm text-[var(--cs-text-secondary)] leading-relaxed whitespace-pre-line">{concern.oversight_note}</p>
           </div>
         )}
 
         {/* ── Outcome / closure ─────────────────────────────────────────────── */}
         {concern.status === "closed" && concern.outcome && (
           <div className="rounded-2xl border bg-white p-5 space-y-3">
-            <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider flex items-center gap-2">
+            <h3 className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider flex items-center gap-2">
               <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />Outcome &amp; Closure
             </h3>
             <div>
-              <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Outcome</div>
-              <p className="text-sm text-slate-700 whitespace-pre-line">{concern.outcome}</p>
+              <div className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-1.5">Outcome</div>
+              <p className="text-sm text-[var(--cs-text-secondary)] whitespace-pre-line">{concern.outcome}</p>
             </div>
             {concern.lessons_learned && (
               <div>
-                <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Lessons Learned</div>
-                <p className="text-sm text-slate-700 whitespace-pre-line">{concern.lessons_learned}</p>
+                <div className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-1.5">Lessons Learned</div>
+                <p className="text-sm text-[var(--cs-text-secondary)] whitespace-pre-line">{concern.lessons_learned}</p>
               </div>
             )}
           </div>
@@ -491,7 +491,7 @@ export default function SafeguardingConcernPage({ params }: { params: Promise<{ 
         {/* ── Linked Documents ──────────────────────────────────────────────── */}
         <div className="rounded-2xl border bg-white p-4 space-y-3">
           <div className="flex items-center justify-between gap-2">
-            <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider flex items-center gap-2">
+            <h3 className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider flex items-center gap-2">
               <Library className="h-3.5 w-3.5" />Linked Documents ({linkedDocs.length})
             </h3>
             <SmartUploadButton
@@ -502,7 +502,7 @@ export default function SafeguardingConcernPage({ params }: { params: Promise<{ 
             />
           </div>
           {linkedDocs.length === 0 ? (
-            <p className="text-xs text-slate-400 py-2">
+            <p className="text-xs text-[var(--cs-text-muted)] py-2">
               No documents linked yet. Upload risk assessments, referral letters, or strategy discussion notes using the button above.
             </p>
           ) : (
@@ -512,14 +512,14 @@ export default function SafeguardingConcernPage({ params }: { params: Promise<{ 
                   "flex items-start gap-3 rounded-xl border px-3 py-2.5",
                   doc.ai_risk_level === "high" || doc.ai_risk_level === "critical" ? "border-red-200 bg-red-50/40"
                   : doc.ai_risk_level === "medium" ? "border-amber-200 bg-amber-50/40"
-                  : "border-slate-100 bg-slate-50"
+                  : "border-[var(--cs-border-subtle)] bg-slate-50"
                 )}>
-                  <FileText className="h-3.5 w-3.5 text-slate-400 shrink-0 mt-0.5" />
+                  <FileText className="h-3.5 w-3.5 text-[var(--cs-text-muted)] shrink-0 mt-0.5" />
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs font-semibold text-slate-800 truncate">{doc.original_file_name}</p>
+                    <p className="text-xs font-semibold text-[var(--cs-navy)] truncate">{doc.original_file_name}</p>
                     <div className="flex flex-wrap items-center gap-1.5 mt-0.5">
                       {doc.document_category && DOCUMENT_CATEGORY_LABELS[doc.document_category] && (
-                        <span className="text-[10px] text-slate-500">
+                        <span className="text-[10px] text-[var(--cs-text-muted)]">
                           {DOCUMENT_CATEGORY_LABELS[doc.document_category]}
                         </span>
                       )}
@@ -530,12 +530,12 @@ export default function SafeguardingConcernPage({ params }: { params: Promise<{ 
                             ? "bg-red-100 text-red-700" : "bg-amber-100 text-amber-700"
                         )}>{doc.ai_risk_level} risk</Badge>
                       )}
-                      <span className="text-[10px] text-slate-400 capitalize">
+                      <span className="text-[10px] text-[var(--cs-text-muted)] capitalize">
                         {doc.document_status?.replace("_", " ")}
                       </span>
                     </div>
                     {doc.ai_summary && (
-                      <p className="text-[11px] text-slate-500 mt-1 leading-relaxed line-clamp-2">
+                      <p className="text-[11px] text-[var(--cs-text-muted)] mt-1 leading-relaxed line-clamp-2">
                         {doc.ai_summary}
                       </p>
                     )}
@@ -547,14 +547,14 @@ export default function SafeguardingConcernPage({ params }: { params: Promise<{ 
         </div>
 
         {/* ── Regulatory note ───────────────────────────────────────────────── */}
-        <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
+        <div className="rounded-xl border border-[var(--cs-border)] bg-slate-50 p-4">
           <div className="flex items-start gap-2.5">
-            <Shield className="h-3.5 w-3.5 text-slate-400 mt-0.5 shrink-0" />
+            <Shield className="h-3.5 w-3.5 text-[var(--cs-text-muted)] mt-0.5 shrink-0" />
             <div>
-              <p className="text-[10px] font-semibold text-slate-600 uppercase tracking-wide mb-1">
+              <p className="text-[10px] font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide mb-1">
                 Regulatory Framework — Safeguarding
               </p>
-              <p className="text-[10px] text-slate-500 leading-relaxed">
+              <p className="text-[10px] text-[var(--cs-text-muted)] leading-relaxed">
                 This record is subject to Working Together to Safeguard Children 2023, Children Act 1989 s47,
                 and local authority safeguarding procedures. Manager oversight is required within 24 hours of
                 a critical or high-severity concern. Records may be inspected by Ofsted (ILACS framework).

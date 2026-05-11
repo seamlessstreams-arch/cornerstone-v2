@@ -38,7 +38,7 @@ const SOURCE_COLOUR: Record<ObjectiveSource, string> = {
 const PRIORITY_COLOUR: Record<ObjectivePriority, string> = {
   high: "bg-red-50 text-red-700 border-red-200",
   medium: "bg-amber-50 text-amber-700 border-amber-200",
-  low: "bg-slate-50 text-slate-600 border-slate-200",
+  low: "bg-slate-50 text-[var(--cs-text-secondary)] border-[var(--cs-border)]",
 };
 
 const STATUS_COLOUR: Record<ObjectiveStatus, string> = {
@@ -198,7 +198,7 @@ export default function HomeImprovementPlanPage() {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <input
               placeholder="Search objectives, notes, owners..."
-              className="w-full rounded-lg border border-slate-200 bg-white pl-9 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900"
+              className="w-full rounded-lg border border-[var(--cs-border)] bg-white pl-9 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
@@ -208,7 +208,7 @@ export default function HomeImprovementPlanPage() {
             <select
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value)}
-              className="rounded-lg border border-slate-200 bg-white px-2 py-2 text-sm text-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-900"
+              className="rounded-lg border border-[var(--cs-border)] bg-white px-2 py-2 text-sm text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-slate-900"
             >
               <option value="all">All Statuses</option>
               <option value="planned">Planned</option>
@@ -220,7 +220,7 @@ export default function HomeImprovementPlanPage() {
           <select
             value={filterPriority}
             onChange={(e) => setFilterPriority(e.target.value)}
-            className="rounded-lg border border-slate-200 bg-white px-2 py-2 text-sm text-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-900"
+            className="rounded-lg border border-[var(--cs-border)] bg-white px-2 py-2 text-sm text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-slate-900"
           >
             <option value="all">All Priorities</option>
             <option value="high">High</option>
@@ -230,7 +230,7 @@ export default function HomeImprovementPlanPage() {
           <select
             value={filterSource}
             onChange={(e) => setFilterSource(e.target.value)}
-            className="rounded-lg border border-slate-200 bg-white px-2 py-2 text-sm text-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-900"
+            className="rounded-lg border border-[var(--cs-border)] bg-white px-2 py-2 text-sm text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-slate-900"
           >
             <option value="all">All Sources</option>
             <option value="reg44">Reg 44</option>
@@ -245,7 +245,7 @@ export default function HomeImprovementPlanPage() {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as "priority" | "status" | "target")}
-              className="rounded-lg border border-slate-200 bg-white px-2 py-2 text-sm text-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-900"
+              className="rounded-lg border border-[var(--cs-border)] bg-white px-2 py-2 text-sm text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-slate-900"
             >
               <option value="priority">Priority</option>
               <option value="status">Status</option>
@@ -258,7 +258,7 @@ export default function HomeImprovementPlanPage() {
         <div className="space-y-3">
           {filtered.length === 0 && (
             <div className="text-center py-12 text-muted-foreground">
-              <Target className="h-10 w-10 mx-auto mb-3 text-slate-300" />
+              <Target className="h-10 w-10 mx-auto mb-3 text-[var(--cs-text-gentle)]" />
               No objectives match your filters.
             </div>
           )}
@@ -274,7 +274,7 @@ export default function HomeImprovementPlanPage() {
               >
                 {/* collapsed header */}
                 <button
-                  className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                  className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                   onClick={() => setExpandedId(isExpanded ? null : obj.id)}
                 >
                   <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -318,7 +318,7 @@ export default function HomeImprovementPlanPage() {
                             style={{ width: `${obj.progress}%` }}
                           />
                         </div>
-                        <span className="text-xs text-slate-500 tabular-nums">{obj.progress}%</span>
+                        <span className="text-xs text-[var(--cs-text-muted)] tabular-nums">{obj.progress}%</span>
                       </div>
                     )}
                     {obj.status === "completed" && (
@@ -335,12 +335,12 @@ export default function HomeImprovementPlanPage() {
                     <Card>
                       <CardHeader className="pb-2">
                         <CardTitle className="text-sm flex items-center gap-2">
-                          <FileText className="h-4 w-4 text-slate-500" />
+                          <FileText className="h-4 w-4 text-[var(--cs-text-muted)]" />
                           Notes
                         </CardTitle>
                       </CardHeader>
                       <CardContent>
-                        <p className="text-sm text-slate-700">{obj.notes}</p>
+                        <p className="text-sm text-[var(--cs-text-secondary)]">{obj.notes}</p>
                       </CardContent>
                     </Card>
 
@@ -366,7 +366,7 @@ export default function HomeImprovementPlanPage() {
                               style={{ width: `${obj.progress}%` }}
                             />
                           </div>
-                          <span className="text-sm font-semibold text-slate-700 tabular-nums w-12 text-right">{obj.progress}%</span>
+                          <span className="text-sm font-semibold text-[var(--cs-text-secondary)] tabular-nums w-12 text-right">{obj.progress}%</span>
                         </div>
                       </CardContent>
                     </Card>
@@ -395,10 +395,10 @@ export default function HomeImprovementPlanPage() {
                                 </div>
                                 <div className="pb-3">
                                   <div className="flex items-center gap-2 flex-wrap">
-                                    <span className="text-xs font-medium text-slate-500">{update.date}</span>
-                                    <span className="text-xs text-slate-400">by {getStaffName(update.updated_by)}</span>
+                                    <span className="text-xs font-medium text-[var(--cs-text-muted)]">{update.date}</span>
+                                    <span className="text-xs text-[var(--cs-text-muted)]">by {getStaffName(update.updated_by)}</span>
                                   </div>
-                                  <p className="text-sm text-slate-700 mt-0.5">{update.note}</p>
+                                  <p className="text-sm text-[var(--cs-text-secondary)] mt-0.5">{update.note}</p>
                                 </div>
                               </div>
                             ))}
@@ -423,7 +423,7 @@ export default function HomeImprovementPlanPage() {
                       </div>
                       <div>
                         <span className="text-muted-foreground">Completed:</span>{" "}
-                        <span className={cn("font-medium", obj.completed_date ? "text-emerald-600" : "text-slate-500")}>
+                        <span className={cn("font-medium", obj.completed_date ? "text-emerald-600" : "text-[var(--cs-text-muted)]")}>
                           {obj.completed_date ?? "Pending"}
                         </span>
                       </div>

@@ -20,6 +20,7 @@ import { useStaff, type StaffEnriched } from "@/hooks/use-staff";
 import { SmartUploadButton } from "@/components/documents/smart-upload-button";
 import { PrintButton } from "@/components/common/print-button";
 import { ExportButton, type ExportColumn } from "@/components/common/export-button";
+import { PageGuidance } from "@/components/ui/page-guidance";
 import { cn, todayStr, formatDate } from "@/lib/utils";
 import { ROLE_LABELS } from "@/lib/constants";
 
@@ -104,23 +105,32 @@ export default function StaffPage() {
     >
       <div id="staff-content" className="space-y-6 animate-fade-in">
 
+        <PageGuidance
+          title="Team management"
+          description="Staff directory, supervision tracking, training compliance, and shift management. Click any team member to see their full profile and compliance status."
+          evidenceTip="Reg 44 visitors check that staff have up-to-date DBS, training, and regular supervision. Keep profiles current to demonstrate compliance."
+          ariaTip="ARIA tracks supervision frequency and training expiry across your team, alerting you before deadlines are missed."
+          regulationRef="Children's Homes Regulations 2015, Reg 33 — Employment of staff"
+          variant="compliance"
+        />
+
         {/* Stats bar */}
         {meta && (
           <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
             {[
-              { label: "Active Staff", value: meta.total, icon: Users, color: "text-slate-900", bg: "bg-slate-50" },
+              { label: "Active Staff", value: meta.total, icon: Users, color: "text-[var(--cs-navy)]", bg: "bg-slate-50" },
               { label: "On Shift Today", value: meta.on_shift, icon: Clock, color: "text-emerald-600", bg: "bg-emerald-50" },
               { label: "On Leave", value: meta.on_leave, icon: Calendar, color: "text-amber-600", bg: "bg-amber-50" },
               { label: "Bank Staff", value: meta.bank, icon: Users, color: "text-blue-600", bg: "bg-blue-50" },
               { label: "Supervision Overdue", value: meta.supervision_overdue, icon: AlertTriangle, color: meta.supervision_overdue > 0 ? "text-red-600" : "text-emerald-600", bg: meta.supervision_overdue > 0 ? "bg-red-50" : "bg-emerald-50" },
             ].map(({ label, value, icon: Icon, color, bg }) => (
-              <div key={label} className="rounded-2xl border border-slate-100 bg-white p-4 flex items-center gap-3">
+              <div key={label} className="rounded-2xl border border-[var(--cs-border-subtle)] bg-white p-4 flex items-center gap-3">
                 <div className={cn("rounded-xl p-2", bg)}>
                   <Icon className={cn("h-4 w-4", color)} />
                 </div>
                 <div>
                   <div className={cn("text-xl font-bold tabular-nums", color)}>{value}</div>
-                  <div className="text-[10px] text-slate-500 leading-tight">{label}</div>
+                  <div className="text-[10px] text-[var(--cs-text-muted)] leading-tight">{label}</div>
                 </div>
               </div>
             ))}
@@ -143,7 +153,7 @@ export default function StaffPage() {
         {/* Filters */}
         <div className="flex flex-wrap items-center gap-3">
           <div className="relative flex-1 min-w-[200px] max-w-sm">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--cs-text-muted)]" />
             <Input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search staff by name, title, or email…" className="pl-9" />
           </div>
           <div className="flex flex-wrap gap-1.5">
@@ -159,7 +169,7 @@ export default function StaffPage() {
         {/* Status filter + sort */}
         <div className="flex items-center gap-3 flex-wrap">
           <div className="flex items-center gap-1.5">
-            <Filter className="h-3.5 w-3.5 text-slate-400" />
+            <Filter className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
             {([
               { key: "all" as StatusFilter, label: "All Status" },
               { key: "on_shift" as StatusFilter, label: "On Shift" },
@@ -174,7 +184,7 @@ export default function StaffPage() {
                   "rounded-full px-2.5 py-1 text-[10px] font-medium transition-colors",
                   statusFilter === key
                     ? key === "training_expired" || key === "supervision_due" ? "bg-red-600 text-white" : "bg-slate-900 text-white"
-                    : "bg-slate-100 text-slate-600 hover:bg-slate-200",
+                    : "bg-slate-100 text-[var(--cs-text-secondary)] hover:bg-slate-200",
                 )}
               >
                 {label}
@@ -182,11 +192,11 @@ export default function StaffPage() {
             ))}
           </div>
           <div className="flex items-center gap-1.5 ml-auto">
-            <ArrowUpDown className="h-3.5 w-3.5 text-slate-400" />
+            <ArrowUpDown className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
             <select
               value={sortKey}
               onChange={(e) => setSortKey(e.target.value as SortKey)}
-              className="rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-[11px] text-slate-700 focus:border-indigo-300 focus:ring-1 focus:ring-indigo-200 outline-none"
+              className="rounded-lg border border-[var(--cs-border)] bg-white px-2.5 py-1 text-[11px] text-[var(--cs-text-secondary)] focus:border-[var(--cs-aria-gold)] focus:ring-1 focus:ring-[var(--cs-aria-gold)]/30 outline-none"
             >
               <option value="name">Name A-Z</option>
               <option value="tasks">Most tasks</option>
@@ -198,16 +208,16 @@ export default function StaffPage() {
 
         {/* Results count */}
         {(search || filterRole || statusFilter !== "all") && (
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-[var(--cs-text-muted)]">
             Showing {filtered.length} of {staffList.length} staff
-            {search && <span className="text-slate-400"> matching &ldquo;{search}&rdquo;</span>}
+            {search && <span className="text-[var(--cs-text-muted)]"> matching &ldquo;{search}&rdquo;</span>}
           </p>
         )}
 
         {/* Loading */}
         {isLoading && (
           <div className="flex items-center justify-center py-20">
-            <Loader2 className="h-6 w-6 animate-spin text-slate-400" />
+            <Loader2 className="h-6 w-6 animate-spin text-[var(--cs-text-muted)]" />
           </div>
         )}
 
@@ -240,32 +250,32 @@ export default function StaffPage() {
                       )}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="text-sm font-semibold text-slate-900 truncate">{staff.full_name}</div>
-                      <div className="text-xs text-slate-500">{staff.job_title}</div>
+                      <div className="text-sm font-semibold text-[var(--cs-navy)] truncate">{staff.full_name}</div>
+                      <div className="text-xs text-[var(--cs-text-muted)]">{staff.job_title}</div>
                       {staff.probation_end_date && staff.probation_end_date > today && (
                         <Badge variant="warning" className="text-[9px] mt-1 rounded-full">Probation</Badge>
                       )}
                     </div>
-                    <ChevronRight className="h-4 w-4 text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
+                    <ChevronRight className="h-4 w-4 text-[var(--cs-text-gentle)] opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
                   </div>
 
                   {/* Stats row */}
                   <div className="mt-4 grid grid-cols-3 gap-2 text-center">
                     <div className="rounded-lg bg-slate-50 p-2">
-                      <div className={cn("text-lg font-bold", staff.overdue_tasks > 0 ? "text-red-600" : "text-slate-900")}>
+                      <div className={cn("text-lg font-bold", staff.overdue_tasks > 0 ? "text-red-600" : "text-[var(--cs-navy)]")}>
                         {staff.active_tasks}
                       </div>
-                      <div className="text-[10px] text-slate-500">Tasks</div>
+                      <div className="text-[10px] text-[var(--cs-text-muted)]">Tasks</div>
                     </div>
                     <div className="rounded-lg bg-slate-50 p-2">
                       <div className={cn("text-lg font-bold", staff.training_expired_count > 0 ? "text-red-600" : "text-emerald-600")}>
                         {staff.training_total_count - staff.training_expired_count}/{staff.training_total_count}
                       </div>
-                      <div className="text-[10px] text-slate-500">Training</div>
+                      <div className="text-[10px] text-[var(--cs-text-muted)]">Training</div>
                     </div>
                     <div className="rounded-lg bg-slate-50 p-2">
-                      <div className="text-lg font-bold text-slate-900">{staff.contracted_hours}h</div>
-                      <div className="text-[10px] text-slate-500">Contracted</div>
+                      <div className="text-lg font-bold text-[var(--cs-navy)]">{staff.contracted_hours}h</div>
+                      <div className="text-[10px] text-[var(--cs-text-muted)]">Contracted</div>
                     </div>
                   </div>
 
@@ -284,7 +294,7 @@ export default function StaffPage() {
                   </div>
 
                   {/* Contact */}
-                  <div className="mt-3 pt-3 border-t border-slate-100 flex items-center gap-3 text-[10px] text-slate-400">
+                  <div className="mt-3 pt-3 border-t border-[var(--cs-border-subtle)] flex items-center gap-3 text-[10px] text-[var(--cs-text-muted)]">
                     {staff.email && <span className="flex items-center gap-0.5 truncate"><Mail className="h-3 w-3" />{staff.email}</span>}
                     {staff.phone && <span className="flex items-center gap-0.5 shrink-0"><Phone className="h-3 w-3" />{staff.phone}</span>}
                   </div>
@@ -295,8 +305,8 @@ export default function StaffPage() {
             {filtered.length === 0 && !isLoading && (
               <div className="col-span-4 flex flex-col items-center justify-center py-20 text-center">
                 <Users className="h-10 w-10 text-slate-200 mb-3" />
-                <div className="text-slate-500 font-medium">No staff members match your search</div>
-                <div className="text-xs text-slate-400 mt-1">Try adjusting your filters</div>
+                <div className="text-[var(--cs-text-muted)] font-medium">No staff members match your search</div>
+                <div className="text-xs text-[var(--cs-text-muted)] mt-1">Try adjusting your filters</div>
               </div>
             )}
           </div>
@@ -306,13 +316,13 @@ export default function StaffPage() {
       {/* Staff Detail Panel */}
       {selectedStaff && (
         <div className="fixed inset-0 z-50 flex justify-end bg-black/30 backdrop-blur-sm" onClick={() => setSelectedStaff(null)}>
-          <div className="w-full max-w-lg bg-white shadow-2xl overflow-y-auto animate-slide-in" onClick={(e) => e.stopPropagation()}>
+          <div className="w-full max-w-lg bg-white shadow-[var(--cs-shadow-elevated)] overflow-y-auto animate-slide-in" onClick={(e) => e.stopPropagation()}>
             <div className="sticky top-0 z-10 bg-white border-b px-6 py-4 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <Avatar name={selectedStaff.full_name} size="lg" />
                 <div>
-                  <div className="text-lg font-bold text-slate-900">{selectedStaff.full_name}</div>
-                  <div className="text-sm text-slate-500">{selectedStaff.job_title}</div>
+                  <div className="text-lg font-bold text-[var(--cs-navy)]">{selectedStaff.full_name}</div>
+                  <div className="text-sm text-[var(--cs-text-muted)]">{selectedStaff.job_title}</div>
                 </div>
               </div>
               <Button variant="ghost" size="icon-sm" onClick={() => setSelectedStaff(null)}>
@@ -336,40 +346,40 @@ export default function StaffPage() {
               {/* Quick stats */}
               <div className="grid grid-cols-3 gap-3">
                 <div className="rounded-xl bg-slate-50 p-3 text-center">
-                  <div className={cn("text-2xl font-bold", selectedStaff.overdue_tasks > 0 ? "text-red-600" : "text-slate-900")}>{selectedStaff.active_tasks}</div>
-                  <div className="text-[10px] text-slate-500 mt-0.5">Active Tasks</div>
+                  <div className={cn("text-2xl font-bold", selectedStaff.overdue_tasks > 0 ? "text-red-600" : "text-[var(--cs-navy)]")}>{selectedStaff.active_tasks}</div>
+                  <div className="text-[10px] text-[var(--cs-text-muted)] mt-0.5">Active Tasks</div>
                   {selectedStaff.overdue_tasks > 0 && <div className="text-[9px] text-red-500 mt-0.5">{selectedStaff.overdue_tasks} overdue</div>}
                 </div>
                 <div className="rounded-xl bg-slate-50 p-3 text-center">
                   <div className={cn("text-2xl font-bold", selectedStaff.training_expired_count > 0 ? "text-red-600" : "text-emerald-600")}>
                     {selectedStaff.training_total_count - selectedStaff.training_expired_count}/{selectedStaff.training_total_count}
                   </div>
-                  <div className="text-[10px] text-slate-500 mt-0.5">Training</div>
+                  <div className="text-[10px] text-[var(--cs-text-muted)] mt-0.5">Training</div>
                   {selectedStaff.training_expiring_count > 0 && <div className="text-[9px] text-amber-500 mt-0.5">{selectedStaff.training_expiring_count} expiring</div>}
                 </div>
                 <div className="rounded-xl bg-slate-50 p-3 text-center">
-                  <div className="text-2xl font-bold text-slate-900">{selectedStaff.contracted_hours}h</div>
-                  <div className="text-[10px] text-slate-500 mt-0.5">Contracted</div>
+                  <div className="text-2xl font-bold text-[var(--cs-navy)]">{selectedStaff.contracted_hours}h</div>
+                  <div className="text-[10px] text-[var(--cs-text-muted)] mt-0.5">Contracted</div>
                 </div>
               </div>
 
               {/* Employment Details */}
               <div>
-                <h3 className="text-sm font-semibold text-slate-900 mb-3">Employment Details</h3>
+                <h3 className="text-sm font-semibold text-[var(--cs-navy)] mb-3">Employment Details</h3>
                 <div className="grid grid-cols-2 gap-3">
-                  <div className="rounded-xl bg-slate-50 p-3"><div className="text-[10px] text-slate-500 mb-0.5">Start Date</div><div className="text-sm font-medium">{formatDate(selectedStaff.start_date)}</div></div>
-                  <div className="rounded-xl bg-slate-50 p-3"><div className="text-[10px] text-slate-500 mb-0.5">Employment</div><div className="text-sm font-medium capitalize">{selectedStaff.employment_type}</div></div>
-                  <div className="rounded-xl bg-slate-50 p-3"><div className="text-[10px] text-slate-500 mb-0.5">Contracted Hours</div><div className="text-sm font-medium">{selectedStaff.contracted_hours}h/week</div></div>
-                  <div className="rounded-xl bg-slate-50 p-3"><div className="text-[10px] text-slate-500 mb-0.5">Payroll ID</div><div className="text-sm font-medium">{selectedStaff.payroll_id || "N/A"}</div></div>
-                  <div className="rounded-xl bg-slate-50 p-3"><div className="text-[10px] text-slate-500 mb-0.5">DBS Number</div><div className="text-sm font-medium">{selectedStaff.dbs_number || "N/A"}</div></div>
-                  <div className="rounded-xl bg-slate-50 p-3"><div className="text-[10px] text-slate-500 mb-0.5">Next Supervision</div><div className={cn("text-sm font-medium", selectedStaff.supervision_overdue ? "text-red-600" : "text-slate-900")}>{selectedStaff.next_supervision_due ? formatDate(selectedStaff.next_supervision_due) : "Not set"}</div></div>
+                  <div className="rounded-xl bg-slate-50 p-3"><div className="text-[10px] text-[var(--cs-text-muted)] mb-0.5">Start Date</div><div className="text-sm font-medium">{formatDate(selectedStaff.start_date)}</div></div>
+                  <div className="rounded-xl bg-slate-50 p-3"><div className="text-[10px] text-[var(--cs-text-muted)] mb-0.5">Employment</div><div className="text-sm font-medium capitalize">{selectedStaff.employment_type}</div></div>
+                  <div className="rounded-xl bg-slate-50 p-3"><div className="text-[10px] text-[var(--cs-text-muted)] mb-0.5">Contracted Hours</div><div className="text-sm font-medium">{selectedStaff.contracted_hours}h/week</div></div>
+                  <div className="rounded-xl bg-slate-50 p-3"><div className="text-[10px] text-[var(--cs-text-muted)] mb-0.5">Payroll ID</div><div className="text-sm font-medium">{selectedStaff.payroll_id || "N/A"}</div></div>
+                  <div className="rounded-xl bg-slate-50 p-3"><div className="text-[10px] text-[var(--cs-text-muted)] mb-0.5">DBS Number</div><div className="text-sm font-medium">{selectedStaff.dbs_number || "N/A"}</div></div>
+                  <div className="rounded-xl bg-slate-50 p-3"><div className="text-[10px] text-[var(--cs-text-muted)] mb-0.5">Next Supervision</div><div className={cn("text-sm font-medium", selectedStaff.supervision_overdue ? "text-red-600" : "text-[var(--cs-navy)]")}>{selectedStaff.next_supervision_due ? formatDate(selectedStaff.next_supervision_due) : "Not set"}</div></div>
                 </div>
               </div>
 
               {/* Training summary */}
               <div>
-                <h3 className="text-sm font-semibold text-slate-900 mb-3 flex items-center gap-2">
-                  <GraduationCap className="h-4 w-4 text-slate-400" />
+                <h3 className="text-sm font-semibold text-[var(--cs-navy)] mb-3 flex items-center gap-2">
+                  <GraduationCap className="h-4 w-4 text-[var(--cs-text-muted)]" />
                   Training &amp; Compliance
                 </h3>
                 <div className="grid grid-cols-3 gap-2">
@@ -386,23 +396,23 @@ export default function StaffPage() {
                     <div className="text-[10px] text-red-600 mt-0.5">Expired</div>
                   </div>
                 </div>
-                <p className="text-xs text-slate-400 mt-2 text-center">Full training matrix available in the Training module</p>
+                <p className="text-xs text-[var(--cs-text-muted)] mt-2 text-center">Full training matrix available in the Training module</p>
               </div>
 
               {/* Contact */}
               <div>
-                <h3 className="text-sm font-semibold text-slate-900 mb-3">Contact</h3>
+                <h3 className="text-sm font-semibold text-[var(--cs-navy)] mb-3">Contact</h3>
                 <div className="space-y-2">
                   {selectedStaff.email && (
-                    <a href={`mailto:${selectedStaff.email}`} className="flex items-center gap-3 rounded-xl bg-slate-50 p-3 hover:bg-slate-100 transition-colors">
-                      <Mail className="h-4 w-4 text-slate-400 shrink-0" />
-                      <span className="text-sm text-slate-700">{selectedStaff.email}</span>
+                    <a href={`mailto:${selectedStaff.email}`} className="flex items-center gap-3 rounded-xl bg-slate-50 p-3 hover:bg-[var(--cs-surface)] transition-colors">
+                      <Mail className="h-4 w-4 text-[var(--cs-text-muted)] shrink-0" />
+                      <span className="text-sm text-[var(--cs-text-secondary)]">{selectedStaff.email}</span>
                     </a>
                   )}
                   {selectedStaff.phone && (
-                    <a href={`tel:${selectedStaff.phone}`} className="flex items-center gap-3 rounded-xl bg-slate-50 p-3 hover:bg-slate-100 transition-colors">
-                      <Phone className="h-4 w-4 text-slate-400 shrink-0" />
-                      <span className="text-sm text-slate-700">{selectedStaff.phone}</span>
+                    <a href={`tel:${selectedStaff.phone}`} className="flex items-center gap-3 rounded-xl bg-slate-50 p-3 hover:bg-[var(--cs-surface)] transition-colors">
+                      <Phone className="h-4 w-4 text-[var(--cs-text-muted)] shrink-0" />
+                      <span className="text-sm text-[var(--cs-text-secondary)]">{selectedStaff.phone}</span>
                     </a>
                   )}
                 </div>
@@ -411,10 +421,10 @@ export default function StaffPage() {
               {/* Emergency Contact */}
               {selectedStaff.emergency_contact_name && (
                 <div>
-                  <h3 className="text-sm font-semibold text-slate-900 mb-3">Emergency Contact</h3>
+                  <h3 className="text-sm font-semibold text-[var(--cs-navy)] mb-3">Emergency Contact</h3>
                   <div className="rounded-xl bg-slate-50 p-3">
                     <div className="text-sm font-medium">{selectedStaff.emergency_contact_name}</div>
-                    <div className="text-xs text-slate-500">{selectedStaff.emergency_contact_phone}</div>
+                    <div className="text-xs text-[var(--cs-text-muted)]">{selectedStaff.emergency_contact_phone}</div>
                   </div>
                 </div>
               )}

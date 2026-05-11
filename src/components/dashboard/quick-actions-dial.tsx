@@ -123,7 +123,7 @@ export function QuickActionsDial() {
               onClick={() => setOpen(false)}
               className={cn(
                 "flex items-center gap-3 rounded-xl px-4 py-2.5 shadow-md transition-all",
-                "bg-white border border-slate-200 hover:shadow-lg hover:-translate-y-0.5",
+                "bg-white border border-[var(--cs-border)] hover:shadow-lg hover:-translate-y-0.5",
               )}
               style={{
                 animationDelay: `${i * 30}ms`,
@@ -134,8 +134,8 @@ export function QuickActionsDial() {
                 <action.icon className={cn("h-4 w-4", action.color)} />
               </div>
               <div className="min-w-0">
-                <span className="text-sm font-semibold text-slate-800 block">{action.label}</span>
-                <span className="text-[10px] text-slate-400 block">{action.description}</span>
+                <span className="text-sm font-semibold text-[var(--cs-navy)] block">{action.label}</span>
+                <span className="text-[10px] text-[var(--cs-text-muted)] block">{action.description}</span>
               </div>
             </Link>
           ))}
@@ -144,7 +144,7 @@ export function QuickActionsDial() {
 
       {/* Backdrop label */}
       {!open && (
-        <span className="text-[10px] font-medium text-slate-400 pr-1 select-none pointer-events-none">
+        <span className="text-[10px] font-medium text-[var(--cs-text-muted)] pr-1 select-none pointer-events-none">
           Quick actions
         </span>
       )}

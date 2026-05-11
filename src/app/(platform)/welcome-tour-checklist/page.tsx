@@ -329,7 +329,7 @@ export default function WelcomeTourChecklistPage() {
           return (
             <div key={t.id} className="rounded-xl border bg-white overflow-hidden">
               <button
-                className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                 onClick={() => setExpandedId(isExpanded ? null : t.id)}
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -476,7 +476,7 @@ export default function WelcomeTourChecklistPage() {
 
                   {t.notes && (
                     <div className="bg-slate-50 rounded-lg p-3 border">
-                      <p className="text-xs font-semibold text-slate-800 uppercase tracking-wide mb-1">Tour Lead Notes</p>
+                      <p className="text-xs font-semibold text-[var(--cs-navy)] uppercase tracking-wide mb-1">Tour Lead Notes</p>
                       <p className="text-sm">{t.notes}</p>
                     </div>
                   )}

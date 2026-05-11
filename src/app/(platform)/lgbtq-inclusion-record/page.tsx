@@ -40,7 +40,7 @@ const outChip = (status: OutStatus) => {
   switch (status) {
     case "yes": return "bg-emerald-100 text-emerald-800";
     case "selectively": return "bg-teal-100 text-teal-800";
-    case "no": return "bg-slate-100 text-slate-700";
+    case "no": return "bg-slate-100 text-[var(--cs-text-secondary)]";
     case "not_yet_decided": return "bg-purple-100 text-purple-800";
   }
 };
@@ -186,7 +186,7 @@ export default function LGBTQInclusionRecordPage() {
           return (
             <div key={r.id} className="rounded-xl border bg-white overflow-hidden">
               <button
-                className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                 onClick={() => setExpandedId(isExpanded ? null : r.id)}
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0">

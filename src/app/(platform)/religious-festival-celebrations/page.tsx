@@ -39,7 +39,7 @@ const faithColour: Record<ReligiousFestivalFaith, string> = {
   judaism: "bg-blue-100 text-blue-800 border-blue-200",
   buddhism: "bg-yellow-100 text-yellow-800 border-yellow-200",
   rastafari: "bg-green-100 text-green-800 border-green-200",
-  secular: "bg-slate-100 text-slate-800 border-slate-200",
+  secular: "bg-slate-100 text-[var(--cs-navy)] border-[var(--cs-border)]",
   other_multi_faith: "bg-purple-100 text-purple-800 border-purple-200",
 };
 
@@ -122,45 +122,45 @@ export default function ReligiousFestivalCelebrationsPage() {
       }
     >
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-slate-600 text-sm mb-1">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-[var(--cs-text-secondary)] text-sm mb-1">
             <Calendar className="h-4 w-4" />
             <span>Upcoming festivals</span>
           </div>
-          <div className="text-2xl font-semibold text-slate-900">{stats.upcoming}</div>
+          <div className="text-2xl font-semibold text-[var(--cs-navy)]">{stats.upcoming}</div>
         </div>
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-slate-600 text-sm mb-1">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-[var(--cs-text-secondary)] text-sm mb-1">
             <Heart className="h-4 w-4" />
             <span>Child-led celebrations</span>
           </div>
-          <div className="text-2xl font-semibold text-slate-900">{stats.childLed}</div>
+          <div className="text-2xl font-semibold text-[var(--cs-navy)]">{stats.childLed}</div>
         </div>
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-slate-600 text-sm mb-1">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-[var(--cs-text-secondary)] text-sm mb-1">
             <Sparkles className="h-4 w-4" />
             <span>Distinct faiths</span>
           </div>
-          <div className="text-2xl font-semibold text-slate-900">{stats.distinctFaiths}</div>
+          <div className="text-2xl font-semibold text-[var(--cs-navy)]">{stats.distinctFaiths}</div>
         </div>
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-slate-600 text-sm mb-1">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-[var(--cs-text-secondary)] text-sm mb-1">
             <Users className="h-4 w-4" />
             <span>Total spent</span>
           </div>
-          <div className="text-2xl font-semibold text-slate-900">£{stats.totalSpent.toFixed(2)}</div>
+          <div className="text-2xl font-semibold text-[var(--cs-navy)]">£{stats.totalSpent.toFixed(2)}</div>
         </div>
       </div>
 
       <div className="flex flex-col sm:flex-row gap-3 mb-4">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--cs-text-muted)]" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search festival or child..."
-            className="w-full pl-9 pr-3 py-2 text-sm border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full pl-9 pr-3 py-2 text-sm border border-[var(--cs-border)] rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
         <Select value={faithFilter} onValueChange={setFaithFilter}>
@@ -192,14 +192,14 @@ export default function ReligiousFestivalCelebrationsPage() {
           const isOpen = expandedId === r.id;
           const upcoming = r.date > d(0);
           return (
-            <div key={r.id} className="rounded-lg border border-slate-200 bg-white overflow-hidden">
+            <div key={r.id} className="rounded-lg border border-[var(--cs-border)] bg-white overflow-hidden">
               <button
                 onClick={() => setExpandedId(isOpen ? null : r.id)}
-                className="w-full p-4 flex items-start justify-between gap-3 hover:bg-slate-50 text-left"
+                className="w-full p-4 flex items-start justify-between gap-3 hover:bg-[var(--cs-surface)] text-left"
               >
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap mb-1">
-                    <span className="font-semibold text-slate-900">{r.festival}</span>
+                    <span className="font-semibold text-[var(--cs-navy)]">{r.festival}</span>
                     <span className={cn("text-xs px-2 py-0.5 rounded-full border", faithColour[r.faith])}>
                       {RELIGIOUS_FESTIVAL_FAITH_LABEL[r.faith]}
                     </span>
@@ -214,61 +214,61 @@ export default function ReligiousFestivalCelebrationsPage() {
                       </span>
                     ) : null}
                   </div>
-                  <div className="text-sm text-slate-600">
+                  <div className="text-sm text-[var(--cs-text-secondary)]">
                     {r.date} · {r.children_involved.map(getYPName).join(", ")} · £{r.spent.toFixed(2)} of £{r.budget.toFixed(2)}
                   </div>
                 </div>
-                {isOpen ? <ChevronUp className="h-5 w-5 text-slate-400" /> : <ChevronDown className="h-5 w-5 text-slate-400" />}
+                {isOpen ? <ChevronUp className="h-5 w-5 text-[var(--cs-text-muted)]" /> : <ChevronDown className="h-5 w-5 text-[var(--cs-text-muted)]" />}
               </button>
               {isOpen ? (
-                <div className="px-4 pb-4 border-t border-slate-100 bg-slate-50/50">
+                <div className="px-4 pb-4 border-t border-[var(--cs-border-subtle)] bg-slate-50/50">
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 pt-4">
-                    <div className="rounded-md border border-slate-200 bg-white p-3">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Child Voice</div>
-                      <p className="text-sm text-slate-700 italic">&ldquo;{r.child_voice}&rdquo;</p>
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Child Voice</div>
+                      <p className="text-sm text-[var(--cs-text-secondary)] italic">&ldquo;{r.child_voice}&rdquo;</p>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Staff Observation</div>
-                      <p className="text-sm text-slate-700">{r.staff_observation}</p>
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Staff Observation</div>
+                      <p className="text-sm text-[var(--cs-text-secondary)]">{r.staff_observation}</p>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Preparation</div>
-                      <ul className="text-sm text-slate-700 space-y-1">
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Preparation</div>
+                      <ul className="text-sm text-[var(--cs-text-secondary)] space-y-1">
                         {r.preparation.map((t, i) => (
-                          <li key={i} className="flex gap-2"><span className="text-slate-400">·</span><span>{t}</span></li>
+                          <li key={i} className="flex gap-2"><span className="text-[var(--cs-text-muted)]">·</span><span>{t}</span></li>
                         ))}
                       </ul>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Food</div>
-                      <ul className="text-sm text-slate-700 space-y-1">
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Food</div>
+                      <ul className="text-sm text-[var(--cs-text-secondary)] space-y-1">
                         {r.food.map((t, i) => (
-                          <li key={i} className="flex gap-2"><span className="text-slate-400">·</span><span>{t}</span></li>
+                          <li key={i} className="flex gap-2"><span className="text-[var(--cs-text-muted)]">·</span><span>{t}</span></li>
                         ))}
                       </ul>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Rituals Observed</div>
-                      <ul className="text-sm text-slate-700 space-y-1">
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Rituals Observed</div>
+                      <ul className="text-sm text-[var(--cs-text-secondary)] space-y-1">
                         {r.rituals_observed.map((t, i) => (
                           <li key={i} className="flex gap-2"><span className="text-emerald-500">·</span><span>{t}</span></li>
                         ))}
                       </ul>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Child-Chosen Aspects</div>
-                      <ul className="text-sm text-slate-700 space-y-1">
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Child-Chosen Aspects</div>
+                      <ul className="text-sm text-[var(--cs-text-secondary)] space-y-1">
                         {r.child_chosen_aspects.map((t, i) => (
                           <li key={i} className="flex gap-2"><span className="text-pink-500">·</span><span>{t}</span></li>
                         ))}
                       </ul>
                     </div>
                     {r.guests_invited.length ? (
-                      <div className="rounded-md border border-slate-200 bg-white p-3">
-                        <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Guests</div>
-                        <ul className="text-sm text-slate-700 space-y-1">
+                      <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                        <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Guests</div>
+                        <ul className="text-sm text-[var(--cs-text-secondary)] space-y-1">
                           {r.guests_invited.map((t, i) => (
-                            <li key={i} className="flex gap-2"><span className="text-slate-400">·</span><span>{t}</span></li>
+                            <li key={i} className="flex gap-2"><span className="text-[var(--cs-text-muted)]">·</span><span>{t}</span></li>
                           ))}
                         </ul>
                       </div>
@@ -283,10 +283,10 @@ export default function ReligiousFestivalCelebrationsPage() {
                         </ul>
                       </div>
                     ) : null}
-                    <div className="rounded-md border border-slate-200 bg-white p-3 lg:col-span-2">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Reflections</div>
-                      <p className="text-sm text-slate-700">{r.reflections}</p>
-                      <div className="text-xs text-slate-500 mt-2">Recorded by {getStaffName(r.recorded_by)}</div>
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3 lg:col-span-2">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Reflections</div>
+                      <p className="text-sm text-[var(--cs-text-secondary)]">{r.reflections}</p>
+                      <div className="text-xs text-[var(--cs-text-muted)] mt-2">Recorded by {getStaffName(r.recorded_by)}</div>
                     </div>
                   </div>
                   {r.children_involved.length > 0 && (

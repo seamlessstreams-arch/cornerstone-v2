@@ -31,7 +31,7 @@ import { toast } from "sonner";
 
 const IMPACT_CLR: Record<DebriefImpactLevel, string> = { low: "bg-green-100 text-green-800", medium: "bg-amber-100 text-amber-800", high: "bg-red-100 text-red-800", critical: "bg-red-200 text-red-900" };
 const IMPACT_BORDER: Record<DebriefImpactLevel, string> = { low: "border-l-green-400", medium: "border-l-amber-400", high: "border-l-red-500", critical: "border-l-red-700" };
-const STATUS_CLR: Record<IncidentDebriefStatus, string> = { scheduled: "bg-blue-100 text-blue-800", completed: "bg-green-100 text-green-800", deferred: "bg-amber-100 text-amber-800", not_required: "bg-slate-100 text-slate-700" };
+const STATUS_CLR: Record<IncidentDebriefStatus, string> = { scheduled: "bg-blue-100 text-blue-800", completed: "bg-green-100 text-green-800", deferred: "bg-amber-100 text-amber-800", not_required: "bg-slate-100 text-[var(--cs-text-secondary)]" };
 
 /* ── page ──────────────────────────────────────────────────────────────────── */
 

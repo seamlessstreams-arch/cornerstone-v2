@@ -528,7 +528,7 @@ export default function UtilityBillsTrackerPage() {
           const isExpanded = expandedId === b.id;
           const Icon = utilityIcon[b.utilityType] ?? Receipt;
           const TrendIcon = b.trend === "Up" ? TrendingUp : b.trend === "Down" ? TrendingDown : Minus;
-          const trendColour = b.trend === "Up" ? "text-amber-600" : b.trend === "Down" ? "text-green-600" : "text-slate-500";
+          const trendColour = b.trend === "Up" ? "text-amber-600" : b.trend === "Down" ? "text-green-600" : "text-[var(--cs-text-muted)]";
           const dueSoon = b.paymentStatus !== "Paid" && new Date(b.dueDate) <= in14d;
           const flagged = b.paymentStatus === "Disputed" || b.paymentStatus === "Overdue";
 
@@ -538,7 +538,7 @@ export default function UtilityBillsTrackerPage() {
               !flagged && dueSoon && "border-l-4 border-l-amber-500"
             )}>
               <button
-                className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                 onClick={() => setExpandedId(isExpanded ? null : b.id)}
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -599,7 +599,7 @@ export default function UtilityBillsTrackerPage() {
                         {b.switchAvailable ? (
                           <span className="text-green-700 inline-flex items-center gap-1"><RefreshCw className="h-3 w-3" />Yes</span>
                         ) : (
-                          <span className="text-slate-500">No</span>
+                          <span className="text-[var(--cs-text-muted)]">No</span>
                         )}
                       </p>
                     </div>
@@ -629,7 +629,7 @@ export default function UtilityBillsTrackerPage() {
                     b.trend === "Down" ? "bg-green-50" : b.trend === "Up" ? "bg-amber-50" : "bg-slate-50"
                   )}>
                     <p className={cn("text-xs font-semibold uppercase tracking-wide mb-1 flex items-center gap-1",
-                      b.trend === "Down" ? "text-green-800" : b.trend === "Up" ? "text-amber-800" : "text-slate-700"
+                      b.trend === "Down" ? "text-green-800" : b.trend === "Up" ? "text-amber-800" : "text-[var(--cs-text-secondary)]"
                     )}>
                       <TrendIcon className="h-3 w-3" />
                       Year-on-Year — {b.comparedToLastYear} ({b.trend})

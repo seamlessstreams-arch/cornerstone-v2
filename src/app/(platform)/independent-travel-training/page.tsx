@@ -219,12 +219,12 @@ export default function IndependentTravelTrainingPage() {
       {/* ── filters ───────────────────────────────────────────────────────── */}
       <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center">
         <div className="relative flex-1">
-          <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+          <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--cs-text-muted)]" />
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search by child, route, mode, or note…"
-            className="w-full rounded-md border border-slate-300 bg-white py-2 pl-9 pr-3 text-sm placeholder:text-slate-400 focus:border-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-200"
+            className="w-full rounded-md border border-slate-300 bg-white py-2 pl-9 pr-3 text-sm placeholder:text-[var(--cs-text-muted)] focus:border-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-200"
           />
         </div>
 
@@ -245,7 +245,7 @@ export default function IndependentTravelTrainingPage() {
           onValueChange={(v) => setSortBy(v as "stage" | "name" | "review")}
         >
           <SelectTrigger className="w-full sm:w-44">
-            <ArrowUpDown className="mr-1 h-4 w-4 text-slate-500" />
+            <ArrowUpDown className="mr-1 h-4 w-4 text-[var(--cs-text-muted)]" />
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -275,10 +275,10 @@ export default function IndependentTravelTrainingPage() {
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2">
-                      <span className="truncate font-semibold text-slate-900">
+                      <span className="truncate font-semibold text-[var(--cs-navy)]">
                         {getYPName(r.child_id)}
                       </span>
-                      <span className="text-xs text-slate-500">
+                      <span className="text-xs text-[var(--cs-text-muted)]">
                         · key worker {getStaffName(r.key_worker)}
                       </span>
                     </div>
@@ -299,7 +299,7 @@ export default function IndependentTravelTrainingPage() {
                       >
                         Confidence: {TRAVEL_CONFIDENCE_LABEL[r.child_confidence]}
                       </span>
-                      <span className="inline-flex items-center rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 text-xs text-slate-700">
+                      <span className="inline-flex items-center rounded-full border border-[var(--cs-border)] bg-slate-50 px-2 py-0.5 text-xs text-[var(--cs-text-secondary)]">
                         £{r.monthly_travel_budget}/month
                       </span>
                       {r.phone_and_charger_check && (
@@ -310,7 +310,7 @@ export default function IndependentTravelTrainingPage() {
                     </div>
                   </div>
                 </div>
-                <div className="flex shrink-0 items-center gap-3 text-xs text-slate-500">
+                <div className="flex shrink-0 items-center gap-3 text-xs text-[var(--cs-text-muted)]">
                   <span>Review {r.review_date}</span>
                   {open ? (
                     <ChevronUp className="h-4 w-4" />
@@ -327,17 +327,17 @@ export default function IndependentTravelTrainingPage() {
                     <div className="text-xs font-semibold uppercase tracking-wide text-sky-700">
                       Child voice
                     </div>
-                    <p className="mt-1 text-sm italic text-slate-800">
+                    <p className="mt-1 text-sm italic text-[var(--cs-navy)]">
                       &ldquo;{r.child_voice}&rdquo;
                     </p>
                   </div>
 
                   {/* Staff observation */}
-                  <div className="rounded-md border border-slate-200 bg-white p-3">
-                    <div className="text-xs font-semibold uppercase tracking-wide text-slate-600">
+                  <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                    <div className="text-xs font-semibold uppercase tracking-wide text-[var(--cs-text-secondary)]">
                       Staff observation
                     </div>
-                    <p className="mt-1 text-sm text-slate-800">
+                    <p className="mt-1 text-sm text-[var(--cs-navy)]">
                       {r.staff_observation}
                     </p>
                   </div>
@@ -349,20 +349,20 @@ export default function IndependentTravelTrainingPage() {
                         Routes mastered ({r.routes_mastered.length})
                       </div>
                       {r.routes_mastered.length === 0 ? (
-                        <p className="mt-1 text-sm text-slate-600">
+                        <p className="mt-1 text-sm text-[var(--cs-text-secondary)]">
                           No routes mastered yet — early in pathway.
                         </p>
                       ) : (
-                        <ul className="mt-1 space-y-2 text-sm text-slate-800">
+                        <ul className="mt-1 space-y-2 text-sm text-[var(--cs-navy)]">
                           {r.routes_mastered.map((x, i) => (
                             <li
                               key={i}
                               className="rounded border border-emerald-200/70 bg-white p-2"
                             >
-                              <div className="font-medium text-slate-900">
+                              <div className="font-medium text-[var(--cs-navy)]">
                                 {x.from} → {x.to}
                               </div>
-                              <div className="text-xs text-slate-600">
+                              <div className="text-xs text-[var(--cs-text-secondary)]">
                                 {x.mode} · achieved {x.achieved_date}
                               </div>
                             </li>
@@ -377,20 +377,20 @@ export default function IndependentTravelTrainingPage() {
                         Routes in learning ({r.routes_learning.length})
                       </div>
                       {r.routes_learning.length === 0 ? (
-                        <p className="mt-1 text-sm text-slate-600">
+                        <p className="mt-1 text-sm text-[var(--cs-text-secondary)]">
                           No active learning routes.
                         </p>
                       ) : (
-                        <ul className="mt-1 space-y-2 text-sm text-slate-800">
+                        <ul className="mt-1 space-y-2 text-sm text-[var(--cs-navy)]">
                           {r.routes_learning.map((x, i) => (
                             <li
                               key={i}
                               className="rounded border border-amber-200/70 bg-white p-2"
                             >
-                              <div className="font-medium text-slate-900">
+                              <div className="font-medium text-[var(--cs-navy)]">
                                 {x.from} → {x.to}
                               </div>
-                              <div className="text-xs text-slate-600">
+                              <div className="text-xs text-[var(--cs-text-secondary)]">
                                 {x.mode}
                               </div>
                               <div className="mt-1 text-xs text-amber-900">
@@ -407,7 +407,7 @@ export default function IndependentTravelTrainingPage() {
                       <div className="text-xs font-semibold uppercase tracking-wide text-blue-800">
                         What-if-lost plan
                       </div>
-                      <p className="mt-1 text-sm text-slate-800">
+                      <p className="mt-1 text-sm text-[var(--cs-navy)]">
                         {r.what_if_lost_plan}
                       </p>
                     </div>
@@ -417,7 +417,7 @@ export default function IndependentTravelTrainingPage() {
                       <div className="text-xs font-semibold uppercase tracking-wide text-sky-700">
                         Check-in protocol
                       </div>
-                      <p className="mt-1 text-sm text-slate-800">
+                      <p className="mt-1 text-sm text-[var(--cs-navy)]">
                         {r.check_in_protocol}
                       </p>
                     </div>
@@ -428,7 +428,7 @@ export default function IndependentTravelTrainingPage() {
                         Risk factors
                       </div>
                       {r.risk_factors.length === 0 ? (
-                        <p className="mt-1 text-sm text-slate-600">
+                        <p className="mt-1 text-sm text-[var(--cs-text-secondary)]">
                           None recorded.
                         </p>
                       ) : (
@@ -471,7 +471,7 @@ export default function IndependentTravelTrainingPage() {
                   </div>
 
                   {/* Footer meta */}
-                  <div className="flex flex-wrap items-center gap-3 text-xs text-slate-500">
+                  <div className="flex flex-wrap items-center gap-3 text-xs text-[var(--cs-text-muted)]">
                     <span>Last updated {r.last_updated}</span>
                     <span>·</span>
                     <span>Next review {r.review_date}</span>
@@ -487,7 +487,7 @@ export default function IndependentTravelTrainingPage() {
         })}
 
         {filtered.length === 0 && (
-          <div className="rounded-lg border border-dashed border-slate-300 bg-white p-8 text-center text-sm text-slate-500">
+          <div className="rounded-lg border border-dashed border-slate-300 bg-white p-8 text-center text-sm text-[var(--cs-text-muted)]">
             No travel training records match the current filters.
           </div>
         )}

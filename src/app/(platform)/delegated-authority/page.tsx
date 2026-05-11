@@ -24,7 +24,7 @@ import type { DelegatedAuthority, DelegatedAuthorityItem, DelegatedAuthStatus, D
 /* ── config ──────────────────────────────────────────────────────────── */
 const STATUS_COLORS: Record<DelegatedAuthStatus, string> = {
   granted: "bg-green-100 text-green-800", not_granted: "bg-red-100 text-red-800",
-  partial: "bg-yellow-100 text-yellow-800", pending: "bg-slate-100 text-slate-800",
+  partial: "bg-yellow-100 text-yellow-800", pending: "bg-slate-100 text-[var(--cs-navy)]",
 };
 const STATUS_LABELS: Record<DelegatedAuthStatus, string> = {
   granted: "Granted", not_granted: "Not Granted",
@@ -92,7 +92,7 @@ export default function DelegatedAuthorityPage() {
       case "granted": return <CheckCircle2 className="h-4 w-4 text-green-600" />;
       case "not_granted": return <XCircle className="h-4 w-4 text-red-600" />;
       case "partial": return <AlertTriangle className="h-4 w-4 text-yellow-600" />;
-      case "pending": return <HelpCircle className="h-4 w-4 text-slate-400" />;
+      case "pending": return <HelpCircle className="h-4 w-4 text-[var(--cs-text-muted)]" />;
     }
   };
 
@@ -115,7 +115,7 @@ export default function DelegatedAuthorityPage() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {[
             { label: "Young People", value: records.length, icon: KeyRound, colour: "text-blue-600" },
-            { label: "Pending Decisions", value: totalPending, icon: Clock, colour: totalPending > 0 ? "text-orange-600" : "text-slate-400" },
+            { label: "Pending Decisions", value: totalPending, icon: Clock, colour: totalPending > 0 ? "text-orange-600" : "text-[var(--cs-text-muted)]" },
             { label: "Reviews Due", value: reviewsDue, icon: AlertTriangle, colour: reviewsDue > 0 ? "text-red-600" : "text-green-600" },
             { label: "Total Delegations", value: records.reduce((s, r) => s + r.items.length, 0), icon: CheckCircle2, colour: "text-green-600" },
           ].map((s) => (
@@ -151,7 +151,7 @@ export default function DelegatedAuthorityPage() {
                   <p className="text-[10px] text-muted-foreground">Not Granted</p>
                 </div>
                 <div>
-                  <p className="text-lg font-bold text-slate-400">{yp.pending}</p>
+                  <p className="text-lg font-bold text-[var(--cs-text-muted)]">{yp.pending}</p>
                   <p className="text-[10px] text-muted-foreground">Pending</p>
                 </div>
               </div>
@@ -168,7 +168,7 @@ export default function DelegatedAuthorityPage() {
             return (
               <div key={record.id} className="rounded-xl border bg-white overflow-hidden">
                 <button
-                  className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                  className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                   onClick={() => setExpanded(isExpanded ? null : record.id)}
                 >
                   <div className="flex items-center gap-3 flex-1 min-w-0">

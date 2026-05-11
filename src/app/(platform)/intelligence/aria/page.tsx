@@ -118,9 +118,9 @@ const FEATURES = [
     title: "Audit Trail",
     description: "Evidence trail for all AI-generated content",
     icon: Layers,
-    color: "text-slate-600",
+    color: "text-[var(--cs-text-secondary)]",
     bg: "bg-slate-50",
-    border: "border-slate-100",
+    border: "border-[var(--cs-border-subtle)]",
   },
 ];
 
@@ -150,7 +150,7 @@ function StatCard({
       <div className={cn("text-[11px] font-semibold uppercase tracking-wider", c.text)}>{title}</div>
       <div className={cn("text-3xl font-bold tabular-nums", c.value)}>{value}</div>
       <div className="flex items-center justify-between">
-        <span className="text-xs text-slate-500">{label}</span>
+        <span className="text-xs text-[var(--cs-text-muted)]">{label}</span>
         <Link href={href} className={cn("text-xs font-medium flex items-center gap-0.5", c.btn)}>
           View <ChevronRight className="h-3.5 w-3.5" />
         </Link>
@@ -219,10 +219,10 @@ export default function AriaHubPage() {
             </div>
             <div>
               <h2 className="text-lg font-bold">ARIA Intelligence</h2>
-              <p className="text-sm text-slate-300">Adaptive Reflective Intelligence Assistant</p>
+              <p className="text-sm text-[var(--cs-text-gentle)]">Adaptive Reflective Intelligence Assistant</p>
             </div>
           </div>
-          <p className="text-sm text-slate-300 leading-relaxed max-w-2xl">
+          <p className="text-sm text-[var(--cs-text-gentle)] leading-relaxed max-w-2xl">
             ARIA supports your practice with AI-powered analysis, structured session planning, safeguarding detection,
             and evidence generation — all designed to save time and improve outcomes for the young people in your care.
           </p>
@@ -265,7 +265,7 @@ export default function AriaHubPage() {
 
         {/* Feature grid */}
         <div>
-          <h3 className="text-sm font-semibold text-slate-700 mb-4">All ARIA Features</h3>
+          <h3 className="text-sm font-semibold text-[var(--cs-text-secondary)] mb-4">All ARIA Features</h3>
           <div className="grid gap-4 sm:grid-cols-2">
             {FEATURES.map((feature) => {
               const Icon = feature.icon;
@@ -279,10 +279,10 @@ export default function AriaHubPage() {
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center justify-between gap-2">
-                            <span className="text-sm font-semibold text-slate-900">{feature.title}</span>
-                            <ChevronRight className="h-4 w-4 text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
+                            <span className="text-sm font-semibold text-[var(--cs-navy)]">{feature.title}</span>
+                            <ChevronRight className="h-4 w-4 text-[var(--cs-text-gentle)] opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
                           </div>
-                          <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">{feature.description}</p>
+                          <p className="text-xs text-[var(--cs-text-muted)] mt-0.5 leading-relaxed">{feature.description}</p>
                         </div>
                       </div>
                     </CardContent>
@@ -301,11 +301,11 @@ export default function AriaHubPage() {
             { label: "Child Resources", value: (resourceData?.data ?? []).length, icon: FileText },
             { label: "Audit Entries", value: (auditData?.data ?? []).length, icon: Layers },
           ].map(({ label, value, icon: Icon }) => (
-            <div key={label} className="rounded-xl border border-slate-100 bg-white p-3 flex items-center gap-3">
-              <Icon className="h-4 w-4 text-slate-400 shrink-0" />
+            <div key={label} className="rounded-xl border border-[var(--cs-border-subtle)] bg-white p-3 flex items-center gap-3">
+              <Icon className="h-4 w-4 text-[var(--cs-text-muted)] shrink-0" />
               <div>
-                <div className="text-lg font-bold text-slate-900">{value}</div>
-                <div className="text-[10px] text-slate-500">{label}</div>
+                <div className="text-lg font-bold text-[var(--cs-navy)]">{value}</div>
+                <div className="text-[10px] text-[var(--cs-text-muted)]">{label}</div>
               </div>
             </div>
           ))}

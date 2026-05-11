@@ -44,7 +44,7 @@ const DOMAIN_CONFIG: Record<CarePlanDomain, {
   identity:              { label: "Identity & Culture",    icon: Fingerprint,   colour: "text-amber-600",   bg: "bg-amber-50",   border: "border-amber-200",  ring: "ring-amber-200"  },
   family_social:         { label: "Family & Social",       icon: Users,         colour: "text-emerald-600", bg: "bg-emerald-50", border: "border-emerald-200",ring: "ring-emerald-200"},
   independence:          { label: "Independence",          icon: Zap,           colour: "text-sky-600",     bg: "bg-sky-50",     border: "border-sky-200",    ring: "ring-sky-200"    },
-  placement_stability:   { label: "Placement Stability",   icon: Home,          colour: "text-slate-600",   bg: "bg-slate-100",  border: "border-slate-300",  ring: "ring-slate-300"  },
+  placement_stability:   { label: "Placement Stability",   icon: Home,          colour: "text-[var(--cs-text-secondary)]",   bg: "bg-slate-100",  border: "border-slate-300",  ring: "ring-slate-300"  },
   safety:                { label: "Safety",                icon: Shield,        colour: "text-red-600",     bg: "bg-red-50",     border: "border-red-200",    ring: "ring-red-200"    },
 };
 
@@ -55,16 +55,16 @@ const GOAL_STATUS_CONFIG: Record<CarePlanGoalStatus, {
   colour: string;
   icon: React.ElementType;
 }> = {
-  not_started:      { label: "Not Started",      colour: "text-slate-600 bg-slate-100 border-slate-200",                icon: Clock         },
+  not_started:      { label: "Not Started",      colour: "text-[var(--cs-text-secondary)] bg-slate-100 border-[var(--cs-border)]",                icon: Clock         },
   in_progress:      { label: "In Progress",      colour: "text-blue-700 bg-blue-50 border-blue-200",                   icon: Clock         },
   on_track:         { label: "On Track",         colour: "text-emerald-700 bg-emerald-50 border-emerald-200",          icon: CheckCircle2  },
   attention_needed: { label: "Attention Needed", colour: "text-red-700 bg-red-50 border-red-200",                      icon: AlertTriangle },
   achieved:         { label: "Achieved",         colour: "text-emerald-800 bg-emerald-100 border-emerald-300",         icon: CheckCircle2  },
-  closed:           { label: "Closed",           colour: "text-slate-500 bg-slate-50 border-slate-200",                icon: CheckCircle2  },
+  closed:           { label: "Closed",           colour: "text-[var(--cs-text-muted)] bg-slate-50 border-[var(--cs-border)]",                icon: CheckCircle2  },
 };
 
 const LOG_TYPE_COLOURS: Record<string, string> = {
-  general:   "bg-slate-100 text-slate-600",
+  general:   "bg-slate-100 text-[var(--cs-text-secondary)]",
   behaviour: "bg-orange-100 text-orange-700",
   health:    "bg-red-100 text-red-700",
   education: "bg-blue-100 text-blue-700",
@@ -85,7 +85,7 @@ function lacCountdown(dateStr: string | null): { days: number; label: string; co
   if (days < 0)  return { days, label: `${Math.abs(days)}d overdue`, colour: "text-red-700 bg-red-50 border-red-200" };
   if (days === 0) return { days, label: "Today",                      colour: "text-red-700 bg-red-50 border-red-200" };
   if (days <= 14) return { days, label: `in ${days}d`,               colour: "text-amber-700 bg-amber-50 border-amber-200" };
-  return { days, label: `in ${days}d`, colour: "text-slate-600 bg-slate-50 border-slate-200" };
+  return { days, label: `in ${days}d`, colour: "text-[var(--cs-text-secondary)] bg-slate-50 border-[var(--cs-border)]" };
 }
 
 function domainRAG(goals: CarePlanGoal[], domain: CarePlanDomain): "green" | "amber" | "red" | "none" {
@@ -120,15 +120,15 @@ function DomainCard({
         "rounded-2xl border p-3 text-left transition-all hover:shadow-sm w-full",
         isActive
           ? `${cfg.bg} ${cfg.border} shadow-sm ring-1 ${cfg.ring}`
-          : "bg-white border-slate-200 hover:border-slate-300",
+          : "bg-white border-[var(--cs-border)] hover:border-slate-300",
       )}
     >
       <div className="flex items-center gap-2 mb-1.5">
-        <Icon className={cn("h-3.5 w-3.5 shrink-0", isActive ? cfg.colour : "text-slate-400")} />
-        <span className={cn("text-[11px] font-semibold leading-tight flex-1", isActive ? cfg.colour : "text-slate-700")}>{cfg.label}</span>
+        <Icon className={cn("h-3.5 w-3.5 shrink-0", isActive ? cfg.colour : "text-[var(--cs-text-muted)]")} />
+        <span className={cn("text-[11px] font-semibold leading-tight flex-1", isActive ? cfg.colour : "text-[var(--cs-text-secondary)]")}>{cfg.label}</span>
         <div className={cn("h-2 w-2 rounded-full shrink-0", ragDot)} />
       </div>
-      <div className="text-[10px] text-slate-500">
+      <div className="text-[10px] text-[var(--cs-text-muted)]">
         {dGoals.length === 0
           ? "No goals set"
           : `${dGoals.length} goal${dGoals.length !== 1 ? "s" : ""}${attentionCount > 0 ? ` · ${attentionCount} ⚠` : ""}`}
@@ -157,22 +157,22 @@ function GoalCard({
       "rounded-2xl border bg-white overflow-hidden transition-shadow hover:shadow-sm",
       goal.status === "attention_needed" ? "border-red-200"
         : goal.status === "on_track" || goal.status === "achieved" ? "border-emerald-200"
-        : "border-slate-200",
+        : "border-[var(--cs-border)]",
     )}>
       {/* Header */}
       <div
-        className="flex items-start gap-3 p-4 cursor-pointer hover:bg-slate-50/50 transition-colors"
+        className="flex items-start gap-3 p-4 cursor-pointer hover:bg-[var(--cs-surface)]/50 transition-colors"
         onClick={() => setOpen(!open)}
       >
         <StatusIcon className={cn(
           "h-4 w-4 shrink-0 mt-0.5",
           goal.status === "attention_needed" ? "text-red-500"
             : goal.status === "on_track" || goal.status === "achieved" ? "text-emerald-500"
-            : "text-slate-400",
+            : "text-[var(--cs-text-muted)]",
         )} />
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap mb-1">
-            <span className="text-sm font-semibold text-slate-900">{goal.title}</span>
+            <span className="text-sm font-semibold text-[var(--cs-navy)]">{goal.title}</span>
             <Badge variant="outline" className={cn("text-[10px] px-1.5 py-0 border", domainCfg.bg, domainCfg.border, domainCfg.colour)}>
               {domainCfg.label}
             </Badge>
@@ -181,26 +181,26 @@ function GoalCard({
             </Badge>
           </div>
           {!open && goal.progress_note && (
-            <p className="text-[11px] text-slate-500 line-clamp-1 mt-0.5">{goal.progress_note}</p>
+            <p className="text-[11px] text-[var(--cs-text-muted)] line-clamp-1 mt-0.5">{goal.progress_note}</p>
           )}
           {!open && goal.target_date && (
-            <p className="text-[10px] text-slate-400 mt-0.5 flex items-center gap-1">
+            <p className="text-[10px] text-[var(--cs-text-muted)] mt-0.5 flex items-center gap-1">
               <Calendar className="h-2.5 w-2.5" />Target: {formatDate(goal.target_date)}
             </p>
           )}
         </div>
         {open
-          ? <ChevronUp className="h-4 w-4 text-slate-400 shrink-0 mt-0.5" />
-          : <ChevronDown className="h-4 w-4 text-slate-400 shrink-0 mt-0.5" />
+          ? <ChevronUp className="h-4 w-4 text-[var(--cs-text-muted)] shrink-0 mt-0.5" />
+          : <ChevronDown className="h-4 w-4 text-[var(--cs-text-muted)] shrink-0 mt-0.5" />
         }
       </div>
 
       {/* Expanded detail */}
       {open && (
-        <div className="border-t border-slate-100 px-4 pb-4 pt-3 space-y-3">
+        <div className="border-t border-[var(--cs-border-subtle)] px-4 pb-4 pt-3 space-y-3">
           <div>
-            <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-wide mb-1">Description</p>
-            <p className="text-sm text-slate-700 leading-relaxed">{goal.description}</p>
+            <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-1">Description</p>
+            <p className="text-sm text-[var(--cs-text-secondary)] leading-relaxed">{goal.description}</p>
           </div>
 
           <div className="rounded-xl border border-indigo-100 bg-indigo-50/60 p-3">
@@ -210,11 +210,11 @@ function GoalCard({
 
           {goal.actions.length > 0 && (
             <div>
-              <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-wide mb-1.5">Actions</p>
+              <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-1.5">Actions</p>
               <ul className="space-y-1">
                 {goal.actions.map((a, i) => (
-                  <li key={i} className="flex items-start gap-2 text-xs text-slate-600">
-                    <ArrowRight className="h-3 w-3 text-slate-300 mt-0.5 shrink-0" />
+                  <li key={i} className="flex items-start gap-2 text-xs text-[var(--cs-text-secondary)]">
+                    <ArrowRight className="h-3 w-3 text-[var(--cs-text-gentle)] mt-0.5 shrink-0" />
                     {a}
                   </li>
                 ))}
@@ -224,8 +224,8 @@ function GoalCard({
 
           {goal.progress_note && (
             <div>
-              <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-wide mb-1">Latest Progress</p>
-              <p className="text-sm text-slate-700 leading-relaxed">{goal.progress_note}</p>
+              <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-1">Latest Progress</p>
+              <p className="text-sm text-[var(--cs-text-secondary)] leading-relaxed">{goal.progress_note}</p>
             </div>
           )}
 
@@ -236,7 +236,7 @@ function GoalCard({
             </div>
           )}
 
-          <div className="flex flex-wrap items-center gap-4 pt-1 text-[10px] text-slate-400 border-t border-slate-50">
+          <div className="flex flex-wrap items-center gap-4 pt-1 text-[10px] text-[var(--cs-text-muted)] border-t border-slate-50">
             {goal.target_date && (
               <span className="flex items-center gap-1">
                 <Calendar className="h-3 w-3" />Target: {formatDate(goal.target_date)}
@@ -256,7 +256,7 @@ function GoalCard({
           <div className="flex items-start gap-2 pt-1">
             {showStatusPicker ? (
               <div className="flex flex-wrap gap-1.5 items-center">
-                <span className="text-[10px] text-slate-500 shrink-0">Change to:</span>
+                <span className="text-[10px] text-[var(--cs-text-muted)] shrink-0">Change to:</span>
                 {(["not_started", "in_progress", "on_track", "attention_needed", "achieved", "closed"] as CarePlanGoalStatus[])
                   .filter((s) => s !== goal.status)
                   .map((s) => {
@@ -277,7 +277,7 @@ function GoalCard({
                   })}
                 <button
                   onClick={() => setShowPicker(false)}
-                  className="rounded-full border border-slate-200 px-2 py-1 text-slate-500 hover:bg-slate-50"
+                  className="rounded-full border border-[var(--cs-border)] px-2 py-1 text-[var(--cs-text-muted)] hover:bg-[var(--cs-surface)]"
                 >
                   <X className="h-2.5 w-2.5" />
                 </button>
@@ -396,7 +396,7 @@ export default function CarePlanDetailPage({ params }: { params: Promise<{ id: s
     return (
       <PageShell title="Care Plan" subtitle="Loading…">
         <div className="flex items-center justify-center py-20">
-          <Loader2 className="h-6 w-6 animate-spin text-slate-400" />
+          <Loader2 className="h-6 w-6 animate-spin text-[var(--cs-text-muted)]" />
         </div>
       </PageShell>
     );
@@ -405,9 +405,9 @@ export default function CarePlanDetailPage({ params }: { params: Promise<{ id: s
   if (!plan) {
     return (
       <PageShell title="Care Plan" subtitle="Record not found">
-        <div className="text-center py-16 text-slate-400">
-          <BookOpen className="h-10 w-10 mx-auto mb-3 text-slate-300" />
-          <p className="text-sm font-medium text-slate-600">Care plan not found</p>
+        <div className="text-center py-16 text-[var(--cs-text-muted)]">
+          <BookOpen className="h-10 w-10 mx-auto mb-3 text-[var(--cs-text-gentle)]" />
+          <p className="text-sm font-medium text-[var(--cs-text-secondary)]">Care plan not found</p>
           <Link href="/care-plans" className="text-xs text-indigo-600 hover:underline mt-2 inline-block">
             Back to Care Plans
           </Link>
@@ -459,7 +459,7 @@ export default function CarePlanDetailPage({ params }: { params: Promise<{ id: s
                 <Sparkles className="h-4 w-4 text-indigo-600" />
                 <p className="text-sm font-semibold text-indigo-900">ARIA Care Plan Overview</p>
               </div>
-              <button onClick={() => setAriaOverview(null)} className="text-slate-400 hover:text-slate-600">
+              <button onClick={() => setAriaOverview(null)} className="text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)]">
                 <X className="h-4 w-4" />
               </button>
             </div>
@@ -470,47 +470,47 @@ export default function CarePlanDetailPage({ params }: { params: Promise<{ id: s
         {/* ── Hero stats strip ── */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {[
-            { label: "Total Goals",       value: totalGoals,       colour: "text-slate-800",   bg: "border-slate-200 bg-white" },
-            { label: "Attention Needed",  value: attentionCount,   colour: attentionCount > 0 ? "text-red-600" : "text-slate-400",    bg: attentionCount > 0 ? "border-red-200 bg-red-50" : "border-slate-200 bg-white" },
+            { label: "Total Goals",       value: totalGoals,       colour: "text-[var(--cs-navy)]",   bg: "border-[var(--cs-border)] bg-white" },
+            { label: "Attention Needed",  value: attentionCount,   colour: attentionCount > 0 ? "text-red-600" : "text-[var(--cs-text-muted)]",    bg: attentionCount > 0 ? "border-red-200 bg-red-50" : "border-[var(--cs-border)] bg-white" },
             { label: "On Track",          value: onTrackCount,     colour: "text-emerald-600", bg: "border-emerald-200 bg-emerald-50" },
             { label: "Achieved",          value: achievedCount,    colour: "text-emerald-700", bg: "border-emerald-200 bg-white" },
           ].map(({ label, value, colour, bg }) => (
             <div key={label} className={cn("rounded-2xl border p-4 text-center", bg)}>
               <p className={cn("text-2xl font-bold tabular-nums", colour)}>{value}</p>
-              <p className="text-xs text-slate-500 mt-0.5">{label}</p>
+              <p className="text-xs text-[var(--cs-text-muted)] mt-0.5">{label}</p>
             </div>
           ))}
         </div>
 
         {/* ── Plan metadata ── */}
-        <div className="rounded-2xl border border-slate-200 bg-white p-4">
+        <div className="rounded-2xl border border-[var(--cs-border)] bg-white p-4">
           <div className="flex flex-wrap items-start gap-4">
             <div className="flex items-center gap-2">
-              <User className="h-4 w-4 text-slate-400" />
+              <User className="h-4 w-4 text-[var(--cs-text-muted)]" />
               <div>
-                <p className="text-[10px] text-slate-400 uppercase tracking-wide">Key Worker</p>
-                <p className="text-sm font-semibold text-slate-800">{getStaff(plan.keyworker_id)}</p>
+                <p className="text-[10px] text-[var(--cs-text-muted)] uppercase tracking-wide">Key Worker</p>
+                <p className="text-sm font-semibold text-[var(--cs-navy)]">{getStaff(plan.keyworker_id)}</p>
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <User className="h-4 w-4 text-slate-400" />
+              <User className="h-4 w-4 text-[var(--cs-text-muted)]" />
               <div>
-                <p className="text-[10px] text-slate-400 uppercase tracking-wide">Registered Manager</p>
-                <p className="text-sm font-semibold text-slate-800">{getStaff(plan.rm_id)}</p>
+                <p className="text-[10px] text-[var(--cs-text-muted)] uppercase tracking-wide">Registered Manager</p>
+                <p className="text-sm font-semibold text-[var(--cs-navy)]">{getStaff(plan.rm_id)}</p>
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <Calendar className="h-4 w-4 text-slate-400" />
+              <Calendar className="h-4 w-4 text-[var(--cs-text-muted)]" />
               <div>
-                <p className="text-[10px] text-slate-400 uppercase tracking-wide">Placement Start</p>
-                <p className="text-sm font-semibold text-slate-800">{formatDate(plan.placement_start)}</p>
+                <p className="text-[10px] text-[var(--cs-text-muted)] uppercase tracking-wide">Placement Start</p>
+                <p className="text-sm font-semibold text-[var(--cs-navy)]">{formatDate(plan.placement_start)}</p>
               </div>
             </div>
             {lac && (
               <div className="flex items-center gap-2 ml-auto">
-                <Calendar className="h-4 w-4 text-slate-400" />
+                <Calendar className="h-4 w-4 text-[var(--cs-text-muted)]" />
                 <div>
-                  <p className="text-[10px] text-slate-400 uppercase tracking-wide">Next LAC Review</p>
+                  <p className="text-[10px] text-[var(--cs-text-muted)] uppercase tracking-wide">Next LAC Review</p>
                   <Badge variant="outline" className={cn("text-xs border font-semibold mt-0.5", lac.colour)}>
                     {formatDate(plan.next_lac_review!)} · {lac.label}
                   </Badge>
@@ -521,7 +521,7 @@ export default function CarePlanDetailPage({ params }: { params: Promise<{ id: s
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="h-4 w-4 text-emerald-500" />
                 <div>
-                  <p className="text-[10px] text-slate-400 uppercase tracking-wide">RM Sign-off</p>
+                  <p className="text-[10px] text-[var(--cs-text-muted)] uppercase tracking-wide">RM Sign-off</p>
                   <p className="text-sm font-semibold text-emerald-700">{formatDate(plan.rm_sign_off_date)}</p>
                 </div>
               </div>
@@ -530,7 +530,7 @@ export default function CarePlanDetailPage({ params }: { params: Promise<{ id: s
 
           {/* Strengths / concerns */}
           {(plan.strengths_summary || plan.concerns_summary) && (
-            <div className="grid sm:grid-cols-2 gap-3 mt-4 pt-4 border-t border-slate-100">
+            <div className="grid sm:grid-cols-2 gap-3 mt-4 pt-4 border-t border-[var(--cs-border-subtle)]">
               {plan.strengths_summary && (
                 <div className="rounded-xl border border-emerald-100 bg-emerald-50/40 p-3">
                   <p className="text-[10px] font-semibold text-emerald-700 uppercase tracking-wide mb-1">Strengths</p>
@@ -550,7 +550,7 @@ export default function CarePlanDetailPage({ params }: { params: Promise<{ id: s
         {/* ── Domain overview grid ── */}
         <div>
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-widest">8 Care Domains</h2>
+            <h2 className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-widest">8 Care Domains</h2>
             {selectedDomain !== "all" && (
               <button
                 onClick={() => setSelectedDomain("all")}
@@ -576,7 +576,7 @@ export default function CarePlanDetailPage({ params }: { params: Promise<{ id: s
         {/* ── Goals list ── */}
         <div>
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-widest">
+            <h2 className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-widest">
               {selectedDomain === "all"
                 ? `All Goals (${filteredGoals.length})`
                 : `${DOMAIN_CONFIG[selectedDomain].label} Goals (${filteredGoals.length})`}
@@ -587,10 +587,10 @@ export default function CarePlanDetailPage({ params }: { params: Promise<{ id: s
           </div>
 
           {filteredGoals.length === 0 ? (
-            <div className="rounded-2xl border border-dashed border-slate-200 bg-white p-10 text-center">
-              <BookOpen className="h-8 w-8 mx-auto mb-2 text-slate-300" />
-              <p className="text-sm font-medium text-slate-700">No goals in this domain</p>
-              <p className="text-xs text-slate-400 mt-1">Goals for this domain haven't been set yet</p>
+            <div className="rounded-2xl border border-dashed border-[var(--cs-border)] bg-white p-10 text-center">
+              <BookOpen className="h-8 w-8 mx-auto mb-2 text-[var(--cs-text-gentle)]" />
+              <p className="text-sm font-medium text-[var(--cs-text-secondary)]">No goals in this domain</p>
+              <p className="text-xs text-[var(--cs-text-muted)] mt-1">Goals for this domain haven't been set yet</p>
             </div>
           ) : (
             <div className="space-y-3">
@@ -610,14 +610,14 @@ export default function CarePlanDetailPage({ params }: { params: Promise<{ id: s
         <div className="grid gap-4 md:grid-cols-2">
 
           {/* Recent daily log entries */}
-          <div className="rounded-2xl border border-slate-200 bg-white overflow-hidden">
-            <div className="flex items-center gap-2 px-4 py-3 border-b border-slate-100 bg-slate-50">
-              <Activity className="h-4 w-4 text-slate-500" />
-              <p className="text-xs font-semibold text-slate-700 uppercase tracking-wide">Recent Log Entries</p>
-              <span className="ml-auto text-[10px] text-slate-400">Last 30 days</span>
+          <div className="rounded-2xl border border-[var(--cs-border)] bg-white overflow-hidden">
+            <div className="flex items-center gap-2 px-4 py-3 border-b border-[var(--cs-border-subtle)] bg-slate-50">
+              <Activity className="h-4 w-4 text-[var(--cs-text-muted)]" />
+              <p className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Recent Log Entries</p>
+              <span className="ml-auto text-[10px] text-[var(--cs-text-muted)]">Last 30 days</span>
             </div>
             {recentLogs.length === 0 ? (
-              <div className="p-6 text-center text-slate-400">
+              <div className="p-6 text-center text-[var(--cs-text-muted)]">
                 <p className="text-xs">No log entries in the last 30 days</p>
               </div>
             ) : (
@@ -626,13 +626,13 @@ export default function CarePlanDetailPage({ params }: { params: Promise<{ id: s
                   <div key={log.id} className="flex items-start gap-3 px-4 py-2.5">
                     <span className={cn(
                       "rounded-full px-1.5 py-0.5 text-[9px] font-semibold shrink-0 mt-0.5 capitalize",
-                      LOG_TYPE_COLOURS[log.entry_type] ?? "bg-slate-100 text-slate-600",
+                      LOG_TYPE_COLOURS[log.entry_type] ?? "bg-slate-100 text-[var(--cs-text-secondary)]",
                     )}>
                       {log.entry_type}
                     </span>
                     <div className="flex-1 min-w-0">
-                      <p className="text-xs text-slate-700 line-clamp-2 leading-relaxed">{log.content}</p>
-                      <p className="text-[10px] text-slate-400 mt-0.5">{formatDate(log.date)} · {log.time}</p>
+                      <p className="text-xs text-[var(--cs-text-secondary)] line-clamp-2 leading-relaxed">{log.content}</p>
+                      <p className="text-[10px] text-[var(--cs-text-muted)] mt-0.5">{formatDate(log.date)} · {log.time}</p>
                     </div>
                     {log.is_significant && (
                       <div className="h-1.5 w-1.5 rounded-full bg-amber-400 shrink-0 mt-1.5" title="Significant entry" />
@@ -644,14 +644,14 @@ export default function CarePlanDetailPage({ params }: { params: Promise<{ id: s
           </div>
 
           {/* Open incidents */}
-          <div className="rounded-2xl border border-slate-200 bg-white overflow-hidden">
-            <div className="flex items-center gap-2 px-4 py-3 border-b border-slate-100 bg-slate-50">
-              <AlertTriangle className="h-4 w-4 text-slate-500" />
-              <p className="text-xs font-semibold text-slate-700 uppercase tracking-wide">Open Incidents</p>
+          <div className="rounded-2xl border border-[var(--cs-border)] bg-white overflow-hidden">
+            <div className="flex items-center gap-2 px-4 py-3 border-b border-[var(--cs-border-subtle)] bg-slate-50">
+              <AlertTriangle className="h-4 w-4 text-[var(--cs-text-muted)]" />
+              <p className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Open Incidents</p>
               <Link href="/incidents" className="ml-auto text-[10px] text-indigo-600 hover:underline">View all →</Link>
             </div>
             {openIncidents.length === 0 ? (
-              <div className="p-6 text-center text-slate-400">
+              <div className="p-6 text-center text-[var(--cs-text-muted)]">
                 <CheckCircle2 className="h-6 w-6 mx-auto mb-1 text-emerald-300" />
                 <p className="text-xs">No open incidents</p>
               </div>
@@ -661,15 +661,15 @@ export default function CarePlanDetailPage({ params }: { params: Promise<{ id: s
                   <Link
                     key={inc.id}
                     href={`/incidents/${inc.id}`}
-                    className="flex items-start gap-3 px-4 py-2.5 hover:bg-slate-50 transition-colors"
+                    className="flex items-start gap-3 px-4 py-2.5 hover:bg-[var(--cs-surface)] transition-colors"
                   >
                     <AlertTriangle className={cn(
                       "h-3.5 w-3.5 shrink-0 mt-0.5",
                       inc.severity === "critical" ? "text-red-500" : "text-amber-500",
                     )} />
                     <div className="flex-1 min-w-0">
-                      <p className="text-xs font-semibold text-slate-800">{inc.reference}</p>
-                      <p className="text-[10px] text-slate-500 capitalize">{inc.type.replace(/_/g, " ")} · {formatDate(inc.date)}</p>
+                      <p className="text-xs font-semibold text-[var(--cs-navy)]">{inc.reference}</p>
+                      <p className="text-[10px] text-[var(--cs-text-muted)] capitalize">{inc.type.replace(/_/g, " ")} · {formatDate(inc.date)}</p>
                     </div>
                     <Badge className={cn(
                       "text-[9px] shrink-0",
@@ -685,8 +685,8 @@ export default function CarePlanDetailPage({ params }: { params: Promise<{ id: s
         </div>
 
         {/* Regulatory footer */}
-        <div className="rounded-xl border border-slate-100 bg-slate-50 px-4 py-3 text-xs text-slate-500">
-          <span className="font-semibold text-slate-600">Regulatory Basis — </span>
+        <div className="rounded-xl border border-[var(--cs-border-subtle)] bg-slate-50 px-4 py-3 text-xs text-[var(--cs-text-muted)]">
+          <span className="font-semibold text-[var(--cs-text-secondary)]">Regulatory Basis — </span>
           Care Planning, Placement and Case Review (England) Regulations 2010. The registered person must ensure
           each child&apos;s care plan is maintained, reviewed at each LAC review, and reflects the child&apos;s
           current needs, voice, and progress across all eight domains. Inspectors will assess whether plans drive

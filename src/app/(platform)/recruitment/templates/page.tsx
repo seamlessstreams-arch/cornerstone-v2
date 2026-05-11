@@ -486,7 +486,7 @@ const CATEGORY_META: Record<TemplateCategory, { label: string; color: string; ic
   invitation: { label: "Invitation", color: "bg-blue-100 text-blue-700", icon: Mail },
   reference: { label: "Reference", color: "bg-violet-100 text-violet-700", icon: Users },
   offer: { label: "Offer", color: "bg-emerald-100 text-emerald-700", icon: CheckCircle2 },
-  rejection: { label: "Rejection", color: "bg-slate-100 text-slate-600", icon: X },
+  rejection: { label: "Rejection", color: "bg-slate-100 text-[var(--cs-text-secondary)]", icon: X },
   compliance: { label: "Compliance", color: "bg-amber-100 text-amber-700", icon: Shield },
   gap_explanation: { label: "Gap Explanation", color: "bg-orange-100 text-orange-700", icon: Clock },
   onboarding: { label: "Onboarding", color: "bg-teal-100 text-teal-700", icon: FileText },
@@ -528,18 +528,18 @@ function TemplateModal({ template, onClose }: { template: Template; onClose: () 
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col">
+      <div className="bg-white rounded-2xl shadow-[var(--cs-shadow-elevated)] w-full max-w-2xl max-h-[90vh] flex flex-col">
         {/* Header */}
-        <div className="flex items-start justify-between p-6 border-b border-slate-100">
+        <div className="flex items-start justify-between p-6 border-b border-[var(--cs-border-subtle)]">
           <div className="space-y-1">
             <CategoryBadge category={template.category} />
-            <h2 className="text-lg font-semibold text-slate-900 mt-1">{template.name}</h2>
-            <p className="text-sm text-slate-500">{template.purpose}</p>
+            <h2 className="text-lg font-semibold text-[var(--cs-navy)] mt-1">{template.name}</h2>
+            <p className="text-sm text-[var(--cs-text-muted)]">{template.purpose}</p>
             {template.regulation_ref && (
-              <p className="text-[10px] text-slate-400">Ref: {template.regulation_ref}</p>
+              <p className="text-[10px] text-[var(--cs-text-muted)]">Ref: {template.regulation_ref}</p>
             )}
           </div>
-          <button onClick={onClose} className="text-slate-400 hover:text-slate-600 ml-4 mt-0.5">
+          <button onClick={onClose} className="text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] ml-4 mt-0.5">
             <X className="h-5 w-5" />
           </button>
         </div>
@@ -547,11 +547,11 @@ function TemplateModal({ template, onClose }: { template: Template; onClose: () 
         {/* Body */}
         <div className="overflow-y-auto flex-1 p-6 space-y-4">
           {/* Trigger */}
-          <div className="flex items-start gap-2 p-3 rounded-xl bg-slate-50 border border-slate-200">
-            <Clock className="h-4 w-4 text-slate-400 mt-0.5 shrink-0" />
+          <div className="flex items-start gap-2 p-3 rounded-xl bg-slate-50 border border-[var(--cs-border)]">
+            <Clock className="h-4 w-4 text-[var(--cs-text-muted)] mt-0.5 shrink-0" />
             <div>
-              <p className="text-xs font-medium text-slate-600">When to use</p>
-              <p className="text-xs text-slate-500">{template.trigger}</p>
+              <p className="text-xs font-medium text-[var(--cs-text-secondary)]">When to use</p>
+              <p className="text-xs text-[var(--cs-text-muted)]">{template.trigger}</p>
             </div>
           </div>
 
@@ -569,16 +569,16 @@ function TemplateModal({ template, onClose }: { template: Template; onClose: () 
           {/* Subject */}
           <div>
             <div className="flex items-center justify-between mb-1">
-              <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Subject line</label>
+              <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Subject line</label>
               <button
                 onClick={() => copyToClipboard(template.subject, "subject")}
-                className="flex items-center gap-1 text-xs text-slate-500 hover:text-blue-600 transition-colors"
+                className="flex items-center gap-1 text-xs text-[var(--cs-text-muted)] hover:text-blue-600 transition-colors"
               >
                 {copied === "subject" ? <CheckCircle2 className="h-3 w-3 text-emerald-500" /> : <Copy className="h-3 w-3" />}
                 {copied === "subject" ? "Copied" : "Copy"}
               </button>
             </div>
-            <div className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700 font-medium">
+            <div className="rounded-lg border border-[var(--cs-border)] bg-slate-50 px-3 py-2 text-sm text-[var(--cs-text-secondary)] font-medium">
               {template.subject}
             </div>
           </div>
@@ -586,23 +586,23 @@ function TemplateModal({ template, onClose }: { template: Template; onClose: () 
           {/* Body */}
           <div>
             <div className="flex items-center justify-between mb-1">
-              <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Email / letter body</label>
+              <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Email / letter body</label>
               <button
                 onClick={() => copyToClipboard(template.body, "body")}
-                className="flex items-center gap-1 text-xs text-slate-500 hover:text-blue-600 transition-colors"
+                className="flex items-center gap-1 text-xs text-[var(--cs-text-muted)] hover:text-blue-600 transition-colors"
               >
                 {copied === "body" ? <CheckCircle2 className="h-3 w-3 text-emerald-500" /> : <Copy className="h-3 w-3" />}
                 {copied === "body" ? "Copied" : "Copy"}
               </button>
             </div>
-            <pre className="rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-xs text-slate-700 whitespace-pre-wrap font-sans leading-relaxed overflow-y-auto max-h-56">
+            <pre className="rounded-lg border border-[var(--cs-border)] bg-slate-50 px-4 py-3 text-xs text-[var(--cs-text-secondary)] whitespace-pre-wrap font-sans leading-relaxed overflow-y-auto max-h-56">
               {template.body}
             </pre>
           </div>
 
           {/* Merge fields */}
           <div>
-            <p className="text-xs font-semibold text-slate-600 uppercase tracking-wide mb-2">Merge fields required</p>
+            <p className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide mb-2">Merge fields required</p>
             <div className="flex flex-wrap gap-1.5">
               {template.merge_fields.map((f) => (
                 <MergeField key={f} field={f} />
@@ -612,10 +612,10 @@ function TemplateModal({ template, onClose }: { template: Template; onClose: () 
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between gap-3 p-4 border-t border-slate-100">
+        <div className="flex items-center justify-between gap-3 p-4 border-t border-[var(--cs-border-subtle)]">
           <div className="flex items-center gap-2">
             <Sparkles className="h-3.5 w-3.5 text-violet-500" />
-            <span className="text-xs text-slate-500">Aria can draft a personalised version for a specific candidate</span>
+            <span className="text-xs text-[var(--cs-text-muted)]">Aria can draft a personalised version for a specific candidate</span>
           </div>
           <div className="flex gap-2">
             <Button variant="outline" size="sm" onClick={onClose}>Close</Button>
@@ -635,22 +635,22 @@ function TemplateModal({ template, onClose }: { template: Template; onClose: () 
 function TemplateCard({ template, onOpen }: { template: Template; onOpen: () => void }) {
   return (
     <div
-      className="rounded-2xl border border-slate-200 bg-white p-4 space-y-3 cursor-pointer hover:shadow-md hover:border-blue-200 transition-all"
+      className="rounded-2xl border border-[var(--cs-border)] bg-white p-4 space-y-3 cursor-pointer hover:shadow-md hover:border-blue-200 transition-all"
       onClick={onOpen}
     >
       <div className="flex items-start justify-between gap-2">
         <CategoryBadge category={template.category} />
         {template.regulation_ref && (
-          <span className="text-[9px] text-slate-400 shrink-0 mt-0.5">{template.regulation_ref.split(",")[0]}</span>
+          <span className="text-[9px] text-[var(--cs-text-muted)] shrink-0 mt-0.5">{template.regulation_ref.split(",")[0]}</span>
         )}
       </div>
 
       <div>
-        <h3 className="text-sm font-semibold text-slate-900 leading-snug">{template.name}</h3>
-        <p className="text-xs text-slate-500 mt-0.5 line-clamp-2">{template.purpose}</p>
+        <h3 className="text-sm font-semibold text-[var(--cs-navy)] leading-snug">{template.name}</h3>
+        <p className="text-xs text-[var(--cs-text-muted)] mt-0.5 line-clamp-2">{template.purpose}</p>
       </div>
 
-      <div className="flex items-center gap-1 text-[10px] text-slate-400">
+      <div className="flex items-center gap-1 text-[10px] text-[var(--cs-text-muted)]">
         <Clock className="h-3 w-3" />
         <span className="truncate">{template.trigger}</span>
       </div>
@@ -665,17 +665,17 @@ function TemplateCard({ template, onOpen }: { template: Template; onOpen: () => 
       <div className="flex items-center justify-between pt-1">
         <div className="flex flex-wrap gap-1">
           {template.merge_fields.slice(0, 3).map((f) => (
-            <code key={f} className="text-[9px] bg-slate-100 text-slate-500 rounded px-1 font-mono">
+            <code key={f} className="text-[9px] bg-slate-100 text-[var(--cs-text-muted)] rounded px-1 font-mono">
               {`{{${f}}}`}
             </code>
           ))}
           {template.merge_fields.length > 3 && (
-            <code className="text-[9px] bg-slate-100 text-slate-400 rounded px-1 font-mono">
+            <code className="text-[9px] bg-slate-100 text-[var(--cs-text-muted)] rounded px-1 font-mono">
               +{template.merge_fields.length - 3} more
             </code>
           )}
         </div>
-        <ExternalLink className="h-3.5 w-3.5 text-slate-300 group-hover:text-blue-400 shrink-0" />
+        <ExternalLink className="h-3.5 w-3.5 text-[var(--cs-text-gentle)] group-hover:text-blue-400 shrink-0" />
       </div>
     </div>
   );
@@ -722,7 +722,7 @@ export default function TemplatesPage() {
           <SmartUploadButton variant="inline" label="Upload Template Document" uploadContext="Safer Recruitment — communication template or correspondence document upload" />
           <Button size="sm" variant="outline" onClick={() => setShowAria((v) => !v)}>
             <Sparkles className="h-3.5 w-3.5 mr-1" />
-            {showAria ? "Hide Aria" : "Ask Aria"}
+            {showAria ? "Hide Aria" : "Ask ARIA"}
           </Button>
         </div>
       }
@@ -730,22 +730,22 @@ export default function TemplatesPage() {
       <div id="templates-content" className="space-y-6">
         {/* Stats row */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          <div className="rounded-xl border border-slate-200 bg-white p-4">
-            <p className="text-xs text-slate-500">Total templates</p>
-            <p className="text-2xl font-bold text-slate-900 mt-1">{TEMPLATES.length}</p>
+          <div className="rounded-xl border border-[var(--cs-border)] bg-white p-4">
+            <p className="text-xs text-[var(--cs-text-muted)]">Total templates</p>
+            <p className="text-2xl font-bold text-[var(--cs-navy)] mt-1">{TEMPLATES.length}</p>
           </div>
-          <div className="rounded-xl border border-slate-200 bg-white p-4">
-            <p className="text-xs text-slate-500">Categories</p>
-            <p className="text-2xl font-bold text-slate-900 mt-1">{ALL_CATEGORIES.length}</p>
+          <div className="rounded-xl border border-[var(--cs-border)] bg-white p-4">
+            <p className="text-xs text-[var(--cs-text-muted)]">Categories</p>
+            <p className="text-2xl font-bold text-[var(--cs-navy)] mt-1">{ALL_CATEGORIES.length}</p>
           </div>
-          <div className="rounded-xl border border-slate-200 bg-white p-4">
-            <p className="text-xs text-slate-500">With safeguarding notes</p>
+          <div className="rounded-xl border border-[var(--cs-border)] bg-white p-4">
+            <p className="text-xs text-[var(--cs-text-muted)]">With safeguarding notes</p>
             <p className="text-2xl font-bold text-amber-600 mt-1">
               {TEMPLATES.filter((t) => t.safeguarding_note).length}
             </p>
           </div>
-          <div className="rounded-xl border border-slate-200 bg-white p-4">
-            <p className="text-xs text-slate-500">With regulation refs</p>
+          <div className="rounded-xl border border-[var(--cs-border)] bg-white p-4">
+            <p className="text-xs text-[var(--cs-text-muted)]">With regulation refs</p>
             <p className="text-2xl font-bold text-blue-600 mt-1">
               {TEMPLATES.filter((t) => t.regulation_ref).length}
             </p>
@@ -764,7 +764,7 @@ export default function TemplatesPage() {
         {/* Search + filter */}
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--cs-text-muted)]" />
             <Input
               placeholder="Search templates…"
               value={search}
@@ -779,7 +779,7 @@ export default function TemplatesPage() {
                 "px-3 py-1.5 rounded-xl text-xs font-medium transition-all border",
                 categoryFilter === "all"
                   ? "bg-slate-900 text-white border-slate-900"
-                  : "bg-white text-slate-600 border-slate-200 hover:border-slate-300"
+                  : "bg-white text-[var(--cs-text-secondary)] border-[var(--cs-border)] hover:border-slate-300"
               )}
             >
               All ({countByCategory.all})
@@ -794,7 +794,7 @@ export default function TemplatesPage() {
                     "px-3 py-1.5 rounded-xl text-xs font-medium transition-all border",
                     categoryFilter === cat
                       ? "bg-slate-900 text-white border-slate-900"
-                      : "bg-white text-slate-600 border-slate-200 hover:border-slate-300"
+                      : "bg-white text-[var(--cs-text-secondary)] border-[var(--cs-border)] hover:border-slate-300"
                   )}
                 >
                   {label} ({countByCategory[cat] ?? 0})
@@ -806,7 +806,7 @@ export default function TemplatesPage() {
 
         {/* Grid */}
         {filtered.length === 0 ? (
-          <div className="text-center py-16 text-slate-400">
+          <div className="text-center py-16 text-[var(--cs-text-muted)]">
             <FileText className="h-8 w-8 mx-auto mb-2 opacity-40" />
             <p className="text-sm">No templates match your search.</p>
           </div>

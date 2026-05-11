@@ -83,12 +83,12 @@ function formatLiveDate(): string {
 // ─── Skeleton helpers ─────────────────────────────────────────────────────────
 
 function Skeleton({ className }: { className?: string }) {
-  return <div className={cn("animate-pulse rounded-xl bg-slate-100", className)} />;
+  return <div className={cn("animate-pulse rounded-xl bg-[var(--cs-surface)]", className)} />;
 }
 
 function StatSkeleton() {
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 space-y-3">
+    <div className="rounded-2xl border border-[var(--cs-border)] bg-[var(--cs-surface-elevated)] p-5 space-y-3">
       <Skeleton className="h-3 w-20" />
       <Skeleton className="h-8 w-12" />
       <Skeleton className="h-2.5 w-28" />
@@ -130,13 +130,13 @@ function StatCard({
   const inner = (
     <div className="flex items-start justify-between gap-3">
       <div className="min-w-0">
-        <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider truncate">{label}</div>
+        <div className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider truncate">{label}</div>
         <div className={cn("mt-1 text-3xl font-bold tabular-nums", color)}>{value}</div>
-        {subtitle && <div className="mt-0.5 text-xs text-slate-400 truncate">{subtitle}</div>}
+        {subtitle && <div className="mt-0.5 text-xs text-[var(--cs-text-gentle)] truncate">{subtitle}</div>}
       </div>
       <div className={cn("rounded-2xl p-3 shrink-0 relative", bgColor)}>
         <Icon className={cn("h-5 w-5", color)} />
-        {pulse && <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-red-500 animate-pulse" />}
+        {pulse && <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-[var(--cs-risk)] animate-pulse" />}
       </div>
     </div>
   );
@@ -145,13 +145,13 @@ function StatCard({
     return (
       <Link
         href={href}
-        className="block rounded-2xl border border-slate-200 bg-white p-5 transition-all hover:shadow-md hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-violet-400"
+        className="block rounded-2xl border border-[var(--cs-border)] bg-[var(--cs-surface-elevated)] p-5 transition-all hover:shadow-[var(--cs-shadow-card)] hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-[var(--cs-aria-gold)]/40"
       >
         {inner}
       </Link>
     );
   }
-  return <div className="rounded-2xl border border-slate-200 bg-white p-5">{inner}</div>;
+  return <div className="rounded-2xl border border-[var(--cs-border)] bg-[var(--cs-surface-elevated)] p-5">{inner}</div>;
 }
 
 // ─── Alert Command Strip ──────────────────────────────────────────────────────
@@ -223,7 +223,7 @@ function TaskRow({ task, onComplete }: { task: Task; onComplete?: (id: string) =
     urgent: "bg-red-100 text-red-700",
     high: "bg-orange-100 text-orange-700",
     medium: "bg-blue-100 text-blue-700",
-    low: "bg-slate-100 text-slate-600",
+    low: "bg-slate-100 text-[var(--cs-text-secondary)]",
   };
 
   const statusIcons: Record<string, React.ElementType> = {
@@ -243,29 +243,29 @@ function TaskRow({ task, onComplete }: { task: Task; onComplete?: (id: string) =
   };
 
   return (
-    <div className="flex items-center gap-3 rounded-xl px-3 py-2.5 hover:bg-slate-50 transition-colors group">
+    <div className="flex items-center gap-3 rounded-xl px-3 py-2.5 hover:bg-[var(--cs-surface)] transition-colors group">
       <StatusIcon
         className={cn(
           "h-4 w-4 shrink-0",
-          task.status === "in_progress" ? "text-blue-500" :
-          task.status === "blocked" ? "text-red-500" :
-          "text-slate-300"
+          task.status === "in_progress" ? "text-[var(--cs-info)]" :
+          task.status === "blocked" ? "text-[var(--cs-risk)]" :
+          "text-[var(--cs-text-gentle)]"
         )}
       />
       <Link href="/tasks" className="flex-1 min-w-0">
-        <div className={cn("text-sm font-medium truncate", overdue ? "text-red-700" : "text-slate-900")}>
+        <div className={cn("text-sm font-medium truncate", overdue ? "text-[var(--cs-risk)]" : "text-[var(--cs-navy)]")}>
           {task.title}
         </div>
         <div className="flex items-center gap-2 mt-0.5 flex-wrap">
           {task.assigned_to && (
-            <span className="text-[10px] text-slate-400">{getStaffName(task.assigned_to).split(" ")[0]}</span>
+            <span className="text-[10px] text-[var(--cs-text-muted)]">{getStaffName(task.assigned_to).split(" ")[0]}</span>
           )}
           {task.due_date && (
             <span className={cn(
               "text-[10px]",
               overdue ? "text-red-600 font-semibold" :
               dueToday ? "text-orange-600 font-medium" :
-              "text-slate-400"
+              "text-[var(--cs-text-muted)]"
             )}>
               {overdue ? "Overdue · " : ""}{formatRelative(task.due_date)}
             </span>
@@ -290,7 +290,7 @@ function TaskRow({ task, onComplete }: { task: Task; onComplete?: (id: string) =
             "shrink-0 h-7 w-7 rounded-lg flex items-center justify-center transition-all",
             completing
               ? "bg-emerald-100 text-emerald-600"
-              : "bg-slate-100 text-slate-400 hover:bg-emerald-100 hover:text-emerald-600 opacity-0 group-hover:opacity-100"
+              : "bg-slate-100 text-[var(--cs-text-muted)] hover:bg-emerald-100 hover:text-emerald-600 opacity-0 group-hover:opacity-100"
           )}
         >
           {completing ? <CheckCheck className="h-3.5 w-3.5" /> : <CheckCircle2 className="h-3.5 w-3.5" />}
@@ -318,7 +318,7 @@ const SEV_COLORS: Record<string, string> = {
   critical: "bg-red-100 text-red-700 border-red-200",
   high: "bg-orange-100 text-orange-700 border-orange-200",
   medium: "bg-amber-100 text-amber-700 border-amber-200",
-  low: "bg-slate-100 text-slate-600 border-slate-200",
+  low: "bg-slate-100 text-[var(--cs-text-secondary)] border-[var(--cs-border)]",
 };
 
 function OversightRow({
@@ -329,36 +329,36 @@ function OversightRow({
   onAddOversight: (id: string) => void;
 }) {
   return (
-    <div className="flex items-start gap-3 rounded-xl px-3 py-3 hover:bg-slate-50 transition-colors group">
+    <div className="flex items-start gap-3 rounded-xl px-3 py-3 hover:bg-[var(--cs-surface)] transition-colors group">
       <AlertTriangle
         className={cn(
           "h-4 w-4 shrink-0 mt-0.5",
-          incident.severity === "critical" ? "text-red-600" :
+          incident.severity === "critical" ? "text-[var(--cs-risk)]" :
           incident.severity === "high" ? "text-orange-500" :
-          "text-amber-500"
+          "text-[var(--cs-warning)]"
         )}
       />
       <Link href="/incidents" className="flex-1 min-w-0">
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-sm font-semibold text-slate-900">{incident.reference}</span>
+          <span className="text-sm font-semibold text-[var(--cs-navy)]">{incident.reference}</span>
           <Badge className={cn("text-[10px] rounded-full border shrink-0", SEV_COLORS[incident.severity])}>
             {incident.severity}
           </Badge>
         </div>
         <div className="flex items-center gap-2 mt-0.5 flex-wrap">
-          <span className="text-[10px] text-slate-500">{TYPE_LABELS[incident.type] || incident.type}</span>
+          <span className="text-[10px] text-[var(--cs-text-muted)]">{TYPE_LABELS[incident.type] || incident.type}</span>
           {incident.child_id && (
             <span className="text-[10px] text-violet-600 flex items-center gap-0.5">
               <Heart className="h-2.5 w-2.5" />
               {getYPName(incident.child_id)}
             </span>
           )}
-          <span className="text-[10px] text-slate-400">{formatRelative(incident.date)}</span>
+          <span className="text-[10px] text-[var(--cs-text-muted)]">{formatRelative(incident.date)}</span>
         </div>
       </Link>
       <button
         onClick={() => onAddOversight(incident.id)}
-        className="shrink-0 flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-[10px] font-semibold bg-violet-50 text-violet-700 border border-violet-200 hover:bg-violet-600 hover:text-white hover:border-violet-600 transition-all"
+        className="shrink-0 flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-[10px] font-semibold bg-purple-50 text-[var(--cs-oversight)] border border-purple-200 hover:bg-[var(--cs-oversight)] hover:text-white hover:border-[var(--cs-oversight)] transition-all"
       >
         <Eye className="h-3 w-3" />
         Oversee
@@ -390,15 +390,15 @@ function ShiftRow({ shift }: { shift: Shift }) {
   const isOnNow = shift.status === "in_progress";
 
   return (
-    <div className="flex items-center gap-3 rounded-xl bg-slate-50 px-3 py-2 hover:bg-slate-100 transition-colors">
+    <div className="flex items-center gap-3 rounded-xl bg-[var(--cs-surface)] px-3 py-2 hover:bg-[var(--cs-surface)]/80 transition-colors">
       <Avatar name={name} size="sm" />
       <div className="flex-1 min-w-0">
-        <div className="text-sm font-medium text-slate-900 truncate">{name}</div>
-        <div className="text-[10px] text-slate-400">
+        <div className="text-sm font-medium text-[var(--cs-navy)] truncate">{name}</div>
+        <div className="text-[10px] text-[var(--cs-text-gentle)]">
           {shift.start_time} – {shift.end_time}
         </div>
       </div>
-      <Badge className={cn("text-[10px] rounded-full border-0 shrink-0", SHIFT_TYPE_COLORS[shift.shift_type] || "bg-slate-100 text-slate-600")}>
+      <Badge className={cn("text-[10px] rounded-full border-0 shrink-0", SHIFT_TYPE_COLORS[shift.shift_type] || "bg-slate-100 text-[var(--cs-text-secondary)]")}>
         {SHIFT_TYPE_LABELS[shift.shift_type] || shift.shift_type}
       </Badge>
       {isOnNow && (
@@ -454,7 +454,7 @@ const PRIORITY_COLORS = {
   critical: "text-red-600",
   high: "text-orange-500",
   medium: "text-amber-500",
-  low: "text-slate-400",
+  low: "text-[var(--cs-text-muted)]",
 };
 
 function SubScoreBar({ label, value, icon: Icon }: { label: string; value: number; icon: React.ElementType }) {
@@ -468,10 +468,10 @@ function SubScoreBar({ label, value, icon: Icon }: { label: string; value: numbe
     <div className="space-y-1">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-1.5">
-          <Icon className="h-3 w-3 text-slate-400" />
-          <span className="text-[11px] text-slate-500">{label}</span>
+          <Icon className="h-3 w-3 text-[var(--cs-text-muted)]" />
+          <span className="text-[11px] text-[var(--cs-text-muted)]">{label}</span>
         </div>
-        <span className="text-[11px] font-semibold text-slate-700 tabular-nums">{value}</span>
+        <span className="text-[11px] font-semibold text-[var(--cs-text-secondary)] tabular-nums">{value}</span>
       </div>
       <Progress value={value} color={color} className="h-1.5" />
     </div>
@@ -492,8 +492,8 @@ function TimeSavedWidget({ formatted }: { formatted: Record<string, string> }) {
     <Card>
       <CardHeader className="pb-3">
         <CardTitle className="flex items-center gap-2 text-base">
-          <Timer className="h-5 w-5 text-violet-500" />
-          Time Saved by Aria
+          <Timer className="h-5 w-5 text-[var(--cs-aria-gold)]" />
+          Time Saved by ARIA
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -503,12 +503,12 @@ function TimeSavedWidget({ formatted }: { formatted: Record<string, string> }) {
               <s.icon className={cn("h-4 w-4 shrink-0", s.color.split(" ")[0])} />
               <div>
                 <div className={cn("text-base font-bold tabular-nums", s.color.split(" ")[0])}>{s.value}</div>
-                <div className="text-[10px] text-slate-500">{s.label}</div>
+                <div className="text-[10px] text-[var(--cs-text-muted)]">{s.label}</div>
               </div>
             </div>
           ))}
         </div>
-        <p className="mt-3 text-[11px] text-slate-400 text-center">
+        <p className="mt-3 text-[11px] text-[var(--cs-text-muted)] text-center">
           Time reclaimed from admin — back into care
         </p>
       </CardContent>
@@ -526,10 +526,10 @@ function ZoneHeader({ label, description }: { label: string; description?: strin
   return (
     <div className="flex items-end gap-3 pt-2 pb-1">
       <div>
-        <p className="text-[11px] font-semibold uppercase tracking-widest text-slate-400">{label}</p>
-        {description && <p className="text-xs text-slate-400 mt-0.5">{description}</p>}
+        <p className="text-[11px] font-semibold uppercase tracking-widest text-[var(--cs-text-gentle)]">{label}</p>
+        {description && <p className="text-xs text-[var(--cs-text-gentle)] mt-0.5">{description}</p>}
       </div>
-      <div className="flex-1 border-b border-slate-100" />
+      <div className="flex-1 border-b border-[var(--cs-border-subtle)]" />
     </div>
   );
 }
@@ -808,7 +808,7 @@ export default function DashboardPage() {
 
   const pageActions = (
     <div className="flex items-center gap-2">
-      <Button variant="ghost" size="sm" onClick={() => dashboard.refetch()} disabled={dashboard.isFetching} className="text-slate-500">
+      <Button variant="ghost" size="sm" onClick={() => dashboard.refetch()} disabled={dashboard.isFetching} className="text-[var(--cs-text-muted)]">
         <RefreshCw className={cn("h-3.5 w-3.5 mr-1", dashboard.isFetching && "animate-spin")} />
         {dashboard.isFetching ? "Refreshing…" : "Refresh"}
       </Button>
@@ -1047,7 +1047,7 @@ export default function DashboardPage() {
                         <ShiftRow key={shift.id} shift={shift} />
                       ))
                     ) : (
-                      <div className="py-6 text-center text-xs text-slate-400">No shifts recorded today</div>
+                      <div className="py-6 text-center text-xs text-[var(--cs-text-muted)]">No shifts recorded today</div>
                     )}
                     {(d?.staffing.open_shifts ?? 0) > 0 && (
                       <Link href="/rota" className="flex items-center gap-2 rounded-xl bg-amber-50 border border-amber-200 px-3 py-2.5 hover:bg-amber-100 transition-colors mt-1">
@@ -1057,7 +1057,7 @@ export default function DashboardPage() {
                       </Link>
                     )}
                     {(d?.staffing.on_leave ?? 0) > 0 && (
-                      <p className="text-[10px] text-slate-400 px-1">{d!.staffing.on_leave} staff on leave today</p>
+                      <p className="text-[10px] text-[var(--cs-text-muted)] px-1">{d!.staffing.on_leave} staff on leave today</p>
                     )}
                   </CardContent>
                 </Card>
@@ -1101,15 +1101,15 @@ export default function DashboardPage() {
                         <p className="text-sm font-medium text-emerald-700">
                           {config.personalTasksOnly ? "No outstanding tasks" : "All clear"}
                         </p>
-                        <p className="text-xs text-slate-400 mt-0.5">
+                        <p className="text-xs text-[var(--cs-text-muted)] mt-0.5">
                           {config.personalTasksOnly ? "Nothing assigned to you right now" : "No overdue or urgent tasks"}
                         </p>
                       </div>
                     )}
                     {(d?.tasks.completed_today ?? 0) > 0 && (
-                      <div className="mt-3 pt-2 border-t border-slate-100 flex items-center gap-2 px-2">
+                      <div className="mt-3 pt-2 border-t border-[var(--cs-border-subtle)] flex items-center gap-2 px-2">
                         <CheckCheck className="h-3.5 w-3.5 text-emerald-500" />
-                        <span className="text-[11px] text-slate-500">{d!.tasks.completed_today} completed today</span>
+                        <span className="text-[11px] text-[var(--cs-text-muted)]">{d!.tasks.completed_today} completed today</span>
                       </div>
                     )}
                   </CardContent>
@@ -1185,7 +1185,7 @@ export default function DashboardPage() {
                           <Activity className="h-4 w-4 text-emerald-500" />
                           Home Health Check
                         </CardTitle>
-                        <Badge className={cn("text-[10px] rounded-full border", RISK_LEVEL_CONFIG[hc.risk_level]?.color || "bg-slate-100 text-slate-600")}>
+                        <Badge className={cn("text-[10px] rounded-full border", RISK_LEVEL_CONFIG[hc.risk_level]?.color || "bg-slate-100 text-[var(--cs-text-secondary)]")}>
                           {RISK_LEVEL_CONFIG[hc.risk_level]?.label || hc.risk_level}
                         </Badge>
                       </div>
@@ -1201,14 +1201,14 @@ export default function DashboardPage() {
                         </div>
                       </div>
                       {hc.action_plan && hc.action_plan.length > 0 && (
-                        <div className="space-y-1.5 pt-3 border-t border-slate-100">
-                          <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-2">Priority actions</p>
+                        <div className="space-y-1.5 pt-3 border-t border-[var(--cs-border-subtle)]">
+                          <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-2">Priority actions</p>
                           {hc.action_plan.slice(0, 3).map((item, i) => (
                             <div key={i} className="flex items-start gap-2 rounded-xl bg-slate-50 px-3 py-2">
-                              <span className={cn("text-xs font-bold shrink-0 tabular-nums", PRIORITY_COLORS[item.priority as keyof typeof PRIORITY_COLORS] || "text-slate-400")}>{i + 1}</span>
+                              <span className={cn("text-xs font-bold shrink-0 tabular-nums", PRIORITY_COLORS[item.priority as keyof typeof PRIORITY_COLORS] || "text-[var(--cs-text-muted)]")}>{i + 1}</span>
                               <div className="min-w-0">
-                                <p className="text-xs font-medium text-slate-800 truncate">{item.issue}</p>
-                                <p className="text-[10px] text-slate-400">{item.area} · {formatRelative(item.due)}</p>
+                                <p className="text-xs font-medium text-[var(--cs-navy)] truncate">{item.issue}</p>
+                                <p className="text-[10px] text-[var(--cs-text-muted)]">{item.area} · {formatRelative(item.due)}</p>
                               </div>
                             </div>
                           ))}
@@ -1288,7 +1288,7 @@ export default function DashboardPage() {
                           {(d?.compliance.cert_warnings_list?.length ?? 0) > 0 && (
                             <div className="mt-3 space-y-1">
                               {d!.compliance.cert_warnings_list.slice(0, 3).map((w, i) => (
-                                <div key={i} className="flex items-center gap-2 text-[10px] text-slate-600">
+                                <div key={i} className="flex items-center gap-2 text-[10px] text-[var(--cs-text-secondary)]">
                                   <span className="h-1.5 w-1.5 rounded-full bg-amber-400 shrink-0" />
                                   <span className="truncate">{w}</span>
                                 </div>
@@ -1305,7 +1305,7 @@ export default function DashboardPage() {
                       <Card>
                         <CardHeader className="pb-2">
                           <CardTitle className="flex items-center gap-2 text-[13px]">
-                            <Building2 className="h-4 w-4 text-slate-500" />
+                            <Building2 className="h-4 w-4 text-[var(--cs-text-muted)]" />
                             Environment
                           </CardTitle>
                         </CardHeader>
@@ -1314,10 +1314,10 @@ export default function DashboardPage() {
                             { icon: Building2, label: "Building checks", overdue: d?.environment.building_checks_overdue ?? 0, due: d?.environment.building_checks_due ?? 0, href: "/buildings" },
                             { icon: Car,       label: "Vehicles",        overdue: d?.environment.vehicle_defects ?? 0,          due: d?.environment.vehicles_restricted ?? 0,  href: "/vehicles" },
                           ].map(({ icon: Icon, label, overdue, due, href }) => (
-                            <Link key={label} href={href} className="flex items-center justify-between rounded-xl bg-slate-50 px-3 py-2.5 hover:bg-slate-100 transition-colors">
+                            <Link key={label} href={href} className="flex items-center justify-between rounded-xl bg-slate-50 px-3 py-2.5 hover:bg-[var(--cs-surface)] transition-colors">
                               <div className="flex items-center gap-2">
-                                <Icon className="h-3.5 w-3.5 text-slate-400" />
-                                <span className="text-xs text-slate-700">{label}</span>
+                                <Icon className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
+                                <span className="text-xs text-[var(--cs-text-secondary)]">{label}</span>
                               </div>
                               <span className={cn("text-[10px] font-medium", overdue > 0 ? "text-red-600" : due > 0 ? "text-amber-600" : "text-emerald-600")}>
                                 {overdue > 0 ? `${overdue} overdue` : due > 0 ? `${due} due` : "All clear"}

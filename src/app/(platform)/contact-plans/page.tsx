@@ -126,7 +126,7 @@ export default function ContactPlansPage() {
     return (
       <PageShell title="Contact Plans" subtitle="Loading...">
         <div className="flex items-center justify-center py-12">
-          <Loader2 className="h-8 w-8 animate-spin text-slate-400" />
+          <Loader2 className="h-8 w-8 animate-spin text-[var(--cs-text-muted)]" />
         </div>
       </PageShell>
     );
@@ -420,9 +420,9 @@ export default function ContactPlansPage() {
       </div>
 
       {/* ─── regulatory note ─── */}
-      <div className="mt-8 bg-slate-50 border border-slate-200 rounded-lg p-4">
-        <p className="text-sm font-medium text-slate-700 mb-1">Regulatory Context</p>
-        <p className="text-xs text-slate-600">
+      <div className="mt-8 bg-slate-50 border border-[var(--cs-border)] rounded-lg p-4">
+        <p className="text-sm font-medium text-[var(--cs-text-secondary)] mb-1">Regulatory Context</p>
+        <p className="text-xs text-[var(--cs-text-secondary)]">
           Regulation 7(2)(b)(v) of the Children&apos;s Homes Regulations 2015 requires that the
           child&apos;s care plan includes arrangements for contact with family. Regulation 12
           (Contact and Access) requires that contact arrangements promote the child&apos;s welfare.

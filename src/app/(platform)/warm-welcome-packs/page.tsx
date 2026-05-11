@@ -469,9 +469,9 @@ export default function WarmWelcomePacksPage() {
       </div>
 
       {/* ─── regulatory note ─── */}
-      <div className="mt-8 bg-slate-50 border border-slate-200 rounded-lg p-4">
-        <p className="text-sm font-medium text-slate-700 mb-1">Regulatory Context</p>
-        <p className="text-xs text-slate-600">
+      <div className="mt-8 bg-slate-50 border border-[var(--cs-border)] rounded-lg p-4">
+        <p className="text-sm font-medium text-[var(--cs-text-secondary)] mb-1">Regulatory Context</p>
+        <p className="text-xs text-[var(--cs-text-secondary)]">
           Quality Standard 1 (Child-Centred Care) requires that children feel welcome, safe, and
           valued from the point of admission. Regulation 14 (Admissions) requires preparation for
           the child&apos;s arrival. The SCCIF examines whether children feel they &quot;belong&quot;

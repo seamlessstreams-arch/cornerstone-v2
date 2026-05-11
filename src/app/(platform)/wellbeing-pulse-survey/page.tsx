@@ -47,14 +47,14 @@ const METHOD_COLORS: Record<WellbeingPulseMethod, string> = {
   conversation: "bg-green-100 text-green-800",
   drawing: "bg-pink-100 text-pink-800",
   emoji_selection: "bg-yellow-100 text-yellow-800",
-  written: "bg-slate-100 text-slate-800",
+  written: "bg-slate-100 text-[var(--cs-navy)]",
 };
 
 const TREND_CONFIG: Record<WellbeingPulseTrend, { color: string; icon: typeof TrendingUp }> = {
   up: { color: "bg-green-100 text-green-800", icon: TrendingUp },
   stable: { color: "bg-blue-100 text-blue-800", icon: Minus },
   down: { color: "bg-red-100 text-red-800", icon: TrendingDown },
-  first_survey: { color: "bg-slate-100 text-slate-700", icon: Sparkles },
+  first_survey: { color: "bg-slate-100 text-[var(--cs-text-secondary)]", icon: Sparkles },
 };
 
 const ALL_DIMENSIONS: WellbeingPulseDimension[] = [
@@ -204,7 +204,7 @@ export default function WellbeingPulseSurveyPage() {
             </div>
           </div>
           <div className="rounded-xl border bg-white p-4 flex items-center gap-3">
-            <AlertTriangle className={cn("h-5 w-5", followUps > 0 ? "text-amber-600" : "text-slate-400")} />
+            <AlertTriangle className={cn("h-5 w-5", followUps > 0 ? "text-amber-600" : "text-[var(--cs-text-muted)]")} />
             <div>
               <p className="text-xs text-muted-foreground">Follow-ups Needed</p>
               <p className={cn("text-lg font-bold", followUps > 0 && "text-amber-600")}>{followUps}</p>
@@ -293,7 +293,7 @@ export default function WellbeingPulseSurveyPage() {
             return (
               <div key={rec.id} className="rounded-xl border bg-white overflow-hidden">
                 <button
-                  className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                  className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                   onClick={() => setExpandedId(isExpanded ? null : rec.id)}
                 >
                   <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -348,14 +348,14 @@ export default function WellbeingPulseSurveyPage() {
 
                     {/* dimension scores */}
                     <div className="rounded-lg bg-white border p-4">
-                      <p className="text-xs font-medium text-slate-600 mb-3">Dimension Scores</p>
+                      <p className="text-xs font-medium text-[var(--cs-text-secondary)] mb-3">Dimension Scores</p>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                         {ALL_DIMENSIONS.map((dim) => {
                           const v = rec.scores[dim];
                           return (
                             <div key={dim}>
                               <div className="flex justify-between text-xs mb-1">
-                                <span className="text-slate-700">{WELLBEING_PULSE_DIMENSION_LABEL[dim]}</span>
+                                <span className="text-[var(--cs-text-secondary)]">{WELLBEING_PULSE_DIMENSION_LABEL[dim]}</span>
                                 <span className={cn("font-bold tabular-nums", scoreColor(v))}>{v}/10</span>
                               </div>
                               <div className="h-2 rounded-full bg-slate-100 overflow-hidden">
@@ -384,7 +384,7 @@ export default function WellbeingPulseSurveyPage() {
                     {/* key themes */}
                     {rec.key_themes.length > 0 && (
                       <div className="rounded-lg bg-white border p-3">
-                        <p className="text-xs font-medium text-slate-600 mb-2">Key Themes</p>
+                        <p className="text-xs font-medium text-[var(--cs-text-secondary)] mb-2">Key Themes</p>
                         <div className="flex flex-wrap gap-1.5">
                           {rec.key_themes.map((t, i) => (
                             <Badge key={i} className="bg-blue-50 text-blue-700 border border-blue-200 text-xs">
@@ -398,9 +398,9 @@ export default function WellbeingPulseSurveyPage() {
                     {/* staff observations */}
                     <div className="rounded-lg bg-white border p-3">
                       <div className="flex items-start gap-2">
-                        <MessageCircle className="h-4 w-4 text-slate-500 mt-0.5 shrink-0" />
+                        <MessageCircle className="h-4 w-4 text-[var(--cs-text-muted)] mt-0.5 shrink-0" />
                         <div>
-                          <p className="text-xs font-medium text-slate-600 mb-1">Staff Observations</p>
+                          <p className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1">Staff Observations</p>
                           <p className="text-sm">{rec.staff_observations}</p>
                         </div>
                       </div>

@@ -38,7 +38,7 @@ const THEME_CLR: Record<LessonThemeArea, string> = {
   safeguarding: "bg-red-50 text-red-700",
   practice: "bg-blue-50 text-blue-700",
   communication: "bg-amber-50 text-amber-700",
-  recording: "bg-slate-100 text-slate-700",
+  recording: "bg-slate-100 text-[var(--cs-text-secondary)]",
   training: "bg-indigo-50 text-indigo-700",
   environment: "bg-teal-50 text-teal-700",
   wellbeing: "bg-purple-50 text-purple-700",
@@ -318,7 +318,7 @@ export default function LessonsLearnedRegisterPage() {
                         <p className="font-medium mb-1">Policies / Procedures Updated</p>
                         <div className="flex flex-wrap gap-1">
                           {r.policies_updated.map((p, i) => (
-                            <Badge key={i} variant="outline" className="bg-slate-100 text-slate-700 text-xs">
+                            <Badge key={i} variant="outline" className="bg-slate-100 text-[var(--cs-text-secondary)] text-xs">
                               <FileText className="h-3 w-3 mr-1" />
                               {p}
                             </Badge>

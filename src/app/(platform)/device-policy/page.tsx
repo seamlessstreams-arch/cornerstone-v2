@@ -41,7 +41,7 @@ import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 /* ── helpers ───────────────────────────────────────────────────────────────── */
 
 const DT_CLR: Record<DevicePolicyDeviceType, string> = { smartphone: "bg-blue-100 text-blue-800", tablet: "bg-indigo-100 text-indigo-800", laptop: "bg-purple-100 text-purple-800", games_console: "bg-green-100 text-green-800", smart_watch: "bg-teal-100 text-teal-800", other: "bg-gray-100 text-gray-800" };
-const AS_CLR: Record<DevicePolicyAgreementStatus, string> = { active: "bg-green-100 text-green-800", suspended: "bg-red-100 text-red-800", under_review: "bg-amber-100 text-amber-800", expired: "bg-gray-100 text-gray-800", not_signed: "bg-slate-100 text-slate-800" };
+const AS_CLR: Record<DevicePolicyAgreementStatus, string> = { active: "bg-green-100 text-green-800", suspended: "bg-red-100 text-red-800", under_review: "bg-amber-100 text-amber-800", expired: "bg-gray-100 text-gray-800", not_signed: "bg-slate-100 text-[var(--cs-navy)]" };
 
 /* ── component ─────────────────────────────────────────────────────────────── */
 

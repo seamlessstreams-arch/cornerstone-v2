@@ -90,7 +90,7 @@ export default function ComplaintsTrendAnalysisPage() {
         </div>
         <div className="rounded-xl border bg-white p-4 text-center">
           <p className={cn("text-2xl font-bold flex items-center justify-center gap-1",
-            latest && latest.change_vs_last_period < 0 ? "text-green-600" : latest && latest.change_vs_last_period > 0 ? "text-red-600" : "text-slate-600"
+            latest && latest.change_vs_last_period < 0 ? "text-green-600" : latest && latest.change_vs_last_period > 0 ? "text-red-600" : "text-[var(--cs-text-secondary)]"
           )}>
             {latest && latest.change_vs_last_period < 0 ? <TrendingDown className="h-5 w-5" /> :
              latest && latest.change_vs_last_period > 0 ? <TrendingUp className="h-5 w-5" /> : null}
@@ -146,7 +146,7 @@ export default function ComplaintsTrendAnalysisPage() {
               "border-l-4 border-l-slate-400"
             )}>
               <button
-                className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                 onClick={() => setExpandedId(isExpanded ? null : trend.id)}
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -161,7 +161,7 @@ export default function ComplaintsTrendAnalysisPage() {
                 <div className="flex items-center gap-2 shrink-0 ml-3">
                   <span className={cn("text-sm font-bold flex items-center gap-1",
                     trend.change_vs_last_period < 0 ? "text-green-600" :
-                    trend.change_vs_last_period > 0 ? "text-red-600" : "text-slate-600"
+                    trend.change_vs_last_period > 0 ? "text-red-600" : "text-[var(--cs-text-secondary)]"
                   )}>
                     {trend.change_vs_last_period < 0 ? <TrendingDown className="h-4 w-4" /> :
                      trend.change_vs_last_period > 0 ? <TrendingUp className="h-4 w-4" /> : null}

@@ -39,7 +39,7 @@ const CAT_LABEL: Record<AccidentCategory, string> = {
   sport_play: "Sport / Play", assault: "Assault", medication_related: "Medication Related", other: "Other",
 };
 const STATUS_LABEL: Record<AccidentStatus, string> = { open: "Open", first_aid_given: "First Aid Given", medical_treatment: "Medical Treatment", hospital: "Hospital Attendance", investigated: "Investigated", closed: "Closed" };
-const STATUS_CLR: Record<AccidentStatus, string> = { open: "bg-blue-100 text-blue-800", first_aid_given: "bg-green-100 text-green-800", medical_treatment: "bg-yellow-100 text-yellow-800", hospital: "bg-red-100 text-red-800", investigated: "bg-purple-100 text-purple-800", closed: "bg-slate-100 text-slate-800" };
+const STATUS_CLR: Record<AccidentStatus, string> = { open: "bg-blue-100 text-blue-800", first_aid_given: "bg-green-100 text-green-800", medical_treatment: "bg-yellow-100 text-yellow-800", hospital: "bg-red-100 text-red-800", investigated: "bg-purple-100 text-purple-800", closed: "bg-slate-100 text-[var(--cs-navy)]" };
 
 const BORDER_SEV: Record<AccidentSeverity, string> = { minor: "border-l-green-400", moderate: "border-l-yellow-400", major: "border-l-orange-500", riddor_reportable: "border-l-red-600" };
 

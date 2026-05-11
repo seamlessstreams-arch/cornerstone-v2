@@ -60,7 +60,7 @@ const STATUS_CLR: Record<StaffSupervisionThemeStatus, string> = {
   emerging: "bg-amber-100 text-amber-800",
   active: "bg-blue-100 text-blue-800",
   addressed: "bg-green-100 text-green-800",
-  monitoring: "bg-slate-100 text-slate-700",
+  monitoring: "bg-slate-100 text-[var(--cs-text-secondary)]",
 };
 
 /* ── page ──────────────────────────────────────────────────────────────────── */
@@ -241,7 +241,7 @@ export default function StaffSupervisionThemesPage() {
                           {STAFF_SUPERVISION_THEME_STATUS_LABEL[r.status]}
                         </Badge>
                         {r.anonymous && (
-                          <Badge variant="outline" className="bg-slate-100 text-slate-700 text-xs flex items-center gap-1">
+                          <Badge variant="outline" className="bg-slate-100 text-[var(--cs-text-secondary)] text-xs flex items-center gap-1">
                             <EyeOff className="h-3 w-3" />Anonymous
                           </Badge>
                         )}
@@ -296,9 +296,9 @@ export default function StaffSupervisionThemesPage() {
                     )}
 
                     {r.anonymous && (
-                      <div className="bg-slate-50 border border-slate-200 rounded p-2 flex items-start gap-2">
-                        <EyeOff className="h-4 w-4 text-slate-500 shrink-0 mt-0.5" />
-                        <p className="text-xs text-slate-600">
+                      <div className="bg-slate-50 border border-[var(--cs-border)] rounded p-2 flex items-start gap-2">
+                        <EyeOff className="h-4 w-4 text-[var(--cs-text-muted)] shrink-0 mt-0.5" />
+                        <p className="text-xs text-[var(--cs-text-secondary)]">
                           Identities of staff who raised this theme are protected. Aggregated frequency only.
                         </p>
                       </div>

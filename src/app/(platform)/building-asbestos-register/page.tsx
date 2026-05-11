@@ -46,7 +46,7 @@ const conditionColour: Record<string, string> = {
   good_condition_sealed: "bg-amber-100 text-amber-900 border-amber-200",
   minor_damage_encapsulated: "bg-orange-100 text-orange-900 border-orange-200",
   significant_damage_action_required: "bg-red-100 text-red-900 border-red-200",
-  removed: "bg-slate-100 text-slate-800 border-slate-200",
+  removed: "bg-slate-100 text-[var(--cs-navy)] border-[var(--cs-border)]",
 };
 
 const exportCols: ExportColumn<AsbestosRecord>[] = [
@@ -150,12 +150,12 @@ export default function BuildingAsbestosRegisterPage() {
       }
     >
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
-          <div className="flex items-center gap-2 text-slate-700 text-sm mb-1">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-slate-50 p-4">
+          <div className="flex items-center gap-2 text-[var(--cs-text-secondary)] text-sm mb-1">
             <FileText className="h-4 w-4" />
             <span>Surveys completed</span>
           </div>
-          <div className="text-2xl font-semibold text-slate-900">{stats.surveysCompleted}</div>
+          <div className="text-2xl font-semibold text-[var(--cs-navy)]">{stats.surveysCompleted}</div>
         </div>
         <div className="rounded-lg border border-amber-200 bg-amber-50 p-4">
           <div className="flex items-center gap-2 text-amber-800 text-sm mb-1">
@@ -182,13 +182,13 @@ export default function BuildingAsbestosRegisterPage() {
 
       <div className="flex flex-col sm:flex-row gap-3 mb-4">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--cs-text-muted)]" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search area, surveyor, ACM type or certificate..."
-            className="w-full pl-9 pr-3 py-2 text-sm border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500"
+            className="w-full pl-9 pr-3 py-2 text-sm border border-[var(--cs-border)] rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500"
           />
         </div>
         <Select value={typeFilter} onValueChange={setTypeFilter}>
@@ -224,7 +224,7 @@ export default function BuildingAsbestosRegisterPage() {
           const inspectionSoon = r.next_inspection_due && r.next_inspection_due >= today && r.next_inspection_due <= sixtyDaysFromNow;
           const inspectionOverdue = r.next_inspection_due && r.next_inspection_due < today;
           return (
-            <div key={r.id} className="rounded-lg border border-slate-200 bg-white overflow-hidden">
+            <div key={r.id} className="rounded-lg border border-[var(--cs-border)] bg-white overflow-hidden">
               <button
                 onClick={() => setExpandedId(isOpen ? null : r.id)}
                 className="w-full p-4 flex items-start justify-between gap-3 hover:bg-amber-50/40 text-left"
@@ -232,7 +232,7 @@ export default function BuildingAsbestosRegisterPage() {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap mb-1">
                     <Shield className="h-4 w-4 text-amber-600" />
-                    <span className="font-semibold text-slate-900">{r.survey_date}</span>
+                    <span className="font-semibold text-[var(--cs-navy)]">{r.survey_date}</span>
                     <span className={cn("text-xs px-2 py-0.5 rounded-full border", surveyTypeColour[r.survey_type])}>
                       {ASBESTOS_SURVEY_TYPE_LABEL[r.survey_type]}
                     </span>
@@ -254,27 +254,27 @@ export default function BuildingAsbestosRegisterPage() {
                       )
                     ) : null}
                   </div>
-                  <div className="text-sm text-slate-600">
+                  <div className="text-sm text-[var(--cs-text-secondary)]">
                     {r.building_area.length > 110 ? `${r.building_area.slice(0, 110)}…` : r.building_area}
                   </div>
                 </div>
-                {isOpen ? <ChevronUp className="h-5 w-5 text-slate-400" /> : <ChevronDown className="h-5 w-5 text-slate-400" />}
+                {isOpen ? <ChevronUp className="h-5 w-5 text-[var(--cs-text-muted)]" /> : <ChevronDown className="h-5 w-5 text-[var(--cs-text-muted)]" />}
               </button>
               {isOpen && (
-                <div className="px-4 pb-4 border-t border-slate-100 bg-amber-50/20">
+                <div className="px-4 pb-4 border-t border-[var(--cs-border-subtle)] bg-amber-50/20">
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 pt-4">
-                    <div className="rounded-md border border-slate-200 bg-white p-3 lg:col-span-2">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Surveyor</div>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-slate-700">
-                        <div><span className="text-slate-500">Surveyor:</span> {r.surveyor}</div>
-                        <div><span className="text-slate-500">Accreditation:</span> {r.surveyor_accreditation}</div>
-                        <div className="sm:col-span-2"><span className="text-slate-500">Certificate number:</span> <span className="font-mono">{r.certificate_number}</span></div>
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3 lg:col-span-2">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Surveyor</div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-[var(--cs-text-secondary)]">
+                        <div><span className="text-[var(--cs-text-muted)]">Surveyor:</span> {r.surveyor}</div>
+                        <div><span className="text-[var(--cs-text-muted)]">Accreditation:</span> {r.surveyor_accreditation}</div>
+                        <div className="sm:col-span-2"><span className="text-[var(--cs-text-muted)]">Certificate number:</span> <span className="font-mono">{r.certificate_number}</span></div>
                       </div>
                     </div>
 
-                    <div className="rounded-md border border-slate-200 bg-white p-3 lg:col-span-2">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Building area surveyed</div>
-                      <p className="text-sm text-slate-700">{r.building_area}</p>
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3 lg:col-span-2">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Building area surveyed</div>
+                      <p className="text-sm text-[var(--cs-text-secondary)]">{r.building_area}</p>
                     </div>
 
                     <div className={cn("rounded-md border p-3", r.acm_identified ? "border-amber-200 bg-amber-50" : "border-emerald-200 bg-emerald-50")}>
@@ -287,9 +287,9 @@ export default function BuildingAsbestosRegisterPage() {
                       </div>
                     </div>
 
-                    <div className="rounded-md border border-slate-200 bg-white p-3">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Condition rating</div>
-                      <div className="text-sm text-slate-700">{ASBESTOS_CONDITION_RATING_LABEL[r.condition_rating]}</div>
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Condition rating</div>
+                      <div className="text-sm text-[var(--cs-text-secondary)]">{ASBESTOS_CONDITION_RATING_LABEL[r.condition_rating]}</div>
                     </div>
 
                     <div className="rounded-md border border-indigo-200 bg-indigo-50 p-3 lg:col-span-2">
@@ -318,14 +318,14 @@ export default function BuildingAsbestosRegisterPage() {
                       </div>
                     )}
 
-                    <div className="rounded-md border border-slate-200 bg-white p-3">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Re-inspection cadence</div>
-                      <div className="text-sm text-slate-700">{ASBESTOS_REINSPECTION_FREQUENCY_LABEL[r.reinspection_frequency]}</div>
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Re-inspection cadence</div>
+                      <div className="text-sm text-[var(--cs-text-secondary)]">{ASBESTOS_REINSPECTION_FREQUENCY_LABEL[r.reinspection_frequency]}</div>
                     </div>
 
-                    <div className="rounded-md border border-slate-200 bg-white p-3">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Next inspection due</div>
-                      <div className="text-sm text-slate-700">{r.next_inspection_due ?? "—"}</div>
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Next inspection due</div>
+                      <div className="text-sm text-[var(--cs-text-secondary)]">{r.next_inspection_due ?? "—"}</div>
                     </div>
 
                     {r.tradesperson_briefings_required ? (
@@ -339,7 +339,7 @@ export default function BuildingAsbestosRegisterPage() {
                         </p>
                       </div>
                     ) : (
-                      <div className="rounded-md border border-slate-200 bg-white p-3 lg:col-span-2 text-sm text-slate-600">
+                      <div className="rounded-md border border-[var(--cs-border)] bg-white p-3 lg:col-span-2 text-sm text-[var(--cs-text-secondary)]">
                         No tradesperson briefing required for this entry.
                       </div>
                     )}
@@ -358,7 +358,7 @@ export default function BuildingAsbestosRegisterPage() {
                       </div>
                     )}
 
-                    <div className="rounded-md border border-slate-200 bg-white p-3 lg:col-span-2 text-xs text-slate-500">
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3 lg:col-span-2 text-xs text-[var(--cs-text-muted)]">
                       Recorded by {getStaffName(r.recorded_by)}
                     </div>
                   </div>

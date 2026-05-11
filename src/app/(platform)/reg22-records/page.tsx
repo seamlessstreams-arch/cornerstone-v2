@@ -92,7 +92,7 @@ export default function Reg22RecordsPage() {
         {/* ── Summary cards ────────────────────────────────────────────── */}
         <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
           {[
-            { label: "Total Records",        value: stats.total,        icon: Database,       c: "text-slate-600"  },
+            { label: "Total Records",        value: stats.total,        icon: Database,       c: "text-[var(--cs-text-secondary)]"  },
             { label: "Compliant",             value: stats.compliant,    icon: CheckCircle2,   c: "text-green-600"  },
             { label: "Partially Compliant",   value: stats.partial,      icon: AlertTriangle,  c: "text-amber-600"  },
             { label: "Non-Compliant",         value: stats.nonCompliant, icon: XCircle,        c: "text-red-600"    },
@@ -155,8 +155,8 @@ export default function Reg22RecordsPage() {
                   className={cn(
                     "px-3 py-1.5 rounded-lg text-xs font-medium",
                     statusFilter === f
-                      ? "bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900"
-                      : "bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-400"
+                      ? "bg-slate-900 text-white dark:bg-slate-100 dark:text-[var(--cs-navy)]"
+                      : "bg-slate-100 text-[var(--cs-text-secondary)] hover:bg-slate-200 dark:bg-slate-800 dark:text-[var(--cs-text-muted)]"
                   )}
                 >
                   {labels[f]}

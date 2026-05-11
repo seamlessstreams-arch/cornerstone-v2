@@ -133,7 +133,7 @@ export default function ReportsPage() {
             {(["week", "month", "quarter", "year"] as const).map((p) => (
               <button key={p} onClick={() => setPeriod(p)}
                 className={cn("px-3 py-1.5 rounded-lg text-xs font-medium capitalize transition-all",
-                  period === p ? "bg-white text-slate-900 shadow-sm" : "text-slate-500 hover:text-slate-700")}
+                  period === p ? "bg-white text-[var(--cs-navy)] shadow-sm" : "text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)]")}
               >{p}</button>
             ))}
           </div>
@@ -147,7 +147,7 @@ export default function ReportsPage() {
         {/* KPI Grid */}
         <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3">
           {kpiCards.map(({ label, value, trend, icon: Icon, color, bg, good }) => (
-            <div key={label} className="rounded-2xl border border-slate-200 bg-white p-4">
+            <div key={label} className="rounded-2xl border border-[var(--cs-border)] bg-white p-4">
               <div className="flex items-start justify-between gap-2 mb-2">
                 <div className={cn("rounded-xl p-2", bg)}>
                   <Icon className={cn("h-4 w-4", color)} />
@@ -155,7 +155,7 @@ export default function ReportsPage() {
                 <Trend value={trend} good={good} />
               </div>
               <div className={cn("text-2xl font-bold tabular-nums", color)}>{value}</div>
-              <div className="text-[10px] font-medium text-slate-500 mt-0.5 leading-tight">{label}</div>
+              <div className="text-[10px] font-medium text-[var(--cs-text-muted)] mt-0.5 leading-tight">{label}</div>
             </div>
           ))}
         </div>
@@ -165,7 +165,7 @@ export default function ReportsPage() {
           {tabs.map(({ id, label, icon: Icon }) => (
             <button key={id} onClick={() => setView(id)}
               className={cn("flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-all",
-                view === id ? "bg-white text-slate-900 shadow-sm" : "text-slate-500 hover:text-slate-700")}
+                view === id ? "bg-white text-[var(--cs-navy)] shadow-sm" : "text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)]")}
             >
               <Icon className="h-3.5 w-3.5" />{label}
             </button>
@@ -175,7 +175,7 @@ export default function ReportsPage() {
         {/* Global loading state */}
         {isLoading && (
           <div className="flex items-center justify-center py-20">
-            <Loader2 className="h-6 w-6 animate-spin text-slate-400" />
+            <Loader2 className="h-6 w-6 animate-spin text-[var(--cs-text-muted)]" />
           </div>
         )}
 
@@ -193,20 +193,20 @@ export default function ReportsPage() {
                     <Sparkline values={[3, 5, 4, 7, 6, 8, 5, 9]} color="bg-blue-400" />
                     <div className="grid grid-cols-3 gap-3 text-center">
                       <div className="rounded-xl bg-slate-50 p-3">
-                        <div className="text-xl font-bold text-slate-900">{allTasks.length}</div>
-                        <div className="text-[10px] text-slate-400">Total tasks</div>
+                        <div className="text-xl font-bold text-[var(--cs-navy)]">{allTasks.length}</div>
+                        <div className="text-[10px] text-[var(--cs-text-muted)]">Total tasks</div>
                       </div>
                       <div className="rounded-xl bg-emerald-50 p-3">
                         <div className="text-xl font-bold text-emerald-600">{completedTasks.length}</div>
-                        <div className="text-[10px] text-slate-400">Completed</div>
+                        <div className="text-[10px] text-[var(--cs-text-muted)]">Completed</div>
                       </div>
                       <div className="rounded-xl bg-red-50 p-3">
                         <div className="text-xl font-bold text-red-600">{overdueTasks.length}</div>
-                        <div className="text-[10px] text-slate-400">Overdue</div>
+                        <div className="text-[10px] text-[var(--cs-text-muted)]">Overdue</div>
                       </div>
                     </div>
                     <Progress value={taskCompletionRate} color={taskCompletionRate > 70 ? "bg-emerald-500" : "bg-amber-500"} />
-                    <div className="text-xs text-center text-slate-400">{taskCompletionRate}% overall completion rate</div>
+                    <div className="text-xs text-center text-[var(--cs-text-muted)]">{taskCompletionRate}% overall completion rate</div>
                   </div>
                 </CardContent>
               </Card>
@@ -222,15 +222,15 @@ export default function ReportsPage() {
                     <div className="grid grid-cols-3 gap-3 text-center">
                       <div className="rounded-xl bg-red-50 p-3">
                         <div className="text-xl font-bold text-red-600">{allIncidents.length}</div>
-                        <div className="text-[10px] text-slate-400">Total</div>
+                        <div className="text-[10px] text-[var(--cs-text-muted)]">Total</div>
                       </div>
                       <div className="rounded-xl bg-amber-50 p-3">
                         <div className="text-xl font-bold text-amber-600">{openIncidents.length}</div>
-                        <div className="text-[10px] text-slate-400">Open</div>
+                        <div className="text-[10px] text-[var(--cs-text-muted)]">Open</div>
                       </div>
                       <div className="rounded-xl bg-emerald-50 p-3">
                         <div className="text-xl font-bold text-emerald-600">{closedIncidents.length}</div>
-                        <div className="text-[10px] text-slate-400">Closed</div>
+                        <div className="text-[10px] text-[var(--cs-text-muted)]">Closed</div>
                       </div>
                     </div>
                     {/* By type */}
@@ -239,11 +239,11 @@ export default function ReportsPage() {
                         const count = allIncidents.filter((i) => i.type === type).length;
                         return (
                           <div key={type} className="flex items-center gap-2 text-xs">
-                            <span className="text-slate-600 flex-1 capitalize">{type.replace(/_/g, " ")}</span>
+                            <span className="text-[var(--cs-text-secondary)] flex-1 capitalize">{type.replace(/_/g, " ")}</span>
                             <div className="h-2 flex-1 max-w-[120px] bg-slate-100 rounded-full overflow-hidden">
                               <div className="h-full bg-red-400 rounded-full" style={{ width: allIncidents.length > 0 ? `${(count / allIncidents.length) * 100}%` : "0%" }} />
                             </div>
-                            <span className="font-semibold text-slate-900 w-4 text-right">{count}</span>
+                            <span className="font-semibold text-[var(--cs-navy)] w-4 text-right">{count}</span>
                           </div>
                         );
                       })}
@@ -267,7 +267,7 @@ export default function ReportsPage() {
                     { label: "Ofsted Grade", value: "Good", status: "good" },
                   ].map(({ label, value, status }) => (
                     <div key={label} className={cn("rounded-xl p-4 border", status === "good" ? "bg-emerald-50 border-emerald-200" : "bg-amber-50 border-amber-200")}>
-                      <div className="text-[10px] text-slate-500 uppercase tracking-wide mb-1">{label}</div>
+                      <div className="text-[10px] text-[var(--cs-text-muted)] uppercase tracking-wide mb-1">{label}</div>
                       <div className={cn("text-lg font-bold", status === "good" ? "text-emerald-700" : "text-amber-700")}>{value}</div>
                     </div>
                   ))}
@@ -299,8 +299,8 @@ export default function ReportsPage() {
                       return (
                         <div key={role} className="space-y-1">
                           <div className="flex justify-between text-xs">
-                            <span className="text-slate-700">{labels[role] || role}</span>
-                            <span className="font-semibold text-slate-900">{count}</span>
+                            <span className="text-[var(--cs-text-secondary)]">{labels[role] || role}</span>
+                            <span className="font-semibold text-[var(--cs-navy)]">{count}</span>
                           </div>
                           <Progress value={pct} color="bg-blue-400" className="h-1.5" />
                         </div>
@@ -322,14 +322,14 @@ export default function ReportsPage() {
                       <div key={label} className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           <div className={cn("h-3 w-3 rounded-sm", color)} />
-                          <span className="text-xs text-slate-700">{label}</span>
+                          <span className="text-xs text-[var(--cs-text-secondary)]">{label}</span>
                         </div>
-                        <span className="text-sm font-semibold text-slate-900">{value} days</span>
+                        <span className="text-sm font-semibold text-[var(--cs-navy)]">{value} days</span>
                       </div>
                     ))}
-                    <div className="pt-2 border-t border-slate-100">
+                    <div className="pt-2 border-t border-[var(--cs-border-subtle)]">
                       <Sparkline values={[2, 0, 1, 3, 2, 1, 0, 2, 1, 3, 4, 2]} color="bg-red-300" />
-                      <div className="text-[10px] text-slate-400 mt-1 text-center">Daily sick absences (last 12 days)</div>
+                      <div className="text-[10px] text-[var(--cs-text-muted)] mt-1 text-center">Daily sick absences (last 12 days)</div>
                     </div>
                   </div>
                 </CardContent>
@@ -347,13 +347,13 @@ export default function ReportsPage() {
                     const completionRate = totalTasks > 0 ? Math.round((completedForStaff / totalTasks) * 100) : 100;
 
                     return (
-                      <div key={staff.id} className="flex items-center gap-4 rounded-xl px-3 py-2.5 hover:bg-slate-50 transition-colors">
+                      <div key={staff.id} className="flex items-center gap-4 rounded-xl px-3 py-2.5 hover:bg-[var(--cs-surface)] transition-colors">
                         <Avatar name={staff.full_name} size="xs" />
-                        <span className="text-sm font-medium text-slate-900 w-36 truncate">{staff.full_name}</span>
+                        <span className="text-sm font-medium text-[var(--cs-navy)] w-36 truncate">{staff.full_name}</span>
                         <div className="flex-1">
                           <Progress value={completionRate} color={completionRate > 70 ? "bg-emerald-400" : completionRate > 40 ? "bg-amber-400" : "bg-red-400"} className="h-1.5" />
                         </div>
-                        <span className="text-xs text-slate-500 w-20">{completedForStaff}/{totalTasks} tasks</span>
+                        <span className="text-xs text-[var(--cs-text-muted)] w-20">{completedForStaff}/{totalTasks} tasks</span>
                         {staff.training_expired_count > 0 ? (
                           <Badge className="text-[9px] rounded-full bg-red-100 text-red-700">{staff.training_expired_count} expired training</Badge>
                         ) : (
@@ -386,7 +386,7 @@ export default function ReportsPage() {
                       <div key={staff.id} className="space-y-1.5">
                         <div className="flex items-center gap-3">
                           <Avatar name={staff.full_name} size="xs" />
-                          <span className="text-sm text-slate-900 flex-1">{staff.full_name}</span>
+                          <span className="text-sm text-[var(--cs-navy)] flex-1">{staff.full_name}</span>
                           <div className="flex gap-1.5">
                             <span className="text-[10px] text-emerald-600 font-medium">{Math.max(0, compliant)} OK</span>
                             {expired > 0 && <span className="text-[10px] text-red-600 font-medium">{expired} exp</span>}
@@ -417,19 +417,19 @@ export default function ReportsPage() {
                       critical: "bg-red-100 text-red-700",
                       high: "bg-orange-100 text-orange-700",
                       medium: "bg-amber-100 text-amber-700",
-                      low: "bg-slate-100 text-slate-600",
+                      low: "bg-slate-100 text-[var(--cs-text-secondary)]",
                     };
                     return (
                       <div key={sev} className="space-y-2">
                         <div className="flex items-center gap-2">
                           <Badge className={cn("text-[9px] rounded-full capitalize", colors[sev])}>{sev}</Badge>
-                          <span className="text-xs text-slate-400">{sevIncidents.length} incident{sevIncidents.length > 1 ? "s" : ""}</span>
+                          <span className="text-xs text-[var(--cs-text-muted)]">{sevIncidents.length} incident{sevIncidents.length > 1 ? "s" : ""}</span>
                         </div>
                         {sevIncidents.map((inc) => (
                           <div key={inc.id} className="flex items-center gap-3 rounded-xl bg-slate-50 px-3 py-2 text-xs">
-                            <span className="text-slate-400 shrink-0">{inc.reference}</span>
-                            <span className="text-slate-700 flex-1 truncate">{inc.type.replace(/_/g, " ")}</span>
-                            <span className="text-slate-400">{inc.date}</span>
+                            <span className="text-[var(--cs-text-muted)] shrink-0">{inc.reference}</span>
+                            <span className="text-[var(--cs-text-secondary)] flex-1 truncate">{inc.type.replace(/_/g, " ")}</span>
+                            <span className="text-[var(--cs-text-muted)]">{inc.date}</span>
                             <Badge className={cn("text-[9px] rounded-full", inc.status === "open" ? "bg-red-100 text-red-700" : "bg-emerald-100 text-emerald-700")}>
                               {inc.status}
                             </Badge>
@@ -454,10 +454,10 @@ export default function ReportsPage() {
                 { label: "Expenses Submitted", value: "£561", sub: "7 claims", color: "text-violet-600" },
                 { label: "Petty Cash Balance", value: "£43.50", sub: "Last counted: today", color: "text-emerald-600" },
               ].map(({ label, value, sub, color }) => (
-                <div key={label} className="rounded-2xl border border-slate-200 bg-white p-5">
-                  <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">{label}</div>
+                <div key={label} className="rounded-2xl border border-[var(--cs-border)] bg-white p-5">
+                  <div className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider">{label}</div>
                   <div className={cn("mt-1 text-2xl font-bold", color)}>{value}</div>
-                  <div className="text-xs text-slate-400 mt-0.5">{sub}</div>
+                  <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">{sub}</div>
                 </div>
               ))}
             </div>

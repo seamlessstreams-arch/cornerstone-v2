@@ -270,12 +270,12 @@ export default function PatternIntelligencePage() {
             { label: "Patterns", value: counts.patterns, icon: Radar, colour: "text-violet-600" },
             { label: "Voice Gaps", value: counts.voiceGaps, icon: Quote, colour: "text-blue-600" },
             { label: "Compliance", value: counts.compliance, icon: Calendar, colour: "text-amber-600" },
-            { label: "Children", value: counts.childrenAffected, icon: Users, colour: "text-slate-600" },
+            { label: "Children", value: counts.childrenAffected, icon: Users, colour: "text-[var(--cs-text-secondary)]" },
           ].map((s) => (
-            <div key={s.label} className="rounded-2xl border border-slate-200 bg-white p-4 text-center">
+            <div key={s.label} className="rounded-2xl border border-[var(--cs-border)] bg-white p-4 text-center">
               <s.icon className={cn("h-4 w-4 mx-auto mb-1", s.colour)} />
-              <div className="text-2xl font-bold text-slate-900">{s.value}</div>
-              <div className="text-[10px] text-slate-500 font-medium uppercase tracking-wide">{s.label}</div>
+              <div className="text-2xl font-bold text-[var(--cs-navy)]">{s.value}</div>
+              <div className="text-[10px] text-[var(--cs-text-muted)] font-medium uppercase tracking-wide">{s.label}</div>
             </div>
           ))}
         </div>
@@ -335,7 +335,7 @@ export default function PatternIntelligencePage() {
               <SelectItem value="resolved">Resolved</SelectItem>
             </SelectContent>
           </Select>
-          <span className="text-xs text-slate-500 ml-auto">{filtered.length} alert{filtered.length !== 1 ? "s" : ""}</span>
+          <span className="text-xs text-[var(--cs-text-muted)] ml-auto">{filtered.length} alert{filtered.length !== 1 ? "s" : ""}</span>
         </div>
 
         {/* ── Alert list ──────────────────────────────────────────────────── */}
@@ -350,7 +350,7 @@ export default function PatternIntelligencePage() {
               <div
                 key={alert.id}
                 className={cn(
-                  "rounded-2xl border border-slate-200 bg-white overflow-hidden transition-all border-l-4",
+                  "rounded-2xl border border-[var(--cs-border)] bg-white overflow-hidden transition-all border-l-4",
                   sevConf.border,
                 )}
               >
@@ -376,14 +376,14 @@ export default function PatternIntelligencePage() {
                         {STATUS_CONFIG[alert.status].label}
                       </Badge>
                     </div>
-                    <p className="text-sm font-medium text-slate-900 truncate">{alert.title}</p>
+                    <p className="text-sm font-medium text-[var(--cs-navy)] truncate">{alert.title}</p>
                   </div>
-                  <ChevronRight className={cn("h-4 w-4 text-slate-400 transition-transform shrink-0", isExpanded && "rotate-90")} />
+                  <ChevronRight className={cn("h-4 w-4 text-[var(--cs-text-muted)] transition-transform shrink-0", isExpanded && "rotate-90")} />
                 </button>
 
                 {isExpanded && (
-                  <div className="px-5 pb-5 border-t border-slate-100 pt-4 space-y-4">
-                    <p className="text-sm text-slate-700">{alert.description}</p>
+                  <div className="px-5 pb-5 border-t border-[var(--cs-border-subtle)] pt-4 space-y-4">
+                    <p className="text-sm text-[var(--cs-text-secondary)]">{alert.description}</p>
 
                     <div className="rounded-xl bg-violet-50 border border-violet-200 p-4">
                       <div className="flex items-center gap-2 mb-2">
@@ -393,7 +393,7 @@ export default function PatternIntelligencePage() {
                       <p className="text-sm text-violet-800">{alert.recommendation}</p>
                     </div>
 
-                    <div className="flex items-center gap-3 text-xs text-slate-500">
+                    <div className="flex items-center gap-3 text-xs text-[var(--cs-text-muted)]">
                       <span className="flex items-center gap-1">
                         <Clock className="h-3 w-3" />
                         Detected: {new Date(alert.detectedAt).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" })}
@@ -432,15 +432,15 @@ export default function PatternIntelligencePage() {
           })}
 
           {filtered.length === 0 && (
-            <div className="rounded-2xl border border-slate-200 p-8 text-center">
-              <Brain className="h-8 w-8 text-slate-300 mx-auto mb-3" />
-              <p className="text-sm text-slate-500">No alerts match the current filters.</p>
+            <div className="rounded-2xl border border-[var(--cs-border)] p-8 text-center">
+              <Brain className="h-8 w-8 text-[var(--cs-text-gentle)] mx-auto mb-3" />
+              <p className="text-sm text-[var(--cs-text-muted)]">No alerts match the current filters.</p>
             </div>
           )}
         </div>
 
         {/* ── Regulatory note ─────────────────────────────────────────────── */}
-        <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs text-slate-500 leading-relaxed">
+        <div className="rounded-2xl border border-[var(--cs-border)] bg-slate-50 px-4 py-3 text-xs text-[var(--cs-text-muted)] leading-relaxed">
           <strong>Regulatory evidence.</strong> This dashboard demonstrates that the home uses data and intelligence
           to proactively identify emerging patterns, safeguard children, and strengthen care. Pattern detection,
           voice gap analysis, and compliance monitoring are tools to support professional judgement — they do not

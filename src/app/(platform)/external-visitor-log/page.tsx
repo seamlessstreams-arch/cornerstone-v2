@@ -43,7 +43,7 @@ const typeColour: Record<VisitorType, string> = {
   contractor: "bg-amber-100 text-amber-800",
   inspector: "bg-purple-100 text-purple-800",
   family_of_staff: "bg-pink-100 text-pink-800",
-  tradesperson: "bg-slate-100 text-slate-800",
+  tradesperson: "bg-slate-100 text-[var(--cs-navy)]",
   researcher: "bg-indigo-100 text-indigo-800",
   friend_of_child: "bg-rose-100 text-rose-800",
 };
@@ -201,7 +201,7 @@ export default function ExternalVisitorLogPage() {
               dbsIssue && "border-l-4 border-l-red-500"
             )}>
               <button
-                className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                 onClick={() => setExpandedId(isExpanded ? null : visit.id)}
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -248,7 +248,7 @@ export default function ExternalVisitorLogPage() {
                         ID Checked
                       </div>
                       <div className={cn("rounded-lg p-2 text-center text-sm",
-                        !visit.dbs_required ? "bg-slate-100 text-slate-700" :
+                        !visit.dbs_required ? "bg-slate-100 text-[var(--cs-text-secondary)]" :
                         visit.dbs_checked ? "bg-green-50 text-green-800" : "bg-red-50 text-red-800"
                       )}>
                         {!visit.dbs_required ? "DBS N/A" : (visit.dbs_checked ? <><CheckCircle className="h-4 w-4 inline mr-1" />DBS Verified</> : <><AlertTriangle className="h-4 w-4 inline mr-1" />DBS REQUIRED</>)}
@@ -260,7 +260,7 @@ export default function ExternalVisitorLogPage() {
                         Signed {visit.signed_in ? "In" : "—"}/{visit.signed_out ? "Out" : "—"}
                       </div>
                       <div className={cn("rounded-lg p-2 text-center text-sm",
-                        visit.badge_issued ? "bg-blue-50 text-blue-800" : "bg-slate-100 text-slate-700"
+                        visit.badge_issued ? "bg-blue-50 text-blue-800" : "bg-slate-100 text-[var(--cs-text-secondary)]"
                       )}>
                         Badge {visit.badge_issued ? "Issued" : "Not Required"}
                       </div>
@@ -305,7 +305,7 @@ export default function ExternalVisitorLogPage() {
 
                   {visit.notes && (
                     <div className="bg-slate-50 rounded-lg p-3 border">
-                      <p className="text-xs font-semibold text-slate-800 uppercase tracking-wide mb-1">Notes</p>
+                      <p className="text-xs font-semibold text-[var(--cs-navy)] uppercase tracking-wide mb-1">Notes</p>
                       <p className="text-sm">{visit.notes}</p>
                     </div>
                   )}

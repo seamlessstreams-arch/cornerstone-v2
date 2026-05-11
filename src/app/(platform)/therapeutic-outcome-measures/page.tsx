@@ -228,7 +228,7 @@ const trendColour: Record<string, string> = {
   Improving: "text-green-600",
   Stable: "text-blue-600",
   Declining: "text-red-600",
-  Baseline: "text-slate-600",
+  Baseline: "text-[var(--cs-text-secondary)]",
 };
 
 const interpretationColour: Record<string, string> = {
@@ -363,7 +363,7 @@ export default function TherapeuticOutcomeMeasuresPage() {
               hasClinicalConcern && "border-l-4 border-l-red-500"
             )}>
               <button
-                className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                 onClick={() => setExpandedId(isExpanded ? null : measure.id)}
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0">

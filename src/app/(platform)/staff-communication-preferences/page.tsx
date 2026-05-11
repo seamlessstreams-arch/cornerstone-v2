@@ -134,7 +134,7 @@ export default function StaffCommunicationPreferencesPage() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {[
             { label: "Profiles Complete", value: profilesComplete, icon: CheckCircle2, colour: "text-green-600" },
-            { label: "Due for Review", value: dueForReview, icon: Clock, colour: dueForReview > 0 ? "text-amber-600" : "text-slate-400" },
+            { label: "Due for Review", value: dueForReview, icon: Clock, colour: dueForReview > 0 ? "text-amber-600" : "text-[var(--cs-text-muted)]" },
             { label: "Adjustments in Place", value: adjustmentsInPlace, icon: Accessibility, colour: "text-blue-600" },
             { label: "Languages Supported", value: languagesSupported, icon: Globe, colour: "text-purple-600" },
           ].map((s) => (
@@ -201,7 +201,7 @@ export default function StaffCommunicationPreferencesPage() {
               <div key={rec.id} className="rounded-xl border bg-white overflow-hidden">
                 <button
                   onClick={() => setExpandedId(isExpanded ? null : rec.id)}
-                  className="w-full px-4 py-3 flex items-center gap-3 hover:bg-slate-50 transition-colors text-left"
+                  className="w-full px-4 py-3 flex items-center gap-3 hover:bg-[var(--cs-surface)] transition-colors text-left"
                 >
                   <div className="flex items-center gap-2 flex-1 min-w-0">
                     <MessageSquare className="h-4 w-4 text-blue-600 shrink-0" />

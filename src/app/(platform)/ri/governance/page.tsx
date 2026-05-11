@@ -243,7 +243,7 @@ const TYPE_CONFIG: Record<RiReportType, { label: string; icon: React.ElementType
 };
 
 const STATUS_CONFIG: Record<RiReportStatus, { label: string; icon: React.ElementType; color: string; bg: string; border: string }> = {
-  draft:     { label: "Draft",     icon: FileText,     color: "text-slate-600",   bg: "bg-slate-50",   border: "border-slate-200"   },
+  draft:     { label: "Draft",     icon: FileText,     color: "text-[var(--cs-text-secondary)]",   bg: "bg-slate-50",   border: "border-[var(--cs-border)]"   },
   reviewed:  { label: "Reviewed",  icon: Eye,          color: "text-amber-700",   bg: "bg-amber-50",   border: "border-amber-200"   },
   approved:  { label: "Approved",  icon: CheckCircle2, color: "text-emerald-700", bg: "bg-emerald-50", border: "border-emerald-200" },
   published: { label: "Published", icon: ScrollText,   color: "text-blue-700",    bg: "bg-blue-50",    border: "border-blue-200"    },
@@ -297,9 +297,9 @@ function ReportCard({
 
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap mb-1">
-            <h3 className="text-sm font-semibold text-slate-900">{tc.label}</h3>
+            <h3 className="text-sm font-semibold text-[var(--cs-navy)]">{tc.label}</h3>
             {report.report_period && (
-              <span className="text-xs text-slate-500">— {report.report_period}</span>
+              <span className="text-xs text-[var(--cs-text-muted)]">— {report.report_period}</span>
             )}
             {report.generated_by_aria && (
               <Badge className="bg-violet-50 text-violet-700 border-violet-200 text-[10px] px-1.5 py-0">
@@ -308,9 +308,9 @@ function ReportCard({
               </Badge>
             )}
           </div>
-          <p className="text-xs text-slate-600 line-clamp-2">{report.content.summary}</p>
+          <p className="text-xs text-[var(--cs-text-secondary)] line-clamp-2">{report.content.summary}</p>
 
-          <div className="flex items-center gap-3 mt-2 text-[11px] text-slate-400">
+          <div className="flex items-center gap-3 mt-2 text-[11px] text-[var(--cs-text-muted)]">
             <span className="flex items-center gap-1">
               <User className="h-3 w-3" />
               {getStaffName(report.created_by)}
@@ -334,7 +334,7 @@ function ReportCard({
             <StIcon className="h-3 w-3 mr-1" />
             {sc.label}
           </Badge>
-          {expanded ? <ChevronUp className="h-4 w-4 text-slate-400" /> : <ChevronDown className="h-4 w-4 text-slate-400" />}
+          {expanded ? <ChevronUp className="h-4 w-4 text-[var(--cs-text-muted)]" /> : <ChevronDown className="h-4 w-4 text-[var(--cs-text-muted)]" />}
         </div>
       </div>
 
@@ -344,11 +344,11 @@ function ReportCard({
           {/* Key Findings */}
           {report.content.key_findings && report.content.key_findings.length > 0 && (
             <div>
-              <h4 className="text-[11px] font-semibold text-slate-600 uppercase tracking-wide mb-2">Key Findings</h4>
+              <h4 className="text-[11px] font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide mb-2">Key Findings</h4>
               <ul className="space-y-1.5">
                 {report.content.key_findings.map((f, i) => (
-                  <li key={i} className="flex items-start gap-2 text-xs text-slate-700">
-                    <Activity className="h-3 w-3 text-slate-400 mt-0.5 flex-shrink-0" />
+                  <li key={i} className="flex items-start gap-2 text-xs text-[var(--cs-text-secondary)]">
+                    <Activity className="h-3 w-3 text-[var(--cs-text-muted)] mt-0.5 flex-shrink-0" />
                     {f}
                   </li>
                 ))}
@@ -362,7 +362,7 @@ function ReportCard({
               <h4 className="text-[11px] font-semibold text-emerald-700 uppercase tracking-wide mb-2">Strengths</h4>
               <ul className="space-y-1.5">
                 {report.content.strengths.map((s, i) => (
-                  <li key={i} className="flex items-start gap-2 text-xs text-slate-700">
+                  <li key={i} className="flex items-start gap-2 text-xs text-[var(--cs-text-secondary)]">
                     <TrendingUp className="h-3 w-3 text-emerald-500 mt-0.5 flex-shrink-0" />
                     {s}
                   </li>
@@ -377,7 +377,7 @@ function ReportCard({
               <h4 className="text-[11px] font-semibold text-red-700 uppercase tracking-wide mb-2">Concerns</h4>
               <ul className="space-y-1.5">
                 {report.content.concerns.map((c, i) => (
-                  <li key={i} className="flex items-start gap-2 text-xs text-slate-700">
+                  <li key={i} className="flex items-start gap-2 text-xs text-[var(--cs-text-secondary)]">
                     <AlertTriangle className="h-3 w-3 text-red-500 mt-0.5 flex-shrink-0" />
                     {c}
                   </li>
@@ -392,7 +392,7 @@ function ReportCard({
               <h4 className="text-[11px] font-semibold text-blue-700 uppercase tracking-wide mb-2">Actions</h4>
               <ul className="space-y-1.5">
                 {report.content.actions.map((a, i) => (
-                  <li key={i} className="flex items-start gap-2 text-xs text-slate-700">
+                  <li key={i} className="flex items-start gap-2 text-xs text-[var(--cs-text-secondary)]">
                     <CheckCircle2 className="h-3 w-3 text-blue-500 mt-0.5 flex-shrink-0" />
                     {a}
                   </li>
@@ -403,7 +403,7 @@ function ReportCard({
 
           {/* Approval info */}
           {report.approved_by && (
-            <div className="text-[10px] text-slate-400 pt-2 border-t border-slate-100">
+            <div className="text-[10px] text-[var(--cs-text-muted)] pt-2 border-t border-[var(--cs-border-subtle)]">
               Approved by {getStaffName(report.approved_by)} — {formatDate(report.approved_at!)}
             </div>
           )}
@@ -520,7 +520,7 @@ function NewReportDialog({
         <div className="space-y-3 py-2">
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="text-[11px] font-medium text-slate-600 mb-1 block">Report Type</label>
+              <label className="text-[11px] font-medium text-[var(--cs-text-secondary)] mb-1 block">Report Type</label>
               <Select value={reportType} onValueChange={(v) => setReportType(v as RiReportType)}>
                 <SelectTrigger className="h-8 text-xs">
                   <SelectValue />
@@ -533,7 +533,7 @@ function NewReportDialog({
               </Select>
             </div>
             <div>
-              <label className="text-[11px] font-medium text-slate-600 mb-1 block">Report Period</label>
+              <label className="text-[11px] font-medium text-[var(--cs-text-secondary)] mb-1 block">Report Period</label>
               <Input
                 value={period}
                 onChange={(e) => setPeriod(e.target.value)}
@@ -544,7 +544,7 @@ function NewReportDialog({
           </div>
 
           <div>
-            <label className="text-[11px] font-medium text-slate-600 mb-1 block">Summary *</label>
+            <label className="text-[11px] font-medium text-[var(--cs-text-secondary)] mb-1 block">Summary *</label>
             <Textarea
               value={summary}
               onChange={(e) => setSummary(e.target.value)}
@@ -554,7 +554,7 @@ function NewReportDialog({
           </div>
 
           <div>
-            <label className="text-[11px] font-medium text-slate-600 mb-1 block">Key Findings (one per line)</label>
+            <label className="text-[11px] font-medium text-[var(--cs-text-secondary)] mb-1 block">Key Findings (one per line)</label>
             <Textarea
               value={findings}
               onChange={(e) => setFindings(e.target.value)}
@@ -564,7 +564,7 @@ function NewReportDialog({
           </div>
 
           <div>
-            <label className="text-[11px] font-medium text-slate-600 mb-1 block">Strengths (one per line)</label>
+            <label className="text-[11px] font-medium text-[var(--cs-text-secondary)] mb-1 block">Strengths (one per line)</label>
             <Textarea
               value={strengths}
               onChange={(e) => setStrengths(e.target.value)}
@@ -574,7 +574,7 @@ function NewReportDialog({
           </div>
 
           <div>
-            <label className="text-[11px] font-medium text-slate-600 mb-1 block">Concerns (one per line)</label>
+            <label className="text-[11px] font-medium text-[var(--cs-text-secondary)] mb-1 block">Concerns (one per line)</label>
             <Textarea
               value={concerns}
               onChange={(e) => setConcerns(e.target.value)}
@@ -584,7 +584,7 @@ function NewReportDialog({
           </div>
 
           <div>
-            <label className="text-[11px] font-medium text-slate-600 mb-1 block">Actions (one per line)</label>
+            <label className="text-[11px] font-medium text-[var(--cs-text-secondary)] mb-1 block">Actions (one per line)</label>
             <Textarea
               value={actions}
               onChange={(e) => setActions(e.target.value)}
@@ -729,15 +729,15 @@ export default function GovernanceReportsPage() {
       {/* ── Summary stats ─────────────────────────────────────────────────── */}
       <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-6">
         {[
-          { label: "Total Reports",   value: stats.total,     color: "text-slate-700",   bg: "bg-slate-50",   border: "border-slate-200"   },
-          { label: "Drafts",          value: stats.draft,     color: "text-slate-600",   bg: "bg-slate-50",   border: "border-slate-200"   },
+          { label: "Total Reports",   value: stats.total,     color: "text-[var(--cs-text-secondary)]",   bg: "bg-slate-50",   border: "border-[var(--cs-border)]"   },
+          { label: "Drafts",          value: stats.draft,     color: "text-[var(--cs-text-secondary)]",   bg: "bg-slate-50",   border: "border-[var(--cs-border)]"   },
           { label: "Awaiting Review", value: stats.reviewed,  color: "text-amber-600",   bg: "bg-amber-50",   border: "border-amber-200"   },
           { label: "Approved",        value: stats.approved,  color: "text-emerald-600", bg: "bg-emerald-50", border: "border-emerald-200" },
           { label: "ARIA Generated",  value: stats.ariaGen,   color: "text-violet-600",  bg: "bg-violet-50",  border: "border-violet-200"  },
         ].map((s) => (
           <div key={s.label} className={cn("rounded-lg border p-3 text-center", s.bg, s.border)}>
             <div className={cn("text-xl font-bold", s.color)}>{s.value}</div>
-            <div className="text-[10px] text-slate-500 font-medium mt-0.5">{s.label}</div>
+            <div className="text-[10px] text-[var(--cs-text-muted)] font-medium mt-0.5">{s.label}</div>
           </div>
         ))}
       </div>
@@ -752,7 +752,7 @@ export default function GovernanceReportsPage() {
               "px-3 py-2 text-xs font-medium whitespace-nowrap border-b-2 -mb-px transition-colors",
               tab === t.key
                 ? "border-blue-600 text-blue-700"
-                : "border-transparent text-slate-500 hover:text-slate-700"
+                : "border-transparent text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)]"
             )}
           >
             {t.label}
@@ -764,7 +764,7 @@ export default function GovernanceReportsPage() {
       {/* ── Filters ───────────────────────────────────────────────────────── */}
       <div className="flex flex-wrap items-center gap-2 mb-4">
         <div className="relative flex-1 min-w-[200px] max-w-xs">
-          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
           <Input
             placeholder="Search reports…"
             value={search}
@@ -773,7 +773,7 @@ export default function GovernanceReportsPage() {
           />
         </div>
 
-        <div className="flex items-center gap-1 text-xs text-slate-500">
+        <div className="flex items-center gap-1 text-xs text-[var(--cs-text-muted)]">
           <Filter className="h-3.5 w-3.5" />
         </div>
 
@@ -790,7 +790,7 @@ export default function GovernanceReportsPage() {
         </Select>
 
         <div className="flex items-center gap-1">
-          <ArrowUpDown className="h-3.5 w-3.5 text-slate-400" />
+          <ArrowUpDown className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
           <Select value={sortBy} onValueChange={setSortBy}>
             <SelectTrigger className="h-8 w-[120px] text-xs">
               <SelectValue />
@@ -808,7 +808,7 @@ export default function GovernanceReportsPage() {
           <Button
             variant="ghost"
             size="sm"
-            className="h-8 text-xs text-slate-500"
+            className="h-8 text-xs text-[var(--cs-text-muted)]"
             onClick={() => { setSearch(""); setTypeFilter("all"); }}
           >
             <X className="h-3 w-3 mr-1" /> Clear
@@ -818,7 +818,7 @@ export default function GovernanceReportsPage() {
 
       {/* ── Report List ───────────────────────────────────────────────────── */}
       {filtered.length === 0 ? (
-        <div className="text-center py-16 text-slate-400">
+        <div className="text-center py-16 text-[var(--cs-text-muted)]">
           <FileText className="h-10 w-10 mx-auto mb-3 opacity-40" />
           <p className="text-sm font-medium">No reports found</p>
           <p className="text-xs mt-1">
@@ -839,17 +839,17 @@ export default function GovernanceReportsPage() {
       )}
 
       {/* Footer count */}
-      <div className="text-center text-[10px] text-slate-400 mt-6">
+      <div className="text-center text-[10px] text-[var(--cs-text-muted)] mt-6">
         Showing {filtered.length} of {stats.total} report{stats.total !== 1 ? "s" : ""}
       </div>
 
       {/* ── Regulatory Note ───────────────────────────────────────────────── */}
-      <div className="mt-8 rounded-lg bg-slate-50 border border-slate-200 p-4">
+      <div className="mt-8 rounded-lg bg-slate-50 border border-[var(--cs-border)] p-4">
         <div className="flex items-start gap-3">
           <Gavel className="h-5 w-5 text-indigo-500 mt-0.5 flex-shrink-0" />
           <div>
-            <h4 className="text-xs font-semibold text-slate-700 mb-1">Regulatory Context</h4>
-            <p className="text-[11px] text-slate-500 leading-relaxed">
+            <h4 className="text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Regulatory Context</h4>
+            <p className="text-[11px] text-[var(--cs-text-muted)] leading-relaxed">
               The Responsible Individual must monitor the quality and effectiveness of the home (Reg 45, Children&apos;s
               Homes Regulations 2015). This includes producing a written report at least every 6 months evaluating
               the quality of care, whether children are effectively safeguarded, the conduct of the home, and any

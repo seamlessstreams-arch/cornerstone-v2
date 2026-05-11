@@ -65,14 +65,14 @@ const ROLE_CONFIG: Record<EmergencyContactRole, { label: string; icon: React.Ele
   gp:             { label: "GP",             icon: Stethoscope,    colour: "bg-green-100 text-green-700" },
   dentist:        { label: "Dentist",        icon: Stethoscope,    colour: "bg-cyan-100 text-cyan-700" },
   camhs:          { label: "CAMHS",          icon: Baby,           colour: "bg-rose-100 text-rose-700" },
-  other:          { label: "Other",          icon: User,           colour: "bg-slate-100 text-slate-700" },
+  other:          { label: "Other",          icon: User,           colour: "bg-slate-100 text-[var(--cs-text-secondary)]" },
 };
 
 const CATEGORY_COLOURS: Record<HomeContact["category"], string> = {
   emergency_999: "bg-red-600 text-white",
   on_call:       "bg-amber-100 text-amber-800",
   local_service: "bg-blue-100 text-blue-800",
-  regulatory:    "bg-slate-100 text-slate-700",
+  regulatory:    "bg-slate-100 text-[var(--cs-text-secondary)]",
 };
 
 // ── Helper ────────────────────────────────────────────────────────────────────
@@ -229,35 +229,35 @@ export default function EmergencyContactsPage() {
     return (
       <div
         key={c.id}
-        className="flex items-start gap-3 py-2.5 border-b border-slate-100 last:border-0 group"
+        className="flex items-start gap-3 py-2.5 border-b border-[var(--cs-border-subtle)] last:border-0 group"
       >
         <div className={cn("mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg", cfg.colour)}>
           <Icon className="h-3.5 w-3.5" />
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-xs font-medium text-slate-500 uppercase tracking-wide">{cfg.label}</span>
+            <span className="text-xs font-medium text-[var(--cs-text-muted)] uppercase tracking-wide">{cfg.label}</span>
             {isDentistOverdue && (
               <Badge variant="warning" className="text-[10px] py-0">Overdue</Badge>
             )}
           </div>
-          <p className="text-sm font-semibold text-slate-900 leading-snug">
+          <p className="text-sm font-semibold text-[var(--cs-navy)] leading-snug">
             {c.name}
             {c.organisation && (
-              <span className="font-normal text-slate-500"> — {c.organisation}</span>
+              <span className="font-normal text-[var(--cs-text-muted)]"> — {c.organisation}</span>
             )}
           </p>
           <div className="flex items-center gap-3 mt-0.5 flex-wrap">
-            <span className="inline-flex items-center gap-1 text-xs text-slate-600">
+            <span className="inline-flex items-center gap-1 text-xs text-[var(--cs-text-secondary)]">
               <Phone className="h-3 w-3" />
               {c.phone}
             </span>
             {c.email && (
-              <span className="text-xs text-slate-500 truncate">{c.email}</span>
+              <span className="text-xs text-[var(--cs-text-muted)] truncate">{c.email}</span>
             )}
           </div>
           {c.notes && (
-            <p className="text-xs text-slate-500 mt-0.5 italic">{c.notes}</p>
+            <p className="text-xs text-[var(--cs-text-muted)] mt-0.5 italic">{c.notes}</p>
           )}
         </div>
         <Button
@@ -284,7 +284,7 @@ export default function EmergencyContactsPage() {
         showQuickCreate={false}
       >
         <div className="flex items-center justify-center py-24">
-          <Loader2 className="h-8 w-8 animate-spin text-slate-400" />
+          <Loader2 className="h-8 w-8 animate-spin text-[var(--cs-text-muted)]" />
         </div>
       </PageShell>
     );
@@ -302,15 +302,15 @@ export default function EmergencyContactsPage() {
       <div id="emergency-board" className="space-y-8">
 
         {/* ── Review status banner ─────────────────────────────────────────── */}
-        <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3">
-          <div className="flex items-center gap-2 text-sm text-slate-600">
+        <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-[var(--cs-border)] bg-slate-50 px-4 py-3">
+          <div className="flex items-center gap-2 text-sm text-[var(--cs-text-secondary)]">
             <CheckCircle2 className="h-4 w-4 text-emerald-600" />
             <span>
-              Last reviewed: <strong className="text-slate-900">{formatDate(LAST_REVIEWED)}</strong>
+              Last reviewed: <strong className="text-[var(--cs-navy)]">{formatDate(LAST_REVIEWED)}</strong>
             </span>
-            <span className="text-slate-300">|</span>
+            <span className="text-[var(--cs-text-gentle)]">|</span>
             <span>
-              Next review due: <strong className="text-slate-900">{formatDate(NEXT_REVIEW)}</strong>
+              Next review due: <strong className="text-[var(--cs-navy)]">{formatDate(NEXT_REVIEW)}</strong>
             </span>
           </div>
           <div className="flex items-center gap-2">
@@ -328,7 +328,7 @@ export default function EmergencyContactsPage() {
         <section>
           <div className="flex items-center gap-2 mb-4">
             <AlertTriangle className="h-5 w-5 text-red-600" />
-            <h2 className="text-lg font-bold text-slate-900">Home Emergency Contacts</h2>
+            <h2 className="text-lg font-bold text-[var(--cs-navy)]">Home Emergency Contacts</h2>
           </div>
 
           {/* 999 / critical — large cards */}
@@ -378,9 +378,9 @@ export default function EmergencyContactsPage() {
                 <CardContent className="p-3">
                   <div className="flex items-start justify-between gap-2">
                     <div>
-                      <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">{c.label}</p>
-                      <p className="text-base font-bold text-slate-900 mt-0.5">{c.number}</p>
-                      <p className="text-xs text-slate-500 mt-0.5">{c.description}</p>
+                      <p className="text-xs font-medium text-[var(--cs-text-muted)] uppercase tracking-wide">{c.label}</p>
+                      <p className="text-base font-bold text-[var(--cs-navy)] mt-0.5">{c.number}</p>
+                      <p className="text-xs text-[var(--cs-text-muted)] mt-0.5">{c.description}</p>
                     </div>
                     <Badge variant={c.category === "regulatory" ? "secondary" : "info"} className="shrink-0 text-[10px]">
                       {c.available}
@@ -399,7 +399,7 @@ export default function EmergencyContactsPage() {
         <section>
           <div className="flex items-center gap-2 mb-4">
             <User className="h-5 w-5 text-blue-600" />
-            <h2 className="text-lg font-bold text-slate-900">Young People — Key Contacts</h2>
+            <h2 className="text-lg font-bold text-[var(--cs-navy)]">Young People — Key Contacts</h2>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
@@ -444,7 +444,7 @@ export default function EmergencyContactsPage() {
         <section>
           <div className="flex items-center gap-2 mb-4">
             <Clock className="h-5 w-5 text-amber-600" />
-            <h2 className="text-lg font-bold text-slate-900">On-Call Rota — Current Week</h2>
+            <h2 className="text-lg font-bold text-[var(--cs-navy)]">On-Call Rota — Current Week</h2>
           </div>
 
           <Card>
@@ -452,11 +452,11 @@ export default function EmergencyContactsPage() {
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="border-b border-slate-200 bg-slate-50">
-                      <th className="px-4 py-2.5 text-left font-medium text-slate-500 text-xs uppercase tracking-wide">Day</th>
-                      <th className="px-4 py-2.5 text-left font-medium text-slate-500 text-xs uppercase tracking-wide">Date</th>
-                      <th className="px-4 py-2.5 text-left font-medium text-slate-500 text-xs uppercase tracking-wide">On-Call Manager</th>
-                      <th className="px-4 py-2.5 text-left font-medium text-slate-500 text-xs uppercase tracking-wide">Contact</th>
+                    <tr className="border-b border-[var(--cs-border)] bg-slate-50">
+                      <th className="px-4 py-2.5 text-left font-medium text-[var(--cs-text-muted)] text-xs uppercase tracking-wide">Day</th>
+                      <th className="px-4 py-2.5 text-left font-medium text-[var(--cs-text-muted)] text-xs uppercase tracking-wide">Date</th>
+                      <th className="px-4 py-2.5 text-left font-medium text-[var(--cs-text-muted)] text-xs uppercase tracking-wide">On-Call Manager</th>
+                      <th className="px-4 py-2.5 text-left font-medium text-[var(--cs-text-muted)] text-xs uppercase tracking-wide">Contact</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -464,11 +464,11 @@ export default function EmergencyContactsPage() {
                       <tr
                         key={i}
                         className={cn(
-                          "border-b border-slate-100 last:border-0",
+                          "border-b border-[var(--cs-border-subtle)] last:border-0",
                           isToday(entry) && "bg-amber-50 font-medium"
                         )}
                       >
-                        <td className="px-4 py-2.5 text-slate-900">
+                        <td className="px-4 py-2.5 text-[var(--cs-navy)]">
                           <div className="flex items-center gap-2">
                             {entry.day}
                             {isToday(entry) && (
@@ -476,10 +476,10 @@ export default function EmergencyContactsPage() {
                             )}
                           </div>
                         </td>
-                        <td className="px-4 py-2.5 text-slate-600">{entry.date}</td>
-                        <td className="px-4 py-2.5 text-slate-900 font-medium">{getStaffName(entry.managerId)}</td>
+                        <td className="px-4 py-2.5 text-[var(--cs-text-secondary)]">{entry.date}</td>
+                        <td className="px-4 py-2.5 text-[var(--cs-navy)] font-medium">{getStaffName(entry.managerId)}</td>
                         <td className="px-4 py-2.5">
-                          <span className="inline-flex items-center gap-1 text-slate-600">
+                          <span className="inline-flex items-center gap-1 text-[var(--cs-text-secondary)]">
                             <Phone className="h-3 w-3" />
                             {entry.phone}
                           </span>
@@ -494,10 +494,10 @@ export default function EmergencyContactsPage() {
         </section>
 
         {/* ── Regulatory note ──────────────────────────────────────────────── */}
-        <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs text-slate-500 flex items-start gap-2 print:border-slate-300">
-          <Shield className="h-4 w-4 text-slate-400 shrink-0 mt-0.5" />
+        <div className="rounded-xl border border-[var(--cs-border)] bg-slate-50 px-4 py-3 text-xs text-[var(--cs-text-muted)] flex items-start gap-2 print:border-slate-300">
+          <Shield className="h-4 w-4 text-[var(--cs-text-muted)] shrink-0 mt-0.5" />
           <div>
-            <p className="font-medium text-slate-700">Regulatory requirement</p>
+            <p className="font-medium text-[var(--cs-text-secondary)]">Regulatory requirement</p>
             <p>
               All emergency contacts must be reviewed monthly and kept accurate at all times.
               The Reg 44 independent visitor should verify the accuracy of this board during each visit.
@@ -519,7 +519,7 @@ export default function EmergencyContactsPage() {
             <DialogTitle>
               {editingContact ? "Edit Contact" : "Add Contact"}
               {(editingChildId || addingForChild) && (
-                <span className="font-normal text-slate-500">
+                <span className="font-normal text-[var(--cs-text-muted)]">
                   {" "}— {getYPName(editingChildId || addingForChild || "")}
                 </span>
               )}
@@ -528,7 +528,7 @@ export default function EmergencyContactsPage() {
 
           <div className="space-y-4 py-2">
             <div>
-              <label className="text-xs font-medium text-slate-700 mb-1 block">Contact Name</label>
+              <label className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1 block">Contact Name</label>
               <Input
                 value={formName}
                 onChange={(e) => setFormName(e.target.value)}
@@ -537,7 +537,7 @@ export default function EmergencyContactsPage() {
             </div>
 
             <div>
-              <label className="text-xs font-medium text-slate-700 mb-1 block">Role</label>
+              <label className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1 block">Role</label>
               <div className="grid grid-cols-4 gap-1.5">
                 {(Object.keys(ROLE_CONFIG) as EmergencyContactRole[]).map((role) => (
                   <button
@@ -548,7 +548,7 @@ export default function EmergencyContactsPage() {
                       "rounded-lg border px-2 py-1.5 text-xs font-medium transition-colors",
                       formRole === role
                         ? "border-blue-300 bg-blue-50 text-blue-700"
-                        : "border-slate-200 text-slate-600 hover:bg-slate-50"
+                        : "border-[var(--cs-border)] text-[var(--cs-text-secondary)] hover:bg-[var(--cs-surface)]"
                     )}
                   >
                     {ROLE_CONFIG[role].label}
@@ -559,7 +559,7 @@ export default function EmergencyContactsPage() {
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="text-xs font-medium text-slate-700 mb-1 block">Organisation</label>
+                <label className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1 block">Organisation</label>
                 <Input
                   value={formOrg}
                   onChange={(e) => setFormOrg(e.target.value)}
@@ -567,7 +567,7 @@ export default function EmergencyContactsPage() {
                 />
               </div>
               <div>
-                <label className="text-xs font-medium text-slate-700 mb-1 block">Phone</label>
+                <label className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1 block">Phone</label>
                 <Input
                   value={formPhone}
                   onChange={(e) => setFormPhone(e.target.value)}
@@ -577,7 +577,7 @@ export default function EmergencyContactsPage() {
             </div>
 
             <div>
-              <label className="text-xs font-medium text-slate-700 mb-1 block">Email</label>
+              <label className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1 block">Email</label>
               <Input
                 value={formEmail}
                 onChange={(e) => setFormEmail(e.target.value)}
@@ -586,7 +586,7 @@ export default function EmergencyContactsPage() {
             </div>
 
             <div>
-              <label className="text-xs font-medium text-slate-700 mb-1 block">Notes</label>
+              <label className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1 block">Notes</label>
               <Textarea
                 value={formNotes}
                 onChange={(e) => setFormNotes(e.target.value)}

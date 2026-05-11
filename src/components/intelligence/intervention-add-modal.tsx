@@ -64,7 +64,7 @@ function FieldLabel({
   required?: boolean;
 }) {
   return (
-    <label className="block text-[11px] font-semibold text-slate-600 uppercase tracking-wider mb-1.5">
+    <label className="block text-[11px] font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wider mb-1.5">
       {children}
       {required && <span className="ml-0.5 text-red-500">*</span>}
     </label>
@@ -92,7 +92,7 @@ function DictationTextarea({
         rows={rows}
         placeholder={placeholder}
         className={cn(
-          "w-full resize-none rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 pr-10 text-xs text-slate-800 placeholder:text-slate-400",
+          "w-full resize-none rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2.5 pr-10 text-xs text-[var(--cs-navy)] placeholder:text-[var(--cs-text-muted)]",
           "focus:border-violet-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-violet-100",
           "transition-colors"
         )}
@@ -235,7 +235,7 @@ export function InterventionAddModal({
           className={cn(
             "fixed left-[50%] top-[50%] z-50 w-full max-w-lg -translate-x-1/2 -translate-y-1/2",
             "max-h-[90vh] overflow-y-auto",
-            "rounded-2xl border border-slate-200 bg-white shadow-xl",
+            "rounded-2xl border border-[var(--cs-border)] bg-white shadow-xl",
             "focus:outline-none",
             "data-[state=open]:animate-in data-[state=closed]:animate-out",
             "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
@@ -245,20 +245,20 @@ export function InterventionAddModal({
           )}
         >
           {/* Header */}
-          <div className="flex items-start justify-between gap-4 border-b border-slate-100 px-6 py-4">
+          <div className="flex items-start justify-between gap-4 border-b border-[var(--cs-border-subtle)] px-6 py-4">
             <div>
-              <Dialog.Title className="text-base font-semibold text-slate-900 flex items-center gap-2">
+              <Dialog.Title className="text-base font-semibold text-[var(--cs-navy)] flex items-center gap-2">
                 <Zap className="h-4 w-4 text-blue-500" />
                 Log Intervention
               </Dialog.Title>
-              <Dialog.Description className="mt-0.5 text-xs text-slate-500">
+              <Dialog.Description className="mt-0.5 text-xs text-[var(--cs-text-muted)]">
                 Recording intervention for{" "}
                 <span className="font-semibold text-blue-700">{childName}</span>
               </Dialog.Description>
             </div>
             <Dialog.Close asChild>
               <button
-                className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-600 transition-colors"
+                className="rounded-lg p-1.5 text-[var(--cs-text-muted)] hover:bg-[var(--cs-surface)] hover:text-[var(--cs-text-secondary)] transition-colors"
                 aria-label="Close"
               >
                 <X className="h-4 w-4" />
@@ -270,8 +270,8 @@ export function InterventionAddModal({
           {success ? (
             <div className="flex flex-col items-center gap-3 py-12 px-6">
               <CheckCircle2 className="h-10 w-10 text-emerald-500" />
-              <p className="text-sm font-semibold text-slate-800">Intervention saved</p>
-              <p className="text-xs text-slate-500">Closing…</p>
+              <p className="text-sm font-semibold text-[var(--cs-navy)]">Intervention saved</p>
+              <p className="text-xs text-[var(--cs-text-muted)]">Closing…</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} noValidate>
@@ -286,7 +286,7 @@ export function InterventionAddModal({
                     onChange={(e) => setTitle(e.target.value)}
                     placeholder="Describe this intervention briefly"
                     className={cn(
-                      "w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-xs text-slate-800 placeholder:text-slate-400",
+                      "w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2.5 text-xs text-[var(--cs-navy)] placeholder:text-[var(--cs-text-muted)]",
                       "focus:border-violet-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-violet-100",
                       "transition-colors"
                     )}
@@ -306,7 +306,7 @@ export function InterventionAddModal({
                           "rounded-lg border px-3 py-1.5 text-[11px] font-semibold transition-colors",
                           category === value
                             ? "border-blue-500 bg-blue-50 text-blue-700"
-                            : "border-slate-200 bg-slate-50 text-slate-600 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700"
+                            : "border-[var(--cs-border)] bg-slate-50 text-[var(--cs-text-secondary)] hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700"
                         )}
                       >
                         {label}
@@ -351,7 +351,7 @@ export function InterventionAddModal({
                 {/* 6. Review date */}
                 <div>
                   <FieldLabel>Review date</FieldLabel>
-                  <span className="inline-block mb-1.5 rounded-full border border-slate-200 px-2 py-0.5 text-[9px] font-semibold text-slate-400">
+                  <span className="inline-block mb-1.5 rounded-full border border-[var(--cs-border)] px-2 py-0.5 text-[9px] font-semibold text-[var(--cs-text-muted)]">
                     Optional
                   </span>
                   <input
@@ -359,7 +359,7 @@ export function InterventionAddModal({
                     value={reviewDate}
                     onChange={(e) => setReviewDate(e.target.value)}
                     className={cn(
-                      "w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-xs text-slate-800",
+                      "w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2.5 text-xs text-[var(--cs-navy)]",
                       "focus:border-violet-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-violet-100",
                       "transition-colors"
                     )}
@@ -375,7 +375,7 @@ export function InterventionAddModal({
               </div>
 
               {/* Footer */}
-              <div className="flex items-center justify-end gap-2 border-t border-slate-100 px-6 py-4">
+              <div className="flex items-center justify-end gap-2 border-t border-[var(--cs-border-subtle)] px-6 py-4">
                 <Dialog.Close asChild>
                   <Button type="button" variant="ghost" size="sm" disabled={isPending}>
                     Cancel

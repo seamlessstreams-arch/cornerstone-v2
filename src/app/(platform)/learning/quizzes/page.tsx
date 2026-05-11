@@ -112,8 +112,8 @@ function QuizPlayer({
 
   if (questions.length === 0) {
     return (
-      <div className="text-center py-8 text-slate-500">
-        <HelpCircle className="h-10 w-10 text-slate-300 mx-auto mb-3" />
+      <div className="text-center py-8 text-[var(--cs-text-muted)]">
+        <HelpCircle className="h-10 w-10 text-[var(--cs-text-gentle)] mx-auto mb-3" />
         <p className="text-sm">No questions generated</p>
       </div>
     );
@@ -158,7 +158,7 @@ function QuizPlayer({
   return (
     <div className="space-y-4">
       {/* Progress */}
-      <div className="flex items-center justify-between text-xs text-slate-500">
+      <div className="flex items-center justify-between text-xs text-[var(--cs-text-muted)]">
         <span>Question {currentIndex + 1} of {questions.length}</span>
         <div className="flex items-center gap-1">
           {questions.map((_, i) => (
@@ -177,9 +177,9 @@ function QuizPlayer({
       </div>
 
       {/* Question */}
-      <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
+      <div className="rounded-xl border border-[var(--cs-border)] bg-slate-50 p-4">
         <div className="flex items-start justify-between gap-3">
-          <p className="text-sm font-semibold text-slate-900 leading-relaxed">{current.question}</p>
+          <p className="text-sm font-semibold text-[var(--cs-navy)] leading-relaxed">{current.question}</p>
           {current.difficulty && (
             <Badge className={cn("text-[10px] h-4 px-1.5 shrink-0",
               current.difficulty === "easy" ? "bg-emerald-100 text-emerald-700"
@@ -206,11 +206,11 @@ function QuizPlayer({
               disabled={isAnswered}
               className={cn(
                 "w-full text-left rounded-xl border px-4 py-3 transition-all",
-                !showResult && !isSelected && "border-slate-200 bg-white hover:border-violet-300 hover:bg-violet-50",
+                !showResult && !isSelected && "border-[var(--cs-border)] bg-white hover:border-violet-300 hover:bg-violet-50",
                 !showResult && isSelected && "border-violet-400 bg-violet-50",
                 showResult && isRight && "border-emerald-400 bg-emerald-50",
                 showResult && isSelected && !isRight && "border-red-400 bg-red-50",
-                showResult && !isSelected && !isRight && "border-slate-200 bg-white opacity-60",
+                showResult && !isSelected && !isRight && "border-[var(--cs-border)] bg-white opacity-60",
               )}
             >
               <div className="flex items-center gap-3">
@@ -219,11 +219,11 @@ function QuizPlayer({
                   !showResult && isSelected ? "border-violet-500 bg-violet-500 text-white"
                   : showResult && isRight ? "border-emerald-500 bg-emerald-500 text-white"
                   : showResult && isSelected && !isRight ? "border-red-500 bg-red-500 text-white"
-                  : "border-slate-300 text-slate-600"
+                  : "border-slate-300 text-[var(--cs-text-secondary)]"
                 )}>
                   {option.label}
                 </span>
-                <span className="text-sm text-slate-800">{option.text}</span>
+                <span className="text-sm text-[var(--cs-navy)]">{option.text}</span>
                 {showResult && isRight && <CheckCircle2 className="h-4 w-4 text-emerald-500 ml-auto shrink-0" />}
                 {showResult && isSelected && !isRight && <XCircle className="h-4 w-4 text-red-500 ml-auto shrink-0" />}
               </div>
@@ -235,7 +235,7 @@ function QuizPlayer({
       {/* Explanation (after answer) */}
       {isAnswered && current.explanation && (
         <div className={cn("rounded-lg p-3 border", isCorrect ? "bg-emerald-50 border-emerald-200" : "bg-red-50 border-red-200")}>
-          <p className="text-[11px] font-semibold uppercase tracking-wide mb-1 text-slate-500">Explanation</p>
+          <p className="text-[11px] font-semibold uppercase tracking-wide mb-1 text-[var(--cs-text-muted)]">Explanation</p>
           <p className={cn("text-sm leading-relaxed", isCorrect ? "text-emerald-800" : "text-red-800")}>
             {current.explanation}
           </p>
@@ -268,21 +268,21 @@ function QuizPlayer({
 // ── Saved quiz item ────────────────────────────────────────────────────────────
 function SavedQuizItem({ resource }: { resource: { id: string; title: string; pathway?: LearningPathway; created_at: string; status: string } }) {
   return (
-    <div className="flex items-center gap-3 rounded-xl border border-slate-100 bg-white p-3 hover:shadow-sm transition-shadow">
+    <div className="flex items-center gap-3 rounded-xl border border-[var(--cs-border-subtle)] bg-white p-3 hover:shadow-sm transition-shadow">
       <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-amber-50">
         <HelpCircle className="h-4 w-4 text-amber-600" />
       </div>
       <div className="flex-1 min-w-0">
-        <p className="text-sm font-medium text-slate-900 truncate">{resource.title}</p>
+        <p className="text-sm font-medium text-[var(--cs-navy)] truncate">{resource.title}</p>
         <div className="flex items-center gap-2 mt-0.5">
           {resource.pathway && (
-            <span className="text-[10px] text-slate-400">{PATHWAY_LABELS[resource.pathway]}</span>
+            <span className="text-[10px] text-[var(--cs-text-muted)]">{PATHWAY_LABELS[resource.pathway]}</span>
           )}
-          <span className="text-[10px] text-slate-400">{formatDate(resource.created_at)}</span>
+          <span className="text-[10px] text-[var(--cs-text-muted)]">{formatDate(resource.created_at)}</span>
         </div>
       </div>
       <Badge className={cn("text-[10px] h-4 px-1.5 shrink-0",
-        resource.status === "approved" ? "bg-emerald-100 text-emerald-700" : "bg-slate-100 text-slate-700"
+        resource.status === "approved" ? "bg-emerald-100 text-emerald-700" : "bg-slate-100 text-[var(--cs-text-secondary)]"
       )}>
         {resource.status}
       </Badge>
@@ -381,7 +381,7 @@ export default function QuizzesPage() {
           <CardContent className="space-y-4">
             <div className="grid gap-4 sm:grid-cols-3">
               <div>
-                <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Topic</label>
+                <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Topic</label>
                 <Input
                   className="mt-1"
                   placeholder="e.g. Children's rights and legislation"
@@ -390,7 +390,7 @@ export default function QuizzesPage() {
                 />
               </div>
               <div>
-                <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Pathway</label>
+                <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Pathway</label>
                 <Select value={pathway} onValueChange={(v) => setPathway(v as LearningPathway)}>
                   <SelectTrigger className="mt-1"><SelectValue /></SelectTrigger>
                   <SelectContent>
@@ -401,7 +401,7 @@ export default function QuizzesPage() {
                 </Select>
               </div>
               <div>
-                <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Number of Questions</label>
+                <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Number of Questions</label>
                 <Select value={numberOfQuestions} onValueChange={(v) => setNumberOfQuestions(v as "5" | "10" | "15")}>
                   <SelectTrigger className="mt-1"><SelectValue /></SelectTrigger>
                   <SelectContent>
@@ -427,7 +427,7 @@ export default function QuizzesPage() {
                 <div>
                   <CardTitle className="text-base">{result.quiz_title ?? "Knowledge Quiz"}</CardTitle>
                   {result.introduction && (
-                    <p className="text-sm text-slate-500 mt-1 leading-relaxed">{result.introduction}</p>
+                    <p className="text-sm text-[var(--cs-text-muted)] mt-1 leading-relaxed">{result.introduction}</p>
                   )}
                 </div>
                 <Badge variant="outline" className="shrink-0 text-xs">
@@ -444,14 +444,14 @@ export default function QuizzesPage() {
         {/* Saved quizzes */}
         <div>
           <div className="flex items-center justify-between mb-3">
-            <h3 className="text-sm font-semibold text-slate-700">Saved Quizzes</h3>
-            <span className="text-xs text-slate-400">{quizzes.length} saved</span>
+            <h3 className="text-sm font-semibold text-[var(--cs-text-secondary)]">Saved Quizzes</h3>
+            <span className="text-xs text-[var(--cs-text-muted)]">{quizzes.length} saved</span>
           </div>
           {isLoading ? (
-            <p className="text-sm text-slate-500 text-center py-8">Loading…</p>
+            <p className="text-sm text-[var(--cs-text-muted)] text-center py-8">Loading…</p>
           ) : quizzes.length === 0 ? (
-            <div className="text-center py-12 text-slate-500">
-              <HelpCircle className="h-10 w-10 text-slate-300 mx-auto mb-3" />
+            <div className="text-center py-12 text-[var(--cs-text-muted)]">
+              <HelpCircle className="h-10 w-10 text-[var(--cs-text-gentle)] mx-auto mb-3" />
               <p className="text-sm font-medium">No quizzes saved yet</p>
               <p className="text-xs mt-1">Generate and save your first quiz above</p>
             </div>

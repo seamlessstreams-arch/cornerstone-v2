@@ -52,8 +52,8 @@ const OUTCOME_COLOUR: Record<ComplaintOutcome, string> = {
   upheld: "bg-red-50 text-red-700 border-red-200",
   partially_upheld: "bg-amber-50 text-amber-700 border-amber-200",
   not_upheld: "bg-emerald-50 text-emerald-700 border-emerald-200",
-  inconclusive: "bg-slate-50 text-slate-600 border-slate-200",
-  withdrawn: "bg-slate-50 text-slate-500 border-slate-200",
+  inconclusive: "bg-slate-50 text-[var(--cs-text-secondary)] border-[var(--cs-border)]",
+  withdrawn: "bg-slate-50 text-[var(--cs-text-muted)] border-[var(--cs-border)]",
   ongoing: "bg-blue-50 text-blue-700 border-blue-200",
 };
 const OUTCOME_CARD_BORDER: Record<ComplaintOutcome, string> = {
@@ -274,7 +274,7 @@ export default function ComplaintsOutcomesPage() {
         <div className="space-y-3">
           {filtered.length === 0 && (
             <div className="text-center py-12 text-muted-foreground">
-              <ClipboardCheck className="h-10 w-10 mx-auto mb-3 text-slate-300" />
+              <ClipboardCheck className="h-10 w-10 mx-auto mb-3 text-[var(--cs-text-gentle)]" />
               No complaint outcomes match your filters.
             </div>
           )}
@@ -291,7 +291,7 @@ export default function ComplaintsOutcomesPage() {
               >
                 {/* collapsed header */}
                 <button
-                  className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                  className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                   onClick={() => setExpanded(isExpanded ? null : entry.id)}
                 >
                   <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -339,12 +339,12 @@ export default function ComplaintsOutcomesPage() {
                     <Card>
                       <CardHeader className="pb-2">
                         <CardTitle className="text-sm flex items-center gap-2">
-                          <FileText className="h-4 w-4 text-slate-500" />
+                          <FileText className="h-4 w-4 text-[var(--cs-text-muted)]" />
                           Summary of Complaint
                         </CardTitle>
                       </CardHeader>
                       <CardContent>
-                        <p className="text-sm text-slate-700">{entry.summary}</p>
+                        <p className="text-sm text-[var(--cs-text-secondary)]">{entry.summary}</p>
                       </CardContent>
                     </Card>
 
@@ -357,7 +357,7 @@ export default function ComplaintsOutcomesPage() {
                         </CardTitle>
                       </CardHeader>
                       <CardContent>
-                        <p className="text-sm text-slate-700">{entry.findings}</p>
+                        <p className="text-sm text-[var(--cs-text-secondary)]">{entry.findings}</p>
                       </CardContent>
                     </Card>
 
@@ -367,7 +367,7 @@ export default function ComplaintsOutcomesPage() {
                         <BookOpen className="h-4 w-4 text-teal-600" />
                         <p className="text-xs font-semibold text-teal-700 uppercase tracking-wide">Lessons Learned</p>
                       </div>
-                      <p className="text-sm text-slate-700">{entry.lessons_learned}</p>
+                      <p className="text-sm text-[var(--cs-text-secondary)]">{entry.lessons_learned}</p>
                     </div>
 
                     {/* practice changes */}
@@ -379,7 +379,7 @@ export default function ComplaintsOutcomesPage() {
                         </div>
                         <ul className="space-y-1.5">
                           {entry.practice_changes.map((change, i) => (
-                            <li key={i} className="flex items-start gap-2 text-sm text-slate-700">
+                            <li key={i} className="flex items-start gap-2 text-sm text-[var(--cs-text-secondary)]">
                               <span className="text-emerald-500 mt-0.5 shrink-0">-</span>
                               {change}
                             </li>
@@ -409,7 +409,7 @@ export default function ComplaintsOutcomesPage() {
                         <span className={cn(
                           "font-medium",
                           entry.complainant_satisfied === true ? "text-emerald-600" :
-                          entry.complainant_satisfied === false ? "text-red-600" : "text-slate-500"
+                          entry.complainant_satisfied === false ? "text-red-600" : "text-[var(--cs-text-muted)]"
                         )}>
                           {entry.complainant_satisfied === null ? "Pending" : entry.complainant_satisfied ? "Yes" : "No"}
                         </span>

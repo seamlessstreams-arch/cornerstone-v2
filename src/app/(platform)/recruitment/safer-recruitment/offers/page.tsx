@@ -44,8 +44,8 @@ function offerStatusColor(status: Offer["status"]): string {
     case "conditional": return "bg-blue-100 text-blue-700";
     case "unconditional": return "bg-teal-100 text-teal-700";
     case "declined": return "bg-red-100 text-red-700";
-    case "withdrawn": return "bg-slate-200 text-slate-600";
-    default: return "bg-slate-100 text-slate-500";
+    case "withdrawn": return "bg-slate-200 text-[var(--cs-text-secondary)]";
+    default: return "bg-slate-100 text-[var(--cs-text-muted)]";
   }
 }
 
@@ -79,20 +79,20 @@ function OfferRow({ candidate, offer, onSelect, isSelected }: OfferRowProps) {
   return (
     <tr
       className={cn(
-        "border-b border-slate-100 last:border-0 cursor-pointer transition-colors",
-        isSelected ? "bg-blue-50" : "hover:bg-slate-50"
+        "border-b border-[var(--cs-border-subtle)] last:border-0 cursor-pointer transition-colors",
+        isSelected ? "bg-blue-50" : "hover:bg-[var(--cs-surface)]"
       )}
       onClick={onSelect}
     >
       <td className="px-4 py-3">
-        <div className="text-sm font-medium text-slate-900">{candidate.first_name} {candidate.last_name}</div>
-        <div className="text-[10px] text-slate-400">{candidate.role_applied}</div>
+        <div className="text-sm font-medium text-[var(--cs-navy)]">{candidate.first_name} {candidate.last_name}</div>
+        <div className="text-[10px] text-[var(--cs-text-muted)]">{candidate.role_applied}</div>
       </td>
       <td className="px-4 py-3">
-        <Badge className="text-[9px] rounded-full bg-slate-100 text-slate-600">{stageLabel(candidate.stage)}</Badge>
+        <Badge className="text-[9px] rounded-full bg-slate-100 text-[var(--cs-text-secondary)]">{stageLabel(candidate.stage)}</Badge>
       </td>
-      <td className="px-4 py-3 text-xs text-slate-600">{formatDate(offer.offer_date)}</td>
-      <td className="px-4 py-3 text-xs text-slate-600">{formatDate(offer.proposed_start_date)}</td>
+      <td className="px-4 py-3 text-xs text-[var(--cs-text-secondary)]">{formatDate(offer.offer_date)}</td>
+      <td className="px-4 py-3 text-xs text-[var(--cs-text-secondary)]">{formatDate(offer.proposed_start_date)}</td>
       <td className="px-4 py-3">
         <Badge className={cn("text-[10px] rounded-full px-2.5 py-0.5", offerStatusColor(offer.status))}>
           {offerStatusLabel(offer.status)}
@@ -104,7 +104,7 @@ function OfferRow({ candidate, offer, onSelect, isSelected }: OfferRowProps) {
             <ShieldAlert className="h-2.5 w-2.5" />Exceptional Start
           </Badge>
         ) : (
-          <span className="text-[10px] text-slate-400">—</span>
+          <span className="text-[10px] text-[var(--cs-text-muted)]">—</span>
         )}
       </td>
       <td className="px-4 py-3">
@@ -113,11 +113,11 @@ function OfferRow({ candidate, offer, onSelect, isSelected }: OfferRowProps) {
             <CheckCircle2 className="h-2.5 w-2.5" />Cleared
           </Badge>
         ) : (
-          <Badge className="text-[9px] rounded-full bg-slate-100 text-slate-500">Pending</Badge>
+          <Badge className="text-[9px] rounded-full bg-slate-100 text-[var(--cs-text-muted)]">Pending</Badge>
         )}
       </td>
       <td className="px-4 py-3">
-        <ChevronRight className={cn("h-4 w-4 transition-colors", isSelected ? "text-blue-500" : "text-slate-300")} />
+        <ChevronRight className={cn("h-4 w-4 transition-colors", isSelected ? "text-blue-500" : "text-[var(--cs-text-gentle)]")} />
       </td>
     </tr>
   );
@@ -144,18 +144,18 @@ function ClearancePanel({ candidate, offer, onClose }: ClearancePanelProps) {
   }
 
   return (
-    <div className="fixed inset-y-0 right-0 z-50 w-full max-w-sm bg-white border-l border-slate-200 shadow-xl flex flex-col">
-      <div className="flex items-center justify-between p-4 border-b border-slate-100">
+    <div className="fixed inset-y-0 right-0 z-50 w-full max-w-sm bg-white border-l border-[var(--cs-border)] shadow-xl flex flex-col">
+      <div className="flex items-center justify-between p-4 border-b border-[var(--cs-border-subtle)]">
         <div>
-          <div className="text-sm font-semibold text-slate-900">Final Clearance</div>
-          <div className="text-xs text-slate-500">{candidate.first_name} {candidate.last_name}</div>
+          <div className="text-sm font-semibold text-[var(--cs-navy)]">Final Clearance</div>
+          <div className="text-xs text-[var(--cs-text-muted)]">{candidate.first_name} {candidate.last_name}</div>
         </div>
-        <button onClick={onClose} className="rounded-lg p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-50">
+        <button onClick={onClose} className="rounded-lg p-1.5 text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] hover:bg-[var(--cs-surface)]">
           <X className="h-4 w-4" />
         </button>
       </div>
       <div className="flex-1 overflow-y-auto p-4 space-y-3">
-        <div className="text-[10px] font-semibold uppercase tracking-wide text-slate-400 mb-2">
+        <div className="text-[10px] font-semibold uppercase tracking-wide text-[var(--cs-text-muted)] mb-2">
           Clearance Checklist
         </div>
         {CLEARANCE_ITEMS.map(item => (
@@ -163,7 +163,7 @@ function ClearancePanel({ candidate, offer, onClose }: ClearancePanelProps) {
             key={item.key}
             className={cn(
               "flex items-start gap-3 rounded-xl border p-3 cursor-pointer transition-colors",
-              checked[item.key] ? "border-emerald-200 bg-emerald-50" : "border-slate-200 bg-white"
+              checked[item.key] ? "border-emerald-200 bg-emerald-50" : "border-[var(--cs-border)] bg-white"
             )}
           >
             <input
@@ -172,7 +172,7 @@ function ClearancePanel({ candidate, offer, onClose }: ClearancePanelProps) {
               onChange={e => setChecked(prev => ({ ...prev, [item.key]: e.target.checked }))}
               className="mt-0.5 accent-emerald-600"
             />
-            <span className="text-xs text-slate-700">{item.label}</span>
+            <span className="text-xs text-[var(--cs-text-secondary)]">{item.label}</span>
           </label>
         ))}
 
@@ -190,8 +190,8 @@ function ClearancePanel({ candidate, offer, onClose }: ClearancePanelProps) {
         )}
 
         <div className="pt-2">
-          <div className="text-[10px] font-semibold uppercase tracking-wide text-slate-400 mb-2">Offer Details</div>
-          <div className="space-y-1.5 text-xs text-slate-600">
+          <div className="text-[10px] font-semibold uppercase tracking-wide text-[var(--cs-text-muted)] mb-2">Offer Details</div>
+          <div className="space-y-1.5 text-xs text-[var(--cs-text-secondary)]">
             <div className="flex justify-between"><span>Offer Date</span><span className="font-medium">{formatDate(offer.offer_date)}</span></div>
             <div className="flex justify-between"><span>Proposed Start</span><span className="font-medium">{formatDate(offer.proposed_start_date)}</span></div>
             <div className="flex justify-between"><span>Status</span>
@@ -206,7 +206,7 @@ function ClearancePanel({ candidate, offer, onClose }: ClearancePanelProps) {
           </div>
         </div>
       </div>
-      <div className="p-4 border-t border-slate-100 space-y-2">
+      <div className="p-4 border-t border-[var(--cs-border-subtle)] space-y-2">
         {localCleared && (
           <div className="rounded-xl bg-emerald-50 border border-emerald-200 px-3 py-2 text-xs text-emerald-800 font-medium flex items-center gap-2">
             <CheckCircle2 className="h-3.5 w-3.5" />Final clearance granted successfully.
@@ -286,34 +286,34 @@ export default function OffersPage() {
         <Card className="rounded-2xl">
           <CardContent className="pt-4 pb-4">
             <div className="text-2xl font-bold text-blue-600">{stats.conditional}</div>
-            <div className="text-xs text-slate-500 mt-0.5">Conditional Sent</div>
+            <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">Conditional Sent</div>
           </CardContent>
         </Card>
         <Card className="rounded-2xl">
           <CardContent className="pt-4 pb-4">
             <div className="text-2xl font-bold text-emerald-600">{stats.final_clearance}</div>
-            <div className="text-xs text-slate-500 mt-0.5">Final Clearance</div>
+            <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">Final Clearance</div>
           </CardContent>
         </Card>
         <Card className="rounded-2xl">
           <CardContent className="pt-4 pb-4">
-            <div className={cn("text-2xl font-bold", stats.exceptional > 0 ? "text-amber-600" : "text-slate-500")}>
+            <div className={cn("text-2xl font-bold", stats.exceptional > 0 ? "text-amber-600" : "text-[var(--cs-text-muted)]")}>
               {stats.exceptional}
             </div>
-            <div className="text-xs text-slate-500 mt-0.5">Exceptional Starts</div>
+            <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">Exceptional Starts</div>
           </CardContent>
         </Card>
         <Card className="rounded-2xl">
           <CardContent className="pt-4 pb-4">
-            <div className="text-2xl font-bold text-slate-900">{stats.started}</div>
-            <div className="text-xs text-slate-500 mt-0.5">Appointed / Started</div>
+            <div className="text-2xl font-bold text-[var(--cs-navy)]">{stats.started}</div>
+            <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">Appointed / Started</div>
           </CardContent>
         </Card>
       </div>
 
       {/* Search */}
       <div className="relative max-w-sm mb-4">
-        <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+        <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
         <Input
           placeholder="Search candidates by name or role…"
           value={search}
@@ -372,28 +372,28 @@ export default function OffersPage() {
       <Card className="rounded-2xl">
         <CardContent className="p-0">
           {isLoading ? (
-            <div className="flex items-center justify-center py-20 text-slate-400">
+            <div className="flex items-center justify-center py-20 text-[var(--cs-text-muted)]">
               <Loader2 className="h-8 w-8 animate-spin mr-2" />
               <span className="text-sm">Loading offers...</span>
             </div>
           ) : candidatesWithOffers.length === 0 ? (
-            <div className="py-12 text-center text-slate-400">
+            <div className="py-12 text-center text-[var(--cs-text-muted)]">
               <Award className="h-10 w-10 mx-auto mb-3 text-slate-200" />
               <div className="text-sm">No offers made yet</div>
-              <div className="text-xs mt-1 text-slate-400">Offers are created from the candidate profile</div>
+              <div className="text-xs mt-1 text-[var(--cs-text-muted)]">Offers are created from the candidate profile</div>
             </div>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-slate-100">
-                    <th className="px-4 py-3 text-left text-[10px] font-semibold uppercase tracking-wide text-slate-400">Candidate</th>
-                    <th className="px-4 py-3 text-left text-[10px] font-semibold uppercase tracking-wide text-slate-400">Stage</th>
-                    <th className="px-4 py-3 text-left text-[10px] font-semibold uppercase tracking-wide text-slate-400">Offer Sent</th>
-                    <th className="px-4 py-3 text-left text-[10px] font-semibold uppercase tracking-wide text-slate-400">Proposed Start</th>
-                    <th className="px-4 py-3 text-left text-[10px] font-semibold uppercase tracking-wide text-slate-400">Status</th>
-                    <th className="px-4 py-3 text-left text-[10px] font-semibold uppercase tracking-wide text-slate-400">Exceptional Start</th>
-                    <th className="px-4 py-3 text-left text-[10px] font-semibold uppercase tracking-wide text-slate-400">Final Clearance</th>
+                  <tr className="border-b border-[var(--cs-border-subtle)]">
+                    <th className="px-4 py-3 text-left text-[10px] font-semibold uppercase tracking-wide text-[var(--cs-text-muted)]">Candidate</th>
+                    <th className="px-4 py-3 text-left text-[10px] font-semibold uppercase tracking-wide text-[var(--cs-text-muted)]">Stage</th>
+                    <th className="px-4 py-3 text-left text-[10px] font-semibold uppercase tracking-wide text-[var(--cs-text-muted)]">Offer Sent</th>
+                    <th className="px-4 py-3 text-left text-[10px] font-semibold uppercase tracking-wide text-[var(--cs-text-muted)]">Proposed Start</th>
+                    <th className="px-4 py-3 text-left text-[10px] font-semibold uppercase tracking-wide text-[var(--cs-text-muted)]">Status</th>
+                    <th className="px-4 py-3 text-left text-[10px] font-semibold uppercase tracking-wide text-[var(--cs-text-muted)]">Exceptional Start</th>
+                    <th className="px-4 py-3 text-left text-[10px] font-semibold uppercase tracking-wide text-[var(--cs-text-muted)]">Final Clearance</th>
                     <th className="px-4 py-3"></th>
                   </tr>
                 </thead>

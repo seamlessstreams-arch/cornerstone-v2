@@ -31,7 +31,7 @@ const LEAVE_TYPE_CONFIG: Record<string, {
   sick:       { icon: Stethoscope,  color: "text-red-600",     bgColor: "bg-red-100",     label: "Sick" },
   compassionate: { icon: Clock,     color: "text-violet-600",  bgColor: "bg-violet-100",  label: "Compassionate" },
   training:   { icon: BookOpen,     color: "text-blue-600",    bgColor: "bg-blue-100",    label: "Training" },
-  unpaid:     { icon: CalendarOff,  color: "text-slate-600",   bgColor: "bg-slate-100",   label: "Unpaid" },
+  unpaid:     { icon: CalendarOff,  color: "text-[var(--cs-text-secondary)]",   bgColor: "bg-slate-100",   label: "Unpaid" },
   toil:       { icon: Clock,        color: "text-amber-600",   bgColor: "bg-amber-100",   label: "TOIL" },
   maternity:  { icon: Clock,        color: "text-pink-600",    bgColor: "bg-pink-100",    label: "Maternity" },
   paternity:  { icon: Clock,        color: "text-sky-600",     bgColor: "bg-sky-100",     label: "Paternity" },
@@ -69,7 +69,7 @@ export function LeaveOverview() {
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-center py-6">
-            <Loader2 className="h-5 w-5 animate-spin text-slate-400" />
+            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
           </div>
         </CardContent>
       </Card>
@@ -100,7 +100,7 @@ export function LeaveOverview() {
         {/* Off today */}
         {onLeaveToday.length > 0 && (
           <div className="mb-3">
-            <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-2">
+            <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-2">
               Off today
             </p>
             <div className="space-y-1.5">
@@ -110,7 +110,7 @@ export function LeaveOverview() {
                 return (
                   <div key={r.id} className="flex items-center gap-2 rounded-xl bg-slate-50 px-3 py-2">
                     <Avatar name={name} size="xs" />
-                    <span className="text-[11px] font-medium text-slate-700 flex-1 truncate">
+                    <span className="text-[11px] font-medium text-[var(--cs-text-secondary)] flex-1 truncate">
                       {name}
                     </span>
                     <Badge className={cn("text-[9px] rounded-full border-0 shrink-0", config.bgColor, config.color)}>
@@ -134,7 +134,7 @@ export function LeaveOverview() {
         {/* Upcoming leave */}
         {upcoming.length > 0 && (
           <div className="mb-3">
-            <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-2">
+            <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-2">
               Coming up
             </p>
             <div className="space-y-1">
@@ -144,8 +144,8 @@ export function LeaveOverview() {
                 return (
                   <div key={r.id} className="flex items-center gap-2 px-2 py-1.5 text-[11px]">
                     <config.icon className={cn("h-3 w-3 shrink-0", config.color)} />
-                    <span className="text-slate-600 truncate flex-1">{name.split(" ")[0]}</span>
-                    <span className="text-[10px] text-slate-400 shrink-0">
+                    <span className="text-[var(--cs-text-secondary)] truncate flex-1">{name.split(" ")[0]}</span>
+                    <span className="text-[10px] text-[var(--cs-text-muted)] shrink-0">
                       {formatRelative(r.start_date)} · {r.total_days}d
                     </span>
                   </div>
@@ -166,7 +166,7 @@ export function LeaveOverview() {
               return (
                 <div key={r.id} className="flex items-center gap-2 px-2 py-1.5 text-[11px]">
                   <Clock className="h-3 w-3 text-amber-500 shrink-0" />
-                  <span className="text-slate-600 truncate flex-1">{name.split(" ")[0]}</span>
+                  <span className="text-[var(--cs-text-secondary)] truncate flex-1">{name.split(" ")[0]}</span>
                   <span className="text-[10px] text-amber-600 shrink-0">
                     {r.total_days}d from {formatRelative(r.start_date)}
                   </span>

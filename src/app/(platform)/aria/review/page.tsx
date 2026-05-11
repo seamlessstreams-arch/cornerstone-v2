@@ -223,18 +223,18 @@ const RISK_CONFIG: Record<RiskLevel, { label: string; colour: string; bg: string
   urgent: { label: "Urgent", colour: "text-red-700", bg: "bg-red-100 text-red-800", dot: "bg-red-500", border: "border-l-red-500" },
   high:   { label: "High",   colour: "text-orange-700", bg: "bg-orange-100 text-orange-800", dot: "bg-orange-500", border: "border-l-orange-500" },
   medium: { label: "Medium", colour: "text-amber-700", bg: "bg-amber-100 text-amber-800", dot: "bg-amber-500", border: "border-l-amber-400" },
-  low:    { label: "Low",    colour: "text-slate-600", bg: "bg-slate-100 text-slate-700", dot: "bg-slate-400", border: "border-l-slate-300" },
+  low:    { label: "Low",    colour: "text-[var(--cs-text-secondary)]", bg: "bg-slate-100 text-[var(--cs-text-secondary)]", dot: "bg-slate-400", border: "border-l-slate-300" },
 };
 
 const STATUS_CONFIG: Record<SuggestionStatus, { label: string; icon: React.ElementType; colour: string; bg: string }> = {
-  draft:               { label: "Draft",              icon: FileText,     colour: "text-slate-500",   bg: "bg-slate-100 text-slate-700" },
+  draft:               { label: "Draft",              icon: FileText,     colour: "text-[var(--cs-text-muted)]",   bg: "bg-slate-100 text-[var(--cs-text-secondary)]" },
   awaiting_review:     { label: "Awaiting review",    icon: Clock,        colour: "text-amber-600",   bg: "bg-amber-100 text-amber-800" },
   approved:            { label: "Approved",            icon: CheckCircle2, colour: "text-emerald-600", bg: "bg-emerald-100 text-emerald-800" },
   amended_and_approved:{ label: "Amended & approved",  icon: CheckCircle2, colour: "text-emerald-600", bg: "bg-emerald-100 text-emerald-800" },
   rejected:            { label: "Rejected",            icon: XCircle,      colour: "text-red-600",     bg: "bg-red-100 text-red-800" },
-  no_action_required:  { label: "No action required",  icon: Eye,          colour: "text-slate-500",   bg: "bg-slate-100 text-slate-700" },
+  no_action_required:  { label: "No action required",  icon: Eye,          colour: "text-[var(--cs-text-muted)]",   bg: "bg-slate-100 text-[var(--cs-text-secondary)]" },
   committed:           { label: "Committed",           icon: CheckCircle2, colour: "text-blue-600",    bg: "bg-blue-100 text-blue-800" },
-  archived:            { label: "Archived",            icon: FileText,     colour: "text-slate-400",   bg: "bg-slate-100 text-slate-600" },
+  archived:            { label: "Archived",            icon: FileText,     colour: "text-[var(--cs-text-muted)]",   bg: "bg-slate-100 text-[var(--cs-text-secondary)]" },
 };
 
 const TYPE_CONFIG: Record<SuggestionType, { label: string; icon: React.ElementType }> = {
@@ -290,12 +290,12 @@ export default function AriaReviewQueuePage() {
 
   return (
     <PageShell
-      title="Aria Review Queue"
+      title="ARIA Review Queue"
       subtitle="Every Aria suggestion requires human review. Approve, reject, amend or mark as no action required."
     >
       {/* Stat strip */}
       <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
-        <StatCard label="Total" value={counts.total} colour="text-slate-700" bg="bg-slate-50" icon={BarChart3} />
+        <StatCard label="Total" value={counts.total} colour="text-[var(--cs-text-secondary)]" bg="bg-slate-50" icon={BarChart3} />
         <StatCard label="Awaiting review" value={counts.awaiting} colour="text-amber-700" bg="bg-amber-50" icon={Clock} pulse={counts.awaiting > 0} />
         <StatCard label="Approved" value={counts.approved} colour="text-emerald-700" bg="bg-emerald-50" icon={CheckCircle2} />
         <StatCard label="Rejected" value={counts.rejected} colour="text-red-700" bg="bg-red-50" icon={XCircle} />
@@ -304,7 +304,7 @@ export default function AriaReviewQueuePage() {
 
       {/* Filters */}
       <div className="flex flex-wrap items-center gap-3 mb-6">
-        <div className="flex items-center gap-1.5 text-xs text-slate-500">
+        <div className="flex items-center gap-1.5 text-xs text-[var(--cs-text-muted)]">
           <Filter className="h-3.5 w-3.5" />
           Filters
         </div>
@@ -346,7 +346,7 @@ export default function AriaReviewQueuePage() {
           </SelectContent>
         </Select>
         <div className="relative flex-1 min-w-[200px]">
-          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
           <Input
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -360,9 +360,9 @@ export default function AriaReviewQueuePage() {
       {filtered.length === 0 ? (
         <Card>
           <CardContent className="py-12 text-center">
-            <Sparkles className="h-8 w-8 text-slate-300 mx-auto mb-3" />
-            <p className="text-sm text-slate-500 font-medium">No suggestions match your filters</p>
-            <p className="text-xs text-slate-400 mt-1">Adjust your filters or check back after Aria reviews new records.</p>
+            <Sparkles className="h-8 w-8 text-[var(--cs-text-gentle)] mx-auto mb-3" />
+            <p className="text-sm text-[var(--cs-text-muted)] font-medium">No suggestions match your filters</p>
+            <p className="text-xs text-[var(--cs-text-muted)] mt-1">Adjust your filters or check back after Aria reviews new records.</p>
           </CardContent>
         </Card>
       ) : (
@@ -377,7 +377,7 @@ export default function AriaReviewQueuePage() {
       <div className="mt-8 p-4 bg-muted/50 rounded-lg text-xs text-muted-foreground">
         <p className="font-medium mb-1">Aria Review Queue</p>
         <p>
-          Every Aria suggestion is labelled as an Aria suggested draft. The Registered Manager
+          Every Aria suggestion is labelled as an ARIA suggested draft. The Registered Manager
           remains the decision-maker. Suggestions are generated to support professional judgement
           and to prompt oversight where practice, regulation or safeguarding considerations indicate
           it is needed. No suggestion is committed to a statutory record without explicit human approval.
@@ -408,23 +408,23 @@ function SuggestionRow({ item }: { item: ReviewItem }) {
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2 mb-1">
-              <TypeIcon className="h-3.5 w-3.5 text-slate-400 shrink-0" />
-              <span className="text-xs text-slate-500 font-medium">{type.label}</span>
+              <TypeIcon className="h-3.5 w-3.5 text-[var(--cs-text-muted)] shrink-0" />
+              <span className="text-xs text-[var(--cs-text-muted)] font-medium">{type.label}</span>
               {item.child_name && (
                 <>
-                  <span className="text-slate-300">&middot;</span>
-                  <span className="text-xs text-slate-500">{item.child_name}</span>
+                  <span className="text-[var(--cs-text-gentle)]">&middot;</span>
+                  <span className="text-xs text-[var(--cs-text-muted)]">{item.child_name}</span>
                 </>
               )}
-              <span className="text-slate-300">&middot;</span>
-              <span className="text-xs text-slate-400">
+              <span className="text-[var(--cs-text-gentle)]">&middot;</span>
+              <span className="text-xs text-[var(--cs-text-muted)]">
                 {item.related_record_type} {item.related_record_id}
               </span>
             </div>
-            <h3 className="text-sm font-semibold text-slate-800 group-hover:text-blue-700 transition-colors line-clamp-1">
+            <h3 className="text-sm font-semibold text-[var(--cs-navy)] group-hover:text-blue-700 transition-colors line-clamp-1">
               {item.title}
             </h3>
-            <p className="text-xs text-slate-500 mt-1 line-clamp-2">{item.summary}</p>
+            <p className="text-xs text-[var(--cs-text-muted)] mt-1 line-clamp-2">{item.summary}</p>
           </div>
           <div className="flex flex-col items-end gap-2 shrink-0">
             <Badge className={cn("text-[10px]", risk.bg)}>{risk.label}</Badge>
@@ -435,7 +435,7 @@ function SuggestionRow({ item }: { item: ReviewItem }) {
           </div>
         </div>
         {item.linked_count > 0 && (
-          <div className="mt-2 flex items-center gap-1.5 text-[10px] text-slate-400">
+          <div className="mt-2 flex items-center gap-1.5 text-[10px] text-[var(--cs-text-muted)]">
             <FileText className="h-3 w-3" />
             {item.linked_count} linked record suggestion{item.linked_count > 1 ? "s" : ""}
           </div>
@@ -464,7 +464,7 @@ function StatCard({
         {pulse && value > 0 && <CircleDot className="h-2.5 w-2.5 text-red-500 animate-pulse" />}
       </div>
       <div className={cn("text-2xl font-bold mt-1 tabular-nums", colour)}>{value}</div>
-      <div className="text-[10px] text-slate-500 font-medium">{label}</div>
+      <div className="text-[10px] text-[var(--cs-text-muted)] font-medium">{label}</div>
     </div>
   );
 }

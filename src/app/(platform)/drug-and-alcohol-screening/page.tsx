@@ -330,7 +330,7 @@ export default function DrugAndAlcoholScreeningPage() {
                         <Badge variant="outline" className={RISK_CLR[r.risk_level]}>
                           {SUBSTANCE_RISK_LEVEL_LABEL[r.risk_level]}
                         </Badge>
-                        <Badge variant="outline" className="bg-slate-100 text-slate-800">
+                        <Badge variant="outline" className="bg-slate-100 text-[var(--cs-navy)]">
                           {SCREENING_TOOL_LABEL[r.screening_tool]}
                         </Badge>
                         {r.child_authored && (

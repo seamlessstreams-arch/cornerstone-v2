@@ -69,33 +69,33 @@ function FlipCard({ card }: { card: Flashcard }) {
           "relative rounded-xl border p-4 min-h-[140px] flex flex-col justify-between transition-all",
           flipped
             ? "border-violet-200 bg-violet-50"
-            : "border-slate-200 bg-white hover:border-slate-300 hover:shadow-sm"
+            : "border-[var(--cs-border)] bg-white hover:border-slate-300 hover:shadow-sm"
         )}
       >
         <div className="flex items-start justify-between gap-2">
           <Badge
             className={cn(
               "text-[10px] h-4 px-1.5 shrink-0",
-              DIFFICULTY_COLOURS[card.difficulty ?? "medium"] ?? "bg-slate-100 text-slate-700"
+              DIFFICULTY_COLOURS[card.difficulty ?? "medium"] ?? "bg-slate-100 text-[var(--cs-text-secondary)]"
             )}
           >
             {card.difficulty ?? "medium"}
           </Badge>
-          <div className="flex items-center gap-1 text-[10px] text-slate-400">
+          <div className="flex items-center gap-1 text-[10px] text-[var(--cs-text-muted)]">
             <RotateCw className="h-2.5 w-2.5" />
             {flipped ? "Answer" : "Question"}
           </div>
         </div>
         <div className="mt-3 flex-1 flex items-center">
-          <p className={cn("text-sm leading-relaxed", flipped ? "text-violet-900 font-medium" : "text-slate-800")}>
+          <p className={cn("text-sm leading-relaxed", flipped ? "text-violet-900 font-medium" : "text-[var(--cs-navy)]")}>
             {flipped ? card.answer : card.question}
           </p>
         </div>
         {!flipped && card.hint && (
-          <p className="text-[10px] text-slate-400 mt-2 italic">Hint: {card.hint}</p>
+          <p className="text-[10px] text-[var(--cs-text-muted)] mt-2 italic">Hint: {card.hint}</p>
         )}
         <div className="flex items-center justify-center mt-2">
-          <span className="text-[10px] text-slate-400">
+          <span className="text-[10px] text-[var(--cs-text-muted)]">
             {flipped ? "Click to see question" : "Click to reveal answer"}
           </span>
         </div>
@@ -107,25 +107,25 @@ function FlipCard({ card }: { card: Flashcard }) {
 // ── Saved set item ─────────────────────────────────────────────────────────────
 function SavedSetItem({ resource }: { resource: { id: string; title: string; pathway?: LearningPathway; created_at: string; status: string } }) {
   return (
-    <div className="flex items-center gap-3 rounded-xl border border-slate-100 bg-white p-3 hover:shadow-sm transition-shadow">
+    <div className="flex items-center gap-3 rounded-xl border border-[var(--cs-border-subtle)] bg-white p-3 hover:shadow-sm transition-shadow">
       <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-teal-50">
         <LayoutGrid className="h-4 w-4 text-teal-600" />
       </div>
       <div className="flex-1 min-w-0">
-        <p className="text-sm font-medium text-slate-900 truncate">{resource.title}</p>
+        <p className="text-sm font-medium text-[var(--cs-navy)] truncate">{resource.title}</p>
         <div className="flex items-center gap-2 mt-0.5">
           {resource.pathway && (
-            <span className="text-[10px] text-slate-400">{PATHWAY_LABELS[resource.pathway]}</span>
+            <span className="text-[10px] text-[var(--cs-text-muted)]">{PATHWAY_LABELS[resource.pathway]}</span>
           )}
-          <span className="text-[10px] text-slate-400">{formatDate(resource.created_at)}</span>
+          <span className="text-[10px] text-[var(--cs-text-muted)]">{formatDate(resource.created_at)}</span>
         </div>
       </div>
       <Badge className={cn("text-[10px] h-4 px-1.5 shrink-0",
-        resource.status === "approved" ? "bg-emerald-100 text-emerald-700" : "bg-slate-100 text-slate-700"
+        resource.status === "approved" ? "bg-emerald-100 text-emerald-700" : "bg-slate-100 text-[var(--cs-text-secondary)]"
       )}>
         {resource.status}
       </Badge>
-      <ChevronRight className="h-4 w-4 text-slate-300 shrink-0" />
+      <ChevronRight className="h-4 w-4 text-[var(--cs-text-gentle)] shrink-0" />
     </div>
   );
 }
@@ -226,7 +226,7 @@ export default function FlashcardsPage() {
           <CardContent className="space-y-4">
             <div className="grid gap-4 sm:grid-cols-3">
               <div>
-                <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Topic</label>
+                <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Topic</label>
                 <Input
                   className="mt-1"
                   placeholder="e.g. Safeguarding thresholds"
@@ -235,7 +235,7 @@ export default function FlashcardsPage() {
                 />
               </div>
               <div>
-                <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Pathway</label>
+                <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Pathway</label>
                 <Select value={pathway} onValueChange={(v) => setPathway(v as LearningPathway)}>
                   <SelectTrigger className="mt-1"><SelectValue /></SelectTrigger>
                   <SelectContent>
@@ -246,7 +246,7 @@ export default function FlashcardsPage() {
                 </Select>
               </div>
               <div>
-                <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Difficulty</label>
+                <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Difficulty</label>
                 <Select value={difficulty} onValueChange={(v) => setDifficulty(v as "easy" | "mixed" | "hard")}>
                   <SelectTrigger className="mt-1"><SelectValue /></SelectTrigger>
                   <SelectContent>
@@ -272,7 +272,7 @@ export default function FlashcardsPage() {
                 <div>
                   <CardTitle className="text-base">{result.set_title ?? "Flashcard Set"}</CardTitle>
                   {result.introduction_note && (
-                    <p className="text-sm text-slate-500 mt-1">{result.introduction_note}</p>
+                    <p className="text-sm text-[var(--cs-text-muted)] mt-1">{result.introduction_note}</p>
                   )}
                 </div>
                 <div className="flex items-center gap-2 shrink-0">
@@ -294,7 +294,7 @@ export default function FlashcardsPage() {
                   ))}
                 </div>
               ) : (
-                <p className="text-sm text-slate-500 text-center py-8">No cards generated</p>
+                <p className="text-sm text-[var(--cs-text-muted)] text-center py-8">No cards generated</p>
               )}
             </CardContent>
           </Card>
@@ -303,14 +303,14 @@ export default function FlashcardsPage() {
         {/* Saved sets */}
         <div>
           <div className="flex items-center justify-between mb-3">
-            <h3 className="text-sm font-semibold text-slate-700">Saved Flashcard Sets</h3>
-            <span className="text-xs text-slate-400">{flashcardSets.length} sets</span>
+            <h3 className="text-sm font-semibold text-[var(--cs-text-secondary)]">Saved Flashcard Sets</h3>
+            <span className="text-xs text-[var(--cs-text-muted)]">{flashcardSets.length} sets</span>
           </div>
           {isLoading ? (
-            <p className="text-sm text-slate-500 text-center py-8">Loading…</p>
+            <p className="text-sm text-[var(--cs-text-muted)] text-center py-8">Loading…</p>
           ) : flashcardSets.length === 0 ? (
-            <div className="text-center py-12 text-slate-500">
-              <LayoutGrid className="h-10 w-10 text-slate-300 mx-auto mb-3" />
+            <div className="text-center py-12 text-[var(--cs-text-muted)]">
+              <LayoutGrid className="h-10 w-10 text-[var(--cs-text-gentle)] mx-auto mb-3" />
               <p className="text-sm font-medium">No flashcard sets saved yet</p>
               <p className="text-xs mt-1">Generate and save your first set above</p>
             </div>

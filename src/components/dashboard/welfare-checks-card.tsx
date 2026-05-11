@@ -73,7 +73,7 @@ export function WelfareChecksCard() {
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-center py-6">
-            <Loader2 className="h-5 w-5 animate-spin text-slate-400" />
+            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
           </div>
         </CardContent>
       </Card>
@@ -99,9 +99,9 @@ export function WelfareChecksCard() {
         {/* KPI strip */}
         <div className="grid grid-cols-3 gap-2">
           <div className={cn("rounded-xl p-2 text-center", todayRounds > 0 ? "bg-cyan-50" : "bg-slate-50")}>
-            <Eye className={cn("h-3 w-3 mx-auto mb-0.5", todayRounds > 0 ? "text-cyan-500" : "text-slate-400")} />
-            <div className={cn("text-sm font-bold tabular-nums", todayRounds > 0 ? "text-cyan-700" : "text-slate-400")}>{todayRounds}</div>
-            <div className={cn("text-[9px]", todayRounds > 0 ? "text-cyan-500" : "text-slate-400")}>Today</div>
+            <Eye className={cn("h-3 w-3 mx-auto mb-0.5", todayRounds > 0 ? "text-cyan-500" : "text-[var(--cs-text-muted)]")} />
+            <div className={cn("text-sm font-bold tabular-nums", todayRounds > 0 ? "text-cyan-700" : "text-[var(--cs-text-muted)]")}>{todayRounds}</div>
+            <div className={cn("text-[9px]", todayRounds > 0 ? "text-cyan-500" : "text-[var(--cs-text-muted)]")}>Today</div>
           </div>
           <div className={cn("rounded-xl p-2 text-center", concernsFlagged > 0 ? "bg-amber-50" : "bg-emerald-50")}>
             <AlertTriangle className={cn("h-3 w-3 mx-auto mb-0.5", concernsFlagged > 0 ? "text-amber-500" : "text-emerald-500")} />
@@ -118,7 +118,7 @@ export function WelfareChecksCard() {
         {/* Today's progress bar */}
         <div className="space-y-1">
           <div className="flex items-center justify-between text-[10px] px-1">
-            <span className="text-slate-500">Today&apos;s Rounds</span>
+            <span className="text-[var(--cs-text-muted)]">Today&apos;s Rounds</span>
             <span className={cn(
               "font-bold tabular-nums",
               completionPct >= 100 ? "text-emerald-600" : completionPct >= 66 ? "text-cyan-600" : "text-amber-600",
@@ -140,10 +140,10 @@ export function WelfareChecksCard() {
         {/* Latest round time */}
         {latestRoundTime && (
           <div className="flex items-center justify-between text-[10px] px-1">
-            <span className="flex items-center gap-1 text-slate-500">
+            <span className="flex items-center gap-1 text-[var(--cs-text-muted)]">
               <Clock className="h-3 w-3" /> Last round
             </span>
-            <span className="font-medium text-slate-700">{latestRoundTime}</span>
+            <span className="font-medium text-[var(--cs-text-secondary)]">{latestRoundTime}</span>
           </div>
         )}
 

@@ -195,7 +195,7 @@ export default function PocketMoneyAccountsPage() {
               </CardHeader>
               <CardContent className="space-y-3">
                 <div className="text-center">
-                  <p className="text-3xl font-bold text-slate-900">
+                  <p className="text-3xl font-bold text-[var(--cs-navy)]">
                     £{acc.currentBalance.toFixed(2)}
                   </p>
                   <p className="text-xs text-muted-foreground">Current Balance</p>
@@ -315,7 +315,7 @@ export default function PocketMoneyAccountsPage() {
 
                 {/* Description + category */}
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-slate-900 truncate">
+                  <p className="text-sm font-medium text-[var(--cs-navy)] truncate">
                     {tx.description}
                   </p>
                   <div className="flex items-center gap-2 mt-0.5">
@@ -323,7 +323,7 @@ export default function PocketMoneyAccountsPage() {
                       {POCKET_MONEY_ACCOUNT_CATEGORY_LABEL[tx.category]}
                     </span>
                     {tx.receipt_ref && (
-                      <Badge className="bg-slate-100 text-slate-600 border-slate-200 text-[9px] px-1.5 py-0">
+                      <Badge className="bg-slate-100 text-[var(--cs-text-secondary)] border-[var(--cs-border)] text-[9px] px-1.5 py-0">
                         <Receipt className="h-2.5 w-2.5 mr-0.5" />
                         {tx.receipt_ref}
                       </Badge>

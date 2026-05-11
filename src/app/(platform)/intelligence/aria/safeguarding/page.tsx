@@ -44,7 +44,7 @@ const SEVERITY_CONFIG: Record<SafeguardingFlagSeverity, { badge: string; border:
   critical: { badge: "bg-red-100 text-red-800 border-red-200", border: "border-l-red-500", dot: "bg-red-500" },
   high: { badge: "bg-orange-100 text-orange-800 border-orange-200", border: "border-l-orange-400", dot: "bg-orange-500" },
   medium: { badge: "bg-amber-100 text-amber-800 border-amber-200", border: "border-l-amber-400", dot: "bg-amber-400" },
-  low: { badge: "bg-slate-100 text-slate-700 border-slate-200", border: "border-l-slate-300", dot: "bg-slate-400" },
+  low: { badge: "bg-slate-100 text-[var(--cs-text-secondary)] border-[var(--cs-border)]", border: "border-l-slate-300", dot: "bg-slate-400" },
 };
 
 const STATUS_TABS = [
@@ -83,12 +83,12 @@ function FlagCard({ flag }: { flag: AriaSafeguardingFlag }) {
     open: "bg-red-100 text-red-800",
     reviewed: "bg-blue-100 text-blue-800",
     escalated: "bg-orange-100 text-orange-800",
-    closed: "bg-slate-100 text-slate-500",
+    closed: "bg-slate-100 text-[var(--cs-text-muted)]",
   };
 
   return (
     <div className={cn(
-      "rounded-xl border-l-4 border border-slate-100 bg-white p-4 space-y-3",
+      "rounded-xl border-l-4 border border-[var(--cs-border-subtle)] bg-white p-4 space-y-3",
       sev.border
     )}>
       <div className="flex items-start gap-3">
@@ -103,11 +103,11 @@ function FlagCard({ flag }: { flag: AriaSafeguardingFlag }) {
             </span>
           </div>
           {/* Flag type */}
-          <p className="text-base font-bold text-slate-900">{formatFlagType(flag.flag_type)}</p>
+          <p className="text-base font-bold text-[var(--cs-navy)]">{formatFlagType(flag.flag_type)}</p>
           {/* Child + date */}
-          <p className="text-xs text-slate-500">{childName} · {formatDate(flag.created_at)}</p>
+          <p className="text-xs text-[var(--cs-text-muted)]">{childName} · {formatDate(flag.created_at)}</p>
           {/* Description */}
-          <p className="text-sm text-slate-700 leading-relaxed">{flag.description}</p>
+          <p className="text-sm text-[var(--cs-text-secondary)] leading-relaxed">{flag.description}</p>
           {/* Recommended action */}
           <div className="rounded-lg bg-amber-50 border border-amber-100 px-3 py-2">
             <p className="text-[10px] font-semibold text-amber-700 uppercase mb-0.5">Recommended Action</p>
@@ -115,7 +115,7 @@ function FlagCard({ flag }: { flag: AriaSafeguardingFlag }) {
           </div>
           {/* Source */}
           {flag.source_type && (
-            <p className="text-[10px] text-slate-400">Source: {flag.source_type}</p>
+            <p className="text-[10px] text-[var(--cs-text-muted)]">Source: {flag.source_type}</p>
           )}
           {/* Review outcome */}
           {flag.review_outcome && (
@@ -129,7 +129,7 @@ function FlagCard({ flag }: { flag: AriaSafeguardingFlag }) {
 
       {/* Actions */}
       {flag.status !== "closed" && (
-        <div className="flex items-center gap-2 flex-wrap pt-1 border-t border-slate-100">
+        <div className="flex items-center gap-2 flex-wrap pt-1 border-t border-[var(--cs-border-subtle)]">
           {flag.status === "open" && (
             <>
               <Button
@@ -156,14 +156,14 @@ function FlagCard({ flag }: { flag: AriaSafeguardingFlag }) {
             <Button
               size="sm"
               variant="outline"
-              className="h-7 px-2.5 text-xs gap-1 text-slate-500"
+              className="h-7 px-2.5 text-xs gap-1 text-[var(--cs-text-muted)]"
               onClick={() => setConfirmClose(true)}
             >
               <X className="h-3 w-3" />Close
             </Button>
           ) : (
             <div className="flex items-center gap-2">
-              <span className="text-xs text-slate-600">Confirm close?</span>
+              <span className="text-xs text-[var(--cs-text-secondary)]">Confirm close?</span>
               <Button
                 size="sm"
                 className="h-7 px-2.5 text-xs bg-slate-700 hover:bg-slate-900 text-white"
@@ -182,13 +182,13 @@ function FlagCard({ flag }: { flag: AriaSafeguardingFlag }) {
 
       {/* Review form */}
       {reviewOpen && (
-        <div className="border-t border-slate-100 pt-3 space-y-2">
+        <div className="border-t border-[var(--cs-border-subtle)] pt-3 space-y-2">
           <textarea
             value={reviewOutcome}
             onChange={(e) => setReviewOutcome(e.target.value)}
             rows={3}
             placeholder="Describe the review outcome — actions taken, decisions made, referrals…"
-            className="w-full rounded-lg border border-slate-200 px-3 py-2 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-300 resize-none"
+            className="w-full rounded-lg border border-[var(--cs-border)] px-3 py-2 text-xs text-[var(--cs-navy)] placeholder:text-[var(--cs-text-muted)] focus:outline-none focus:ring-2 focus:ring-blue-300 resize-none"
           />
           <div className="flex gap-2">
             <Button size="sm" variant="ghost" className="text-xs h-7" onClick={() => setReviewOpen(false)}>
@@ -266,7 +266,7 @@ function RaiseFlagForm({ onClose }: { onClose: () => void }) {
           <CardTitle className="text-sm font-semibold flex items-center gap-2">
             <Shield className="h-4 w-4 text-red-500" />Raise Safeguarding Flag
           </CardTitle>
-          <button onClick={onClose} className="rounded-lg p-1 text-slate-400 hover:text-slate-600 hover:bg-slate-100">
+          <button onClick={onClose} className="rounded-lg p-1 text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] hover:bg-[var(--cs-surface)]">
             <X className="h-4 w-4" />
           </button>
         </div>
@@ -274,11 +274,11 @@ function RaiseFlagForm({ onClose }: { onClose: () => void }) {
       <CardContent className="space-y-4">
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-1.5">
-            <label className="text-xs font-medium text-slate-600">Young Person *</label>
+            <label className="text-xs font-medium text-[var(--cs-text-secondary)]">Young Person *</label>
             <select
               value={childId}
               onChange={(e) => setChildId(e.target.value)}
-              className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-red-300"
+              className="w-full rounded-lg border border-[var(--cs-border)] bg-white px-3 py-2 text-sm text-[var(--cs-navy)] focus:outline-none focus:ring-2 focus:ring-red-300"
             >
               <option value="">Select young person</option>
               {youngPeople.map((yp) => (
@@ -287,7 +287,7 @@ function RaiseFlagForm({ onClose }: { onClose: () => void }) {
             </select>
           </div>
           <div className="space-y-1.5">
-            <label className="text-xs font-medium text-slate-600">Severity *</label>
+            <label className="text-xs font-medium text-[var(--cs-text-secondary)]">Severity *</label>
             <div className="flex gap-2">
               {(["low", "medium", "high", "critical"] as SafeguardingFlagSeverity[]).map((s) => (
                 <button
@@ -300,7 +300,7 @@ function RaiseFlagForm({ onClose }: { onClose: () => void }) {
                         : s === "high" ? "bg-orange-500 text-white border-orange-500"
                         : s === "medium" ? "bg-amber-400 text-white border-amber-400"
                         : "bg-slate-700 text-white border-slate-700"
-                      : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50"
+                      : "border-[var(--cs-border)] bg-white text-[var(--cs-text-secondary)] hover:bg-[var(--cs-surface)]"
                   )}
                 >
                   {s}
@@ -311,11 +311,11 @@ function RaiseFlagForm({ onClose }: { onClose: () => void }) {
         </div>
 
         <div className="space-y-1.5">
-          <label className="text-xs font-medium text-slate-600">Flag Type *</label>
+          <label className="text-xs font-medium text-[var(--cs-text-secondary)]">Flag Type *</label>
           <select
             value={flagType}
             onChange={(e) => setFlagType(e.target.value as SafeguardingFlagType)}
-            className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-red-300"
+            className="w-full rounded-lg border border-[var(--cs-border)] bg-white px-3 py-2 text-sm text-[var(--cs-navy)] focus:outline-none focus:ring-2 focus:ring-red-300"
           >
             {FLAG_TYPES.map((t) => (
               <option key={t} value={t}>{formatFlagType(t)}</option>
@@ -324,24 +324,24 @@ function RaiseFlagForm({ onClose }: { onClose: () => void }) {
         </div>
 
         <div className="space-y-1.5">
-          <label className="text-xs font-medium text-slate-600">Description *</label>
+          <label className="text-xs font-medium text-[var(--cs-text-secondary)]">Description *</label>
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             rows={4}
             placeholder="Describe the concern in detail — what was observed, said, or identified…"
-            className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-red-300 resize-none"
+            className="w-full rounded-lg border border-[var(--cs-border)] bg-white px-3 py-2 text-sm text-[var(--cs-navy)] placeholder:text-[var(--cs-text-muted)] focus:outline-none focus:ring-2 focus:ring-red-300 resize-none"
           />
         </div>
 
         <div className="space-y-1.5">
-          <label className="text-xs font-medium text-slate-600">Recommended Action *</label>
+          <label className="text-xs font-medium text-[var(--cs-text-secondary)]">Recommended Action *</label>
           <textarea
             value={recommendedAction}
             onChange={(e) => setRecommendedAction(e.target.value)}
             rows={3}
             placeholder="What action should be taken in response to this flag?"
-            className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-red-300 resize-none"
+            className="w-full rounded-lg border border-[var(--cs-border)] bg-white px-3 py-2 text-sm text-[var(--cs-navy)] placeholder:text-[var(--cs-text-muted)] focus:outline-none focus:ring-2 focus:ring-red-300 resize-none"
           />
         </div>
 
@@ -422,14 +422,14 @@ export default function SafeguardingFlagsPage() {
         {/* Stat bar */}
         <div className="grid gap-3 sm:grid-cols-4">
           {[
-            { label: "Open Flags", value: openFlags.length, colour: "text-slate-900" },
+            { label: "Open Flags", value: openFlags.length, colour: "text-[var(--cs-navy)]" },
             { label: "Critical", value: criticalFlags.length, colour: "text-red-600" },
             { label: "High", value: highFlags.length, colour: "text-orange-600" },
             { label: "Medium", value: mediumFlags.length, colour: "text-amber-600" },
           ].map(({ label, value, colour }) => (
-            <div key={label} className="rounded-xl border border-slate-100 bg-white p-3">
+            <div key={label} className="rounded-xl border border-[var(--cs-border-subtle)] bg-white p-3">
               <div className={cn("text-2xl font-bold tabular-nums", colour)}>{value}</div>
-              <div className="text-xs text-slate-500 mt-0.5">{label}</div>
+              <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">{label}</div>
             </div>
           ))}
         </div>
@@ -442,7 +442,7 @@ export default function SafeguardingFlagsPage() {
               onClick={() => setStatusFilter(tab.value)}
               className={cn(
                 "rounded-full px-3 py-1 text-xs font-medium transition-colors",
-                statusFilter === tab.value ? "bg-slate-900 text-white" : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                statusFilter === tab.value ? "bg-slate-900 text-white" : "bg-slate-100 text-[var(--cs-text-secondary)] hover:bg-slate-200"
               )}
             >
               {tab.label}
@@ -458,8 +458,8 @@ export default function SafeguardingFlagsPage() {
         ) : filtered.length === 0 ? (
           <div className="flex flex-col items-center gap-2 py-12 text-center">
             <Shield className="h-12 w-12 text-slate-200" />
-            <p className="text-sm font-semibold text-slate-700">No flags to display</p>
-            <p className="text-xs text-slate-400">
+            <p className="text-sm font-semibold text-[var(--cs-text-secondary)]">No flags to display</p>
+            <p className="text-xs text-[var(--cs-text-muted)]">
               {statusFilter === "all" ? "No safeguarding flags have been raised" : `No ${statusFilter} flags`}
             </p>
           </div>
@@ -472,9 +472,9 @@ export default function SafeguardingFlagsPage() {
         )}
 
         {/* Disclaimer */}
-        <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 flex items-start gap-3">
-          <Shield className="h-4 w-4 text-slate-400 shrink-0 mt-0.5" />
-          <p className="text-xs text-slate-600 leading-relaxed">
+        <div className="rounded-xl border border-[var(--cs-border)] bg-slate-50 p-4 flex items-start gap-3">
+          <Shield className="h-4 w-4 text-[var(--cs-text-muted)] shrink-0 mt-0.5" />
+          <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed">
             ARIA identifies potential concerns but cannot make safeguarding decisions. All flags must be reviewed
             by a trained designated safeguarding lead. This tool does not replace your organisation&apos;s safeguarding
             procedures.

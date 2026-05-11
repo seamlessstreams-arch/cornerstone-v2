@@ -55,7 +55,7 @@ function MetricBar({ label, score, max = 100 }: { label: string; score: number; 
   return (
     <div className="space-y-1">
       <div className="flex items-center justify-between text-xs">
-        <span className="text-slate-600">{label}</span>
+        <span className="text-[var(--cs-text-secondary)]">{label}</span>
         <ScorePill score={score} size="sm" />
       </div>
       <div className="h-1.5 rounded-full bg-slate-100">
@@ -74,7 +74,7 @@ function FeatureCard({
 }) {
   return (
     <Link href={href} className="group">
-      <Card className="border border-slate-100 transition-all hover:shadow-md hover:-translate-y-0.5 h-full">
+      <Card className="border border-[var(--cs-border-subtle)] transition-all hover:shadow-md hover:-translate-y-0.5 h-full">
         <CardContent className="p-4">
           <div className="flex items-start gap-3">
             <div className={cn("flex h-9 w-9 shrink-0 items-center justify-center rounded-xl", bg)}>
@@ -82,15 +82,15 @@ function FeatureCard({
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center justify-between gap-2">
-                <span className="text-sm font-semibold text-slate-900">{title}</span>
+                <span className="text-sm font-semibold text-[var(--cs-navy)]">{title}</span>
                 <div className="flex items-center gap-1 shrink-0">
                   {badge && (
                     <Badge variant="destructive" className="text-[10px] h-4 px-1.5">{badge}</Badge>
                   )}
-                  <ChevronRight className="h-4 w-4 text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <ChevronRight className="h-4 w-4 text-[var(--cs-text-gentle)] opacity-0 group-hover:opacity-100 transition-opacity" />
                 </div>
               </div>
-              <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">{description}</p>
+              <p className="text-xs text-[var(--cs-text-muted)] mt-0.5 leading-relaxed">{description}</p>
             </div>
           </div>
         </CardContent>
@@ -190,7 +190,7 @@ export default function RiHubPage() {
               </div>
               <div>
                 <h2 className="text-lg font-bold">RI Command Centre</h2>
-                <p className="text-sm text-slate-300">Strategic governance for Oak House</p>
+                <p className="text-sm text-[var(--cs-text-gentle)]">Strategic governance for Oak House</p>
               </div>
             </div>
             <div className="text-right shrink-0">
@@ -200,7 +200,7 @@ export default function RiHubPage() {
               </div>
               <div className="flex items-center gap-1 justify-end mt-1">
                 <Zap className="h-3 w-3 text-indigo-400" />
-                <span className="text-[10px] text-slate-400">live governance score</span>
+                <span className="text-[10px] text-[var(--cs-text-muted)]">live governance score</span>
               </div>
             </div>
           </div>
@@ -216,9 +216,9 @@ export default function RiHubPage() {
             <MetricBar label="Child Voice" score={scores.child_voice_score} />
           </div>
           <div className="flex flex-wrap gap-2 pt-1 border-t border-white/10">
-            <span className="rounded-full bg-white/10 px-3 py-1 text-xs text-slate-300">Oak House</span>
+            <span className="rounded-full bg-white/10 px-3 py-1 text-xs text-[var(--cs-text-gentle)]">Oak House</span>
             <span className="rounded-full bg-indigo-600/40 px-3 py-1 text-xs text-indigo-200">Reg 17 / Reg 44 / Reg 45</span>
-            <span className="rounded-full bg-white/10 px-3 py-1 text-xs text-slate-300">ILACS Framework</span>
+            <span className="rounded-full bg-white/10 px-3 py-1 text-xs text-[var(--cs-text-gentle)]">ILACS Framework</span>
           </div>
         </div>
 
@@ -231,13 +231,13 @@ export default function RiHubPage() {
             { label: "Urgent Training", value: urgentTraining.length, icon: BookOpen, colour: urgentTraining.length > 0 ? "text-orange-600" : "text-emerald-600", bg: urgentTraining.length > 0 ? "bg-orange-50" : "bg-emerald-50", href: "/learning/training-needs" },
           ].map(({ label, value, icon: Icon, colour, bg, href }) => (
             <Link key={label} href={href} className="group">
-              <div className="rounded-xl border border-slate-100 bg-white p-4 flex items-center gap-3 hover:shadow-sm transition-shadow">
+              <div className="rounded-xl border border-[var(--cs-border-subtle)] bg-white p-4 flex items-center gap-3 hover:shadow-sm transition-shadow">
                 <div className={cn("flex h-9 w-9 shrink-0 items-center justify-center rounded-xl", bg)}>
                   <Icon className={cn("h-4.5 w-4.5", colour)} style={{ width: "1.125rem", height: "1.125rem" }} />
                 </div>
                 <div>
-                  <div className="text-lg font-bold text-slate-900">{value}</div>
-                  <div className="text-[10px] text-slate-500">{label}</div>
+                  <div className="text-lg font-bold text-[var(--cs-navy)]">{value}</div>
+                  <div className="text-[10px] text-[var(--cs-text-muted)]">{label}</div>
                 </div>
               </div>
             </Link>
@@ -246,7 +246,7 @@ export default function RiHubPage() {
 
         {/* Feature grid */}
         <div>
-          <h3 className="text-sm font-semibold text-slate-700 mb-4">RI Tools</h3>
+          <h3 className="text-sm font-semibold text-[var(--cs-text-secondary)] mb-4">RI Tools</h3>
           <div className="grid gap-4 sm:grid-cols-2">
             <FeatureCard
               href="/ri/scorecard"
@@ -331,11 +331,11 @@ export default function RiHubPage() {
         </div>
 
         {/* Governance notice */}
-        <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4 flex items-start gap-3">
-          <CheckCircle2 className="h-5 w-5 text-slate-500 shrink-0 mt-0.5" />
+        <div className="rounded-2xl border border-[var(--cs-border)] bg-slate-50 p-4 flex items-start gap-3">
+          <CheckCircle2 className="h-5 w-5 text-[var(--cs-text-muted)] shrink-0 mt-0.5" />
           <div>
-            <p className="text-sm font-semibold text-slate-700">RI Independent Oversight</p>
-            <p className="text-xs text-slate-500 leading-relaxed mt-0.5">
+            <p className="text-sm font-semibold text-[var(--cs-text-secondary)]">RI Independent Oversight</p>
+            <p className="text-xs text-[var(--cs-text-muted)] leading-relaxed mt-0.5">
               This Command Centre supports the RI role under Regulation 15 and Schedule 2 of the Children's Homes (England) Regulations 2015.
               All AI-generated analysis requires RI review and professional judgement before any governance action is taken.
             </p>

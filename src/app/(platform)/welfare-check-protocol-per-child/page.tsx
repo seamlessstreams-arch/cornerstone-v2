@@ -212,7 +212,7 @@ function checkTypeColour(t: CheckType): string {
     case "Sensor-only":
       return "bg-purple-100 text-purple-800 border-purple-200";
     case "Standard observation":
-      return "bg-slate-100 text-slate-800 border-slate-200";
+      return "bg-slate-100 text-[var(--cs-navy)] border-[var(--cs-border)]";
   }
 }
 
@@ -378,7 +378,7 @@ export default function WelfareCheckProtocolPerChildPage() {
               {/* ── header row (click to toggle) ─────────────────────── */}
               <button
                 onClick={() => setExpandedId(open ? null : r.id)}
-                className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 rounded-xl"
+                className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] rounded-xl"
               >
                 <div className="flex items-center gap-4 flex-1 min-w-0">
                   <div className="h-10 w-10 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
@@ -565,9 +565,9 @@ export default function WelfareCheckProtocolPerChildPage() {
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────── */}
-      <div className="mt-8 rounded-lg border bg-slate-50 p-4 text-sm text-slate-700">
+      <div className="mt-8 rounded-lg border bg-slate-50 p-4 text-sm text-[var(--cs-text-secondary)]">
         <p className="font-medium mb-1 flex items-center gap-2">
-          <Shield className="h-4 w-4 text-slate-600" />
+          <Shield className="h-4 w-4 text-[var(--cs-text-secondary)]" />
           Regulatory basis — Quality Standard 5 (Protection of Children)
         </p>
         <p>

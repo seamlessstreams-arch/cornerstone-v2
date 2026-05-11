@@ -190,7 +190,7 @@ export default function PlacementEndSummaryPage() {
           return (
             <div key={s.id} className="rounded-xl border bg-white overflow-hidden">
               <button
-                className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                 onClick={() => setExpandedId(isExpanded ? null : s.id)}
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -223,7 +223,7 @@ export default function PlacementEndSummaryPage() {
                             <span className="text-xs font-medium uppercase tracking-wide capitalize">{key}</span>
                             <span className={cn("text-sm font-bold", ratingColour(val.rating))}>{val.rating}/5</span>
                           </div>
-                          <p className="text-xs text-slate-700">{val.summary}</p>
+                          <p className="text-xs text-[var(--cs-text-secondary)]">{val.summary}</p>
                         </div>
                       ))}
                     </div>
@@ -298,8 +298,8 @@ export default function PlacementEndSummaryPage() {
                       <p className="text-sm text-purple-900 italic">&ldquo;{s.staff_reflection}&rdquo;</p>
                     </div>
                     <div className="bg-slate-50 rounded-lg p-3 border">
-                      <p className="text-xs font-semibold text-slate-800 uppercase tracking-wide mb-1">Social Worker Reflection</p>
-                      <p className="text-sm text-slate-700 italic">&ldquo;{s.sw_reflection}&rdquo;</p>
+                      <p className="text-xs font-semibold text-[var(--cs-navy)] uppercase tracking-wide mb-1">Social Worker Reflection</p>
+                      <p className="text-sm text-[var(--cs-text-secondary)] italic">&ldquo;{s.sw_reflection}&rdquo;</p>
                     </div>
                   </div>
 

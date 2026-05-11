@@ -37,19 +37,19 @@ import { SmartUploadButton } from "@/components/documents/smart-upload-button";
 // ── Status display ────────────────────────────────────────────────────────────
 
 const STATUS_CONFIG: Record<string, { label: string; color: string; bgColor: string; border: string; icon: React.ElementType }> = {
-  draft:          { label: "Draft",          color: "text-slate-500",   bgColor: "bg-slate-100",   border: "border-l-slate-400",   icon: Pencil        },
+  draft:          { label: "Draft",          color: "text-[var(--cs-text-muted)]",   bgColor: "bg-slate-100",   border: "border-l-slate-400",   icon: Pencil        },
   submitted:      { label: "Submitted",      color: "text-blue-600",    bgColor: "bg-blue-100",    border: "border-l-blue-500",    icon: Clock         },
   pending_review: { label: "Pending Review", color: "text-amber-600",   bgColor: "bg-amber-100",   border: "border-l-amber-500",   icon: AlertTriangle  },
   approved:       { label: "Approved",       color: "text-emerald-600", bgColor: "bg-emerald-100", border: "border-l-emerald-500", icon: CheckCircle2  },
   rejected:       { label: "Rejected",       color: "text-red-600",     bgColor: "bg-red-100",     border: "border-l-red-500",     icon: XCircle       },
-  archived:       { label: "Archived",       color: "text-slate-400",   bgColor: "bg-slate-100",   border: "border-l-slate-300",   icon: Archive       },
+  archived:       { label: "Archived",       color: "text-[var(--cs-text-muted)]",   bgColor: "bg-slate-100",   border: "border-l-slate-300",   icon: Archive       },
 };
 
 const PRIORITY_CONFIG: Record<string, { label: string; color: string; border: string }> = {
   urgent: { label: "Urgent", color: "bg-red-100 text-red-800",       border: "border-l-red-600"   },
   high:   { label: "High",   color: "bg-orange-100 text-orange-800", border: "border-l-orange-500" },
   medium: { label: "Medium", color: "bg-blue-100 text-blue-800",     border: "border-l-blue-400"  },
-  low:    { label: "Low",    color: "bg-slate-100 text-slate-600",   border: "border-l-slate-300"  },
+  low:    { label: "Low",    color: "bg-slate-100 text-[var(--cs-text-secondary)]",   border: "border-l-slate-300"  },
 };
 
 // ── Submit panel ──────────────────────────────────────────────────────────────
@@ -130,7 +130,7 @@ function ApprovePanel({
           onChange={(e) => setReviewNotes(e.target.value)}
           rows={2}
           placeholder="Add any notes or observations before approving…"
-          className="w-full rounded-xl border border-emerald-200 bg-white px-3 py-2 text-sm text-slate-700 resize-none focus:outline-none focus:ring-2 focus:ring-emerald-400 placeholder:text-slate-400"
+          className="w-full rounded-xl border border-emerald-200 bg-white px-3 py-2 text-sm text-[var(--cs-text-secondary)] resize-none focus:outline-none focus:ring-2 focus:ring-emerald-400 placeholder:text-[var(--cs-text-muted)]"
         />
       </div>
       <Button
@@ -208,7 +208,7 @@ export default function FormDetailPage() {
   if (isLoading) {
     return (
       <PageShell title="Form" subtitle="Loading…" showQuickCreate={false}>
-        <div className="flex items-center justify-center py-24 text-slate-400">
+        <div className="flex items-center justify-center py-24 text-[var(--cs-text-muted)]">
           <Loader2 className="h-8 w-8 animate-spin mr-3" />
           <span className="text-sm">Loading form…</span>
         </div>
@@ -221,7 +221,7 @@ export default function FormDetailPage() {
       <PageShell title="Form not found" subtitle="" showQuickCreate={false}>
         <div className="max-w-md mx-auto mt-12 text-center space-y-4">
           <AlertCircle className="h-12 w-12 text-red-400 mx-auto" />
-          <p className="text-sm text-slate-600">This form could not be found. It may have been deleted.</p>
+          <p className="text-sm text-[var(--cs-text-secondary)]">This form could not be found. It may have been deleted.</p>
           <Link href="/forms">
             <Button variant="outline"><ArrowLeft className="h-4 w-4 mr-1" />Back to Forms</Button>
           </Link>
@@ -303,7 +303,7 @@ export default function FormDetailPage() {
               )}
             </div>
             {form.description && (
-              <p className="text-xs text-slate-500 mt-1.5 line-clamp-2">{form.description}</p>
+              <p className="text-xs text-[var(--cs-text-muted)] mt-1.5 line-clamp-2">{form.description}</p>
             )}
           </div>
         </div>
@@ -328,10 +328,10 @@ export default function FormDetailPage() {
         {/* ── Edit form ───────────────────────────────────────────────────── */}
         {editing && (
           <div className="rounded-2xl border bg-white p-5 space-y-4">
-            <h3 className="text-sm font-bold text-slate-900">Edit Form Details</h3>
+            <h3 className="text-sm font-bold text-[var(--cs-navy)]">Edit Form Details</h3>
 
             <div>
-              <label className="text-xs font-semibold text-slate-600 block mb-1.5">Title <span className="text-red-500">*</span></label>
+              <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">Title <span className="text-red-500">*</span></label>
               <Input
                 value={editDraft.title ?? ""}
                 onChange={(e) => setEditDraft((d) => ({ ...d, title: e.target.value }))}
@@ -341,23 +341,23 @@ export default function FormDetailPage() {
             </div>
 
             <div>
-              <label className="text-xs font-semibold text-slate-600 block mb-1.5">Description</label>
+              <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">Description</label>
               <textarea
                 value={(editDraft.description as string) ?? ""}
                 onChange={(e) => setEditDraft((d) => ({ ...d, description: e.target.value }))}
                 rows={3}
                 placeholder="Optional description or notes…"
-                className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-3 text-sm text-slate-700 resize-none focus:outline-none focus:ring-2 focus:ring-slate-400 placeholder:text-slate-400"
+                className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3.5 py-3 text-sm text-[var(--cs-text-secondary)] resize-none focus:outline-none focus:ring-2 focus:ring-slate-400 placeholder:text-[var(--cs-text-muted)]"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="text-xs font-semibold text-slate-600 block mb-1.5">Form Type</label>
+                <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">Form Type</label>
                 <select
                   value={editDraft.form_type ?? form.form_type}
                   onChange={(e) => setEditDraft((d) => ({ ...d, form_type: e.target.value as CareForm["form_type"] }))}
-                  className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-400"
+                  className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2.5 text-sm text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-slate-400"
                 >
                   {CARE_FORM_TYPES.map((t) => (
                     <option key={t} value={t}>{CARE_FORM_TYPE_LABELS[t]}</option>
@@ -365,11 +365,11 @@ export default function FormDetailPage() {
                 </select>
               </div>
               <div>
-                <label className="text-xs font-semibold text-slate-600 block mb-1.5">Priority</label>
+                <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">Priority</label>
                 <select
                   value={editDraft.priority ?? form.priority}
                   onChange={(e) => setEditDraft((d) => ({ ...d, priority: e.target.value as CareForm["priority"] }))}
-                  className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-400"
+                  className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2.5 text-sm text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-slate-400"
                 >
                   {(["low", "medium", "high", "urgent"] as const).map((p) => (
                     <option key={p} value={p} className="capitalize">{p.charAt(0).toUpperCase() + p.slice(1)}</option>
@@ -380,7 +380,7 @@ export default function FormDetailPage() {
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="text-xs font-semibold text-slate-600 block mb-1.5">Due Date</label>
+                <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">Due Date</label>
                 <Input
                   type="date"
                   value={(editDraft.due_date as string) ?? ""}
@@ -389,11 +389,11 @@ export default function FormDetailPage() {
                 />
               </div>
               <div>
-                <label className="text-xs font-semibold text-slate-600 block mb-1.5">Linked Young Person</label>
+                <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">Linked Young Person</label>
                 <select
                   value={(editDraft.linked_child_id as string) ?? ""}
                   onChange={(e) => setEditDraft((d) => ({ ...d, linked_child_id: e.target.value || null }))}
-                  className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-400"
+                  className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2.5 text-sm text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-slate-400"
                 >
                   <option value="">None</option>
                   {activeYP.map((yp) => (
@@ -404,11 +404,11 @@ export default function FormDetailPage() {
             </div>
 
             <div>
-              <label className="text-xs font-semibold text-slate-600 block mb-1.5">Linked Staff Member</label>
+              <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">Linked Staff Member</label>
               <select
                 value={(editDraft.linked_staff_id as string) ?? ""}
                 onChange={(e) => setEditDraft((d) => ({ ...d, linked_staff_id: e.target.value || null }))}
-                className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-400"
+                className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2.5 text-sm text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-slate-400"
               >
                 <option value="">None</option>
                 {activeStaff.map((s) => (
@@ -426,64 +426,64 @@ export default function FormDetailPage() {
         {/* ── Form detail grid ────────────────────────────────────────────── */}
         {!editing && (
           <div className="rounded-2xl border bg-white p-5">
-            <h3 className="text-sm font-bold text-slate-900 mb-4">Form Details</h3>
+            <h3 className="text-sm font-bold text-[var(--cs-navy)] mb-4">Form Details</h3>
             <div className="grid grid-cols-2 gap-x-8 gap-y-4 text-sm">
 
               <div>
-                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Form Type</span>
-                <span className="text-slate-800">{typeLabel}</span>
+                <span className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider block mb-1">Form Type</span>
+                <span className="text-[var(--cs-navy)]">{typeLabel}</span>
               </div>
 
               <div>
-                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Priority</span>
+                <span className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider block mb-1">Priority</span>
                 <Badge className={cn("rounded-full border-0 text-xs", prio.color)}>{prio.label}</Badge>
               </div>
 
               <div>
-                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Status</span>
+                <span className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider block mb-1">Status</span>
                 <Badge className={cn("rounded-full border-0 text-xs", stat.bgColor, stat.color)}>{stat.label}</Badge>
               </div>
 
               <div>
-                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Due Date</span>
-                <span className={cn("font-medium", isOverdue ? "text-red-600" : "text-slate-800")}>
-                  {form.due_date ? formatRelative(form.due_date) : <span className="text-slate-400 font-normal italic">No due date</span>}
+                <span className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider block mb-1">Due Date</span>
+                <span className={cn("font-medium", isOverdue ? "text-red-600" : "text-[var(--cs-navy)]")}>
+                  {form.due_date ? formatRelative(form.due_date) : <span className="text-[var(--cs-text-muted)] font-normal italic">No due date</span>}
                 </span>
               </div>
 
               {form.linked_child_id && (
                 <div>
-                  <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Young Person</span>
+                  <span className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider block mb-1">Young Person</span>
                   <div className="flex items-center gap-2">
                     <Heart className="h-3.5 w-3.5 text-rose-400" />
-                    <span className="text-slate-800">{getYPName(form.linked_child_id)}</span>
+                    <span className="text-[var(--cs-navy)]">{getYPName(form.linked_child_id)}</span>
                   </div>
                 </div>
               )}
 
               {form.linked_staff_id && (
                 <div>
-                  <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Linked Staff</span>
+                  <span className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider block mb-1">Linked Staff</span>
                   <div className="flex items-center gap-2">
                     <Avatar name={getStaffName(form.linked_staff_id)} size="xs" />
-                    <span className="text-slate-800">{getStaffName(form.linked_staff_id)}</span>
+                    <span className="text-[var(--cs-navy)]">{getStaffName(form.linked_staff_id)}</span>
                   </div>
                 </div>
               )}
 
               {form.linked_incident_id && (
                 <div>
-                  <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Linked Incident</span>
-                  <span className="text-slate-800 font-mono text-xs">{form.linked_incident_id.replace("inc_", "INC-")}</span>
+                  <span className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider block mb-1">Linked Incident</span>
+                  <span className="text-[var(--cs-navy)] font-mono text-xs">{form.linked_incident_id.replace("inc_", "INC-")}</span>
                 </div>
               )}
 
               {form.tags.length > 0 && (
                 <div className="col-span-2">
-                  <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1.5">Tags</span>
+                  <span className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider block mb-1.5">Tags</span>
                   <div className="flex flex-wrap gap-1.5">
                     {form.tags.map((tag) => (
-                      <span key={tag} className="text-xs text-slate-500 bg-slate-50 rounded-full px-2.5 py-0.5 border border-slate-200">
+                      <span key={tag} className="text-xs text-[var(--cs-text-muted)] bg-slate-50 rounded-full px-2.5 py-0.5 border border-[var(--cs-border)]">
                         <Tag className="h-3 w-3 inline mr-1" />#{tag}
                       </span>
                     ))}
@@ -493,8 +493,8 @@ export default function FormDetailPage() {
 
               {form.description && (
                 <div className="col-span-2">
-                  <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Description</span>
-                  <p className="text-slate-700 text-sm leading-relaxed">{form.description}</p>
+                  <span className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider block mb-1">Description</span>
+                  <p className="text-[var(--cs-text-secondary)] text-sm leading-relaxed">{form.description}</p>
                 </div>
               )}
             </div>
@@ -542,15 +542,15 @@ export default function FormDetailPage() {
 
         {/* ── Audit trail ─────────────────────────────────────────────────── */}
         <div className="rounded-2xl border bg-white p-5">
-          <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Audit</h3>
+          <h3 className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-3">Audit</h3>
           <div className="grid grid-cols-2 gap-4 text-sm">
             <div>
-              <span className="text-xs text-slate-400 block">Created</span>
-              <span className="text-slate-700">{formatDate(form.created_at)} by {getStaffName(form.created_by)}</span>
+              <span className="text-xs text-[var(--cs-text-muted)] block">Created</span>
+              <span className="text-[var(--cs-text-secondary)]">{formatDate(form.created_at)} by {getStaffName(form.created_by)}</span>
             </div>
             <div>
-              <span className="text-xs text-slate-400 block">Last updated</span>
-              <span className="text-slate-700">{formatDate(form.updated_at)} by {getStaffName(form.updated_by)}</span>
+              <span className="text-xs text-[var(--cs-text-muted)] block">Last updated</span>
+              <span className="text-[var(--cs-text-secondary)]">{formatDate(form.updated_at)} by {getStaffName(form.updated_by)}</span>
             </div>
           </div>
         </div>

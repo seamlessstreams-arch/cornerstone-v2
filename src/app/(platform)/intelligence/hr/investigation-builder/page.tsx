@@ -130,7 +130,7 @@ const FINDING_OPTIONS: { value: Allegation["finding"]; label: string; colour: st
   { value: "substantiated", label: "Substantiated", colour: "bg-red-100 text-red-800" },
   { value: "partially_substantiated", label: "Partially substantiated", colour: "bg-amber-100 text-amber-800" },
   { value: "not_substantiated", label: "Not substantiated", colour: "bg-emerald-100 text-emerald-800" },
-  { value: "inconclusive", label: "Inconclusive", colour: "bg-slate-100 text-slate-700" },
+  { value: "inconclusive", label: "Inconclusive", colour: "bg-slate-100 text-[var(--cs-text-secondary)]" },
 ];
 
 let nextId = 1;
@@ -311,7 +311,7 @@ export default function InvestigationBuilderPage() {
       .map((e) => `- [${EVIDENCE_TYPES.find((t) => t.value === e.type)?.label ?? e.type}] ${e.description} — Source: ${e.source}. Relevance: ${e.relevance}`)
       .join("\n");
 
-    return `Aria suggested draft — requires investigating officer review before finalising.
+    return `ARIA suggested draft — requires investigating officer review before finalising.
 
 ═══════════════════════════════════════════════════════════════
 INVESTIGATION REPORT
@@ -402,7 +402,7 @@ gathered during the investigation.
                   ? "bg-slate-900 text-white"
                   : isDone
                     ? "bg-emerald-50 text-emerald-700 hover:bg-emerald-100"
-                    : "bg-slate-100 text-slate-600 hover:bg-slate-200",
+                    : "bg-slate-100 text-[var(--cs-text-secondary)] hover:bg-slate-200",
               )}
             >
               {isDone && !isActive ? (
@@ -427,13 +427,13 @@ gathered during the investigation.
         <Card>
           <CardHeader className="pb-3">
             <CardTitle className="text-base flex items-center gap-2">
-              <Target className="h-4 w-4 text-slate-500" />Investigation Details
+              <Target className="h-4 w-4 text-[var(--cs-text-muted)]" />Investigation Details
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="text-xs font-medium text-slate-600 mb-1 block">Investigation type</label>
+                <label className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1 block">Investigation type</label>
                 <Select value={investigationType} onValueChange={(v) => setInvestigationType(v as InvestigationType)}>
                   <SelectTrigger><SelectValue /></SelectTrigger>
                   <SelectContent>
@@ -444,23 +444,23 @@ gathered during the investigation.
                 </Select>
               </div>
               <div>
-                <label className="text-xs font-medium text-slate-600 mb-1 block">Staff member name</label>
+                <label className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1 block">Staff member name</label>
                 <Input value={staffName} onChange={(e) => setStaffName(e.target.value)} placeholder="Full name" />
               </div>
               <div>
-                <label className="text-xs font-medium text-slate-600 mb-1 block">Staff member role</label>
+                <label className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1 block">Staff member role</label>
                 <Input value={staffRole} onChange={(e) => setStaffRole(e.target.value)} placeholder="e.g. Residential Support Worker" />
               </div>
               <div>
-                <label className="text-xs font-medium text-slate-600 mb-1 block">Investigating officer</label>
+                <label className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1 block">Investigating officer</label>
                 <Input value={investigatingOfficer} onChange={(e) => setInvestigatingOfficer(e.target.value)} placeholder="Full name" />
               </div>
               <div>
-                <label className="text-xs font-medium text-slate-600 mb-1 block">Date commissioned</label>
+                <label className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1 block">Date commissioned</label>
                 <Input type="date" value={dateCommissioned} onChange={(e) => setDateCommissioned(e.target.value)} />
               </div>
               <div>
-                <label className="text-xs font-medium text-slate-600 mb-1 block">Target completion date</label>
+                <label className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1 block">Target completion date</label>
                 <Input type="date" value={targetCompletionDate} onChange={(e) => setTargetCompletionDate(e.target.value)} />
               </div>
             </div>
@@ -470,7 +470,7 @@ gathered during the investigation.
         <Card>
           <CardHeader className="pb-3">
             <CardTitle className="text-base flex items-center gap-2">
-              <BookOpen className="h-4 w-4 text-slate-500" />Background
+              <BookOpen className="h-4 w-4 text-[var(--cs-text-muted)]" />Background
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -486,7 +486,7 @@ gathered during the investigation.
         <Card>
           <CardHeader className="pb-3">
             <CardTitle className="text-base flex items-center gap-2">
-              <FileSearch className="h-4 w-4 text-slate-500" />Scope
+              <FileSearch className="h-4 w-4 text-[var(--cs-text-muted)]" />Scope
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -512,11 +512,11 @@ gathered during the investigation.
           </CardHeader>
           <CardContent className="space-y-4">
             {allegations.map((a, i) => (
-              <div key={a.id} className="rounded-xl border border-slate-200 p-4 space-y-3">
+              <div key={a.id} className="rounded-xl border border-[var(--cs-border)] p-4 space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-semibold text-slate-500">Allegation {i + 1}</span>
+                  <span className="text-xs font-semibold text-[var(--cs-text-muted)]">Allegation {i + 1}</span>
                   {allegations.length > 1 && (
-                    <button onClick={() => removeAllegation(a.id)} className="text-slate-400 hover:text-red-500">
+                    <button onClick={() => removeAllegation(a.id)} className="text-[var(--cs-text-muted)] hover:text-red-500">
                       <Trash2 className="h-3.5 w-3.5" />
                     </button>
                   )}
@@ -560,7 +560,7 @@ gathered during the investigation.
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
               <CardTitle className="text-base flex items-center gap-2">
-                <Users className="h-4 w-4 text-slate-500" />Witnesses to Interview
+                <Users className="h-4 w-4 text-[var(--cs-text-muted)]" />Witnesses to Interview
               </CardTitle>
               <Button size="sm" variant="outline" onClick={addWitness} className="gap-1.5">
                 <Plus className="h-3.5 w-3.5" />Add Witness
@@ -569,13 +569,13 @@ gathered during the investigation.
           </CardHeader>
           <CardContent className="space-y-3">
             {witnesses.length === 0 && (
-              <p className="text-sm text-slate-500 text-center py-4">No witnesses added yet. Add the people you need to interview.</p>
+              <p className="text-sm text-[var(--cs-text-muted)] text-center py-4">No witnesses added yet. Add the people you need to interview.</p>
             )}
             {witnesses.map((w, i) => (
-              <div key={w.id} className="rounded-xl border border-slate-200 p-4 space-y-3">
+              <div key={w.id} className="rounded-xl border border-[var(--cs-border)] p-4 space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-semibold text-slate-500">Witness {i + 1}</span>
-                  <button onClick={() => removeWitness(w.id)} className="text-slate-400 hover:text-red-500">
+                  <span className="text-xs font-semibold text-[var(--cs-text-muted)]">Witness {i + 1}</span>
+                  <button onClick={() => removeWitness(w.id)} className="text-[var(--cs-text-muted)] hover:text-red-500">
                     <Trash2 className="h-3.5 w-3.5" />
                   </button>
                 </div>
@@ -592,7 +592,7 @@ gathered during the investigation.
         <Card>
           <CardHeader className="pb-3">
             <CardTitle className="text-base flex items-center gap-2">
-              <FileText className="h-4 w-4 text-slate-500" />Documents to Review
+              <FileText className="h-4 w-4 text-[var(--cs-text-muted)]" />Documents to Review
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -608,7 +608,7 @@ gathered during the investigation.
         <Card>
           <CardHeader className="pb-3">
             <CardTitle className="text-base flex items-center gap-2">
-              <Clock className="h-4 w-4 text-slate-500" />Timeline and Milestones
+              <Clock className="h-4 w-4 text-[var(--cs-text-muted)]" />Timeline and Milestones
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -639,9 +639,9 @@ gathered during the investigation.
     return (
       <div className="space-y-5">
         {witnesses.length === 0 ? (
-          <div className="rounded-2xl border border-slate-200 p-8 text-center">
-            <Users className="h-8 w-8 text-slate-300 mx-auto mb-3" />
-            <p className="text-sm text-slate-500">No witnesses added. Go back to the Investigation Plan to add witnesses.</p>
+          <div className="rounded-2xl border border-[var(--cs-border)] p-8 text-center">
+            <Users className="h-8 w-8 text-[var(--cs-text-gentle)] mx-auto mb-3" />
+            <p className="text-sm text-[var(--cs-text-muted)]">No witnesses added. Go back to the Investigation Plan to add witnesses.</p>
             <Button size="sm" variant="outline" className="mt-3" onClick={() => setStage("plan")}>
               <ChevronLeft className="h-3.5 w-3.5 mr-1" />Back to Plan
             </Button>
@@ -652,11 +652,11 @@ gathered during the investigation.
               <CardHeader className="pb-3">
                 <div className="flex items-center justify-between">
                   <CardTitle className="text-base flex items-center gap-2">
-                    <MessageSquare className="h-4 w-4 text-slate-500" />
+                    <MessageSquare className="h-4 w-4 text-[var(--cs-text-muted)]" />
                     {w.name || `Witness ${i + 1}`}
                     <Badge variant="outline" className="text-[10px]">{w.role || "Role not set"}</Badge>
                   </CardTitle>
-                  <label className="flex items-center gap-2 text-xs text-slate-600">
+                  <label className="flex items-center gap-2 text-xs text-[var(--cs-text-secondary)]">
                     <input
                       type="checkbox"
                       checked={w.interviewed}
@@ -669,7 +669,7 @@ gathered during the investigation.
               </CardHeader>
               <CardContent className="space-y-3">
                 <div>
-                  <label className="text-xs font-medium text-slate-600 mb-1 block">Key points from interview</label>
+                  <label className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1 block">Key points from interview</label>
                   <Textarea
                     value={w.keyPoints ?? ""}
                     onChange={(e) => updateWitness(w.id, { keyPoints: e.target.value })}
@@ -678,7 +678,7 @@ gathered during the investigation.
                   />
                 </div>
                 <div>
-                  <label className="text-xs font-medium text-slate-600 mb-1 block">Investigator notes</label>
+                  <label className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1 block">Investigator notes</label>
                   <Textarea
                     value={w.notes ?? ""}
                     onChange={(e) => updateWitness(w.id, { notes: e.target.value })}
@@ -700,24 +700,24 @@ gathered during the investigation.
     return (
       <div className="space-y-5">
         <div className="flex items-center justify-between">
-          <h3 className="text-sm font-semibold text-slate-700">Evidence Log</h3>
+          <h3 className="text-sm font-semibold text-[var(--cs-text-secondary)]">Evidence Log</h3>
           <Button size="sm" variant="outline" onClick={addEvidence} className="gap-1.5">
             <Plus className="h-3.5 w-3.5" />Add Evidence
           </Button>
         </div>
 
         {evidenceItems.length === 0 ? (
-          <div className="rounded-2xl border border-slate-200 p-8 text-center">
-            <Folder className="h-8 w-8 text-slate-300 mx-auto mb-3" />
-            <p className="text-sm text-slate-500">No evidence logged yet. Add documents, statements, CCTV footage, and other evidence.</p>
+          <div className="rounded-2xl border border-[var(--cs-border)] p-8 text-center">
+            <Folder className="h-8 w-8 text-[var(--cs-text-gentle)] mx-auto mb-3" />
+            <p className="text-sm text-[var(--cs-text-muted)]">No evidence logged yet. Add documents, statements, CCTV footage, and other evidence.</p>
           </div>
         ) : (
           evidenceItems.map((e, i) => (
             <Card key={e.id}>
               <CardContent className="pt-4 space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-semibold text-slate-500">Evidence item {i + 1}</span>
-                  <button onClick={() => removeEvidence(e.id)} className="text-slate-400 hover:text-red-500">
+                  <span className="text-xs font-semibold text-[var(--cs-text-muted)]">Evidence item {i + 1}</span>
+                  <button onClick={() => removeEvidence(e.id)} className="text-[var(--cs-text-muted)] hover:text-red-500">
                     <Trash2 className="h-3.5 w-3.5" />
                   </button>
                 </div>
@@ -762,19 +762,19 @@ gathered during the investigation.
           </CardHeader>
           <CardContent className="space-y-4">
             {allegations.filter((a) => a.description.trim()).map((a, i) => (
-              <div key={a.id} className="rounded-xl border border-slate-200 p-4 space-y-3">
+              <div key={a.id} className="rounded-xl border border-[var(--cs-border)] p-4 space-y-3">
                 <div className="flex items-center justify-between gap-2">
-                  <span className="text-sm font-medium text-slate-700">Allegation {i + 1}</span>
+                  <span className="text-sm font-medium text-[var(--cs-text-secondary)]">Allegation {i + 1}</span>
                   {a.finding && (
                     <Badge className={cn("text-[10px]", FINDING_OPTIONS.find((f) => f.value === a.finding)?.colour)}>
                       {FINDING_OPTIONS.find((f) => f.value === a.finding)?.label}
                     </Badge>
                   )}
                 </div>
-                <p className="text-sm text-slate-600">{a.description}</p>
+                <p className="text-sm text-[var(--cs-text-secondary)]">{a.description}</p>
 
                 <div>
-                  <label className="text-xs font-medium text-slate-600 mb-1 block">Finding</label>
+                  <label className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1 block">Finding</label>
                   <Select value={a.finding ?? ""} onValueChange={(v) => updateAllegation(a.id, { finding: v as Allegation["finding"] })}>
                     <SelectTrigger><SelectValue placeholder="Select finding" /></SelectTrigger>
                     <SelectContent>
@@ -786,7 +786,7 @@ gathered during the investigation.
                 </div>
 
                 <div>
-                  <label className="text-xs font-medium text-slate-600 mb-1 block">Rationale</label>
+                  <label className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1 block">Rationale</label>
                   <Textarea
                     value={a.findingRationale ?? ""}
                     onChange={(e) => updateAllegation(a.id, { findingRationale: e.target.value })}
@@ -805,7 +805,7 @@ gathered during the investigation.
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <label className="text-xs font-medium text-slate-600 mb-1 block">Summary of findings</label>
+              <label className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1 block">Summary of findings</label>
               <Textarea
                 value={overallSummary}
                 onChange={(e) => setOverallSummary(e.target.value)}
@@ -815,7 +815,7 @@ gathered during the investigation.
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="text-xs font-medium text-slate-600 mb-1 block">Mitigating factors</label>
+                <label className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1 block">Mitigating factors</label>
                 <Textarea
                   value={mitigatingFactors}
                   onChange={(e) => setMitigatingFactors(e.target.value)}
@@ -824,7 +824,7 @@ gathered during the investigation.
                 />
               </div>
               <div>
-                <label className="text-xs font-medium text-slate-600 mb-1 block">Aggravating factors</label>
+                <label className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1 block">Aggravating factors</label>
                 <Textarea
                   value={aggravatingFactors}
                   onChange={(e) => setAggravatingFactors(e.target.value)}
@@ -834,7 +834,7 @@ gathered during the investigation.
               </div>
             </div>
             <div>
-              <label className="text-xs font-medium text-slate-600 mb-1 block">Recommended outcome</label>
+              <label className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1 block">Recommended outcome</label>
               <Textarea
                 value={recommendedOutcome}
                 onChange={(e) => setRecommendedOutcome(e.target.value)}
@@ -854,7 +854,7 @@ gathered during the investigation.
     return (
       <div className="space-y-5">
         <div className="flex items-center justify-between">
-          <h3 className="text-sm font-semibold text-slate-700">Investigation Report</h3>
+          <h3 className="text-sm font-semibold text-[var(--cs-text-secondary)]">Investigation Report</h3>
           <Button
             size="sm"
             onClick={handleGenerateReport}
@@ -867,9 +867,9 @@ gathered during the investigation.
         </div>
 
         {!reportDraft && !generating && (
-          <div className="rounded-2xl border border-slate-200 p-8 text-center">
-            <ScrollText className="h-8 w-8 text-slate-300 mx-auto mb-3" />
-            <p className="text-sm text-slate-500">
+          <div className="rounded-2xl border border-[var(--cs-border)] p-8 text-center">
+            <ScrollText className="h-8 w-8 text-[var(--cs-text-gentle)] mx-auto mb-3" />
+            <p className="text-sm text-[var(--cs-text-muted)]">
               Complete the previous stages, then click &ldquo;Generate Report with ARIA&rdquo; to produce a structured
               investigation report draft. You can edit the draft before finalising.
             </p>
@@ -880,8 +880,8 @@ gathered during the investigation.
           <Card>
             <CardHeader className="pb-3">
               <div className="flex items-center gap-2">
-                <Badge className="bg-violet-100 text-violet-800 text-[10px]">Aria suggested draft</Badge>
-                <span className="text-xs text-slate-500">Requires investigating officer review before finalising</span>
+                <Badge className="bg-violet-100 text-violet-800 text-[10px]">ARIA suggested draft</Badge>
+                <span className="text-xs text-[var(--cs-text-muted)]">Requires investigating officer review before finalising</span>
               </div>
             </CardHeader>
             <CardContent>
@@ -913,10 +913,10 @@ gathered during the investigation.
       <div className="max-w-4xl space-y-5 animate-fade-in">
 
         {/* Progress bar */}
-        <div className="rounded-2xl border border-slate-200 bg-white p-4">
+        <div className="rounded-2xl border border-[var(--cs-border)] bg-white p-4">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-medium text-slate-600">Investigation progress</span>
-            <span className="text-xs text-slate-500">{completedStages} of {STAGES.length} stages started</span>
+            <span className="text-xs font-medium text-[var(--cs-text-secondary)]">Investigation progress</span>
+            <span className="text-xs text-[var(--cs-text-muted)]">{completedStages} of {STAGES.length} stages started</span>
           </div>
           <div className="h-2 rounded-full bg-slate-100 overflow-hidden">
             <div

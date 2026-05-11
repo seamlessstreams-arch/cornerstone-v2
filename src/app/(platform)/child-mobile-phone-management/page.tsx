@@ -40,7 +40,7 @@ import {
 import { useState } from "react";
 
 const contractTone: Record<PhoneContractType, string> = {
-  payg: "bg-slate-100 text-slate-800",
+  payg: "bg-slate-100 text-[var(--cs-navy)]",
   sim_only: "bg-sky-100 text-sky-800",
   contract: "bg-indigo-100 text-indigo-800",
   family_shared: "bg-purple-100 text-purple-800",
@@ -51,7 +51,7 @@ const handInTone: Record<PhoneHandInProtocol, string> = {
   bedtime: "bg-sky-100 text-sky-800",
   school_hours: "bg-amber-100 text-amber-800",
   both: "bg-emerald-100 text-emerald-800",
-  never: "bg-slate-100 text-slate-800",
+  never: "bg-slate-100 text-[var(--cs-navy)]",
   other_agreed_pattern: "bg-purple-100 text-purple-800",
 };
 
@@ -61,7 +61,7 @@ const categoryTone: Record<PhoneAppCategory, string> = {
   education: "bg-emerald-100 text-emerald-800",
   health: "bg-teal-100 text-teal-800",
   communication: "bg-sky-100 text-sky-800",
-  utility: "bg-slate-100 text-slate-800",
+  utility: "bg-slate-100 text-[var(--cs-navy)]",
   other: "bg-zinc-100 text-zinc-800",
 };
 
@@ -151,7 +151,7 @@ export default function ChildMobilePhoneManagementPage() {
           <p className="text-xs text-muted-foreground">Active Phones</p>
         </div>
         <div className="rounded-xl border bg-white p-4 text-center">
-          <p className="text-2xl font-bold text-slate-700">£{totalMonthlyCost.toFixed(2)}</p>
+          <p className="text-2xl font-bold text-[var(--cs-text-secondary)]">£{totalMonthlyCost.toFixed(2)}</p>
           <p className="text-xs text-muted-foreground">Total Monthly Cost</p>
         </div>
         <div className="rounded-xl border bg-white p-4 text-center">
@@ -159,7 +159,7 @@ export default function ChildMobilePhoneManagementPage() {
           <p className="text-xs text-muted-foreground">Parental Controls Active</p>
         </div>
         <div className="rounded-xl border bg-white p-4 text-center">
-          <p className={cn("text-2xl font-bold", flagCount > 0 ? "text-amber-600" : "text-slate-400")}>{flagCount}</p>
+          <p className={cn("text-2xl font-bold", flagCount > 0 ? "text-amber-600" : "text-[var(--cs-text-muted)]")}>{flagCount}</p>
           <p className="text-xs text-muted-foreground">Flags / Concerns</p>
         </div>
       </div>
@@ -219,7 +219,7 @@ export default function ChildMobilePhoneManagementPage() {
           return (
             <div key={r.id} className="rounded-xl border bg-white overflow-hidden">
               <button
-                className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                 onClick={() => setExpandedId(isExpanded ? null : r.id)}
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -233,7 +233,7 @@ export default function ChildMobilePhoneManagementPage() {
                   <span className={cn("text-xs px-2 py-0.5 rounded-full font-medium", contractTone[r.contract_type])}>
                     {PHONE_CONTRACT_TYPE_LABEL[r.contract_type]}
                   </span>
-                  <span className="text-xs px-2 py-0.5 rounded-full bg-slate-100 text-slate-800 font-medium">
+                  <span className="text-xs px-2 py-0.5 rounded-full bg-slate-100 text-[var(--cs-navy)] font-medium">
                     £{r.monthly_cost.toFixed(2)}/mo
                   </span>
                   <span className={cn("text-xs px-2 py-0.5 rounded-full font-medium", handInTone[r.hand_in_protocol])}>
@@ -269,7 +269,7 @@ export default function ChildMobilePhoneManagementPage() {
                         {r.parental_controls_active ? (
                           <span className="text-emerald-700 font-medium">Active</span>
                         ) : (
-                          <span className="text-slate-600">Not active</span>
+                          <span className="text-[var(--cs-text-secondary)]">Not active</span>
                         )}
                       </p>
                       {r.parental_controls_type && (
@@ -320,7 +320,7 @@ export default function ChildMobilePhoneManagementPage() {
                                 {PHONE_APP_CATEGORY_LABEL[a.category]}
                               </span>
                               {a.age_rating && (
-                                <span className="text-xs px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 font-medium">
+                                <span className="text-xs px-2 py-0.5 rounded-full bg-slate-100 text-[var(--cs-text-secondary)] font-medium">
                                   {a.age_rating}
                                 </span>
                               )}

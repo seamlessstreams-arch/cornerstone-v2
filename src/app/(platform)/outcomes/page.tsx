@@ -162,17 +162,17 @@ function ReviewDialog({
         <div className="space-y-4">
           {/* Target context */}
           <div className={cn("rounded-xl border p-3", domainCfg.bg, domainCfg.border)}>
-            <p className="text-xs font-semibold text-slate-600">{getYPName(target.child_id)} — {OUTCOME_DOMAIN_LABELS[target.domain]}</p>
-            <p className="text-sm text-slate-800 mt-1">{target.target_description}</p>
+            <p className="text-xs font-semibold text-[var(--cs-text-secondary)]">{getYPName(target.child_id)} — {OUTCOME_DOMAIN_LABELS[target.domain]}</p>
+            <p className="text-sm text-[var(--cs-navy)] mt-1">{target.target_description}</p>
             <div className="flex items-center gap-3 mt-2">
-              <span className="text-[10px] text-slate-500">Current: <RatingStars rating={target.current_rating} /></span>
-              <span className="text-[10px] text-slate-500">Target: <RatingStars rating={target.target_rating} /></span>
+              <span className="text-[10px] text-[var(--cs-text-muted)]">Current: <RatingStars rating={target.current_rating} /></span>
+              <span className="text-[10px] text-[var(--cs-text-muted)]">Target: <RatingStars rating={target.target_rating} /></span>
             </div>
           </div>
 
           {/* New rating selector */}
           <div>
-            <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2 block">New Rating</label>
+            <label className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-2 block">New Rating</label>
             <div className="flex gap-2">
               {([1, 2, 3, 4, 5] as OutcomeRating[]).map((r) => (
                 <button
@@ -182,11 +182,11 @@ function ReviewDialog({
                     "flex-1 rounded-xl border-2 px-2 py-3 text-center transition-all",
                     newRating === r
                       ? "border-indigo-500 bg-indigo-50 shadow-sm"
-                      : "border-slate-200 bg-white hover:border-indigo-200",
+                      : "border-[var(--cs-border)] bg-white hover:border-indigo-200",
                   )}
                 >
                   <RatingStars rating={r} size="md" />
-                  <p className="text-[9px] text-slate-500 mt-1 leading-tight">{OUTCOME_RATING_LABELS[r]}</p>
+                  <p className="text-[9px] text-[var(--cs-text-muted)] mt-1 leading-tight">{OUTCOME_RATING_LABELS[r]}</p>
                 </button>
               ))}
             </div>
@@ -194,7 +194,7 @@ function ReviewDialog({
 
           {/* Progress notes */}
           <div>
-            <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1 block">
+            <label className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-1 block">
               Progress Notes <span className="text-red-500">*</span>
             </label>
             <Textarea
@@ -215,7 +215,7 @@ function ReviewDialog({
                 onChange={(e) => setYpParticipated(e.target.checked)}
                 className="rounded"
               />
-              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Young person participated in review</span>
+              <span className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide">Young person participated in review</span>
             </label>
             {ypParticipated && (
               <Textarea
@@ -231,7 +231,7 @@ function ReviewDialog({
           {/* Barriers & next steps */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1 block">Barriers</label>
+              <label className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-1 block">Barriers</label>
               <Textarea
                 value={barriers}
                 onChange={(e) => setBarriers(e.target.value)}
@@ -241,7 +241,7 @@ function ReviewDialog({
               />
             </div>
             <div>
-              <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1 block">Next Steps</label>
+              <label className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-1 block">Next Steps</label>
               <Textarea
                 value={nextSteps}
                 onChange={(e) => setNextSteps(e.target.value)}
@@ -337,13 +337,13 @@ function NewTargetDialog({
         <div className="space-y-4">
           {/* Young person selector */}
           <div>
-            <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1 block">
+            <label className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-1 block">
               Young Person <span className="text-red-500">*</span>
             </label>
             <select
               value={childId}
               onChange={(e) => setChildId(e.target.value)}
-              className="w-full h-9 rounded-xl border border-slate-200 bg-white px-3 text-sm"
+              className="w-full h-9 rounded-xl border border-[var(--cs-border)] bg-white px-3 text-sm"
             >
               {childIds.map((cid) => (
                 <option key={cid} value={cid}>{getYPName(cid)}</option>
@@ -353,7 +353,7 @@ function NewTargetDialog({
 
           {/* Domain selector */}
           <div>
-            <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2 block">
+            <label className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-2 block">
               Outcome Domain <span className="text-red-500">*</span>
             </label>
             <div className="grid grid-cols-4 gap-1.5">
@@ -368,11 +368,11 @@ function NewTargetDialog({
                       "flex flex-col items-center gap-1 rounded-xl border-2 p-2 transition-all text-center",
                       domain === key
                         ? cn("shadow-sm", dc.bg, dc.border)
-                        : "border-slate-200 bg-white hover:border-slate-300",
+                        : "border-[var(--cs-border)] bg-white hover:border-slate-300",
                     )}
                   >
-                    <DIcon className={cn("h-4 w-4", domain === key ? dc.text : "text-slate-400")} />
-                    <span className={cn("text-[9px] font-medium leading-tight", domain === key ? dc.text : "text-slate-500")}>
+                    <DIcon className={cn("h-4 w-4", domain === key ? dc.text : "text-[var(--cs-text-muted)]")} />
+                    <span className={cn("text-[9px] font-medium leading-tight", domain === key ? dc.text : "text-[var(--cs-text-muted)]")}>
                       {label}
                     </span>
                   </button>
@@ -383,7 +383,7 @@ function NewTargetDialog({
 
           {/* Target description */}
           <div>
-            <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1 block">
+            <label className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-1 block">
               Target Description <span className="text-red-500">*</span>
             </label>
             <Textarea
@@ -397,7 +397,7 @@ function NewTargetDialog({
 
           {/* Success criteria */}
           <div>
-            <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1 block">Success Criteria</label>
+            <label className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-1 block">Success Criteria</label>
             <Textarea
               value={successCriteria}
               onChange={(e) => setSuccessCriteria(e.target.value)}
@@ -410,7 +410,7 @@ function NewTargetDialog({
           {/* Rating selectors */}
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2 block">Baseline Rating</label>
+              <label className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-2 block">Baseline Rating</label>
               <div className="flex gap-1">
                 {([1, 2, 3, 4, 5] as OutcomeRating[]).map((r) => (
                   <button
@@ -420,17 +420,17 @@ function NewTargetDialog({
                       "flex-1 rounded-lg border-2 py-2 text-center transition-all",
                       baselineRating === r
                         ? "border-indigo-500 bg-indigo-50"
-                        : "border-slate-200 hover:border-indigo-200",
+                        : "border-[var(--cs-border)] hover:border-indigo-200",
                     )}
                   >
                     <Star className={cn("h-4 w-4 mx-auto", baselineRating >= r ? "text-amber-400 fill-amber-400" : "text-slate-200")} />
                   </button>
                 ))}
               </div>
-              <p className="text-[9px] text-slate-400 mt-1 text-center">{OUTCOME_RATING_LABELS[baselineRating]}</p>
+              <p className="text-[9px] text-[var(--cs-text-muted)] mt-1 text-center">{OUTCOME_RATING_LABELS[baselineRating]}</p>
             </div>
             <div>
-              <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2 block">Target Rating</label>
+              <label className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-2 block">Target Rating</label>
               <div className="flex gap-1">
                 {([1, 2, 3, 4, 5] as OutcomeRating[]).map((r) => (
                   <button
@@ -440,20 +440,20 @@ function NewTargetDialog({
                       "flex-1 rounded-lg border-2 py-2 text-center transition-all",
                       targetRating === r
                         ? "border-emerald-500 bg-emerald-50"
-                        : "border-slate-200 hover:border-emerald-200",
+                        : "border-[var(--cs-border)] hover:border-emerald-200",
                     )}
                   >
                     <Star className={cn("h-4 w-4 mx-auto", targetRating >= r ? "text-amber-400 fill-amber-400" : "text-slate-200")} />
                   </button>
                 ))}
               </div>
-              <p className="text-[9px] text-slate-400 mt-1 text-center">{OUTCOME_RATING_LABELS[targetRating]}</p>
+              <p className="text-[9px] text-[var(--cs-text-muted)] mt-1 text-center">{OUTCOME_RATING_LABELS[targetRating]}</p>
             </div>
           </div>
 
           {/* YP voice */}
           <div>
-            <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1 block">
+            <label className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-1 block">
               <MessageSquare className="h-3 w-3 inline mr-1" />Voice of the Child
             </label>
             <Textarea
@@ -467,7 +467,7 @@ function NewTargetDialog({
 
           {/* Notes */}
           <div>
-            <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1 block">Notes</label>
+            <label className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-1 block">Notes</label>
             <Textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
@@ -530,7 +530,7 @@ function TargetCard({
       )}>
         {/* Header row */}
         <div
-          className="flex items-start gap-3 p-4 cursor-pointer hover:bg-slate-50/50 transition-colors"
+          className="flex items-start gap-3 p-4 cursor-pointer hover:bg-[var(--cs-surface)]/50 transition-colors"
           onClick={() => setExpanded((v) => !v)}
         >
           <div className={cn("flex h-9 w-9 shrink-0 items-center justify-center rounded-xl", domainCfg.bg)}>
@@ -539,7 +539,7 @@ function TargetCard({
 
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 flex-wrap mb-1">
-              <span className="text-sm font-semibold text-slate-800 line-clamp-1">
+              <span className="text-sm font-semibold text-[var(--cs-navy)] line-clamp-1">
                 {target.target_description}
               </span>
               {isAchieved && (
@@ -555,7 +555,7 @@ function TargetCard({
               <DirectionBadge direction={target.direction} />
               <div className="flex items-center gap-1.5">
                 <RatingStars rating={target.current_rating} />
-                <span className="text-[10px] text-slate-400">/ {target.target_rating}</span>
+                <span className="text-[10px] text-[var(--cs-text-muted)]">/ {target.target_rating}</span>
               </div>
               {reviewOverdue && !isAchieved && (
                 <span className="text-[10px] text-red-600 font-medium flex items-center gap-0.5">
@@ -575,7 +575,7 @@ function TargetCard({
                   style={{ width: `${clampedPct}%` }}
                 />
               </div>
-              <span className="text-[10px] text-slate-400 w-8 text-right">{clampedPct}%</span>
+              <span className="text-[10px] text-[var(--cs-text-muted)] w-8 text-right">{clampedPct}%</span>
             </div>
           </div>
 
@@ -590,18 +590,18 @@ function TargetCard({
                 <Plus className="h-3 w-3 mr-0.5" />Review
               </Button>
             )}
-            {expanded ? <ChevronUp className="h-4 w-4 text-slate-300" /> : <ChevronDown className="h-4 w-4 text-slate-300" />}
+            {expanded ? <ChevronUp className="h-4 w-4 text-[var(--cs-text-gentle)]" /> : <ChevronDown className="h-4 w-4 text-[var(--cs-text-gentle)]" />}
           </div>
         </div>
 
         {/* Expanded detail */}
         {expanded && (
-          <div className="border-t border-slate-100 px-4 pb-4 pt-3 space-y-3">
+          <div className="border-t border-[var(--cs-border-subtle)] px-4 pb-4 pt-3 space-y-3">
             {/* Success criteria */}
             {target.success_criteria && (
-              <div className="rounded-xl bg-slate-50 border border-slate-100 p-3">
-                <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-1">Success Criteria</p>
-                <p className="text-xs text-slate-700">{target.success_criteria}</p>
+              <div className="rounded-xl bg-slate-50 border border-[var(--cs-border-subtle)] p-3">
+                <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-widest mb-1">Success Criteria</p>
+                <p className="text-xs text-[var(--cs-text-secondary)]">{target.success_criteria}</p>
               </div>
             )}
 
@@ -618,8 +618,8 @@ function TargetCard({
             {/* Notes & evidence */}
             {target.notes && (
               <div>
-                <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-1">Progress Notes</p>
-                <p className="text-xs text-slate-700">{target.notes}</p>
+                <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-widest mb-1">Progress Notes</p>
+                <p className="text-xs text-[var(--cs-text-secondary)]">{target.notes}</p>
               </div>
             )}
             {target.evidence_notes && (
@@ -631,22 +631,22 @@ function TargetCard({
 
             {/* Rating details */}
             <div className="grid grid-cols-3 gap-3">
-              <div className="rounded-xl bg-slate-50 border border-slate-100 p-2.5 text-center">
-                <p className="text-[10px] text-slate-400">Baseline</p>
+              <div className="rounded-xl bg-slate-50 border border-[var(--cs-border-subtle)] p-2.5 text-center">
+                <p className="text-[10px] text-[var(--cs-text-muted)]">Baseline</p>
                 <RatingStars rating={target.baseline_rating} />
               </div>
               <div className={cn("rounded-xl border p-2.5 text-center", domainCfg.bg, domainCfg.border)}>
                 <p className={cn("text-[10px]", domainCfg.text)}>Current</p>
                 <RatingStars rating={target.current_rating} />
               </div>
-              <div className="rounded-xl bg-slate-50 border border-slate-100 p-2.5 text-center">
-                <p className="text-[10px] text-slate-400">Target</p>
+              <div className="rounded-xl bg-slate-50 border border-[var(--cs-border-subtle)] p-2.5 text-center">
+                <p className="text-[10px] text-[var(--cs-text-muted)]">Target</p>
                 <RatingStars rating={target.target_rating} />
               </div>
             </div>
 
             {/* Meta */}
-            <div className="flex items-center gap-4 text-[10px] text-slate-400">
+            <div className="flex items-center gap-4 text-[10px] text-[var(--cs-text-muted)]">
               <span>Set by: {target.set_by.replace("staff_", "")}</span>
               <span>Set: {formatDate(target.set_date)}</span>
               <span className={cn(reviewOverdue && "text-red-600 font-medium")}>
@@ -657,15 +657,15 @@ function TargetCard({
             {/* Review history */}
             {targetReviews.length > 0 && (
               <div>
-                <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-2">Review History</p>
+                <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-widest mb-2">Review History</p>
                 <div className="space-y-2">
                   {targetReviews.map((review) => (
-                    <div key={review.id} className="rounded-xl border border-slate-100 bg-white p-3">
+                    <div key={review.id} className="rounded-xl border border-[var(--cs-border-subtle)] bg-white p-3">
                       <div className="flex items-center justify-between mb-1">
                         <div className="flex items-center gap-2">
-                          <span className="text-xs text-slate-500">{formatDate(review.review_date)}</span>
+                          <span className="text-xs text-[var(--cs-text-muted)]">{formatDate(review.review_date)}</span>
                           <DirectionBadge direction={review.direction} />
-                          <span className="text-[10px] text-slate-400">
+                          <span className="text-[10px] text-[var(--cs-text-muted)]">
                             {review.previous_rating} → {review.new_rating}
                           </span>
                         </div>
@@ -675,7 +675,7 @@ function TargetCard({
                           </Badge>
                         )}
                       </div>
-                      <p className="text-xs text-slate-700">{review.progress_notes}</p>
+                      <p className="text-xs text-[var(--cs-text-secondary)]">{review.progress_notes}</p>
                       {review.yp_voice && (
                         <div className="mt-1.5 rounded-lg bg-blue-50 border border-blue-100 p-2">
                           <p className="text-[10px] text-blue-700 italic">&ldquo;{review.yp_voice}&rdquo;</p>
@@ -737,7 +737,7 @@ function ChildSummaryCard({
   return (
     <div className={cn(
       "rounded-2xl border p-4",
-      declining > 0 ? "border-red-200 bg-red-50/30" : "border-slate-200 bg-white",
+      declining > 0 ? "border-red-200 bg-red-50/30" : "border-[var(--cs-border)] bg-white",
     )}>
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
@@ -745,8 +745,8 @@ function ChildSummaryCard({
             <User className="h-4 w-4 text-indigo-600" />
           </div>
           <div>
-            <p className="text-sm font-bold text-slate-800">{getYPName(childId)}</p>
-            <p className="text-[10px] text-slate-400">{active.length} active targets</p>
+            <p className="text-sm font-bold text-[var(--cs-navy)]">{getYPName(childId)}</p>
+            <p className="text-[10px] text-[var(--cs-text-muted)]">{active.length} active targets</p>
           </div>
         </div>
         <div className="text-right">
@@ -756,7 +756,7 @@ function ChildSummaryCard({
           )}>
             {avgRating}
           </p>
-          <p className="text-[10px] text-slate-400">avg rating</p>
+          <p className="text-[10px] text-[var(--cs-text-muted)]">avg rating</p>
         </div>
       </div>
 
@@ -785,18 +785,18 @@ function ChildSummaryCard({
       <div className="grid grid-cols-3 gap-2">
         <div className="rounded-lg bg-emerald-50 border border-emerald-100 p-2 text-center">
           <p className="text-sm font-bold text-emerald-600">{improving}</p>
-          <p className="text-[9px] text-slate-500">Improving</p>
+          <p className="text-[9px] text-[var(--cs-text-muted)]">Improving</p>
         </div>
         <div className="rounded-lg bg-amber-50 border border-amber-100 p-2 text-center">
           <p className="text-sm font-bold text-amber-600">{active.length - improving - declining}</p>
-          <p className="text-[9px] text-slate-500">Stable</p>
+          <p className="text-[9px] text-[var(--cs-text-muted)]">Stable</p>
         </div>
         <div className={cn(
           "rounded-lg border p-2 text-center",
-          declining > 0 ? "bg-red-50 border-red-100" : "bg-slate-50 border-slate-100",
+          declining > 0 ? "bg-red-50 border-red-100" : "bg-slate-50 border-[var(--cs-border-subtle)]",
         )}>
-          <p className={cn("text-sm font-bold", declining > 0 ? "text-red-600" : "text-slate-400")}>{declining}</p>
-          <p className="text-[9px] text-slate-500">Declining</p>
+          <p className={cn("text-sm font-bold", declining > 0 ? "text-red-600" : "text-[var(--cs-text-muted)]")}>{declining}</p>
+          <p className="text-[9px] text-[var(--cs-text-muted)]">Declining</p>
         </div>
       </div>
     </div>
@@ -828,7 +828,7 @@ function DomainRadar({
             <div className="flex items-center justify-between">
               <div>
                 <p className={cn("text-lg font-bold", dc.text)}>{d.avg_rating}</p>
-                <p className="text-[9px] text-slate-400">{d.count} targets</p>
+                <p className="text-[9px] text-[var(--cs-text-muted)]">{d.count} targets</p>
               </div>
               <div className="text-right text-[10px]">
                 {d.improving > 0 && <p className="text-emerald-600">{d.improving} improving</p>}
@@ -937,12 +937,12 @@ export default function OutcomesPage() {
               { label: "Improving",        value: meta.improving,         colour: "text-emerald-600", bg: "bg-emerald-50 border-emerald-100", icon: TrendingUp },
               { label: "Stable",           value: meta.stable,            colour: "text-amber-600", bg: "bg-amber-50 border-amber-100", icon: Minus },
               { label: "Declining",        value: meta.declining,         colour: meta.declining > 0 ? "text-red-600" : "text-emerald-600", bg: meta.declining > 0 ? "bg-red-50 border-red-100" : "bg-emerald-50 border-emerald-100", icon: TrendingDown },
-              { label: "Reviews Due",      value: meta.reviews_due_soon,  colour: meta.reviews_due_soon > 3 ? "text-amber-600" : "text-slate-600", bg: meta.reviews_due_soon > 3 ? "bg-amber-50 border-amber-100" : "bg-slate-50 border-slate-100", icon: Clock },
+              { label: "Reviews Due",      value: meta.reviews_due_soon,  colour: meta.reviews_due_soon > 3 ? "text-amber-600" : "text-[var(--cs-text-secondary)]", bg: meta.reviews_due_soon > 3 ? "bg-amber-50 border-amber-100" : "bg-slate-50 border-[var(--cs-border-subtle)]", icon: Clock },
             ].map(({ label, value, colour, bg, icon: Icon }) => (
               <div key={label} className={cn("rounded-2xl border p-4", bg)}>
                 <div className="flex items-center gap-2 mb-1">
                   <Icon className={cn("h-4 w-4", colour)} />
-                  <span className="text-[10px] text-slate-500 font-medium">{label}</span>
+                  <span className="text-[10px] text-[var(--cs-text-muted)] font-medium">{label}</span>
                 </div>
                 <p className={cn("text-2xl font-bold tabular-nums", colour)}>{value}</p>
               </div>
@@ -963,10 +963,10 @@ export default function OutcomesPage() {
               meta.avg_rating >= 3.5 ? "text-emerald-600" : meta.avg_rating >= 2.5 ? "text-amber-600" : "text-red-600",
             )} />
             <div className="flex-1">
-              <p className="text-sm font-semibold text-slate-800">
+              <p className="text-sm font-semibold text-[var(--cs-navy)]">
                 Home Average: {meta.avg_rating} / 5
               </p>
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-[var(--cs-text-muted)]">
                 Across {meta.active_targets} active targets for {childIds.length} young {childIds.length === 1 ? "person" : "people"}
                 {meta.declining > 0 && ` — ${meta.declining} area${meta.declining > 1 ? "s" : ""} declining`}
               </p>
@@ -980,7 +980,7 @@ export default function OutcomesPage() {
 
         {/* ── Per-Child Summary ── */}
         <div>
-          <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-3">Per Child</h3>
+          <h3 className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-widest mb-3">Per Child</h3>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             {childIds.map((cid) => (
               <ChildSummaryCard
@@ -997,7 +997,7 @@ export default function OutcomesPage() {
         <div className="space-y-3">
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
             <div className="relative flex-1 w-full sm:max-w-sm">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
               <Input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
@@ -1009,7 +1009,7 @@ export default function OutcomesPage() {
               <select
                 value={filterChild}
                 onChange={(e) => setFilterChild(e.target.value)}
-                className="h-8 rounded-xl border border-slate-200 bg-white px-2 text-xs"
+                className="h-8 rounded-xl border border-[var(--cs-border)] bg-white px-2 text-xs"
               >
                 <option value="all">All children</option>
                 {childIds.map((cid) => (
@@ -1019,7 +1019,7 @@ export default function OutcomesPage() {
               <select
                 value={filterDomain}
                 onChange={(e) => setFilterDomain(e.target.value)}
-                className="h-8 rounded-xl border border-slate-200 bg-white px-2 text-xs"
+                className="h-8 rounded-xl border border-[var(--cs-border)] bg-white px-2 text-xs"
               >
                 <option value="all">All domains</option>
                 {Object.entries(OUTCOME_DOMAIN_LABELS).map(([k, v]) => (
@@ -1029,7 +1029,7 @@ export default function OutcomesPage() {
               <select
                 value={filterDirection}
                 onChange={(e) => setFilterDirection(e.target.value)}
-                className="h-8 rounded-xl border border-slate-200 bg-white px-2 text-xs"
+                className="h-8 rounded-xl border border-[var(--cs-border)] bg-white px-2 text-xs"
               >
                 <option value="all">All trends</option>
                 <option value="improving">Improving</option>
@@ -1039,7 +1039,7 @@ export default function OutcomesPage() {
               <select
                 value={sortKey}
                 onChange={(e) => setSortKey(e.target.value as SortKey)}
-                className="h-8 rounded-xl border border-slate-200 bg-white px-2 text-xs"
+                className="h-8 rounded-xl border border-[var(--cs-border)] bg-white px-2 text-xs"
               >
                 <option value="child">Sort: By child</option>
                 <option value="domain">Sort: By domain</option>
@@ -1047,7 +1047,7 @@ export default function OutcomesPage() {
                 <option value="rating_asc">Sort: Rating (low→high)</option>
                 <option value="direction">Sort: Declining first</option>
               </select>
-              <label className="flex items-center gap-1.5 text-xs text-slate-500 cursor-pointer">
+              <label className="flex items-center gap-1.5 text-xs text-[var(--cs-text-muted)] cursor-pointer">
                 <input
                   type="checkbox"
                   checked={showAchieved}
@@ -1061,7 +1061,7 @@ export default function OutcomesPage() {
 
           {/* Results count */}
           {isFiltered && (
-            <div className="text-xs text-slate-500">
+            <div className="text-xs text-[var(--cs-text-muted)]">
               Showing {filtered.length} of {targets.filter((t) => showAchieved || t.status !== "achieved").length} target{targets.length !== 1 ? "s" : ""}
             </div>
           )}
@@ -1070,7 +1070,7 @@ export default function OutcomesPage() {
         {/* ── Loading ── */}
         {isLoading && (
           <div className="flex items-center justify-center py-16">
-            <Loader2 className="h-6 w-6 animate-spin text-slate-400" />
+            <Loader2 className="h-6 w-6 animate-spin text-[var(--cs-text-muted)]" />
           </div>
         )}
 
@@ -1079,9 +1079,9 @@ export default function OutcomesPage() {
           <div className="space-y-3">
             {filtered.length === 0 ? (
               <div className="text-center py-16">
-                <Target className="h-10 w-10 text-slate-300 mx-auto mb-3" />
-                <p className="text-sm font-semibold text-slate-600">No outcomes match your filters</p>
-                <p className="text-xs text-slate-400 mt-1">Try adjusting your filters or add a new target</p>
+                <Target className="h-10 w-10 text-[var(--cs-text-gentle)] mx-auto mb-3" />
+                <p className="text-sm font-semibold text-[var(--cs-text-secondary)]">No outcomes match your filters</p>
+                <p className="text-xs text-[var(--cs-text-muted)] mt-1">Try adjusting your filters or add a new target</p>
               </div>
             ) : (
               <>
@@ -1092,10 +1092,10 @@ export default function OutcomesPage() {
                     if (childTargets.length === 0) return null;
                     return (
                       <div key={cid}>
-                        <h4 className="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-2 flex items-center gap-2">
+                        <h4 className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-widest mb-2 flex items-center gap-2">
                           <User className="h-3.5 w-3.5" />
                           {getYPName(cid)}
-                          <Badge className="text-[9px] bg-slate-100 text-slate-600 border-0 rounded-full">
+                          <Badge className="text-[9px] bg-slate-100 text-[var(--cs-text-secondary)] border-0 rounded-full">
                             {childTargets.length} targets
                           </Badge>
                         </h4>
@@ -1120,8 +1120,8 @@ export default function OutcomesPage() {
         )}
 
         {/* ── Regulatory note ── */}
-        <div className="rounded-xl border border-slate-100 bg-slate-50 px-4 py-3 text-xs text-slate-500">
-          <span className="font-semibold text-slate-600">Regulatory Basis — </span>
+        <div className="rounded-xl border border-[var(--cs-border-subtle)] bg-slate-50 px-4 py-3 text-xs text-[var(--cs-text-muted)]">
+          <span className="font-semibold text-[var(--cs-text-secondary)]">Regulatory Basis — </span>
           Ofsted ILACS Framework: &ldquo;What is the experience and progress of children?&rdquo; is the
           primary judgement area. Quality Standards 2015 Standard 1 requires homes to demonstrate
           measurable progress across health, education, emotional wellbeing, and independence. Each

@@ -321,7 +321,7 @@ export default function IncidentLearningReviewPage() {
                       ) : (
                         <div className="bg-indigo-50 border border-indigo-100 rounded-lg p-4 space-y-3">
                           <Badge className="bg-indigo-100 text-indigo-800 text-xs">
-                            Aria suggested analysis
+                            ARIA suggested analysis
                           </Badge>
                           <div className="space-y-3">
                             <div>

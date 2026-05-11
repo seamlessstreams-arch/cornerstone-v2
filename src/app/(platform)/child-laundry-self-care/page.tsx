@@ -43,7 +43,7 @@ function stageColour(stage: LaundryStage): string {
     case "stage_4_did_independently": return "bg-teal-100 text-teal-800";
     case "stage_3_did_with_prompts": return "bg-sky-100 text-sky-800";
     case "stage_2_did_with_staff": return "bg-blue-100 text-blue-800";
-    default: return "bg-slate-100 text-slate-800";
+    default: return "bg-slate-100 text-[var(--cs-navy)]";
   }
 }
 
@@ -52,7 +52,7 @@ function levelColour(level: LaundrySkillLevel): string {
     case "independent": return "bg-emerald-100 text-emerald-800";
     case "confident": return "bg-teal-100 text-teal-800";
     case "learning": return "bg-sky-100 text-sky-800";
-    default: return "bg-slate-100 text-slate-700";
+    default: return "bg-slate-100 text-[var(--cs-text-secondary)]";
   }
 }
 
@@ -221,7 +221,7 @@ export default function ChildLaundrySelfCarePage() {
           return (
             <div key={rec.id} className="rounded-xl border bg-white overflow-hidden">
               <button
-                className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                 onClick={() => setExpandedId(isExpanded ? null : rec.id)}
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0">

@@ -73,7 +73,7 @@ const DOMAIN_COLOUR: Record<CarePlanDomain, string> = {
   identity:              "text-amber-600 bg-amber-50 border-amber-200",
   family_social:         "text-emerald-600 bg-emerald-50 border-emerald-200",
   independence:          "text-sky-600 bg-sky-50 border-sky-200",
-  placement_stability:   "text-slate-600 bg-slate-50 border-slate-200",
+  placement_stability:   "text-[var(--cs-text-secondary)] bg-slate-50 border-[var(--cs-border)]",
   safety:                "text-red-600 bg-red-50 border-red-200",
 };
 
@@ -87,12 +87,12 @@ const GOAL_STATUS_LABELS: Record<CarePlanGoalStatus, string> = {
 };
 
 const GOAL_STATUS_COLOUR: Record<CarePlanGoalStatus, string> = {
-  not_started:      "bg-slate-100 text-slate-600 border-slate-200",
+  not_started:      "bg-slate-100 text-[var(--cs-text-secondary)] border-[var(--cs-border)]",
   in_progress:      "bg-blue-50 text-blue-700 border-blue-200",
   on_track:         "bg-emerald-50 text-emerald-700 border-emerald-200",
   attention_needed: "bg-red-50 text-red-700 border-red-200",
   achieved:         "bg-emerald-100 text-emerald-800 border-emerald-300",
-  closed:           "bg-slate-50 text-slate-500 border-slate-200",
+  closed:           "bg-slate-50 text-[var(--cs-text-muted)] border-[var(--cs-border)]",
 };
 
 const GOAL_STATUS_ICON: Record<CarePlanGoalStatus, React.ElementType> = {
@@ -134,7 +134,7 @@ function GoalRow({ goal }: { goal: CarePlanGoal }) {
       "rounded-xl border transition-all",
       goal.status === "attention_needed" ? "bg-red-50/50 border-red-100" :
       goal.status === "on_track" || goal.status === "achieved" ? "bg-emerald-50/40 border-emerald-100" :
-      "bg-white border-slate-100",
+      "bg-white border-[var(--cs-border-subtle)]",
     )}>
       <div
         className="flex items-start gap-2.5 p-3 cursor-pointer"
@@ -144,11 +144,11 @@ function GoalRow({ goal }: { goal: CarePlanGoal }) {
           "h-4 w-4 shrink-0 mt-0.5",
           goal.status === "attention_needed" ? "text-red-500" :
           goal.status === "on_track" || goal.status === "achieved" ? "text-emerald-500" :
-          "text-slate-400",
+          "text-[var(--cs-text-muted)]",
         )} />
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-xs font-semibold text-slate-800">{goal.title}</span>
+            <span className="text-xs font-semibold text-[var(--cs-navy)]">{goal.title}</span>
             <Badge variant="outline" className={cn("text-[10px] px-1.5 py-0 border", DOMAIN_COLOUR[goal.domain])}>
               {DOMAIN_LABELS[goal.domain]}
             </Badge>
@@ -157,29 +157,29 @@ function GoalRow({ goal }: { goal: CarePlanGoal }) {
             </Badge>
           </div>
           {!open && goal.progress_note && (
-            <p className="text-[10px] text-slate-500 mt-0.5 line-clamp-1">{goal.progress_note}</p>
+            <p className="text-[10px] text-[var(--cs-text-muted)] mt-0.5 line-clamp-1">{goal.progress_note}</p>
           )}
         </div>
-        {open ? <ChevronUp className="h-3.5 w-3.5 text-slate-400 shrink-0 mt-0.5" />
-               : <ChevronDown className="h-3.5 w-3.5 text-slate-400 shrink-0 mt-0.5" />}
+        {open ? <ChevronUp className="h-3.5 w-3.5 text-[var(--cs-text-muted)] shrink-0 mt-0.5" />
+               : <ChevronDown className="h-3.5 w-3.5 text-[var(--cs-text-muted)] shrink-0 mt-0.5" />}
       </div>
 
       {open && (
-        <div className="border-t border-slate-100 px-3 pb-3 pt-2 space-y-2.5">
-          <p className="text-xs text-slate-600">{goal.description}</p>
+        <div className="border-t border-[var(--cs-border-subtle)] px-3 pb-3 pt-2 space-y-2.5">
+          <p className="text-xs text-[var(--cs-text-secondary)]">{goal.description}</p>
 
           <div className="rounded-lg border border-indigo-100 bg-indigo-50/40 p-2">
             <p className="text-[10px] font-semibold text-indigo-700 uppercase tracking-wide mb-0.5">Desired Outcome</p>
-            <p className="text-xs text-slate-700">{goal.desired_outcome}</p>
+            <p className="text-xs text-[var(--cs-text-secondary)]">{goal.desired_outcome}</p>
           </div>
 
           {goal.actions.length > 0 && (
             <div>
-              <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wide mb-1">Actions</p>
+              <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-1">Actions</p>
               <ul className="space-y-0.5">
                 {goal.actions.map((a, i) => (
-                  <li key={i} className="flex items-start gap-1.5 text-xs text-slate-600">
-                    <ArrowRight className="h-3 w-3 text-slate-300 mt-0.5 shrink-0" />
+                  <li key={i} className="flex items-start gap-1.5 text-xs text-[var(--cs-text-secondary)]">
+                    <ArrowRight className="h-3 w-3 text-[var(--cs-text-gentle)] mt-0.5 shrink-0" />
                     {a}
                   </li>
                 ))}
@@ -189,12 +189,12 @@ function GoalRow({ goal }: { goal: CarePlanGoal }) {
 
           {goal.progress_note && (
             <div>
-              <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wide mb-0.5">Progress</p>
-              <p className="text-xs text-slate-700">{goal.progress_note}</p>
+              <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-0.5">Progress</p>
+              <p className="text-xs text-[var(--cs-text-secondary)]">{goal.progress_note}</p>
             </div>
           )}
 
-          <div className="flex items-center gap-4 text-[10px] text-slate-400">
+          <div className="flex items-center gap-4 text-[10px] text-[var(--cs-text-muted)]">
             {goal.target_date && <span>Target: {formatDate(goal.target_date)}</span>}
             {goal.last_reviewed && <span>Reviewed: {formatDate(goal.last_reviewed)}{goal.reviewed_by ? ` · ${getStaffName(goal.reviewed_by)}` : ""}</span>}
           </div>
@@ -276,7 +276,7 @@ function NewGoalDialog({
 
         <div className="space-y-3 py-2">
           <div className="space-y-1">
-            <Label className="text-xs text-slate-600">Domain</Label>
+            <Label className="text-xs text-[var(--cs-text-secondary)]">Domain</Label>
             <Select value={domain} onValueChange={(v) => setDomain(v as CarePlanDomain)}>
               <SelectTrigger className="text-xs"><SelectValue /></SelectTrigger>
               <SelectContent>
@@ -288,7 +288,7 @@ function NewGoalDialog({
           </div>
 
           <div className="space-y-1">
-            <Label className="text-xs text-slate-600">Goal Title</Label>
+            <Label className="text-xs text-[var(--cs-text-secondary)]">Goal Title</Label>
             <Input
               value={title}
               onChange={(e) => setTitle(e.target.value)}
@@ -298,7 +298,7 @@ function NewGoalDialog({
           </div>
 
           <div className="space-y-1">
-            <Label className="text-xs text-slate-600">Description</Label>
+            <Label className="text-xs text-[var(--cs-text-secondary)]">Description</Label>
             <Textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
@@ -308,7 +308,7 @@ function NewGoalDialog({
           </div>
 
           <div className="space-y-1">
-            <Label className="text-xs text-slate-600">Desired Outcome / Success Criteria</Label>
+            <Label className="text-xs text-[var(--cs-text-secondary)]">Desired Outcome / Success Criteria</Label>
             <Textarea
               value={desiredOutcome}
               onChange={(e) => setDesiredOutcome(e.target.value)}
@@ -319,7 +319,7 @@ function NewGoalDialog({
 
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1">
-              <Label className="text-xs text-slate-600">Target Date</Label>
+              <Label className="text-xs text-[var(--cs-text-secondary)]">Target Date</Label>
               <Input
                 type="date"
                 value={targetDate}
@@ -329,7 +329,7 @@ function NewGoalDialog({
             </div>
 
             <div className="space-y-1">
-              <Label className="text-xs text-slate-600">Responsible Staff</Label>
+              <Label className="text-xs text-[var(--cs-text-secondary)]">Responsible Staff</Label>
               <Select value={responsibleStaff} onValueChange={setResponsibleStaff}>
                 <SelectTrigger className="text-xs"><SelectValue placeholder="Select..." /></SelectTrigger>
                 <SelectContent>
@@ -402,7 +402,7 @@ function CarePlanCard({
 
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap mb-1">
-            <Link href={`/young-people/${plan.child_id}`} className="text-sm font-bold text-slate-800 hover:text-indigo-600 transition-colors">
+            <Link href={`/young-people/${plan.child_id}`} className="text-sm font-bold text-[var(--cs-navy)] hover:text-indigo-600 transition-colors">
               {ypName}
             </Link>
             <Badge variant="outline" className={cn(
@@ -413,12 +413,12 @@ function CarePlanCard({
             )}>
               {rag === "red" ? "⚠ Needs attention" : rag === "amber" ? "Review recommended" : "On track"}
             </Badge>
-            <Badge variant="outline" className="text-[10px] px-1.5 py-0 bg-slate-50 text-slate-600 border-slate-200">
+            <Badge variant="outline" className="text-[10px] px-1.5 py-0 bg-slate-50 text-[var(--cs-text-secondary)] border-[var(--cs-border)]">
               v{plan.version} · {plan.legal_status}
             </Badge>
           </div>
 
-          <div className="flex items-center gap-3 text-xs text-slate-500 flex-wrap">
+          <div className="flex items-center gap-3 text-xs text-[var(--cs-text-muted)] flex-wrap">
             {plan.keyworker_id && (
               <span className="flex items-center gap-1">
                 <User className="h-3 w-3" />Key worker: {getStaffName(plan.keyworker_id)}
@@ -448,27 +448,27 @@ function CarePlanCard({
           <Link href={`/care-plans/${plan.id}`} className="text-[11px] font-medium text-indigo-600 hover:underline" onClick={(e) => e.stopPropagation()}>
             Detail →
           </Link>
-          <button onClick={() => setExpanded(!expanded)} className="text-slate-400 hover:text-slate-600">
+          <button onClick={() => setExpanded(!expanded)} className="text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)]">
             {expanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
           </button>
         </div>
       </div>
 
       {expanded && (
-        <div className="border-t border-slate-100 px-4 pb-4 pt-3 space-y-4">
+        <div className="border-t border-[var(--cs-border-subtle)] px-4 pb-4 pt-3 space-y-4">
           {/* Summaries */}
           {(plan.strengths_summary || plan.concerns_summary) && (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {plan.strengths_summary && (
                 <div className="rounded-xl border border-emerald-100 bg-emerald-50/40 p-3">
                   <p className="text-[10px] font-semibold text-emerald-700 uppercase tracking-widest mb-1">Strengths</p>
-                  <p className="text-xs text-slate-700">{plan.strengths_summary}</p>
+                  <p className="text-xs text-[var(--cs-text-secondary)]">{plan.strengths_summary}</p>
                 </div>
               )}
               {plan.concerns_summary && (
                 <div className="rounded-xl border border-red-100 bg-red-50/40 p-3">
                   <p className="text-[10px] font-semibold text-red-700 uppercase tracking-widest mb-1">Concerns</p>
-                  <p className="text-xs text-slate-700">{plan.concerns_summary}</p>
+                  <p className="text-xs text-[var(--cs-text-secondary)]">{plan.concerns_summary}</p>
                 </div>
               )}
             </div>
@@ -476,7 +476,7 @@ function CarePlanCard({
 
           {/* Goals — attention needed first */}
           <div>
-            <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-2">Goals ({plan.goals.length})</p>
+            <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-widest mb-2">Goals ({plan.goals.length})</p>
             <div className="space-y-2">
               {[...plan.goals]
                 .sort((a, b) => {
@@ -499,7 +499,7 @@ function CarePlanCard({
                 <Sparkles className="h-3.5 w-3.5 text-teal-600" />
                 <p className="text-[10px] font-semibold text-teal-700 uppercase tracking-widest">ARIA Overview</p>
               </div>
-              <p className="text-xs text-slate-700">{plan.aria_overview}</p>
+              <p className="text-xs text-[var(--cs-text-secondary)]">{plan.aria_overview}</p>
             </div>
           ) : (
             <button
@@ -533,7 +533,7 @@ function CarePlanCard({
 
           {/* Sign-off */}
           {plan.rm_sign_off_date && (
-            <p className="text-[10px] text-slate-400">
+            <p className="text-[10px] text-[var(--cs-text-muted)]">
               RM signed off {formatDate(plan.rm_sign_off_date)}{plan.rm_sign_off_by ? ` · ${getStaffName(plan.rm_sign_off_by)}` : ""}
             </p>
           )}
@@ -691,7 +691,7 @@ Concerns: ${plan.concerns_summary ?? "not recorded"}`;
             uploadContext="Care Plans — care plan document, placement plan or LAC review upload"
           />
           <Link href="/young-people">
-            <button className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50 transition-colors">
+            <button className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--cs-border)] bg-white px-3 py-1.5 text-xs font-medium text-[var(--cs-text-secondary)] hover:bg-[var(--cs-surface)] transition-colors">
               <Heart className="h-3.5 w-3.5" />
               Young People
             </button>
@@ -782,7 +782,7 @@ Concerns: ${plan.concerns_summary ?? "not recorded"}`;
           <div key={label} className={cn("rounded-xl border p-3", bg)}>
             <div className="flex items-center gap-2 mb-1">
               <Icon className={cn("h-4 w-4 shrink-0", colour)} />
-              <span className="text-[10px] text-slate-500 font-medium">{label}</span>
+              <span className="text-[10px] text-[var(--cs-text-muted)] font-medium">{label}</span>
             </div>
             <p className={cn("text-lg font-bold", colour)}>{value}</p>
           </div>
@@ -799,36 +799,36 @@ Concerns: ${plan.concerns_summary ?? "not recorded"}`;
               className={cn(
                 "px-3 py-1.5 rounded-lg text-xs font-medium transition-all flex items-center gap-1.5",
                 ragFilter === key
-                  ? "bg-white text-slate-900 shadow-sm"
-                  : "text-slate-500 hover:text-slate-700",
+                  ? "bg-white text-[var(--cs-navy)] shadow-sm"
+                  : "text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)]",
               )}
             >
               {label}
               <span className={cn(
                 "text-[10px] tabular-nums",
-                ragFilter === key ? colour || "text-slate-600" : "text-slate-400",
+                ragFilter === key ? colour || "text-[var(--cs-text-secondary)]" : "text-[var(--cs-text-muted)]",
               )}>{count}</span>
             </button>
           ))}
         </div>
 
         <div className="relative flex-1 max-w-sm">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
           <input
             type="text"
             placeholder="Search by child, key worker, or legal status..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full rounded-lg border border-slate-200 bg-white py-1.5 pl-9 pr-3 text-xs text-slate-700 placeholder:text-slate-400 focus:border-indigo-300 focus:ring-1 focus:ring-indigo-200 outline-none transition-all"
+            className="w-full rounded-lg border border-[var(--cs-border)] bg-white py-1.5 pl-9 pr-3 text-xs text-[var(--cs-text-secondary)] placeholder:text-[var(--cs-text-muted)] focus:border-[var(--cs-aria-gold)] focus:ring-1 focus:ring-[var(--cs-aria-gold)]/30 outline-none transition-all"
           />
         </div>
 
-        <div className="flex items-center gap-1.5 text-xs text-slate-500 shrink-0">
+        <div className="flex items-center gap-1.5 text-xs text-[var(--cs-text-muted)] shrink-0">
           <ArrowUpDown className="h-3.5 w-3.5" />
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
-            className="rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-300"
+            className="rounded-lg border border-[var(--cs-border)] bg-white px-2 py-1.5 text-xs text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-[var(--cs-aria-gold)]/40"
           >
             <option value="rag">RAG Status</option>
             <option value="name">Child Name</option>
@@ -850,9 +850,9 @@ Concerns: ${plan.concerns_summary ?? "not recorded"}`;
 
       {/* Results count when filtered */}
       {(search || ragFilter !== "all") && (
-        <p className="text-xs text-slate-500">
+        <p className="text-xs text-[var(--cs-text-muted)]">
           Showing {filteredPlans.length} of {stats.total} plan{stats.total !== 1 ? "s" : ""}
-          {search && <span className="text-slate-400"> matching &ldquo;{search}&rdquo;</span>}
+          {search && <span className="text-[var(--cs-text-muted)]"> matching &ldquo;{search}&rdquo;</span>}
         </p>
       )}
 
@@ -870,8 +870,8 @@ Concerns: ${plan.concerns_summary ?? "not recorded"}`;
         ))}
         {ariaError && <p className="text-xs text-red-600 text-right">{ariaError}</p>}
         {filteredPlans.length === 0 && plans.length > 0 && (
-          <div className="text-center py-12 text-slate-400">
-            <Search className="h-8 w-8 mx-auto mb-2 text-slate-300" />
+          <div className="text-center py-12 text-[var(--cs-text-muted)]">
+            <Search className="h-8 w-8 mx-auto mb-2 text-[var(--cs-text-gentle)]" />
             <p className="text-sm">No care plans match your filters</p>
             <button onClick={() => { setSearch(""); setRAGFilter("all"); }} className="text-xs text-indigo-600 hover:underline mt-1">
               Clear filters
@@ -882,10 +882,10 @@ Concerns: ${plan.concerns_summary ?? "not recorded"}`;
 
       {/* ── Domain coverage matrix ── */}
       {plans.length > 0 && (
-        <div className="rounded-2xl border border-slate-200 bg-white overflow-hidden">
-          <div className="px-4 py-3 border-b border-slate-100 bg-slate-50 flex items-center gap-2">
+        <div className="rounded-2xl border border-[var(--cs-border)] bg-white overflow-hidden">
+          <div className="px-4 py-3 border-b border-[var(--cs-border-subtle)] bg-slate-50 flex items-center gap-2">
             <BarChart3 className="h-3.5 w-3.5 text-indigo-500" />
-            <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest">Domain Coverage Across All Plans</p>
+            <p className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-widest">Domain Coverage Across All Plans</p>
           </div>
           <div className="p-4 grid grid-cols-2 sm:grid-cols-4 gap-2">
             {(Object.entries(DOMAIN_LABELS) as [CarePlanDomain, string][]).map(([domain, label]) => {
@@ -909,10 +909,10 @@ Concerns: ${plan.concerns_summary ?? "not recorded"}`;
 
       {/* ── Goal progress overview ── */}
       {stats.totalGoals > 0 && (
-        <div className="rounded-2xl border border-slate-200 bg-white overflow-hidden">
-          <div className="px-4 py-3 border-b border-slate-100 bg-slate-50 flex items-center gap-2">
+        <div className="rounded-2xl border border-[var(--cs-border)] bg-white overflow-hidden">
+          <div className="px-4 py-3 border-b border-[var(--cs-border-subtle)] bg-slate-50 flex items-center gap-2">
             <Activity className="h-3.5 w-3.5 text-indigo-500" />
-            <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest">Goal Status Overview</p>
+            <p className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-widest">Goal Status Overview</p>
           </div>
           <div className="p-4 space-y-3">
             {/* Progress bar showing all goal statuses stacked */}
@@ -942,10 +942,10 @@ Concerns: ${plan.concerns_summary ?? "not recorded"}`;
                   </div>
                   <div className="flex items-center gap-4 flex-wrap">
                     {counts.map(({ status, count, colour, label }) => (
-                      <div key={status} className="flex items-center gap-1.5 text-[10px] text-slate-600">
+                      <div key={status} className="flex items-center gap-1.5 text-[10px] text-[var(--cs-text-secondary)]">
                         <span className={cn("w-2.5 h-2.5 rounded-full", colour)} />
                         <span className="font-medium">{label}</span>
-                        <span className="text-slate-400 tabular-nums">{count}</span>
+                        <span className="text-[var(--cs-text-muted)] tabular-nums">{count}</span>
                       </div>
                     ))}
                   </div>
@@ -957,8 +957,8 @@ Concerns: ${plan.concerns_summary ?? "not recorded"}`;
       )}
 
       {/* ── Regulatory note ── */}
-      <div className="rounded-xl border border-slate-100 bg-slate-50 px-4 py-3 text-xs text-slate-500">
-        <span className="font-semibold text-slate-600">Regulatory Basis — </span>
+      <div className="rounded-xl border border-[var(--cs-border-subtle)] bg-slate-50 px-4 py-3 text-xs text-[var(--cs-text-muted)]">
+        <span className="font-semibold text-[var(--cs-text-secondary)]">Regulatory Basis — </span>
         Care Planning, Placement and Case Review (England) Regulations 2010: every looked-after child
         must have a care plan that is reviewed at each LAC review (within 20 days of placement, then
         3-monthly, then 6-monthly). The home must implement the care plan and record progress.

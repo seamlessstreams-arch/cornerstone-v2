@@ -32,7 +32,7 @@ import {
 } from "@/types/extended";
 
 const LEVEL_COLOUR: Record<CompetencyLevel, string> = {
-  0: "bg-slate-100 text-slate-400 border-slate-200",
+  0: "bg-slate-100 text-[var(--cs-text-muted)] border-[var(--cs-border)]",
   1: "bg-red-50 text-red-600 border-red-200",
   2: "bg-amber-50 text-amber-700 border-amber-200",
   3: "bg-blue-50 text-blue-700 border-blue-200",
@@ -46,7 +46,7 @@ const LEVEL_BAR: Record<CompetencyLevel, string> = {
 };
 
 const STAGE_COLOURS: Record<PathwayStage, string> = {
-  inductee:           "bg-slate-100 text-slate-700 border-slate-200",
+  inductee:           "bg-slate-100 text-[var(--cs-text-secondary)] border-[var(--cs-border)]",
   rsw:                "bg-blue-50 text-blue-700 border-blue-200",
   senior_rsw:         "bg-sky-50 text-sky-700 border-sky-200",
   team_leader:        "bg-violet-50 text-violet-700 border-violet-200",
@@ -116,8 +116,8 @@ export default function StaffCompetencyProfilePage({ params }: { params: Promise
   if (!member) {
     return (
       <PageShell title="Staff Profile" showQuickCreate={false}>
-        <div className="text-center py-16 text-slate-400">
-          <User className="h-10 w-10 mx-auto mb-3 text-slate-300" />
+        <div className="text-center py-16 text-[var(--cs-text-muted)]">
+          <User className="h-10 w-10 mx-auto mb-3 text-[var(--cs-text-gentle)]" />
           <p>Staff member not found</p>
           <Button variant="outline" size="sm" className="mt-4" onClick={() => router.push("/workforce/staff")}>
             Back to profiles
@@ -160,7 +160,7 @@ export default function StaffCompetencyProfilePage({ params }: { params: Promise
       <div id="staff-profile-content" className="space-y-0">
       {showAria && profile && (
         <div className="relative">
-          <button onClick={() => setShowAria(false)} className="absolute top-3 right-3 z-10 text-slate-400 hover:text-slate-600 text-xs">✕ Close</button>
+          <button onClick={() => setShowAria(false)} className="absolute top-3 right-3 z-10 text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] text-xs">✕ Close</button>
           <AriaPanel
             mode="staff_development_summary"
             pageContext={`Staff: ${member.full_name} (${member.job_title}). Current stage: ${PATHWAY_STAGE_LABELS[profile.current_stage]}. Readiness: ${profile.overall_readiness_score}%. Target: ${profile.target_stage ? PATHWAY_STAGE_LABELS[profile.target_stage] : "none"}. Strengths: ${profile.strengths.join("; ")}. Development areas: ${profile.development_areas.join("; ")}. Active plan: ${activePlan ? activePlan.title : "none"}. Observations: ${obs.length}.`}
@@ -169,7 +169,7 @@ export default function StaffCompetencyProfilePage({ params }: { params: Promise
       )}
 
       {/* Profile header card */}
-      <div className="rounded-2xl border border-slate-200 bg-white p-5">
+      <div className="rounded-2xl border border-[var(--cs-border)] bg-white p-5">
         <div className="flex items-start gap-4">
           {/* Avatar */}
           <div className="w-14 h-14 rounded-2xl bg-indigo-100 flex items-center justify-center shrink-0">
@@ -179,21 +179,21 @@ export default function StaffCompetencyProfilePage({ params }: { params: Promise
           {/* Info */}
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 flex-wrap mb-2">
-              <h2 className="text-lg font-bold text-slate-900">{member.full_name}</h2>
+              <h2 className="text-lg font-bold text-[var(--cs-navy)]">{member.full_name}</h2>
               {profile && (
                 <Badge variant="outline" className={cn("text-xs border", STAGE_COLOURS[profile.current_stage])}>
                   {PATHWAY_STAGE_LABELS[profile.current_stage]}
                 </Badge>
               )}
               {profile?.target_stage && (
-                <div className="flex items-center gap-1 text-xs text-slate-400">
+                <div className="flex items-center gap-1 text-xs text-[var(--cs-text-muted)]">
                   <ArrowUpRight className="h-3.5 w-3.5" />
                   <span>→ {PATHWAY_STAGE_LABELS[profile.target_stage]}</span>
                 </div>
               )}
             </div>
 
-            <div className="flex items-center gap-4 text-xs text-slate-500 flex-wrap">
+            <div className="flex items-center gap-4 text-xs text-[var(--cs-text-muted)] flex-wrap">
               <span>{member.employment_type === "permanent" ? "Permanent" : "Bank"} · {member.contracted_hours}h/wk</span>
               <span>Started {member.start_date}</span>
               {member.next_supervision_due && (
@@ -212,11 +212,11 @@ export default function StaffCompetencyProfilePage({ params }: { params: Promise
                 <span className={READINESS_COLOUR(profile.overall_readiness_score)}>
                   {profile.overall_readiness_score}
                 </span>
-                <span className="text-slate-300 text-lg">%</span>
+                <span className="text-[var(--cs-text-gentle)] text-lg">%</span>
               </div>
-              <p className="text-[10px] text-slate-400 uppercase tracking-wide">Readiness</p>
+              <p className="text-[10px] text-[var(--cs-text-muted)] uppercase tracking-wide">Readiness</p>
               {nextStage && (
-                <p className="text-[9px] text-slate-400 mt-0.5">
+                <p className="text-[9px] text-[var(--cs-text-muted)] mt-0.5">
                   towards {PATHWAY_STAGE_LABELS[nextStage].split(" ")[0]}
                 </p>
               )}
@@ -236,7 +236,7 @@ export default function StaffCompetencyProfilePage({ params }: { params: Promise
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-0.5 border-b border-slate-200 overflow-x-auto">
+      <div className="flex gap-0.5 border-b border-[var(--cs-border)] overflow-x-auto">
         {TABS.map((t) => {
           const Icon = t.icon;
           return (
@@ -247,13 +247,13 @@ export default function StaffCompetencyProfilePage({ params }: { params: Promise
                 "flex items-center gap-1.5 px-3 py-2.5 text-xs font-medium border-b-2 transition-all whitespace-nowrap",
                 tab === t.id
                   ? "border-indigo-500 text-indigo-700"
-                  : "border-transparent text-slate-500 hover:text-slate-800 hover:border-slate-300",
+                  : "border-transparent text-[var(--cs-text-muted)] hover:text-[var(--cs-navy)] hover:border-slate-300",
               )}
             >
               <Icon className="h-3.5 w-3.5" />
               {t.label}
               {t.count !== undefined && t.count > 0 && (
-                <span className="ml-0.5 bg-slate-100 text-slate-600 text-[10px] px-1.5 py-0.5 rounded-full font-semibold">
+                <span className="ml-0.5 bg-slate-100 text-[var(--cs-text-secondary)] text-[10px] px-1.5 py-0.5 rounded-full font-semibold">
                   {t.count}
                 </span>
               )}
@@ -312,31 +312,31 @@ export default function StaffCompetencyProfilePage({ params }: { params: Promise
 
           {/* Active plan snapshot */}
           {activePlan && (
-            <div className="rounded-2xl border border-slate-200 bg-white p-4">
+            <div className="rounded-2xl border border-[var(--cs-border)] bg-white p-4">
               <div className="flex items-center justify-between mb-3">
-                <p className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+                <p className="text-xs font-bold text-[var(--cs-text-secondary)] flex items-center gap-1.5">
                   <GitMerge className="h-3.5 w-3.5 text-indigo-500" /> Active Development Plan
                 </p>
                 <button onClick={() => setTab("plans")} className="text-[10px] text-indigo-600 hover:underline">
                   View full plan →
                 </button>
               </div>
-              <p className="text-sm font-semibold text-slate-800 mb-2">{activePlan.title}</p>
+              <p className="text-sm font-semibold text-[var(--cs-navy)] mb-2">{activePlan.title}</p>
               <div className="space-y-1.5">
                 {activePlan.actions.slice(0, 3).map((action) => (
                   <div key={action.id} className="flex items-center gap-2 text-xs">
                     {action.completed ? (
                       <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500 shrink-0" />
                     ) : (
-                      <Clock className="h-3.5 w-3.5 text-slate-400 shrink-0" />
+                      <Clock className="h-3.5 w-3.5 text-[var(--cs-text-muted)] shrink-0" />
                     )}
-                    <span className={action.completed ? "line-through text-slate-400" : "text-slate-700"}>
+                    <span className={action.completed ? "line-through text-[var(--cs-text-muted)]" : "text-[var(--cs-text-secondary)]"}>
                       {action.title}
                     </span>
                   </div>
                 ))}
                 {activePlan.actions.length > 3 && (
-                  <p className="text-[10px] text-slate-400 pl-5">+{activePlan.actions.length - 3} more actions</p>
+                  <p className="text-[10px] text-[var(--cs-text-muted)] pl-5">+{activePlan.actions.length - 3} more actions</p>
                 )}
               </div>
             </div>
@@ -344,14 +344,14 @@ export default function StaffCompetencyProfilePage({ params }: { params: Promise
 
           {/* Latest observation */}
           {latestObs && (
-            <div className="rounded-2xl border border-slate-200 bg-white p-4">
+            <div className="rounded-2xl border border-[var(--cs-border)] bg-white p-4">
               <div className="flex items-center justify-between mb-2">
-                <p className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+                <p className="text-xs font-bold text-[var(--cs-text-secondary)] flex items-center gap-1.5">
                   <Microscope className="h-3.5 w-3.5 text-purple-500" /> Latest Practice Observation
                 </p>
-                <span className="text-[10px] text-slate-400">{latestObs.observation_date}</span>
+                <span className="text-[10px] text-[var(--cs-text-muted)]">{latestObs.observation_date}</span>
               </div>
-              <p className="text-xs text-slate-700 leading-relaxed line-clamp-3">{latestObs.narrative}</p>
+              <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed line-clamp-3">{latestObs.narrative}</p>
             </div>
           )}
         </div>
@@ -363,9 +363,9 @@ export default function StaffCompetencyProfilePage({ params }: { params: Promise
           {ALL_COMPETENCY_DOMAINS.map((domain) => {
             const score = inferDomainScore(profile, domain);
             return (
-              <div key={domain} className="rounded-xl border border-slate-100 bg-white px-4 py-3">
+              <div key={domain} className="rounded-xl border border-[var(--cs-border-subtle)] bg-white px-4 py-3">
                 <div className="flex items-center justify-between mb-2">
-                  <p className="text-xs font-medium text-slate-700">{COMPETENCY_DOMAIN_LABELS[domain]}</p>
+                  <p className="text-xs font-medium text-[var(--cs-text-secondary)]">{COMPETENCY_DOMAIN_LABELS[domain]}</p>
                   <Badge variant="outline" className={cn("text-[10px] border", LEVEL_COLOUR[score])}>
                     {score} — {COMPETENCY_LEVEL_LABELS[score]}
                   </Badge>
@@ -392,8 +392,8 @@ export default function StaffCompetencyProfilePage({ params }: { params: Promise
       {tab === "plans" && (
         <div className="space-y-4">
           {plans.length === 0 ? (
-            <div className="text-center py-12 text-slate-400">
-              <GitMerge className="h-8 w-8 mx-auto mb-2 text-slate-300" />
+            <div className="text-center py-12 text-[var(--cs-text-muted)]">
+              <GitMerge className="h-8 w-8 mx-auto mb-2 text-[var(--cs-text-gentle)]" />
               <p className="text-sm">No development plans yet</p>
               <Link href="/workforce/aria-planner">
                 <Button size="sm" className="mt-3 gap-1.5 bg-indigo-600 text-white">
@@ -406,18 +406,18 @@ export default function StaffCompetencyProfilePage({ params }: { params: Promise
               const completed = plan.actions.filter((a) => a.completed).length;
               const total     = plan.actions.length;
               return (
-                <div key={plan.id} className="rounded-2xl border border-slate-200 bg-white p-4 space-y-3">
+                <div key={plan.id} className="rounded-2xl border border-[var(--cs-border)] bg-white p-4 space-y-3">
                   <div className="flex items-start justify-between">
                     <div>
-                      <p className="text-sm font-bold text-slate-800 mb-0.5">{plan.title}</p>
-                      <p className="text-xs text-slate-500">
+                      <p className="text-sm font-bold text-[var(--cs-navy)] mb-0.5">{plan.title}</p>
+                      <p className="text-xs text-[var(--cs-text-muted)]">
                         {PATHWAY_STAGE_LABELS[plan.from_stage]} → {PATHWAY_STAGE_LABELS[plan.to_stage]}
                       </p>
                     </div>
                     <Badge variant="outline" className={cn(
                       "text-[10px] border",
                       plan.status === "active" ? "text-emerald-700 bg-emerald-50 border-emerald-200"
-                      : "text-slate-600 bg-slate-50 border-slate-200",
+                      : "text-[var(--cs-text-secondary)] bg-slate-50 border-[var(--cs-border)]",
                     )}>
                       {plan.status}
                     </Badge>
@@ -428,18 +428,18 @@ export default function StaffCompetencyProfilePage({ params }: { params: Promise
                       style={{ width: total > 0 ? `${(completed / total) * 100}%` : "0%" }}
                     />
                   </div>
-                  <p className="text-xs text-slate-500">{completed}/{total} actions complete</p>
+                  <p className="text-xs text-[var(--cs-text-muted)]">{completed}/{total} actions complete</p>
                   <div className="space-y-1.5">
                     {plan.actions.map((action) => (
                       <div key={action.id} className="flex items-start gap-2 text-xs">
                         {action.completed
                           ? <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500 shrink-0 mt-0.5" />
-                          : <Clock className="h-3.5 w-3.5 text-slate-400 shrink-0 mt-0.5" />}
+                          : <Clock className="h-3.5 w-3.5 text-[var(--cs-text-muted)] shrink-0 mt-0.5" />}
                         <div>
-                          <span className={action.completed ? "line-through text-slate-400" : "text-slate-700"}>{action.title}</span>
-                          <span className="ml-2 text-[10px] text-slate-400">{COMPETENCY_DOMAIN_LABELS[action.domain]}</span>
+                          <span className={action.completed ? "line-through text-[var(--cs-text-muted)]" : "text-[var(--cs-text-secondary)]"}>{action.title}</span>
+                          <span className="ml-2 text-[10px] text-[var(--cs-text-muted)]">{COMPETENCY_DOMAIN_LABELS[action.domain]}</span>
                           {action.target_date && !action.completed && (
-                            <span className="ml-2 text-[10px] text-slate-400">· {action.target_date}</span>
+                            <span className="ml-2 text-[10px] text-[var(--cs-text-muted)]">· {action.target_date}</span>
                           )}
                         </div>
                       </div>
@@ -462,17 +462,17 @@ export default function StaffCompetencyProfilePage({ params }: { params: Promise
       {tab === "observations" && (
         <div className="space-y-3">
           {obs.length === 0 ? (
-            <div className="text-center py-12 text-slate-400">
-              <Microscope className="h-8 w-8 mx-auto mb-2 text-slate-300" />
+            <div className="text-center py-12 text-[var(--cs-text-muted)]">
+              <Microscope className="h-8 w-8 mx-auto mb-2 text-[var(--cs-text-gentle)]" />
               <p className="text-sm">No practice observations recorded</p>
             </div>
           ) : (
             obs.map((o) => (
-              <div key={o.id} className="rounded-2xl border border-slate-200 bg-white p-4 space-y-3">
+              <div key={o.id} className="rounded-2xl border border-[var(--cs-border)] bg-white p-4 space-y-3">
                 <div className="flex items-start justify-between">
                   <div>
-                    <p className="text-sm font-bold text-slate-800">{o.context}</p>
-                    <p className="text-xs text-slate-500">{o.observation_date}</p>
+                    <p className="text-sm font-bold text-[var(--cs-navy)]">{o.context}</p>
+                    <p className="text-xs text-[var(--cs-text-muted)]">{o.observation_date}</p>
                   </div>
                   <Badge variant="outline" className={cn(
                     "text-[10px] border",
@@ -483,7 +483,7 @@ export default function StaffCompetencyProfilePage({ params }: { params: Promise
                     {o.outcome.replace(/_/g, " ")}
                   </Badge>
                 </div>
-                <p className="text-xs text-slate-700 leading-relaxed">{o.narrative}</p>
+                <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed">{o.narrative}</p>
                 {o.strengths_noted.length > 0 && (
                   <div>
                     <p className="text-[10px] font-semibold text-emerald-700 mb-1">Strengths</p>
@@ -508,19 +508,19 @@ export default function StaffCompetencyProfilePage({ params }: { params: Promise
       {tab === "appraisals" && (
         <div className="space-y-3">
           {appraisals.length === 0 ? (
-            <div className="text-center py-12 text-slate-400">
-              <Star className="h-8 w-8 mx-auto mb-2 text-slate-300" />
+            <div className="text-center py-12 text-[var(--cs-text-muted)]">
+              <Star className="h-8 w-8 mx-auto mb-2 text-[var(--cs-text-gentle)]" />
               <p className="text-sm">No appraisals on record</p>
             </div>
           ) : (
             appraisals.map((appraisal) => (
-              <div key={appraisal.id} className="rounded-2xl border border-slate-200 bg-white p-4 space-y-3">
+              <div key={appraisal.id} className="rounded-2xl border border-[var(--cs-border)] bg-white p-4 space-y-3">
                 <div className="flex items-start justify-between">
                   <div>
-                    <p className="text-sm font-bold text-slate-800">
+                    <p className="text-sm font-bold text-[var(--cs-navy)]">
                       {appraisal.appraisal_type.replace(/_/g, " ").replace(/\b\w/g, (l) => l.toUpperCase())}
                     </p>
-                    <p className="text-xs text-slate-500">{appraisal.appraisal_date}</p>
+                    <p className="text-xs text-[var(--cs-text-muted)]">{appraisal.appraisal_date}</p>
                   </div>
                   <div className="flex items-center gap-2">
                     <Badge variant="outline" className={cn(
@@ -541,7 +541,7 @@ export default function StaffCompetencyProfilePage({ params }: { params: Promise
                 {appraisal.key_achievements && (
                   <div>
                     <p className="text-[10px] font-semibold text-emerald-700 mb-0.5">Achievements</p>
-                    <p className="text-xs text-slate-700">{appraisal.key_achievements}</p>
+                    <p className="text-xs text-[var(--cs-text-secondary)]">{appraisal.key_achievements}</p>
                   </div>
                 )}
                 {appraisal.aria_insights && (
@@ -550,7 +550,7 @@ export default function StaffCompetencyProfilePage({ params }: { params: Promise
                     <p className="text-xs text-indigo-800">{appraisal.aria_insights}</p>
                   </div>
                 )}
-                <div className="flex items-center gap-3 text-[10px] text-slate-400 pt-1">
+                <div className="flex items-center gap-3 text-[10px] text-[var(--cs-text-muted)] pt-1">
                   {appraisal.signed_by_staff && (
                     <span className="flex items-center gap-1 text-emerald-600">
                       <CheckCircle2 className="h-3 w-3" /> Signed by staff
@@ -572,8 +572,8 @@ export default function StaffCompetencyProfilePage({ params }: { params: Promise
       {tab === "qualifications" && (
         <div className="space-y-2">
           {quals.length === 0 ? (
-            <div className="text-center py-12 text-slate-400">
-              <Award className="h-8 w-8 mx-auto mb-2 text-slate-300" />
+            <div className="text-center py-12 text-[var(--cs-text-muted)]">
+              <Award className="h-8 w-8 mx-auto mb-2 text-[var(--cs-text-gentle)]" />
               <p className="text-sm">No qualifications recorded</p>
             </div>
           ) : (
@@ -582,18 +582,18 @@ export default function StaffCompetencyProfilePage({ params }: { params: Promise
                 "rounded-xl border bg-white p-3",
                 qual.status === "expired" || (qual.mandatory && qual.status === "not_started")
                   ? "border-red-200"
-                  : "border-slate-200",
+                  : "border-[var(--cs-border)]",
               )}>
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap mb-1">
-                      <p className="text-xs font-semibold text-slate-800">{qual.qualification_name}</p>
+                      <p className="text-xs font-semibold text-[var(--cs-navy)]">{qual.qualification_name}</p>
                       {qual.mandatory && (
                         <Badge variant="outline" className="text-[9px] border-rose-200 text-rose-700">Mandatory</Badge>
                       )}
                     </div>
-                    {qual.awarding_body && <p className="text-[10px] text-slate-400">{qual.awarding_body}{qual.level ? ` · ${qual.level}` : ""}</p>}
-                    {qual.regulatory_requirement && <p className="text-[9px] text-slate-400 mt-0.5">{qual.regulatory_requirement}</p>}
+                    {qual.awarding_body && <p className="text-[10px] text-[var(--cs-text-muted)]">{qual.awarding_body}{qual.level ? ` · ${qual.level}` : ""}</p>}
+                    {qual.regulatory_requirement && <p className="text-[9px] text-[var(--cs-text-muted)] mt-0.5">{qual.regulatory_requirement}</p>}
                   </div>
                   <div className="text-right shrink-0">
                     <Badge variant="outline" className={cn(
@@ -601,12 +601,12 @@ export default function StaffCompetencyProfilePage({ params }: { params: Promise
                       qual.status === "completed" ? "text-emerald-700 bg-emerald-50 border-emerald-200"
                       : qual.status === "in_progress" ? "text-amber-700 bg-amber-50 border-amber-200"
                       : qual.status === "expired" ? "text-red-700 bg-red-50 border-red-200"
-                      : "text-slate-600 bg-slate-50 border-slate-200",
+                      : "text-[var(--cs-text-secondary)] bg-slate-50 border-[var(--cs-border)]",
                     )}>
                       {qual.status.replace(/_/g, " ")}
                     </Badge>
                     {qual.expiry_date && (
-                      <p className="text-[9px] text-slate-400 mt-0.5">Exp: {qual.expiry_date}</p>
+                      <p className="text-[9px] text-[var(--cs-text-muted)] mt-0.5">Exp: {qual.expiry_date}</p>
                     )}
                   </div>
                 </div>

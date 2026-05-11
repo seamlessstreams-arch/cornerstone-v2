@@ -139,7 +139,7 @@ export function ShiftChecklist() {
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-center py-6">
-            <Loader2 className="h-5 w-5 animate-spin text-slate-400" />
+            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
           </div>
         </CardContent>
       </Card>
@@ -188,7 +188,7 @@ export function ShiftChecklist() {
             return (
               <Link key={item.id} href={item.href}>
                 <div className={cn(
-                  "flex items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-slate-50 transition-colors",
+                  "flex items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-[var(--cs-surface)] transition-colors",
                   item.completed && "opacity-60",
                 )}>
                   {item.completed ? (
@@ -196,17 +196,17 @@ export function ShiftChecklist() {
                   ) : (
                     <Circle className={cn(
                       "h-4 w-4 shrink-0",
-                      item.critical ? "text-amber-400" : "text-slate-300",
+                      item.critical ? "text-amber-400" : "text-[var(--cs-text-gentle)]",
                     )} />
                   )}
                   <Icon className={cn(
                     "h-3 w-3 shrink-0",
-                    item.completed ? "text-emerald-400" : "text-slate-400",
+                    item.completed ? "text-emerald-400" : "text-[var(--cs-text-muted)]",
                   )} />
                   <div className="flex-1 min-w-0">
                     <p className={cn(
                       "text-[11px] font-medium",
-                      item.completed ? "text-emerald-700 line-through" : "text-slate-700",
+                      item.completed ? "text-emerald-700 line-through" : "text-[var(--cs-text-secondary)]",
                     )}>
                       {item.label}
                     </p>
@@ -216,7 +216,7 @@ export function ShiftChecklist() {
                       Required
                     </Badge>
                   )}
-                  <ChevronRight className="h-3 w-3 text-slate-300 shrink-0" />
+                  <ChevronRight className="h-3 w-3 text-[var(--cs-text-gentle)] shrink-0" />
                 </div>
               </Link>
             );

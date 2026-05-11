@@ -52,7 +52,7 @@ const ACTIONS: ActionConfig[] = [
     label: "Generate Oversight",
     description: "Draft a management oversight record from this",
     icon: ScrollText,
-    colour: "text-slate-700 bg-white border-slate-200 hover:bg-slate-50",
+    colour: "text-[var(--cs-text-secondary)] bg-white border-[var(--cs-border)] hover:bg-[var(--cs-surface)]",
     href: (c, t, s) => `/intelligence/aria/oversight?child_id=${c}&source_type=${t}&source_id=${s}`,
   },
   {
@@ -108,7 +108,7 @@ const ACTIONS: ActionConfig[] = [
     label: "Create Follow-Up Task",
     description: "Add a follow-up task linked to this record",
     icon: CheckSquare,
-    colour: "text-slate-700 bg-white border-slate-200 hover:bg-slate-50",
+    colour: "text-[var(--cs-text-secondary)] bg-white border-[var(--cs-border)] hover:bg-[var(--cs-surface)]",
     href: (c, t, s) => `/tasks?new=1&child_id=${c}&linked_id=${s}&source_type=${t}`,
   },
 ];

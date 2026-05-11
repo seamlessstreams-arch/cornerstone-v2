@@ -62,18 +62,18 @@ const CHECK_META: Record<string, { label: string; icon: React.ElementType; descr
 };
 
 const CHECK_STATUS_DISPLAY: Record<string, { label: string; color: string; ring: string }> = {
-  not_started: { label: "Not Started", color: "bg-slate-100 text-slate-500", ring: "ring-slate-200" },
+  not_started: { label: "Not Started", color: "bg-slate-100 text-[var(--cs-text-muted)]", ring: "ring-slate-200" },
   requested: { label: "Requested", color: "bg-blue-100 text-blue-700", ring: "ring-blue-200" },
   in_progress: { label: "In Progress", color: "bg-blue-100 text-blue-700", ring: "ring-blue-300" },
   received: { label: "Received", color: "bg-amber-100 text-amber-700", ring: "ring-amber-200" },
   verified: { label: "Verified", color: "bg-emerald-100 text-emerald-700", ring: "ring-emerald-300" },
   concern_flagged: { label: "Concern Flagged", color: "bg-red-100 text-red-700", ring: "ring-red-300" },
   override_approved: { label: "Override Approved", color: "bg-purple-100 text-purple-700", ring: "ring-purple-300" },
-  not_required: { label: "Not Required", color: "bg-slate-100 text-slate-400", ring: "ring-slate-100" },
+  not_required: { label: "Not Required", color: "bg-slate-100 text-[var(--cs-text-muted)]", ring: "ring-slate-100" },
 };
 
 const REF_STATUS_DISPLAY: Record<string, { label: string; color: string }> = {
-  not_requested: { label: "Not Requested", color: "bg-slate-100 text-slate-500" },
+  not_requested: { label: "Not Requested", color: "bg-slate-100 text-[var(--cs-text-muted)]" },
   requested: { label: "Requested", color: "bg-blue-100 text-blue-700" },
   chased: { label: "Chased", color: "bg-amber-100 text-amber-700" },
   received: { label: "Received", color: "bg-amber-100 text-amber-700" },
@@ -81,7 +81,7 @@ const REF_STATUS_DISPLAY: Record<string, { label: string; color: string }> = {
   unsatisfactory: { label: "Unsatisfactory", color: "bg-red-100 text-red-700" },
   concerns_noted: { label: "Concerns Noted", color: "bg-red-100 text-red-700" },
   verbal_only: { label: "Verbal Only", color: "bg-amber-100 text-amber-700" },
-  uncontactable: { label: "Uncontactable", color: "bg-slate-100 text-slate-500" },
+  uncontactable: { label: "Uncontactable", color: "bg-slate-100 text-[var(--cs-text-muted)]" },
 };
 
 function ComplianceRing({ score }: { score: number }) {
@@ -100,7 +100,7 @@ function ComplianceRing({ score }: { score: number }) {
       </svg>
       <div className="absolute text-center">
         <div className="text-lg font-bold" style={{ color }}>{score}</div>
-        <div className="text-[9px] text-slate-400 -mt-0.5">%</div>
+        <div className="text-[9px] text-[var(--cs-text-muted)] -mt-0.5">%</div>
       </div>
     </div>
   );
@@ -282,15 +282,15 @@ export default function CandidateDetailPage() {
     <>
     <div className="flex flex-col min-h-screen bg-slate-50">
       {/* Sticky Header */}
-      <div className="sticky top-0 z-30 bg-white border-b border-slate-200 px-6 py-3">
+      <div className="sticky top-0 z-30 bg-white border-b border-[var(--cs-border)] px-6 py-3">
         <div className="flex items-center gap-4 flex-wrap">
-          <Link href="/recruitment/candidates" className="text-slate-400 hover:text-slate-700 transition-colors">
+          <Link href="/recruitment/candidates" className="text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] transition-colors">
             <ChevronLeft className="h-5 w-5" />
           </Link>
 
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-3 flex-wrap">
-              <h1 className="text-lg font-bold text-slate-900">
+              <h1 className="text-lg font-bold text-[var(--cs-navy)]">
                 {candidate.first_name} {candidate.last_name}
               </h1>
               <span className={cn("text-[10px] rounded-full px-2.5 py-1 font-semibold",
@@ -299,7 +299,7 @@ export default function CandidateDetailPage() {
                 {STAGE_LABELS[candidate.stage] ?? candidate.stage}
               </span>
               <span className={cn("text-[10px] rounded-full px-2.5 py-1 font-semibold uppercase",
-                RISK_COLORS[candidate.risk_level] ?? "bg-slate-100 text-slate-500"
+                RISK_COLORS[candidate.risk_level] ?? "bg-slate-100 text-[var(--cs-text-muted)]"
               )}>
                 {candidate.risk_level} risk
               </span>
@@ -310,7 +310,7 @@ export default function CandidateDetailPage() {
                 </span>
               )}
             </div>
-            <div className="text-xs text-slate-400 mt-0.5">{candidate.role_applied} · {candidate.email}</div>
+            <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">{candidate.role_applied} · {candidate.email}</div>
           </div>
 
           <div className="flex items-center gap-2">
@@ -340,8 +340,8 @@ export default function CandidateDetailPage() {
               className={cn(
                 "px-4 py-2 text-xs font-medium border-b-2 transition-all",
                 activeTab === id
-                  ? "border-slate-900 text-slate-900"
-                  : "border-transparent text-slate-400 hover:text-slate-700"
+                  ? "border-slate-900 text-[var(--cs-navy)]"
+                  : "border-transparent text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)]"
               )}
             >
               {label}
@@ -355,9 +355,9 @@ export default function CandidateDetailPage() {
         {/* Left column */}
         <div className="w-[220px] shrink-0 space-y-4">
           {/* Stage progress */}
-          <Card className="rounded-2xl border-slate-100">
+          <Card className="rounded-2xl border-[var(--cs-border-subtle)]">
             <CardHeader className="pb-2">
-              <CardTitle className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Stage</CardTitle>
+              <CardTitle className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider">Stage</CardTitle>
             </CardHeader>
             <CardContent className="py-0 pb-3">
               <div className="space-y-1">
@@ -375,7 +375,7 @@ export default function CandidateDetailPage() {
                       </div>
                       <span className={cn(
                         "text-[10px]",
-                        isCurrent ? "font-semibold text-slate-900" : isDone ? "text-emerald-700" : "text-slate-400"
+                        isCurrent ? "font-semibold text-[var(--cs-navy)]" : isDone ? "text-emerald-700" : "text-[var(--cs-text-muted)]"
                       )}>
                         {STAGE_LABELS[stage]}
                       </span>
@@ -437,15 +437,15 @@ export default function CandidateDetailPage() {
                 {[
                   { label: "Checks Verified", value: `${candidate.checks?.filter(c => c.status === "verified").length ?? 0}/${candidate.checks?.length ?? 0}`, icon: CheckCircle2, color: "text-emerald-600" },
                   { label: "Refs Received", value: `${candidate.references?.filter(r => ["received", "satisfactory", "verbal_only"].includes(r.status)).length ?? 0}/2`, icon: Users, color: "text-blue-600" },
-                  { label: "Days in Stage", value: candidate.days_in_stage, icon: Clock, color: candidate.days_in_stage > 14 ? "text-amber-600" : "text-slate-600" },
-                  { label: "Proposed Start", value: candidate.start_date ? formatDate(candidate.start_date) : "TBC", icon: Calendar, color: "text-slate-700" },
+                  { label: "Days in Stage", value: candidate.days_in_stage, icon: Clock, color: candidate.days_in_stage > 14 ? "text-amber-600" : "text-[var(--cs-text-secondary)]" },
+                  { label: "Proposed Start", value: candidate.start_date ? formatDate(candidate.start_date) : "TBC", icon: Calendar, color: "text-[var(--cs-text-secondary)]" },
                 ].map(({ label, value, icon: Icon, color }) => (
-                  <Card key={label} className="rounded-2xl border-slate-100">
+                  <Card key={label} className="rounded-2xl border-[var(--cs-border-subtle)]">
                     <CardContent className="py-3 px-4 flex items-center gap-3">
                       <Icon className={cn("h-5 w-5 shrink-0", color)} />
                       <div>
                         <div className={cn("text-lg font-bold", color)}>{value}</div>
-                        <div className="text-[10px] text-slate-400">{label}</div>
+                        <div className="text-[10px] text-[var(--cs-text-muted)]">{label}</div>
                       </div>
                     </CardContent>
                   </Card>
@@ -453,9 +453,9 @@ export default function CandidateDetailPage() {
               </div>
 
               {/* Checks grid */}
-              <Card className="rounded-2xl border-slate-100">
+              <Card className="rounded-2xl border-[var(--cs-border-subtle)]">
                 <CardHeader className="pb-3">
-                  <CardTitle className="text-sm font-semibold text-slate-700">Compliance Checks</CardTitle>
+                  <CardTitle className="text-sm font-semibold text-[var(--cs-text-secondary)]">Compliance Checks</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
@@ -472,16 +472,16 @@ export default function CandidateDetailPage() {
                             check.status === "verified" ? "border-emerald-200 bg-emerald-50" :
                             check.concern_flag ? "border-red-200 bg-red-50" :
                             check.override_reason != null ? "border-purple-200 bg-purple-50" :
-                            "border-slate-100 bg-white hover:border-slate-200"
+                            "border-[var(--cs-border-subtle)] bg-white hover:border-[var(--cs-border)]"
                           )}
                         >
                           <Icon className={cn("h-4 w-4 shrink-0",
                             check.status === "verified" ? "text-emerald-500" :
                             check.concern_flag ? "text-red-500" :
-                            "text-slate-400"
+                            "text-[var(--cs-text-muted)]"
                           )} />
                           <div className="flex-1 min-w-0">
-                            <div className="text-[10px] font-semibold text-slate-700 truncate">{meta?.label ?? check.check_type}</div>
+                            <div className="text-[10px] font-semibold text-[var(--cs-text-secondary)] truncate">{meta?.label ?? check.check_type}</div>
                             <span className={cn("text-[9px] rounded-full px-1.5 py-0.5 font-medium", status.color)}>
                               {status.label}
                             </span>
@@ -496,25 +496,25 @@ export default function CandidateDetailPage() {
 
               {/* Employment overview */}
               {(candidate.employment_history ?? []).length > 0 && (
-                <Card className="rounded-2xl border-slate-100">
+                <Card className="rounded-2xl border-[var(--cs-border-subtle)]">
                   <CardHeader className="pb-3">
-                    <CardTitle className="text-sm font-semibold text-slate-700">Employment Summary</CardTitle>
+                    <CardTitle className="text-sm font-semibold text-[var(--cs-text-secondary)]">Employment Summary</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-2">
                       {candidate.employment_history.slice(0, 3).map((e, i) => (
                         <div key={i} className="flex items-center gap-3 py-2 border-b border-slate-50 last:border-0">
-                          <Briefcase className="h-4 w-4 text-slate-300 shrink-0" />
+                          <Briefcase className="h-4 w-4 text-[var(--cs-text-gentle)] shrink-0" />
                           <div className="flex-1">
-                            <div className="text-xs font-medium text-slate-700">{e.role_title} · {e.employer}</div>
-                            <div className="text-[10px] text-slate-400">
+                            <div className="text-xs font-medium text-[var(--cs-text-secondary)]">{e.role_title} · {e.employer}</div>
+                            <div className="text-[10px] text-[var(--cs-text-muted)]">
                               {formatDate(e.start_date)} – {e.end_date ? formatDate(e.end_date) : "Present"}
                             </div>
                           </div>
                           {e.verified ? (
                             <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500" />
                           ) : (
-                            <Clock className="h-3.5 w-3.5 text-slate-300" />
+                            <Clock className="h-3.5 w-3.5 text-[var(--cs-text-gentle)]" />
                           )}
                         </div>
                       ))}
@@ -547,7 +547,7 @@ export default function CandidateDetailPage() {
                     check.concern_flag ? "border-red-200" :
                     check.status === "verified" ? "border-emerald-100" :
                     check.override_reason ? "border-purple-100" :
-                    "border-slate-100"
+                    "border-[var(--cs-border-subtle)]"
                   )}>
                     <button
                       className="w-full flex items-center gap-4 p-4 text-left"
@@ -564,22 +564,22 @@ export default function CandidateDetailPage() {
                           check.status === "verified" ? "text-emerald-600" :
                           check.concern_flag ? "text-red-600" :
                           check.override_reason ? "text-purple-600" :
-                          "text-slate-400"
+                          "text-[var(--cs-text-muted)]"
                         )} />
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center gap-2">
-                          <span className="text-sm font-semibold text-slate-800">{meta?.label ?? check.check_type}</span>
+                          <span className="text-sm font-semibold text-[var(--cs-navy)]">{meta?.label ?? check.check_type}</span>
                           {check.concern_flag && <span className="text-[9px] bg-red-100 text-red-600 rounded-full px-1.5 py-0.5 font-semibold flex items-center gap-0.5"><Flag className="h-2.5 w-2.5" /> Concern</span>}
                           {check.override_reason && <span className="text-[9px] bg-purple-100 text-purple-700 rounded-full px-1.5 py-0.5 font-semibold">Override</span>}
                         </div>
-                        <div className="text-[10px] text-slate-400 mt-0.5">{meta?.description}</div>
+                        <div className="text-[10px] text-[var(--cs-text-muted)] mt-0.5">{meta?.description}</div>
                       </div>
                       <div className="flex items-center gap-2 shrink-0">
                         <span className={cn("text-[10px] rounded-full px-2.5 py-1 font-semibold", status.color)}>
                           {status.label}
                         </span>
-                        <ChevronRight className={cn("h-4 w-4 text-slate-300 transition-transform", isExpanded && "rotate-90")} />
+                        <ChevronRight className={cn("h-4 w-4 text-[var(--cs-text-gentle)] transition-transform", isExpanded && "rotate-90")} />
                       </div>
                     </button>
 
@@ -587,22 +587,22 @@ export default function CandidateDetailPage() {
                       <div className="px-4 pb-4 border-t border-slate-50 pt-3 space-y-3">
                         <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 text-[11px]">
                           {check.requested_date && (
-                            <div><span className="text-slate-400">Requested</span><div className="font-medium text-slate-700">{formatDate(check.requested_date)}</div></div>
+                            <div><span className="text-[var(--cs-text-muted)]">Requested</span><div className="font-medium text-[var(--cs-text-secondary)]">{formatDate(check.requested_date)}</div></div>
                           )}
                           {check.received_date && (
-                            <div><span className="text-slate-400">Received</span><div className="font-medium text-slate-700">{formatDate(check.received_date)}</div></div>
+                            <div><span className="text-[var(--cs-text-muted)]">Received</span><div className="font-medium text-[var(--cs-text-secondary)]">{formatDate(check.received_date)}</div></div>
                           )}
                           {check.verified_at && (
-                            <div><span className="text-slate-400">Verified</span><div className="font-medium text-slate-700">{formatDate(check.verified_at)} by {check.verified_by}</div></div>
+                            <div><span className="text-[var(--cs-text-muted)]">Verified</span><div className="font-medium text-[var(--cs-text-secondary)]">{formatDate(check.verified_at)} by {check.verified_by}</div></div>
                           )}
                           {check.certificate_number && (
-                            <div><span className="text-slate-400">Certificate #</span><div className="font-mono font-medium text-slate-700">{check.certificate_number}</div></div>
+                            <div><span className="text-[var(--cs-text-muted)]">Certificate #</span><div className="font-mono font-medium text-[var(--cs-text-secondary)]">{check.certificate_number}</div></div>
                           )}
                           {check.document_type && (
-                            <div><span className="text-slate-400">Document</span><div className="font-medium text-slate-700">{check.document_type}</div></div>
+                            <div><span className="text-[var(--cs-text-muted)]">Document</span><div className="font-medium text-[var(--cs-text-secondary)]">{check.document_type}</div></div>
                           )}
                           {check.expiry_date && (
-                            <div><span className="text-slate-400">Expiry</span><div className="font-medium text-slate-700">{formatDate(check.expiry_date)}</div></div>
+                            <div><span className="text-[var(--cs-text-muted)]">Expiry</span><div className="font-medium text-[var(--cs-text-secondary)]">{formatDate(check.expiry_date)}</div></div>
                           )}
                         </div>
                         {check.concern_notes && (
@@ -654,8 +654,8 @@ export default function CandidateDetailPage() {
                 );
               })}
               {(candidate.checks ?? []).length === 0 && (
-                <Card className="rounded-2xl border-slate-100">
-                  <CardContent className="py-10 text-center text-slate-400">
+                <Card className="rounded-2xl border-[var(--cs-border-subtle)]">
+                  <CardContent className="py-10 text-center text-[var(--cs-text-muted)]">
                     <Shield className="h-8 w-8 mx-auto mb-3 text-slate-200" />
                     <div className="text-sm">No checks recorded yet</div>
                     <div className="text-xs mt-1">Checks are created automatically when a candidate is added</div>
@@ -676,8 +676,8 @@ export default function CandidateDetailPage() {
                 </div>
               )}
               {(candidate.references ?? []).length === 0 ? (
-                <Card className="rounded-2xl border-slate-100">
-                  <CardContent className="py-10 text-center text-slate-400">
+                <Card className="rounded-2xl border-[var(--cs-border-subtle)]">
+                  <CardContent className="py-10 text-center text-[var(--cs-text-muted)]">
                     <Users className="h-8 w-8 mx-auto mb-3 text-slate-200" />
                     <div className="text-sm">No references on record</div>
                     <Button
@@ -697,13 +697,13 @@ export default function CandidateDetailPage() {
                     ref.discrepancy_flag ? "border-red-200" :
                     ref.status === "satisfactory" ? "border-emerald-100" :
                     ref.status === "unsatisfactory" ? "border-red-200" :
-                    "border-slate-100"
+                    "border-[var(--cs-border-subtle)]"
                   )}>
                     <CardContent className="p-4">
                       <div className="flex items-start justify-between gap-4">
                         <div className="flex-1">
                           <div className="flex items-center gap-2 flex-wrap">
-                            <div className="font-semibold text-slate-800">{ref.referee_name}</div>
+                            <div className="font-semibold text-[var(--cs-navy)]">{ref.referee_name}</div>
                             {ref.is_most_recent_employer && (
                               <span className="text-[9px] bg-blue-100 text-blue-700 rounded-full px-1.5 py-0.5 font-semibold flex items-center gap-0.5">
                                 <Star className="h-2.5 w-2.5" /> Most Recent Employer
@@ -715,10 +715,10 @@ export default function CandidateDetailPage() {
                               </span>
                             )}
                           </div>
-                          <div className="text-[11px] text-slate-500 mt-0.5">
+                          <div className="text-[11px] text-[var(--cs-text-muted)] mt-0.5">
                             {ref.referee_role} · {ref.referee_org ?? "Unknown organisation"}
                           </div>
-                          <div className="text-[10px] text-slate-400 mt-0.5">{ref.relationship}</div>
+                          <div className="text-[10px] text-[var(--cs-text-muted)] mt-0.5">{ref.relationship}</div>
                         </div>
                         <span className={cn("text-[10px] rounded-full px-2.5 py-1 font-semibold shrink-0", status.color)}>
                           {status.label}
@@ -726,7 +726,7 @@ export default function CandidateDetailPage() {
                       </div>
 
                       {/* Dates */}
-                      <div className="flex gap-4 mt-3 text-[10px] text-slate-400">
+                      <div className="flex gap-4 mt-3 text-[10px] text-[var(--cs-text-muted)]">
                         {ref.requested_date && <span>Requested: {formatDate(ref.requested_date)}</span>}
                         {ref.received_date && <span>Received: {formatDate(ref.received_date)}</span>}
                       </div>
@@ -748,9 +748,9 @@ export default function CandidateDetailPage() {
                               ) : value === "YES" ? (
                                 <AlertTriangle className="h-3 w-3 text-red-500" />
                               ) : (
-                                <div className="h-3 w-3 rounded-full border border-slate-200" />
+                                <div className="h-3 w-3 rounded-full border border-[var(--cs-border)]" />
                               )}
-                              <span className="text-[10px] text-slate-600">{label}</span>
+                              <span className="text-[10px] text-[var(--cs-text-secondary)]">{label}</span>
                             </div>
                           ))}
                         </div>
@@ -805,16 +805,16 @@ export default function CandidateDetailPage() {
           {/* EMPLOYMENT HISTORY TAB */}
           {activeTab === "history" && (
             <div className="space-y-3">
-              <Card className="rounded-2xl border-slate-100">
+              <Card className="rounded-2xl border-[var(--cs-border-subtle)]">
                 <CardHeader className="pb-3">
                   <CardTitle className="text-sm flex items-center justify-between">
                     <span>Employment History</span>
-                    <span className="text-xs font-normal text-slate-400">Most recent first</span>
+                    <span className="text-xs font-normal text-[var(--cs-text-muted)]">Most recent first</span>
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   {(candidate.employment_history ?? []).length === 0 ? (
-                    <div className="py-8 text-center text-slate-400">
+                    <div className="py-8 text-center text-[var(--cs-text-muted)]">
                       <Briefcase className="h-8 w-8 mx-auto mb-2 text-slate-200" />
                       <div className="text-sm">No employment history recorded</div>
                     </div>
@@ -841,13 +841,13 @@ export default function CandidateDetailPage() {
                                 )}
                               </div>
                               <div className="flex-1 pb-2">
-                                <div className="font-semibold text-slate-800 text-sm">{entry.role_title}</div>
-                                <div className="text-xs text-slate-500">{entry.employer}</div>
-                                <div className="text-[10px] text-slate-400 mt-0.5">
+                                <div className="font-semibold text-[var(--cs-navy)] text-sm">{entry.role_title}</div>
+                                <div className="text-xs text-[var(--cs-text-muted)]">{entry.employer}</div>
+                                <div className="text-[10px] text-[var(--cs-text-muted)] mt-0.5">
                                   {formatDate(entry.start_date)} – {entry.end_date ? formatDate(entry.end_date) : "Present"}
                                 </div>
                                 {entry.reason_for_leaving && (
-                                  <div className="text-[10px] text-slate-400 mt-0.5">Left: {entry.reason_for_leaving}</div>
+                                  <div className="text-[10px] text-[var(--cs-text-muted)] mt-0.5">Left: {entry.reason_for_leaving}</div>
                                 )}
                               </div>
                             </div>
@@ -880,11 +880,11 @@ export default function CandidateDetailPage() {
           {activeTab === "interviews" && (
             <div className="space-y-3">
               {(candidate.interviews ?? []).length === 0 ? (
-                <Card className="rounded-2xl border-slate-100">
-                  <CardContent className="py-10 text-center text-slate-400">
+                <Card className="rounded-2xl border-[var(--cs-border-subtle)]">
+                  <CardContent className="py-10 text-center text-[var(--cs-text-muted)]">
                     <Calendar className="h-8 w-8 mx-auto mb-3 text-slate-200" />
                     <div className="text-sm">No interviews scheduled</div>
-                    <div className="text-xs mt-1 text-slate-400">Use the Interviews page to schedule</div>
+                    <div className="text-xs mt-1 text-[var(--cs-text-muted)]">Use the Interviews page to schedule</div>
                     <Link href="/recruitment/safer-recruitment/interviews">
                       <Button size="sm" className="mt-3 rounded-xl bg-slate-900 text-white text-xs">
                         Go to Interviews
@@ -893,12 +893,12 @@ export default function CandidateDetailPage() {
                   </CardContent>
                 </Card>
               ) : candidate.interviews.map((interview) => (
-                <Card key={interview.id} className="rounded-2xl border-slate-100">
+                <Card key={interview.id} className="rounded-2xl border-[var(--cs-border-subtle)]">
                   <CardContent className="p-4">
                     <div className="flex items-start justify-between gap-4">
                       <div>
-                        <div className="font-semibold text-slate-800">{interview.mode === "in_person" ? "In-Person" : interview.mode === "video" ? "Video" : "Phone"} Interview</div>
-                        <div className="text-xs text-slate-500 mt-0.5">
+                        <div className="font-semibold text-[var(--cs-navy)]">{interview.mode === "in_person" ? "In-Person" : interview.mode === "video" ? "Video" : "Phone"} Interview</div>
+                        <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">
                           {formatDate(interview.scheduled_at)} · {interview.location ?? "Location TBC"}
                         </div>
                       </div>
@@ -906,7 +906,7 @@ export default function CandidateDetailPage() {
                         "text-[10px] rounded-full px-2.5 py-1 font-semibold",
                         interview.status === "completed" ? "bg-emerald-100 text-emerald-700" :
                         interview.status === "scheduled" ? "bg-blue-100 text-blue-700" :
-                        "bg-slate-100 text-slate-500"
+                        "bg-slate-100 text-[var(--cs-text-muted)]"
                       )}>
                         {interview.status}
                       </span>
@@ -936,36 +936,36 @@ export default function CandidateDetailPage() {
           {activeTab === "offer" && (
             <div className="space-y-3">
               {!candidate.offer ? (
-                <Card className="rounded-2xl border-slate-100">
-                  <CardContent className="py-10 text-center text-slate-400">
+                <Card className="rounded-2xl border-[var(--cs-border-subtle)]">
+                  <CardContent className="py-10 text-center text-[var(--cs-text-muted)]">
                     <FileText className="h-8 w-8 mx-auto mb-3 text-slate-200" />
                     <div className="text-sm">No offer on record</div>
                     <div className="text-xs mt-1">An offer can be created once the candidate reaches conditional_offer stage</div>
                   </CardContent>
                 </Card>
               ) : (
-                <Card className="rounded-2xl border-slate-100">
+                <Card className="rounded-2xl border-[var(--cs-border-subtle)]">
                   <CardContent className="p-5 space-y-4">
                     <div className="flex items-center justify-between">
-                      <div className="font-semibold text-slate-800">Conditional Offer</div>
+                      <div className="font-semibold text-[var(--cs-navy)]">Conditional Offer</div>
                       <span className={cn(
                         "text-[10px] rounded-full px-2.5 py-1 font-semibold",
                         candidate.offer.status === "accepted" ? "bg-emerald-100 text-emerald-700" :
                         candidate.offer.status === "conditional" ? "bg-amber-100 text-amber-700" :
-                        "bg-slate-100 text-slate-500"
+                        "bg-slate-100 text-[var(--cs-text-muted)]"
                       )}>
                         {candidate.offer.status}
                       </span>
                     </div>
                     <div className="grid grid-cols-2 gap-4 text-xs">
                       {candidate.offer.proposed_start_date && (
-                        <div><span className="text-slate-400">Proposed Start</span><div className="font-medium">{formatDate(candidate.offer.proposed_start_date)}</div></div>
+                        <div><span className="text-[var(--cs-text-muted)]">Proposed Start</span><div className="font-medium">{formatDate(candidate.offer.proposed_start_date)}</div></div>
                       )}
                       {candidate.offer.salary && (
-                        <div><span className="text-slate-400">Salary</span><div className="font-medium">£{candidate.offer.salary.toLocaleString()}</div></div>
+                        <div><span className="text-[var(--cs-text-muted)]">Salary</span><div className="font-medium">£{candidate.offer.salary.toLocaleString()}</div></div>
                       )}
                       {candidate.offer.hours_per_week && (
-                        <div><span className="text-slate-400">Hours</span><div className="font-medium">{candidate.offer.hours_per_week} hrs/wk</div></div>
+                        <div><span className="text-[var(--cs-text-muted)]">Hours</span><div className="font-medium">{candidate.offer.hours_per_week} hrs/wk</div></div>
                       )}
                     </div>
                     {candidate.offer.exceptional_start && (
@@ -1014,7 +1014,7 @@ export default function CandidateDetailPage() {
 
           {/* AUDIT TAB */}
           {activeTab === "audit" && (
-            <Card className="rounded-2xl border-slate-100">
+            <Card className="rounded-2xl border-[var(--cs-border-subtle)]">
               <CardHeader className="pb-3">
                 <CardTitle className="text-sm flex items-center justify-between">
                   <span>Audit Trail</span>
@@ -1025,7 +1025,7 @@ export default function CandidateDetailPage() {
               </CardHeader>
               <CardContent>
                 {(candidate.audit ?? []).length === 0 ? (
-                  <div className="py-8 text-center text-slate-400">
+                  <div className="py-8 text-center text-[var(--cs-text-muted)]">
                     <Activity className="h-8 w-8 mx-auto mb-2 text-slate-200" />
                     <div className="text-sm">No audit entries yet</div>
                   </div>
@@ -1035,23 +1035,23 @@ export default function CandidateDetailPage() {
                       <div key={entry.id} className="flex gap-3">
                         <div className="flex flex-col items-center">
                           <div className="h-4 w-4 rounded-full bg-slate-200 flex items-center justify-center shrink-0 mt-0.5">
-                            <Activity className="h-2.5 w-2.5 text-slate-400" />
+                            <Activity className="h-2.5 w-2.5 text-[var(--cs-text-muted)]" />
                           </div>
                           <div className="w-0.5 flex-1 bg-slate-100 mt-1" />
                         </div>
                         <div className="flex-1 pb-3">
                           <div className="flex items-center gap-2">
-                            <span className="text-xs font-semibold text-slate-700">{entry.event_type.replace(/_/g, " ")}</span>
-                            <span className="text-[10px] text-slate-400">{formatDate(entry.performed_at)}</span>
+                            <span className="text-xs font-semibold text-[var(--cs-text-secondary)]">{entry.event_type.replace(/_/g, " ")}</span>
+                            <span className="text-[10px] text-[var(--cs-text-muted)]">{formatDate(entry.performed_at)}</span>
                           </div>
-                          <div className="text-[10px] text-slate-500 mt-0.5">{entry.summary}</div>
-                          <div className="text-[10px] text-slate-400">{entry.actor}</div>
+                          <div className="text-[10px] text-[var(--cs-text-muted)] mt-0.5">{entry.summary}</div>
+                          <div className="text-[10px] text-[var(--cs-text-muted)]">{entry.actor}</div>
                         </div>
                       </div>
                     ))}
                   </div>
                 )}
-                <p className="text-[9px] text-slate-300 mt-4 text-center">This audit trail cannot be edited or deleted. All actions are permanently logged.</p>
+                <p className="text-[9px] text-[var(--cs-text-gentle)] mt-4 text-center">This audit trail cannot be edited or deleted. All actions are permanently logged.</p>
               </CardContent>
             </Card>
           )}
@@ -1076,16 +1076,16 @@ export default function CandidateDetailPage() {
     {/* ── Flag Concern Modal ─────────────────────────────────────────────────── */}
     {flagConcern && (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
-        <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 space-y-4">
-          <h2 className="text-base font-semibold text-slate-900 flex items-center gap-2">
+        <div className="bg-white rounded-2xl shadow-[var(--cs-shadow-elevated)] w-full max-w-md p-6 space-y-4">
+          <h2 className="text-base font-semibold text-[var(--cs-navy)] flex items-center gap-2">
             <Flag className="h-4 w-4 text-red-500" /> Flag Concern
           </h2>
-          <p className="text-xs text-slate-500">Describe the concern. This will be logged in the audit trail and the check will be escalated for RM review.</p>
+          <p className="text-xs text-[var(--cs-text-muted)]">Describe the concern. This will be logged in the audit trail and the check will be escalated for RM review.</p>
           <textarea
             value={flagConcern.notes}
             onChange={(e) => setFlagConcern({ ...flagConcern, notes: e.target.value })}
             placeholder="Describe the concern in detail…"
-            className="w-full rounded-xl border border-slate-200 p-3 text-sm resize-none h-28 focus:outline-none focus:ring-2 focus:ring-red-300"
+            className="w-full rounded-xl border border-[var(--cs-border)] p-3 text-sm resize-none h-28 focus:outline-none focus:ring-2 focus:ring-red-300"
             autoFocus
           />
           <div className="flex justify-end gap-2">
@@ -1106,16 +1106,16 @@ export default function CandidateDetailPage() {
     {/* ── Request Override Modal ─────────────────────────────────────────────── */}
     {requestOverride && (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
-        <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 space-y-4">
-          <h2 className="text-base font-semibold text-slate-900 flex items-center gap-2">
+        <div className="bg-white rounded-2xl shadow-[var(--cs-shadow-elevated)] w-full max-w-md p-6 space-y-4">
+          <h2 className="text-base font-semibold text-[var(--cs-navy)] flex items-center gap-2">
             <Shield className="h-4 w-4 text-purple-500" /> Request Override
           </h2>
-          <p className="text-xs text-slate-500">Document the reason for approving this check despite the outcome. This is permanently recorded and must satisfy Regulation 32.</p>
+          <p className="text-xs text-[var(--cs-text-muted)]">Document the reason for approving this check despite the outcome. This is permanently recorded and must satisfy Regulation 32.</p>
           <textarea
             value={requestOverride.reason}
             onChange={(e) => setRequestOverride({ ...requestOverride, reason: e.target.value })}
             placeholder="State the reason for override and risk mitigation in place…"
-            className="w-full rounded-xl border border-slate-200 p-3 text-sm resize-none h-28 focus:outline-none focus:ring-2 focus:ring-purple-300"
+            className="w-full rounded-xl border border-[var(--cs-border)] p-3 text-sm resize-none h-28 focus:outline-none focus:ring-2 focus:ring-purple-300"
             autoFocus
           />
           <div className="flex justify-end gap-2">
@@ -1136,13 +1136,13 @@ export default function CandidateDetailPage() {
     {/* ── Add Reference Modal ────────────────────────────────────────────────── */}
     {showAddRef && (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
-        <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 space-y-4">
-          <h2 className="text-base font-semibold text-slate-900 flex items-center gap-2">
+        <div className="bg-white rounded-2xl shadow-[var(--cs-shadow-elevated)] w-full max-w-md p-6 space-y-4">
+          <h2 className="text-base font-semibold text-[var(--cs-navy)] flex items-center gap-2">
             <Users className="h-4 w-4 text-blue-600" /> Add Reference
           </h2>
           <form onSubmit={handleAddRefSubmit} className="space-y-3">
             <div>
-              <label className="text-xs font-medium text-slate-600 block mb-1">Referee name <span className="text-red-500">*</span></label>
+              <label className="text-xs font-medium text-[var(--cs-text-secondary)] block mb-1">Referee name <span className="text-red-500">*</span></label>
               <Input
                 value={addRefForm.referee_name}
                 onChange={(e) => setAddRefForm({ ...addRefForm, referee_name: e.target.value })}
@@ -1153,7 +1153,7 @@ export default function CandidateDetailPage() {
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="text-xs font-medium text-slate-600 block mb-1">Organisation</label>
+                <label className="text-xs font-medium text-[var(--cs-text-secondary)] block mb-1">Organisation</label>
                 <Input
                   value={addRefForm.referee_org}
                   onChange={(e) => setAddRefForm({ ...addRefForm, referee_org: e.target.value })}
@@ -1162,7 +1162,7 @@ export default function CandidateDetailPage() {
                 />
               </div>
               <div>
-                <label className="text-xs font-medium text-slate-600 block mb-1">Role/Title</label>
+                <label className="text-xs font-medium text-[var(--cs-text-secondary)] block mb-1">Role/Title</label>
                 <Input
                   value={addRefForm.referee_role}
                   onChange={(e) => setAddRefForm({ ...addRefForm, referee_role: e.target.value })}
@@ -1172,7 +1172,7 @@ export default function CandidateDetailPage() {
               </div>
             </div>
             <div>
-              <label className="text-xs font-medium text-slate-600 block mb-1">Email</label>
+              <label className="text-xs font-medium text-[var(--cs-text-secondary)] block mb-1">Email</label>
               <Input
                 type="email"
                 value={addRefForm.referee_email}
@@ -1182,11 +1182,11 @@ export default function CandidateDetailPage() {
               />
             </div>
             <div>
-              <label className="text-xs font-medium text-slate-600 block mb-1">Relationship <span className="text-red-500">*</span></label>
+              <label className="text-xs font-medium text-[var(--cs-text-secondary)] block mb-1">Relationship <span className="text-red-500">*</span></label>
               <select
                 value={addRefForm.relationship}
                 onChange={(e) => setAddRefForm({ ...addRefForm, relationship: e.target.value })}
-                className="w-full h-9 rounded-xl border border-slate-200 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
+                className="w-full h-9 rounded-xl border border-[var(--cs-border)] px-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
               >
                 <option value="employer">Previous employer</option>
                 <option value="line_manager">Line manager</option>
@@ -1203,7 +1203,7 @@ export default function CandidateDetailPage() {
                 onChange={(e) => setAddRefForm({ ...addRefForm, is_most_recent_employer: e.target.checked })}
                 className="h-4 w-4 rounded"
               />
-              <label htmlFor="most_recent" className="text-xs text-slate-600">This is the most recent employer</label>
+              <label htmlFor="most_recent" className="text-xs text-[var(--cs-text-secondary)]">This is the most recent employer</label>
             </div>
             {addRefError && (
               <p className="text-xs text-red-600">{addRefError}</p>

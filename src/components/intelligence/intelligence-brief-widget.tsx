@@ -192,7 +192,7 @@ export function IntelligenceBriefWidget() {
             <div className="text-[11px] font-semibold text-violet-700 leading-none">
               ARIA Intelligence
             </div>
-            <div className="text-[10px] text-slate-400 leading-none mt-0.5">{todayLabel}</div>
+            <div className="text-[10px] text-[var(--cs-text-muted)] leading-none mt-0.5">{todayLabel}</div>
           </div>
         </div>
 
@@ -209,7 +209,7 @@ export function IntelligenceBriefWidget() {
               pillClass={getClimatePillClasses(climateScore)}
             />
           ) : (
-            <StatPill label="Home Climate" value="—" pillClass="bg-slate-50 border-slate-200 text-slate-500" />
+            <StatPill label="Home Climate" value="—" pillClass="bg-slate-50 border-[var(--cs-border)] text-[var(--cs-text-muted)]" />
           )}
 
           {/* Active Alerts */}
@@ -279,7 +279,7 @@ export function IntelligenceBriefWidget() {
             </div>
             <button
               onClick={handleClose}
-              className="rounded-full p-0.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100"
+              className="rounded-full p-0.5 text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] hover:bg-[var(--cs-surface)]"
               aria-label="Close brief"
             >
               <X className="h-3.5 w-3.5" />
@@ -288,14 +288,14 @@ export function IntelligenceBriefWidget() {
 
           {/* Streaming output */}
           {isGenerating && !output && (
-            <div className="flex items-center gap-2 py-4 text-xs text-slate-500">
+            <div className="flex items-center gap-2 py-4 text-xs text-[var(--cs-text-muted)]">
               <Loader2 className="h-4 w-4 animate-spin text-violet-500" />
               Generating morning brief…
             </div>
           )}
 
           {output && (
-            <div className="prose prose-sm max-w-none text-sm whitespace-pre-wrap font-mono text-slate-700 leading-relaxed">
+            <div className="prose prose-sm max-w-none text-sm whitespace-pre-wrap font-mono text-[var(--cs-text-secondary)] leading-relaxed">
               {output}
               {isGenerating && (
                 <span className="inline-block ml-1 h-3.5 w-0.5 bg-violet-500 animate-pulse" />
@@ -304,7 +304,7 @@ export function IntelligenceBriefWidget() {
           )}
 
           {/* Disclaimer */}
-          <div className="mt-2 text-[10px] text-slate-400">
+          <div className="mt-2 text-[10px] text-[var(--cs-text-muted)]">
             AI-generated — verify against live data
           </div>
         </div>

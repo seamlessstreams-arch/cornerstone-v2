@@ -36,7 +36,7 @@ const EFFECT_CLR: Record<CommEffectiveness, string> = {
   effective: "text-green-700",
   partially_effective: "text-amber-700",
   not_effective: "text-red-700",
-  not_yet_evaluated: "text-slate-500",
+  not_yet_evaluated: "text-[var(--cs-text-muted)]",
 };
 
 export default function LanguageCommunicationPage() {

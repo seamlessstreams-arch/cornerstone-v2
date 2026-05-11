@@ -38,7 +38,7 @@ const JUDGEMENT_COLOURS: Record<string, string> = {
   good: "bg-blue-100 text-blue-700 border-blue-200",
   requires_improvement: "bg-amber-100 text-amber-700 border-amber-200",
   inadequate: "bg-red-100 text-red-700 border-red-200",
-  unknown: "bg-slate-100 text-slate-700 border-slate-200",
+  unknown: "bg-slate-100 text-[var(--cs-text-secondary)] border-[var(--cs-border)]",
 };
 
 function ScoreDial({ score }: { score: number }) {
@@ -46,7 +46,7 @@ function ScoreDial({ score }: { score: number }) {
   return (
     <div className="flex flex-col items-center">
       <div className={cn("text-5xl font-bold tabular-nums", colour)}>{score}</div>
-      <div className="text-xs text-slate-500 mt-1">Readiness Score / 100</div>
+      <div className="text-xs text-[var(--cs-text-muted)] mt-1">Readiness Score / 100</div>
     </div>
   );
 }
@@ -55,20 +55,20 @@ function MockQuestion({ question, index }: { question: string; index: number }) 
   const [open, setOpen] = useState(false);
   const [answer, setAnswer] = useState("");
   return (
-    <div className="border border-slate-200 rounded-xl overflow-hidden">
+    <div className="border border-[var(--cs-border)] rounded-xl overflow-hidden">
       <button
-        className="w-full flex items-center gap-3 p-4 text-left hover:bg-slate-50 transition-colors"
+        className="w-full flex items-center gap-3 p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
         onClick={() => setOpen((p) => !p)}
       >
         <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-xs font-bold text-indigo-600">
           {index + 1}
         </span>
-        <span className="text-sm font-medium text-slate-800 flex-1">{question}</span>
-        {open ? <ChevronUp className="h-4 w-4 text-slate-400 shrink-0" /> : <ChevronDown className="h-4 w-4 text-slate-400 shrink-0" />}
+        <span className="text-sm font-medium text-[var(--cs-navy)] flex-1">{question}</span>
+        {open ? <ChevronUp className="h-4 w-4 text-[var(--cs-text-muted)] shrink-0" /> : <ChevronDown className="h-4 w-4 text-[var(--cs-text-muted)] shrink-0" />}
       </button>
       {open && (
-        <div className="px-4 pb-4 border-t border-slate-100 pt-3">
-          <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Your Practice Answer</label>
+        <div className="px-4 pb-4 border-t border-[var(--cs-border-subtle)] pt-3">
+          <label className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide">Your Practice Answer</label>
           <Textarea
             className="mt-1 text-sm"
             rows={4}
@@ -76,7 +76,7 @@ function MockQuestion({ question, index }: { question: string; index: number }) 
             value={answer}
             onChange={(e) => setAnswer(e.target.value)}
           />
-          <p className="text-[10px] text-slate-400 mt-1">This is not saved — use it to rehearse your response</p>
+          <p className="text-[10px] text-[var(--cs-text-muted)] mt-1">This is not saved — use it to rehearse your response</p>
         </div>
       )}
     </div>
@@ -142,7 +142,7 @@ export default function OfstedReadinessPage() {
           </CardHeader>
           <CardContent className="space-y-3">
             <div>
-              <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Service Context (optional)</label>
+              <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Service Context (optional)</label>
               <Textarea
                 className="mt-1 text-sm"
                 rows={3}
@@ -170,25 +170,25 @@ export default function OfstedReadinessPage() {
             <div className="rounded-2xl bg-slate-900 text-white p-6 space-y-4">
               <div className="flex items-center justify-between gap-4">
                 <div>
-                  <p className="text-xs text-slate-400 uppercase tracking-wide mb-1">Predicted Judgement</p>
+                  <p className="text-xs text-[var(--cs-text-muted)] uppercase tracking-wide mb-1">Predicted Judgement</p>
                   <span className={cn("rounded-full border px-4 py-1 text-sm font-bold capitalize", JUDGEMENT_COLOURS[result.headline_judgement_prediction])}>
                     {result.headline_judgement_prediction.replace("_", " ")}
                   </span>
                 </div>
                 <ScoreDial score={result.inspection_readiness_score} />
               </div>
-              <p className="text-sm text-slate-300 leading-relaxed">{result.headline_rationale}</p>
+              <p className="text-sm text-[var(--cs-text-gentle)] leading-relaxed">{result.headline_rationale}</p>
             </div>
 
             {/* Tab bar */}
-            <div className="flex gap-2 border-b border-slate-200 pb-0">
+            <div className="flex gap-2 border-b border-[var(--cs-border)] pb-0">
               {tabs.map((t) => (
                 <button
                   key={t}
                   onClick={() => setTab(t)}
                   className={cn(
                     "px-3 py-2 text-xs font-semibold capitalize border-b-2 transition-colors",
-                    tab === t ? "border-violet-600 text-violet-700" : "border-transparent text-slate-500 hover:text-slate-700"
+                    tab === t ? "border-violet-600 text-violet-700" : "border-transparent text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)]"
                   )}
                 >
                   {t.replace("_", " ")}
@@ -205,15 +205,15 @@ export default function OfstedReadinessPage() {
                   { label: "Leadership & Management", content: result.leaders_and_managers_evidence, colour: "bg-violet-50 border-violet-100" },
                 ].map(({ label, content, colour }) => (
                   <div key={label}>
-                    <p className="text-xs font-semibold text-slate-600 uppercase tracking-wide mb-2">{label}</p>
+                    <p className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide mb-2">{label}</p>
                     <div className={cn("rounded-xl border p-4", colour)}>
-                      <p className="text-sm text-slate-800 leading-relaxed">{content}</p>
+                      <p className="text-sm text-[var(--cs-navy)] leading-relaxed">{content}</p>
                     </div>
                   </div>
                 ))}
                 {result.immediate_actions_before_inspection.length > 0 && (
                   <div>
-                    <p className="text-xs font-semibold text-slate-600 uppercase tracking-wide mb-2">Immediate Actions Before Inspection</p>
+                    <p className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide mb-2">Immediate Actions Before Inspection</p>
                     <div className="space-y-2">
                       {result.immediate_actions_before_inspection.map((action, i) => (
                         <div key={i} className="flex items-start gap-2 rounded-lg border border-amber-100 bg-amber-50 px-3 py-2">
@@ -226,12 +226,12 @@ export default function OfstedReadinessPage() {
                 )}
                 {result.evidence_to_prepare.length > 0 && (
                   <div>
-                    <p className="text-xs font-semibold text-slate-600 uppercase tracking-wide mb-2">Evidence to Prepare</p>
+                    <p className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide mb-2">Evidence to Prepare</p>
                     <div className="grid gap-1.5 sm:grid-cols-2">
                       {result.evidence_to_prepare.map((item, i) => (
-                        <div key={i} className="flex items-start gap-2 rounded-lg bg-slate-50 border border-slate-100 px-3 py-2">
-                          <FileText className="h-3.5 w-3.5 text-slate-400 shrink-0 mt-0.5" />
-                          <p className="text-xs text-slate-700">{item}</p>
+                        <div key={i} className="flex items-start gap-2 rounded-lg bg-slate-50 border border-[var(--cs-border-subtle)] px-3 py-2">
+                          <FileText className="h-3.5 w-3.5 text-[var(--cs-text-muted)] shrink-0 mt-0.5" />
+                          <p className="text-xs text-[var(--cs-text-secondary)]">{item}</p>
                         </div>
                       ))}
                     </div>
@@ -270,8 +270,8 @@ export default function OfstedReadinessPage() {
                     </div>
                     <p className="text-sm text-amber-700">{v.risk}</p>
                     <div className="rounded-lg bg-white border border-amber-100 px-3 py-2">
-                      <p className="text-xs font-semibold text-slate-500 mb-0.5">Recommended Action</p>
-                      <p className="text-xs text-slate-700">{v.recommended_action}</p>
+                      <p className="text-xs font-semibold text-[var(--cs-text-muted)] mb-0.5">Recommended Action</p>
+                      <p className="text-xs text-[var(--cs-text-secondary)]">{v.recommended_action}</p>
                     </div>
                   </div>
                 ))}
@@ -281,7 +281,7 @@ export default function OfstedReadinessPage() {
             {/* Mock interview tab */}
             {tab === "interview" && (
               <div className="space-y-3">
-                <p className="text-xs text-slate-500">
+                <p className="text-xs text-[var(--cs-text-muted)]">
                   Practice answering these questions as an inspector might ask them. Your answers are not saved.
                 </p>
                 {result.mock_interview_questions.map((q, i) => (
@@ -293,8 +293,8 @@ export default function OfstedReadinessPage() {
         )}
 
         {!result && !generating && (
-          <div className="text-center py-16 text-slate-400">
-            <Award className="h-12 w-12 mx-auto mb-3 text-slate-300" />
+          <div className="text-center py-16 text-[var(--cs-text-muted)]">
+            <Award className="h-12 w-12 mx-auto mb-3 text-[var(--cs-text-gentle)]" />
             <p className="text-sm font-medium">Run a readiness review to see your inspection position</p>
             <p className="text-xs mt-1">ARIA will analyse current evidence and predict your likely ILACS judgement</p>
           </div>

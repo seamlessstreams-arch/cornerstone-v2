@@ -148,14 +148,14 @@ function NewCheckForm({
           const statusCfg = STATUS_CONFIG[data.status];
 
           return (
-            <div key={child.id} className="rounded-xl border border-slate-200 bg-white p-4">
+            <div key={child.id} className="rounded-xl border border-[var(--cs-border)] bg-white p-4">
               <div className="flex items-center gap-3 mb-3">
                 <Avatar name={`${child.first_name} ${child.last_name}`} size="sm" />
                 <div className="flex-1">
-                  <p className="text-sm font-semibold text-slate-800">
+                  <p className="text-sm font-semibold text-[var(--cs-navy)]">
                     {child.preferred_name || child.first_name}
                   </p>
-                  <p className="text-[10px] text-slate-400">
+                  <p className="text-[10px] text-[var(--cs-text-muted)]">
                     DOB: {child.date_of_birth} · Key worker: {getStaffName(child.key_worker_id ?? "")}
                   </p>
                 </div>
@@ -177,7 +177,7 @@ function NewCheckForm({
                         "flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium border transition-all",
                         data.status === s
                           ? `${cfg.bgColor} ${cfg.color} border-current`
-                          : "bg-white text-slate-500 border-slate-200 hover:border-slate-300",
+                          : "bg-white text-[var(--cs-text-muted)] border-[var(--cs-border)] hover:border-slate-300",
                       )}
                     >
                       <Icon className="h-3 w-3" />
@@ -189,7 +189,7 @@ function NewCheckForm({
 
               {/* Mood */}
               <div className="flex items-center gap-2 mb-2">
-                <span className="text-[10px] text-slate-500 w-12 shrink-0">Mood:</span>
+                <span className="text-[10px] text-[var(--cs-text-muted)] w-12 shrink-0">Mood:</span>
                 <div className="flex gap-1">
                   {["settled", "restless", "upset", "calm", "agitated"].map((m) => (
                     <button
@@ -202,7 +202,7 @@ function NewCheckForm({
                         "px-2 py-0.5 rounded-full text-[10px] border transition-all capitalize",
                         data.mood === m
                           ? "bg-indigo-100 text-indigo-700 border-indigo-300"
-                          : "bg-white text-slate-500 border-slate-200",
+                          : "bg-white text-[var(--cs-text-muted)] border-[var(--cs-border)]",
                       )}
                     >
                       {m}
@@ -219,7 +219,7 @@ function NewCheckForm({
                   ...prev,
                   [child.id]: { ...prev[child.id], notes: e.target.value },
                 }))}
-                className="w-full rounded-lg border border-slate-200 px-3 py-2 text-xs placeholder:text-slate-300 resize-none h-16 focus:outline-none focus:ring-1 focus:ring-indigo-300"
+                className="w-full rounded-lg border border-[var(--cs-border)] px-3 py-2 text-xs placeholder:text-[var(--cs-text-gentle)] resize-none h-16 focus:outline-none focus:ring-1 focus:ring-[var(--cs-aria-gold)]/40"
               />
 
               {/* Concern details */}
@@ -251,7 +251,7 @@ function NewCheckForm({
                   }))}
                   className="rounded border-slate-300"
                 />
-                <span className="text-[11px] text-slate-600">Physical marks or injuries noted</span>
+                <span className="text-[11px] text-[var(--cs-text-secondary)]">Physical marks or injuries noted</span>
               </label>
               {data.physical_marks && (
                 <textarea
@@ -269,8 +269,8 @@ function NewCheckForm({
         })}
 
         {/* Building checks */}
-        <div className="rounded-xl border border-slate-200 bg-white p-4">
-          <p className="text-xs font-semibold text-slate-600 mb-3 flex items-center gap-2">
+        <div className="rounded-xl border border-[var(--cs-border)] bg-white p-4">
+          <p className="text-xs font-semibold text-[var(--cs-text-secondary)] mb-3 flex items-center gap-2">
             <Shield className="h-3.5 w-3.5 text-indigo-500" />
             Building Security
           </p>
@@ -281,15 +281,15 @@ function NewCheckForm({
               { label: "External doors locked", value: doorsLocked, setter: setDoorsLocked, icon: DoorOpen },
               { label: "Alarm set", value: alarmSet, setter: setAlarmSet, icon: Shield },
             ].map(({ label, value, setter, icon: Icon }) => (
-              <label key={label} className="flex items-center gap-2 cursor-pointer rounded-lg border border-slate-100 p-2.5 hover:bg-slate-50">
+              <label key={label} className="flex items-center gap-2 cursor-pointer rounded-lg border border-[var(--cs-border-subtle)] p-2.5 hover:bg-[var(--cs-surface)]">
                 <input
                   type="checkbox"
                   checked={value}
                   onChange={(e) => setter(e.target.checked)}
                   className="rounded border-slate-300"
                 />
-                <Icon className="h-3 w-3 text-slate-400" />
-                <span className="text-[11px] text-slate-600">{label}</span>
+                <Icon className="h-3 w-3 text-[var(--cs-text-muted)]" />
+                <span className="text-[11px] text-[var(--cs-text-secondary)]">{label}</span>
               </label>
             ))}
           </div>
@@ -300,7 +300,7 @@ function NewCheckForm({
           placeholder="Additional notes for this round (optional)..."
           value={additionalNotes}
           onChange={(e) => setAdditionalNotes(e.target.value)}
-          className="w-full rounded-lg border border-slate-200 px-3 py-2 text-xs placeholder:text-slate-300 resize-none h-16 focus:outline-none focus:ring-1 focus:ring-indigo-300"
+          className="w-full rounded-lg border border-[var(--cs-border)] px-3 py-2 text-xs placeholder:text-[var(--cs-text-gentle)] resize-none h-16 focus:outline-none focus:ring-1 focus:ring-[var(--cs-aria-gold)]/40"
         />
 
         {/* Submit */}
@@ -332,12 +332,12 @@ function RoundCard({ round }: { round: WelfareCheckRound }) {
   return (
     <div className={cn(
       "rounded-xl border bg-white overflow-hidden transition-all",
-      hasConcerns ? "border-red-200" : "border-slate-200",
+      hasConcerns ? "border-red-200" : "border-[var(--cs-border)]",
     )}>
       {/* Header */}
       <button
         onClick={() => setExpanded(!expanded)}
-        className="w-full flex items-center gap-3 px-4 py-3 hover:bg-slate-50 transition-colors text-left"
+        className="w-full flex items-center gap-3 px-4 py-3 hover:bg-[var(--cs-surface)] transition-colors text-left"
       >
         <div className={cn(
           "flex h-9 w-9 items-center justify-center rounded-xl shrink-0",
@@ -351,8 +351,8 @@ function RoundCard({ round }: { round: WelfareCheckRound }) {
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
-            <span className="text-sm font-semibold text-slate-800 tabular-nums">{round.round_time}</span>
-            <span className="text-[10px] text-slate-400">{formatRelative(round.round_date)}</span>
+            <span className="text-sm font-semibold text-[var(--cs-navy)] tabular-nums">{round.round_time}</span>
+            <span className="text-[10px] text-[var(--cs-text-muted)]">{formatRelative(round.round_date)}</span>
             {hasConcerns && (
               <Badge className="bg-red-100 text-red-700 border-0 text-[9px] rounded-full">
                 Concern
@@ -364,7 +364,7 @@ function RoundCard({ round }: { round: WelfareCheckRound }) {
               </Badge>
             )}
           </div>
-          <p className="text-[11px] text-slate-500">
+          <p className="text-[11px] text-[var(--cs-text-muted)]">
             {staffName} · {round.checks.length} children checked
           </p>
         </div>
@@ -376,13 +376,13 @@ function RoundCard({ round }: { round: WelfareCheckRound }) {
             {round.external_doors_locked && <DoorOpen className="h-3 w-3 text-emerald-500" />}
             {round.alarm_set && <Shield className="h-3 w-3 text-emerald-500" />}
           </div>
-          {expanded ? <ChevronUp className="h-4 w-4 text-slate-400" /> : <ChevronDown className="h-4 w-4 text-slate-400" />}
+          {expanded ? <ChevronUp className="h-4 w-4 text-[var(--cs-text-muted)]" /> : <ChevronDown className="h-4 w-4 text-[var(--cs-text-muted)]" />}
         </div>
       </button>
 
       {/* Expanded details */}
       {expanded && (
-        <div className="border-t border-slate-100 divide-y divide-slate-50">
+        <div className="border-t border-[var(--cs-border-subtle)] divide-y divide-slate-50">
           {round.checks.map((check) => {
             const cfg = STATUS_CONFIG[check.status] ?? STATUS_CONFIG.ok;
             const Icon = cfg.icon;
@@ -395,16 +395,16 @@ function RoundCard({ round }: { round: WelfareCheckRound }) {
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-medium text-slate-800">{childName}</span>
+                    <span className="text-xs font-medium text-[var(--cs-navy)]">{childName}</span>
                     <Badge className={cn("text-[9px] rounded-full border-0 shrink-0", cfg.bgColor, cfg.color)}>
                       {cfg.label}
                     </Badge>
                     {check.mood && (
-                      <span className="text-[10px] text-slate-400 capitalize">{check.mood}</span>
+                      <span className="text-[10px] text-[var(--cs-text-muted)] capitalize">{check.mood}</span>
                     )}
                   </div>
                   {check.notes && (
-                    <p className="text-[11px] text-slate-500 mt-0.5">{check.notes}</p>
+                    <p className="text-[11px] text-[var(--cs-text-muted)] mt-0.5">{check.notes}</p>
                   )}
                   {check.concern_details && (
                     <p className="text-[11px] text-red-600 mt-0.5 font-medium">{check.concern_details}</p>
@@ -417,12 +417,12 @@ function RoundCard({ round }: { round: WelfareCheckRound }) {
                   )}
                   <div className="flex items-center gap-3 mt-1">
                     {check.window_secure && (
-                      <span className="text-[10px] text-slate-400 flex items-center gap-0.5">
+                      <span className="text-[10px] text-[var(--cs-text-muted)] flex items-center gap-0.5">
                         <Lock className="h-2.5 w-2.5" /> Window secure
                       </span>
                     )}
                     {check.room_temperature && (
-                      <span className="text-[10px] text-slate-400 flex items-center gap-0.5">
+                      <span className="text-[10px] text-[var(--cs-text-muted)] flex items-center gap-0.5">
                         <Thermometer className="h-2.5 w-2.5" /> {check.room_temperature}
                       </span>
                     )}
@@ -435,7 +435,7 @@ function RoundCard({ round }: { round: WelfareCheckRound }) {
           {/* Building security summary */}
           <div className="px-4 py-3 bg-slate-50">
             <div className="flex flex-wrap items-center gap-3 text-[10px]">
-              <span className="font-semibold text-slate-500 uppercase tracking-wider">Building:</span>
+              <span className="font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider">Building:</span>
               {[
                 { label: "Secure", ok: round.building_secure },
                 { label: "Fire exits clear", ok: round.fire_exits_clear },
@@ -449,7 +449,7 @@ function RoundCard({ round }: { round: WelfareCheckRound }) {
               ))}
             </div>
             {round.additional_notes && (
-              <p className="text-[11px] text-slate-500 mt-2">{round.additional_notes}</p>
+              <p className="text-[11px] text-[var(--cs-text-muted)] mt-2">{round.additional_notes}</p>
             )}
           </div>
         </div>
@@ -529,7 +529,7 @@ export default function WelfareChecksPage() {
     return (
       <PageShell title="Welfare Checks" subtitle="Loading…">
         <div className="flex items-center justify-center py-20">
-          <Loader2 className="h-6 w-6 animate-spin text-slate-400" />
+          <Loader2 className="h-6 w-6 animate-spin text-[var(--cs-text-muted)]" />
         </div>
       </PageShell>
     );
@@ -574,27 +574,27 @@ export default function WelfareChecksPage() {
             <div className="text-center">
               <Moon className="h-5 w-5 mx-auto mb-1 text-indigo-300" />
               <div className="text-2xl font-bold tabular-nums">{meta?.total_rounds ?? 0}</div>
-              <div className="text-[10px] text-slate-400">Total Rounds</div>
+              <div className="text-[10px] text-[var(--cs-text-muted)]">Total Rounds</div>
             </div>
             <div className="text-center">
               <Eye className="h-5 w-5 mx-auto mb-1 text-emerald-300" />
               <div className="text-2xl font-bold tabular-nums">{meta?.today_rounds ?? 0}</div>
-              <div className="text-[10px] text-slate-400">Tonight</div>
+              <div className="text-[10px] text-[var(--cs-text-muted)]">Tonight</div>
             </div>
             <div className="text-center">
               <Heart className="h-5 w-5 mx-auto mb-1 text-blue-300" />
               <div className="text-2xl font-bold tabular-nums">{meta?.total_checks ?? 0}</div>
-              <div className="text-[10px] text-slate-400">Total Checks</div>
+              <div className="text-[10px] text-[var(--cs-text-muted)]">Total Checks</div>
             </div>
             <div className="text-center">
               <AlertTriangle className="h-5 w-5 mx-auto mb-1 text-amber-300" />
               <div className="text-2xl font-bold tabular-nums">{meta?.concerns_flagged ?? 0}</div>
-              <div className="text-[10px] text-slate-400">Concerns</div>
+              <div className="text-[10px] text-[var(--cs-text-muted)]">Concerns</div>
             </div>
             <div className="text-center">
               <Shield className="h-5 w-5 mx-auto mb-1 text-green-300" />
               <div className="text-2xl font-bold tabular-nums">{meta?.consecutive_days ?? 0}</div>
-              <div className="text-[10px] text-slate-400">Day Streak</div>
+              <div className="text-[10px] text-[var(--cs-text-muted)]">Day Streak</div>
             </div>
           </div>
         </div>
@@ -611,7 +611,7 @@ export default function WelfareChecksPage() {
             <div className="flex items-center gap-4">
               <div className="flex-1">
                 <div className="flex justify-between mb-1.5">
-                  <span className="text-xs text-slate-500">
+                  <span className="text-xs text-[var(--cs-text-muted)]">
                     {completedChecks} of {expectedChecks} scheduled rounds
                   </span>
                   <span className={cn(
@@ -638,7 +638,7 @@ export default function WelfareChecksPage() {
                       "flex-1 text-center rounded-lg py-2 text-xs font-medium border",
                       done
                         ? "bg-emerald-50 border-emerald-200 text-emerald-700"
-                        : "bg-slate-50 border-slate-200 text-slate-400",
+                        : "bg-slate-50 border-[var(--cs-border)] text-[var(--cs-text-muted)]",
                     )}
                   >
                     {done && <CheckCircle2 className="h-3 w-3 mx-auto mb-0.5" />}
@@ -664,7 +664,7 @@ export default function WelfareChecksPage() {
         {/* Search + Date filter */}
         <div className="flex items-center gap-3 flex-wrap">
           <div className="relative flex-1 min-w-[200px] max-w-sm">
-            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
             <Input
               placeholder="Search staff, children, notes…"
               value={search}
@@ -673,13 +673,13 @@ export default function WelfareChecksPage() {
             />
           </div>
           {search && (
-            <span className="text-[10px] text-slate-400">
+            <span className="text-[10px] text-[var(--cs-text-muted)]">
               {filteredRounds.length} result{filteredRounds.length !== 1 ? "s" : ""}
             </span>
           )}
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-xs text-slate-500 font-medium">Filter:</span>
+          <span className="text-xs text-[var(--cs-text-muted)] font-medium">Filter:</span>
           {[
             { label: "All", value: undefined },
             { label: "Today", value: today },
@@ -692,7 +692,7 @@ export default function WelfareChecksPage() {
                 "px-3 py-1 rounded-full text-xs font-medium border transition-all",
                 selectedDate === f.value
                   ? "bg-indigo-600 text-white border-indigo-600"
-                  : "bg-white text-slate-600 border-slate-200 hover:border-indigo-300",
+                  : "bg-white text-[var(--cs-text-secondary)] border-[var(--cs-border)] hover:border-indigo-300",
               )}
             >
               {f.label}
@@ -703,9 +703,9 @@ export default function WelfareChecksPage() {
         {/* Check rounds by date */}
         {groupedRounds.length === 0 ? (
           <div className="py-12 text-center">
-            <Moon className="h-10 w-10 text-slate-300 mx-auto mb-3" />
-            <p className="text-sm font-medium text-slate-600">No welfare checks recorded yet</p>
-            <p className="text-xs text-slate-400 mt-1">
+            <Moon className="h-10 w-10 text-[var(--cs-text-gentle)] mx-auto mb-3" />
+            <p className="text-sm font-medium text-[var(--cs-text-secondary)]">No welfare checks recorded yet</p>
+            <p className="text-xs text-[var(--cs-text-muted)] mt-1">
               Start a new check round to document tonight&apos;s welfare monitoring
             </p>
             <Button
@@ -722,11 +722,11 @@ export default function WelfareChecksPage() {
             {groupedRounds.map(([date, dateRounds]) => (
               <div key={date}>
                 <div className="flex items-center gap-2 mb-3">
-                  <Clock className="h-3.5 w-3.5 text-slate-400" />
-                  <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                  <Clock className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
+                  <span className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider">
                     {date === today ? "Today" : formatRelative(date)} — {date}
                   </span>
-                  <Badge className="bg-slate-100 text-slate-600 border-0 text-[10px] rounded-full">
+                  <Badge className="bg-slate-100 text-[var(--cs-text-secondary)] border-0 text-[10px] rounded-full">
                     {dateRounds.length} rounds
                   </Badge>
                 </div>
@@ -741,8 +741,8 @@ export default function WelfareChecksPage() {
         )}
 
         {/* Regulatory note */}
-        <div className="rounded-xl border border-slate-100 bg-slate-50 px-4 py-3 text-xs text-slate-500">
-          <span className="font-semibold text-slate-600">Regulatory Basis — </span>
+        <div className="rounded-xl border border-[var(--cs-border-subtle)] bg-slate-50 px-4 py-3 text-xs text-[var(--cs-text-muted)]">
+          <span className="font-semibold text-[var(--cs-text-secondary)]">Regulatory Basis — </span>
           Children&apos;s Homes Quality Standards 2015 (6.3): The home must ensure children are safe and feel safe.
           Night-time welfare checks are a critical safeguarding measure demonstrating that children&apos;s
           wellbeing is actively monitored throughout the night. Checks must be documented with time, staff member,

@@ -102,7 +102,7 @@ const RATING_CONFIG: Record<ProbationReview["overallRating"], { label: string; c
 };
 
 const STATUS_CONFIG: Record<ProbationObjectiveStatus, { label: string; colour: string }> = {
-  not_started: { label: "Not started", colour: "bg-slate-100 text-slate-700" },
+  not_started: { label: "Not started", colour: "bg-slate-100 text-[var(--cs-text-secondary)]" },
   in_progress: { label: "In progress", colour: "bg-blue-100 text-blue-800" },
   met: { label: "Met", colour: "bg-emerald-100 text-emerald-800" },
   partially_met: { label: "Partially met", colour: "bg-amber-100 text-amber-800" },
@@ -208,7 +208,7 @@ export default function ProbationPathwayPage() {
                   ? "bg-slate-900 text-white"
                   : isDone
                     ? "bg-emerald-50 text-emerald-700 hover:bg-emerald-100"
-                    : "bg-slate-100 text-slate-600 hover:bg-slate-200",
+                    : "bg-slate-100 text-[var(--cs-text-secondary)] hover:bg-slate-200",
               )}
             >
               {isDone && !isActive ? <CheckCircle2 className="h-3.5 w-3.5" /> : <Icon className="h-3.5 w-3.5" />}
@@ -229,25 +229,25 @@ export default function ProbationPathwayPage() {
         <Card>
           <CardHeader className="pb-3">
             <CardTitle className="text-base flex items-center gap-2">
-              <UserCheck className="h-4 w-4 text-slate-500" />Staff Details
+              <UserCheck className="h-4 w-4 text-[var(--cs-text-muted)]" />Staff Details
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="text-xs font-medium text-slate-600 mb-1 block">Staff member name</label>
+                <label className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1 block">Staff member name</label>
                 <Input value={staffName} onChange={(e) => setStaffName(e.target.value)} placeholder="Full name" />
               </div>
               <div>
-                <label className="text-xs font-medium text-slate-600 mb-1 block">Role</label>
+                <label className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1 block">Role</label>
                 <Input value={staffRole} onChange={(e) => setStaffRole(e.target.value)} placeholder="e.g. Residential Support Worker" />
               </div>
               <div>
-                <label className="text-xs font-medium text-slate-600 mb-1 block">Start date</label>
+                <label className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1 block">Start date</label>
                 <Input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
               </div>
               <div>
-                <label className="text-xs font-medium text-slate-600 mb-1 block">Probation length (months)</label>
+                <label className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1 block">Probation length (months)</label>
                 <Select value={probationLength} onValueChange={setProbationLength}>
                   <SelectTrigger><SelectValue /></SelectTrigger>
                   <SelectContent>
@@ -259,7 +259,7 @@ export default function ProbationPathwayPage() {
                 </Select>
               </div>
               <div>
-                <label className="text-xs font-medium text-slate-600 mb-1 block">Line manager</label>
+                <label className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1 block">Line manager</label>
                 <Input value={lineManager} onChange={(e) => setLineManager(e.target.value)} placeholder="Manager name" />
               </div>
             </div>
@@ -269,31 +269,31 @@ export default function ProbationPathwayPage() {
         <Card>
           <CardHeader className="pb-3">
             <CardTitle className="text-base flex items-center gap-2">
-              <Shield className="h-4 w-4 text-slate-500" />Safer Recruitment Checks
+              <Shield className="h-4 w-4 text-[var(--cs-text-muted)]" />Safer Recruitment Checks
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
-            <label className="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
+            <label className="flex items-center gap-3 p-3 rounded-xl border border-[var(--cs-border)] hover:bg-[var(--cs-surface)] cursor-pointer">
               <input type="checkbox" checked={dbsClearance} onChange={(e) => setDbsClearance(e.target.checked)} className="rounded border-slate-300" />
               <div>
-                <span className="text-sm font-medium text-slate-700">DBS clearance received</span>
-                <p className="text-xs text-slate-500">Enhanced DBS with barred list check for regulated activity</p>
+                <span className="text-sm font-medium text-[var(--cs-text-secondary)]">DBS clearance received</span>
+                <p className="text-xs text-[var(--cs-text-muted)]">Enhanced DBS with barred list check for regulated activity</p>
               </div>
               {dbsClearance && <CheckCircle2 className="h-4 w-4 text-emerald-500 ml-auto" />}
             </label>
-            <label className="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
+            <label className="flex items-center gap-3 p-3 rounded-xl border border-[var(--cs-border)] hover:bg-[var(--cs-surface)] cursor-pointer">
               <input type="checkbox" checked={referencesReceived} onChange={(e) => setReferencesReceived(e.target.checked)} className="rounded border-slate-300" />
               <div>
-                <span className="text-sm font-medium text-slate-700">References received and verified</span>
-                <p className="text-xs text-slate-500">Minimum two references including most recent employer</p>
+                <span className="text-sm font-medium text-[var(--cs-text-secondary)]">References received and verified</span>
+                <p className="text-xs text-[var(--cs-text-muted)]">Minimum two references including most recent employer</p>
               </div>
               {referencesReceived && <CheckCircle2 className="h-4 w-4 text-emerald-500 ml-auto" />}
             </label>
-            <label className="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
+            <label className="flex items-center gap-3 p-3 rounded-xl border border-[var(--cs-border)] hover:bg-[var(--cs-surface)] cursor-pointer">
               <input type="checkbox" checked={inductionComplete} onChange={(e) => setInductionComplete(e.target.checked)} className="rounded border-slate-300" />
               <div>
-                <span className="text-sm font-medium text-slate-700">Induction programme completed</span>
-                <p className="text-xs text-slate-500">Home induction, safeguarding training, lone working, medication</p>
+                <span className="text-sm font-medium text-[var(--cs-text-secondary)]">Induction programme completed</span>
+                <p className="text-xs text-[var(--cs-text-muted)]">Home induction, safeguarding training, lone working, medication</p>
               </div>
               {inductionComplete && <CheckCircle2 className="h-4 w-4 text-emerald-500 ml-auto" />}
             </label>
@@ -320,11 +320,11 @@ export default function ProbationPathwayPage() {
           </CardHeader>
           <CardContent className="space-y-4">
             {objectives.map((o, i) => (
-              <div key={o.id} className="rounded-xl border border-slate-200 p-4 space-y-3">
+              <div key={o.id} className="rounded-xl border border-[var(--cs-border)] p-4 space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-semibold text-slate-500">Objective {i + 1}</span>
+                  <span className="text-xs font-semibold text-[var(--cs-text-muted)]">Objective {i + 1}</span>
                   {objectives.length > 1 && (
-                    <button onClick={() => removeObjective(o.id)} className="text-slate-400 hover:text-red-500">
+                    <button onClick={() => removeObjective(o.id)} className="text-[var(--cs-text-muted)] hover:text-red-500">
                       <Trash2 className="h-3.5 w-3.5" />
                     </button>
                   )}
@@ -364,16 +364,16 @@ export default function ProbationPathwayPage() {
     return (
       <div className="space-y-5">
         <div className="flex items-center justify-between">
-          <h3 className="text-sm font-semibold text-slate-700">Probation Reviews</h3>
+          <h3 className="text-sm font-semibold text-[var(--cs-text-secondary)]">Probation Reviews</h3>
           <Button size="sm" variant="outline" onClick={addReview} className="gap-1.5">
             <Plus className="h-3.5 w-3.5" />Add Review
           </Button>
         </div>
 
         {reviews.length === 0 ? (
-          <div className="rounded-2xl border border-slate-200 p-8 text-center">
-            <Calendar className="h-8 w-8 text-slate-300 mx-auto mb-3" />
-            <p className="text-sm text-slate-500">No reviews recorded yet. Add reviews as they are conducted.</p>
+          <div className="rounded-2xl border border-[var(--cs-border)] p-8 text-center">
+            <Calendar className="h-8 w-8 text-[var(--cs-text-gentle)] mx-auto mb-3" />
+            <p className="text-sm text-[var(--cs-text-muted)]">No reviews recorded yet. Add reviews as they are conducted.</p>
           </div>
         ) : (
           reviews.map((r, i) => {
@@ -384,14 +384,14 @@ export default function ProbationPathwayPage() {
                 <CardHeader className="pb-3">
                   <div className="flex items-center justify-between">
                     <CardTitle className="text-base flex items-center gap-2">
-                      <ClipboardCheck className="h-4 w-4 text-slate-500" />
+                      <ClipboardCheck className="h-4 w-4 text-[var(--cs-text-muted)]" />
                       {REVIEW_TYPES.find((t) => t.value === r.reviewType)?.label ?? `Review ${i + 1}`}
                     </CardTitle>
                     <div className="flex items-center gap-2">
                       <Badge className={cn("text-[10px]", ratingConf.colour)}>
                         <RatingIcon className="h-3 w-3 mr-1" />{ratingConf.label}
                       </Badge>
-                      <label className="flex items-center gap-1.5 text-xs text-slate-600">
+                      <label className="flex items-center gap-1.5 text-xs text-[var(--cs-text-secondary)]">
                         <input
                           type="checkbox"
                           checked={r.completed}
@@ -400,7 +400,7 @@ export default function ProbationPathwayPage() {
                         />
                         Done
                       </label>
-                      <button onClick={() => removeReview(r.id)} className="text-slate-400 hover:text-red-500">
+                      <button onClick={() => removeReview(r.id)} className="text-[var(--cs-text-muted)] hover:text-red-500">
                         <Trash2 className="h-3.5 w-3.5" />
                       </button>
                     </div>
@@ -409,11 +409,11 @@ export default function ProbationPathwayPage() {
                 <CardContent className="space-y-3">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                      <label className="text-xs font-medium text-slate-600 mb-1 block">Review date</label>
+                      <label className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1 block">Review date</label>
                       <Input type="date" value={r.reviewDate} onChange={(e) => updateReview(r.id, { reviewDate: e.target.value })} />
                     </div>
                     <div>
-                      <label className="text-xs font-medium text-slate-600 mb-1 block">Review type</label>
+                      <label className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1 block">Review type</label>
                       <Select value={r.reviewType} onValueChange={(v) => updateReview(r.id, { reviewType: v })}>
                         <SelectTrigger><SelectValue /></SelectTrigger>
                         <SelectContent>
@@ -422,7 +422,7 @@ export default function ProbationPathwayPage() {
                       </Select>
                     </div>
                     <div>
-                      <label className="text-xs font-medium text-slate-600 mb-1 block">Overall rating</label>
+                      <label className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1 block">Overall rating</label>
                       <Select value={r.overallRating} onValueChange={(v) => updateReview(r.id, { overallRating: v as ProbationReview["overallRating"] })}>
                         <SelectTrigger><SelectValue /></SelectTrigger>
                         <SelectContent>
@@ -432,28 +432,28 @@ export default function ProbationPathwayPage() {
                     </div>
                   </div>
                   <div>
-                    <label className="text-xs font-medium text-slate-600 mb-1 block">Strengths demonstrated</label>
+                    <label className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1 block">Strengths demonstrated</label>
                     <Textarea value={r.strengths} onChange={(e) => updateReview(r.id, { strengths: e.target.value })} placeholder="What has the staff member done well?" rows={3} />
                   </div>
                   <div>
-                    <label className="text-xs font-medium text-slate-600 mb-1 block">Areas for development</label>
+                    <label className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1 block">Areas for development</label>
                     <Textarea value={r.areasForDevelopment} onChange={(e) => updateReview(r.id, { areasForDevelopment: e.target.value })} placeholder="Where does the staff member need to improve?" rows={3} />
                   </div>
                   <div>
-                    <label className="text-xs font-medium text-slate-600 mb-1 block">Support provided</label>
+                    <label className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1 block">Support provided</label>
                     <Textarea value={r.supportProvided} onChange={(e) => updateReview(r.id, { supportProvided: e.target.value })} placeholder="What support, training, shadowing or mentoring has been provided?" rows={2} />
                   </div>
                   <div>
-                    <label className="text-xs font-medium text-slate-600 mb-1 block">Objective progress</label>
+                    <label className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1 block">Objective progress</label>
                     <Textarea value={r.objectiveProgress} onChange={(e) => updateReview(r.id, { objectiveProgress: e.target.value })} placeholder="Progress against each probation objective..." rows={3} />
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                      <label className="text-xs font-medium text-slate-600 mb-1 block">Manager notes</label>
+                      <label className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1 block">Manager notes</label>
                       <Textarea value={r.managerNotes} onChange={(e) => updateReview(r.id, { managerNotes: e.target.value })} placeholder="Manager's observations and notes" rows={3} />
                     </div>
                     <div>
-                      <label className="text-xs font-medium text-slate-600 mb-1 block">Staff member comments</label>
+                      <label className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1 block">Staff member comments</label>
                       <Textarea value={r.staffComments} onChange={(e) => updateReview(r.id, { staffComments: e.target.value })} placeholder="The staff member's own comments and reflections" rows={3} />
                     </div>
                   </div>
@@ -479,7 +479,7 @@ export default function ProbationPathwayPage() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <label className="text-xs font-medium text-slate-600 mb-1 block">Concerns identified</label>
+              <label className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1 block">Concerns identified</label>
               <Textarea
                 value={concernsDescription}
                 onChange={(e) => setConcernsDescription(e.target.value)}
@@ -488,7 +488,7 @@ export default function ProbationPathwayPage() {
               />
             </div>
             <div>
-              <label className="text-xs font-medium text-slate-600 mb-1 block">Support plan</label>
+              <label className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1 block">Support plan</label>
               <Textarea
                 value={supportPlan}
                 onChange={(e) => setSupportPlan(e.target.value)}
@@ -497,7 +497,7 @@ export default function ProbationPathwayPage() {
               />
             </div>
             <div>
-              <label className="text-xs font-medium text-slate-600 mb-1 block">Informal conversations / check-ins</label>
+              <label className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1 block">Informal conversations / check-ins</label>
               <Textarea
                 value={informalConversations}
                 onChange={(e) => setInformalConversations(e.target.value)}
@@ -532,15 +532,15 @@ export default function ProbationPathwayPage() {
           <Card>
             <CardHeader className="pb-3">
               <CardTitle className="text-base flex items-center gap-2">
-                <Target className="h-4 w-4 text-slate-500" />Objective Status Summary
+                <Target className="h-4 w-4 text-[var(--cs-text-muted)]" />Objective Status Summary
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
               {objectives.filter((o) => o.description.trim()).map((o, i) => (
-                <div key={o.id} className="flex items-center justify-between p-3 rounded-xl border border-slate-200">
+                <div key={o.id} className="flex items-center justify-between p-3 rounded-xl border border-[var(--cs-border)]">
                   <div className="flex-1 min-w-0">
-                    <span className="text-xs font-semibold text-slate-500">Objective {i + 1}</span>
-                    <p className="text-sm text-slate-700 truncate">{o.description}</p>
+                    <span className="text-xs font-semibold text-[var(--cs-text-muted)]">Objective {i + 1}</span>
+                    <p className="text-sm text-[var(--cs-text-secondary)] truncate">{o.description}</p>
                   </div>
                   <div className="flex items-center gap-2 shrink-0 ml-3">
                     <Select value={o.status} onValueChange={(v) => updateObjective(o.id, { status: v as ProbationObjectiveStatus })}>
@@ -564,12 +564,12 @@ export default function ProbationPathwayPage() {
         <Card>
           <CardHeader className="pb-3">
             <CardTitle className="text-base flex items-center gap-2">
-              <Scale className="h-4 w-4 text-slate-500" />Probation Decision
+              <Scale className="h-4 w-4 text-[var(--cs-text-muted)]" />Probation Decision
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <label className="text-xs font-medium text-slate-600 mb-1 block">Outcome</label>
+              <label className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1 block">Outcome</label>
               <Select value={outcome} onValueChange={(v) => setOutcome(v as ProbationOutcome)}>
                 <SelectTrigger><SelectValue placeholder="Select outcome" /></SelectTrigger>
                 <SelectContent>
@@ -589,7 +589,7 @@ export default function ProbationPathwayPage() {
             )}
 
             <div>
-              <label className="text-xs font-medium text-slate-600 mb-1 block">Rationale</label>
+              <label className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1 block">Rationale</label>
               <Textarea
                 value={outcomeRationale}
                 onChange={(e) => setOutcomeRationale(e.target.value)}
@@ -601,11 +601,11 @@ export default function ProbationPathwayPage() {
             {outcome === "extended" && (
               <div className="space-y-3">
                 <div>
-                  <label className="text-xs font-medium text-slate-600 mb-1 block">Extension length</label>
+                  <label className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1 block">Extension length</label>
                   <Input value={extensionLength} onChange={(e) => setExtensionLength(e.target.value)} placeholder="e.g. 3 months" />
                 </div>
                 <div>
-                  <label className="text-xs font-medium text-slate-600 mb-1 block">Extension objectives</label>
+                  <label className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1 block">Extension objectives</label>
                   <Textarea
                     value={extensionObjectives}
                     onChange={(e) => setExtensionObjectives(e.target.value)}
@@ -646,10 +646,10 @@ export default function ProbationPathwayPage() {
       }
     >
       <div className="max-w-4xl space-y-5 animate-fade-in">
-        <div className="rounded-2xl border border-slate-200 bg-white p-4">
+        <div className="rounded-2xl border border-[var(--cs-border)] bg-white p-4">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-medium text-slate-600">Probation progress</span>
-            <span className="text-xs text-slate-500">{completedStages} of {STAGES.length} stages started</span>
+            <span className="text-xs font-medium text-[var(--cs-text-secondary)]">Probation progress</span>
+            <span className="text-xs text-[var(--cs-text-muted)]">{completedStages} of {STAGES.length} stages started</span>
           </div>
           <div className="h-2 rounded-full bg-slate-100 overflow-hidden">
             <div

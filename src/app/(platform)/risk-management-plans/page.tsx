@@ -25,7 +25,7 @@ import type { RiskLevel } from "@/types/extended";
 
 const d = (n: number) => { const dt = new Date(); dt.setDate(dt.getDate() + n); return dt.toISOString().slice(0, 10); };
 
-const RC_CLR: Record<RiskMgmtPlanCategory, string> = { self_harm: "bg-red-100 text-red-800", absconding: "bg-purple-100 text-purple-800", aggression: "bg-orange-100 text-orange-800", exploitation: "bg-red-200 text-red-900", substance_misuse: "bg-amber-100 text-amber-800", sexualised_behaviour: "bg-pink-100 text-pink-800", online_risk: "bg-blue-100 text-blue-800", radicalisation: "bg-slate-100 text-slate-800", trafficking: "bg-red-200 text-red-900", other: "bg-gray-100 text-gray-800" };
+const RC_CLR: Record<RiskMgmtPlanCategory, string> = { self_harm: "bg-red-100 text-red-800", absconding: "bg-purple-100 text-purple-800", aggression: "bg-orange-100 text-orange-800", exploitation: "bg-red-200 text-red-900", substance_misuse: "bg-amber-100 text-amber-800", sexualised_behaviour: "bg-pink-100 text-pink-800", online_risk: "bg-blue-100 text-blue-800", radicalisation: "bg-slate-100 text-[var(--cs-navy)]", trafficking: "bg-red-200 text-red-900", other: "bg-gray-100 text-gray-800" };
 const RL_CLR: Record<RiskLevel, string> = { low: "bg-green-100 text-green-800", medium: "bg-amber-100 text-amber-800", high: "bg-red-100 text-red-800", very_high: "bg-red-900 text-white" };
 const PS_CLR: Record<RiskMgmtPlanStatus, string> = { active: "bg-green-100 text-green-800", under_review: "bg-amber-100 text-amber-800", archived: "bg-gray-100 text-gray-800", draft: "bg-blue-100 text-blue-800" };
 

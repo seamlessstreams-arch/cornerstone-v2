@@ -236,7 +236,7 @@ export default function ChildEpilepsySeizurePlanPage() {
                             <Pill className="h-3 w-3 mr-1" /> Rescue med prescribed
                           </Badge>
                         ) : (
-                          <Badge variant="outline" className="bg-slate-100 text-slate-700">
+                          <Badge variant="outline" className="bg-slate-100 text-[var(--cs-text-secondary)]">
                             No rescue med
                           </Badge>
                         )}
@@ -399,9 +399,9 @@ export default function ChildEpilepsySeizurePlanPage() {
                       ) : (
                         <div>
                           <p className="font-medium mb-1 flex items-center gap-1">
-                            <Pill className="h-4 w-4 text-slate-500" /> Rescue Medication
+                            <Pill className="h-4 w-4 text-[var(--cs-text-muted)]" /> Rescue Medication
                           </p>
-                          <div className="bg-slate-50 border border-slate-200 rounded p-2 text-xs text-slate-700">
+                          <div className="bg-slate-50 border border-[var(--cs-border)] rounded p-2 text-xs text-[var(--cs-text-secondary)]">
                             None currently prescribed. Casey&apos;s seizures are brief absences and self-resolve.
                             Reassess with neurologist if pattern changes (any prolonged or convulsive seizure
                             triggers immediate review and likely buccal midazolam prescription).

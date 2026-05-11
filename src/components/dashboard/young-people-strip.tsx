@@ -29,7 +29,7 @@ const RISK_FLAG_COLORS: Record<string, string> = {
 };
 
 function getRiskFlagColor(flag: string): string {
-  return RISK_FLAG_COLORS[flag.toLowerCase()] ?? "bg-slate-100 text-slate-600 border-slate-200";
+  return RISK_FLAG_COLORS[flag.toLowerCase()] ?? "bg-slate-100 text-[var(--cs-text-secondary)] border-[var(--cs-border)]";
 }
 
 // ── Single young person card ────────────────────────────────────────────────
@@ -47,7 +47,7 @@ function YPCard({ yp }: { yp: YPEnriched }) {
           ? "border-red-200 bg-red-50/50"
           : hasRisk
             ? "border-amber-200 bg-amber-50/30"
-            : "border-slate-200 bg-white",
+            : "border-[var(--cs-border)] bg-white",
       )}
     >
       {/* Header */}
@@ -55,10 +55,10 @@ function YPCard({ yp }: { yp: YPEnriched }) {
         <Avatar name={`${yp.first_name} ${yp.last_name}`} size="md" />
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
-            <span className="text-sm font-bold text-slate-900 truncate">
+            <span className="text-sm font-bold text-[var(--cs-navy)] truncate">
               {yp.preferred_name || yp.first_name}
             </span>
-            <span className="text-[10px] text-slate-400 tabular-nums">
+            <span className="text-[10px] text-[var(--cs-text-muted)] tabular-nums">
               {yp.age}y
             </span>
             {hasMissing && (
@@ -69,13 +69,13 @@ function YPCard({ yp }: { yp: YPEnriched }) {
             )}
           </div>
           <div className="flex items-center gap-1.5 mt-0.5">
-            <User className="h-3 w-3 text-slate-400" />
-            <span className="text-[10px] text-slate-500 truncate">
+            <User className="h-3 w-3 text-[var(--cs-text-muted)]" />
+            <span className="text-[10px] text-[var(--cs-text-muted)] truncate">
               {yp.key_worker ? `${yp.key_worker.first_name} ${yp.key_worker.last_name}` : "No key worker"}
             </span>
           </div>
         </div>
-        <ChevronRight className="h-3.5 w-3.5 text-slate-300 shrink-0 mt-1 opacity-0 group-hover:opacity-100 transition-opacity" />
+        <ChevronRight className="h-3.5 w-3.5 text-[var(--cs-text-gentle)] shrink-0 mt-1 opacity-0 group-hover:opacity-100 transition-opacity" />
       </div>
 
       {/* Risk flags */}
@@ -93,7 +93,7 @@ function YPCard({ yp }: { yp: YPEnriched }) {
       )}
 
       {/* Status indicators */}
-      <div className="grid grid-cols-3 gap-2 mt-3 pt-3 border-t border-slate-100">
+      <div className="grid grid-cols-3 gap-2 mt-3 pt-3 border-t border-[var(--cs-border-subtle)]">
         <StatusIndicator
           icon={Shield}
           label="Incidents"
@@ -138,14 +138,14 @@ function StatusIndicator({
 }) {
   return (
     <div className="text-center">
-      <Icon className={cn("h-3 w-3 mx-auto mb-0.5", alert ? alertColor : "text-slate-400")} />
+      <Icon className={cn("h-3 w-3 mx-auto mb-0.5", alert ? alertColor : "text-[var(--cs-text-muted)]")} />
       <div className={cn(
         "text-xs font-semibold tabular-nums",
-        alert ? alertColor : "text-slate-700",
+        alert ? alertColor : "text-[var(--cs-text-secondary)]",
       )}>
         {value}
       </div>
-      <div className="text-[9px] text-slate-400">{label}</div>
+      <div className="text-[9px] text-[var(--cs-text-muted)]">{label}</div>
     </div>
   );
 }
@@ -167,7 +167,7 @@ export function YoungPeopleStrip() {
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-center py-8">
-            <Loader2 className="h-5 w-5 animate-spin text-slate-400" />
+            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
           </div>
         </CardContent>
       </Card>

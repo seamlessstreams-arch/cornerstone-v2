@@ -272,20 +272,20 @@ export default function ChildSkinConditionsPage() {
             label: "Dermatology Referrals Active",
             value: stats.dermActive,
             icon: Pill,
-            colour: stats.dermActive > 0 ? "text-sky-600" : "text-slate-500",
+            colour: stats.dermActive > 0 ? "text-sky-600" : "text-[var(--cs-text-muted)]",
           },
           {
             label: "Severe / Flaring",
             value: stats.severeFlaring,
             icon: Heart,
             colour:
-              stats.severeFlaring > 0 ? "text-rose-600" : "text-slate-500",
+              stats.severeFlaring > 0 ? "text-rose-600" : "text-[var(--cs-text-muted)]",
           },
           {
             label: "Reviews Due (90d)",
             value: stats.reviewsDue,
             icon: Sun,
-            colour: stats.reviewsDue > 0 ? "text-amber-600" : "text-slate-500",
+            colour: stats.reviewsDue > 0 ? "text-amber-600" : "text-[var(--cs-text-muted)]",
           },
         ].map((s) => (
           <div
@@ -625,7 +625,7 @@ export default function ChildSkinConditionsPage() {
                         {rec.products_avoided.map((p, i) => (
                           <span
                             key={i}
-                            className="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium bg-slate-100 text-slate-700 border"
+                            className="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium bg-slate-100 text-[var(--cs-text-secondary)] border"
                           >
                             {p}
                           </span>

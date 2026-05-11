@@ -272,7 +272,7 @@ export default function EmergencyMedicationProtocolsPage() {
             label: "Reviews Due (14d)",
             value: stats.reviewsDue,
             icon: Clock,
-            colour: stats.reviewsDue > 0 ? "text-red-600" : "text-slate-500",
+            colour: stats.reviewsDue > 0 ? "text-red-600" : "text-[var(--cs-text-muted)]",
           },
         ].map((s) => (
           <div

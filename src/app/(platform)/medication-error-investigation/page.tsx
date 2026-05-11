@@ -84,7 +84,7 @@ export default function MedicationErrorInvestigationPage() {
           const isExpanded = expandedId === e.id;
           return (
             <div key={e.id} className="rounded-xl border bg-white overflow-hidden">
-              <button className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors" onClick={() => setExpandedId(isExpanded ? null : e.id)}>
+              <button className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors" onClick={() => setExpandedId(isExpanded ? null : e.id)}>
                 <div className="flex items-center gap-3 flex-1 min-w-0"><Pill className="h-5 w-5 text-purple-600 shrink-0" /><div className="min-w-0"><p className="font-medium truncate">{getYPName(e.child_id)} — {MED_INV_ERROR_TYPE_LABEL[e.error_type]}</p><p className="text-xs text-muted-foreground mt-0.5">{e.date_of_error} &middot; Staff: {getStaffName(e.staff_involved)}</p></div></div>
                 <div className="flex items-center gap-2 shrink-0 ml-3"><span className={cn("text-xs px-2 py-0.5 rounded-full font-medium", severityColour[e.error_severity])}>{MED_INV_SEVERITY_LABEL[e.error_severity]}</span><span className={cn("text-xs px-2 py-0.5 rounded-full font-medium", statusColour[e.status])}>{MED_INV_STATUS_LABEL[e.status]}</span>{isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}</div>
               </button>
@@ -104,7 +104,7 @@ export default function MedicationErrorInvestigationPage() {
                     {e.preventive_action_embedded && <span className="px-2 py-0.5 rounded-full bg-green-100 text-green-800 font-medium">Embedded</span>}
                     <span>Reviewed: {getStaffName(e.reviewed_by)}</span>
                   </div>
-                  {e.notes && <div className="bg-slate-50 rounded-lg p-3 border"><p className="text-xs font-semibold text-slate-800 uppercase tracking-wide mb-1">Notes</p><p>{e.notes}</p></div>}
+                  {e.notes && <div className="bg-slate-50 rounded-lg p-3 border"><p className="text-xs font-semibold text-[var(--cs-navy)] uppercase tracking-wide mb-1">Notes</p><p>{e.notes}</p></div>}
                   <SmartLinkPanel sourceType="medication-error-investigation" sourceId={e.id} childId={e.child_id} compact />
                 </div>
               )}

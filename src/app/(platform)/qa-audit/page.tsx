@@ -45,7 +45,7 @@ const BORDER_RATING: Record<QAAuditRating, string> = {
 const ACTION_STATUS_CLR: Record<QAAuditActionStatus, string> = {
   completed: "bg-green-100 text-green-800",
   in_progress: "bg-blue-100 text-blue-800",
-  pending: "bg-slate-100 text-slate-700",
+  pending: "bg-slate-100 text-[var(--cs-text-secondary)]",
   overdue: "bg-red-100 text-red-800",
 };
 
@@ -157,11 +157,11 @@ export default function QAAuditPage() {
         )}
 
         {/* ── regulatory note ────────────────────────────────────────── */}
-        <div className="bg-slate-50 border border-slate-200 rounded-lg p-3 mb-6 flex items-start gap-2">
-          <Target className="h-5 w-5 text-slate-600 shrink-0 mt-0.5" />
+        <div className="bg-slate-50 border border-[var(--cs-border)] rounded-lg p-3 mb-6 flex items-start gap-2">
+          <Target className="h-5 w-5 text-[var(--cs-text-secondary)] shrink-0 mt-0.5" />
           <div className="text-sm">
-            <p className="font-semibold text-slate-800">Self-Assessment &amp; Quality Monitoring</p>
-            <p className="text-slate-600">Ofsted expects children&apos;s homes to demonstrate continuous improvement through rigorous self-assessment. Internal QA audits evidence proactive quality monitoring, identify areas for development, and show that the home does not wait for external inspection to drive improvement. Reg 45 independent reviews should be complemented by ongoing internal quality checks.</p>
+            <p className="font-semibold text-[var(--cs-navy)]">Self-Assessment &amp; Quality Monitoring</p>
+            <p className="text-[var(--cs-text-secondary)]">Ofsted expects children&apos;s homes to demonstrate continuous improvement through rigorous self-assessment. Internal QA audits evidence proactive quality monitoring, identify areas for development, and show that the home does not wait for external inspection to drive improvement. Reg 45 independent reviews should be complemented by ongoing internal quality checks.</p>
           </div>
         </div>
 
@@ -212,7 +212,7 @@ export default function QAAuditPage() {
                       <CardTitle className="text-base flex items-center gap-2">
                         {r.title}
                         <Badge variant="outline" className={RATING_CLR[r.overall_rating]}>{QA_AUDIT_RATING_LABEL[r.overall_rating]}</Badge>
-                        <Badge variant="outline" className="bg-slate-100 text-slate-800">{r.score}%</Badge>
+                        <Badge variant="outline" className="bg-slate-100 text-[var(--cs-navy)]">{r.score}%</Badge>
                       </CardTitle>
                       <p className="text-sm text-muted-foreground">
                         {r.date} · Auditor: {getStaffName(r.auditor)} · Scope: {r.scope}
@@ -231,8 +231,8 @@ export default function QAAuditPage() {
                 {open && (
                   <CardContent className="pt-0 space-y-4 text-sm">
                     <div>
-                      <p className="font-semibold text-slate-700 mb-1">Findings</p>
-                      <ul className="list-disc list-inside space-y-0.5 text-slate-600">
+                      <p className="font-semibold text-[var(--cs-text-secondary)] mb-1">Findings</p>
+                      <ul className="list-disc list-inside space-y-0.5 text-[var(--cs-text-secondary)]">
                         {r.findings.map((f, i) => <li key={i}>{f}</li>)}
                       </ul>
                     </div>
@@ -257,12 +257,12 @@ export default function QAAuditPage() {
 
                     {r.actions.length > 0 && (
                       <div>
-                        <p className="font-semibold text-slate-700 mb-2">Action Plan</p>
+                        <p className="font-semibold text-[var(--cs-text-secondary)] mb-2">Action Plan</p>
                         <div className="space-y-2">
                           {r.actions.map((a, i) => (
                             <div key={i} className="bg-muted/40 rounded p-2 flex items-start justify-between gap-3">
                               <div className="flex-1">
-                                <p className="text-slate-700">{a.action}</p>
+                                <p className="text-[var(--cs-text-secondary)]">{a.action}</p>
                                 <p className="text-xs text-muted-foreground mt-0.5">
                                   Owner: {getStaffName(a.owner)} · Deadline: {a.deadline}
                                 </p>
@@ -278,8 +278,8 @@ export default function QAAuditPage() {
 
                     {r.notes && (
                       <div>
-                        <p className="font-semibold text-slate-700 mb-1">Notes</p>
-                        <p className="text-slate-600">{r.notes}</p>
+                        <p className="font-semibold text-[var(--cs-text-secondary)] mb-1">Notes</p>
+                        <p className="text-[var(--cs-text-secondary)]">{r.notes}</p>
                       </div>
                     )}
                   </CardContent>

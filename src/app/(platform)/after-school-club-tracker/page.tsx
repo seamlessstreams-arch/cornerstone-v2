@@ -39,7 +39,7 @@ const statusColour: Record<string, string> = {
   active: "bg-green-100 text-green-800",
   trialled_declined: "bg-blue-100 text-blue-800",
   on_break: "bg-amber-100 text-amber-800",
-  ended: "bg-slate-100 text-slate-800",
+  ended: "bg-slate-100 text-[var(--cs-navy)]",
 };
 
 const exportCols: ExportColumn<ClubRecord>[] = [
@@ -180,7 +180,7 @@ export default function AfterSchoolClubTrackerPage() {
           return (
             <div key={c.id} className="rounded-xl border bg-white overflow-hidden">
               <button
-                className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                 onClick={() => setExpandedId(isExpanded ? null : c.id)}
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -274,7 +274,7 @@ export default function AfterSchoolClubTrackerPage() {
 
                   {c.ended_date && (
                     <div className="bg-slate-50 rounded-lg p-3 border">
-                      <p className="text-xs font-semibold text-slate-800 uppercase tracking-wide mb-1">Ended {c.ended_date}</p>
+                      <p className="text-xs font-semibold text-[var(--cs-navy)] uppercase tracking-wide mb-1">Ended {c.ended_date}</p>
                       <p className="text-sm">{c.reason_for_ending}</p>
                     </div>
                   )}
@@ -288,7 +288,7 @@ export default function AfterSchoolClubTrackerPage() {
 
                   {c.notes && (
                     <div className="bg-slate-50 rounded-lg p-3 border">
-                      <p className="text-xs font-semibold text-slate-800 uppercase tracking-wide mb-1">Notes</p>
+                      <p className="text-xs font-semibold text-[var(--cs-navy)] uppercase tracking-wide mb-1">Notes</p>
                       <p className="text-sm">{c.notes}</p>
                     </div>
                   )}

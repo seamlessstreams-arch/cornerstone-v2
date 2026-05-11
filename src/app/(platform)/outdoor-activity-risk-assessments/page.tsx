@@ -77,7 +77,7 @@ export default function OutdoorActivityRiskAssessmentsPage() {
           const isExpanded = expandedId === a.id;
           return (
             <div key={a.id} className="rounded-xl border bg-white overflow-hidden">
-              <button className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors" onClick={() => setExpandedId(isExpanded ? null : a.id)}>
+              <button className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors" onClick={() => setExpandedId(isExpanded ? null : a.id)}>
                 <div className="flex items-center gap-3 flex-1 min-w-0"><MapPin className="h-5 w-5 text-amber-600 shrink-0" /><div className="min-w-0"><p className="font-medium truncate">{a.activity_name}</p><p className="text-xs text-muted-foreground mt-0.5">{a.date} &middot; {a.location} &middot; {a.young_people_attending.length} children &middot; {a.duration_hours}h</p></div></div>
                 <div className="flex items-center gap-2 shrink-0 ml-3"><span className={cn("text-xs px-2 py-0.5 rounded-full font-medium", riskColour[a.behaviour_risk_rating])}>{OUTDOOR_RISK_LEVEL_LABEL[a.behaviour_risk_rating]} risk</span>{a.signed_off_by_rm && <CheckCircle className="h-4 w-4 text-green-500" />}{isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}</div>
               </button>

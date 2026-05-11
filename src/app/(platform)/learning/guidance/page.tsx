@@ -96,7 +96,7 @@ function GuidanceCard({ resource }: { resource: { id: string; title: string; sta
   };
 
   return (
-    <Card className="border border-slate-100">
+    <Card className="border border-[var(--cs-border-subtle)]">
       <CardContent className="p-4">
         <div className="flex items-start gap-3">
           <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-blue-50">
@@ -104,14 +104,14 @@ function GuidanceCard({ resource }: { resource: { id: string; title: string; sta
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-start justify-between gap-2">
-              <p className="text-sm font-semibold text-slate-900">{resource.title}</p>
-              <Badge className={cn("text-[10px] h-4 px-1.5 shrink-0", resource.status === "approved" ? "bg-emerald-100 text-emerald-700" : "bg-slate-100 text-slate-700")}>
+              <p className="text-sm font-semibold text-[var(--cs-navy)]">{resource.title}</p>
+              <Badge className={cn("text-[10px] h-4 px-1.5 shrink-0", resource.status === "approved" ? "bg-emerald-100 text-emerald-700" : "bg-slate-100 text-[var(--cs-text-secondary)]")}>
                 {resource.status}
               </Badge>
             </div>
             <div className="flex items-center gap-2 mt-1">
               {resource.pathway && <Badge variant="outline" className="text-[10px] h-4 px-1.5 capitalize">{resource.pathway}</Badge>}
-              <span className="text-[10px] text-slate-400 flex items-center gap-0.5">
+              <span className="text-[10px] text-[var(--cs-text-muted)] flex items-center gap-0.5">
                 <Clock className="h-2.5 w-2.5" />
                 {formatDate(resource.created_at)}
               </span>
@@ -124,7 +124,7 @@ function GuidanceCard({ resource }: { resource: { id: string; title: string; sta
                 Approve
               </Button>
             )}
-            <button onClick={() => setExpanded((p) => !p)} className="text-slate-400 hover:text-slate-600">
+            <button onClick={() => setExpanded((p) => !p)} className="text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)]">
               {expanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
             </button>
           </div>
@@ -219,7 +219,7 @@ export default function GuidanceNotesPage() {
           <CardContent className="space-y-4">
             <div className="grid sm:grid-cols-2 gap-3">
               <div>
-                <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Topic</label>
+                <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Topic</label>
                 <div className="relative mt-1">
                   <Input
                     list="guidance-topics"
@@ -233,7 +233,7 @@ export default function GuidanceNotesPage() {
                 </div>
               </div>
               <div>
-                <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Pathway</label>
+                <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Pathway</label>
                 <Select value={pathway} onValueChange={setPathway}>
                   <SelectTrigger className="mt-1"><SelectValue /></SelectTrigger>
                   <SelectContent>
@@ -245,7 +245,7 @@ export default function GuidanceNotesPage() {
               </div>
             </div>
             <div>
-              <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Additional Context (optional)</label>
+              <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Additional Context (optional)</label>
               <Textarea
                 className="mt-1 text-sm"
                 rows={2}
@@ -279,17 +279,17 @@ export default function GuidanceNotesPage() {
                   <Badge className="text-[10px] bg-blue-600/30 text-blue-200 capitalize mt-0.5">{result.pathway} pathway</Badge>
                 </div>
               </div>
-              <p className="text-sm text-slate-300 leading-relaxed">{result.purpose}</p>
+              <p className="text-sm text-[var(--cs-text-gentle)] leading-relaxed">{result.purpose}</p>
             </div>
 
             {result.key_definitions?.length > 0 && (
               <div>
-                <p className="text-xs font-semibold text-slate-600 uppercase tracking-wide mb-2">Key Definitions</p>
+                <p className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide mb-2">Key Definitions</p>
                 <div className="space-y-2">
                   {result.key_definitions.map((d, i) => (
-                    <div key={i} className="rounded-lg border border-slate-100 bg-white px-4 py-2.5">
-                      <span className="text-xs font-bold text-slate-800">{d.term}: </span>
-                      <span className="text-xs text-slate-600">{d.definition}</span>
+                    <div key={i} className="rounded-lg border border-[var(--cs-border-subtle)] bg-white px-4 py-2.5">
+                      <span className="text-xs font-bold text-[var(--cs-navy)]">{d.term}: </span>
+                      <span className="text-xs text-[var(--cs-text-secondary)]">{d.definition}</span>
                     </div>
                   ))}
                 </div>
@@ -298,16 +298,16 @@ export default function GuidanceNotesPage() {
 
             {result.main_content && (
               <div>
-                <p className="text-xs font-semibold text-slate-600 uppercase tracking-wide mb-2">Main Content</p>
-                <div className="rounded-xl border border-slate-100 bg-white p-4">
-                  <p className="text-sm text-slate-800 leading-relaxed whitespace-pre-wrap">{result.main_content}</p>
+                <p className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide mb-2">Main Content</p>
+                <div className="rounded-xl border border-[var(--cs-border-subtle)] bg-white p-4">
+                  <p className="text-sm text-[var(--cs-navy)] leading-relaxed whitespace-pre-wrap">{result.main_content}</p>
                 </div>
               </div>
             )}
 
             {result.practical_examples?.length > 0 && (
               <div>
-                <p className="text-xs font-semibold text-slate-600 uppercase tracking-wide mb-2">Practical Examples</p>
+                <p className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide mb-2">Practical Examples</p>
                 <div className="space-y-2">
                   {result.practical_examples.map((ex, i) => (
                     <div key={i} className="flex items-start gap-2 rounded-lg bg-blue-50 border border-blue-100 px-3 py-2">
@@ -321,7 +321,7 @@ export default function GuidanceNotesPage() {
 
             {result.what_good_looks_like && (
               <div>
-                <p className="text-xs font-semibold text-slate-600 uppercase tracking-wide mb-2">What Good Looks Like</p>
+                <p className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide mb-2">What Good Looks Like</p>
                 <div className="rounded-xl border border-emerald-100 bg-emerald-50 p-4">
                   <p className="text-sm text-emerald-900 leading-relaxed">{result.what_good_looks_like}</p>
                 </div>
@@ -330,7 +330,7 @@ export default function GuidanceNotesPage() {
 
             {result.common_mistakes?.length > 0 && (
               <div>
-                <p className="text-xs font-semibold text-slate-600 uppercase tracking-wide mb-2">Common Mistakes to Avoid</p>
+                <p className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide mb-2">Common Mistakes to Avoid</p>
                 <div className="space-y-1.5">
                   {result.common_mistakes.map((m, i) => (
                     <div key={i} className="flex items-start gap-2 rounded-lg bg-amber-50 border border-amber-100 px-3 py-2">
@@ -344,11 +344,11 @@ export default function GuidanceNotesPage() {
 
             {result.reflection_questions?.length > 0 && (
               <div>
-                <p className="text-xs font-semibold text-slate-600 uppercase tracking-wide mb-2">Reflection Questions</p>
+                <p className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide mb-2">Reflection Questions</p>
                 <div className="space-y-1.5">
                   {result.reflection_questions.map((q, i) => (
-                    <div key={i} className="rounded-lg bg-slate-50 border border-slate-200 px-3 py-2">
-                      <p className="text-xs text-slate-700 italic">"{q}"</p>
+                    <div key={i} className="rounded-lg bg-slate-50 border border-[var(--cs-border)] px-3 py-2">
+                      <p className="text-xs text-[var(--cs-text-secondary)] italic">"{q}"</p>
                     </div>
                   ))}
                 </div>
@@ -357,9 +357,9 @@ export default function GuidanceNotesPage() {
 
             {result.legal_regulatory_context && (
               <div>
-                <p className="text-xs font-semibold text-slate-600 uppercase tracking-wide mb-2">Legal & Regulatory Context</p>
-                <div className="rounded-xl border border-slate-100 bg-white p-4">
-                  <p className="text-sm text-slate-700 leading-relaxed">{result.legal_regulatory_context}</p>
+                <p className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide mb-2">Legal & Regulatory Context</p>
+                <div className="rounded-xl border border-[var(--cs-border-subtle)] bg-white p-4">
+                  <p className="text-sm text-[var(--cs-text-secondary)] leading-relaxed">{result.legal_regulatory_context}</p>
                 </div>
               </div>
             )}
@@ -377,7 +377,7 @@ export default function GuidanceNotesPage() {
         {/* Saved notes */}
         {guidanceResources.length > 0 && (
           <div>
-            <h3 className="text-sm font-semibold text-slate-700 mb-3">Saved Guidance Notes ({guidanceResources.length})</h3>
+            <h3 className="text-sm font-semibold text-[var(--cs-text-secondary)] mb-3">Saved Guidance Notes ({guidanceResources.length})</h3>
             <div className="space-y-3">
               {guidanceResources.map((r) => (
                 <GuidanceCard key={r.id} resource={r} />

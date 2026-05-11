@@ -35,14 +35,14 @@ function StaffContextCard({ ctx }: { ctx: StaffHandoverContext }) {
         <Avatar name={ctx.staff_name} size="sm" />
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
-            <span className="text-sm font-medium text-slate-900">{ctx.staff_name}</span>
+            <span className="text-sm font-medium text-[var(--cs-navy)]">{ctx.staff_name}</span>
             <Badge className={cn("text-[9px] rounded-full", depthCfg.color)}>
               {depthCfg.label}
             </Badge>
           </div>
           <div className="flex items-center gap-2 mt-0.5">
-            <Clock className="h-3 w-3 text-slate-400" />
-            <span className="text-[11px] text-slate-500">
+            <Clock className="h-3 w-3 text-[var(--cs-text-muted)]" />
+            <span className="text-[11px] text-[var(--cs-text-muted)]">
               {ctx.days_since_last_shift === null
                 ? "No recent shift history"
                 : ctx.days_since_last_shift === 0
@@ -61,14 +61,14 @@ function StaffContextCard({ ctx }: { ctx: StaffHandoverContext }) {
             </span>
           )}
           {ctx.missed_events.daily_logs > 0 && (
-            <span className="flex items-center gap-0.5 text-[10px] text-slate-500">
+            <span className="flex items-center gap-0.5 text-[10px] text-[var(--cs-text-muted)]">
               <BookOpen className="h-3 w-3" />
               {ctx.missed_events.daily_logs}
             </span>
           )}
           {expanded
-            ? <ChevronUp className="h-4 w-4 text-slate-400" />
-            : <ChevronDown className="h-4 w-4 text-slate-400" />
+            ? <ChevronUp className="h-4 w-4 text-[var(--cs-text-muted)]" />
+            : <ChevronDown className="h-4 w-4 text-[var(--cs-text-muted)]" />
           }
         </div>
       </button>
@@ -103,7 +103,7 @@ function StaffContextCard({ ctx }: { ctx: StaffHandoverContext }) {
                 ARIA — Personalised handover for {firstName}
               </span>
             </div>
-            <pre className="text-[11px] text-slate-700 whitespace-pre-wrap font-sans leading-relaxed">
+            <pre className="text-[11px] text-[var(--cs-text-secondary)] whitespace-pre-wrap font-sans leading-relaxed">
               {ctx.aria_summary}
             </pre>
           </div>
@@ -133,8 +133,8 @@ export function AriaHandoverBuilder({ incomingStaffIds }: AriaHandoverBuilderPro
               <Sparkles className="h-4 w-4 text-violet-600" />
             </div>
             <div>
-              <div className="text-sm font-semibold text-slate-900">ARIA Handover Builder</div>
-              <div className="text-[11px] text-slate-500">
+              <div className="text-sm font-semibold text-[var(--cs-navy)]">ARIA Handover Builder</div>
+              <div className="text-[11px] text-[var(--cs-text-muted)]">
                 Personalised context based on when each staff member was last on shift
               </div>
             </div>
@@ -152,7 +152,7 @@ export function AriaHandoverBuilder({ incomingStaffIds }: AriaHandoverBuilderPro
 
         {showBuilder && (
           <div className="space-y-3">
-            <div className="flex items-center gap-2 text-[11px] text-slate-500">
+            <div className="flex items-center gap-2 text-[11px] text-[var(--cs-text-muted)]">
               <User className="h-3.5 w-3.5" />
               <span>
                 Building personalised handover for {incomingStaffIds.length} incoming staff member{incomingStaffIds.length > 1 ? "s" : ""}
@@ -171,14 +171,14 @@ export function AriaHandoverBuilder({ incomingStaffIds }: AriaHandoverBuilderPro
                 ))}
               </div>
             ) : (
-              <div className="text-center py-6 text-slate-400 text-sm">
+              <div className="text-center py-6 text-[var(--cs-text-muted)] text-sm">
                 No context available for selected staff
               </div>
             )}
 
             {!isLoading && contexts.length > 0 && (
-              <div className="rounded-xl bg-slate-50 border border-slate-100 px-3 py-2.5 text-[11px] text-slate-500">
-                <strong className="text-slate-700">How this works:</strong> ARIA checks the rota to see when each incoming
+              <div className="rounded-xl bg-slate-50 border border-slate-100 px-3 py-2.5 text-[11px] text-[var(--cs-text-muted)]">
+                <strong className="text-[var(--cs-text-secondary)]">How this works:</strong> ARIA checks the rota to see when each incoming
                 staff member was last on shift. Staff who have been away longer receive more comprehensive context — including
                 incidents, young person updates, and completed tasks they missed.
               </div>

@@ -33,7 +33,7 @@ import type { LacReviewPrep, LacPrepStatus } from "@/types/extended";
 import { LAC_REVIEW_TYPE_LABEL, LAC_PREP_STATUS_LABEL, CHILD_PREP_STATUS_LABEL, CHILD_ATTENDANCE_CHOICE_LABEL, LAC_PREP_ACTION_STATUS_LABEL } from "@/types/extended";
 
 const prepStatusColour: Record<LacPrepStatus, string> = {
-  not_started: "bg-slate-100 text-slate-800",
+  not_started: "bg-slate-100 text-[var(--cs-navy)]",
   in_progress: "bg-amber-100 text-amber-800",
   ready_for_review: "bg-blue-100 text-blue-800",
   review_held: "bg-green-100 text-green-800",
@@ -159,7 +159,7 @@ export default function LacReviewPrepPage() {
           return (
             <div key={prep.id} className="rounded-xl border bg-white overflow-hidden">
               <button
-                className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                 onClick={() => setExpandedId(isExpanded ? null : prep.id)}
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -262,7 +262,7 @@ export default function LacReviewPrepPage() {
 
                   {/* past actions progress */}
                   <div className="bg-slate-50 rounded-lg p-3 border">
-                    <p className="text-xs font-semibold text-slate-800 uppercase tracking-wide mb-1">Past Actions — Progress Review</p>
+                    <p className="text-xs font-semibold text-[var(--cs-navy)] uppercase tracking-wide mb-1">Past Actions — Progress Review</p>
                     <ul className="space-y-1">
                       {prep.past_actions_to_review_progress.map((a, i) => (
                         <li key={i} className="text-sm flex items-start gap-1">
@@ -327,7 +327,7 @@ export default function LacReviewPrepPage() {
 
                   {prep.notes && (
                     <div className="bg-slate-50 rounded-lg p-3 border">
-                      <p className="text-xs font-semibold text-slate-800 uppercase tracking-wide mb-1">Notes</p>
+                      <p className="text-xs font-semibold text-[var(--cs-navy)] uppercase tracking-wide mb-1">Notes</p>
                       <p className="text-sm">{prep.notes}</p>
                     </div>
                   )}

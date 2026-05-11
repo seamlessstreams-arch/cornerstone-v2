@@ -181,7 +181,7 @@ const exportCols: ExportColumn<TransPlan>[] = [
 ];
 
 const stageColour: Record<TransPlan["socialTransitionStage"], string> = {
-  "Pre-questioning": "bg-slate-100 text-slate-800 border-slate-200",
+  "Pre-questioning": "bg-slate-100 text-[var(--cs-navy)] border-[var(--cs-border)]",
   "Questioning / exploring": "bg-amber-100 text-amber-800 border-amber-200",
   "Privately identified": "bg-blue-100 text-blue-800 border-blue-200",
   "Out to staff only": "bg-sky-100 text-sky-800 border-sky-200",
@@ -234,45 +234,45 @@ export default function TransAffirmingCarePlanPage() {
       }
     >
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-slate-600 text-sm mb-1">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-[var(--cs-text-secondary)] text-sm mb-1">
             <Heart className="h-4 w-4" />
             <span>Active plans</span>
           </div>
-          <div className="text-2xl font-semibold text-slate-900">{stats.activePlans}</div>
+          <div className="text-2xl font-semibold text-[var(--cs-navy)]">{stats.activePlans}</div>
         </div>
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-slate-600 text-sm mb-1">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-[var(--cs-text-secondary)] text-sm mb-1">
             <Star className="h-4 w-4" />
             <span>Child pace confirmed</span>
           </div>
-          <div className="text-2xl font-semibold text-slate-900">{stats.childPaceRespected}</div>
+          <div className="text-2xl font-semibold text-[var(--cs-navy)]">{stats.childPaceRespected}</div>
         </div>
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-slate-600 text-sm mb-1">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-[var(--cs-text-secondary)] text-sm mb-1">
             <Users className="h-4 w-4" />
             <span>External support engaged</span>
           </div>
-          <div className="text-2xl font-semibold text-slate-900">{stats.externalSupportEngaged}</div>
+          <div className="text-2xl font-semibold text-[var(--cs-navy)]">{stats.externalSupportEngaged}</div>
         </div>
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-slate-600 text-sm mb-1">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-[var(--cs-text-secondary)] text-sm mb-1">
             <Shield className="h-4 w-4" />
             <span>Reviews due (60d)</span>
           </div>
-          <div className="text-2xl font-semibold text-slate-900">{stats.reviewsDue}</div>
+          <div className="text-2xl font-semibold text-[var(--cs-navy)]">{stats.reviewsDue}</div>
         </div>
       </div>
 
       <div className="flex flex-col sm:flex-row gap-3 mb-4">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--cs-text-muted)]" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search young person or identity..."
-            className="w-full pl-9 pr-3 py-2 text-sm border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full pl-9 pr-3 py-2 text-sm border border-[var(--cs-border)] rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
         <Select value={stageFilter} onValueChange={setStageFilter}>
@@ -308,15 +308,15 @@ export default function TransAffirmingCarePlanPage() {
         {filtered.map((r) => {
           const isOpen = expandedId === r.id;
           return (
-            <div key={r.id} className="rounded-lg border border-slate-200 bg-white overflow-hidden">
+            <div key={r.id} className="rounded-lg border border-[var(--cs-border)] bg-white overflow-hidden">
               <button
                 onClick={() => setExpandedId(isOpen ? null : r.id)}
-                className="w-full p-4 flex items-start justify-between gap-3 hover:bg-slate-50 text-left"
+                className="w-full p-4 flex items-start justify-between gap-3 hover:bg-[var(--cs-surface)] text-left"
               >
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap mb-1">
-                    <span className="font-semibold text-slate-900">{getYPName(r.youngPerson)}</span>
-                    <span className="text-slate-700">{r.preferredName} · {r.pronouns}</span>
+                    <span className="font-semibold text-[var(--cs-navy)]">{getYPName(r.youngPerson)}</span>
+                    <span className="text-[var(--cs-text-secondary)]">{r.preferredName} · {r.pronouns}</span>
                     <span className={cn("text-xs px-2 py-0.5 rounded-full border", stageColour[r.socialTransitionStage])}>
                       {r.socialTransitionStage}
                     </span>
@@ -335,22 +335,22 @@ export default function TransAffirmingCarePlanPage() {
                       </span>
                     )}
                   </div>
-                  <div className="text-sm text-slate-600">
+                  <div className="text-sm text-[var(--cs-text-secondary)]">
                     Plan {r.planDate} · Review {r.reviewDate} · {getStaffName(r.keyWorker)}
                   </div>
                 </div>
-                {isOpen ? <ChevronUp className="h-5 w-5 text-slate-400" /> : <ChevronDown className="h-5 w-5 text-slate-400" />}
+                {isOpen ? <ChevronUp className="h-5 w-5 text-[var(--cs-text-muted)]" /> : <ChevronDown className="h-5 w-5 text-[var(--cs-text-muted)]" />}
               </button>
               {isOpen ? (
-                <div className="px-4 pb-4 border-t border-slate-100 bg-slate-50/50">
+                <div className="px-4 pb-4 border-t border-[var(--cs-border-subtle)] bg-slate-50/50">
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 pt-4">
                     <div className="rounded-md border border-violet-200 bg-violet-50 p-3 lg:col-span-2">
                       <div className="text-xs font-semibold text-violet-700 uppercase mb-2">Child Voice</div>
                       <p className="text-sm text-violet-900 italic">&ldquo;{r.childVoice}&rdquo;</p>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3 lg:col-span-2">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Staff Observation</div>
-                      <p className="text-sm text-slate-700">{r.staffObservation}</p>
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3 lg:col-span-2">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Staff Observation</div>
+                      <p className="text-sm text-[var(--cs-text-secondary)]">{r.staffObservation}</p>
                     </div>
                     <div className="rounded-md border border-emerald-200 bg-emerald-50 p-3">
                       <div className="text-xs font-semibold text-emerald-700 uppercase mb-2">Affirming actions</div>
@@ -360,20 +360,20 @@ export default function TransAffirmingCarePlanPage() {
                         ))}
                       </ul>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Clothing & body</div>
-                      <ul className="text-sm text-slate-700 space-y-1.5">
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Clothing & body</div>
+                      <ul className="text-sm text-[var(--cs-text-secondary)] space-y-1.5">
                         {r.clothingAccessSupported.map((c, i) => (
-                          <li key={i} className="flex gap-2"><span className="text-slate-400">·</span><span>{c}</span></li>
+                          <li key={i} className="flex gap-2"><span className="text-[var(--cs-text-muted)]">·</span><span>{c}</span></li>
                         ))}
                         {r.bindingPolicy ? (
-                          <li className="border-t border-slate-100 pt-1.5"><span className="text-xs text-slate-500 uppercase">Binder policy:</span> <span>{r.bindingPolicy}</span></li>
+                          <li className="border-t border-[var(--cs-border-subtle)] pt-1.5"><span className="text-xs text-[var(--cs-text-muted)] uppercase">Binder policy:</span> <span>{r.bindingPolicy}</span></li>
                         ) : null}
                       </ul>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Where preferred name used</div>
-                      <ul className="text-sm text-slate-700 space-y-1">
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Where preferred name used</div>
+                      <ul className="text-sm text-[var(--cs-text-secondary)] space-y-1">
                         {r.preferredNameWhereUsed.map((n, i) => (
                           <li key={i} className="flex gap-2"><span className="text-emerald-500">+</span><span>{n}</span></li>
                         ))}
@@ -389,27 +389,27 @@ export default function TransAffirmingCarePlanPage() {
                         </ul>
                       </div>
                     ) : null}
-                    <div className="rounded-md border border-slate-200 bg-white p-3">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">External support</div>
-                      <ul className="text-sm text-slate-700 space-y-1.5">
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">External support</div>
+                      <ul className="text-sm text-[var(--cs-text-secondary)] space-y-1.5">
                         {r.externalSupport.map((s, i) => (
                           <li key={i}>
                             <div className="font-medium">{s.agency}</div>
-                            <div className="text-slate-500">{s.clinician ?? "—"} · {s.frequency}</div>
+                            <div className="text-[var(--cs-text-muted)]">{s.clinician ?? "—"} · {s.frequency}</div>
                           </li>
                         ))}
                       </ul>
                       {r.giccStatus ? (
-                        <p className="text-xs text-slate-600 mt-2 pt-2 border-t border-slate-100">{r.giccStatus}</p>
+                        <p className="text-xs text-[var(--cs-text-secondary)] mt-2 pt-2 border-t border-[var(--cs-border-subtle)]">{r.giccStatus}</p>
                       ) : null}
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Family & school</div>
-                      <div className="text-sm text-slate-700 space-y-1">
-                        <div><span className="text-slate-500">Parental awareness:</span> {r.parentalAwareness}</div>
-                        <div><span className="text-slate-500">School aware:</span> {r.schoolAware}</div>
-                        <div><span className="text-slate-500">School using pronouns:</span> {r.schoolUsingPreferredNamePronouns ? "Yes" : "No"}</div>
-                        <div><span className="text-slate-500">Bathroom/changing:</span> {r.bathroomChangingArrangements}</div>
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Family & school</div>
+                      <div className="text-sm text-[var(--cs-text-secondary)] space-y-1">
+                        <div><span className="text-[var(--cs-text-muted)]">Parental awareness:</span> {r.parentalAwareness}</div>
+                        <div><span className="text-[var(--cs-text-muted)]">School aware:</span> {r.schoolAware}</div>
+                        <div><span className="text-[var(--cs-text-muted)]">School using pronouns:</span> {r.schoolUsingPreferredNamePronouns ? "Yes" : "No"}</div>
+                        <div><span className="text-[var(--cs-text-muted)]">Bathroom/changing:</span> {r.bathroomChangingArrangements}</div>
                       </div>
                     </div>
                     <div className="rounded-md border border-rose-200 bg-rose-50 p-3 lg:col-span-2">

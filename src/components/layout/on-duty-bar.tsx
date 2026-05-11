@@ -38,14 +38,14 @@ export function OnDutyBar({ collapsed }: { collapsed: boolean }) {
   if (collapsed) {
     // Collapsed sidebar — just show count dot
     return (
-      <div className="px-2 py-3 border-t border-slate-100">
+      <div className="px-2 py-3 border-t border-white/10">
         <Link
           href="/rota"
-          className="flex flex-col items-center gap-1 rounded-xl p-2 hover:bg-slate-50 transition-colors"
+          className="flex flex-col items-center gap-1 rounded-xl p-2 hover:bg-white/10 transition-colors"
           title={`${onDuty.length} on shift · ${scheduled.length} scheduled`}
         >
           <div className="relative">
-            <Users className="h-4 w-4 text-slate-400" />
+            <Users className="h-4 w-4 text-white/40" />
             <span className="absolute -top-1 -right-1.5 h-3.5 min-w-3.5 flex items-center justify-center rounded-full bg-emerald-500 text-[8px] font-bold text-white px-0.5">
               {onDuty.length}
             </span>
@@ -56,7 +56,7 @@ export function OnDutyBar({ collapsed }: { collapsed: boolean }) {
   }
 
   return (
-    <div className="border-t border-slate-100 px-3 py-3">
+    <div className="border-t border-white/10 px-3 py-3">
       {/* Header */}
       <div className="flex items-center justify-between mb-2 px-1">
         <div className="flex items-center gap-1.5">
@@ -64,11 +64,11 @@ export function OnDutyBar({ collapsed }: { collapsed: boolean }) {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
           </span>
-          <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
+          <span className="text-[10px] font-semibold text-white/50 uppercase tracking-wider">
             On Duty
           </span>
         </div>
-        <Link href="/rota" className="text-[10px] text-blue-500 hover:underline">
+        <Link href="/rota" className="text-[10px] text-[var(--cs-aria-gold)]/70 hover:text-[var(--cs-aria-gold)]">
           Rota
         </Link>
       </div>
@@ -81,11 +81,11 @@ export function OnDutyBar({ collapsed }: { collapsed: boolean }) {
             <div key={shift.id} className="flex items-center gap-2 rounded-lg px-2 py-1">
               <Avatar name={name} size="xs" />
               <div className="flex-1 min-w-0">
-                <span className="text-[11px] font-medium text-slate-700 truncate block">
+                <span className="text-[11px] font-medium text-white/80 truncate block">
                   {name.split(" ")[0]}
                 </span>
               </div>
-              <span className="text-[9px] text-emerald-600 font-medium shrink-0">
+              <span className="text-[9px] text-emerald-400 font-medium shrink-0">
                 {SHIFT_LABEL[shift.shift_type] || shift.shift_type}
               </span>
             </div>
@@ -97,7 +97,7 @@ export function OnDutyBar({ collapsed }: { collapsed: boolean }) {
       {scheduled.length > 0 && (
         <>
           <div className="mt-2 mb-1 px-2">
-            <span className="text-[9px] text-slate-400 uppercase tracking-wider">
+            <span className="text-[9px] text-white/30 uppercase tracking-wider">
               Coming up
             </span>
           </div>
@@ -108,11 +108,11 @@ export function OnDutyBar({ collapsed }: { collapsed: boolean }) {
                 <div key={shift.id} className="flex items-center gap-2 rounded-lg px-2 py-1 opacity-60">
                   <Avatar name={name} size="xs" />
                   <div className="flex-1 min-w-0">
-                    <span className="text-[11px] text-slate-500 truncate block">
+                    <span className="text-[11px] text-white/50 truncate block">
                       {name.split(" ")[0]}
                     </span>
                   </div>
-                  <span className="text-[9px] text-slate-400 shrink-0">
+                  <span className="text-[9px] text-white/30 shrink-0">
                     {shift.start_time}
                   </span>
                 </div>

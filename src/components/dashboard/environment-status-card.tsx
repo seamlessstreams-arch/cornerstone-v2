@@ -66,7 +66,7 @@ export function EnvironmentStatusCard() {
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-center py-6">
-            <Loader2 className="h-5 w-5 animate-spin text-slate-400" />
+            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
           </div>
         </CardContent>
       </Card>
@@ -92,10 +92,10 @@ export function EnvironmentStatusCard() {
         {/* Three sections: Building, Maintenance, Vehicles */}
 
         {/* Building Checks */}
-        <div className="rounded-xl border border-slate-100 p-2.5 space-y-1.5">
+        <div className="rounded-xl border border-[var(--cs-border-subtle)] p-2.5 space-y-1.5">
           <div className="flex items-center gap-1.5">
             <ClipboardCheck className="h-3 w-3 text-teal-500" />
-            <span className="text-[10px] font-semibold text-slate-600 uppercase tracking-wider">Building Checks</span>
+            <span className="text-[10px] font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wider">Building Checks</span>
           </div>
           <div className="grid grid-cols-2 gap-2">
             <div className={cn("rounded-lg p-2 text-center", checksOverdue > 0 ? "bg-red-50" : "bg-emerald-50")}>
@@ -105,54 +105,54 @@ export function EnvironmentStatusCard() {
               <div className={cn("text-[9px]", checksOverdue > 0 ? "text-red-500" : "text-emerald-500")}>Overdue</div>
             </div>
             <div className={cn("rounded-lg p-2 text-center", checksDue > 0 ? "bg-amber-50" : "bg-slate-50")}>
-              <div className={cn("text-sm font-bold tabular-nums", checksDue > 0 ? "text-amber-700" : "text-slate-400")}>
+              <div className={cn("text-sm font-bold tabular-nums", checksDue > 0 ? "text-amber-700" : "text-[var(--cs-text-muted)]")}>
                 {checksDue}
               </div>
-              <div className={cn("text-[9px]", checksDue > 0 ? "text-amber-500" : "text-slate-400")}>Due Soon</div>
+              <div className={cn("text-[9px]", checksDue > 0 ? "text-amber-500" : "text-[var(--cs-text-muted)]")}>Due Soon</div>
             </div>
           </div>
         </div>
 
         {/* Maintenance */}
-        <div className="rounded-xl border border-slate-100 p-2.5 space-y-1.5">
+        <div className="rounded-xl border border-[var(--cs-border-subtle)] p-2.5 space-y-1.5">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5">
               <Wrench className="h-3 w-3 text-amber-500" />
-              <span className="text-[10px] font-semibold text-slate-600 uppercase tracking-wider">Maintenance</span>
+              <span className="text-[10px] font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wider">Maintenance</span>
             </div>
             <Link href="/maintenance">
-              <ChevronRight className="h-3 w-3 text-slate-300 hover:text-slate-500" />
+              <ChevronRight className="h-3 w-3 text-[var(--cs-text-gentle)] hover:text-[var(--cs-text-muted)]" />
             </Link>
           </div>
           <div className="grid grid-cols-3 gap-2">
             <div className={cn("rounded-lg p-2 text-center", maintUrgent > 0 ? "bg-red-50" : "bg-slate-50")}>
-              <div className={cn("text-sm font-bold tabular-nums", maintUrgent > 0 ? "text-red-700" : "text-slate-400")}>
+              <div className={cn("text-sm font-bold tabular-nums", maintUrgent > 0 ? "text-red-700" : "text-[var(--cs-text-muted)]")}>
                 {maintUrgent}
               </div>
-              <div className={cn("text-[9px]", maintUrgent > 0 ? "text-red-500" : "text-slate-400")}>Urgent</div>
+              <div className={cn("text-[9px]", maintUrgent > 0 ? "text-red-500" : "text-[var(--cs-text-muted)]")}>Urgent</div>
             </div>
             <div className={cn("rounded-lg p-2 text-center", maintOpen > 0 ? "bg-amber-50" : "bg-slate-50")}>
-              <div className={cn("text-sm font-bold tabular-nums", maintOpen > 0 ? "text-amber-700" : "text-slate-400")}>
+              <div className={cn("text-sm font-bold tabular-nums", maintOpen > 0 ? "text-amber-700" : "text-[var(--cs-text-muted)]")}>
                 {maintOpen}
               </div>
-              <div className={cn("text-[9px]", maintOpen > 0 ? "text-amber-500" : "text-slate-400")}>Open</div>
+              <div className={cn("text-[9px]", maintOpen > 0 ? "text-amber-500" : "text-[var(--cs-text-muted)]")}>Open</div>
             </div>
             <div className="rounded-lg bg-slate-50 p-2 text-center">
-              <div className="text-sm font-bold text-slate-700 tabular-nums">{maintScheduled}</div>
-              <div className="text-[9px] text-slate-400">Scheduled</div>
+              <div className="text-sm font-bold text-[var(--cs-text-secondary)] tabular-nums">{maintScheduled}</div>
+              <div className="text-[9px] text-[var(--cs-text-muted)]">Scheduled</div>
             </div>
           </div>
         </div>
 
         {/* Vehicles */}
-        <div className="rounded-xl border border-slate-100 p-2.5 space-y-1.5">
+        <div className="rounded-xl border border-[var(--cs-border-subtle)] p-2.5 space-y-1.5">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5">
               <Car className="h-3 w-3 text-blue-500" />
-              <span className="text-[10px] font-semibold text-slate-600 uppercase tracking-wider">Vehicles</span>
+              <span className="text-[10px] font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wider">Vehicles</span>
             </div>
             <Link href="/vehicles">
-              <ChevronRight className="h-3 w-3 text-slate-300 hover:text-slate-500" />
+              <ChevronRight className="h-3 w-3 text-[var(--cs-text-gentle)] hover:text-[var(--cs-text-muted)]" />
             </Link>
           </div>
           <div className="grid grid-cols-2 gap-2">

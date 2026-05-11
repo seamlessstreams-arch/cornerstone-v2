@@ -50,7 +50,7 @@ const TYPE_COLOUR: Record<ProfMeetingType, string> = {
   ehcp_review: "bg-violet-100 text-violet-700",
   health: "bg-emerald-100 text-emerald-700",
   multi_agency: "bg-amber-100 text-amber-700",
-  external_consultation: "bg-slate-100 text-slate-700",
+  external_consultation: "bg-slate-100 text-[var(--cs-text-secondary)]",
 };
 
 const ACTION_COLOUR: Record<ProfMeetingActionStatus, string> = {

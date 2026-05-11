@@ -101,7 +101,7 @@ export function ConcernEscalation() {
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-center py-6">
-            <Loader2 className="h-5 w-5 animate-spin text-slate-400" />
+            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
           </div>
         </CardContent>
       </Card>
@@ -128,7 +128,7 @@ export function ConcernEscalation() {
           <div className="py-4 text-center">
             <CheckCircle2 className="h-6 w-6 text-emerald-400 mx-auto mb-1" />
             <p className="text-xs font-medium text-emerald-700">No open concerns</p>
-            <p className="text-[10px] text-slate-400 mt-0.5">All concerns resolved or escalated</p>
+            <p className="text-[10px] text-[var(--cs-text-muted)] mt-0.5">All concerns resolved or escalated</p>
           </div>
         ) : (
           <div className="space-y-1.5">
@@ -137,26 +137,26 @@ export function ConcernEscalation() {
               return (
                 <Link key={concern.id} href={concern.link}>
                   <div className={cn(
-                    "flex items-start gap-2.5 rounded-xl px-3 py-2.5 hover:bg-slate-50 transition-colors cursor-pointer border",
-                    concern.severity === "critical" ? "bg-red-50/50 border-red-100" : "bg-white border-slate-100",
+                    "flex items-start gap-2.5 rounded-xl px-3 py-2.5 hover:bg-[var(--cs-surface)] transition-colors cursor-pointer border",
+                    concern.severity === "critical" ? "bg-red-50/50 border-red-100" : "bg-white border-[var(--cs-border-subtle)]",
                   )}>
                     <AlertTriangle className={cn("h-3.5 w-3.5 shrink-0 mt-0.5", sev.color)} />
                     <div className="flex-1 min-w-0">
-                      <p className="text-[11px] font-medium text-slate-800 line-clamp-1">
+                      <p className="text-[11px] font-medium text-[var(--cs-navy)] line-clamp-1">
                         {concern.title}
                       </p>
                       <div className="flex items-center gap-2 mt-0.5">
                         {concern.child && (
                           <span className="text-[10px] text-violet-600">{concern.child}</span>
                         )}
-                        <span className="text-[10px] text-slate-400">{formatRelative(concern.date)}</span>
+                        <span className="text-[10px] text-[var(--cs-text-muted)]">{formatRelative(concern.date)}</span>
                       </div>
                     </div>
                     <div className="flex items-center gap-1.5 shrink-0">
                       <Badge className={cn("text-[9px] rounded-full border-0", sev.bg, sev.color)}>
                         {concern.severity}
                       </Badge>
-                      <ChevronRight className="h-3 w-3 text-slate-300" />
+                      <ChevronRight className="h-3 w-3 text-[var(--cs-text-gentle)]" />
                     </div>
                   </div>
                 </Link>

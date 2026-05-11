@@ -23,13 +23,13 @@ import {
 // ── Config ────────────────────────────────────────────────────────────────────
 
 const STATUS_CONFIG: Record<string, { label: string; badge: string; dot: string }> = {
-  pending: { label: "Pending", badge: "bg-slate-100 text-slate-600", dot: "bg-slate-400" },
+  pending: { label: "Pending", badge: "bg-slate-100 text-[var(--cs-text-secondary)]", dot: "bg-slate-400" },
   analysing: { label: "Analysing", badge: "bg-violet-100 text-violet-700", dot: "bg-violet-500" },
   review: { label: "Awaiting Review", badge: "bg-amber-100 text-amber-700", dot: "bg-amber-500" },
   approved: { label: "Approved", badge: "bg-blue-100 text-blue-700", dot: "bg-blue-500" },
   actioned: { label: "Actioned", badge: "bg-emerald-100 text-emerald-700", dot: "bg-emerald-500" },
   rejected: { label: "Rejected", badge: "bg-red-100 text-red-700", dot: "bg-red-500" },
-  archived: { label: "Archived", badge: "bg-slate-100 text-slate-500", dot: "bg-slate-300" },
+  archived: { label: "Archived", badge: "bg-slate-100 text-[var(--cs-text-muted)]", dot: "bg-slate-300" },
 };
 
 const RISK_CONFIG: Record<string, { badge: string; border: string }> = {
@@ -43,7 +43,7 @@ const PRIORITY_COLOURS: Record<string, string> = {
   urgent: "bg-red-100 text-red-700",
   high: "bg-orange-100 text-orange-700",
   medium: "bg-amber-100 text-amber-700",
-  low: "bg-slate-100 text-slate-600",
+  low: "bg-slate-100 text-[var(--cs-text-secondary)]",
 };
 
 // ── Document card ─────────────────────────────────────────────────────────────
@@ -84,14 +84,14 @@ function DocumentCard({ doc }: { doc: UploadedDocument }) {
       {/* Header */}
       <div className="flex items-start gap-4 p-5">
         <div className="h-10 w-10 rounded-xl bg-slate-50 flex items-center justify-center shrink-0">
-          <FileText className="h-5 w-5 text-slate-400" />
+          <FileText className="h-5 w-5 text-[var(--cs-text-muted)]" />
         </div>
         <div className="flex-1 min-w-0">
           {/* Top row */}
           <div className="flex items-start justify-between gap-3">
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-sm font-bold text-slate-900 truncate max-w-[280px]">{doc.original_file_name}</span>
+                <span className="text-sm font-bold text-[var(--cs-navy)] truncate max-w-[280px]">{doc.original_file_name}</span>
                 <span className={cn("inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold", status.badge)}>
                   <span className={cn("h-1.5 w-1.5 rounded-full", status.dot, doc.document_status === "analysing" && "animate-pulse")} />
                   {status.label}
@@ -107,9 +107,9 @@ function DocumentCard({ doc }: { doc: UploadedDocument }) {
                   </span>
                 )}
               </div>
-              <div className="text-xs text-slate-500 mt-0.5 flex items-center gap-2 flex-wrap">
+              <div className="text-xs text-[var(--cs-text-muted)] mt-0.5 flex items-center gap-2 flex-wrap">
                 {doc.document_category && DOCUMENT_CATEGORY_LABELS[doc.document_category] && (
-                  <span className="font-medium text-slate-700">{DOCUMENT_CATEGORY_LABELS[doc.document_category]}</span>
+                  <span className="font-medium text-[var(--cs-text-secondary)]">{DOCUMENT_CATEGORY_LABELS[doc.document_category]}</span>
                 )}
                 {doc.classification_confidence !== null && (
                   <span>{Math.round((doc.classification_confidence ?? 0) * 100)}% confidence</span>
@@ -119,7 +119,7 @@ function DocumentCard({ doc }: { doc: UploadedDocument }) {
             </div>
             <button
               onClick={() => setExpanded((p) => !p)}
-              className="text-slate-400 hover:text-slate-600 shrink-0"
+              className="text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] shrink-0"
             >
               {expanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
             </button>
@@ -127,7 +127,7 @@ function DocumentCard({ doc }: { doc: UploadedDocument }) {
 
           {/* Summary */}
           {doc.ai_summary && (
-            <p className="text-xs text-slate-600 mt-2 leading-relaxed line-clamp-2">{doc.ai_summary}</p>
+            <p className="text-xs text-[var(--cs-text-secondary)] mt-2 leading-relaxed line-clamp-2">{doc.ai_summary}</p>
           )}
 
           {/* Quick chips */}
@@ -162,7 +162,7 @@ function DocumentCard({ doc }: { doc: UploadedDocument }) {
 
       {/* ── Expanded detail panel ── */}
       {expanded && aiResult && (
-        <div className="border-t border-slate-100 divide-y divide-slate-100">
+        <div className="border-t border-[var(--cs-border-subtle)] divide-y divide-slate-100">
 
           {/* Injection warning */}
           {aiResult.prompt_injection_detected && (
@@ -186,23 +186,23 @@ function DocumentCard({ doc }: { doc: UploadedDocument }) {
 
           {/* Extracted intelligence */}
           <div className="px-5 py-4 bg-slate-50/30">
-            <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-3">Extracted Intelligence</div>
+            <div className="text-[10px] font-bold text-[var(--cs-text-muted)] uppercase tracking-wider mb-3">Extracted Intelligence</div>
             <div className="grid grid-cols-2 gap-x-8 gap-y-3 text-[11px]">
               {aiResult.extracted_entities.people.length > 0 && (
                 <div>
-                  <div className="font-semibold text-slate-600 mb-1">People mentioned</div>
+                  <div className="font-semibold text-[var(--cs-text-secondary)] mb-1">People mentioned</div>
                   <div className="flex flex-wrap gap-1">
                     {aiResult.extracted_entities.people.map((p, i) => (
-                      <span key={i} className="rounded-full bg-white border border-slate-200 px-2 py-0.5 text-[10px] text-slate-700">{p}</span>
+                      <span key={i} className="rounded-full bg-white border border-[var(--cs-border)] px-2 py-0.5 text-[10px] text-[var(--cs-text-secondary)]">{p}</span>
                     ))}
                   </div>
                 </div>
               )}
               {aiResult.extracted_entities.dates.length > 0 && (
                 <div>
-                  <div className="font-semibold text-slate-600 mb-1">Key dates</div>
+                  <div className="font-semibold text-[var(--cs-text-secondary)] mb-1">Key dates</div>
                   {aiResult.extracted_entities.dates.slice(0, 4).map((d, i) => (
-                    <div key={i} className="text-slate-600">
+                    <div key={i} className="text-[var(--cs-text-secondary)]">
                       <span className="font-medium">{d.label}:</span> {d.value}
                     </div>
                   ))}
@@ -210,15 +210,15 @@ function DocumentCard({ doc }: { doc: UploadedDocument }) {
               )}
               {aiResult.extracted_entities.actions.length > 0 && (
                 <div className="col-span-2">
-                  <div className="font-semibold text-slate-600 mb-1">Action points</div>
+                  <div className="font-semibold text-[var(--cs-text-secondary)] mb-1">Action points</div>
                   <ul className="space-y-1">
                     {aiResult.extracted_entities.actions.slice(0, 6).map((a, i) => (
                       <li key={i} className="flex items-start gap-2">
-                        <span className="text-slate-400 mt-0.5">•</span>
-                        <span className="text-slate-700">
+                        <span className="text-[var(--cs-text-muted)] mt-0.5">•</span>
+                        <span className="text-[var(--cs-text-secondary)]">
                           <span className="font-medium">{a.action}</span>
-                          {a.responsible_person && <span className="text-slate-500 ml-1">— {a.responsible_person}</span>}
-                          {a.due_date && <span className="text-slate-400 ml-1">({a.due_date})</span>}
+                          {a.responsible_person && <span className="text-[var(--cs-text-muted)] ml-1">— {a.responsible_person}</span>}
+                          {a.due_date && <span className="text-[var(--cs-text-muted)] ml-1">({a.due_date})</span>}
                         </span>
                       </li>
                     ))}
@@ -254,7 +254,7 @@ function DocumentCard({ doc }: { doc: UploadedDocument }) {
           {/* Risk flags */}
           {aiResult.risk_flags.length > 0 && (
             <div className="px-5 py-4">
-              <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2.5">Risk & Gap Flags</div>
+              <div className="text-[10px] font-bold text-[var(--cs-text-muted)] uppercase tracking-wider mb-2.5">Risk & Gap Flags</div>
               <div className="space-y-2">
                 {aiResult.risk_flags.map((f, i) => (
                   <div key={i} className={cn(
@@ -262,7 +262,7 @@ function DocumentCard({ doc }: { doc: UploadedDocument }) {
                     f.severity === "critical" ? "border-red-200 bg-red-50 text-red-800"
                     : f.severity === "high" ? "border-orange-200 bg-orange-50 text-orange-800"
                     : f.severity === "medium" ? "border-amber-200 bg-amber-50 text-amber-800"
-                    : "border-slate-200 bg-slate-50 text-slate-700",
+                    : "border-[var(--cs-border)] bg-slate-50 text-[var(--cs-text-secondary)]",
                   )}>
                     <TriangleAlert className="h-3.5 w-3.5 shrink-0 mt-0.5" />
                     <div>
@@ -297,14 +297,14 @@ function DocumentCard({ doc }: { doc: UploadedDocument }) {
           {/* Evidence areas */}
           {aiResult.evidence_areas.length > 0 && (
             <div className="px-5 py-4">
-              <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2.5">Reg 45 Evidence Areas</div>
+              <div className="text-[10px] font-bold text-[var(--cs-text-muted)] uppercase tracking-wider mb-2.5">Reg 45 Evidence Areas</div>
               <div className="flex flex-wrap gap-2">
                 {aiResult.evidence_areas.map((e, i) => (
                   <div key={i} className={cn(
                     "rounded-xl border px-3 py-1.5 text-[11px] font-medium",
                     e.strength === "strong" ? "border-emerald-200 bg-emerald-50 text-emerald-800"
                     : e.strength === "moderate" ? "border-amber-200 bg-amber-50 text-amber-800"
-                    : "border-slate-200 bg-slate-50 text-slate-600",
+                    : "border-[var(--cs-border)] bg-slate-50 text-[var(--cs-text-secondary)]",
                   )}>
                     {e.area}
                     {e.reg45_section && <span className="ml-1 opacity-60">· {e.reg45_section}</span>}
@@ -338,7 +338,7 @@ function DocumentCard({ doc }: { doc: UploadedDocument }) {
           {/* Task approval panel */}
           {doc.document_status === "review" && pendingTasks.length > 0 && (
             <div className="px-5 py-4">
-              <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-3">
+              <div className="text-[10px] font-bold text-[var(--cs-text-muted)] uppercase tracking-wider mb-3">
                 Approve tasks to create — {selectedTaskIds.size} selected
               </div>
               <div className="space-y-2 mb-4">
@@ -347,7 +347,7 @@ function DocumentCard({ doc }: { doc: UploadedDocument }) {
                     key={task.id}
                     className={cn(
                       "flex items-start gap-3 rounded-xl border p-3 cursor-pointer transition-all",
-                      selectedTaskIds.has(task.id) ? "border-violet-300 bg-violet-50" : "border-slate-100 bg-white hover:bg-slate-50",
+                      selectedTaskIds.has(task.id) ? "border-violet-300 bg-violet-50" : "border-[var(--cs-border-subtle)] bg-white hover:bg-[var(--cs-surface)]",
                     )}
                   >
                     <input
@@ -362,18 +362,18 @@ function DocumentCard({ doc }: { doc: UploadedDocument }) {
                     />
                     <div className="flex-1">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span className="text-xs font-semibold text-slate-900">{task.title}</span>
+                        <span className="text-xs font-semibold text-[var(--cs-navy)]">{task.title}</span>
                         <span className={cn("rounded-full px-2 py-0.5 text-[10px] font-semibold capitalize", PRIORITY_COLOURS[task.priority] ?? PRIORITY_COLOURS.low)}>
                           {task.priority}
                         </span>
-                        {task.due_date && <span className="text-[10px] text-slate-400">{formatDate(task.due_date)}</span>}
+                        {task.due_date && <span className="text-[10px] text-[var(--cs-text-muted)]">{formatDate(task.due_date)}</span>}
                       </div>
-                      <p className="text-[11px] text-slate-600 mt-0.5 leading-relaxed">{task.description}</p>
+                      <p className="text-[11px] text-[var(--cs-text-secondary)] mt-0.5 leading-relaxed">{task.description}</p>
                       {task.regulation_link && (
                         <div className="mt-1 text-[10px] text-blue-600">📋 {task.regulation_link}</div>
                       )}
                       {task.source_quote && (
-                        <div className="mt-1 text-[10px] text-slate-400 italic border-l-2 border-slate-200 pl-2 line-clamp-2">
+                        <div className="mt-1 text-[10px] text-[var(--cs-text-muted)] italic border-l-2 border-[var(--cs-border)] pl-2 line-clamp-2">
                           &ldquo;{task.source_quote}&rdquo;
                         </div>
                       )}
@@ -395,13 +395,13 @@ function DocumentCard({ doc }: { doc: UploadedDocument }) {
                 </button>
                 <button
                   onClick={() => approve.mutate({ docId: doc.id, action: "reject" })}
-                  className="rounded-xl border border-slate-200 px-4 py-2.5 text-xs font-medium text-slate-600 hover:bg-slate-50"
+                  className="rounded-xl border border-[var(--cs-border)] px-4 py-2.5 text-xs font-medium text-[var(--cs-text-secondary)] hover:bg-[var(--cs-surface)]"
                 >
                   Reject
                 </button>
                 <button
                   onClick={() => approve.mutate({ docId: doc.id, action: "request_review" })}
-                  className="rounded-xl border border-slate-200 px-4 py-2.5 text-xs font-medium text-slate-600 hover:bg-slate-50"
+                  className="rounded-xl border border-[var(--cs-border)] px-4 py-2.5 text-xs font-medium text-[var(--cs-text-secondary)] hover:bg-[var(--cs-surface)]"
                 >
                   Send for review
                 </button>
@@ -420,7 +420,7 @@ function DocumentCard({ doc }: { doc: UploadedDocument }) {
                     : "Approved — no tasks created"}
                 </span>
                 {doc.approved_at && (
-                  <span className="text-xs text-slate-500 ml-2">· Approved {formatDate(doc.approved_at)}</span>
+                  <span className="text-xs text-[var(--cs-text-muted)] ml-2">· Approved {formatDate(doc.approved_at)}</span>
                 )}
               </div>
             </div>
@@ -485,7 +485,7 @@ export default function DocumentIntelligencePage() {
               </div>
               <div className="flex-1">
                 <h2 className="text-lg font-bold">ARIA Document Intelligence Engine</h2>
-                <p className="text-sm text-slate-300 mt-1.5 leading-relaxed max-w-2xl">
+                <p className="text-sm text-[var(--cs-text-gentle)] mt-1.5 leading-relaxed max-w-2xl">
                   Upload any operational document. ARIA reads, classifies, extracts entities, detects risks, maps to regulations, suggests tasks, generates management oversight, and creates Reg 45 evidence — all requiring your approval before any record is changed.
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2">
@@ -498,7 +498,7 @@ export default function DocumentIntelligencePage() {
                   </button>
                   <div className="flex flex-wrap gap-1.5">
                     {["Care Plan", "Risk Assessment", "DBS", "Reg 44", "Incident", "PEP", "Training Cert", "Strategy Meeting", "Medication Audit", "+more"].map((t) => (
-                      <span key={t} className="rounded-full bg-white/10 px-2.5 py-1 text-[10px] font-medium text-slate-300">{t}</span>
+                      <span key={t} className="rounded-full bg-white/10 px-2.5 py-1 text-[10px] font-medium text-[var(--cs-text-gentle)]">{t}</span>
                     ))}
                   </div>
                 </div>
@@ -528,7 +528,7 @@ export default function DocumentIntelligencePage() {
               },
               {
                 label: "Total Documents", value: meta?.total ?? 0,
-                icon: FileText, color: "text-slate-700", bg: "bg-slate-50",
+                icon: FileText, color: "text-[var(--cs-text-secondary)]", bg: "bg-slate-50",
                 action: () => setFilterStatus("all"),
               },
             ].map(({ label, value, icon: Icon, color, bg, action }) => (
@@ -543,7 +543,7 @@ export default function DocumentIntelligencePage() {
                   </div>
                   <div>
                     <div className={cn("text-2xl font-bold", color)}>{value}</div>
-                    <div className="text-xs text-slate-500 mt-0.5">{label}</div>
+                    <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">{label}</div>
                   </div>
                 </div>
               </button>
@@ -553,19 +553,19 @@ export default function DocumentIntelligencePage() {
           {/* Filters */}
           <div className="rounded-2xl border bg-white p-4 flex flex-wrap items-center gap-3">
             <div className="relative flex-1 min-w-[200px]">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
               <input
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search documents, summaries, categories…"
-                className="w-full pl-9 pr-3 h-8 rounded-lg border border-slate-200 text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-400"
+                className="w-full pl-9 pr-3 h-8 rounded-lg border border-[var(--cs-border)] text-xs text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-violet-400"
               />
             </div>
             <select
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value)}
-              className="h-8 rounded-lg border border-slate-200 bg-white px-2.5 text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-400"
+              className="h-8 rounded-lg border border-[var(--cs-border)] bg-white px-2.5 text-xs text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-violet-400"
             >
               <option value="all">All statuses</option>
               <option value="review">Awaiting review</option>
@@ -577,7 +577,7 @@ export default function DocumentIntelligencePage() {
             <select
               value={filterRisk}
               onChange={(e) => setFilterRisk(e.target.value)}
-              className="h-8 rounded-lg border border-slate-200 bg-white px-2.5 text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-400"
+              className="h-8 rounded-lg border border-[var(--cs-border)] bg-white px-2.5 text-xs text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-violet-400"
             >
               <option value="all">All risk levels</option>
               <option value="critical">Critical</option>
@@ -588,12 +588,12 @@ export default function DocumentIntelligencePage() {
             {(filterStatus !== "all" || filterRisk !== "all" || search) && (
               <button
                 onClick={() => { setFilterStatus("all"); setFilterRisk("all"); setSearch(""); }}
-                className="text-xs text-slate-500 hover:text-slate-700 flex items-center gap-1"
+                className="text-xs text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] flex items-center gap-1"
               >
                 <X className="h-3.5 w-3.5" /> Clear
               </button>
             )}
-            <span className="ml-auto text-xs text-slate-400">
+            <span className="ml-auto text-xs text-[var(--cs-text-muted)]">
               {filtered.length} document{filtered.length !== 1 ? "s" : ""}
             </span>
           </div>
@@ -601,7 +601,7 @@ export default function DocumentIntelligencePage() {
           {/* Documents list */}
           {query.isPending ? (
             <div className="flex items-center justify-center py-20">
-              <Loader2 className="h-6 w-6 animate-spin text-slate-400" />
+              <Loader2 className="h-6 w-6 animate-spin text-[var(--cs-text-muted)]" />
             </div>
           ) : filtered.length === 0 ? (
             <div className="rounded-2xl border bg-white p-16 text-center space-y-4">
@@ -609,10 +609,10 @@ export default function DocumentIntelligencePage() {
                 <Sparkles className="h-8 w-8 text-violet-400" />
               </div>
               <div>
-                <div className="text-base font-bold text-slate-900">
+                <div className="text-base font-bold text-[var(--cs-navy)]">
                   {allDocs.length === 0 ? "No documents yet" : "No documents match your filters"}
                 </div>
-                <div className="text-sm text-slate-500 mt-1 max-w-sm mx-auto leading-relaxed">
+                <div className="text-sm text-[var(--cs-text-muted)] mt-1 max-w-sm mx-auto leading-relaxed">
                   {allDocs.length === 0
                     ? "Upload your first document and ARIA will classify, extract intelligence, and suggest actions."
                     : "Try clearing your filters to see all documents."
@@ -638,9 +638,9 @@ export default function DocumentIntelligencePage() {
           )}
 
           {/* What ARIA supports */}
-          <div className="rounded-2xl border border-slate-100 bg-slate-50 p-5 space-y-4">
-            <div className="text-xs font-bold text-slate-700">Supported document types</div>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 text-[11px] text-slate-500">
+          <div className="rounded-2xl border border-[var(--cs-border-subtle)] bg-slate-50 p-5 space-y-4">
+            <div className="text-xs font-bold text-[var(--cs-text-secondary)]">Supported document types</div>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 text-[11px] text-[var(--cs-text-muted)]">
               {[
                 "Care plans & placement plans", "Risk & safety assessments", "Missing from care reports",
                 "Incident & accident reports", "Strategy meeting minutes", "CLA / LAC review records",
@@ -657,9 +657,9 @@ export default function DocumentIntelligencePage() {
                 </div>
               ))}
             </div>
-            <div className="flex items-start gap-2 rounded-xl border border-slate-200 bg-white p-3">
-              <Shield className="h-3.5 w-3.5 text-slate-400 shrink-0 mt-0.5" />
-              <p className="text-[10px] text-slate-500 leading-relaxed">
+            <div className="flex items-start gap-2 rounded-xl border border-[var(--cs-border)] bg-white p-3">
+              <Shield className="h-3.5 w-3.5 text-[var(--cs-text-muted)] shrink-0 mt-0.5" />
+              <p className="text-[10px] text-[var(--cs-text-muted)] leading-relaxed">
                 <strong>Security:</strong> ARIA treats all uploaded document content as data. If a document contains instructions attempting to manipulate ARIA (e.g. &ldquo;ignore previous instructions&rdquo;), they are automatically detected, flagged, and ignored. All AI suggestions require explicit human approval before creating any records. Full audit trail is maintained for every action.
               </p>
             </div>

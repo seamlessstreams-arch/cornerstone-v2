@@ -24,6 +24,7 @@ import { useCreateTrainingNeed } from "@/hooks/use-ri-learning";
 import { SmartUploadButton } from "@/components/documents/smart-upload-button";
 import { PrintButton } from "@/components/common/print-button";
 import { ExportButton, type ExportColumn } from "@/components/common/export-button";
+import { PageGuidance } from "@/components/ui/page-guidance";
 import { getStaffName, getYPName, getYPById } from "@/lib/seed-data";
 import { INCIDENT_TYPE_LABELS, INCIDENT_TYPES, INCIDENT_SEVERITIES } from "@/lib/constants";
 import { cn, formatDate, formatRelative, todayStr } from "@/lib/utils";
@@ -45,8 +46,8 @@ const SEV_CONFIG = {
     badge: "bg-amber-100 text-amber-800", dot: "bg-amber-400",
   },
   low: {
-    color: "text-slate-600", bg: "bg-slate-50", border: "border-l-slate-300",
-    badge: "bg-slate-100 text-slate-700", dot: "bg-slate-400",
+    color: "text-[var(--cs-text-secondary)]", bg: "bg-slate-50", border: "border-l-slate-300",
+    badge: "bg-slate-100 text-[var(--cs-text-secondary)]", dot: "bg-slate-400",
   },
 } as const;
 
@@ -152,14 +153,14 @@ function IncidentCard({
           {/* Top line */}
           <div className="flex items-start justify-between gap-3 flex-wrap">
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-sm font-bold text-slate-900">{inc.reference}</span>
+              <span className="text-sm font-bold text-[var(--cs-navy)]">{inc.reference}</span>
               <span className={cn("inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold", stat.badge)}>
                 {stat.label}
               </span>
               <span className={cn("inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold capitalize", sev.badge)}>
                 {inc.severity}
               </span>
-              <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-medium text-slate-600">
+              <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-medium text-[var(--cs-text-secondary)]">
                 {INCIDENT_TYPE_LABELS[inc.type] || inc.type}
               </span>
             </div>
@@ -171,24 +172,24 @@ function IncidentCard({
               <YPAvatar childId={inc.child_id} />
               <span className="text-xs font-semibold text-violet-700">{getYPName(inc.child_id)}</span>
             </div>
-            <span className="text-[11px] text-slate-500 flex items-center gap-1">
+            <span className="text-[11px] text-[var(--cs-text-muted)] flex items-center gap-1">
               <Calendar className="h-3 w-3" />
               {formatDate(inc.date)} at {inc.time}
             </span>
             {inc.location && (
-              <span className="text-[11px] text-slate-500 flex items-center gap-1">
+              <span className="text-[11px] text-[var(--cs-text-muted)] flex items-center gap-1">
                 <MapPin className="h-3 w-3" />
                 {inc.location}
               </span>
             )}
-            <span className="text-[11px] text-slate-500 flex items-center gap-1">
+            <span className="text-[11px] text-[var(--cs-text-muted)] flex items-center gap-1">
               <Users className="h-3 w-3" />
               {getStaffName(inc.reported_by)}
             </span>
           </div>
 
           {/* Description */}
-          <p className="text-xs text-slate-600 mt-2.5 leading-relaxed line-clamp-2">{inc.description}</p>
+          <p className="text-xs text-[var(--cs-text-secondary)] mt-2.5 leading-relaxed line-clamp-2">{inc.description}</p>
 
           {/* Notifications */}
           {inc.notifications.length > 0 && (
@@ -200,7 +201,7 @@ function IncidentCard({
                     "inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium",
                     n.acknowledged
                       ? "bg-emerald-50 text-emerald-700"
-                      : "bg-slate-100 text-slate-600"
+                      : "bg-slate-100 text-[var(--cs-text-secondary)]"
                   )}
                 >
                   <Bell className="h-2.5 w-2.5" />
@@ -358,7 +359,7 @@ function AllIncidentsTab() {
   if (query.isPending) {
     return (
       <div className="flex items-center justify-center py-20">
-        <Loader2 className="h-6 w-6 animate-spin text-slate-400" />
+        <Loader2 className="h-6 w-6 animate-spin text-[var(--cs-text-muted)]" />
       </div>
     );
   }
@@ -383,14 +384,14 @@ function AllIncidentsTab() {
       {/* Stats bar */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         {[
-          { label: "Total", value: stats.total, color: "text-slate-900" },
+          { label: "Total", value: stats.total, color: "text-[var(--cs-navy)]" },
           { label: "Open", value: stats.open, color: "text-red-600" },
           { label: "Needs Oversight", value: stats.awaitingOversight, color: "text-amber-600" },
           { label: "Critical Open", value: stats.critical, color: "text-red-700" },
         ].map((s) => (
           <div key={s.label} className="rounded-2xl border bg-white p-4 text-center">
             <div className={cn("text-2xl font-bold", s.color)}>{s.value}</div>
-            <div className="text-xs text-slate-500 mt-0.5">{s.label}</div>
+            <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">{s.label}</div>
           </div>
         ))}
       </div>
@@ -398,7 +399,7 @@ function AllIncidentsTab() {
       {/* Filter bar */}
       <div className="rounded-2xl border bg-white p-4 flex flex-wrap items-center gap-3">
         <div className="relative flex-1 min-w-[200px]">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
           <Input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -410,7 +411,7 @@ function AllIncidentsTab() {
         <select
           value={filterStatus}
           onChange={(e) => setFilterStatus(e.target.value)}
-          className="h-8 rounded-lg border border-slate-200 bg-white px-2.5 text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-400"
+          className="h-8 rounded-lg border border-[var(--cs-border)] bg-white px-2.5 text-xs text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-violet-400"
         >
           <option value="all">All statuses</option>
           <option value="open">Open</option>
@@ -421,7 +422,7 @@ function AllIncidentsTab() {
         <select
           value={filterSeverity}
           onChange={(e) => setFilterSeverity(e.target.value)}
-          className="h-8 rounded-lg border border-slate-200 bg-white px-2.5 text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-400"
+          className="h-8 rounded-lg border border-[var(--cs-border)] bg-white px-2.5 text-xs text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-violet-400"
         >
           <option value="all">All severities</option>
           {INCIDENT_SEVERITIES.map((s) => (
@@ -432,7 +433,7 @@ function AllIncidentsTab() {
         <select
           value={filterType}
           onChange={(e) => setFilterType(e.target.value)}
-          className="h-8 rounded-lg border border-slate-200 bg-white px-2.5 text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-400"
+          className="h-8 rounded-lg border border-[var(--cs-border)] bg-white px-2.5 text-xs text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-violet-400"
         >
           <option value="all">All types</option>
           {INCIDENT_TYPES.map((t) => <option key={t} value={t}>{INCIDENT_TYPE_LABELS[t]}</option>)}
@@ -441,7 +442,7 @@ function AllIncidentsTab() {
         <select
           value={filterChild}
           onChange={(e) => setFilterChild(e.target.value)}
-          className="h-8 rounded-lg border border-slate-200 bg-white px-2.5 text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-400"
+          className="h-8 rounded-lg border border-[var(--cs-border)] bg-white px-2.5 text-xs text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-violet-400"
         >
           <option value="all">All young people</option>
           {allYP.map((yp) => (
@@ -450,11 +451,11 @@ function AllIncidentsTab() {
         </select>
 
         <div className="flex items-center gap-1">
-          <ArrowUpDown className="h-3.5 w-3.5 text-slate-400" />
+          <ArrowUpDown className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value as "severity" | "date" | "reference")}
-            className="h-8 rounded-lg border border-slate-200 bg-white px-2.5 text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-400"
+            className="h-8 rounded-lg border border-[var(--cs-border)] bg-white px-2.5 text-xs text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-violet-400"
           >
             <option value="severity">Priority</option>
             <option value="date">Date</option>
@@ -465,7 +466,7 @@ function AllIncidentsTab() {
         {(filterStatus !== "all" || filterSeverity !== "all" || filterType !== "all" || filterChild !== "all" || search) && (
           <button
             onClick={() => { setFilterStatus("all"); setFilterSeverity("all"); setFilterType("all"); setFilterChild("all"); setSearch(""); }}
-            className="text-xs text-slate-500 hover:text-slate-700 flex items-center gap-1"
+            className="text-xs text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] flex items-center gap-1"
           >
             <X className="h-3.5 w-3.5" /> Clear
           </button>
@@ -480,13 +481,13 @@ function AllIncidentsTab() {
           columns={INCIDENT_EXPORT_COLS}
           label="Export CSV"
         />
-        <span className="text-xs text-slate-400">
+        <span className="text-xs text-[var(--cs-text-muted)]">
           {filtered.length} incident{filtered.length !== 1 ? "s" : ""}
         </span>
       </div>
 
       {/* Results */}
-      <div className="text-xs text-slate-400 font-medium">
+      <div className="text-xs text-[var(--cs-text-muted)] font-medium">
         {filtered.length} incident{filtered.length !== 1 ? "s" : ""} shown
       </div>
 
@@ -494,8 +495,8 @@ function AllIncidentsTab() {
         {filtered.length === 0 ? (
           <div className="rounded-2xl border bg-white p-12 text-center">
             <CheckCircle2 className="h-8 w-8 text-emerald-400 mx-auto mb-3" />
-            <div className="text-sm font-semibold text-slate-900">No incidents match your filters</div>
-            <div className="text-xs text-slate-400 mt-1">Try adjusting your filters to see more records</div>
+            <div className="text-sm font-semibold text-[var(--cs-navy)]">No incidents match your filters</div>
+            <div className="text-xs text-[var(--cs-text-muted)] mt-1">Try adjusting your filters to see more records</div>
           </div>
         ) : (
           filtered.map((inc) => (
@@ -516,37 +517,37 @@ function AllIncidentsTab() {
           onClick={() => setOversightTarget(null)}
         >
           <div
-            className="w-full max-w-lg bg-white shadow-2xl overflow-y-auto"
+            className="w-full max-w-lg bg-white shadow-[var(--cs-shadow-elevated)] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="sticky top-0 z-10 bg-white border-b px-6 py-4 flex items-center justify-between">
               <div>
                 <div className="flex items-center gap-2">
                   <Shield className="h-4 w-4 text-amber-600" />
-                  <span className="text-sm font-bold text-slate-900">Add Management Oversight</span>
+                  <span className="text-sm font-bold text-[var(--cs-navy)]">Add Management Oversight</span>
                 </div>
-                <div className="text-xs text-slate-500 mt-0.5">{oversightTarget.reference}</div>
+                <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">{oversightTarget.reference}</div>
               </div>
-              <button onClick={() => setOversightTarget(null)} className="text-slate-400 hover:text-slate-600">
+              <button onClick={() => setOversightTarget(null)} className="text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)]">
                 <X className="h-4 w-4" />
               </button>
             </div>
 
             <div className="p-6 space-y-5">
               {/* Incident summary */}
-              <div className={cn("rounded-2xl border-l-4 p-4", SEV_CONFIG[oversightTarget.severity]?.border, "border border-slate-200")}>
+              <div className={cn("rounded-2xl border-l-4 p-4", SEV_CONFIG[oversightTarget.severity]?.border, "border border-[var(--cs-border)]")}>
                 <div className="flex items-center gap-2 mb-2">
                   <span className={cn("rounded-full px-2 py-0.5 text-[10px] font-semibold capitalize", SEV_CONFIG[oversightTarget.severity]?.badge)}>
                     {oversightTarget.severity}
                   </span>
-                  <span className="text-xs font-medium text-slate-700">{INCIDENT_TYPE_LABELS[oversightTarget.type]}</span>
-                  <span className="text-xs text-slate-400">— {getYPName(oversightTarget.child_id)}</span>
+                  <span className="text-xs font-medium text-[var(--cs-text-secondary)]">{INCIDENT_TYPE_LABELS[oversightTarget.type]}</span>
+                  <span className="text-xs text-[var(--cs-text-muted)]">— {getYPName(oversightTarget.child_id)}</span>
                 </div>
-                <p className="text-xs text-slate-700 leading-relaxed">{oversightTarget.description}</p>
+                <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed">{oversightTarget.description}</p>
                 {oversightTarget.immediate_action && (
                   <div className="mt-3 rounded-xl bg-slate-50 p-3">
-                    <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-1">Immediate Action</div>
-                    <p className="text-xs text-slate-700">{oversightTarget.immediate_action}</p>
+                    <div className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-1">Immediate Action</div>
+                    <p className="text-xs text-[var(--cs-text-secondary)]">{oversightTarget.immediate_action}</p>
                   </div>
                 )}
               </div>
@@ -563,7 +564,7 @@ function AllIncidentsTab() {
 
               {/* Oversight textarea */}
               <div>
-                <label className="text-xs font-semibold text-slate-700 block mb-2">
+                <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-2">
                   Oversight note <span className="text-red-500">*</span>
                 </label>
                 <textarea
@@ -571,7 +572,7 @@ function AllIncidentsTab() {
                   onChange={(e) => setOversightNote(e.target.value)}
                   rows={5}
                   placeholder="Record your management oversight — what you have considered, any actions agreed, lessons identified…"
-                  className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-3 text-xs text-slate-700 resize-none focus:outline-none focus:ring-2 focus:ring-violet-400 placeholder:text-slate-400 leading-relaxed"
+                  className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3.5 py-3 text-xs text-[var(--cs-text-secondary)] resize-none focus:outline-none focus:ring-2 focus:ring-violet-400 placeholder:text-[var(--cs-text-muted)] leading-relaxed"
                 />
               </div>
 
@@ -617,7 +618,7 @@ function OversightQueueTab() {
   if (query.isPending) {
     return (
       <div className="flex items-center justify-center py-20">
-        <Loader2 className="h-6 w-6 animate-spin text-slate-400" />
+        <Loader2 className="h-6 w-6 animate-spin text-[var(--cs-text-muted)]" />
       </div>
     );
   }
@@ -628,8 +629,8 @@ function OversightQueueTab() {
         <div className="h-14 w-14 rounded-full bg-emerald-100 flex items-center justify-center mx-auto mb-4">
           <CheckCircle2 className="h-7 w-7 text-emerald-600" />
         </div>
-        <div className="text-base font-bold text-slate-900">All incidents have manager oversight</div>
-        <div className="text-sm text-slate-400 mt-1">
+        <div className="text-base font-bold text-[var(--cs-navy)]">All incidents have manager oversight</div>
+        <div className="text-sm text-[var(--cs-text-muted)] mt-1">
           Every incident requiring oversight has been reviewed. Well done.
         </div>
       </div>
@@ -684,26 +685,26 @@ function OversightQueueTab() {
         return (
           <div key={inc.id} className={cn("rounded-2xl border bg-white border-l-4 overflow-hidden", sev.border)}>
             {/* Card header */}
-            <div className="p-5 border-b border-slate-100">
+            <div className="p-5 border-b border-[var(--cs-border-subtle)]">
               <div className="flex items-start gap-3">
                 <div className={cn("rounded-xl p-2.5 shrink-0", sev.bg)}>
                   <AlertTriangle className={cn("h-4 w-4", sev.color)} />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-sm font-bold text-slate-900">{inc.reference}</span>
+                    <span className="text-sm font-bold text-[var(--cs-navy)]">{inc.reference}</span>
                     <span className={cn("inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold capitalize", sev.badge)}>
                       {inc.severity}
                     </span>
-                    <span className="text-xs font-medium text-slate-600">{INCIDENT_TYPE_LABELS[inc.type]}</span>
+                    <span className="text-xs font-medium text-[var(--cs-text-secondary)]">{INCIDENT_TYPE_LABELS[inc.type]}</span>
                   </div>
                   <div className="mt-1.5 flex items-center gap-3">
                     <div className="flex items-center gap-1.5">
                       <YPAvatar childId={inc.child_id} />
                       <span className="text-xs font-semibold text-violet-700">{getYPName(inc.child_id)}</span>
                     </div>
-                    <span className="text-[11px] text-slate-400">{formatDate(inc.date)} at {inc.time}</span>
-                    {inc.location && <span className="text-[11px] text-slate-400">{inc.location}</span>}
+                    <span className="text-[11px] text-[var(--cs-text-muted)]">{formatDate(inc.date)} at {inc.time}</span>
+                    {inc.location && <span className="text-[11px] text-[var(--cs-text-muted)]">{inc.location}</span>}
                   </div>
                 </div>
               </div>
@@ -712,25 +713,25 @@ function OversightQueueTab() {
             {/* Incident body */}
             <div className="p-5 space-y-4">
               <div>
-                <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Description</div>
-                <p className="text-sm text-slate-700 leading-relaxed">{inc.description}</p>
+                <div className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-1.5">Description</div>
+                <p className="text-sm text-[var(--cs-text-secondary)] leading-relaxed">{inc.description}</p>
               </div>
 
               {inc.immediate_action && (
                 <div>
-                  <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Immediate Action Taken</div>
-                  <p className="text-sm text-slate-700 leading-relaxed">{inc.immediate_action}</p>
+                  <div className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-1.5">Immediate Action Taken</div>
+                  <p className="text-sm text-[var(--cs-text-secondary)] leading-relaxed">{inc.immediate_action}</p>
                 </div>
               )}
 
               {/* Notifications */}
               {inc.notifications.length > 0 && (
                 <div>
-                  <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2">Notifications Made</div>
+                  <div className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-2">Notifications Made</div>
                   <div className="space-y-1.5">
                     {inc.notifications.map((n, i) => (
                       <div key={i} className="flex items-center justify-between rounded-xl bg-slate-50 px-3 py-2">
-                        <span className="text-xs text-slate-700">
+                        <span className="text-xs text-[var(--cs-text-secondary)]">
                           <span className="font-medium">{n.role}:</span> {n.name} — {n.method}
                         </span>
                         {n.acknowledged
@@ -750,7 +751,7 @@ function OversightQueueTab() {
                   className="flex items-center gap-2 rounded-xl border border-violet-200 bg-violet-50 px-3 py-2 text-xs font-semibold text-violet-700 hover:bg-violet-100 transition-colors"
                 >
                   <Sparkles className="h-3.5 w-3.5" />
-                  {ariaPanelId === inc.id ? "Close Aria" : "Ask Aria to help draft oversight"}
+                  {ariaPanelId === inc.id ? "Close Aria" : "Ask ARIA to help draft oversight"}
                 </button>
 
                 {ariaPanelId === inc.id && (
@@ -777,7 +778,7 @@ function OversightQueueTab() {
                   onChange={(e) => setNotesById((prev) => ({ ...prev, [inc.id]: e.target.value }))}
                   rows={4}
                   placeholder="Record your oversight — considerations, actions agreed, lessons identified, follow-up required…"
-                  className="w-full rounded-xl border border-amber-200 bg-white px-3.5 py-3 text-xs text-slate-700 resize-none focus:outline-none focus:ring-2 focus:ring-amber-400 placeholder:text-slate-400 leading-relaxed"
+                  className="w-full rounded-xl border border-amber-200 bg-white px-3.5 py-3 text-xs text-[var(--cs-text-secondary)] resize-none focus:outline-none focus:ring-2 focus:ring-amber-400 placeholder:text-[var(--cs-text-muted)] leading-relaxed"
                 />
                 <Button
                   onClick={() => handleSubmit(inc)}
@@ -896,10 +897,10 @@ function LogIncidentTab({ onSuccess }: { onSuccess?: () => void }) {
         </div>
         {successResult.links.length > 0 && (
           <div className="rounded-xl bg-white border border-emerald-200 p-4 text-left">
-            <div className="text-xs font-semibold text-slate-700 mb-2">Auto-created linked records:</div>
+            <div className="text-xs font-semibold text-[var(--cs-text-secondary)] mb-2">Auto-created linked records:</div>
             <ul className="space-y-1">
               {successResult.links.map((l, i) => (
-                <li key={i} className="text-xs text-slate-600 flex items-center gap-2">
+                <li key={i} className="text-xs text-[var(--cs-text-secondary)] flex items-center gap-2">
                   <CheckCircle2 className="h-3 w-3 text-emerald-500 shrink-0" />
                   {l}
                 </li>
@@ -921,16 +922,16 @@ function LogIncidentTab({ onSuccess }: { onSuccess?: () => void }) {
     <div className="max-w-2xl space-y-5">
       {/* Child + type + severity */}
       <div className="rounded-2xl border bg-white p-5 space-y-4">
-        <div className="text-sm font-bold text-slate-900">Incident Details</div>
+        <div className="text-sm font-bold text-[var(--cs-navy)]">Incident Details</div>
 
         <div>
-          <label className="text-xs font-semibold text-slate-600 block mb-1.5">
+          <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">
             Young Person <span className="text-red-500">*</span>
           </label>
           <select
             value={form.child_id}
             onChange={(e) => setForm((p) => ({ ...p, child_id: e.target.value }))}
-            className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-400"
+            className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2.5 text-sm text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-violet-400"
           >
             <option value="">Select young person…</option>
             {logAllYP.map((yp) => (
@@ -943,24 +944,24 @@ function LogIncidentTab({ onSuccess }: { onSuccess?: () => void }) {
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="text-xs font-semibold text-slate-600 block mb-1.5">
+            <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">
               Incident Type <span className="text-red-500">*</span>
             </label>
             <select
               value={form.type}
               onChange={(e) => setForm((p) => ({ ...p, type: e.target.value }))}
-              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-400"
+              className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2.5 text-sm text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-violet-400"
             >
               <option value="">Select type…</option>
               {INCIDENT_TYPES.map((t) => <option key={t} value={t}>{INCIDENT_TYPE_LABELS[t]}</option>)}
             </select>
           </div>
           <div>
-            <label className="text-xs font-semibold text-slate-600 block mb-1.5">Severity</label>
+            <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">Severity</label>
             <select
               value={form.severity}
               onChange={(e) => setForm((p) => ({ ...p, severity: e.target.value }))}
-              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-400"
+              className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2.5 text-sm text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-violet-400"
             >
               <option value="low">Low</option>
               <option value="medium">Medium</option>
@@ -972,7 +973,7 @@ function LogIncidentTab({ onSuccess }: { onSuccess?: () => void }) {
 
         <div className="grid grid-cols-3 gap-4">
           <div>
-            <label className="text-xs font-semibold text-slate-600 block mb-1.5">Date</label>
+            <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">Date</label>
             <Input
               type="date"
               value={form.date}
@@ -981,7 +982,7 @@ function LogIncidentTab({ onSuccess }: { onSuccess?: () => void }) {
             />
           </div>
           <div>
-            <label className="text-xs font-semibold text-slate-600 block mb-1.5">Time</label>
+            <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">Time</label>
             <Input
               type="time"
               value={form.time}
@@ -990,7 +991,7 @@ function LogIncidentTab({ onSuccess }: { onSuccess?: () => void }) {
             />
           </div>
           <div>
-            <label className="text-xs font-semibold text-slate-600 block mb-1.5">Location</label>
+            <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">Location</label>
             <Input
               value={form.location}
               onChange={(e) => setForm((p) => ({ ...p, location: e.target.value }))}
@@ -1004,7 +1005,7 @@ function LogIncidentTab({ onSuccess }: { onSuccess?: () => void }) {
       {/* Description */}
       <div className="rounded-2xl border bg-white p-5 space-y-4">
         <div className="flex items-center justify-between">
-          <div className="text-sm font-bold text-slate-900">Description & Actions</div>
+          <div className="text-sm font-bold text-[var(--cs-navy)]">Description & Actions</div>
           <button
             onClick={() => setAriaOpen(!ariaOpen)}
             className="flex items-center gap-1.5 rounded-xl border border-violet-200 bg-violet-50 px-3 py-1.5 text-xs font-semibold text-violet-700 hover:bg-violet-100 transition-colors"
@@ -1069,23 +1070,23 @@ function LogIncidentTab({ onSuccess }: { onSuccess?: () => void }) {
 
       {/* Notifications */}
       <div className="rounded-2xl border bg-white p-5 space-y-4">
-        <div className="text-sm font-bold text-slate-900">Notifications</div>
-        <div className="text-xs text-slate-500">Record who has been informed of this incident.</div>
+        <div className="text-sm font-bold text-[var(--cs-navy)]">Notifications</div>
+        <div className="text-xs text-[var(--cs-text-muted)]">Record who has been informed of this incident.</div>
 
         <div className="flex items-end gap-2 flex-wrap">
           <div className="flex-1 min-w-[140px]">
-            <label className="text-xs font-medium text-slate-600 block mb-1">Role</label>
+            <label className="text-xs font-medium text-[var(--cs-text-secondary)] block mb-1">Role</label>
             <select
               value={notifRole}
               onChange={(e) => setNotifRole(e.target.value)}
-              className="w-full h-9 rounded-lg border border-slate-200 bg-slate-50 px-2.5 text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-400"
+              className="w-full h-9 rounded-lg border border-[var(--cs-border)] bg-slate-50 px-2.5 text-xs text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-violet-400"
             >
               <option value="">Select role…</option>
               {NOTIF_ROLES.map((r) => <option key={r} value={r}>{r}</option>)}
             </select>
           </div>
           <div className="flex-1 min-w-[140px]">
-            <label className="text-xs font-medium text-slate-600 block mb-1">Name (optional)</label>
+            <label className="text-xs font-medium text-[var(--cs-text-secondary)] block mb-1">Name (optional)</label>
             <Input
               value={notifName}
               onChange={(e) => setNotifName(e.target.value)}
@@ -1094,11 +1095,11 @@ function LogIncidentTab({ onSuccess }: { onSuccess?: () => void }) {
             />
           </div>
           <div className="w-28">
-            <label className="text-xs font-medium text-slate-600 block mb-1">Method</label>
+            <label className="text-xs font-medium text-[var(--cs-text-secondary)] block mb-1">Method</label>
             <select
               value={notifMethod}
               onChange={(e) => setNotifMethod(e.target.value)}
-              className="w-full h-9 rounded-lg border border-slate-200 bg-slate-50 px-2.5 text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-400"
+              className="w-full h-9 rounded-lg border border-[var(--cs-border)] bg-slate-50 px-2.5 text-xs text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-violet-400"
             >
               <option>Phone</option>
               <option>Email</option>
@@ -1115,12 +1116,12 @@ function LogIncidentTab({ onSuccess }: { onSuccess?: () => void }) {
           <div className="space-y-1.5">
             {form.notifications.map((n, i) => (
               <div key={i} className="flex items-center justify-between rounded-xl bg-slate-50 px-3 py-2">
-                <span className="text-xs text-slate-700">
+                <span className="text-xs text-[var(--cs-text-secondary)]">
                   <span className="font-medium">{n.role}</span>
                   {n.name && `: ${n.name}`}
-                  <span className="text-slate-400"> — {n.method}</span>
+                  <span className="text-[var(--cs-text-muted)]"> — {n.method}</span>
                 </span>
-                <button onClick={() => removeNotif(i)} className="text-slate-300 hover:text-red-500 transition-colors">
+                <button onClick={() => removeNotif(i)} className="text-[var(--cs-text-gentle)] hover:text-red-500 transition-colors">
                   <X className="h-3.5 w-3.5" />
                 </button>
               </div>
@@ -1133,8 +1134,8 @@ function LogIncidentTab({ onSuccess }: { onSuccess?: () => void }) {
       <div className="rounded-2xl border bg-white p-5">
         <div className="flex items-center justify-between">
           <div>
-            <div className="text-sm font-bold text-slate-900">Body Map</div>
-            <div className="text-xs text-slate-500 mt-0.5">Required for any incident involving physical marks, injuries, or self-harm.</div>
+            <div className="text-sm font-bold text-[var(--cs-navy)]">Body Map</div>
+            <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">Required for any incident involving physical marks, injuries, or self-harm.</div>
           </div>
           <button
             onClick={() => setForm((p) => ({ ...p, body_map_required: !p.body_map_required }))}
@@ -1167,7 +1168,7 @@ function LogIncidentTab({ onSuccess }: { onSuccess?: () => void }) {
           )}
         </Button>
         {!isValid && (
-          <span className="text-xs text-slate-400">
+          <span className="text-xs text-[var(--cs-text-muted)]">
             Complete young person, type, description, and immediate action to submit
           </span>
         )}
@@ -1204,6 +1205,14 @@ export default function IncidentsPage() {
       }
     >
       <div id="incidents-content" className="space-y-6">
+        <PageGuidance
+          title="Incident recording & oversight"
+          description="Every incident must be logged promptly and reviewed by management within 24 hours. Critical incidents require immediate escalation and statutory notifications."
+          evidenceTip="Inspectors assess whether oversight notes demonstrate professional curiosity — not just sign-off but reflective analysis of what happened and what will change."
+          ariaTip="ARIA can detect incident patterns across children and time periods, flagging escalation risks before they become critical."
+          regulationRef="Children's Homes Regulations 2015, Reg 40 — Notification of significant events"
+          variant="safeguarding"
+        />
         {/* Tab bar */}
         <div className="flex items-center gap-1 rounded-2xl border bg-white p-1.5">
           {TABS.map(({ id, label, icon: Icon }) => {
@@ -1217,7 +1226,7 @@ export default function IncidentsPage() {
                   "flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all",
                   isActive
                     ? "bg-slate-900 text-white shadow-sm"
-                    : "text-slate-500 hover:text-slate-700 hover:bg-slate-50"
+                    : "text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] hover:bg-[var(--cs-surface)]"
                 )}
               >
                 <Icon className="h-4 w-4" />
@@ -1225,7 +1234,7 @@ export default function IncidentsPage() {
                 {showBadge && (
                   <span className={cn(
                     "rounded-full px-1.5 py-0.5 text-[10px] font-bold",
-                    isActive ? "bg-white text-slate-900" : "bg-amber-500 text-white"
+                    isActive ? "bg-white text-[var(--cs-navy)]" : "bg-amber-500 text-white"
                   )}>
                     {queueCount}
                   </span>

@@ -649,7 +649,7 @@ export default function TransportRiskAssessmentsPage() {
           return (
             <div key={ra.id} className="rounded-xl border bg-white overflow-hidden">
               <button
-                className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                 onClick={() => setExpandedId(isExpanded ? null : ra.id)}
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -784,7 +784,7 @@ export default function TransportRiskAssessmentsPage() {
                       <p className="text-sm text-red-900">{ra.emergencyProcedure}</p>
                     </div>
                     <div className="bg-slate-100 rounded-lg p-3 border">
-                      <p className="text-xs font-semibold text-slate-800 uppercase tracking-wide mb-1">
+                      <p className="text-xs font-semibold text-[var(--cs-navy)] uppercase tracking-wide mb-1">
                         <Wrench className="h-3 w-3 inline mr-1" />Breakdown Procedure
                       </p>
                       <p className="text-sm">{ra.breakdownProcedure}</p>

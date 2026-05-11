@@ -28,7 +28,7 @@ import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 /* ── constants ────────────────────────────────────────────────────────── */
 
 const LOSS_TYPE_COLOURS: Record<LossType, string> = {
-  bereavement: "bg-slate-100 text-slate-800",
+  bereavement: "bg-slate-100 text-[var(--cs-navy)]",
   family_separation: "bg-blue-100 text-blue-800",
   placement_move: "bg-amber-100 text-amber-800",
   pet_loss: "bg-emerald-100 text-emerald-800",
@@ -295,9 +295,9 @@ export default function GriefAndLossSupportPage() {
 
                   {/* coping + watch for */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <div className="rounded-md bg-slate-50 border border-slate-200 p-3">
-                      <h4 className="text-xs font-semibold text-slate-700 mb-1">Child&apos;s Coping Strategies</h4>
-                      <ul className="list-disc list-inside text-sm text-slate-900 space-y-0.5">
+                    <div className="rounded-md bg-slate-50 border border-[var(--cs-border)] p-3">
+                      <h4 className="text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Child&apos;s Coping Strategies</h4>
+                      <ul className="list-disc list-inside text-sm text-[var(--cs-navy)] space-y-0.5">
                         {r.child_coping_strategies.map((c, i) => <li key={i}>{c}</li>)}
                       </ul>
                     </div>

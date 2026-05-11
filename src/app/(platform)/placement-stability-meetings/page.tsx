@@ -348,9 +348,9 @@ export default function PlacementStabilityMeetingsPage() {
       </div>
 
       {/* ─── regulatory note ─── */}
-      <div className="mt-8 bg-slate-50 border border-slate-200 rounded-lg p-4">
-        <p className="text-sm font-medium text-slate-700 mb-1">Regulatory Context</p>
-        <p className="text-xs text-slate-600">
+      <div className="mt-8 bg-slate-50 border border-[var(--cs-border)] rounded-lg p-4">
+        <p className="text-sm font-medium text-[var(--cs-text-secondary)] mb-1">Regulatory Context</p>
+        <p className="text-xs text-[var(--cs-text-secondary)]">
           Placement stability is a key outcome measure for Ofsted. The SCCIF examines whether the
           home works proactively to maintain placements and prevents unplanned endings. Quality
           Standard 1 requires that children experience stable, consistent care. Where placements

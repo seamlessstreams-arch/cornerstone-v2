@@ -165,7 +165,7 @@ const STATUS_CFG: Record<string, { color: string; bg: string; border: string; la
   due: { color: "text-blue-700", bg: "bg-blue-100", border: "border-blue-200", label: "Due", icon: Clock },
   overdue: { color: "text-red-700", bg: "bg-red-100", border: "border-red-200", label: "Overdue", icon: AlertTriangle },
   failed: { color: "text-red-700", bg: "bg-red-100", border: "border-red-200", label: "Failed", icon: XCircle },
-  waived: { color: "text-slate-500", bg: "bg-slate-100", border: "border-slate-200", label: "Waived", icon: Eye },
+  waived: { color: "text-[var(--cs-text-muted)]", bg: "bg-slate-100", border: "border-[var(--cs-border)]", label: "Waived", icon: Eye },
 };
 
 const RESULT_CFG: Record<string, { color: string; bg: string; label: string }> = {
@@ -175,7 +175,7 @@ const RESULT_CFG: Record<string, { color: string; bg: string; label: string }> =
 };
 
 const RISK_CFG: Record<string, { color: string; bg: string }> = {
-  low: { color: "text-slate-600", bg: "bg-slate-100" },
+  low: { color: "text-[var(--cs-text-secondary)]", bg: "bg-slate-100" },
   medium: { color: "text-amber-700", bg: "bg-amber-100" },
   high: { color: "text-orange-700", bg: "bg-orange-100" },
   critical: { color: "text-red-700", bg: "bg-red-100" },
@@ -228,22 +228,22 @@ function AddCheckForm({ onClose, onSubmit }: { onClose: () => void; onSubmit: (d
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm" onClick={onClose}>
-      <div className="w-full max-w-lg bg-white rounded-2xl shadow-2xl overflow-hidden" onClick={(e) => e.stopPropagation()}>
+      <div className="w-full max-w-lg bg-white rounded-2xl shadow-[var(--cs-shadow-elevated)] overflow-hidden" onClick={(e) => e.stopPropagation()}>
         <div className="px-6 py-4 border-b bg-slate-50 flex items-center justify-between">
-          <div className="font-bold text-slate-900">Record Building Check</div>
-          <button onClick={onClose} className="text-slate-400 hover:text-slate-600 text-lg leading-none">&times;</button>
+          <div className="font-bold text-[var(--cs-navy)]">Record Building Check</div>
+          <button onClick={onClose} className="text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] text-lg leading-none">&times;</button>
         </div>
         <div className="p-6 space-y-4 max-h-[75vh] overflow-y-auto">
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide block mb-1">Check Type</label>
-              <select value={form.check_type} onChange={(e) => set("check_type", e.target.value)} className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm">
+              <label className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide block mb-1">Check Type</label>
+              <select value={form.check_type} onChange={(e) => set("check_type", e.target.value)} className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2 text-sm">
                 {Object.entries(CHECK_TYPE_LABELS).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
               </select>
             </div>
             <div>
-              <label className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide block mb-1">Area</label>
-              <select value={form.area} onChange={(e) => set("area", e.target.value)} className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm">
+              <label className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide block mb-1">Area</label>
+              <select value={form.area} onChange={(e) => set("area", e.target.value)} className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2 text-sm">
                 {["main_building", "kitchen", "garden", "medication_room", "bedrooms", "office", "garage", "external"].map((a) => (
                   <option key={a} value={a}>{a.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())}</option>
                 ))}
@@ -252,12 +252,12 @@ function AddCheckForm({ onClose, onSubmit }: { onClose: () => void; onSubmit: (d
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide block mb-1">Date</label>
-              <input type="date" value={form.check_date} onChange={(e) => set("check_date", e.target.value)} className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm" />
+              <label className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide block mb-1">Date</label>
+              <input type="date" value={form.check_date} onChange={(e) => set("check_date", e.target.value)} className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2 text-sm" />
             </div>
             <div>
-              <label className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide block mb-1">Result</label>
-              <select value={form.result} onChange={(e) => set("result", e.target.value)} className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm">
+              <label className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide block mb-1">Result</label>
+              <select value={form.result} onChange={(e) => set("result", e.target.value)} className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2 text-sm">
                 <option value="pass">Pass</option>
                 <option value="fail">Fail</option>
                 <option value="advisory">Advisory</option>
@@ -268,8 +268,8 @@ function AddCheckForm({ onClose, onSubmit }: { onClose: () => void; onSubmit: (d
             <div className="rounded-xl bg-red-50 border border-red-200 p-3 space-y-3">
               <div className="text-xs font-semibold text-red-800 flex items-center gap-1.5"><AlertTriangle className="h-3.5 w-3.5" />Non-pass result — additional details required</div>
               <div>
-                <label className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide block mb-1">Risk Level</label>
-                <select value={form.risk_level} onChange={(e) => set("risk_level", e.target.value)} className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm">
+                <label className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide block mb-1">Risk Level</label>
+                <select value={form.risk_level} onChange={(e) => set("risk_level", e.target.value)} className="w-full rounded-xl border border-[var(--cs-border)] bg-white px-3 py-2 text-sm">
                   <option value="">Select risk level</option>
                   <option value="low">Low</option>
                   <option value="medium">Medium</option>
@@ -278,12 +278,12 @@ function AddCheckForm({ onClose, onSubmit }: { onClose: () => void; onSubmit: (d
                 </select>
               </div>
               <div>
-                <label className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide block mb-1">Action Required</label>
-                <input value={form.action_required} onChange={(e) => set("action_required", e.target.value)} className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm" placeholder="Describe action needed..." />
+                <label className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide block mb-1">Action Required</label>
+                <input value={form.action_required} onChange={(e) => set("action_required", e.target.value)} className="w-full rounded-xl border border-[var(--cs-border)] bg-white px-3 py-2 text-sm" placeholder="Describe action needed..." />
               </div>
               <div>
-                <label className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide block mb-1">Action Due By</label>
-                <input type="date" value={form.action_due} onChange={(e) => set("action_due", e.target.value)} className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm" />
+                <label className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide block mb-1">Action Due By</label>
+                <input type="date" value={form.action_due} onChange={(e) => set("action_due", e.target.value)} className="w-full rounded-xl border border-[var(--cs-border)] bg-white px-3 py-2 text-sm" />
               </div>
               <div className="rounded-lg bg-amber-50 border border-amber-200 px-3 py-2 text-xs text-amber-800">
                 Submitting will automatically create a maintenance task and notify the manager.
@@ -291,8 +291,8 @@ function AddCheckForm({ onClose, onSubmit }: { onClose: () => void; onSubmit: (d
             </div>
           )}
           <div>
-            <label className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide block mb-1">Notes</label>
-            <textarea value={form.notes} onChange={(e) => set("notes", e.target.value)} rows={3} className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm resize-none" placeholder="Any observations or comments..." />
+            <label className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide block mb-1">Notes</label>
+            <textarea value={form.notes} onChange={(e) => set("notes", e.target.value)} rows={3} className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2 text-sm resize-none" placeholder="Any observations or comments..." />
           </div>
         </div>
         <div className="px-6 py-4 border-t bg-slate-50 flex justify-end gap-2">
@@ -379,7 +379,7 @@ function DashboardTab({ data, onAddCheck }: { data: BuildingsData; onAddCheck: (
               <div className={cn("p-2 rounded-xl bg-white shadow-sm", hasAlerts ? "border border-red-100" : "border border-emerald-100")}>
                 <Building2 className={cn("h-4 w-4", hasAlerts ? "text-red-600" : "text-emerald-600")} />
               </div>
-              <span className="text-xs font-semibold text-slate-700">Buildings</span>
+              <span className="text-xs font-semibold text-[var(--cs-text-secondary)]">Buildings</span>
             </div>
             {hasAlerts
               ? <AlertTriangle className="h-4 w-4 text-red-500" />
@@ -389,11 +389,11 @@ function DashboardTab({ data, onAddCheck }: { data: BuildingsData; onAddCheck: (
           <div className="grid grid-cols-2 gap-2">
             <div className="text-center">
               <div className={cn("text-2xl font-bold tabular-nums", hasAlerts ? "text-red-700" : "text-emerald-700")}>{completedToday}</div>
-              <div className="text-[10px] text-slate-500">Done today</div>
+              <div className="text-[10px] text-[var(--cs-text-muted)]">Done today</div>
             </div>
             <div className="text-center">
-              <div className={cn("text-2xl font-bold tabular-nums", summary.overdue > 0 ? "text-red-700" : "text-slate-600")}>{summary.overdue}</div>
-              <div className="text-[10px] text-slate-500">Overdue</div>
+              <div className={cn("text-2xl font-bold tabular-nums", summary.overdue > 0 ? "text-red-700" : "text-[var(--cs-text-secondary)]")}>{summary.overdue}</div>
+              <div className="text-[10px] text-[var(--cs-text-muted)]">Overdue</div>
             </div>
           </div>
           {allDailyDone && (
@@ -406,28 +406,28 @@ function DashboardTab({ data, onAddCheck }: { data: BuildingsData; onAddCheck: (
         {/* Vehicles domain */}
         <div className={cn(
           "rounded-2xl border p-5 space-y-3",
-          vehicleDefects > 0 ? "border-amber-200 bg-amber-50" : "border-slate-200 bg-slate-50"
+          vehicleDefects > 0 ? "border-amber-200 bg-amber-50" : "border-[var(--cs-border)] bg-slate-50"
         )}>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="p-2 rounded-xl bg-white shadow-sm border border-slate-100">
-                <Car className={cn("h-4 w-4", vehicleDefects > 0 ? "text-amber-600" : "text-slate-600")} />
+              <div className="p-2 rounded-xl bg-white shadow-sm border border-[var(--cs-border-subtle)]">
+                <Car className={cn("h-4 w-4", vehicleDefects > 0 ? "text-amber-600" : "text-[var(--cs-text-secondary)]")} />
               </div>
-              <span className="text-xs font-semibold text-slate-700">Vehicles</span>
+              <span className="text-xs font-semibold text-[var(--cs-text-secondary)]">Vehicles</span>
             </div>
             {vehicleDefects > 0
               ? <AlertTriangle className="h-4 w-4 text-amber-500" />
-              : <CheckCircle2 className="h-4 w-4 text-slate-400" />
+              : <CheckCircle2 className="h-4 w-4 text-[var(--cs-text-muted)]" />
             }
           </div>
           <div className="grid grid-cols-2 gap-2">
             <div className="text-center">
-              <div className="text-2xl font-bold tabular-nums text-slate-800">{vehiclesAvailable}</div>
-              <div className="text-[10px] text-slate-500">Available</div>
+              <div className="text-2xl font-bold tabular-nums text-[var(--cs-navy)]">{vehiclesAvailable}</div>
+              <div className="text-[10px] text-[var(--cs-text-muted)]">Available</div>
             </div>
             <div className="text-center">
-              <div className={cn("text-2xl font-bold tabular-nums", vehicleDefects > 0 ? "text-amber-700" : "text-slate-500")}>{vehicleDefects}</div>
-              <div className="text-[10px] text-slate-500">Defects</div>
+              <div className={cn("text-2xl font-bold tabular-nums", vehicleDefects > 0 ? "text-amber-700" : "text-[var(--cs-text-muted)]")}>{vehicleDefects}</div>
+              <div className="text-[10px] text-[var(--cs-text-muted)]">Defects</div>
             </div>
           </div>
           {vehiclesRestricted > 0 && (
@@ -445,28 +445,28 @@ function DashboardTab({ data, onAddCheck }: { data: BuildingsData; onAddCheck: (
         {/* Maintenance domain */}
         <div className={cn(
           "rounded-2xl border p-5 space-y-3",
-          urgentMaint.length > 0 ? "border-orange-200 bg-orange-50" : "border-slate-200 bg-slate-50"
+          urgentMaint.length > 0 ? "border-orange-200 bg-orange-50" : "border-[var(--cs-border)] bg-slate-50"
         )}>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="p-2 rounded-xl bg-white shadow-sm border border-slate-100">
-                <Wrench className={cn("h-4 w-4", urgentMaint.length > 0 ? "text-orange-600" : "text-slate-600")} />
+              <div className="p-2 rounded-xl bg-white shadow-sm border border-[var(--cs-border-subtle)]">
+                <Wrench className={cn("h-4 w-4", urgentMaint.length > 0 ? "text-orange-600" : "text-[var(--cs-text-secondary)]")} />
               </div>
-              <span className="text-xs font-semibold text-slate-700">Maintenance</span>
+              <span className="text-xs font-semibold text-[var(--cs-text-secondary)]">Maintenance</span>
             </div>
             {urgentMaint.length > 0
               ? <AlertTriangle className="h-4 w-4 text-orange-500" />
-              : <CheckCircle2 className="h-4 w-4 text-slate-400" />
+              : <CheckCircle2 className="h-4 w-4 text-[var(--cs-text-muted)]" />
             }
           </div>
           <div className="grid grid-cols-2 gap-2">
             <div className="text-center">
-              <div className={cn("text-2xl font-bold tabular-nums", (maintMeta?.open ?? 0) > 0 ? "text-orange-700" : "text-slate-600")}>{maintMeta?.open ?? "—"}</div>
-              <div className="text-[10px] text-slate-500">Open jobs</div>
+              <div className={cn("text-2xl font-bold tabular-nums", (maintMeta?.open ?? 0) > 0 ? "text-orange-700" : "text-[var(--cs-text-secondary)]")}>{maintMeta?.open ?? "—"}</div>
+              <div className="text-[10px] text-[var(--cs-text-muted)]">Open jobs</div>
             </div>
             <div className="text-center">
-              <div className={cn("text-2xl font-bold tabular-nums", urgentMaint.length > 0 ? "text-red-700" : "text-slate-500")}>{urgentMaint.length}</div>
-              <div className="text-[10px] text-slate-500">Urgent</div>
+              <div className={cn("text-2xl font-bold tabular-nums", urgentMaint.length > 0 ? "text-red-700" : "text-[var(--cs-text-muted)]")}>{urgentMaint.length}</div>
+              <div className="text-[10px] text-[var(--cs-text-muted)]">Urgent</div>
             </div>
           </div>
           {urgentMaint.length > 0 && (
@@ -484,7 +484,7 @@ function DashboardTab({ data, onAddCheck }: { data: BuildingsData; onAddCheck: (
 
       {/* Today's required checks */}
       <div>
-        <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+        <h3 className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-3 flex items-center gap-1.5">
           <CheckSquare className="h-3.5 w-3.5" />Today&apos;s Required Checks
         </h3>
         <div className="rounded-2xl border bg-white divide-y divide-slate-50">
@@ -502,7 +502,7 @@ function DashboardTab({ data, onAddCheck }: { data: BuildingsData; onAddCheck: (
                     : <Clock className="h-4 w-4 text-amber-500" />
                   }
                 </div>
-                <span className="text-sm text-slate-700 flex-1 font-medium">{label}</span>
+                <span className="text-sm text-[var(--cs-text-secondary)] flex-1 font-medium">{label}</span>
                 <div className="flex items-center gap-2 shrink-0">
                   {doneToday ? (
                     <>
@@ -559,12 +559,12 @@ function DashboardTab({ data, onAddCheck }: { data: BuildingsData; onAddCheck: (
                           "h-2 w-2 rounded-full shrink-0",
                           isOverdue || isFailed ? "bg-red-500" : isDue ? "bg-blue-400" : lastDone ? "bg-emerald-500" : "bg-slate-300"
                         )} />
-                        <span className="text-sm text-slate-700 flex-1 font-medium">{label}</span>
+                        <span className="text-sm text-[var(--cs-text-secondary)] flex-1 font-medium">{label}</span>
                         <div className="flex items-center gap-2 shrink-0">
                           {lastDone ? (
-                            <span className="text-xs text-slate-400">Last: {formatDate(lastDone)}</span>
+                            <span className="text-xs text-[var(--cs-text-muted)]">Last: {formatDate(lastDone)}</span>
                           ) : (
-                            <span className="text-xs text-slate-400 italic">Never recorded</span>
+                            <span className="text-xs text-[var(--cs-text-muted)] italic">Never recorded</span>
                           )}
                           {result && (
                             <Badge className={cn("text-[9px] rounded-full border-0", RESULT_CFG[result]?.bg, RESULT_CFG[result]?.color)}>
@@ -639,20 +639,20 @@ function CheckHistoryTab({ data, onAddCheck }: { data: BuildingsData; onAddCheck
     <div className="space-y-4">
       <div className="flex flex-wrap items-center gap-3">
         <div className="relative flex-1 min-w-[200px] max-w-sm">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--cs-text-muted)]" />
           <Input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search checks..." className="pl-9" />
         </div>
-        <select value={filterArea} onChange={(e) => setFilterArea(e.target.value)} className="h-9 rounded-lg border border-slate-200 bg-white px-2 text-xs">
+        <select value={filterArea} onChange={(e) => setFilterArea(e.target.value)} className="h-9 rounded-lg border border-[var(--cs-border)] bg-white px-2 text-xs">
           <option value="">All areas</option>
           {areas.map((a) => <option key={a} value={a}>{a.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())}</option>)}
         </select>
-        <select value={filterResult} onChange={(e) => setFilterResult(e.target.value)} className="h-9 rounded-lg border border-slate-200 bg-white px-2 text-xs">
+        <select value={filterResult} onChange={(e) => setFilterResult(e.target.value)} className="h-9 rounded-lg border border-[var(--cs-border)] bg-white px-2 text-xs">
           <option value="">All results</option>
           <option value="pass">Pass</option>
           <option value="fail">Fail</option>
           <option value="advisory">Advisory</option>
         </select>
-        <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)} className="h-9 rounded-lg border border-slate-200 bg-white px-2 text-xs">
+        <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)} className="h-9 rounded-lg border border-[var(--cs-border)] bg-white px-2 text-xs">
           <option value="">All statuses</option>
           <option value="completed">Completed</option>
           <option value="due">Due</option>
@@ -660,8 +660,8 @@ function CheckHistoryTab({ data, onAddCheck }: { data: BuildingsData; onAddCheck
           <option value="failed">Failed</option>
         </select>
         <div className="flex items-center gap-1.5">
-          <ArrowUpDown className="h-3.5 w-3.5 text-slate-400" />
-          <select value={sortBy} onChange={(e) => setSortBy(e.target.value as typeof sortBy)} className="h-9 rounded-lg border border-slate-200 bg-white px-2 text-xs">
+          <ArrowUpDown className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
+          <select value={sortBy} onChange={(e) => setSortBy(e.target.value as typeof sortBy)} className="h-9 rounded-lg border border-[var(--cs-border)] bg-white px-2 text-xs">
             <option value="date">Date</option>
             <option value="type">Type</option>
             <option value="status">Status</option>
@@ -675,7 +675,7 @@ function CheckHistoryTab({ data, onAddCheck }: { data: BuildingsData; onAddCheck
 
       <div className="space-y-2">
         {filtered.length === 0 && (
-          <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center text-sm text-slate-400">No checks match your filters.</div>
+          <div className="rounded-2xl border border-[var(--cs-border)] bg-white p-8 text-center text-sm text-[var(--cs-text-muted)]">No checks match your filters.</div>
         )}
         {filtered.map((check) => {
           const isFail = check.result === "fail";
@@ -684,7 +684,7 @@ function CheckHistoryTab({ data, onAddCheck }: { data: BuildingsData; onAddCheck
           return (
             <div key={check.id} className={cn(
               "rounded-2xl border bg-white p-4 hover:shadow-sm transition-all",
-              isFail ? "border-l-4 border-l-red-500 border-red-200 bg-red-50/30" : "border-slate-200"
+              isFail ? "border-l-4 border-l-red-500 border-red-200 bg-red-50/30" : "border-[var(--cs-border)]"
             )}>
               <div className="flex items-start gap-4">
                 <div className={cn("rounded-xl p-2 shrink-0", statusCfg.bg)}>
@@ -692,7 +692,7 @@ function CheckHistoryTab({ data, onAddCheck }: { data: BuildingsData; onAddCheck
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-sm font-semibold text-slate-900">
+                    <span className="text-sm font-semibold text-[var(--cs-navy)]">
                       {CHECK_TYPE_LABELS[check.check_type] || check.check_type}
                     </span>
                     {check.result && (
@@ -706,12 +706,12 @@ function CheckHistoryTab({ data, onAddCheck }: { data: BuildingsData; onAddCheck
                       </Badge>
                     )}
                   </div>
-                  <div className="text-xs text-slate-500 mt-0.5 flex items-center gap-3 flex-wrap">
+                  <div className="text-xs text-[var(--cs-text-muted)] mt-0.5 flex items-center gap-3 flex-wrap">
                     <span>{formatDate(check.check_date)}</span>
                     {check.area && <span className="capitalize">{check.area.replace(/_/g, " ")}</span>}
                   </div>
                   {check.notes && (
-                    <p className="text-xs text-slate-600 mt-1.5 leading-relaxed">{check.notes}</p>
+                    <p className="text-xs text-[var(--cs-text-secondary)] mt-1.5 leading-relaxed">{check.notes}</p>
                   )}
                   {check.action_required && (
                     <div className="mt-2 rounded-xl bg-amber-50 border border-amber-200 px-3 py-2">
@@ -824,11 +824,11 @@ function CertificatesTab({ data }: { data: BuildingsData }) {
                   <div className="flex items-start justify-between gap-3 flex-wrap">
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="text-sm font-bold text-slate-900">{label}</span>
+                        <span className="text-sm font-bold text-[var(--cs-navy)]">{label}</span>
                         <div className={cn("h-2 w-2 rounded-full", cfg.dot)} />
                         <Badge className={cn("text-[9px] rounded-full border-0", cfg.bg, cfg.color)}>{cfg.label}</Badge>
                       </div>
-                      <div className="text-xs text-slate-500 mt-0.5">{description}</div>
+                      <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">{description}</div>
                     </div>
                     <div className="text-right shrink-0">
                       {expiry && (
@@ -836,16 +836,16 @@ function CertificatesTab({ data }: { data: BuildingsData }) {
                           <div className={cn("text-sm font-bold", cfg.color)}>
                             {days !== null && days < 0 ? "Expired" : days === 0 ? "Expires today" : `${days} days`}
                           </div>
-                          <div className="text-xs text-slate-400">{formatDate(expiry)}</div>
+                          <div className="text-xs text-[var(--cs-text-muted)]">{formatDate(expiry)}</div>
                         </>
                       )}
-                      {lastDone && !expiry && <div className="text-xs text-slate-400">Last: {formatDate(lastDone)}</div>}
+                      {lastDone && !expiry && <div className="text-xs text-[var(--cs-text-muted)]">Last: {formatDate(lastDone)}</div>}
                       {rating && <div className="text-xl font-black text-emerald-600">{rating}</div>}
-                      {note && <div className="text-xs text-slate-500 mt-0.5">{note}</div>}
+                      {note && <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">{note}</div>}
                     </div>
                   </div>
                   <div className="mt-3 flex items-center justify-between gap-3">
-                    <div className="text-[10px] text-slate-400 italic">{required_by}</div>
+                    <div className="text-[10px] text-[var(--cs-text-muted)] italic">{required_by}</div>
                     <Button
                       size="sm"
                       variant="outline"
@@ -912,7 +912,7 @@ function HazardsTab({ data }: { data: BuildingsData }) {
                     <div className="flex items-start justify-between gap-3 flex-wrap">
                       <div>
                         <div className="flex items-center gap-2 flex-wrap">
-                          <span className="text-sm font-bold text-slate-900">
+                          <span className="text-sm font-bold text-[var(--cs-navy)]">
                             {CHECK_TYPE_LABELS[hazard.check_type] || hazard.check_type}
                           </span>
                           {hazard.risk_level && (
@@ -927,13 +927,13 @@ function HazardsTab({ data }: { data: BuildingsData }) {
                             <Badge className="text-[9px] rounded-full bg-red-100 text-red-700 border-0">Failed check</Badge>
                           )}
                         </div>
-                        <div className="text-xs text-slate-500 mt-0.5 capitalize">
+                        <div className="text-xs text-[var(--cs-text-muted)] mt-0.5 capitalize">
                           Area: {hazard.area?.replace(/_/g, " ")} · Check date: {formatDate(hazard.check_date)}
                         </div>
                       </div>
                     </div>
                     {hazard.notes && (
-                      <p className="text-xs text-slate-700 mt-2 leading-relaxed">{hazard.notes}</p>
+                      <p className="text-xs text-[var(--cs-text-secondary)] mt-2 leading-relaxed">{hazard.notes}</p>
                     )}
                     {hazard.action_required && (
                       <div className="mt-3 rounded-xl bg-amber-50 border border-amber-200 px-3 py-2">
@@ -1079,8 +1079,8 @@ export default function BuildingsPage() {
               className={cn(
                 "flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium transition-all relative",
                 tab === id
-                  ? "bg-white text-slate-900 shadow-sm"
-                  : "text-slate-600 hover:text-slate-900"
+                  ? "bg-white text-[var(--cs-navy)] shadow-sm"
+                  : "text-[var(--cs-text-secondary)] hover:text-[var(--cs-navy)]"
               )}
             >
               <Icon className="h-3.5 w-3.5" />
@@ -1095,9 +1095,9 @@ export default function BuildingsPage() {
         </div>
 
         {isLoading && (
-          <div className="flex items-center justify-center py-16 text-slate-400">
+          <div className="flex items-center justify-center py-16 text-[var(--cs-text-muted)]">
             <div className="flex flex-col items-center gap-2">
-              <div className="h-8 w-8 animate-spin rounded-full border-2 border-slate-200 border-t-slate-600" />
+              <div className="h-8 w-8 animate-spin rounded-full border-2 border-[var(--cs-border)] border-t-slate-600" />
               <span className="text-sm">Loading compliance data...</span>
             </div>
           </div>

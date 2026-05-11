@@ -123,7 +123,7 @@ export default function SensoryEquipmentInventoryPage() {
           const isCritical = i.notes?.toLowerCase().includes("do not replace");
           return (
             <div key={i.id} className={cn("rounded-xl border bg-white overflow-hidden", isCritical && "border-l-4 border-l-pink-500")}>
-              <button className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors" onClick={() => setExpandedId(isExpanded ? null : i.id)}>
+              <button className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors" onClick={() => setExpandedId(isExpanded ? null : i.id)}>
                 <div className="flex items-center gap-3 flex-1 min-w-0"><Package className="h-5 w-5 text-purple-600 shrink-0" /><div className="min-w-0"><p className="font-medium truncate">{i.item_name}</p><p className="text-xs text-muted-foreground mt-0.5">{SENSORY_EQUIPMENT_LOCATION_LABEL[i.location]} &middot; {i.assigned_to_child ? getYPName(i.assigned_to_child) : "Shared"} &middot; {SENSORY_EQUIPMENT_USE_FREQUENCY_LABEL[i.use_frequency]}</p></div></div>
                 <div className="flex items-center gap-2 shrink-0 ml-3"><span className={cn("text-xs px-2 py-0.5 rounded-full font-medium", categoryColour[i.category])}>{SENSORY_EQUIPMENT_CATEGORY_LABEL[i.category]}</span><span className={cn("text-xs px-2 py-0.5 rounded-full font-medium", conditionColour[i.condition])}>{SENSORY_EQUIPMENT_CONDITION_LABEL[i.condition]}</span>{isCritical && <Heart className="h-4 w-4 text-pink-500" />}{isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}</div>
               </button>

@@ -113,7 +113,7 @@ const RISK_CONFIG: Record<string, { label: string; colour: string; bg: string; d
   urgent:  { label: "Urgent",  colour: "text-red-700",    bg: "bg-red-100",    dot: "bg-red-500"    },
   high:    { label: "High",    colour: "text-orange-700", bg: "bg-orange-100", dot: "bg-orange-500" },
   medium:  { label: "Medium",  colour: "text-amber-700",  bg: "bg-amber-100",  dot: "bg-amber-500"  },
-  low:     { label: "Low",     colour: "text-slate-600",  bg: "bg-slate-100",  dot: "bg-slate-400"  },
+  low:     { label: "Low",     colour: "text-[var(--cs-text-secondary)]",  bg: "bg-slate-100",  dot: "bg-slate-400"  },
 };
 
 const STATUS_CONFIG: Record<string, { label: string; icon: React.ElementType; colour: string }> = {
@@ -121,9 +121,9 @@ const STATUS_CONFIG: Record<string, { label: string; icon: React.ElementType; co
   approved:            { label: "Approved",           icon: CheckCircle2, colour: "text-emerald-600" },
   amended_and_approved:{ label: "Amended & approved", icon: CheckCircle2, colour: "text-emerald-600" },
   rejected:            { label: "Rejected",           icon: XCircle,      colour: "text-red-600" },
-  no_action_required:  { label: "No action required", icon: Eye,          colour: "text-slate-500" },
+  no_action_required:  { label: "No action required", icon: Eye,          colour: "text-[var(--cs-text-muted)]" },
   committed:           { label: "Committed",          icon: CheckCircle2, colour: "text-blue-600" },
-  draft:               { label: "Draft",              icon: Clock,        colour: "text-slate-500" },
+  draft:               { label: "Draft",              icon: Clock,        colour: "text-[var(--cs-text-muted)]" },
 };
 
 function typeLabel(type: string): string {
@@ -170,18 +170,18 @@ export function AriaDashboardPanel() {
   );
 
   return (
-    <Card className="border-blue-200/60 bg-gradient-to-b from-blue-50/30 to-white">
+    <Card className="border-[var(--cs-aria-gold-soft)] bg-gradient-to-b from-[var(--cs-aria-gold-bg)]/30 to-[var(--cs-surface-elevated)]">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2 text-sm font-semibold">
-            <div className="rounded-lg bg-blue-100 p-1.5">
-              <Sparkles className="h-4 w-4 text-blue-600" />
+            <div className="rounded-xl bg-[var(--cs-aria-gold-bg)] border border-[var(--cs-aria-gold-soft)] p-1.5">
+              <Sparkles className="h-4 w-4 text-[var(--cs-aria-gold)]" />
             </div>
-            Aria Intelligence
+            ARIA Intelligence
           </CardTitle>
           <Link
             href="/aria/review"
-            className="text-xs font-medium text-blue-600 hover:text-blue-800 flex items-center gap-1 transition-colors"
+            className="text-xs font-medium text-[var(--cs-aria-gold)] hover:text-[var(--cs-aria-gold)]/80 flex items-center gap-1 transition-colors"
           >
             Review Queue
             <ChevronRight className="h-3.5 w-3.5" />
@@ -215,7 +215,7 @@ export function AriaDashboardPanel() {
           <StatPill
             label="Rejected"
             value={counts.rejected}
-            colour="text-slate-600"
+            colour="text-[var(--cs-text-secondary)]"
             bg="bg-slate-50"
           />
         </div>
@@ -229,33 +229,33 @@ export function AriaDashboardPanel() {
                 <Link
                   key={s.id}
                   href={`/aria/review/${s.id}`}
-                  className="flex items-start gap-3 rounded-xl bg-white border border-slate-100 px-3 py-2.5 hover:bg-slate-50 transition-colors group"
+                  className="flex items-start gap-3 rounded-xl bg-[var(--cs-surface-elevated)] border border-[var(--cs-border-subtle)] px-3 py-2.5 hover:bg-[var(--cs-surface)] transition-colors group"
                 >
                   <div className={cn("mt-1 h-2 w-2 rounded-full shrink-0", risk.dot)} />
                   <div className="min-w-0 flex-1">
-                    <div className="text-xs font-medium text-slate-800 line-clamp-1 group-hover:text-blue-700 transition-colors">
+                    <div className="text-xs font-medium text-[var(--cs-navy)] line-clamp-1 group-hover:text-[var(--cs-aria-gold)] transition-colors">
                       {s.title}
                     </div>
                     <div className="flex items-center gap-2 mt-0.5">
                       <Badge className={cn("text-[10px] px-1.5 py-0", risk.bg, risk.colour)}>
                         {risk.label}
                       </Badge>
-                      <span className="text-[10px] text-slate-400">
+                      <span className="text-[10px] text-[var(--cs-text-muted)]">
                         {typeLabel(s.suggestion_type)}
                       </span>
                       {s.child_name && (
-                        <span className="text-[10px] text-slate-400">
+                        <span className="text-[10px] text-[var(--cs-text-muted)]">
                           &middot; {s.child_name}
                         </span>
                       )}
                     </div>
                   </div>
-                  <ChevronRight className="h-3.5 w-3.5 text-slate-300 shrink-0 mt-1 group-hover:text-blue-500 transition-colors" />
+                  <ChevronRight className="h-3.5 w-3.5 text-[var(--cs-text-gentle)] shrink-0 mt-1 group-hover:text-blue-500 transition-colors" />
                 </Link>
               );
             })}
             {pendingSuggestions.length > 4 && (
-              <p className="text-[10px] text-slate-400 text-center">
+              <p className="text-[10px] text-[var(--cs-text-muted)] text-center">
                 + {pendingSuggestions.length - 4} more pending
               </p>
             )}
@@ -263,15 +263,15 @@ export function AriaDashboardPanel() {
         ) : (
           <div className="rounded-xl bg-emerald-50/50 border border-emerald-100 px-4 py-3 text-center">
             <CheckCircle2 className="h-4 w-4 text-emerald-500 mx-auto mb-1" />
-            <p className="text-xs text-emerald-700 font-medium">All Aria suggestions reviewed</p>
+            <p className="text-xs text-emerald-700 font-medium">All ARIA suggestions reviewed</p>
           </div>
         )}
 
         {/* CTA */}
         <Link href="/aria/review" className="block">
-          <Button variant="outline" size="sm" className="w-full text-xs gap-1.5 border-blue-200 text-blue-700 hover:bg-blue-50">
+          <Button variant="outline" size="sm" className="w-full text-xs gap-1.5 border-[var(--cs-aria-gold-soft)] text-[var(--cs-aria-gold)] hover:bg-[var(--cs-aria-gold-bg)]">
             <Eye className="h-3.5 w-3.5" />
-            Open Aria Review Queue
+            Open ARIA Review Queue
             <ArrowRight className="h-3 w-3 ml-auto" />
           </Button>
         </Link>
@@ -294,7 +294,7 @@ function StatPill({
   return (
     <div className={cn("rounded-lg px-2 py-1.5 text-center relative", bg)}>
       <div className={cn("text-lg font-bold tabular-nums", colour)}>{value}</div>
-      <div className="text-[10px] text-slate-500 font-medium">{label}</div>
+      <div className="text-[10px] text-[var(--cs-text-muted)] font-medium">{label}</div>
       {pulse && value > 0 && (
         <CircleDot className="absolute top-1 right-1 h-2.5 w-2.5 text-red-500 animate-pulse" />
       )}

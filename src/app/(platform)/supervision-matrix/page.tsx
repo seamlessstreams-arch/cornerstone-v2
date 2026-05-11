@@ -164,8 +164,8 @@ export default function SupervisionMatrixPage() {
               {/* RI level */}
               <div className="flex flex-col items-center">
                 <div className="rounded-lg border-2 border-slate-300 bg-slate-50 px-5 py-3 text-center">
-                  <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Responsible Individual</p>
-                  <p className="text-sm text-slate-600 mt-0.5">External (RI)</p>
+                  <p className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide">Responsible Individual</p>
+                  <p className="text-sm text-[var(--cs-text-secondary)] mt-0.5">External (RI)</p>
                   {rmExternal && (
                     <Badge variant="outline" className={cn("mt-1 text-[10px]", STATUS_CLR[rmExternal.status])}>
                       {rmExternal.frequency} &middot; {SUPERVISION_MATRIX_STATUS_LABEL[rmExternal.status]}
@@ -173,7 +173,7 @@ export default function SupervisionMatrixPage() {
                   )}
                 </div>
                 <div className="w-px h-6 bg-slate-300" />
-                <ArrowDown className="h-3 w-3 text-slate-400 -mt-1 -mb-1" />
+                <ArrowDown className="h-3 w-3 text-[var(--cs-text-muted)] -mt-1 -mb-1" />
                 <div className="w-px h-4 bg-slate-300" />
               </div>
 
@@ -192,13 +192,13 @@ export default function SupervisionMatrixPage() {
                 {/* left branch — RM direct reports */}
                 <div className="flex-1 flex flex-col items-center">
                   <div className="w-1/2 border-t-2 border-r-2 border-slate-300 h-4 self-end" />
-                  <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wide mb-2">Direct Reports (RM)</p>
+                  <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-2">Direct Reports (RM)</p>
                   <div className="space-y-2 w-full max-w-xs">
                     {rmDirectReports.map((r) => (
                       <div
                         key={r.id}
                         className={cn(
-                          "rounded-lg border-l-4 bg-white border border-slate-200 px-3 py-2 flex items-center justify-between",
+                          "rounded-lg border-l-4 bg-white border border-[var(--cs-border)] px-3 py-2 flex items-center justify-between",
                           BORDER_CLR[r.status]
                         )}
                       >
@@ -225,13 +225,13 @@ export default function SupervisionMatrixPage() {
                       <p className="text-[10px] text-indigo-600">Supervises {deputyReports.length} staff</p>
                     </div>
                     <div className="w-px h-4 bg-slate-300" />
-                    <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wide mb-2">Deputy&apos;s Reports</p>
+                    <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-2">Deputy&apos;s Reports</p>
                     <div className="space-y-2 w-full max-w-xs">
                       {deputyReports.map((r) => (
                         <div
                           key={r.id}
                           className={cn(
-                            "rounded-lg border-l-4 bg-white border border-slate-200 px-3 py-2 flex items-center justify-between",
+                            "rounded-lg border-l-4 bg-white border border-[var(--cs-border)] px-3 py-2 flex items-center justify-between",
                             BORDER_CLR[r.status]
                           )}
                         >

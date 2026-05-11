@@ -129,8 +129,8 @@ export function HandoverPrompt() {
         <c.icon className={cn("h-5 w-5", c.iconColor)} />
       </div>
       <div className="flex-1 min-w-0">
-        <p className="text-sm font-bold text-slate-900">{c.title}</p>
-        <p className="text-xs text-slate-600 mt-0.5">{c.message}</p>
+        <p className="text-sm font-bold text-[var(--cs-navy)]">{c.title}</p>
+        <p className="text-xs text-[var(--cs-text-secondary)] mt-0.5">{c.message}</p>
       </div>
       <Link
         href="/handover"
@@ -146,7 +146,7 @@ export function HandoverPrompt() {
       </Link>
       <button
         onClick={() => setDismissed(true)}
-        className="shrink-0 rounded-lg p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"
+        className="shrink-0 rounded-lg p-1.5 text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] hover:bg-[var(--cs-surface)] transition-colors"
         aria-label="Dismiss"
       >
         <X className="h-3.5 w-3.5" />

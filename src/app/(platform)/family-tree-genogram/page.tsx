@@ -52,7 +52,7 @@ const contactColour: Record<FamilyContactStatus, string> = {
   letterbox_only: "bg-blue-100 text-blue-800",
   indirect: "bg-purple-100 text-purple-800",
   restricted: "bg-amber-100 text-amber-800",
-  no_contact: "bg-slate-100 text-slate-800",
+  no_contact: "bg-slate-100 text-[var(--cs-navy)]",
 };
 
 export default function FamilyTreeGenogramPage() {
@@ -169,7 +169,7 @@ export default function FamilyTreeGenogramPage() {
           return (
             <div key={g.id} className="rounded-xl border bg-white overflow-hidden">
               <button
-                className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                 onClick={() => setExpandedId(isExpanded ? null : g.id)}
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -227,12 +227,12 @@ export default function FamilyTreeGenogramPage() {
                           <div className="flex items-center justify-between mb-1">
                             <p className="text-sm font-medium">{f.relation}: {f.name}</p>
                             <div className="flex items-center gap-1">
-                              <span className={cn("text-xs px-2 py-0.5 rounded-full font-medium", contactColour[f.contact_status] ?? "bg-slate-100 text-slate-700")}>
+                              <span className={cn("text-xs px-2 py-0.5 rounded-full font-medium", contactColour[f.contact_status] ?? "bg-slate-100 text-[var(--cs-text-secondary)]")}>
                                 {FAMILY_CONTACT_STATUS_LABEL[f.contact_status] ?? f.contact_status}
                               </span>
                               <span className={cn("text-xs px-2 py-0.5 rounded-full font-medium",
                                 f.status === "living" ? "bg-emerald-50 text-emerald-700" :
-                                f.status === "deceased" ? "bg-slate-100 text-slate-700" :
+                                f.status === "deceased" ? "bg-slate-100 text-[var(--cs-text-secondary)]" :
                                 "bg-amber-50 text-amber-700"
                               )}>
                                 {FAMILY_MEMBER_STATUS_LABEL[f.status] ?? f.status}
@@ -331,7 +331,7 @@ export default function FamilyTreeGenogramPage() {
                   </div>
 
                   <div className="bg-slate-50 rounded-lg p-3 border">
-                    <p className="text-xs font-semibold text-slate-800 uppercase tracking-wide mb-1">Identity Impact</p>
+                    <p className="text-xs font-semibold text-[var(--cs-navy)] uppercase tracking-wide mb-1">Identity Impact</p>
                     <p className="text-sm">{g.identity_impact}</p>
                   </div>
 

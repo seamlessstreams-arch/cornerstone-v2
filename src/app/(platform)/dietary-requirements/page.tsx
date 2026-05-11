@@ -83,7 +83,7 @@ export default function DietaryRequirementsPage() {
     return (
       <PageShell title="Dietary Requirements" subtitle="Loading...">
         <div className="flex items-center justify-center py-12">
-          <Loader2 className="h-8 w-8 animate-spin text-slate-400" />
+          <Loader2 className="h-8 w-8 animate-spin text-[var(--cs-text-muted)]" />
         </div>
       </PageShell>
     );
@@ -160,7 +160,7 @@ export default function DietaryRequirementsPage() {
               hasCritical && "border-l-4 border-l-red-500"
             )}>
               <button
-                className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                 onClick={() => setExpandedId(isExpanded ? null : plan.id)}
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -325,7 +325,7 @@ export default function DietaryRequirementsPage() {
                   </div>
 
                   <div className="bg-slate-50 rounded-lg p-3 border">
-                    <p className="text-xs font-semibold text-slate-800 uppercase tracking-wide mb-1">Growth Monitoring</p>
+                    <p className="text-xs font-semibold text-[var(--cs-navy)] uppercase tracking-wide mb-1">Growth Monitoring</p>
                     <p className="text-sm">Weight: {plan.growth_monitoring.last_weight} ({plan.growth_monitoring.last_weight_date})</p>
                     <p className="text-sm">Height: {plan.growth_monitoring.last_height} ({plan.growth_monitoring.last_height_date})</p>
                     <p className="text-xs text-muted-foreground mt-1">{plan.growth_monitoring.concerns}</p>

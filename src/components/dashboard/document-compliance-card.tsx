@@ -86,7 +86,7 @@ export function DocumentComplianceCard() {
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-center py-6">
-            <Loader2 className="h-5 w-5 animate-spin text-slate-400" />
+            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
           </div>
         </CardContent>
       </Card>
@@ -122,9 +122,9 @@ export function DocumentComplianceCard() {
             <div className={cn("text-[9px]", expired > 0 ? "text-red-500" : "text-emerald-500")}>Expired</div>
           </div>
           <div className={cn("rounded-xl p-2 text-center", expiringSoon > 0 ? "bg-amber-50" : "bg-slate-50")}>
-            <Clock className={cn("h-3 w-3 mx-auto mb-0.5", expiringSoon > 0 ? "text-amber-500" : "text-slate-400")} />
-            <div className={cn("text-sm font-bold tabular-nums", expiringSoon > 0 ? "text-amber-700" : "text-slate-400")}>{expiringSoon}</div>
-            <div className={cn("text-[9px]", expiringSoon > 0 ? "text-amber-500" : "text-slate-400")}>Expiring</div>
+            <Clock className={cn("h-3 w-3 mx-auto mb-0.5", expiringSoon > 0 ? "text-amber-500" : "text-[var(--cs-text-muted)]")} />
+            <div className={cn("text-sm font-bold tabular-nums", expiringSoon > 0 ? "text-amber-700" : "text-[var(--cs-text-muted)]")}>{expiringSoon}</div>
+            <div className={cn("text-[9px]", expiringSoon > 0 ? "text-amber-500" : "text-[var(--cs-text-muted)]")}>Expiring</div>
           </div>
         </div>
 
@@ -132,7 +132,7 @@ export function DocumentComplianceCard() {
         {requireSign > 0 && (
           <div className="space-y-1.5">
             <div className="flex items-center justify-between text-[10px] px-1">
-              <span className="flex items-center gap-1 text-slate-500">
+              <span className="flex items-center gap-1 text-[var(--cs-text-muted)]">
                 <FileCheck className="h-3 w-3" /> Read & Sign
               </span>
               <span className={cn(
@@ -151,7 +151,7 @@ export function DocumentComplianceCard() {
                 style={{ width: `${signCompletionPct}%` }}
               />
             </div>
-            <div className="flex items-center justify-between text-[9px] text-slate-400 px-1">
+            <div className="flex items-center justify-between text-[9px] text-[var(--cs-text-muted)] px-1">
               <span>{fullySignedCount} of {requireSign} fully signed</span>
             </div>
           </div>
@@ -175,12 +175,12 @@ export function DocumentComplianceCard() {
         {/* Outstanding sign-offs */}
         {outstandingDocs.length > 0 && (
           <div className="space-y-1">
-            <span className="text-[10px] font-medium text-slate-500 px-1">Outstanding Sign-offs</span>
+            <span className="text-[10px] font-medium text-[var(--cs-text-muted)] px-1">Outstanding Sign-offs</span>
             {outstandingDocs.map((doc) => (
               <Link key={doc.id} href="/documents">
-                <div className="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-slate-50 transition-colors">
+                <div className="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-[var(--cs-surface)] transition-colors">
                   <Shield className="h-3 w-3 text-violet-500 shrink-0" />
-                  <span className="text-[11px] font-medium text-slate-700 flex-1 truncate">
+                  <span className="text-[11px] font-medium text-[var(--cs-text-secondary)] flex-1 truncate">
                     {doc.title}
                   </span>
                   <Badge className="text-[8px] px-1.5 py-0 rounded-full border-0 bg-amber-100 text-amber-700">

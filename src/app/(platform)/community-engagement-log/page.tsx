@@ -49,7 +49,7 @@ const typeColour: Record<string, string> = {
   education: "bg-amber-100 text-amber-800",
   religious_spiritual: "bg-indigo-100 text-indigo-800",
   social: "bg-green-100 text-green-800",
-  civic: "bg-slate-100 text-slate-800",
+  civic: "bg-slate-100 text-[var(--cs-navy)]",
   environmental: "bg-emerald-100 text-emerald-800",
 };
 
@@ -104,7 +104,7 @@ export default function CommunityEngagementLogPage() {
     return (
       <PageShell title="Community Engagement Log" subtitle="Loading...">
         <div className="flex items-center justify-center py-12">
-          <Loader2 className="h-8 w-8 animate-spin text-slate-400" />
+          <Loader2 className="h-8 w-8 animate-spin text-[var(--cs-text-muted)]" />
         </div>
       </PageShell>
     );
@@ -191,7 +191,7 @@ export default function CommunityEngagementLogPage() {
           return (
             <div key={evt.id} className="rounded-xl border bg-white overflow-hidden">
               <button
-                className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                 onClick={() => setExpandedId(isExpanded ? null : evt.id)}
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0">

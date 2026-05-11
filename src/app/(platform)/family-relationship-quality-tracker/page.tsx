@@ -142,7 +142,7 @@ export default function FamilyRelationshipQualityTrackerPage() {
     return (
       <PageShell title="Family Relationship Quality Tracker" subtitle="Loading...">
         <div className="flex items-center justify-center py-12">
-          <Loader2 className="h-8 w-8 animate-spin text-slate-400" />
+          <Loader2 className="h-8 w-8 animate-spin text-[var(--cs-text-muted)]" />
         </div>
       </PageShell>
     );
@@ -209,9 +209,9 @@ export default function FamilyRelationshipQualityTrackerPage() {
       </div>
 
       {/* ── Filters & sort ────────────────────────────────────────────────── */}
-      <div className="mt-5 flex flex-wrap items-center gap-3 rounded-xl border border-slate-200 bg-white p-3">
+      <div className="mt-5 flex flex-wrap items-center gap-3 rounded-xl border border-[var(--cs-border)] bg-white p-3">
         <div className="flex items-center gap-2">
-          <span className="text-xs font-medium text-slate-500">Child</span>
+          <span className="text-xs font-medium text-[var(--cs-text-muted)]">Child</span>
           <Select value={filterChild} onValueChange={setFilterChild}>
             <SelectTrigger className="h-8 w-[180px] text-xs">
               <SelectValue placeholder="All children" />
@@ -226,7 +226,7 @@ export default function FamilyRelationshipQualityTrackerPage() {
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="text-xs font-medium text-slate-500">Quality</span>
+          <span className="text-xs font-medium text-[var(--cs-text-muted)]">Quality</span>
           <Select value={filterQuality} onValueChange={setFilterQuality}>
             <SelectTrigger className="h-8 w-[170px] text-xs">
               <SelectValue placeholder="All qualities" />
@@ -241,7 +241,7 @@ export default function FamilyRelationshipQualityTrackerPage() {
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="text-xs font-medium text-slate-500">Trajectory</span>
+          <span className="text-xs font-medium text-[var(--cs-text-muted)]">Trajectory</span>
           <Select value={filterTrajectory} onValueChange={setFilterTraj}>
             <SelectTrigger className="h-8 w-[160px] text-xs">
               <SelectValue placeholder="All" />
@@ -256,7 +256,7 @@ export default function FamilyRelationshipQualityTrackerPage() {
         </div>
 
         <div className="ml-auto flex items-center gap-2">
-          <ArrowUpDown className="h-4 w-4 text-slate-400" />
+          <ArrowUpDown className="h-4 w-4 text-[var(--cs-text-muted)]" />
           <Select value={sortKey} onValueChange={(v) => setSortKey(v as SortKey)}>
             <SelectTrigger className="h-8 w-[200px] text-xs">
               <SelectValue />
@@ -278,28 +278,28 @@ export default function FamilyRelationshipQualityTrackerPage() {
           return (
             <div
               key={r.id}
-              className="overflow-hidden rounded-xl border border-slate-200 bg-white"
+              className="overflow-hidden rounded-xl border border-[var(--cs-border)] bg-white"
             >
               {/* header row */}
               <button
                 type="button"
                 onClick={() => setExpandedId(open ? null : r.id)}
-                className="flex w-full items-start gap-3 p-4 text-left transition hover:bg-slate-50"
+                className="flex w-full items-start gap-3 p-4 text-left transition hover:bg-[var(--cs-surface)]"
               >
                 <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-rose-50 text-rose-600">
                   <Heart className="h-4 w-4" />
                 </div>
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="text-sm font-semibold text-slate-900">
+                    <span className="text-sm font-semibold text-[var(--cs-navy)]">
                       {r.family_member}
                     </span>
-                    <span className="text-xs text-slate-500">·</span>
-                    <span className="text-xs font-medium text-slate-600">
+                    <span className="text-xs text-[var(--cs-text-muted)]">·</span>
+                    <span className="text-xs font-medium text-[var(--cs-text-secondary)]">
                       {getYPName(r.child_id)}
                     </span>
-                    <span className="text-xs text-slate-400">·</span>
-                    <span className="text-[11px] uppercase tracking-wide text-slate-500">
+                    <span className="text-xs text-[var(--cs-text-muted)]">·</span>
+                    <span className="text-[11px] uppercase tracking-wide text-[var(--cs-text-muted)]">
                       {FAMILY_RELATIONSHIP_TYPE_LABEL[r.relationship_type]}
                     </span>
                   </div>
@@ -321,17 +321,17 @@ export default function FamilyRelationshipQualityTrackerPage() {
                       <TrajectoryIcon t={r.trajectory} />
                       {FAMILY_RELATIONSHIP_TRAJECTORY_LABEL[r.trajectory]}
                     </span>
-                    <span className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 text-[11px] font-medium text-slate-600">
+                    <span className="inline-flex items-center gap-1 rounded-full border border-[var(--cs-border)] bg-slate-50 px-2 py-0.5 text-[11px] font-medium text-[var(--cs-text-secondary)]">
                       <Activity className="h-3 w-3" />
                       {r.quality_1_to_10}/10
                     </span>
-                    <span className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 text-[11px] text-slate-600">
+                    <span className="inline-flex items-center gap-1 rounded-full border border-[var(--cs-border)] bg-slate-50 px-2 py-0.5 text-[11px] text-[var(--cs-text-secondary)]">
                       <CalendarDays className="h-3 w-3" />
                       Review {r.next_review}
                     </span>
                   </div>
                 </div>
-                <div className="shrink-0 self-center text-slate-400">
+                <div className="shrink-0 self-center text-[var(--cs-text-muted)]">
                   {open ? (
                     <ChevronUp className="h-4 w-4" />
                   ) : (
@@ -342,21 +342,21 @@ export default function FamilyRelationshipQualityTrackerPage() {
 
               {/* expanded body */}
               {open && (
-                <div className="border-t border-slate-100 bg-slate-50/50 px-4 py-4">
+                <div className="border-t border-[var(--cs-border-subtle)] bg-slate-50/50 px-4 py-4">
                   <div className="grid gap-4 md:grid-cols-2">
                     <Section title="Contact pattern" icon={<MessageCircle className="h-3.5 w-3.5" />}>
-                      <p className="text-xs text-slate-700">
-                        <span className="font-medium text-slate-900">Frequency:</span>{" "}
+                      <p className="text-xs text-[var(--cs-text-secondary)]">
+                        <span className="font-medium text-[var(--cs-navy)]">Frequency:</span>{" "}
                         {r.contact_frequency}
                       </p>
-                      <p className="mt-1 text-xs text-slate-700">
-                        <span className="font-medium text-slate-900">Quality:</span>{" "}
+                      <p className="mt-1 text-xs text-[var(--cs-text-secondary)]">
+                        <span className="font-medium text-[var(--cs-navy)]">Quality:</span>{" "}
                         {r.contact_quality}
                       </p>
                     </Section>
 
                     <Section title="Recent events" icon={<CalendarDays className="h-3.5 w-3.5" />}>
-                      <ul className="list-disc pl-4 text-xs text-slate-700">
+                      <ul className="list-disc pl-4 text-xs text-[var(--cs-text-secondary)]">
                         {r.recent_events.map((e, i) => (
                           <li key={i} className="mt-0.5">{e}</li>
                         ))}
@@ -364,7 +364,7 @@ export default function FamilyRelationshipQualityTrackerPage() {
                     </Section>
 
                     <Section title="Strengths observed" icon={<CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />}>
-                      <ul className="list-disc pl-4 text-xs text-slate-700">
+                      <ul className="list-disc pl-4 text-xs text-[var(--cs-text-secondary)]">
                         {r.strengths_observed.map((s, i) => (
                           <li key={i} className="mt-0.5">{s}</li>
                         ))}
@@ -372,7 +372,7 @@ export default function FamilyRelationshipQualityTrackerPage() {
                     </Section>
 
                     <Section title="Challenges observed" icon={<AlertTriangle className="h-3.5 w-3.5 text-amber-600" />}>
-                      <ul className="list-disc pl-4 text-xs text-slate-700">
+                      <ul className="list-disc pl-4 text-xs text-[var(--cs-text-secondary)]">
                         {r.challenges_observed.map((c, i) => (
                           <li key={i} className="mt-0.5">{c}</li>
                         ))}
@@ -381,9 +381,9 @@ export default function FamilyRelationshipQualityTrackerPage() {
 
                     <Section title="Active interventions" icon={<Sparkles className="h-3.5 w-3.5 text-violet-600" />}>
                       {r.interventions_active.length === 0 ? (
-                        <p className="text-xs italic text-slate-500">None currently.</p>
+                        <p className="text-xs italic text-[var(--cs-text-muted)]">None currently.</p>
                       ) : (
-                        <ul className="list-disc pl-4 text-xs text-slate-700">
+                        <ul className="list-disc pl-4 text-xs text-[var(--cs-text-secondary)]">
                           {r.interventions_active.map((iv, i) => (
                             <li key={i} className="mt-0.5">{iv}</li>
                           ))}
@@ -395,7 +395,7 @@ export default function FamilyRelationshipQualityTrackerPage() {
                       <p className="text-[11px] font-semibold uppercase tracking-wide text-rose-600">
                         Risks
                       </p>
-                      <ul className="list-disc pl-4 text-xs text-slate-700">
+                      <ul className="list-disc pl-4 text-xs text-[var(--cs-text-secondary)]">
                         {r.risk_factors.map((rf, i) => (
                           <li key={i} className="mt-0.5">{rf}</li>
                         ))}
@@ -403,7 +403,7 @@ export default function FamilyRelationshipQualityTrackerPage() {
                       <p className="mt-2 text-[11px] font-semibold uppercase tracking-wide text-emerald-700">
                         Protective
                       </p>
-                      <ul className="list-disc pl-4 text-xs text-slate-700">
+                      <ul className="list-disc pl-4 text-xs text-[var(--cs-text-secondary)]">
                         {r.protective_factors.map((pf, i) => (
                           <li key={i} className="mt-0.5">{pf}</li>
                         ))}
@@ -415,7 +415,7 @@ export default function FamilyRelationshipQualityTrackerPage() {
                       icon={<Compass className="h-3.5 w-3.5 text-sky-600" />}
                       span2
                     >
-                      <p className="text-xs italic text-slate-700">
+                      <p className="text-xs italic text-[var(--cs-text-secondary)]">
                         &ldquo;{r.child_perspective}&rdquo;
                       </p>
                     </Section>
@@ -425,21 +425,21 @@ export default function FamilyRelationshipQualityTrackerPage() {
                       icon={<Heart className="h-3.5 w-3.5 text-rose-500" />}
                       span2
                     >
-                      <p className="text-xs text-slate-700">{r.child_wishes_and_feelings}</p>
+                      <p className="text-xs text-[var(--cs-text-secondary)]">{r.child_wishes_and_feelings}</p>
                     </Section>
                   </div>
 
                   {/* footer meta */}
-                  <div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-slate-200 pt-3 text-[11px] text-slate-500">
+                  <div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-[var(--cs-border)] pt-3 text-[11px] text-[var(--cs-text-muted)]">
                     <span>
                       Assessed {r.assessment_date} · Reviewed by{" "}
-                      <span className="font-medium text-slate-700">
+                      <span className="font-medium text-[var(--cs-text-secondary)]">
                         {getStaffName(r.reviewed_by)}
                       </span>
                     </span>
                     <span>
                       Next review:{" "}
-                      <span className="font-medium text-slate-700">{r.next_review}</span>
+                      <span className="font-medium text-[var(--cs-text-secondary)]">{r.next_review}</span>
                     </span>
                   </div>
 
@@ -454,18 +454,18 @@ export default function FamilyRelationshipQualityTrackerPage() {
         })}
 
         {visible.length === 0 && (
-          <div className="rounded-xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center text-sm text-slate-500">
+          <div className="rounded-xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center text-sm text-[var(--cs-text-muted)]">
             No relationships match the current filters.
           </div>
         )}
       </div>
 
       {/* ── Regulatory note ───────────────────────────────────────────────── */}
-      <div className="mt-6 rounded-xl border border-slate-200 bg-slate-50 p-4">
+      <div className="mt-6 rounded-xl border border-[var(--cs-border)] bg-slate-50 p-4">
         <div className="flex items-start gap-3">
-          <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0 text-slate-500" />
-          <div className="text-xs leading-relaxed text-slate-600">
-            <p className="font-semibold text-slate-800">
+          <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0 text-[var(--cs-text-muted)]" />
+          <div className="text-xs leading-relaxed text-[var(--cs-text-secondary)]">
+            <p className="font-semibold text-[var(--cs-navy)]">
               Children&apos;s Homes (England) Regulations 2015 — Quality Standard 9
             </p>
             <p className="mt-1">
@@ -503,7 +503,7 @@ function StatCard({
     violet:  "bg-violet-50 text-violet-700 border-violet-100",
   };
   return (
-    <div className={cn("rounded-xl border bg-white p-3", "border-slate-200")}>
+    <div className={cn("rounded-xl border bg-white p-3", "border-[var(--cs-border)]")}>
       <div className="flex items-center gap-2">
         <span
           className={cn(
@@ -513,11 +513,11 @@ function StatCard({
         >
           {icon}
         </span>
-        <span className="text-[11px] font-medium uppercase tracking-wide text-slate-500">
+        <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--cs-text-muted)]">
           {label}
         </span>
       </div>
-      <div className="mt-2 text-2xl font-semibold text-slate-900">{value}</div>
+      <div className="mt-2 text-2xl font-semibold text-[var(--cs-navy)]">{value}</div>
     </div>
   );
 }
@@ -536,11 +536,11 @@ function Section({
   return (
     <div
       className={cn(
-        "rounded-lg border border-slate-200 bg-white p-3",
+        "rounded-lg border border-[var(--cs-border)] bg-white p-3",
         span2 && "md:col-span-2",
       )}
     >
-      <div className="mb-2 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-slate-600">
+      <div className="mb-2 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-[var(--cs-text-secondary)]">
         {icon}
         {title}
       </div>

@@ -24,7 +24,7 @@ const consentColour: Record<ChildConsentResponse, string> = {
   conditional: "bg-amber-100 text-amber-800",
   declined: "bg-red-100 text-red-800",
   unsure_withdrawn: "bg-purple-100 text-purple-800",
-  not_asked_inappropriate: "bg-slate-100 text-slate-800",
+  not_asked_inappropriate: "bg-slate-100 text-[var(--cs-navy)]",
 };
 
 export default function MediaPublicityConsentPage() {
@@ -144,7 +144,7 @@ export default function MediaPublicityConsentPage() {
 
           return (
             <div key={r.id} className={cn("rounded-xl border bg-white overflow-hidden", isDeclined && "border-l-4 border-l-red-500")}>
-              <button className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors" onClick={() => setExpandedId(isExpanded ? null : r.id)}>
+              <button className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors" onClick={() => setExpandedId(isExpanded ? null : r.id)}>
                 <div className="flex items-center gap-3 flex-1 min-w-0">
                   <Camera className="h-5 w-5 text-purple-600 shrink-0" />
                   <div className="min-w-0">
@@ -231,7 +231,7 @@ export default function MediaPublicityConsentPage() {
 
                   {r.notes && (
                     <div className="bg-slate-50 rounded-lg p-3 border">
-                      <p className="text-xs font-semibold text-slate-800 uppercase tracking-wide mb-1">Notes</p>
+                      <p className="text-xs font-semibold text-[var(--cs-navy)] uppercase tracking-wide mb-1">Notes</p>
                       <p className="text-sm">{r.notes}</p>
                     </div>
                   )}

@@ -32,13 +32,13 @@ const OUTCOME_COLOURS: Record<string, string> = {
   concerns_identified_internal_support: "bg-amber-100 text-amber-800",
   channel_discussion_considered: "bg-orange-100 text-orange-800",
   channel_referred: "bg-rose-100 text-rose-800",
-  de_escalated_closed: "bg-slate-100 text-slate-700",
+  de_escalated_closed: "bg-slate-100 text-[var(--cs-text-secondary)]",
 };
 
 const CHANNEL_COLOURS: Record<string, string> = {
-  considered_not_made: "bg-slate-100 text-slate-700",
+  considered_not_made: "bg-slate-100 text-[var(--cs-text-secondary)]",
   made_accepted: "bg-amber-100 text-amber-800",
-  made_rejected: "bg-slate-100 text-slate-700",
+  made_rejected: "bg-slate-100 text-[var(--cs-text-secondary)]",
   active_panel: "bg-rose-100 text-rose-800",
   closed: "bg-emerald-100 text-emerald-800",
 };
@@ -265,7 +265,7 @@ export default function ChildPreventRadicalisationScreeningPage() {
                     </span>
                     <span className={cn(
                       "px-2 py-0.5 rounded-full text-xs font-medium inline-flex items-center gap-1",
-                      r.child_voice_consulted ? "bg-teal-100 text-teal-800" : "bg-slate-100 text-slate-600"
+                      r.child_voice_consulted ? "bg-teal-100 text-teal-800" : "bg-slate-100 text-[var(--cs-text-secondary)]"
                     )}>
                       {r.child_voice_consulted ? "Child voice consulted" : "Child voice not consulted"}
                     </span>
@@ -351,9 +351,9 @@ export default function ChildPreventRadicalisationScreeningPage() {
                   )}
 
                   {/* staff observation */}
-                  <div className="rounded-md bg-slate-50 border border-slate-200 p-3">
-                    <h4 className="text-xs font-semibold text-slate-700 mb-1">Staff observation</h4>
-                    <p className="text-sm text-slate-900">{r.staff_observation}</p>
+                  <div className="rounded-md bg-slate-50 border border-[var(--cs-border)] p-3">
+                    <h4 className="text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Staff observation</h4>
+                    <p className="text-sm text-[var(--cs-navy)]">{r.staff_observation}</p>
                   </div>
 
                   {/* external consultation */}

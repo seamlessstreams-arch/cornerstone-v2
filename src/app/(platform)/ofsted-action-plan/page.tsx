@@ -58,13 +58,13 @@ const TYPE_ICON_COLOUR: Record<OfstedActionType, string> = {
 const PRIORITY_COLOUR: Record<OfstedActionPriority, string> = {
   high: "bg-red-50 text-red-700 border-red-200",
   medium: "bg-amber-50 text-amber-700 border-amber-200",
-  low: "bg-slate-50 text-slate-600 border-slate-200",
+  low: "bg-slate-50 text-[var(--cs-text-secondary)] border-[var(--cs-border)]",
 };
 
 const STATUS_COLOUR: Record<OfstedActionStatus, string> = {
   completed: "bg-emerald-50 text-emerald-700 border-emerald-200",
   in_progress: "bg-amber-50 text-amber-700 border-amber-200",
-  not_started: "bg-slate-50 text-slate-600 border-slate-200",
+  not_started: "bg-slate-50 text-[var(--cs-text-secondary)] border-[var(--cs-border)]",
   noted: "bg-blue-50 text-blue-700 border-blue-200",
 };
 
@@ -236,21 +236,21 @@ export default function OfstedActionPlanPage() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                 <div className="flex items-center gap-2">
                   <Star className="h-3.5 w-3.5 text-blue-500" />
-                  <span className="text-xs text-slate-600">Overall experiences &amp; progress:</span>
+                  <span className="text-xs text-[var(--cs-text-secondary)]">Overall experiences &amp; progress:</span>
                   <Badge variant="outline" className="bg-blue-100 text-blue-700 border-blue-200 text-[10px] px-1.5 py-0">
                     {INSPECTION.subJudgments.overallExperiences}
                   </Badge>
                 </div>
                 <div className="flex items-center gap-2">
                   <ShieldCheck className="h-3.5 w-3.5 text-blue-500" />
-                  <span className="text-xs text-slate-600">Helped &amp; protected:</span>
+                  <span className="text-xs text-[var(--cs-text-secondary)]">Helped &amp; protected:</span>
                   <Badge variant="outline" className="bg-blue-100 text-blue-700 border-blue-200 text-[10px] px-1.5 py-0">
                     {INSPECTION.subJudgments.helpedAndProtected}
                   </Badge>
                 </div>
                 <div className="flex items-center gap-2">
                   <User className="h-3.5 w-3.5 text-blue-500" />
-                  <span className="text-xs text-slate-600">Leaders &amp; managers:</span>
+                  <span className="text-xs text-[var(--cs-text-secondary)]">Leaders &amp; managers:</span>
                   <Badge variant="outline" className="bg-blue-100 text-blue-700 border-blue-200 text-[10px] px-1.5 py-0">
                     {INSPECTION.subJudgments.leadersAndManagers}
                   </Badge>
@@ -284,7 +284,7 @@ export default function OfstedActionPlanPage() {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <input
               placeholder="Search actions, evidence, owners..."
-              className="w-full rounded-lg border border-slate-200 bg-white pl-9 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900"
+              className="w-full rounded-lg border border-[var(--cs-border)] bg-white pl-9 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
@@ -294,7 +294,7 @@ export default function OfstedActionPlanPage() {
             <select
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value)}
-              className="rounded-lg border border-slate-200 bg-white px-2 py-2 text-sm text-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-900"
+              className="rounded-lg border border-[var(--cs-border)] bg-white px-2 py-2 text-sm text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-slate-900"
             >
               <option value="all">All Statuses</option>
               <option value="completed">Completed</option>
@@ -306,7 +306,7 @@ export default function OfstedActionPlanPage() {
           <select
             value={filterType}
             onChange={(e) => setFilterType(e.target.value)}
-            className="rounded-lg border border-slate-200 bg-white px-2 py-2 text-sm text-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-900"
+            className="rounded-lg border border-[var(--cs-border)] bg-white px-2 py-2 text-sm text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-slate-900"
           >
             <option value="all">All Types</option>
             <option value="requirement">Requirements</option>
@@ -316,7 +316,7 @@ export default function OfstedActionPlanPage() {
           <select
             value={filterPriority}
             onChange={(e) => setFilterPriority(e.target.value)}
-            className="rounded-lg border border-slate-200 bg-white px-2 py-2 text-sm text-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-900"
+            className="rounded-lg border border-[var(--cs-border)] bg-white px-2 py-2 text-sm text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-slate-900"
           >
             <option value="all">All Priorities</option>
             <option value="high">High</option>
@@ -327,7 +327,7 @@ export default function OfstedActionPlanPage() {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as "priority" | "status" | "type")}
-              className="rounded-lg border border-slate-200 bg-white px-2 py-2 text-sm text-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-900"
+              className="rounded-lg border border-[var(--cs-border)] bg-white px-2 py-2 text-sm text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-slate-900"
             >
               <option value="priority">Priority</option>
               <option value="status">Status</option>
@@ -340,7 +340,7 @@ export default function OfstedActionPlanPage() {
         <div className="space-y-3">
           {filtered.length === 0 && (
             <div className="text-center py-12 text-muted-foreground">
-              <ClipboardCheck className="h-10 w-10 mx-auto mb-3 text-slate-300" />
+              <ClipboardCheck className="h-10 w-10 mx-auto mb-3 text-[var(--cs-text-gentle)]" />
               No action items match your filters.
             </div>
           )}
@@ -356,7 +356,7 @@ export default function OfstedActionPlanPage() {
               >
                 {/* collapsed header */}
                 <button
-                  className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                  className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                   onClick={() => setExpandedId(isExpanded ? null : item.id)}
                 >
                   <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -397,7 +397,7 @@ export default function OfstedActionPlanPage() {
                             style={{ width: `${item.progress}%` }}
                           />
                         </div>
-                        <span className="text-xs text-slate-500 tabular-nums">{item.progress}%</span>
+                        <span className="text-xs text-[var(--cs-text-muted)] tabular-nums">{item.progress}%</span>
                       </div>
                     )}
                     {item.status === "completed" && (
@@ -417,12 +417,12 @@ export default function OfstedActionPlanPage() {
                     <Card>
                       <CardHeader className="pb-2">
                         <CardTitle className="text-sm flex items-center gap-2">
-                          <FileText className="h-4 w-4 text-slate-500" />
+                          <FileText className="h-4 w-4 text-[var(--cs-text-muted)]" />
                           Evidence &amp; Notes
                         </CardTitle>
                       </CardHeader>
                       <CardContent>
-                        <p className="text-sm text-slate-700">{item.evidence}</p>
+                        <p className="text-sm text-[var(--cs-text-secondary)]">{item.evidence}</p>
                       </CardContent>
                     </Card>
 
@@ -448,7 +448,7 @@ export default function OfstedActionPlanPage() {
                                 style={{ width: `${item.progress}%` }}
                               />
                             </div>
-                            <span className="text-sm font-semibold text-slate-700 tabular-nums w-12 text-right">{item.progress}%</span>
+                            <span className="text-sm font-semibold text-[var(--cs-text-secondary)] tabular-nums w-12 text-right">{item.progress}%</span>
                           </div>
                         </CardContent>
                       </Card>
@@ -478,10 +478,10 @@ export default function OfstedActionPlanPage() {
                                 </div>
                                 <div className="pb-3">
                                   <div className="flex items-center gap-2 flex-wrap">
-                                    <span className="text-xs font-medium text-slate-500">{update.date}</span>
-                                    <span className="text-xs text-slate-400">by {getStaffName(update.updated_by)}</span>
+                                    <span className="text-xs font-medium text-[var(--cs-text-muted)]">{update.date}</span>
+                                    <span className="text-xs text-[var(--cs-text-muted)]">by {getStaffName(update.updated_by)}</span>
                                   </div>
-                                  <p className="text-sm text-slate-700 mt-0.5">{update.note}</p>
+                                  <p className="text-sm text-[var(--cs-text-secondary)] mt-0.5">{update.note}</p>
                                 </div>
                               </div>
                             ))}
@@ -506,7 +506,7 @@ export default function OfstedActionPlanPage() {
                       </div>
                       <div>
                         <span className="text-muted-foreground">Completed:</span>{" "}
-                        <span className={cn("font-medium", item.completed_date ? "text-emerald-600" : "text-slate-500")}>
+                        <span className={cn("font-medium", item.completed_date ? "text-emerald-600" : "text-[var(--cs-text-muted)]")}>
                           {item.completed_date ?? "Pending"}
                         </span>
                       </div>

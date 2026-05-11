@@ -150,8 +150,8 @@ export default function AbsenceTrackingPage() {
           {[
             { label: "Total Absences", value: totalAbsences, icon: CalendarX, colour: "text-blue-600" },
             { label: "Sessions Lost", value: totalSessionsLost, icon: Clock, colour: "text-orange-600" },
-            { label: "Unauthorised", value: unauthorisedCount, icon: AlertTriangle, colour: unauthorisedCount > 0 ? "text-red-600" : "text-slate-400" },
-            { label: "Exclusions", value: exclusions, icon: TrendingDown, colour: exclusions > 0 ? "text-red-600" : "text-slate-400" },
+            { label: "Unauthorised", value: unauthorisedCount, icon: AlertTriangle, colour: unauthorisedCount > 0 ? "text-red-600" : "text-[var(--cs-text-muted)]" },
+            { label: "Exclusions", value: exclusions, icon: TrendingDown, colour: exclusions > 0 ? "text-red-600" : "text-[var(--cs-text-muted)]" },
           ].map((s) => (
             <div key={s.label} className="rounded-xl border bg-white p-4 flex items-center gap-3">
               <s.icon className={cn("h-5 w-5", s.colour)} />
@@ -254,7 +254,7 @@ export default function AbsenceTrackingPage() {
             return (
               <div key={rec.id} className="rounded-xl border bg-white overflow-hidden">
                 <button
-                  className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                  className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                   onClick={() => setExpanded(isExpanded ? null : rec.id)}
                 >
                   <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -283,11 +283,11 @@ export default function AbsenceTrackingPage() {
                       <div><span className="text-muted-foreground">Setting:</span> <span className="font-medium">{SETTING_LABELS[rec.setting]}</span></div>
                       <div><span className="text-muted-foreground">Sessions:</span> <span className="font-medium">{rec.sessions}</span></div>
                       <div className="flex items-center gap-1">
-                        <CheckCircle2 className={cn("h-3 w-3", rec.school_notified ? "text-green-600" : "text-slate-300")} />
+                        <CheckCircle2 className={cn("h-3 w-3", rec.school_notified ? "text-green-600" : "text-[var(--cs-text-gentle)]")} />
                         <span className="text-sm">School Notified</span>
                       </div>
                       <div className="flex items-center gap-1">
-                        <CheckCircle2 className={cn("h-3 w-3", rec.sw_notified ? "text-green-600" : "text-slate-300")} />
+                        <CheckCircle2 className={cn("h-3 w-3", rec.sw_notified ? "text-green-600" : "text-[var(--cs-text-gentle)]")} />
                         <span className="text-sm">SW Notified</span>
                       </div>
                     </div>

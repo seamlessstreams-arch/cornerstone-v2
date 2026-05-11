@@ -50,7 +50,7 @@ const ERROR_TYPE_CONFIG: Record<MedErrorType, { label: string; color: string; bg
   omission:            { label: "Omission",            color: "text-yellow-700",  bg: "bg-yellow-50",  border: "border-yellow-200"  },
   wrong_route:         { label: "Wrong Route",         color: "text-pink-700",    bg: "bg-pink-50",    border: "border-pink-200"    },
   expired_medication:  { label: "Expired Medication",  color: "text-stone-700",   bg: "bg-stone-50",   border: "border-stone-200"   },
-  documentation_error: { label: "Documentation Error", color: "text-slate-700",   bg: "bg-slate-100",  border: "border-slate-200"   },
+  documentation_error: { label: "Documentation Error", color: "text-[var(--cs-text-secondary)]",   bg: "bg-slate-100",  border: "border-[var(--cs-border)]"   },
   near_miss:           { label: "Near Miss",           color: "text-blue-700",    bg: "bg-blue-50",    border: "border-blue-200"    },
   adverse_reaction:    { label: "Adverse Reaction",    color: "text-purple-700",  bg: "bg-purple-50",  border: "border-purple-200"  },
 };
@@ -211,7 +211,7 @@ export default function MedicationErrorsPage() {
     return (
       <PageShell title="Medication Errors & Near-Misses" subtitle="Regulation 23 — Medication error reporting and learning">
         <div className="flex items-center justify-center py-20">
-          <Loader2 className="h-6 w-6 animate-spin text-slate-400" />
+          <Loader2 className="h-6 w-6 animate-spin text-[var(--cs-text-muted)]" />
         </div>
       </PageShell>
     );
@@ -239,28 +239,28 @@ export default function MedicationErrorsPage() {
     >
       {/* ── Summary Strip ─────────────────────────────────────────────────── */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
-        <Card className="border-slate-200">
+        <Card className="border-[var(--cs-border)]">
           <CardContent className="p-3">
-            <div className="text-[10px] font-medium text-slate-500 uppercase tracking-wide">Total Errors</div>
-            <div className="text-2xl font-bold text-slate-900 mt-0.5">{stats.total}</div>
+            <div className="text-[10px] font-medium text-[var(--cs-text-muted)] uppercase tracking-wide">Total Errors</div>
+            <div className="text-2xl font-bold text-[var(--cs-navy)] mt-0.5">{stats.total}</div>
           </CardContent>
         </Card>
-        <Card className="border-slate-200">
+        <Card className="border-[var(--cs-border)]">
           <CardContent className="p-3">
-            <div className="text-[10px] font-medium text-slate-500 uppercase tracking-wide">Open Cases</div>
+            <div className="text-[10px] font-medium text-[var(--cs-text-muted)] uppercase tracking-wide">Open Cases</div>
             <div className={cn("text-2xl font-bold mt-0.5", stats.open > 0 ? "text-amber-600" : "text-emerald-600")}>{stats.open}</div>
           </CardContent>
         </Card>
-        <Card className="border-slate-200">
+        <Card className="border-[var(--cs-border)]">
           <CardContent className="p-3">
-            <div className="text-[10px] font-medium text-slate-500 uppercase tracking-wide">Near Misses</div>
+            <div className="text-[10px] font-medium text-[var(--cs-text-muted)] uppercase tracking-wide">Near Misses</div>
             <div className="text-2xl font-bold text-blue-600 mt-0.5">{stats.nearMisses}</div>
           </CardContent>
         </Card>
-        <Card className="border-slate-200">
+        <Card className="border-[var(--cs-border)]">
           <CardContent className="p-3">
-            <div className="text-[10px] font-medium text-slate-500 uppercase tracking-wide">Avg Resolution</div>
-            <div className="text-2xl font-bold text-slate-900 mt-0.5">{stats.avgDays} <span className="text-sm font-normal text-slate-400">days</span></div>
+            <div className="text-[10px] font-medium text-[var(--cs-text-muted)] uppercase tracking-wide">Avg Resolution</div>
+            <div className="text-2xl font-bold text-[var(--cs-navy)] mt-0.5">{stats.avgDays} <span className="text-sm font-normal text-[var(--cs-text-muted)]">days</span></div>
           </CardContent>
         </Card>
       </div>
@@ -283,14 +283,14 @@ export default function MedicationErrorsPage() {
       {/* ── Per-Child Summary Cards ───────────────────────────────────────── */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5">
         {childSummaries.map((child) => (
-          <Card key={child.id} className="border-slate-200">
+          <Card key={child.id} className="border-[var(--cs-border)]">
             <CardHeader className="pb-2 pt-3 px-3">
-              <CardTitle className="text-sm font-semibold text-slate-900">{child.name}</CardTitle>
+              <CardTitle className="text-sm font-semibold text-[var(--cs-navy)]">{child.name}</CardTitle>
             </CardHeader>
             <CardContent className="px-3 pb-3 space-y-2">
               <div className="flex items-center justify-between text-[11px]">
-                <span className="text-slate-500">Total incidents</span>
-                <span className="font-semibold text-slate-700">{child.count}</span>
+                <span className="text-[var(--cs-text-muted)]">Total incidents</span>
+                <span className="font-semibold text-[var(--cs-text-secondary)]">{child.count}</span>
               </div>
               <div className="flex flex-wrap gap-1">
                 {Object.entries(child.types).map(([type, count]) => {
@@ -312,7 +312,7 @@ export default function MedicationErrorsPage() {
                   );
                 })}
               </div>
-              <div className="text-[10px] text-slate-400 pt-1 border-t border-slate-100">
+              <div className="text-[10px] text-[var(--cs-text-muted)] pt-1 border-t border-[var(--cs-border-subtle)]">
                 Last incident: {formatDate(child.lastDate)}
               </div>
             </CardContent>
@@ -323,7 +323,7 @@ export default function MedicationErrorsPage() {
       {/* ── Filter Bar ────────────────────────────────────────────────────── */}
       <div className="flex flex-wrap items-center gap-2 mb-4">
         <div className="relative flex-1 min-w-[180px] max-w-xs">
-          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
           <Input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -334,7 +334,7 @@ export default function MedicationErrorsPage() {
 
         <Select value={typeFilter} onValueChange={(v) => setTypeFilter(v as MedErrorType | "all")}>
           <SelectTrigger className="h-8 text-xs w-[160px]">
-            <Filter className="h-3 w-3 mr-1 text-slate-400" />
+            <Filter className="h-3 w-3 mr-1 text-[var(--cs-text-muted)]" />
             <SelectValue placeholder="Error type" />
           </SelectTrigger>
           <SelectContent>
@@ -371,7 +371,7 @@ export default function MedicationErrorsPage() {
 
         <Select value={sortBy} onValueChange={(v) => setSortBy(v as typeof sortBy)}>
           <SelectTrigger className="h-8 text-xs w-[130px]">
-            <ArrowUpDown className="h-3 w-3 mr-1 text-slate-400" />
+            <ArrowUpDown className="h-3 w-3 mr-1 text-[var(--cs-text-muted)]" />
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -385,7 +385,7 @@ export default function MedicationErrorsPage() {
           <Button
             variant="ghost"
             size="sm"
-            className="h-8 text-xs text-slate-400 hover:text-slate-600"
+            className="h-8 text-xs text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)]"
             onClick={() => { setSearch(""); setTypeFilter("all"); setSeverityFilter("all"); setStatusFilter("all"); }}
           >
             <XCircle className="h-3 w-3 mr-1" />
@@ -395,14 +395,14 @@ export default function MedicationErrorsPage() {
       </div>
 
       {/* ── Results count ─────────────────────────────────────────────────── */}
-      <p className="text-[11px] text-slate-400 mb-3">
+      <p className="text-[11px] text-[var(--cs-text-muted)] mb-3">
         Showing {filtered.length} of {errors.length} record{errors.length !== 1 ? "s" : ""}
       </p>
 
       {/* ── Error Cards ───────────────────────────────────────────────────── */}
       <div className="space-y-3">
         {filtered.length === 0 && (
-          <div className="text-center py-12 text-sm text-slate-400">
+          <div className="text-center py-12 text-sm text-[var(--cs-text-muted)]">
             No medication errors match the current filters.
           </div>
         )}
@@ -434,10 +434,10 @@ export default function MedicationErrorsPage() {
               >
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap mb-1">
-                    <span className="text-xs font-medium text-slate-500">{formatDate(error.date_occurred)}</span>
-                    <span className="text-[10px] text-slate-400">{error.time_occurred}</span>
-                    <span className="text-xs font-semibold text-slate-900">— {error.medication}</span>
-                    <span className="text-[11px] text-slate-500">({getYPName(error.child_id)})</span>
+                    <span className="text-xs font-medium text-[var(--cs-text-muted)]">{formatDate(error.date_occurred)}</span>
+                    <span className="text-[10px] text-[var(--cs-text-muted)]">{error.time_occurred}</span>
+                    <span className="text-xs font-semibold text-[var(--cs-navy)]">— {error.medication}</span>
+                    <span className="text-[11px] text-[var(--cs-text-muted)]">({getYPName(error.child_id)})</span>
                   </div>
                   <div className="flex items-center gap-1.5 flex-wrap">
                     <Badge className={cn("text-[10px] px-2 py-0 border", etCfg.bg, etCfg.color, etCfg.border)}>
@@ -462,12 +462,12 @@ export default function MedicationErrorsPage() {
                   </div>
                 </div>
                 <div className="flex items-center gap-2 flex-shrink-0">
-                  <span className="text-[10px] text-slate-400">
+                  <span className="text-[10px] text-[var(--cs-text-muted)]">
                     Reported by {getStaffName(error.reported_by)}
                   </span>
                   {isExpanded
-                    ? <ChevronUp className="h-4 w-4 text-slate-400" />
-                    : <ChevronDown className="h-4 w-4 text-slate-400" />
+                    ? <ChevronUp className="h-4 w-4 text-[var(--cs-text-muted)]" />
+                    : <ChevronDown className="h-4 w-4 text-[var(--cs-text-muted)]" />
                   }
                 </div>
               </div>
@@ -493,10 +493,10 @@ export default function MedicationErrorsPage() {
 
                   {/* Persons informed */}
                   <div>
-                    <h4 className="text-[11px] font-semibold text-slate-600 uppercase tracking-wide mb-1.5">Persons Informed</h4>
+                    <h4 className="text-[11px] font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide mb-1.5">Persons Informed</h4>
                     <div className="flex flex-wrap gap-1">
                       {error.person_informed.map((p) => (
-                        <Badge key={p} className="text-[10px] px-2 py-0.5 bg-slate-100 text-slate-700 border border-slate-200">
+                        <Badge key={p} className="text-[10px] px-2 py-0.5 bg-slate-100 text-[var(--cs-text-secondary)] border border-[var(--cs-border)]">
                           {p}
                         </Badge>
                       ))}
@@ -512,7 +512,7 @@ export default function MedicationErrorsPage() {
                   {/* Contributing factors */}
                   {error.contributing_factors.length > 0 && (
                     <div>
-                      <h4 className="text-[11px] font-semibold text-slate-600 uppercase tracking-wide mb-1.5">Contributing Factors</h4>
+                      <h4 className="text-[11px] font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide mb-1.5">Contributing Factors</h4>
                       <div className="flex flex-wrap gap-1">
                         {error.contributing_factors.map((f, i) => (
                           <Badge key={i} className="text-[10px] px-2 py-0.5 bg-orange-50 text-orange-700 border border-orange-200">
@@ -526,17 +526,17 @@ export default function MedicationErrorsPage() {
                   {/* Remedial actions table */}
                   {error.remedial_actions.length > 0 && (
                     <div>
-                      <h4 className="text-[11px] font-semibold text-slate-600 uppercase tracking-wide mb-2">
+                      <h4 className="text-[11px] font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide mb-2">
                         Remedial Actions ({error.remedial_actions.length})
                       </h4>
-                      <div className="rounded-lg border border-slate-200 overflow-hidden">
+                      <div className="rounded-lg border border-[var(--cs-border)] overflow-hidden">
                         <table className="w-full text-xs">
                           <thead>
-                            <tr className="bg-slate-50 border-b border-slate-200">
-                              <th className="text-left px-3 py-1.5 text-[10px] font-semibold text-slate-500 uppercase">Action</th>
-                              <th className="text-left px-3 py-1.5 text-[10px] font-semibold text-slate-500 uppercase">Owner</th>
-                              <th className="text-left px-3 py-1.5 text-[10px] font-semibold text-slate-500 uppercase">Due</th>
-                              <th className="text-left px-3 py-1.5 text-[10px] font-semibold text-slate-500 uppercase">Status</th>
+                            <tr className="bg-slate-50 border-b border-[var(--cs-border)]">
+                              <th className="text-left px-3 py-1.5 text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase">Action</th>
+                              <th className="text-left px-3 py-1.5 text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase">Owner</th>
+                              <th className="text-left px-3 py-1.5 text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase">Due</th>
+                              <th className="text-left px-3 py-1.5 text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase">Status</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -547,13 +547,13 @@ export default function MedicationErrorsPage() {
                                 <tr
                                   key={i}
                                   className={cn(
-                                    "border-b border-slate-100 last:border-0",
+                                    "border-b border-[var(--cs-border-subtle)] last:border-0",
                                     isOverdue && "bg-orange-50",
                                   )}
                                 >
-                                  <td className="px-3 py-2 text-slate-700">{a.action}</td>
-                                  <td className="px-3 py-2 text-slate-600">{getStaffName(a.owner)}</td>
-                                  <td className={cn("px-3 py-2", isOverdue ? "text-orange-700 font-semibold" : "text-slate-600")}>
+                                  <td className="px-3 py-2 text-[var(--cs-text-secondary)]">{a.action}</td>
+                                  <td className="px-3 py-2 text-[var(--cs-text-secondary)]">{getStaffName(a.owner)}</td>
+                                  <td className={cn("px-3 py-2", isOverdue ? "text-orange-700 font-semibold" : "text-[var(--cs-text-secondary)]")}>
                                     {formatDate(a.due_date)}
                                     {isOverdue && <span className="ml-1 text-[9px] text-orange-600">(overdue)</span>}
                                   </td>
@@ -599,8 +599,8 @@ export default function MedicationErrorsPage() {
 
                   {/* Outcome */}
                   <div>
-                    <h4 className="text-[11px] font-semibold text-slate-600 uppercase tracking-wide mb-1">Outcome</h4>
-                    <p className="text-xs text-slate-700 leading-relaxed">{error.outcome}</p>
+                    <h4 className="text-[11px] font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide mb-1">Outcome</h4>
+                    <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed">{error.outcome}</p>
                   </div>
 
                   {/* Smart Link Panel */}
@@ -612,7 +612,7 @@ export default function MedicationErrorsPage() {
                   />
 
                   {/* Footer meta */}
-                  <div className="flex items-center gap-4 text-[10px] text-slate-400 pt-1 border-t border-slate-100">
+                  <div className="flex items-center gap-4 text-[10px] text-[var(--cs-text-muted)] pt-1 border-t border-[var(--cs-border-subtle)]">
                     <span>Reported: {formatDate(error.reported_date)} by {getStaffName(error.reported_by)}</span>
                     {error.review_date && <span>Review date: {formatDate(error.review_date)}</span>}
                   </div>
@@ -624,8 +624,8 @@ export default function MedicationErrorsPage() {
       </div>
 
       {/* ── Regulatory Note ───────────────────────────────────────────────── */}
-      <div className="mt-6 rounded-lg border border-slate-200 bg-slate-50 p-3">
-        <p className="text-[10px] text-slate-500 leading-relaxed">
+      <div className="mt-6 rounded-lg border border-[var(--cs-border)] bg-slate-50 p-3">
+        <p className="text-[10px] text-[var(--cs-text-muted)] leading-relaxed">
           <strong>Regulatory context:</strong> This register supports compliance with{" "}
           <strong>Regulation 23 (Health)</strong> of the Children's Homes (England) Regulations 2015 and follows{" "}
           <strong>NICE guidelines</strong> on medication safety in care settings. All medication errors, near-misses, and
@@ -743,7 +743,7 @@ function NewErrorDialog({
           {/* Young person + date/time */}
           <div className="grid grid-cols-3 gap-3">
             <div>
-              <label className="text-[11px] font-medium text-slate-600 mb-1 block">Young Person *</label>
+              <label className="text-[11px] font-medium text-[var(--cs-text-secondary)] mb-1 block">Young Person *</label>
               <Select value={child_id} onValueChange={setChildId}>
                 <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
                 <SelectContent>
@@ -754,11 +754,11 @@ function NewErrorDialog({
               </Select>
             </div>
             <div>
-              <label className="text-[11px] font-medium text-slate-600 mb-1 block">Date Occurred *</label>
+              <label className="text-[11px] font-medium text-[var(--cs-text-secondary)] mb-1 block">Date Occurred *</label>
               <Input type="date" value={date_occurred} onChange={(e) => setDateOccurred(e.target.value)} className="h-8 text-xs" />
             </div>
             <div>
-              <label className="text-[11px] font-medium text-slate-600 mb-1 block">Time Occurred</label>
+              <label className="text-[11px] font-medium text-[var(--cs-text-secondary)] mb-1 block">Time Occurred</label>
               <Input type="time" value={time_occurred} onChange={(e) => setTimeOccurred(e.target.value)} className="h-8 text-xs" />
             </div>
           </div>
@@ -766,7 +766,7 @@ function NewErrorDialog({
           {/* Error type + severity */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="text-[11px] font-medium text-slate-600 mb-1 block">Error Type *</label>
+              <label className="text-[11px] font-medium text-[var(--cs-text-secondary)] mb-1 block">Error Type *</label>
               <Select value={error_type} onValueChange={(v) => setErrorType(v as MedErrorType)}>
                 <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
                 <SelectContent>
@@ -777,7 +777,7 @@ function NewErrorDialog({
               </Select>
             </div>
             <div>
-              <label className="text-[11px] font-medium text-slate-600 mb-1 block">Severity</label>
+              <label className="text-[11px] font-medium text-[var(--cs-text-secondary)] mb-1 block">Severity</label>
               <Select value={severity} onValueChange={(v) => setSeverity(v as MedErrorSeverity)}>
                 <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
                 <SelectContent>
@@ -791,24 +791,24 @@ function NewErrorDialog({
 
           {/* Medication + doses */}
           <div>
-            <label className="text-[11px] font-medium text-slate-600 mb-1 block">Medication *</label>
+            <label className="text-[11px] font-medium text-[var(--cs-text-secondary)] mb-1 block">Medication *</label>
             <Input value={medication} onChange={(e) => setMedication(e.target.value)} placeholder="e.g. Melatonin 3mg" className="h-8 text-xs" />
           </div>
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="text-[11px] font-medium text-slate-600 mb-1 block">Prescribed Dose</label>
+              <label className="text-[11px] font-medium text-[var(--cs-text-secondary)] mb-1 block">Prescribed Dose</label>
               <Input value={prescribed_dose} onChange={(e) => setPrescribedDose(e.target.value)} placeholder="e.g. 3mg" className="h-8 text-xs" />
             </div>
             <div>
-              <label className="text-[11px] font-medium text-slate-600 mb-1 block">Actual Dose</label>
+              <label className="text-[11px] font-medium text-[var(--cs-text-secondary)] mb-1 block">Actual Dose</label>
               <Input value={actual_dose} onChange={(e) => setActualDose(e.target.value)} placeholder="e.g. 5mg or Not given" className="h-8 text-xs" />
             </div>
           </div>
 
           {/* What happened */}
           <div>
-            <label className="text-[11px] font-medium text-slate-600 mb-1 block">What Happened *</label>
+            <label className="text-[11px] font-medium text-[var(--cs-text-secondary)] mb-1 block">What Happened *</label>
             <Textarea
               value={what_happened}
               onChange={(e) => setWhatHappened(e.target.value)}
@@ -819,7 +819,7 @@ function NewErrorDialog({
 
           {/* Immediate action */}
           <div>
-            <label className="text-[11px] font-medium text-slate-600 mb-1 block">Immediate Action Taken</label>
+            <label className="text-[11px] font-medium text-[var(--cs-text-secondary)] mb-1 block">Immediate Action Taken</label>
             <Textarea
               value={immediate_action}
               onChange={(e) => setImmediateAction(e.target.value)}
@@ -830,7 +830,7 @@ function NewErrorDialog({
 
           {/* Persons informed */}
           <div>
-            <label className="text-[11px] font-medium text-slate-600 mb-1.5 block">Persons Informed</label>
+            <label className="text-[11px] font-medium text-[var(--cs-text-secondary)] mb-1.5 block">Persons Informed</label>
             <div className="flex flex-wrap gap-1.5">
               {PERSONS_OPTIONS.map((p) => (
                 <Button
@@ -842,7 +842,7 @@ function NewErrorDialog({
                     "h-6 text-[10px] px-2",
                     personsInformed.includes(p)
                       ? "bg-blue-100 text-blue-700 border-blue-300"
-                      : "bg-white text-slate-500 border-slate-200"
+                      : "bg-white text-[var(--cs-text-muted)] border-[var(--cs-border)]"
                   )}
                   onClick={() => togglePerson(p)}
                 >
@@ -862,12 +862,12 @@ function NewErrorDialog({
               onChange={(e) => setDutyOfCandour(e.target.checked)}
               className="h-3.5 w-3.5 rounded border-slate-300 text-blue-600"
             />
-            <label htmlFor="doc-checkbox" className="text-xs text-slate-600">Duty of Candour applies</label>
+            <label htmlFor="doc-checkbox" className="text-xs text-[var(--cs-text-secondary)]">Duty of Candour applies</label>
           </div>
 
           {/* Root cause */}
           <div>
-            <label className="text-[11px] font-medium text-slate-600 mb-1 block">Root Cause</label>
+            <label className="text-[11px] font-medium text-[var(--cs-text-secondary)] mb-1 block">Root Cause</label>
             <Textarea
               value={root_cause}
               onChange={(e) => setRootCause(e.target.value)}
@@ -878,7 +878,7 @@ function NewErrorDialog({
 
           {/* Contributing factors */}
           <div>
-            <label className="text-[11px] font-medium text-slate-600 mb-1 block">Contributing Factors (one per line)</label>
+            <label className="text-[11px] font-medium text-[var(--cs-text-secondary)] mb-1 block">Contributing Factors (one per line)</label>
             <Textarea
               value={contributing_factors}
               onChange={(e) => setContributingFactors(e.target.value)}
@@ -889,7 +889,7 @@ function NewErrorDialog({
 
           {/* Lessons learned */}
           <div>
-            <label className="text-[11px] font-medium text-slate-600 mb-1 block">Lessons Learned</label>
+            <label className="text-[11px] font-medium text-[var(--cs-text-secondary)] mb-1 block">Lessons Learned</label>
             <Textarea
               value={lessons_learned}
               onChange={(e) => setLessonsLearned(e.target.value)}

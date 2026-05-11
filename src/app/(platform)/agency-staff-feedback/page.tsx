@@ -85,7 +85,7 @@ export default function AgencyStaffFeedbackPage() {
           const isExpanded = expandedId === f.id;
           return (
             <div key={f.id} className="rounded-xl border bg-white overflow-hidden">
-              <button className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors" onClick={() => setExpandedId(isExpanded ? null : f.id)}>
+              <button className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors" onClick={() => setExpandedId(isExpanded ? null : f.id)}>
                 <div className="flex items-center gap-3 flex-1 min-w-0"><UserCheck className="h-5 w-5 text-blue-600 shrink-0" /><div className="min-w-0"><p className="font-medium truncate">{f.agency_staff_name} ({f.agency})</p><p className="text-xs text-muted-foreground mt-0.5">{f.shift_date} &middot; {AGENCY_SHIFT_TYPE_LABEL[f.shift_type]} &middot; with {getStaffName(f.permanent_staff_on_shift)}</p></div></div>
                 <div className="flex items-center gap-2 shrink-0 ml-3"><span className={cn("text-xs px-2 py-0.5 rounded-full font-medium", verdictColour[f.overall_verdict])}>{AGENCY_VERDICT_LABEL[f.overall_verdict]}</span>{isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}</div>
               </button>
@@ -104,7 +104,7 @@ export default function AgencyStaffFeedbackPage() {
                   </div>
                   <div className="bg-blue-50 rounded-lg p-3"><p className="text-xs font-semibold text-blue-800 uppercase tracking-wide mb-1">Feedback Summary</p><p>{f.feedback_summary}</p></div>
                   <div className="flex flex-wrap gap-4 text-xs text-muted-foreground pt-2 border-t"><span>Feedback to agency: {f.feedback_to_agency_date}</span><span>Reviewed: {getStaffName(f.reviewed_by)}</span><span>Action: {f.follow_up_action}</span></div>
-                  {f.notes && <div className="bg-slate-50 rounded-lg p-3 border"><p className="text-xs font-semibold text-slate-800 uppercase tracking-wide mb-1">Notes</p><p>{f.notes}</p></div>}
+                  {f.notes && <div className="bg-slate-50 rounded-lg p-3 border"><p className="text-xs font-semibold text-[var(--cs-navy)] uppercase tracking-wide mb-1">Notes</p><p>{f.notes}</p></div>}
                 </div>
               )}
             </div>

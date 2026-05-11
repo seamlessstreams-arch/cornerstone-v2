@@ -34,10 +34,10 @@ const STATUS_COLOUR: Record<string, string> = {
   approved: "bg-emerald-100 text-emerald-700",
   actioned: "bg-blue-100 text-blue-700",
   review: "bg-amber-100 text-amber-700",
-  pending: "bg-slate-100 text-slate-600",
+  pending: "bg-slate-100 text-[var(--cs-text-secondary)]",
   analysing: "bg-indigo-100 text-indigo-700",
   rejected: "bg-red-100 text-red-700",
-  archived: "bg-slate-100 text-slate-400",
+  archived: "bg-slate-100 text-[var(--cs-text-muted)]",
 };
 
 // ── Export columns ────────────────────────────────────────────────────────────
@@ -159,45 +159,45 @@ export default function EvidencePortfolioPage() {
 
       {/* Stats row */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-        <div className="rounded-xl border border-slate-200 bg-white p-3 text-center">
+        <div className="rounded-xl border border-[var(--cs-border)] bg-white p-3 text-center">
           <FolderOpen className="h-4 w-4 text-indigo-500 mx-auto mb-1" />
-          <div className="text-lg font-bold text-slate-800 tabular-nums">{stats.totalDocs}</div>
-          <div className="text-[10px] text-slate-500">Total Documents</div>
+          <div className="text-lg font-bold text-[var(--cs-navy)] tabular-nums">{stats.totalDocs}</div>
+          <div className="text-[10px] text-[var(--cs-text-muted)]">Total Documents</div>
         </div>
-        <div className="rounded-xl border border-slate-200 bg-white p-3 text-center">
+        <div className="rounded-xl border border-[var(--cs-border)] bg-white p-3 text-center">
           <Users className="h-4 w-4 text-blue-500 mx-auto mb-1" />
           <div className="text-lg font-bold text-blue-700 tabular-nums">
             {stats.staffWithEvidence}/{stats.totalStaff}
           </div>
-          <div className="text-[10px] text-slate-500">Staff with Evidence</div>
+          <div className="text-[10px] text-[var(--cs-text-muted)]">Staff with Evidence</div>
         </div>
-        <div className="rounded-xl border border-slate-200 bg-white p-3 text-center">
+        <div className="rounded-xl border border-[var(--cs-border)] bg-white p-3 text-center">
           <Award className="h-4 w-4 text-violet-500 mx-auto mb-1" />
           <div className="text-lg font-bold text-violet-700 tabular-nums">{stats.categories}</div>
-          <div className="text-[10px] text-slate-500">Categories</div>
+          <div className="text-[10px] text-[var(--cs-text-muted)]">Categories</div>
         </div>
-        <div className="rounded-xl border border-slate-200 bg-white p-3 text-center">
-          <CheckCircle2 className={cn("h-4 w-4 mx-auto mb-1", stats.approved > 0 ? "text-emerald-500" : "text-slate-300")} />
-          <div className={cn("text-lg font-bold tabular-nums", stats.approved > 0 ? "text-emerald-700" : "text-slate-400")}>{stats.approved}</div>
-          <div className="text-[10px] text-slate-500">Approved</div>
+        <div className="rounded-xl border border-[var(--cs-border)] bg-white p-3 text-center">
+          <CheckCircle2 className={cn("h-4 w-4 mx-auto mb-1", stats.approved > 0 ? "text-emerald-500" : "text-[var(--cs-text-gentle)]")} />
+          <div className={cn("text-lg font-bold tabular-nums", stats.approved > 0 ? "text-emerald-700" : "text-[var(--cs-text-muted)]")}>{stats.approved}</div>
+          <div className="text-[10px] text-[var(--cs-text-muted)]">Approved</div>
         </div>
-        <div className="rounded-xl border border-slate-200 bg-white p-3 text-center">
-          <Clock className={cn("h-4 w-4 mx-auto mb-1", stats.pending > 0 ? "text-amber-500" : "text-slate-300")} />
-          <div className={cn("text-lg font-bold tabular-nums", stats.pending > 0 ? "text-amber-700" : "text-slate-400")}>{stats.pending}</div>
-          <div className="text-[10px] text-slate-500">Pending Review</div>
+        <div className="rounded-xl border border-[var(--cs-border)] bg-white p-3 text-center">
+          <Clock className={cn("h-4 w-4 mx-auto mb-1", stats.pending > 0 ? "text-amber-500" : "text-[var(--cs-text-gentle)]")} />
+          <div className={cn("text-lg font-bold tabular-nums", stats.pending > 0 ? "text-amber-700" : "text-[var(--cs-text-muted)]")}>{stats.pending}</div>
+          <div className="text-[10px] text-[var(--cs-text-muted)]">Pending Review</div>
         </div>
       </div>
 
       {/* Search + Category filter */}
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1 max-w-sm">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
           <input
             type="text"
             placeholder="Search by filename, staff name or category..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full rounded-lg border border-slate-200 bg-white py-1.5 pl-9 pr-3 text-xs text-slate-700 placeholder:text-slate-400 focus:border-indigo-300 focus:ring-1 focus:ring-indigo-200 outline-none transition-all"
+            className="w-full rounded-lg border border-[var(--cs-border)] bg-white py-1.5 pl-9 pr-3 text-xs text-[var(--cs-text-secondary)] placeholder:text-[var(--cs-text-muted)] focus:border-[var(--cs-aria-gold)] focus:ring-1 focus:ring-[var(--cs-aria-gold)]/30 outline-none transition-all"
           />
         </div>
         <div className="flex gap-1.5 flex-wrap">
@@ -212,7 +212,7 @@ export default function EvidencePortfolioPage() {
                   "px-2.5 py-1 rounded-full text-[11px] font-medium border transition-all",
                   categoryFilter === key
                     ? "bg-indigo-600 text-white border-indigo-600"
-                    : "bg-white text-slate-600 border-slate-200 hover:border-indigo-300",
+                    : "bg-white text-[var(--cs-text-secondary)] border-[var(--cs-border)] hover:border-indigo-300",
                 )}
               >
                 {label} {count > 0 && `(${count})`}
@@ -252,42 +252,42 @@ export default function EvidencePortfolioPage() {
       {/* By staff member */}
       {Object.keys(docsByStaff).length > 0 && (
         <div className="space-y-3">
-          <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest">By Staff Member</p>
+          <p className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-widest">By Staff Member</p>
           {Object.entries(docsByStaff).map(([staffId, docs]) => {
             const member = staff.find((s) => s.id === staffId);
             if (!member) return null;
             return (
-              <div key={staffId} className="rounded-2xl border border-slate-200 bg-white overflow-hidden">
-                <div className="flex items-center justify-between px-4 py-3 bg-slate-50 border-b border-slate-100">
+              <div key={staffId} className="rounded-2xl border border-[var(--cs-border)] bg-white overflow-hidden">
+                <div className="flex items-center justify-between px-4 py-3 bg-slate-50 border-b border-[var(--cs-border-subtle)]">
                   <div className="flex items-center gap-2">
                     <div className="w-7 h-7 rounded-full bg-indigo-100 flex items-center justify-center text-xs font-bold text-indigo-700">
                       {member.full_name.split(" ").map((n) => n[0]).join("").slice(0, 2)}
                     </div>
                     <div>
-                      <p className="text-sm font-semibold text-slate-800">{member.full_name}</p>
-                      <p className="text-xs text-slate-500">
+                      <p className="text-sm font-semibold text-[var(--cs-navy)]">{member.full_name}</p>
+                      <p className="text-xs text-[var(--cs-text-muted)]">
                         {docs.length} document{docs.length !== 1 ? "s" : ""}
-                        {member.job_title && <span className="text-slate-400"> · {member.job_title}</span>}
+                        {member.job_title && <span className="text-[var(--cs-text-muted)]"> · {member.job_title}</span>}
                       </p>
                     </div>
                   </div>
                   <Link href={`/workforce/staff/${staffId}`}>
-                    <ChevronRight className="h-4 w-4 text-slate-300 hover:text-slate-500 transition-colors" />
+                    <ChevronRight className="h-4 w-4 text-[var(--cs-text-gentle)] hover:text-[var(--cs-text-muted)] transition-colors" />
                   </Link>
                 </div>
                 <div className="divide-y divide-slate-50">
                   {docs.map((doc) => (
                     <div key={doc.id} className="flex items-center gap-3 px-4 py-2.5">
-                      <FileText className="h-3.5 w-3.5 text-slate-400 shrink-0" />
+                      <FileText className="h-3.5 w-3.5 text-[var(--cs-text-muted)] shrink-0" />
                       <div className="flex-1 min-w-0">
-                        <p className="text-xs font-medium text-slate-800 truncate">{doc.original_file_name}</p>
-                        <p className="text-[10px] text-slate-400">
+                        <p className="text-xs font-medium text-[var(--cs-navy)] truncate">{doc.original_file_name}</p>
+                        <p className="text-[10px] text-[var(--cs-text-muted)]">
                           {doc.document_category ? DOCUMENT_CATEGORY_LABELS[doc.document_category] : "Uncategorised"}
                           {doc.created_at && <span> · {new Date(doc.created_at).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}</span>}
                         </p>
                       </div>
                       {doc.document_status && (
-                        <Badge className={cn("text-[9px] px-1.5 py-0 rounded-full border-0", STATUS_COLOUR[doc.document_status] ?? "bg-slate-100 text-slate-500")}>
+                        <Badge className={cn("text-[9px] px-1.5 py-0 rounded-full border-0", STATUS_COLOUR[doc.document_status] ?? "bg-slate-100 text-[var(--cs-text-muted)]")}>
                           {doc.document_status.replace(/_/g, " ")}
                         </Badge>
                       )}
@@ -313,21 +313,21 @@ export default function EvidencePortfolioPage() {
       {/* Unlinked documents */}
       {unlinkedDocs.length > 0 && (
         <div className="space-y-3">
-          <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest">General Evidence</p>
-          <div className="rounded-2xl border border-slate-200 bg-white overflow-hidden">
+          <p className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-widest">General Evidence</p>
+          <div className="rounded-2xl border border-[var(--cs-border)] bg-white overflow-hidden">
             <div className="divide-y divide-slate-50">
               {unlinkedDocs.map((doc) => (
                 <div key={doc.id} className="flex items-center gap-3 px-4 py-2.5">
-                  <FileText className="h-3.5 w-3.5 text-slate-400 shrink-0" />
+                  <FileText className="h-3.5 w-3.5 text-[var(--cs-text-muted)] shrink-0" />
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs font-medium text-slate-800 truncate">{doc.original_file_name}</p>
-                    <p className="text-[10px] text-slate-400">
+                    <p className="text-xs font-medium text-[var(--cs-navy)] truncate">{doc.original_file_name}</p>
+                    <p className="text-[10px] text-[var(--cs-text-muted)]">
                       {doc.document_category ? DOCUMENT_CATEGORY_LABELS[doc.document_category] : "Uncategorised"}
                       {doc.created_at && <span> · {new Date(doc.created_at).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}</span>}
                     </p>
                   </div>
                   {doc.document_status && (
-                    <Badge className={cn("text-[9px] px-1.5 py-0 rounded-full border-0", STATUS_COLOUR[doc.document_status] ?? "bg-slate-100 text-slate-500")}>
+                    <Badge className={cn("text-[9px] px-1.5 py-0 rounded-full border-0", STATUS_COLOUR[doc.document_status] ?? "bg-slate-100 text-[var(--cs-text-muted)]")}>
                       {doc.document_status.replace(/_/g, " ")}
                     </Badge>
                   )}
@@ -340,23 +340,23 @@ export default function EvidencePortfolioPage() {
 
       {/* No results */}
       {filteredDocs.length === 0 && allDocs.length > 0 && (
-        <div className="text-center py-8 text-slate-400">
-          <Search className="h-6 w-6 mx-auto mb-2 text-slate-300" />
+        <div className="text-center py-8 text-[var(--cs-text-muted)]">
+          <Search className="h-6 w-6 mx-auto mb-2 text-[var(--cs-text-gentle)]" />
           <p className="text-sm">No documents match your search</p>
           <p className="text-xs mt-1">Try adjusting the search or category filter</p>
         </div>
       )}
 
       {allDocs.length === 0 && (
-        <div className="text-center py-8 text-slate-400">
-          <Briefcase className="h-8 w-8 mx-auto mb-2 text-slate-300" />
+        <div className="text-center py-8 text-[var(--cs-text-muted)]">
+          <Briefcase className="h-8 w-8 mx-auto mb-2 text-[var(--cs-text-gentle)]" />
           <p className="text-sm">No evidence uploaded yet</p>
           <p className="text-xs mt-1">Upload CPD certificates, observation reports, or training records above</p>
         </div>
       )}
 
-      <div className="rounded-xl border border-slate-100 bg-slate-50 px-4 py-3 text-xs text-slate-500">
-        <span className="font-semibold text-slate-600">ILACS Inspection Note — </span>
+      <div className="rounded-xl border border-[var(--cs-border-subtle)] bg-slate-50 px-4 py-3 text-xs text-[var(--cs-text-muted)]">
+        <span className="font-semibold text-[var(--cs-text-secondary)]">ILACS Inspection Note — </span>
         Ofsted inspectors may request evidence of staff CPD and professional development during inspection.
         This portfolio provides a single location for all workforce development evidence, accessible during
         Reg 44 visits and full Ofsted inspections.

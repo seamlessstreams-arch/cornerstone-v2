@@ -62,7 +62,7 @@ export default function EmergencyPlanningPage() {
           {[
             { label: "Emergency Plans", value: plans.length, icon: AlertOctagon, colour: "text-red-600" },
             { label: "All Current", value: plans.filter((p) => p.status === "current").length, icon: CheckCircle2, colour: "text-green-600" },
-            { label: "Tests Due", value: testsDue, icon: RefreshCw, colour: testsDue > 0 ? "text-orange-600" : "text-slate-400" },
+            { label: "Tests Due", value: testsDue, icon: RefreshCw, colour: testsDue > 0 ? "text-orange-600" : "text-[var(--cs-text-muted)]" },
             { label: "Evacuation Plans", value: plans.filter((p) => p.evacuation_required).length, icon: Building2, colour: "text-blue-600" },
           ].map((s) => (
             <div key={s.label} className="rounded-xl border bg-white p-4 flex items-center gap-3">
@@ -103,7 +103,7 @@ export default function EmergencyPlanningPage() {
             return (
               <div key={plan.id} className="rounded-xl border bg-white overflow-hidden">
                 <button
-                  className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                  className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                   onClick={() => setExpanded(isExpanded ? null : plan.id)}
                 >
                   <div className="flex items-center gap-3">

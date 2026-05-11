@@ -47,7 +47,7 @@ const TYPE_CONFIG: Record<AppointmentType, { label: string; colour: string; icon
   lac_review:    { label: "LAC Review",     colour: "bg-orange-100 text-orange-700", icon: Calendar    },
   pep_meeting:   { label: "PEP Meeting",    colour: "bg-amber-100 text-amber-700",   icon: Calendar    },
   social_worker: { label: "Social Worker",  colour: "bg-green-100 text-green-700",   icon: User        },
-  court:         { label: "Court",          colour: "bg-slate-100 text-slate-700",   icon: Shield      },
+  court:         { label: "Court",          colour: "bg-slate-100 text-[var(--cs-text-secondary)]",   icon: Shield      },
   therapy:       { label: "Therapy",        colour: "bg-rose-100 text-rose-700",     icon: Heart       },
   specialist:    { label: "Specialist",     colour: "bg-teal-100 text-teal-700",     icon: Stethoscope },
   immunisation:  { label: "Immunisation",   colour: "bg-emerald-100 text-emerald-700", icon: Shield    },
@@ -236,7 +236,7 @@ export default function AppointmentsPage() {
           { label: "This Week",  value: stats.thisWeek, icon: Clock, c: "text-indigo-600" },
           { label: "Attended",   value: stats.attended, icon: CheckCircle2, c: "text-green-600" },
           { label: "Missed",     value: stats.missed, icon: XCircle, c: "text-red-600" },
-          { label: "Total",      value: stats.total, icon: Calendar, c: "text-slate-600" },
+          { label: "Total",      value: stats.total, icon: Calendar, c: "text-[var(--cs-text-secondary)]" },
         ].map(s => (
           <div key={s.label} className="rounded-lg border bg-card p-3 flex items-center gap-3">
             <s.icon className={cn("h-5 w-5", s.c)} />

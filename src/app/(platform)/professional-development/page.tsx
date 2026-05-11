@@ -47,7 +47,7 @@ const TYPE_COLOUR: Record<CPDType, string> = {
 const STATUS_COLOUR: Record<CPDStatus, string> = {
   completed: "bg-emerald-100 text-emerald-800",
   in_progress: "bg-blue-100 text-blue-800",
-  planned: "bg-slate-100 text-slate-700",
+  planned: "bg-slate-100 text-[var(--cs-text-secondary)]",
 };
 
 const d = (n: number) => { const dt = new Date(); dt.setDate(dt.getDate() + n); return dt.toISOString().slice(0, 10); };
@@ -244,20 +244,20 @@ export default function ProfessionalDevelopmentPage() {
                     </div>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
                       <div className="rounded-lg bg-slate-50 border p-2">
-                        <p className="font-semibold text-slate-600">Start Date</p>
-                        <p className="text-slate-900">{r.start_date}</p>
+                        <p className="font-semibold text-[var(--cs-text-secondary)]">Start Date</p>
+                        <p className="text-[var(--cs-navy)]">{r.start_date}</p>
                       </div>
                       <div className="rounded-lg bg-slate-50 border p-2">
-                        <p className="font-semibold text-slate-600">Completed</p>
-                        <p className="text-slate-900">{r.completed_date ?? "Ongoing"}</p>
+                        <p className="font-semibold text-[var(--cs-text-secondary)]">Completed</p>
+                        <p className="text-[var(--cs-navy)]">{r.completed_date ?? "Ongoing"}</p>
                       </div>
                       <div className="rounded-lg bg-slate-50 border p-2">
-                        <p className="font-semibold text-slate-600">CPD Hours</p>
-                        <p className="text-slate-900">{r.cpd_hours}</p>
+                        <p className="font-semibold text-[var(--cs-text-secondary)]">CPD Hours</p>
+                        <p className="text-[var(--cs-navy)]">{r.cpd_hours}</p>
                       </div>
                       <div className="rounded-lg bg-slate-50 border p-2">
-                        <p className="font-semibold text-slate-600">Certificate</p>
-                        <p className="text-slate-900">{r.certificate_obtained ? "Yes" : "No"}</p>
+                        <p className="font-semibold text-[var(--cs-text-secondary)]">Certificate</p>
+                        <p className="text-[var(--cs-navy)]">{r.certificate_obtained ? "Yes" : "No"}</p>
                       </div>
                     </div>
                   </CardContent>

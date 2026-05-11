@@ -65,8 +65,8 @@ export function GlobalCreateMenu() {
         className={cn(
           "flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-medium transition-all",
           open
-            ? "bg-slate-900 text-white"
-            : "bg-slate-900 text-white hover:bg-slate-800",
+            ? "bg-[var(--cs-navy)] text-white"
+            : "bg-[var(--cs-navy)] text-white hover:bg-[var(--cs-navy)]/90",
         )}
       >
         {open ? <X className="h-3.5 w-3.5" /> : <Plus className="h-3.5 w-3.5" />}
@@ -83,14 +83,14 @@ export function GlobalCreateMenu() {
           />
 
           {/* Menu */}
-          <div className="absolute right-0 top-full mt-2 z-50 w-72 rounded-2xl border border-slate-200 bg-white shadow-xl py-3 animate-fade-in">
-            <p className="px-4 pb-2 text-[10px] font-semibold uppercase tracking-wider text-slate-400">
+          <div className="absolute right-0 top-full mt-2 z-50 w-72 rounded-2xl border border-[var(--cs-border)] bg-[var(--cs-surface-elevated)] shadow-[var(--cs-shadow-elevated)] py-3 animate-fade-in">
+            <p className="px-4 pb-2 text-[10px] font-semibold uppercase tracking-wider text-[var(--cs-text-gentle)]">
               Create new
             </p>
 
             {Object.entries(groups).map(([group, items]) => (
               <div key={group} className="mb-1">
-                <p className="px-4 pt-2 pb-1 text-[10px] font-semibold text-slate-400 uppercase tracking-wider">
+                <p className="px-4 pt-2 pb-1 text-[10px] font-semibold text-[var(--cs-text-gentle)] uppercase tracking-wider">
                   {group}
                 </p>
                 {items.map((item) => {
@@ -100,10 +100,10 @@ export function GlobalCreateMenu() {
                       key={item.label}
                       href={item.href}
                       onClick={() => setOpen(false)}
-                      className="flex items-center gap-3 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition-colors"
+                      className="flex items-center gap-3 px-4 py-2 text-sm text-[var(--cs-text-secondary)] hover:bg-[var(--cs-surface)] transition-colors"
                     >
-                      <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-slate-100 shrink-0">
-                        <Icon className="h-3.5 w-3.5 text-slate-500" />
+                      <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[var(--cs-surface)] shrink-0">
+                        <Icon className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
                       </span>
                       {item.label}
                     </Link>

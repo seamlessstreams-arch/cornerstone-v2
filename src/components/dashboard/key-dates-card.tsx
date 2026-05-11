@@ -32,7 +32,7 @@ const TYPE_CONFIG: Record<KeyDate["type"], {
   supervision:      { icon: Users,          color: "text-indigo-600",  bgColor: "bg-indigo-100",  label: "Supervision" },
   probation_end:    { icon: Award,          color: "text-emerald-600", bgColor: "bg-emerald-100", label: "Probation" },
   placement_review: { icon: Heart,          color: "text-violet-600",  bgColor: "bg-violet-100",  label: "Placement" },
-  document_expiry:  { icon: FileText,       color: "text-slate-600",   bgColor: "bg-slate-100",   label: "Document" },
+  document_expiry:  { icon: FileText,       color: "text-[var(--cs-text-secondary)]",   bgColor: "bg-slate-100",   label: "Document" },
   care_review:      { icon: Heart,          color: "text-blue-600",    bgColor: "bg-blue-100",    label: "Care Plan" },
 };
 
@@ -54,20 +54,20 @@ function KeyDateRow({ item }: { item: KeyDate }) {
   return (
     <Link
       href={item.href}
-      className="flex items-center gap-3 px-3 py-2.5 hover:bg-slate-50 transition-colors group"
+      className="flex items-center gap-3 px-3 py-2.5 hover:bg-[var(--cs-surface)] transition-colors group"
     >
       <div className={cn(
         "flex h-8 w-8 items-center justify-center rounded-xl shrink-0",
         config?.bgColor ?? "bg-slate-100",
       )}>
-        <Icon className={cn("h-4 w-4", config?.color ?? "text-slate-500")} />
+        <Icon className={cn("h-4 w-4", config?.color ?? "text-[var(--cs-text-muted)]")} />
       </div>
 
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
           <span className={cn(
             "text-[13px] font-medium truncate",
-            isOverdue ? "text-red-700" : "text-slate-800",
+            isOverdue ? "text-red-700" : "text-[var(--cs-navy)]",
           )}>
             {item.title}
           </span>
@@ -76,10 +76,10 @@ function KeyDateRow({ item }: { item: KeyDate }) {
           )}
         </div>
         <div className="flex items-center gap-2 mt-0.5">
-          <span className="text-[10px] text-slate-400">{item.entity_name}</span>
+          <span className="text-[10px] text-[var(--cs-text-muted)]">{item.entity_name}</span>
           <span className={cn(
             "text-[10px]",
-            isOverdue ? "text-red-600 font-semibold" : "text-slate-400",
+            isOverdue ? "text-red-600 font-semibold" : "text-[var(--cs-text-muted)]",
           )}>
             {item.notes ? item.notes : formatRelative(item.date)}
           </span>
@@ -98,7 +98,7 @@ function KeyDateRow({ item }: { item: KeyDate }) {
         </Badge>
       )}
 
-      <ChevronRight className="h-3.5 w-3.5 text-slate-300 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
+      <ChevronRight className="h-3.5 w-3.5 text-[var(--cs-text-gentle)] shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
     </Link>
   );
 }
@@ -120,7 +120,7 @@ export function KeyDatesCard({ limit = 8 }: { limit?: number }) {
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-center py-8">
-            <Loader2 className="h-5 w-5 animate-spin text-slate-400" />
+            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
           </div>
         </CardContent>
       </Card>
@@ -139,8 +139,8 @@ export function KeyDatesCard({ limit = 8 }: { limit?: number }) {
         <CardContent>
           <div className="py-6 text-center">
             <Calendar className="h-8 w-8 text-slate-200 mx-auto mb-2" />
-            <p className="text-sm font-medium text-slate-500">No upcoming key dates</p>
-            <p className="text-[11px] text-slate-400 mt-0.5">All reviews and deadlines are clear</p>
+            <p className="text-sm font-medium text-[var(--cs-text-muted)]">No upcoming key dates</p>
+            <p className="text-[11px] text-[var(--cs-text-muted)] mt-0.5">All reviews and deadlines are clear</p>
           </div>
         </CardContent>
       </Card>

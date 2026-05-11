@@ -76,8 +76,8 @@ const OUTCOME_COLOUR: Record<InterventionOutcome, string> = {
   working:           "bg-emerald-50 text-emerald-700 border-emerald-200",
   not_working:       "bg-red-50 text-red-700 border-red-200",
   partially_working: "bg-amber-50 text-amber-700 border-amber-200",
-  too_early:         "bg-slate-50 text-slate-600 border-slate-200",
-  unknown:           "bg-slate-50 text-slate-400 border-slate-200",
+  too_early:         "bg-slate-50 text-[var(--cs-text-secondary)] border-[var(--cs-border)]",
+  unknown:           "bg-slate-50 text-[var(--cs-text-muted)] border-[var(--cs-border)]",
 };
 
 const OUTCOME_ICONS: Record<InterventionOutcome, React.ElementType> = {
@@ -120,7 +120,7 @@ function reviewBadge(reviewDate: string | null): { label: string; cls: string } 
   if (d === 0) return { label: "Today", cls: "bg-amber-100 text-amber-700 border-amber-200" };
   if (d <= 3) return { label: `${d}d`, cls: "bg-amber-100 text-amber-700 border-amber-200" };
   if (d <= 7) return { label: `${d}d`, cls: "bg-blue-100 text-blue-700 border-blue-200" };
-  return { label: `${d}d`, cls: "bg-slate-100 text-slate-600 border-slate-200" };
+  return { label: `${d}d`, cls: "bg-slate-100 text-[var(--cs-text-secondary)] border-[var(--cs-border)]" };
 }
 
 function daysSince(dateStr: string): number {
@@ -157,7 +157,7 @@ function InterventionCard({
           ? "border-emerald-200"
           : intervention.status === "paused"
             ? "border-amber-200"
-            : "border-slate-200",
+            : "border-[var(--cs-border)]",
     )}>
       {/* Header */}
       <div className="flex items-start gap-3 p-4">
@@ -174,13 +174,13 @@ function InterventionCard({
             isActive ? "text-emerald-700" :
             intervention.status === "paused" ? "text-amber-700" :
             intervention.status === "completed" ? "text-blue-700" :
-            "text-slate-500",
+            "text-[var(--cs-text-muted)]",
           )} />
         </div>
 
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap mb-1">
-            <span className="text-sm font-bold text-slate-800">{intervention.title}</span>
+            <span className="text-sm font-bold text-[var(--cs-navy)]">{intervention.title}</span>
             <Badge variant="outline" className={cn("text-[10px] px-1.5 py-0 border", STATUS_COLOUR[intervention.status])}>
               {STATUS_LABELS[intervention.status]}
             </Badge>
@@ -195,7 +195,7 @@ function InterventionCard({
             )}
           </div>
 
-          <div className="flex items-center gap-3 text-xs text-slate-500 flex-wrap">
+          <div className="flex items-center gap-3 text-xs text-[var(--cs-text-muted)] flex-wrap">
             <span className="flex items-center gap-1">
               <User className="h-3 w-3" />
               {getYPName(intervention.child_id)}
@@ -204,7 +204,7 @@ function InterventionCard({
             <span className="flex items-center gap-1">
               <Calendar className="h-3 w-3" />
               Started {formatDate(intervention.started_at)}
-              <span className="text-slate-400">({durationDays}d ago)</span>
+              <span className="text-[var(--cs-text-muted)]">({durationDays}d ago)</span>
             </span>
             {intervention.agreed_by && (
               <>
@@ -217,24 +217,24 @@ function InterventionCard({
 
         <button
           onClick={() => setExpanded(!expanded)}
-          className="text-slate-400 hover:text-slate-600 shrink-0"
+          className="text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] shrink-0"
         >
           {expanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
         </button>
       </div>
 
       {expanded && (
-        <div className="border-t border-slate-100 px-4 pb-4 pt-3 space-y-3">
+        <div className="border-t border-[var(--cs-border-subtle)] px-4 pb-4 pt-3 space-y-3">
           {/* Description */}
-          <div className="rounded-xl border border-slate-200 bg-slate-50 p-3">
-            <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest mb-1">What We Are Doing</p>
-            <p className="text-xs text-slate-700 leading-relaxed">{intervention.description}</p>
+          <div className="rounded-xl border border-[var(--cs-border)] bg-slate-50 p-3">
+            <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-widest mb-1">What We Are Doing</p>
+            <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed">{intervention.description}</p>
           </div>
 
           {/* Rationale */}
           <div className="rounded-xl border border-indigo-100 bg-indigo-50/40 p-3">
             <p className="text-[10px] font-semibold text-indigo-700 uppercase tracking-widest mb-1">Why — Rationale</p>
-            <p className="text-xs text-slate-700 leading-relaxed">{intervention.rationale}</p>
+            <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed">{intervention.rationale}</p>
           </div>
 
           {/* Intended outcome */}
@@ -243,7 +243,7 @@ function InterventionCard({
               <Target className="h-3 w-3 text-teal-600" />
               <p className="text-[10px] font-semibold text-teal-700 uppercase tracking-widest">Intended Outcome</p>
             </div>
-            <p className="text-xs text-slate-700 leading-relaxed">{intervention.intended_outcome}</p>
+            <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed">{intervention.intended_outcome}</p>
           </div>
 
           {/* Outcome notes (if any) */}
@@ -265,18 +265,18 @@ function InterventionCard({
           {/* Evidence links */}
           {intervention.evidence_refs.length > 0 && (
             <div>
-              <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-2">Linked Evidence</p>
+              <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-widest mb-2">Linked Evidence</p>
               <div className="space-y-1.5">
                 {intervention.evidence_refs.map((ref, i) => (
                   <div
                     key={i}
-                    className="flex items-start gap-2 rounded-lg border border-slate-100 bg-white px-3 py-2"
+                    className="flex items-start gap-2 rounded-lg border border-[var(--cs-border-subtle)] bg-white px-3 py-2"
                   >
-                    <LinkIcon className="h-3 w-3 text-slate-400 shrink-0 mt-0.5" />
+                    <LinkIcon className="h-3 w-3 text-[var(--cs-text-muted)] shrink-0 mt-0.5" />
                     <div className="text-xs">
-                      <span className="font-medium text-slate-700 capitalize">{ref.type.replace(/_/g, " ")}</span>
-                      <span className="text-slate-400 ml-1.5">{formatDate(ref.date)}</span>
-                      <p className="text-slate-500 mt-0.5 leading-relaxed">{ref.excerpt}</p>
+                      <span className="font-medium text-[var(--cs-text-secondary)] capitalize">{ref.type.replace(/_/g, " ")}</span>
+                      <span className="text-[var(--cs-text-muted)] ml-1.5">{formatDate(ref.date)}</span>
+                      <p className="text-[var(--cs-text-muted)] mt-0.5 leading-relaxed">{ref.excerpt}</p>
                     </div>
                   </div>
                 ))}
@@ -285,7 +285,7 @@ function InterventionCard({
           )}
 
           {/* Review & timeline info */}
-          <div className="flex items-center gap-4 text-[10px] text-slate-400 flex-wrap">
+          <div className="flex items-center gap-4 text-[10px] text-[var(--cs-text-muted)] flex-wrap">
             {intervention.review_date && (
               <span>Review: {formatDate(intervention.review_date)}</span>
             )}
@@ -381,12 +381,12 @@ function InterventionCard({
 
               {/* Outcome assessment */}
               <div className="ml-auto flex items-center gap-1.5">
-                <span className="text-[10px] text-slate-400 font-medium">Effectiveness:</span>
+                <span className="text-[10px] text-[var(--cs-text-muted)] font-medium">Effectiveness:</span>
                 <select
                   value={intervention.outcome}
                   onChange={(e) => onOutcomeChange(intervention.id, e.target.value as InterventionOutcome)}
                   disabled={isBusy}
-                  className="rounded-lg border border-slate-200 bg-white px-2 py-1 text-[11px] text-slate-700 focus:border-teal-300 focus:ring-1 focus:ring-teal-200 outline-none"
+                  className="rounded-lg border border-[var(--cs-border)] bg-white px-2 py-1 text-[11px] text-[var(--cs-text-secondary)] focus:border-teal-300 focus:ring-1 focus:ring-teal-200 outline-none"
                 >
                   {(Object.entries(OUTCOME_LABELS) as [InterventionOutcome, string][]).map(([k, v]) => (
                     <option key={k} value={k}>{v}</option>
@@ -458,7 +458,7 @@ function NewInterventionDialog({
         <div className="space-y-3 text-sm">
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="text-xs text-slate-500 font-medium mb-1 block">Young person <span className="text-red-500">*</span></label>
+              <label className="text-xs text-[var(--cs-text-muted)] font-medium mb-1 block">Young person <span className="text-red-500">*</span></label>
               <Select
                 value={form.child_id}
                 onValueChange={(v) => setForm((p) => ({ ...p, child_id: v }))}
@@ -474,7 +474,7 @@ function NewInterventionDialog({
               </Select>
             </div>
             <div>
-              <label className="text-xs text-slate-500 font-medium mb-1 block">Review date</label>
+              <label className="text-xs text-[var(--cs-text-muted)] font-medium mb-1 block">Review date</label>
               <Input
                 type="date"
                 value={form.review_date}
@@ -485,7 +485,7 @@ function NewInterventionDialog({
           </div>
 
           <div>
-            <label className="text-xs text-slate-500 font-medium mb-1 block">Intervention title <span className="text-red-500">*</span></label>
+            <label className="text-xs text-[var(--cs-text-muted)] font-medium mb-1 block">Intervention title <span className="text-red-500">*</span></label>
             <Input
               value={form.title}
               onChange={(e) => setForm((p) => ({ ...p, title: e.target.value }))}
@@ -495,7 +495,7 @@ function NewInterventionDialog({
           </div>
 
           <div>
-            <label className="text-xs text-slate-500 font-medium mb-1 block">What are we doing? <span className="text-red-500">*</span></label>
+            <label className="text-xs text-[var(--cs-text-muted)] font-medium mb-1 block">What are we doing? <span className="text-red-500">*</span></label>
             <Textarea
               value={form.description}
               onChange={(e) => setForm((p) => ({ ...p, description: e.target.value }))}
@@ -506,7 +506,7 @@ function NewInterventionDialog({
           </div>
 
           <div>
-            <label className="text-xs text-slate-500 font-medium mb-1 block">Why — rationale <span className="text-red-500">*</span></label>
+            <label className="text-xs text-[var(--cs-text-muted)] font-medium mb-1 block">Why — rationale <span className="text-red-500">*</span></label>
             <Textarea
               value={form.rationale}
               onChange={(e) => setForm((p) => ({ ...p, rationale: e.target.value }))}
@@ -517,7 +517,7 @@ function NewInterventionDialog({
           </div>
 
           <div>
-            <label className="text-xs text-slate-500 font-medium mb-1 block">Intended outcome</label>
+            <label className="text-xs text-[var(--cs-text-muted)] font-medium mb-1 block">Intended outcome</label>
             <Textarea
               value={form.intended_outcome}
               onChange={(e) => setForm((p) => ({ ...p, intended_outcome: e.target.value }))}
@@ -527,7 +527,7 @@ function NewInterventionDialog({
             />
           </div>
 
-          <p className="text-[10px] text-slate-400">
+          <p className="text-[10px] text-[var(--cs-text-muted)]">
             Interventions should be evidence-based, proportionate, and reviewed regularly.
             Link to pattern alerts, incidents, or observations where possible.
           </p>
@@ -693,8 +693,8 @@ export default function InterventionsPage() {
               label: "Active",
               value: activeList.length,
               icon: Activity,
-              colour: activeList.length > 0 ? "text-emerald-600" : "text-slate-500",
-              bg: activeList.length > 0 ? "bg-emerald-50 border-emerald-100" : "bg-slate-50 border-slate-100",
+              colour: activeList.length > 0 ? "text-emerald-600" : "text-[var(--cs-text-muted)]",
+              bg: activeList.length > 0 ? "bg-emerald-50 border-emerald-100" : "bg-slate-50 border-[var(--cs-border-subtle)]",
             },
             {
               label: "Review Due",
@@ -728,7 +728,7 @@ export default function InterventionsPage() {
             <div key={label} className={cn("rounded-2xl border p-4 text-center", bg)}>
               <Icon className={cn("h-4 w-4 mx-auto mb-1", colour)} />
               <div className={cn("text-2xl font-bold tabular-nums", colour)}>{value}</div>
-              <div className="text-[10px] text-slate-500 mt-0.5 font-medium">{label}</div>
+              <div className="text-[10px] text-[var(--cs-text-muted)] mt-0.5 font-medium">{label}</div>
             </div>
           ))}
         </div>
@@ -751,7 +751,7 @@ export default function InterventionsPage() {
         {/* ── Tab bar ──────────────────────────────────────────────────────── */}
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1 max-w-sm">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
             <Input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -773,7 +773,7 @@ export default function InterventionsPage() {
                   "rounded-full px-3 py-1.5 text-xs font-medium transition-colors",
                   viewTab === key
                     ? "bg-slate-900 text-white"
-                    : "bg-slate-100 text-slate-600 hover:bg-slate-200",
+                    : "bg-slate-100 text-[var(--cs-text-secondary)] hover:bg-slate-200",
                 )}
               >
                 {label}
@@ -785,11 +785,11 @@ export default function InterventionsPage() {
         {/* ── Filters ──────────────────────────────────────────────────────── */}
         <div className="flex items-center gap-3 flex-wrap">
           <div className="flex items-center gap-1.5">
-            <Filter className="h-3.5 w-3.5 text-slate-400" />
+            <Filter className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
             <select
               value={childFilter}
               onChange={(e) => setChildFilter(e.target.value)}
-              className="rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-[11px] text-slate-700 focus:border-emerald-300 focus:ring-1 focus:ring-emerald-200 outline-none"
+              className="rounded-lg border border-[var(--cs-border)] bg-white px-2.5 py-1 text-[11px] text-[var(--cs-text-secondary)] focus:border-emerald-300 focus:ring-1 focus:ring-emerald-200 outline-none"
             >
               <option value="all">All young people</option>
               {childIds.map((id) => (
@@ -798,11 +798,11 @@ export default function InterventionsPage() {
             </select>
           </div>
           <div className="flex items-center gap-1.5">
-            <ArrowUpDown className="h-3.5 w-3.5 text-slate-400" />
+            <ArrowUpDown className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
-              className="rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-[11px] text-slate-700 focus:border-emerald-300 focus:ring-1 focus:ring-emerald-200 outline-none"
+              className="rounded-lg border border-[var(--cs-border)] bg-white px-2.5 py-1 text-[11px] text-[var(--cs-text-secondary)] focus:border-emerald-300 focus:ring-1 focus:ring-emerald-200 outline-none"
             >
               <option value="date">Start date</option>
               <option value="child">Young person</option>
@@ -812,7 +812,7 @@ export default function InterventionsPage() {
           </div>
 
           {(search || childFilter !== "all") && (
-            <p className="text-xs text-slate-400 ml-auto">
+            <p className="text-xs text-[var(--cs-text-muted)] ml-auto">
               {filtered.length} result{filtered.length !== 1 ? "s" : ""}
             </p>
           )}
@@ -821,19 +821,19 @@ export default function InterventionsPage() {
         {/* ── Loading ──────────────────────────────────────────────────────── */}
         {isLoading && (
           <div className="flex items-center justify-center py-16">
-            <Loader2 className="h-6 w-6 animate-spin text-slate-400" />
-            <span className="ml-2 text-sm text-slate-400">Loading interventions…</span>
+            <Loader2 className="h-6 w-6 animate-spin text-[var(--cs-text-muted)]" />
+            <span className="ml-2 text-sm text-[var(--cs-text-muted)]">Loading interventions…</span>
           </div>
         )}
 
         {/* ── Interventions list ───────────────────────────────────────────── */}
         {!isLoading && filtered.length === 0 && (
-          <div className="text-center py-16 text-slate-500">
-            <Activity className="h-10 w-10 text-slate-300 mx-auto mb-3" />
+          <div className="text-center py-16 text-[var(--cs-text-muted)]">
+            <Activity className="h-10 w-10 text-[var(--cs-text-gentle)] mx-auto mb-3" />
             <p className="text-sm font-medium">
               {search ? `No interventions match "${search}"` : "No interventions in this view"}
             </p>
-            <p className="text-xs text-slate-400 mt-1">
+            <p className="text-xs text-[var(--cs-text-muted)] mt-1">
               {viewTab === "active" ? "Create a new intervention to track your work with young people." : "Try a different filter."}
             </p>
           </div>
@@ -854,8 +854,8 @@ export default function InterventionsPage() {
         )}
 
         {/* ── Regulatory note ──────────────────────────────────────────────── */}
-        <div className="rounded-xl border border-slate-100 bg-slate-50 px-4 py-3 text-xs text-slate-500">
-          <span className="font-semibold text-slate-600">Regulatory Basis — </span>
+        <div className="rounded-xl border border-[var(--cs-border-subtle)] bg-slate-50 px-4 py-3 text-xs text-[var(--cs-text-muted)]">
+          <span className="font-semibold text-[var(--cs-text-secondary)]">Regulatory Basis — </span>
           Children&apos;s Homes Quality Standards 2015, Standard 2 (Quality of Care) &amp; Standard 6
           (Child-Centred Care): interventions must be purposeful, evidence-based, and regularly reviewed.
           Ofsted ILACS inspections specifically assess whether the home takes timely and proportionate

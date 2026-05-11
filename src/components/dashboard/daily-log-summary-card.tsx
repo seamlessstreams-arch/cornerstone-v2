@@ -23,7 +23,7 @@ import {
 // ── Entry type colours ───────────────────────────────────────────────────────
 
 const TYPE_COLOURS: Record<string, string> = {
-  general:   "bg-slate-100 text-slate-600",
+  general:   "bg-slate-100 text-[var(--cs-text-secondary)]",
   behaviour: "bg-orange-100 text-orange-700",
   health:    "bg-teal-100 text-teal-700",
   education: "bg-blue-100 text-blue-700",
@@ -61,7 +61,7 @@ export function DailyLogSummaryCard() {
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-center py-6">
-            <Loader2 className="h-5 w-5 animate-spin text-slate-400" />
+            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
           </div>
         </CardContent>
       </Card>
@@ -157,11 +157,11 @@ export function DailyLogSummaryCard() {
         {/* Per-child summary */}
         {perChild.map(({ yp, count, latestMood, significant, types }) => (
           <Link key={yp.id} href={`/daily-log?child=${yp.id}`}>
-            <div className="flex items-center gap-2 rounded-lg px-2 py-1.5 hover:bg-slate-50 transition-colors">
+            <div className="flex items-center gap-2 rounded-lg px-2 py-1.5 hover:bg-[var(--cs-surface)] transition-colors">
               <div className="w-5 h-5 rounded-full bg-rose-100 flex items-center justify-center shrink-0">
                 <Heart className="h-2.5 w-2.5 text-rose-500" />
               </div>
-              <span className="text-[11px] font-medium text-slate-700 flex-1 truncate">
+              <span className="text-[11px] font-medium text-[var(--cs-text-secondary)] flex-1 truncate">
                 {yp.preferred_name || yp.first_name}
               </span>
 
@@ -171,7 +171,7 @@ export function DailyLogSummaryCard() {
               {/* Entry count */}
               <span className={cn(
                 "text-[10px] font-semibold tabular-nums",
-                count > 0 ? "text-emerald-600" : "text-slate-300",
+                count > 0 ? "text-emerald-600" : "text-[var(--cs-text-gentle)]",
               )}>
                 {count}
               </span>
@@ -190,18 +190,18 @@ export function DailyLogSummaryCard() {
                 ))}
               </div>
 
-              <ChevronRight className="h-3 w-3 text-slate-300 shrink-0" />
+              <ChevronRight className="h-3 w-3 text-[var(--cs-text-gentle)] shrink-0" />
             </div>
           </Link>
         ))}
 
         {/* Entry type breakdown */}
         {Object.keys(byType).length > 0 && (
-          <div className="flex flex-wrap gap-1 pt-1 border-t border-slate-100">
+          <div className="flex flex-wrap gap-1 pt-1 border-t border-[var(--cs-border-subtle)]">
             {Object.entries(byType)
               .sort(([, a], [, b]) => (b as number) - (a as number))
               .map(([type, count]) => (
-                <span key={type} className={cn("text-[9px] px-1.5 py-0.5 rounded-full font-medium", TYPE_COLOURS[type] ?? "bg-slate-100 text-slate-500")}>
+                <span key={type} className={cn("text-[9px] px-1.5 py-0.5 rounded-full font-medium", TYPE_COLOURS[type] ?? "bg-slate-100 text-[var(--cs-text-muted)]")}>
                   {type} {count as number}
                 </span>
               ))}

@@ -24,7 +24,7 @@ import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 /* ── colour map ─────────────────────────────────────────────────────── */
 const TYPE_COLORS: Record<CommissioningFeedbackType, string> = {
   annual_review: "bg-blue-100 text-blue-800",
-  placement_update: "bg-slate-100 text-slate-800",
+  placement_update: "bg-slate-100 text-[var(--cs-navy)]",
   quality_concern: "bg-red-100 text-red-800",
   compliment: "bg-green-100 text-green-800",
   statutory_visit: "bg-purple-100 text-purple-800",
@@ -113,7 +113,7 @@ export default function CommissioningFeedbackPage() {
           key={n}
           className={cn(
             "h-4 w-4",
-            n <= rating ? "fill-amber-400 text-amber-400" : "text-slate-300",
+            n <= rating ? "fill-amber-400 text-amber-400" : "text-[var(--cs-text-gentle)]",
           )}
         />
       ))}
@@ -162,7 +162,7 @@ export default function CommissioningFeedbackPage() {
               label: "Concerns to Resolve",
               value: concernsToResolve,
               icon: AlertTriangle,
-              colour: concernsToResolve > 0 ? "text-red-600" : "text-slate-400",
+              colour: concernsToResolve > 0 ? "text-red-600" : "text-[var(--cs-text-muted)]",
             },
             {
               label: "LAs Engaged",
@@ -263,7 +263,7 @@ export default function CommissioningFeedbackPage() {
                 )}
               >
                 <button
-                  className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                  className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                   onClick={() => setExpandedId(isExpanded ? null : entry.id)}
                 >
                   <div className="flex items-center gap-3 flex-1 min-w-0">

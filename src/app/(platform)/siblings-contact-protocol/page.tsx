@@ -249,7 +249,7 @@ export default function SiblingsContactProtocolPage() {
                         {getYPName(r.child_id)}
                         <span className="text-muted-foreground font-normal">↔</span>
                         <span className="font-medium">{r.sibling_name}</span>
-                        <Badge variant="outline" className={QUALITY_CLR[r.current_relationship_quality] ?? "bg-slate-100 text-slate-800"}>
+                        <Badge variant="outline" className={QUALITY_CLR[r.current_relationship_quality] ?? "bg-slate-100 text-[var(--cs-navy)]"}>
                           {r.current_relationship_quality}
                         </Badge>
                         {r.court_ordered_contact && (
@@ -274,7 +274,7 @@ export default function SiblingsContactProtocolPage() {
                         {r.contact_types.map((t) => {
                           const Icon = TYPE_ICON[t] ?? MessageSquare;
                           return (
-                            <Badge key={t} variant="outline" className="bg-slate-50 text-slate-700 gap-1 font-normal">
+                            <Badge key={t} variant="outline" className="bg-slate-50 text-[var(--cs-text-secondary)] gap-1 font-normal">
                               <Icon className="h-3 w-3" /> {t}
                             </Badge>
                           );
@@ -290,24 +290,24 @@ export default function SiblingsContactProtocolPage() {
                     {/* Pre-Oak House */}
                     <section>
                       <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-1">Relationship before Oak House</h4>
-                      <p className="text-slate-700 leading-relaxed">{r.relationship_pre_oak_house}</p>
+                      <p className="text-[var(--cs-text-secondary)] leading-relaxed">{r.relationship_pre_oak_house}</p>
                     </section>
 
                     {/* Frequency + Plan */}
                     <section className="grid md:grid-cols-2 gap-4">
                       <div>
                         <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-1">Contact frequency</h4>
-                        <p className="text-slate-700">{r.contact_frequency}</p>
+                        <p className="text-[var(--cs-text-secondary)]">{r.contact_frequency}</p>
                       </div>
                       <div>
                         <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-1">Supervision</h4>
-                        <p className="text-slate-700">{r.supervision_level}</p>
+                        <p className="text-[var(--cs-text-secondary)]">{r.supervision_level}</p>
                       </div>
                     </section>
 
                     <section>
                       <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-1">Agreed contact plan</h4>
-                      <p className="text-slate-700 leading-relaxed">{r.agreed_contact_plan}</p>
+                      <p className="text-[var(--cs-text-secondary)] leading-relaxed">{r.agreed_contact_plan}</p>
                     </section>
 
                     {/* Court order */}
@@ -356,15 +356,15 @@ export default function SiblingsContactProtocolPage() {
                     <section className="grid md:grid-cols-3 gap-4">
                       <div>
                         <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-1">Transport</h4>
-                        <p className="text-slate-700 text-xs">{r.transport_arrangements}</p>
+                        <p className="text-[var(--cs-text-secondary)] text-xs">{r.transport_arrangements}</p>
                       </div>
                       <div>
                         <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-1">Budget</h4>
-                        <p className="text-slate-700 text-xs">{r.contact_costs_budget}</p>
+                        <p className="text-[var(--cs-text-secondary)] text-xs">{r.contact_costs_budget}</p>
                       </div>
                       <div>
                         <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-1">Locations</h4>
-                        <ul className="text-slate-700 text-xs space-y-0.5">
+                        <ul className="text-[var(--cs-text-secondary)] text-xs space-y-0.5">
                           {r.locations_for_contact.map((l, i) => (<li key={i} className="flex items-start gap-1"><MapPin className="h-3 w-3 mt-0.5 shrink-0" /> {l}</li>))}
                         </ul>
                       </div>
@@ -405,17 +405,17 @@ export default function SiblingsContactProtocolPage() {
                         {r.recent_contacts.map((c, i) => {
                           const Icon = TYPE_ICON[c.type] ?? MessageSquare;
                           return (
-                            <div key={i} className="border border-slate-200 rounded-lg p-3 bg-white">
+                            <div key={i} className="border border-[var(--cs-border)] rounded-lg p-3 bg-white">
                               <div className="flex items-center gap-2 mb-1 flex-wrap">
-                                <Badge variant="outline" className="bg-slate-50 text-slate-700 gap-1 font-normal">
+                                <Badge variant="outline" className="bg-slate-50 text-[var(--cs-text-secondary)] gap-1 font-normal">
                                   <Icon className="h-3 w-3" /> {c.type}
                                 </Badge>
                                 <span className="text-xs text-muted-foreground">{c.date}</span>
-                                <Badge variant="outline" className={MOOD_CLR[c.child_mood_after] ?? "bg-slate-100 text-slate-700"}>
+                                <Badge variant="outline" className={MOOD_CLR[c.child_mood_after] ?? "bg-slate-100 text-[var(--cs-text-secondary)]"}>
                                   Mood after: {c.child_mood_after}
                                 </Badge>
                               </div>
-                              <p className="text-slate-700 text-xs leading-relaxed">{c.observations}</p>
+                              <p className="text-[var(--cs-text-secondary)] text-xs leading-relaxed">{c.observations}</p>
                             </div>
                           );
                         })}
@@ -425,17 +425,17 @@ export default function SiblingsContactProtocolPage() {
                     {/* Themes */}
                     <section>
                       <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">Ongoing sibling themes</h4>
-                      <ul className="space-y-1 text-slate-700 list-disc list-inside text-xs">
+                      <ul className="space-y-1 text-[var(--cs-text-secondary)] list-disc list-inside text-xs">
                         {r.ongoing_sibling_themes.map((t, i) => (<li key={i}>{t}</li>))}
                       </ul>
                     </section>
 
                     {/* Review */}
                     <section className="flex items-center justify-between pt-2 border-t text-xs text-muted-foreground">
-                      <span className="flex items-center gap-1"><CalendarClock className="h-3.5 w-3.5" /> Next review: <span className="font-medium text-slate-700">{r.review_date}</span></span>
-                      <span>Reviewed by <span className="font-medium text-slate-700">{getStaffName(r.reviewed_by)}</span></span>
+                      <span className="flex items-center gap-1"><CalendarClock className="h-3.5 w-3.5" /> Next review: <span className="font-medium text-[var(--cs-text-secondary)]">{r.review_date}</span></span>
+                      <span>Reviewed by <span className="font-medium text-[var(--cs-text-secondary)]">{getStaffName(r.reviewed_by)}</span></span>
                       {lastContact && (
-                        <span>Last contact: <span className="font-medium text-slate-700">{lastContact.date}</span></span>
+                        <span>Last contact: <span className="font-medium text-[var(--cs-text-secondary)]">{lastContact.date}</span></span>
                       )}
                     </section>
 
@@ -454,8 +454,8 @@ export default function SiblingsContactProtocolPage() {
         </div>
 
         {/* ── regulatory note ──────────────────────────────────────────────── */}
-        <div className="mt-8 bg-slate-50 border border-slate-200 rounded-lg p-4 text-xs text-slate-700">
-          <p className="font-semibold text-slate-900 mb-1">Regulatory framework</p>
+        <div className="mt-8 bg-slate-50 border border-[var(--cs-border)] rounded-lg p-4 text-xs text-[var(--cs-text-secondary)]">
+          <p className="font-semibold text-[var(--cs-navy)] mb-1">Regulatory framework</p>
           <p className="leading-relaxed">
             This protocol gives effect to <strong>Children Act 1989, s23(7)</strong> (the duty to place siblings together so far as reasonably practicable, and to support contact where they are separated) and <strong>Quality Standard 9</strong> of the Children&apos;s Homes (England) Regulations 2015 (Care Planning), which requires the home to actively promote contact with siblings where this is consistent with the child&apos;s welfare. Cross-references: Care Plan, Family Contact log, Contact Plans, Life-Story Work, and the placing authority&apos;s Sibling Assessment. Each protocol must be reviewed at every LAC review and at any change in either child&apos;s placement.
           </p>

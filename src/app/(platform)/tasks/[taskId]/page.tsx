@@ -34,18 +34,18 @@ import { PrintButton } from "@/components/common/print-button";
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
 const STATUS_CONFIG: Record<string, { color: string; bgColor: string; icon: React.ElementType; label: string }> = {
-  not_started: { color: "text-slate-500", bgColor: "bg-slate-100", icon: Circle, label: "Not Started" },
+  not_started: { color: "text-[var(--cs-text-muted)]", bgColor: "bg-slate-100", icon: Circle, label: "Not Started" },
   in_progress: { color: "text-blue-600", bgColor: "bg-blue-100", icon: Clock, label: "In Progress" },
   blocked: { color: "text-red-600", bgColor: "bg-red-100", icon: Ban, label: "Blocked" },
   completed: { color: "text-emerald-600", bgColor: "bg-emerald-100", icon: CheckCircle2, label: "Completed" },
-  cancelled: { color: "text-slate-400", bgColor: "bg-slate-100", icon: X, label: "Cancelled" },
+  cancelled: { color: "text-[var(--cs-text-muted)]", bgColor: "bg-slate-100", icon: X, label: "Cancelled" },
 };
 
 const PRIORITY_CONFIG: Record<string, { color: string; border: string; icon: React.ElementType; label: string }> = {
   urgent: { color: "bg-red-100 text-red-800", border: "border-l-red-600", icon: Flame, label: "Urgent" },
   high: { color: "bg-orange-100 text-orange-800", border: "border-l-orange-500", icon: ArrowUp, label: "High" },
   medium: { color: "bg-blue-100 text-blue-800", border: "border-l-blue-400", icon: ArrowRight, label: "Medium" },
-  low: { color: "bg-slate-100 text-slate-600", border: "border-l-slate-300", icon: ArrowDown, label: "Low" },
+  low: { color: "bg-slate-100 text-[var(--cs-text-secondary)]", border: "border-l-slate-300", icon: ArrowDown, label: "Low" },
 };
 
 // ── Inline editable field ─────────────────────────────────────────────────────
@@ -53,7 +53,7 @@ const PRIORITY_CONFIG: Record<string, { color: string; border: string; icon: Rea
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div>
-      <dt className="text-[10px] font-semibold uppercase tracking-wider text-slate-400 mb-1">{label}</dt>
+      <dt className="text-[10px] font-semibold uppercase tracking-wider text-[var(--cs-text-muted)] mb-1">{label}</dt>
       <dd>{children}</dd>
     </div>
   );
@@ -88,7 +88,7 @@ function CompletePanel({
         onChange={(e) => setNote(e.target.value)}
         rows={2}
         placeholder="Evidence note (optional) — describe what was done…"
-        className="w-full rounded-xl border border-emerald-200 bg-white px-3 py-2.5 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-emerald-400 placeholder:text-slate-400"
+        className="w-full rounded-xl border border-emerald-200 bg-white px-3 py-2.5 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-emerald-400 placeholder:text-[var(--cs-text-muted)]"
       />
       <div className="flex gap-2">
         <Button
@@ -138,11 +138,11 @@ function EscalatePanel({
     <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 space-y-3">
       <p className="text-sm font-semibold text-amber-800">Escalate Task</p>
       <div>
-        <label className="text-xs font-semibold text-slate-600 block mb-1">Escalate to</label>
+        <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1">Escalate to</label>
         <select
           value={to}
           onChange={(e) => setTo(e.target.value)}
-          className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-amber-400"
+          className="w-full rounded-xl border border-[var(--cs-border)] bg-white px-3 py-2.5 text-sm text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-amber-400"
         >
           <option value="">Select person…</option>
           {seniors.map((s) => (
@@ -151,13 +151,13 @@ function EscalatePanel({
         </select>
       </div>
       <div>
-        <label className="text-xs font-semibold text-slate-600 block mb-1">Reason</label>
+        <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1">Reason</label>
         <textarea
           value={reason}
           onChange={(e) => setReason(e.target.value)}
           rows={2}
           placeholder="Why is this being escalated?"
-          className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-amber-400 placeholder:text-slate-400"
+          className="w-full rounded-xl border border-[var(--cs-border)] bg-white px-3 py-2.5 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-amber-400 placeholder:text-[var(--cs-text-muted)]"
         />
       </div>
       {error && <p className="text-xs text-red-600 font-medium">{error}</p>}
@@ -204,7 +204,7 @@ export default function TaskDetailPage() {
   if (isLoading) {
     return (
       <PageShell title="Task" subtitle="Loading…" showQuickCreate={false}>
-        <div className="flex items-center justify-center py-24 text-slate-400">
+        <div className="flex items-center justify-center py-24 text-[var(--cs-text-muted)]">
           <Loader2 className="h-8 w-8 animate-spin mr-3" />
           <span className="text-sm">Loading task…</span>
         </div>
@@ -217,7 +217,7 @@ export default function TaskDetailPage() {
       <PageShell title="Task not found" subtitle="" showQuickCreate={false}>
         <div className="max-w-md mx-auto mt-12 text-center space-y-4">
           <AlertCircle className="h-12 w-12 text-red-400 mx-auto" />
-          <p className="text-sm text-slate-600">This task could not be found. It may have been deleted.</p>
+          <p className="text-sm text-[var(--cs-text-secondary)]">This task could not be found. It may have been deleted.</p>
           <Link href="/tasks">
             <Button variant="outline"><ArrowLeft className="h-4 w-4 mr-1" />Back to Tasks</Button>
           </Link>
@@ -324,7 +324,7 @@ export default function TaskDetailPage() {
               {isSignedOff && <Badge className="text-[9px] rounded-full bg-emerald-100 text-emerald-700 gap-0.5"><UserCheck className="h-3 w-3" />Signed Off</Badge>}
             </div>
             {task.due_date && (
-              <p className={cn("text-xs mt-1", overdue ? "text-red-600 font-semibold" : dueToday ? "text-orange-600" : "text-slate-500")}>
+              <p className={cn("text-xs mt-1", overdue ? "text-red-600 font-semibold" : dueToday ? "text-orange-600" : "text-[var(--cs-text-muted)]")}>
                 <CalendarDays className="h-3 w-3 inline mr-1" />
                 Due {formatRelative(task.due_date)}
               </p>
@@ -381,7 +381,7 @@ export default function TaskDetailPage() {
             </CardHeader>
             <CardContent className="space-y-3">
               <div>
-                <label className="text-xs font-semibold text-slate-600 block mb-1.5">Title <span className="text-red-500">*</span></label>
+                <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">Title <span className="text-red-500">*</span></label>
                 <Input
                   value={editForm.title ?? ""}
                   onChange={(e) => setEditForm((f) => ({ ...f, title: e.target.value }))}
@@ -389,31 +389,31 @@ export default function TaskDetailPage() {
                 />
               </div>
               <div>
-                <label className="text-xs font-semibold text-slate-600 block mb-1.5">Description</label>
+                <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">Description</label>
                 <textarea
                   value={editForm.description ?? ""}
                   onChange={(e) => setEditForm((f) => ({ ...f, description: e.target.value }))}
                   rows={3}
-                  className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-3 text-sm text-slate-700 resize-none focus:outline-none focus:ring-2 focus:ring-slate-400 placeholder:text-slate-400"
+                  className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3.5 py-3 text-sm text-[var(--cs-text-secondary)] resize-none focus:outline-none focus:ring-2 focus:ring-slate-400 placeholder:text-[var(--cs-text-muted)]"
                 />
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs font-semibold text-slate-600 block mb-1.5">Priority</label>
+                  <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">Priority</label>
                   <select
                     value={editForm.priority ?? "medium"}
                     onChange={(e) => setEditForm((f) => ({ ...f, priority: e.target.value as Task["priority"] }))}
-                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-400"
+                    className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2.5 text-sm text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-slate-400"
                   >
                     {TASK_PRIORITIES.map((p) => <option key={p} value={p} className="capitalize">{p.charAt(0).toUpperCase() + p.slice(1)}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label className="text-xs font-semibold text-slate-600 block mb-1.5">Status</label>
+                  <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">Status</label>
                   <select
                     value={editForm.status ?? "not_started"}
                     onChange={(e) => setEditForm((f) => ({ ...f, status: e.target.value as Task["status"] }))}
-                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-400"
+                    className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2.5 text-sm text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-slate-400"
                   >
                     {TASK_STATUSES.filter((s) => s !== "completed").map((s) => (
                       <option key={s} value={s}>{STATUS_CONFIG[s]?.label ?? s}</option>
@@ -423,17 +423,17 @@ export default function TaskDetailPage() {
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs font-semibold text-slate-600 block mb-1.5">Category</label>
+                  <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">Category</label>
                   <select
                     value={editForm.category ?? "admin"}
                     onChange={(e) => setEditForm((f) => ({ ...f, category: e.target.value as Task["category"] }))}
-                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-400"
+                    className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2.5 text-sm text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-slate-400"
                   >
                     {TASK_CATEGORIES.map((c) => <option key={c} value={c}>{TASK_CATEGORY_LABELS[c]}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label className="text-xs font-semibold text-slate-600 block mb-1.5">Due Date</label>
+                  <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">Due Date</label>
                   <Input
                     type="date"
                     value={editForm.due_date ?? ""}
@@ -443,11 +443,11 @@ export default function TaskDetailPage() {
                 </div>
               </div>
               <div>
-                <label className="text-xs font-semibold text-slate-600 block mb-1.5">Assigned To</label>
+                <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">Assigned To</label>
                 <select
                   value={editForm.assigned_to ?? ""}
                   onChange={(e) => setEditForm((f) => ({ ...f, assigned_to: e.target.value }))}
-                  className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-400"
+                  className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2.5 text-sm text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-slate-400"
                 >
                   <option value="">Unassigned</option>
                   {activeStaff.map((s) => <option key={s.id} value={s.id}>{s.full_name}</option>)}
@@ -470,16 +470,16 @@ export default function TaskDetailPage() {
           {/* Left column */}
           <Card className="rounded-2xl">
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm flex items-center gap-2"><FileText className="h-4 w-4 text-slate-400" />Details</CardTitle>
+              <CardTitle className="text-sm flex items-center gap-2"><FileText className="h-4 w-4 text-[var(--cs-text-muted)]" />Details</CardTitle>
             </CardHeader>
             <CardContent>
               <dl className="space-y-4">
                 <Field label="Title">
-                  <p className="text-sm font-medium text-slate-900">{task.title}</p>
+                  <p className="text-sm font-medium text-[var(--cs-navy)]">{task.title}</p>
                 </Field>
                 {task.description && (
                   <Field label="Description">
-                    <p className="text-sm text-slate-600 leading-relaxed whitespace-pre-wrap">{task.description}</p>
+                    <p className="text-sm text-[var(--cs-text-secondary)] leading-relaxed whitespace-pre-wrap">{task.description}</p>
                   </Field>
                 )}
                 <Field label="Category">
@@ -489,16 +489,16 @@ export default function TaskDetailPage() {
                 </Field>
                 {task.estimated_minutes && (
                   <Field label="Estimated Time">
-                    <p className="text-sm text-slate-600 flex items-center gap-1.5">
-                      <Timer className="h-3.5 w-3.5 text-slate-400" />
+                    <p className="text-sm text-[var(--cs-text-secondary)] flex items-center gap-1.5">
+                      <Timer className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
                       {task.estimated_minutes} minutes
                     </p>
                   </Field>
                 )}
                 {task.recurring && (
                   <Field label="Recurrence">
-                    <p className="text-sm text-slate-600 flex items-center gap-1.5">
-                      <RotateCcw className="h-3.5 w-3.5 text-slate-400" />
+                    <p className="text-sm text-[var(--cs-text-secondary)] flex items-center gap-1.5">
+                      <RotateCcw className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
                       {task.recurring_schedule
                         ? task.recurring_schedule.charAt(0).toUpperCase() + task.recurring_schedule.slice(1)
                         : "Recurring"}
@@ -525,7 +525,7 @@ export default function TaskDetailPage() {
             {/* Assignment */}
             <Card className="rounded-2xl">
               <CardHeader className="pb-3">
-                <CardTitle className="text-sm flex items-center gap-2"><User className="h-4 w-4 text-slate-400" />Assignment</CardTitle>
+                <CardTitle className="text-sm flex items-center gap-2"><User className="h-4 w-4 text-[var(--cs-text-muted)]" />Assignment</CardTitle>
               </CardHeader>
               <CardContent>
                 <dl className="space-y-3">
@@ -533,21 +533,21 @@ export default function TaskDetailPage() {
                     {task.assigned_to ? (
                       <div className="flex items-center gap-2">
                         <Avatar name={getStaffName(task.assigned_to)} size="sm" />
-                        <span className="text-sm text-slate-700">{getStaffName(task.assigned_to)}</span>
+                        <span className="text-sm text-[var(--cs-text-secondary)]">{getStaffName(task.assigned_to)}</span>
                       </div>
                     ) : (
-                      <span className="text-sm text-slate-400">Unassigned</span>
+                      <span className="text-sm text-[var(--cs-text-muted)]">Unassigned</span>
                     )}
                   </Field>
                   {task.assigned_role && (
                     <Field label="Role">
-                      <span className="text-sm text-slate-600 capitalize">{task.assigned_role.replace(/_/g, " ")}</span>
+                      <span className="text-sm text-[var(--cs-text-secondary)] capitalize">{task.assigned_role.replace(/_/g, " ")}</span>
                     </Field>
                   )}
                   <Field label="Created By">
                     <div className="flex items-center gap-2">
                       <Avatar name={getStaffName(task.created_by)} size="sm" />
-                      <span className="text-sm text-slate-600">{getStaffName(task.created_by)}</span>
+                      <span className="text-sm text-[var(--cs-text-secondary)]">{getStaffName(task.created_by)}</span>
                     </div>
                   </Field>
                 </dl>
@@ -558,7 +558,7 @@ export default function TaskDetailPage() {
             {(task.linked_child_id || task.linked_incident_id || task.linked_document_id) && (
               <Card className="rounded-2xl">
                 <CardHeader className="pb-3">
-                  <CardTitle className="text-sm flex items-center gap-2"><Tag className="h-4 w-4 text-slate-400" />Linked Records</CardTitle>
+                  <CardTitle className="text-sm flex items-center gap-2"><Tag className="h-4 w-4 text-[var(--cs-text-muted)]" />Linked Records</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-2">
                   {task.linked_child_id && (
@@ -594,17 +594,17 @@ export default function TaskDetailPage() {
                 <Field label="Completed By">
                   <div className="flex items-center gap-2">
                     <Avatar name={getStaffName(task.completed_by ?? "")} size="sm" />
-                    <span className="text-sm text-slate-700">{getStaffName(task.completed_by ?? "")}</span>
+                    <span className="text-sm text-[var(--cs-text-secondary)]">{getStaffName(task.completed_by ?? "")}</span>
                   </div>
                 </Field>
                 {task.completed_at && (
                   <Field label="Completed At">
-                    <span className="text-sm text-slate-600">{formatDate(task.completed_at)}</span>
+                    <span className="text-sm text-[var(--cs-text-secondary)]">{formatDate(task.completed_at)}</span>
                   </Field>
                 )}
                 {task.evidence_note && (
                   <Field label="Evidence Note">
-                    <p className="text-sm text-slate-600 leading-relaxed">{task.evidence_note}</p>
+                    <p className="text-sm text-[var(--cs-text-secondary)] leading-relaxed">{task.evidence_note}</p>
                   </Field>
                 )}
                 {isSignedOff && (
@@ -612,12 +612,12 @@ export default function TaskDetailPage() {
                     <Field label="Signed Off By">
                       <div className="flex items-center gap-2">
                         <Avatar name={getStaffName(task.signed_off_by ?? "")} size="sm" />
-                        <span className="text-sm text-slate-700">{getStaffName(task.signed_off_by ?? "")}</span>
+                        <span className="text-sm text-[var(--cs-text-secondary)]">{getStaffName(task.signed_off_by ?? "")}</span>
                       </div>
                     </Field>
                     {task.signed_off_at && (
                       <Field label="Sign-off Date">
-                        <span className="text-sm text-slate-600">{formatDate(task.signed_off_at)}</span>
+                        <span className="text-sm text-[var(--cs-text-secondary)]">{formatDate(task.signed_off_at)}</span>
                       </Field>
                     )}
                   </>
@@ -641,18 +641,18 @@ export default function TaskDetailPage() {
                   <Field label="Escalated To">
                     <div className="flex items-center gap-2">
                       <Avatar name={getStaffName(task.escalated_to)} size="sm" />
-                      <span className="text-sm text-slate-700">{getStaffName(task.escalated_to)}</span>
+                      <span className="text-sm text-[var(--cs-text-secondary)]">{getStaffName(task.escalated_to)}</span>
                     </div>
                   </Field>
                 )}
                 {task.escalation_reason && (
                   <Field label="Reason">
-                    <p className="text-sm text-slate-600">{task.escalation_reason}</p>
+                    <p className="text-sm text-[var(--cs-text-secondary)]">{task.escalation_reason}</p>
                   </Field>
                 )}
                 {task.escalated_at && (
                   <Field label="Escalated At">
-                    <span className="text-sm text-slate-600">{formatDate(task.escalated_at)}</span>
+                    <span className="text-sm text-[var(--cs-text-secondary)]">{formatDate(task.escalated_at)}</span>
                   </Field>
                 )}
               </dl>
@@ -663,8 +663,8 @@ export default function TaskDetailPage() {
         {/* Audit metadata */}
         <Card className="rounded-2xl bg-slate-50">
           <CardContent className="pt-4 pb-4">
-            <div className="flex flex-wrap gap-4 text-[10px] text-slate-400">
-              <span>ID: <code className="font-mono text-slate-500">{task.id}</code></span>
+            <div className="flex flex-wrap gap-4 text-[10px] text-[var(--cs-text-muted)]">
+              <span>ID: <code className="font-mono text-[var(--cs-text-muted)]">{task.id}</code></span>
               <span>Created: {formatDate(task.created_at)}</span>
               <span>Updated: {formatDate(task.updated_at)}</span>
               <span>Home: {task.home_id}</span>

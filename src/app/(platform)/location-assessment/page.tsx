@@ -103,7 +103,7 @@ export default function LocationAssessmentPage() {
             return (
               <div key={area.id} className="rounded-xl border bg-white overflow-hidden">
                 <button
-                  className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                  className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                   onClick={() => setExpanded(isExpanded ? null : area.id)}
                 >
                   <div className="flex items-center gap-3">

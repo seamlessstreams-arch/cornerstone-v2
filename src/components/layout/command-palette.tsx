@@ -103,7 +103,7 @@ function buildItems(): CommandItem[] {
     { id: "action_handover", label: "View handover", href: "/handover", icon: ArrowRight, description: "Review shift handover notes" },
     { id: "action_medication", label: "Administer medication", href: "/medication", icon: Pill, description: "Record medication administration" },
     { id: "action_supervision", label: "Schedule supervision", href: "/supervision", icon: Users, description: "Book a staff supervision session" },
-    { id: "action_aria", label: "Open Aria Intelligence", href: "/intelligence", icon: Sparkles, description: "AI-powered care insights" },
+    { id: "action_aria", label: "Open ARIA Intelligence", href: "/intelligence", icon: Sparkles, description: "AI-powered care insights" },
   ];
   actions.forEach((a) => items.push({ ...a, group: "actions" }));
 
@@ -257,10 +257,10 @@ export function CommandPalette() {
 
       {/* Dialog */}
       <div className="fixed inset-x-0 top-[15%] mx-auto w-full max-w-lg z-[61] px-4 animate-fade-in">
-        <div className="rounded-2xl border border-slate-200 bg-white shadow-2xl overflow-hidden">
+        <div className="rounded-2xl border border-[var(--cs-border)] bg-[var(--cs-surface-elevated)] shadow-[var(--cs-shadow-elevated)] overflow-hidden">
           {/* Search input */}
-          <div className="flex items-center gap-3 px-4 py-3 border-b border-slate-100">
-            <Search className="h-4 w-4 text-slate-400 shrink-0" />
+          <div className="flex items-center gap-3 px-4 py-3 border-b border-[var(--cs-border-subtle)]">
+            <Search className="h-4 w-4 text-[var(--cs-text-muted)] shrink-0" />
             <input
               ref={inputRef}
               type="text"
@@ -268,10 +268,10 @@ export function CommandPalette() {
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Search children, staff, pages, actions..."
-              className="flex-1 text-sm text-slate-800 placeholder:text-slate-400 outline-none bg-transparent"
+              className="flex-1 text-sm text-[var(--cs-navy)] placeholder:text-[var(--cs-text-gentle)] outline-none bg-transparent"
             />
             <div className="flex items-center gap-1 shrink-0">
-              <kbd className="hidden sm:inline-flex h-5 items-center rounded border border-slate-200 bg-slate-50 px-1.5 text-[10px] font-medium text-slate-400">
+              <kbd className="hidden sm:inline-flex h-5 items-center rounded border border-[var(--cs-border)] bg-[var(--cs-surface)] px-1.5 text-[10px] font-medium text-[var(--cs-text-muted)]">
                 ESC
               </kbd>
             </div>
@@ -281,15 +281,15 @@ export function CommandPalette() {
           <div ref={listRef} className="max-h-[50vh] overflow-y-auto py-2">
             {flatItems.length === 0 ? (
               <div className="px-4 py-8 text-center">
-                <Search className="h-8 w-8 text-slate-200 mx-auto mb-2" />
-                <p className="text-sm font-medium text-slate-500">No results found</p>
-                <p className="text-xs text-slate-400 mt-1">Try a different search term</p>
+                <Search className="h-8 w-8 text-[var(--cs-text-gentle)] mx-auto mb-2" />
+                <p className="text-sm font-medium text-[var(--cs-text-secondary)]">No results found</p>
+                <p className="text-xs text-[var(--cs-text-muted)] mt-1">Try a different search term</p>
               </div>
             ) : (
               grouped.map((g) => (
                 <div key={g.group}>
                   <div className="px-4 py-1.5">
-                    <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest">
+                    <span className="text-[10px] font-semibold text-[var(--cs-text-gentle)] uppercase tracking-widest">
                       {GROUP_LABELS[g.group]}
                     </span>
                   </div>
@@ -310,29 +310,29 @@ export function CommandPalette() {
                         onMouseEnter={() => setSelectedIndex(idx)}
                         className={cn(
                           "w-full flex items-center gap-3 px-4 py-2.5 text-left transition-colors",
-                          isSelected ? "bg-indigo-50" : "hover:bg-slate-50",
+                          isSelected ? "bg-[var(--cs-aria-gold-bg)]" : "hover:bg-[var(--cs-surface)]",
                         )}
                       >
                         <div className={cn(
                           "flex h-8 w-8 items-center justify-center rounded-xl shrink-0 transition-colors",
-                          isSelected ? "bg-indigo-100 text-indigo-600" : "bg-slate-100 text-slate-400",
+                          isSelected ? "bg-[var(--cs-aria-gold-bg)] text-[var(--cs-aria-gold)]" : "bg-[var(--cs-surface)] text-[var(--cs-text-muted)]",
                         )}>
                           <Icon className="h-4 w-4" />
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className={cn(
                             "text-sm font-medium truncate",
-                            isSelected ? "text-indigo-900" : "text-slate-800",
+                            isSelected ? "text-[var(--cs-navy)]" : "text-[var(--cs-text-primary)]",
                           )}>
                             {item.label}
                           </p>
                           {item.description && (
-                            <p className="text-[11px] text-slate-400 truncate">{item.description}</p>
+                            <p className="text-[11px] text-[var(--cs-text-muted)] truncate">{item.description}</p>
                           )}
                         </div>
                         {isSelected && (
                           <div className="flex items-center gap-1 shrink-0">
-                            <CornerDownLeft className="h-3 w-3 text-indigo-400" />
+                            <CornerDownLeft className="h-3 w-3 text-[var(--cs-aria-gold)]" />
                           </div>
                         )}
                       </button>
@@ -344,28 +344,28 @@ export function CommandPalette() {
           </div>
 
           {/* Footer hints */}
-          <div className="flex items-center justify-between px-4 py-2 border-t border-slate-100 bg-slate-50/50">
+          <div className="flex items-center justify-between px-4 py-2 border-t border-[var(--cs-border-subtle)] bg-[var(--cs-surface)]/50">
             <div className="flex items-center gap-3">
-              <div className="flex items-center gap-1 text-[10px] text-slate-400">
-                <kbd className="inline-flex h-4 items-center rounded border border-slate-200 bg-white px-1 text-[9px] font-medium">
+              <div className="flex items-center gap-1 text-[10px] text-[var(--cs-text-gentle)]">
+                <kbd className="inline-flex h-4 items-center rounded border border-[var(--cs-border)] bg-[var(--cs-surface-elevated)] px-1 text-[9px] font-medium">
                   ↑↓
                 </kbd>
                 <span>navigate</span>
               </div>
-              <div className="flex items-center gap-1 text-[10px] text-slate-400">
-                <kbd className="inline-flex h-4 items-center rounded border border-slate-200 bg-white px-1 text-[9px] font-medium">
+              <div className="flex items-center gap-1 text-[10px] text-[var(--cs-text-gentle)]">
+                <kbd className="inline-flex h-4 items-center rounded border border-[var(--cs-border)] bg-[var(--cs-surface-elevated)] px-1 text-[9px] font-medium">
                   ↵
                 </kbd>
                 <span>select</span>
               </div>
-              <div className="flex items-center gap-1 text-[10px] text-slate-400">
-                <kbd className="inline-flex h-4 items-center rounded border border-slate-200 bg-white px-1 text-[9px] font-medium">
+              <div className="flex items-center gap-1 text-[10px] text-[var(--cs-text-gentle)]">
+                <kbd className="inline-flex h-4 items-center rounded border border-[var(--cs-border)] bg-[var(--cs-surface-elevated)] px-1 text-[9px] font-medium">
                   esc
                 </kbd>
                 <span>close</span>
               </div>
             </div>
-            <div className="flex items-center gap-1 text-[10px] text-slate-400">
+            <div className="flex items-center gap-1 text-[10px] text-[var(--cs-text-gentle)]">
               <Command className="h-3 w-3" />
               <span>K to open</span>
             </div>

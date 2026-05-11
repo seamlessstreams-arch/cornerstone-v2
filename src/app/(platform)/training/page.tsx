@@ -6,6 +6,7 @@
 
 import React, { useState, useMemo } from "react";
 import { PageShell } from "@/components/layout/page-shell";
+import { PageGuidance } from "@/components/ui/page-guidance";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -43,7 +44,7 @@ const STATUS_STYLES: Record<string, { color: string; icon: React.ElementType; la
   compliant:     { color: "bg-emerald-100 text-emerald-700", icon: CheckCircle2,  label: "Compliant"     },
   expiring_soon: { color: "bg-amber-100 text-amber-700",     icon: Clock,         label: "Expiring Soon"  },
   expired:       { color: "bg-red-100 text-red-700",          icon: XCircle,       label: "Expired"        },
-  not_started:   { color: "bg-slate-100 text-slate-600",     icon: AlertTriangle, label: "Not Started"   },
+  not_started:   { color: "bg-slate-100 text-[var(--cs-text-secondary)]",     icon: AlertTriangle, label: "Not Started"   },
 };
 
 const CATEGORY_LABELS: Record<TrainingCategory, string> = {
@@ -126,7 +127,7 @@ function AddRecordDialog({ open, onClose }: { open: boolean; onClose: () => void
         </DialogHeader>
         <div className="space-y-4">
           <div>
-            <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Staff Member</label>
+            <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Staff Member</label>
             <Select value={staffId} onValueChange={setStaffId}>
               <SelectTrigger className="mt-1"><SelectValue placeholder="Select staff…" /></SelectTrigger>
               <SelectContent>
@@ -137,12 +138,12 @@ function AddRecordDialog({ open, onClose }: { open: boolean; onClose: () => void
             </Select>
           </div>
           <div>
-            <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Course Name</label>
+            <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Course Name</label>
             <Input className="mt-1" placeholder="e.g. Safeguarding Level 3" value={courseName} onChange={(e) => setCourseName(e.target.value)} />
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Category</label>
+              <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Category</label>
               <Select value={category} onValueChange={(v) => setCategory(v as TrainingCategory)}>
                 <SelectTrigger className="mt-1"><SelectValue /></SelectTrigger>
                 <SelectContent>
@@ -153,18 +154,18 @@ function AddRecordDialog({ open, onClose }: { open: boolean; onClose: () => void
               </Select>
             </div>
             <div>
-              <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Provider</label>
+              <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Provider</label>
               <Input className="mt-1" placeholder="e.g. SCIE, In-house" value={provider} onChange={(e) => setProvider(e.target.value)} />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Completed Date</label>
-              <input type="date" className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" value={completedDate} onChange={(e) => setCompletedDate(e.target.value)} />
+              <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Completed Date</label>
+              <input type="date" className="mt-1 w-full rounded-lg border border-[var(--cs-border)] bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" value={completedDate} onChange={(e) => setCompletedDate(e.target.value)} />
             </div>
             <div>
-              <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Expiry Date</label>
-              <input type="date" className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" value={expiryDate} onChange={(e) => setExpiryDate(e.target.value)} />
+              <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Expiry Date</label>
+              <input type="date" className="mt-1 w-full rounded-lg border border-[var(--cs-border)] bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" value={expiryDate} onChange={(e) => setExpiryDate(e.target.value)} />
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -175,10 +176,10 @@ function AddRecordDialog({ open, onClose }: { open: boolean; onClose: () => void
               onChange={(e) => setIsMandatory(e.target.checked)}
               className="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
             />
-            <label htmlFor="mandatory-check" className="text-sm text-slate-700">Mandatory training</label>
+            <label htmlFor="mandatory-check" className="text-sm text-[var(--cs-text-secondary)]">Mandatory training</label>
           </div>
           <div>
-            <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Notes (optional)</label>
+            <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Notes (optional)</label>
             <Textarea className="mt-1 text-sm" rows={2} placeholder="Any notes about this record…" value={notes} onChange={(e) => setNotes(e.target.value)} />
           </div>
         </div>
@@ -271,7 +272,7 @@ function ComplianceReportPanel({
 
           {report.risk_areas?.length > 0 && (
             <div>
-              <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide mb-1.5">Risk Areas</p>
+              <p className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-1.5">Risk Areas</p>
               <div className="space-y-1">
                 {report.risk_areas.map((r, i) => (
                   <div key={i} className="flex items-start gap-2 text-xs text-amber-800 bg-amber-50 border border-amber-100 rounded-lg px-3 py-1.5">
@@ -285,11 +286,11 @@ function ComplianceReportPanel({
 
           {report.recommended_actions?.length > 0 && (
             <div>
-              <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide mb-1.5">Recommended Actions</p>
+              <p className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-1.5">Recommended Actions</p>
               <div className="space-y-1">
                 {report.recommended_actions.map((a, i) => (
-                  <div key={i} className="flex items-start gap-2 text-xs text-slate-700 bg-white border border-slate-100 rounded-lg px-3 py-1.5">
-                    <ChevronRight className="h-3 w-3 shrink-0 mt-0.5 text-slate-400" />
+                  <div key={i} className="flex items-start gap-2 text-xs text-[var(--cs-text-secondary)] bg-white border border-[var(--cs-border-subtle)] rounded-lg px-3 py-1.5">
+                    <ChevronRight className="h-3 w-3 shrink-0 mt-0.5 text-[var(--cs-text-muted)]" />
                     {a}
                   </div>
                 ))}
@@ -457,20 +458,29 @@ export default function TrainingPage() {
     >
       <div id="training-content" className="space-y-5 animate-fade-in">
 
+        <PageGuidance
+          title="Training & compliance"
+          description="Track mandatory and optional training for all staff. Expired certificates are flagged automatically and must be renewed to maintain Ofsted compliance."
+          evidenceTip="Maintain a training matrix that maps each role to required courses. Inspectors check that training is current and relevant to the children in placement."
+          ariaTip="ARIA can predict upcoming training gaps based on expiry dates and suggest scheduling to avoid multiple expirations at once."
+          regulationRef="Children's Homes Regulations 2015, Reg 33(4)(a) — Fitness of staff"
+          variant="compliance"
+        />
+
         {/* Summary stats */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
           {[
-            { label: "Total Records", value: meta?.total ?? "—", colour: "text-slate-700", bg: "bg-slate-50", icon: GraduationCap },
+            { label: "Total Records", value: meta?.total ?? "—", colour: "text-[var(--cs-text-secondary)]", bg: "bg-slate-50", icon: GraduationCap },
             { label: "Compliant", value: meta?.compliant ?? "—", colour: "text-emerald-700", bg: "bg-emerald-50", icon: CheckCircle2 },
             { label: "Expiring Soon", value: meta?.expiring ?? "—", colour: "text-amber-700", bg: "bg-amber-50", icon: Clock },
             { label: "Expired", value: meta?.expired ?? "—", colour: "text-red-700", bg: "bg-red-50", icon: XCircle },
-            { label: "Not Started", value: meta?.not_started ?? "—", colour: "text-slate-600", bg: "bg-slate-50", icon: AlertTriangle },
+            { label: "Not Started", value: meta?.not_started ?? "—", colour: "text-[var(--cs-text-secondary)]", bg: "bg-slate-50", icon: AlertTriangle },
             { label: "Active Staff", value: activeStaff.length, colour: "text-blue-700", bg: "bg-blue-50", icon: Users },
           ].map(({ label, value, colour, bg, icon: Icon }) => (
-            <div key={label} className={cn("rounded-xl border border-slate-100 p-3", bg)}>
+            <div key={label} className={cn("rounded-xl border border-[var(--cs-border-subtle)] p-3", bg)}>
               <div className="flex items-center gap-2 mb-1">
                 <Icon className={cn("h-3.5 w-3.5 shrink-0", colour)} />
-                <span className="text-[10px] text-slate-500 font-medium">{label}</span>
+                <span className="text-[10px] text-[var(--cs-text-muted)] font-medium">{label}</span>
               </div>
               <div className={cn("text-lg font-bold tabular-nums", colour)}>{value}</div>
             </div>
@@ -481,7 +491,7 @@ export default function TrainingPage() {
         {meta && (
           <div className="space-y-1.5">
             <div className="flex items-center justify-between text-xs px-1">
-              <span className="text-slate-500 font-medium flex items-center gap-1.5">
+              <span className="text-[var(--cs-text-muted)] font-medium flex items-center gap-1.5">
                 <BarChart3 className="h-3.5 w-3.5" /> Overall Compliance
               </span>
               <span className={cn(
@@ -539,7 +549,7 @@ export default function TrainingPage() {
         {/* Filters + view toggle */}
         <div className="flex flex-wrap items-center gap-3">
           <div className="relative flex-1 min-w-[200px] max-w-sm">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--cs-text-muted)]" />
             <Input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -570,11 +580,11 @@ export default function TrainingPage() {
         <div className="flex items-center gap-3 flex-wrap">
           {/* Category filter */}
           <div className="flex items-center gap-1.5">
-            <Filter className="h-3.5 w-3.5 text-slate-400" />
+            <Filter className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
             <select
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value as CategoryFilter)}
-              className="rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-[11px] text-slate-700 focus:border-blue-300 focus:ring-1 focus:ring-blue-200 outline-none"
+              className="rounded-lg border border-[var(--cs-border)] bg-white px-2.5 py-1 text-[11px] text-[var(--cs-text-secondary)] focus:border-blue-300 focus:ring-1 focus:ring-blue-200 outline-none"
             >
               <option value="all">All categories</option>
               {availableCategories.map((c) => (
@@ -586,11 +596,11 @@ export default function TrainingPage() {
           {/* Sort (list view) */}
           {view === "list" && (
             <div className="flex items-center gap-1.5 ml-auto">
-              <ArrowUpDown className="h-3.5 w-3.5 text-slate-400" />
+              <ArrowUpDown className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
               <select
                 value={sortKey}
                 onChange={(e) => setSortKey(e.target.value as SortKey)}
-                className="rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-[11px] text-slate-700 focus:border-blue-300 focus:ring-1 focus:ring-blue-200 outline-none"
+                className="rounded-lg border border-[var(--cs-border)] bg-white px-2.5 py-1 text-[11px] text-[var(--cs-text-secondary)] focus:border-blue-300 focus:ring-1 focus:ring-blue-200 outline-none"
               >
                 <option value="status">By status (urgent first)</option>
                 <option value="expiry">By expiry date</option>
@@ -604,9 +614,9 @@ export default function TrainingPage() {
 
         {/* Results count */}
         {(search || filterStatus || categoryFilter !== "all") && (
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-[var(--cs-text-muted)]">
             Showing {filtered.length} of {allRecords.length} record{allRecords.length !== 1 ? "s" : ""}
-            {search && <span className="text-slate-400"> matching &ldquo;{search}&rdquo;</span>}
+            {search && <span className="text-[var(--cs-text-muted)]"> matching &ldquo;{search}&rdquo;</span>}
           </p>
         )}
 
@@ -624,7 +634,7 @@ export default function TrainingPage() {
         {/* Loading */}
         {isLoading && (
           <div className="flex items-center justify-center py-16">
-            <Loader2 className="h-6 w-6 animate-spin text-slate-400" />
+            <Loader2 className="h-6 w-6 animate-spin text-[var(--cs-text-muted)]" />
           </div>
         )}
 
@@ -635,9 +645,9 @@ export default function TrainingPage() {
               <table className="w-full min-w-[800px]">
                 <thead>
                   <tr className="border-b bg-slate-50">
-                    <th className="py-3 px-4 text-left text-xs font-semibold text-slate-600 w-[180px] sticky left-0 bg-slate-50 z-10">Staff</th>
+                    <th className="py-3 px-4 text-left text-xs font-semibold text-[var(--cs-text-secondary)] w-[180px] sticky left-0 bg-slate-50 z-10">Staff</th>
                     {courses.map((course) => (
-                      <th key={course} className="py-3 px-2 text-center text-[10px] font-medium text-slate-600 min-w-[100px]">
+                      <th key={course} className="py-3 px-2 text-center text-[10px] font-medium text-[var(--cs-text-secondary)] min-w-[100px]">
                         <div className="truncate max-w-[90px] mx-auto" title={course}>{course}</div>
                       </th>
                     ))}
@@ -648,14 +658,14 @@ export default function TrainingPage() {
                     const sc = staffCompliance[staff.id];
                     const pct = sc && sc.total > 0 ? Math.round((sc.compliant / sc.total) * 100) : null;
                     return (
-                    <tr key={staff.id} className="border-b hover:bg-slate-50/50">
+                    <tr key={staff.id} className="border-b hover:bg-[var(--cs-surface)]/50">
                       <td className="py-2 px-4 sticky left-0 bg-white z-10">
                         <div className="flex items-center gap-2">
                           <Avatar name={staff.full_name} size="sm" />
                           <div className="flex-1 min-w-0">
-                            <div className="text-xs font-medium text-slate-900">{staff.full_name}</div>
+                            <div className="text-xs font-medium text-[var(--cs-navy)]">{staff.full_name}</div>
                             <div className="flex items-center gap-1.5">
-                              <span className="text-[10px] text-slate-400">{staff.job_title}</span>
+                              <span className="text-[10px] text-[var(--cs-text-muted)]">{staff.job_title}</span>
                               {pct !== null && (
                                 <span className={cn(
                                   "text-[9px] font-semibold tabular-nums",
@@ -671,7 +681,7 @@ export default function TrainingPage() {
                       {courses.map((course) => {
                         const record = allRecords.find((t) => t.staff_id === staff.id && t.course_name === course);
                         if (!record) {
-                          return <td key={course} className="py-2 px-2 text-center"><div className="text-[10px] text-slate-300">—</div></td>;
+                          return <td key={course} className="py-2 px-2 text-center"><div className="text-[10px] text-[var(--cs-text-gentle)]">—</div></td>;
                         }
                         const cfg = STATUS_STYLES[record.status] ?? STATUS_STYLES.not_started;
                         const Icon = cfg.icon;
@@ -705,7 +715,7 @@ export default function TrainingPage() {
             {filtered.length === 0 ? (
               <div className="rounded-2xl border bg-white p-12 text-center">
                 <GraduationCap className="h-8 w-8 text-slate-200 mx-auto mb-3" />
-                <div className="text-sm text-slate-500">No training records match your filters</div>
+                <div className="text-sm text-[var(--cs-text-muted)]">No training records match your filters</div>
               </div>
             ) : (
               filtered.map((record) => {
@@ -716,16 +726,16 @@ export default function TrainingPage() {
                 return (
                   <div key={record.id} className={cn(
                     "rounded-xl border bg-white p-4 flex items-center gap-4 hover:shadow-sm transition-all",
-                    record.status === "expired" ? "border-red-200" : record.status === "expiring_soon" ? "border-amber-200" : "border-slate-100"
+                    record.status === "expired" ? "border-red-200" : record.status === "expiring_soon" ? "border-amber-200" : "border-[var(--cs-border-subtle)]"
                   )}>
                     <div className={cn("rounded-full p-2 shrink-0", cfg.color)}>
                       <Icon className="h-4 w-4" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="text-sm font-medium text-slate-900">{record.course_name}</div>
-                      <div className="text-xs text-slate-500 mt-0.5 flex items-center gap-2">
+                      <div className="text-sm font-medium text-[var(--cs-navy)]">{record.course_name}</div>
+                      <div className="text-xs text-[var(--cs-text-muted)] mt-0.5 flex items-center gap-2">
                         <span>{getStaffName(record.staff_id)}</span>
-                        {record.provider && <span className="text-slate-400">via {record.provider}</span>}
+                        {record.provider && <span className="text-[var(--cs-text-muted)]">via {record.provider}</span>}
                         {record.category && (
                           <Badge variant="outline" className="text-[10px] h-4 px-1.5">
                             {CATEGORY_LABELS[record.category as TrainingCategory] ?? record.category}
@@ -740,7 +750,7 @@ export default function TrainingPage() {
                             "text-xs font-medium",
                             record.status === "expired" ? "text-red-600"
                             : record.status === "expiring_soon" ? "text-amber-600"
-                            : "text-slate-500"
+                            : "text-[var(--cs-text-muted)]"
                           )}>
                             {record.status === "expired" ? "Expired" : "Expires"} {formatDate(record.expiry_date)}
                           </div>

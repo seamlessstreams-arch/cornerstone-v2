@@ -49,7 +49,7 @@ const importanceColour: Record<LanguageIdentityImportance, string> = {
   central: "bg-amber-100 text-amber-800",
   important: "bg-teal-100 text-teal-800",
   becoming_important: "bg-blue-100 text-blue-800",
-  mixed_feelings: "bg-slate-100 text-slate-800",
+  mixed_feelings: "bg-slate-100 text-[var(--cs-navy)]",
   fading: "bg-rose-100 text-rose-800",
 };
 
@@ -301,7 +301,7 @@ export default function ChildHeritageLanguageTrackerPage() {
           return (
             <div key={r.id} className="rounded-xl border bg-white overflow-hidden">
               <button
-                className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                 onClick={() => setExpandedId(isExpanded ? null : r.id)}
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0">

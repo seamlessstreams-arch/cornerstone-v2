@@ -122,7 +122,7 @@ export default function DisclosureLogPage() {
     return (
       <PageShell title="Disclosure Log" subtitle="Loading...">
         <div className="flex items-center justify-center py-12">
-          <Loader2 className="h-8 w-8 animate-spin text-slate-400" />
+          <Loader2 className="h-8 w-8 animate-spin text-[var(--cs-text-muted)]" />
         </div>
       </PageShell>
     );
@@ -245,7 +245,7 @@ export default function DisclosureLogPage() {
           return (
             <div key={rec.id} className="rounded-xl border bg-white overflow-hidden">
               <button
-                className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                 onClick={() => setExpandedId(isExpanded ? null : rec.id)}
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -334,7 +334,7 @@ export default function DisclosureLogPage() {
                     >
                       Questions: {QUESTIONS_ASKED_LABEL[rec.questions_asked]}
                     </span>
-                    <span className="text-xs px-2 py-1 rounded-full bg-slate-100 text-slate-700">
+                    <span className="text-xs px-2 py-1 rounded-full bg-slate-100 text-[var(--cs-text-secondary)]">
                       Type: {DISCLOSURE_TYPE_LABEL[rec.disclosure_type]}
                     </span>
                     <span

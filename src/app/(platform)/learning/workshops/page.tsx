@@ -57,16 +57,16 @@ interface WorkshopResult {
 function AccordionSection({ section, index }: { section: ContentSection; index: number }) {
   const [open, setOpen] = useState(index === 0);
   return (
-    <div className="border border-slate-200 rounded-lg overflow-hidden">
+    <div className="border border-[var(--cs-border)] rounded-lg overflow-hidden">
       <button
-        className="w-full flex items-center justify-between px-4 py-3 text-left bg-slate-50 hover:bg-slate-100 transition-colors"
+        className="w-full flex items-center justify-between px-4 py-3 text-left bg-slate-50 hover:bg-[var(--cs-surface)] transition-colors"
         onClick={() => setOpen((p) => !p)}
       >
         <div className="flex items-center gap-3">
-          <span className="text-xs font-bold text-slate-500 tabular-nums">
+          <span className="text-xs font-bold text-[var(--cs-text-muted)] tabular-nums">
             {String(index + 1).padStart(2, "0")}
           </span>
-          <span className="text-sm font-semibold text-slate-900">
+          <span className="text-sm font-semibold text-[var(--cs-navy)]">
             {section.title ?? `Section ${index + 1}`}
           </span>
           {section.duration && (
@@ -77,22 +77,22 @@ function AccordionSection({ section, index }: { section: ContentSection; index: 
           )}
         </div>
         {open ? (
-          <ChevronUp className="h-4 w-4 text-slate-400 shrink-0" />
+          <ChevronUp className="h-4 w-4 text-[var(--cs-text-muted)] shrink-0" />
         ) : (
-          <ChevronDown className="h-4 w-4 text-slate-400 shrink-0" />
+          <ChevronDown className="h-4 w-4 text-[var(--cs-text-muted)] shrink-0" />
         )}
       </button>
       {open && (
         <div className="px-4 py-3 space-y-3">
           {section.content && (
             <div>
-              <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide mb-1">Content</p>
-              <p className="text-sm text-slate-700 leading-relaxed whitespace-pre-wrap">{section.content}</p>
+              <p className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-1">Content</p>
+              <p className="text-sm text-[var(--cs-text-secondary)] leading-relaxed whitespace-pre-wrap">{section.content}</p>
             </div>
           )}
           {section.activity && (
             <div>
-              <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide mb-1">Activity</p>
+              <p className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-1">Activity</p>
               <div className="rounded-lg bg-violet-50 border border-violet-100 p-3">
                 <p className="text-sm text-violet-800 leading-relaxed">{section.activity}</p>
               </div>
@@ -132,10 +132,10 @@ function WorkshopResult({
         {/* Learning objectives */}
         {Array.isArray(result.learning_objectives) && result.learning_objectives.length > 0 && (
           <div>
-            <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide mb-2">Learning Objectives</p>
+            <p className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-2">Learning Objectives</p>
             <ul className="space-y-1.5">
               {result.learning_objectives.map((obj, i) => (
-                <li key={i} className="flex items-start gap-2 text-sm text-slate-700">
+                <li key={i} className="flex items-start gap-2 text-sm text-[var(--cs-text-secondary)]">
                   <span className="text-violet-500 font-bold shrink-0">{i + 1}.</span>
                   <span>{obj}</span>
                 </li>
@@ -147,7 +147,7 @@ function WorkshopResult({
         {/* Facilitator notes */}
         {result.facilitator_notes && (
           <div>
-            <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide mb-2">Facilitator Notes</p>
+            <p className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-2">Facilitator Notes</p>
             <div className="rounded-lg bg-amber-50 border border-amber-100 p-3">
               <p className="text-sm text-amber-900 leading-relaxed whitespace-pre-wrap">{result.facilitator_notes}</p>
             </div>
@@ -157,7 +157,7 @@ function WorkshopResult({
         {/* Main content sections */}
         {Array.isArray(result.main_content_sections) && result.main_content_sections.length > 0 && (
           <div>
-            <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide mb-2">Content Sections</p>
+            <p className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-2">Content Sections</p>
             <div className="space-y-2">
               {result.main_content_sections.map((section, i) => (
                 <AccordionSection key={i} section={section} index={i} />
@@ -169,7 +169,7 @@ function WorkshopResult({
         {/* Group activity */}
         {result.group_activity && (
           <div>
-            <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide mb-2">Group Activity</p>
+            <p className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-2">Group Activity</p>
             <div className="rounded-lg bg-blue-50 border border-blue-100 p-3">
               <p className="text-sm text-blue-900 leading-relaxed whitespace-pre-wrap">{result.group_activity}</p>
             </div>
@@ -179,7 +179,7 @@ function WorkshopResult({
         {/* Reflection exercise */}
         {result.reflection_exercise && (
           <div>
-            <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide mb-2">Reflection Exercise</p>
+            <p className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-2">Reflection Exercise</p>
             <div className="rounded-lg bg-emerald-50 border border-emerald-100 p-3">
               <p className="text-sm text-emerald-900 leading-relaxed whitespace-pre-wrap">{result.reflection_exercise}</p>
             </div>
@@ -189,11 +189,11 @@ function WorkshopResult({
         {/* Key messages */}
         {Array.isArray(result.key_messages) && result.key_messages.length > 0 && (
           <div>
-            <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide mb-2">Key Messages</p>
+            <p className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-2">Key Messages</p>
             <ul className="space-y-1.5">
               {result.key_messages.map((msg, i) => (
-                <li key={i} className="flex items-start gap-2 text-sm text-slate-700">
-                  <span className="text-slate-400 shrink-0">•</span>
+                <li key={i} className="flex items-start gap-2 text-sm text-[var(--cs-text-secondary)]">
+                  <span className="text-[var(--cs-text-muted)] shrink-0">•</span>
                   <span>{msg}</span>
                 </li>
               ))}
@@ -204,10 +204,10 @@ function WorkshopResult({
         {/* Evaluation questions */}
         {Array.isArray(result.evaluation_questions) && result.evaluation_questions.length > 0 && (
           <div>
-            <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide mb-2">Evaluation Questions</p>
+            <p className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-2">Evaluation Questions</p>
             <ul className="space-y-1.5">
               {result.evaluation_questions.map((q, i) => (
-                <li key={i} className="flex items-start gap-2 text-sm text-slate-700">
+                <li key={i} className="flex items-start gap-2 text-sm text-[var(--cs-text-secondary)]">
                   <span className="text-violet-500 font-semibold shrink-0">{i + 1}.</span>
                   <span>{q}</span>
                 </li>
@@ -223,22 +223,22 @@ function WorkshopResult({
 // ── Workshop list item ─────────────────────────────────────────────────────────
 function WorkshopListItem({ resource }: { resource: { id: string; title: string; pathway?: LearningPathway; created_at: string; status: string } }) {
   return (
-    <div className="flex items-center gap-3 rounded-xl border border-slate-100 bg-white p-3">
+    <div className="flex items-center gap-3 rounded-xl border border-[var(--cs-border-subtle)] bg-white p-3">
       <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-violet-50">
         <Presentation className="h-4 w-4 text-violet-600" />
       </div>
       <div className="flex-1 min-w-0">
-        <p className="text-sm font-medium text-slate-900 truncate">{resource.title}</p>
+        <p className="text-sm font-medium text-[var(--cs-navy)] truncate">{resource.title}</p>
         <div className="flex items-center gap-2 mt-0.5">
           {resource.pathway && (
-            <span className="text-[10px] text-slate-400">{PATHWAY_LABELS[resource.pathway]}</span>
+            <span className="text-[10px] text-[var(--cs-text-muted)]">{PATHWAY_LABELS[resource.pathway]}</span>
           )}
-          <span className="text-[10px] text-slate-400">{formatDate(resource.created_at)}</span>
+          <span className="text-[10px] text-[var(--cs-text-muted)]">{formatDate(resource.created_at)}</span>
         </div>
       </div>
       <Badge className={cn("text-[10px] h-4 px-1.5 shrink-0",
         resource.status === "approved" ? "bg-emerald-100 text-emerald-700"
-        : resource.status === "draft" ? "bg-slate-100 text-slate-700"
+        : resource.status === "draft" ? "bg-slate-100 text-[var(--cs-text-secondary)]"
         : "bg-blue-100 text-blue-700"
       )}>
         {resource.status}
@@ -339,7 +339,7 @@ export default function WorkshopPlannerPage() {
           <CardContent className="space-y-4">
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
-                <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Topic</label>
+                <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Topic</label>
                 <Input
                   className="mt-1"
                   placeholder="e.g. Trauma-informed approaches to behaviour"
@@ -348,7 +348,7 @@ export default function WorkshopPlannerPage() {
                 />
               </div>
               <div>
-                <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Pathway</label>
+                <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Pathway</label>
                 <Select value={pathway} onValueChange={(v) => setPathway(v as LearningPathway)}>
                   <SelectTrigger className="mt-1"><SelectValue /></SelectTrigger>
                   <SelectContent>
@@ -360,7 +360,7 @@ export default function WorkshopPlannerPage() {
               </div>
             </div>
             <div>
-              <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Audience Description</label>
+              <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Audience Description</label>
               <Input
                 className="mt-1"
                 placeholder="e.g. Residential care staff, mixed experience levels"
@@ -369,7 +369,7 @@ export default function WorkshopPlannerPage() {
               />
             </div>
             <div>
-              <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Context / Focus Areas</label>
+              <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Context / Focus Areas</label>
               <Textarea
                 className="mt-1 text-sm"
                 rows={3}
@@ -393,14 +393,14 @@ export default function WorkshopPlannerPage() {
         {/* Recent workshops */}
         <div>
           <div className="flex items-center justify-between mb-3">
-            <h3 className="text-sm font-semibold text-slate-700">Recent Workshops</h3>
-            <span className="text-xs text-slate-400">{workshops.length} saved</span>
+            <h3 className="text-sm font-semibold text-[var(--cs-text-secondary)]">Recent Workshops</h3>
+            <span className="text-xs text-[var(--cs-text-muted)]">{workshops.length} saved</span>
           </div>
           {isLoading ? (
-            <p className="text-sm text-slate-500 text-center py-8">Loading…</p>
+            <p className="text-sm text-[var(--cs-text-muted)] text-center py-8">Loading…</p>
           ) : workshops.length === 0 ? (
-            <div className="text-center py-12 text-slate-500">
-              <Presentation className="h-10 w-10 text-slate-300 mx-auto mb-3" />
+            <div className="text-center py-12 text-[var(--cs-text-muted)]">
+              <Presentation className="h-10 w-10 text-[var(--cs-text-gentle)] mx-auto mb-3" />
               <p className="text-sm font-medium">No workshops saved yet</p>
               <p className="text-xs mt-1">Plan and save your first workshop above</p>
             </div>

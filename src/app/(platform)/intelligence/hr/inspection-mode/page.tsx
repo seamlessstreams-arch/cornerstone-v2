@@ -444,7 +444,7 @@ function riskBadge(level: HrRiskLevel) {
 
 function significanceBadge(sig: "routine" | "significant" | "critical") {
   const styles = {
-    routine: "bg-slate-100 text-slate-700",
+    routine: "bg-slate-100 text-[var(--cs-text-secondary)]",
     significant: "bg-amber-100 text-amber-800",
     critical: "bg-red-100 text-red-800",
   };

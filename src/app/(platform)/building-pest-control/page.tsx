@@ -35,7 +35,7 @@ const typeColour: Record<string, string> = {
   reactive_call_out: "bg-amber-100 text-amber-800 border-amber-200",
   annual_contract_review: "bg-indigo-100 text-indigo-800 border-indigo-200",
   bait_station_refresh: "bg-emerald-100 text-emerald-800 border-emerald-200",
-  survey_only: "bg-slate-100 text-slate-800 border-slate-200",
+  survey_only: "bg-slate-100 text-[var(--cs-navy)] border-[var(--cs-border)]",
   follow_up_monitoring: "bg-sky-100 text-sky-800 border-sky-200",
 };
 
@@ -49,7 +49,7 @@ const pestColour: Record<string, string> = {
   cockroaches: "bg-stone-200 text-stone-900 border-stone-300",
   moths: "bg-violet-100 text-violet-900 border-violet-200",
   pigeons: "bg-zinc-100 text-zinc-900 border-zinc-200",
-  mixed_general: "bg-slate-100 text-slate-800 border-slate-200",
+  mixed_general: "bg-slate-100 text-[var(--cs-navy)] border-[var(--cs-border)]",
   none_preventive_only: "bg-emerald-100 text-emerald-800 border-emerald-200",
 };
 
@@ -160,8 +160,8 @@ export default function BuildingPestControlPage() {
 
       <div className="flex flex-col sm:flex-row gap-3 mb-4">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
-          <input type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search pest, contractor or area..." className="w-full pl-9 pr-3 py-2 text-sm border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--cs-text-muted)]" />
+          <input type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search pest, contractor or area..." className="w-full pl-9 pr-3 py-2 text-sm border border-[var(--cs-border)] rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500" />
         </div>
         <Select value={pestFilter} onValueChange={setPestFilter}>
           <SelectTrigger className="w-full sm:w-64"><SelectValue placeholder="Pest category" /></SelectTrigger>
@@ -189,12 +189,12 @@ export default function BuildingPestControlPage() {
           const followUpSoon = r.follow_up_required && r.follow_up_date && r.follow_up_date >= today && r.follow_up_date <= thirtyDaysFromNow;
           const followUpOverdue = r.follow_up_required && r.follow_up_date && r.follow_up_date < today;
           return (
-            <div key={r.id} className="rounded-lg border border-slate-200 bg-white overflow-hidden">
+            <div key={r.id} className="rounded-lg border border-[var(--cs-border)] bg-white overflow-hidden">
               <button onClick={() => setExpandedId(isOpen ? null : r.id)} className="w-full p-4 flex items-start justify-between gap-3 hover:bg-amber-50/40 text-left">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap mb-1">
                     <Bug className="h-4 w-4 text-amber-600" />
-                    <span className="font-semibold text-slate-900">{r.record_date}</span>
+                    <span className="font-semibold text-[var(--cs-navy)]">{r.record_date}</span>
                     <span className={cn("text-xs px-2 py-0.5 rounded-full border", typeColour[r.record_type])}>{PEST_RECORD_TYPE_LABEL[r.record_type]}</span>
                     <span className={cn("text-xs px-2 py-0.5 rounded-full border", pestColour[r.pest_category])}>{PEST_CATEGORY_LABEL[r.pest_category]}</span>
                     {r.follow_up_required ? (
@@ -207,24 +207,24 @@ export default function BuildingPestControlPage() {
                       )
                     ) : null}
                   </div>
-                  <div className="text-sm text-slate-600">
+                  <div className="text-sm text-[var(--cs-text-secondary)]">
                     {r.affected_areas.slice(0, 2).join(" · ")}{r.affected_areas.length > 2 ? ` · +${r.affected_areas.length - 2} more` : ""} · {r.contractor}
                   </div>
                 </div>
-                {isOpen ? <ChevronUp className="h-5 w-5 text-slate-400" /> : <ChevronDown className="h-5 w-5 text-slate-400" />}
+                {isOpen ? <ChevronUp className="h-5 w-5 text-[var(--cs-text-muted)]" /> : <ChevronDown className="h-5 w-5 text-[var(--cs-text-muted)]" />}
               </button>
               {isOpen && (
-                <div className="px-4 pb-4 border-t border-slate-100 bg-amber-50/20">
+                <div className="px-4 pb-4 border-t border-[var(--cs-border-subtle)] bg-amber-50/20">
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 pt-4">
-                    <div className="rounded-md border border-slate-200 bg-white p-3 lg:col-span-2">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Affected areas</div>
-                      <ul className="text-sm text-slate-700 space-y-1">{r.affected_areas.map((a, i) => (<li key={i} className="flex gap-2"><span className="text-amber-600">·</span><span>{a}</span></li>))}</ul>
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3 lg:col-span-2">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Affected areas</div>
+                      <ul className="text-sm text-[var(--cs-text-secondary)] space-y-1">{r.affected_areas.map((a, i) => (<li key={i} className="flex gap-2"><span className="text-amber-600">·</span><span>{a}</span></li>))}</ul>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3 lg:col-span-2">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Contractor</div>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-slate-700">
-                        <div><span className="text-slate-500">Provider:</span> {r.contractor}</div>
-                        <div><span className="text-slate-500">Accreditation:</span> {r.contractor_accreditation}</div>
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3 lg:col-span-2">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Contractor</div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-[var(--cs-text-secondary)]">
+                        <div><span className="text-[var(--cs-text-muted)]">Provider:</span> {r.contractor}</div>
+                        <div><span className="text-[var(--cs-text-muted)]">Accreditation:</span> {r.contractor_accreditation}</div>
                       </div>
                     </div>
                     <div className="rounded-md border border-teal-200 bg-teal-50 p-3">
@@ -249,19 +249,19 @@ export default function BuildingPestControlPage() {
                       <div className="flex items-center gap-2 mb-2"><Sprout className="h-4 w-4 text-amber-700" /><div className="text-xs font-semibold text-amber-800 uppercase">Prevention advice</div></div>
                       <ul className="text-sm text-amber-900 space-y-1">{r.prevention_advice.map((p, i) => (<li key={i} className="flex gap-2"><span>·</span><span>{p}</span></li>))}</ul>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3 lg:col-span-2">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Outcome / evidence trail</div>
-                      <p className="text-sm text-slate-700">{r.outcome_evidence}</p>
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3 lg:col-span-2">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Outcome / evidence trail</div>
+                      <p className="text-sm text-[var(--cs-text-secondary)]">{r.outcome_evidence}</p>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Follow-up</div>
-                      <div className="text-sm text-slate-700">
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Follow-up</div>
+                      <div className="text-sm text-[var(--cs-text-secondary)]">
                         {r.follow_up_required ? <>Required by <span className="font-medium">{r.follow_up_date ?? "TBC"}</span></> : <span className="text-emerald-700">No follow-up required — closed</span>}
                       </div>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Cost</div>
-                      <div className="text-sm text-slate-700">{r.cost_paid !== undefined ? `£${r.cost_paid.toFixed(2)}` : "—"}</div>
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Cost</div>
+                      <div className="text-sm text-[var(--cs-text-secondary)]">{r.cost_paid !== undefined ? `£${r.cost_paid.toFixed(2)}` : "—"}</div>
                     </div>
                     {r.flags_concerns.length > 0 && (
                       <div className="rounded-md border border-red-200 bg-red-50 p-3 lg:col-span-2">
@@ -269,7 +269,7 @@ export default function BuildingPestControlPage() {
                         <ul className="text-sm text-red-900 space-y-1">{r.flags_concerns.map((f, i) => (<li key={i} className="flex gap-2"><span>!</span><span>{f}</span></li>))}</ul>
                       </div>
                     )}
-                    <div className="rounded-md border border-slate-200 bg-white p-3 lg:col-span-2 text-xs text-slate-500">
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3 lg:col-span-2 text-xs text-[var(--cs-text-muted)]">
                       Recorded by {getStaffName(r.recorded_by)}
                     </div>
                   </div>

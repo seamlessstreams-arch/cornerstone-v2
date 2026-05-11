@@ -38,14 +38,14 @@ const CHECK_TYPES = [
 type CheckTypeId = typeof CHECK_TYPES[number]["id"];
 
 const STATUS_DISPLAY: Record<string, { label: string; short: string; color: string; dot: string }> = {
-  not_started: { label: "Not Started", short: "—", color: "bg-slate-100 text-slate-500", dot: "bg-slate-300" },
+  not_started: { label: "Not Started", short: "—", color: "bg-slate-100 text-[var(--cs-text-muted)]", dot: "bg-slate-300" },
   requested: { label: "Requested", short: "REQ", color: "bg-blue-100 text-blue-700", dot: "bg-blue-400" },
   in_progress: { label: "In Progress", short: "IP", color: "bg-blue-100 text-blue-700", dot: "bg-blue-500" },
   received: { label: "Received", short: "RCV", color: "bg-amber-100 text-amber-700", dot: "bg-amber-400" },
   verified: { label: "Verified", short: "✓", color: "bg-emerald-100 text-emerald-700", dot: "bg-emerald-500" },
   concern_flagged: { label: "Concern", short: "!", color: "bg-red-100 text-red-700", dot: "bg-red-500" },
   override_approved: { label: "Override", short: "OVR", color: "bg-purple-100 text-purple-700", dot: "bg-purple-500" },
-  not_required: { label: "N/A", short: "N/A", color: "bg-slate-50 text-slate-300", dot: "bg-slate-200" },
+  not_required: { label: "N/A", short: "N/A", color: "bg-slate-50 text-[var(--cs-text-gentle)]", dot: "bg-slate-200" },
 };
 
 // ── Grid Cell ─────────────────────────────────────────────────────────────────
@@ -152,11 +152,11 @@ export default function ChecksPage() {
           <Button variant="outline" size="sm" className="rounded-xl text-xs" disabled title="SCR grid export is available from the Audit page.">
             <Download className="h-3.5 w-3.5 mr-1.5" /> Export Grid
           </Button>
-          <div className="flex rounded-xl border border-slate-200 overflow-hidden">
+          <div className="flex rounded-xl border border-[var(--cs-border)] overflow-hidden">
             <button
               onClick={() => setViewMode("grid")}
               className={cn("px-3 py-1.5 text-xs flex items-center gap-1.5 transition-colors",
-                viewMode === "grid" ? "bg-slate-900 text-white" : "bg-white text-slate-600 hover:bg-slate-50"
+                viewMode === "grid" ? "bg-slate-900 text-white" : "bg-white text-[var(--cs-text-secondary)] hover:bg-[var(--cs-surface)]"
               )}
             >
               <LayoutGrid className="h-3.5 w-3.5" /> Grid
@@ -164,7 +164,7 @@ export default function ChecksPage() {
             <button
               onClick={() => setViewMode("list")}
               className={cn("px-3 py-1.5 text-xs flex items-center gap-1.5 transition-colors",
-                viewMode === "list" ? "bg-slate-900 text-white" : "bg-white text-slate-600 hover:bg-slate-50"
+                viewMode === "list" ? "bg-slate-900 text-white" : "bg-white text-[var(--cs-text-secondary)] hover:bg-[var(--cs-surface)]"
               )}
             >
               <List className="h-3.5 w-3.5" /> List
@@ -177,16 +177,16 @@ export default function ChecksPage() {
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 mb-4">
         {[
-          { label: "Total Checks", value: stats.total, color: "text-slate-700" },
+          { label: "Total Checks", value: stats.total, color: "text-[var(--cs-text-secondary)]" },
           { label: "Verified", value: stats.verified, color: "text-emerald-600" },
           { label: "Outstanding", value: stats.outstanding, color: stats.outstanding > 0 ? "text-amber-600" : "text-emerald-600" },
-          { label: "Concern Flags", value: stats.concerns, color: stats.concerns > 0 ? "text-red-600" : "text-slate-400" },
-          { label: "Overrides", value: stats.overrides, color: stats.overrides > 0 ? "text-purple-700" : "text-slate-400" },
+          { label: "Concern Flags", value: stats.concerns, color: stats.concerns > 0 ? "text-red-600" : "text-[var(--cs-text-muted)]" },
+          { label: "Overrides", value: stats.overrides, color: stats.overrides > 0 ? "text-purple-700" : "text-[var(--cs-text-muted)]" },
         ].map(({ label, value, color }) => (
-          <Card key={label} className="rounded-2xl border-slate-100">
+          <Card key={label} className="rounded-2xl border-[var(--cs-border-subtle)]">
             <CardContent className="py-3 px-4">
               <div className={cn("text-2xl font-bold", color)}>{value}</div>
-              <div className="text-[10px] text-slate-500 mt-0.5">{label}</div>
+              <div className="text-[10px] text-[var(--cs-text-muted)] mt-0.5">{label}</div>
             </CardContent>
           </Card>
         ))}
@@ -194,7 +194,7 @@ export default function ChecksPage() {
 
       {/* Search */}
       <div className="relative max-w-sm mb-4">
-        <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+        <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
         <Input
           placeholder="Search candidates by name or role…"
           value={search}
@@ -214,20 +214,20 @@ export default function ChecksPage() {
 
       {/* GRID VIEW */}
       {viewMode === "grid" && (
-        <Card className="rounded-2xl border-slate-100 overflow-hidden">
+        <Card className="rounded-2xl border-[var(--cs-border-subtle)] overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-xs border-collapse min-w-max">
               <thead>
-                <tr className="bg-slate-50 border-b border-slate-100">
-                  <th className="sticky left-0 z-10 bg-slate-50 px-4 py-3 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider whitespace-nowrap border-r border-slate-100 min-w-[180px]">
+                <tr className="bg-slate-50 border-b border-[var(--cs-border-subtle)]">
+                  <th className="sticky left-0 z-10 bg-slate-50 px-4 py-3 text-left text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider whitespace-nowrap border-r border-[var(--cs-border-subtle)] min-w-[180px]">
                     Candidate
                   </th>
-                  <th className="px-2 py-2 text-[10px] font-semibold text-slate-400 uppercase tracking-wider whitespace-nowrap">Stage</th>
+                  <th className="px-2 py-2 text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider whitespace-nowrap">Stage</th>
                   {CHECK_TYPES.map(({ id, label, icon: Icon }) => (
                     <th key={id} className="px-2 py-2 min-w-[50px]">
                       <div className="flex flex-col items-center gap-0.5">
-                        <Icon className="h-3.5 w-3.5 text-slate-400" />
-                        <span className="text-[8px] font-semibold text-slate-400 uppercase tracking-wider leading-tight text-center max-w-[48px]">
+                        <Icon className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
+                        <span className="text-[8px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider leading-tight text-center max-w-[48px]">
                           {label.split(" ").map((w, i) => <span key={i} className="block">{w}</span>)}
                         </span>
                       </div>
@@ -238,16 +238,16 @@ export default function ChecksPage() {
               <tbody className="divide-y divide-slate-50">
                 {candidates.length === 0 ? (
                   <tr>
-                    <td colSpan={CHECK_TYPES.length + 3} className="py-12 text-center text-slate-400 text-sm">
+                    <td colSpan={CHECK_TYPES.length + 3} className="py-12 text-center text-[var(--cs-text-muted)] text-sm">
                       No candidates found
                     </td>
                   </tr>
                 ) : candidates.map((c) => (
-                  <tr key={c.id} className="hover:bg-slate-50 transition-colors">
-                    <td className="sticky left-0 z-10 bg-white hover:bg-slate-50 px-4 py-2.5 border-r border-slate-100">
+                  <tr key={c.id} className="hover:bg-[var(--cs-surface)] transition-colors">
+                    <td className="sticky left-0 z-10 bg-white hover:bg-[var(--cs-surface)] px-4 py-2.5 border-r border-[var(--cs-border-subtle)]">
                       <Link href={`/recruitment/candidates/${c.id}`} className="hover:underline">
-                        <div className="font-semibold text-slate-800 text-[11px]">{c.first_name} {c.last_name}</div>
-                        <div className="text-[9px] text-slate-400 truncate max-w-[140px]">{c.role_applied}</div>
+                        <div className="font-semibold text-[var(--cs-navy)] text-[11px]">{c.first_name} {c.last_name}</div>
+                        <div className="text-[9px] text-[var(--cs-text-muted)] truncate max-w-[140px]">{c.role_applied}</div>
                       </Link>
                     </td>
                     <td className="px-2 py-2 text-center">
@@ -266,7 +266,7 @@ export default function ChecksPage() {
               </tbody>
             </table>
           </div>
-          <div className="px-4 py-2 border-t border-slate-50 bg-slate-50 text-[10px] text-slate-400">
+          <div className="px-4 py-2 border-t border-slate-50 bg-slate-50 text-[10px] text-[var(--cs-text-muted)]">
             {candidates.length} candidate{candidates.length !== 1 ? "s" : ""} · Click any status cell to view check details
           </div>
         </Card>
@@ -280,7 +280,7 @@ export default function ChecksPage() {
             <button
               onClick={() => setSelectedCheckType("all")}
               className={cn("px-3 py-1.5 rounded-xl text-xs font-medium transition-all",
-                selectedCheckType === "all" ? "bg-slate-900 text-white" : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                selectedCheckType === "all" ? "bg-slate-900 text-white" : "bg-slate-100 text-[var(--cs-text-secondary)] hover:bg-slate-200"
               )}
             >
               All Check Types
@@ -290,7 +290,7 @@ export default function ChecksPage() {
                 key={id}
                 onClick={() => setSelectedCheckType(id)}
                 className={cn("px-3 py-1.5 rounded-xl text-xs font-medium transition-all",
-                  selectedCheckType === id ? "bg-slate-900 text-white" : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                  selectedCheckType === id ? "bg-slate-900 text-white" : "bg-slate-100 text-[var(--cs-text-secondary)] hover:bg-slate-200"
                 )}
               >
                 {label}
@@ -308,12 +308,12 @@ export default function ChecksPage() {
             const concerns = checksForType.filter(x => x.check?.concern_flag).length;
 
             return (
-              <Card key={id} className="rounded-2xl border-slate-100">
+              <Card key={id} className="rounded-2xl border-[var(--cs-border-subtle)]">
                 <CardHeader className="pb-2">
                   <CardTitle className="text-sm flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <div className="h-7 w-7 rounded-xl bg-slate-100 flex items-center justify-center">
-                        <Icon className="h-3.5 w-3.5 text-slate-500" />
+                        <Icon className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
                       </div>
                       {label}
                     </div>
@@ -330,13 +330,13 @@ export default function ChecksPage() {
                       const status = check ? (STATUS_DISPLAY[check.status] ?? STATUS_DISPLAY.not_started) : STATUS_DISPLAY.not_started;
                       return (
                         <Link key={c.id} href={`/recruitment/candidates/${c.id}`}>
-                          <div className="flex items-center gap-3 py-1.5 px-2 rounded-xl hover:bg-slate-50 transition-colors">
+                          <div className="flex items-center gap-3 py-1.5 px-2 rounded-xl hover:bg-[var(--cs-surface)] transition-colors">
                             <div className="flex-1">
-                              <span className="text-xs font-medium text-slate-700">{c.first_name} {c.last_name}</span>
-                              <span className="text-[10px] text-slate-400 ml-2">{c.role_applied}</span>
+                              <span className="text-xs font-medium text-[var(--cs-text-secondary)]">{c.first_name} {c.last_name}</span>
+                              <span className="text-[10px] text-[var(--cs-text-muted)] ml-2">{c.role_applied}</span>
                             </div>
                             {check?.verified_at && (
-                              <span className="text-[9px] text-slate-400">Verified {new Date(check.verified_at).toLocaleDateString("en-GB", { day: "2-digit", month: "short" })}</span>
+                              <span className="text-[9px] text-[var(--cs-text-muted)]">Verified {new Date(check.verified_at).toLocaleDateString("en-GB", { day: "2-digit", month: "short" })}</span>
                             )}
                             {check?.concern_flag && <AlertTriangle className="h-3.5 w-3.5 text-red-500 shrink-0" />}
                             <span className={cn("text-[9px] rounded-full px-2 py-0.5 font-semibold shrink-0", status.color)}>

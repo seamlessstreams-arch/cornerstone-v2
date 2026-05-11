@@ -40,7 +40,7 @@ const STATUS_META: Record<StaffDebriefStatus, { color: string }> = {
   completed: { color: "bg-green-100 text-green-800" },
   scheduled: { color: "bg-blue-100 text-blue-800" },
   overdue: { color: "bg-red-100 text-red-800" },
-  declined: { color: "bg-slate-100 text-slate-700" },
+  declined: { color: "bg-slate-100 text-[var(--cs-text-secondary)]" },
 };
 
 const IMPACT_META: Record<StaffDebriefEmotionalImpact, { color: string }> = {
@@ -192,7 +192,7 @@ export default function StaffDebriefLogPage() {
                         <Badge variant="outline" className={cn("text-xs", debrief.emotional_impact === "significant" || debrief.emotional_impact === "high" ? "bg-red-100 text-red-800" : debrief.emotional_impact === "moderate" ? "bg-amber-100 text-amber-800" : "bg-green-100 text-green-800")}>
                           {STAFF_DEBRIEF_EMOTIONAL_IMPACT_LABEL[debrief.emotional_impact]} Impact
                         </Badge>
-                        {debrief.confidential && <Badge variant="outline" className="bg-slate-100 text-slate-700">Confidential</Badge>}
+                        {debrief.confidential && <Badge variant="outline" className="bg-slate-100 text-[var(--cs-text-secondary)]">Confidential</Badge>}
                       </CardTitle>
                       <p className="text-sm text-muted-foreground">
                         {debrief.date} · Staff: {debrief.staff_involved.map((s) => getStaffName(s)).join(", ")} · Facilitated by: {getStaffName(debrief.facilitated_by)}

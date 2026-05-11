@@ -31,7 +31,7 @@ import { PrintButton } from "@/components/common/print-button";
 
 
 const STATUS_COLOURS: Record<string, string> = {
-  draft: "bg-slate-100 text-slate-700",
+  draft: "bg-slate-100 text-[var(--cs-text-secondary)]",
   in_progress: "bg-blue-100 text-blue-700",
   reviewed: "bg-amber-100 text-amber-700",
   approved: "bg-violet-100 text-violet-700",
@@ -47,7 +47,7 @@ function Reg45Card({ record }: { record: RiReg45Evidence }) {
   const markSubmitted = () => updateMutation.mutate({ id: record.id, status: "submitted", submitted_to_ofsted: true, submitted_at: new Date().toISOString() });
 
   return (
-    <Card className="border border-slate-100">
+    <Card className="border border-[var(--cs-border-subtle)]">
       <CardContent className="p-4">
         <div className="flex items-start gap-3">
           <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-blue-50">
@@ -56,8 +56,8 @@ function Reg45Card({ record }: { record: RiReg45Evidence }) {
           <div className="flex-1 min-w-0">
             <div className="flex items-start gap-2 justify-between">
               <div>
-                <p className="text-sm font-semibold text-slate-900">Reg 45 Report — {record.report_period}</p>
-                <p className="text-xs text-slate-500 mt-0.5">
+                <p className="text-sm font-semibold text-[var(--cs-navy)]">Reg 45 Report — {record.report_period}</p>
+                <p className="text-xs text-[var(--cs-text-muted)] mt-0.5">
                   {formatDate(record.period_start)} → {formatDate(record.period_end)}
                 </p>
               </div>
@@ -71,23 +71,23 @@ function Reg45Card({ record }: { record: RiReg45Evidence }) {
               </div>
             </div>
           </div>
-          <button onClick={() => setExpanded((p) => !p)} className="text-slate-400 hover:text-slate-600 shrink-0 mt-1">
+          <button onClick={() => setExpanded((p) => !p)} className="text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] shrink-0 mt-1">
             {expanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
           </button>
         </div>
 
         {expanded && record.aria_strengths && (
-          <div className="mt-4 space-y-4 border-t border-slate-100 pt-4">
+          <div className="mt-4 space-y-4 border-t border-[var(--cs-border-subtle)] pt-4">
             {[
               { label: "Strengths", content: record.aria_strengths, colour: "bg-emerald-50 border-emerald-100 text-emerald-900" },
               { label: "Weaknesses / Areas for Development", content: record.aria_weaknesses, colour: "bg-amber-50 border-amber-100 text-amber-900" },
               { label: "Improvement Areas", content: record.aria_improvement_areas, colour: "bg-blue-50 border-blue-100 text-blue-900" },
               { label: "Impact on Children", content: record.aria_child_impact, colour: "bg-violet-50 border-violet-100 text-violet-900" },
-              { label: "Action Plan", content: record.aria_action_plan, colour: "bg-slate-50 border-slate-200 text-slate-800" },
+              { label: "Action Plan", content: record.aria_action_plan, colour: "bg-slate-50 border-[var(--cs-border)] text-[var(--cs-navy)]" },
               { label: "RI Statement", content: record.aria_ri_statement, colour: "bg-indigo-50 border-indigo-100 text-indigo-900" },
             ].filter((s) => !!s.content).map(({ label, content, colour }) => (
               <div key={label}>
-                <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide mb-1">{label}</p>
+                <p className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-1">{label}</p>
                 <div className={cn("rounded-lg border p-3", colour)}>
                   <p className="text-sm leading-relaxed whitespace-pre-wrap">{content}</p>
                 </div>
@@ -356,11 +356,11 @@ function LiveEvidencePanel({ onUseContext }: { onUseContext: (text: string) => v
         </div>
       </CardHeader>
         <CardContent className="pt-0 space-y-4">
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-[var(--cs-text-muted)]">
             Evidence auto-surfaced from completed training needs, resolved alerts, audits, and supervision — grouped by Reg 45 reporting standard. Select items to build ARIA context.
           </p>
           {items.length === 0 ? (
-            <p className="text-sm text-slate-400 text-center py-4">No completed evidence items found yet.</p>
+            <p className="text-sm text-[var(--cs-text-muted)] text-center py-4">No completed evidence items found yet.</p>
           ) : (
             <div className="space-y-3">
               {REG45_STANDARDS.map((std) => {
@@ -390,15 +390,15 @@ function LiveEvidencePanel({ onUseContext }: { onUseContext: (text: string) => v
                             </span>
                           )}
                         </div>
-                        <p className="text-[10px] text-slate-500 mt-0.5">{std.description}</p>
+                        <p className="text-[10px] text-[var(--cs-text-muted)] mt-0.5">{std.description}</p>
                       </div>
-                      {isExpanded ? <ChevronUp className="h-3.5 w-3.5 text-slate-400 shrink-0" /> : <ChevronDown className="h-3.5 w-3.5 text-slate-400 shrink-0" />}
+                      {isExpanded ? <ChevronUp className="h-3.5 w-3.5 text-[var(--cs-text-muted)] shrink-0" /> : <ChevronDown className="h-3.5 w-3.5 text-[var(--cs-text-muted)] shrink-0" />}
                     </button>
                     {/* Items */}
                     {isExpanded && (
                       <div className="divide-y divide-slate-50 bg-white">
                         {stdItems.length === 0 ? (
-                          <div className="px-4 py-3 text-[11px] text-slate-400 italic">
+                          <div className="px-4 py-3 text-[11px] text-[var(--cs-text-muted)] italic">
                             No completed evidence items for this standard yet.
                           </div>
                         ) : (
@@ -411,15 +411,15 @@ function LiveEvidencePanel({ onUseContext }: { onUseContext: (text: string) => v
                                 onClick={() => toggle(item)}
                                 className={cn(
                                   "w-full text-left px-4 py-2.5 transition-all flex items-start gap-3",
-                                  isSelected ? "bg-emerald-50" : "hover:bg-slate-50"
+                                  isSelected ? "bg-emerald-50" : "hover:bg-[var(--cs-surface)]"
                                 )}
                               >
                                 <item.icon className={cn("h-3.5 w-3.5 shrink-0 mt-0.5", item.iconColour)} />
                                 <div className="flex-1 min-w-0">
-                                  <span className="text-xs font-semibold text-slate-800 leading-snug line-clamp-1">{item.title}</span>
-                                  <p className="text-[11px] text-slate-500 mt-0.5 line-clamp-1">{item.detail}</p>
+                                  <span className="text-xs font-semibold text-[var(--cs-navy)] leading-snug line-clamp-1">{item.title}</span>
+                                  <p className="text-[11px] text-[var(--cs-text-muted)] mt-0.5 line-clamp-1">{item.detail}</p>
                                 </div>
-                                <span className="text-[10px] text-slate-400 shrink-0 mt-0.5">
+                                <span className="text-[10px] text-[var(--cs-text-muted)] shrink-0 mt-0.5">
                                   {new Date(item.date).toLocaleDateString("en-GB", { day: "2-digit", month: "short" })}
                                 </span>
                                 {isSelected && <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500 shrink-0 mt-0.5" />}
@@ -515,35 +515,35 @@ function GenerateForm({
       <CardContent className="space-y-4">
         <div className="grid sm:grid-cols-3 gap-3">
           <div>
-            <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Report Period</label>
+            <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Report Period</label>
             <input
-              className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="mt-1 w-full rounded-lg border border-[var(--cs-border)] bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="e.g. Q1 2026"
               value={period}
               onChange={(e) => setPeriod(e.target.value)}
             />
           </div>
           <div>
-            <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Period Start</label>
+            <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Period Start</label>
             <input
               type="date"
-              className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="mt-1 w-full rounded-lg border border-[var(--cs-border)] bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={periodStart}
               onChange={(e) => setPeriodStart(e.target.value)}
             />
           </div>
           <div>
-            <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Period End</label>
+            <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Period End</label>
             <input
               type="date"
-              className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="mt-1 w-full rounded-lg border border-[var(--cs-border)] bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={periodEnd}
               onChange={(e) => setPeriodEnd(e.target.value)}
             />
           </div>
         </div>
         <div>
-          <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Evidence Context (optional)</label>
+          <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Evidence Context (optional)</label>
           <Textarea
             className="mt-1 text-sm"
             rows={3}
@@ -572,9 +572,9 @@ function GenerateForm({
               { label: "RI Statement", key: "ri_statement" },
             ].map(({ label, key }) => result[key] && (
               <div key={key}>
-                <p className="text-[11px] text-slate-500 mb-1">{label}</p>
-                <div className="rounded-lg bg-white border border-slate-100 p-3">
-                  <p className="text-sm text-slate-800 leading-relaxed whitespace-pre-wrap">{result[key]}</p>
+                <p className="text-[11px] text-[var(--cs-text-muted)] mb-1">{label}</p>
+                <div className="rounded-lg bg-white border border-[var(--cs-border-subtle)] p-3">
+                  <p className="text-sm text-[var(--cs-navy)] leading-relaxed whitespace-pre-wrap">{result[key]}</p>
                 </div>
               </div>
             ))}
@@ -633,12 +633,12 @@ export default function Reg45Page() {
 
         {/* Existing records */}
         <div>
-          <h3 className="text-sm font-semibold text-slate-700 mb-3">Previous Reports</h3>
+          <h3 className="text-sm font-semibold text-[var(--cs-text-secondary)] mb-3">Previous Reports</h3>
           {isLoading ? (
-            <div className="text-sm text-slate-500 text-center py-8">Loading…</div>
+            <div className="text-sm text-[var(--cs-text-muted)] text-center py-8">Loading…</div>
           ) : records.length === 0 ? (
-            <div className="text-center py-12 text-slate-400">
-              <FileText className="h-10 w-10 mx-auto mb-3 text-slate-300" />
+            <div className="text-center py-12 text-[var(--cs-text-muted)]">
+              <FileText className="h-10 w-10 mx-auto mb-3 text-[var(--cs-text-gentle)]" />
               <p className="text-sm">No Reg 45 reports yet. Generate your first above.</p>
             </div>
           ) : (

@@ -78,7 +78,7 @@ const SEV_CLASSES: Record<string, string> = {
   critical: "bg-red-100 text-red-800",
   high:     "bg-orange-100 text-orange-800",
   medium:   "bg-amber-100 text-amber-800",
-  low:      "bg-slate-100 text-slate-700",
+  low:      "bg-slate-100 text-[var(--cs-text-secondary)]",
 };
 
 const SEV_BORDER: Record<string, string> = {
@@ -89,12 +89,12 @@ const SEV_BORDER: Record<string, string> = {
 };
 
 const STATUS_CLASSES: Record<string, string> = {
-  open:        "bg-slate-100 text-slate-700",
+  open:        "bg-slate-100 text-[var(--cs-text-secondary)]",
   in_progress: "bg-blue-100 text-blue-800",
   overdue:     "bg-red-100 text-red-800",
   stalled:     "bg-amber-100 text-amber-800",
   completed:   "bg-emerald-100 text-emerald-800",
-  cancelled:   "bg-slate-100 text-slate-500",
+  cancelled:   "bg-slate-100 text-[var(--cs-text-muted)]",
 };
 
 // ── Section A: Header stat cards ──────────────────────────────────────────────
@@ -134,9 +134,9 @@ function HeaderStatCards() {
   return (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {/* Home Climate */}
-      <div className="rounded-2xl border border-slate-200 bg-white p-4 space-y-2 shadow-sm">
+      <div className="rounded-2xl border border-[var(--cs-border)] bg-white p-4 space-y-2 shadow-sm">
         <div className="flex items-center justify-between">
-          <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Home Climate</span>
+          <span className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider">Home Climate</span>
           {climateDelta !== null && (
             climateDelta > 0
               ? <TrendingUp className="h-4 w-4 text-emerald-500" />
@@ -156,18 +156,18 @@ function HeaderStatCards() {
               <div className={cn("h-1.5 rounded-full transition-all", scoreBarColor(climateScore))} style={{ width: `${climateScore}%` }} />
             </div>
             {climateMeta && (
-              <div className="text-[10px] text-slate-400 capitalize">{climateMeta}</div>
+              <div className="text-[10px] text-[var(--cs-text-muted)] capitalize">{climateMeta}</div>
             )}
           </>
         ) : (
-          <div className="text-sm text-slate-400">No data</div>
+          <div className="text-sm text-[var(--cs-text-muted)]">No data</div>
         )}
       </div>
 
       {/* Active Alerts */}
-      <div className="rounded-2xl border border-slate-200 bg-white p-4 space-y-2 shadow-sm">
+      <div className="rounded-2xl border border-[var(--cs-border)] bg-white p-4 space-y-2 shadow-sm">
         <div className="flex items-center justify-between">
-          <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Active Alerts</span>
+          <span className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider">Active Alerts</span>
           <AlertTriangle className="h-4 w-4 text-amber-500" />
         </div>
         {alerts.isLoading ? (
@@ -196,11 +196,11 @@ function HeaderStatCards() {
       {/* Overdue Actions */}
       <div className={cn(
         "rounded-2xl border bg-white p-4 space-y-2 shadow-sm",
-        overdueItems.length > 0 ? "border-red-200" : "border-slate-200"
+        overdueItems.length > 0 ? "border-red-200" : "border-[var(--cs-border)]"
       )}>
         <div className="flex items-center justify-between">
-          <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Overdue Actions</span>
-          <Clock className="h-4 w-4 text-slate-400" />
+          <span className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider">Overdue Actions</span>
+          <Clock className="h-4 w-4 text-[var(--cs-text-muted)]" />
         </div>
         {overdue.isLoading ? (
           <Skeleton className="h-8 w-12" />
@@ -209,7 +209,7 @@ function HeaderStatCards() {
             <div className={cn("text-3xl font-bold tabular-nums", overdueItems.length > 0 ? "text-red-600" : "text-emerald-600")}>
               {overdueItems.length}
             </div>
-            <div className="text-[10px] text-slate-400">
+            <div className="text-[10px] text-[var(--cs-text-muted)]">
               {overdueItems.length > 0 ? "Requires attention" : "No overdue actions"}
             </div>
           </>
@@ -217,9 +217,9 @@ function HeaderStatCards() {
       </div>
 
       {/* Voice Coverage */}
-      <div className="rounded-2xl border border-slate-200 bg-white p-4 space-y-2 shadow-sm">
+      <div className="rounded-2xl border border-[var(--cs-border)] bg-white p-4 space-y-2 shadow-sm">
         <div className="flex items-center justify-between">
-          <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Voice Coverage</span>
+          <span className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider">Voice Coverage</span>
           <MessageSquareQuote className="h-4 w-4 text-violet-500" />
         </div>
         {voiceLoading ? (
@@ -227,9 +227,9 @@ function HeaderStatCards() {
         ) : (
           <>
             <div className={cn("text-3xl font-bold tabular-nums", voiceCoverage === ypTotal ? "text-emerald-600" : voiceCoverage > 0 ? "text-amber-600" : "text-red-600")}>
-              {voiceCoverage}<span className="text-xl text-slate-400">/{ypTotal}</span>
+              {voiceCoverage}<span className="text-xl text-[var(--cs-text-muted)]">/{ypTotal}</span>
             </div>
-            <div className="text-[10px] text-slate-400">Last 7 days</div>
+            <div className="text-[10px] text-[var(--cs-text-muted)]">Last 7 days</div>
           </>
         )}
       </div>
@@ -264,16 +264,16 @@ function ChildOverviewCard({ child }: { child: { id: string; name: string } }) {
   return (
     <Link
       href={`/young-people/${child.id}`}
-      className="block rounded-2xl border border-slate-200 bg-white p-5 hover:shadow-md hover:-translate-y-0.5 transition-all group focus:outline-none focus:ring-2 focus:ring-violet-400"
+      className="block rounded-2xl border border-[var(--cs-border)] bg-white p-5 hover:shadow-md hover:-translate-y-0.5 transition-all group focus:outline-none focus:ring-2 focus:ring-violet-400"
     >
       {/* Child header */}
       <div className="flex items-center gap-3 mb-4">
         <Avatar name={child.name} size="md" />
         <div className="flex-1 min-w-0">
-          <div className="text-sm font-bold text-slate-900">{child.name}</div>
-          <div className="text-[11px] text-slate-400">Young person profile</div>
+          <div className="text-sm font-bold text-[var(--cs-navy)]">{child.name}</div>
+          <div className="text-[11px] text-[var(--cs-text-muted)]">Young person profile</div>
         </div>
-        <ChevronRight className="h-4 w-4 text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
+        <ChevronRight className="h-4 w-4 text-[var(--cs-text-gentle)] opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
       </div>
 
       {/* Wellbeing score bar */}
@@ -282,7 +282,7 @@ function ChildOverviewCard({ child }: { child: { id: string; name: string } }) {
       ) : score !== null ? (
         <div className="mb-4 space-y-1.5">
           <div className="flex items-center justify-between">
-            <span className="text-[10px] text-slate-500 font-semibold uppercase tracking-wider">Wellbeing Score</span>
+            <span className="text-[10px] text-[var(--cs-text-muted)] font-semibold uppercase tracking-wider">Wellbeing Score</span>
             <span className={cn("text-sm font-bold tabular-nums", scoreTextColor(score))}>
               {score}
               {delta !== null && delta !== 0 && (
@@ -304,22 +304,22 @@ function ChildOverviewCard({ child }: { child: { id: string; name: string } }) {
       {/* Mini stats row */}
       <div className="grid grid-cols-2 gap-2">
         <div className="rounded-xl bg-slate-50 px-3 py-2">
-          <div className="text-[9px] font-semibold text-slate-400 uppercase tracking-wider mb-0.5">Alerts</div>
-          <div className={cn("text-base font-bold tabular-nums", alertCount > 0 ? "text-amber-600" : "text-slate-700")}>
+          <div className="text-[9px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-0.5">Alerts</div>
+          <div className={cn("text-base font-bold tabular-nums", alertCount > 0 ? "text-amber-600" : "text-[var(--cs-text-secondary)]")}>
             {alertCount}
           </div>
         </div>
         <div className="rounded-xl bg-slate-50 px-3 py-2">
-          <div className="text-[9px] font-semibold text-slate-400 uppercase tracking-wider mb-0.5">Interventions</div>
-          <div className="text-base font-bold tabular-nums text-slate-700">{activeInterventions}</div>
+          <div className="text-[9px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-0.5">Interventions</div>
+          <div className="text-base font-bold tabular-nums text-[var(--cs-text-secondary)]">{activeInterventions}</div>
         </div>
         <div className="rounded-xl bg-slate-50 px-3 py-2">
-          <div className="text-[9px] font-semibold text-slate-400 uppercase tracking-wider mb-0.5">Practice Bank</div>
-          <div className="text-base font-bold tabular-nums text-slate-700">{practiceBankCount}</div>
+          <div className="text-[9px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-0.5">Practice Bank</div>
+          <div className="text-base font-bold tabular-nums text-[var(--cs-text-secondary)]">{practiceBankCount}</div>
         </div>
         <div className="rounded-xl bg-slate-50 px-3 py-2">
-          <div className="text-[9px] font-semibold text-slate-400 uppercase tracking-wider mb-0.5">Last Voice</div>
-          <div className="text-[11px] font-semibold text-slate-600 truncate">
+          <div className="text-[9px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-0.5">Last Voice</div>
+          <div className="text-[11px] font-semibold text-[var(--cs-text-secondary)] truncate">
             {lastVoiceRecord ? formatRelative(lastVoiceRecord.recorded_at) : "—"}
           </div>
         </div>
@@ -335,10 +335,10 @@ function ChildrenOverviewSection() {
   return (
     <section className="space-y-3">
       <div className="flex items-center gap-2">
-        <Users className="h-4 w-4 text-slate-400" />
-        <h2 className="text-sm font-semibold text-slate-700">Children Overview</h2>
+        <Users className="h-4 w-4 text-[var(--cs-text-muted)]" />
+        <h2 className="text-sm font-semibold text-[var(--cs-text-secondary)]">Children Overview</h2>
         {!isLoading && (
-          <span className="text-[10px] text-slate-400 ml-auto">{children.length} current</span>
+          <span className="text-[10px] text-[var(--cs-text-muted)] ml-auto">{children.length} current</span>
         )}
       </div>
       {isLoading ? (
@@ -391,8 +391,8 @@ function PatternAlertsSection() {
         ) : alerts.length === 0 ? (
           <div className="flex flex-col items-center gap-2 py-8 text-center">
             <CheckCircle2 className="h-10 w-10 text-slate-200" />
-            <p className="text-sm text-slate-500">No active pattern alerts</p>
-            <p className="text-xs text-slate-400">ARIA is monitoring for emerging patterns</p>
+            <p className="text-sm text-[var(--cs-text-muted)]">No active pattern alerts</p>
+            <p className="text-xs text-[var(--cs-text-muted)]">ARIA is monitoring for emerging patterns</p>
           </div>
         ) : (
           <div className="space-y-3">
@@ -400,7 +400,7 @@ function PatternAlertsSection() {
               <div
                 key={alert.id}
                 className={cn(
-                  "rounded-xl border-l-4 border border-slate-100 bg-slate-50 p-4",
+                  "rounded-xl border-l-4 border border-[var(--cs-border-subtle)] bg-slate-50 p-4",
                   SEV_BORDER[alert.severity]
                 )}
               >
@@ -413,12 +413,12 @@ function PatternAlertsSection() {
                       )}>
                         {alert.severity}
                       </span>
-                      <span className="text-xs font-semibold text-slate-900">{alert.title}</span>
+                      <span className="text-xs font-semibold text-[var(--cs-navy)]">{alert.title}</span>
                     </div>
                     {alert.description && (
-                      <p className="text-xs text-slate-600 leading-relaxed line-clamp-2">{alert.description}</p>
+                      <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed line-clamp-2">{alert.description}</p>
                     )}
-                    <div className="text-[10px] text-slate-400">{formatDate(alert.detected_at)}</div>
+                    <div className="text-[10px] text-[var(--cs-text-muted)]">{formatDate(alert.detected_at)}</div>
                   </div>
                   <Button
                     size="sm"
@@ -451,10 +451,10 @@ function ActionCard({ action, nameMap }: { action: ActionOutcome; nameMap: Recor
   return (
     <div className={cn(
       "rounded-xl border bg-white p-3 space-y-1.5",
-      action.status === "overdue" ? "border-red-200" : "border-slate-100"
+      action.status === "overdue" ? "border-red-200" : "border-[var(--cs-border-subtle)]"
     )}>
       <div className="flex items-start justify-between gap-2">
-        <div className="text-xs font-semibold text-slate-900 leading-snug flex-1 min-w-0">{action.title}</div>
+        <div className="text-xs font-semibold text-[var(--cs-navy)] leading-snug flex-1 min-w-0">{action.title}</div>
         <span className={cn(
           "rounded-full px-2 py-0.5 text-[9px] font-semibold uppercase shrink-0 whitespace-nowrap",
           STATUS_CLASSES[action.status] ?? STATUS_CLASSES.open
@@ -463,14 +463,14 @@ function ActionCard({ action, nameMap }: { action: ActionOutcome; nameMap: Recor
         </span>
       </div>
       {action.child_id && (
-        <div className="text-[10px] text-slate-500">
-          Child: <span className="font-medium text-slate-700">{nameMap[action.child_id] ?? action.child_id}</span>
+        <div className="text-[10px] text-[var(--cs-text-muted)]">
+          Child: <span className="font-medium text-[var(--cs-text-secondary)]">{nameMap[action.child_id] ?? action.child_id}</span>
         </div>
       )}
       {action.due_date && (
         <div className={cn(
           "flex items-center gap-1 text-[10px] font-medium",
-          action.status === "overdue" ? "text-red-600" : "text-slate-400"
+          action.status === "overdue" ? "text-red-600" : "text-[var(--cs-text-muted)]"
         )}>
           <Clock className="h-2.5 w-2.5" />
           Due {formatDate(action.due_date)}
@@ -522,7 +522,7 @@ function ActionsTrackerSection() {
         </CardHeader>
         <CardContent>
           {inProgress.length === 0 ? (
-            <p className="text-xs text-slate-400 py-4 text-center">No in-progress actions</p>
+            <p className="text-xs text-[var(--cs-text-muted)] py-4 text-center">No in-progress actions</p>
           ) : (
             <div className="space-y-2">
               {inProgress.map((action) => (
@@ -537,7 +537,7 @@ function ActionsTrackerSection() {
       <Card className={overdueItems.length > 0 ? "border-red-200" : undefined}>
         <CardHeader className="pb-3">
           <CardTitle className="text-sm font-semibold flex items-center gap-2">
-            <Clock className={cn("h-4 w-4", overdueItems.length > 0 ? "text-red-500" : "text-slate-400")} />
+            <Clock className={cn("h-4 w-4", overdueItems.length > 0 ? "text-red-500" : "text-[var(--cs-text-muted)]")} />
             Overdue
             {overdueItems.length > 0 && (
               <span className="ml-auto rounded-full bg-red-100 px-2 py-0.5 text-[10px] font-bold text-red-700">
@@ -550,7 +550,7 @@ function ActionsTrackerSection() {
           {overdueItems.length === 0 ? (
             <div className="flex flex-col items-center gap-2 py-4 text-center">
               <CheckCircle2 className="h-8 w-8 text-slate-200" />
-              <p className="text-xs text-slate-400">No overdue actions</p>
+              <p className="text-xs text-[var(--cs-text-muted)]">No overdue actions</p>
             </div>
           ) : (
             <div className="space-y-2">
@@ -684,8 +684,8 @@ function AriaWeeklyReportSection() {
 
         {rawOutput && (
           <div className="relative">
-            <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
-              <pre className="text-xs text-slate-700 whitespace-pre-wrap leading-relaxed font-sans">
+            <div className="rounded-xl border border-[var(--cs-border)] bg-slate-50 p-4">
+              <pre className="text-xs text-[var(--cs-text-secondary)] whitespace-pre-wrap leading-relaxed font-sans">
                 {rawOutput}
                 {isGenerating && (
                   <span className="inline-block h-3.5 w-0.5 bg-violet-500 ml-0.5 animate-pulse align-middle" />
@@ -695,7 +695,7 @@ function AriaWeeklyReportSection() {
             {isDone && (
               <button
                 onClick={handleCopy}
-                className="absolute top-2 right-2 flex items-center gap-1.5 rounded-lg bg-white border border-slate-200 px-2.5 py-1.5 text-[11px] font-medium text-slate-600 hover:bg-slate-50 transition-colors shadow-sm"
+                className="absolute top-2 right-2 flex items-center gap-1.5 rounded-lg bg-white border border-[var(--cs-border)] px-2.5 py-1.5 text-[11px] font-medium text-[var(--cs-text-secondary)] hover:bg-[var(--cs-surface)] transition-colors shadow-sm"
               >
                 <Copy className="h-3.5 w-3.5" />
                 {copied ? "Copied!" : "Copy"}
@@ -912,7 +912,7 @@ function BulkComputeSection() {
       </CardHeader>
       <CardContent className="space-y-3">
         {state === "idle" && progress.length === 0 && (
-          <p className="text-xs text-slate-500 leading-relaxed">
+          <p className="text-xs text-[var(--cs-text-muted)] leading-relaxed">
             Ask ARIA to compute fresh wellbeing snapshots for all three children simultaneously,
             using their latest voice records, interventions, and practice bank data as context.
           </p>

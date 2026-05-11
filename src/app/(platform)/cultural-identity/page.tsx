@@ -69,7 +69,7 @@ export default function CulturalIdentityPage() {
           {[
             { label: "Active Plans", value: plans.length, icon: Globe, colour: "text-blue-600" },
             { label: "Needs Attention", value: needsAttention, icon: AlertTriangle, colour: needsAttention > 0 ? "text-orange-600" : "text-green-600" },
-            { label: "Reviews Due", value: reviewsDue, icon: Star, colour: reviewsDue > 0 ? "text-orange-600" : "text-slate-400" },
+            { label: "Reviews Due", value: reviewsDue, icon: Star, colour: reviewsDue > 0 ? "text-orange-600" : "text-[var(--cs-text-muted)]" },
             { label: "Child Contributed", value: plans.filter((p) => p.child_contributed).length, icon: Heart, colour: "text-pink-600" },
           ].map((s) => (
             <div key={s.label} className="rounded-xl border bg-white p-4 flex items-center gap-3">
@@ -91,7 +91,7 @@ export default function CulturalIdentityPage() {
             return (
               <div key={plan.id} className="rounded-xl border bg-white overflow-hidden">
                 <button
-                  className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                  className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                   onClick={() => setExpanded(isExpanded ? null : plan.id)}
                 >
                   <div className="flex items-center gap-3 flex-1 min-w-0">

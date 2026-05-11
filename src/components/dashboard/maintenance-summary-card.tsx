@@ -35,7 +35,7 @@ export function MaintenanceSummaryCard() {
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-center py-6">
-            <Loader2 className="h-5 w-5 animate-spin text-slate-400" />
+            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
           </div>
         </CardContent>
       </Card>
@@ -68,14 +68,14 @@ export function MaintenanceSummaryCard() {
         {/* KPI strip */}
         <div className="grid grid-cols-3 gap-2">
           <div className={cn("rounded-xl p-2 text-center", meta.urgent > 0 ? "bg-red-50" : "bg-slate-50")}>
-            <AlertTriangle className={cn("h-3 w-3 mx-auto mb-0.5", meta.urgent > 0 ? "text-red-500" : "text-slate-400")} />
-            <div className={cn("text-sm font-bold tabular-nums", meta.urgent > 0 ? "text-red-700" : "text-slate-400")}>{meta.urgent}</div>
-            <div className={cn("text-[9px]", meta.urgent > 0 ? "text-red-500" : "text-slate-400")}>Urgent</div>
+            <AlertTriangle className={cn("h-3 w-3 mx-auto mb-0.5", meta.urgent > 0 ? "text-red-500" : "text-[var(--cs-text-muted)]")} />
+            <div className={cn("text-sm font-bold tabular-nums", meta.urgent > 0 ? "text-red-700" : "text-[var(--cs-text-muted)]")}>{meta.urgent}</div>
+            <div className={cn("text-[9px]", meta.urgent > 0 ? "text-red-500" : "text-[var(--cs-text-muted)]")}>Urgent</div>
           </div>
           <div className={cn("rounded-xl p-2 text-center", meta.open > 0 ? "bg-amber-50" : "bg-slate-50")}>
-            <CircleDot className={cn("h-3 w-3 mx-auto mb-0.5", meta.open > 0 ? "text-amber-500" : "text-slate-400")} />
-            <div className={cn("text-sm font-bold tabular-nums", meta.open > 0 ? "text-amber-700" : "text-slate-400")}>{meta.open}</div>
-            <div className={cn("text-[9px]", meta.open > 0 ? "text-amber-500" : "text-slate-400")}>Open</div>
+            <CircleDot className={cn("h-3 w-3 mx-auto mb-0.5", meta.open > 0 ? "text-amber-500" : "text-[var(--cs-text-muted)]")} />
+            <div className={cn("text-sm font-bold tabular-nums", meta.open > 0 ? "text-amber-700" : "text-[var(--cs-text-muted)]")}>{meta.open}</div>
+            <div className={cn("text-[9px]", meta.open > 0 ? "text-amber-500" : "text-[var(--cs-text-muted)]")}>Open</div>
           </div>
           <div className="rounded-xl bg-slate-50 p-2 text-center">
             <CalendarClock className="h-3 w-3 text-blue-500 mx-auto mb-0.5" />
@@ -86,7 +86,7 @@ export function MaintenanceSummaryCard() {
 
         {/* Completed */}
         <div className="flex items-center justify-between text-[10px] px-1">
-          <span className="text-slate-500 flex items-center gap-1">
+          <span className="text-[var(--cs-text-muted)] flex items-center gap-1">
             <CheckCircle2 className="h-3 w-3" /> Completed
           </span>
           <span className="font-bold text-emerald-600 tabular-nums">{meta.completed}</span>
@@ -94,8 +94,8 @@ export function MaintenanceSummaryCard() {
 
         {/* Total */}
         <div className="flex items-center justify-between text-[10px] px-1">
-          <span className="text-slate-500">Total items</span>
-          <span className="font-bold text-slate-700 tabular-nums">{meta.total}</span>
+          <span className="text-[var(--cs-text-muted)]">Total items</span>
+          <span className="font-bold text-[var(--cs-text-secondary)] tabular-nums">{meta.total}</span>
         </div>
 
         {/* Overdue alert */}

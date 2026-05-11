@@ -150,24 +150,24 @@ function SuggestionCard({
   const [editedText, setEditedText] = useState(suggestion);
 
   return (
-    <div className="rounded-xl border border-indigo-200 bg-indigo-50 p-4 space-y-3 animate-fade-in">
+    <div className="rounded-2xl border border-[var(--cs-aria-gold-soft)] bg-[var(--cs-aria-gold-bg)] p-4 space-y-3 animate-fade-in">
       <div className="flex items-start gap-2">
-        <Sparkles className="w-4 h-4 text-indigo-500 mt-0.5 shrink-0" />
-        <p className="text-xs font-semibold text-indigo-700">Aria suggestion</p>
+        <Sparkles className="w-4 h-4 text-[var(--cs-aria-gold)] mt-0.5 shrink-0" />
+        <p className="text-xs font-semibold text-[var(--cs-aria-gold)]">ARIA suggestion</p>
       </div>
 
       {editing ? (
         <Textarea
-          className="min-h-[120px] text-sm resize-none border-indigo-300 bg-white"
+          className="min-h-[120px] text-sm resize-none border-[var(--cs-aria-gold-soft)] bg-[var(--cs-surface-elevated)]"
           value={editedText}
           onChange={(e) => setEditedText(e.target.value)}
         />
       ) : (
-        <p className="text-sm text-indigo-900 leading-relaxed whitespace-pre-wrap">{suggestion}</p>
+        <p className="text-sm text-[var(--cs-navy)] leading-relaxed whitespace-pre-wrap">{suggestion}</p>
       )}
 
-      <p className="text-[10px] text-indigo-500 italic">
-        All Aria suggestions require human review before being saved to the official record.
+      <p className="text-[10px] text-[var(--cs-aria-gold)] italic">
+        All ARIA suggestions require human review before being saved to the official record.
       </p>
 
       <div className="flex gap-2 flex-wrap">
@@ -175,7 +175,7 @@ function SuggestionCard({
           <>
             <Button
               size="sm"
-              className="h-7 text-xs bg-indigo-600 hover:bg-indigo-700"
+              className="h-7 text-xs bg-[var(--cs-aria-gold)] text-[var(--cs-navy)] hover:bg-[var(--cs-aria-gold)]/90"
               onClick={() => { onEdit(editedText); setEditing(false); }}
             >
               <CheckCircle2 className="w-3 h-3 mr-1" /> Save edited
@@ -193,7 +193,7 @@ function SuggestionCard({
           <>
             <Button
               size="sm"
-              className="h-7 text-xs bg-emerald-600 hover:bg-emerald-700"
+              className="h-7 text-xs bg-[var(--cs-success)] hover:bg-[var(--cs-success)]/90"
               onClick={onApprove}
             >
               <CheckCircle2 className="w-3 h-3 mr-1" /> Approve
@@ -209,7 +209,7 @@ function SuggestionCard({
             <Button
               size="sm"
               variant="ghost"
-              className="h-7 text-xs text-slate-500"
+              className="h-7 text-xs text-[var(--cs-text-muted)]"
               onClick={onReject}
             >
               <XCircle className="w-3 h-3 mr-1" /> Reject
@@ -317,22 +317,22 @@ export function AriaDrawer({ open, onClose, context = {} }: AriaDrawerProps) {
       />
 
       {/* Drawer */}
-      <aside className="fixed right-0 top-0 z-50 h-full w-[420px] max-w-[100vw] bg-white shadow-2xl flex flex-col animate-drawer">
+      <aside className="fixed right-0 top-0 z-50 h-full w-[420px] max-w-[100vw] bg-[var(--cs-surface-elevated)] shadow-[var(--cs-shadow-elevated)] flex flex-col animate-drawer">
         {/* Header */}
-        <div className="flex items-center gap-3 border-b border-slate-100 px-5 py-4">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-100">
-            <Sparkles className="h-4 w-4 text-indigo-600" />
+        <div className="flex items-center gap-3 border-b border-[var(--cs-border-subtle)] px-5 py-4">
+          <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[var(--cs-aria-gold-bg)] border border-[var(--cs-aria-gold-soft)]">
+            <Sparkles className="h-4 w-4 text-[var(--cs-aria-gold)]" />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-semibold text-slate-900">Aria</p>
-            <p className="text-[11px] text-slate-500 truncate">
+            <p className="text-sm font-semibold text-[var(--cs-navy)]">ARIA</p>
+            <p className="text-[11px] text-[var(--cs-text-muted)] truncate">
               {context.pageTitle ?? "Intelligent assistance"}
               {context.childName ? ` · ${context.childName}` : ""}
             </p>
           </div>
           <button
             onClick={onClose}
-            className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-600 transition-colors"
+            className="rounded-lg p-1.5 text-[var(--cs-text-muted)] hover:bg-[var(--cs-surface)] hover:text-[var(--cs-text-secondary)] transition-colors"
           >
             <X className="h-4 w-4" />
           </button>
@@ -371,9 +371,9 @@ export function AriaDrawer({ open, onClose, context = {} }: AriaDrawerProps) {
 
           {/* Loading */}
           {loading && (
-            <div className="flex items-center gap-3 rounded-xl bg-indigo-50 border border-indigo-200 px-4 py-5">
-              <Loader2 className="w-4 h-4 text-indigo-500 animate-spin shrink-0" />
-              <p className="text-sm text-indigo-700">Aria is thinking…</p>
+            <div className="flex items-center gap-3 rounded-2xl bg-[var(--cs-aria-gold-bg)] border border-[var(--cs-aria-gold-soft)] px-4 py-5">
+              <Loader2 className="w-4 h-4 text-[var(--cs-aria-gold)] animate-spin shrink-0" />
+              <p className="text-sm text-[var(--cs-navy)]">ARIA is thinking…</p>
             </div>
           )}
 
@@ -382,7 +382,7 @@ export function AriaDrawer({ open, onClose, context = {} }: AriaDrawerProps) {
             <>
               {Object.entries(groupedActions).map(([category, items]) => (
                 <div key={category}>
-                  <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400 mb-2">
+                  <p className="text-[10px] font-semibold uppercase tracking-wider text-[var(--cs-text-gentle)] mb-2">
                     {category}
                   </p>
                   <div className="space-y-1.5">
@@ -395,11 +395,11 @@ export function AriaDrawer({ open, onClose, context = {} }: AriaDrawerProps) {
                           className={cn(
                             "w-full flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-left transition-all border",
                             activeAction === action.id
-                              ? "bg-indigo-50 border-indigo-200 text-indigo-800"
-                              : "bg-white border-slate-100 text-slate-700 hover:bg-slate-50 hover:border-slate-200",
+                              ? "bg-[var(--cs-aria-gold-bg)] border-[var(--cs-aria-gold-soft)] text-[var(--cs-navy)]"
+                              : "bg-[var(--cs-surface-elevated)] border-[var(--cs-border-subtle)] text-[var(--cs-text-secondary)] hover:bg-[var(--cs-surface)] hover:border-[var(--cs-border)]",
                           )}
                         >
-                          <Icon className="w-4 h-4 shrink-0 text-indigo-500" />
+                          <Icon className="w-4 h-4 shrink-0 text-[var(--cs-aria-gold)]" />
                           {action.label}
                         </button>
                       );
@@ -411,30 +411,31 @@ export function AriaDrawer({ open, onClose, context = {} }: AriaDrawerProps) {
               {/* Free-form prompt */}
               <div>
                 <button
-                  className="flex items-center gap-2 text-[11px] text-slate-500 hover:text-slate-700 transition-colors"
+                  className="flex items-center gap-2 text-[11px] text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] transition-colors"
                   onClick={() => setShowFreePrompt((v) => !v)}
                 >
                   {showFreePrompt ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
-                  Ask Aria something specific
+                  Ask ARIA something specific
                 </button>
                 {showFreePrompt && (
                   <div className="mt-2 space-y-2">
                     <Textarea
                       className="h-24 text-sm resize-none"
-                      placeholder="Ask Aria anything about this record…"
+                      placeholder="Ask ARIA anything about this record…"
                       value={freePrompt}
                       onChange={(e) => setFreePrompt(e.target.value)}
                     />
                     <Button
                       size="sm"
-                      className="h-8 text-xs bg-indigo-600 hover:bg-indigo-700"
+                      variant="aria"
+                      className="h-8 text-xs"
                       disabled={!freePrompt.trim()}
                       onClick={() => runAction(
                         { id: "free", label: "Custom", icon: Sparkles, prompt: freePrompt, category: "Custom" },
                         freePrompt,
                       )}
                     >
-                      <Sparkles className="w-3 h-3 mr-1.5" /> Ask Aria
+                      <Sparkles className="w-3 h-3 mr-1.5" /> Ask ARIA
                     </Button>
                   </div>
                 )}
@@ -444,9 +445,9 @@ export function AriaDrawer({ open, onClose, context = {} }: AriaDrawerProps) {
         </div>
 
         {/* Footer */}
-        <div className="border-t border-slate-100 px-5 py-3">
-          <p className="text-[10px] text-slate-400 leading-relaxed">
-            Aria suggestions are AI-generated. All outputs require human review before saving to the official record. Every action is audit logged.
+        <div className="border-t border-[var(--cs-border-subtle)] px-5 py-3">
+          <p className="text-[10px] text-[var(--cs-text-gentle)] leading-relaxed">
+            ARIA suggestions are AI-generated. All outputs require human review before saving to the official record. Every action is audit logged.
           </p>
         </div>
       </aside>

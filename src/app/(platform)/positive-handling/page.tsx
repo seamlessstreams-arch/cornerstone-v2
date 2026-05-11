@@ -106,7 +106,7 @@ export default function PositiveHandlingPage() {
             return (
               <div key={plan.id} className="rounded-xl border bg-white overflow-hidden">
                 <button
-                  className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                  className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                   onClick={() => setExpanded(isExpanded ? null : plan.id)}
                 >
                   <div className="flex items-center gap-3 flex-1 min-w-0">

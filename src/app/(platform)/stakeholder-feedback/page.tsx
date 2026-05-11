@@ -133,8 +133,8 @@ export default function StakeholderFeedbackPage() {
           {[
             { label: "Total Feedback", value: total, icon: MessageSquare, colour: "text-blue-600" },
             { label: "Positive", value: positive, icon: ThumbsUp, colour: "text-green-600" },
-            { label: "Negative", value: negative, icon: ThumbsDown, colour: negative > 0 ? "text-red-600" : "text-slate-400" },
-            { label: "Unacknowledged", value: unacknowledged, icon: AlertTriangle, colour: unacknowledged > 0 ? "text-orange-600" : "text-slate-400" },
+            { label: "Negative", value: negative, icon: ThumbsDown, colour: negative > 0 ? "text-red-600" : "text-[var(--cs-text-muted)]" },
+            { label: "Unacknowledged", value: unacknowledged, icon: AlertTriangle, colour: unacknowledged > 0 ? "text-orange-600" : "text-[var(--cs-text-muted)]" },
           ].map((s) => (
             <div key={s.label} className="rounded-xl border bg-white p-4 flex items-center gap-3">
               <s.icon className={cn("h-5 w-5", s.colour)} />
@@ -213,7 +213,7 @@ export default function StakeholderFeedbackPage() {
             return (
               <div key={entry.id} className="rounded-xl border bg-white overflow-hidden">
                 <button
-                  className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                  className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                   onClick={() => setExpanded(isExpanded ? null : entry.id)}
                 >
                   <div className="flex items-center gap-3 flex-1 min-w-0">

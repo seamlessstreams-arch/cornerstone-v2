@@ -26,7 +26,7 @@ import { useIncidentTrends } from "@/hooks/use-incident-trends";
 const STATUS_CLR: Record<TrendActionStatus, string> = {
   completed: "bg-green-100 text-green-800",
   in_progress: "bg-blue-100 text-blue-800",
-  not_started: "bg-slate-100 text-slate-700",
+  not_started: "bg-slate-100 text-[var(--cs-text-secondary)]",
   overdue: "bg-red-100 text-red-800",
 };
 
@@ -35,7 +35,7 @@ const STATUS_CLR: Record<TrendActionStatus, string> = {
 function ReductionBadge({ value }: { value: number }) {
   if (value === 0) {
     return (
-      <Badge variant="outline" className="bg-slate-100 text-slate-700">
+      <Badge variant="outline" className="bg-slate-100 text-[var(--cs-text-secondary)]">
         No change vs previous
       </Badge>
     );
@@ -170,7 +170,7 @@ export default function IncidentTrendAnalysisPage() {
               ) : periodChange > 0 ? (
                 <TrendingUp className="h-5 w-5 mx-auto mb-1 text-red-600" />
               ) : (
-                <Activity className="h-5 w-5 mx-auto mb-1 text-slate-500" />
+                <Activity className="h-5 w-5 mx-auto mb-1 text-[var(--cs-text-muted)]" />
               )}
               <p
                 className={cn(
@@ -291,7 +291,7 @@ export default function IncidentTrendAnalysisPage() {
                       <p className="font-medium mb-1 text-xs">Children Involved</p>
                       <div className="flex flex-wrap gap-1">
                         {r.children_involved.map((id) => (
-                          <Badge key={id} variant="outline" className="bg-slate-50 text-slate-700 text-xs">
+                          <Badge key={id} variant="outline" className="bg-slate-50 text-[var(--cs-text-secondary)] text-xs">
                             {getYPName(id)}
                           </Badge>
                         ))}

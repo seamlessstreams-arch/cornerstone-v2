@@ -49,7 +49,7 @@ const fundingColour: Record<TutoringFundingSource, string> = {
   pupil_premium_plus: "bg-violet-100 text-violet-800",
   virtual_school_grant: "bg-indigo-100 text-indigo-800",
   leaving_care_fund: "bg-purple-100 text-purple-800",
-  home_budget: "bg-slate-100 text-slate-800",
+  home_budget: "bg-slate-100 text-[var(--cs-navy)]",
   family_contribution: "bg-blue-100 text-blue-800",
   mixed: "bg-fuchsia-100 text-fuchsia-800",
   free_charity: "bg-emerald-100 text-emerald-800",
@@ -221,7 +221,7 @@ export default function ChildTutoringPrivateTuitionPage() {
           return (
             <div key={r.id} className="rounded-xl border bg-white overflow-hidden">
               <button
-                className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                 onClick={() => setExpandedId(isExpanded ? null : r.id)}
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -238,7 +238,7 @@ export default function ChildTutoringPrivateTuitionPage() {
                       <span className="text-[11px] px-2 py-0.5 rounded-full bg-sky-100 text-sky-800 font-medium">
                         {r.subject}
                       </span>
-                      <span className="text-[11px] px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 font-medium">
+                      <span className="text-[11px] px-2 py-0.5 rounded-full bg-slate-100 text-[var(--cs-text-secondary)] font-medium">
                         {TUTORING_FORMAT_LABEL[r.format]}
                       </span>
                       <span className="text-[11px] px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 font-medium">
@@ -332,7 +332,7 @@ export default function ChildTutoringPrivateTuitionPage() {
                       <div className="flex items-center justify-between gap-2">
                         <div className="flex-1 text-center">
                           <p className="text-xs text-muted-foreground">Baseline</p>
-                          <p className="text-lg font-bold text-slate-700">
+                          <p className="text-lg font-bold text-[var(--cs-text-secondary)]">
                             {r.baseline_grade ?? "—"}
                           </p>
                         </div>

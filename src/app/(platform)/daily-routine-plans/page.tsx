@@ -57,7 +57,7 @@ export default function DailyRoutinePlansPage() {
     return (
       <PageShell title="Daily Routine Plans" subtitle="Loading...">
         <div className="flex items-center justify-center py-12">
-          <Loader2 className="h-8 w-8 animate-spin text-slate-400" />
+          <Loader2 className="h-8 w-8 animate-spin text-[var(--cs-text-muted)]" />
         </div>
       </PageShell>
     );
@@ -263,9 +263,9 @@ export default function DailyRoutinePlansPage() {
       </div>
 
       {/* ─── regulatory note ─── */}
-      <div className="mt-8 bg-slate-50 border border-slate-200 rounded-lg p-4">
-        <p className="text-sm font-medium text-slate-700 mb-1">Regulatory Context</p>
-        <p className="text-xs text-slate-600">
+      <div className="mt-8 bg-slate-50 border border-[var(--cs-border)] rounded-lg p-4">
+        <p className="text-sm font-medium text-[var(--cs-text-secondary)] mb-1">Regulatory Context</p>
+        <p className="text-xs text-[var(--cs-text-secondary)]">
           Quality Standard 1 (Child-Centred Care) requires that daily life in the home is organised
           around the individual needs of each child. Regulation 6 (Quality and Purpose of Care)
           requires that care meets each child&apos;s needs as set out in their placement plan.

@@ -90,7 +90,7 @@ const AREA_META: Record<ProgressArea, { label: string; color: string; icon: Reac
   identity: { label: "Identity", color: "bg-indigo-100 text-indigo-800", icon: <Sparkles className="h-3.5 w-3.5" /> },
   wishes_and_feelings: { label: "Wishes & Feelings", color: "bg-sky-100 text-sky-800", icon: <MessageSquare className="h-3.5 w-3.5" /> },
   community: { label: "Community", color: "bg-teal-100 text-teal-800", icon: <Users className="h-3.5 w-3.5" /> },
-  placement_stability: { label: "Placement Stability", color: "bg-slate-100 text-slate-800", icon: <Shield className="h-3.5 w-3.5" /> },
+  placement_stability: { label: "Placement Stability", color: "bg-slate-100 text-[var(--cs-navy)]", icon: <Shield className="h-3.5 w-3.5" /> },
 };
 
 const STATUS_META: Record<GoalStatus, { label: string; color: string }> = {
@@ -508,7 +508,7 @@ export default function ChildProgressPage() {
               <div className="space-y-3">
                 <div className="flex items-center gap-2">
                   <Badge className="bg-indigo-100 text-indigo-800 text-xs">
-                    Aria suggested draft
+                    ARIA suggested draft
                   </Badge>
                 </div>
                 <div className="bg-indigo-50 border border-indigo-100 rounded-lg p-4 space-y-3">

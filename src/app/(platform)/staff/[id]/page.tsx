@@ -36,7 +36,7 @@ const TRAINING_STATUS_CFG: Record<string, { label: string; colour: string }> = {
   compliant:     { label: "Compliant",      colour: "bg-emerald-100 text-emerald-700" },
   expiring_soon: { label: "Expiring Soon",  colour: "bg-amber-100 text-amber-700" },
   expired:       { label: "Expired",        colour: "bg-red-100 text-red-700" },
-  not_completed: { label: "Not Completed",  colour: "bg-slate-100 text-slate-600" },
+  not_completed: { label: "Not Completed",  colour: "bg-slate-100 text-[var(--cs-text-secondary)]" },
 };
 
 const SUPERVISION_STATUS_CFG: Record<string, { label: string; colour: string }> = {
@@ -66,14 +66,14 @@ function StatCard({
   alert?: boolean;
 }) {
   return (
-    <div className={cn("rounded-2xl border bg-white p-4", alert ? "border-red-200 bg-red-50" : "border-slate-100")}>
+    <div className={cn("rounded-2xl border bg-white p-4", alert ? "border-red-200 bg-red-50" : "border-[var(--cs-border-subtle)]")}>
       <div className="flex items-center gap-3">
         <div className={cn("flex h-9 w-9 items-center justify-center rounded-xl", colour)}>
           <Icon className="h-4 w-4" />
         </div>
         <div>
-          <div className={cn("text-xl font-bold tabular-nums", alert ? "text-red-700" : "text-slate-900")}>{value}</div>
-          <div className="text-xs text-slate-500">{label}</div>
+          <div className={cn("text-xl font-bold tabular-nums", alert ? "text-red-700" : "text-[var(--cs-navy)]")}>{value}</div>
+          <div className="text-xs text-[var(--cs-text-muted)]">{label}</div>
         </div>
       </div>
     </div>
@@ -106,7 +106,7 @@ export default function StaffProfilePage({ params }: { params: Promise<{ id: str
   if (query.isLoading) {
     return (
       <PageShell title="Staff Profile" showQuickCreate={false}>
-        <div className="flex items-center justify-center py-24 gap-2 text-slate-400">
+        <div className="flex items-center justify-center py-24 gap-2 text-[var(--cs-text-muted)]">
           <Loader2 className="h-5 w-5 animate-spin" />
           <span className="text-sm">Loading profile…</span>
         </div>
@@ -117,7 +117,7 @@ export default function StaffProfilePage({ params }: { params: Promise<{ id: str
   if (!staff || query.isError) {
     return (
       <PageShell title="Staff Profile" showQuickCreate={false}>
-        <div className="flex flex-col items-center justify-center py-24 gap-3 text-slate-500">
+        <div className="flex flex-col items-center justify-center py-24 gap-3 text-[var(--cs-text-muted)]">
           <AlertCircle className="h-8 w-8 text-red-400" />
           <p className="text-sm font-medium">Staff member not found</p>
           <Button size="sm" variant="outline" onClick={() => router.push("/staff")}>
@@ -202,14 +202,14 @@ export default function StaffProfilePage({ params }: { params: Promise<{ id: str
         )}
 
         {/* Profile header */}
-        <div className="rounded-2xl border border-slate-100 bg-white p-5">
+        <div className="rounded-2xl border border-[var(--cs-border-subtle)] bg-white p-5">
           <div className="flex items-start gap-4">
             <Avatar name={staff.full_name} size="xl" />
             <div className="flex-1 min-w-0">
               <div className="flex items-start justify-between gap-2 flex-wrap">
                 <div>
-                  <h2 className="text-lg font-bold text-slate-900">{staff.full_name}</h2>
-                  <p className="text-sm text-slate-500">{staff.job_title}</p>
+                  <h2 className="text-lg font-bold text-[var(--cs-navy)]">{staff.full_name}</h2>
+                  <p className="text-sm text-[var(--cs-text-muted)]">{staff.job_title}</p>
                 </div>
                 <div className="flex flex-wrap gap-1.5">
                   <Badge
@@ -233,7 +233,7 @@ export default function StaffProfilePage({ params }: { params: Promise<{ id: str
                   )}
                 </div>
               </div>
-              <div className="mt-3 flex flex-wrap gap-4 text-xs text-slate-500">
+              <div className="mt-3 flex flex-wrap gap-4 text-xs text-[var(--cs-text-muted)]">
                 {staff.email && (
                   <a href={`mailto:${staff.email}`} className="flex items-center gap-1 hover:text-blue-600 transition-colors">
                     <Mail className="h-3.5 w-3.5" />{staff.email}
@@ -276,13 +276,13 @@ export default function StaffProfilePage({ params }: { params: Promise<{ id: str
                 "shrink-0 flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-medium transition-colors",
                 tab === tabId
                   ? "bg-slate-900 text-white"
-                  : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                  : "bg-slate-100 text-[var(--cs-text-secondary)] hover:bg-slate-200"
               )}
             >
               {alert && <span className="h-1.5 w-1.5 rounded-full bg-red-500 shrink-0" />}
               {label}
               {count !== undefined && count > 0 && (
-                <span className={cn("rounded-full px-1.5 text-[9px] font-bold", tab === tabId ? "bg-white/20 text-white" : "bg-slate-200 text-slate-600")}>
+                <span className={cn("rounded-full px-1.5 text-[9px] font-bold", tab === tabId ? "bg-white/20 text-white" : "bg-slate-200 text-[var(--cs-text-secondary)]")}>
                   {count}
                 </span>
               )}
@@ -296,21 +296,21 @@ export default function StaffProfilePage({ params }: { params: Promise<{ id: str
             {/* Employment details */}
             <Card>
               <CardHeader className="pb-2">
-                <CardTitle className="text-xs font-semibold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
+                <CardTitle className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider flex items-center gap-1.5">
                   <User className="h-3.5 w-3.5" />Employment
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-2 text-xs">
-                <div className="flex justify-between"><span className="text-slate-500">Job Title</span><span className="font-medium text-slate-900">{staff.job_title}</span></div>
-                <div className="flex justify-between"><span className="text-slate-500">Role</span><span className="font-medium text-slate-900 capitalize">{staff.role.replace(/_/g, " ")}</span></div>
-                <div className="flex justify-between"><span className="text-slate-500">Contract</span><span className="font-medium text-slate-900 capitalize">{staff.employment_type}</span></div>
-                <div className="flex justify-between"><span className="text-slate-500">Hours</span><span className="font-medium text-slate-900">{staff.contracted_hours}h / week</span></div>
-                <div className="flex justify-between"><span className="text-slate-500">Start Date</span><span className="font-medium text-slate-900">{formatDate(staff.start_date)}</span></div>
+                <div className="flex justify-between"><span className="text-[var(--cs-text-muted)]">Job Title</span><span className="font-medium text-[var(--cs-navy)]">{staff.job_title}</span></div>
+                <div className="flex justify-between"><span className="text-[var(--cs-text-muted)]">Role</span><span className="font-medium text-[var(--cs-navy)] capitalize">{staff.role.replace(/_/g, " ")}</span></div>
+                <div className="flex justify-between"><span className="text-[var(--cs-text-muted)]">Contract</span><span className="font-medium text-[var(--cs-navy)] capitalize">{staff.employment_type}</span></div>
+                <div className="flex justify-between"><span className="text-[var(--cs-text-muted)]">Hours</span><span className="font-medium text-[var(--cs-navy)]">{staff.contracted_hours}h / week</span></div>
+                <div className="flex justify-between"><span className="text-[var(--cs-text-muted)]">Start Date</span><span className="font-medium text-[var(--cs-navy)]">{formatDate(staff.start_date)}</span></div>
                 {staff.probation_end_date && (
-                  <div className="flex justify-between"><span className="text-slate-500">Probation Ends</span><span className="font-medium text-slate-900">{formatDate(staff.probation_end_date)}</span></div>
+                  <div className="flex justify-between"><span className="text-[var(--cs-text-muted)]">Probation Ends</span><span className="font-medium text-[var(--cs-navy)]">{formatDate(staff.probation_end_date)}</span></div>
                 )}
                 {staff.payroll_id && (
-                  <div className="flex justify-between"><span className="text-slate-500">Payroll ID</span><span className="font-medium text-slate-900">{staff.payroll_id}</span></div>
+                  <div className="flex justify-between"><span className="text-[var(--cs-text-muted)]">Payroll ID</span><span className="font-medium text-[var(--cs-navy)]">{staff.payroll_id}</span></div>
                 )}
               </CardContent>
             </Card>
@@ -318,7 +318,7 @@ export default function StaffProfilePage({ params }: { params: Promise<{ id: str
             {/* Compliance snapshot */}
             <Card>
               <CardHeader className="pb-2">
-                <CardTitle className="text-xs font-semibold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
+                <CardTitle className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider flex items-center gap-1.5">
                   <ShieldCheck className="h-3.5 w-3.5" />Compliance Snapshot
                 </CardTitle>
               </CardHeader>
@@ -326,8 +326,8 @@ export default function StaffProfilePage({ params }: { params: Promise<{ id: str
                 {/* Training compliance bar */}
                 <div>
                   <div className="flex justify-between text-xs mb-1">
-                    <span className="text-slate-500">Training Compliance</span>
-                    <span className="font-medium text-slate-900">{training.length > 0 ? Math.round((completedTraining / training.length) * 100) : 0}%</span>
+                    <span className="text-[var(--cs-text-muted)]">Training Compliance</span>
+                    <span className="font-medium text-[var(--cs-navy)]">{training.length > 0 ? Math.round((completedTraining / training.length) * 100) : 0}%</span>
                   </div>
                   <div className="h-2 rounded-full bg-slate-100">
                     <div
@@ -338,35 +338,35 @@ export default function StaffProfilePage({ params }: { params: Promise<{ id: str
                 </div>
 
                 {/* DBS */}
-                <div className="rounded-xl border border-slate-100 bg-slate-50 px-3 py-2.5 space-y-1.5 text-xs">
+                <div className="rounded-xl border border-[var(--cs-border-subtle)] bg-slate-50 px-3 py-2.5 space-y-1.5 text-xs">
                   <div className="flex justify-between">
-                    <span className="text-slate-500">DBS Number</span>
-                    <span className="font-medium">{staff.dbs_number ?? <span className="italic text-slate-400">Not recorded</span>}</span>
+                    <span className="text-[var(--cs-text-muted)]">DBS Number</span>
+                    <span className="font-medium">{staff.dbs_number ?? <span className="italic text-[var(--cs-text-muted)]">Not recorded</span>}</span>
                   </div>
                   {staff.dbs_issue_date && (
                     <div className="flex justify-between">
-                      <span className="text-slate-500">DBS Issued</span>
+                      <span className="text-[var(--cs-text-muted)]">DBS Issued</span>
                       <span className="font-medium">{formatDate(staff.dbs_issue_date)}</span>
                     </div>
                   )}
                   <div className="flex justify-between">
-                    <span className="text-slate-500">Update Service</span>
-                    <span className={cn("font-medium", staff.dbs_update_service ? "text-emerald-600" : "text-slate-500")}>
+                    <span className="text-[var(--cs-text-muted)]">Update Service</span>
+                    <span className={cn("font-medium", staff.dbs_update_service ? "text-emerald-600" : "text-[var(--cs-text-muted)]")}>
                       {staff.dbs_update_service ? "Enrolled" : "Not enrolled"}
                     </span>
                   </div>
                 </div>
 
                 {/* Supervision */}
-                <div className="rounded-xl border border-slate-100 bg-slate-50 px-3 py-2.5 space-y-1.5 text-xs">
+                <div className="rounded-xl border border-[var(--cs-border-subtle)] bg-slate-50 px-3 py-2.5 space-y-1.5 text-xs">
                   <div className="flex justify-between">
-                    <span className="text-slate-500">Last Supervision</span>
-                    <span className="font-medium">{lastSupervision ? formatDate(lastSupervision.scheduled_date) : <span className="italic text-slate-400">None recorded</span>}</span>
+                    <span className="text-[var(--cs-text-muted)]">Last Supervision</span>
+                    <span className="font-medium">{lastSupervision ? formatDate(lastSupervision.scheduled_date) : <span className="italic text-[var(--cs-text-muted)]">None recorded</span>}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-slate-500">Next Due</span>
-                    <span className={cn("font-medium", staff.supervision_overdue ? "text-red-600" : "text-slate-900")}>
-                      {staff.next_supervision_due ? formatRelative(staff.next_supervision_due) : <span className="italic text-slate-400">Not set</span>}
+                    <span className="text-[var(--cs-text-muted)]">Next Due</span>
+                    <span className={cn("font-medium", staff.supervision_overdue ? "text-red-600" : "text-[var(--cs-navy)]")}>
+                      {staff.next_supervision_due ? formatRelative(staff.next_supervision_due) : <span className="italic text-[var(--cs-text-muted)]">Not set</span>}
                     </span>
                   </div>
                 </div>
@@ -377,7 +377,7 @@ export default function StaffProfilePage({ params }: { params: Promise<{ id: str
             {training.length > 0 && (
               <Card className="sm:col-span-2">
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-xs font-semibold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
+                  <CardTitle className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider flex items-center gap-1.5">
                     <GraduationCap className="h-3.5 w-3.5" />Recent Training
                   </CardTitle>
                 </CardHeader>
@@ -388,11 +388,11 @@ export default function StaffProfilePage({ params }: { params: Promise<{ id: str
                       return (
                         <div key={t.id} className="flex items-center justify-between gap-2">
                           <div className="flex-1 min-w-0">
-                            <p className="text-xs font-medium text-slate-900 truncate">{t.course_name}</p>
-                            <p className="text-[10px] text-slate-500 capitalize">{t.category.replace(/_/g, " ")}{t.provider ? ` · ${t.provider}` : ""}</p>
+                            <p className="text-xs font-medium text-[var(--cs-navy)] truncate">{t.course_name}</p>
+                            <p className="text-[10px] text-[var(--cs-text-muted)] capitalize">{t.category.replace(/_/g, " ")}{t.provider ? ` · ${t.provider}` : ""}</p>
                           </div>
                           <div className="flex items-center gap-2 shrink-0">
-                            {t.expiry_date && <span className="text-[10px] text-slate-400">Expires {formatDate(t.expiry_date)}</span>}
+                            {t.expiry_date && <span className="text-[10px] text-[var(--cs-text-muted)]">Expires {formatDate(t.expiry_date)}</span>}
                             <span className={cn("rounded-full px-2 py-0.5 text-[10px] font-medium", cfg.colour)}>{cfg.label}</span>
                           </div>
                         </div>
@@ -414,17 +414,17 @@ export default function StaffProfilePage({ params }: { params: Promise<{ id: str
         {tab === "training" && (
           <div className="space-y-3">
             {training.length === 0 ? (
-              <div className="rounded-2xl border-2 border-dashed border-slate-200 p-10 text-center">
-                <GraduationCap className="h-8 w-8 text-slate-300 mx-auto mb-2" />
-                <p className="text-sm text-slate-500">No training records</p>
+              <div className="rounded-2xl border-2 border-dashed border-[var(--cs-border)] p-10 text-center">
+                <GraduationCap className="h-8 w-8 text-[var(--cs-text-gentle)] mx-auto mb-2" />
+                <p className="text-sm text-[var(--cs-text-muted)]">No training records</p>
               </div>
             ) : (
               <div className="rounded-2xl border bg-white overflow-hidden">
                 <table className="w-full">
-                  <thead className="bg-slate-50 border-b border-slate-100">
+                  <thead className="bg-slate-50 border-b border-[var(--cs-border-subtle)]">
                     <tr>
                       {["Course", "Category", "Provider", "Completed", "Expiry", "Status"].map((h) => (
-                        <th key={h} className="text-left px-4 py-3 text-[10px] font-semibold text-slate-500 uppercase tracking-wider">{h}</th>
+                        <th key={h} className="text-left px-4 py-3 text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider">{h}</th>
                       ))}
                     </tr>
                   </thead>
@@ -432,15 +432,15 @@ export default function StaffProfilePage({ params }: { params: Promise<{ id: str
                     {training.map((t) => {
                       const cfg = TRAINING_STATUS_CFG[t.status] ?? TRAINING_STATUS_CFG.not_completed;
                       return (
-                        <tr key={t.id} className="hover:bg-slate-50/50">
+                        <tr key={t.id} className="hover:bg-[var(--cs-surface)]/50">
                           <td className="px-4 py-3">
-                            <p className="text-xs font-medium text-slate-900">{t.course_name}</p>
+                            <p className="text-xs font-medium text-[var(--cs-navy)]">{t.course_name}</p>
                             {t.is_mandatory && <span className="text-[9px] text-red-600 font-medium">Mandatory</span>}
                           </td>
-                          <td className="px-4 py-3 text-xs text-slate-600 capitalize">{t.category.replace(/_/g, " ")}</td>
-                          <td className="px-4 py-3 text-xs text-slate-600">{t.provider ?? "—"}</td>
-                          <td className="px-4 py-3 text-xs text-slate-600">{t.completed_date ? formatDate(t.completed_date) : "—"}</td>
-                          <td className="px-4 py-3 text-xs text-slate-600">{t.expiry_date ? formatDate(t.expiry_date) : "—"}</td>
+                          <td className="px-4 py-3 text-xs text-[var(--cs-text-secondary)] capitalize">{t.category.replace(/_/g, " ")}</td>
+                          <td className="px-4 py-3 text-xs text-[var(--cs-text-secondary)]">{t.provider ?? "—"}</td>
+                          <td className="px-4 py-3 text-xs text-[var(--cs-text-secondary)]">{t.completed_date ? formatDate(t.completed_date) : "—"}</td>
+                          <td className="px-4 py-3 text-xs text-[var(--cs-text-secondary)]">{t.expiry_date ? formatDate(t.expiry_date) : "—"}</td>
                           <td className="px-4 py-3">
                             <span className={cn("rounded-full px-2 py-0.5 text-[10px] font-medium", cfg.colour)}>{cfg.label}</span>
                           </td>
@@ -469,9 +469,9 @@ export default function StaffProfilePage({ params }: { params: Promise<{ id: str
               </div>
             )}
             {supervisions.length === 0 ? (
-              <div className="rounded-2xl border-2 border-dashed border-slate-200 p-10 text-center">
-                <ClipboardList className="h-8 w-8 text-slate-300 mx-auto mb-2" />
-                <p className="text-sm text-slate-500">No supervision records</p>
+              <div className="rounded-2xl border-2 border-dashed border-[var(--cs-border)] p-10 text-center">
+                <ClipboardList className="h-8 w-8 text-[var(--cs-text-gentle)] mx-auto mb-2" />
+                <p className="text-sm text-[var(--cs-text-muted)]">No supervision records</p>
               </div>
             ) : (
               <div className="space-y-3">
@@ -482,10 +482,10 @@ export default function StaffProfilePage({ params }: { params: Promise<{ id: str
                       <div className="flex items-start justify-between gap-2">
                         <div>
                           <div className="flex items-center gap-2">
-                            <span className="text-sm font-semibold text-slate-900 capitalize">{s.type.replace(/_/g, " ")} Supervision</span>
+                            <span className="text-sm font-semibold text-[var(--cs-navy)] capitalize">{s.type.replace(/_/g, " ")} Supervision</span>
                             <span className={cn("rounded-full px-2 py-0.5 text-[10px] font-medium", cfg.colour)}>{cfg.label}</span>
                           </div>
-                          <p className="text-xs text-slate-500 mt-0.5">
+                          <p className="text-xs text-[var(--cs-text-muted)] mt-0.5">
                             {formatDate(s.scheduled_date)}
                             {s.duration_minutes && ` · ${s.duration_minutes} mins`}
                           </p>
@@ -496,22 +496,22 @@ export default function StaffProfilePage({ params }: { params: Promise<{ id: str
                               <div className={cn("text-lg font-bold tabular-nums", s.wellbeing_score >= 7 ? "text-emerald-600" : s.wellbeing_score >= 4 ? "text-amber-600" : "text-red-600")}>
                                 {s.wellbeing_score}/10
                               </div>
-                              <div className="text-[10px] text-slate-400">Wellbeing</div>
+                              <div className="text-[10px] text-[var(--cs-text-muted)]">Wellbeing</div>
                             </div>
                           )}
                           <button
                             onClick={() => router.push(`/supervision/${s.id}`)}
-                            className="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 text-[11px] font-medium text-slate-600 hover:bg-slate-100 transition-colors"
+                            className="rounded-lg border border-[var(--cs-border)] bg-slate-50 px-2.5 py-1 text-[11px] font-medium text-[var(--cs-text-secondary)] hover:bg-[var(--cs-surface)] transition-colors"
                           >
                             View
                           </button>
                         </div>
                       </div>
                       {s.discussion_points && (
-                        <p className="text-xs text-slate-600 mt-2 leading-relaxed line-clamp-2">{s.discussion_points}</p>
+                        <p className="text-xs text-[var(--cs-text-secondary)] mt-2 leading-relaxed line-clamp-2">{s.discussion_points}</p>
                       )}
                       {s.actions_agreed.length > 0 && (
-                        <div className="mt-2 text-[10px] text-slate-500">
+                        <div className="mt-2 text-[10px] text-[var(--cs-text-muted)]">
                           {s.actions_agreed.length} action{s.actions_agreed.length !== 1 ? "s" : ""} agreed
                           {" · "}
                           {s.actions_agreed.filter((a) => a.status === "completed").length} completed
@@ -529,9 +529,9 @@ export default function StaffProfilePage({ params }: { params: Promise<{ id: str
         {tab === "tasks" && (
           <div className="space-y-2">
             {tasks.length === 0 ? (
-              <div className="rounded-2xl border-2 border-dashed border-slate-200 p-10 text-center">
-                <CheckSquare className="h-8 w-8 text-slate-300 mx-auto mb-2" />
-                <p className="text-sm text-slate-500">No active tasks assigned</p>
+              <div className="rounded-2xl border-2 border-dashed border-[var(--cs-border)] p-10 text-center">
+                <CheckSquare className="h-8 w-8 text-[var(--cs-text-gentle)] mx-auto mb-2" />
+                <p className="text-sm text-[var(--cs-text-muted)]">No active tasks assigned</p>
               </div>
             ) : (
               tasks.map((t: Task) => {
@@ -547,9 +547,9 @@ export default function StaffProfilePage({ params }: { params: Promise<{ id: str
                   >
                     <div className="flex items-start justify-between gap-2">
                       <div>
-                        <p className="text-sm font-semibold text-slate-900">{t.title}</p>
+                        <p className="text-sm font-semibold text-[var(--cs-navy)]">{t.title}</p>
                         {t.due_date && (
-                          <p className={cn("text-xs mt-0.5", isOverdue ? "text-red-600 font-medium" : "text-slate-500")}>
+                          <p className={cn("text-xs mt-0.5", isOverdue ? "text-red-600 font-medium" : "text-[var(--cs-text-muted)]")}>
                             {isOverdue ? "Overdue · " : "Due "}{formatRelative(t.due_date)}
                           </p>
                         )}
@@ -561,7 +561,7 @@ export default function StaffProfilePage({ params }: { params: Promise<{ id: str
                         >
                           {t.priority}
                         </Badge>
-                        <ChevronRight className="h-4 w-4 text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <ChevronRight className="h-4 w-4 text-[var(--cs-text-gentle)] opacity-0 group-hover:opacity-100 transition-opacity" />
                       </div>
                     </div>
                   </div>
@@ -575,10 +575,10 @@ export default function StaffProfilePage({ params }: { params: Promise<{ id: str
         {tab === "development" && (
           <div className="space-y-4">
             {staffTrainingNeeds.length === 0 ? (
-              <div className="rounded-2xl border-2 border-dashed border-slate-200 p-10 text-center">
-                <Brain className="h-8 w-8 text-slate-300 mx-auto mb-2" />
-                <p className="text-sm text-slate-500">No training needs identified for this staff member</p>
-                <p className="text-xs text-slate-400 mt-1">
+              <div className="rounded-2xl border-2 border-dashed border-[var(--cs-border)] p-10 text-center">
+                <Brain className="h-8 w-8 text-[var(--cs-text-gentle)] mx-auto mb-2" />
+                <p className="text-sm text-[var(--cs-text-muted)]">No training needs identified for this staff member</p>
+                <p className="text-xs text-[var(--cs-text-muted)] mt-1">
                   Training needs are identified from incidents, supervision, audits and RI challenges
                 </p>
               </div>
@@ -602,13 +602,13 @@ export default function StaffProfilePage({ params }: { params: Promise<{ id: str
                     onKeyDown={(e) => e.key === "Enter" && router.push("/learning/training-needs")}
                     className={cn(
                       "rounded-2xl border bg-white p-4 hover:shadow-md hover:-translate-y-0.5 transition-all cursor-pointer group",
-                      n.priority === "urgent" ? "border-red-200" : n.priority === "high" ? "border-orange-200" : "border-slate-100"
+                      n.priority === "urgent" ? "border-red-200" : n.priority === "high" ? "border-orange-200" : "border-[var(--cs-border-subtle)]"
                     )}
                   >
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-semibold text-slate-900">{n.title}</p>
-                        <p className="text-xs text-slate-500 mt-0.5 capitalize">{n.need_type.replace(/_/g, " ")} · Identified from {n.identified_by.replace(/_/g, " ")}</p>
+                        <p className="text-sm font-semibold text-[var(--cs-navy)]">{n.title}</p>
+                        <p className="text-xs text-[var(--cs-text-muted)] mt-0.5 capitalize">{n.need_type.replace(/_/g, " ")} · Identified from {n.identified_by.replace(/_/g, " ")}</p>
                       </div>
                       <div className="flex items-center gap-1.5 shrink-0">
                         <Badge
@@ -617,14 +617,14 @@ export default function StaffProfilePage({ params }: { params: Promise<{ id: str
                         >
                           {n.priority}
                         </Badge>
-                        <ChevronRight className="h-4 w-4 text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <ChevronRight className="h-4 w-4 text-[var(--cs-text-gentle)] opacity-0 group-hover:opacity-100 transition-opacity" />
                       </div>
                     </div>
                     {n.description && (
-                      <p className="text-xs text-slate-600 mt-2 leading-relaxed line-clamp-2">{n.description}</p>
+                      <p className="text-xs text-[var(--cs-text-secondary)] mt-2 leading-relaxed line-clamp-2">{n.description}</p>
                     )}
                     {n.deadline && (
-                      <p className="text-[10px] text-slate-400 mt-1.5 flex items-center gap-1">
+                      <p className="text-[10px] text-[var(--cs-text-muted)] mt-1.5 flex items-center gap-1">
                         <Clock className="h-3 w-3" />Deadline: {formatDate(n.deadline)}
                       </p>
                     )}
@@ -636,12 +636,12 @@ export default function StaffProfilePage({ params }: { params: Promise<{ id: str
             {/* ARIA development narrative */}
             <Card>
               <CardHeader className="pb-2">
-                <CardTitle className="text-xs font-semibold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
+                <CardTitle className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider flex items-center gap-1.5">
                   <TrendingUp className="h-3.5 w-3.5" />ARIA Development Plan
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-xs text-slate-500 mb-3">
+                <p className="text-xs text-[var(--cs-text-muted)] mb-3">
                   ARIA can analyse this staff member&apos;s training record, supervision history and identified needs to generate a personalised development plan narrative.
                 </p>
                 <Button
@@ -699,7 +699,7 @@ export default function StaffProfilePage({ params }: { params: Promise<{ id: str
 
               {/* Competency Domain Rings */}
               <div>
-                <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+                <h3 className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-3 flex items-center gap-1.5">
                   <Map className="h-3.5 w-3.5" />Competency Framework
                 </h3>
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
@@ -717,7 +717,7 @@ export default function StaffProfilePage({ params }: { params: Promise<{ id: str
                     return (
                       <div
                         key={domain.key}
-                        className={`rounded-2xl border border-slate-100 p-4 flex flex-col items-center gap-2 ${domain.bg}`}
+                        className={`rounded-2xl border border-[var(--cs-border-subtle)] p-4 flex flex-col items-center gap-2 ${domain.bg}`}
                       >
                         <div className="relative w-16 h-16">
                           <svg className="w-16 h-16 -rotate-90" viewBox="0 0 72 72">
@@ -734,11 +734,11 @@ export default function StaffProfilePage({ params }: { params: Promise<{ id: str
                         </div>
                         <div className="text-center">
                           <div className={`text-lg font-bold tabular-nums ${domain.colour}`}>{pct}%</div>
-                          <div className="text-[10px] font-medium text-slate-700 leading-tight">{domain.label}</div>
+                          <div className="text-[10px] font-medium text-[var(--cs-text-secondary)] leading-tight">{domain.label}</div>
                           {total > 0 ? (
-                            <div className="text-[9px] text-slate-400 mt-0.5">{compliant}/{total} compliant</div>
+                            <div className="text-[9px] text-[var(--cs-text-muted)] mt-0.5">{compliant}/{total} compliant</div>
                           ) : (
-                            <div className="text-[9px] text-slate-400 mt-0.5">No records</div>
+                            <div className="text-[9px] text-[var(--cs-text-muted)] mt-0.5">No records</div>
                           )}
                         </div>
                       </div>
@@ -749,13 +749,13 @@ export default function StaffProfilePage({ params }: { params: Promise<{ id: str
 
               {/* Mandatory Training Checklist */}
               <div>
-                <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+                <h3 className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-3 flex items-center gap-1.5">
                   <GraduationCap className="h-3.5 w-3.5" />Mandatory Training Checklist
                 </h3>
                 {training.filter((t) => t.is_mandatory).length === 0 ? (
-                  <div className="rounded-2xl border-2 border-dashed border-slate-200 p-8 text-center">
-                    <GraduationCap className="h-7 w-7 text-slate-300 mx-auto mb-2" />
-                    <p className="text-sm text-slate-500">No mandatory training records</p>
+                  <div className="rounded-2xl border-2 border-dashed border-[var(--cs-border)] p-8 text-center">
+                    <GraduationCap className="h-7 w-7 text-[var(--cs-text-gentle)] mx-auto mb-2" />
+                    <p className="text-sm text-[var(--cs-text-muted)]">No mandatory training records</p>
                   </div>
                 ) : (
                   <div className="rounded-2xl border bg-white overflow-hidden divide-y divide-slate-50">
@@ -774,17 +774,17 @@ export default function StaffProfilePage({ params }: { params: Promise<{ id: str
                             }
                           </div>
                           <div className="flex-1 min-w-0">
-                            <p className="text-xs font-medium text-slate-900 truncate">{t.course_name}</p>
-                            <p className="text-[10px] text-slate-400 capitalize">{t.category.replace(/_/g, " ")}{t.provider ? ` · ${t.provider}` : ""}</p>
+                            <p className="text-xs font-medium text-[var(--cs-navy)] truncate">{t.course_name}</p>
+                            <p className="text-[10px] text-[var(--cs-text-muted)] capitalize">{t.category.replace(/_/g, " ")}{t.provider ? ` · ${t.provider}` : ""}</p>
                           </div>
                           <div className="shrink-0 text-right">
                             {t.expiry_date && (
-                              <p className={`text-[10px] font-medium ${isExpired ? "text-red-600" : isExpiring ? "text-amber-600" : "text-slate-400"}`}>
+                              <p className={`text-[10px] font-medium ${isExpired ? "text-red-600" : isExpiring ? "text-amber-600" : "text-[var(--cs-text-muted)]"}`}>
                                 {isExpired ? "Expired" : isExpiring ? "Expiring" : "Expires"} {formatDate(t.expiry_date)}
                               </p>
                             )}
                             {t.completed_date && !t.expiry_date && (
-                              <p className="text-[10px] text-slate-400">Completed {formatDate(t.completed_date)}</p>
+                              <p className="text-[10px] text-[var(--cs-text-muted)]">Completed {formatDate(t.completed_date)}</p>
                             )}
                           </div>
                         </div>
@@ -800,24 +800,24 @@ export default function StaffProfilePage({ params }: { params: Promise<{ id: str
                 {/* Probation timeline */}
                 <Card>
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-xs font-semibold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
+                    <CardTitle className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider flex items-center gap-1.5">
                       <Clock className="h-3.5 w-3.5" />Probation
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
                     {staff.probation_end_date === null ? (
-                      <div className="flex items-center gap-2 text-xs text-slate-500">
+                      <div className="flex items-center gap-2 text-xs text-[var(--cs-text-muted)]">
                         <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" />
                         No probation period recorded
                       </div>
                     ) : (
                       <div className="space-y-3">
                         <div className="flex items-center justify-between text-xs">
-                          <span className="text-slate-500">Started</span>
-                          <span className="font-medium text-slate-900">{formatDate(staff.start_date)}</span>
+                          <span className="text-[var(--cs-text-muted)]">Started</span>
+                          <span className="font-medium text-[var(--cs-navy)]">{formatDate(staff.start_date)}</span>
                         </div>
                         <div className="flex items-center justify-between text-xs">
-                          <span className="text-slate-500">Ends</span>
+                          <span className="text-[var(--cs-text-muted)]">Ends</span>
                           <span className={`font-medium ${onProbation ? "text-amber-700" : "text-emerald-700"}`}>
                             {formatDate(staff.probation_end_date)}
                           </span>
@@ -830,7 +830,7 @@ export default function StaffProfilePage({ params }: { params: Promise<{ id: str
                                 style={{ width: `${probationPct}%` }}
                               />
                             </div>
-                            <div className="flex items-center justify-between text-[10px] text-slate-400">
+                            <div className="flex items-center justify-between text-[10px] text-[var(--cs-text-muted)]">
                               <span>{probationPct}% complete</span>
                               {onProbation && (
                                 <span className="text-amber-600 font-medium">In probation</span>
@@ -851,32 +851,32 @@ export default function StaffProfilePage({ params }: { params: Promise<{ id: str
                 {/* Supervision cadence */}
                 <Card>
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-xs font-semibold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
+                    <CardTitle className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider flex items-center gap-1.5">
                       <ClipboardList className="h-3.5 w-3.5" />Supervision Cadence
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-3">
                     <div className="flex items-center justify-between text-xs">
-                      <span className="text-slate-500">Total supervisions</span>
-                      <span className="font-medium text-slate-900">{completedSupervisionsList.length}</span>
+                      <span className="text-[var(--cs-text-muted)]">Total supervisions</span>
+                      <span className="font-medium text-[var(--cs-navy)]">{completedSupervisionsList.length}</span>
                     </div>
                     <div className="flex items-center justify-between text-xs">
-                      <span className="text-slate-500">Last supervision</span>
-                      <span className={`font-medium ${staff.supervision_overdue ? "text-red-600" : "text-slate-900"}`}>
+                      <span className="text-[var(--cs-text-muted)]">Last supervision</span>
+                      <span className={`font-medium ${staff.supervision_overdue ? "text-red-600" : "text-[var(--cs-navy)]"}`}>
                         {completedSupervisionsList[0] ? formatRelative(completedSupervisionsList[0].scheduled_date) : "None"}
                       </span>
                     </div>
                     {supervisionFrequency !== null && (
                       <div className="flex items-center justify-between text-xs">
-                        <span className="text-slate-500">Avg interval</span>
+                        <span className="text-[var(--cs-text-muted)]">Avg interval</span>
                         <span className={`font-medium ${supervisionFrequency > 8 ? "text-red-600" : supervisionFrequency > 6 ? "text-amber-600" : "text-emerald-700"}`}>
                           Every {supervisionFrequency} weeks
                         </span>
                       </div>
                     )}
                     {/* Frequency meter */}
-                    <div className="rounded-xl bg-slate-50 border border-slate-100 p-3 space-y-1.5">
-                      <div className="flex justify-between text-[10px] text-slate-400">
+                    <div className="rounded-xl bg-slate-50 border border-[var(--cs-border-subtle)] p-3 space-y-1.5">
+                      <div className="flex justify-between text-[10px] text-[var(--cs-text-muted)]">
                         <span>Target: every 6 weeks</span>
                         <span className={`font-medium ${staff.supervision_overdue ? "text-red-500" : "text-emerald-600"}`}>
                           {staff.supervision_overdue ? "Overdue" : "On track"}
@@ -885,7 +885,7 @@ export default function StaffProfilePage({ params }: { params: Promise<{ id: str
                       {completedSupervisionsList.slice(0, 6).map((s, i) => (
                         <div key={s.id} className="flex items-center gap-2">
                           <div className={`h-2 w-2 rounded-full shrink-0 ${s.status === "completed" ? "bg-emerald-500" : "bg-slate-300"}`} />
-                          <div className="text-[10px] text-slate-500 flex-1">{formatDate(s.scheduled_date)}</div>
+                          <div className="text-[10px] text-[var(--cs-text-muted)] flex-1">{formatDate(s.scheduled_date)}</div>
                           {s.wellbeing_score !== null && (
                             <div className={`text-[10px] font-semibold tabular-nums ${s.wellbeing_score >= 7 ? "text-emerald-600" : s.wellbeing_score >= 4 ? "text-amber-600" : "text-red-500"}`}>
                               {s.wellbeing_score}/10
@@ -907,8 +907,8 @@ export default function StaffProfilePage({ params }: { params: Promise<{ id: str
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-sm font-semibold text-slate-900">Staff Documents</h3>
-                <p className="text-xs text-slate-500 mt-0.5">DBS certificates, contracts, references, training records and more</p>
+                <h3 className="text-sm font-semibold text-[var(--cs-navy)]">Staff Documents</h3>
+                <p className="text-xs text-[var(--cs-text-muted)] mt-0.5">DBS certificates, contracts, references, training records and more</p>
               </div>
               <SmartUploadButton
                 variant="inline"
@@ -919,12 +919,12 @@ export default function StaffProfilePage({ params }: { params: Promise<{ id: str
             </div>
 
             {linkedDocs.length === 0 ? (
-              <div className="rounded-2xl border-2 border-dashed border-slate-200 p-12 text-center">
+              <div className="rounded-2xl border-2 border-dashed border-[var(--cs-border)] p-12 text-center">
                 <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-violet-50 mx-auto mb-3">
                   <Sparkles className="h-6 w-6 text-violet-500" />
                 </div>
-                <p className="text-sm font-semibold text-slate-700 mb-1">No documents linked</p>
-                <p className="text-xs text-slate-400 max-w-xs mx-auto mb-4">
+                <p className="text-sm font-semibold text-[var(--cs-text-secondary)] mb-1">No documents linked</p>
+                <p className="text-xs text-[var(--cs-text-muted)] max-w-xs mx-auto mb-4">
                   Upload DBS certificates, contracts, qualifications, right-to-work documents — ARIA will classify and extract intelligence.
                 </p>
                 <SmartUploadButton
@@ -944,8 +944,8 @@ export default function StaffProfilePage({ params }: { params: Promise<{ id: str
                   const statusBadge: Record<string, string> = {
                     review: "bg-amber-100 text-amber-700", approved: "bg-blue-100 text-blue-700",
                     actioned: "bg-emerald-100 text-emerald-700", rejected: "bg-red-100 text-red-700",
-                    analysing: "bg-violet-100 text-violet-700", pending: "bg-slate-100 text-slate-600",
-                    archived: "bg-slate-100 text-slate-500",
+                    analysing: "bg-violet-100 text-violet-700", pending: "bg-slate-100 text-[var(--cs-text-secondary)]",
+                    archived: "bg-slate-100 text-[var(--cs-text-muted)]",
                   };
                   return (
                     <div key={doc.id} className={`rounded-2xl border bg-white p-4 border-l-4 ${riskBorder[doc.ai_risk_level ?? "low"] ?? "border-l-slate-200"}`}>
@@ -955,22 +955,22 @@ export default function StaffProfilePage({ params }: { params: Promise<{ id: str
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 flex-wrap mb-1">
-                            <span className="text-sm font-semibold text-slate-900 truncate">{doc.original_file_name}</span>
+                            <span className="text-sm font-semibold text-[var(--cs-navy)] truncate">{doc.original_file_name}</span>
                             {doc.document_status && (
                               <span className={`rounded-full px-2 py-0.5 text-[10px] font-semibold capitalize ${statusBadge[doc.document_status] ?? statusBadge.pending}`}>
                                 {doc.document_status.replace(/_/g, " ")}
                               </span>
                             )}
                             {doc.ai_result?.document_category_label && (
-                              <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] text-slate-600">
+                              <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] text-[var(--cs-text-secondary)]">
                                 {doc.ai_result.document_category_label}
                               </span>
                             )}
                           </div>
                           {doc.ai_result?.ai_summary && (
-                            <p className="text-xs text-slate-600 leading-relaxed line-clamp-2">{doc.ai_result.ai_summary}</p>
+                            <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed line-clamp-2">{doc.ai_result.ai_summary}</p>
                           )}
-                          <div className="flex items-center gap-3 mt-2 text-[10px] text-slate-400">
+                          <div className="flex items-center gap-3 mt-2 text-[10px] text-[var(--cs-text-muted)]">
                             <span>{formatDate(doc.uploaded_at)}</span>
                             {doc.tasks_created.length > 0 && (
                               <span className="text-violet-600 font-medium">{doc.tasks_created.length} task{doc.tasks_created.length !== 1 ? "s" : ""} created</span>

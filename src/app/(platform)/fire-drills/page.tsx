@@ -42,7 +42,7 @@ const TYPE_CONFIG: Record<FireDrillType, { label: string; colour: string }> = {
   fire_drill:      { label: "Fire Drill",       colour: "bg-red-100 text-red-700"    },
   evacuation:      { label: "Evacuation",        colour: "bg-orange-100 text-orange-700" },
   lockdown:        { label: "Lockdown",          colour: "bg-purple-100 text-purple-700" },
-  bomb_threat:     { label: "Bomb Threat",       colour: "bg-slate-100 text-slate-700" },
+  bomb_threat:     { label: "Bomb Threat",       colour: "bg-slate-100 text-[var(--cs-text-secondary)]" },
   flood:           { label: "Flood",             colour: "bg-blue-100 text-blue-700" },
   equipment_check: { label: "Equipment Check",   colour: "bg-green-100 text-green-700" },
 };

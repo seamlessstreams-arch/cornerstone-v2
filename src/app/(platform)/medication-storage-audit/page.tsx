@@ -169,7 +169,7 @@ export default function MedicationStorageAuditPage() {
               a.overall_verdict === "fail_immediate_action" && "border-l-4 border-l-red-500"
             )}>
               <button
-                className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                 onClick={() => setExpandedId(isExpanded ? null : a.id)}
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0">

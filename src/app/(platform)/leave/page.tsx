@@ -54,7 +54,7 @@ const LEAVE_TYPE_COLORS: Record<string, string> = {
   sick: "bg-red-100 text-red-700",
   compassionate: "bg-violet-100 text-violet-700",
   parental: "bg-pink-100 text-pink-700",
-  unpaid: "bg-slate-100 text-slate-600",
+  unpaid: "bg-slate-100 text-[var(--cs-text-secondary)]",
   toil: "bg-teal-100 text-teal-700",
   training: "bg-amber-100 text-amber-700",
 };
@@ -63,7 +63,7 @@ const STATUS_COLORS: Record<string, string> = {
   pending: "bg-amber-100 text-amber-700",
   approved: "bg-emerald-100 text-emerald-700",
   declined: "bg-red-100 text-red-700",
-  cancelled: "bg-slate-100 text-slate-500",
+  cancelled: "bg-slate-100 text-[var(--cs-text-muted)]",
 };
 
 // Leave entitlement per person (mock — would come from HR integration)
@@ -104,24 +104,24 @@ function LeaveRow({ req, onClick }: { req: LeaveRequest; onClick: () => void }) 
   const needsRTW = req.return_to_work_required && !req.return_to_work_completed && req.status === "approved" && req.end_date < today;
 
   return (
-    <button onClick={onClick} className="w-full flex items-center gap-3 rounded-xl px-3 py-3 hover:bg-slate-50 transition-colors text-left group">
+    <button onClick={onClick} className="w-full flex items-center gap-3 rounded-xl px-3 py-3 hover:bg-[var(--cs-surface)] transition-colors text-left group">
       <div className={cn("h-9 w-9 rounded-xl flex items-center justify-center shrink-0", LEAVE_TYPE_COLORS[req.leave_type] || "bg-slate-100")}>
         <Icon className="h-4 w-4" />
       </div>
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
-          <span className="text-sm font-medium text-slate-900">{getStaffName(req.staff_id)}</span>
+          <span className="text-sm font-medium text-[var(--cs-navy)]">{getStaffName(req.staff_id)}</span>
           {isOnLeave && <span className="text-[10px] bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full px-2 py-0.5 font-medium">On leave now</span>}
           {needsRTW && <span className="text-[10px] bg-red-50 text-red-700 border border-red-200 rounded-full px-2 py-0.5 font-medium flex items-center gap-0.5"><AlertTriangle className="h-2.5 w-2.5" />RTW needed</span>}
         </div>
-        <div className="text-xs text-slate-500 mt-0.5">
+        <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">
           {LEAVE_TYPE_LABELS[req.leave_type as keyof typeof LEAVE_TYPE_LABELS] || req.leave_type} · {formatDate(req.start_date)}
           {req.start_date !== req.end_date && ` – ${formatDate(req.end_date)}`} · {req.total_days} day{req.total_days !== 1 ? "s" : ""}
         </div>
       </div>
       <div className="flex items-center gap-2 shrink-0">
-        <Badge className={cn("text-[10px] rounded-full", STATUS_COLORS[req.status] || "bg-slate-100 text-slate-500")}>{req.status}</Badge>
-        <ChevronRight className="h-3.5 w-3.5 text-slate-300 opacity-0 group-hover:opacity-100" />
+        <Badge className={cn("text-[10px] rounded-full", STATUS_COLORS[req.status] || "bg-slate-100 text-[var(--cs-text-muted)]")}>{req.status}</Badge>
+        <ChevronRight className="h-3.5 w-3.5 text-[var(--cs-text-gentle)] opacity-0 group-hover:opacity-100" />
       </div>
     </button>
   );
@@ -132,13 +132,13 @@ function RTWPanel({ req, onClose }: { req: LeaveRequest; onClose: () => void }) 
   const [signed, setSigned] = useState(false);
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-6 space-y-5">
+      <div className="bg-white rounded-2xl shadow-[var(--cs-shadow-elevated)] w-full max-w-lg p-6 space-y-5">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-lg font-bold text-slate-900">Return to Work Interview</h2>
-            <p className="text-sm text-slate-500">{getStaffName(req.staff_id)} · {formatDate(req.start_date)} – {formatDate(req.end_date)}</p>
+            <h2 className="text-lg font-bold text-[var(--cs-navy)]">Return to Work Interview</h2>
+            <p className="text-sm text-[var(--cs-text-muted)]">{getStaffName(req.staff_id)} · {formatDate(req.start_date)} – {formatDate(req.end_date)}</p>
           </div>
-          <button onClick={onClose} className="text-slate-400 hover:text-slate-600 text-xl font-bold">×</button>
+          <button onClick={onClose} className="text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] text-xl font-bold">×</button>
         </div>
         <div className="space-y-4">
           <div className="rounded-xl bg-amber-50 border border-amber-200 p-3 text-sm text-amber-800">
@@ -146,9 +146,9 @@ function RTWPanel({ req, onClose }: { req: LeaveRequest; onClose: () => void }) 
             {req.reason && <div className="mt-1 text-amber-700">Reason given: {req.reason}</div>}
           </div>
           <div>
-            <label className="text-xs font-semibold text-slate-700 block mb-1">Interview notes</label>
+            <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1">Interview notes</label>
             <textarea
-              className="w-full rounded-xl border border-slate-200 p-3 text-sm resize-none h-28 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full rounded-xl border border-[var(--cs-border)] p-3 text-sm resize-none h-28 focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Record the return to work interview discussion..."
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
@@ -156,7 +156,7 @@ function RTWPanel({ req, onClose }: { req: LeaveRequest; onClose: () => void }) 
           </div>
           <div className="flex items-center gap-3">
             <input type="checkbox" id="rtw-sign" checked={signed} onChange={(e) => setSigned(e.target.checked)} className="rounded" />
-            <label htmlFor="rtw-sign" className="text-sm text-slate-700">I confirm this return to work interview has been completed</label>
+            <label htmlFor="rtw-sign" className="text-sm text-[var(--cs-text-secondary)]">I confirm this return to work interview has been completed</label>
           </div>
         </div>
         <div className="flex items-center gap-3 pt-2">
@@ -263,7 +263,7 @@ export default function LeavePage() {
         {/* Loading */}
         {isLoading && (
           <div className="flex items-center justify-center py-20">
-            <Loader2 className="h-6 w-6 animate-spin text-slate-400" />
+            <Loader2 className="h-6 w-6 animate-spin text-[var(--cs-text-muted)]" />
           </div>
         )}
 
@@ -298,10 +298,10 @@ export default function LeavePage() {
                 { label: "RTW Outstanding", value: stats.needsRTW, icon: AlertTriangle, color: "text-red-600", bg: "bg-red-50" },
                 { label: "Sick This Month", value: stats.sickMonth, icon: Stethoscope, color: "text-rose-600", bg: "bg-rose-50" },
               ].map(({ label, value, icon: Icon, color, bg }) => (
-                <div key={label} className="rounded-2xl border border-slate-200 bg-white p-5">
+                <div key={label} className="rounded-2xl border border-[var(--cs-border)] bg-white p-5">
                   <div className="flex items-start justify-between gap-3">
                     <div>
-                      <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">{label}</div>
+                      <div className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider">{label}</div>
                       <div className={cn("mt-1 text-3xl font-bold tabular-nums", color)}>{value}</div>
                     </div>
                     <div className={cn("rounded-2xl p-3", bg)}>
@@ -320,7 +320,7 @@ export default function LeavePage() {
                   onClick={() => setTab(id)}
                   className={cn(
                     "flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-all",
-                    tab === id ? "bg-white text-slate-900 shadow-sm" : "text-slate-500 hover:text-slate-700"
+                    tab === id ? "bg-white text-[var(--cs-navy)] shadow-sm" : "text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)]"
                   )}
                 >
                   <Icon className="h-3.5 w-3.5" />
@@ -346,9 +346,9 @@ export default function LeavePage() {
                             <div key={staff.id} className="space-y-1.5">
                               <div className="flex items-center gap-3">
                                 <Avatar name={staff.full_name} size="xs" />
-                                <span className="text-sm font-medium text-slate-900 flex-1">{staff.full_name}</span>
-                                <div className="text-xs text-slate-500 text-right">
-                                  <span className="font-semibold text-slate-900">{ent.taken}</span>/{ent.total} taken
+                                <span className="text-sm font-medium text-[var(--cs-navy)] flex-1">{staff.full_name}</span>
+                                <div className="text-xs text-[var(--cs-text-muted)] text-right">
+                                  <span className="font-semibold text-[var(--cs-navy)]">{ent.taken}</span>/{ent.total} taken
                                   {ent.pending > 0 && <span className="text-amber-600 ml-1">+{ent.pending} pending</span>}
                                 </div>
                               </div>
@@ -369,7 +369,7 @@ export default function LeavePage() {
                     </CardHeader>
                     <CardContent>
                       {stats.onLeaveNow.length === 0 ? (
-                        <div className="py-4 text-center text-sm text-slate-400">No staff on leave today</div>
+                        <div className="py-4 text-center text-sm text-[var(--cs-text-muted)]">No staff on leave today</div>
                       ) : (
                         <div className="space-y-2">
                           {stats.onLeaveNow.map((r) => {
@@ -378,8 +378,8 @@ export default function LeavePage() {
                               <div key={r.id} className="flex items-center gap-3 rounded-xl bg-slate-50 px-3 py-2">
                                 <Avatar name={getStaffName(r.staff_id)} size="sm" />
                                 <div className="flex-1 min-w-0">
-                                  <div className="text-sm font-medium text-slate-900 truncate">{getStaffName(r.staff_id)}</div>
-                                  <div className="text-[10px] text-slate-500">Back {formatDate(r.end_date)}</div>
+                                  <div className="text-sm font-medium text-[var(--cs-navy)] truncate">{getStaffName(r.staff_id)}</div>
+                                  <div className="text-[10px] text-[var(--cs-text-muted)]">Back {formatDate(r.end_date)}</div>
                                 </div>
                                 <Badge className={cn("text-[9px] rounded-full", LEAVE_TYPE_COLORS[r.leave_type])}>
                                   <Icon className="h-2.5 w-2.5 mr-0.5" />
@@ -400,16 +400,16 @@ export default function LeavePage() {
                     </CardHeader>
                     <CardContent>
                       {leaveRequests.filter((r) => r.status === "pending").length === 0 ? (
-                        <div className="py-4 text-center text-sm text-slate-400">No pending requests</div>
+                        <div className="py-4 text-center text-sm text-[var(--cs-text-muted)]">No pending requests</div>
                       ) : (
                         <div className="space-y-2">
                           {leaveRequests.filter((r) => r.status === "pending").map((r) => (
                             <div key={r.id} className="rounded-xl border border-amber-200 bg-amber-50 p-3">
                               <div className="flex items-center justify-between">
-                                <div className="text-sm font-medium text-slate-900">{getStaffName(r.staff_id)}</div>
+                                <div className="text-sm font-medium text-[var(--cs-navy)]">{getStaffName(r.staff_id)}</div>
                                 <span className="text-xs text-amber-700">{r.total_days}d</span>
                               </div>
-                              <div className="text-xs text-slate-500 mt-0.5">{formatDate(r.start_date)} – {formatDate(r.end_date)}</div>
+                              <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">{formatDate(r.start_date)} – {formatDate(r.end_date)}</div>
                               <div className="flex gap-2 mt-2">
                                 <Button size="sm" className="h-7 text-xs bg-emerald-600 hover:bg-emerald-700 flex-1" onClick={() => handleApprove(r.id)}>
                                   <CheckCircle2 className="h-3 w-3 mr-1" />Approve
@@ -434,7 +434,7 @@ export default function LeavePage() {
                 <CardHeader className="pb-3">
                   <div className="flex items-center gap-3 flex-wrap">
                     <div className="relative flex-1 min-w-48">
-                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
                       <Input placeholder="Search staff..." value={search} onChange={(e) => setSearch(e.target.value)} className="pl-9 h-9" />
                     </div>
                     <div className="flex gap-1">
@@ -443,18 +443,18 @@ export default function LeavePage() {
                           key={s}
                           onClick={() => setStatusFilter(s)}
                           className={cn("px-3 py-1.5 rounded-lg text-xs font-medium capitalize transition-all",
-                            statusFilter === s ? "bg-slate-900 text-white" : "bg-slate-100 text-slate-600 hover:bg-slate-200")}
+                            statusFilter === s ? "bg-slate-900 text-white" : "bg-slate-100 text-[var(--cs-text-secondary)] hover:bg-slate-200")}
                         >
                           {s}
                         </button>
                       ))}
                     </div>
                     <div className="flex items-center gap-1.5">
-                      <ArrowUpDown className="h-3.5 w-3.5 text-slate-400" />
+                      <ArrowUpDown className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
                       <select
                         value={sortBy}
                         onChange={(e) => setSortBy(e.target.value as "date" | "staff" | "type")}
-                        className="h-9 rounded-lg border border-slate-200 bg-white px-2.5 text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-900"
+                        className="h-9 rounded-lg border border-[var(--cs-border)] bg-white px-2.5 text-xs text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-slate-900"
                       >
                         <option value="date">Date</option>
                         <option value="staff">Staff A–Z</option>
@@ -466,7 +466,7 @@ export default function LeavePage() {
                 <CardContent>
                   <div className="divide-y divide-slate-100">
                     {filteredRequests.length === 0 ? (
-                      <div className="py-12 text-center text-sm text-slate-400">No leave requests match your filter</div>
+                      <div className="py-12 text-center text-sm text-[var(--cs-text-muted)]">No leave requests match your filter</div>
                     ) : (
                       filteredRequests.map((req) => (
                         <LeaveRow key={req.id} req={req} onClick={() => setSelectedReq(req)} />
@@ -487,21 +487,21 @@ export default function LeavePage() {
                   <div className="overflow-x-auto">
                     <div className="min-w-[700px]">
                       <div className="grid grid-cols-[140px_1fr] gap-0">
-                        <div className="text-xs font-semibold text-slate-500 pb-2">Staff</div>
+                        <div className="text-xs font-semibold text-[var(--cs-text-muted)] pb-2">Staff</div>
                         <div className="grid grid-cols-30 gap-0 pb-2">
                           {Array.from({ length: 30 }, (_, i) => (
-                            <div key={i} className="text-[9px] text-center text-slate-400">{i + 1}</div>
+                            <div key={i} className="text-[9px] text-center text-[var(--cs-text-muted)]">{i + 1}</div>
                           ))}
                         </div>
                         {activeStaff.map((staff) => {
                           const staffLeave = leaveRequests.filter((r) => r.staff_id === staff.id && r.status === "approved");
                           return (
                             <React.Fragment key={staff.id}>
-                              <div className="flex items-center gap-2 py-1.5 border-t border-slate-100">
+                              <div className="flex items-center gap-2 py-1.5 border-t border-[var(--cs-border-subtle)]">
                                 <Avatar name={staff.full_name} size="xs" />
-                                <span className="text-xs text-slate-700 truncate">{staff.first_name}</span>
+                                <span className="text-xs text-[var(--cs-text-secondary)] truncate">{staff.first_name}</span>
                               </div>
-                              <div className="relative border-t border-slate-100 py-1.5">
+                              <div className="relative border-t border-[var(--cs-border-subtle)] py-1.5">
                                 <div className="flex gap-0 h-6">
                                   {Array.from({ length: 30 }, (_, i) => {
                                     const d = new Date();
@@ -529,7 +529,7 @@ export default function LeavePage() {
                         })}
                       </div>
                       {/* Legend */}
-                      <div className="flex gap-4 mt-4 pt-3 border-t border-slate-100">
+                      <div className="flex gap-4 mt-4 pt-3 border-t border-[var(--cs-border-subtle)]">
                         {[
                           { color: "bg-blue-300", label: "Annual Leave" },
                           { color: "bg-red-300", label: "Sickness" },
@@ -538,7 +538,7 @@ export default function LeavePage() {
                         ].map(({ color, label }) => (
                           <div key={label} className="flex items-center gap-1.5">
                             <div className={cn("h-3 w-6 rounded-sm", color)} />
-                            <span className="text-xs text-slate-500">{label}</span>
+                            <span className="text-xs text-[var(--cs-text-muted)]">{label}</span>
                           </div>
                         ))}
                       </div>
@@ -563,26 +563,26 @@ export default function LeavePage() {
                       {activeStaff.map((staff) => {
                         const sick = SICKNESS_STATS[staff.id] || { episodes: 0, days: 0, bradford: 0, lastSick: null };
                         return (
-                          <div key={staff.id} className="flex items-center gap-4 rounded-xl px-3 py-3 hover:bg-slate-50 transition-colors">
+                          <div key={staff.id} className="flex items-center gap-4 rounded-xl px-3 py-3 hover:bg-[var(--cs-surface)] transition-colors">
                             <Avatar name={staff.full_name} size="sm" />
                             <div className="flex-1 min-w-0">
-                              <div className="text-sm font-medium text-slate-900">{staff.full_name}</div>
-                              <div className="text-xs text-slate-500">{staff.job_title}</div>
+                              <div className="text-sm font-medium text-[var(--cs-navy)]">{staff.full_name}</div>
+                              <div className="text-xs text-[var(--cs-text-muted)]">{staff.job_title}</div>
                             </div>
                             <div className="text-center">
-                              <div className="text-sm font-semibold text-slate-900">{sick.episodes}</div>
-                              <div className="text-[10px] text-slate-400">Episodes</div>
+                              <div className="text-sm font-semibold text-[var(--cs-navy)]">{sick.episodes}</div>
+                              <div className="text-[10px] text-[var(--cs-text-muted)]">Episodes</div>
                             </div>
                             <div className="text-center">
-                              <div className="text-sm font-semibold text-slate-900">{sick.days}</div>
-                              <div className="text-[10px] text-slate-400">Days</div>
+                              <div className="text-sm font-semibold text-[var(--cs-navy)]">{sick.days}</div>
+                              <div className="text-[10px] text-[var(--cs-text-muted)]">Days</div>
                             </div>
                             <div className="text-center min-w-24">
                               <BradfordBadge score={sick.bradford} />
-                              <div className="text-[10px] text-slate-400 mt-0.5">Bradford</div>
+                              <div className="text-[10px] text-[var(--cs-text-muted)] mt-0.5">Bradford</div>
                             </div>
                             {sick.lastSick ? (
-                              <div className="text-right text-xs text-slate-400">Last: {formatDate(sick.lastSick)}</div>
+                              <div className="text-right text-xs text-[var(--cs-text-muted)]">Last: {formatDate(sick.lastSick)}</div>
                             ) : (
                               <div className="text-right text-xs text-emerald-600 font-medium">No absences</div>
                             )}

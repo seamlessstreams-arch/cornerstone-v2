@@ -24,7 +24,7 @@ import type { AdoptionStatus, AdoptionIntroductionPhase, AdoptionRecord } from "
 /* ── helpers ───────────────────────────────────────────────────────────────── */
 
 const STATUS_CLR: Record<AdoptionStatus, string> = {
-  plan_being_explored: "bg-slate-100 text-slate-800",
+  plan_being_explored: "bg-slate-100 text-[var(--cs-navy)]",
   placement_order_granted: "bg-blue-100 text-blue-800",
   family_finding: "bg-amber-100 text-amber-800",
   matched: "bg-purple-100 text-purple-800",

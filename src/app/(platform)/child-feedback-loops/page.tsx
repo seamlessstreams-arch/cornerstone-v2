@@ -39,7 +39,7 @@ const decisionColour: Record<string, string> = {
   acted_on_in_part: "bg-blue-100 text-blue-800",
   discussed_and_explored: "bg-purple-100 text-purple-800",
   cannot_do_explained: "bg-amber-100 text-amber-800",
-  pending_consideration: "bg-slate-100 text-slate-800",
+  pending_consideration: "bg-slate-100 text-[var(--cs-navy)]",
 };
 
 const exportCols: ExportColumn<ChildFeedbackLoop>[] = [
@@ -170,7 +170,7 @@ export default function ChildFeedbackLoopsPage() {
           return (
             <div key={f.id} className="rounded-xl border bg-white overflow-hidden">
               <button
-                className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                 onClick={() => setExpandedId(isExpanded ? null : f.id)}
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0">

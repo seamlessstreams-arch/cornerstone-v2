@@ -195,7 +195,7 @@ export default function OfstedSelfEvaluationPage() {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <input
               placeholder="Search strengths, evidence, development areas..."
-              className="w-full rounded-lg border border-slate-200 bg-white pl-9 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900"
+              className="w-full rounded-lg border border-[var(--cs-border)] bg-white pl-9 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
@@ -205,7 +205,7 @@ export default function OfstedSelfEvaluationPage() {
             <select
               value={filterGrade}
               onChange={(e) => setFilterGrade(e.target.value)}
-              className="rounded-lg border border-slate-200 bg-white px-2 py-2 text-sm text-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-900"
+              className="rounded-lg border border-[var(--cs-border)] bg-white px-2 py-2 text-sm text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-slate-900"
             >
               <option value="all">All Grades</option>
               <option value="outstanding">Outstanding</option>
@@ -219,7 +219,7 @@ export default function OfstedSelfEvaluationPage() {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as "area" | "grade")}
-              className="rounded-lg border border-slate-200 bg-white px-2 py-2 text-sm text-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-900"
+              className="rounded-lg border border-[var(--cs-border)] bg-white px-2 py-2 text-sm text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-slate-900"
             >
               <option value="area">Judgement Area</option>
               <option value="grade">Grade</option>
@@ -231,7 +231,7 @@ export default function OfstedSelfEvaluationPage() {
         <div className="space-y-3">
           {filtered.length === 0 && (
             <div className="text-center py-12 text-muted-foreground">
-              <ClipboardCheck className="h-10 w-10 mx-auto mb-3 text-slate-300" />
+              <ClipboardCheck className="h-10 w-10 mx-auto mb-3 text-[var(--cs-text-gentle)]" />
               No judgement areas match your filters.
             </div>
           )}
@@ -247,7 +247,7 @@ export default function OfstedSelfEvaluationPage() {
               >
                 {/* collapsed header */}
                 <button
-                  className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                  className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                   onClick={() => setExpandedId(isExpanded ? null : item.id)}
                 >
                   <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -287,7 +287,7 @@ export default function OfstedSelfEvaluationPage() {
                       <CardContent>
                         <ul className="space-y-2">
                           {item.strengths.map((s, i) => (
-                            <li key={i} className="flex items-start gap-2 text-sm text-slate-700">
+                            <li key={i} className="flex items-start gap-2 text-sm text-[var(--cs-text-secondary)]">
                               <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400 shrink-0 mt-0.5" />
                               {s}
                             </li>
@@ -307,7 +307,7 @@ export default function OfstedSelfEvaluationPage() {
                       <CardContent>
                         <ul className="space-y-2">
                           {item.evidence.map((e, i) => (
-                            <li key={i} className="flex items-start gap-2 text-sm text-slate-700">
+                            <li key={i} className="flex items-start gap-2 text-sm text-[var(--cs-text-secondary)]">
                               <ShieldCheck className="h-3.5 w-3.5 text-blue-400 shrink-0 mt-0.5" />
                               {e}
                             </li>
@@ -327,7 +327,7 @@ export default function OfstedSelfEvaluationPage() {
                       <CardContent>
                         <ul className="space-y-2">
                           {item.areas_for_development.map((a, i) => (
-                            <li key={i} className="flex items-start gap-2 text-sm text-slate-700">
+                            <li key={i} className="flex items-start gap-2 text-sm text-[var(--cs-text-secondary)]">
                               <Target className="h-3.5 w-3.5 text-amber-400 shrink-0 mt-0.5" />
                               {a}
                             </li>
@@ -348,8 +348,8 @@ export default function OfstedSelfEvaluationPage() {
                         <CardContent>
                           <div className="space-y-3">
                             {item.actions.map((action, i) => (
-                              <div key={i} className="rounded-lg border border-slate-200 bg-white p-3">
-                                <p className="text-sm text-slate-700 font-medium">{action.action}</p>
+                              <div key={i} className="rounded-lg border border-[var(--cs-border)] bg-white p-3">
+                                <p className="text-sm text-[var(--cs-text-secondary)] font-medium">{action.action}</p>
                                 <div className="flex items-center gap-4 mt-2 text-xs text-muted-foreground">
                                   <span className="flex items-center gap-1">
                                     <User className="h-3 w-3" />

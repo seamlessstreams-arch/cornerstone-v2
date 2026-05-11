@@ -2,7 +2,17 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 function Card({ className, ...props }: React.ComponentProps<"div">) {
-  return <div className={cn("rounded-2xl border border-slate-200 bg-white shadow-sm", className)} {...props} />;
+  return (
+    <div
+      className={cn(
+        "rounded-2xl border bg-[var(--cs-surface-elevated)] border-[var(--cs-border)]",
+        "shadow-[var(--cs-shadow-soft)] transition-shadow duration-200",
+        "hover:shadow-[var(--cs-shadow-card)]",
+        className,
+      )}
+      {...props}
+    />
+  );
 }
 
 function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
@@ -10,11 +20,20 @@ function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
 }
 
 function CardTitle({ className, ...props }: React.ComponentProps<"h3">) {
-  return <h3 className={cn("text-lg font-semibold text-slate-900 leading-tight", className)} {...props} />;
+  return (
+    <h3
+      className={cn(
+        "text-lg font-semibold leading-tight tracking-[-0.01em]",
+        "text-[var(--cs-navy)]",
+        className,
+      )}
+      {...props}
+    />
+  );
 }
 
 function CardDescription({ className, ...props }: React.ComponentProps<"p">) {
-  return <p className={cn("text-sm text-slate-500", className)} {...props} />;
+  return <p className={cn("text-sm text-[var(--cs-text-muted)] leading-relaxed", className)} {...props} />;
 }
 
 function CardContent({ className, ...props }: React.ComponentProps<"div">) {

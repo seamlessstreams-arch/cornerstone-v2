@@ -346,7 +346,7 @@ export default function VoiceOfTheChildPage() {
               <div className="space-y-2">
                 <label className="text-sm font-medium">Child&apos;s Words</label>
                 <textarea
-                  className="w-full min-h-[80px] p-3 text-sm border rounded-md resize-y focus:outline-none focus:ring-2 focus:ring-indigo-200"
+                  className="w-full min-h-[80px] p-3 text-sm border rounded-md resize-y focus:outline-none focus:ring-2 focus:ring-[var(--cs-aria-gold)]/30"
                   placeholder="Record exactly what the child said, in their own words..."
                   value={newChildWords}
                   onChange={(e) => setNewChildWords(e.target.value)}
@@ -355,7 +355,7 @@ export default function VoiceOfTheChildPage() {
               <div className="space-y-2">
                 <label className="text-sm font-medium">Summary</label>
                 <textarea
-                  className="w-full min-h-[60px] p-3 text-sm border rounded-md resize-y focus:outline-none focus:ring-2 focus:ring-indigo-200"
+                  className="w-full min-h-[60px] p-3 text-sm border rounded-md resize-y focus:outline-none focus:ring-2 focus:ring-[var(--cs-aria-gold)]/30"
                   placeholder="Brief summary for records..."
                   value={newSummary}
                   onChange={(e) => setNewSummary(e.target.value)}
@@ -364,7 +364,7 @@ export default function VoiceOfTheChildPage() {
               <div className="space-y-2">
                 <label className="text-sm font-medium">Action Taken</label>
                 <textarea
-                  className="w-full min-h-[60px] p-3 text-sm border rounded-md resize-y focus:outline-none focus:ring-2 focus:ring-indigo-200"
+                  className="w-full min-h-[60px] p-3 text-sm border rounded-md resize-y focus:outline-none focus:ring-2 focus:ring-[var(--cs-aria-gold)]/30"
                   placeholder="What was done in response..."
                   value={newActionTaken}
                   onChange={(e) => setNewActionTaken(e.target.value)}
@@ -373,7 +373,7 @@ export default function VoiceOfTheChildPage() {
               <div className="space-y-2">
                 <label className="text-sm font-medium">Staff Response (shared with child)</label>
                 <textarea
-                  className="w-full min-h-[60px] p-3 text-sm border rounded-md resize-y focus:outline-none focus:ring-2 focus:ring-indigo-200"
+                  className="w-full min-h-[60px] p-3 text-sm border rounded-md resize-y focus:outline-none focus:ring-2 focus:ring-[var(--cs-aria-gold)]/30"
                   placeholder="Your response to the child..."
                   value={newStaffResponse}
                   onChange={(e) => setNewStaffResponse(e.target.value)}

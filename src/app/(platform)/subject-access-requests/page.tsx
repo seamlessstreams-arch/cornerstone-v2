@@ -38,7 +38,7 @@ import {
 /* ── local config (colours not serializable) ────────────────────────────── */
 
 const STATUS_CLR: Record<SubjectAccessRequestStatus, string> = {
-  received: "bg-slate-100 text-slate-700",
+  received: "bg-slate-100 text-[var(--cs-text-secondary)]",
   identity_verified: "bg-blue-100 text-blue-800",
   in_progress: "bg-amber-100 text-amber-800",
   redaction: "bg-purple-100 text-purple-800",
@@ -282,7 +282,7 @@ export default function SubjectAccessRequestsPage() {
                       </div>
                       <div className="bg-muted/40 rounded p-2 text-center">
                         <p className="font-medium text-xs">DPO Consulted</p>
-                        <p className={cn("text-xs font-bold", r.dpo_consulted ? "text-green-700" : "text-slate-500")}>{r.dpo_consulted ? "Yes" : "No"}</p>
+                        <p className={cn("text-xs font-bold", r.dpo_consulted ? "text-green-700" : "text-[var(--cs-text-muted)]")}>{r.dpo_consulted ? "Yes" : "No"}</p>
                       </div>
                     </div>
 

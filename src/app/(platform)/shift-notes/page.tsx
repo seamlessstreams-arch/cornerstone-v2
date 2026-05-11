@@ -28,7 +28,7 @@ const SHIFT_META: Record<ShiftNoteShiftType, { icon: React.ReactNode; color: str
   morning:   { icon: <Sun className="h-4 w-4" />,    color: "bg-amber-100 text-amber-800",   times: "07:00 – 14:00" },
   afternoon: { icon: <Sunset className="h-4 w-4" />, color: "bg-orange-100 text-orange-800", times: "14:00 – 21:00" },
   evening:   { icon: <Moon className="h-4 w-4" />,   color: "bg-indigo-100 text-indigo-800", times: "21:00 – 23:00" },
-  night:     { icon: <Moon className="h-4 w-4" />,   color: "bg-slate-100 text-slate-800",   times: "23:00 – 07:00" },
+  night:     { icon: <Moon className="h-4 w-4" />,   color: "bg-slate-100 text-[var(--cs-navy)]",   times: "23:00 – 07:00" },
   sleep_in:  { icon: <Moon className="h-4 w-4" />,   color: "bg-purple-100 text-purple-800", times: "23:00 – 07:00" },
 };
 

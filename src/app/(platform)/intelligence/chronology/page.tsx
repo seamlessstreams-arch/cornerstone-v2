@@ -56,7 +56,7 @@ const SEV_CLASSES: Record<string, string> = {
   critical: "bg-red-100 text-red-800",
   high:     "bg-orange-100 text-orange-800",
   medium:   "bg-amber-100 text-amber-800",
-  low:      "bg-slate-100 text-slate-700",
+  low:      "bg-slate-100 text-[var(--cs-text-secondary)]",
 };
 
 // ── Parse raw ARIA text into chronology rows ──────────────────────────────────
@@ -249,7 +249,7 @@ export default function ChronologyIntelligencePage() {
 
               {/* Child selector */}
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-slate-600 block">
+                <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block">
                   Young Person
                 </label>
                 {ypQuery.isLoading ? (
@@ -258,7 +258,7 @@ export default function ChronologyIntelligencePage() {
                   <select
                     value={selectedChildId}
                     onChange={(e) => setSelectedChildId(e.target.value)}
-                    className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-400"
+                    className="w-full rounded-xl border border-[var(--cs-border)] bg-white px-3 py-2 text-sm text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-violet-400"
                   >
                     <option value="">Select a young person…</option>
                     {youngPeople.map((yp) => {
@@ -275,7 +275,7 @@ export default function ChronologyIntelligencePage() {
 
               {/* Period selector */}
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-slate-600 block">
+                <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block">
                   Period
                 </label>
                 <div className="flex flex-wrap gap-2">
@@ -287,7 +287,7 @@ export default function ChronologyIntelligencePage() {
                         "rounded-full px-3 py-1.5 text-xs font-medium transition-colors border",
                         selectedPeriod === opt.value
                           ? "bg-violet-600 text-white border-violet-600"
-                          : "bg-white text-slate-600 border-slate-200 hover:border-violet-300 hover:text-violet-700"
+                          : "bg-white text-[var(--cs-text-secondary)] border-[var(--cs-border)] hover:border-violet-300 hover:text-violet-700"
                       )}
                     >
                       {opt.label}
@@ -299,9 +299,9 @@ export default function ChronologyIntelligencePage() {
               {/* Paste records / notes */}
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between">
-                  <label className="text-xs font-semibold text-slate-600 block">
+                  <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block">
                     Paste records or notes to include{" "}
-                    <span className="font-normal text-slate-400">(optional)</span>
+                    <span className="font-normal text-[var(--cs-text-muted)]">(optional)</span>
                   </label>
                   <DictationButton
                     size="sm"
@@ -315,13 +315,13 @@ export default function ChronologyIntelligencePage() {
                   onChange={(e) => setPastedNotes(e.target.value)}
                   placeholder="Paste any relevant records, log entries, or notes here…"
                   rows={4}
-                  className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-700 resize-none focus:outline-none focus:ring-2 focus:ring-violet-400 placeholder:text-slate-400"
+                  className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2.5 text-sm text-[var(--cs-text-secondary)] resize-none focus:outline-none focus:ring-2 focus:ring-violet-400 placeholder:text-[var(--cs-text-muted)]"
                 />
               </div>
 
               {/* Style selector */}
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-slate-600 block">
+                <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block">
                   Writing Style
                 </label>
                 <div className="grid sm:grid-cols-3 gap-2">
@@ -333,16 +333,16 @@ export default function ChronologyIntelligencePage() {
                         "rounded-xl border p-3 text-left transition-all",
                         selectedStyle === opt.value
                           ? "border-violet-400 bg-violet-50 ring-1 ring-violet-300"
-                          : "border-slate-200 bg-white hover:border-violet-200 hover:bg-violet-50/40"
+                          : "border-[var(--cs-border)] bg-white hover:border-violet-200 hover:bg-violet-50/40"
                       )}
                     >
                       <div className={cn(
                         "text-xs font-semibold mb-0.5",
-                        selectedStyle === opt.value ? "text-violet-700" : "text-slate-700"
+                        selectedStyle === opt.value ? "text-violet-700" : "text-[var(--cs-text-secondary)]"
                       )}>
                         {opt.label}
                       </div>
-                      <div className="text-[10px] text-slate-400 leading-tight">
+                      <div className="text-[10px] text-[var(--cs-text-muted)] leading-tight">
                         {opt.description}
                       </div>
                     </button>
@@ -388,13 +388,13 @@ export default function ChronologyIntelligencePage() {
                     <FileText className="h-4 w-4 text-violet-400" />
                     Chronology Output
                     {isGenerating && (
-                      <Loader2 className="h-3.5 w-3.5 text-slate-400 animate-spin ml-1" />
+                      <Loader2 className="h-3.5 w-3.5 text-[var(--cs-text-muted)] animate-spin ml-1" />
                     )}
                   </CardTitle>
                   {isDone && rawOutput && (
                     <button
                       onClick={handleCopy}
-                      className="flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors"
+                      className="flex items-center gap-1.5 rounded-lg border border-[var(--cs-border)] bg-white px-2.5 py-1.5 text-xs font-medium text-[var(--cs-text-secondary)] hover:bg-[var(--cs-surface)] transition-colors"
                     >
                       <Copy className="h-3.5 w-3.5" />
                       {copied ? "Copied!" : "Copy all"}
@@ -407,9 +407,9 @@ export default function ChronologyIntelligencePage() {
                   <div className="space-y-1.5">
                     {/* Table header */}
                     <div className="grid grid-cols-[120px_1fr_160px] gap-2 px-3 py-1.5 rounded-lg bg-slate-100">
-                      <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Date</div>
-                      <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Event</div>
-                      <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Significance</div>
+                      <div className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider">Date</div>
+                      <div className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider">Event</div>
+                      <div className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider">Significance</div>
                     </div>
 
                     {/* Rows */}
@@ -420,18 +420,18 @@ export default function ChronologyIntelligencePage() {
                           "grid grid-cols-[120px_1fr_160px] gap-2 rounded-xl border px-3 py-2.5 text-xs",
                           row.isHigh
                             ? "border-red-200 bg-red-50"
-                            : "border-slate-100 bg-white"
+                            : "border-[var(--cs-border-subtle)] bg-white"
                         )}
                       >
                         <div className={cn(
                           "font-medium shrink-0",
-                          row.isHigh ? "text-red-700" : "text-slate-500"
+                          row.isHigh ? "text-red-700" : "text-[var(--cs-text-muted)]"
                         )}>
                           {row.date}
                         </div>
                         <div className={cn(
                           "leading-relaxed",
-                          row.isHigh ? "text-red-900 font-medium" : "text-slate-800"
+                          row.isHigh ? "text-red-900 font-medium" : "text-[var(--cs-navy)]"
                         )}>
                           {row.isHigh && (
                             <AlertTriangle className="h-3 w-3 inline mr-1 text-red-500 shrink-0" />
@@ -440,7 +440,7 @@ export default function ChronologyIntelligencePage() {
                         </div>
                         <div className={cn(
                           "leading-relaxed",
-                          row.isHigh ? "text-red-700 font-medium" : "text-slate-500"
+                          row.isHigh ? "text-red-700 font-medium" : "text-[var(--cs-text-muted)]"
                         )}>
                           {row.significance}
                         </div>
@@ -449,14 +449,14 @@ export default function ChronologyIntelligencePage() {
                   </div>
                 ) : (
                   /* Fallback: raw text when parsing yields no table rows */
-                  <pre className="whitespace-pre-wrap text-xs text-slate-700 leading-relaxed font-sans">
+                  <pre className="whitespace-pre-wrap text-xs text-[var(--cs-text-secondary)] leading-relaxed font-sans">
                     {rawOutput}
                   </pre>
                 )}
 
                 {/* Streaming cursor */}
                 {isGenerating && (
-                  <div className="mt-2 flex items-center gap-1.5 text-xs text-slate-400">
+                  <div className="mt-2 flex items-center gap-1.5 text-xs text-[var(--cs-text-muted)]">
                     <Loader2 className="h-3 w-3 animate-spin" />
                     ARIA is writing…
                   </div>
@@ -483,7 +483,7 @@ export default function ChronologyIntelligencePage() {
           <Card>
             <CardHeader className="pb-3">
               <CardTitle className="flex items-center gap-2 text-sm font-semibold">
-                <ChevronRight className="h-4 w-4 text-slate-400" />
+                <ChevronRight className="h-4 w-4 text-[var(--cs-text-muted)]" />
                 Chronology Tips
               </CardTitle>
             </CardHeader>
@@ -496,7 +496,7 @@ export default function ChronologyIntelligencePage() {
                   "Identify gaps — periods with no entries",
                   "Theme your chronology by domain (health, education, placement, etc.)",
                 ].map((tip) => (
-                  <li key={tip} className="flex items-start gap-2 text-xs text-slate-600">
+                  <li key={tip} className="flex items-start gap-2 text-xs text-[var(--cs-text-secondary)]">
                     <ChevronRight className="h-3.5 w-3.5 text-violet-400 shrink-0 mt-0.5" />
                     {tip}
                   </li>
@@ -526,13 +526,13 @@ export default function ChronologyIntelligencePage() {
                   ))}
                 </div>
               ) : activeAlerts.length === 0 ? (
-                <p className="text-xs text-slate-400 py-2">No active pattern alerts.</p>
+                <p className="text-xs text-[var(--cs-text-muted)] py-2">No active pattern alerts.</p>
               ) : (
                 <div className="space-y-2">
                   {activeAlerts.map((alert) => (
                     <div
                       key={alert.id}
-                      className="flex items-start gap-2 rounded-xl border border-slate-100 bg-slate-50 px-3 py-2"
+                      className="flex items-start gap-2 rounded-xl border border-[var(--cs-border-subtle)] bg-slate-50 px-3 py-2"
                     >
                       <span className={cn(
                         "shrink-0 mt-0.5 rounded-full px-2 py-0.5 text-[10px] font-semibold capitalize",
@@ -540,7 +540,7 @@ export default function ChronologyIntelligencePage() {
                       )}>
                         {alert.severity}
                       </span>
-                      <span className="text-xs text-slate-700 leading-snug">{alert.title}</span>
+                      <span className="text-xs text-[var(--cs-text-secondary)] leading-snug">{alert.title}</span>
                     </div>
                   ))}
                 </div>
@@ -565,7 +565,7 @@ export default function ChronologyIntelligencePage() {
                   "Theme entries by domain",
                   "Surface links to other records",
                 ].map((cap) => (
-                  <li key={cap} className="flex items-start gap-2 text-xs text-slate-600">
+                  <li key={cap} className="flex items-start gap-2 text-xs text-[var(--cs-text-secondary)]">
                     <Sparkles className="h-3 w-3 text-violet-400 shrink-0 mt-0.5" />
                     {cap}
                   </li>

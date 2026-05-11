@@ -29,7 +29,7 @@ const STAGE_CLR: Record<MenstrualStage, string> = {
   early_signs_noted: "bg-violet-100 text-violet-800",
   started_menstruating: "bg-rose-100 text-rose-800",
   established: "bg-pink-100 text-pink-800",
-  na_not_menstruating: "bg-slate-100 text-slate-700",
+  na_not_menstruating: "bg-slate-100 text-[var(--cs-text-secondary)]",
 };
 
 const STAGE_BORDER: Record<MenstrualStage, string> = {
@@ -44,7 +44,7 @@ const COMFORT_CLR: Record<MenstrualComfortLevel, string> = {
   comfortable_discussing: "bg-emerald-50 text-emerald-700 border-emerald-200",
   developing_comfort: "bg-amber-50 text-amber-700 border-amber-200",
   reluctant: "bg-orange-50 text-orange-700 border-orange-200",
-  private_staff_only: "bg-slate-50 text-slate-700 border-slate-200",
+  private_staff_only: "bg-slate-50 text-[var(--cs-text-secondary)] border-[var(--cs-border)]",
 };
 
 const STAGES: MenstrualStage[] = [
@@ -186,10 +186,10 @@ export default function MenstrualHealthTrackerPage() {
         </div>
 
         <div className="bg-slate-100 border border-slate-300 rounded-lg p-3 mb-6 flex items-start gap-3">
-          <Lock className="h-5 w-5 text-slate-700 shrink-0 mt-0.5" />
-          <div className="text-sm text-slate-800">
+          <Lock className="h-5 w-5 text-[var(--cs-text-secondary)] shrink-0 mt-0.5" />
+          <div className="text-sm text-[var(--cs-navy)]">
             <p className="font-semibold mb-0.5">Confidentiality</p>
-            <p className="text-slate-700">
+            <p className="text-[var(--cs-text-secondary)]">
               Access to these records is limited to staff with an explicit, child-agreed need to know. Records are not visible in routine handover
               documents. Each child decides who within the staff team can read their plan. This is reviewed at every plan review.
             </p>
@@ -271,11 +271,11 @@ export default function MenstrualHealthTrackerPage() {
                 </CardHeader>
                 {open && (
                   <CardContent className="pt-0 space-y-4 text-sm">
-                    <div className="bg-slate-50 border border-slate-200 rounded-lg p-3">
-                      <p className="font-semibold text-slate-800 flex items-center gap-1">
+                    <div className="bg-slate-50 border border-[var(--cs-border)] rounded-lg p-3">
+                      <p className="font-semibold text-[var(--cs-navy)] flex items-center gap-1">
                         <Lock className="h-4 w-4" /> Confidentiality note for this record
                       </p>
-                      <p className="text-slate-700 mt-1">{r.confidentiality_note}</p>
+                      <p className="text-[var(--cs-text-secondary)] mt-1">{r.confidentiality_note}</p>
                     </div>
 
                     <div className="bg-rose-50 border border-rose-200 rounded-lg p-3">

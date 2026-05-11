@@ -103,17 +103,17 @@ const FEATURES = [
     title: "Resource Library",
     description: "Browse, search and manage all approved learning resources",
     icon: Library,
-    colour: "text-slate-600",
+    colour: "text-[var(--cs-text-secondary)]",
     bg: "bg-slate-50",
-    border: "border-slate-100",
+    border: "border-[var(--cs-border-subtle)]",
   },
 ];
 
 function StatChip({ label, value, colour }: { label: string; value: number; colour: string }) {
   return (
-    <div className="rounded-xl border border-slate-100 bg-white p-4 text-center">
+    <div className="rounded-xl border border-[var(--cs-border-subtle)] bg-white p-4 text-center">
       <div className={cn("text-2xl font-bold tabular-nums", colour)}>{value}</div>
-      <div className="text-[10px] text-slate-500 mt-0.5">{label}</div>
+      <div className="text-[10px] text-[var(--cs-text-muted)] mt-0.5">{label}</div>
     </div>
   );
 }
@@ -167,10 +167,10 @@ export default function LearningHubPage() {
             </div>
             <div>
               <h2 className="text-lg font-bold">ARIA Learning Studio</h2>
-              <p className="text-sm text-slate-300">Intelligent learning design for residential care</p>
+              <p className="text-sm text-[var(--cs-text-gentle)]">Intelligent learning design for residential care</p>
             </div>
           </div>
-          <p className="text-sm text-slate-300 leading-relaxed max-w-2xl">
+          <p className="text-sm text-[var(--cs-text-gentle)] leading-relaxed max-w-2xl">
             Generate professional learning resources for staff and children — from workshops and flashcards to full curricula.
             ARIA identifies training needs from your operational data and closes the loop from governance to learning.
           </p>
@@ -187,7 +187,7 @@ export default function LearningHubPage() {
           <StatChip label="Urgent Needs" value={urgentNeeds} colour={urgentNeeds > 0 ? "text-red-700" : "text-emerald-700"} />
           <StatChip label="Resources" value={totalResources} colour="text-violet-700" />
           <StatChip label="Knowledge Gaps" value={openGaps} colour={openGaps > 0 ? "text-orange-700" : "text-emerald-700"} />
-          <StatChip label="Library" value={libraryCount} colour="text-slate-700" />
+          <StatChip label="Library" value={libraryCount} colour="text-[var(--cs-text-secondary)]" />
         </div>
 
         {/* The loop explanation */}
@@ -218,7 +218,7 @@ export default function LearningHubPage() {
 
         {/* Feature grid */}
         <div>
-          <h3 className="text-sm font-semibold text-slate-700 mb-4">All Learning Studio Tools</h3>
+          <h3 className="text-sm font-semibold text-[var(--cs-text-secondary)] mb-4">All Learning Studio Tools</h3>
           <div className="grid gap-4 sm:grid-cols-2">
             {FEATURES.map((feature) => {
               const Icon = feature.icon;
@@ -232,15 +232,15 @@ export default function LearningHubPage() {
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center justify-between gap-2">
-                            <span className="text-sm font-semibold text-slate-900">{feature.title}</span>
+                            <span className="text-sm font-semibold text-[var(--cs-navy)]">{feature.title}</span>
                             <div className="flex items-center gap-1 shrink-0">
                               {feature.badgeKey === "urgent" && urgentNeeds > 0 && (
                                 <Badge variant="destructive" className="text-[10px] h-4 px-1.5">{urgentNeeds}</Badge>
                               )}
-                              <ChevronRight className="h-4 w-4 text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity" />
+                              <ChevronRight className="h-4 w-4 text-[var(--cs-text-gentle)] opacity-0 group-hover:opacity-100 transition-opacity" />
                             </div>
                           </div>
-                          <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">{feature.description}</p>
+                          <p className="text-xs text-[var(--cs-text-muted)] mt-0.5 leading-relaxed">{feature.description}</p>
                         </div>
                       </div>
                     </CardContent>

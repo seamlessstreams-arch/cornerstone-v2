@@ -32,7 +32,7 @@ const TYPE_COLOURS: Record<CommunityFeedbackType, string> = {
   compliment: "bg-green-100 text-green-800",
   concern: "bg-amber-100 text-amber-800",
   suggestion: "bg-blue-100 text-blue-800",
-  question: "bg-slate-100 text-slate-800",
+  question: "bg-slate-100 text-[var(--cs-navy)]",
   complaint: "bg-red-100 text-red-800",
   recognition: "bg-purple-100 text-purple-800",
 };
@@ -239,7 +239,7 @@ export default function CommunityFeedbackPage() {
             return (
               <div key={r.id} className="rounded-xl border bg-white overflow-hidden">
                 <button
-                  className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                  className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                   onClick={() => setExpandedId(isExpanded ? null : r.id)}
                 >
                   <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -351,7 +351,7 @@ export default function CommunityFeedbackPage() {
                             "font-medium",
                             r.children_informed_of_positive_feedback
                               ? "text-green-600"
-                              : "text-slate-500",
+                              : "text-[var(--cs-text-muted)]",
                           )}
                         >
                           {isPositive

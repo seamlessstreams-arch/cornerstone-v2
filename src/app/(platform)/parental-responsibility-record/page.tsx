@@ -177,7 +177,7 @@ export default function ParentalResponsibilityRecordPage() {
           return (
             <div key={r.id} className="rounded-xl border bg-white overflow-hidden">
               <button
-                className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                 onClick={() => setExpandedId(isExpanded ? null : r.id)}
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -208,7 +208,7 @@ export default function ParentalResponsibilityRecordPage() {
                           <div className="flex items-center justify-between mb-1">
                             <p className="text-sm font-medium">{p.party}</p>
                             <span className={cn("text-xs px-2 py-0.5 rounded-full font-medium",
-                              p.current ? "bg-green-100 text-green-800" : "bg-slate-200 text-slate-700"
+                              p.current ? "bg-green-100 text-green-800" : "bg-slate-200 text-[var(--cs-text-secondary)]"
                             )}>
                               {p.current ? "Current" : "Ended"}
                             </span>

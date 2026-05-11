@@ -47,7 +47,7 @@ const STATUS_LABELS: Record<ComplaintStatus, string> = {
   closed:              "Closed",
 };
 const STATUS_COLOUR: Record<ComplaintStatus, string> = {
-  received:            "bg-slate-100 text-slate-700 border-slate-200",
+  received:            "bg-slate-100 text-[var(--cs-text-secondary)] border-[var(--cs-border)]",
   acknowledged:        "bg-blue-50 text-blue-700 border-blue-200",
   under_investigation: "bg-amber-50 text-amber-700 border-amber-200",
   response_sent:       "bg-violet-50 text-violet-700 border-violet-200",
@@ -59,8 +59,8 @@ const OUTCOME_COLOUR: Record<ComplaintOutcome, string> = {
   upheld:           "bg-red-50 text-red-700 border-red-200",
   partially_upheld: "bg-amber-50 text-amber-700 border-amber-200",
   not_upheld:       "bg-emerald-50 text-emerald-700 border-emerald-200",
-  inconclusive:     "bg-slate-50 text-slate-600 border-slate-200",
-  withdrawn:        "bg-slate-50 text-slate-500 border-slate-200",
+  inconclusive:     "bg-slate-50 text-[var(--cs-text-secondary)] border-[var(--cs-border)]",
+  withdrawn:        "bg-slate-50 text-[var(--cs-text-muted)] border-[var(--cs-border)]",
   ongoing:          "bg-blue-50 text-blue-700 border-blue-200",
 };
 const OUTCOME_LABELS: Record<ComplaintOutcome, string> = {
@@ -152,7 +152,7 @@ function ComplaintCard({
       "rounded-2xl border bg-white overflow-hidden",
       overdue ? "border-red-200" :
       complaint.status === "closed" ? "border-emerald-100" :
-      daysLeft <= 2 ? "border-amber-200" : "border-slate-200",
+      daysLeft <= 2 ? "border-amber-200" : "border-[var(--cs-border)]",
     )}>
       {/* Header */}
       <div className="flex items-start gap-3 p-4">
@@ -167,7 +167,7 @@ function ComplaintCard({
 
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap mb-1">
-            <span className="text-sm font-bold text-slate-800">{complaint.reference}</span>
+            <span className="text-sm font-bold text-[var(--cs-navy)]">{complaint.reference}</span>
             <Badge variant="outline" className={cn("text-[10px] px-1.5 py-0 border", STATUS_COLOUR[complaint.status])}>
               {STATUS_LABELS[complaint.status]}
             </Badge>
@@ -188,7 +188,7 @@ function ComplaintCard({
             )}
           </div>
 
-          <div className="flex items-center gap-3 text-xs text-slate-500 flex-wrap">
+          <div className="flex items-center gap-3 text-xs text-[var(--cs-text-muted)] flex-wrap">
             <span className="flex items-center gap-1">
               <User className="h-3 w-3" />
               {COMPLAINANT_LABELS[complaint.complainant_type]}
@@ -213,8 +213,8 @@ function ComplaintCard({
               )}>
                 {complaint.acknowledged_at ? `✓ Acknowledged ${formatDate(complaint.acknowledged_at)}` : `⚠ Acknowledgement due ${formatDate(complaint.acknowledgement_due)}`}
               </span>
-              <span className="text-slate-300">·</span>
-              <span className={cn("font-medium", overdue ? "text-red-600" : daysLeft <= 2 ? "text-amber-600" : "text-slate-500")}>
+              <span className="text-[var(--cs-text-gentle)]">·</span>
+              <span className={cn("font-medium", overdue ? "text-red-600" : daysLeft <= 2 ? "text-amber-600" : "text-[var(--cs-text-muted)]")}>
                 Response due {formatDate(complaint.response_due)}
                 {!overdue && daysLeft > 0 ? ` · ${daysLeft} working day${daysLeft !== 1 ? "s" : ""} left` : overdue ? " · OVERDUE" : ""}
               </span>
@@ -224,20 +224,20 @@ function ComplaintCard({
 
         <button
           onClick={() => setExpanded(!expanded)}
-          className="text-slate-400 hover:text-slate-600 shrink-0"
+          className="text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] shrink-0"
         >
           {expanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
         </button>
       </div>
 
       {expanded && (
-        <div className="border-t border-slate-100 px-4 pb-4 pt-3 space-y-4">
+        <div className="border-t border-[var(--cs-border-subtle)] px-4 pb-4 pt-3 space-y-4">
           {/* Summary */}
-          <div className="rounded-xl border border-slate-200 bg-slate-50 p-3">
-            <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest mb-1">Summary</p>
-            <p className="text-xs text-slate-700">{complaint.summary}</p>
+          <div className="rounded-xl border border-[var(--cs-border)] bg-slate-50 p-3">
+            <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-widest mb-1">Summary</p>
+            <p className="text-xs text-[var(--cs-text-secondary)]">{complaint.summary}</p>
             {complaint.full_detail && (
-              <p className="text-xs text-slate-500 mt-1.5">{complaint.full_detail}</p>
+              <p className="text-xs text-[var(--cs-text-muted)] mt-1.5">{complaint.full_detail}</p>
             )}
           </div>
 
@@ -260,9 +260,9 @@ function ComplaintCard({
 
           {/* Investigation notes */}
           {complaint.investigation_notes && (
-            <div className="rounded-xl border border-slate-200 bg-white p-3">
-              <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest mb-1">Investigation Notes</p>
-              <p className="text-xs text-slate-700">{complaint.investigation_notes}</p>
+            <div className="rounded-xl border border-[var(--cs-border)] bg-white p-3">
+              <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-widest mb-1">Investigation Notes</p>
+              <p className="text-xs text-[var(--cs-text-secondary)]">{complaint.investigation_notes}</p>
             </div>
           )}
 
@@ -270,7 +270,7 @@ function ComplaintCard({
           {complaint.outcome_detail && (
             <div className={cn(
               "rounded-xl border p-3",
-              complaint.outcome ? OUTCOME_COLOUR[complaint.outcome] : "border-slate-200 bg-slate-50",
+              complaint.outcome ? OUTCOME_COLOUR[complaint.outcome] : "border-[var(--cs-border)] bg-slate-50",
             )}>
               <p className="text-[10px] font-semibold uppercase tracking-widest mb-1 opacity-70">Outcome</p>
               <p className="text-xs">{complaint.outcome_detail}</p>
@@ -282,22 +282,22 @@ function ComplaintCard({
               <p className="text-[10px] font-semibold text-emerald-700 uppercase tracking-widest mb-1">
                 Lessons Learned {complaint.learning_shared ? "· Shared with team ✓" : ""}
               </p>
-              <p className="text-xs text-slate-700">{complaint.lessons_learned}</p>
+              <p className="text-xs text-[var(--cs-text-secondary)]">{complaint.lessons_learned}</p>
             </div>
           )}
 
           {/* Timeline */}
           {complaint.timeline.length > 0 && (
             <div>
-              <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-2">Timeline</p>
+              <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-widest mb-2">Timeline</p>
               <div className="space-y-2">
                 {complaint.timeline.map((entry, i) => (
                   <div key={i} className="flex items-start gap-2 text-xs">
                     <div className="w-1.5 h-1.5 rounded-full bg-slate-300 mt-1.5 shrink-0" />
                     <div>
-                      <span className="font-semibold text-slate-700">{entry.action}</span>
-                      <span className="text-slate-400 ml-1.5">{formatDate(entry.date)}</span>
-                      {entry.note && <p className="text-slate-500 mt-0.5">{entry.note}</p>}
+                      <span className="font-semibold text-[var(--cs-text-secondary)]">{entry.action}</span>
+                      <span className="text-[var(--cs-text-muted)] ml-1.5">{formatDate(entry.date)}</span>
+                      {entry.note && <p className="text-[var(--cs-text-muted)] mt-0.5">{entry.note}</p>}
                     </div>
                   </div>
                 ))}
@@ -312,7 +312,7 @@ function ComplaintCard({
                 <Sparkles className="h-3.5 w-3.5 text-teal-600" />
                 <p className="text-[10px] font-semibold text-teal-700 uppercase tracking-widest">ARIA Analysis</p>
               </div>
-              <p className="text-xs text-slate-700">{complaint.aria_summary}</p>
+              <p className="text-xs text-[var(--cs-text-secondary)]">{complaint.aria_summary}</p>
             </div>
           ) : (
             <button
@@ -380,7 +380,7 @@ function NewComplaintDialog({
         <div className="space-y-3 text-sm">
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="text-xs text-slate-500 font-medium mb-1 block">Complainant type</label>
+              <label className="text-xs text-[var(--cs-text-muted)] font-medium mb-1 block">Complainant type</label>
               <Select
                 value={form.complainant_type}
                 onValueChange={(v) => setForm((p) => ({ ...p, complainant_type: v as ComplainantType }))}
@@ -396,7 +396,7 @@ function NewComplaintDialog({
               </Select>
             </div>
             <div>
-              <label className="text-xs text-slate-500 font-medium mb-1 block">Category</label>
+              <label className="text-xs text-[var(--cs-text-muted)] font-medium mb-1 block">Category</label>
               <Select
                 value={form.category}
                 onValueChange={(v) => setForm((p) => ({ ...p, category: v as ComplaintCategory }))}
@@ -414,7 +414,7 @@ function NewComplaintDialog({
           </div>
 
           <div>
-            <label className="text-xs text-slate-500 font-medium mb-1 block">Complainant name</label>
+            <label className="text-xs text-[var(--cs-text-muted)] font-medium mb-1 block">Complainant name</label>
             <Input
               value={form.complainant_name}
               onChange={(e) => setForm((p) => ({ ...p, complainant_name: e.target.value }))}
@@ -425,7 +425,7 @@ function NewComplaintDialog({
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="text-xs text-slate-500 font-medium mb-1 block">Date received</label>
+              <label className="text-xs text-[var(--cs-text-muted)] font-medium mb-1 block">Date received</label>
               <Input
                 type="date"
                 value={form.date_received}
@@ -434,7 +434,7 @@ function NewComplaintDialog({
               />
             </div>
             <div>
-              <label className="text-xs text-slate-500 font-medium mb-1 block">Young person (if applicable)</label>
+              <label className="text-xs text-[var(--cs-text-muted)] font-medium mb-1 block">Young person (if applicable)</label>
               <Input
                 value={form.child_id}
                 onChange={(e) => setForm((p) => ({ ...p, child_id: e.target.value }))}
@@ -445,7 +445,7 @@ function NewComplaintDialog({
           </div>
 
           <div>
-            <label className="text-xs text-slate-500 font-medium mb-1 block">Summary of complaint <span className="text-red-500">*</span></label>
+            <label className="text-xs text-[var(--cs-text-muted)] font-medium mb-1 block">Summary of complaint <span className="text-red-500">*</span></label>
             <Textarea
               value={form.summary}
               onChange={(e) => setForm((p) => ({ ...p, summary: e.target.value }))}
@@ -462,10 +462,10 @@ function NewComplaintDialog({
               onChange={(e) => setForm((p) => ({ ...p, includes_safeguarding_element: e.target.checked }))}
               className="rounded"
             />
-            <span className="text-xs text-slate-600">Contains a safeguarding element</span>
+            <span className="text-xs text-[var(--cs-text-secondary)]">Contains a safeguarding element</span>
           </label>
 
-          <p className="text-[10px] text-slate-400">
+          <p className="text-[10px] text-[var(--cs-text-muted)]">
             Acknowledgement due within 3 working days · Response due within 10 working days
           </p>
         </div>
@@ -665,14 +665,14 @@ ${complaint.lessons_learned ? `Learning: ${complaint.lessons_learned}` : ""}`;
             label: "Upheld This Year",
             value: upheldCount + partialCount,
             icon: Flag,
-            colour: (upheldCount + partialCount) > 2 ? "text-red-600" : "text-slate-600",
-            bg: (upheldCount + partialCount) > 2 ? "bg-red-50 border-red-100" : "bg-slate-50 border-slate-100",
+            colour: (upheldCount + partialCount) > 2 ? "text-red-600" : "text-[var(--cs-text-secondary)]",
+            bg: (upheldCount + partialCount) > 2 ? "bg-red-50 border-red-100" : "bg-slate-50 border-[var(--cs-border-subtle)]",
           },
         ].map(({ label, value, icon: Icon, colour, bg }) => (
           <div key={label} className={cn("rounded-xl border p-3", bg)}>
             <div className="flex items-center gap-2 mb-1">
               <Icon className={cn("h-4 w-4 shrink-0", colour)} />
-              <span className="text-[10px] text-slate-500 font-medium">{label}</span>
+              <span className="text-[10px] text-[var(--cs-text-muted)] font-medium">{label}</span>
             </div>
             <p className={cn("text-lg font-bold", colour)}>{value}</p>
           </div>
@@ -697,7 +697,7 @@ ${complaint.lessons_learned ? `Learning: ${complaint.lessons_learned}` : ""}`;
       {/* ── Reg 45 annual summary pill ── */}
       <div className="rounded-xl border border-indigo-100 bg-indigo-50/50 px-4 py-3 flex items-center gap-3">
         <Gavel className="h-4 w-4 text-indigo-600 shrink-0" />
-        <div className="text-xs text-slate-600">
+        <div className="text-xs text-[var(--cs-text-secondary)]">
           <span className="font-semibold text-indigo-700">Reg 45 Summary ({currentYear}) — </span>
           {thisYearComplaints.length} complaint{thisYearComplaints.length !== 1 ? "s" : ""} received ·{" "}
           {upheldCount} upheld · {partialCount} partially upheld ·{" "}
@@ -709,7 +709,7 @@ ${complaint.lessons_learned ? `Learning: ${complaint.lessons_learned}` : ""}`;
       {/* ── Search + filter toolbar ── */}
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1 max-w-sm">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
           <Input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -726,7 +726,7 @@ ${complaint.lessons_learned ? `Learning: ${complaint.lessons_learned}` : ""}`;
                 "rounded-full px-3 py-1.5 text-xs font-medium transition-colors capitalize",
                 viewTab === t
                   ? "bg-slate-900 text-white"
-                  : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                  : "bg-slate-100 text-[var(--cs-text-secondary)] hover:bg-slate-200"
               )}
             >
               {t === "open" ? `Open (${openComplaints.length})` : t === "closed" ? `Closed (${closedComplaints.length})` : `All (${complaints.length})`}
@@ -738,11 +738,11 @@ ${complaint.lessons_learned ? `Learning: ${complaint.lessons_learned}` : ""}`;
       {/* Category filter + Sort */}
       <div className="flex items-center gap-3 flex-wrap">
         <div className="flex items-center gap-1.5">
-          <Filter className="h-3.5 w-3.5 text-slate-400" />
+          <Filter className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
         <select
           value={categoryFilter}
           onChange={(e) => setCategoryFilter(e.target.value as "all" | ComplaintCategory)}
-          className="rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-[11px] text-slate-700 focus:border-indigo-300 focus:ring-1 focus:ring-indigo-200 outline-none"
+          className="rounded-lg border border-[var(--cs-border)] bg-white px-2.5 py-1 text-[11px] text-[var(--cs-text-secondary)] focus:border-[var(--cs-aria-gold)] focus:ring-1 focus:ring-[var(--cs-aria-gold)]/30 outline-none"
         >
           <option value="all">All categories</option>
           {(Object.keys(CATEGORY_LABELS) as ComplaintCategory[]).map((c) => (
@@ -751,11 +751,11 @@ ${complaint.lessons_learned ? `Learning: ${complaint.lessons_learned}` : ""}`;
         </select>
         </div>
         <div className="flex items-center gap-1.5">
-          <ArrowUpDown className="h-3.5 w-3.5 text-slate-400" />
+          <ArrowUpDown className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value as "date" | "reference" | "severity")}
-            className="rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-[11px] text-slate-700 focus:border-indigo-300 focus:ring-1 focus:ring-indigo-200 outline-none"
+            className="rounded-lg border border-[var(--cs-border)] bg-white px-2.5 py-1 text-[11px] text-[var(--cs-text-secondary)] focus:border-[var(--cs-aria-gold)] focus:ring-1 focus:ring-[var(--cs-aria-gold)]/30 outline-none"
           >
             <option value="date">Date received</option>
             <option value="reference">Reference</option>
@@ -766,16 +766,16 @@ ${complaint.lessons_learned ? `Learning: ${complaint.lessons_learned}` : ""}`;
 
       {/* Results count */}
       {(search || categoryFilter !== "all") && (
-        <p className="text-xs text-slate-500">
+        <p className="text-xs text-[var(--cs-text-muted)]">
           Showing {filtered.length} of {complaints.length} complaint{complaints.length !== 1 ? "s" : ""}
-          {search && <span className="text-slate-400"> matching &ldquo;{search}&rdquo;</span>}
+          {search && <span className="text-[var(--cs-text-muted)]"> matching &ldquo;{search}&rdquo;</span>}
         </p>
       )}
 
       {/* ── Complaints list ── */}
       {filtered.length === 0 ? (
-        <div className="text-center py-16 text-slate-500">
-          <MessageCircle className="h-10 w-10 text-slate-300 mx-auto mb-3" />
+        <div className="text-center py-16 text-[var(--cs-text-muted)]">
+          <MessageCircle className="h-10 w-10 text-[var(--cs-text-gentle)] mx-auto mb-3" />
           <p className="text-sm font-medium">
             {search ? `No complaints match "${search}"` : "No complaints in this view"}
           </p>
@@ -783,12 +783,12 @@ ${complaint.lessons_learned ? `Learning: ${complaint.lessons_learned}` : ""}`;
       ) : (
         <div className="space-y-2">
           {viewTab === "open" && filtered.length > 0 && (
-            <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest">
+            <p className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-widest">
               Open Complaints ({filtered.length})
             </p>
           )}
           {viewTab === "closed" && filtered.length > 0 && (
-            <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest">
+            <p className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-widest">
               Closed Complaints ({filtered.length})
             </p>
           )}
@@ -806,8 +806,8 @@ ${complaint.lessons_learned ? `Learning: ${complaint.lessons_learned}` : ""}`;
       )}
 
       {/* ── Regulatory note ── */}
-      <div className="rounded-xl border border-slate-100 bg-slate-50 px-4 py-3 text-xs text-slate-500">
-        <span className="font-semibold text-slate-600">Regulatory Basis — </span>
+      <div className="rounded-xl border border-[var(--cs-border-subtle)] bg-slate-50 px-4 py-3 text-xs text-[var(--cs-text-muted)]">
+        <span className="font-semibold text-[var(--cs-text-secondary)]">Regulatory Basis — </span>
         Children&apos;s Homes Quality Standards 2015, Standard 3 (Rights &amp; Responsibilities): every
         young person must know how to make a complaint and complaints must be taken seriously. Statutory
         Guidance on Representations and Complaints (2016): acknowledgement within 3 working days,

@@ -47,7 +47,7 @@ export function NightSummary() {
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-center py-6">
-            <Loader2 className="h-5 w-5 animate-spin text-slate-400" />
+            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
           </div>
         </CardContent>
       </Card>
@@ -113,8 +113,8 @@ export function NightSummary() {
       <CardContent className="pt-0">
         {rounds.length === 0 ? (
           <div className="py-4 text-center">
-            <Moon className="h-6 w-6 text-slate-300 mx-auto mb-1" />
-            <p className="text-xs text-slate-500">No welfare checks recorded last night</p>
+            <Moon className="h-6 w-6 text-[var(--cs-text-gentle)] mx-auto mb-1" />
+            <p className="text-xs text-[var(--cs-text-muted)]">No welfare checks recorded last night</p>
             <Link href="/welfare-checks" className="text-[10px] text-blue-600 hover:underline mt-1 inline-block">
               Start a check →
             </Link>
@@ -122,14 +122,14 @@ export function NightSummary() {
         ) : (
           <>
             {/* Quick stats */}
-            <div className="flex items-center gap-4 mb-3 text-[11px] text-slate-500">
+            <div className="flex items-center gap-4 mb-3 text-[11px] text-[var(--cs-text-muted)]">
               <span className="flex items-center gap-1">
                 <Eye className="h-3 w-3 text-indigo-500" />
                 {rounds.length} rounds
               </span>
               {sleepInStaff && (
                 <span className="flex items-center gap-1">
-                  <BedDouble className="h-3 w-3 text-slate-400" />
+                  <BedDouble className="h-3 w-3 text-[var(--cs-text-muted)]" />
                   {sleepInStaff.split(" ")[0]}
                 </span>
               )}
@@ -146,7 +146,7 @@ export function NightSummary() {
             <div className="space-y-1.5">
               {Object.entries(childSummary).map(([childId, cs]) => {
                 const StatusIcon = STATUS_EMOJI[cs.lastStatus]?.icon ?? CheckCircle2;
-                const statusColor = STATUS_EMOJI[cs.lastStatus]?.color ?? "text-slate-400";
+                const statusColor = STATUS_EMOJI[cs.lastStatus]?.color ?? "text-[var(--cs-text-muted)]";
 
                 return (
                   <div key={childId} className={cn(
@@ -154,14 +154,14 @@ export function NightSummary() {
                     cs.hadConcern ? "bg-red-50" : "bg-slate-50",
                   )}>
                     <StatusIcon className={cn("h-3.5 w-3.5 shrink-0", statusColor)} />
-                    <span className="text-[11px] font-medium text-slate-700 flex-1 truncate">
+                    <span className="text-[11px] font-medium text-[var(--cs-text-secondary)] flex-1 truncate">
                       {cs.name}
                     </span>
-                    <span className="text-[10px] text-slate-400 shrink-0">
+                    <span className="text-[10px] text-[var(--cs-text-muted)] shrink-0">
                       {cs.checks} checks
                     </span>
                     {cs.moods.length > 0 && (
-                      <span className="text-[10px] text-slate-400 shrink-0 capitalize">
+                      <span className="text-[10px] text-[var(--cs-text-muted)] shrink-0 capitalize">
                         {cs.moods[cs.moods.length - 1]}
                       </span>
                     )}

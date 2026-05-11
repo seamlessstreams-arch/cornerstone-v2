@@ -46,7 +46,7 @@ const PURPOSE_META: Record<TransportLogPurpose, { colour: string }> = {
   emergency:          { colour: "bg-red-100 text-red-700" },
   respite_transport:  { colour: "bg-indigo-100 text-indigo-700" },
   court:              { colour: "bg-gray-100 text-gray-700" },
-  other:              { colour: "bg-slate-100 text-slate-700" },
+  other:              { colour: "bg-slate-100 text-[var(--cs-text-secondary)]" },
 };
 
 const BEHAVIOUR_META: Record<TransportLogBehaviour, { colour: string }> = {

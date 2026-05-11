@@ -56,7 +56,7 @@ const STATUS_LABELS: Record<Reg44VisitStatus, string> = {
 };
 
 const STATUS_COLOUR: Record<Reg44VisitStatus, string> = {
-  scheduled:                   "bg-slate-100 text-slate-700 border-slate-200",
+  scheduled:                   "bg-slate-100 text-[var(--cs-text-secondary)] border-[var(--cs-border)]",
   completed:                   "bg-blue-50 text-blue-700 border-blue-200",
   report_received:             "bg-amber-50 text-amber-700 border-amber-200",
   manager_response_submitted:  "bg-violet-50 text-violet-700 border-violet-200",
@@ -131,7 +131,7 @@ function FindingRow({ finding }: { finding: Reg44Visit["findings"][0] }) {
         </Badge>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-xs font-semibold text-slate-800">{finding.area}</span>
+            <span className="text-xs font-semibold text-[var(--cs-navy)]">{finding.area}</span>
             {finding.severity && (
               <span className={cn("text-[10px] font-medium capitalize", SEVERITY_COLOUR[finding.severity])}>
                 {finding.severity}
@@ -147,14 +147,14 @@ function FindingRow({ finding }: { finding: Reg44Visit["findings"][0] }) {
             )}
           </div>
           <p className={cn(
-            "text-xs text-slate-600 mt-0.5",
+            "text-xs text-[var(--cs-text-secondary)] mt-0.5",
             !open && "line-clamp-2",
           )}>{finding.description}</p>
 
           {finding.action_required && (
             <button
               onClick={() => setOpen(!open)}
-              className="text-[10px] text-slate-400 hover:text-slate-600 mt-1 flex items-center gap-1"
+              className="text-[10px] text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] mt-1 flex items-center gap-1"
             >
               {open ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
               {open ? "Hide action" : "Show action"}
@@ -162,17 +162,17 @@ function FindingRow({ finding }: { finding: Reg44Visit["findings"][0] }) {
           )}
 
           {open && finding.action_required && (
-            <div className="mt-2 rounded-lg border border-slate-200 bg-white p-2 space-y-1.5">
+            <div className="mt-2 rounded-lg border border-[var(--cs-border)] bg-white p-2 space-y-1.5">
               <div>
-                <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wide">Required Action</p>
-                <p className="text-xs text-slate-700">{finding.action_required}</p>
+                <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide">Required Action</p>
+                <p className="text-xs text-[var(--cs-text-secondary)]">{finding.action_required}</p>
               </div>
               {finding.action_completed && finding.action_completed_at && (
                 <div>
                   <p className="text-[10px] font-semibold text-emerald-600 uppercase tracking-wide">Completed</p>
-                  <p className="text-xs text-slate-600">{formatDate(finding.action_completed_at)}</p>
+                  <p className="text-xs text-[var(--cs-text-secondary)]">{formatDate(finding.action_completed_at)}</p>
                   {finding.action_evidence && (
-                    <p className="text-xs text-slate-500 mt-0.5">{finding.action_evidence}</p>
+                    <p className="text-xs text-[var(--cs-text-muted)] mt-0.5">{finding.action_evidence}</p>
                   )}
                 </div>
               )}
@@ -202,14 +202,14 @@ function VisitCard({
   return (
     <div className={cn(
       "rounded-2xl border bg-white overflow-hidden transition-shadow",
-      isScheduled ? "border-dashed border-slate-300" : "border-slate-200 hover:shadow-sm",
+      isScheduled ? "border-dashed border-slate-300" : "border-[var(--cs-border)] hover:shadow-sm",
     )}>
       {/* Header */}
       <div className="flex items-start gap-4 p-4">
         {/* Visit number badge */}
         <div className={cn(
           "w-10 h-10 rounded-xl flex items-center justify-center shrink-0 font-bold text-sm",
-          isScheduled ? "bg-slate-100 text-slate-500" : "bg-indigo-100 text-indigo-700",
+          isScheduled ? "bg-slate-100 text-[var(--cs-text-muted)]" : "bg-indigo-100 text-indigo-700",
         )}>
           {visit.visit_number}
         </div>
@@ -217,7 +217,7 @@ function VisitCard({
         {/* Main info */}
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap mb-1">
-            <span className="text-sm font-bold text-slate-800">Visit {visit.visit_number}</span>
+            <span className="text-sm font-bold text-[var(--cs-navy)]">Visit {visit.visit_number}</span>
             <Badge variant="outline" className={cn("text-[10px] px-1.5 py-0 border", STATUS_COLOUR[visit.status])}>
               {STATUS_LABELS[visit.status]}
             </Badge>
@@ -233,7 +233,7 @@ function VisitCard({
             )}
           </div>
 
-          <div className="flex items-center gap-3 flex-wrap text-xs text-slate-500">
+          <div className="flex items-center gap-3 flex-wrap text-xs text-[var(--cs-text-muted)]">
             <span className="flex items-center gap-1">
               <Calendar className="h-3 w-3" />
               {isScheduled
@@ -278,7 +278,7 @@ function VisitCard({
           {!isScheduled && visit.findings.length > 0 && (
             <button
               onClick={() => setExpanded(!expanded)}
-              className="text-slate-400 hover:text-slate-600 transition-colors"
+              className="text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] transition-colors"
             >
               {expanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
             </button>
@@ -295,18 +295,18 @@ function VisitCard({
             return (
               <div className={cn(
                 "rounded-xl border p-3 flex items-center gap-3",
-                overdue ? "bg-red-50 border-red-200" : days <= 7 ? "bg-amber-50 border-amber-200" : "bg-slate-50 border-slate-200",
+                overdue ? "bg-red-50 border-red-200" : days <= 7 ? "bg-amber-50 border-amber-200" : "bg-slate-50 border-[var(--cs-border)]",
               )}>
-                <Calendar className={cn("h-4 w-4 shrink-0", overdue ? "text-red-500" : days <= 7 ? "text-amber-500" : "text-slate-400")} />
+                <Calendar className={cn("h-4 w-4 shrink-0", overdue ? "text-red-500" : days <= 7 ? "text-amber-500" : "text-[var(--cs-text-muted)]")} />
                 <div>
-                  <p className={cn("text-xs font-semibold", overdue ? "text-red-700" : days <= 7 ? "text-amber-700" : "text-slate-700")}>
+                  <p className={cn("text-xs font-semibold", overdue ? "text-red-700" : days <= 7 ? "text-amber-700" : "text-[var(--cs-text-secondary)]")}>
                     {overdue
                       ? `${Math.abs(days)} day${Math.abs(days) !== 1 ? "s" : ""} overdue`
                       : days === 0
                       ? "Visit due today"
                       : `${days} day${days !== 1 ? "s" : ""} until next visit`}
                   </p>
-                  <p className="text-[10px] text-slate-500">Reg 44 requires an independent visit at least every 4 weeks</p>
+                  <p className="text-[10px] text-[var(--cs-text-muted)]">Reg 44 requires an independent visit at least every 4 weeks</p>
                 </div>
               </div>
             );
@@ -316,11 +316,11 @@ function VisitCard({
 
       {/* Expanded: findings + response */}
       {expanded && !isScheduled && (
-        <div className="border-t border-slate-100 px-4 pb-4 pt-3 space-y-4">
+        <div className="border-t border-[var(--cs-border-subtle)] px-4 pb-4 pt-3 space-y-4">
           {/* Findings */}
           {visit.findings.length > 0 && (
             <div>
-              <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-2">Findings</p>
+              <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-widest mb-2">Findings</p>
               <div className="space-y-2">
                 {visit.findings.map((f) => (
                   <FindingRow key={f.id} finding={f} />
@@ -335,7 +335,7 @@ function VisitCard({
               <p className="text-[10px] font-semibold text-violet-700 uppercase tracking-widest mb-1.5">
                 Manager Response · {visit.manager_response_date ? formatDate(visit.manager_response_date) : ""}
               </p>
-              <p className="text-xs text-slate-700">{visit.manager_response}</p>
+              <p className="text-xs text-[var(--cs-text-secondary)]">{visit.manager_response}</p>
             </div>
           )}
 
@@ -345,7 +345,7 @@ function VisitCard({
               <p className="text-[10px] font-semibold text-indigo-700 uppercase tracking-widest mb-1.5">
                 RI Review · {visit.ri_review_date ? formatDate(visit.ri_review_date) : ""}
               </p>
-              <p className="text-xs text-slate-700">{visit.ri_comments}</p>
+              <p className="text-xs text-[var(--cs-text-secondary)]">{visit.ri_comments}</p>
             </div>
           )}
 
@@ -356,7 +356,7 @@ function VisitCard({
                 <Sparkles className="h-3.5 w-3.5 text-teal-600" />
                 <p className="text-[10px] font-semibold text-teal-700 uppercase tracking-widest">ARIA Analysis</p>
               </div>
-              <p className="text-xs text-slate-700">{visit.aria_summary}</p>
+              <p className="text-xs text-[var(--cs-text-secondary)]">{visit.aria_summary}</p>
             </div>
           )}
         </div>
@@ -539,7 +539,7 @@ Manager response: ${visit.manager_response ?? "None submitted yet"}`;
             uploadContext="Reg 44 Independent Visit — visit report or evidence document upload"
           />
           <Link href="/ri">
-            <button className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50 transition-colors">
+            <button className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--cs-border)] bg-white px-3 py-1.5 text-xs font-medium text-[var(--cs-text-secondary)] hover:bg-[var(--cs-surface)] transition-colors">
               <Gavel className="h-3.5 w-3.5" />
               RI Hub
             </button>
@@ -590,14 +590,14 @@ Manager response: ${visit.manager_response ?? "None submitted yet"}`;
             label: "Next Visit",
             value: nextScheduled ? formatDate(nextScheduled.scheduled_date) : "Not scheduled",
             icon: Calendar,
-            colour: "text-slate-600",
-            bg: "bg-slate-50 border-slate-100",
+            colour: "text-[var(--cs-text-secondary)]",
+            bg: "bg-slate-50 border-[var(--cs-border-subtle)]",
           },
         ].map(({ label, value, icon: Icon, colour, bg }) => (
           <div key={label} className={cn("rounded-xl border p-3", bg)}>
             <div className="flex items-center gap-2 mb-1">
               <Icon className={cn("h-4 w-4 shrink-0", colour)} />
-              <span className="text-[10px] text-slate-500 font-medium">{label}</span>
+              <span className="text-[10px] text-[var(--cs-text-muted)] font-medium">{label}</span>
             </div>
             <p className={cn("text-lg font-bold", colour)}>{value}</p>
           </div>
@@ -607,7 +607,7 @@ Manager response: ${visit.manager_response ?? "None submitted yet"}`;
       {/* ── Next scheduled visit ── */}
       {nextScheduled && (
         <div>
-          <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-2">Next Scheduled Visit</p>
+          <p className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-widest mb-2">Next Scheduled Visit</p>
           <VisitCard visit={nextScheduled} onRespondClick={setRespondingTo} />
         </div>
       )}
@@ -617,7 +617,7 @@ Manager response: ${visit.manager_response ?? "None submitted yet"}`;
         <div className="space-y-3">
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
             <div className="relative flex-1 w-full sm:max-w-sm">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
               <Input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
@@ -642,7 +642,7 @@ Manager response: ${visit.manager_response ?? "None submitted yet"}`;
                     "px-3 py-1.5 text-[11px] font-medium rounded-full border transition-colors",
                     statusFilter === key
                       ? "bg-slate-900 text-white border-slate-900"
-                      : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50"
+                      : "bg-white text-[var(--cs-text-secondary)] border-[var(--cs-border)] hover:bg-[var(--cs-surface)]"
                   )}
                 >
                   {label}
@@ -656,7 +656,7 @@ Manager response: ${visit.manager_response ?? "None submitted yet"}`;
             <select
               value={overallFilter}
               onChange={(e) => setOverallFilter(e.target.value as OverallFilter)}
-              className="rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-[11px] text-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-900"
+              className="rounded-xl border border-[var(--cs-border)] bg-white px-3 py-1.5 text-[11px] text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-slate-900"
             >
               <option value="all">All findings</option>
               <option value="satisfactory">Satisfactory</option>
@@ -668,7 +668,7 @@ Manager response: ${visit.manager_response ?? "None submitted yet"}`;
             <select
               value={sortKey}
               onChange={(e) => setSortKey(e.target.value as SortKey)}
-              className="rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-[11px] text-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-900"
+              className="rounded-xl border border-[var(--cs-border)] bg-white px-3 py-1.5 text-[11px] text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-slate-900"
             >
               <option value="newest">Newest first</option>
               <option value="oldest">Oldest first</option>
@@ -677,7 +677,7 @@ Manager response: ${visit.manager_response ?? "None submitted yet"}`;
 
           {/* Results count */}
           {isFiltered && (
-            <div className="text-xs text-slate-500">
+            <div className="text-xs text-[var(--cs-text-muted)]">
               Showing {filteredVisits.length} of {allCompletedVisits.length} visit{allCompletedVisits.length !== 1 ? "s" : ""}
             </div>
           )}
@@ -687,9 +687,9 @@ Manager response: ${visit.manager_response ?? "None submitted yet"}`;
       {/* ── Completed visits ── */}
       {allCompletedVisits.length > 0 && (
         <div className="space-y-2">
-          <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest">Visit History</p>
+          <p className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-widest">Visit History</p>
           {filteredVisits.length === 0 && isFiltered ? (
-            <div className="rounded-2xl border-2 border-dashed border-slate-200 p-10 text-center text-slate-400">
+            <div className="rounded-2xl border-2 border-dashed border-[var(--cs-border)] p-10 text-center text-[var(--cs-text-muted)]">
               <Search className="h-8 w-8 mx-auto mb-2 text-slate-200" />
               <div className="text-sm font-medium">No visits match your filters</div>
               <div className="text-xs mt-1">Try adjusting your search, status, or finding filter</div>
@@ -730,8 +730,8 @@ Manager response: ${visit.manager_response ?? "None submitted yet"}`;
       )}
 
       {/* ── Regulatory note ── */}
-      <div className="rounded-xl border border-slate-100 bg-slate-50 px-4 py-3 text-xs text-slate-500">
-        <span className="font-semibold text-slate-600">Regulatory Basis — </span>
+      <div className="rounded-xl border border-[var(--cs-border-subtle)] bg-slate-50 px-4 py-3 text-xs text-[var(--cs-text-muted)]">
+        <span className="font-semibold text-[var(--cs-text-secondary)]">Regulatory Basis — </span>
         Children&apos;s Homes (England) Regulations 2015, Regulation 44: an independent person must visit
         the home at least once every 4 weeks, and the registered person must submit a report within
         5 working days of the visit. The manager must respond formally and the RI must review all
@@ -752,9 +752,9 @@ Manager response: ${visit.manager_response ?? "None submitted yet"}`;
           {respondingTo && (
             <div className="space-y-4">
               {/* Visit summary */}
-              <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-xs">
+              <div className="rounded-xl border border-[var(--cs-border)] bg-slate-50 p-3 text-xs">
                 <div className="flex items-center gap-2 flex-wrap mb-2">
-                  <span className="font-semibold text-slate-700">
+                  <span className="font-semibold text-[var(--cs-text-secondary)]">
                     {formatDate(respondingTo.visit_date ?? respondingTo.scheduled_date)}
                   </span>
                   {respondingTo.overall_finding && (
@@ -771,7 +771,7 @@ Manager response: ${visit.manager_response ?? "None submitted yet"}`;
                       {respondingTo.findings
                         .filter((f) => f.action_required && !f.action_completed)
                         .map((f) => (
-                          <li key={f.id} className="flex items-start gap-1.5 text-slate-600">
+                          <li key={f.id} className="flex items-start gap-1.5 text-[var(--cs-text-secondary)]">
                             <Flag className="h-3 w-3 text-red-500 mt-0.5 shrink-0" />
                             <span>{f.area}: {f.action_required}</span>
                           </li>
@@ -789,7 +789,7 @@ Manager response: ${visit.manager_response ?? "None submitted yet"}`;
                 className="text-sm"
               />
 
-              <p className="text-[10px] text-slate-400">
+              <p className="text-[10px] text-[var(--cs-text-muted)]">
                 This response will be recorded against Visit {respondingTo.visit_number} and forwarded to the RI for review. It becomes part of the Reg 45 evidence base.
               </p>
             </div>

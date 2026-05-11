@@ -51,7 +51,7 @@ const TYPE_CONFIG: Record<RelationalRecordType, { label: string; icon: React.Ele
 };
 
 const CONFIDENCE_CONFIG: Record<string, { label: string; cls: string }> = {
-  low:    { label: "Low confidence",    cls: "bg-slate-50 text-slate-500 border-slate-200"     },
+  low:    { label: "Low confidence",    cls: "bg-slate-50 text-[var(--cs-text-muted)] border-[var(--cs-border)]"     },
   medium: { label: "Developing",        cls: "bg-amber-50 text-amber-700 border-amber-200"    },
   high:   { label: "Well-evidenced",    cls: "bg-emerald-50 text-emerald-700 border-emerald-200" },
 };
@@ -83,12 +83,12 @@ function RecordCard({ record }: { record: RelationalRecord }) {
     )}>
       <div className="flex items-start gap-3 p-4">
         <div className={cn("w-10 h-10 rounded-xl flex items-center justify-center shrink-0", typeCfg?.bg ?? "bg-slate-50")}>
-          <TypeIcon className={cn("h-4 w-4", typeCfg?.color ?? "text-slate-500")} />
+          <TypeIcon className={cn("h-4 w-4", typeCfg?.color ?? "text-[var(--cs-text-muted)]")} />
         </div>
 
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap mb-1">
-            <span className="text-sm font-bold text-slate-800">{record.title}</span>
+            <span className="text-sm font-bold text-[var(--cs-navy)]">{record.title}</span>
             {record.is_positive ? (
               <ThumbsUp className="h-3.5 w-3.5 text-emerald-500" />
             ) : (
@@ -105,7 +105,7 @@ function RecordCard({ record }: { record: RelationalRecord }) {
             </Badge>
           </div>
 
-          <div className="flex items-center gap-3 text-xs text-slate-500 flex-wrap">
+          <div className="flex items-center gap-3 text-xs text-[var(--cs-text-muted)] flex-wrap">
             <span className="flex items-center gap-1">
               <User className="h-3 w-3" />{getYPName(record.child_id)}
             </span>
@@ -124,21 +124,21 @@ function RecordCard({ record }: { record: RelationalRecord }) {
           </div>
         </div>
 
-        <button onClick={() => setExpanded(!expanded)} className="text-slate-400 hover:text-slate-600 shrink-0">
+        <button onClick={() => setExpanded(!expanded)} className="text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] shrink-0">
           {expanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
         </button>
       </div>
 
       {expanded && (
-        <div className="border-t border-slate-100 px-4 pb-4 pt-3 space-y-3">
+        <div className="border-t border-[var(--cs-border-subtle)] px-4 pb-4 pt-3 space-y-3">
           <div className={cn(
             "rounded-xl border p-3",
             record.is_positive ? "border-emerald-100 bg-emerald-50/40" : "border-red-100 bg-red-50/30",
           )}>
-            <p className="text-xs text-slate-700 leading-relaxed">{record.description}</p>
+            <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed">{record.description}</p>
           </div>
 
-          <div className="flex items-center gap-4 text-[10px] text-slate-400 flex-wrap">
+          <div className="flex items-center gap-4 text-[10px] text-[var(--cs-text-muted)] flex-wrap">
             <span>Recorded by {getStaffName(record.created_by)}</span>
             {record.source_ref_type && (
               <span>Source: {record.source_ref_type.replace(/_/g, " ")}</span>
@@ -208,7 +208,7 @@ function NewRecordDialog({
         <div className="space-y-3 text-sm">
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="text-xs text-slate-500 font-medium mb-1 block">Young person</label>
+              <label className="text-xs text-[var(--cs-text-muted)] font-medium mb-1 block">Young person</label>
               <Select value={form.child_id} onValueChange={(v) => setForm((p) => ({ ...p, child_id: v }))}>
                 <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
                 <SelectContent>
@@ -219,7 +219,7 @@ function NewRecordDialog({
               </Select>
             </div>
             <div>
-              <label className="text-xs text-slate-500 font-medium mb-1 block">Type</label>
+              <label className="text-xs text-[var(--cs-text-muted)] font-medium mb-1 block">Type</label>
               <Select value={form.record_type} onValueChange={(v) => setForm((p) => ({ ...p, record_type: v as RelationalRecordType }))}>
                 <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
                 <SelectContent>
@@ -232,18 +232,18 @@ function NewRecordDialog({
           </div>
 
           <div>
-            <label className="text-xs text-slate-500 font-medium mb-1 block">Title <span className="text-red-500">*</span></label>
+            <label className="text-xs text-[var(--cs-text-muted)] font-medium mb-1 block">Title <span className="text-red-500">*</span></label>
             <Input value={form.title} onChange={(e) => setForm((p) => ({ ...p, title: e.target.value }))} placeholder="e.g. Casey initiated conversation about school" className="h-8 text-xs" />
           </div>
 
           <div>
-            <label className="text-xs text-slate-500 font-medium mb-1 block">Description <span className="text-red-500">*</span></label>
+            <label className="text-xs text-[var(--cs-text-muted)] font-medium mb-1 block">Description <span className="text-red-500">*</span></label>
             <Textarea value={form.description} onChange={(e) => setForm((p) => ({ ...p, description: e.target.value }))} placeholder="Describe what you observed and why it matters…" rows={4} className="text-xs" />
           </div>
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="text-xs text-slate-500 font-medium mb-1 block">Related staff member</label>
+              <label className="text-xs text-[var(--cs-text-muted)] font-medium mb-1 block">Related staff member</label>
               <Select value={form.staff_id} onValueChange={(v) => setForm((p) => ({ ...p, staff_id: v }))}>
                 <SelectTrigger className="h-8 text-xs"><SelectValue placeholder="Optional" /></SelectTrigger>
                 <SelectContent>
@@ -254,7 +254,7 @@ function NewRecordDialog({
               </Select>
             </div>
             <div>
-              <label className="text-xs text-slate-500 font-medium mb-1 block">Confidence</label>
+              <label className="text-xs text-[var(--cs-text-muted)] font-medium mb-1 block">Confidence</label>
               <Select value={form.confidence} onValueChange={(v) => setForm((p) => ({ ...p, confidence: v as RelationalRecord["confidence"] }))}>
                 <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
                 <SelectContent>
@@ -268,7 +268,7 @@ function NewRecordDialog({
 
           <label className="flex items-center gap-2 cursor-pointer">
             <input type="checkbox" checked={form.is_positive} onChange={(e) => setForm((p) => ({ ...p, is_positive: e.target.checked }))} className="rounded" />
-            <span className="text-xs text-slate-600">This is a positive / protective observation</span>
+            <span className="text-xs text-[var(--cs-text-secondary)]">This is a positive / protective observation</span>
           </label>
         </div>
         <DialogFooter className="gap-2">
@@ -381,16 +381,16 @@ export default function RelationalPracticePage() {
         {/* ── Summary stats ────────────────────────────────────────────────── */}
         <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
           {[
-            { label: "Total Records", value: allRecords.length, icon: Heart, colour: "text-slate-700", bg: "bg-slate-50 border-slate-100" },
+            { label: "Total Records", value: allRecords.length, icon: Heart, colour: "text-[var(--cs-text-secondary)]", bg: "bg-slate-50 border-[var(--cs-border-subtle)]" },
             { label: "Positive", value: positiveCount, icon: ThumbsUp, colour: "text-emerald-600", bg: "bg-emerald-50 border-emerald-100" },
-            { label: "Caution", value: cautionCount, icon: AlertTriangle, colour: cautionCount > 0 ? "text-red-600" : "text-slate-500", bg: cautionCount > 0 ? "bg-red-50 border-red-100" : "bg-slate-50 border-slate-100" },
+            { label: "Caution", value: cautionCount, icon: AlertTriangle, colour: cautionCount > 0 ? "text-red-600" : "text-[var(--cs-text-muted)]", bg: cautionCount > 0 ? "bg-red-50 border-red-100" : "bg-slate-50 border-[var(--cs-border-subtle)]" },
             { label: "Well-Evidenced", value: highConfidenceCount, icon: CheckCircle2, colour: "text-blue-600", bg: "bg-blue-50 border-blue-100" },
             { label: "Record Types", value: Object.keys(typeCounts).length, icon: Sparkles, colour: "text-violet-600", bg: "bg-violet-50 border-violet-100" },
           ].map(({ label, value, icon: Icon, colour, bg }) => (
             <div key={label} className={cn("rounded-2xl border p-4 text-center", bg)}>
               <Icon className={cn("h-4 w-4 mx-auto mb-1", colour)} />
               <div className={cn("text-2xl font-bold tabular-nums", colour)}>{value}</div>
-              <div className="text-[10px] text-slate-500 mt-0.5 font-medium">{label}</div>
+              <div className="text-[10px] text-[var(--cs-text-muted)] mt-0.5 font-medium">{label}</div>
             </div>
           ))}
         </div>
@@ -408,11 +408,11 @@ export default function RelationalPracticePage() {
                   "flex-1 rounded-xl border p-3 text-center transition-all",
                   childFilter === id
                     ? "bg-emerald-50 border-emerald-300 ring-1 ring-emerald-200"
-                    : "bg-white border-slate-200 hover:border-emerald-200",
+                    : "bg-white border-[var(--cs-border)] hover:border-emerald-200",
                 )}
               >
-                <p className="text-sm font-semibold text-slate-800">{getYPName(id)}</p>
-                <p className="text-xs text-slate-500 mt-0.5">
+                <p className="text-sm font-semibold text-[var(--cs-navy)]">{getYPName(id)}</p>
+                <p className="text-xs text-[var(--cs-text-muted)] mt-0.5">
                   {count} record{count !== 1 ? "s" : ""} · {pos} positive
                 </p>
               </button>
@@ -450,16 +450,16 @@ export default function RelationalPracticePage() {
         {/* ── Search + filters ─────────────────────────────────────────────── */}
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1 max-w-sm">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
             <Input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search records, strategies…" className="pl-9 h-8 text-xs" />
           </div>
           <div className="flex items-center gap-3 flex-wrap">
             <div className="flex items-center gap-1.5">
-              <Filter className="h-3.5 w-3.5 text-slate-400" />
+              <Filter className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
               <select
                 value={polarityFilter}
                 onChange={(e) => setPolarityFilter(e.target.value as typeof polarityFilter)}
-                className="rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-[11px] text-slate-700 focus:border-emerald-300 focus:ring-1 focus:ring-emerald-200 outline-none"
+                className="rounded-lg border border-[var(--cs-border)] bg-white px-2.5 py-1 text-[11px] text-[var(--cs-text-secondary)] focus:border-emerald-300 focus:ring-1 focus:ring-emerald-200 outline-none"
               >
                 <option value="all">All records</option>
                 <option value="positive">Positive only</option>
@@ -467,11 +467,11 @@ export default function RelationalPracticePage() {
               </select>
             </div>
             <div className="flex items-center gap-1.5">
-              <ArrowUpDown className="h-3.5 w-3.5 text-slate-400" />
+              <ArrowUpDown className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
-                className="rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-[11px] text-slate-700 focus:border-emerald-300 focus:ring-1 focus:ring-emerald-200 outline-none"
+                className="rounded-lg border border-[var(--cs-border)] bg-white px-2.5 py-1 text-[11px] text-[var(--cs-text-secondary)] focus:border-emerald-300 focus:ring-1 focus:ring-emerald-200 outline-none"
               >
                 <option value="date">Date (newest)</option>
                 <option value="child">Young person</option>
@@ -483,7 +483,7 @@ export default function RelationalPracticePage() {
 
         {(search || childFilter !== "all" || typeFilter !== "all" || polarityFilter !== "all") && (
           <div className="flex items-center gap-2">
-            <p className="text-xs text-slate-400">{filtered.length} result{filtered.length !== 1 ? "s" : ""}</p>
+            <p className="text-xs text-[var(--cs-text-muted)]">{filtered.length} result{filtered.length !== 1 ? "s" : ""}</p>
             <button
               onClick={() => { setSearch(""); setChildFilter("all"); setTypeFilter("all"); setPolarityFilter("all"); }}
               className="text-xs text-emerald-600 hover:text-emerald-800 font-medium"
@@ -496,19 +496,19 @@ export default function RelationalPracticePage() {
         {/* ── Loading ──────────────────────────────────────────────────────── */}
         {isLoading && (
           <div className="flex items-center justify-center py-16">
-            <Loader2 className="h-6 w-6 animate-spin text-slate-400" />
-            <span className="ml-2 text-sm text-slate-400">Loading relational records…</span>
+            <Loader2 className="h-6 w-6 animate-spin text-[var(--cs-text-muted)]" />
+            <span className="ml-2 text-sm text-[var(--cs-text-muted)]">Loading relational records…</span>
           </div>
         )}
 
         {/* ── Records list ─────────────────────────────────────────────────── */}
         {!isLoading && filtered.length === 0 && (
-          <div className="text-center py-16 text-slate-500">
-            <Heart className="h-10 w-10 text-slate-300 mx-auto mb-3" />
+          <div className="text-center py-16 text-[var(--cs-text-muted)]">
+            <Heart className="h-10 w-10 text-[var(--cs-text-gentle)] mx-auto mb-3" />
             <p className="text-sm font-medium">
               {search ? `No records match "${search}"` : "No relational records yet"}
             </p>
-            <p className="text-xs text-slate-400 mt-1">
+            <p className="text-xs text-[var(--cs-text-muted)] mt-1">
               Capture what works, what to avoid, and trust moments for each young person.
             </p>
           </div>
@@ -523,8 +523,8 @@ export default function RelationalPracticePage() {
         )}
 
         {/* ── Regulatory note ──────────────────────────────────────────────── */}
-        <div className="rounded-xl border border-slate-100 bg-slate-50 px-4 py-3 text-xs text-slate-500">
-          <span className="font-semibold text-slate-600">Regulatory Basis — </span>
+        <div className="rounded-xl border border-[var(--cs-border-subtle)] bg-slate-50 px-4 py-3 text-xs text-[var(--cs-text-muted)]">
+          <span className="font-semibold text-[var(--cs-text-secondary)]">Regulatory Basis — </span>
           Children&apos;s Homes Quality Standards 2015, Standard 11 (Positive Relationships): staff must
           build relationships founded on trust, consistency, and predictability. Standard 2 (Quality of Care):
           care must be tailored to the individual needs of each child. Ofsted ILACS inspections assess

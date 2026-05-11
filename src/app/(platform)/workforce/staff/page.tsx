@@ -33,7 +33,7 @@ const STAFF_PROFILE_EXPORT_COLS: ExportColumn<StaffEnriched>[] = [
 ];
 
 const STAGE_COLOURS: Record<PathwayStage, string> = {
-  inductee:           "bg-slate-100 text-slate-700 border-slate-200",
+  inductee:           "bg-slate-100 text-[var(--cs-text-secondary)] border-[var(--cs-border)]",
   rsw:                "bg-blue-50 text-blue-700 border-blue-200",
   senior_rsw:         "bg-sky-50 text-sky-700 border-sky-200",
   team_leader:        "bg-violet-50 text-violet-700 border-violet-200",
@@ -171,7 +171,7 @@ export default function StaffProfilesPage() {
           <PrintButton title="Staff Competency Profiles" subtitle="Oak House — Competency Profiles" targetId="staff-profiles-content" />
           <SmartUploadButton variant="inline" label="Upload Staff Document" uploadContext="Workforce Intelligence — staff profile or HR document upload" />
           <Link href="/workforce">
-            <button className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50 transition-colors">
+            <button className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--cs-border)] bg-white px-3 py-1.5 text-xs font-medium text-[var(--cs-text-secondary)] hover:bg-[var(--cs-surface)] transition-colors">
               <Users className="h-3.5 w-3.5" />
               Workforce Hub
             </button>
@@ -184,44 +184,44 @@ export default function StaffProfilesPage() {
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
           <Card className="rounded-2xl">
             <CardContent className="pt-4 pb-4 text-center">
-              <Users className="h-4 w-4 text-slate-400 mx-auto mb-1" />
-              <div className="text-2xl font-bold text-slate-900">{stats.total}</div>
-              <div className="text-[10px] text-slate-500">Total Staff</div>
+              <Users className="h-4 w-4 text-[var(--cs-text-muted)] mx-auto mb-1" />
+              <div className="text-2xl font-bold text-[var(--cs-navy)]">{stats.total}</div>
+              <div className="text-[10px] text-[var(--cs-text-muted)]">Total Staff</div>
             </CardContent>
           </Card>
           <Card className="rounded-2xl">
             <CardContent className="pt-4 pb-4 text-center">
               <CheckCircle2 className="h-4 w-4 text-emerald-500 mx-auto mb-1" />
               <div className="text-2xl font-bold text-emerald-600">{stats.onShift}</div>
-              <div className="text-[10px] text-slate-500">On Shift</div>
+              <div className="text-[10px] text-[var(--cs-text-muted)]">On Shift</div>
             </CardContent>
           </Card>
           <Card className="rounded-2xl">
             <CardContent className="pt-4 pb-4 text-center">
               <GraduationCap className={cn("h-4 w-4 mx-auto mb-1", stats.trainingIssue > 0 ? "text-red-500" : "text-emerald-500")} />
               <div className={cn("text-2xl font-bold", stats.trainingIssue > 0 ? "text-red-600" : "text-emerald-600")}>{stats.trainingIssue}</div>
-              <div className="text-[10px] text-slate-500">Training Issues</div>
+              <div className="text-[10px] text-[var(--cs-text-muted)]">Training Issues</div>
             </CardContent>
           </Card>
           <Card className="rounded-2xl">
             <CardContent className="pt-4 pb-4 text-center">
               <Clock className={cn("h-4 w-4 mx-auto mb-1", stats.supervisionDue > 0 ? "text-amber-500" : "text-emerald-500")} />
               <div className={cn("text-2xl font-bold", stats.supervisionDue > 0 ? "text-amber-600" : "text-emerald-600")}>{stats.supervisionDue}</div>
-              <div className="text-[10px] text-slate-500">Supervision Due</div>
+              <div className="text-[10px] text-[var(--cs-text-muted)]">Supervision Due</div>
             </CardContent>
           </Card>
           <Card className="rounded-2xl">
             <CardContent className="pt-4 pb-4 text-center">
               <Calendar className="h-4 w-4 text-blue-500 mx-auto mb-1" />
               <div className="text-2xl font-bold text-blue-600">{stats.onLeave}</div>
-              <div className="text-[10px] text-slate-500">On Leave</div>
+              <div className="text-[10px] text-[var(--cs-text-muted)]">On Leave</div>
             </CardContent>
           </Card>
           <Card className="rounded-2xl">
             <CardContent className="pt-4 pb-4 text-center">
               <UserCheck className="h-4 w-4 text-indigo-500 mx-auto mb-1" />
               <div className="text-2xl font-bold text-indigo-600">{stats.withProfile}</div>
-              <div className="text-[10px] text-slate-500">With Profile</div>
+              <div className="text-[10px] text-[var(--cs-text-muted)]">With Profile</div>
             </CardContent>
           </Card>
         </div>
@@ -237,19 +237,19 @@ export default function StaffProfilesPage() {
                   "rounded-full px-3 py-1 text-xs font-medium transition-colors",
                   filter === f.key
                     ? "bg-slate-900 text-white"
-                    : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                    : "bg-slate-100 text-[var(--cs-text-secondary)] hover:bg-slate-200"
                 )}
               >
                 {f.label}
                 {f.count > 0 && (
-                  <span className={cn("ml-1.5", filter === f.key ? "text-slate-300" : "text-slate-400")}>
+                  <span className={cn("ml-1.5", filter === f.key ? "text-[var(--cs-text-gentle)]" : "text-[var(--cs-text-muted)]")}>
                     {f.count}
                   </span>
                 )}
               </button>
             ))}
           </div>
-          <div className="flex items-center gap-1.5 text-xs text-slate-500 shrink-0">
+          <div className="flex items-center gap-1.5 text-xs text-[var(--cs-text-muted)] shrink-0">
             <ArrowUpDown className="h-3.5 w-3.5" />
             <select value={sortBy} onChange={(e) => setSortBy(e.target.value as typeof sortBy)} className="bg-white border rounded-md px-2 py-1.5 text-xs">
               <option value="role">Role hierarchy</option>
@@ -258,20 +258,20 @@ export default function StaffProfilesPage() {
             </select>
           </div>
           <div className="relative ml-auto">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
             <input
               type="text"
               placeholder="Search by name or role..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="rounded-full border border-slate-200 pl-8 pr-3 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-slate-900 w-56"
+              className="rounded-full border border-[var(--cs-border)] pl-8 pr-3 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-slate-900 w-56"
             />
           </div>
         </div>
 
         {/* Grouped staff list */}
         {filtered.length === 0 ? (
-          <div className="rounded-2xl border-2 border-dashed border-slate-200 p-12 text-center text-slate-400">
+          <div className="rounded-2xl border-2 border-dashed border-[var(--cs-border)] p-12 text-center text-[var(--cs-text-muted)]">
             <Users className="h-10 w-10 mx-auto mb-3 text-slate-200" />
             <div className="text-sm font-medium">No staff match this filter</div>
             <div className="text-xs mt-1">Try changing the filter or search term</div>
@@ -280,11 +280,11 @@ export default function StaffProfilesPage() {
           Array.from(grouped.entries()).map(([role, members]) => (
             <div key={role} className="space-y-2">
               <div className="flex items-center gap-2 pt-1">
-                <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest">
+                <p className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-widest">
                   {ROLE_LABELS[role] ?? role.replace(/_/g, " ")}
                 </p>
-                <Badge className="text-[9px] bg-slate-100 text-slate-500 border-0 rounded-full">{members.length}</Badge>
-                <div className="flex-1 border-b border-slate-100" />
+                <Badge className="text-[9px] bg-slate-100 text-[var(--cs-text-muted)] border-0 rounded-full">{members.length}</Badge>
+                <div className="flex-1 border-b border-[var(--cs-border-subtle)]" />
               </div>
 
               {members.map((member) => {
@@ -295,7 +295,7 @@ export default function StaffProfilesPage() {
                   <Link key={member.id} href={hasProfile ? `/workforce/staff/${member.id}` : "/workforce/aria-planner"}>
                     <div className={cn(
                       "rounded-2xl border bg-white p-4 hover:shadow-sm transition-all cursor-pointer",
-                      hasProfile ? "border-slate-200 hover:border-indigo-200" : "border-dashed border-slate-200 bg-slate-50/50",
+                      hasProfile ? "border-[var(--cs-border)] hover:border-indigo-200" : "border-dashed border-[var(--cs-border)] bg-slate-50/50",
                     )}>
                       <div className="flex items-center gap-4">
                         {/* Avatar */}
@@ -303,7 +303,7 @@ export default function StaffProfilesPage() {
                           "w-10 h-10 rounded-full flex items-center justify-center shrink-0",
                           hasProfile ? "bg-indigo-100" : "bg-slate-200",
                         )}>
-                          <span className={cn("text-sm font-bold", hasProfile ? "text-indigo-700" : "text-slate-500")}>
+                          <span className={cn("text-sm font-bold", hasProfile ? "text-indigo-700" : "text-[var(--cs-text-muted)]")}>
                             {member.full_name.split(" ").map((n) => n[0]).join("").slice(0, 2)}
                           </span>
                         </div>
@@ -311,20 +311,20 @@ export default function StaffProfilesPage() {
                         {/* Name, job, stage */}
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 flex-wrap mb-0.5">
-                            <p className="text-sm font-bold text-slate-800">{member.full_name}</p>
+                            <p className="text-sm font-bold text-[var(--cs-navy)]">{member.full_name}</p>
                             {hasProfile && profile.current_stage && (
                               <Badge variant="outline" className={cn("text-[10px] px-1.5 py-0 border", STAGE_COLOURS[profile.current_stage])}>
                                 {PATHWAY_STAGE_LABELS[profile.current_stage]}
                               </Badge>
                             )}
                             {hasProfile && profile.target_stage && (
-                              <div className="flex items-center gap-1 text-[10px] text-slate-400">
+                              <div className="flex items-center gap-1 text-[10px] text-[var(--cs-text-muted)]">
                                 <ArrowUpRight className="h-3 w-3" />
                                 <span>→ {PATHWAY_STAGE_LABELS[profile.target_stage]}</span>
                               </div>
                             )}
                           </div>
-                          <p className="text-xs text-slate-500">{member.job_title}</p>
+                          <p className="text-xs text-[var(--cs-text-muted)]">{member.job_title}</p>
                         </div>
 
                         {/* Indicators */}
@@ -365,7 +365,7 @@ export default function StaffProfilesPage() {
                           {hasProfile && (
                             <div className="w-16 hidden sm:block">
                               <div className="flex justify-between mb-0.5">
-                                <span className="text-[9px] text-slate-400">Ready</span>
+                                <span className="text-[9px] text-[var(--cs-text-muted)]">Ready</span>
                                 <span className={cn("text-[9px] font-bold", READINESS_COLOUR(profile.overall_readiness_score))}>
                                   {profile.overall_readiness_score}%
                                 </span>
@@ -385,7 +385,7 @@ export default function StaffProfilesPage() {
                             </span>
                           )}
 
-                          <ChevronRight className="h-4 w-4 text-slate-300" />
+                          <ChevronRight className="h-4 w-4 text-[var(--cs-text-gentle)]" />
                         </div>
                       </div>
 
@@ -394,12 +394,12 @@ export default function StaffProfilesPage() {
                         <div className="mt-3 pt-3 border-t border-slate-50 flex items-center gap-3">
                           <div className="flex-1 min-w-0">
                             <p className="text-[10px] text-emerald-600 font-semibold mb-0.5">Top Strength</p>
-                            <p className="text-xs text-slate-600 line-clamp-1">{profile.strengths[0]}</p>
+                            <p className="text-xs text-[var(--cs-text-secondary)] line-clamp-1">{profile.strengths[0]}</p>
                           </div>
                           {profile.development_areas.length > 0 && (
                             <div className="flex-1 min-w-0 hidden md:block">
                               <p className="text-[10px] text-amber-600 font-semibold mb-0.5">Development Area</p>
-                              <p className="text-xs text-slate-600 line-clamp-1">{profile.development_areas[0]}</p>
+                              <p className="text-xs text-[var(--cs-text-secondary)] line-clamp-1">{profile.development_areas[0]}</p>
                             </div>
                           )}
                         </div>
@@ -413,8 +413,8 @@ export default function StaffProfilesPage() {
         )}
 
         {/* Regulatory note */}
-        <div className="rounded-xl border border-slate-100 bg-slate-50 px-4 py-3 text-xs text-slate-500">
-          <span className="font-semibold text-slate-600">Regulatory Basis — </span>
+        <div className="rounded-xl border border-[var(--cs-border-subtle)] bg-slate-50 px-4 py-3 text-xs text-[var(--cs-text-muted)]">
+          <span className="font-semibold text-[var(--cs-text-secondary)]">Regulatory Basis — </span>
           Children&apos;s Homes Regulations 2015: Reg 32 (fitness of workers), Reg 33 (employment of staff
           — qualifications and experience), Reg 34 (staff supervision and development). The registered person must
           ensure that staff have the qualifications, skills, and knowledge necessary to safeguard and meet the needs

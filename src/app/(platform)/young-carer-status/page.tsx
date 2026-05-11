@@ -161,7 +161,7 @@ const statusColour: Record<string, string> = {
   "Identified young carer": "bg-amber-100 text-amber-800",
   "Previous young carer (pre-care)": "bg-purple-100 text-purple-800",
   "Risk of young carer role on family contact": "bg-blue-100 text-blue-800",
-  "Not a young carer": "bg-slate-100 text-slate-800",
+  "Not a young carer": "bg-slate-100 text-[var(--cs-navy)]",
 };
 
 const exportCols: ExportColumn<YoungCarerRecord>[] = [
@@ -227,7 +227,7 @@ export default function YoungCarerStatusPage() {
           const isExpanded = expandedId === r.id;
           return (
             <div key={r.id} className="rounded-xl border bg-white overflow-hidden">
-              <button className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors" onClick={() => setExpandedId(isExpanded ? null : r.id)}>
+              <button className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors" onClick={() => setExpandedId(isExpanded ? null : r.id)}>
                 <div className="flex items-center gap-3 flex-1 min-w-0"><Heart className="h-5 w-5 text-purple-600 shrink-0" /><div className="min-w-0"><p className="font-medium truncate">{getYPName(r.youngPerson)}</p><p className="text-xs text-muted-foreground mt-0.5">{r.carerStatus} {r.caringRecipient && `· caring for ${r.caringRecipient}`}</p></div></div>
                 <div className="flex items-center gap-2 shrink-0 ml-3"><span className={cn("text-xs px-2 py-0.5 rounded-full font-medium", statusColour[r.carerStatus])}>{r.carerStatus.split(" ")[0]}</span>{isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}</div>
               </button>
@@ -241,7 +241,7 @@ export default function YoungCarerStatusPage() {
                   {r.contactSupportArrangements && <div className="bg-purple-50 rounded-lg p-3"><p className="text-xs font-semibold text-purple-800 uppercase tracking-wide mb-1">Contact Support</p><p>{r.contactSupportArrangements}</p></div>}
                   {r.childRefusesIdentification && <div className="bg-amber-50 rounded-lg p-3"><p className="text-xs font-semibold text-amber-800 uppercase tracking-wide mb-1">Note on Identification</p><p>{r.childRefusesIdentification}</p></div>}
                   <div className="flex flex-wrap gap-4 text-xs text-muted-foreground pt-2 border-t"><span>Reviewed: {r.reviewedDate} by {getStaffName(r.reviewedBy)}</span><span>Schedule: {r.reviewSchedule}</span>{r.formalYoungCarerAssessment && <span className="px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 font-medium">LA Assessed</span>}</div>
-                  {r.notes && <div className="bg-slate-50 rounded-lg p-3 border"><p className="text-xs font-semibold text-slate-800 uppercase tracking-wide mb-1">Notes</p><p>{r.notes}</p></div>}
+                  {r.notes && <div className="bg-slate-50 rounded-lg p-3 border"><p className="text-xs font-semibold text-[var(--cs-navy)] uppercase tracking-wide mb-1">Notes</p><p>{r.notes}</p></div>}
                 </div>
               )}
             </div>

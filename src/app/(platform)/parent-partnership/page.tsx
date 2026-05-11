@@ -48,7 +48,7 @@ const CT_ICON: Record<ParentContactType, typeof Phone> = {
 
 const ENG_CLR: Record<ParentEngagementLevel, string> = {
   positive: "bg-emerald-100 text-emerald-800",
-  neutral: "bg-slate-100 text-slate-800",
+  neutral: "bg-slate-100 text-[var(--cs-navy)]",
   difficult: "bg-amber-100 text-amber-800",
   disengaged: "bg-orange-100 text-orange-800",
   hostile: "bg-red-100 text-red-800",
@@ -149,8 +149,8 @@ export default function ParentPartnershipPage() {
           {[
             { label: "Total Contacts", value: totalContacts, icon: Phone, colour: "text-blue-600" },
             { label: "Positive", value: positiveCount, icon: Heart, colour: "text-emerald-600" },
-            { label: "Difficult / Hostile", value: difficultCount, icon: AlertTriangle, colour: difficultCount > 0 ? "text-amber-600" : "text-slate-400" },
-            { label: "Disengaged", value: disengagedCount, icon: Clock, colour: disengagedCount > 0 ? "text-orange-600" : "text-slate-400" },
+            { label: "Difficult / Hostile", value: difficultCount, icon: AlertTriangle, colour: difficultCount > 0 ? "text-amber-600" : "text-[var(--cs-text-muted)]" },
+            { label: "Disengaged", value: disengagedCount, icon: Clock, colour: disengagedCount > 0 ? "text-orange-600" : "text-[var(--cs-text-muted)]" },
             { label: "With Concerns", value: withConcerns, icon: AlertTriangle, colour: withConcerns > 0 ? "text-red-600" : "text-emerald-600" },
             { label: "Follow-Up Actions", value: pendingFollowUps, icon: CheckCircle2, colour: "text-indigo-600" },
           ].map(s => (
@@ -224,13 +224,13 @@ export default function ParentPartnershipPage() {
                   <div className="flex items-center justify-between px-4 py-3">
                     <div className="flex items-center gap-3 min-w-0">
                       <div className="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center flex-shrink-0">
-                        <Icon className="w-4 h-4 text-slate-600" />
+                        <Icon className="w-4 h-4 text-[var(--cs-text-secondary)]" />
                       </div>
                       <div className="min-w-0">
                         <div className="flex items-center gap-2 flex-wrap">
-                          <span className="font-semibold text-sm text-slate-900">{getYPName(r.child_id)}</span>
-                          <span className="text-slate-400 text-xs">&middot;</span>
-                          <span className="text-sm text-slate-700">{r.family_member_name}</span>
+                          <span className="font-semibold text-sm text-[var(--cs-navy)]">{getYPName(r.child_id)}</span>
+                          <span className="text-[var(--cs-text-muted)] text-xs">&middot;</span>
+                          <span className="text-sm text-[var(--cs-text-secondary)]">{r.family_member_name}</span>
                           <Badge variant="outline" className="text-xs">{PARENT_RELATIONSHIP_TYPE_LABEL[r.relationship_type]}</Badge>
                         </div>
                         <div className="flex items-center gap-2 mt-0.5 flex-wrap">
@@ -251,7 +251,7 @@ export default function ParentPartnershipPage() {
                       {r.sw_informed && (
                         <Badge className="bg-blue-100 text-blue-700 text-xs">SW Informed</Badge>
                       )}
-                      {open ? <ChevronUp className="h-4 w-4 text-slate-400" /> : <ChevronDown className="h-4 w-4 text-slate-400" />}
+                      {open ? <ChevronUp className="h-4 w-4 text-[var(--cs-text-muted)]" /> : <ChevronDown className="h-4 w-4 text-[var(--cs-text-muted)]" />}
                     </div>
                   </div>
                 </button>
@@ -260,8 +260,8 @@ export default function ParentPartnershipPage() {
                   <CardContent className="space-y-4 pt-0 border-t">
                     {/* Summary */}
                     <div>
-                      <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">Summary</p>
-                      <p className="text-sm text-slate-700 leading-relaxed">{r.summary}</p>
+                      <p className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-1">Summary</p>
+                      <p className="text-sm text-[var(--cs-text-secondary)] leading-relaxed">{r.summary}</p>
                     </div>
 
                     {/* Contact details grid */}

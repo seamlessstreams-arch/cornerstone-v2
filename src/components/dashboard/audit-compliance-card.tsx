@@ -49,7 +49,7 @@ export function AuditComplianceCard() {
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-center py-6">
-            <Loader2 className="h-5 w-5 animate-spin text-slate-400" />
+            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
           </div>
         </CardContent>
       </Card>
@@ -84,9 +84,9 @@ export function AuditComplianceCard() {
             <div className="text-[9px] text-emerald-500">Completed</div>
           </div>
           <div className={cn("rounded-xl p-2 text-center", meta.overdue > 0 ? "bg-red-50" : "bg-slate-50")}>
-            <Clock className={cn("h-3 w-3 mx-auto mb-0.5", meta.overdue > 0 ? "text-red-500" : "text-slate-400")} />
-            <div className={cn("text-sm font-bold tabular-nums", meta.overdue > 0 ? "text-red-700" : "text-slate-400")}>{meta.overdue}</div>
-            <div className={cn("text-[9px]", meta.overdue > 0 ? "text-red-500" : "text-slate-400")}>Overdue</div>
+            <Clock className={cn("h-3 w-3 mx-auto mb-0.5", meta.overdue > 0 ? "text-red-500" : "text-[var(--cs-text-muted)]")} />
+            <div className={cn("text-sm font-bold tabular-nums", meta.overdue > 0 ? "text-red-700" : "text-[var(--cs-text-muted)]")}>{meta.overdue}</div>
+            <div className={cn("text-[9px]", meta.overdue > 0 ? "text-red-500" : "text-[var(--cs-text-muted)]")}>Overdue</div>
           </div>
           <div className="rounded-xl bg-blue-50 p-2 text-center">
             <BarChart3 className="h-3 w-3 text-blue-500 mx-auto mb-0.5" />
@@ -97,7 +97,7 @@ export function AuditComplianceCard() {
 
         {/* Average score */}
         <div className="flex items-center justify-between text-[10px] px-1">
-          <span className="text-slate-500 flex items-center gap-1">
+          <span className="text-[var(--cs-text-muted)] flex items-center gap-1">
             <Star className="h-3 w-3" /> Average score
           </span>
           <div className="flex items-center gap-1.5">
@@ -121,19 +121,19 @@ export function AuditComplianceCard() {
 
         {/* Findings & Actions */}
         <div className="flex items-center justify-between text-[10px] px-1">
-          <span className="text-slate-500">Total findings</span>
-          <span className="font-bold text-slate-700 tabular-nums">{stats.totalFindings}</span>
+          <span className="text-[var(--cs-text-muted)]">Total findings</span>
+          <span className="font-bold text-[var(--cs-text-secondary)] tabular-nums">{stats.totalFindings}</span>
         </div>
         <div className="flex items-center justify-between text-[10px] px-1">
-          <span className="text-slate-500">Open actions</span>
-          <span className={cn("font-bold tabular-nums", stats.totalActions > 0 ? "text-amber-600" : "text-slate-400")}>
+          <span className="text-[var(--cs-text-muted)]">Open actions</span>
+          <span className={cn("font-bold tabular-nums", stats.totalActions > 0 ? "text-amber-600" : "text-[var(--cs-text-muted)]")}>
             {stats.totalActions}
           </span>
         </div>
 
         {/* Scheduled */}
         <div className="flex items-center justify-between text-[10px] px-1">
-          <span className="text-slate-500">Scheduled</span>
+          <span className="text-[var(--cs-text-muted)]">Scheduled</span>
           <span className="font-bold text-blue-600 tabular-nums">{meta.scheduled}</span>
         </div>
 

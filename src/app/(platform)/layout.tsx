@@ -27,7 +27,7 @@ export default function PlatformLayout({
   return (
     <AuthProvider>
       <SidebarProvider>
-        <div className="flex min-h-screen bg-[#f7f8fa]">
+        <div className="flex min-h-screen" style={{ background: 'var(--cs-bg)' }}>
           <Sidebar />
           <PlatformContent>{children}</PlatformContent>
           <BottomNav />

@@ -29,7 +29,7 @@ const TYPE_CLR: Record<HateIncidentType, string> = {
   disability_related: "bg-blue-100 text-blue-800",
   antisemitic: "bg-orange-100 text-orange-800",
   misogynistic: "bg-pink-100 text-pink-800",
-  other: "bg-slate-100 text-slate-800",
+  other: "bg-slate-100 text-[var(--cs-navy)]",
 };
 
 const STATUS_CLR: Record<HateIncidentStatus, string> = {

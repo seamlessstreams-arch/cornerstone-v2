@@ -113,9 +113,9 @@ export function PriorityCard({
           )}>
             {count}
           </span>
-          <p className="text-[13px] font-semibold text-slate-800 leading-tight">{title}</p>
+          <p className="text-[13px] font-semibold text-[var(--cs-navy)] leading-tight">{title}</p>
         </div>
-        <p className="text-[12px] text-slate-600 leading-relaxed">{description}</p>
+        <p className="text-[12px] text-[var(--cs-text-secondary)] leading-relaxed">{description}</p>
       </div>
 
       {/* Action */}

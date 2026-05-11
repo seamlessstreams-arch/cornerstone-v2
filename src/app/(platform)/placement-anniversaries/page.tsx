@@ -34,7 +34,7 @@ const significanceColour: Record<string, string> = {
   celebratory: "bg-green-100 text-green-800",
   bittersweet: "bg-amber-100 text-amber-800",
   difficult: "bg-red-100 text-red-800",
-  practical_only: "bg-slate-100 text-slate-800",
+  practical_only: "bg-slate-100 text-[var(--cs-navy)]",
   mixed: "bg-purple-100 text-purple-800",
 };
 
@@ -173,7 +173,7 @@ export default function PlacementAnniversariesPage() {
           return (
             <div key={a.id} className="rounded-xl border bg-white overflow-hidden">
               <button
-                className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                 onClick={() => setExpandedId(isExpanded ? null : a.id)}
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0">

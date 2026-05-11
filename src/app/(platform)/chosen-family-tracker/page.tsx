@@ -45,7 +45,7 @@ const relationshipColour: Record<string, string> = {
   grandparent_figure: "bg-orange-100 text-orange-800",
   older_friend: "bg-cyan-100 text-cyan-800",
   sports_club_leader: "bg-yellow-100 text-yellow-800",
-  other_significant_adult: "bg-slate-100 text-slate-800",
+  other_significant_adult: "bg-slate-100 text-[var(--cs-navy)]",
 };
 
 const importanceColour: Record<string, string> = {
@@ -126,7 +126,7 @@ export default function ChosenFamilyTrackerPage() {
     return (
       <PageShell title="Chosen Family Tracker" subtitle="Loading...">
         <div className="flex items-center justify-center py-12">
-          <Loader2 className="h-8 w-8 animate-spin text-slate-400" />
+          <Loader2 className="h-8 w-8 animate-spin text-[var(--cs-text-muted)]" />
         </div>
       </PageShell>
     );
@@ -237,7 +237,7 @@ export default function ChosenFamilyTrackerPage() {
                   <span className={cn("text-xs px-2 py-0.5 rounded-full font-medium", relationshipColour[r.relationship])}>
                     {CHOSEN_FAMILY_RELATIONSHIP_LABEL[r.relationship]}
                   </span>
-                  <span className="text-xs px-2 py-0.5 rounded-full font-medium bg-slate-100 text-slate-700">
+                  <span className="text-xs px-2 py-0.5 rounded-full font-medium bg-slate-100 text-[var(--cs-text-secondary)]">
                     {CHOSEN_FAMILY_CONTACT_FREQUENCY_LABEL[r.contact_frequency]}
                   </span>
                   <span className={cn("text-xs px-2 py-0.5 rounded-full font-medium", importanceColour[r.importance_to_child])}>
@@ -332,7 +332,7 @@ export default function ChosenFamilyTrackerPage() {
                   </div>
 
                   <div className="flex flex-wrap gap-2 pt-2 border-t">
-                    <span className={cn("text-xs px-2 py-0.5 rounded-full font-medium", r.child_initiated_relationship ? "bg-rose-100 text-rose-800" : "bg-slate-100 text-slate-700")}>
+                    <span className={cn("text-xs px-2 py-0.5 rounded-full font-medium", r.child_initiated_relationship ? "bg-rose-100 text-rose-800" : "bg-slate-100 text-[var(--cs-text-secondary)]")}>
                       {r.child_initiated_relationship ? "Child sought this relationship" : "Adult-introduced, child embraced"}
                     </span>
                     <span className={cn("text-xs px-2 py-0.5 rounded-full font-medium", r.reciprocal ? "bg-emerald-100 text-emerald-800" : "bg-amber-100 text-amber-800")}>
@@ -341,7 +341,7 @@ export default function ChosenFamilyTrackerPage() {
                     <span className="text-xs px-2 py-0.5 rounded-full font-medium bg-blue-100 text-blue-800">
                       Next review: {r.review_date}
                     </span>
-                    <span className="text-xs px-2 py-0.5 rounded-full font-medium bg-slate-100 text-slate-700">
+                    <span className="text-xs px-2 py-0.5 rounded-full font-medium bg-slate-100 text-[var(--cs-text-secondary)]">
                       Key worker: {getStaffName(r.key_worker)}
                     </span>
                   </div>

@@ -53,7 +53,7 @@ const CAT_COLORS: Record<string, { bg: string; text: string; border: string }> =
   security:    { bg: "bg-violet-50", text: "text-violet-600", border: "border-violet-200" },
   electrical:  { bg: "bg-amber-50",  text: "text-amber-600",  border: "border-amber-200" },
   cleaning:    { bg: "bg-teal-50",   text: "text-teal-600",   border: "border-teal-200" },
-  general:     { bg: "bg-slate-50",  text: "text-slate-600",  border: "border-slate-200" },
+  general:     { bg: "bg-slate-50",  text: "text-[var(--cs-text-secondary)]",  border: "border-[var(--cs-border)]" },
 };
 const STATUS_COLORS: Record<string, string> = {
   open: "bg-amber-100 text-amber-700",
@@ -61,7 +61,7 @@ const STATUS_COLORS: Record<string, string> = {
   completed: "bg-emerald-100 text-emerald-700",
 };
 const PRIO_COLORS: Record<string, string> = {
-  urgent: "text-red-600", high: "text-orange-600", medium: "text-blue-600", low: "text-slate-400",
+  urgent: "text-red-600", high: "text-orange-600", medium: "text-blue-600", low: "text-[var(--cs-text-muted)]",
 };
 const PRIO_SORT: Record<string, number> = { urgent: 0, high: 1, medium: 2, low: 3 };
 
@@ -107,16 +107,16 @@ function MaintenanceCard({
         ? "border-red-200 bg-red-50"
         : isOverdue
         ? "border-amber-200 bg-amber-50"
-        : "border-slate-200 bg-white"
+        : "border-[var(--cs-border)] bg-white"
     )}>
       <div className={cn("h-10 w-10 rounded-xl flex items-center justify-center shrink-0", catColors.bg)}>
         <Icon className={cn("h-4.5 w-4.5", catColors.text)} style={{ width: "1.125rem", height: "1.125rem" }} />
       </div>
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-sm font-semibold text-slate-900">{item.title}</span>
+          <span className="text-sm font-semibold text-[var(--cs-navy)]">{item.title}</span>
           {item.recurring && (
-            <Badge className="text-[9px] rounded-full bg-slate-100 text-slate-500 flex items-center gap-0.5">
+            <Badge className="text-[9px] rounded-full bg-slate-100 text-[var(--cs-text-muted)] flex items-center gap-0.5">
               <RefreshCw className="h-2 w-2" />Recurring
             </Badge>
           )}
@@ -124,13 +124,13 @@ function MaintenanceCard({
             <Badge className="text-[9px] rounded-full bg-red-100 text-red-700">Overdue</Badge>
           )}
         </div>
-        <div className="text-xs text-slate-500 mt-0.5 line-clamp-1">
+        <div className="text-xs text-[var(--cs-text-muted)] mt-0.5 line-clamp-1">
           {item.notes || CAT_LABELS[item.category] || item.category}
           {item.assigned_to && <span className="ml-1">· {item.assigned_to}</span>}
         </div>
       </div>
       <div className="text-right shrink-0">
-        <div className="text-xs text-slate-500">{formatDate(item.due_date)}</div>
+        <div className="text-xs text-[var(--cs-text-muted)]">{formatDate(item.due_date)}</div>
         {isOverdue && (
           <div className="text-[10px] text-red-600 font-medium mt-0.5">
             {Math.ceil((new Date(today).getTime() - new Date(item.due_date).getTime()) / 86400000)}d overdue
@@ -336,10 +336,10 @@ export default function MaintenancePage() {
               { label: "Scheduled", value: stats.scheduled, icon: Calendar, color: "text-blue-600", bg: "bg-blue-50" },
               { label: "Completed", value: stats.completed, icon: CheckCircle2, color: "text-emerald-600", bg: "bg-emerald-50" },
             ].map(({ label, value, icon: Icon, color, bg }) => (
-              <div key={label} className="rounded-2xl border border-slate-200 bg-white p-5">
+              <div key={label} className="rounded-2xl border border-[var(--cs-border)] bg-white p-5">
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">{label}</div>
+                    <div className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider">{label}</div>
                     <div className={cn("mt-1 text-3xl font-bold tabular-nums", color)}>{value}</div>
                   </div>
                   <div className={cn("rounded-2xl p-3", bg)}><Icon className={cn("h-5 w-5", color)} /></div>
@@ -372,12 +372,12 @@ export default function MaintenancePage() {
                             <Icon className={cn("h-3.5 w-3.5", colors.text)} />
                           </div>
                           <div className="flex-1 min-w-0">
-                            <div className="text-xs font-semibold text-slate-900 truncate">{label}</div>
-                            <div className="text-[10px] text-slate-500">{data.open} open · {data.completed} done</div>
+                            <div className="text-xs font-semibold text-[var(--cs-navy)] truncate">{label}</div>
+                            <div className="text-[10px] text-[var(--cs-text-muted)]">{data.open} open · {data.completed} done</div>
                           </div>
                         </div>
                         <Progress value={pct} className="h-1.5" />
-                        <div className="text-[10px] text-slate-400 text-right">{pct}% complete</div>
+                        <div className="text-[10px] text-[var(--cs-text-muted)] text-right">{pct}% complete</div>
                       </div>
                     );
                   })}
@@ -392,7 +392,7 @@ export default function MaintenancePage() {
               <div className="flex items-center gap-3 flex-wrap">
                 <CardTitle className="text-base flex-1">Maintenance Log</CardTitle>
                 <div className="relative min-w-48 max-w-sm">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
                   <Input
                     placeholder="Search issues..."
                     value={search}
@@ -400,7 +400,7 @@ export default function MaintenancePage() {
                     className="pl-9 h-9"
                   />
                 </div>
-                <div className="flex items-center gap-1.5 text-xs text-slate-500 shrink-0">
+                <div className="flex items-center gap-1.5 text-xs text-[var(--cs-text-muted)] shrink-0">
                   <ArrowUpDown className="h-3.5 w-3.5" />
                   <select value={sortBy} onChange={(e) => setSortBy(e.target.value as typeof sortBy)} className="bg-white border rounded-md px-2 py-1.5 text-xs">
                     <option value="smart">Smart (overdue → priority)</option>
@@ -413,16 +413,16 @@ export default function MaintenancePage() {
                   {(["all", "open", "completed"] as const).map((f) => (
                     <button key={f} onClick={() => setFilter(f)}
                       className={cn("px-3 py-1.5 rounded-lg text-xs font-medium capitalize transition-colors",
-                        filter === f ? "bg-slate-900 text-white" : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                        filter === f ? "bg-slate-900 text-white" : "bg-slate-100 text-[var(--cs-text-secondary)] hover:bg-slate-200"
                       )}
                     >{f}</button>
                   ))}
                 </div>
-                <div className="flex gap-0.5 rounded-lg border border-slate-200 bg-white p-0.5">
+                <div className="flex gap-0.5 rounded-lg border border-[var(--cs-border)] bg-white p-0.5">
                   <button
                     onClick={() => setGroupBy("none")}
                     className={cn("rounded-md px-2 py-1 text-xs transition-colors",
-                      groupBy === "none" ? "bg-slate-900 text-white" : "text-slate-500 hover:text-slate-700"
+                      groupBy === "none" ? "bg-slate-900 text-white" : "text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)]"
                     )}
                     title="Flat list"
                   >
@@ -431,7 +431,7 @@ export default function MaintenancePage() {
                   <button
                     onClick={() => setGroupBy("category")}
                     className={cn("rounded-md px-2 py-1 text-xs transition-colors",
-                      groupBy === "category" ? "bg-slate-900 text-white" : "text-slate-500 hover:text-slate-700"
+                      groupBy === "category" ? "bg-slate-900 text-white" : "text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)]"
                     )}
                     title="Group by category"
                   >
@@ -440,7 +440,7 @@ export default function MaintenancePage() {
                   <button
                     onClick={() => setGroupBy("priority")}
                     className={cn("rounded-md px-2 py-1 text-xs transition-colors",
-                      groupBy === "priority" ? "bg-slate-900 text-white" : "text-slate-500 hover:text-slate-700"
+                      groupBy === "priority" ? "bg-slate-900 text-white" : "text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)]"
                     )}
                     title="Group by priority"
                   >
@@ -452,8 +452,8 @@ export default function MaintenancePage() {
             <CardContent>
               {maintenanceQuery.isLoading ? (
                 <div className="flex items-center justify-center py-12">
-                  <Loader2 className="h-5 w-5 animate-spin text-slate-400 mr-2" />
-                  <span className="text-sm text-slate-400">Loading maintenance items…</span>
+                  <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)] mr-2" />
+                  <span className="text-sm text-[var(--cs-text-muted)]">Loading maintenance items…</span>
                 </div>
               ) : grouped ? (
                 /* Grouped view */
@@ -461,10 +461,10 @@ export default function MaintenancePage() {
                   {Array.from(grouped.entries()).map(([key, groupItems]) => (
                     <div key={key}>
                       <div className="flex items-center gap-3 mb-3">
-                        <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide capitalize">
+                        <span className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide capitalize">
                           {key.replace(/_/g, " ")}
                         </span>
-                        <span className="text-[10px] text-slate-400">({groupItems.length})</span>
+                        <span className="text-[10px] text-[var(--cs-text-muted)]">({groupItems.length})</span>
                         <div className="flex-1 h-px bg-slate-100" />
                       </div>
                       <div className="space-y-2">
@@ -480,7 +480,7 @@ export default function MaintenancePage() {
                     </div>
                   ))}
                   {grouped.size === 0 && (
-                    <div className="py-8 text-center text-sm text-slate-400">No items in this view.</div>
+                    <div className="py-8 text-center text-sm text-[var(--cs-text-muted)]">No items in this view.</div>
                   )}
                 </div>
               ) : (
@@ -495,7 +495,7 @@ export default function MaintenancePage() {
                     />
                   ))}
                   {filtered.length === 0 && (
-                    <div className="py-8 text-center text-sm text-slate-400">No items match your search or filter.</div>
+                    <div className="py-8 text-center text-sm text-[var(--cs-text-muted)]">No items match your search or filter.</div>
                   )}
                 </div>
               )}
@@ -503,8 +503,8 @@ export default function MaintenancePage() {
           </Card>
 
           {/* ── Regulatory compliance note ─────────────────────────────────────── */}
-          <div className="rounded-xl border border-slate-100 bg-slate-50 px-4 py-3 text-xs text-slate-500">
-            <span className="font-semibold text-slate-600">Regulatory Basis — </span>
+          <div className="rounded-xl border border-[var(--cs-border-subtle)] bg-slate-50 px-4 py-3 text-xs text-[var(--cs-text-muted)]">
+            <span className="font-semibold text-[var(--cs-text-secondary)]">Regulatory Basis — </span>
             Children&apos;s Homes Regulations 2015 Reg 25 (Premises) requires that premises are
             maintained to a standard appropriate for the care of children, kept in good repair,
             and that all health and safety matters (fire safety, electrical testing, gas safety,
@@ -520,22 +520,22 @@ export default function MaintenancePage() {
           onClick={() => setShowLog(false)}
         >
           <div
-            className="w-full max-w-md bg-white rounded-2xl shadow-2xl p-6"
+            className="w-full max-w-md bg-white rounded-2xl shadow-[var(--cs-shadow-elevated)] p-6"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between mb-4">
               <div>
-                <span className="text-base font-bold text-slate-900">Log Maintenance Issue</span>
-                <p className="text-xs text-slate-500 mt-0.5">Record a new maintenance issue or scheduled work</p>
+                <span className="text-base font-bold text-[var(--cs-navy)]">Log Maintenance Issue</span>
+                <p className="text-xs text-[var(--cs-text-muted)] mt-0.5">Record a new maintenance issue or scheduled work</p>
               </div>
-              <button onClick={() => setShowLog(false)} className="text-slate-400 hover:text-slate-600">
+              <button onClick={() => setShowLog(false)} className="text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)]">
                 <X className="h-4 w-4" />
               </button>
             </div>
 
             <div className="space-y-3">
               <div>
-                <label className="text-xs font-semibold text-slate-600 block mb-1.5">Title <span className="text-red-500">*</span></label>
+                <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">Title <span className="text-red-500">*</span></label>
                 <Input
                   value={form.title}
                   onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
@@ -546,11 +546,11 @@ export default function MaintenancePage() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs font-semibold text-slate-600 block mb-1.5">Category</label>
+                  <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">Category</label>
                   <select
                     value={form.category}
                     onChange={(e) => setForm((f) => ({ ...f, category: e.target.value as MaintenanceCategory }))}
-                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-400"
+                    className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2.5 text-sm text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-slate-400"
                   >
                     {CATEGORIES.map((c) => (
                       <option key={c.value} value={c.value}>{c.label}</option>
@@ -558,11 +558,11 @@ export default function MaintenancePage() {
                   </select>
                 </div>
                 <div>
-                  <label className="text-xs font-semibold text-slate-600 block mb-1.5">Priority</label>
+                  <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">Priority</label>
                   <select
                     value={form.priority}
                     onChange={(e) => setForm((f) => ({ ...f, priority: e.target.value as MaintenancePriority }))}
-                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-400"
+                    className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2.5 text-sm text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-slate-400"
                   >
                     <option value="urgent">Urgent</option>
                     <option value="high">High</option>
@@ -574,7 +574,7 @@ export default function MaintenancePage() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs font-semibold text-slate-600 block mb-1.5">Due Date</label>
+                  <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">Due Date</label>
                   <Input
                     type="date"
                     value={form.due_date}
@@ -583,7 +583,7 @@ export default function MaintenancePage() {
                   />
                 </div>
                 <div>
-                  <label className="text-xs font-semibold text-slate-600 block mb-1.5">Assigned To</label>
+                  <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">Assigned To</label>
                   <Input
                     value={form.assigned_to ?? ""}
                     onChange={(e) => setForm((f) => ({ ...f, assigned_to: e.target.value }))}
@@ -594,17 +594,17 @@ export default function MaintenancePage() {
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-slate-600 block mb-1.5">Notes</label>
+                <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">Notes</label>
                 <textarea
                   value={form.notes}
                   onChange={(e) => setForm((f) => ({ ...f, notes: e.target.value }))}
                   rows={3}
                   placeholder="Additional details, location within building, photos needed…"
-                  className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-3 text-sm text-slate-700 resize-none focus:outline-none focus:ring-2 focus:ring-slate-400 placeholder:text-slate-400"
+                  className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3.5 py-3 text-sm text-[var(--cs-text-secondary)] resize-none focus:outline-none focus:ring-2 focus:ring-slate-400 placeholder:text-[var(--cs-text-muted)]"
                 />
               </div>
 
-              <label className="flex items-center gap-2 text-sm text-slate-700 cursor-pointer">
+              <label className="flex items-center gap-2 text-sm text-[var(--cs-text-secondary)] cursor-pointer">
                 <input
                   type="checkbox"
                   checked={form.recurring}

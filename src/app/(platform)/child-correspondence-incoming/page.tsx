@@ -44,11 +44,11 @@ const senderColour: Record<CorrespondenceSenderType, string> = {
   birth_family: "bg-pink-100 text-pink-800",
   friend: "bg-emerald-100 text-emerald-800",
   school: "bg-indigo-100 text-indigo-800",
-  solicitor_legal: "bg-slate-100 text-slate-800",
+  solicitor_legal: "bg-slate-100 text-[var(--cs-navy)]",
   pen_pal_scheme: "bg-blue-100 text-blue-800",
   charity_anonymous: "bg-cyan-100 text-cyan-800",
   other_professional: "bg-indigo-100 text-indigo-800",
-  junk_mail: "bg-slate-100 text-slate-700",
+  junk_mail: "bg-slate-100 text-[var(--cs-text-secondary)]",
 };
 
 const exportCols: ExportColumn<IncomingCorrespondence>[] = [
@@ -184,7 +184,7 @@ export default function ChildCorrespondenceIncomingPage() {
           return (
             <div key={m.id} className="rounded-xl border bg-white overflow-hidden">
               <button
-                className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                 onClick={() => setExpandedId(isExpanded ? null : m.id)}
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -243,14 +243,14 @@ export default function ChildCorrespondenceIncomingPage() {
                     </>
                   ) : (
                     <div className="bg-slate-50 rounded-lg p-3 border">
-                      <p className="text-xs font-semibold text-slate-800 uppercase tracking-wide mb-1">Item Not Given to Child</p>
+                      <p className="text-xs font-semibold text-[var(--cs-navy)] uppercase tracking-wide mb-1">Item Not Given to Child</p>
                       <p className="text-sm">{m.reviewed_reason}</p>
                     </div>
                   )}
 
                   {m.notes && (
                     <div className="bg-slate-50 rounded-lg p-3 border">
-                      <p className="text-xs font-semibold text-slate-800 uppercase tracking-wide mb-1">Notes</p>
+                      <p className="text-xs font-semibold text-[var(--cs-navy)] uppercase tracking-wide mb-1">Notes</p>
                       <p className="text-sm">{m.notes}</p>
                     </div>
                   )}

@@ -36,14 +36,14 @@ const AUDIT_TYPE_CLR: Record<MedAuditType, string> = {
   expiry_review: "bg-amber-100 text-amber-800",
   storage_check: "bg-green-100 text-green-800",
   reconciliation: "bg-indigo-100 text-indigo-800",
-  return_to_pharmacy: "bg-slate-100 text-slate-800",
+  return_to_pharmacy: "bg-slate-100 text-[var(--cs-navy)]",
 };
 
 const RESULT_CLR: Record<MedAuditResult, string> = {
   satisfactory: "bg-green-100 text-green-800",
   discrepancy_found: "bg-red-100 text-red-800",
   action_required: "bg-amber-100 text-amber-800",
-  completed: "bg-slate-100 text-slate-800",
+  completed: "bg-slate-100 text-[var(--cs-navy)]",
 };
 
 const BORDER_RES: Record<MedAuditResult, string> = {

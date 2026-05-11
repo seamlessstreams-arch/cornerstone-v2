@@ -34,7 +34,7 @@ import { useGiftRecords, useCreateGiftRecord } from "@/hooks/use-gift-records";
 /* ── local styling maps ───────────────────────────────────────────────────── */
 
 const DIR_CLR: Record<GiftDirection, string> = { received: "bg-green-100 text-green-800", given: "bg-blue-100 text-blue-800" };
-const STATUS_CLR: Record<GiftApprovalStatus, string> = { approved: "bg-green-100 text-green-800", declined: "bg-red-100 text-red-800", pending: "bg-amber-100 text-amber-800", returned: "bg-slate-100 text-slate-800" };
+const STATUS_CLR: Record<GiftApprovalStatus, string> = { approved: "bg-green-100 text-green-800", declined: "bg-red-100 text-red-800", pending: "bg-amber-100 text-amber-800", returned: "bg-slate-100 text-[var(--cs-navy)]" };
 const BORDER_DIR: Record<GiftDirection, string> = { received: "border-l-green-400", given: "border-l-blue-400" };
 
 /* ── page ──────────────────────────────────────────────────────────────────── */

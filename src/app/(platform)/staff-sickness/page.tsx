@@ -38,7 +38,7 @@ import {
 /* ── local config (colours not serializable) ─────────────────────────────── */
 
 const CAT_CLR: Record<StaffSicknessCategory, string> = { short_term: "bg-blue-100 text-blue-800", long_term: "bg-red-100 text-red-800", intermittent: "bg-amber-100 text-amber-800", work_related: "bg-purple-100 text-purple-800" };
-const RTW_CLR: Record<StaffSicknessRTWStatus, string> = { not_required: "bg-slate-100 text-slate-700", scheduled: "bg-blue-100 text-blue-800", completed: "bg-green-100 text-green-800", overdue: "bg-red-100 text-red-800" };
+const RTW_CLR: Record<StaffSicknessRTWStatus, string> = { not_required: "bg-slate-100 text-[var(--cs-text-secondary)]", scheduled: "bg-blue-100 text-blue-800", completed: "bg-green-100 text-green-800", overdue: "bg-red-100 text-red-800" };
 
 /* ── component ────────────────────────────────────────────────────────────── */
 

@@ -113,7 +113,7 @@ function PIDebriefCard({
   return (
     <div className={cn(
       "rounded-2xl border bg-white overflow-hidden",
-      overdue ? "border-red-200" : debrief.status === "rm_signed_off" ? "border-emerald-200" : "border-slate-200",
+      overdue ? "border-red-200" : debrief.status === "rm_signed_off" ? "border-emerald-200" : "border-[var(--cs-border)]",
     )}>
       {/* Header */}
       <div className="flex items-start gap-3 p-4">
@@ -133,7 +133,7 @@ function PIDebriefCard({
 
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap mb-1">
-            <span className="text-sm font-bold text-slate-800">{incidentRef}</span>
+            <span className="text-sm font-bold text-[var(--cs-navy)]">{incidentRef}</span>
             <Badge variant="outline" className={cn("text-[10px] px-1.5 py-0 border", STATUS_COLOUR[debrief.status])}>
               {STATUS_LABELS[debrief.status]}
             </Badge>
@@ -149,7 +149,7 @@ function PIDebriefCard({
             )}
           </div>
 
-          <div className="flex items-center gap-3 text-xs text-slate-500 flex-wrap">
+          <div className="flex items-center gap-3 text-xs text-[var(--cs-text-muted)] flex-wrap">
             <span className="flex items-center gap-1">
               <User className="h-3 w-3" />{ypName}
             </span>
@@ -163,7 +163,7 @@ function PIDebriefCard({
 
           {/* Staff involved */}
           {debrief.staff_involved.length > 0 && (
-            <div className="flex items-center gap-1 mt-1 text-[10px] text-slate-500">
+            <div className="flex items-center gap-1 mt-1 text-[10px] text-[var(--cs-text-muted)]">
               <Users className="h-3 w-3" />
               {debrief.staff_involved.map((id) => getStaffName(id)).join(", ")}
             </div>
@@ -173,14 +173,14 @@ function PIDebriefCard({
         {/* Expand toggle */}
         <button
           onClick={() => setExpanded(!expanded)}
-          className="text-slate-400 hover:text-slate-600 transition-colors shrink-0"
+          className="text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] transition-colors shrink-0"
         >
           {expanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
         </button>
       </div>
 
       {expanded && (
-        <div className="border-t border-slate-100 px-4 pb-4 pt-3 space-y-4">
+        <div className="border-t border-[var(--cs-border-subtle)] px-4 pb-4 pt-3 space-y-4">
           {/* Debrief checklist */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             {/* YP Debrief */}
@@ -193,7 +193,7 @@ function PIDebriefCard({
                   {debrief.yp_debrief_completed
                     ? <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />
                     : <AlertTriangle className="h-3.5 w-3.5 text-red-500" />}
-                  <span className="text-xs font-semibold text-slate-700">YP Debrief</span>
+                  <span className="text-xs font-semibold text-[var(--cs-text-secondary)]">YP Debrief</span>
                 </div>
                 {!debrief.yp_debrief_completed && (
                   <button
@@ -215,7 +215,7 @@ function PIDebriefCard({
                   <p>{debrief.yp_debrief_date ? formatDate(debrief.yp_debrief_date) : ""}</p>
                   {debrief.yp_debrief_by && <p>By: {getStaffName(debrief.yp_debrief_by)}</p>}
                   {debrief.yp_debrief_feelings && (
-                    <p className="text-slate-600 italic mt-1">"{debrief.yp_debrief_feelings}"</p>
+                    <p className="text-[var(--cs-text-secondary)] italic mt-1">"{debrief.yp_debrief_feelings}"</p>
                   )}
                 </div>
               ) : (
@@ -233,7 +233,7 @@ function PIDebriefCard({
                   {debrief.staff_debrief_completed
                     ? <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />
                     : <AlertTriangle className="h-3.5 w-3.5 text-red-500" />}
-                  <span className="text-xs font-semibold text-slate-700">Staff Debrief</span>
+                  <span className="text-xs font-semibold text-[var(--cs-text-secondary)]">Staff Debrief</span>
                 </div>
                 {!debrief.staff_debrief_completed && (
                   <button
@@ -255,7 +255,7 @@ function PIDebriefCard({
                   <p>{debrief.staff_debrief_date ? formatDate(debrief.staff_debrief_date) : ""}</p>
                   {debrief.staff_debrief_by && <p>By: {getStaffName(debrief.staff_debrief_by)}</p>}
                   {debrief.staff_debrief_notes && (
-                    <p className="text-slate-600 mt-1 line-clamp-2">{debrief.staff_debrief_notes}</p>
+                    <p className="text-[var(--cs-text-secondary)] mt-1 line-clamp-2">{debrief.staff_debrief_notes}</p>
                   )}
                 </div>
               ) : (
@@ -277,7 +277,7 @@ function PIDebriefCard({
                       {debrief.ofsted_notified_at
                         ? <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />
                         : <AlertTriangle className="h-3.5 w-3.5 text-red-500" />}
-                      <span className="font-medium text-slate-700">Ofsted notification</span>
+                      <span className="font-medium text-[var(--cs-text-secondary)]">Ofsted notification</span>
                     </div>
                     {debrief.ofsted_notified_at ? (
                       <span className="text-[10px] text-emerald-600">{formatDate(debrief.ofsted_notified_at)}</span>
@@ -299,7 +299,7 @@ function PIDebriefCard({
                       {debrief.la_notified_at
                         ? <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />
                         : <AlertTriangle className="h-3.5 w-3.5 text-red-500" />}
-                      <span className="font-medium text-slate-700">Local Authority notification</span>
+                      <span className="font-medium text-[var(--cs-text-secondary)]">Local Authority notification</span>
                     </div>
                     {debrief.la_notified_at ? (
                       <span className="text-[10px] text-emerald-600">{formatDate(debrief.la_notified_at)}</span>
@@ -321,7 +321,7 @@ function PIDebriefCard({
                       {debrief.riddor_reported_at
                         ? <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />
                         : <AlertTriangle className="h-3.5 w-3.5 text-red-500" />}
-                      <span className="font-medium text-slate-700">RIDDOR report</span>
+                      <span className="font-medium text-[var(--cs-text-secondary)]">RIDDOR report</span>
                     </div>
                     {debrief.riddor_reported_at ? (
                       <span className="text-[10px] text-emerald-600">{formatDate(debrief.riddor_reported_at)}</span>
@@ -348,7 +348,7 @@ function PIDebriefCard({
                 Injuries Recorded
               </p>
               {debrief.injuries.map((injury, i) => (
-                <div key={i} className="text-xs text-slate-700">
+                <div key={i} className="text-xs text-[var(--cs-text-secondary)]">
                   <span className="font-medium capitalize">{injury.person_type.replace("_", " ")} — </span>
                   {injury.description}
                   {injury.medical_attention_required && (
@@ -363,13 +363,13 @@ function PIDebriefCard({
 
           {/* Trigger & learning */}
           {debrief.trigger_identified && (
-            <div className="rounded-xl border border-slate-200 bg-slate-50 p-3">
-              <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest mb-1">Trigger Identified</p>
-              <p className="text-xs text-slate-700">{debrief.trigger_identified}</p>
+            <div className="rounded-xl border border-[var(--cs-border)] bg-slate-50 p-3">
+              <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-widest mb-1">Trigger Identified</p>
+              <p className="text-xs text-[var(--cs-text-secondary)]">{debrief.trigger_identified}</p>
               {debrief.preventative_measures && (
                 <div className="mt-2">
                   <p className="text-[10px] font-semibold text-emerald-600 uppercase tracking-widest mb-0.5">Preventative Measures</p>
-                  <p className="text-xs text-slate-700">{debrief.preventative_measures}</p>
+                  <p className="text-xs text-[var(--cs-text-secondary)]">{debrief.preventative_measures}</p>
                 </div>
               )}
             </div>
@@ -382,7 +382,7 @@ function PIDebriefCard({
                 <Sparkles className="h-3.5 w-3.5 text-teal-600" />
                 <p className="text-[10px] font-semibold text-teal-700 uppercase tracking-widest">ARIA Analysis</p>
               </div>
-              <p className="text-xs text-slate-700">{debrief.aria_analysis}</p>
+              <p className="text-xs text-[var(--cs-text-secondary)]">{debrief.aria_analysis}</p>
             </div>
           ) : (
             <button
@@ -405,7 +405,7 @@ function PIDebriefCard({
                 RM Sign-off · {debrief.rm_sign_off_date ? formatDate(debrief.rm_sign_off_date) : ""}
               </p>
               {debrief.rm_comments && (
-                <p className="text-xs text-slate-700">{debrief.rm_comments}</p>
+                <p className="text-xs text-[var(--cs-text-secondary)]">{debrief.rm_comments}</p>
               )}
             </div>
           ) : (
@@ -599,7 +599,7 @@ Ofsted notification required: ${debrief.ofsted_notification_required ? "Yes" : "
             uploadContext="Physical Intervention — debrief record, body map or evidence document upload"
           />
           <Link href="/incidents">
-            <button className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50 transition-colors">
+            <button className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--cs-border)] bg-white px-3 py-1.5 text-xs font-medium text-[var(--cs-text-secondary)] hover:bg-[var(--cs-surface)] transition-colors">
               <ArrowLeft className="h-3.5 w-3.5" />
               Incidents
             </button>
@@ -615,13 +615,13 @@ Ofsted notification required: ${debrief.ofsted_notification_required ? "Yes" : "
           { label: "Pending Debrief", value: meta?.pending ?? 0, icon: Clock, colour: (meta?.pending ?? 0) > 0 ? "text-red-600" : "text-emerald-600", bg: (meta?.pending ?? 0) > 0 ? "bg-red-50 border-red-100" : "bg-emerald-50 border-emerald-100" },
           { label: "Overdue (>48h)", value: meta?.overdue ?? 0, icon: AlertTriangle, colour: (meta?.overdue ?? 0) > 0 ? "text-red-600" : "text-emerald-600", bg: (meta?.overdue ?? 0) > 0 ? "bg-red-50 border-red-100" : "bg-emerald-50 border-emerald-100" },
           { label: "RM Signed Off", value: completedDebriefs.length, icon: CheckCircle2, colour: "text-emerald-600", bg: "bg-emerald-50 border-emerald-100" },
-          { label: "Injuries Recorded", value: injuryStats.totalInjuries, icon: AlertOctagon, colour: injuryStats.totalInjuries > 0 ? "text-orange-600" : "text-slate-500", bg: injuryStats.totalInjuries > 0 ? "bg-orange-50 border-orange-100" : "bg-slate-50 border-slate-100" },
-          { label: "RIDDOR Reports", value: injuryStats.riddorCount, icon: Flag, colour: injuryStats.riddorCount > 0 ? "text-red-600" : "text-slate-500", bg: injuryStats.riddorCount > 0 ? "bg-red-50 border-red-100" : "bg-slate-50 border-slate-100" },
+          { label: "Injuries Recorded", value: injuryStats.totalInjuries, icon: AlertOctagon, colour: injuryStats.totalInjuries > 0 ? "text-orange-600" : "text-[var(--cs-text-muted)]", bg: injuryStats.totalInjuries > 0 ? "bg-orange-50 border-orange-100" : "bg-slate-50 border-[var(--cs-border-subtle)]" },
+          { label: "RIDDOR Reports", value: injuryStats.riddorCount, icon: Flag, colour: injuryStats.riddorCount > 0 ? "text-red-600" : "text-[var(--cs-text-muted)]", bg: injuryStats.riddorCount > 0 ? "bg-red-50 border-red-100" : "bg-slate-50 border-[var(--cs-border-subtle)]" },
         ].map(({ label, value, icon: Icon, colour, bg }) => (
           <div key={label} className={cn("rounded-xl border p-3", bg)}>
             <div className="flex items-center gap-2 mb-1">
               <Icon className={cn("h-3.5 w-3.5 shrink-0", colour)} />
-              <span className="text-[10px] text-slate-500 font-medium">{label}</span>
+              <span className="text-[10px] text-[var(--cs-text-muted)] font-medium">{label}</span>
             </div>
             <p className={cn("text-lg font-bold tabular-nums", colour)}>{value}</p>
           </div>
@@ -631,7 +631,7 @@ Ofsted notification required: ${debrief.ofsted_notification_required ? "Yes" : "
       {/* Technique distribution */}
       {Object.keys(techniqueCounts).length > 0 && (
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-[10px] font-medium text-slate-500">Techniques used:</span>
+          <span className="text-[10px] font-medium text-[var(--cs-text-muted)]">Techniques used:</span>
           {Object.entries(techniqueCounts)
             .sort(([, a], [, b]) => b - a)
             .map(([tech, count]) => (
@@ -645,7 +645,7 @@ Ofsted notification required: ${debrief.ofsted_notification_required ? "Yes" : "
       {/* ── Search + filter toolbar ── */}
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1 max-w-sm">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
           <Input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -653,7 +653,7 @@ Ofsted notification required: ${debrief.ofsted_notification_required ? "Yes" : "
             className="pl-9"
           />
         </div>
-        <div className="flex items-center gap-1.5 text-xs text-slate-500 shrink-0">
+        <div className="flex items-center gap-1.5 text-xs text-[var(--cs-text-muted)] shrink-0">
           <ArrowUpDown className="h-3.5 w-3.5" />
           <select value={sortBy} onChange={(e) => setSortBy(e.target.value as typeof sortBy)} className="bg-white border rounded-md px-2 py-1.5 text-xs">
             <option value="date">Newest first</option>
@@ -671,7 +671,7 @@ Ofsted notification required: ${debrief.ofsted_notification_required ? "Yes" : "
                 "rounded-full px-3 py-1.5 text-xs font-medium transition-colors capitalize",
                 viewTab === t
                   ? "bg-slate-900 text-white"
-                  : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                  : "bg-slate-100 text-[var(--cs-text-secondary)] hover:bg-slate-200"
               )}
             >
               {t === "pending" ? `Pending (${pendingDebriefs.length})` : t === "completed" ? `Signed Off (${completedDebriefs.length})` : `All (${debriefs.length})`}
@@ -682,16 +682,16 @@ Ofsted notification required: ${debrief.ofsted_notification_required ? "Yes" : "
 
       {/* Results count */}
       {(search || viewTab === "all") && (
-        <p className="text-xs text-slate-500">
+        <p className="text-xs text-[var(--cs-text-muted)]">
           Showing {filtered.length} of {debriefs.length} debrief{debriefs.length !== 1 ? "s" : ""}
-          {search && <span className="text-slate-400"> matching &ldquo;{search}&rdquo;</span>}
+          {search && <span className="text-[var(--cs-text-muted)]"> matching &ldquo;{search}&rdquo;</span>}
         </p>
       )}
 
       {/* ── Debriefs list ── */}
       {filtered.length === 0 ? (
-        <div className="text-center py-12 text-slate-500">
-          <ShieldAlert className="h-10 w-10 text-slate-300 mx-auto mb-3" />
+        <div className="text-center py-12 text-[var(--cs-text-muted)]">
+          <ShieldAlert className="h-10 w-10 text-[var(--cs-text-gentle)] mx-auto mb-3" />
           <p className="text-sm font-medium">
             {search ? `No debriefs match "${search}"` : "No debriefs in this view"}
           </p>
@@ -716,8 +716,8 @@ Ofsted notification required: ${debrief.ofsted_notification_required ? "Yes" : "
       )}
 
       {/* ── Regulatory note ── */}
-      <div className="rounded-xl border border-slate-100 bg-slate-50 px-4 py-3 text-xs text-slate-500">
-        <span className="font-semibold text-slate-600">Regulatory Basis — </span>
+      <div className="rounded-xl border border-[var(--cs-border-subtle)] bg-slate-50 px-4 py-3 text-xs text-[var(--cs-text-muted)]">
+        <span className="font-semibold text-[var(--cs-text-secondary)]">Regulatory Basis — </span>
         Children&apos;s Homes (England) Regulations 2015, Regulation 20: Use of restraint and measures of
         control, physical restraint or discipline. A record must be made of every use of restraint;
         post-incident debrief with the young person must occur within 24 hours; staff debrief before
@@ -736,7 +736,7 @@ Ofsted notification required: ${debrief.ofsted_notification_required ? "Yes" : "
             </DialogTitle>
           </DialogHeader>
           <div className="space-y-3">
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-[var(--cs-text-muted)]">
               Confirm that both debriefs have been completed, notifications made, and learning has been documented.
               This sign-off will close the debrief record.
             </p>

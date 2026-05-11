@@ -67,7 +67,7 @@ export function Header({ title, subtitle, actions, ariaContext }: HeaderProps) {
 
   return (
     <>
-      <header className="sticky top-0 z-30 bg-white border-b border-slate-200">
+      <header className="sticky top-0 z-30 bg-[var(--cs-surface-elevated)] border-b border-[var(--cs-border)]">
         <div className="flex items-center gap-2 sm:gap-3 px-4 md:px-6 h-[56px] sm:h-[60px]">
 
           {/* ── Left: breadcrumb + title ── */}
@@ -82,8 +82,8 @@ export function Header({ title, subtitle, actions, ariaContext }: HeaderProps) {
                       className={cn(
                         "text-[11px] transition-colors truncate",
                         i === breadcrumb.length - 1
-                          ? "text-slate-500 font-medium pointer-events-none"
-                          : "text-slate-400 hover:text-slate-600",
+                          ? "text-[var(--cs-text-muted)] font-medium pointer-events-none"
+                          : "text-[var(--cs-text-gentle)] hover:text-[var(--cs-text-secondary)]",
                       )}
                     >
                       {crumb.label}
@@ -92,7 +92,7 @@ export function Header({ title, subtitle, actions, ariaContext }: HeaderProps) {
                 ))}
               </div>
             )}
-            <h1 className="text-[15px] font-semibold text-slate-900 leading-tight truncate">
+            <h1 className="text-[15px] font-semibold text-[var(--cs-navy)] leading-tight truncate tracking-[-0.01em]">
               {title}
             </h1>
           </div>
@@ -102,7 +102,7 @@ export function Header({ title, subtitle, actions, ariaContext }: HeaderProps) {
             {/* Search (opens Command Palette) */}
             <button
               onClick={() => document.dispatchEvent(new KeyboardEvent("keydown", { key: "k", metaKey: true }))}
-              className="hidden sm:flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-3 py-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-600 transition-colors"
+              className="hidden sm:flex items-center gap-2 rounded-xl border border-[var(--cs-border)] bg-[var(--cs-surface)] px-3 py-1.5 text-[var(--cs-text-muted)] hover:bg-[var(--cs-aria-gold-bg)] hover:border-[var(--cs-aria-gold-soft)] hover:text-[var(--cs-text-secondary)] transition-colors"
               title="Search (⌘K)"
             >
               <Search className="h-3.5 w-3.5" />
@@ -131,13 +131,13 @@ export function Header({ title, subtitle, actions, ariaContext }: HeaderProps) {
               className={cn(
                 "flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-medium transition-all border",
                 ariaOpen
-                  ? "bg-indigo-600 text-white border-indigo-600"
-                  : "border-indigo-200 text-indigo-700 hover:bg-indigo-50",
+                  ? "bg-[var(--cs-aria-gold)] text-[var(--cs-navy)] border-[var(--cs-aria-gold)] shadow-[var(--cs-shadow-glow-gold)]"
+                  : "border-[var(--cs-aria-gold-soft)] text-[var(--cs-aria-gold)] hover:bg-[var(--cs-aria-gold-bg)] hover:border-[var(--cs-aria-gold)]",
               )}
-              title="Open Aria"
+              title="Open ARIA"
             >
-              <Sparkles className="h-3.5 w-3.5" />
-              <span className="hidden sm:inline">Aria</span>
+              <Sparkles className={cn("h-3.5 w-3.5", ariaOpen && "aria-pulse")} />
+              <span className="hidden sm:inline">ARIA</span>
             </button>
 
             {/* Notification Centre */}
@@ -150,8 +150,8 @@ export function Header({ title, subtitle, actions, ariaContext }: HeaderProps) {
 
         {/* ── Optional subtitle bar ── */}
         {subtitle && (
-          <div className="hidden sm:block border-t border-slate-100 px-4 md:px-6 py-1.5">
-            <p className="text-[11px] text-slate-500">{subtitle}</p>
+          <div className="hidden sm:block border-t border-[var(--cs-border-subtle)] px-4 md:px-6 py-1.5">
+            <p className="text-[11px] text-[var(--cs-text-muted)]">{subtitle}</p>
           </div>
         )}
       </header>

@@ -47,13 +47,13 @@ const MODALITY_COLOURS: Record<TherapyModality, string> = {
   cbt_general: "bg-blue-100 text-blue-800",
   person_centred: "bg-emerald-100 text-emerald-800",
   sand_tray: "bg-amber-100 text-amber-800",
-  mixed: "bg-slate-100 text-slate-800",
+  mixed: "bg-slate-100 text-[var(--cs-navy)]",
   other: "bg-gray-100 text-gray-700",
 };
 
 const PRESENTATION_COLOURS: Record<TherapyPresentation, string> = {
   engaged: "bg-emerald-100 text-emerald-800",
-  withdrawn: "bg-slate-100 text-slate-700",
+  withdrawn: "bg-slate-100 text-[var(--cs-text-secondary)]",
   avoidant: "bg-amber-100 text-amber-800",
   distressed: "bg-rose-100 text-rose-800",
   mixed: "bg-indigo-100 text-indigo-800",
@@ -303,7 +303,7 @@ export default function ChildTraumaTherapyLogPage() {
                     {r.attended && (
                       <span className={cn(
                         "px-2 py-0.5 rounded-full text-xs font-medium inline-flex items-center gap-1",
-                        moodDelta > 0 ? "bg-teal-100 text-teal-800" : moodDelta < 0 ? "bg-rose-50 text-rose-700" : "bg-slate-100 text-slate-700"
+                        moodDelta > 0 ? "bg-teal-100 text-teal-800" : moodDelta < 0 ? "bg-rose-50 text-rose-700" : "bg-slate-100 text-[var(--cs-text-secondary)]"
                       )}>
                         <Heart className="h-3 w-3" />
                         Mood {moodDelta > 0 ? `+${moodDelta}` : moodDelta}

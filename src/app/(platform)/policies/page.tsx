@@ -37,12 +37,12 @@ const CATEGORY_CONFIG: Record<HomePolicyCategory, { label: string; icon: React.E
   workforce:        { label: "Workforce",           icon: Users,       color: "text-teal-600",     bg: "bg-teal-50",     border: "border-teal-200"    },
   behaviour:        { label: "Behaviour Support",   icon: Star,        color: "text-amber-600",    bg: "bg-amber-50",    border: "border-amber-200"   },
   complaints:       { label: "Complaints",          icon: FileText,    color: "text-violet-600",   bg: "bg-violet-50",   border: "border-violet-200"  },
-  data_protection:  { label: "Data Protection",     icon: Lock,        color: "text-slate-600",    bg: "bg-slate-50",    border: "border-slate-200"   },
+  data_protection:  { label: "Data Protection",     icon: Lock,        color: "text-[var(--cs-text-secondary)]",    bg: "bg-slate-50",    border: "border-[var(--cs-border)]"   },
   admissions:       { label: "Admissions",          icon: UserCheck,   color: "text-blue-600",     bg: "bg-blue-50",     border: "border-blue-200"    },
   missing_persons:  { label: "Missing Persons",     icon: AlertTriangle,color: "text-orange-600",  bg: "bg-orange-50",   border: "border-orange-200"  },
   medication:       { label: "Medication",          icon: FileText,    color: "text-pink-600",     bg: "bg-pink-50",     border: "border-pink-200"    },
   fire_safety:      { label: "Fire Safety",         icon: AlertTriangle,color: "text-red-600",     bg: "bg-red-50",      border: "border-red-200"     },
-  lone_working:     { label: "Lone Working",        icon: Users,       color: "text-slate-600",    bg: "bg-slate-50",    border: "border-slate-200"   },
+  lone_working:     { label: "Lone Working",        icon: Users,       color: "text-[var(--cs-text-secondary)]",    bg: "bg-slate-50",    border: "border-[var(--cs-border)]"   },
   whistleblowing:   { label: "Whistleblowing",      icon: Shield,      color: "text-indigo-600",   bg: "bg-indigo-50",   border: "border-indigo-200"  },
 };
 
@@ -50,8 +50,8 @@ const STATUS_CONFIG: Record<HomePolicyStatus, { label: string; cls: string }> = 
   current:    { label: "Current",     cls: "bg-emerald-50 text-emerald-700 border-emerald-200" },
   due_review: { label: "Due Review",  cls: "bg-amber-50 text-amber-700 border-amber-200"      },
   overdue:    { label: "Overdue",     cls: "bg-red-50 text-red-700 border-red-200"             },
-  draft:      { label: "Draft",       cls: "bg-slate-50 text-slate-600 border-slate-200"       },
-  archived:   { label: "Archived",    cls: "bg-slate-50 text-slate-400 border-slate-200"       },
+  draft:      { label: "Draft",       cls: "bg-slate-50 text-[var(--cs-text-secondary)] border-[var(--cs-border)]"       },
+  archived:   { label: "Archived",    cls: "bg-slate-50 text-[var(--cs-text-muted)] border-[var(--cs-border)]"       },
 };
 
 const POLICY_EXPORT_COLS: ExportColumn<HomePolicy>[] = [
@@ -92,8 +92,8 @@ function PolicyCard({ policy }: { policy: HomePolicy }) {
       "rounded-2xl border bg-white overflow-hidden transition-all",
       policy.status === "overdue" ? "border-red-200" :
       policy.status === "due_review" ? "border-amber-200" :
-      policy.status === "draft" ? "border-slate-200 border-dashed" :
-      "border-slate-200",
+      policy.status === "draft" ? "border-[var(--cs-border)] border-dashed" :
+      "border-[var(--cs-border)]",
     )}>
       {/* Header */}
       <div className="flex items-start gap-3 p-4">
@@ -103,14 +103,14 @@ function PolicyCard({ policy }: { policy: HomePolicy }) {
 
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap mb-1">
-            <span className="text-sm font-bold text-slate-800">{policy.title}</span>
+            <span className="text-sm font-bold text-[var(--cs-navy)]">{policy.title}</span>
             <Badge variant="outline" className={cn("text-[10px] px-1.5 py-0 border", stCfg.cls)}>
               {stCfg.label}
             </Badge>
-            <span className="text-[10px] text-slate-400 font-mono">v{policy.version}</span>
+            <span className="text-[10px] text-[var(--cs-text-muted)] font-mono">v{policy.version}</span>
           </div>
 
-          <div className="flex items-center gap-3 text-xs text-slate-500 flex-wrap">
+          <div className="flex items-center gap-3 text-xs text-[var(--cs-text-muted)] flex-wrap">
             <span className="flex items-center gap-1">
               <Users className="h-3 w-3" />Owner: {getStaffName(policy.owner_id)}
             </span>
@@ -119,7 +119,7 @@ function PolicyCard({ policy }: { policy: HomePolicy }) {
               "flex items-center gap-1",
               reviewDays < 0 ? "text-red-600 font-semibold" :
               reviewDays <= 30 ? "text-amber-600" :
-              "text-slate-500",
+              "text-[var(--cs-text-muted)]",
             )}>
               <Calendar className="h-3 w-3" />
               {reviewDays < 0
@@ -147,18 +147,18 @@ function PolicyCard({ policy }: { policy: HomePolicy }) {
 
         <button
           onClick={() => setExpanded(!expanded)}
-          className="text-slate-400 hover:text-slate-600 shrink-0"
+          className="text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] shrink-0"
         >
           {expanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
         </button>
       </div>
 
       {expanded && (
-        <div className="border-t border-slate-100 px-4 pb-4 pt-3 space-y-3">
+        <div className="border-t border-[var(--cs-border-subtle)] px-4 pb-4 pt-3 space-y-3">
           {/* Description */}
-          <div className="rounded-xl border border-slate-200 bg-slate-50 p-3">
-            <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest mb-1">Description</p>
-            <p className="text-xs text-slate-700 leading-relaxed">{policy.description}</p>
+          <div className="rounded-xl border border-[var(--cs-border)] bg-slate-50 p-3">
+            <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-widest mb-1">Description</p>
+            <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed">{policy.description}</p>
           </div>
 
           {/* Key points */}
@@ -166,7 +166,7 @@ function PolicyCard({ policy }: { policy: HomePolicy }) {
             <p className="text-[10px] font-semibold text-indigo-700 uppercase tracking-widest mb-2">Key Points</p>
             <ul className="space-y-1">
               {policy.key_points.map((point, i) => (
-                <li key={i} className="flex items-start gap-2 text-xs text-slate-700">
+                <li key={i} className="flex items-start gap-2 text-xs text-[var(--cs-text-secondary)]">
                   <CheckCircle2 className="h-3 w-3 text-indigo-500 shrink-0 mt-0.5" />
                   {point}
                 </li>
@@ -176,19 +176,19 @@ function PolicyCard({ policy }: { policy: HomePolicy }) {
 
           {/* Statutory basis */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div className="rounded-xl border border-slate-200 bg-white p-3">
-              <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest mb-1">Statutory Basis</p>
-              <p className="text-xs text-slate-700">{policy.statutory_basis}</p>
+            <div className="rounded-xl border border-[var(--cs-border)] bg-white p-3">
+              <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-widest mb-1">Statutory Basis</p>
+              <p className="text-xs text-[var(--cs-text-secondary)]">{policy.statutory_basis}</p>
             </div>
-            <div className="rounded-xl border border-slate-200 bg-white p-3">
-              <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest mb-1">Linked Quality Standard</p>
-              <p className="text-xs text-slate-700">{policy.linked_standard}</p>
+            <div className="rounded-xl border border-[var(--cs-border)] bg-white p-3">
+              <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-widest mb-1">Linked Quality Standard</p>
+              <p className="text-xs text-[var(--cs-text-secondary)]">{policy.linked_standard}</p>
             </div>
           </div>
 
           {/* Read acknowledgements */}
           <div>
-            <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-2">Staff Read Status</p>
+            <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-widest mb-2">Staff Read Status</p>
             <div className="flex flex-wrap gap-2">
               {policy.read_acknowledgements.map((ack) => (
                 <div
@@ -212,7 +212,7 @@ function PolicyCard({ policy }: { policy: HomePolicy }) {
           </div>
 
           {/* Version & dates */}
-          <div className="flex items-center gap-4 text-[10px] text-slate-400 flex-wrap">
+          <div className="flex items-center gap-4 text-[10px] text-[var(--cs-text-muted)] flex-wrap">
             {policy.approved_by && (
               <span>Approved by {getStaffName(policy.approved_by)} on {formatDate(policy.approved_date!)}</span>
             )}
@@ -346,7 +346,7 @@ export default function PoliciesPage() {
         {/* ── Summary stats ────────────────────────────────────────────────── */}
         <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
           {[
-            { label: "Total Policies", value: enrichedPolicies.length, colour: "text-slate-700", bg: "bg-slate-50 border-slate-100", icon: FileText },
+            { label: "Total Policies", value: enrichedPolicies.length, colour: "text-[var(--cs-text-secondary)]", bg: "bg-slate-50 border-[var(--cs-border-subtle)]", icon: FileText },
             { label: "Current", value: currentCount, colour: "text-emerald-600", bg: "bg-emerald-50 border-emerald-100", icon: CheckCircle2 },
             { label: "Due Review", value: dueReviewCount, colour: dueReviewCount > 0 ? "text-amber-600" : "text-emerald-600", bg: dueReviewCount > 0 ? "bg-amber-50 border-amber-100" : "bg-emerald-50 border-emerald-100", icon: Clock },
             { label: "Overdue", value: overdueCount, colour: overdueCount > 0 ? "text-red-600" : "text-emerald-600", bg: overdueCount > 0 ? "bg-red-50 border-red-100" : "bg-emerald-50 border-emerald-100", icon: AlertTriangle },
@@ -355,7 +355,7 @@ export default function PoliciesPage() {
             <div key={label} className={cn("rounded-2xl border p-4 text-center", bg)}>
               <Icon className={cn("h-4 w-4 mx-auto mb-1", colour)} />
               <div className={cn("text-2xl font-bold tabular-nums", colour)}>{value}</div>
-              <div className="text-[10px] text-slate-500 mt-0.5 font-medium">{label}</div>
+              <div className="text-[10px] text-[var(--cs-text-muted)] mt-0.5 font-medium">{label}</div>
             </div>
           ))}
         </div>
@@ -378,7 +378,7 @@ export default function PoliciesPage() {
         {/* ── Tab bar + search ─────────────────────────────────────────────── */}
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1 max-w-sm">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
             <Input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -400,7 +400,7 @@ export default function PoliciesPage() {
                   "rounded-full px-3 py-1.5 text-xs font-medium transition-colors",
                   viewTab === key
                     ? "bg-slate-900 text-white"
-                    : "bg-slate-100 text-slate-600 hover:bg-slate-200",
+                    : "bg-slate-100 text-[var(--cs-text-secondary)] hover:bg-slate-200",
                 )}
               >
                 {label}
@@ -412,11 +412,11 @@ export default function PoliciesPage() {
         {/* ── Filters ──────────────────────────────────────────────────────── */}
         <div className="flex items-center gap-3 flex-wrap">
           <div className="flex items-center gap-1.5">
-            <Filter className="h-3.5 w-3.5 text-slate-400" />
+            <Filter className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
             <select
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
-              className="rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-[11px] text-slate-700 focus:border-indigo-300 focus:ring-1 focus:ring-indigo-200 outline-none"
+              className="rounded-lg border border-[var(--cs-border)] bg-white px-2.5 py-1 text-[11px] text-[var(--cs-text-secondary)] focus:border-[var(--cs-aria-gold)] focus:ring-1 focus:ring-[var(--cs-aria-gold)]/30 outline-none"
             >
               <option value="all">All categories</option>
               {(Object.entries(CATEGORY_CONFIG) as [HomePolicyCategory, typeof CATEGORY_CONFIG[HomePolicyCategory]][]).map(([key, cfg]) => (
@@ -425,11 +425,11 @@ export default function PoliciesPage() {
             </select>
           </div>
           <div className="flex items-center gap-1.5">
-            <ArrowUpDown className="h-3.5 w-3.5 text-slate-400" />
+            <ArrowUpDown className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
-              className="rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-[11px] text-slate-700 focus:border-indigo-300 focus:ring-1 focus:ring-indigo-200 outline-none"
+              className="rounded-lg border border-[var(--cs-border)] bg-white px-2.5 py-1 text-[11px] text-[var(--cs-text-secondary)] focus:border-[var(--cs-aria-gold)] focus:ring-1 focus:ring-[var(--cs-aria-gold)]/30 outline-none"
             >
               <option value="review">Review date (soonest first)</option>
               <option value="title">Title A–Z</option>
@@ -438,7 +438,7 @@ export default function PoliciesPage() {
             </select>
           </div>
           {(search || categoryFilter !== "all") && (
-            <p className="text-xs text-slate-400 ml-auto">
+            <p className="text-xs text-[var(--cs-text-muted)] ml-auto">
               {filtered.length} result{filtered.length !== 1 ? "s" : ""}
             </p>
           )}
@@ -446,8 +446,8 @@ export default function PoliciesPage() {
 
         {/* ── Policies list ────────────────────────────────────────────────── */}
         {filtered.length === 0 ? (
-          <div className="text-center py-16 text-slate-500">
-            <FileText className="h-10 w-10 text-slate-300 mx-auto mb-3" />
+          <div className="text-center py-16 text-[var(--cs-text-muted)]">
+            <FileText className="h-10 w-10 text-[var(--cs-text-gentle)] mx-auto mb-3" />
             <p className="text-sm font-medium">
               {search ? `No policies match "${search}"` : "No policies in this view"}
             </p>
@@ -461,8 +461,8 @@ export default function PoliciesPage() {
         )}
 
         {/* ── Regulatory note ──────────────────────────────────────────────── */}
-        <div className="rounded-xl border border-slate-100 bg-slate-50 px-4 py-3 text-xs text-slate-500">
-          <span className="font-semibold text-slate-600">Regulatory Basis — </span>
+        <div className="rounded-xl border border-[var(--cs-border-subtle)] bg-slate-50 px-4 py-3 text-xs text-[var(--cs-text-muted)]">
+          <span className="font-semibold text-[var(--cs-text-secondary)]">Regulatory Basis — </span>
           Children&apos;s Homes Regulations 2015, Reg 16 (Statement of Purpose) requires that the home
           has clear policies covering all aspects of care. Quality Standard 14 (Financial Viability &amp;
           Governance) requires policies to be current, reviewed regularly, understood by all staff, and

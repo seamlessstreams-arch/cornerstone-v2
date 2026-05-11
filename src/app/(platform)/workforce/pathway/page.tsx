@@ -38,7 +38,7 @@ const STAGE_CONFIG: Record<PathwayStage, {
   min_score: number; description: string; requirements: string[];
 }> = {
   inductee: {
-    colour: "text-slate-700", bgColour: "bg-slate-100", borderColour: "border-slate-200", dotColour: "bg-slate-400",
+    colour: "text-[var(--cs-text-secondary)]", bgColour: "bg-slate-100", borderColour: "border-[var(--cs-border)]", dotColour: "bg-slate-400",
     min_score: 0,
     description: "New starters within the first 90 days. Completing mandatory induction and supervised shifts.",
     requirements: ["DBS cleared", "Day 1 H&S induction", "YP profiles read", "Supervised shifts (min. 5)"],
@@ -125,12 +125,12 @@ function StaffReadinessCard({
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-0.5 flex-wrap">
-              <p className="text-sm font-bold text-slate-800">{staffName}</p>
+              <p className="text-sm font-bold text-[var(--cs-navy)]">{staffName}</p>
               <Badge variant="outline" className={cn("text-[9px] h-4 px-1.5 border", currentCfg.borderColour, currentCfg.colour)}>
                 {PATHWAY_STAGE_LABELS[profile.current_stage]}
               </Badge>
               {profile.target_stage && (
-                <span className="flex items-center gap-0.5 text-[9px] text-slate-400">
+                <span className="flex items-center gap-0.5 text-[9px] text-[var(--cs-text-muted)]">
                   <ArrowRight className="h-2.5 w-2.5" />
                   <Badge variant="outline" className={cn("text-[9px] h-4 px-1.5 border border-dashed", targetCfg?.borderColour, targetCfg?.colour)}>
                     {PATHWAY_STAGE_LABELS[profile.target_stage]}
@@ -145,11 +145,11 @@ function StaffReadinessCard({
               <span className={cn("text-[11px] font-bold tabular-nums", scoreColour)}>{score}%</span>
             </div>
           </div>
-          {expanded ? <ChevronUp className="h-4 w-4 text-slate-400 shrink-0" /> : <ChevronDown className="h-4 w-4 text-slate-400 shrink-0" />}
+          {expanded ? <ChevronUp className="h-4 w-4 text-[var(--cs-text-muted)] shrink-0" /> : <ChevronDown className="h-4 w-4 text-[var(--cs-text-muted)] shrink-0" />}
         </button>
 
         {expanded && (
-          <div className="mt-3 pt-3 border-t border-slate-100 space-y-3">
+          <div className="mt-3 pt-3 border-t border-[var(--cs-border-subtle)] space-y-3">
             {/* Strengths & Development */}
             {profile.strengths.length > 0 && (
               <div className="rounded-lg bg-emerald-50 border border-emerald-100 px-3 py-2">
@@ -197,7 +197,7 @@ function StaffReadinessCard({
             )}
 
             {/* Footer info */}
-            <div className="flex items-center gap-3 text-[10px] text-slate-400">
+            <div className="flex items-center gap-3 text-[10px] text-[var(--cs-text-muted)]">
               {profile.last_assessed_at && (
                 <span className="flex items-center gap-0.5">
                   <Clock className="h-2.5 w-2.5" />
@@ -258,10 +258,10 @@ function StageDistributionBar({ profiles }: { profiles: StaffCompetencyProfile[]
             const count = stageCounts[stage];
             if (count === 0) return null;
             return (
-              <div key={stage} className="flex items-center gap-1 text-[10px] text-slate-500">
+              <div key={stage} className="flex items-center gap-1 text-[10px] text-[var(--cs-text-muted)]">
                 <div className={cn("w-2 h-2 rounded-full", STAGE_CONFIG[stage].dotColour)} />
                 <span>{PATHWAY_STAGE_LABELS[stage]}</span>
-                <span className="font-semibold text-slate-700">{count}</span>
+                <span className="font-semibold text-[var(--cs-text-secondary)]">{count}</span>
               </div>
             );
           })}
@@ -297,7 +297,7 @@ function ReadinessOverview({ profiles, getStaffName }: { profiles: StaffCompeten
           const textCol = score >= 80 ? "text-emerald-600" : score >= 60 ? "text-blue-600" : score >= 40 ? "text-amber-600" : "text-red-600";
           return (
             <div key={p.id} className="flex items-center gap-2">
-              <p className="text-[10px] text-slate-600 w-20 truncate shrink-0 font-medium">
+              <p className="text-[10px] text-[var(--cs-text-secondary)] w-20 truncate shrink-0 font-medium">
                 {getStaffName(p.staff_id).split(" ")[0]}
               </p>
               <div className="flex-1 h-2 rounded-full bg-slate-100 overflow-hidden">
@@ -372,7 +372,7 @@ export default function CareerPathwayPage() {
           <PrintButton title="Career Pathway Report" subtitle="Oak House Workforce" targetId="pathway-content" />
           <SmartUploadButton variant="inline" label="Upload Evidence" uploadContext="Workforce Intelligence — career pathway evidence or portfolio document upload" />
           <Link href="/workforce">
-            <button className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50 transition-colors">
+            <button className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--cs-border)] bg-white px-3 py-1.5 text-xs font-medium text-[var(--cs-text-secondary)] hover:bg-[var(--cs-surface)] transition-colors">
               <Milestone className="h-3.5 w-3.5" />
               Workforce Hub
             </button>
@@ -390,10 +390,10 @@ export default function CareerPathwayPage() {
             { label: "Actively Progressing", value: progressingCount, colour: "text-blue-700", icon: <TrendingUp className="h-4 w-4 text-blue-500" /> },
             { label: "Stages Covered", value: `${new Set(profiles.map((p) => p.current_stage)).size}/7`, colour: "text-violet-700", icon: <Milestone className="h-4 w-4 text-violet-500" /> },
           ].map(({ label, value, colour, icon }) => (
-            <div key={label} className="rounded-xl border border-slate-100 bg-white p-3 text-center">
+            <div key={label} className="rounded-xl border border-[var(--cs-border-subtle)] bg-white p-3 text-center">
               <div className="flex justify-center mb-1">{icon}</div>
               <div className={cn("text-xl font-bold tabular-nums", colour)}>{value}</div>
-              <div className="text-[10px] text-slate-500 mt-0.5">{label}</div>
+              <div className="text-[10px] text-[var(--cs-text-muted)] mt-0.5">{label}</div>
             </div>
           ))}
         </div>
@@ -407,7 +407,7 @@ export default function CareerPathwayPage() {
         {/* ── View Toggle + Search ────────────────────────────────────────── */}
         <div className="flex items-center gap-3">
           <div className="relative w-60">
-            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
             <Input
               placeholder="Search staff…"
               value={search}
@@ -416,9 +416,9 @@ export default function CareerPathwayPage() {
             />
           </div>
           {search.trim() && (
-            <span className="text-xs text-slate-400">{filteredProfiles.length} of {profiles.length} staff</span>
+            <span className="text-xs text-[var(--cs-text-muted)]">{filteredProfiles.length} of {profiles.length} staff</span>
           )}
-          <div className="flex items-center rounded-lg border border-slate-200 overflow-hidden ml-auto">
+          <div className="flex items-center rounded-lg border border-[var(--cs-border)] overflow-hidden ml-auto">
             {([
               { mode: "ladder" as ViewMode, icon: Milestone, label: "Ladder" },
               { mode: "people" as ViewMode, icon: Users, label: "People" },
@@ -428,7 +428,7 @@ export default function CareerPathwayPage() {
                 onClick={() => setViewMode(mode)}
                 className={cn(
                   "flex items-center gap-1 px-3 py-1.5 text-[11px] font-medium transition-all",
-                  viewMode === mode ? "bg-indigo-600 text-white" : "text-slate-500 hover:bg-slate-50",
+                  viewMode === mode ? "bg-indigo-600 text-white" : "text-[var(--cs-text-muted)] hover:bg-[var(--cs-surface)]",
                 )}
               >
                 <Icon className="h-3 w-3" />
@@ -467,14 +467,14 @@ export default function CareerPathwayPage() {
                               {people.length} staff
                             </Badge>
                           )}
-                          <span className="text-[9px] text-slate-400 ml-auto">Min score: {cfg.min_score}%</span>
+                          <span className="text-[9px] text-[var(--cs-text-muted)] ml-auto">Min score: {cfg.min_score}%</span>
                         </div>
-                        <p className="text-xs text-slate-600 mb-3">{cfg.description}</p>
+                        <p className="text-xs text-[var(--cs-text-secondary)] mb-3">{cfg.description}</p>
 
                         {/* Requirements grid */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 mb-3">
                           {cfg.requirements.map((req) => (
-                            <div key={req} className="flex items-start gap-1.5 text-xs text-slate-700">
+                            <div key={req} className="flex items-start gap-1.5 text-xs text-[var(--cs-text-secondary)]">
                               <CheckCircle2 className={cn("h-3.5 w-3.5 shrink-0 mt-0.5", cfg.colour)} />
                               <span>{req}</span>
                             </div>
@@ -517,7 +517,7 @@ export default function CareerPathwayPage() {
                           <div className="mt-2 flex flex-wrap gap-2">
                             {targetingThis.map((p) => (
                               <Link key={p.id} href={`/workforce/staff/${p.staff_id}`}>
-                                <div className="inline-flex items-center gap-1.5 rounded-lg border border-dashed border-slate-300 bg-white/60 px-2.5 py-1 text-xs text-slate-500 hover:opacity-80 transition-opacity">
+                                <div className="inline-flex items-center gap-1.5 rounded-lg border border-dashed border-slate-300 bg-white/60 px-2.5 py-1 text-xs text-[var(--cs-text-muted)] hover:opacity-80 transition-opacity">
                                   <TrendingUp className="h-3 w-3" />
                                   {getStaffName(p.staff_id)} targeting
                                   <span className="font-semibold">{p.overall_readiness_score}%</span>
@@ -532,7 +532,7 @@ export default function CareerPathwayPage() {
 
                   {!isLast && (
                     <div className="flex justify-center py-1">
-                      <ArrowRight className="h-4 w-4 text-slate-300 rotate-90" />
+                      <ArrowRight className="h-4 w-4 text-[var(--cs-text-gentle)] rotate-90" />
                     </div>
                   )}
                 </div>
@@ -557,8 +557,8 @@ export default function CareerPathwayPage() {
         )}
 
         {/* ── Regulatory Footer ───────────────────────────────────────────── */}
-        <div className="rounded-xl border border-slate-100 bg-slate-50 px-4 py-3 text-xs text-slate-500">
-          <span className="font-semibold text-slate-600">Regulatory Basis — </span>
+        <div className="rounded-xl border border-[var(--cs-border-subtle)] bg-slate-50 px-4 py-3 text-xs text-[var(--cs-text-muted)]">
+          <span className="font-semibold text-[var(--cs-text-secondary)]">Regulatory Basis — </span>
           Children&apos;s Homes Regulations 2015: Reg 29 (RM must hold Level 5 or equivalent),
           Reg 32 (residential staff must hold or be working towards Level 3 within 2 years of appointment).
           ILACS Quality of Care — workforce capability assessed against this progression framework.

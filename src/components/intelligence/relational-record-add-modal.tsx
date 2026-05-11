@@ -132,20 +132,20 @@ export function RelationalRecordAddModal({
 
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm animate-in fade-in" />
-        <Dialog.Content className="fixed left-1/2 top-1/2 z-50 w-full max-w-lg -translate-x-1/2 -translate-y-1/2 max-h-[92vh] overflow-y-auto rounded-2xl bg-white shadow-2xl focus:outline-none animate-in slide-in-from-bottom-4">
+        <Dialog.Content className="fixed left-1/2 top-1/2 z-50 w-full max-w-lg -translate-x-1/2 -translate-y-1/2 max-h-[92vh] overflow-y-auto rounded-2xl bg-white shadow-[var(--cs-shadow-elevated)] focus:outline-none animate-in slide-in-from-bottom-4">
 
           {/* Header */}
-          <div className="flex items-start justify-between gap-4 border-b border-slate-100 px-6 py-4">
+          <div className="flex items-start justify-between gap-4 border-b border-[var(--cs-border-subtle)] px-6 py-4">
             <div>
-              <Dialog.Title className="text-base font-bold text-slate-900">
+              <Dialog.Title className="text-base font-bold text-[var(--cs-navy)]">
                 Add Relational Record
               </Dialog.Title>
-              <Dialog.Description className="mt-0.5 text-xs text-slate-500">
+              <Dialog.Description className="mt-0.5 text-xs text-[var(--cs-text-muted)]">
                 For <span className="font-semibold text-teal-700">{childName}</span> — trust, regulation, attachment
               </Dialog.Description>
             </div>
             <Dialog.Close asChild>
-              <button className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-600 transition-colors" aria-label="Close">
+              <button className="rounded-lg p-1.5 text-[var(--cs-text-muted)] hover:bg-[var(--cs-surface)] hover:text-[var(--cs-text-secondary)] transition-colors" aria-label="Close">
                 <X className="h-4 w-4" />
               </button>
             </Dialog.Close>
@@ -154,7 +154,7 @@ export function RelationalRecordAddModal({
           {success ? (
             <div className="flex flex-col items-center gap-3 py-14 px-6">
               <CheckCircle2 className="h-12 w-12 text-teal-500" />
-              <p className="text-sm font-bold text-slate-800">Record saved</p>
+              <p className="text-sm font-bold text-[var(--cs-navy)]">Record saved</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} noValidate>
@@ -162,7 +162,7 @@ export function RelationalRecordAddModal({
 
                 {/* Record type */}
                 <div>
-                  <label className="block text-[11px] font-semibold text-slate-600 uppercase tracking-wider mb-2">
+                  <label className="block text-[11px] font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wider mb-2">
                     Record type <span className="text-red-500">*</span>
                   </label>
                   <div className="grid grid-cols-2 gap-2">
@@ -177,18 +177,18 @@ export function RelationalRecordAddModal({
                             ? positive
                               ? "border-teal-400 bg-teal-50 ring-2 ring-teal-200"
                               : "border-amber-400 bg-amber-50 ring-2 ring-amber-200"
-                            : "border-slate-200 bg-slate-50 hover:border-teal-200 hover:bg-teal-50/40"
+                            : "border-[var(--cs-border)] bg-slate-50 hover:border-teal-200 hover:bg-teal-50/40"
                         )}
                       >
                         <div className={cn(
                           "text-[11px] font-semibold",
                           recordType === value
                             ? positive ? "text-teal-700" : "text-amber-700"
-                            : "text-slate-700"
+                            : "text-[var(--cs-text-secondary)]"
                         )}>
                           {label}
                         </div>
-                        <div className="text-[9px] text-slate-400 mt-0.5">{sublabel}</div>
+                        <div className="text-[9px] text-[var(--cs-text-muted)] mt-0.5">{sublabel}</div>
                       </button>
                     ))}
                   </div>
@@ -196,7 +196,7 @@ export function RelationalRecordAddModal({
 
                 {/* Title */}
                 <div>
-                  <label className="block text-[11px] font-semibold text-slate-600 uppercase tracking-wider mb-1.5">
+                  <label className="block text-[11px] font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wider mb-1.5">
                     Title / name <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -209,13 +209,13 @@ export function RelationalRecordAddModal({
                       recordType === "sensory_need" ? "e.g. Prefers low lighting, dislikes loud noise" :
                       "Short descriptive title"
                     }
-                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-xs text-slate-800 placeholder:text-slate-400 focus:border-teal-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-100 transition-colors"
+                    className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2.5 text-xs text-[var(--cs-navy)] placeholder:text-[var(--cs-text-muted)] focus:border-teal-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-100 transition-colors"
                   />
                 </div>
 
                 {/* Description */}
                 <div>
-                  <label className="block text-[11px] font-semibold text-slate-600 uppercase tracking-wider mb-1.5">
+                  <label className="block text-[11px] font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wider mb-1.5">
                     Description <span className="text-red-500">*</span>
                   </label>
                   <div className="relative">
@@ -224,7 +224,7 @@ export function RelationalRecordAddModal({
                       onChange={(e) => setDescription(e.target.value)}
                       rows={4}
                       placeholder="Describe what happened, what was observed, or what was learned about this young person..."
-                      className="w-full resize-none rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 pr-10 text-xs text-slate-800 placeholder:text-slate-400 focus:border-teal-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-100 transition-colors"
+                      className="w-full resize-none rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2.5 pr-10 text-xs text-[var(--cs-navy)] placeholder:text-[var(--cs-text-muted)] focus:border-teal-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-100 transition-colors"
                     />
                     <div className="absolute right-2 top-2">
                       <DictationButton
@@ -240,7 +240,7 @@ export function RelationalRecordAddModal({
 
                 {/* Confidence */}
                 <div>
-                  <label className="block text-[11px] font-semibold text-slate-600 uppercase tracking-wider mb-2">
+                  <label className="block text-[11px] font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wider mb-2">
                     Confidence level
                   </label>
                   <div className="flex gap-2">
@@ -257,11 +257,11 @@ export function RelationalRecordAddModal({
                           "flex-1 rounded-xl border px-2 py-2 text-center transition-all",
                           confidence === val
                             ? "border-teal-400 bg-teal-50 text-teal-700 ring-1 ring-teal-300"
-                            : "border-slate-200 bg-slate-50 text-slate-500 hover:border-teal-200"
+                            : "border-[var(--cs-border)] bg-slate-50 text-[var(--cs-text-muted)] hover:border-teal-200"
                         )}
                       >
                         <div className="text-[11px] font-semibold">{label}</div>
-                        <div className="text-[9px] text-slate-400 mt-0.5">{note}</div>
+                        <div className="text-[9px] text-[var(--cs-text-muted)] mt-0.5">{note}</div>
                       </button>
                     ))}
                   </div>
@@ -275,7 +275,7 @@ export function RelationalRecordAddModal({
               </div>
 
               {/* Footer */}
-              <div className="flex items-center justify-end gap-2 border-t border-slate-100 px-6 py-4">
+              <div className="flex items-center justify-end gap-2 border-t border-[var(--cs-border-subtle)] px-6 py-4">
                 <Dialog.Close asChild>
                   <Button type="button" variant="ghost" size="sm" disabled={isPending}>
                     Cancel

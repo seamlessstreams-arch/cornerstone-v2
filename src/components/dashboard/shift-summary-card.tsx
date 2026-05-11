@@ -55,23 +55,23 @@ function EventRow({ event }: { event: ShiftSummaryEvent }) {
       </div>
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
-          <span className="text-[12px] font-medium text-slate-800 truncate">{event.title}</span>
+          <span className="text-[12px] font-medium text-[var(--cs-navy)] truncate">{event.title}</span>
           {event.severity !== "info" && (
             <span className={cn("h-1.5 w-1.5 rounded-full shrink-0", SEVERITY_DOT[event.severity])} />
           )}
         </div>
         {event.description && (
-          <p className="text-[11px] text-slate-500 mt-0.5 line-clamp-1">{event.description}</p>
+          <p className="text-[11px] text-[var(--cs-text-muted)] mt-0.5 line-clamp-1">{event.description}</p>
         )}
         <div className="flex items-center gap-2 mt-0.5">
-          <span className="text-[10px] text-slate-400 tabular-nums">{event.time}</span>
+          <span className="text-[10px] text-[var(--cs-text-muted)] tabular-nums">{event.time}</span>
           {event.child_name && (
             <span className="text-[10px] text-violet-600 flex items-center gap-0.5">
               <Heart className="h-2.5 w-2.5" /> {event.child_name}
             </span>
           )}
           {event.staff_name && (
-            <span className="text-[10px] text-slate-400">{event.staff_name.split(" ")[0]}</span>
+            <span className="text-[10px] text-[var(--cs-text-muted)]">{event.staff_name.split(" ")[0]}</span>
           )}
         </div>
       </div>
@@ -121,7 +121,7 @@ export function ShiftSummaryCard({
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-center py-8">
-            <Loader2 className="h-5 w-5 animate-spin text-slate-400" />
+            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
           </div>
         </CardContent>
       </Card>
@@ -187,7 +187,7 @@ export function ShiftSummaryCard({
                 key={yp.id}
                 className="flex items-center gap-2 rounded-xl bg-slate-50 px-3 py-1.5"
               >
-                <span className="text-[11px] font-medium text-slate-700">{yp.name}</span>
+                <span className="text-[11px] font-medium text-[var(--cs-text-secondary)]">{yp.name}</span>
                 {yp.mood_score !== undefined && (
                   <span className={cn(
                     "text-[10px] font-bold rounded-full h-5 w-5 flex items-center justify-center",
@@ -198,18 +198,18 @@ export function ShiftSummaryCard({
                     {yp.mood_score}
                   </span>
                 )}
-                <span className="text-[10px] text-slate-400">{yp.entries_count} entries</span>
+                <span className="text-[10px] text-[var(--cs-text-muted)]">{yp.entries_count} entries</span>
               </div>
             ))}
           </div>
         )}
 
         {/* Auto-generated notes */}
-        <div className="rounded-xl bg-slate-50 border border-slate-200 p-3 mb-3">
-          <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-2">
+        <div className="rounded-xl bg-slate-50 border border-[var(--cs-border)] p-3 mb-3">
+          <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-2">
             Auto-generated notes
           </p>
-          <pre className="text-[12px] text-slate-700 whitespace-pre-wrap font-sans leading-relaxed">
+          <pre className="text-[12px] text-[var(--cs-text-secondary)] whitespace-pre-wrap font-sans leading-relaxed">
             {summary.auto_notes}
           </pre>
         </div>
@@ -217,14 +217,14 @@ export function ShiftSummaryCard({
         {/* Expandable event timeline */}
         <button
           onClick={() => setShowEvents(!showEvents)}
-          className="flex items-center gap-2 w-full rounded-xl px-3 py-2 text-[11px] font-medium text-slate-500 hover:bg-slate-50 transition-colors"
+          className="flex items-center gap-2 w-full rounded-xl px-3 py-2 text-[11px] font-medium text-[var(--cs-text-muted)] hover:bg-[var(--cs-surface)] transition-colors"
         >
           {showEvents ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
           {showEvents ? "Hide event timeline" : `Show all ${s.total_events} events`}
         </button>
 
         {showEvents && summary.events.length > 0 && (
-          <div className="divide-y divide-slate-100 border-t border-slate-100 mt-1 max-h-[400px] overflow-y-auto">
+          <div className="divide-y divide-slate-100 border-t border-[var(--cs-border-subtle)] mt-1 max-h-[400px] overflow-y-auto">
             {summary.events.map((event, i) => (
               <EventRow key={`${event.type}_${event.time}_${i}`} event={event} />
             ))}
@@ -232,7 +232,7 @@ export function ShiftSummaryCard({
         )}
 
         {showEvents && summary.events.length === 0 && (
-          <div className="py-6 text-center text-xs text-slate-400">
+          <div className="py-6 text-center text-xs text-[var(--cs-text-muted)]">
             No events recorded during this shift period
           </div>
         )}
@@ -259,11 +259,11 @@ function StatPill({
       "rounded-xl p-2 text-center",
       alert ? "bg-red-50" : "bg-slate-50",
     )}>
-      <Icon className={cn("h-3 w-3 mx-auto mb-0.5", alert ? "text-red-500" : "text-slate-400")} />
-      <div className={cn("text-sm font-bold tabular-nums", alert ? "text-red-600" : "text-slate-700")}>
+      <Icon className={cn("h-3 w-3 mx-auto mb-0.5", alert ? "text-red-500" : "text-[var(--cs-text-muted)]")} />
+      <div className={cn("text-sm font-bold tabular-nums", alert ? "text-red-600" : "text-[var(--cs-text-secondary)]")}>
         {value}
       </div>
-      <div className="text-[9px] text-slate-400">{label}</div>
+      <div className="text-[9px] text-[var(--cs-text-muted)]">{label}</div>
     </div>
   );
 }

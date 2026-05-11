@@ -111,16 +111,16 @@ export function QuickCreateActions({ context, compact = false, className }: Quic
               />
 
               {/* Menu */}
-              <div className="absolute right-0 top-full mt-1 z-50 w-44 rounded-lg border border-slate-200 bg-white shadow-lg py-1">
+              <div className="absolute right-0 top-full mt-1 z-50 w-44 rounded-lg border border-[var(--cs-border)] bg-white shadow-lg py-1">
                 <button
-                  className="flex w-full items-center gap-2.5 px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 transition-colors"
+                  className="flex w-full items-center gap-2.5 px-3 py-2 text-sm text-[var(--cs-text-secondary)] hover:bg-[var(--cs-surface)] transition-colors"
                   onClick={() => { setDefaultTab("task"); setShowMenu(false); setOpen(true); }}
                 >
                   <CheckSquare className="h-3.5 w-3.5 text-blue-500" />
                   New Task
                 </button>
                 <button
-                  className="flex w-full items-center gap-2.5 px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 transition-colors"
+                  className="flex w-full items-center gap-2.5 px-3 py-2 text-sm text-[var(--cs-text-secondary)] hover:bg-[var(--cs-surface)] transition-colors"
                   onClick={() => { setDefaultTab("form"); setShowMenu(false); setOpen(true); }}
                 >
                   <FileText className="h-3.5 w-3.5 text-violet-500" />

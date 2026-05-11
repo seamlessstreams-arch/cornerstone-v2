@@ -29,7 +29,7 @@ import { useFoodHygieneRecords, useCreateFoodHygieneRecord } from "@/hooks/use-f
 
 /* ── helpers ───────────────────────────────────────────────────────────────── */
 
-const COMPLIANCE_CLR: Record<FoodHygieneCompliance, string> = { pass: "bg-green-100 text-green-800", fail: "bg-red-100 text-red-800", action_required: "bg-amber-100 text-amber-800", n_a: "bg-slate-100 text-slate-800" };
+const COMPLIANCE_CLR: Record<FoodHygieneCompliance, string> = { pass: "bg-green-100 text-green-800", fail: "bg-red-100 text-red-800", action_required: "bg-amber-100 text-amber-800", n_a: "bg-slate-100 text-[var(--cs-navy)]" };
 const BORDER_COMP: Record<FoodHygieneCompliance, string> = { pass: "border-l-green-400", fail: "border-l-red-600", action_required: "border-l-amber-400", n_a: "border-l-slate-300" };
 
 /* ── page ──────────────────────────────────────────────────────────────────── */

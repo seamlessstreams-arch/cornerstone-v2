@@ -130,7 +130,7 @@ const SECTIONS: HandbookSection[] = [
     ],
   },
   {
-    id: "keys", title: "Keys, Security & Access", icon: Key, iconColor: "text-slate-600",
+    id: "keys", title: "Keys, Security & Access", icon: Key, iconColor: "text-[var(--cs-text-secondary)]",
     lastUpdated: d(-30),
     content: [
       { heading: "Key Responsibilities", body: "Keys are issued at the start of your shift and must be returned at handover. You are personally responsible for all keys in your possession. Lost keys must be reported immediately — this is a security incident that may require lock changes. Never leave keys unattended or accessible to young people." },
@@ -147,7 +147,7 @@ const SECTIONS: HandbookSection[] = [
     ],
   },
   {
-    id: "data", title: "Data Protection & GDPR", icon: Lock, iconColor: "text-slate-600",
+    id: "data", title: "Data Protection & GDPR", icon: Lock, iconColor: "text-[var(--cs-text-secondary)]",
     lastUpdated: d(-14),
     content: [
       { heading: "Your Obligations", body: "You have a legal obligation to protect personal data under the UK GDPR and Data Protection Act 2018. This includes: children's records, staff records, family information, and professional contacts. Only access information you need for your role. Never share information without authorisation. Report any data breach immediately." },
@@ -163,7 +163,7 @@ const SECTIONS: HandbookSection[] = [
     ],
   },
   {
-    id: "leaving", title: "Leaving Oak House", icon: Home, iconColor: "text-slate-600",
+    id: "leaving", title: "Leaving Oak House", icon: Home, iconColor: "text-[var(--cs-text-secondary)]",
     lastUpdated: d(-60),
     content: [
       { heading: "Notice Period", body: "Your contractual notice period is 4 weeks (or as stated in your contract). Please submit your resignation in writing to the RM. During your notice period, you are expected to maintain the same professional standards. A thorough handover of your key working responsibilities must be completed." },

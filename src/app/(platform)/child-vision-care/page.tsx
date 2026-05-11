@@ -268,7 +268,7 @@ export default function ChildVisionCarePage() {
                         {getYPName(r.child_id)}
                         <Badge variant="outline" className={STATUS_CLR[r.status]}>{VISION_STATUS_LABEL[r.status]}</Badge>
                         {r.last_sight_test_date && (
-                          <Badge variant="outline" className="bg-slate-100 text-slate-700">
+                          <Badge variant="outline" className="bg-slate-100 text-[var(--cs-text-secondary)]">
                             <Calendar className="h-3 w-3 mr-1" /> Tested {r.last_sight_test_date}
                           </Badge>
                         )}

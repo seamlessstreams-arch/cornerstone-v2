@@ -30,12 +30,12 @@ import { DUTY_LOG_SHIFT_LABEL, DUTY_LOG_CATEGORY_LABEL, DUTY_LOG_PRIORITY_LABEL 
 
 /* ── helpers ───────────────────────────────────────────────────────────────── */
 
-const SHIFT_CLR: Record<DutyLogShift, string> = { morning: "bg-yellow-100 text-yellow-800", afternoon: "bg-orange-100 text-orange-800", evening: "bg-indigo-100 text-indigo-800", night: "bg-slate-100 text-slate-800", sleep_in: "bg-purple-100 text-purple-800" };
+const SHIFT_CLR: Record<DutyLogShift, string> = { morning: "bg-yellow-100 text-yellow-800", afternoon: "bg-orange-100 text-orange-800", evening: "bg-indigo-100 text-indigo-800", night: "bg-slate-100 text-[var(--cs-navy)]", sleep_in: "bg-purple-100 text-purple-800" };
 
 const CAT_CLR: Record<DutyLogCategory, string> = {
   incident: "bg-red-100 text-red-800", visitor: "bg-blue-100 text-blue-800",
   phone_call: "bg-indigo-100 text-indigo-800", maintenance: "bg-gray-100 text-gray-800",
-  staff_change: "bg-slate-100 text-slate-800", welfare: "bg-amber-100 text-amber-800",
+  staff_change: "bg-slate-100 text-[var(--cs-navy)]", welfare: "bg-amber-100 text-amber-800",
   medication: "bg-purple-100 text-purple-800", safeguarding: "bg-red-100 text-red-800",
   routine: "bg-gray-100 text-gray-700", handover: "bg-blue-100 text-blue-800",
   complaint: "bg-orange-100 text-orange-800", positive: "bg-green-100 text-green-800",

@@ -35,7 +35,7 @@ const statusColour: Record<InsurancePolicyStatus, string> = {
   active: "bg-green-100 text-green-800",
   lapsed: "bg-red-100 text-red-800",
   pending_renewal: "bg-amber-100 text-amber-800",
-  cancelled: "bg-slate-100 text-slate-800",
+  cancelled: "bg-slate-100 text-[var(--cs-navy)]",
   awaiting_documents: "bg-blue-100 text-blue-800",
 };
 
@@ -167,7 +167,7 @@ export default function InsuranceTrackerPage() {
               renewalSoon && "border-l-4 border-l-amber-500"
             )}>
               <button
-                className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                 onClick={() => setExpandedId(isExpanded ? null : p.id)}
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -257,7 +257,7 @@ export default function InsuranceTrackerPage() {
                   )}
 
                   <div className="bg-slate-50 rounded-lg p-3 border">
-                    <p className="text-xs font-semibold text-slate-800 uppercase tracking-wide mb-1">Review Notes</p>
+                    <p className="text-xs font-semibold text-[var(--cs-navy)] uppercase tracking-wide mb-1">Review Notes</p>
                     <p className="text-sm">{p.review_notes}</p>
                   </div>
 

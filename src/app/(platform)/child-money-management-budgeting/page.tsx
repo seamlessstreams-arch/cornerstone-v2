@@ -47,7 +47,7 @@ const exportCols: ExportColumn<MoneyRecord>[] = [
 ];
 
 const competencyColour: Record<MoneyCompetency, string> = {
-  not_yet_introduced: "bg-slate-100 text-slate-800 border-slate-200",
+  not_yet_introduced: "bg-slate-100 text-[var(--cs-navy)] border-[var(--cs-border)]",
   aware: "bg-blue-100 text-blue-800 border-blue-200",
   did_with_help: "bg-sky-100 text-sky-800 border-sky-200",
   did_independently: "bg-emerald-100 text-emerald-800 border-emerald-200",
@@ -99,7 +99,7 @@ export default function ChildMoneyManagementBudgetingPage() {
     return (
       <PageShell title="Money Management & Budgeting" subtitle="Loading...">
         <div className="flex items-center justify-center py-12">
-          <Loader2 className="h-8 w-8 animate-spin text-slate-400" />
+          <Loader2 className="h-8 w-8 animate-spin text-[var(--cs-text-muted)]" />
         </div>
       </PageShell>
     );
@@ -117,45 +117,45 @@ export default function ChildMoneyManagementBudgetingPage() {
       }
     >
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-slate-600 text-sm mb-1">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-[var(--cs-text-secondary)] text-sm mb-1">
             <BookOpen className="h-4 w-4" />
             <span>Skills tracked</span>
           </div>
-          <div className="text-2xl font-semibold text-slate-900">{stats.skillsTracked}</div>
+          <div className="text-2xl font-semibold text-[var(--cs-navy)]">{stats.skillsTracked}</div>
         </div>
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-slate-600 text-sm mb-1">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-[var(--cs-text-secondary)] text-sm mb-1">
             <ShieldCheck className="h-4 w-4" />
             <span>Confident / independent</span>
           </div>
-          <div className="text-2xl font-semibold text-slate-900">{stats.confidentCount}</div>
+          <div className="text-2xl font-semibold text-[var(--cs-navy)]">{stats.confidentCount}</div>
         </div>
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-slate-600 text-sm mb-1">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-[var(--cs-text-secondary)] text-sm mb-1">
             <TrendingUp className="h-4 w-4" />
             <span>Real-world applications</span>
           </div>
-          <div className="text-2xl font-semibold text-slate-900">{stats.realWorldApps}</div>
+          <div className="text-2xl font-semibold text-[var(--cs-navy)]">{stats.realWorldApps}</div>
         </div>
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-slate-600 text-sm mb-1">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-[var(--cs-text-secondary)] text-sm mb-1">
             <AlertTriangle className="h-4 w-4" />
             <span>Reviews due (60d)</span>
           </div>
-          <div className="text-2xl font-semibold text-slate-900">{stats.reviewsDue}</div>
+          <div className="text-2xl font-semibold text-[var(--cs-navy)]">{stats.reviewsDue}</div>
         </div>
       </div>
 
       <div className="flex flex-col sm:flex-row gap-3 mb-4">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--cs-text-muted)]" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search young person or skill..."
-            className="w-full pl-9 pr-3 py-2 text-sm border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full pl-9 pr-3 py-2 text-sm border border-[var(--cs-border)] rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
         <Select value={categoryFilter} onValueChange={setCategoryFilter}>
@@ -187,35 +187,35 @@ export default function ChildMoneyManagementBudgetingPage() {
         {filtered.map((r) => {
           const isOpen = expandedId === r.id;
           return (
-            <div key={r.id} className="rounded-lg border border-slate-200 bg-white overflow-hidden">
+            <div key={r.id} className="rounded-lg border border-[var(--cs-border)] bg-white overflow-hidden">
               <button
                 onClick={() => setExpandedId(isOpen ? null : r.id)}
-                className="w-full p-4 flex items-start justify-between gap-3 hover:bg-slate-50 text-left"
+                className="w-full p-4 flex items-start justify-between gap-3 hover:bg-[var(--cs-surface)] text-left"
               >
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap mb-1">
-                    <span className="font-semibold text-slate-900">{getYPName(r.child_id)}</span>
-                    <span className="text-slate-700">{MONEY_SKILL_CATEGORY_LABEL[r.skill_category]}</span>
+                    <span className="font-semibold text-[var(--cs-navy)]">{getYPName(r.child_id)}</span>
+                    <span className="text-[var(--cs-text-secondary)]">{MONEY_SKILL_CATEGORY_LABEL[r.skill_category]}</span>
                     <span className={cn("text-xs px-2 py-0.5 rounded-full border", competencyColour[r.competency])}>
                       {MONEY_COMPETENCY_LABEL[r.competency]}
                     </span>
                   </div>
-                  <div className="text-sm text-slate-600">
+                  <div className="text-sm text-[var(--cs-text-secondary)]">
                     Recorded {r.recorded_date} · Review {r.review_date} · {getStaffName(r.key_worker)}
                   </div>
                 </div>
-                {isOpen ? <ChevronUp className="h-5 w-5 text-slate-400" /> : <ChevronDown className="h-5 w-5 text-slate-400" />}
+                {isOpen ? <ChevronUp className="h-5 w-5 text-[var(--cs-text-muted)]" /> : <ChevronDown className="h-5 w-5 text-[var(--cs-text-muted)]" />}
               </button>
               {isOpen ? (
-                <div className="px-4 pb-4 border-t border-slate-100 bg-slate-50/50">
+                <div className="px-4 pb-4 border-t border-[var(--cs-border-subtle)] bg-slate-50/50">
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 pt-4">
-                    <div className="rounded-md border border-slate-200 bg-white p-3 lg:col-span-2">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Child Voice</div>
-                      <p className="text-sm text-slate-700 italic">&ldquo;{r.child_voice}&rdquo;</p>
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3 lg:col-span-2">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Child Voice</div>
+                      <p className="text-sm text-[var(--cs-text-secondary)] italic">&ldquo;{r.child_voice}&rdquo;</p>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3 lg:col-span-2">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Staff Observation</div>
-                      <p className="text-sm text-slate-700">{r.staff_observation}</p>
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3 lg:col-span-2">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Staff Observation</div>
+                      <p className="text-sm text-[var(--cs-text-secondary)]">{r.staff_observation}</p>
                     </div>
                     <div className="rounded-md border border-emerald-200 bg-emerald-50 p-3">
                       <div className="text-xs font-semibold text-emerald-700 uppercase mb-2">Practical examples</div>
@@ -234,8 +234,8 @@ export default function ChildMoneyManagementBudgetingPage() {
                       </ul>
                     </div>
                     {r.tools_used.length ? (
-                      <div className="rounded-md border border-slate-200 bg-white p-3">
-                        <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Tools used</div>
+                      <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                        <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Tools used</div>
                         <div className="flex flex-wrap gap-1.5">
                           {r.tools_used.map((t, i) => (
                             <span key={i} className="text-xs px-2 py-0.5 rounded-full border bg-violet-100 text-violet-800 border-violet-200">{t}</span>

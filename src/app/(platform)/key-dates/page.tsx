@@ -82,8 +82,8 @@ const BUCKET_CONFIG: Record<Bucket, { label: string; badgeClass: string; bg: str
   overdue:   { label: "Overdue",        badgeClass: "bg-red-100 text-red-700 border-red-200",       bg: "bg-red-50",     border: "border-red-200"    },
   week:      { label: "This Week",      badgeClass: "bg-amber-100 text-amber-700 border-amber-200",  bg: "bg-amber-50",   border: "border-amber-200"  },
   fortnight: { label: "Next 2 Weeks",   badgeClass: "bg-blue-100 text-blue-700 border-blue-200",     bg: "bg-blue-50",    border: "border-blue-200"   },
-  month:     { label: "This Month",     badgeClass: "bg-slate-100 text-slate-700 border-slate-200",  bg: "bg-slate-50",   border: "border-slate-200"  },
-  quarter:   { label: "Next 90 Days",   badgeClass: "bg-slate-100 text-slate-600 border-slate-200",  bg: "bg-white",      border: "border-slate-100"  },
+  month:     { label: "This Month",     badgeClass: "bg-slate-100 text-[var(--cs-text-secondary)] border-[var(--cs-border)]",  bg: "bg-slate-50",   border: "border-[var(--cs-border)]"  },
+  quarter:   { label: "Next 90 Days",   badgeClass: "bg-slate-100 text-[var(--cs-text-secondary)] border-[var(--cs-border)]",  bg: "bg-white",      border: "border-[var(--cs-border-subtle)]"  },
 };
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -111,7 +111,7 @@ function EventRow({ item }: { item: KeyDateItem }) {
     item.days === 0        ? "bg-amber-100 text-amber-700 border-amber-200":
     item.days <= 7         ? "bg-amber-100 text-amber-700 border-amber-200":
     item.days <= 14        ? "bg-blue-100 text-blue-700 border-blue-200"  :
-                             "bg-slate-100 text-slate-600 border-slate-200";
+                             "bg-slate-100 text-[var(--cs-text-secondary)] border-[var(--cs-border)]";
 
   return (
     <Link href={item.href} className="group">
@@ -128,8 +128,8 @@ function EventRow({ item }: { item: KeyDateItem }) {
         <div className="flex-1 min-w-0">
           <div className="flex items-start justify-between gap-2">
             <div>
-              <p className="text-sm font-semibold text-slate-900 leading-snug">{item.title}</p>
-              <p className="text-xs text-slate-500 mt-0.5">{item.subtitle}</p>
+              <p className="text-sm font-semibold text-[var(--cs-navy)] leading-snug">{item.title}</p>
+              <p className="text-xs text-[var(--cs-text-muted)] mt-0.5">{item.subtitle}</p>
             </div>
             <div className="flex items-center gap-2 shrink-0">
               <Badge className={cn("text-[9px] px-2 py-0.5 rounded-full border font-semibold", cfg.border, cfg.bg, cfg.color)}>
@@ -138,10 +138,10 @@ function EventRow({ item }: { item: KeyDateItem }) {
               <span className={cn("text-[10px] font-semibold px-2 py-0.5 rounded-full border", badgeCls)}>
                 {daysBadge(item.days)}
               </span>
-              <ChevronRight className="h-4 w-4 text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity" />
+              <ChevronRight className="h-4 w-4 text-[var(--cs-text-gentle)] opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
           </div>
-          <p className="text-[10px] text-slate-400 mt-1">{formatDate(item.date)}</p>
+          <p className="text-[10px] text-[var(--cs-text-muted)] mt-1">{formatDate(item.date)}</p>
         </div>
       </div>
     </Link>
@@ -320,18 +320,18 @@ export default function KeyDatesPage() {
             { label: "Overdue",          value: overdueCount,  color: overdueCount  > 0 ? "text-red-600"  : "text-emerald-600", bg: overdueCount  > 0 ? "bg-red-50 border-red-100"  : "bg-emerald-50 border-emerald-100" },
             { label: "This Week",        value: thisWeekCount, color: thisWeekCount > 0 ? "text-amber-600": "text-emerald-600", bg: thisWeekCount > 0 ? "bg-amber-50 border-amber-100": "bg-emerald-50 border-emerald-100" },
             { label: "Next 90 Days",     value: upcomingCount, color: "text-indigo-600", bg: "bg-indigo-50 border-indigo-100" },
-            { label: "Types Tracked",    value: Object.keys(CAT_CONFIG).length, color: "text-slate-600", bg: "bg-slate-50 border-slate-100" },
+            { label: "Types Tracked",    value: Object.keys(CAT_CONFIG).length, color: "text-[var(--cs-text-secondary)]", bg: "bg-slate-50 border-[var(--cs-border-subtle)]" },
           ].map(({ label, value, color, bg }) => (
             <div key={label} className={cn("rounded-2xl border p-4 text-center", bg)}>
               <div className={cn("text-2xl font-bold tabular-nums", color)}>{value}</div>
-              <div className="text-[10px] text-slate-500 mt-0.5 font-medium">{label}</div>
+              <div className="text-[10px] text-[var(--cs-text-muted)] mt-0.5 font-medium">{label}</div>
             </div>
           ))}
         </div>
 
         {/* ── Category filters ────────────────────────────────────────────────── */}
         <div className="flex flex-wrap items-center gap-2">
-          <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 mr-1">
+          <div className="flex items-center gap-1.5 text-xs font-semibold text-[var(--cs-text-muted)] mr-1">
             <Filter className="h-3.5 w-3.5" />Filter:
           </div>
           {(Object.entries(CAT_CONFIG) as [EventCategory, typeof CAT_CONFIG[EventCategory]][]).map(([cat, cfg]) => {
@@ -346,7 +346,7 @@ export default function KeyDatesPage() {
                   "flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium transition-all",
                   active
                     ? cn(cfg.bg, cfg.border, cfg.color)
-                    : "bg-white border-slate-200 text-slate-400 hover:border-slate-300 hover:text-slate-600",
+                    : "bg-white border-[var(--cs-border)] text-[var(--cs-text-muted)] hover:border-slate-300 hover:text-[var(--cs-text-secondary)]",
                 )}
               >
                 <Icon className="h-3 w-3" />
@@ -365,7 +365,7 @@ export default function KeyDatesPage() {
 
         {/* ── Search ──────────────────────────────────────────────────────────── */}
         <div className="relative max-w-md">
-          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
           <Input
             placeholder="Search events, staff, young people…"
             value={search}
@@ -375,7 +375,7 @@ export default function KeyDatesPage() {
         </div>
 
         {search && (
-          <p className="text-xs text-slate-400">
+          <p className="text-xs text-[var(--cs-text-muted)]">
             {filtered.length} result{filtered.length !== 1 ? "s" : ""} matching &quot;{search}&quot;
           </p>
         )}
@@ -383,8 +383,8 @@ export default function KeyDatesPage() {
         {/* ── Loading ─────────────────────────────────────────────────────────── */}
         {isLoading && (
           <div className="flex items-center justify-center py-16">
-            <Loader2 className="h-6 w-6 animate-spin text-slate-400" />
-            <span className="ml-2 text-sm text-slate-400">Loading your key dates…</span>
+            <Loader2 className="h-6 w-6 animate-spin text-[var(--cs-text-muted)]" />
+            <span className="ml-2 text-sm text-[var(--cs-text-muted)]">Loading your key dates…</span>
           </div>
         )}
 
@@ -427,16 +427,16 @@ export default function KeyDatesPage() {
             {filtered.length === 0 && !isLoading && (
               <div className="text-center py-16">
                 <CheckCircle2 className="h-10 w-10 text-emerald-400 mx-auto mb-3" />
-                <p className="text-sm font-semibold text-slate-700">No upcoming dates in the selected categories</p>
-                <p className="text-xs text-slate-400 mt-1">Try enabling more category filters or check back later</p>
+                <p className="text-sm font-semibold text-[var(--cs-text-secondary)]">No upcoming dates in the selected categories</p>
+                <p className="text-xs text-[var(--cs-text-muted)] mt-1">Try enabling more category filters or check back later</p>
               </div>
             )}
           </div>
         )}
 
         {/* ── Regulatory basis note ────────────────────────────────────────────── */}
-        <div className="rounded-xl border border-slate-100 bg-slate-50 px-4 py-3 text-xs text-slate-500">
-          <span className="font-semibold text-slate-600">Regulatory Basis — </span>
+        <div className="rounded-xl border border-[var(--cs-border-subtle)] bg-slate-50 px-4 py-3 text-xs text-[var(--cs-text-muted)]">
+          <span className="font-semibold text-[var(--cs-text-secondary)]">Regulatory Basis — </span>
           LAC reviews: Children Act 1989 (minimum every 6 months, first within 20 days of placement).
           Reg 44 visits: Children&apos;s Homes Regulations 2015 Reg 44 (every 28 days, unannounced).
           Supervisions: Standard 6 Quality Standards — minimum 6-weekly for care staff.

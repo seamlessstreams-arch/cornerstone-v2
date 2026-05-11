@@ -129,7 +129,7 @@ export default function NotificationLogPage() {
             { label: "Total Notifications", value: total, icon: Send, colour: "text-blue-600" },
             { label: "Within Timeframe", value: `${onTimePct}%`, icon: CheckCircle2, colour: "text-green-600" },
             { label: "Ofsted Notifications", value: ofstedCount, icon: Building2, colour: "text-indigo-600" },
-            { label: "Late Notifications", value: lateCount, icon: AlertTriangle, colour: lateCount > 0 ? "text-red-600" : "text-slate-400" },
+            { label: "Late Notifications", value: lateCount, icon: AlertTriangle, colour: lateCount > 0 ? "text-red-600" : "text-[var(--cs-text-muted)]" },
           ].map((s) => (
             <div key={s.label} className="rounded-xl border bg-white p-4 flex items-center gap-3">
               <s.icon className={cn("h-5 w-5", s.colour)} />
@@ -227,7 +227,7 @@ export default function NotificationLogPage() {
             return (
               <div key={rec.id} className="rounded-xl border bg-white overflow-hidden">
                 <button
-                  className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                  className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                   onClick={() => setExpandedId(isExpanded ? null : rec.id)}
                 >
                   <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -347,7 +347,7 @@ export default function NotificationLogPage() {
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <div className="rounded-lg bg-slate-50 border p-3">
-                <p className="font-medium text-slate-900 mb-1">Required Timeframes</p>
+                <p className="font-medium text-[var(--cs-navy)] mb-1">Required Timeframes</p>
                 <ul className="space-y-1 text-xs">
                   <li><span className="font-medium">Death / serious harm:</span> Immediately + within 24 hours (written)</li>
                   <li><span className="font-medium">Serious incident / restraint:</span> Within 24 hours</li>
@@ -359,7 +359,7 @@ export default function NotificationLogPage() {
                 </ul>
               </div>
               <div className="rounded-lg bg-slate-50 border p-3">
-                <p className="font-medium text-slate-900 mb-1">Ofsted Expectations</p>
+                <p className="font-medium text-[var(--cs-navy)] mb-1">Ofsted Expectations</p>
                 <ul className="space-y-1 text-xs">
                   <li>Notify on <span className="font-medium">awareness</span> of the event, not on confirmation or conclusion</li>
                   <li>Use the online notification portal for all written notifications</li>

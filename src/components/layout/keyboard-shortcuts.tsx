@@ -124,16 +124,16 @@ export function KeyboardShortcuts() {
       />
 
       {/* Panel */}
-      <div className="relative w-full max-w-2xl mx-4 rounded-2xl bg-white shadow-2xl border border-slate-200 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+      <div className="relative w-full max-w-2xl mx-4 rounded-2xl bg-white shadow-[var(--cs-shadow-elevated)] border border-[var(--cs-border)] overflow-hidden animate-in fade-in zoom-in-95 duration-200">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--cs-border-subtle)]">
           <div className="flex items-center gap-2.5">
             <Keyboard className="h-5 w-5 text-indigo-500" />
-            <h2 className="text-base font-bold text-slate-900">Keyboard Shortcuts</h2>
+            <h2 className="text-base font-bold text-[var(--cs-navy)]">Keyboard Shortcuts</h2>
           </div>
           <button
             onClick={() => setOpen(false)}
-            className="rounded-lg p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"
+            className="rounded-lg p-1.5 text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] hover:bg-[var(--cs-surface)] transition-colors"
           >
             <X className="h-4 w-4" />
           </button>
@@ -144,7 +144,7 @@ export function KeyboardShortcuts() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {groups.map((group) => (
               <div key={group.label}>
-                <h3 className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-3">
+                <h3 className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-3">
                   {group.label}
                 </h3>
                 <div className="space-y-2">
@@ -153,14 +153,14 @@ export function KeyboardShortcuts() {
                       key={shortcut.description}
                       className="flex items-center justify-between gap-3"
                     >
-                      <span className="text-sm text-slate-700">{shortcut.description}</span>
+                      <span className="text-sm text-[var(--cs-text-secondary)]">{shortcut.description}</span>
                       <div className="flex items-center gap-1 shrink-0">
                         {shortcut.keys.map((key, i) => (
                           <React.Fragment key={i}>
                             {i > 0 && (
-                              <span className="text-[10px] text-slate-300 mx-0.5">then</span>
+                              <span className="text-[10px] text-[var(--cs-text-gentle)] mx-0.5">then</span>
                             )}
-                            <kbd className="inline-flex h-6 min-w-[24px] items-center justify-center rounded-md border border-slate-200 bg-slate-50 px-1.5 text-[11px] font-medium text-slate-600 shadow-sm">
+                            <kbd className="inline-flex h-6 min-w-[24px] items-center justify-center rounded-md border border-[var(--cs-border)] bg-[var(--cs-surface)] px-1.5 text-[11px] font-medium text-[var(--cs-text-secondary)] shadow-sm">
                               {key}
                             </kbd>
                           </React.Fragment>
@@ -175,9 +175,9 @@ export function KeyboardShortcuts() {
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-3 border-t border-slate-100 bg-slate-50">
-          <p className="text-[11px] text-slate-400 text-center">
-            Press <kbd className="inline-flex h-4 items-center rounded border border-slate-200 bg-white px-1 text-[9px] font-medium text-slate-400 mx-0.5">?</kbd> to toggle this overlay
+        <div className="px-6 py-3 border-t border-[var(--cs-border-subtle)] bg-[var(--cs-surface)]">
+          <p className="text-[11px] text-[var(--cs-text-muted)] text-center">
+            Press <kbd className="inline-flex h-4 items-center rounded border border-[var(--cs-border)] bg-white px-1 text-[9px] font-medium text-[var(--cs-text-muted)] mx-0.5">?</kbd> to toggle this overlay
           </p>
         </div>
       </div>

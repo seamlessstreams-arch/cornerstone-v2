@@ -122,14 +122,14 @@ const CONFIDENCE_COLOURS = {
   high: "bg-emerald-100 text-emerald-800",
   possible: "bg-yellow-100 text-yellow-800",
   needs_human_review: "bg-orange-100 text-orange-800",
-  insufficient_information: "bg-slate-100 text-slate-700",
+  insufficient_information: "bg-slate-100 text-[var(--cs-text-secondary)]",
 };
 
 const STATUS_COLOURS: Record<LiversStatus | InterventionSessionStatus, string> = {
-  draft: "bg-slate-100 text-slate-700",
+  draft: "bg-slate-100 text-[var(--cs-text-secondary)]",
   reviewed: "bg-violet-100 text-violet-800",
   approved: "bg-emerald-100 text-emerald-700",
-  archived: "bg-slate-200 text-slate-500",
+  archived: "bg-slate-200 text-[var(--cs-text-muted)]",
   in_progress: "bg-blue-100 text-blue-800",
   completed: "bg-green-100 text-green-700",
 };
@@ -263,7 +263,7 @@ function DomainCard({
           <div className="text-left">
             <p className="font-semibold text-sm">{domain.label}</p>
             {rating && (
-              <Badge className={cn("mt-0.5", RATING_COLOURS[rating as keyof typeof RATING_COLOURS] ?? "bg-slate-100 text-slate-700")}>
+              <Badge className={cn("mt-0.5", RATING_COLOURS[rating as keyof typeof RATING_COLOURS] ?? "bg-slate-100 text-[var(--cs-text-secondary)]")}>
                 {rating.charAt(0).toUpperCase() + rating.slice(1)} viability
               </Badge>
             )}
@@ -317,7 +317,7 @@ function AnalysisCard({
         <div className="flex items-start justify-between gap-3">
           <div>
             <CardTitle className="text-base">L.I.V.E.R.S. Analysis</CardTitle>
-            <p className="text-xs text-slate-500 mt-0.5">{formatDate(analysis.created_at)}</p>
+            <p className="text-xs text-[var(--cs-text-muted)] mt-0.5">{formatDate(analysis.created_at)}</p>
           </div>
           <div className="flex items-center gap-2 flex-wrap justify-end">
             {analysis.aria_confidence && (
@@ -353,7 +353,7 @@ function AnalysisCard({
         {analysis.aria_summary && (
           <div className="rounded-lg bg-violet-50 border border-violet-100 p-3">
             <Label className="text-violet-600">ARIA Summary</Label>
-            <p className="text-sm text-slate-800 mt-1 leading-relaxed">{analysis.aria_summary}</p>
+            <p className="text-sm text-[var(--cs-navy)] mt-1 leading-relaxed">{analysis.aria_summary}</p>
           </div>
         )}
 
@@ -367,8 +367,8 @@ function AnalysisCard({
         {/* Recommended intervention + generate buttons */}
         {analysis.recommended_intervention_type && (
           <div className="rounded-lg bg-slate-50 border p-3">
-            <Label className="text-slate-500">Recommended Intervention</Label>
-            <p className="text-sm font-medium text-slate-800 mt-1">
+            <Label className="text-[var(--cs-text-muted)]">Recommended Intervention</Label>
+            <p className="text-sm font-medium text-[var(--cs-navy)] mt-1">
               {SESSION_TYPE_LABELS[analysis.recommended_intervention_type] ?? analysis.recommended_intervention_type}
             </p>
           </div>
@@ -443,7 +443,7 @@ function AnalysisCard({
             <Button
               size="sm"
               variant="ghost"
-              className="text-slate-600"
+              className="text-[var(--cs-text-secondary)]"
               onClick={() =>
                 updateAnalysis.mutate({ id: analysis.id, status: "reviewed" as LiversStatus, user_role: currentRole })
               }
@@ -470,13 +470,13 @@ function AnalysisCard({
 
         {access.canAuditComment && (
           <div className="rounded-lg border bg-white p-3 space-y-2">
-            <Label className="text-slate-500">Audit Comment</Label>
+            <Label className="text-[var(--cs-text-muted)]">Audit Comment</Label>
             <textarea
               rows={2}
               value={auditComment}
               onChange={(e) => setAuditComment(e.target.value)}
               placeholder="Add audit observation or challenge..."
-              className="w-full rounded-lg border border-slate-200 text-sm p-2 resize-none focus:outline-none focus:ring-2 focus:ring-violet-400"
+              className="w-full rounded-lg border border-[var(--cs-border)] text-sm p-2 resize-none focus:outline-none focus:ring-2 focus:ring-violet-400"
             />
             <Button
               size="sm"
@@ -543,10 +543,10 @@ function SessionCard({ session, canRecordOutcome }: { session: InterventionSessi
               <Badge className={STATUS_COLOURS[session.status]}>
                 {session.status}
               </Badge>
-              <span className="text-xs text-slate-400">{formatDate(session.created_at)}</span>
+              <span className="text-xs text-[var(--cs-text-muted)]">{formatDate(session.created_at)}</span>
             </div>
           </div>
-          {open ? <ChevronUp className="w-4 h-4 shrink-0 mt-1 text-slate-400" /> : <ChevronDown className="w-4 h-4 shrink-0 mt-1 text-slate-400" />}
+          {open ? <ChevronUp className="w-4 h-4 shrink-0 mt-1 text-[var(--cs-text-muted)]" /> : <ChevronDown className="w-4 h-4 shrink-0 mt-1 text-[var(--cs-text-muted)]" />}
         </button>
       </CardHeader>
 
@@ -554,31 +554,31 @@ function SessionCard({ session, canRecordOutcome }: { session: InterventionSessi
         <CardContent className="pt-0 space-y-4">
           {session.aim && (
             <div>
-              <Label className="text-slate-500">Aim</Label>
-              <p className="text-sm text-slate-800 mt-1">{session.aim}</p>
+              <Label className="text-[var(--cs-text-muted)]">Aim</Label>
+              <p className="text-sm text-[var(--cs-navy)] mt-1">{session.aim}</p>
             </div>
           )}
 
           {session.pace_opening_script && (
             <div>
-              <Label className="text-slate-500">Opening Script (PACE)</Label>
-              <p className="text-sm text-slate-700 italic mt-1 leading-relaxed">{session.pace_opening_script}</p>
+              <Label className="text-[var(--cs-text-muted)]">Opening Script (PACE)</Label>
+              <p className="text-sm text-[var(--cs-text-secondary)] italic mt-1 leading-relaxed">{session.pace_opening_script}</p>
             </div>
           )}
 
           {session.session_steps?.length > 0 && (
             <div>
-              <Label className="text-slate-500">Session Steps</Label>
+              <Label className="text-[var(--cs-text-muted)]">Session Steps</Label>
               <div className="mt-2 space-y-2">
                 {session.session_steps.map((step) => (
                   <div key={step.step_number} className="rounded-lg bg-slate-50 border p-3">
-                    <p className="text-xs font-semibold text-slate-700">
+                    <p className="text-xs font-semibold text-[var(--cs-text-secondary)]">
                       Step {step.step_number}: {step.title}
                       {step.duration_minutes && (
-                        <span className="font-normal text-slate-400 ml-2">({step.duration_minutes} min)</span>
+                        <span className="font-normal text-[var(--cs-text-muted)] ml-2">({step.duration_minutes} min)</span>
                       )}
                     </p>
-                    <p className="text-sm text-slate-700 mt-1">{step.description}</p>
+                    <p className="text-sm text-[var(--cs-text-secondary)] mt-1">{step.description}</p>
                     {step.facilitator_prompt && (
                       <p className="text-xs text-violet-700 mt-1 italic">Prompt: {step.facilitator_prompt}</p>
                     )}
@@ -593,10 +593,10 @@ function SessionCard({ session, canRecordOutcome }: { session: InterventionSessi
 
           {session.reflective_questions_staff?.length > 0 && (
             <div>
-              <Label className="text-slate-500">Reflective Questions for Staff</Label>
+              <Label className="text-[var(--cs-text-muted)]">Reflective Questions for Staff</Label>
               <ul className="mt-1 space-y-1">
                 {session.reflective_questions_staff.map((q, i) => (
-                  <li key={i} className="text-xs text-slate-700">• {q}</li>
+                  <li key={i} className="text-xs text-[var(--cs-text-secondary)]">• {q}</li>
                 ))}
               </ul>
             </div>
@@ -605,7 +605,7 @@ function SessionCard({ session, canRecordOutcome }: { session: InterventionSessi
           {session.child_friendly_version && (
             <div className="rounded-lg bg-sky-50 border border-sky-100 p-3">
               <Label className="text-sky-700">Child-Friendly Version</Label>
-              <p className="text-sm text-slate-700 mt-1 leading-relaxed">{session.child_friendly_version}</p>
+              <p className="text-sm text-[var(--cs-text-secondary)] mt-1 leading-relaxed">{session.child_friendly_version}</p>
             </div>
           )}
 
@@ -619,9 +619,9 @@ function SessionCard({ session, canRecordOutcome }: { session: InterventionSessi
           {showOutcomeForm && (
             <div className="rounded-xl border bg-slate-50 p-4 space-y-3">
               <div className="flex items-center justify-between">
-                <Label className="text-slate-700">Record Outcome</Label>
+                <Label className="text-[var(--cs-text-secondary)]">Record Outcome</Label>
                 <button onClick={() => setShowOutcomeForm(false)}>
-                  <X className="w-4 h-4 text-slate-400" />
+                  <X className="w-4 h-4 text-[var(--cs-text-muted)]" />
                 </button>
               </div>
               {(
@@ -633,25 +633,25 @@ function SessionCard({ session, canRecordOutcome }: { session: InterventionSessi
                 ] as const
               ).map(({ key, label }) => (
                 <div key={key}>
-                  <label className="block text-xs font-medium text-slate-600 mb-1">{label}</label>
+                  <label className="block text-xs font-medium text-[var(--cs-text-secondary)] mb-1">{label}</label>
                   <textarea
                     rows={2}
                     value={outcomeForm[key]}
                     onChange={(e) => setOutcomeForm((f) => ({ ...f, [key]: e.target.value }))}
-                    className="w-full rounded-lg border border-slate-200 text-sm p-2 resize-none focus:outline-none focus:ring-2 focus:ring-violet-400"
+                    className="w-full rounded-lg border border-[var(--cs-border)] text-sm p-2 resize-none focus:outline-none focus:ring-2 focus:ring-violet-400"
                   />
                 </div>
               ))}
               <div className="flex gap-3">
                 {(["risk_change", "sustainability_change"] as const).map((field) => (
                   <div key={field} className="flex-1">
-                    <label className="block text-xs font-medium text-slate-600 mb-1">
+                    <label className="block text-xs font-medium text-[var(--cs-text-secondary)] mb-1">
                       {field === "risk_change" ? "Risk Change" : "Sustainability Change"}
                     </label>
                     <select
                       value={outcomeForm[field]}
                       onChange={(e) => setOutcomeForm((f) => ({ ...f, [field]: e.target.value }))}
-                      className="w-full rounded-lg border border-slate-200 text-sm p-2 focus:outline-none focus:ring-2 focus:ring-violet-400"
+                      className="w-full rounded-lg border border-[var(--cs-border)] text-sm p-2 focus:outline-none focus:ring-2 focus:ring-violet-400"
                     >
                       <option value="unknown">Unknown</option>
                       <option value="improved">Improved</option>
@@ -669,7 +669,7 @@ function SessionCard({ session, canRecordOutcome }: { session: InterventionSessi
                   onChange={(e) => setOutcomeForm((f) => ({ ...f, further_action_required: e.target.checked }))}
                   className="rounded"
                 />
-                <label htmlFor={`far-${session.id}`} className="text-xs text-slate-700">
+                <label htmlFor={`far-${session.id}`} className="text-xs text-[var(--cs-text-secondary)]">
                   Further action required
                 </label>
               </div>
@@ -679,7 +679,7 @@ function SessionCard({ session, canRecordOutcome }: { session: InterventionSessi
                   placeholder="Describe further action needed..."
                   value={outcomeForm.further_action_notes}
                   onChange={(e) => setOutcomeForm((f) => ({ ...f, further_action_notes: e.target.value }))}
-                  className="w-full rounded-lg border border-slate-200 text-sm p-2 resize-none focus:outline-none focus:ring-2 focus:ring-violet-400"
+                  className="w-full rounded-lg border border-[var(--cs-border)] text-sm p-2 resize-none focus:outline-none focus:ring-2 focus:ring-violet-400"
                 />
               )}
               <Button
@@ -801,7 +801,7 @@ function LiversGeneratorForm({
         Generate L.I.V.E.R.S. Analysis with ARIA
       </Button>
       {!canCreateAnalysis && (
-        <p className="text-xs text-slate-500">Your role has view-only access for analysis generation.</p>
+        <p className="text-xs text-[var(--cs-text-muted)]">Your role has view-only access for analysis generation.</p>
       )}
     </div>
   );
@@ -989,7 +989,7 @@ export default function LiversPage() {
                 setSelectedChildId(e.target.value);
                 setRecordsInput("");
               }}
-              className="w-full rounded-lg border border-slate-200 text-sm p-2.5 focus:outline-none focus:ring-2 focus:ring-violet-400"
+              className="w-full rounded-lg border border-[var(--cs-border)] text-sm p-2.5 focus:outline-none focus:ring-2 focus:ring-violet-400"
             >
               <option value="">— Select a young person —</option>
               {youngPeople.map((yp) => (
@@ -1002,7 +1002,7 @@ export default function LiversPage() {
             {selectedChildId && (
               <>
                 <div>
-                  <label className="block text-xs font-medium text-slate-600 mb-1.5">
+                  <label className="block text-xs font-medium text-[var(--cs-text-secondary)] mb-1.5">
                     Paste records / context for ARIA to analyse (optional but recommended)
                   </label>
                   <textarea
@@ -1010,9 +1010,9 @@ export default function LiversPage() {
                     placeholder="Paste key work notes, incident records, missing episode details, risk assessment extracts, chronology entries..."
                     value={recordsInput}
                     onChange={(e) => setRecordsInput(e.target.value)}
-                    className="w-full rounded-lg border border-slate-200 text-sm p-2.5 resize-y focus:outline-none focus:ring-2 focus:ring-violet-400"
+                    className="w-full rounded-lg border border-[var(--cs-border)] text-sm p-2.5 resize-y focus:outline-none focus:ring-2 focus:ring-violet-400"
                   />
-                  <p className="text-xs text-slate-400 mt-1">
+                  <p className="text-xs text-[var(--cs-text-muted)] mt-1">
                     ARIA will use this alongside any existing analysis. The more context, the more accurate the output.
                   </p>
                 </div>
@@ -1034,11 +1034,11 @@ export default function LiversPage() {
         {analyses.length > 0 && (
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="text-sm font-semibold text-slate-700 flex items-center gap-2">
+              <h2 className="text-sm font-semibold text-[var(--cs-text-secondary)] flex items-center gap-2">
                 <BookOpen className="w-4 h-4 text-violet-500" />
                 Analyses ({analyses.length})
                 {selectedChildId && youngPersonName && (
-                  <span className="text-slate-400 font-normal">— {youngPersonName}</span>
+                  <span className="text-[var(--cs-text-muted)] font-normal">— {youngPersonName}</span>
                 )}
               </h2>
             </div>
@@ -1056,7 +1056,7 @@ export default function LiversPage() {
                 {/* Sessions linked to this analysis */}
                 {(sessionsByAnalysis[analysis.id]?.length ?? 0) > 0 && (
                   <div className="pl-4 border-l-2 border-violet-100 space-y-2">
-                    <p className="text-xs font-semibold text-slate-500 flex items-center gap-1.5">
+                    <p className="text-xs font-semibold text-[var(--cs-text-muted)] flex items-center gap-1.5">
                       <ArrowUpRight className="w-3 h-3" />
                       Intervention Sessions ({sessionsByAnalysis[analysis.id].length})
                     </p>
@@ -1073,7 +1073,7 @@ export default function LiversPage() {
         {/* Unlinked sessions */}
         {sessions.filter((s) => !s.livers_analysis_id).length > 0 && (
           <div className="space-y-3">
-            <h2 className="text-sm font-semibold text-slate-700">
+            <h2 className="text-sm font-semibold text-[var(--cs-text-secondary)]">
               Other Intervention Sessions
             </h2>
             {sessions
@@ -1086,20 +1086,20 @@ export default function LiversPage() {
 
         {/* Empty state */}
         {analyses.length === 0 && sessions.length === 0 && selectedChildId && (
-          <div className="rounded-xl border border-dashed border-slate-200 p-10 text-center">
-            <Layers className="w-8 h-8 text-slate-300 mx-auto mb-3" />
-            <p className="text-sm font-medium text-slate-500">No analyses yet for this child</p>
-            <p className="text-xs text-slate-400 mt-1">
+          <div className="rounded-xl border border-dashed border-[var(--cs-border)] p-10 text-center">
+            <Layers className="w-8 h-8 text-[var(--cs-text-gentle)] mx-auto mb-3" />
+            <p className="text-sm font-medium text-[var(--cs-text-muted)]">No analyses yet for this child</p>
+            <p className="text-xs text-[var(--cs-text-muted)] mt-1">
               Add context above and generate a L.I.V.E.R.S. Analysis with ARIA to get started.
             </p>
           </div>
         )}
 
         {!selectedChildId && analyses.length === 0 && (
-          <div className="rounded-xl border border-dashed border-slate-200 p-10 text-center">
-            <Layers className="w-8 h-8 text-slate-300 mx-auto mb-3" />
-            <p className="text-sm font-medium text-slate-500">Select a young person to begin</p>
-            <p className="text-xs text-slate-400 mt-1">
+          <div className="rounded-xl border border-dashed border-[var(--cs-border)] p-10 text-center">
+            <Layers className="w-8 h-8 text-[var(--cs-text-gentle)] mx-auto mb-3" />
+            <p className="text-sm font-medium text-[var(--cs-text-muted)]">Select a young person to begin</p>
+            <p className="text-xs text-[var(--cs-text-muted)] mt-1">
               L.I.V.E.R.S. analysis ensures every intervention is rooted in the child&apos;s lived experience.
             </p>
           </div>

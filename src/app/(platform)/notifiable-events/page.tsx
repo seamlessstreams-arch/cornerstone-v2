@@ -48,7 +48,7 @@ const STATUS_COLORS: Record<NotifiableStatus, string> = {
   pending: "bg-red-100 text-red-800",
   notified_within_24h: "bg-green-100 text-green-800",
   notified_late: "bg-orange-100 text-orange-800",
-  not_required: "bg-slate-100 text-slate-800",
+  not_required: "bg-slate-100 text-[var(--cs-navy)]",
 };
 const STATUS_LABELS: Record<NotifiableStatus, string> = {
   pending: "Pending Notification",
@@ -136,7 +136,7 @@ export default function NotifiableEventsPage() {
             { label: "Total Events", value: total, icon: Bell, colour: "text-blue-600" },
             { label: "Pending Notification", value: pending, icon: Clock, colour: pending > 0 ? "text-red-600" : "text-green-600" },
             { label: "Notified On Time", value: notifiedOnTime, icon: CheckCircle2, colour: "text-green-600" },
-            { label: "Notified Late", value: late, icon: AlertTriangle, colour: late > 0 ? "text-orange-600" : "text-slate-400" },
+            { label: "Notified Late", value: late, icon: AlertTriangle, colour: late > 0 ? "text-orange-600" : "text-[var(--cs-text-muted)]" },
           ].map((s) => (
             <div key={s.label} className="rounded-xl border bg-white p-4 flex items-center gap-3">
               <s.icon className={cn("h-5 w-5", s.colour)} />
@@ -222,7 +222,7 @@ export default function NotifiableEventsPage() {
             return (
               <div key={evt.id} className="rounded-xl border bg-white overflow-hidden">
                 <button
-                  className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                  className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                   onClick={() => setExpanded(isExpanded ? null : evt.id)}
                 >
                   <div className="flex items-center gap-3 flex-1 min-w-0">

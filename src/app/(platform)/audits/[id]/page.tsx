@@ -40,7 +40,7 @@ function severityConfig(s: AuditFinding["severity"]) {
     case "critical": return { label: "Critical", colour: "bg-red-100 text-red-800 border-red-200", dot: "bg-red-500" };
     case "high":     return { label: "High",     colour: "bg-orange-100 text-orange-800 border-orange-200", dot: "bg-orange-500" };
     case "medium":   return { label: "Medium",   colour: "bg-amber-100 text-amber-800 border-amber-200", dot: "bg-amber-500" };
-    case "low":      return { label: "Low",      colour: "bg-slate-100 text-slate-600 border-slate-200", dot: "bg-slate-400" };
+    case "low":      return { label: "Low",      colour: "bg-slate-100 text-[var(--cs-text-secondary)] border-[var(--cs-border)]", dot: "bg-slate-400" };
   }
 }
 
@@ -96,7 +96,7 @@ function FindingCard({
     <div className={cn(
       "rounded-2xl border bg-white p-5 space-y-3",
       finding.severity === "critical" ? "border-red-200" :
-      finding.severity === "high" ? "border-orange-200" : "border-slate-100"
+      finding.severity === "high" ? "border-orange-200" : "border-[var(--cs-border-subtle)]"
     )}>
       {/* Header */}
       <div className="flex items-start justify-between gap-3">
@@ -105,9 +105,9 @@ function FindingCard({
             {index + 1}
           </span>
           <div className="min-w-0">
-            <p className="text-sm font-semibold text-slate-900">{finding.area}</p>
+            <p className="text-sm font-semibold text-[var(--cs-navy)]">{finding.area}</p>
             {finding.standard_ref && (
-              <p className="text-[10px] text-slate-400 mt-0.5">{finding.standard_ref}</p>
+              <p className="text-[10px] text-[var(--cs-text-muted)] mt-0.5">{finding.standard_ref}</p>
             )}
           </div>
         </div>
@@ -118,13 +118,13 @@ function FindingCard({
       </div>
 
       {/* Description */}
-      <p className="text-sm text-slate-700 leading-relaxed">{finding.description}</p>
+      <p className="text-sm text-[var(--cs-text-secondary)] leading-relaxed">{finding.description}</p>
 
       {/* Action required */}
-      <div className="rounded-xl bg-slate-50 border border-slate-100 p-3 space-y-1">
-        <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Action required</p>
-        <p className="text-xs text-slate-700">{finding.action_required}</p>
-        <div className="flex items-center gap-3 mt-1 text-[10px] text-slate-400">
+      <div className="rounded-xl bg-slate-50 border border-[var(--cs-border-subtle)] p-3 space-y-1">
+        <p className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider">Action required</p>
+        <p className="text-xs text-[var(--cs-text-secondary)]">{finding.action_required}</p>
+        <div className="flex items-center gap-3 mt-1 text-[10px] text-[var(--cs-text-muted)]">
           <span className="flex items-center gap-1"><User className="h-3 w-3" />{finding.owner}</span>
           <span className="flex items-center gap-1"><Clock className="h-3 w-3" />Due {formatDate(finding.due_date)}</span>
         </div>
@@ -184,7 +184,7 @@ export default function AuditDetailPage({
   if (!audit) {
     return (
       <PageShell title="Audit not found">
-        <p className="text-slate-500 text-sm">This audit record could not be found.</p>
+        <p className="text-[var(--cs-text-muted)] text-sm">This audit record could not be found.</p>
         <Button variant="outline" className="mt-4 gap-1.5" onClick={() => router.push("/audits")}>
           <ChevronLeft className="h-4 w-4" />Back to audits
         </Button>
@@ -231,7 +231,7 @@ export default function AuditDetailPage({
         <div className="mb-6 relative">
           <button
             onClick={() => setShowAria(false)}
-            className="absolute top-3 right-3 z-10 text-slate-400 hover:text-slate-600 text-xs"
+            className="absolute top-3 right-3 z-10 text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] text-xs"
           >
             ✕ Close
           </button>
@@ -265,7 +265,7 @@ export default function AuditDetailPage({
                   <span className={cn("text-xl font-bold", scoreColour(scorePct))}>{scorePct}%</span>
                 </div>
               </div>
-              <span className="text-[11px] text-slate-500">{audit.score}/{audit.max_score}</span>
+              <span className="text-[11px] text-[var(--cs-text-muted)]">{audit.score}/{audit.max_score}</span>
             </div>
 
             {/* Meta */}
@@ -279,7 +279,7 @@ export default function AuditDetailPage({
                 )}>
                   {audit.status.replace(/_/g, " ")}
                 </Badge>
-                <Badge className="text-[11px] rounded-full border bg-slate-100 text-slate-700 border-slate-200">
+                <Badge className="text-[11px] rounded-full border bg-slate-100 text-[var(--cs-text-secondary)] border-[var(--cs-border)]">
                   {CATEGORY_LABELS[audit.category] ?? audit.category}
                 </Badge>
               </div>
@@ -290,12 +290,12 @@ export default function AuditDetailPage({
                   { label: "Findings", value: String(audit.findings), icon: AlertTriangle },
                   { label: "Actions", value: String(audit.actions), icon: ClipboardCheck },
                 ].map(({ label, value, icon: Icon }) => (
-                  <div key={label} className="rounded-xl bg-slate-50 border border-slate-100 p-2.5">
+                  <div key={label} className="rounded-xl bg-slate-50 border border-[var(--cs-border-subtle)] p-2.5">
                     <div className="flex items-center gap-1 mb-1">
-                      <Icon className="h-3 w-3 text-slate-400" />
-                      <span className="text-[10px] text-slate-400">{label}</span>
+                      <Icon className="h-3 w-3 text-[var(--cs-text-muted)]" />
+                      <span className="text-[10px] text-[var(--cs-text-muted)]">{label}</span>
                     </div>
-                    <div className="text-xs font-semibold text-slate-800 truncate">{value}</div>
+                    <div className="text-xs font-semibold text-[var(--cs-navy)] truncate">{value}</div>
                   </div>
                 ))}
               </div>
@@ -333,7 +333,7 @@ export default function AuditDetailPage({
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Findings list */}
         <div className="lg:col-span-2 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-700 flex items-center gap-2">
+          <h2 className="text-sm font-semibold text-[var(--cs-text-secondary)] flex items-center gap-2">
             <ShieldAlert className="h-4 w-4 text-orange-500" />
             Findings
             {openFindings > 0 && (
@@ -344,9 +344,9 @@ export default function AuditDetailPage({
           </h2>
 
           {audit.findings_detail.length === 0 ? (
-            <div className="rounded-2xl border-2 border-dashed border-slate-200 p-10 text-center">
+            <div className="rounded-2xl border-2 border-dashed border-[var(--cs-border)] p-10 text-center">
               <CheckCircle2 className="h-7 w-7 text-emerald-400 mx-auto mb-2" />
-              <p className="text-sm text-slate-500">No findings recorded for this audit</p>
+              <p className="text-sm text-[var(--cs-text-muted)]">No findings recorded for this audit</p>
             </div>
           ) : (
             audit.findings_detail.map((finding, i) => (
@@ -366,7 +366,7 @@ export default function AuditDetailPage({
           {/* Progress summary */}
           <Card className="rounded-2xl shadow-sm">
             <CardHeader className="pb-2">
-              <CardTitle className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+              <CardTitle className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider">
                 Findings progress
               </CardTitle>
             </CardHeader>
@@ -378,8 +378,8 @@ export default function AuditDetailPage({
               ].map(({ label, count, colour }) => (
                 <div key={label} className="flex items-center gap-2.5">
                   <div className={cn("h-2 w-2 rounded-full shrink-0", colour)} />
-                  <span className="text-xs text-slate-600 flex-1">{label}</span>
-                  <span className="text-xs font-semibold text-slate-800">{count}</span>
+                  <span className="text-xs text-[var(--cs-text-secondary)] flex-1">{label}</span>
+                  <span className="text-xs font-semibold text-[var(--cs-navy)]">{count}</span>
                 </div>
               ))}
               {audit.findings_detail.length > 0 && (
@@ -405,19 +405,19 @@ export default function AuditDetailPage({
           {/* Linked training needs */}
           <Card className="rounded-2xl shadow-sm">
             <CardHeader className="pb-2">
-              <CardTitle className="text-xs font-semibold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
+              <CardTitle className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider flex items-center gap-1.5">
                 <Brain className="h-3.5 w-3.5" />Linked training needs
               </CardTitle>
             </CardHeader>
             <CardContent>
               {audit.linked_training_needs.length === 0 ? (
-                <p className="text-xs text-slate-400 text-center py-3">No training needs linked to this audit yet</p>
+                <p className="text-xs text-[var(--cs-text-muted)] text-center py-3">No training needs linked to this audit yet</p>
               ) : (
                 <div className="space-y-2">
                   {audit.linked_training_needs.map((n) => (
-                    <div key={n.id} className="rounded-lg border border-slate-100 bg-slate-50 px-3 py-2 text-xs">
-                      <div className="font-medium text-slate-800 truncate">{n.title}</div>
-                      <div className="text-slate-400 mt-0.5 capitalize">{n.status.replace(/_/g, " ")}</div>
+                    <div key={n.id} className="rounded-lg border border-[var(--cs-border-subtle)] bg-slate-50 px-3 py-2 text-xs">
+                      <div className="font-medium text-[var(--cs-navy)] truncate">{n.title}</div>
+                      <div className="text-[var(--cs-text-muted)] mt-0.5 capitalize">{n.status.replace(/_/g, " ")}</div>
                     </div>
                   ))}
                 </div>
@@ -437,7 +437,7 @@ export default function AuditDetailPage({
           {/* Score benchmark */}
           <Card className="rounded-2xl shadow-sm">
             <CardHeader className="pb-2">
-              <CardTitle className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+              <CardTitle className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider">
                 Score benchmark
               </CardTitle>
             </CardHeader>
@@ -453,18 +453,18 @@ export default function AuditDetailPage({
                   className={cn(
                     "flex items-center gap-2.5 rounded-lg px-3 py-2 text-xs",
                     scorePct >= min && (min === 90 || scorePct < [90, 75, 60, 0][["Outstanding", "Good", "Requires improvement", "Inadequate"].indexOf(label) - 1] || min === 90 ? true : false)
-                      ? "bg-slate-100 font-semibold text-slate-900 ring-1 ring-slate-300"
-                      : "text-slate-500"
+                      ? "bg-slate-100 font-semibold text-[var(--cs-navy)] ring-1 ring-slate-300"
+                      : "text-[var(--cs-text-muted)]"
                   )}
                 >
                   <div className={cn("h-2 w-2 rounded-full shrink-0", colour)} />
                   <span className="flex-1">{label}</span>
-                  <span className="text-[10px] text-slate-400">{min}%+</span>
+                  <span className="text-[10px] text-[var(--cs-text-muted)]">{min}%+</span>
                 </div>
               ))}
-              <div className="mt-2 pt-2 border-t border-slate-100">
+              <div className="mt-2 pt-2 border-t border-[var(--cs-border-subtle)]">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="text-slate-500">This audit</span>
+                  <span className="text-[var(--cs-text-muted)]">This audit</span>
                   <span className={cn("font-bold", scoreColour(scorePct))}>{scorePct}%</span>
                 </div>
                 <Progress value={scorePct} className="h-1.5 mt-1" />

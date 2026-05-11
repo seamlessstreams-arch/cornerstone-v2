@@ -95,14 +95,14 @@ function TransactionRow({ tx }: { tx: PocketMoneyTransaction }) {
 
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-0.5">
-            <span className="text-xs font-semibold text-slate-900">{tx.description}</span>
+            <span className="text-xs font-semibold text-[var(--cs-navy)]">{tx.description}</span>
             {tx.receipt_held && (
-              <Badge className="bg-slate-100 text-slate-600 border-slate-200 text-[9px] px-1.5 py-0">
+              <Badge className="bg-slate-100 text-[var(--cs-text-secondary)] border-[var(--cs-border)] text-[9px] px-1.5 py-0">
                 <Receipt className="h-2.5 w-2.5 mr-0.5" /> Receipt
               </Badge>
             )}
           </div>
-          <div className="flex items-center gap-2 text-[10px] text-slate-500">
+          <div className="flex items-center gap-2 text-[10px] text-[var(--cs-text-muted)]">
             <span>{getYPName(tx.child_id)}</span>
             <span>·</span>
             <span>{formatDate(tx.date)}</span>
@@ -117,15 +117,15 @@ function TransactionRow({ tx }: { tx: PocketMoneyTransaction }) {
           {income ? "+" : "−"}£{tx.amount.toFixed(2)}
         </div>
 
-        {expanded ? <ChevronUp className="h-3.5 w-3.5 text-slate-400" /> : <ChevronDown className="h-3.5 w-3.5 text-slate-400" />}
+        {expanded ? <ChevronUp className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" /> : <ChevronDown className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />}
       </div>
 
       {expanded && (
         <div className="border-t px-3 pb-3 pt-2 space-y-2">
-          <div className="text-[10px] text-slate-400 flex items-center gap-4">
+          <div className="text-[10px] text-[var(--cs-text-muted)] flex items-center gap-4">
             <span>Category: {CATEGORY_LABELS[tx.category] ?? tx.category}</span>
             <span>Approved by: {getStaffName(tx.approved_by)}</span>
-            {tx.notes && <span className="text-slate-600 italic">{tx.notes}</span>}
+            {tx.notes && <span className="text-[var(--cs-text-secondary)] italic">{tx.notes}</span>}
           </div>
           <SmartLinkPanel sourceType="pocket_money_transaction" sourceId={tx.id} childId={tx.child_id} compact />
         </div>
@@ -185,7 +185,7 @@ function NewTransactionDialog({
         <div className="space-y-3 py-2">
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="text-[11px] font-medium text-slate-600 mb-1 block">Young Person</label>
+              <label className="text-[11px] font-medium text-[var(--cs-text-secondary)] mb-1 block">Young Person</label>
               <Select value={childId} onValueChange={setChildId}>
                 <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
                 <SelectContent>
@@ -196,7 +196,7 @@ function NewTransactionDialog({
               </Select>
             </div>
             <div>
-              <label className="text-[11px] font-medium text-slate-600 mb-1 block">Type</label>
+              <label className="text-[11px] font-medium text-[var(--cs-text-secondary)] mb-1 block">Type</label>
               <Select value={type} onValueChange={(v) => setType(v as PocketMoneyTransactionType)}>
                 <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
                 <SelectContent>
@@ -210,11 +210,11 @@ function NewTransactionDialog({
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="text-[11px] font-medium text-slate-600 mb-1 block">Amount (£) *</label>
+              <label className="text-[11px] font-medium text-[var(--cs-text-secondary)] mb-1 block">Amount (£) *</label>
               <Input type="number" step="0.01" min="0" value={amount} onChange={(e) => setAmount(e.target.value)} placeholder="0.00" className="h-8 text-xs" />
             </div>
             <div>
-              <label className="text-[11px] font-medium text-slate-600 mb-1 block">Category</label>
+              <label className="text-[11px] font-medium text-[var(--cs-text-secondary)] mb-1 block">Category</label>
               <Select value={category} onValueChange={setCategory}>
                 <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
                 <SelectContent>
@@ -227,17 +227,17 @@ function NewTransactionDialog({
           </div>
 
           <div>
-            <label className="text-[11px] font-medium text-slate-600 mb-1 block">Description *</label>
+            <label className="text-[11px] font-medium text-[var(--cs-text-secondary)] mb-1 block">Description *</label>
             <Input value={description} onChange={(e) => setDescription(e.target.value)} placeholder="What was the money for?" className="h-8 text-xs" />
           </div>
 
           <div className="flex items-center gap-2">
             <input type="checkbox" id="receipt-check" checked={receiptHeld} onChange={(e) => setReceiptHeld(e.target.checked)} className="rounded border-slate-300" />
-            <label htmlFor="receipt-check" className="text-xs text-slate-700">Receipt held on file</label>
+            <label htmlFor="receipt-check" className="text-xs text-[var(--cs-text-secondary)]">Receipt held on file</label>
           </div>
 
           <div>
-            <label className="text-[11px] font-medium text-slate-600 mb-1 block">Notes</label>
+            <label className="text-[11px] font-medium text-[var(--cs-text-secondary)] mb-1 block">Notes</label>
             <Textarea value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Optional notes…" className="text-xs min-h-[50px]" />
           </div>
         </div>
@@ -342,22 +342,22 @@ export default function PocketMoneyPage() {
       {/* ── YP Balance Cards ──────────────────────────────────────────────── */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
         {balances.map((b) => (
-          <div key={b.id} className="rounded-lg border border-slate-200 bg-white p-4">
+          <div key={b.id} className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-sm font-semibold text-slate-900">{b.name}</span>
-              <span className="text-[10px] text-slate-400">{b.txCount} transactions</span>
+              <span className="text-sm font-semibold text-[var(--cs-navy)]">{b.name}</span>
+              <span className="text-[10px] text-[var(--cs-text-muted)]">{b.txCount} transactions</span>
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <div className="text-lg font-bold text-emerald-600 tabular-nums">£{b.wallet.toFixed(2)}</div>
-                <div className="text-[10px] text-slate-500">Wallet balance</div>
+                <div className="text-[10px] text-[var(--cs-text-muted)]">Wallet balance</div>
               </div>
               <div>
                 <div className="text-lg font-bold text-blue-600 tabular-nums">£{b.savings.toFixed(2)}</div>
-                <div className="text-[10px] text-slate-500">Savings</div>
+                <div className="text-[10px] text-[var(--cs-text-muted)]">Savings</div>
               </div>
             </div>
-            <div className="flex items-center gap-3 mt-2 text-[10px] text-slate-400">
+            <div className="flex items-center gap-3 mt-2 text-[10px] text-[var(--cs-text-muted)]">
               <span className="flex items-center gap-0.5"><ArrowDownLeft className="h-2.5 w-2.5 text-emerald-500" /> In: £{b.totalIn.toFixed(2)}</span>
               <span className="flex items-center gap-0.5"><ArrowUpRight className="h-2.5 w-2.5 text-red-500" /> Out: £{b.totalOut.toFixed(2)}</span>
             </div>
@@ -370,12 +370,12 @@ export default function PocketMoneyPage() {
         {[
           { label: "Total in Wallets",   value: `£${totalWallet.toFixed(2)}`,  color: "text-emerald-600", bg: "bg-emerald-50", border: "border-emerald-200" },
           { label: "Total Savings",      value: `£${totalSavings.toFixed(2)}`, color: "text-blue-600",    bg: "bg-blue-50",    border: "border-blue-200"    },
-          { label: "Transactions",       value: data.length,           color: "text-slate-700",   bg: "bg-slate-50",   border: "border-slate-200"   },
+          { label: "Transactions",       value: data.length,           color: "text-[var(--cs-text-secondary)]",   bg: "bg-slate-50",   border: "border-[var(--cs-border)]"   },
           { label: "Receipts on File",   value: data.filter((t) => t.receipt_held).length, color: "text-violet-600", bg: "bg-violet-50", border: "border-violet-200" },
         ].map((s) => (
           <div key={s.label} className={cn("rounded-lg border p-3 text-center", s.bg, s.border)}>
             <div className={cn("text-xl font-bold", s.color)}>{s.value}</div>
-            <div className="text-[10px] text-slate-500 font-medium mt-0.5">{s.label}</div>
+            <div className="text-[10px] text-[var(--cs-text-muted)] font-medium mt-0.5">{s.label}</div>
           </div>
         ))}
       </div>
@@ -383,10 +383,10 @@ export default function PocketMoneyPage() {
       {/* ── Filters ───────────────────────────────────────────────────────── */}
       <div className="flex flex-wrap items-center gap-2 mb-4">
         <div className="relative flex-1 min-w-[180px] max-w-xs">
-          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
           <Input placeholder="Search transactions…" value={search} onChange={(e) => setSearch(e.target.value)} className="pl-8 h-8 text-xs" />
         </div>
-        <Filter className="h-3.5 w-3.5 text-slate-400" />
+        <Filter className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
         <Select value={childFilter} onValueChange={setChildFilter}>
           <SelectTrigger className="h-8 w-[140px] text-xs"><SelectValue placeholder="Child" /></SelectTrigger>
           <SelectContent>
@@ -406,7 +406,7 @@ export default function PocketMoneyPage() {
           </SelectContent>
         </Select>
         <div className="flex items-center gap-1">
-          <ArrowUpDown className="h-3.5 w-3.5 text-slate-400" />
+          <ArrowUpDown className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
           <Select value={sortBy} onValueChange={setSortBy}>
             <SelectTrigger className="h-8 w-[110px] text-xs"><SelectValue /></SelectTrigger>
             <SelectContent>
@@ -418,7 +418,7 @@ export default function PocketMoneyPage() {
           </Select>
         </div>
         {hasFilters && (
-          <Button variant="ghost" size="sm" className="h-8 text-xs text-slate-500" onClick={() => { setSearch(""); setChildFilter("all"); setTypeFilter("all"); }}>
+          <Button variant="ghost" size="sm" className="h-8 text-xs text-[var(--cs-text-muted)]" onClick={() => { setSearch(""); setChildFilter("all"); setTypeFilter("all"); }}>
             <X className="h-3 w-3 mr-1" /> Clear
           </Button>
         )}
@@ -426,7 +426,7 @@ export default function PocketMoneyPage() {
 
       {/* ── Transaction List ──────────────────────────────────────────────── */}
       {filtered.length === 0 ? (
-        <div className="text-center py-16 text-slate-400">
+        <div className="text-center py-16 text-[var(--cs-text-muted)]">
           <Wallet className="h-10 w-10 mx-auto mb-3 opacity-40" />
           <p className="text-sm font-medium">No transactions found</p>
           <p className="text-xs mt-1">{hasFilters ? "Try adjusting your filters" : "Record the first transaction"}</p>
@@ -439,17 +439,17 @@ export default function PocketMoneyPage() {
         </div>
       )}
 
-      <div className="text-center text-[10px] text-slate-400 mt-6">
+      <div className="text-center text-[10px] text-[var(--cs-text-muted)] mt-6">
         Showing {filtered.length} of {data.length} transaction{data.length !== 1 ? "s" : ""}
       </div>
 
       {/* ── Regulatory Note ───────────────────────────────────────────────── */}
-      <div className="mt-8 rounded-lg bg-slate-50 border border-slate-200 p-4">
+      <div className="mt-8 rounded-lg bg-slate-50 border border-[var(--cs-border)] p-4">
         <div className="flex items-start gap-3">
           <Wallet className="h-5 w-5 text-indigo-500 mt-0.5 flex-shrink-0" />
           <div>
-            <h4 className="text-xs font-semibold text-slate-700 mb-1">Regulatory Context</h4>
-            <p className="text-[11px] text-slate-500 leading-relaxed">
+            <h4 className="text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Regulatory Context</h4>
+            <p className="text-[11px] text-[var(--cs-text-muted)] leading-relaxed">
               The Children&apos;s Homes Regulations 2015 (Reg 37, Schedule 3) require children&apos;s homes to
               maintain a record of money held or managed on behalf of each child. This includes pocket money
               allowances, spending, savings, gifts, and earnings. Receipts should be retained where possible.

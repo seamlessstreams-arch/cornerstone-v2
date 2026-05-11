@@ -36,7 +36,7 @@ import Link from "next/link";
 
 // ── Severity config ───────────────────────────────────────────────────────────
 const SEV_CONFIG: Record<string, { label: string; color: string; bg: string; badge: string; border: string }> = {
-  low:      { label: "Low",      color: "text-slate-600",   bg: "bg-slate-100",   badge: "bg-slate-100 text-slate-700",   border: "border-l-slate-400"  },
+  low:      { label: "Low",      color: "text-[var(--cs-text-secondary)]",   bg: "bg-slate-100",   badge: "bg-slate-100 text-[var(--cs-text-secondary)]",   border: "border-l-slate-400"  },
   medium:   { label: "Medium",   color: "text-amber-600",   bg: "bg-amber-50",    badge: "bg-amber-100 text-amber-800",   border: "border-l-amber-500"  },
   high:     { label: "High",     color: "text-orange-600",  bg: "bg-orange-50",   badge: "bg-orange-100 text-orange-800", border: "border-l-orange-500" },
   critical: { label: "Critical", color: "text-red-600",     bg: "bg-red-50",      badge: "bg-red-100 text-red-800",       border: "border-l-red-600"    },
@@ -83,7 +83,7 @@ function OversightPanel({ incidentId, onSaved }: OversightPanelProps) {
         onChange={(e) => setNote(e.target.value)}
         rows={3}
         placeholder="Record your oversight comments — review of response, lessons, any further actions required…"
-        className="w-full rounded-xl border border-amber-200 bg-white px-3.5 py-3 text-sm text-slate-700 resize-none focus:outline-none focus:ring-2 focus:ring-amber-300 placeholder:text-slate-400"
+        className="w-full rounded-xl border border-amber-200 bg-white px-3.5 py-3 text-sm text-[var(--cs-text-secondary)] resize-none focus:outline-none focus:ring-2 focus:ring-amber-300 placeholder:text-[var(--cs-text-muted)]"
       />
       {error && (
         <p className="text-xs text-red-600 font-medium flex items-center gap-1.5">
@@ -132,26 +132,26 @@ function OutcomePanel({ incidentId, currentOutcome, currentLessons, onSaved }: O
   }
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-4 space-y-3">
-      <h4 className="text-sm font-semibold text-slate-900">Close Incident</h4>
+    <div className="rounded-2xl border border-[var(--cs-border)] bg-white p-4 space-y-3">
+      <h4 className="text-sm font-semibold text-[var(--cs-navy)]">Close Incident</h4>
       <div>
-        <label className="text-xs font-semibold text-slate-600 block mb-1.5">Outcome <span className="text-red-500">*</span></label>
+        <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">Outcome <span className="text-red-500">*</span></label>
         <textarea
           value={outcome}
           onChange={(e) => setOutcome(e.target.value)}
           rows={2}
           placeholder="Summarise the outcome and resolution…"
-          className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-3 text-sm text-slate-700 resize-none focus:outline-none focus:ring-2 focus:ring-slate-400 placeholder:text-slate-400"
+          className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3.5 py-3 text-sm text-[var(--cs-text-secondary)] resize-none focus:outline-none focus:ring-2 focus:ring-slate-400 placeholder:text-[var(--cs-text-muted)]"
         />
       </div>
       <div>
-        <label className="text-xs font-semibold text-slate-600 block mb-1.5">Lessons Learned</label>
+        <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">Lessons Learned</label>
         <textarea
           value={lessons}
           onChange={(e) => setLessons(e.target.value)}
           rows={2}
           placeholder="What could be done differently? What will change as a result?"
-          className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-3 text-sm text-slate-700 resize-none focus:outline-none focus:ring-2 focus:ring-slate-400 placeholder:text-slate-400"
+          className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3.5 py-3 text-sm text-[var(--cs-text-secondary)] resize-none focus:outline-none focus:ring-2 focus:ring-slate-400 placeholder:text-[var(--cs-text-muted)]"
         />
       </div>
       {error && (
@@ -218,7 +218,7 @@ export default function IncidentDetailPage({ params }: { params: Promise<{ id: s
   if (incidentQ.isLoading) {
     return (
       <PageShell title="Incident" showQuickCreate={false}>
-        <div className="flex items-center justify-center py-24 gap-2 text-slate-400">
+        <div className="flex items-center justify-center py-24 gap-2 text-[var(--cs-text-muted)]">
           <Loader2 className="h-5 w-5 animate-spin" />
           <span className="text-sm">Loading incident…</span>
         </div>
@@ -231,7 +231,7 @@ export default function IncidentDetailPage({ params }: { params: Promise<{ id: s
       <PageShell title="Incident" showQuickCreate={false}>
         <div className="flex flex-col items-center gap-3 py-24 text-center">
           <AlertCircle className="h-10 w-10 text-red-400" />
-          <p className="text-sm font-medium text-slate-600">Incident not found</p>
+          <p className="text-sm font-medium text-[var(--cs-text-secondary)]">Incident not found</p>
           <Button size="sm" variant="outline" onClick={() => router.push("/incidents")}>
             <ArrowLeft className="h-3.5 w-3.5 mr-1" />Back to Incidents
           </Button>
@@ -283,7 +283,7 @@ export default function IncidentDetailPage({ params }: { params: Promise<{ id: s
                   {stat.label}
                 </Badge>
               </div>
-              <div className="text-xs text-slate-600 mt-0.5">
+              <div className="text-xs text-[var(--cs-text-secondary)] mt-0.5">
                 {INCIDENT_TYPE_LABELS[incident.type]} · {formatDate(incident.date)} at {incident.time}
                 {incident.location && ` · ${incident.location}`}
               </div>
@@ -348,15 +348,15 @@ export default function IncidentDetailPage({ params }: { params: Promise<{ id: s
 
         {/* ── Young person ──────────────────────────────────────────────────── */}
         <div className="rounded-2xl border bg-white p-4">
-          <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 flex items-center gap-2">
+          <h3 className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-3 flex items-center gap-2">
             <Heart className="h-3.5 w-3.5 text-violet-500" />Young Person
           </h3>
           <div className="flex items-center gap-3">
             <Avatar name={ypName} size="md" className="bg-violet-100" />
             <div>
-              <div className="text-sm font-semibold text-slate-900">{ypName}</div>
+              <div className="text-sm font-semibold text-[var(--cs-navy)]">{ypName}</div>
               {yp && (
-                <div className="text-xs text-slate-500">
+                <div className="text-xs text-[var(--cs-text-muted)]">
                   Age {Math.floor((new Date().getTime() - new Date(yp.date_of_birth).getTime()) / (365.25 * 86400000))} · {yp.legal_status} · {yp.local_authority}
                 </div>
               )}
@@ -383,42 +383,42 @@ export default function IncidentDetailPage({ params }: { params: Promise<{ id: s
 
         {/* ── Incident description ──────────────────────────────────────────── */}
         <div className="rounded-2xl border bg-white p-5 space-y-4">
-          <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider flex items-center gap-2">
+          <h3 className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider flex items-center gap-2">
             <FileText className="h-3.5 w-3.5" />Incident Record
           </h3>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
             <div className="rounded-xl bg-slate-50 p-3">
-              <div className="text-slate-400 mb-0.5">Reported by</div>
-              <div className="font-semibold text-slate-900">{getStaffName(incident.reported_by)}</div>
+              <div className="text-[var(--cs-text-muted)] mb-0.5">Reported by</div>
+              <div className="font-semibold text-[var(--cs-navy)]">{getStaffName(incident.reported_by)}</div>
             </div>
             <div className="rounded-xl bg-slate-50 p-3">
-              <div className="text-slate-400 mb-0.5">Date &amp; Time</div>
-              <div className="font-semibold text-slate-900">{formatDate(incident.date)} · {incident.time}</div>
+              <div className="text-[var(--cs-text-muted)] mb-0.5">Date &amp; Time</div>
+              <div className="font-semibold text-[var(--cs-navy)]">{formatDate(incident.date)} · {incident.time}</div>
             </div>
             {incident.location && (
               <div className="rounded-xl bg-slate-50 p-3">
-                <div className="text-slate-400 mb-0.5 flex items-center gap-1"><MapPin className="h-3 w-3" />Location</div>
-                <div className="font-semibold text-slate-900">{incident.location}</div>
+                <div className="text-[var(--cs-text-muted)] mb-0.5 flex items-center gap-1"><MapPin className="h-3 w-3" />Location</div>
+                <div className="font-semibold text-[var(--cs-navy)]">{incident.location}</div>
               </div>
             )}
             {incident.witnesses.length > 0 && (
               <div className="rounded-xl bg-slate-50 p-3 col-span-2 sm:col-span-1">
-                <div className="text-slate-400 mb-0.5 flex items-center gap-1"><User className="h-3 w-3" />Witnesses</div>
-                <div className="font-semibold text-slate-900">{incident.witnesses.join(", ")}</div>
+                <div className="text-[var(--cs-text-muted)] mb-0.5 flex items-center gap-1"><User className="h-3 w-3" />Witnesses</div>
+                <div className="font-semibold text-[var(--cs-navy)]">{incident.witnesses.join(", ")}</div>
               </div>
             )}
           </div>
 
           <div>
-            <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2">Description</div>
-            <p className="text-sm text-slate-700 leading-relaxed whitespace-pre-line">{incident.description}</p>
+            <div className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-2">Description</div>
+            <p className="text-sm text-[var(--cs-text-secondary)] leading-relaxed whitespace-pre-line">{incident.description}</p>
           </div>
 
           {incident.immediate_action && (
             <div>
-              <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2">Immediate Action Taken</div>
-              <p className="text-sm text-slate-700 leading-relaxed whitespace-pre-line">{incident.immediate_action}</p>
+              <div className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-2">Immediate Action Taken</div>
+              <p className="text-sm text-[var(--cs-text-secondary)] leading-relaxed whitespace-pre-line">{incident.immediate_action}</p>
             </div>
           )}
         </div>
@@ -426,21 +426,21 @@ export default function IncidentDetailPage({ params }: { params: Promise<{ id: s
         {/* ── Notifications ─────────────────────────────────────────────────── */}
         {incident.notifications.length > 0 && (
           <div className="rounded-2xl border bg-white p-5">
-            <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 flex items-center gap-2">
+            <h3 className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-3 flex items-center gap-2">
               <Bell className="h-3.5 w-3.5" />Notifications Made ({incident.notifications.length})
             </h3>
             <div className="space-y-2">
               {incident.notifications.map((n, i) => (
                 <div key={i} className={cn(
                   "flex items-center justify-between rounded-xl px-3 py-2.5 border text-xs",
-                  n.acknowledged ? "bg-emerald-50 border-emerald-200" : "bg-slate-50 border-slate-200"
+                  n.acknowledged ? "bg-emerald-50 border-emerald-200" : "bg-slate-50 border-[var(--cs-border)]"
                 )}>
                   <div>
-                    <span className="font-semibold text-slate-900">{n.role}:</span>
-                    <span className="text-slate-700 ml-1">{n.name} — {n.method}</span>
+                    <span className="font-semibold text-[var(--cs-navy)]">{n.role}:</span>
+                    <span className="text-[var(--cs-text-secondary)] ml-1">{n.name} — {n.method}</span>
                   </div>
                   <div className="flex items-center gap-2 shrink-0">
-                    <span className="text-slate-400">{formatRelative(n.notified_at.slice(0, 10))}</span>
+                    <span className="text-[var(--cs-text-muted)]">{formatRelative(n.notified_at.slice(0, 10))}</span>
                     {n.acknowledged
                       ? <span className="flex items-center gap-0.5 text-emerald-600 font-medium"><CheckCircle2 className="h-3.5 w-3.5" />Acknowledged</span>
                       : <span className="flex items-center gap-0.5 text-amber-600"><Clock className="h-3.5 w-3.5" />Awaiting</span>
@@ -458,30 +458,30 @@ export default function IncidentDetailPage({ params }: { params: Promise<{ id: s
             <h3 className="text-xs font-semibold text-emerald-700 uppercase tracking-wider mb-3 flex items-center gap-2">
               <Shield className="h-3.5 w-3.5" />Manager Oversight Completed
             </h3>
-            <div className="text-xs text-slate-500 mb-2">
-              By <strong className="text-slate-700">{getStaffName(incident.oversight_by)}</strong>
+            <div className="text-xs text-[var(--cs-text-muted)] mb-2">
+              By <strong className="text-[var(--cs-text-secondary)]">{getStaffName(incident.oversight_by)}</strong>
               {incident.oversight_at && <span className="ml-1">· {formatRelative(incident.oversight_at.slice(0, 10))}</span>}
             </div>
-            <p className="text-sm text-slate-700 leading-relaxed whitespace-pre-line">{incident.oversight_note}</p>
+            <p className="text-sm text-[var(--cs-text-secondary)] leading-relaxed whitespace-pre-line">{incident.oversight_note}</p>
           </div>
         )}
 
         {/* ── Outcome & lessons ─────────────────────────────────────────────── */}
         {incident.status === "closed" && (
           <div className="rounded-2xl border bg-white p-5 space-y-3">
-            <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider flex items-center gap-2">
+            <h3 className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider flex items-center gap-2">
               <ClipboardCheck className="h-3.5 w-3.5" />Outcome &amp; Closure
             </h3>
             {incident.outcome && (
               <div>
-                <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Outcome</div>
-                <p className="text-sm text-slate-700 whitespace-pre-line">{incident.outcome}</p>
+                <div className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-1.5">Outcome</div>
+                <p className="text-sm text-[var(--cs-text-secondary)] whitespace-pre-line">{incident.outcome}</p>
               </div>
             )}
             {incident.lessons_learned && (
               <div>
-                <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Lessons Learned</div>
-                <p className="text-sm text-slate-700 whitespace-pre-line">{incident.lessons_learned}</p>
+                <div className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-1.5">Lessons Learned</div>
+                <p className="text-sm text-[var(--cs-text-secondary)] whitespace-pre-line">{incident.lessons_learned}</p>
               </div>
             )}
           </div>
@@ -507,7 +507,7 @@ export default function IncidentDetailPage({ params }: { params: Promise<{ id: s
         {/* ── Linked items ──────────────────────────────────────────────────── */}
         {incident.linked_task_ids.length > 0 && (
           <div className="rounded-2xl border bg-white p-4">
-            <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 flex items-center gap-2">
+            <h3 className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-3 flex items-center gap-2">
               <BookOpen className="h-3.5 w-3.5" />Linked Tasks ({incident.linked_task_ids.length})
             </h3>
             <div className="space-y-1.5">
@@ -515,11 +515,11 @@ export default function IncidentDetailPage({ params }: { params: Promise<{ id: s
                 <button
                   key={taskId}
                   onClick={() => router.push(`/tasks/${taskId}`)}
-                  className="w-full flex items-center gap-2 rounded-xl bg-slate-50 hover:bg-slate-100 px-3 py-2 text-xs text-left transition-colors"
+                  className="w-full flex items-center gap-2 rounded-xl bg-slate-50 hover:bg-[var(--cs-surface)] px-3 py-2 text-xs text-left transition-colors"
                 >
-                  <ClipboardCheck className="h-3.5 w-3.5 text-slate-400 shrink-0" />
-                  <span className="flex-1 text-slate-700 font-medium">{taskId}</span>
-                  <ChevronRight className="h-3.5 w-3.5 text-slate-400" />
+                  <ClipboardCheck className="h-3.5 w-3.5 text-[var(--cs-text-muted)] shrink-0" />
+                  <span className="flex-1 text-[var(--cs-text-secondary)] font-medium">{taskId}</span>
+                  <ChevronRight className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
                 </button>
               ))}
             </div>
@@ -561,7 +561,7 @@ export default function IncidentDetailPage({ params }: { params: Promise<{ id: s
         {/* ── Linked Documents ──────────────────────────────────────────────── */}
         <div className="rounded-2xl border bg-white p-4 space-y-3">
           <div className="flex items-center justify-between gap-2">
-            <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider flex items-center gap-2">
+            <h3 className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider flex items-center gap-2">
               <Library className="h-3.5 w-3.5" />Linked Documents ({linkedDocs.length})
             </h3>
             <SmartUploadButton
@@ -572,7 +572,7 @@ export default function IncidentDetailPage({ params }: { params: Promise<{ id: s
             />
           </div>
           {linkedDocs.length === 0 ? (
-            <p className="text-xs text-slate-400 py-2">
+            <p className="text-xs text-[var(--cs-text-muted)] py-2">
               No documents linked yet. Upload evidence, body maps, or external reports using the button above.
             </p>
           ) : (
@@ -582,26 +582,26 @@ export default function IncidentDetailPage({ params }: { params: Promise<{ id: s
                   "flex items-start gap-3 rounded-xl border px-3 py-2.5",
                   doc.ai_risk_level === "high" ? "border-red-200 bg-red-50/40"
                   : doc.ai_risk_level === "medium" ? "border-amber-200 bg-amber-50/40"
-                  : "border-slate-100 bg-slate-50"
+                  : "border-[var(--cs-border-subtle)] bg-slate-50"
                 )}>
-                  <FileText className="h-3.5 w-3.5 text-slate-400 shrink-0 mt-0.5" />
+                  <FileText className="h-3.5 w-3.5 text-[var(--cs-text-muted)] shrink-0 mt-0.5" />
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs font-semibold text-slate-800 truncate">{doc.original_file_name}</p>
+                    <p className="text-xs font-semibold text-[var(--cs-navy)] truncate">{doc.original_file_name}</p>
                     <div className="flex flex-wrap items-center gap-1.5 mt-0.5">
                       {doc.document_category && DOCUMENT_CATEGORY_LABELS[doc.document_category] && (
-                        <span className="text-[10px] text-slate-500">{DOCUMENT_CATEGORY_LABELS[doc.document_category]}</span>
+                        <span className="text-[10px] text-[var(--cs-text-muted)]">{DOCUMENT_CATEGORY_LABELS[doc.document_category]}</span>
                       )}
                       {doc.ai_risk_level && doc.ai_risk_level !== "low" && (
                         <Badge className={cn("text-[9px] h-3.5 px-1 rounded-full",
                           doc.ai_risk_level === "high" ? "bg-red-100 text-red-700"
                           : doc.ai_risk_level === "medium" ? "bg-amber-100 text-amber-700"
-                          : "bg-slate-100 text-slate-600"
+                          : "bg-slate-100 text-[var(--cs-text-secondary)]"
                         )}>{doc.ai_risk_level} risk</Badge>
                       )}
-                      <span className="text-[10px] text-slate-400 capitalize">{doc.document_status?.replace("_", " ")}</span>
+                      <span className="text-[10px] text-[var(--cs-text-muted)] capitalize">{doc.document_status?.replace("_", " ")}</span>
                     </div>
                     {doc.ai_summary && (
-                      <p className="text-[11px] text-slate-500 mt-1 leading-relaxed line-clamp-2">{doc.ai_summary}</p>
+                      <p className="text-[11px] text-[var(--cs-text-muted)] mt-1 leading-relaxed line-clamp-2">{doc.ai_summary}</p>
                     )}
                   </div>
                 </div>

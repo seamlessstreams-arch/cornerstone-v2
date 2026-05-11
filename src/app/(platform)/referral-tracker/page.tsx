@@ -218,7 +218,7 @@ export default function ReferralTrackerPage() {
             <div key={ref.id} className="rounded-xl border bg-white overflow-hidden">
               <button
                 onClick={() => setExpandedId(isExpanded ? null : ref.id)}
-                className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0">
                   <FileText className="h-5 w-5 text-blue-600 shrink-0" />

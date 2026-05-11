@@ -239,12 +239,12 @@ export default function NightTimeAnxietySupportPage() {
       {/* ── filters ───────────────────────────────────────────────────────── */}
       <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center">
         <div className="relative flex-1">
-          <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+          <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--cs-text-muted)]" />
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search by child, trigger, or note…"
-            className="w-full rounded-md border border-slate-300 bg-white py-2 pl-9 pr-3 text-sm placeholder:text-slate-400 focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+            className="w-full rounded-md border border-slate-300 bg-white py-2 pl-9 pr-3 text-sm placeholder:text-[var(--cs-text-muted)] focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-[var(--cs-aria-gold)]/30"
           />
         </div>
 
@@ -267,7 +267,7 @@ export default function NightTimeAnxietySupportPage() {
           onValueChange={(v) => setSortBy(v as "level" | "name" | "review")}
         >
           <SelectTrigger className="w-full sm:w-44">
-            <ArrowUpDown className="mr-1 h-4 w-4 text-slate-500" />
+            <ArrowUpDown className="mr-1 h-4 w-4 text-[var(--cs-text-muted)]" />
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -297,10 +297,10 @@ export default function NightTimeAnxietySupportPage() {
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2">
-                      <span className="truncate font-semibold text-slate-900">
+                      <span className="truncate font-semibold text-[var(--cs-navy)]">
                         {getYPName(r.child_id)}
                       </span>
-                      <span className="text-xs text-slate-500">
+                      <span className="text-xs text-[var(--cs-text-muted)]">
                         · key worker {getStaffName(r.key_worker)}
                       </span>
                     </div>
@@ -322,7 +322,7 @@ export default function NightTimeAnxietySupportPage() {
                         Nightmares: {NIGHTMARE_FREQUENCY_LABEL[r.nightmare_frequency]}
                       </span>
                       {r.average_sleep_hours !== null && (
-                        <span className="inline-flex items-center rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 text-xs text-slate-700">
+                        <span className="inline-flex items-center rounded-full border border-[var(--cs-border)] bg-slate-50 px-2 py-0.5 text-xs text-[var(--cs-text-secondary)]">
                           {r.average_sleep_hours}h avg sleep
                         </span>
                       )}
@@ -334,7 +334,7 @@ export default function NightTimeAnxietySupportPage() {
                     </div>
                   </div>
                 </div>
-                <div className="flex shrink-0 items-center gap-3 text-xs text-slate-500">
+                <div className="flex shrink-0 items-center gap-3 text-xs text-[var(--cs-text-muted)]">
                   <span>Review {r.review_date}</span>
                   {open ? (
                     <ChevronUp className="h-4 w-4" />
@@ -351,17 +351,17 @@ export default function NightTimeAnxietySupportPage() {
                     <div className="text-xs font-semibold uppercase tracking-wide text-indigo-700">
                       Child voice
                     </div>
-                    <p className="mt-1 text-sm italic text-slate-800">
+                    <p className="mt-1 text-sm italic text-[var(--cs-navy)]">
                       &ldquo;{r.child_voice}&rdquo;
                     </p>
                   </div>
 
                   {/* Staff observation */}
-                  <div className="rounded-md border border-slate-200 bg-white p-3">
-                    <div className="text-xs font-semibold uppercase tracking-wide text-slate-600">
+                  <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                    <div className="text-xs font-semibold uppercase tracking-wide text-[var(--cs-text-secondary)]">
                       Staff observation
                     </div>
-                    <p className="mt-1 text-sm text-slate-800">{r.staff_observation}</p>
+                    <p className="mt-1 text-sm text-[var(--cs-navy)]">{r.staff_observation}</p>
                   </div>
 
                   {/* Two-col grid */}
@@ -371,7 +371,7 @@ export default function NightTimeAnxietySupportPage() {
                       <div className="text-xs font-semibold uppercase tracking-wide text-amber-800">
                         Primary triggers
                       </div>
-                      <ul className="mt-1 list-disc space-y-1 pl-5 text-sm text-slate-800">
+                      <ul className="mt-1 list-disc space-y-1 pl-5 text-sm text-[var(--cs-navy)]">
                         {r.primary_triggers.map((t, i) => (
                           <li key={i}>{t}</li>
                         ))}
@@ -383,7 +383,7 @@ export default function NightTimeAnxietySupportPage() {
                       <div className="text-xs font-semibold uppercase tracking-wide text-indigo-700">
                         Bedtime routine
                       </div>
-                      <ol className="mt-1 list-decimal space-y-1 pl-5 text-sm text-slate-800">
+                      <ol className="mt-1 list-decimal space-y-1 pl-5 text-sm text-[var(--cs-navy)]">
                         {r.bedtime_routine.map((step, i) => (
                           <li key={i}>{step}</li>
                         ))}
@@ -395,7 +395,7 @@ export default function NightTimeAnxietySupportPage() {
                       <div className="text-xs font-semibold uppercase tracking-wide text-purple-800">
                         Comfort items
                       </div>
-                      <ul className="mt-1 list-disc space-y-1 pl-5 text-sm text-slate-800">
+                      <ul className="mt-1 list-disc space-y-1 pl-5 text-sm text-[var(--cs-navy)]">
                         {r.comfort_items.map((c, i) => (
                           <li key={i}>{c}</li>
                         ))}
@@ -407,7 +407,7 @@ export default function NightTimeAnxietySupportPage() {
                       <div className="text-xs font-semibold uppercase tracking-wide text-blue-800">
                         Child preferences
                       </div>
-                      <p className="mt-1 text-sm text-slate-800">
+                      <p className="mt-1 text-sm text-[var(--cs-navy)]">
                         {r.child_preferences}
                       </p>
                     </div>
@@ -443,7 +443,7 @@ export default function NightTimeAnxietySupportPage() {
                       <div className="text-xs font-semibold uppercase tracking-wide text-orange-800">
                         Hypervigilance notes
                       </div>
-                      <p className="mt-1 text-sm text-slate-800">
+                      <p className="mt-1 text-sm text-[var(--cs-navy)]">
                         {r.hypervigilance_notes}
                       </p>
                     </div>
@@ -455,18 +455,18 @@ export default function NightTimeAnxietySupportPage() {
                       <div className="text-xs font-semibold uppercase tracking-wide text-purple-700">
                         Active external referral
                       </div>
-                      <p className="mt-1 text-sm text-slate-800">
+                      <p className="mt-1 text-sm text-[var(--cs-navy)]">
                         {r.external_referral_active}
                       </p>
                     </div>
                   )}
 
                   {/* Staff actions last week */}
-                  <div className="rounded-md border border-slate-200 bg-white p-3">
-                    <div className="text-xs font-semibold uppercase tracking-wide text-slate-600">
+                  <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                    <div className="text-xs font-semibold uppercase tracking-wide text-[var(--cs-text-secondary)]">
                       Staff actions — last 7 days
                     </div>
-                    <ul className="mt-1 list-disc space-y-1 pl-5 text-sm text-slate-800">
+                    <ul className="mt-1 list-disc space-y-1 pl-5 text-sm text-[var(--cs-navy)]">
                       {r.staff_actions_last_week.map((a, i) => (
                         <li key={i}>{a}</li>
                       ))}
@@ -477,7 +477,7 @@ export default function NightTimeAnxietySupportPage() {
                   <SmartLinkPanel sourceType="night-time-anxiety-support" sourceId={r.id} childId={r.child_id} compact />
 
                   {/* Footer meta */}
-                  <div className="flex flex-wrap items-center gap-3 text-xs text-slate-500">
+                  <div className="flex flex-wrap items-center gap-3 text-xs text-[var(--cs-text-muted)]">
                     <span>Plan recorded {r.record_date}</span>
                     <span>·</span>
                     <span>Next review {r.review_date}</span>
@@ -491,7 +491,7 @@ export default function NightTimeAnxietySupportPage() {
         })}
 
         {filtered.length === 0 && (
-          <div className="rounded-lg border border-dashed border-slate-300 bg-white p-8 text-center text-sm text-slate-500">
+          <div className="rounded-lg border border-dashed border-slate-300 bg-white p-8 text-center text-sm text-[var(--cs-text-muted)]">
             No plans match the current filters.
           </div>
         )}

@@ -43,7 +43,7 @@ const TYPE_CLR: Record<ChildInjuryType, string> = {
   bump: "bg-blue-100 text-blue-800",
   burn: "bg-rose-100 text-rose-800",
   sprain: "bg-amber-100 text-amber-800",
-  other: "bg-slate-100 text-slate-800",
+  other: "bg-slate-100 text-[var(--cs-navy)]",
 };
 
 /* ── page ──────────────────────────────────────────────────────────────────── */

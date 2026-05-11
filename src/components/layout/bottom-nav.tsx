@@ -81,18 +81,18 @@ function MoreOverlay({ onClose }: { onClose: () => void }) {
       <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} />
 
       {/* Sheet — slides up from bottom */}
-      <div className="relative mt-auto bg-white rounded-t-3xl shadow-2xl max-h-[85vh] flex flex-col overflow-hidden">
+      <div className="relative mt-auto bg-[var(--cs-surface-elevated)] rounded-t-3xl shadow-[var(--cs-shadow-elevated)] max-h-[85vh] flex flex-col overflow-hidden">
         {/* Handle + header */}
-        <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100 shrink-0">
+        <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--cs-border-subtle)] shrink-0">
           <div>
-            <p className="text-sm font-bold text-slate-900">Navigation</p>
-            <p className="text-[11px] text-slate-500 mt-0.5">
+            <p className="text-sm font-bold text-[var(--cs-navy)]">Navigation</p>
+            <p className="text-[11px] text-[var(--cs-text-muted)] mt-0.5">
               {currentUser?.full_name} · {APP_ROLE_LABELS[currentRole as AppRole] ?? currentRole}
             </p>
           </div>
           <button
             onClick={onClose}
-            className="flex h-8 w-8 items-center justify-center rounded-xl bg-slate-100 text-slate-500 hover:bg-slate-200 transition-colors"
+            className="flex h-8 w-8 items-center justify-center rounded-xl bg-[var(--cs-surface)] text-[var(--cs-text-muted)] hover:bg-[var(--cs-surface)]/80 transition-colors"
           >
             <X className="h-4 w-4" />
           </button>
@@ -118,11 +118,11 @@ function MoreOverlay({ onClose }: { onClose: () => void }) {
                 <div className="flex items-center gap-2 px-3 py-2 mb-0.5">
                   <GroupIcon className={cn(
                     "h-4 w-4",
-                    isGroupActive ? "text-indigo-600" : "text-slate-400"
+                    isGroupActive ? "text-[var(--cs-aria-gold)]" : "text-[var(--cs-text-gentle)]"
                   )} />
                   <span className={cn(
                     "text-xs font-semibold uppercase tracking-wider",
-                    isGroupActive ? "text-indigo-700" : "text-slate-400"
+                    isGroupActive ? "text-[var(--cs-navy)]" : "text-[var(--cs-text-gentle)]"
                   )}>
                     {group.label}
                   </span>
@@ -144,17 +144,17 @@ function MoreOverlay({ onClose }: { onClose: () => void }) {
                         className={cn(
                           "flex items-center gap-3 rounded-xl px-3 py-3 text-sm transition-all",
                           isActive
-                            ? "bg-indigo-50 text-indigo-700 font-medium"
-                            : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                            ? "bg-[var(--cs-aria-gold-bg)] text-[var(--cs-navy)] font-medium"
+                            : "text-[var(--cs-text-secondary)] hover:bg-[var(--cs-surface)] hover:text-[var(--cs-navy)]"
                         )}
                       >
                         <ChildIcon className={cn(
                           "h-4 w-4 shrink-0",
-                          isActive ? "text-indigo-600" : "text-slate-400"
+                          isActive ? "text-[var(--cs-aria-gold)]" : "text-[var(--cs-text-gentle)]"
                         )} />
                         <span className="flex-1">{child.label}</span>
                         {isActive && (
-                          <div className="h-1.5 w-1.5 rounded-full bg-indigo-500" />
+                          <div className="h-1.5 w-1.5 rounded-full bg-[var(--cs-aria-gold)]" />
                         )}
                       </Link>
                     );
@@ -181,7 +181,7 @@ export function BottomNav() {
   return (
     <>
       {/* Bottom bar */}
-      <nav className="fixed bottom-0 left-0 right-0 z-40 md:hidden bg-white border-t border-slate-200 shadow-[0_-1px_12px_rgba(0,0,0,0.06)]">
+      <nav className="fixed bottom-0 left-0 right-0 z-40 md:hidden bg-[var(--cs-surface-elevated)] border-t border-[var(--cs-border)] shadow-[0_-1px_12px_rgba(0,0,0,0.06)]">
         <div className="flex items-stretch h-[56px] px-2">
           {/* Fixed destination buttons */}
           {BOTTOM_ITEMS.map(({ id, label, href, icon: Icon, badgeKey }) => {
@@ -197,8 +197,8 @@ export function BottomNav() {
                 className={cn(
                   "flex flex-1 flex-col items-center justify-center gap-0.5 rounded-xl mx-0.5 transition-all relative",
                   isActive
-                    ? "text-indigo-600"
-                    : "text-slate-400 hover:text-slate-700"
+                    ? "text-[var(--cs-navy)]"
+                    : "text-[var(--cs-text-gentle)] hover:text-[var(--cs-text-secondary)]"
                 )}
               >
                 <div className="relative">
@@ -207,19 +207,19 @@ export function BottomNav() {
                     isActive && "scale-110"
                   )} />
                   {badge > 0 && (
-                    <span className="absolute -top-1.5 -right-2 min-w-[14px] h-[14px] flex items-center justify-center rounded-full bg-red-500 text-white text-[8px] font-bold px-0.5">
+                    <span className="absolute -top-1.5 -right-2 min-w-[14px] h-[14px] flex items-center justify-center rounded-full bg-[var(--cs-risk)] text-white text-[8px] font-bold px-0.5">
                       {badge > 9 ? "9+" : badge}
                     </span>
                   )}
                 </div>
                 <span className={cn(
                   "text-[10px] font-medium leading-none",
-                  isActive ? "text-indigo-600" : "text-slate-400"
+                  isActive ? "text-[var(--cs-navy)]" : "text-[var(--cs-text-gentle)]"
                 )}>
                   {label}
                 </span>
                 {isActive && (
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 h-0.5 w-8 rounded-b-full bg-indigo-500" />
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 h-0.5 w-8 rounded-b-full bg-[var(--cs-aria-gold)]" />
                 )}
               </Link>
             );
@@ -230,11 +230,11 @@ export function BottomNav() {
             onClick={() => setMoreOpen(true)}
             className={cn(
               "flex flex-1 flex-col items-center justify-center gap-0.5 rounded-xl mx-0.5 transition-all",
-              moreOpen ? "text-indigo-600" : "text-slate-400 hover:text-slate-700"
+              moreOpen ? "text-[var(--cs-navy)]" : "text-[var(--cs-text-gentle)] hover:text-[var(--cs-text-secondary)]"
             )}
           >
             <Menu className="h-5 w-5" />
-            <span className="text-[10px] font-medium leading-none text-slate-400">More</span>
+            <span className="text-[10px] font-medium leading-none text-[var(--cs-text-gentle)]">More</span>
           </button>
         </div>
 

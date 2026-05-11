@@ -29,7 +29,7 @@ const FORMAT_CLR: Record<string, string> = {
   one_to_one_driving: "bg-sky-100 text-sky-800",
   one_to_one_cooking_together: "bg-orange-100 text-orange-800",
   one_to_one_boxing_sport: "bg-red-100 text-red-800",
-  brief_check_in: "bg-slate-100 text-slate-800",
+  brief_check_in: "bg-slate-100 text-[var(--cs-navy)]",
   crisis_check_in: "bg-fuchsia-100 text-fuchsia-800",
 };
 
@@ -275,9 +275,9 @@ export default function ChildKeyworker1to1SessionsPage() {
                     </div>
 
                     {r.notes && (
-                      <div className="rounded-lg bg-slate-50 border border-slate-200 p-3">
-                        <p className="text-xs font-semibold text-slate-800 mb-1">Notes</p>
-                        <p className="text-sm text-slate-900">{r.notes}</p>
+                      <div className="rounded-lg bg-slate-50 border border-[var(--cs-border)] p-3">
+                        <p className="text-xs font-semibold text-[var(--cs-navy)] mb-1">Notes</p>
+                        <p className="text-sm text-[var(--cs-navy)]">{r.notes}</p>
                       </div>
                     )}
 

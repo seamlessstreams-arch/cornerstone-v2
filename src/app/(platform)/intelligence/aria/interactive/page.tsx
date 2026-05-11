@@ -192,7 +192,7 @@ function ActiveSessionView({ session, onEnd }: ActiveSessionProps) {
     <div className="space-y-4">
       {/* Progress */}
       <div className="space-y-1.5">
-        <div className="flex items-center justify-between text-xs text-slate-500">
+        <div className="flex items-center justify-between text-xs text-[var(--cs-text-muted)]">
           <span>Activity {activityIdx + 1} of {ACTIVITIES.length}</span>
           <span>{progress}%</span>
         </div>
@@ -205,7 +205,7 @@ function ActiveSessionView({ session, onEnd }: ActiveSessionProps) {
         <CardContent className="p-6 space-y-5">
           <div className="space-y-1">
             <p className="text-[10px] font-semibold text-teal-600 uppercase tracking-wider">{activity.title}</p>
-            <p className="text-lg font-medium text-slate-900 leading-relaxed">{activity.childPrompt}</p>
+            <p className="text-lg font-medium text-[var(--cs-navy)] leading-relaxed">{activity.childPrompt}</p>
           </div>
 
           {/* Emoji response */}
@@ -219,11 +219,11 @@ function ActiveSessionView({ session, onEnd }: ActiveSessionProps) {
                     "flex flex-col items-center gap-1 rounded-2xl border-2 p-3 transition-all",
                     currentResponse === opt.value
                       ? "border-teal-400 bg-teal-50"
-                      : "border-slate-200 bg-white hover:border-teal-300"
+                      : "border-[var(--cs-border)] bg-white hover:border-teal-300"
                   )}
                 >
                   <span className="text-3xl">{opt.emoji}</span>
-                  <span className="text-[11px] text-slate-600">{opt.label}</span>
+                  <span className="text-[11px] text-[var(--cs-text-secondary)]">{opt.label}</span>
                 </button>
               ))}
             </div>
@@ -240,7 +240,7 @@ function ActiveSessionView({ session, onEnd }: ActiveSessionProps) {
                 onChange={(e) => setCurrentResponse(Number(e.target.value))}
                 className="w-full accent-teal-500"
               />
-              <div className="flex justify-between text-xs text-slate-500">
+              <div className="flex justify-between text-xs text-[var(--cs-text-muted)]">
                 <span>1 — Really difficult</span>
                 <span className="font-bold text-teal-600 text-base">{currentResponse ?? 5}</span>
                 <span>10 — Amazing</span>
@@ -255,25 +255,25 @@ function ActiveSessionView({ session, onEnd }: ActiveSessionProps) {
               onChange={(e) => setChildWords(e.target.value)}
               rows={4}
               placeholder="Record what the child said in their own words…"
-              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-300 resize-none"
+              className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2 text-sm text-[var(--cs-navy)] placeholder:text-[var(--cs-text-muted)] focus:outline-none focus:ring-2 focus:ring-teal-300 resize-none"
             />
           )}
 
           {declined && (
-            <div className="rounded-xl bg-slate-100 p-3 text-xs text-slate-600 italic">
+            <div className="rounded-xl bg-slate-100 p-3 text-xs text-[var(--cs-text-secondary)] italic">
               Child declined this activity
             </div>
           )}
 
           {/* Staff observation */}
           <div className="space-y-1.5">
-            <label className="text-xs font-medium text-slate-500">Staff Observation (optional)</label>
+            <label className="text-xs font-medium text-[var(--cs-text-muted)]">Staff Observation (optional)</label>
             <textarea
               value={staffObs}
               onChange={(e) => setStaffObs(e.target.value)}
               rows={2}
               placeholder="Note how the child engaged, their body language, tone…"
-              className="w-full rounded-lg border border-slate-100 bg-slate-50 px-3 py-2 text-xs text-slate-700 placeholder:text-slate-400 focus:outline-none resize-none"
+              className="w-full rounded-lg border border-[var(--cs-border-subtle)] bg-slate-50 px-3 py-2 text-xs text-[var(--cs-text-secondary)] placeholder:text-[var(--cs-text-muted)] focus:outline-none resize-none"
             />
           </div>
 
@@ -294,7 +294,7 @@ function ActiveSessionView({ session, onEnd }: ActiveSessionProps) {
                 variant="outline"
                 size="sm"
                 onClick={handleDecline}
-                className="text-slate-500"
+                className="text-[var(--cs-text-muted)]"
               >
                 Child Declined
               </Button>
@@ -396,10 +396,10 @@ function SessionSummary({
         {/* Response summary */}
         <div className="space-y-2">
           {responses.map((r, i) => (
-            <div key={i} className="flex items-center gap-3 rounded-lg bg-slate-50 border border-slate-100 px-3 py-2">
-              <span className="text-xs font-medium text-slate-700 flex-1">{r.activity_title}</span>
+            <div key={i} className="flex items-center gap-3 rounded-lg bg-slate-50 border border-[var(--cs-border-subtle)] px-3 py-2">
+              <span className="text-xs font-medium text-[var(--cs-text-secondary)] flex-1">{r.activity_title}</span>
               {r.response_type === "declined" ? (
-                <span className="text-[10px] text-slate-400 italic">Declined</span>
+                <span className="text-[10px] text-[var(--cs-text-muted)] italic">Declined</span>
               ) : (
                 <span className="text-[10px] text-teal-600 font-medium">
                   {String(r.child_words ?? r.response_value ?? "Completed").slice(0, 40)}
@@ -425,25 +425,25 @@ function SessionSummary({
             {ariaSummary.child_friendly && (
               <div className="rounded-xl border border-teal-200 bg-teal-50 p-3">
                 <p className="text-[10px] font-semibold text-teal-600 uppercase mb-1">Child-friendly Summary</p>
-                <p className="text-sm text-slate-800">{ariaSummary.child_friendly}</p>
+                <p className="text-sm text-[var(--cs-navy)]">{ariaSummary.child_friendly}</p>
               </div>
             )}
             {ariaSummary.professional && (
-              <div className="rounded-xl border border-slate-200 bg-slate-50 p-3">
-                <p className="text-[10px] font-semibold text-slate-500 uppercase mb-1">Professional Summary</p>
-                <p className="text-sm text-slate-800">{ariaSummary.professional}</p>
+              <div className="rounded-xl border border-[var(--cs-border)] bg-slate-50 p-3">
+                <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase mb-1">Professional Summary</p>
+                <p className="text-sm text-[var(--cs-navy)]">{ariaSummary.professional}</p>
               </div>
             )}
             {ariaSummary.child_voice && (
               <div className="rounded-xl border border-violet-200 bg-violet-50 p-3">
                 <p className="text-[10px] font-semibold text-violet-600 uppercase mb-1">Child&apos;s Voice</p>
-                <p className="text-sm text-slate-800 italic">&ldquo;{ariaSummary.child_voice}&rdquo;</p>
+                <p className="text-sm text-[var(--cs-navy)] italic">&ldquo;{ariaSummary.child_voice}&rdquo;</p>
               </div>
             )}
             {ariaSummary.staff_reflection && (
-              <div className="rounded-xl border border-slate-200 p-3">
-                <p className="text-[10px] font-semibold text-slate-500 uppercase mb-1">Staff Reflection</p>
-                <p className="text-sm text-slate-800">{ariaSummary.staff_reflection}</p>
+              <div className="rounded-xl border border-[var(--cs-border)] p-3">
+                <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase mb-1">Staff Reflection</p>
+                <p className="text-sm text-[var(--cs-navy)]">{ariaSummary.staff_reflection}</p>
               </div>
             )}
           </div>
@@ -526,18 +526,18 @@ function SetupForm({ onStart, onClose }: {
             <Users className="h-4 w-4 text-teal-500" />
             Setup Interactive Session
           </CardTitle>
-          <button onClick={onClose} className="rounded-lg p-1 text-slate-400 hover:text-slate-600 hover:bg-slate-100">
+          <button onClick={onClose} className="rounded-lg p-1 text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] hover:bg-[var(--cs-surface)]">
             <X className="h-4 w-4" />
           </button>
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="space-y-1.5">
-          <label className="text-xs font-medium text-slate-600">Young Person</label>
+          <label className="text-xs font-medium text-[var(--cs-text-secondary)]">Young Person</label>
           <select
             value={childId}
             onChange={(e) => setChildId(e.target.value)}
-            className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-teal-300"
+            className="w-full rounded-lg border border-[var(--cs-border)] bg-white px-3 py-2 text-sm text-[var(--cs-navy)] focus:outline-none focus:ring-2 focus:ring-teal-300"
           >
             <option value="">Select young person</option>
             {youngPeople.map((yp) => (
@@ -547,7 +547,7 @@ function SetupForm({ onStart, onClose }: {
         </div>
 
         <div className="space-y-1.5">
-          <label className="text-xs font-medium text-slate-600">Session Mode</label>
+          <label className="text-xs font-medium text-[var(--cs-text-secondary)]">Session Mode</label>
           <div className="grid gap-2 sm:grid-cols-3">
             {SESSION_MODES.map((m) => (
               <button
@@ -555,11 +555,11 @@ function SetupForm({ onStart, onClose }: {
                 onClick={() => setSessionMode(m.value as "guided" | "freeform" | "activity")}
                 className={cn(
                   "rounded-xl border p-3 text-left transition-all",
-                  sessionMode === m.value ? "border-teal-400 bg-teal-50" : "border-slate-200 bg-white"
+                  sessionMode === m.value ? "border-teal-400 bg-teal-50" : "border-[var(--cs-border)] bg-white"
                 )}
               >
-                <div className="text-xs font-semibold text-slate-900">{m.label}</div>
-                <div className="text-[10px] text-slate-500">{m.description}</div>
+                <div className="text-xs font-semibold text-[var(--cs-navy)]">{m.label}</div>
+                <div className="text-[10px] text-[var(--cs-text-muted)]">{m.description}</div>
               </button>
             ))}
           </div>
@@ -567,11 +567,11 @@ function SetupForm({ onStart, onClose }: {
 
         {childId && kwData?.data && kwData.data.length > 0 && (
           <div className="space-y-1.5">
-            <label className="text-xs font-medium text-slate-600">Link to Key Work Session (optional)</label>
+            <label className="text-xs font-medium text-[var(--cs-text-secondary)]">Link to Key Work Session (optional)</label>
             <select
               value={linkedKW}
               onChange={(e) => setLinkedKW(e.target.value)}
-              className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-teal-300"
+              className="w-full rounded-lg border border-[var(--cs-border)] bg-white px-3 py-2 text-sm text-[var(--cs-navy)] focus:outline-none focus:ring-2 focus:ring-teal-300"
             >
               <option value="">No link</option>
               {kwData.data.map((s) => (
@@ -598,7 +598,7 @@ function SetupForm({ onStart, onClose }: {
             onChange={(e) => setConsentNotes(e.target.value)}
             rows={2}
             placeholder="Consent notes (how consent was obtained, young person's response)…"
-            className="w-full rounded-lg border border-amber-200 bg-white px-3 py-2 text-xs text-slate-700 placeholder:text-slate-400 focus:outline-none resize-none"
+            className="w-full rounded-lg border border-amber-200 bg-white px-3 py-2 text-xs text-[var(--cs-text-secondary)] placeholder:text-[var(--cs-text-muted)] focus:outline-none resize-none"
           />
         </div>
 
@@ -686,13 +686,13 @@ export default function InteractiveSessionsPage() {
                 <span className="rounded-full bg-teal-100 text-teal-800 px-2.5 py-1 text-xs font-semibold">
                   Live Session
                 </span>
-                <span className="text-sm text-slate-600">
+                <span className="text-sm text-[var(--cs-text-secondary)]">
                   {youngPeople.find((y) => y.id === activeSession.child_id)?.name}
                 </span>
               </div>
               <button
                 onClick={() => setActiveSession(null)}
-                className="text-xs text-slate-400 hover:text-red-500 flex items-center gap-1"
+                className="text-xs text-[var(--cs-text-muted)] hover:text-red-500 flex items-center gap-1"
               >
                 <X className="h-3.5 w-3.5" />Cancel
               </button>
@@ -722,7 +722,7 @@ export default function InteractiveSessionsPage() {
                 <select
                   value={historyChild}
                   onChange={(e) => setHistoryChild(e.target.value)}
-                  className="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-teal-300"
+                  className="rounded-lg border border-[var(--cs-border)] bg-white px-3 py-1.5 text-xs text-[var(--cs-navy)] focus:outline-none focus:ring-2 focus:ring-teal-300"
                 >
                   {youngPeople.map((yp) => (
                     <option key={yp.id} value={yp.id}>{yp.name}</option>
@@ -738,22 +738,22 @@ export default function InteractiveSessionsPage() {
               ) : pastSessions.length === 0 ? (
                 <div className="flex flex-col items-center gap-2 py-10 text-center">
                   <Users className="h-10 w-10 text-slate-200" />
-                  <p className="text-sm text-slate-500">No past sessions for this young person</p>
+                  <p className="text-sm text-[var(--cs-text-muted)]">No past sessions for this young person</p>
                 </div>
               ) : (
                 <div className="space-y-2">
                   {pastSessions.map((s) => (
-                    <div key={s.id} className="rounded-xl border border-slate-100 bg-slate-50 p-3">
+                    <div key={s.id} className="rounded-xl border border-[var(--cs-border-subtle)] bg-slate-50 p-3">
                       <div className="flex items-center gap-3">
                         <span className={cn("rounded-full px-2 py-0.5 text-[10px] font-semibold capitalize", STATUS_COLOURS[s.status])}>
                           {s.status}
                         </span>
-                        <span className="text-xs text-slate-600 flex-1">
+                        <span className="text-xs text-[var(--cs-text-secondary)] flex-1">
                           {s.session_mode} · {s.responses.length} activities · {formatDate(s.created_at)}
                         </span>
                       </div>
                       {s.child_voice && (
-                        <p className="text-xs text-slate-600 italic mt-2 line-clamp-2">&ldquo;{s.child_voice}&rdquo;</p>
+                        <p className="text-xs text-[var(--cs-text-secondary)] italic mt-2 line-clamp-2">&ldquo;{s.child_voice}&rdquo;</p>
                       )}
                     </div>
                   ))}

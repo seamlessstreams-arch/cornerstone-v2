@@ -44,7 +44,7 @@ const EVENT_TYPES = [
 // ── Section colour config ─────────────────────────────────────────────────────
 
 const SECTION_STYLES: Record<string, { border: string; bg: string; label: string; icon: React.ElementType }> = {
-  "What happened":                      { border: "border-slate-200",   bg: "bg-slate-50",    label: "What happened",                      icon: MessageSquare },
+  "What happened":                      { border: "border-[var(--cs-border)]",   bg: "bg-slate-50",    label: "What happened",                      icon: MessageSquare },
   "What the child was communicating":   { border: "border-blue-200",    bg: "bg-blue-50/40",  label: "What the child was communicating",   icon: Heart },
   "How I responded":                    { border: "border-violet-200",  bg: "bg-violet-50/40",label: "How I responded",                    icon: User },
   "Was I regulated":                    { border: "border-amber-200",   bg: "bg-amber-50/40", label: "Was I regulated?",                   icon: Brain },
@@ -84,14 +84,14 @@ function PreviousReflections({ childId }: { childId: string }) {
     return <div className="space-y-2">{[1, 2].map((i) => <div key={i} className="h-14 rounded-xl bg-slate-100 animate-pulse" />)}</div>;
   }
   if (reflections.length === 0) {
-    return <p className="text-xs text-slate-400 text-center py-6">No previous reflections{childId ? " for this young person" : ""}</p>;
+    return <p className="text-xs text-[var(--cs-text-muted)] text-center py-6">No previous reflections{childId ? " for this young person" : ""}</p>;
   }
   return (
     <div className="space-y-2">
       {reflections.map((r) => (
-        <div key={r.id} className="rounded-xl border border-slate-100 bg-slate-50 p-3 space-y-1">
-          <p className="text-[10px] text-slate-500">{formatDate(r.created_at)}</p>
-          <p className="text-xs text-slate-700 line-clamp-3 leading-relaxed">{r.situation_summary}</p>
+        <div key={r.id} className="rounded-xl border border-[var(--cs-border-subtle)] bg-slate-50 p-3 space-y-1">
+          <p className="text-[10px] text-[var(--cs-text-muted)]">{formatDate(r.created_at)}</p>
+          <p className="text-xs text-[var(--cs-text-secondary)] line-clamp-3 leading-relaxed">{r.situation_summary}</p>
         </div>
       ))}
     </div>
@@ -101,14 +101,14 @@ function PreviousReflections({ childId }: { childId: string }) {
 // ── Debrief section card ──────────────────────────────────────────────────────
 
 function DebriefSection({ heading, content }: { heading: string; content: string }) {
-  const style = SECTION_STYLES[heading] ?? { border: "border-slate-200", bg: "bg-slate-50", label: heading, icon: MessageSquare };
+  const style = SECTION_STYLES[heading] ?? { border: "border-[var(--cs-border)]", bg: "bg-slate-50", label: heading, icon: MessageSquare };
   const Icon = style.icon;
   return (
     <div className={cn("rounded-xl border p-4 space-y-2", style.border, style.bg)}>
-      <p className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-slate-600">
+      <p className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-[var(--cs-text-secondary)]">
         <Icon className="h-3 w-3" />{style.label}
       </p>
-      <p className="text-sm text-slate-800 leading-relaxed whitespace-pre-line">{content}</p>
+      <p className="text-sm text-[var(--cs-navy)] leading-relaxed whitespace-pre-line">{content}</p>
     </div>
   );
 }
@@ -273,11 +273,11 @@ export default function ReflectivePracticePage() {
                 <div className="grid grid-cols-2 gap-4">
                   {/* Young person */}
                   <div className="space-y-1.5">
-                    <label className="text-xs font-medium text-slate-600">Young Person (optional)</label>
+                    <label className="text-xs font-medium text-[var(--cs-text-secondary)]">Young Person (optional)</label>
                     <select
                       value={childId}
                       onChange={(e) => setChildId(e.target.value)}
-                      className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-teal-300"
+                      className="w-full rounded-lg border border-[var(--cs-border)] bg-white px-3 py-2 text-sm text-[var(--cs-navy)] focus:outline-none focus:ring-2 focus:ring-teal-300"
                     >
                       <option value="">No specific young person</option>
                       {youngPeople.map((yp) => (
@@ -288,11 +288,11 @@ export default function ReflectivePracticePage() {
 
                   {/* Event type */}
                   <div className="space-y-1.5">
-                    <label className="text-xs font-medium text-slate-600">Type of Event</label>
+                    <label className="text-xs font-medium text-[var(--cs-text-secondary)]">Type of Event</label>
                     <select
                       value={eventType}
                       onChange={(e) => setEventType(e.target.value)}
-                      className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-teal-300"
+                      className="w-full rounded-lg border border-[var(--cs-border)] bg-white px-3 py-2 text-sm text-[var(--cs-navy)] focus:outline-none focus:ring-2 focus:ring-teal-300"
                     >
                       {EVENT_TYPES.map((t) => (
                         <option key={t.value} value={t.value}>{t.label}</option>
@@ -304,7 +304,7 @@ export default function ReflectivePracticePage() {
                 {/* Description */}
                 <div className="space-y-1.5">
                   <div className="flex items-center justify-between">
-                    <label className="text-xs font-medium text-slate-600">What happened — in your own words</label>
+                    <label className="text-xs font-medium text-[var(--cs-text-secondary)]">What happened — in your own words</label>
                     <div className="flex items-center gap-2">
                       {prefilling && (
                         <span className="flex items-center gap-1 text-[10px] text-teal-600">
@@ -320,11 +320,11 @@ export default function ReflectivePracticePage() {
                     rows={9}
                     placeholder="Describe what happened in your own words. Include what the young person did, what you did, how you felt in the moment, and anything that surprised or challenged you. There is no right or wrong here — this is a safe space to reflect honestly."
                     className={cn(
-                      "w-full rounded-lg border px-3 py-2 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-300 resize-none leading-relaxed",
-                      prefilling ? "border-teal-200 bg-teal-50/30" : "border-slate-200 bg-white"
+                      "w-full rounded-lg border px-3 py-2 text-sm text-[var(--cs-navy)] placeholder:text-[var(--cs-text-muted)] focus:outline-none focus:ring-2 focus:ring-teal-300 resize-none leading-relaxed",
+                      prefilling ? "border-teal-200 bg-teal-50/30" : "border-[var(--cs-border)] bg-white"
                     )}
                   />
-                  <p className="text-[10px] text-slate-400">{description.length} characters</p>
+                  <p className="text-[10px] text-[var(--cs-text-muted)]">{description.length} characters</p>
                 </div>
 
                 {/* Wellbeing notice */}
@@ -374,7 +374,7 @@ export default function ReflectivePracticePage() {
                   ))}
 
                   {/* Save / disclaimer */}
-                  <div className="flex items-center gap-3 pt-2 border-t border-slate-100">
+                  <div className="flex items-center gap-3 pt-2 border-t border-[var(--cs-border-subtle)]">
                     {savedOk ? (
                       <div className="flex items-center gap-2 text-sm text-emerald-600 font-medium">
                         <CheckCircle2 className="h-4 w-4" />Reflection saved to your record
@@ -389,7 +389,7 @@ export default function ReflectivePracticePage() {
                         Save Reflection
                       </Button>
                     )}
-                    <p className="text-[10px] text-slate-400 italic">
+                    <p className="text-[10px] text-[var(--cs-text-muted)] italic">
                       ARIA-generated prompts. This does not become part of a child&apos;s record.
                     </p>
                   </div>
@@ -408,7 +408,7 @@ export default function ReflectivePracticePage() {
                   <Info className="h-3.5 w-3.5" />About Reflective Practice
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3 text-xs text-slate-600 leading-relaxed">
+              <CardContent className="space-y-3 text-xs text-[var(--cs-text-secondary)] leading-relaxed">
                 <p>
                   Reflective practice is how skilled practitioners learn from experience —
                   especially the difficult, complex or unexpected moments.
@@ -431,7 +431,7 @@ export default function ReflectivePracticePage() {
                     </li>
                   ))}
                 </ul>
-                <p className="text-[10px] text-slate-500 italic border-t border-teal-200 pt-2">
+                <p className="text-[10px] text-[var(--cs-text-muted)] italic border-t border-teal-200 pt-2">
                   Using PACE principles: Playfulness, Acceptance, Curiosity, Empathy
                 </p>
               </CardContent>
@@ -441,7 +441,7 @@ export default function ReflectivePracticePage() {
             <Card>
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm font-semibold flex items-center gap-2">
-                  <Brain className="h-4 w-4 text-slate-400" />
+                  <Brain className="h-4 w-4 text-[var(--cs-text-muted)]" />
                   Previous Reflections
                 </CardTitle>
               </CardHeader>

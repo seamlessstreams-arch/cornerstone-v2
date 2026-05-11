@@ -194,7 +194,7 @@ export function DictationButton({
           disabled
           aria-label="Voice input not supported"
           className={cn(
-            "inline-flex items-center justify-center rounded-lg border border-slate-200 bg-slate-50 text-slate-300 cursor-not-allowed transition-colors",
+            "inline-flex items-center justify-center rounded-lg border border-[var(--cs-border)] bg-slate-50 text-[var(--cs-text-gentle)] cursor-not-allowed transition-colors",
             SIZE_BTN[size]
           )}
         >
@@ -231,7 +231,7 @@ export function DictationButton({
           <Square className="h-2.5 w-2.5 fill-red-600" />
           Stop
         </button>
-        <span className="text-[11px] text-slate-400 animate-pulse">Listening...</span>
+        <span className="text-[11px] text-[var(--cs-text-muted)] animate-pulse">Listening...</span>
       </div>
     );
   }
@@ -248,7 +248,7 @@ export function DictationButton({
           "inline-flex items-center justify-center rounded-lg border transition-colors",
           error
             ? "border-amber-200 bg-amber-50 text-amber-600 hover:bg-amber-100"
-            : "border-slate-200 bg-slate-50 text-slate-500 hover:bg-violet-50 hover:border-violet-300 hover:text-violet-600",
+            : "border-[var(--cs-border)] bg-slate-50 text-[var(--cs-text-muted)] hover:bg-violet-50 hover:border-violet-300 hover:text-violet-600",
           disabled && "opacity-40 cursor-not-allowed pointer-events-none",
           SIZE_BTN[size]
         )}

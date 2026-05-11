@@ -59,12 +59,12 @@ const exportCols: ExportColumn<OrthoRecord>[] = [
 ];
 
 const stageColour: Record<OrthoStage, string> = {
-  awaiting_referral: "bg-slate-100 text-slate-800 border-slate-200",
+  awaiting_referral: "bg-slate-100 text-[var(--cs-navy)] border-[var(--cs-border)]",
   referred_assessment_booked: "bg-sky-100 text-sky-800 border-sky-200",
   assessed_on_waiting_list: "bg-blue-100 text-blue-800 border-blue-200",
   active_treatment: "bg-teal-100 text-teal-800 border-teal-200",
   retention_phase: "bg-emerald-100 text-emerald-800 border-emerald-200",
-  discharged: "bg-slate-100 text-slate-700 border-slate-200",
+  discharged: "bg-slate-100 text-[var(--cs-text-secondary)] border-[var(--cs-border)]",
   not_currently_indicated: "bg-stone-100 text-stone-700 border-stone-200",
 };
 
@@ -80,7 +80,7 @@ const hygieneColour: Record<OrthoHygieneCompliance, string> = {
   good: "bg-teal-100 text-teal-800 border-teal-200",
   fair: "bg-amber-100 text-amber-800 border-amber-200",
   poor_needs_support: "bg-rose-100 text-rose-800 border-rose-200",
-  not_yet_started: "bg-slate-100 text-slate-700 border-slate-200",
+  not_yet_started: "bg-slate-100 text-[var(--cs-text-secondary)] border-[var(--cs-border)]",
 };
 
 const dFromNow = (n: number) => {
@@ -129,7 +129,7 @@ export default function ChildOrthodonticTreatmentPage() {
     return (
       <PageShell title="Orthodontic Treatment" subtitle="Loading...">
         <div className="flex items-center justify-center py-12">
-          <Loader2 className="h-8 w-8 animate-spin text-slate-400" />
+          <Loader2 className="h-8 w-8 animate-spin text-[var(--cs-text-muted)]" />
         </div>
       </PageShell>
     );
@@ -147,45 +147,45 @@ export default function ChildOrthodonticTreatmentPage() {
       }
     >
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-slate-600 text-sm mb-1">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-[var(--cs-text-secondary)] text-sm mb-1">
             <Sparkles className="h-4 w-4" />
             <span>Active treatment</span>
           </div>
-          <div className="text-2xl font-semibold text-slate-900">{stats.active}</div>
+          <div className="text-2xl font-semibold text-[var(--cs-navy)]">{stats.active}</div>
         </div>
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-slate-600 text-sm mb-1">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-[var(--cs-text-secondary)] text-sm mb-1">
             <Smile className="h-4 w-4" />
             <span>Retention phase</span>
           </div>
-          <div className="text-2xl font-semibold text-slate-900">{stats.retention}</div>
+          <div className="text-2xl font-semibold text-[var(--cs-navy)]">{stats.retention}</div>
         </div>
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-slate-600 text-sm mb-1">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-[var(--cs-text-secondary)] text-sm mb-1">
             <Award className="h-4 w-4" />
             <span>NHS eligible</span>
           </div>
-          <div className="text-2xl font-semibold text-slate-900">{stats.onNhs}</div>
+          <div className="text-2xl font-semibold text-[var(--cs-navy)]">{stats.onNhs}</div>
         </div>
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-slate-600 text-sm mb-1">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-[var(--cs-text-secondary)] text-sm mb-1">
             <Calendar className="h-4 w-4" />
             <span>Reviews due (90d)</span>
           </div>
-          <div className="text-2xl font-semibold text-slate-900">{stats.reviewsDue}</div>
+          <div className="text-2xl font-semibold text-[var(--cs-navy)]">{stats.reviewsDue}</div>
         </div>
       </div>
 
       <div className="flex flex-col sm:flex-row gap-3 mb-4">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--cs-text-muted)]" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search young person, practice or orthodontist..."
-            className="w-full pl-9 pr-3 py-2 text-sm border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500"
+            className="w-full pl-9 pr-3 py-2 text-sm border border-[var(--cs-border)] rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500"
           />
         </div>
         <Select value={stageFilter} onValueChange={setStageFilter}>
@@ -217,14 +217,14 @@ export default function ChildOrthodonticTreatmentPage() {
         {filtered.map((r) => {
           const isOpen = expandedId === r.id;
           return (
-            <div key={r.id} className="rounded-lg border border-slate-200 bg-white overflow-hidden">
+            <div key={r.id} className="rounded-lg border border-[var(--cs-border)] bg-white overflow-hidden">
               <button
                 onClick={() => setExpandedId(isOpen ? null : r.id)}
-                className="w-full p-4 flex items-start justify-between gap-3 hover:bg-slate-50 text-left"
+                className="w-full p-4 flex items-start justify-between gap-3 hover:bg-[var(--cs-surface)] text-left"
               >
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap mb-1">
-                    <span className="font-semibold text-slate-900">{getYPName(r.child_id)}</span>
+                    <span className="font-semibold text-[var(--cs-navy)]">{getYPName(r.child_id)}</span>
                     <span className={cn("text-xs px-2 py-0.5 rounded-full border", stageColour[r.stage])}>
                       {ORTHO_STAGE_LABEL[r.stage]}
                     </span>
@@ -242,66 +242,66 @@ export default function ChildOrthodonticTreatmentPage() {
                       Motivation: {ORTHO_MOTIVATION_LABEL[r.child_motivation]}
                     </span>
                   </div>
-                  <div className="text-sm text-slate-600">
+                  <div className="text-sm text-[var(--cs-text-secondary)]">
                     Recorded {r.recorded_date} · Review {r.review_date} · {getStaffName(r.key_worker)}
                   </div>
                 </div>
-                {isOpen ? <ChevronUp className="h-5 w-5 text-slate-400" /> : <ChevronDown className="h-5 w-5 text-slate-400" />}
+                {isOpen ? <ChevronUp className="h-5 w-5 text-[var(--cs-text-muted)]" /> : <ChevronDown className="h-5 w-5 text-[var(--cs-text-muted)]" />}
               </button>
               {isOpen ? (
-                <div className="px-4 pb-4 border-t border-slate-100 bg-slate-50/50">
+                <div className="px-4 pb-4 border-t border-[var(--cs-border-subtle)] bg-slate-50/50">
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 pt-4">
                     <div className="rounded-md border border-sky-200 bg-sky-50 p-3 lg:col-span-2">
                       <div className="text-xs font-semibold text-sky-700 uppercase mb-2">Child Voice</div>
                       <p className="text-sm text-sky-900 italic">&ldquo;{r.child_voice}&rdquo;</p>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3 lg:col-span-2">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Staff Observation</div>
-                      <p className="text-sm text-slate-700">{r.staff_observation}</p>
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3 lg:col-span-2">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Staff Observation</div>
+                      <p className="text-sm text-[var(--cs-text-secondary)]">{r.staff_observation}</p>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">IOTN & NHS</div>
-                      <div className="text-sm text-slate-700 space-y-1">
-                        <div><span className="text-slate-500">IOTN score:</span> {r.iotn_score ?? "—"}</div>
-                        <div><span className="text-slate-500">NHS eligible:</span> {r.nhs_eligible ? "Yes" : "No"}</div>
-                        {r.private_option ? <div><span className="text-slate-500">Private option:</span> {r.private_option}</div> : null}
-                        {r.cost_covered ? <div><span className="text-slate-500">Cost cover:</span> {r.cost_covered}</div> : null}
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">IOTN & NHS</div>
+                      <div className="text-sm text-[var(--cs-text-secondary)] space-y-1">
+                        <div><span className="text-[var(--cs-text-muted)]">IOTN score:</span> {r.iotn_score ?? "—"}</div>
+                        <div><span className="text-[var(--cs-text-muted)]">NHS eligible:</span> {r.nhs_eligible ? "Yes" : "No"}</div>
+                        {r.private_option ? <div><span className="text-[var(--cs-text-muted)]">Private option:</span> {r.private_option}</div> : null}
+                        {r.cost_covered ? <div><span className="text-[var(--cs-text-muted)]">Cost cover:</span> {r.cost_covered}</div> : null}
                       </div>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Treatment details</div>
-                      <div className="text-sm text-slate-700 space-y-1">
-                        <div><span className="text-slate-500">Type:</span> {r.treatment_type ? ORTHO_TREATMENT_TYPE_LABEL[r.treatment_type] : "—"}</div>
-                        <div><span className="text-slate-500">Start:</span> {r.start_date ?? "—"}</div>
-                        <div><span className="text-slate-500">Expected end:</span> {r.expected_end_date ?? "—"}</div>
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Treatment details</div>
+                      <div className="text-sm text-[var(--cs-text-secondary)] space-y-1">
+                        <div><span className="text-[var(--cs-text-muted)]">Type:</span> {r.treatment_type ? ORTHO_TREATMENT_TYPE_LABEL[r.treatment_type] : "—"}</div>
+                        <div><span className="text-[var(--cs-text-muted)]">Start:</span> {r.start_date ?? "—"}</div>
+                        <div><span className="text-[var(--cs-text-muted)]">Expected end:</span> {r.expected_end_date ?? "—"}</div>
                       </div>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Orthodontist</div>
-                      <div className="text-sm text-slate-700 space-y-1">
-                        <div><span className="text-slate-500">Practice:</span> {r.practice_name ?? "—"}</div>
-                        <div><span className="text-slate-500">Clinician:</span> {r.orthodontist ?? "—"}</div>
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Orthodontist</div>
+                      <div className="text-sm text-[var(--cs-text-secondary)] space-y-1">
+                        <div><span className="text-[var(--cs-text-muted)]">Practice:</span> {r.practice_name ?? "—"}</div>
+                        <div><span className="text-[var(--cs-text-muted)]">Clinician:</span> {r.orthodontist ?? "—"}</div>
                       </div>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Appointments</div>
-                      <div className="text-sm text-slate-700 space-y-1">
-                        <div><span className="text-slate-500">Frequency:</span> {r.appointment_frequency ?? "—"}</div>
-                        <div><span className="text-slate-500">Attended:</span> {r.appointments_attended}</div>
-                        <div><span className="text-slate-500">Missed:</span> {r.appointments_missed}</div>
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Appointments</div>
+                      <div className="text-sm text-[var(--cs-text-secondary)] space-y-1">
+                        <div><span className="text-[var(--cs-text-muted)]">Frequency:</span> {r.appointment_frequency ?? "—"}</div>
+                        <div><span className="text-[var(--cs-text-muted)]">Attended:</span> {r.appointments_attended}</div>
+                        <div><span className="text-[var(--cs-text-muted)]">Missed:</span> {r.appointments_missed}</div>
                       </div>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Oral hygiene & motivation</div>
-                      <div className="text-sm text-slate-700 space-y-2">
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Oral hygiene & motivation</div>
+                      <div className="text-sm text-[var(--cs-text-secondary)] space-y-2">
                         <div className="flex items-center gap-2">
-                          <span className="text-slate-500">Hygiene:</span>
+                          <span className="text-[var(--cs-text-muted)]">Hygiene:</span>
                           <span className={cn("text-xs px-2 py-0.5 rounded-full border", hygieneColour[r.oral_hygiene_compliance])}>
                             {ORTHO_HYGIENE_COMPLIANCE_LABEL[r.oral_hygiene_compliance]}
                           </span>
                         </div>
                         <div className="flex items-center gap-2">
-                          <span className="text-slate-500">Motivation:</span>
+                          <span className="text-[var(--cs-text-muted)]">Motivation:</span>
                           <span className={cn("text-xs px-2 py-0.5 rounded-full border", motivationColour[r.child_motivation])}>
                             {ORTHO_MOTIVATION_LABEL[r.child_motivation]}
                           </span>
@@ -318,13 +318,13 @@ export default function ChildOrthodonticTreatmentPage() {
                       </div>
                     ) : null}
                     {r.emergency_contacts.length ? (
-                      <div className="rounded-md border border-slate-200 bg-white p-3 lg:col-span-2">
-                        <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Emergency contacts</div>
-                        <ul className="text-sm text-slate-700 space-y-1">
+                      <div className="rounded-md border border-[var(--cs-border)] bg-white p-3 lg:col-span-2">
+                        <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Emergency contacts</div>
+                        <ul className="text-sm text-[var(--cs-text-secondary)] space-y-1">
                           {r.emergency_contacts.map((c, i) => (
                             <li key={i} className="flex gap-2">
                               <span className="text-teal-500">·</span>
-                              <span><span className="font-medium">{c.name}</span> — {c.role} · <span className="text-slate-600">{c.phone}</span></span>
+                              <span><span className="font-medium">{c.name}</span> — {c.role} · <span className="text-[var(--cs-text-secondary)]">{c.phone}</span></span>
                             </li>
                           ))}
                         </ul>

@@ -172,7 +172,7 @@ export default function ChildMentalHealthDailyCheckPage() {
             </div>
           </div>
           <div className="rounded-xl border bg-gradient-to-br from-amber-50 to-white p-4 flex items-center gap-3">
-            <Cloud className={cn("h-5 w-5", flagsThisWeek > 0 ? "text-amber-600" : "text-slate-400")} />
+            <Cloud className={cn("h-5 w-5", flagsThisWeek > 0 ? "text-amber-600" : "text-[var(--cs-text-muted)]")} />
             <div>
               <p className="text-xs text-muted-foreground">Flags This Week</p>
               <p className={cn("text-lg font-bold", flagsThisWeek > 0 && "text-amber-600")}>{flagsThisWeek}</p>
@@ -276,7 +276,7 @@ export default function ChildMentalHealthDailyCheckPage() {
                   <div className="border-t bg-gradient-to-br from-sky-50/40 to-violet-50/30 p-4 space-y-4">
                     {/* mood scale visual */}
                     <div className="rounded-lg bg-white border p-3">
-                      <p className="text-xs font-medium text-slate-600 mb-2">Mood Scale (1-5)</p>
+                      <p className="text-xs font-medium text-[var(--cs-text-secondary)] mb-2">Mood Scale (1-5)</p>
                       <div className="flex items-center gap-2">
                         {[1, 2, 3, 4, 5].map((n) => {
                           const cfg = MOOD_CONFIG[n as MoodRating];
@@ -289,7 +289,7 @@ export default function ChildMentalHealthDailyCheckPage() {
                               )} />
                               <p className={cn(
                                 "text-[10px] mt-1 text-center",
-                                active ? cfg.color + " font-semibold" : "text-slate-400"
+                                active ? cfg.color + " font-semibold" : "text-[var(--cs-text-muted)]"
                               )}>
                                 {n}
                               </p>
@@ -300,12 +300,12 @@ export default function ChildMentalHealthDailyCheckPage() {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      <div className="rounded-lg bg-white border border-slate-200 p-3">
-                        <p className="text-xs font-medium text-slate-600 mb-1 flex items-center gap-1.5">
-                          <Cloud className="h-3.5 w-3.5 text-slate-500" />
+                      <div className="rounded-lg bg-white border border-[var(--cs-border)] p-3">
+                        <p className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1 flex items-center gap-1.5">
+                          <Cloud className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
                           What&apos;s Heavy Today
                         </p>
-                        <p className="text-sm italic text-slate-800">&ldquo;{rec.whats_heavy}&rdquo;</p>
+                        <p className="text-sm italic text-[var(--cs-navy)]">&ldquo;{rec.whats_heavy}&rdquo;</p>
                       </div>
                       <div className="rounded-lg bg-white border border-violet-200 p-3">
                         <p className="text-xs font-medium text-violet-700 mb-1 flex items-center gap-1.5">

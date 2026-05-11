@@ -30,7 +30,7 @@ const d = (n: number) => {
 };
 
 const STATUS_COLOURS: Record<SelfHarmSafetyPlanStatus, string> = {
-  not_currently_needed:      "bg-slate-100 text-slate-700 border border-slate-200",
+  not_currently_needed:      "bg-slate-100 text-[var(--cs-text-secondary)] border border-[var(--cs-border)]",
   active_preventive:         "bg-teal-100 text-teal-800 border border-teal-200",
   active_recent_incident:    "bg-rose-100 text-rose-800 border border-rose-200",
   in_review:                 "bg-sky-100 text-sky-800 border border-sky-200",
@@ -41,7 +41,7 @@ const FREQUENCY_COLOURS: Record<SelfHarmSafetyPlanReviewFrequency, string> = {
   fortnightly:     "bg-amber-50 text-amber-800 border border-amber-200",
   monthly:         "bg-teal-50 text-teal-800 border border-teal-200",
   quarterly:       "bg-sky-50 text-sky-800 border border-sky-200",
-  after_incident:  "bg-slate-50 text-slate-700 border border-slate-200",
+  after_incident:  "bg-slate-50 text-[var(--cs-text-secondary)] border border-[var(--cs-border)]",
 };
 
 type SortKey = "child" | "status" | "nextReviewDate" | "planDate";
@@ -249,7 +249,7 @@ export default function SelfHarmSafetyPlanPage() {
           <button
             type="button"
             onClick={() => setSortDir((d) => (d === "asc" ? "desc" : "asc"))}
-            className="inline-flex items-center gap-1 rounded-md border bg-white px-3 py-2 text-xs hover:bg-slate-50"
+            className="inline-flex items-center gap-1 rounded-md border bg-white px-3 py-2 text-xs hover:bg-[var(--cs-surface)]"
             aria-label="Toggle sort direction"
           >
             <ArrowUpDown className="h-3.5 w-3.5" />
@@ -282,7 +282,7 @@ export default function SelfHarmSafetyPlanPage() {
               >
                 {/* header */}
                 <button
-                  className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                  className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                   onClick={() => toggle(plan.id)}
                 >
                   <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -328,10 +328,10 @@ export default function SelfHarmSafetyPlanPage() {
                   <div className="border-t bg-slate-50 p-4 space-y-4">
                     {/* co-produced with */}
                     <div>
-                      <p className="text-xs font-semibold text-slate-700 mb-1">Co-produced with</p>
+                      <p className="text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Co-produced with</p>
                       <div className="flex flex-wrap gap-1">
                         {plan.co_produced_with.map((c) => (
-                          <Badge key={c} variant="outline" className="text-xs bg-white text-slate-700 border-slate-200">{c}</Badge>
+                          <Badge key={c} variant="outline" className="text-xs bg-white text-[var(--cs-text-secondary)] border-[var(--cs-border)]">{c}</Badge>
                         ))}
                       </div>
                     </div>
@@ -341,7 +341,7 @@ export default function SelfHarmSafetyPlanPage() {
                       <p className="text-xs font-semibold text-sky-800 mb-2">1. Warning signs (so we notice early — together)</p>
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                         <div>
-                          <p className="text-xs font-medium text-slate-600 mb-1">External (others may notice)</p>
+                          <p className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1">External (others may notice)</p>
                           <ul className="space-y-1">
                             {plan.warning_signs_external.map((w, i) => (
                               <li key={i} className="text-sm flex gap-1"><span className="text-sky-400">&#8226;</span><span>{w}</span></li>
@@ -349,7 +349,7 @@ export default function SelfHarmSafetyPlanPage() {
                           </ul>
                         </div>
                         <div>
-                          <p className="text-xs font-medium text-slate-600 mb-1">Internal (how it feels)</p>
+                          <p className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1">Internal (how it feels)</p>
                           <ul className="space-y-1">
                             {plan.warning_signs_internal.map((w, i) => (
                               <li key={i} className="text-sm flex gap-1"><span className="text-sky-400">&#8226;</span><span>{w}</span></li>
@@ -357,7 +357,7 @@ export default function SelfHarmSafetyPlanPage() {
                           </ul>
                         </div>
                         <div>
-                          <p className="text-xs font-medium text-slate-600 mb-1">Early triggers</p>
+                          <p className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1">Early triggers</p>
                           <ul className="space-y-1">
                             {plan.early_triggers.map((t, i) => (
                               <li key={i} className="text-sm flex gap-1"><span className="text-sky-400">&#8226;</span><span>{t}</span></li>
@@ -423,12 +423,12 @@ export default function SelfHarmSafetyPlanPage() {
                     </div>
 
                     {/* step 6 — means safety */}
-                    <div className="rounded-lg bg-white border border-slate-200 p-3">
-                      <p className="text-xs font-semibold text-slate-700 mb-2">6. Keeping the environment safer (agreed together)</p>
+                    <div className="rounded-lg bg-white border border-[var(--cs-border)] p-3">
+                      <p className="text-xs font-semibold text-[var(--cs-text-secondary)] mb-2">6. Keeping the environment safer (agreed together)</p>
                       <ul className="space-y-1">
                         {plan.means_restriction_agreed.map((m, i) => (
                           <li key={i} className="text-sm flex gap-1">
-                            <Shield className="h-3.5 w-3.5 text-slate-500 mt-0.5 shrink-0" />
+                            <Shield className="h-3.5 w-3.5 text-[var(--cs-text-muted)] mt-0.5 shrink-0" />
                             <span>{m}</span>
                           </li>
                         ))}
@@ -480,22 +480,22 @@ export default function SelfHarmSafetyPlanPage() {
 
                     {/* staff observation */}
                     <div className="rounded-lg bg-white border p-3">
-                      <p className="text-xs font-semibold text-slate-700 mb-1">Staff observation</p>
-                      <p className="text-sm text-slate-800">{plan.staff_observation}</p>
+                      <p className="text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Staff observation</p>
+                      <p className="text-sm text-[var(--cs-navy)]">{plan.staff_observation}</p>
                     </div>
 
                     {/* professionals informed + flags */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       <div className="rounded-lg bg-white border p-3">
-                        <p className="text-xs font-semibold text-slate-700 mb-1">Professionals informed</p>
+                        <p className="text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Professionals informed</p>
                         <ul className="space-y-0.5">
                           {plan.professionals_informed.map((p, i) => (
-                            <li key={i} className="text-sm flex gap-1"><span className="text-slate-400">&#8226;</span><span>{p}</span></li>
+                            <li key={i} className="text-sm flex gap-1"><span className="text-[var(--cs-text-muted)]">&#8226;</span><span>{p}</span></li>
                           ))}
                         </ul>
                       </div>
                       <div className="rounded-lg bg-white border p-3">
-                        <p className="text-xs font-semibold text-slate-700 mb-1">Flags for next review</p>
+                        <p className="text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Flags for next review</p>
                         {plan.flags_for_review.length === 0 ? (
                           <p className="text-sm text-muted-foreground">No flags raised.</p>
                         ) : (

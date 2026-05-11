@@ -105,7 +105,7 @@ export default function MyDayPage() {
     return (
       <PageShell title="My Day" subtitle="Loading your day…">
         <div className="flex items-center justify-center py-20">
-          <Loader2 className="h-6 w-6 animate-spin text-slate-400" />
+          <Loader2 className="h-6 w-6 animate-spin text-[var(--cs-text-muted)]" />
         </div>
       </PageShell>
     );
@@ -127,9 +127,9 @@ export default function MyDayPage() {
               <Sun className="h-6 w-6 text-yellow-300" />
             </div>
             <div className="flex-1">
-              <div className="text-xs font-medium text-slate-300 mb-1">{new Date().toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric" })}</div>
+              <div className="text-xs font-medium text-[var(--cs-text-gentle)] mb-1">{new Date().toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric" })}</div>
               <div className="text-xl font-bold">{greeting}, {displayName}</div>
-              <div className="text-sm text-slate-300 mt-1">
+              <div className="text-sm text-[var(--cs-text-gentle)] mt-1">
                 {myTasks.length > 0
                   ? `${myTasks.filter((t) => isDueToday(t.due_date)).length} tasks due today · ${myTasks.filter((t) => isOverdue(t.due_date, t.status)).length} overdue`
                   : "You have no tasks due today"}
@@ -139,7 +139,7 @@ export default function MyDayPage() {
             {todayShift && (
               <div className="text-right">
                 <div className="text-sm font-semibold">{todayShift.start_time} – {todayShift.end_time}</div>
-                <div className="text-xs text-slate-300">Your shift today</div>
+                <div className="text-xs text-[var(--cs-text-gentle)]">Your shift today</div>
               </div>
             )}
           </div>
@@ -200,27 +200,27 @@ export default function MyDayPage() {
                 {myTasks.length === 0 ? (
                   <div className="py-8 text-center">
                     <CheckCircle2 className="h-10 w-10 text-emerald-400 mx-auto mb-2" />
-                    <div className="text-sm font-medium text-slate-700">All caught up!</div>
-                    <div className="text-xs text-slate-400">No outstanding tasks assigned to you</div>
+                    <div className="text-sm font-medium text-[var(--cs-text-secondary)]">All caught up!</div>
+                    <div className="text-xs text-[var(--cs-text-muted)]">No outstanding tasks assigned to you</div>
                   </div>
                 ) : (
                   <div className="divide-y divide-slate-100">
                     {myTasks.map((task) => {
                       const overdue = isOverdue(task.due_date, task.status);
                       const dueToday = isDueToday(task.due_date);
-                      const prioColors: Record<string, string> = { urgent: "text-red-600", high: "text-orange-600", medium: "text-blue-600", low: "text-slate-400" };
+                      const prioColors: Record<string, string> = { urgent: "text-red-600", high: "text-orange-600", medium: "text-blue-600", low: "text-[var(--cs-text-muted)]" };
                       return (
                         <div key={task.id} className="flex items-center gap-3 py-2.5">
                           {task.status === "in_progress" ? (
                             <Clock className="h-4 w-4 text-blue-500 shrink-0" />
                           ) : (
-                            <Circle className="h-4 w-4 text-slate-300 shrink-0" />
+                            <Circle className="h-4 w-4 text-[var(--cs-text-gentle)] shrink-0" />
                           )}
                           <div className="flex-1 min-w-0">
-                            <div className={cn("text-sm font-medium truncate", overdue ? "text-red-700" : "text-slate-900")}>{task.title}</div>
-                            <div className="text-xs text-slate-400 mt-0.5">
+                            <div className={cn("text-sm font-medium truncate", overdue ? "text-red-700" : "text-[var(--cs-navy)]")}>{task.title}</div>
+                            <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">
                               {task.due_date && (
-                                <span className={cn(overdue ? "text-red-600 font-semibold" : dueToday ? "text-orange-600" : "text-slate-400")}>
+                                <span className={cn(overdue ? "text-red-600 font-semibold" : dueToday ? "text-orange-600" : "text-[var(--cs-text-muted)]")}>
                                   {overdue ? "OVERDUE" : dueToday ? "Due today" : `Due ${formatDate(task.due_date)}`}
                                 </span>
                               )}
@@ -249,7 +249,7 @@ export default function MyDayPage() {
                     {awaitingSignOff.map((task) => (
                       <div key={task.id} className="flex items-center gap-3 rounded-xl bg-amber-50 border border-amber-200 px-3 py-2.5">
                         <CheckCircle2 className="h-4 w-4 text-amber-600 shrink-0" />
-                        <span className="text-sm text-slate-900 flex-1 truncate">{task.title}</span>
+                        <span className="text-sm text-[var(--cs-navy)] flex-1 truncate">{task.title}</span>
                         <Button
                           size="sm"
                           className="h-7 text-xs bg-amber-600 hover:bg-amber-700"
@@ -280,8 +280,8 @@ export default function MyDayPage() {
                       )}>
                         <AlertTriangle className={cn("h-4 w-4 shrink-0", inc.severity === "critical" ? "text-red-500" : "text-amber-500")} />
                         <div className="flex-1 min-w-0">
-                          <div className="text-sm font-medium text-slate-900 truncate">{inc.reference} — {inc.type.replace(/_/g, " ")}</div>
-                          <div className="text-xs text-slate-500">{inc.date}</div>
+                          <div className="text-sm font-medium text-[var(--cs-navy)] truncate">{inc.reference} — {inc.type.replace(/_/g, " ")}</div>
+                          <div className="text-xs text-[var(--cs-text-muted)]">{inc.date}</div>
                         </div>
                         <Badge className={cn("text-[9px] rounded-full", inc.severity === "critical" ? "bg-red-100 text-red-700" : "bg-amber-100 text-amber-700")}>{inc.severity}</Badge>
                       </div>
@@ -302,11 +302,11 @@ export default function MyDayPage() {
                   {todayShift ? (
                     <div className="rounded-xl bg-emerald-50 border border-emerald-200 p-3">
                       <div className="text-xs font-semibold text-emerald-800 mb-0.5">Today&apos;s Shift</div>
-                      <div className="text-sm font-bold text-slate-900">{todayShift.start_time} – {todayShift.end_time}</div>
-                      <div className="text-xs text-slate-500 capitalize">{todayShift.shift_type.replace(/_/g, " ")}</div>
+                      <div className="text-sm font-bold text-[var(--cs-navy)]">{todayShift.start_time} – {todayShift.end_time}</div>
+                      <div className="text-xs text-[var(--cs-text-muted)] capitalize">{todayShift.shift_type.replace(/_/g, " ")}</div>
                     </div>
                   ) : (
-                    <div className="rounded-xl bg-slate-50 p-3 text-xs text-slate-500 text-center">No shift today</div>
+                    <div className="rounded-xl bg-slate-50 p-3 text-xs text-[var(--cs-text-muted)] text-center">No shift today</div>
                   )}
                   {nextSupervision && (
                     <div className="flex items-center gap-2 text-xs rounded-xl bg-blue-50 p-3">
@@ -353,11 +353,11 @@ export default function MyDayPage() {
                     { label: "Daily handover", href: "/handover", icon: MessageSquare },
                   ].map(({ label, href, icon: Icon }) => (
                     <a key={href} href={href}
-                      className="flex items-center gap-3 rounded-xl px-3 py-2 hover:bg-slate-50 transition-colors text-sm text-slate-700 group"
+                      className="flex items-center gap-3 rounded-xl px-3 py-2 hover:bg-[var(--cs-surface)] transition-colors text-sm text-[var(--cs-text-secondary)] group"
                     >
-                      <Icon className="h-4 w-4 text-slate-400 group-hover:text-slate-600" />
+                      <Icon className="h-4 w-4 text-[var(--cs-text-muted)] group-hover:text-[var(--cs-text-secondary)]" />
                       {label}
-                      <ChevronRight className="h-3.5 w-3.5 text-slate-300 ml-auto opacity-0 group-hover:opacity-100" />
+                      <ChevronRight className="h-3.5 w-3.5 text-[var(--cs-text-gentle)] ml-auto opacity-0 group-hover:opacity-100" />
                     </a>
                   ))}
                 </div>

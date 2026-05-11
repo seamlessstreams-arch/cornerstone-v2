@@ -48,7 +48,7 @@ type CurriculumResult = {
 
 const CONTENT_TYPE_COLOURS: Record<string, string> = {
   workshop: "bg-blue-100 text-blue-700",
-  self_study: "bg-slate-100 text-slate-700",
+  self_study: "bg-slate-100 text-[var(--cs-text-secondary)]",
   discussion: "bg-violet-100 text-violet-700",
   activity: "bg-amber-100 text-amber-700",
   assessment: "bg-emerald-100 text-emerald-700",
@@ -57,56 +57,56 @@ const CONTENT_TYPE_COLOURS: Record<string, string> = {
 function ModuleCard({ module }: { module: CurriculumModule }) {
   const [expanded, setExpanded] = useState(false);
   return (
-    <div className="rounded-xl border border-slate-200 overflow-hidden">
+    <div className="rounded-xl border border-[var(--cs-border)] overflow-hidden">
       <button
-        className="w-full flex items-center gap-3 p-4 text-left hover:bg-slate-50 transition-colors"
+        className="w-full flex items-center gap-3 p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
         onClick={() => setExpanded((p) => !p)}
       >
         <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-teal-100 text-xs font-bold text-teal-700">
           {module.module_number}
         </span>
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-semibold text-slate-900">{module.title}</p>
+          <p className="text-sm font-semibold text-[var(--cs-navy)]">{module.title}</p>
           <div className="flex items-center gap-2 mt-0.5">
-            <Badge className={cn("text-[10px] h-4 px-1.5", CONTENT_TYPE_COLOURS[module.content_type] ?? "bg-slate-100 text-slate-700")}>
+            <Badge className={cn("text-[10px] h-4 px-1.5", CONTENT_TYPE_COLOURS[module.content_type] ?? "bg-slate-100 text-[var(--cs-text-secondary)]")}>
               {module.content_type?.replace("_", " ")}
             </Badge>
             {module.duration && (
-              <span className="text-[10px] text-slate-400 flex items-center gap-0.5">
+              <span className="text-[10px] text-[var(--cs-text-muted)] flex items-center gap-0.5">
                 <Clock className="h-2.5 w-2.5" />
                 {module.duration}
               </span>
             )}
           </div>
         </div>
-        {expanded ? <ChevronUp className="h-4 w-4 text-slate-400 shrink-0" /> : <ChevronDown className="h-4 w-4 text-slate-400 shrink-0" />}
+        {expanded ? <ChevronUp className="h-4 w-4 text-[var(--cs-text-muted)] shrink-0" /> : <ChevronDown className="h-4 w-4 text-[var(--cs-text-muted)] shrink-0" />}
       </button>
       {expanded && (
-        <div className="px-4 pb-4 space-y-3 border-t border-slate-100 pt-3">
+        <div className="px-4 pb-4 space-y-3 border-t border-[var(--cs-border-subtle)] pt-3">
           {module.learning_objective && (
             <div>
-              <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wide mb-1">Learning Objective</p>
-              <p className="text-sm text-slate-700">{module.learning_objective}</p>
+              <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-1">Learning Objective</p>
+              <p className="text-sm text-[var(--cs-text-secondary)]">{module.learning_objective}</p>
             </div>
           )}
           {module.description && (
             <div>
-              <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wide mb-1">Content</p>
-              <p className="text-sm text-slate-700 leading-relaxed">{module.description}</p>
+              <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-1">Content</p>
+              <p className="text-sm text-[var(--cs-text-secondary)] leading-relaxed">{module.description}</p>
             </div>
           )}
           {module.resources_needed?.length > 0 && (
             <div>
-              <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wide mb-1">Resources</p>
-              <ul className="text-xs text-slate-600 space-y-0.5 list-disc list-inside">
+              <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-1">Resources</p>
+              <ul className="text-xs text-[var(--cs-text-secondary)] space-y-0.5 list-disc list-inside">
                 {module.resources_needed.map((r, i) => <li key={i}>{r}</li>)}
               </ul>
             </div>
           )}
           {module.assessment_method && (
             <div>
-              <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wide mb-1">Assessment</p>
-              <p className="text-sm text-slate-700">{module.assessment_method}</p>
+              <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-1">Assessment</p>
+              <p className="text-sm text-[var(--cs-text-secondary)]">{module.assessment_method}</p>
             </div>
           )}
         </div>
@@ -199,17 +199,17 @@ export default function CurriculumBuilderPage() {
           <CardContent className="space-y-4">
             <div className="grid sm:grid-cols-2 gap-3">
               <div>
-                <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Topic / Theme</label>
+                <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Topic / Theme</label>
                 <Input className="mt-1" placeholder="e.g. Trauma-Informed Practice" value={topic} onChange={(e) => setTopic(e.target.value)} />
               </div>
               <div>
-                <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Duration</label>
+                <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Duration</label>
                 <Input className="mt-1" placeholder="e.g. 6 weeks, 3 days, 1 month" value={duration} onChange={(e) => setDuration(e.target.value)} />
               </div>
             </div>
             <div className="grid sm:grid-cols-2 gap-3">
               <div>
-                <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Pathway</label>
+                <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Pathway</label>
                 <Select value={pathway} onValueChange={setPathway}>
                   <SelectTrigger className="mt-1"><SelectValue /></SelectTrigger>
                   <SelectContent>
@@ -220,12 +220,12 @@ export default function CurriculumBuilderPage() {
                 </Select>
               </div>
               <div>
-                <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Target Audience</label>
+                <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Target Audience</label>
                 <Input className="mt-1" placeholder="e.g. All care staff, new starters, TLs" value={audience} onChange={(e) => setAudience(e.target.value)} />
               </div>
             </div>
             <div>
-              <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Desired Learning Outcomes</label>
+              <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Desired Learning Outcomes</label>
               <Textarea className="mt-1 text-sm" rows={2} placeholder="What should participants know or be able to do after completing this curriculum?" value={outcomes} onChange={(e) => setOutcomes(e.target.value)} />
             </div>
             <Button onClick={generate} disabled={!topic.trim() || generating} className="gap-1.5 bg-teal-600 hover:bg-teal-700 text-white" size="sm">
@@ -247,16 +247,16 @@ export default function CurriculumBuilderPage() {
                   <h3 className="text-base font-bold">{result.curriculum_title}</h3>
                   <div className="flex items-center gap-2 mt-0.5">
                     <Badge className="text-[10px] bg-teal-600/40 text-teal-200 capitalize">{result.pathway}</Badge>
-                    {result.duration && <span className="text-xs text-slate-400">{result.duration}</span>}
+                    {result.duration && <span className="text-xs text-[var(--cs-text-muted)]">{result.duration}</span>}
                   </div>
                 </div>
               </div>
-              <p className="text-sm text-slate-300 leading-relaxed">{result.overview}</p>
+              <p className="text-sm text-[var(--cs-text-gentle)] leading-relaxed">{result.overview}</p>
             </div>
 
             {result.learning_outcomes?.length > 0 && (
               <div>
-                <p className="text-xs font-semibold text-slate-600 uppercase tracking-wide mb-2">Learning Outcomes</p>
+                <p className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide mb-2">Learning Outcomes</p>
                 <div className="space-y-1.5">
                   {result.learning_outcomes.map((o, i) => (
                     <div key={i} className="flex items-start gap-2 rounded-lg bg-emerald-50 border border-emerald-100 px-3 py-2">
@@ -270,7 +270,7 @@ export default function CurriculumBuilderPage() {
 
             {result.modules?.length > 0 && (
               <div>
-                <p className="text-xs font-semibold text-slate-600 uppercase tracking-wide mb-2">
+                <p className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide mb-2">
                   {result.modules.length} Module{result.modules.length !== 1 ? "s" : ""}
                 </p>
                 <div className="space-y-2">
@@ -281,9 +281,9 @@ export default function CurriculumBuilderPage() {
 
             {result.assessment_framework && (
               <div>
-                <p className="text-xs font-semibold text-slate-600 uppercase tracking-wide mb-2">Assessment Framework</p>
-                <div className="rounded-xl border border-slate-100 bg-white p-4">
-                  <p className="text-sm text-slate-700 leading-relaxed">{result.assessment_framework}</p>
+                <p className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide mb-2">Assessment Framework</p>
+                <div className="rounded-xl border border-[var(--cs-border-subtle)] bg-white p-4">
+                  <p className="text-sm text-[var(--cs-text-secondary)] leading-relaxed">{result.assessment_framework}</p>
                 </div>
               </div>
             )}
@@ -301,18 +301,18 @@ export default function CurriculumBuilderPage() {
         {/* Saved curricula */}
         {curricula.length > 0 && (
           <div>
-            <h3 className="text-sm font-semibold text-slate-700 mb-3">Saved Curricula</h3>
+            <h3 className="text-sm font-semibold text-[var(--cs-text-secondary)] mb-3">Saved Curricula</h3>
             <div className="space-y-3">
               {curricula.map((c) => (
-                <div key={c.id} className="rounded-xl border border-slate-100 bg-white p-4 flex items-center gap-3">
+                <div key={c.id} className="rounded-xl border border-[var(--cs-border-subtle)] bg-white p-4 flex items-center gap-3">
                   <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-teal-50">
                     <BookOpen className="h-4.5 w-4.5 text-teal-600" style={{ width: "1.125rem", height: "1.125rem" }} />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-semibold text-slate-900">{c.title}</p>
+                    <p className="text-sm font-semibold text-[var(--cs-navy)]">{c.title}</p>
                     <div className="flex items-center gap-2 mt-0.5">
                       {c.pathway && <Badge variant="outline" className="text-[10px] h-4 px-1.5 capitalize">{c.pathway}</Badge>}
-                      <Badge className={cn("text-[10px] h-4 px-1.5", c.status === "approved" ? "bg-emerald-100 text-emerald-700" : "bg-slate-100 text-slate-700")}>
+                      <Badge className={cn("text-[10px] h-4 px-1.5", c.status === "approved" ? "bg-emerald-100 text-emerald-700" : "bg-slate-100 text-[var(--cs-text-secondary)]")}>
                         {c.status}
                       </Badge>
                     </div>

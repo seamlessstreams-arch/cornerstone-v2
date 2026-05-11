@@ -136,7 +136,7 @@ export default function QualityOfCarePage() {
             { label: "Total Reviews", value: totalReviews, icon: Star, colour: "text-blue-600" },
             { label: "Latest Rating", value: latestRating ? QOC_RATING_LABEL[latestRating] : "—", icon: Target, colour: latestRating === "outstanding" ? "text-green-600" : latestRating === "good" ? "text-blue-600" : "text-orange-600" },
             { label: "Open Actions", value: openActions, icon: CheckCircle2, colour: openActions > 0 ? "text-orange-600" : "text-green-600" },
-            { label: "Domains Flagged", value: riDomains, icon: AlertTriangle, colour: riDomains > 0 ? "text-red-600" : "text-slate-400" },
+            { label: "Domains Flagged", value: riDomains, icon: AlertTriangle, colour: riDomains > 0 ? "text-red-600" : "text-[var(--cs-text-muted)]" },
           ].map((s) => (
             <div key={s.label} className="rounded-xl border bg-white p-4 flex items-center gap-3">
               <s.icon className={cn("h-5 w-5", s.colour)} />
@@ -217,7 +217,7 @@ export default function QualityOfCarePage() {
             return (
               <div key={review.id} className="rounded-xl border bg-white overflow-hidden">
                 <button
-                  className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                  className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                   onClick={() => setExpanded(isExpanded ? null : review.id)}
                 >
                   <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -313,7 +313,7 @@ export default function QualityOfCarePage() {
                           {review.actions.map((action: QocActionItem, idx: number) => (
                             <div key={idx} className="flex items-start gap-2 rounded-lg border bg-white p-2.5">
                               <CheckCircle2 className={cn("h-4 w-4 mt-0.5 shrink-0",
-                                action.status === "completed" ? "text-green-600" : action.status === "in_progress" ? "text-blue-600" : "text-slate-400"
+                                action.status === "completed" ? "text-green-600" : action.status === "in_progress" ? "text-blue-600" : "text-[var(--cs-text-muted)]"
                               )} />
                               <div className="flex-1 min-w-0">
                                 <p className={cn("text-sm", action.status === "completed" && "line-through text-muted-foreground")}>{action.action}</p>
@@ -327,7 +327,7 @@ export default function QualityOfCarePage() {
                                 <Badge variant="outline" className={cn("text-xs",
                                   action.priority === "high" ? "border-red-300 text-red-700" :
                                   action.priority === "medium" ? "border-orange-300 text-orange-700" :
-                                  "border-slate-300 text-slate-700"
+                                  "border-slate-300 text-[var(--cs-text-secondary)]"
                                 )}>{QOC_ACTION_PRIORITY_LABEL[action.priority]}</Badge>
                                 <Badge variant="outline" className="text-xs">{QOC_ACTION_STATUS_LABEL[action.status]}</Badge>
                               </div>

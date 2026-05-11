@@ -292,7 +292,7 @@ export default function BoardReportingPage() {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <div className="p-2 rounded-full bg-slate-100">
-                      <FileText className="h-5 w-5 text-slate-700" />
+                      <FileText className="h-5 w-5 text-[var(--cs-text-secondary)]" />
                     </div>
                     <div>
                       <CardTitle className="text-base">
@@ -501,7 +501,7 @@ export default function BoardReportingPage() {
                       <ul className="space-y-1">
                         {report.evidence_attachments.map((a, i) => (
                           <li key={i} className="text-sm text-muted-foreground flex items-start gap-2">
-                            <span className="text-slate-400 mt-1.5">•</span> {a}
+                            <span className="text-[var(--cs-text-muted)] mt-1.5">•</span> {a}
                           </li>
                         ))}
                       </ul>
@@ -541,9 +541,9 @@ export default function BoardReportingPage() {
       </div>
 
       {/* ─── regulatory note ─── */}
-      <div className="mt-8 bg-slate-50 border border-slate-200 rounded-lg p-4">
-        <p className="text-sm font-medium text-slate-700 mb-1">Regulatory Context</p>
-        <p className="text-xs text-slate-600 leading-relaxed">
+      <div className="mt-8 bg-slate-50 border border-[var(--cs-border)] rounded-lg p-4">
+        <p className="text-sm font-medium text-[var(--cs-text-secondary)] mb-1">Regulatory Context</p>
+        <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed">
           Quality Standard 13 (Leadership and Management) requires that the registered manager and
           responsible individual lead and manage the home in a way that promotes children&apos;s
           welfare and protects them from harm. Regulation 45 of the Children&apos;s Homes (England)

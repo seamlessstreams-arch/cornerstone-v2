@@ -31,7 +31,7 @@ const CATEGORY_CONFIG: Record<string, { color: string; bgColor: string }> = {
   regulation:       { color: "text-purple-600",  bgColor: "bg-purple-100" },
   guidance:         { color: "text-teal-600",    bgColor: "bg-teal-100" },
   training:         { color: "text-emerald-600", bgColor: "bg-emerald-100" },
-  report:           { color: "text-slate-600",   bgColor: "bg-slate-100" },
+  report:           { color: "text-[var(--cs-text-secondary)]",   bgColor: "bg-slate-100" },
 };
 
 // ── Document row ────────────────────────────────────────────────────────────
@@ -59,10 +59,10 @@ function DocRow({
   const isExpiring = doc.expiry_date && !isExpired &&
     (new Date(doc.expiry_date).getTime() - Date.now()) < 30 * 86400000;
 
-  const catConfig = CATEGORY_CONFIG[doc.category] ?? { color: "text-slate-600", bgColor: "bg-slate-100" };
+  const catConfig = CATEGORY_CONFIG[doc.category] ?? { color: "text-[var(--cs-text-secondary)]", bgColor: "bg-slate-100" };
 
   return (
-    <div className="flex items-start gap-3 px-3 py-3 hover:bg-slate-50 transition-colors group">
+    <div className="flex items-start gap-3 px-3 py-3 hover:bg-[var(--cs-surface)] transition-colors group">
       <div className={cn("flex h-8 w-8 items-center justify-center rounded-xl shrink-0 mt-0.5", catConfig.bgColor)}>
         <FileText className={cn("h-4 w-4", catConfig.color)} />
       </div>
@@ -71,7 +71,7 @@ function DocRow({
         <div className="flex items-center gap-2">
           <Link
             href="/documents"
-            className="text-[13px] font-medium text-slate-800 truncate hover:text-blue-600 transition-colors"
+            className="text-[13px] font-medium text-[var(--cs-navy)] truncate hover:text-blue-600 transition-colors"
           >
             {doc.title}
           </Link>
@@ -87,13 +87,13 @@ function DocRow({
           )}
         </div>
         <div className="flex items-center gap-2 mt-1">
-          <span className="text-[10px] text-slate-400 capitalize">
+          <span className="text-[10px] text-[var(--cs-text-muted)] capitalize">
             {doc.category.replace(/_/g, " ")}
           </span>
           {doc.expiry_date && (
             <span className={cn(
               "text-[10px]",
-              isExpired ? "text-red-600 font-semibold" : "text-slate-400",
+              isExpired ? "text-red-600 font-semibold" : "text-[var(--cs-text-muted)]",
             )}>
               {isExpired ? "Expired" : "Expires"} {formatRelative(doc.expiry_date)}
             </span>
@@ -102,7 +102,7 @@ function DocRow({
         {/* Sign progress */}
         <div className="mt-2 flex items-center gap-2">
           <Progress value={pct} className="h-1.5 flex-1" />
-          <span className="text-[10px] text-slate-400 tabular-nums shrink-0">
+          <span className="text-[10px] text-[var(--cs-text-muted)] tabular-nums shrink-0">
             {signedCount}/{totalRequired}
           </span>
         </div>
@@ -165,7 +165,7 @@ export function DocumentSignOff() {
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-center py-8">
-            <Loader2 className="h-5 w-5 animate-spin text-slate-400" />
+            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
           </div>
         </CardContent>
       </Card>
@@ -207,7 +207,7 @@ export function DocumentSignOff() {
           <div className="py-6 text-center">
             <CheckCircle2 className="h-8 w-8 text-emerald-400 mx-auto mb-2" />
             <p className="text-sm font-medium text-emerald-700">All documents signed</p>
-            <p className="text-[11px] text-slate-400 mt-0.5">
+            <p className="text-[11px] text-[var(--cs-text-muted)] mt-0.5">
               {docs.length} document{docs.length !== 1 ? "s" : ""} in your read-and-sign queue — all acknowledged
             </p>
           </div>

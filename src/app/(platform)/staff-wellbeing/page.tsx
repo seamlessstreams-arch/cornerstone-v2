@@ -128,7 +128,7 @@ export default function StaffWellbeingPage() {
             { label: "Total Check-ins", value: total, icon: HeartPulse, colour: "text-pink-600" },
             { label: "Avg. Score", value: `${avgScore}/5`, icon: TrendingUp, colour: "text-blue-600" },
             { label: "Low Scores (≤2)", value: lowScores, icon: AlertTriangle, colour: lowScores > 0 ? "text-red-600" : "text-green-600" },
-            { label: "Follow-ups Due", value: pendingFollowUp, icon: Clock, colour: pendingFollowUp > 0 ? "text-orange-600" : "text-slate-400" },
+            { label: "Follow-ups Due", value: pendingFollowUp, icon: Clock, colour: pendingFollowUp > 0 ? "text-orange-600" : "text-[var(--cs-text-muted)]" },
           ].map((s) => (
             <div key={s.label} className="rounded-xl border bg-white p-4 flex items-center gap-3">
               <s.icon className={cn("h-5 w-5", s.colour)} />
@@ -198,7 +198,7 @@ export default function StaffWellbeingPage() {
             return (
               <div key={check.id} className="rounded-xl border bg-white overflow-hidden">
                 <button
-                  className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                  className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                   onClick={() => setExpanded(isExpanded ? null : check.id)}
                 >
                   <div className="flex items-center gap-3 flex-1 min-w-0">

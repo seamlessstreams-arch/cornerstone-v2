@@ -26,7 +26,7 @@ import { useImpactAssessments } from "@/hooks/use-impact-assessments";
 const STATUSES: ImpactAssessmentStatus[] = ["draft", "in_progress", "completed", "approved", "declined"];
 
 const STATUS_COLORS: Record<ImpactAssessmentStatus, string> = {
-  draft: "bg-slate-100 text-slate-800", in_progress: "bg-blue-100 text-blue-800",
+  draft: "bg-slate-100 text-[var(--cs-navy)]", in_progress: "bg-blue-100 text-blue-800",
   completed: "bg-green-100 text-green-800", approved: "bg-emerald-100 text-emerald-800",
   declined: "bg-red-100 text-red-800",
 };
@@ -120,7 +120,7 @@ export default function ImpactAssessmentsPage() {
             { label: "Total Assessments", value: total, icon: Scale, colour: "text-blue-600" },
             { label: "Approved", value: approved, icon: ThumbsUp, colour: "text-green-600" },
             { label: "Declined", value: declined, icon: ThumbsDown, colour: "text-red-600" },
-            { label: "In Progress", value: inProgress, icon: Clock, colour: inProgress > 0 ? "text-orange-600" : "text-slate-400" },
+            { label: "In Progress", value: inProgress, icon: Clock, colour: inProgress > 0 ? "text-orange-600" : "text-[var(--cs-text-muted)]" },
           ].map((s) => (
             <div key={s.label} className="rounded-xl border bg-white p-4 flex items-center gap-3">
               <s.icon className={cn("h-5 w-5", s.colour)} />
@@ -179,7 +179,7 @@ export default function ImpactAssessmentsPage() {
             return (
               <div key={assessment.id} className="rounded-xl border bg-white overflow-hidden">
                 <button
-                  className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                  className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                   onClick={() => setExpanded(isExpanded ? null : assessment.id)}
                 >
                   <div className="flex items-center gap-3 flex-1 min-w-0">

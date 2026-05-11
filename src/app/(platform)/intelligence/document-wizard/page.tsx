@@ -80,7 +80,7 @@ function WizardStepBar({ stage }: { stage: WizardStage }) {
                   "h-9 w-9 rounded-full flex items-center justify-center border-2 transition-all",
                   done   && "bg-violet-600 border-violet-600 text-white",
                   active && "bg-white border-violet-600 text-violet-600",
-                  !done && !active && "bg-white border-slate-200 text-slate-400"
+                  !done && !active && "bg-white border-[var(--cs-border)] text-[var(--cs-text-muted)]"
                 )}
               >
                 {done ? (
@@ -92,7 +92,7 @@ function WizardStepBar({ stage }: { stage: WizardStage }) {
               <span
                 className={cn(
                   "text-[11px] font-semibold",
-                  active ? "text-violet-700" : done ? "text-violet-500" : "text-slate-400"
+                  active ? "text-violet-700" : done ? "text-violet-500" : "text-[var(--cs-text-muted)]"
                 )}
               >
                 {idx + 1}. {label}
@@ -117,7 +117,7 @@ function WizardStepBar({ stage }: { stage: WizardStage }) {
 
 function TagPill({ label, color = "slate" }: { label: string; color?: string }) {
   const colors: Record<string, string> = {
-    slate:  "bg-slate-100 text-slate-700",
+    slate:  "bg-slate-100 text-[var(--cs-text-secondary)]",
     violet: "bg-violet-100 text-violet-700",
     red:    "bg-red-100 text-red-700",
     amber:  "bg-amber-100 text-amber-700",
@@ -133,7 +133,7 @@ function TagPill({ label, color = "slate" }: { label: string; color?: string }) 
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-1.5">
+    <div className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-1.5">
       {children}
     </div>
   );
@@ -313,10 +313,10 @@ export default function DocumentWizardPage() {
 
         {/* ── Stage 1: Upload ─────────────────────────────────────────────── */}
         {stage === "upload" && (
-          <div className="rounded-2xl border border-slate-200 bg-white p-6 space-y-5 shadow-sm">
+          <div className="rounded-2xl border border-[var(--cs-border)] bg-white p-6 space-y-5 shadow-sm">
             <div>
-              <h2 className="text-base font-bold text-slate-900">Upload a document</h2>
-              <p className="text-sm text-slate-500 mt-0.5">
+              <h2 className="text-base font-bold text-[var(--cs-navy)]">Upload a document</h2>
+              <p className="text-sm text-[var(--cs-text-muted)] mt-0.5">
                 ARIA will read, classify, and extract key information automatically.
               </p>
             </div>
@@ -333,17 +333,17 @@ export default function DocumentWizardPage() {
                     "flex flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed p-10 cursor-pointer transition-all",
                     isDragOver
                       ? "border-violet-400 bg-violet-50"
-                      : "border-slate-200 bg-slate-50 hover:border-violet-300 hover:bg-violet-50"
+                      : "border-[var(--cs-border)] bg-slate-50 hover:border-violet-300 hover:bg-violet-50"
                   )}
                 >
                   <div className="h-12 w-12 rounded-2xl bg-violet-100 flex items-center justify-center">
                     <FileUp className="h-6 w-6 text-violet-600" />
                   </div>
                   <div className="text-center">
-                    <p className="text-sm font-semibold text-slate-700">
+                    <p className="text-sm font-semibold text-[var(--cs-text-secondary)]">
                       Drop a file here, or click to browse
                     </p>
-                    <p className="text-xs text-slate-400 mt-0.5">
+                    <p className="text-xs text-[var(--cs-text-muted)] mt-0.5">
                       PDF, DOCX, TXT, JPG, PNG — up to 20 MB
                     </p>
                   </div>
@@ -358,19 +358,19 @@ export default function DocumentWizardPage() {
 
                 {/* Selected file display */}
                 {file && (
-                  <div className="flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-4 py-3">
+                  <div className="flex items-center justify-between rounded-xl border border-[var(--cs-border)] bg-slate-50 px-4 py-3">
                     <div className="flex items-center gap-3">
                       <FileText className="h-5 w-5 text-violet-500 shrink-0" />
                       <div>
-                        <p className="text-sm font-medium text-slate-800">{file.name}</p>
-                        <p className="text-xs text-slate-400">
+                        <p className="text-sm font-medium text-[var(--cs-navy)]">{file.name}</p>
+                        <p className="text-xs text-[var(--cs-text-muted)]">
                           {(file.size / 1024).toFixed(1)} KB · {file.type || "unknown type"}
                         </p>
                       </div>
                     </div>
                     <button
                       onClick={(e) => { e.stopPropagation(); setFile(null); setDocumentText(""); }}
-                      className="text-slate-400 hover:text-slate-600 transition-colors"
+                      className="text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] transition-colors"
                     >
                       <X className="h-4 w-4" />
                     </button>
@@ -385,7 +385,7 @@ export default function DocumentWizardPage() {
                       <span className="font-semibold">Text extraction note:</span> Server-side PDF/DOCX parsing isn&apos;t configured yet.
                       Please paste the text from your document below, or use the "Paste text instead" option.
                       <textarea
-                        className="mt-2 w-full rounded-lg border border-amber-200 bg-white p-2.5 text-xs resize-none focus:outline-none focus:ring-2 focus:ring-amber-400 placeholder:text-slate-400"
+                        className="mt-2 w-full rounded-lg border border-amber-200 bg-white p-2.5 text-xs resize-none focus:outline-none focus:ring-2 focus:ring-amber-400 placeholder:text-[var(--cs-text-muted)]"
                         rows={4}
                         placeholder="Paste the document text here..."
                         value={documentText}
@@ -406,11 +406,11 @@ export default function DocumentWizardPage() {
               <>
                 {/* Paste mode */}
                 <div className="space-y-2">
-                  <label className="text-xs font-semibold text-slate-600 block">
+                  <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block">
                     Paste document text
                   </label>
                   <textarea
-                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-700 resize-none focus:outline-none focus:ring-2 focus:ring-violet-400 placeholder:text-slate-400 min-h-[180px]"
+                    className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2.5 text-sm text-[var(--cs-text-secondary)] resize-none focus:outline-none focus:ring-2 focus:ring-violet-400 placeholder:text-[var(--cs-text-muted)] min-h-[180px]"
                     placeholder="Paste the text from your document here..."
                     value={pastedText}
                     onChange={(e) => setPastedText(e.target.value)}
@@ -453,8 +453,8 @@ export default function DocumentWizardPage() {
               <Loader2 className="h-8 w-8 text-violet-600 animate-spin" />
             </div>
             <div className="text-center">
-              <p className="text-base font-bold text-slate-900">ARIA is reading your document...</p>
-              <p className="text-sm text-slate-500 mt-1">
+              <p className="text-base font-bold text-[var(--cs-navy)]">ARIA is reading your document...</p>
+              <p className="text-sm text-[var(--cs-text-muted)] mt-1">
                 Classifying type · Extracting facts · Identifying risks
               </p>
             </div>
@@ -480,11 +480,11 @@ export default function DocumentWizardPage() {
         {/* ── Stage 3: Classification result ──────────────────────────────── */}
         {stage === "classified" && classification && (
           <div className="space-y-4">
-            <div className="rounded-2xl border border-slate-200 bg-white p-6 space-y-5 shadow-sm">
+            <div className="rounded-2xl border border-[var(--cs-border)] bg-white p-6 space-y-5 shadow-sm">
               <div className="flex items-start justify-between">
                 <div>
-                  <h2 className="text-base font-bold text-slate-900">Classification result</h2>
-                  <p className="text-sm text-slate-500 mt-0.5">ARIA has read your document</p>
+                  <h2 className="text-base font-bold text-[var(--cs-navy)]">Classification result</h2>
+                  <p className="text-sm text-[var(--cs-text-muted)] mt-0.5">ARIA has read your document</p>
                 </div>
                 <Badge className="bg-violet-100 text-violet-700 border-0 text-xs rounded-full">
                   <Sparkles className="h-3 w-3 mr-1" />
@@ -494,15 +494,15 @@ export default function DocumentWizardPage() {
 
               {/* Document type + confidence */}
               <div className="grid grid-cols-2 gap-4">
-                <div className="rounded-xl bg-slate-50 border border-slate-200 px-4 py-3">
+                <div className="rounded-xl bg-slate-50 border border-[var(--cs-border)] px-4 py-3">
                   <SectionLabel>Document type</SectionLabel>
-                  <p className="text-sm font-bold text-slate-800">
+                  <p className="text-sm font-bold text-[var(--cs-navy)]">
                     {classification.document_type ?? "Unknown"}
                   </p>
                 </div>
-                <div className="rounded-xl bg-slate-50 border border-slate-200 px-4 py-3">
+                <div className="rounded-xl bg-slate-50 border border-[var(--cs-border)] px-4 py-3">
                   <SectionLabel>Confidence</SectionLabel>
-                  <p className="text-sm font-bold text-slate-800">
+                  <p className="text-sm font-bold text-[var(--cs-navy)]">
                     {classification.confidence_score != null
                       ? `${Math.round(classification.confidence_score * 100)}%`
                       : "—"}
@@ -513,17 +513,17 @@ export default function DocumentWizardPage() {
               {/* Module + confidentiality */}
               <div className="grid grid-cols-2 gap-4">
                 {classification.suggested_module && (
-                  <div className="rounded-xl bg-slate-50 border border-slate-200 px-4 py-3">
+                  <div className="rounded-xl bg-slate-50 border border-[var(--cs-border)] px-4 py-3">
                     <SectionLabel>Suggested module</SectionLabel>
                     <TagPill label={classification.suggested_module} color="violet" />
                   </div>
                 )}
                 {classification.confidentiality_level && (
-                  <div className="rounded-xl bg-slate-50 border border-slate-200 px-4 py-3">
+                  <div className="rounded-xl bg-slate-50 border border-[var(--cs-border)] px-4 py-3">
                     <SectionLabel>Confidentiality</SectionLabel>
                     <div className="flex items-center gap-1.5">
-                      <Lock className="h-3.5 w-3.5 text-slate-500" />
-                      <span className="text-sm font-medium text-slate-700">
+                      <Lock className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
+                      <span className="text-sm font-medium text-[var(--cs-text-secondary)]">
                         {classification.confidentiality_level}
                       </span>
                     </div>
@@ -549,7 +549,7 @@ export default function DocumentWizardPage() {
                   <SectionLabel>Key facts</SectionLabel>
                   <ul className="space-y-1.5">
                     {classification.key_facts.map((fact, i) => (
-                      <li key={i} className="flex items-start gap-2 text-sm text-slate-700">
+                      <li key={i} className="flex items-start gap-2 text-sm text-[var(--cs-text-secondary)]">
                         <ChevronRight className="h-3.5 w-3.5 text-violet-400 shrink-0 mt-0.5" />
                         {fact}
                       </li>
@@ -612,9 +612,9 @@ export default function DocumentWizardPage() {
               {/* Child voice + safeguarding */}
               <div className="grid grid-cols-2 gap-4">
                 {classification.child_voice_present != null && (
-                  <div className="rounded-xl bg-slate-50 border border-slate-200 px-4 py-3">
+                  <div className="rounded-xl bg-slate-50 border border-[var(--cs-border)] px-4 py-3">
                     <SectionLabel>Child voice present</SectionLabel>
-                    <p className={cn("text-sm font-semibold", classification.child_voice_present ? "text-emerald-600" : "text-slate-500")}>
+                    <p className={cn("text-sm font-semibold", classification.child_voice_present ? "text-emerald-600" : "text-[var(--cs-text-muted)]")}>
                       {classification.child_voice_present ? "Yes" : "No"}
                     </p>
                   </div>
@@ -636,15 +636,15 @@ export default function DocumentWizardPage() {
               {classification.recommended_placement && (
                 <div className="rounded-xl bg-violet-50 border border-violet-200 px-4 py-3">
                   <SectionLabel>Recommended placement</SectionLabel>
-                  <p className="text-sm text-slate-700">{classification.recommended_placement}</p>
+                  <p className="text-sm text-[var(--cs-text-secondary)]">{classification.recommended_placement}</p>
                 </div>
               )}
 
               {/* Summary fallback */}
               {classification.summary && !classification.document_type && (
-                <div className="rounded-xl bg-slate-50 border border-slate-200 px-4 py-3">
+                <div className="rounded-xl bg-slate-50 border border-[var(--cs-border)] px-4 py-3">
                   <SectionLabel>ARIA analysis</SectionLabel>
-                  <p className="text-sm text-slate-700 whitespace-pre-wrap">{classification.summary}</p>
+                  <p className="text-sm text-[var(--cs-text-secondary)] whitespace-pre-wrap">{classification.summary}</p>
                 </div>
               )}
 
@@ -665,7 +665,7 @@ export default function DocumentWizardPage() {
                 </Button>
                 <button
                   onClick={resetWizard}
-                  className="flex items-center gap-1.5 text-sm font-medium text-slate-500 hover:text-slate-700 transition-colors"
+                  className="flex items-center gap-1.5 text-sm font-medium text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] transition-colors"
                 >
                   <RotateCcw className="h-3.5 w-3.5" />
                   Start again
@@ -678,11 +678,11 @@ export default function DocumentWizardPage() {
         {/* ── Stage 4: Form created ────────────────────────────────────────── */}
         {(stage === "form_created" || stage === "saved") && formResult && (
           <div className="space-y-4">
-            <div className="rounded-2xl border border-slate-200 bg-white p-6 space-y-5 shadow-sm">
+            <div className="rounded-2xl border border-[var(--cs-border)] bg-white p-6 space-y-5 shadow-sm">
               <div className="flex items-start justify-between">
                 <div>
-                  <h2 className="text-base font-bold text-slate-900">Extracted form</h2>
-                  <p className="text-sm text-slate-500 mt-0.5">Review before saving to the queue</p>
+                  <h2 className="text-base font-bold text-[var(--cs-navy)]">Extracted form</h2>
+                  <p className="text-sm text-[var(--cs-text-muted)] mt-0.5">Review before saving to the queue</p>
                 </div>
                 {stage === "saved" && (
                   <Badge className="bg-emerald-100 text-emerald-700 border-0 rounded-full">
@@ -696,9 +696,9 @@ export default function DocumentWizardPage() {
               {(formResult.form_type || formResult.title) && (
                 <div className="rounded-xl bg-violet-50 border border-violet-200 px-4 py-3">
                   <SectionLabel>Form type</SectionLabel>
-                  <p className="text-sm font-bold text-slate-800">{formResult.form_type ?? "—"}</p>
+                  <p className="text-sm font-bold text-[var(--cs-navy)]">{formResult.form_type ?? "—"}</p>
                   {formResult.title && (
-                    <p className="text-xs text-slate-600 mt-0.5">{formResult.title}</p>
+                    <p className="text-xs text-[var(--cs-text-secondary)] mt-0.5">{formResult.title}</p>
                   )}
                 </div>
               )}
@@ -707,13 +707,13 @@ export default function DocumentWizardPage() {
               {formResult.fields && Object.keys(formResult.fields).length > 0 && (
                 <div>
                   <SectionLabel>Extracted fields</SectionLabel>
-                  <div className="rounded-xl border border-slate-200 divide-y divide-slate-100 overflow-hidden">
+                  <div className="rounded-xl border border-[var(--cs-border)] divide-y divide-slate-100 overflow-hidden">
                     {Object.entries(formResult.fields).map(([key, value]) => (
                       <div key={key} className="grid grid-cols-[160px_1fr] text-sm">
-                        <div className="bg-slate-50 px-3 py-2.5 font-medium text-slate-600 text-xs capitalize">
+                        <div className="bg-slate-50 px-3 py-2.5 font-medium text-[var(--cs-text-secondary)] text-xs capitalize">
                           {key.replace(/_/g, " ")}
                         </div>
-                        <div className="px-3 py-2.5 text-slate-800 text-xs">{value}</div>
+                        <div className="px-3 py-2.5 text-[var(--cs-navy)] text-xs">{value}</div>
                       </div>
                     ))}
                   </div>
@@ -734,9 +734,9 @@ export default function DocumentWizardPage() {
 
               {/* ARIA notes */}
               {formResult.aria_notes && (
-                <div className="rounded-xl bg-slate-50 border border-slate-200 px-4 py-3">
+                <div className="rounded-xl bg-slate-50 border border-[var(--cs-border)] px-4 py-3">
                   <SectionLabel>ARIA notes</SectionLabel>
-                  <p className="text-xs text-slate-700 whitespace-pre-wrap">{formResult.aria_notes}</p>
+                  <p className="text-xs text-[var(--cs-text-secondary)] whitespace-pre-wrap">{formResult.aria_notes}</p>
                 </div>
               )}
 
@@ -762,7 +762,7 @@ export default function DocumentWizardPage() {
                   </Button>
                   <button
                     onClick={resetWizard}
-                    className="flex items-center gap-1.5 text-sm font-medium text-slate-500 hover:text-slate-700 transition-colors"
+                    className="flex items-center gap-1.5 text-sm font-medium text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] transition-colors"
                   >
                     <RotateCcw className="h-3.5 w-3.5" />
                     Start again

@@ -46,7 +46,7 @@ const levelOrder: Record<BikeabilityLevel, number> = {
 };
 
 const levelColour: Record<BikeabilityLevel, string> = {
-  not_started: "bg-slate-100 text-slate-700",
+  not_started: "bg-slate-100 text-[var(--cs-text-secondary)]",
   level_1_off_road: "bg-sky-100 text-sky-800",
   level_2_on_road_basic: "bg-teal-100 text-teal-800",
   level_3_on_road_advanced: "bg-emerald-100 text-emerald-800",
@@ -221,7 +221,7 @@ export default function ChildBikeCyclingTrackerPage() {
           return (
             <div key={c.id} className="rounded-xl border bg-white overflow-hidden">
               <button
-                className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                 onClick={() => setExpandedId(isExpanded ? null : c.id)}
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -248,7 +248,7 @@ export default function ChildBikeCyclingTrackerPage() {
                   <span
                     className={cn(
                       "text-xs px-2 py-0.5 rounded-full font-medium",
-                      c.bike_owned ? "bg-sky-100 text-sky-800" : "bg-slate-100 text-slate-700",
+                      c.bike_owned ? "bg-sky-100 text-sky-800" : "bg-slate-100 text-[var(--cs-text-secondary)]",
                     )}
                   >
                     {c.bike_owned ? "Owns bike" : "No bike"}

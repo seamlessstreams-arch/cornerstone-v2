@@ -66,7 +66,7 @@ const levelColour: Record<SwimmingLevel, string> = {
   stage_6: "bg-blue-100 text-blue-800 border-blue-200",
   stage_7: "bg-indigo-100 text-indigo-800 border-indigo-200",
   beyond_stages: "bg-emerald-100 text-emerald-800 border-emerald-200",
-  not_currently_swimming: "bg-slate-100 text-slate-800 border-slate-200",
+  not_currently_swimming: "bg-slate-100 text-[var(--cs-navy)] border-[var(--cs-border)]",
 };
 
 const dFromNow = (n: number) => {
@@ -118,7 +118,7 @@ export default function ChildSwimmingWaterSafetyPage() {
     return (
       <PageShell title="Swimming & Water Safety" subtitle="Loading...">
         <div className="flex items-center justify-center py-12">
-          <Loader2 className="h-8 w-8 animate-spin text-slate-400" />
+          <Loader2 className="h-8 w-8 animate-spin text-[var(--cs-text-muted)]" />
         </div>
       </PageShell>
     );
@@ -151,30 +151,30 @@ export default function ChildSwimmingWaterSafetyPage() {
           <div className="text-2xl font-semibold text-cyan-900">{stats.canSwim25m}</div>
         </div>
         <div className="rounded-lg border border-sky-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-slate-600 text-sm mb-1">
+          <div className="flex items-center gap-2 text-[var(--cs-text-secondary)] text-sm mb-1">
             <LifeBuoy className="h-4 w-4" />
             <span>Lessons running</span>
           </div>
-          <div className="text-2xl font-semibold text-slate-900">{stats.lessonsRunning}</div>
+          <div className="text-2xl font-semibold text-[var(--cs-navy)]">{stats.lessonsRunning}</div>
         </div>
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-slate-600 text-sm mb-1">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-[var(--cs-text-secondary)] text-sm mb-1">
             <Calendar className="h-4 w-4" />
             <span>Reviews due (90d)</span>
           </div>
-          <div className="text-2xl font-semibold text-slate-900">{stats.reviewsDue90}</div>
+          <div className="text-2xl font-semibold text-[var(--cs-navy)]">{stats.reviewsDue90}</div>
         </div>
       </div>
 
       <div className="flex flex-col sm:flex-row gap-3 mb-4">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--cs-text-muted)]" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search young person, level, provider..."
-            className="w-full pl-9 pr-3 py-2 text-sm border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500"
+            className="w-full pl-9 pr-3 py-2 text-sm border border-[var(--cs-border)] rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500"
           />
         </div>
         <Select value={levelFilter} onValueChange={setLevelFilter}>
@@ -212,62 +212,62 @@ export default function ChildSwimmingWaterSafetyPage() {
               >
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap mb-1">
-                    <span className="font-semibold text-slate-900">{getYPName(r.child_id)}</span>
+                    <span className="font-semibold text-[var(--cs-navy)]">{getYPName(r.child_id)}</span>
                     <span className={cn("text-xs px-2 py-0.5 rounded-full border", levelColour[r.swimming_level])}>{SWIMMING_LEVEL_LABEL[r.swimming_level]}</span>
-                    <span className={cn("text-xs px-2 py-0.5 rounded-full border", r.can_swim_25m ? "bg-emerald-100 text-emerald-800 border-emerald-200" : "bg-slate-100 text-slate-700 border-slate-200")}>
+                    <span className={cn("text-xs px-2 py-0.5 rounded-full border", r.can_swim_25m ? "bg-emerald-100 text-emerald-800 border-emerald-200" : "bg-slate-100 text-[var(--cs-text-secondary)] border-[var(--cs-border)]")}>
                       {r.can_swim_25m ? "Can swim 25m" : "Not yet 25m"}
                     </span>
-                    <span className={cn("text-xs px-2 py-0.5 rounded-full border", r.lessons_booked_active ? "bg-cyan-100 text-cyan-800 border-cyan-200" : "bg-slate-100 text-slate-700 border-slate-200")}>
+                    <span className={cn("text-xs px-2 py-0.5 rounded-full border", r.lessons_booked_active ? "bg-cyan-100 text-cyan-800 border-cyan-200" : "bg-slate-100 text-[var(--cs-text-secondary)] border-[var(--cs-border)]")}>
                       {r.lessons_booked_active ? "Lessons active" : "No active lessons"}
                     </span>
                   </div>
-                  <div className="text-sm text-slate-600">
+                  <div className="text-sm text-[var(--cs-text-secondary)]">
                     Recorded {r.recorded_date} · Review {r.review_date} · {getStaffName(r.key_worker)}
                   </div>
                 </div>
-                {isOpen ? <ChevronUp className="h-5 w-5 text-slate-400" /> : <ChevronDown className="h-5 w-5 text-slate-400" />}
+                {isOpen ? <ChevronUp className="h-5 w-5 text-[var(--cs-text-muted)]" /> : <ChevronDown className="h-5 w-5 text-[var(--cs-text-muted)]" />}
               </button>
               {isOpen ? (
                 <div className="px-4 pb-4 border-t border-sky-100 bg-sky-50/30">
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 pt-4">
-                    <div className="rounded-md border border-slate-200 bg-white p-3">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Child Voice</div>
-                      <p className="text-sm text-slate-700 italic">&ldquo;{r.child_voice}&rdquo;</p>
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Child Voice</div>
+                      <p className="text-sm text-[var(--cs-text-secondary)] italic">&ldquo;{r.child_voice}&rdquo;</p>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Staff Observation</div>
-                      <p className="text-sm text-slate-700">{r.staff_observation}</p>
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Staff Observation</div>
+                      <p className="text-sm text-[var(--cs-text-secondary)]">{r.staff_observation}</p>
                     </div>
                     <div className="rounded-md border border-cyan-200 bg-white p-3">
                       <div className="text-xs font-semibold text-cyan-700 uppercase mb-2">Lessons</div>
-                      <div className="text-sm text-slate-700 space-y-1">
-                        <div><span className="text-slate-500">Active:</span> {r.lessons_booked_active ? "Yes" : "No"}</div>
-                        <div><span className="text-slate-500">Provider:</span> {r.lesson_provider ?? "—"}</div>
-                        <div><span className="text-slate-500">Frequency:</span> {r.lesson_frequency ?? "—"}</div>
-                        <div><span className="text-slate-500">Cost:</span> {r.lessons_cost != null ? `£${r.lessons_cost}/session` : "—"}</div>
-                        <div><span className="text-slate-500">Funding:</span> {r.home_funding_source ?? "—"}</div>
+                      <div className="text-sm text-[var(--cs-text-secondary)] space-y-1">
+                        <div><span className="text-[var(--cs-text-muted)]">Active:</span> {r.lessons_booked_active ? "Yes" : "No"}</div>
+                        <div><span className="text-[var(--cs-text-muted)]">Provider:</span> {r.lesson_provider ?? "—"}</div>
+                        <div><span className="text-[var(--cs-text-muted)]">Frequency:</span> {r.lesson_frequency ?? "—"}</div>
+                        <div><span className="text-[var(--cs-text-muted)]">Cost:</span> {r.lessons_cost != null ? `£${r.lessons_cost}/session` : "—"}</div>
+                        <div><span className="text-[var(--cs-text-muted)]">Funding:</span> {r.home_funding_source ?? "—"}</div>
                       </div>
                     </div>
                     <div className="rounded-md border border-sky-200 bg-white p-3">
                       <div className="text-xs font-semibold text-sky-700 uppercase mb-2">School Swimming</div>
-                      <div className="text-sm text-slate-700 space-y-1">
-                        <div><span className="text-slate-500">Done:</span> {r.school_swimming_done ? "Yes" : "No"}</div>
-                        <div className="text-slate-700">{r.school_swimming_outcome ?? "—"}</div>
+                      <div className="text-sm text-[var(--cs-text-secondary)] space-y-1">
+                        <div><span className="text-[var(--cs-text-muted)]">Done:</span> {r.school_swimming_done ? "Yes" : "No"}</div>
+                        <div className="text-[var(--cs-text-secondary)]">{r.school_swimming_outcome ?? "—"}</div>
                       </div>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3 lg:col-span-2">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Competence (KS2 standard: 25m + tread water + safe self-rescue)</div>
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3 lg:col-span-2">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Competence (KS2 standard: 25m + tread water + safe self-rescue)</div>
                       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-sm">
-                        <div className={cn("rounded-md border px-2 py-1.5", r.can_swim_25m ? "bg-emerald-50 border-emerald-200 text-emerald-800" : "bg-slate-50 border-slate-200 text-slate-600")}>
+                        <div className={cn("rounded-md border px-2 py-1.5", r.can_swim_25m ? "bg-emerald-50 border-emerald-200 text-emerald-800" : "bg-slate-50 border-[var(--cs-border)] text-[var(--cs-text-secondary)]")}>
                           {r.can_swim_25m ? "✓" : "○"} 25m unaided
                         </div>
-                        <div className={cn("rounded-md border px-2 py-1.5", r.can_tread_water ? "bg-emerald-50 border-emerald-200 text-emerald-800" : "bg-slate-50 border-slate-200 text-slate-600")}>
+                        <div className={cn("rounded-md border px-2 py-1.5", r.can_tread_water ? "bg-emerald-50 border-emerald-200 text-emerald-800" : "bg-slate-50 border-[var(--cs-border)] text-[var(--cs-text-secondary)]")}>
                           {r.can_tread_water ? "✓" : "○"} Tread water
                         </div>
-                        <div className={cn("rounded-md border px-2 py-1.5", r.can_float_back ? "bg-emerald-50 border-emerald-200 text-emerald-800" : "bg-slate-50 border-slate-200 text-slate-600")}>
+                        <div className={cn("rounded-md border px-2 py-1.5", r.can_float_back ? "bg-emerald-50 border-emerald-200 text-emerald-800" : "bg-slate-50 border-[var(--cs-border)] text-[var(--cs-text-secondary)]")}>
                           {r.can_float_back ? "✓" : "○"} Float on back
                         </div>
-                        <div className={cn("rounded-md border px-2 py-1.5", r.comfortable_underwater ? "bg-emerald-50 border-emerald-200 text-emerald-800" : "bg-slate-50 border-slate-200 text-slate-600")}>
+                        <div className={cn("rounded-md border px-2 py-1.5", r.comfortable_underwater ? "bg-emerald-50 border-emerald-200 text-emerald-800" : "bg-slate-50 border-[var(--cs-border)] text-[var(--cs-text-secondary)]")}>
                           {r.comfortable_underwater ? "✓" : "○"} Underwater
                         </div>
                       </div>
@@ -275,7 +275,7 @@ export default function ChildSwimmingWaterSafetyPage() {
                     {r.beach_safety_aware.length ? (
                       <div className="rounded-md border border-sky-200 bg-white p-3">
                         <div className="text-xs font-semibold text-sky-700 uppercase mb-2">Beach safety</div>
-                        <ul className="text-sm text-slate-700 space-y-1">
+                        <ul className="text-sm text-[var(--cs-text-secondary)] space-y-1">
                           {r.beach_safety_aware.map((b, i) => (
                             <li key={i} className="flex gap-2"><span className="text-sky-500">•</span><span>{b}</span></li>
                           ))}
@@ -285,7 +285,7 @@ export default function ChildSwimmingWaterSafetyPage() {
                     {r.open_water_awareness.length ? (
                       <div className="rounded-md border border-cyan-200 bg-white p-3">
                         <div className="text-xs font-semibold text-cyan-700 uppercase mb-2">Open water awareness</div>
-                        <ul className="text-sm text-slate-700 space-y-1">
+                        <ul className="text-sm text-[var(--cs-text-secondary)] space-y-1">
                           {r.open_water_awareness.map((o, i) => (
                             <li key={i} className="flex gap-2"><span className="text-cyan-500">•</span><span>{o}</span></li>
                           ))}
@@ -293,12 +293,12 @@ export default function ChildSwimmingWaterSafetyPage() {
                       </div>
                     ) : null}
                     {r.life_jacket_usage.length ? (
-                      <div className="rounded-md border border-slate-200 bg-white p-3 lg:col-span-2">
-                        <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Life jacket / buoyancy aid</div>
-                        <ul className="text-sm text-slate-700 space-y-1">
+                      <div className="rounded-md border border-[var(--cs-border)] bg-white p-3 lg:col-span-2">
+                        <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Life jacket / buoyancy aid</div>
+                        <ul className="text-sm text-[var(--cs-text-secondary)] space-y-1">
                           {r.life_jacket_usage.map((l, i) => (
                             <li key={i} className="flex gap-2">
-                              <LifeBuoy className="h-3.5 w-3.5 text-slate-400 mt-0.5 shrink-0" />
+                              <LifeBuoy className="h-3.5 w-3.5 text-[var(--cs-text-muted)] mt-0.5 shrink-0" />
                               <span>{l}</span>
                             </li>
                           ))}

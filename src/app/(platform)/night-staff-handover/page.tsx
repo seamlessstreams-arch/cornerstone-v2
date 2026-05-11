@@ -369,12 +369,12 @@ export default function NightStaffHandoverPage() {
                             const checkFreq = r.night_checks_required[id];
                             return (
                               <div key={id} className="rounded-lg border bg-slate-50 p-3 space-y-1">
-                                <p className="font-semibold text-slate-900">{getYPName(id)}</p>
-                                <p className="text-xs text-slate-600 flex items-center gap-1">
+                                <p className="font-semibold text-[var(--cs-navy)]">{getYPName(id)}</p>
+                                <p className="text-xs text-[var(--cs-text-secondary)] flex items-center gap-1">
                                   <BedDouble className="h-3 w-3" /> Bedtime: {bedtime ?? "—"}
                                 </p>
                                 {checkFreq && (
-                                  <p className="text-xs text-slate-700 flex items-center gap-1">
+                                  <p className="text-xs text-[var(--cs-text-secondary)] flex items-center gap-1">
                                     <Eye className="h-3 w-3" />
                                     <span className="font-medium">Checks:</span> {checkFreq}
                                   </p>

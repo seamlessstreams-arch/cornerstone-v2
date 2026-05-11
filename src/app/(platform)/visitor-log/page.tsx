@@ -44,12 +44,12 @@ const CATEGORY_CONFIG: Record<VisitorCategory, { label: string; icon: React.Elem
   tradesperson: { label: "Tradesperson", icon: Wrench,    color: "text-amber-700",   bg: "bg-amber-50",   border: "border-amber-200"   },
   inspector:    { label: "Inspector",    icon: Eye,       color: "text-violet-700",  bg: "bg-violet-50",  border: "border-violet-200"  },
   volunteer:    { label: "Volunteer",    icon: UserCheck,  color: "text-emerald-700", bg: "bg-emerald-50", border: "border-emerald-200" },
-  other:        { label: "Other",        icon: Users,     color: "text-slate-700",   bg: "bg-slate-50",   border: "border-slate-200"   },
+  other:        { label: "Other",        icon: Users,     color: "text-[var(--cs-text-secondary)]",   bg: "bg-slate-50",   border: "border-[var(--cs-border)]"   },
 };
 
 const STATUS_CONFIG: Record<VisitStatus, { label: string; icon: React.ElementType; color: string; bg: string; border: string }> = {
   signed_in:  { label: "On Site",    icon: LogIn,  color: "text-emerald-700", bg: "bg-emerald-50", border: "border-emerald-200" },
-  signed_out: { label: "Departed",   icon: LogOut, color: "text-slate-600",   bg: "bg-slate-50",   border: "border-slate-200"   },
+  signed_out: { label: "Departed",   icon: LogOut, color: "text-[var(--cs-text-secondary)]",   bg: "bg-slate-50",   border: "border-[var(--cs-border)]"   },
   expected:   { label: "Expected",   icon: Clock,  color: "text-amber-700",   bg: "bg-amber-50",   border: "border-amber-200"   },
 };
 
@@ -91,12 +91,12 @@ function VisitorRow({ entry }: { entry: VisitorEntry }) {
 
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-0.5">
-            <span className="text-xs font-semibold text-slate-900">{entry.visitor_name}</span>
+            <span className="text-xs font-semibold text-[var(--cs-navy)]">{entry.visitor_name}</span>
             {entry.organisation && (
-              <span className="text-[10px] text-slate-500">— {entry.organisation}</span>
+              <span className="text-[10px] text-[var(--cs-text-muted)]">— {entry.organisation}</span>
             )}
           </div>
-          <div className="flex items-center gap-2 text-[10px] text-slate-500">
+          <div className="flex items-center gap-2 text-[10px] text-[var(--cs-text-muted)]">
             <span>{formatDate(entry.date)}</span>
             <span>·</span>
             <span>{entry.sign_in_time}{entry.sign_out_time ? ` – ${entry.sign_out_time}` : ""}</span>
@@ -117,14 +117,14 @@ function VisitorRow({ entry }: { entry: VisitorEntry }) {
           {st.label}
         </Badge>
 
-        {expanded ? <ChevronUp className="h-3.5 w-3.5 text-slate-400" /> : <ChevronDown className="h-3.5 w-3.5 text-slate-400" />}
+        {expanded ? <ChevronUp className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" /> : <ChevronDown className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />}
       </div>
 
       {expanded && (
         <div className="border-t px-3 pb-3 pt-2 space-y-2">
-          <p className="text-xs text-slate-700"><span className="font-medium">Purpose:</span> {entry.purpose}</p>
-          {entry.notes && <p className="text-xs text-slate-600 italic">{entry.notes}</p>}
-          <div className="flex items-center gap-4 text-[10px] text-slate-400">
+          <p className="text-xs text-[var(--cs-text-secondary)]"><span className="font-medium">Purpose:</span> {entry.purpose}</p>
+          {entry.notes && <p className="text-xs text-[var(--cs-text-secondary)] italic">{entry.notes}</p>}
+          <div className="flex items-center gap-4 text-[10px] text-[var(--cs-text-muted)]">
             <span>Host: {getStaffName(entry.host_staff_id)}</span>
             <span>ID verified: {entry.id_verified ? "Yes" : "No"}</span>
             <span>DBS: {entry.dbs_checked ? "Checked" : "N/A"}</span>
@@ -198,17 +198,17 @@ function NewVisitorDialog({
         <div className="space-y-3 py-2">
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="text-[11px] font-medium text-slate-600 mb-1 block">Visitor Name *</label>
+              <label className="text-[11px] font-medium text-[var(--cs-text-secondary)] mb-1 block">Visitor Name *</label>
               <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="Full name" className="h-8 text-xs" />
             </div>
             <div>
-              <label className="text-[11px] font-medium text-slate-600 mb-1 block">Organisation</label>
+              <label className="text-[11px] font-medium text-[var(--cs-text-secondary)] mb-1 block">Organisation</label>
               <Input value={org} onChange={(e) => setOrg(e.target.value)} placeholder="Organisation" className="h-8 text-xs" />
             </div>
           </div>
 
           <div>
-            <label className="text-[11px] font-medium text-slate-600 mb-1 block">Category</label>
+            <label className="text-[11px] font-medium text-[var(--cs-text-secondary)] mb-1 block">Category</label>
             <Select value={category} onValueChange={(v) => setCategory(v as VisitorCategory)}>
               <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
               <SelectContent>
@@ -220,23 +220,23 @@ function NewVisitorDialog({
           </div>
 
           <div>
-            <label className="text-[11px] font-medium text-slate-600 mb-1 block">Purpose of Visit *</label>
+            <label className="text-[11px] font-medium text-[var(--cs-text-secondary)] mb-1 block">Purpose of Visit *</label>
             <Input value={purpose} onChange={(e) => setPurpose(e.target.value)} placeholder="Reason for visiting" className="h-8 text-xs" />
           </div>
 
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
               <input type="checkbox" id="dbs-check" checked={dbsChecked} onChange={(e) => setDbsChecked(e.target.checked)} className="rounded border-slate-300" />
-              <label htmlFor="dbs-check" className="text-xs text-slate-700">DBS checked</label>
+              <label htmlFor="dbs-check" className="text-xs text-[var(--cs-text-secondary)]">DBS checked</label>
             </div>
             <div className="flex items-center gap-2">
               <input type="checkbox" id="id-check" checked={idVerified} onChange={(e) => setIdVerified(e.target.checked)} className="rounded border-slate-300" />
-              <label htmlFor="id-check" className="text-xs text-slate-700">ID verified</label>
+              <label htmlFor="id-check" className="text-xs text-[var(--cs-text-secondary)]">ID verified</label>
             </div>
           </div>
 
           <div>
-            <label className="text-[11px] font-medium text-slate-600 mb-1 block">Notes</label>
+            <label className="text-[11px] font-medium text-[var(--cs-text-secondary)] mb-1 block">Notes</label>
             <Textarea value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Any additional notes…" className="text-xs min-h-[50px]" />
           </div>
         </div>
@@ -329,15 +329,15 @@ export default function VisitorLogPage() {
           {/* ── Summary stats ─────────────────────────────────────────────────── */}
           <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-6">
             {[
-              { label: "Total Visitors", value: stats.total,         color: "text-slate-700",   bg: "bg-slate-50",   border: "border-slate-200"   },
-              { label: "On Site Now",    value: stats.onSite,        color: stats.onSite > 0 ? "text-emerald-600" : "text-slate-500", bg: stats.onSite > 0 ? "bg-emerald-50" : "bg-slate-50", border: stats.onSite > 0 ? "border-emerald-200" : "border-slate-200" },
+              { label: "Total Visitors", value: stats.total,         color: "text-[var(--cs-text-secondary)]",   bg: "bg-slate-50",   border: "border-[var(--cs-border)]"   },
+              { label: "On Site Now",    value: stats.onSite,        color: stats.onSite > 0 ? "text-emerald-600" : "text-[var(--cs-text-muted)]", bg: stats.onSite > 0 ? "bg-emerald-50" : "bg-slate-50", border: stats.onSite > 0 ? "border-emerald-200" : "border-[var(--cs-border)]" },
               { label: "Today",          value: stats.today,         color: "text-blue-600",    bg: "bg-blue-50",    border: "border-blue-200"    },
               { label: "Professionals",  value: stats.professionals, color: "text-indigo-600",  bg: "bg-indigo-50",  border: "border-indigo-200"  },
               { label: "DBS Verified",   value: stats.dbsChecked,    color: "text-emerald-600", bg: "bg-emerald-50", border: "border-emerald-200" },
             ].map((s) => (
               <div key={s.label} className={cn("rounded-lg border p-3 text-center", s.bg, s.border)}>
                 <div className={cn("text-xl font-bold", s.color)}>{s.value}</div>
-                <div className="text-[10px] text-slate-500 font-medium mt-0.5">{s.label}</div>
+                <div className="text-[10px] text-[var(--cs-text-muted)] font-medium mt-0.5">{s.label}</div>
               </div>
             ))}
           </div>
@@ -360,10 +360,10 @@ export default function VisitorLogPage() {
           {/* ── Filters ───────────────────────────────────────────────────────── */}
           <div className="flex flex-wrap items-center gap-2 mb-4">
             <div className="relative flex-1 min-w-[180px] max-w-xs">
-              <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+              <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
               <Input placeholder="Search visitors…" value={search} onChange={(e) => setSearch(e.target.value)} className="pl-8 h-8 text-xs" />
             </div>
-            <Filter className="h-3.5 w-3.5 text-slate-400" />
+            <Filter className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
             <Select value={dateFilter} onValueChange={setDateFilter}>
               <SelectTrigger className="h-8 w-[110px] text-xs"><SelectValue /></SelectTrigger>
               <SelectContent>
@@ -391,7 +391,7 @@ export default function VisitorLogPage() {
               </SelectContent>
             </Select>
             <div className="flex items-center gap-1">
-              <ArrowUpDown className="h-3.5 w-3.5 text-slate-400" />
+              <ArrowUpDown className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
               <Select value={sortBy} onValueChange={setSortBy}>
                 <SelectTrigger className="h-8 w-[100px] text-xs"><SelectValue /></SelectTrigger>
                 <SelectContent>
@@ -402,7 +402,7 @@ export default function VisitorLogPage() {
               </Select>
             </div>
             {hasFilters && (
-              <Button variant="ghost" size="sm" className="h-8 text-xs text-slate-500" onClick={() => { setSearch(""); setDateFilter("all"); setCategoryFilter("all"); setStatusFilter("all"); }}>
+              <Button variant="ghost" size="sm" className="h-8 text-xs text-[var(--cs-text-muted)]" onClick={() => { setSearch(""); setDateFilter("all"); setCategoryFilter("all"); setStatusFilter("all"); }}>
                 <X className="h-3 w-3 mr-1" /> Clear
               </Button>
             )}
@@ -410,7 +410,7 @@ export default function VisitorLogPage() {
 
           {/* ── Visitor List ──────────────────────────────────────────────────── */}
           {filtered.length === 0 ? (
-            <div className="text-center py-16 text-slate-400">
+            <div className="text-center py-16 text-[var(--cs-text-muted)]">
               <Users className="h-10 w-10 mx-auto mb-3 opacity-40" />
               <p className="text-sm font-medium">No visitors found</p>
               <p className="text-xs mt-1">{hasFilters ? "Try adjusting your filters" : "No visitors recorded yet"}</p>
@@ -423,17 +423,17 @@ export default function VisitorLogPage() {
             </div>
           )}
 
-          <div className="text-center text-[10px] text-slate-400 mt-6">
+          <div className="text-center text-[10px] text-[var(--cs-text-muted)] mt-6">
             Showing {filtered.length} of {visitors.length} visitor{visitors.length !== 1 ? "s" : ""}
           </div>
 
           {/* ── Regulatory Note ───────────────────────────────────────────────── */}
-          <div className="mt-8 rounded-lg bg-slate-50 border border-slate-200 p-4">
+          <div className="mt-8 rounded-lg bg-slate-50 border border-[var(--cs-border)] p-4">
             <div className="flex items-start gap-3">
               <Users className="h-5 w-5 text-indigo-500 mt-0.5 flex-shrink-0" />
               <div>
-                <h4 className="text-xs font-semibold text-slate-700 mb-1">Regulatory Context</h4>
-                <p className="text-[11px] text-slate-500 leading-relaxed">
+                <h4 className="text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Regulatory Context</h4>
+                <p className="text-[11px] text-[var(--cs-text-muted)] leading-relaxed">
                   The Children&apos;s Homes Regulations 2015 (Reg 37, Schedule 3) require a record of all persons
                   visiting the home, including their name, purpose of visit, and arrival/departure times. Professional
                   visitors should have their DBS status and ID verified. This log is inspectable by Ofsted and the

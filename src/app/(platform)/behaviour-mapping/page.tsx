@@ -25,7 +25,7 @@ const TYPE_META: Record<BehaviourMappingType, { label: string; color: string }> 
   property_damage: { label: "Property Damage", color: "bg-amber-100 text-amber-800" },
   verbal_aggression: { label: "Verbal Aggression", color: "bg-amber-100 text-amber-800" },
   withdrawal: { label: "Withdrawal", color: "bg-blue-100 text-blue-800" },
-  refusal: { label: "Refusal", color: "bg-slate-100 text-slate-700" },
+  refusal: { label: "Refusal", color: "bg-slate-100 text-[var(--cs-text-secondary)]" },
   dysregulation: { label: "Dysregulation", color: "bg-purple-100 text-purple-800" },
 };
 

@@ -156,7 +156,7 @@ export default function PlacementStabilityPage() {
             return (
               <div key={rec.id} className="rounded-xl border bg-white overflow-hidden">
                 <button
-                  className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                  className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                   onClick={() => setExpanded(isExpanded ? null : rec.id)}
                 >
                   <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -222,7 +222,7 @@ export default function PlacementStabilityPage() {
                           <div key={idx} className="flex items-start gap-2 rounded-lg border bg-white p-2.5 text-sm">
                             {evt.impact === "positive" ? <TrendingUp className="h-4 w-4 text-green-600 mt-0.5 shrink-0" /> :
                              evt.impact === "negative" ? <TrendingDown className="h-4 w-4 text-red-600 mt-0.5 shrink-0" /> :
-                             <Clock className="h-4 w-4 text-slate-400 mt-0.5 shrink-0" />}
+                             <Clock className="h-4 w-4 text-[var(--cs-text-muted)] mt-0.5 shrink-0" />}
                             <div>
                               <div className="flex items-center gap-2">
                                 <Badge variant="outline" className="text-xs">{evt.date}</Badge>

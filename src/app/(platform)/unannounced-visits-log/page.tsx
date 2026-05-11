@@ -375,17 +375,17 @@ export default function UnannouncedVisitsLogPage() {
         </div>
 
         {/* ── Regulatory note ──────────────────────────────────────────── */}
-        <Card className="bg-slate-50 border-slate-200">
+        <Card className="bg-slate-50 border-[var(--cs-border)]">
           <CardContent className="pt-4 pb-3">
-            <p className="text-xs font-medium text-slate-700 flex items-center gap-1.5 mb-2">
+            <p className="text-xs font-medium text-[var(--cs-text-secondary)] flex items-center gap-1.5 mb-2">
               <Shield className="h-3.5 w-3.5" /> Regulatory Framework
             </p>
-            <ul className="text-xs text-slate-600 space-y-1">
+            <ul className="text-xs text-[var(--cs-text-secondary)] space-y-1">
               <li><span className="font-medium">Regulation 44</span> — An independent person must visit the home at least once per month and produce a written report on the conduct of the home.</li>
               <li><span className="font-medium">Regulation 45</span> — The registered person must review the quality of care at least every 6 months and produce a written report, consulting the independent visitor&apos;s reports.</li>
               <li><span className="font-medium">Quality Standard 25</span> — The registered person ensures effective governance, with systems to monitor the quality of care and address shortfalls promptly.</li>
             </ul>
-            <p className="text-xs text-slate-500 mt-2">
+            <p className="text-xs text-[var(--cs-text-muted)] mt-2">
               Unannounced visits at varied times (including nights and weekends) demonstrate robust oversight and ensure standards are consistently maintained outside of planned visits.
             </p>
           </CardContent>

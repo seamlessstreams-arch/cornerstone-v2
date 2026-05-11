@@ -137,8 +137,8 @@ export default function PlacementDisruptionPreventionPlanPage() {
     return (
       <PageShell title="Placement Disruption Prevention Plan" subtitle="Per-child proactive plans to prevent placement breakdown when warning signs emerge">
         <div className="flex items-center justify-center py-20">
-          <Loader2 className="h-6 w-6 animate-spin text-slate-400" />
-          <span className="ml-2 text-sm text-slate-400">Loading disruption prevention plans…</span>
+          <Loader2 className="h-6 w-6 animate-spin text-[var(--cs-text-muted)]" />
+          <span className="ml-2 text-sm text-[var(--cs-text-muted)]">Loading disruption prevention plans…</span>
         </div>
       </PageShell>
     );
@@ -223,7 +223,7 @@ export default function PlacementDisruptionPreventionPlanPage() {
             return (
               <div key={rec.id} className="rounded-xl border bg-white overflow-hidden">
                 <button
-                  className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                  className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                   onClick={() => setExpandedId(isExpanded ? null : rec.id)}
                 >
                   <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -366,23 +366,23 @@ export default function PlacementDisruptionPreventionPlanPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="rounded-lg bg-white border p-3">
                         <div className="flex items-center gap-1 mb-2">
-                          <Users className="h-4 w-4 text-slate-700" />
-                          <p className="text-xs font-medium text-slate-700">Support Network</p>
+                          <Users className="h-4 w-4 text-[var(--cs-text-secondary)]" />
+                          <p className="text-xs font-medium text-[var(--cs-text-secondary)]">Support Network</p>
                         </div>
                         <ul className="space-y-1">
                           {rec.support_network_in_place.map((s, i) => (
-                            <li key={i} className="text-sm text-slate-700">{s}</li>
+                            <li key={i} className="text-sm text-[var(--cs-text-secondary)]">{s}</li>
                           ))}
                         </ul>
                       </div>
                       <div className="rounded-lg bg-white border p-3">
                         <div className="flex items-center gap-1 mb-2">
-                          <UserCheck className="h-4 w-4 text-slate-700" />
-                          <p className="text-xs font-medium text-slate-700">Professionals Involved</p>
+                          <UserCheck className="h-4 w-4 text-[var(--cs-text-secondary)]" />
+                          <p className="text-xs font-medium text-[var(--cs-text-secondary)]">Professionals Involved</p>
                         </div>
                         <ul className="space-y-1">
                           {rec.professionals_involved.map((p, i) => (
-                            <li key={i} className="text-sm text-slate-700">{p}</li>
+                            <li key={i} className="text-sm text-[var(--cs-text-secondary)]">{p}</li>
                           ))}
                         </ul>
                       </div>
@@ -428,8 +428,8 @@ export default function PlacementDisruptionPreventionPlanPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="rounded-lg bg-white border p-3">
                         <div className="flex items-center gap-1 mb-2">
-                          <Wrench className="h-4 w-4 text-slate-700" />
-                          <p className="text-xs font-medium text-slate-700">Home-Specific Mitigations</p>
+                          <Wrench className="h-4 w-4 text-[var(--cs-text-secondary)]" />
+                          <p className="text-xs font-medium text-[var(--cs-text-secondary)]">Home-Specific Mitigations</p>
                         </div>
                         <ul className="space-y-1">
                           {rec.home_specific_mitigations.map((m, i) => (
@@ -442,8 +442,8 @@ export default function PlacementDisruptionPreventionPlanPage() {
                       </div>
                       <div className="rounded-lg bg-white border p-3">
                         <div className="flex items-center gap-1 mb-2">
-                          <UserCheck className="h-4 w-4 text-slate-700" />
-                          <p className="text-xs font-medium text-slate-700">Staffing Adjustments</p>
+                          <UserCheck className="h-4 w-4 text-[var(--cs-text-secondary)]" />
+                          <p className="text-xs font-medium text-[var(--cs-text-secondary)]">Staffing Adjustments</p>
                         </div>
                         <p className="text-sm">{rec.staffing_adjustments}</p>
                       </div>
@@ -452,7 +452,7 @@ export default function PlacementDisruptionPreventionPlanPage() {
                     {/* interventions history */}
                     <div>
                       <div className="flex items-center gap-1 mb-2">
-                        <Activity className="h-4 w-4 text-slate-700" />
+                        <Activity className="h-4 w-4 text-[var(--cs-text-secondary)]" />
                         <p className="text-sm font-medium">Interventions Deployed History</p>
                       </div>
                       <div className="space-y-2">
@@ -471,9 +471,9 @@ export default function PlacementDisruptionPreventionPlanPage() {
                     {/* sign-off */}
                     <div className="rounded-lg bg-slate-100 border p-3 flex items-center justify-between text-sm">
                       <div className="flex items-center gap-2">
-                        <FileSignature className="h-4 w-4 text-slate-700" />
+                        <FileSignature className="h-4 w-4 text-[var(--cs-text-secondary)]" />
                         <span className="text-muted-foreground">Local Authority sign-off:</span>
-                        <Badge className={cn("text-xs", rec.signed_off_by_la ? "bg-green-100 text-green-800" : "bg-slate-200 text-slate-700")}>
+                        <Badge className={cn("text-xs", rec.signed_off_by_la ? "bg-green-100 text-green-800" : "bg-slate-200 text-[var(--cs-text-secondary)]")}>
                           {rec.signed_off_by_la ? "Signed" : "Pending"}
                         </Badge>
                       </div>

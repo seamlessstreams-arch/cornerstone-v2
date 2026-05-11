@@ -42,9 +42,9 @@ const TYPE_COLOR: Record<FeedItem["type"], string> = {
   handover:     "bg-amber-100 text-amber-600",
   safeguarding: "bg-red-100 text-red-600",
   training:     "bg-violet-100 text-violet-600",
-  document:     "bg-slate-100 text-slate-600",
+  document:     "bg-slate-100 text-[var(--cs-text-secondary)]",
   shift:        "bg-indigo-100 text-indigo-600",
-  form:         "bg-slate-100 text-slate-600",
+  form:         "bg-slate-100 text-[var(--cs-text-secondary)]",
 };
 
 const SEVERITY_DOT: Record<string, string> = {
@@ -81,7 +81,7 @@ function FeedItemRow({ item }: { item: FeedItem }) {
   return (
     <Link
       href={item.href}
-      className="flex items-start gap-3 px-4 py-3 hover:bg-slate-50 transition-colors group"
+      className="flex items-start gap-3 px-4 py-3 hover:bg-[var(--cs-surface)] transition-colors group"
     >
       {/* Icon */}
       <div className={cn(
@@ -94,19 +94,19 @@ function FeedItemRow({ item }: { item: FeedItem }) {
       {/* Content */}
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
+          <span className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider">
             {item.action}
           </span>
           {item.severity && item.severity !== "info" && (
             <span className={cn("h-1.5 w-1.5 rounded-full", SEVERITY_DOT[item.severity])} />
           )}
         </div>
-        <p className="text-[13px] font-medium text-slate-800 mt-0.5 leading-snug line-clamp-1">
+        <p className="text-[13px] font-medium text-[var(--cs-navy)] mt-0.5 leading-snug line-clamp-1">
           {item.title}
         </p>
         <div className="flex items-center gap-2 mt-1 flex-wrap">
           {item.actor_id && (
-            <span className="text-[10px] text-slate-500">
+            <span className="text-[10px] text-[var(--cs-text-muted)]">
               {getStaffName(item.actor_id).split(" ")[0]}
             </span>
           )}
@@ -116,13 +116,13 @@ function FeedItemRow({ item }: { item: FeedItem }) {
               {getYPName(item.child_id)}
             </span>
           )}
-          <span className="text-[10px] text-slate-400">
+          <span className="text-[10px] text-[var(--cs-text-muted)]">
             {time}{dateLabel ? ` · ${dateLabel}` : ""}
           </span>
         </div>
       </div>
 
-      <ChevronRight className="h-3.5 w-3.5 text-slate-300 shrink-0 mt-2 opacity-0 group-hover:opacity-100 transition-opacity" />
+      <ChevronRight className="h-3.5 w-3.5 text-[var(--cs-text-gentle)] shrink-0 mt-2 opacity-0 group-hover:opacity-100 transition-opacity" />
     </Link>
   );
 }
@@ -145,18 +145,18 @@ export function ActivityFeed({ limit = 12 }: { limit?: number }) {
               <span className="relative inline-flex h-2 w-2 rounded-full bg-indigo-500" />
             </span>
           </CardTitle>
-          <span className="text-[10px] text-slate-400">Auto-refreshes every 30s</span>
+          <span className="text-[10px] text-[var(--cs-text-muted)]">Auto-refreshes every 30s</span>
         </div>
       </CardHeader>
       <CardContent className="p-0">
         {isLoading ? (
           <div className="flex items-center justify-center py-12">
-            <Loader2 className="h-5 w-5 animate-spin text-slate-400" />
+            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
           </div>
         ) : items.length === 0 ? (
           <div className="py-10 text-center">
             <Activity className="h-8 w-8 text-slate-200 mx-auto mb-2" />
-            <p className="text-sm font-medium text-slate-500">No recent activity</p>
+            <p className="text-sm font-medium text-[var(--cs-text-muted)]">No recent activity</p>
           </div>
         ) : (
           <div className="divide-y divide-slate-100 max-h-[480px] overflow-y-auto">

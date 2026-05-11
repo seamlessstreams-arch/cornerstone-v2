@@ -82,7 +82,7 @@ export default function CleaningRotaPage() {
     return (
       <PageShell title="Cleaning Rota" subtitle="Loading...">
         <div className="flex items-center justify-center py-12">
-          <Loader2 className="h-8 w-8 animate-spin text-slate-400" />
+          <Loader2 className="h-8 w-8 animate-spin text-[var(--cs-text-muted)]" />
         </div>
       </PageShell>
     );
@@ -166,7 +166,7 @@ export default function CleaningRotaPage() {
           return (
             <div key={c.id} className="rounded-xl border bg-white overflow-hidden">
               <button
-                className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                 onClick={() => setExpandedId(isExpanded ? null : c.id)}
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -196,7 +196,7 @@ export default function CleaningRotaPage() {
                         <div key={i} className="bg-white rounded-lg p-2 border text-sm flex items-start gap-2">
                           {t.completed ? <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 shrink-0" /> : <AlertTriangle className="h-4 w-4 text-amber-500 mt-0.5 shrink-0" />}
                           <div className="flex-1">
-                            <span className={cn(t.completed ? "text-slate-700" : "text-slate-500")}>{t.task}</span>
+                            <span className={cn(t.completed ? "text-[var(--cs-text-secondary)]" : "text-[var(--cs-text-muted)]")}>{t.task}</span>
                             {t.notes && <p className="text-xs text-muted-foreground">{t.notes}</p>}
                           </div>
                         </div>
@@ -253,7 +253,7 @@ export default function CleaningRotaPage() {
 
                   {c.notes && (
                     <div className="bg-slate-50 rounded-lg p-3 border">
-                      <p className="text-xs font-semibold text-slate-800 uppercase tracking-wide mb-1">Notes</p>
+                      <p className="text-xs font-semibold text-[var(--cs-navy)] uppercase tracking-wide mb-1">Notes</p>
                       <p className="text-sm">{c.notes}</p>
                     </div>
                   )}

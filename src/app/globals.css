@@ -45,66 +45,129 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* ── Design tokens ────────────────────────────────────────────────────────── */
+/* ── Cornerstone Calm Design Tokens ───────────────────────────────────────── */
 :root {
   /* Font stack — Avenir with graceful fallback chain */
   --font-sans: "Avenir Next LT Pro", "Avenir Next", Avenir, ui-sans-serif,
     system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
-  /* Colour palette */
+  /* ── Cornerstone Calm palette ─────────────────────────────────────────── */
+  --cs-bg:              #f7f3ec;
+  --cs-surface:         #fffaf2;
+  --cs-surface-elevated:#ffffff;
+  --cs-border:          #e6dccb;
+  --cs-border-subtle:   #f0e8d8;
 
-  /* Sidebar */
-  --sidebar-bg:           #ffffff;
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-active-bg:    #eef2ff;
-  --sidebar-active-text:  #1e3a8a;
-  --sidebar-text:         #374151;
-  --sidebar-muted:        #6b7280;
-  --sidebar-hover-bg:     #f9fafb;
+  /* Navy — deep professional tone */
+  --cs-navy:            #0f1e36;
+  --cs-navy-soft:       #172b4d;
+  --cs-navy-muted:      #1e3a5f;
+
+  /* Text hierarchy */
+  --cs-text:            #1f2933;
+  --cs-text-secondary:  #4a5568;
+  --cs-text-muted:      #667085;
+  --cs-text-gentle:     #94a3b8;
+
+  /* ARIA Intelligence accent — warm gold */
+  --cs-aria-gold:       #c89b3c;
+  --cs-aria-gold-soft:  #f5e7c6;
+  --cs-aria-gold-bg:    #fdf8ef;
+  --cs-aria-glow:       rgba(200, 155, 60, 0.28);
+  --cs-aria-shimmer:    linear-gradient(135deg, #f5e7c6 0%, #fdf8ef 50%, #f5e7c6 100%);
+
+  /* Semantic — calm tones, not harsh */
+  --cs-risk:            #b42318;
+  --cs-risk-soft:       #fee4e2;
+  --cs-risk-bg:         #fef3f2;
+  --cs-success:         #067647;
+  --cs-success-soft:    #dcfae6;
+  --cs-success-bg:      #f0fdf4;
+  --cs-info:            #175cd3;
+  --cs-info-soft:       #d1e9ff;
+  --cs-info-bg:         #eff8ff;
+  --cs-warning:         #b54708;
+  --cs-warning-soft:    #fef0c7;
+  --cs-warning-bg:      #fffaeb;
+  --cs-oversight:       #5925dc;
+  --cs-oversight-soft:  #ebe9fe;
+  --cs-oversight-bg:    #f4f3ff;
+
+  /* Radius — generous for warmth */
+  --cs-radius-sm:       0.5rem;
+  --cs-radius-md:       0.875rem;
+  --cs-radius-lg:       1.25rem;
+  --cs-radius-xl:       1.5rem;
+  --cs-radius-2xl:      2rem;
+
+  /* Shadows — soft, layered */
+  --cs-shadow-soft:     0 1px 3px rgba(15, 30, 54, 0.04), 0 4px 12px rgba(15, 30, 54, 0.03);
+  --cs-shadow-card:     0 2px 8px rgba(15, 30, 54, 0.04), 0 12px 32px rgba(15, 30, 54, 0.06);
+  --cs-shadow-elevated: 0 4px 16px rgba(15, 30, 54, 0.06), 0 20px 48px rgba(15, 30, 54, 0.08);
+  --cs-shadow-glow-gold:0 0 20px rgba(200, 155, 60, 0.15), 0 0 40px rgba(200, 155, 60, 0.08);
+
+  /* Spacing scale */
+  --cs-space-xs:        0.25rem;
+  --cs-space-sm:        0.5rem;
+  --cs-space-md:        1rem;
+  --cs-space-lg:        1.5rem;
+  --cs-space-xl:        2rem;
+  --cs-space-2xl:       3rem;
+
+  /* Sidebar — calm navy */
+  --sidebar-bg:           #0f1e36;
+  --sidebar-border:       rgba(255, 255, 255, 0.08);
+  --sidebar-active-bg:    rgba(200, 155, 60, 0.15);
+  --sidebar-active-text:  #f5e7c6;
+  --sidebar-text:         rgba(255, 255, 255, 0.75);
+  --sidebar-muted:        rgba(255, 255, 255, 0.45);
+  --sidebar-hover-bg:     rgba(255, 255, 255, 0.06);
 
   /* Status colours */
-  --status-complete:        #16a34a;
-  --status-in-progress:     #2563eb;
-  --status-overdue:         #dc2626;
-  --status-needs-review:    #d97706;
-  --status-oversight:       #7c3aed;
-  --status-aria:            #0891b2;
+  --status-complete:        var(--cs-success);
+  --status-in-progress:     var(--cs-info);
+  --status-overdue:         var(--cs-risk);
+  --status-needs-review:    var(--cs-warning);
+  --status-oversight:       var(--cs-oversight);
+  --status-aria:            var(--cs-aria-gold);
   --status-escalated:       #db2777;
-  --status-low:             #16a34a;
-  --status-medium:          #d97706;
-  --status-high:            #dc2626;
+  --status-low:             var(--cs-success);
+  --status-medium:          var(--cs-warning);
+  --status-high:            var(--cs-risk);
   --status-critical:        #9f1239;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+
+  /* Shadcn compatibility tokens — mapped to Calm palette */
+  --background: var(--cs-bg);
+  --foreground: var(--cs-text);
+  --card: var(--cs-surface-elevated);
+  --card-foreground: var(--cs-text);
+  --popover: var(--cs-surface-elevated);
+  --popover-foreground: var(--cs-text);
+  --primary: var(--cs-navy);
+  --primary-foreground: #f7f3ec;
+  --secondary: var(--cs-surface);
+  --secondary-foreground: var(--cs-text);
+  --muted: var(--cs-surface);
+  --muted-foreground: var(--cs-text-muted);
+  --accent: var(--cs-aria-gold-bg);
+  --accent-foreground: var(--cs-navy);
+  --destructive: var(--cs-risk);
+  --border: var(--cs-border);
+  --input: var(--cs-border);
+  --ring: var(--cs-aria-gold);
+  --chart-1: var(--cs-aria-gold);
+  --chart-2: var(--cs-info);
+  --chart-3: var(--cs-success);
+  --chart-4: var(--cs-warning);
+  --chart-5: var(--cs-oversight);
+  --radius: 0.875rem;
+  --sidebar: var(--cs-navy);
+  --sidebar-foreground: rgba(255, 255, 255, 0.85);
+  --sidebar-primary: var(--cs-aria-gold);
+  --sidebar-primary-foreground: var(--cs-navy);
+  --sidebar-accent: rgba(255, 255, 255, 0.06);
+  --sidebar-accent-foreground: rgba(255, 255, 255, 0.85);
+  --sidebar-ring: var(--cs-aria-gold);
 }
 
 @theme inline {
@@ -148,6 +211,32 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* Cornerstone Calm — semantic colour classes */
+  --color-cs-bg: var(--cs-bg);
+  --color-cs-surface: var(--cs-surface);
+  --color-cs-surface-elevated: var(--cs-surface-elevated);
+  --color-cs-border: var(--cs-border);
+  --color-cs-border-subtle: var(--cs-border-subtle);
+  --color-cs-navy: var(--cs-navy);
+  --color-cs-navy-soft: var(--cs-navy-soft);
+  --color-cs-text: var(--cs-text);
+  --color-cs-text-secondary: var(--cs-text-secondary);
+  --color-cs-text-muted: var(--cs-text-muted);
+  --color-cs-text-gentle: var(--cs-text-gentle);
+  --color-cs-aria-gold: var(--cs-aria-gold);
+  --color-cs-aria-gold-soft: var(--cs-aria-gold-soft);
+  --color-cs-aria-gold-bg: var(--cs-aria-gold-bg);
+  --color-cs-risk: var(--cs-risk);
+  --color-cs-risk-soft: var(--cs-risk-soft);
+  --color-cs-success: var(--cs-success);
+  --color-cs-success-soft: var(--cs-success-soft);
+  --color-cs-info: var(--cs-info);
+  --color-cs-info-soft: var(--cs-info-soft);
+  --color-cs-warning: var(--cs-warning);
+  --color-cs-warning-soft: var(--cs-warning-soft);
+  --color-cs-oversight: var(--cs-oversight);
+  --color-cs-oversight-soft: var(--cs-oversight-soft);
 }
 
 /* ── Base styles ──────────────────────────────────────────────────────────── */
@@ -222,38 +311,150 @@ body {
   animation: drawerSlide 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* ── ARIA Magic Animations ────────────────────────────────────────────────── */
+@keyframes ariaShimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+.aria-shimmer {
+  background: linear-gradient(90deg,
+    var(--cs-aria-gold-bg) 0%,
+    var(--cs-aria-gold-soft) 25%,
+    var(--cs-aria-gold-bg) 50%,
+    var(--cs-aria-gold-soft) 75%,
+    var(--cs-aria-gold-bg) 100%);
+  background-size: 200% 100%;
+  animation: ariaShimmer 3s ease-in-out infinite;
+}
+
+@keyframes ariaGlow {
+  0%, 100% { box-shadow: 0 0 12px rgba(200, 155, 60, 0.12); }
+  50%      { box-shadow: 0 0 24px rgba(200, 155, 60, 0.22); }
+}
+.aria-glow {
+  animation: ariaGlow 3s ease-in-out infinite;
+}
+
+@keyframes ariaPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.7; transform: scale(0.96); }
+}
+.aria-pulse {
+  animation: ariaPulse 2s ease-in-out infinite;
+}
+
+@keyframes gentleFadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-gentle-fade-up {
+  animation: gentleFadeUp 0.4s ease-out;
+}
+
+/* ── Cornerstone Calm Utility Classes ─────────────────────────────────────── */
+.cs-card {
+  background: var(--cs-surface-elevated);
+  border: 1px solid var(--cs-border);
+  border-radius: var(--cs-radius-xl);
+  box-shadow: var(--cs-shadow-soft);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.cs-card:hover {
+  box-shadow: var(--cs-shadow-card);
+  border-color: var(--cs-border-subtle);
+}
+
+.cs-card-elevated {
+  background: var(--cs-surface-elevated);
+  border: 1px solid var(--cs-border);
+  border-radius: var(--cs-radius-xl);
+  box-shadow: var(--cs-shadow-card);
+}
+
+.cs-card-aria {
+  background: var(--cs-aria-gold-bg);
+  border: 1px solid var(--cs-aria-gold-soft);
+  border-radius: var(--cs-radius-xl);
+  box-shadow: var(--cs-shadow-glow-gold);
+}
+
+.cs-surface {
+  background: var(--cs-surface);
+}
+
+.cs-text-heading {
+  color: var(--cs-navy);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.cs-text-body {
+  color: var(--cs-text-secondary);
+  line-height: 1.6;
+}
+
+.cs-text-muted {
+  color: var(--cs-text-muted);
+}
+
+.cs-focus-ring {
+  outline: 2px solid var(--cs-aria-gold);
+  outline-offset: 2px;
+}
+
+/* ARIA badge — gold intelligence indicator */
+.cs-badge-aria {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.125rem 0.5rem;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: var(--cs-aria-gold);
+  background: var(--cs-aria-gold-bg);
+  border: 1px solid var(--cs-aria-gold-soft);
+  border-radius: 999px;
+}
+
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --cs-bg: #0a1628;
+  --cs-surface: #0f1e36;
+  --cs-surface-elevated: #172b4d;
+  --cs-border: rgba(255, 255, 255, 0.08);
+  --cs-text: #e2e8f0;
+  --cs-text-secondary: #94a3b8;
+  --cs-text-muted: #64748b;
+  --background: var(--cs-bg);
+  --foreground: var(--cs-text);
+  --card: var(--cs-surface-elevated);
+  --card-foreground: var(--cs-text);
+  --popover: var(--cs-surface-elevated);
+  --popover-foreground: var(--cs-text);
+  --primary: var(--cs-aria-gold);
+  --primary-foreground: var(--cs-navy);
+  --secondary: var(--cs-surface);
+  --secondary-foreground: var(--cs-text);
+  --muted: var(--cs-surface);
+  --muted-foreground: var(--cs-text-muted);
+  --accent: rgba(200, 155, 60, 0.12);
+  --accent-foreground: var(--cs-aria-gold-soft);
+  --destructive: #ef4444;
+  --border: var(--cs-border);
+  --input: rgba(255, 255, 255, 0.1);
+  --ring: var(--cs-aria-gold);
+  --chart-1: var(--cs-aria-gold);
+  --chart-2: #60a5fa;
+  --chart-3: #34d399;
+  --chart-4: #fbbf24;
+  --chart-5: #a78bfa;
+  --sidebar: #0a1222;
+  --sidebar-foreground: rgba(255, 255, 255, 0.85);
+  --sidebar-primary: var(--cs-aria-gold);
+  --sidebar-primary-foreground: var(--cs-navy);
+  --sidebar-accent: rgba(255, 255, 255, 0.06);
+  --sidebar-accent-foreground: rgba(255, 255, 255, 0.85);
+  --sidebar-border: rgba(255, 255, 255, 0.06);
+  --sidebar-ring: var(--cs-aria-gold);
 }
 
 @layer base {

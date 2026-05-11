@@ -38,7 +38,7 @@ const AREA_META: Record<TransitionPlanningArea, { icon: React.ReactNode; color: 
   health_wellbeing:       { icon: <Heart className="h-4 w-4" />,          color: "bg-pink-100 text-pink-800" },
   housing:                { icon: <Home className="h-4 w-4" />,           color: "bg-amber-100 text-amber-800" },
   relationships:          { icon: <Users className="h-4 w-4" />,          color: "bg-indigo-100 text-indigo-800" },
-  legal_rights:           { icon: <Shield className="h-4 w-4" />,         color: "bg-slate-100 text-slate-800" },
+  legal_rights:           { icon: <Shield className="h-4 w-4" />,         color: "bg-slate-100 text-[var(--cs-navy)]" },
   identity:               { icon: <Target className="h-4 w-4" />,         color: "bg-rose-100 text-rose-800" },
 };
 

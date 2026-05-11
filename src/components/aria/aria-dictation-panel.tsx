@@ -171,7 +171,7 @@ export function AriaDictationPanel(props: AriaDictationPanelProps) {
           ) : null}
 
           {/* Recording controls */}
-          <div className="rounded-md border border-slate-200 bg-white p-3">
+          <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
             <div className="flex items-center justify-between gap-3">
               <div className="flex items-center gap-2">
                 <span
@@ -184,7 +184,7 @@ export function AriaDictationPanel(props: AriaDictationPanelProps) {
                         : "bg-slate-300",
                   )}
                 />
-                <span className="text-sm font-medium text-slate-700">
+                <span className="text-sm font-medium text-[var(--cs-text-secondary)]">
                   {recorder.state === "recording"
                     ? "Recording"
                     : recorder.state === "paused"
@@ -193,7 +193,7 @@ export function AriaDictationPanel(props: AriaDictationPanelProps) {
                         ? "Recording captured"
                         : "Ready"}
                 </span>
-                <Badge className="border bg-slate-100 text-slate-700 border-slate-200 text-xs">
+                <Badge className="border bg-slate-100 text-[var(--cs-text-secondary)] border-[var(--cs-border)] text-xs">
                   {formatDuration(recorder.durationMs)}
                 </Badge>
               </div>
@@ -247,10 +247,10 @@ export function AriaDictationPanel(props: AriaDictationPanelProps) {
 
           {/* Transcript area */}
           {transcript || transcribing || transcriptError ? (
-            <div className="rounded-md border border-slate-200 bg-white p-3 space-y-3">
-              <div className="text-xs font-semibold text-slate-500 uppercase">Transcript</div>
+            <div className="rounded-md border border-[var(--cs-border)] bg-white p-3 space-y-3">
+              <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase">Transcript</div>
               {transcribing ? (
-                <div className="flex items-center gap-2 text-sm text-slate-600">
+                <div className="flex items-center gap-2 text-sm text-[var(--cs-text-secondary)]">
                   <Loader2 className="h-4 w-4 animate-spin" /> Transcribing
                 </div>
               ) : null}

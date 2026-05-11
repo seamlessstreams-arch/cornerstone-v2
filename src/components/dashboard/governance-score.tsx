@@ -67,7 +67,7 @@ export function GovernanceScore() {
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-center py-6">
-            <Loader2 className="h-5 w-5 animate-spin text-slate-400" />
+            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
           </div>
         </CardContent>
       </Card>
@@ -109,7 +109,7 @@ export function GovernanceScore() {
               </span>
               <div className="flex items-center gap-0.5">
                 <Zap className="h-2.5 w-2.5 text-emerald-500" />
-                <span className="text-[9px] text-slate-400">Live</span>
+                <span className="text-[9px] text-[var(--cs-text-muted)]">Live</span>
               </div>
             </div>
             <div className="h-1.5 rounded-full bg-slate-100 overflow-hidden">
@@ -139,9 +139,9 @@ export function GovernanceScore() {
           const catText = score >= 80 ? "text-emerald-600" : score >= 65 ? "text-amber-600" : "text-red-600";
           return (
             <Link key={key} href="/ri/scorecard">
-              <div className="flex items-center gap-2 rounded-lg px-1.5 py-1 hover:bg-slate-50 transition-colors">
+              <div className="flex items-center gap-2 rounded-lg px-1.5 py-1 hover:bg-[var(--cs-surface)] transition-colors">
                 <Icon className={cn("h-3 w-3 shrink-0", colour)} />
-                <span className="text-[10px] text-slate-500 w-16 truncate">{label}</span>
+                <span className="text-[10px] text-[var(--cs-text-muted)] w-16 truncate">{label}</span>
                 <div className="flex-1 h-1.5 rounded-full bg-slate-100 overflow-hidden">
                   <div className={cn("h-full rounded-full", catBar)} style={{ width: `${score}%` }} />
                 </div>

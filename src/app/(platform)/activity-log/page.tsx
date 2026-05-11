@@ -38,7 +38,7 @@ const TYPE_CONFIG: Record<FeedItem["type"], { label: string; icon: React.Element
   handover:     { label: "Handover",     icon: ArrowRightLeft, color: "text-amber-700",   bg: "bg-amber-50",   border: "border-amber-200"   },
   safeguarding: { label: "Safeguarding", icon: Shield,         color: "text-rose-700",    bg: "bg-rose-50",    border: "border-rose-200"    },
   training:     { label: "Training",     icon: GraduationCap,  color: "text-sky-700",     bg: "bg-sky-50",     border: "border-sky-200"     },
-  document:     { label: "Document",     icon: FileText,       color: "text-slate-700",   bg: "bg-slate-50",   border: "border-slate-200"   },
+  document:     { label: "Document",     icon: FileText,       color: "text-[var(--cs-text-secondary)]",   bg: "bg-slate-50",   border: "border-[var(--cs-border)]"   },
   shift:        { label: "Shift",        icon: Clock,          color: "text-indigo-700",  bg: "bg-indigo-50",  border: "border-indigo-200"  },
   form:         { label: "Form",         icon: ClipboardCheck, color: "text-teal-700",    bg: "bg-teal-50",    border: "border-teal-200"    },
 };
@@ -48,7 +48,7 @@ const SEVERITY_CONFIG: Record<string, { label: string; icon: React.ElementType; 
   high:     { label: "High",     icon: AlertTriangle, color: "text-orange-700", bg: "bg-orange-50",  border: "border-orange-200" },
   medium:   { label: "Medium",   icon: Info,          color: "text-amber-700",  bg: "bg-amber-50",   border: "border-amber-200"  },
   low:      { label: "Low",      icon: Info,          color: "text-blue-700",   bg: "bg-blue-50",    border: "border-blue-200"   },
-  info:     { label: "Info",     icon: Info,          color: "text-slate-500",  bg: "bg-slate-50",   border: "border-slate-200"  },
+  info:     { label: "Info",     icon: Info,          color: "text-[var(--cs-text-muted)]",  bg: "bg-slate-50",   border: "border-[var(--cs-border)]"  },
 };
 
 // ── Export Columns ────────────────────────────────────────────────────────────
@@ -81,7 +81,7 @@ function FeedRow({ item }: { item: FeedItem }) {
 
   return (
     <Link href={item.href} className="block">
-      <div className="flex items-start gap-3 px-4 py-3 hover:bg-slate-50 transition-colors group border-b border-slate-50 last:border-0">
+      <div className="flex items-start gap-3 px-4 py-3 hover:bg-[var(--cs-surface)] transition-colors group border-b border-slate-50 last:border-0">
         {/* Timeline dot + type icon */}
         <div className="flex flex-col items-center pt-0.5">
           <div className={cn("rounded-md p-1.5 border", tc.bg, tc.border)}>
@@ -92,7 +92,7 @@ function FeedRow({ item }: { item: FeedItem }) {
         {/* Content */}
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap mb-0.5">
-            <span className="text-xs font-semibold text-slate-900">{item.action}</span>
+            <span className="text-xs font-semibold text-[var(--cs-navy)]">{item.action}</span>
             {item.severity && item.severity !== "info" && (
               <Badge className={cn("text-[9px] px-1.5 py-0 border", sc.bg, sc.color, sc.border)}>
                 {sc.label}
@@ -102,12 +102,12 @@ function FeedRow({ item }: { item: FeedItem }) {
               {tc.label}
             </Badge>
           </div>
-          <p className="text-xs text-slate-700 font-medium">{item.title}</p>
+          <p className="text-xs text-[var(--cs-text-secondary)] font-medium">{item.title}</p>
           {item.description && (
-            <p className="text-[11px] text-slate-500 mt-0.5 line-clamp-1">{item.description}</p>
+            <p className="text-[11px] text-[var(--cs-text-muted)] mt-0.5 line-clamp-1">{item.description}</p>
           )}
 
-          <div className="flex items-center gap-3 mt-1.5 text-[10px] text-slate-400">
+          <div className="flex items-center gap-3 mt-1.5 text-[10px] text-[var(--cs-text-muted)]">
             <span className="font-medium">
               {isToday ? `Today ${timePart}` : `${formatDate(datePart)} ${timePart}`}
             </span>
@@ -127,7 +127,7 @@ function FeedRow({ item }: { item: FeedItem }) {
         </div>
 
         {/* Arrow */}
-        <ChevronRight className="h-4 w-4 text-slate-300 mt-1 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0" />
+        <ChevronRight className="h-4 w-4 text-[var(--cs-text-gentle)] mt-1 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0" />
       </div>
     </Link>
   );
@@ -209,8 +209,8 @@ export default function ActivityLogPage() {
     return (
       <PageShell title="Activity Log" subtitle="Home-wide event timeline">
         <div className="flex items-center justify-center py-20">
-          <Loader2 className="h-6 w-6 animate-spin text-slate-400" />
-          <span className="ml-2 text-sm text-slate-400">Loading activity feed…</span>
+          <Loader2 className="h-6 w-6 animate-spin text-[var(--cs-text-muted)]" />
+          <span className="ml-2 text-sm text-[var(--cs-text-muted)]">Loading activity feed…</span>
         </div>
       </PageShell>
     );
@@ -234,7 +234,7 @@ export default function ActivityLogPage() {
       {/* ── Summary stats ─────────────────────────────────────────────────── */}
       <div className="grid grid-cols-2 sm:grid-cols-6 gap-3 mb-6">
         {[
-          { label: "Total Events",  value: stats.total,     color: "text-slate-700",   bg: "bg-slate-50",   border: "border-slate-200"  },
+          { label: "Total Events",  value: stats.total,     color: "text-[var(--cs-text-secondary)]",   bg: "bg-slate-50",   border: "border-[var(--cs-border)]"  },
           { label: "Critical",      value: stats.critical,  color: "text-red-600",     bg: "bg-red-50",     border: "border-red-200"    },
           { label: "High",          value: stats.high,      color: "text-orange-600",  bg: "bg-orange-50",  border: "border-orange-200" },
           { label: "Incidents",     value: stats.incidents, color: "text-red-600",     bg: "bg-red-50",     border: "border-red-200"    },
@@ -243,7 +243,7 @@ export default function ActivityLogPage() {
         ].map((s) => (
           <div key={s.label} className={cn("rounded-lg border p-3 text-center", s.bg, s.border)}>
             <div className={cn("text-xl font-bold", s.color)}>{s.value}</div>
-            <div className="text-[10px] text-slate-500 font-medium mt-0.5">{s.label}</div>
+            <div className="text-[10px] text-[var(--cs-text-muted)] font-medium mt-0.5">{s.label}</div>
           </div>
         ))}
       </div>
@@ -266,7 +266,7 @@ export default function ActivityLogPage() {
       {/* ── Filters ───────────────────────────────────────────────────────── */}
       <div className="flex flex-wrap items-center gap-2 mb-4">
         <div className="relative flex-1 min-w-[200px] max-w-xs">
-          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
           <Input
             placeholder="Search events…"
             value={search}
@@ -275,7 +275,7 @@ export default function ActivityLogPage() {
           />
         </div>
 
-        <div className="flex items-center gap-1 text-xs text-slate-500">
+        <div className="flex items-center gap-1 text-xs text-[var(--cs-text-muted)]">
           <Filter className="h-3.5 w-3.5" />
         </div>
 
@@ -308,7 +308,7 @@ export default function ActivityLogPage() {
         </Select>
 
         <div className="flex items-center gap-1">
-          <ArrowUpDown className="h-3.5 w-3.5 text-slate-400" />
+          <ArrowUpDown className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
           <Select value={sortBy} onValueChange={setSortBy}>
             <SelectTrigger className="h-8 w-[130px] text-xs">
               <SelectValue />
@@ -326,7 +326,7 @@ export default function ActivityLogPage() {
           <Button
             variant="ghost"
             size="sm"
-            className="h-8 text-xs text-slate-500"
+            className="h-8 text-xs text-[var(--cs-text-muted)]"
             onClick={() => { setSearch(""); setTypeFilter("all"); setSeverityFilter("all"); }}
           >
             <X className="h-3 w-3 mr-1" /> Clear
@@ -349,7 +349,7 @@ export default function ActivityLogPage() {
                 "flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-medium border transition-colors",
                 isActive
                   ? `${tc.bg} ${tc.color} ${tc.border} ring-1 ring-offset-1 ${tc.border}`
-                  : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50"
+                  : "bg-white text-[var(--cs-text-secondary)] border-[var(--cs-border)] hover:bg-[var(--cs-surface)]"
               )}
             >
               <tc.icon className="h-3 w-3" />
@@ -362,7 +362,7 @@ export default function ActivityLogPage() {
 
       {/* ── Feed List ─────────────────────────────────────────────────────── */}
       {filtered.length === 0 ? (
-        <div className="text-center py-16 text-slate-400">
+        <div className="text-center py-16 text-[var(--cs-text-muted)]">
           <Activity className="h-10 w-10 mx-auto mb-3 opacity-40" />
           <p className="text-sm font-medium">No events found</p>
           <p className="text-xs mt-1">
@@ -378,17 +378,17 @@ export default function ActivityLogPage() {
       )}
 
       {/* Footer count */}
-      <div className="text-center text-[10px] text-slate-400 mt-6">
+      <div className="text-center text-[10px] text-[var(--cs-text-muted)] mt-6">
         Showing {filtered.length} of {stats.total} event{stats.total !== 1 ? "s" : ""} · Live refresh every 30s
       </div>
 
       {/* ── Regulatory Note ───────────────────────────────────────────────── */}
-      <div className="mt-8 rounded-lg bg-slate-50 border border-slate-200 p-4">
+      <div className="mt-8 rounded-lg bg-slate-50 border border-[var(--cs-border)] p-4">
         <div className="flex items-start gap-3">
           <Activity className="h-5 w-5 text-indigo-500 mt-0.5 flex-shrink-0" />
           <div>
-            <h4 className="text-xs font-semibold text-slate-700 mb-1">About the Activity Log</h4>
-            <p className="text-[11px] text-slate-500 leading-relaxed">
+            <h4 className="text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">About the Activity Log</h4>
+            <p className="text-[11px] text-[var(--cs-text-muted)] leading-relaxed">
               The activity log provides a single, time-ordered view of all events across the home. It aggregates
               incidents, daily log entries, medication administrations, task updates, handovers, shifts, and
               safeguarding events. This audit trail supports Regulation 37 (Record Keeping) of the Children&apos;s

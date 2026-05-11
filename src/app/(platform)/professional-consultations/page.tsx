@@ -28,7 +28,7 @@ const TYPE_COLOR: Record<ProfConsultationType, string> = {
   social_worker: "bg-blue-100 text-blue-800",
   iro: "bg-purple-100 text-purple-800",
   lado: "bg-red-100 text-red-800",
-  police: "bg-slate-100 text-slate-800",
+  police: "bg-slate-100 text-[var(--cs-navy)]",
   gp: "bg-green-100 text-green-800",
   therapist: "bg-rose-100 text-rose-800",
   education: "bg-indigo-100 text-indigo-800",

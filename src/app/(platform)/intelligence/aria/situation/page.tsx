@@ -47,7 +47,7 @@ const RISK_COLOURS: Record<AriaRiskLevel, string> = {
   critical: "bg-red-100 text-red-800 border-red-200",
   high: "bg-orange-100 text-orange-800 border-orange-200",
   medium: "bg-amber-100 text-amber-800 border-amber-200",
-  low: "bg-slate-100 text-slate-700 border-slate-200",
+  low: "bg-slate-100 text-[var(--cs-text-secondary)] border-[var(--cs-border)]",
   not_identified: "bg-green-100 text-green-700 border-green-200",
 };
 
@@ -62,7 +62,7 @@ const PRIORITY_COLOURS: Record<string, string> = {
   urgent: "bg-red-100 text-red-800",
   high: "bg-orange-100 text-orange-800",
   medium: "bg-amber-100 text-amber-700",
-  low: "bg-slate-100 text-slate-600",
+  low: "bg-slate-100 text-[var(--cs-text-secondary)]",
 };
 
 // ── Parsed result shape (from ARIA JSON) ─────────────────────────────────────
@@ -116,8 +116,8 @@ function SectionCard({
   className?: string;
 }) {
   return (
-    <div className={cn("rounded-xl border border-slate-100 bg-white p-4 space-y-2", className)}>
-      <p className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-slate-500">
+    <div className={cn("rounded-xl border border-[var(--cs-border-subtle)] bg-white p-4 space-y-2", className)}>
+      <p className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-[var(--cs-text-muted)]">
         {Icon && <Icon className="h-3 w-3" />}
         {label}
       </p>
@@ -134,7 +134,7 @@ function PreviousAssessments({ childId }: { childId: string }) {
 
   if (!childId) {
     return (
-      <div className="text-center py-8 text-xs text-slate-400">
+      <div className="text-center py-8 text-xs text-[var(--cs-text-muted)]">
         Select a young person to see previous assessments
       </div>
     );
@@ -152,7 +152,7 @@ function PreviousAssessments({ childId }: { childId: string }) {
 
   if (assessments.length === 0) {
     return (
-      <div className="text-center py-8 text-xs text-slate-400">
+      <div className="text-center py-8 text-xs text-[var(--cs-text-muted)]">
         No previous assessments for this young person
       </div>
     );
@@ -161,14 +161,14 @@ function PreviousAssessments({ childId }: { childId: string }) {
   return (
     <div className="space-y-2">
       {assessments.map((a) => (
-        <div key={a.id} className="rounded-xl border border-slate-100 bg-slate-50 p-3 space-y-1">
+        <div key={a.id} className="rounded-xl border border-[var(--cs-border-subtle)] bg-slate-50 p-3 space-y-1">
           <div className="flex items-center gap-2 flex-wrap">
             <span className={cn("rounded-full px-2 py-0.5 text-[10px] font-semibold border capitalize", RISK_COLOURS[a.risk_level])}>
               {a.risk_level.replace("_", " ")}
             </span>
-            <span className="text-[10px] text-slate-500">{formatDate(a.created_at)}</span>
+            <span className="text-[10px] text-[var(--cs-text-muted)]">{formatDate(a.created_at)}</span>
           </div>
-          <p className="text-xs text-slate-700 line-clamp-2">{a.situation_summary}</p>
+          <p className="text-xs text-[var(--cs-text-secondary)] line-clamp-2">{a.situation_summary}</p>
         </div>
       ))}
     </div>
@@ -289,15 +289,15 @@ function ResultsPanel({
 
       {/* ── Situation summary ─────────────────────────────────────────────────── */}
       {result.situation_summary && (
-        <SectionCard label="Situation Summary" icon={BookOpen} className="bg-slate-50 border-slate-200">
-          <p className="text-sm text-slate-800 leading-relaxed">{result.situation_summary}</p>
+        <SectionCard label="Situation Summary" icon={BookOpen} className="bg-slate-50 border-[var(--cs-border)]">
+          <p className="text-sm text-[var(--cs-navy)] leading-relaxed">{result.situation_summary}</p>
         </SectionCard>
       )}
 
       {/* ── What happened ─────────────────────────────────────────────────────── */}
       {result.what_happened && (
         <SectionCard label="What Happened">
-          <p className="text-sm text-slate-800 leading-relaxed">{result.what_happened}</p>
+          <p className="text-sm text-[var(--cs-navy)] leading-relaxed">{result.what_happened}</p>
         </SectionCard>
       )}
 
@@ -311,7 +311,7 @@ function ResultsPanel({
       {/* ── Child's communication through behaviour ───────────────────────────── */}
       {result.child_communication_through_behaviour && (
         <SectionCard label="Child's Communication Through Behaviour" icon={MessageSquare} className="border-blue-100 bg-blue-50/30">
-          <p className="text-sm text-slate-800 leading-relaxed">{result.child_communication_through_behaviour}</p>
+          <p className="text-sm text-[var(--cs-navy)] leading-relaxed">{result.child_communication_through_behaviour}</p>
           <p className="text-[10px] text-blue-600 italic">
             Behaviours are communication. This section explores what the young person may be expressing.
           </p>
@@ -321,7 +321,7 @@ function ResultsPanel({
       {/* ── Known triggers ────────────────────────────────────────────────────── */}
       {result.known_triggers && (
         <SectionCard label="Known Triggers" icon={Target}>
-          <p className="text-sm text-slate-800 leading-relaxed">{result.known_triggers}</p>
+          <p className="text-sm text-[var(--cs-navy)] leading-relaxed">{result.known_triggers}</p>
         </SectionCard>
       )}
 
@@ -354,14 +354,14 @@ function ResultsPanel({
       {/* ── Team understanding ───────────────────────────────────────────────── */}
       {result.team_understanding && (
         <SectionCard label="Team Understanding">
-          <p className="text-sm text-slate-800 leading-relaxed">{result.team_understanding}</p>
+          <p className="text-sm text-[var(--cs-navy)] leading-relaxed">{result.team_understanding}</p>
         </SectionCard>
       )}
 
       {/* ── Safeguarding flags (pills) ────────────────────────────────────────── */}
       {result.safeguarding_flags && result.safeguarding_flags.length > 0 && (
         <div>
-          <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-500 mb-2 flex items-center gap-1.5">
+          <p className="text-[10px] font-semibold uppercase tracking-wider text-[var(--cs-text-muted)] mb-2 flex items-center gap-1.5">
             <Shield className="h-3 w-3" />Safeguarding Flags
           </p>
           <div className="flex flex-wrap gap-1.5">
@@ -377,7 +377,7 @@ function ResultsPanel({
       {/* ── Protective factors (pills) ────────────────────────────────────────── */}
       {protectiveFactors.length > 0 && (
         <div>
-          <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-500 mb-2">
+          <p className="text-[10px] font-semibold uppercase tracking-wider text-[var(--cs-text-muted)] mb-2">
             Protective Factors
           </p>
           <div className="flex flex-wrap gap-1.5">
@@ -393,7 +393,7 @@ function ResultsPanel({
       {/* ── Emotional needs (pills) ───────────────────────────────────────────── */}
       {emotionalNeeds.length > 0 && (
         <div>
-          <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-500 mb-2">
+          <p className="text-[10px] font-semibold uppercase tracking-wider text-[var(--cs-text-muted)] mb-2">
             Emotional Needs Identified
           </p>
           <div className="flex flex-wrap gap-1.5">
@@ -409,7 +409,7 @@ function ResultsPanel({
       {/* ── 3-column action timeline ──────────────────────────────────────────── */}
       {(result.action_now || result.action_24h || result.action_72h) && (
         <div>
-          <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-500 mb-2 flex items-center gap-1.5">
+          <p className="text-[10px] font-semibold uppercase tracking-wider text-[var(--cs-text-muted)] mb-2 flex items-center gap-1.5">
             <Clock className="h-3 w-3" />Action Timeline
           </p>
           <div className="grid grid-cols-3 gap-3">
@@ -438,37 +438,37 @@ function ResultsPanel({
       {/* ── Follow-up key work ────────────────────────────────────────────────── */}
       {result.follow_up_key_work && (
         <SectionCard label="Follow-Up Key Work Suggested" icon={BookOpen}>
-          <p className="text-sm text-slate-800 leading-relaxed">{result.follow_up_key_work}</p>
+          <p className="text-sm text-[var(--cs-navy)] leading-relaxed">{result.follow_up_key_work}</p>
         </SectionCard>
       )}
 
       {/* ── Resources needed ─────────────────────────────────────────────────── */}
       {result.resources_needed && (
         <SectionCard label="Resources or Support Needed" icon={Wrench}>
-          <p className="text-sm text-slate-800 leading-relaxed">{result.resources_needed}</p>
+          <p className="text-sm text-[var(--cs-navy)] leading-relaxed">{result.resources_needed}</p>
         </SectionCard>
       )}
 
       {/* ── Suggested actions ─────────────────────────────────────────────────── */}
       {result.suggested_actions && result.suggested_actions.length > 0 && (
         <div>
-          <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-500 mb-2 flex items-center gap-1.5">
+          <p className="text-[10px] font-semibold uppercase tracking-wider text-[var(--cs-text-muted)] mb-2 flex items-center gap-1.5">
             <Target className="h-3 w-3" />Suggested Actions
           </p>
           <div className="space-y-2">
             {result.suggested_actions.map((action, i) => (
-              <div key={i} className="rounded-xl border border-slate-100 bg-slate-50 p-3 space-y-1.5">
+              <div key={i} className="rounded-xl border border-[var(--cs-border-subtle)] bg-slate-50 p-3 space-y-1.5">
                 <div className="flex items-center gap-2 flex-wrap">
                   <span className={cn("rounded-full px-2 py-0.5 text-[10px] font-bold capitalize", PRIORITY_COLOURS[action.priority])}>
                     {action.priority}
                   </span>
-                  <span className="text-xs font-semibold text-slate-900">{action.title}</span>
+                  <span className="text-xs font-semibold text-[var(--cs-navy)]">{action.title}</span>
                 </div>
                 {action.why_this_matters && (
-                  <p className="text-xs text-slate-600 leading-relaxed">{action.why_this_matters}</p>
+                  <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed">{action.why_this_matters}</p>
                 )}
                 {action.assigned_role && (
-                  <p className="text-[10px] text-slate-400">Assigned to: {action.assigned_role}</p>
+                  <p className="text-[10px] text-[var(--cs-text-muted)]">Assigned to: {action.assigned_role}</p>
                 )}
               </div>
             ))}
@@ -477,7 +477,7 @@ function ResultsPanel({
       )}
 
       {/* ── Save button ───────────────────────────────────────────────────────── */}
-      <div className="flex items-center gap-3 pt-3 border-t border-slate-100">
+      <div className="flex items-center gap-3 pt-3 border-t border-[var(--cs-border-subtle)]">
         {savedOk ? (
           <div className="flex items-center gap-2 text-sm text-emerald-600 font-medium">
             <CheckCircle2 className="h-4 w-4" />Assessment saved successfully
@@ -492,7 +492,7 @@ function ResultsPanel({
             Save Assessment
           </Button>
         )}
-        <p className="text-[10px] text-slate-400 italic">
+        <p className="text-[10px] text-[var(--cs-text-muted)] italic">
           AI-generated analysis. Always subject to professional judgement.
         </p>
       </div>
@@ -654,11 +654,11 @@ export default function SituationReviewPage() {
               <CardContent className="space-y-4">
                 {/* Child selector */}
                 <div className="space-y-1.5">
-                  <label className="text-xs font-medium text-slate-600">Young Person</label>
+                  <label className="text-xs font-medium text-[var(--cs-text-secondary)]">Young Person</label>
                   <select
                     value={childId}
                     onChange={(e) => setChildId(e.target.value)}
-                    className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-violet-300"
+                    className="w-full rounded-lg border border-[var(--cs-border)] bg-white px-3 py-2 text-sm text-[var(--cs-navy)] focus:outline-none focus:ring-2 focus:ring-violet-300"
                   >
                     <option value="">Select young person</option>
                     {youngPeople.map((yp) => (
@@ -669,11 +669,11 @@ export default function SituationReviewPage() {
 
                 {/* Source type */}
                 <div className="space-y-1.5">
-                  <label className="text-xs font-medium text-slate-600">Source Type</label>
+                  <label className="text-xs font-medium text-[var(--cs-text-secondary)]">Source Type</label>
                   <select
                     value={sourceType}
                     onChange={(e) => setSourceType(e.target.value)}
-                    className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-violet-300"
+                    className="w-full rounded-lg border border-[var(--cs-border)] bg-white px-3 py-2 text-sm text-[var(--cs-navy)] focus:outline-none focus:ring-2 focus:ring-violet-300"
                   >
                     {SOURCE_TYPES.map((s) => (
                       <option key={s.value} value={s.value}>{s.label}</option>
@@ -684,7 +684,7 @@ export default function SituationReviewPage() {
                 {/* Situation textarea */}
                 <div className="space-y-1.5">
                   <div className="flex items-center justify-between">
-                    <label className="text-xs font-medium text-slate-600">Situation Information</label>
+                    <label className="text-xs font-medium text-[var(--cs-text-secondary)]">Situation Information</label>
                     <div className="flex items-center gap-2">
                       {prefilling && (
                         <span className="flex items-center gap-1 text-[10px] text-violet-600">
@@ -700,11 +700,11 @@ export default function SituationReviewPage() {
                     rows={10}
                     placeholder="Enter or paste the situation information here. Include as much detail as possible — what happened, when, who was involved, context, staff observations, and any immediate actions taken."
                     className={cn(
-                      "w-full rounded-lg border px-3 py-2 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-violet-300 resize-none leading-relaxed",
-                      prefilling ? "border-violet-200 bg-violet-50/30" : "border-slate-200 bg-white"
+                      "w-full rounded-lg border px-3 py-2 text-sm text-[var(--cs-navy)] placeholder:text-[var(--cs-text-muted)] focus:outline-none focus:ring-2 focus:ring-violet-300 resize-none leading-relaxed",
+                      prefilling ? "border-violet-200 bg-violet-50/30" : "border-[var(--cs-border)] bg-white"
                     )}
                   />
-                  <p className="text-[10px] text-slate-400">
+                  <p className="text-[10px] text-[var(--cs-text-muted)]">
                     {content.length} characters
                     {content.length > 0 && !prefilling && (
                       <span className="text-violet-500 ml-2">· Record content loaded — add any additional context below</span>
@@ -764,9 +764,9 @@ export default function SituationReviewPage() {
                   <Info className="h-3.5 w-3.5" />ARIA Guidance
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3 text-xs text-slate-600 leading-relaxed">
+              <CardContent className="space-y-3 text-xs text-[var(--cs-text-secondary)] leading-relaxed">
                 <p>ARIA produces a structured analysis across 18 headings:</p>
-                <ul className="space-y-1 text-slate-600 text-[11px]">
+                <ul className="space-y-1 text-[var(--cs-text-secondary)] text-[11px]">
                   {[
                     "Situation summary",
                     "What happened",
@@ -793,7 +793,7 @@ export default function SituationReviewPage() {
                     </li>
                   ))}
                 </ul>
-                <p className="text-[10px] text-slate-500 italic border-t border-violet-200 pt-2">
+                <p className="text-[10px] text-[var(--cs-text-muted)] italic border-t border-violet-200 pt-2">
                   Provide as much detail as possible for the most accurate analysis.
                 </p>
               </CardContent>
@@ -802,7 +802,7 @@ export default function SituationReviewPage() {
             <Card>
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm font-semibold flex items-center gap-2">
-                  <User className="h-4 w-4 text-slate-400" />
+                  <User className="h-4 w-4 text-[var(--cs-text-muted)]" />
                   Previous Assessments
                 </CardTitle>
               </CardHeader>

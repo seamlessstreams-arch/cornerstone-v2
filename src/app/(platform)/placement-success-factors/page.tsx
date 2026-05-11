@@ -393,11 +393,11 @@ export default function PlacementSuccessFactorsPage() {
                       </p>
                       <p className="text-xs text-blue-900">{f.child_voice_on_factor}</p>
                     </div>
-                    <div className="rounded-md bg-slate-50 border border-slate-200 p-3">
-                      <p className="text-xs font-medium text-slate-700 flex items-center gap-1 mb-1">
+                    <div className="rounded-md bg-slate-50 border border-[var(--cs-border)] p-3">
+                      <p className="text-xs font-medium text-[var(--cs-text-secondary)] flex items-center gap-1 mb-1">
                         <Users className="h-3 w-3" /> Staff perspective
                       </p>
-                      <p className="text-xs text-slate-700">{f.staff_perspective}</p>
+                      <p className="text-xs text-[var(--cs-text-secondary)]">{f.staff_perspective}</p>
                     </div>
                   </div>
 
@@ -442,9 +442,9 @@ export default function PlacementSuccessFactorsPage() {
       </div>
 
       {/* ─── regulatory note ─── */}
-      <div className="mt-8 bg-slate-50 border border-slate-200 rounded-lg p-4">
-        <p className="text-sm font-medium text-slate-700 mb-1">Regulatory Context</p>
-        <p className="text-xs text-slate-600">
+      <div className="mt-8 bg-slate-50 border border-[var(--cs-border)] rounded-lg p-4">
+        <p className="text-sm font-medium text-[var(--cs-text-secondary)] mb-1">Regulatory Context</p>
+        <p className="text-xs text-[var(--cs-text-secondary)]">
           Quality Standard 13 (the Leadership and Management Standard) requires the registered
           person to lead and manage the home in a way that uses learning to continuously improve
           practice. Regulation 45 of the Children&apos;s Homes Regulations 2015 requires the

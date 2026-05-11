@@ -51,7 +51,7 @@ const OUTCOME_STYLES: Record<DrillOutcome, { bg: string; text: string }> = {
 const SCENARIO_COLOURS: Record<DrillScenarioType, string> = {
   missing_child: "bg-red-100 text-red-700",
   medical_emergency: "bg-pink-100 text-pink-700",
-  power_failure: "bg-slate-100 text-slate-700",
+  power_failure: "bg-slate-100 text-[var(--cs-text-secondary)]",
   intruder_alert: "bg-purple-100 text-purple-700",
   flooding: "bg-blue-100 text-blue-700",
   evacuation: "bg-orange-100 text-orange-700",

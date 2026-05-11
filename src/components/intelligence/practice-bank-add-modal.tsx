@@ -58,7 +58,7 @@ function FieldLabel({
   required?: boolean;
 }) {
   return (
-    <label className="block text-[11px] font-semibold text-slate-600 uppercase tracking-wider mb-1.5">
+    <label className="block text-[11px] font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wider mb-1.5">
       {children}
       {required && <span className="ml-0.5 text-red-500">*</span>}
     </label>
@@ -86,7 +86,7 @@ function DictationTextarea({
         rows={rows}
         placeholder={placeholder}
         className={cn(
-          "w-full resize-none rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 pr-10 text-xs text-slate-800 placeholder:text-slate-400",
+          "w-full resize-none rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2.5 pr-10 text-xs text-[var(--cs-navy)] placeholder:text-[var(--cs-text-muted)]",
           "focus:border-amber-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-amber-100",
           "transition-colors"
         )}
@@ -212,7 +212,7 @@ export function PracticeBankAddModal({
           className={cn(
             "fixed left-[50%] top-[50%] z-50 w-full max-w-lg -translate-x-1/2 -translate-y-1/2",
             "max-h-[90vh] overflow-y-auto",
-            "rounded-2xl border border-slate-200 bg-white shadow-xl",
+            "rounded-2xl border border-[var(--cs-border)] bg-white shadow-xl",
             "focus:outline-none",
             "data-[state=open]:animate-in data-[state=closed]:animate-out",
             "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
@@ -222,20 +222,20 @@ export function PracticeBankAddModal({
           )}
         >
           {/* Header */}
-          <div className="flex items-start justify-between gap-4 border-b border-slate-100 px-6 py-4">
+          <div className="flex items-start justify-between gap-4 border-b border-[var(--cs-border-subtle)] px-6 py-4">
             <div>
-              <Dialog.Title className="text-base font-semibold text-slate-900 flex items-center gap-2">
+              <Dialog.Title className="text-base font-semibold text-[var(--cs-navy)] flex items-center gap-2">
                 <Zap className="h-4 w-4 text-amber-500" />
                 Add Practice Bank Entry
               </Dialog.Title>
-              <Dialog.Description className="mt-0.5 text-xs text-slate-500">
+              <Dialog.Description className="mt-0.5 text-xs text-[var(--cs-text-muted)]">
                 Recording what works for{" "}
                 <span className="font-semibold text-amber-700">{childName}</span>
               </Dialog.Description>
             </div>
             <Dialog.Close asChild>
               <button
-                className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-600 transition-colors"
+                className="rounded-lg p-1.5 text-[var(--cs-text-muted)] hover:bg-[var(--cs-surface)] hover:text-[var(--cs-text-secondary)] transition-colors"
                 aria-label="Close"
               >
                 <X className="h-4 w-4" />
@@ -247,8 +247,8 @@ export function PracticeBankAddModal({
           {success ? (
             <div className="flex flex-col items-center gap-3 py-12 px-6">
               <CheckCircle2 className="h-10 w-10 text-emerald-500" />
-              <p className="text-sm font-semibold text-slate-800">Entry saved</p>
-              <p className="text-xs text-slate-500">Closing…</p>
+              <p className="text-sm font-semibold text-[var(--cs-navy)]">Entry saved</p>
+              <p className="text-xs text-[var(--cs-text-muted)]">Closing…</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} noValidate>
@@ -263,7 +263,7 @@ export function PracticeBankAddModal({
                     onChange={(e) => setTitle(e.target.value)}
                     placeholder="E.g. 'Give Marcus 5 minutes before asking questions after school'"
                     className={cn(
-                      "w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-xs text-slate-800 placeholder:text-slate-400",
+                      "w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2.5 text-xs text-[var(--cs-navy)] placeholder:text-[var(--cs-text-muted)]",
                       "focus:border-amber-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-amber-100",
                       "transition-colors"
                     )}
@@ -283,7 +283,7 @@ export function PracticeBankAddModal({
                           "rounded-lg border px-3 py-1.5 text-[11px] font-semibold transition-colors",
                           category === value
                             ? "border-amber-500 bg-amber-50 text-amber-700"
-                            : "border-slate-200 bg-slate-50 text-slate-600 hover:border-amber-300 hover:bg-amber-50 hover:text-amber-700"
+                            : "border-[var(--cs-border)] bg-slate-50 text-[var(--cs-text-secondary)] hover:border-amber-300 hover:bg-amber-50 hover:text-amber-700"
                         )}
                       >
                         {label}
@@ -306,7 +306,7 @@ export function PracticeBankAddModal({
                 {/* 4. Context / why this works */}
                 <div>
                   <FieldLabel>Context / why this works</FieldLabel>
-                  <span className="inline-block mb-1.5 rounded-full border border-slate-200 px-2 py-0.5 text-[9px] font-semibold text-slate-400">
+                  <span className="inline-block mb-1.5 rounded-full border border-[var(--cs-border)] px-2 py-0.5 text-[9px] font-semibold text-[var(--cs-text-muted)]">
                     Optional
                   </span>
                   <DictationTextarea
@@ -320,7 +320,7 @@ export function PracticeBankAddModal({
                 {/* 5. Evidence */}
                 <div>
                   <FieldLabel>Evidence</FieldLabel>
-                  <span className="inline-block mb-1.5 rounded-full border border-slate-200 px-2 py-0.5 text-[9px] font-semibold text-slate-400">
+                  <span className="inline-block mb-1.5 rounded-full border border-[var(--cs-border)] px-2 py-0.5 text-[9px] font-semibold text-[var(--cs-text-muted)]">
                     Optional
                   </span>
                   <textarea
@@ -329,7 +329,7 @@ export function PracticeBankAddModal({
                     rows={2}
                     placeholder="Which observations or records support this?"
                     className={cn(
-                      "w-full resize-none rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-xs text-slate-800 placeholder:text-slate-400",
+                      "w-full resize-none rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2.5 text-xs text-[var(--cs-navy)] placeholder:text-[var(--cs-text-muted)]",
                       "focus:border-amber-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-amber-100",
                       "transition-colors"
                     )}
@@ -345,7 +345,7 @@ export function PracticeBankAddModal({
               </div>
 
               {/* Footer */}
-              <div className="flex items-center justify-end gap-2 border-t border-slate-100 px-6 py-4">
+              <div className="flex items-center justify-end gap-2 border-t border-[var(--cs-border-subtle)] px-6 py-4">
                 <Dialog.Close asChild>
                   <Button type="button" variant="ghost" size="sm" disabled={isPending}>
                     Cancel

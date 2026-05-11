@@ -3,6 +3,7 @@
 import React, { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { PageShell } from "@/components/layout/page-shell";
+import { PageGuidance } from "@/components/ui/page-guidance";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -76,7 +77,7 @@ const RATING_COLORS: Record<string, string> = {
 };
 
 function WellbeingIcon({ score }: { score: number | null }) {
-  if (score === null) return <span className="text-slate-400 text-xs">—</span>;
+  if (score === null) return <span className="text-[var(--cs-text-muted)] text-xs">—</span>;
   if (score >= 7) return <Smile className="h-4 w-4 text-emerald-500" />;
   if (score >= 5) return <Meh className="h-4 w-4 text-amber-500" />;
   return <Frown className="h-4 w-4 text-red-500" />;
@@ -127,15 +128,15 @@ function RecordSupervisionDialog({ sup, onClose }: { sup: Supervision; onClose: 
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm" onClick={onClose}>
-      <div className="w-full max-w-xl bg-white rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
-        <div className="sticky top-0 bg-white rounded-t-2xl border-b border-slate-100 px-6 py-4 flex items-center justify-between">
+      <div className="w-full max-w-xl bg-white rounded-2xl shadow-[var(--cs-shadow-elevated)] max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+        <div className="sticky top-0 bg-white rounded-t-2xl border-b border-[var(--cs-border-subtle)] px-6 py-4 flex items-center justify-between">
           <div>
-            <p className="text-base font-bold text-slate-900">Record Supervision</p>
-            <p className="text-xs text-slate-500">
+            <p className="text-base font-bold text-[var(--cs-navy)]">Record Supervision</p>
+            <p className="text-xs text-[var(--cs-text-muted)]">
               {sup.type.replace(/_/g, " ")} · {formatDate(sup.scheduled_date)}
             </p>
           </div>
-          <button onClick={onClose} className="text-slate-400 hover:text-slate-600">
+          <button onClick={onClose} className="text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)]">
             <X className="h-4 w-4" />
           </button>
         </div>
@@ -143,9 +144,9 @@ function RecordSupervisionDialog({ sup, onClose }: { sup: Supervision; onClose: 
         <div className="p-6 space-y-5">
           {/* Discussion points */}
           <div>
-            <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Discussion Points & Notes</label>
+            <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Discussion Points & Notes</label>
             <textarea
-              className="mt-1 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"
+              className="mt-1 w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2.5 text-sm text-[var(--cs-navy)] focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"
               rows={6}
               placeholder="Record key discussion points, concerns raised, reflections, and any significant matters discussed…"
               value={discussionPoints}
@@ -156,8 +157,8 @@ function RecordSupervisionDialog({ sup, onClose }: { sup: Supervision; onClose: 
           {/* Wellbeing + duration */}
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">
-                Wellbeing Score: <span className="text-slate-900">{wellbeing}/10</span>
+              <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">
+                Wellbeing Score: <span className="text-[var(--cs-navy)]">{wellbeing}/10</span>
               </label>
               <input
                 type="range" min={1} max={10} step={1}
@@ -165,12 +166,12 @@ function RecordSupervisionDialog({ sup, onClose }: { sup: Supervision; onClose: 
                 onChange={(e) => setWellbeing(Number(e.target.value))}
                 className="mt-2 w-full accent-blue-600"
               />
-              <div className="flex justify-between text-[10px] text-slate-400 mt-0.5">
+              <div className="flex justify-between text-[10px] text-[var(--cs-text-muted)] mt-0.5">
                 <span>1 (Low)</span><span>10 (High)</span>
               </div>
             </div>
             <div>
-              <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Duration (minutes)</label>
+              <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Duration (minutes)</label>
               <Input
                 type="number"
                 className="mt-1"
@@ -185,13 +186,13 @@ function RecordSupervisionDialog({ sup, onClose }: { sup: Supervision; onClose: 
 
           {/* Actions agreed */}
           <div>
-            <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Actions Agreed</label>
+            <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Actions Agreed</label>
             <div className="mt-2 space-y-2">
               {actions.map((action) => (
-                <div key={action.id} className="flex items-center gap-2 rounded-lg bg-slate-50 border border-slate-100 px-3 py-2">
+                <div key={action.id} className="flex items-center gap-2 rounded-lg bg-slate-50 border border-[var(--cs-border-subtle)] px-3 py-2">
                   <div className="h-1.5 w-1.5 rounded-full bg-amber-400 shrink-0" />
-                  <span className="text-xs text-slate-700 flex-1">{action.description}</span>
-                  <button onClick={() => removeAction(action.id)} className="text-slate-300 hover:text-red-500 transition-colors">
+                  <span className="text-xs text-[var(--cs-text-secondary)] flex-1">{action.description}</span>
+                  <button onClick={() => removeAction(action.id)} className="text-[var(--cs-text-gentle)] hover:text-red-500 transition-colors">
                     <X className="h-3.5 w-3.5" />
                   </button>
                 </div>
@@ -216,17 +217,17 @@ function RecordSupervisionDialog({ sup, onClose }: { sup: Supervision; onClose: 
             <label className="flex items-center gap-2 cursor-pointer">
               <input type="checkbox" checked={staffSigned} onChange={(e) => setStaffSigned(e.target.checked)}
                 className="h-4 w-4 rounded border-slate-300 accent-blue-600" />
-              <span className="text-sm text-slate-700">Staff signed</span>
+              <span className="text-sm text-[var(--cs-text-secondary)]">Staff signed</span>
             </label>
             <label className="flex items-center gap-2 cursor-pointer">
               <input type="checkbox" checked={supervisorSigned} onChange={(e) => setSupervisorSigned(e.target.checked)}
                 className="h-4 w-4 rounded border-slate-300 accent-blue-600" />
-              <span className="text-sm text-slate-700">Supervisor signed</span>
+              <span className="text-sm text-[var(--cs-text-secondary)]">Supervisor signed</span>
             </label>
           </div>
         </div>
 
-        <div className="sticky bottom-0 bg-white rounded-b-2xl border-t border-slate-100 px-6 py-4 flex gap-2">
+        <div className="sticky bottom-0 bg-white rounded-b-2xl border-t border-[var(--cs-border-subtle)] px-6 py-4 flex gap-2">
           <Button
             onClick={() => handleSave(true)}
             disabled={!discussionPoints.trim() || updateMutation.isPending}
@@ -264,9 +265,9 @@ function SupervisionCard({ sup }: { sup: Supervision }) {
   const statusConfig = {
     completed:   { label: "Completed",   color: "bg-emerald-100 text-emerald-700" },
     scheduled:   { label: "Scheduled",   color: "bg-blue-100 text-blue-700"      },
-    cancelled:   { label: "Cancelled",   color: "bg-slate-100 text-slate-500"    },
+    cancelled:   { label: "Cancelled",   color: "bg-slate-100 text-[var(--cs-text-muted)]"    },
     rescheduled: { label: "Rescheduled", color: "bg-amber-100 text-amber-700"    },
-  }[sup.status] ?? { label: sup.status, color: "bg-slate-100 text-slate-600" };
+  }[sup.status] ?? { label: sup.status, color: "bg-slate-100 text-[var(--cs-text-secondary)]" };
 
   const typeLabel: Record<string, string> = {
     formal: "Formal Supervision", informal: "Informal Check-in",
@@ -317,33 +318,33 @@ function SupervisionCard({ sup }: { sup: Supervision }) {
   return (
     <>
       {recording && <RecordSupervisionDialog sup={sup} onClose={() => setRecording(false)} />}
-      <div className="rounded-2xl border border-slate-200 bg-white p-4 space-y-3 hover:shadow-md transition-all">
+      <div className="rounded-2xl border border-[var(--cs-border)] bg-white p-4 space-y-3 hover:shadow-md transition-all">
         <div className="flex items-start gap-3">
           <Avatar name={staff?.full_name || "?"} size="sm" />
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-sm font-semibold text-slate-900">{staff?.full_name}</span>
+              <span className="text-sm font-semibold text-[var(--cs-navy)]">{staff?.full_name}</span>
               <Badge className={cn("text-[9px] rounded-full", statusConfig.color)}>{statusConfig.label}</Badge>
               {sup.type === "probation_review" && (
                 <Badge className="text-[9px] rounded-full bg-purple-100 text-purple-700">Probation</Badge>
               )}
             </div>
-            <div className="text-xs text-slate-500 mt-0.5">
+            <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">
               {typeLabel[sup.type] ?? sup.type} · {formatDate(sup.scheduled_date)}
             </div>
-            <div className="text-xs text-slate-400">
+            <div className="text-xs text-[var(--cs-text-muted)]">
               With {supervisor?.first_name || "?"} · {sup.duration_minutes ? `${sup.duration_minutes} mins` : "Scheduled"}
             </div>
           </div>
           <div className="flex items-center gap-1.5 shrink-0">
             {sup.wellbeing_score !== null && (
-              <div className="flex items-center gap-1 text-xs text-slate-500">
+              <div className="flex items-center gap-1 text-xs text-[var(--cs-text-muted)]">
                 <WellbeingIcon score={sup.wellbeing_score} />
                 {sup.wellbeing_score}/10
               </div>
             )}
             {sup.status === "completed" && (
-              <button onClick={() => setExpanded((p) => !p)} className="text-slate-400 hover:text-slate-600 ml-1">
+              <button onClick={() => setExpanded((p) => !p)} className="text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] ml-1">
                 {expanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
               </button>
             )}
@@ -352,24 +353,24 @@ function SupervisionCard({ sup }: { sup: Supervision }) {
 
         {/* Inline discussion points (collapsed by default) */}
         {expanded && sup.status === "completed" && (
-          <div className="space-y-3 border-t border-slate-100 pt-3">
+          <div className="space-y-3 border-t border-[var(--cs-border-subtle)] pt-3">
             {sup.discussion_points && (
               <div>
-                <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide mb-1">Discussion Points</p>
-                <div className="rounded-xl bg-slate-50 p-3 text-xs text-slate-700 leading-relaxed whitespace-pre-wrap">
+                <p className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-1">Discussion Points</p>
+                <div className="rounded-xl bg-slate-50 p-3 text-xs text-[var(--cs-text-secondary)] leading-relaxed whitespace-pre-wrap">
                   {sup.discussion_points}
                 </div>
               </div>
             )}
             {pendingActions.length > 0 && (
               <div>
-                <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide mb-1">Pending Actions ({pendingActions.length})</p>
+                <p className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-1">Pending Actions ({pendingActions.length})</p>
                 <div className="space-y-1.5">
                   {pendingActions.map((action) => (
                     <div key={action.id} className="flex items-center gap-2 text-xs">
                       <div className="h-1.5 w-1.5 rounded-full bg-amber-400 shrink-0" />
-                      <span className="text-slate-700 flex-1">{action.description}</span>
-                      <span className="text-slate-400 shrink-0">{formatDate(action.due_date)}</span>
+                      <span className="text-[var(--cs-text-secondary)] flex-1">{action.description}</span>
+                      <span className="text-[var(--cs-text-muted)] shrink-0">{formatDate(action.due_date)}</span>
                     </div>
                   ))}
                 </div>
@@ -380,7 +381,7 @@ function SupervisionCard({ sup }: { sup: Supervision }) {
 
         {/* Collapsed pending actions hint */}
         {!expanded && pendingActions.length > 0 && (
-          <div className="text-[10px] text-slate-500 flex items-center gap-1">
+          <div className="text-[10px] text-[var(--cs-text-muted)] flex items-center gap-1">
             <div className="h-1.5 w-1.5 rounded-full bg-amber-400" />
             {pendingActions.length} pending action{pendingActions.length !== 1 ? "s" : ""}
           </div>
@@ -420,7 +421,7 @@ function SupervisionCard({ sup }: { sup: Supervision }) {
             </>
           )}
           {sup.status === "completed" && (
-            <div className="ml-auto flex items-center gap-1 text-[10px] text-slate-400">
+            <div className="ml-auto flex items-center gap-1 text-[10px] text-[var(--cs-text-muted)]">
               {sup.staff_signature && sup.supervisor_signature ? (
                 <><CheckCircle2 className="h-3 w-3 text-emerald-500" />Signed</>
               ) : (
@@ -491,13 +492,13 @@ function ScheduleModal({ onClose }: { onClose: () => void }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm" onClick={onClose}>
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl p-6 space-y-5" onClick={(e) => e.stopPropagation()}>
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-[var(--cs-shadow-elevated)] p-6 space-y-5" onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center justify-between">
           <div>
-            <div className="text-base font-bold text-slate-900">Schedule Supervision</div>
-            <div className="text-xs text-slate-500 mt-0.5">Book a supervision session for a team member</div>
+            <div className="text-base font-bold text-[var(--cs-navy)]">Schedule Supervision</div>
+            <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">Book a supervision session for a team member</div>
           </div>
-          <button onClick={onClose} className="text-slate-400 hover:text-slate-600 transition-colors">
+          <button onClick={onClose} className="text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] transition-colors">
             <X className="h-4 w-4" />
           </button>
         </div>
@@ -511,11 +512,11 @@ function ScheduleModal({ onClose }: { onClose: () => void }) {
           <>
             <div className="space-y-4">
               <div>
-                <label className="text-xs font-semibold text-slate-700 block mb-1.5">Staff Member <span className="text-red-500">*</span></label>
+                <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">Staff Member <span className="text-red-500">*</span></label>
                 <select
                   value={form.staff_id}
                   onChange={(e) => setForm((p) => ({ ...p, staff_id: e.target.value }))}
-                  className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2.5 text-sm text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-blue-400"
                 >
                   <option value="">Select staff member…</option>
                   {activeStaff.map((s) => (
@@ -525,11 +526,11 @@ function ScheduleModal({ onClose }: { onClose: () => void }) {
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-slate-700 block mb-1.5">Supervisor</label>
+                <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">Supervisor</label>
                 <select
                   value={form.supervisor_id}
                   onChange={(e) => setForm((p) => ({ ...p, supervisor_id: e.target.value }))}
-                  className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2.5 text-sm text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-blue-400"
                 >
                   {supervisors.map((s) => (
                     <option key={s.id} value={s.id}>{s.full_name}</option>
@@ -539,11 +540,11 @@ function ScheduleModal({ onClose }: { onClose: () => void }) {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs font-semibold text-slate-700 block mb-1.5">Type</label>
+                  <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">Type</label>
                   <select
                     value={form.type}
                     onChange={(e) => setForm((p) => ({ ...p, type: e.target.value as Supervision["type"] }))}
-                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2.5 text-sm text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-blue-400"
                   >
                     <option value="formal">Formal Supervision</option>
                     <option value="informal">Informal Check-in</option>
@@ -553,7 +554,7 @@ function ScheduleModal({ onClose }: { onClose: () => void }) {
                   </select>
                 </div>
                 <div>
-                  <label className="text-xs font-semibold text-slate-700 block mb-1.5">Date <span className="text-red-500">*</span></label>
+                  <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">Date <span className="text-red-500">*</span></label>
                   <Input
                     type="date"
                     value={form.scheduled_date}
@@ -701,20 +702,28 @@ export default function SupervisionPage() {
       }
     >
       <div id="supervision-content" className="space-y-6">
+        <PageGuidance
+          title="Supervision & performance"
+          description="Schedule, record, and track formal supervision for all staff. Overdue supervisions are flagged automatically. Actions from supervision feed into the task system."
+          evidenceTip="Supervision records should evidence reflective practice, not just operational updates. Inspectors look for professional development discussions linked to individual children."
+          ariaTip="ARIA can identify supervision themes across the team and flag when a staff member's caseload may be affecting their wellbeing."
+          regulationRef="Children's Homes Regulations 2015, Reg 33(4)(b) — Supervision of staff"
+          variant="compliance"
+        />
         {/* Stats */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
           {[
             { label: "Overdue", value: stats.overdue, icon: AlertTriangle, color: stats.overdue > 0 ? "text-red-600" : "text-emerald-600", bg: stats.overdue > 0 ? "bg-red-50" : "bg-emerald-50" },
-            { label: "Due in 14 Days", value: stats.upcoming, icon: Clock, color: stats.upcoming > 0 ? "text-amber-600" : "text-slate-400", bg: stats.upcoming > 0 ? "bg-amber-50" : "bg-slate-50" },
+            { label: "Due in 14 Days", value: stats.upcoming, icon: Clock, color: stats.upcoming > 0 ? "text-amber-600" : "text-[var(--cs-text-muted)]", bg: stats.upcoming > 0 ? "bg-amber-50" : "bg-slate-50" },
             { label: "Completed", value: stats.completed, icon: CheckCircle2, color: "text-emerald-600", bg: "bg-emerald-50" },
             { label: "Avg Wellbeing", value: stats.avgWellbeing ?? "—", icon: Heart, color: "text-pink-600", bg: "bg-pink-50" },
-            { label: "Pending Actions", value: stats.pendingActions, icon: ClipboardList, color: stats.pendingActions > 0 ? "text-amber-600" : "text-slate-400", bg: stats.pendingActions > 0 ? "bg-amber-50" : "bg-slate-50" },
+            { label: "Pending Actions", value: stats.pendingActions, icon: ClipboardList, color: stats.pendingActions > 0 ? "text-amber-600" : "text-[var(--cs-text-muted)]", bg: stats.pendingActions > 0 ? "bg-amber-50" : "bg-slate-50" },
             { label: "Appraisals Due", value: stats.appraisalsDue, icon: Award, color: "text-blue-600", bg: "bg-blue-50" },
           ].map(({ label, value, icon: Icon, color, bg }) => (
-            <div key={label} className="rounded-2xl border border-slate-200 bg-white p-4">
+            <div key={label} className="rounded-2xl border border-[var(--cs-border)] bg-white p-4">
               <div className="flex items-start justify-between gap-2">
                 <div>
-                  <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">{label}</div>
+                  <div className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider">{label}</div>
                   <div className={cn("mt-1 text-2xl font-bold tabular-nums", color)}>{value}</div>
                 </div>
                 <div className={cn("rounded-xl p-2", bg)}>
@@ -733,7 +742,7 @@ export default function SupervisionPage() {
               onClick={() => setTab(id)}
               className={cn(
                 "flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-all",
-                tab === id ? "bg-white text-slate-900 shadow-sm" : "text-slate-500 hover:text-slate-700"
+                tab === id ? "bg-white text-[var(--cs-navy)] shadow-sm" : "text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)]"
               )}
             >
               <Icon className="h-3.5 w-3.5" />{label}
@@ -758,7 +767,7 @@ export default function SupervisionPage() {
             {/* Search & Filter toolbar */}
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
               <div className="relative flex-1 w-full sm:max-w-sm">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
                 <Input
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
@@ -780,19 +789,19 @@ export default function SupervisionPage() {
                       "px-3 py-1.5 text-[11px] font-medium rounded-full border transition-colors",
                       statusFilter === key
                         ? "bg-slate-900 text-white border-slate-900"
-                        : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50"
+                        : "bg-white text-[var(--cs-text-secondary)] border-[var(--cs-border)] hover:bg-[var(--cs-surface)]"
                     )}
                   >
                     {label}
                   </button>
                 ))}
               </div>
-              <div className="flex items-center gap-1.5 text-xs text-slate-500 shrink-0">
+              <div className="flex items-center gap-1.5 text-xs text-[var(--cs-text-muted)] shrink-0">
                 <ArrowUpDown className="h-3.5 w-3.5" />
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
-                  className="rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-300"
+                  className="rounded-lg border border-[var(--cs-border)] bg-white px-2 py-1.5 text-xs text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-emerald-300"
                 >
                   <option value="date">Date</option>
                   <option value="staff">Staff Name</option>
@@ -804,7 +813,7 @@ export default function SupervisionPage() {
 
             {/* Results count */}
             {isFiltered && (
-              <div className="text-xs text-slate-500">
+              <div className="text-xs text-[var(--cs-text-muted)]">
                 Showing {filteredStaff.length} staff · {filteredRecords.length} records
               </div>
             )}
@@ -821,13 +830,13 @@ export default function SupervisionPage() {
                 return (
                   <div key={staff.id} className={cn(
                     "rounded-2xl border p-4 space-y-3",
-                    isOverdue ? "border-red-200 bg-red-50" : isDueSoon ? "border-amber-200 bg-amber-50" : "border-slate-200 bg-white"
+                    isOverdue ? "border-red-200 bg-red-50" : isDueSoon ? "border-amber-200 bg-amber-50" : "border-[var(--cs-border)] bg-white"
                   )}>
                     <div className="flex items-center gap-3">
                       <Avatar name={staff.full_name} size="sm" />
                       <div className="flex-1 min-w-0">
-                        <div className="text-sm font-medium text-slate-900 truncate">{staff.full_name}</div>
-                        <div className="text-xs text-slate-500">{staff.job_title}</div>
+                        <div className="text-sm font-medium text-[var(--cs-navy)] truncate">{staff.full_name}</div>
+                        <div className="text-xs text-[var(--cs-text-muted)]">{staff.job_title}</div>
                       </div>
                       {isOverdue ? (
                         <Badge className="text-[9px] rounded-full bg-red-100 text-red-700">Overdue</Badge>
@@ -837,14 +846,14 @@ export default function SupervisionPage() {
                         <Badge className="text-[9px] rounded-full bg-emerald-100 text-emerald-700">Current</Badge>
                       )}
                     </div>
-                    <div className="space-y-1 text-xs text-slate-600">
+                    <div className="space-y-1 text-xs text-[var(--cs-text-secondary)]">
                       <div className="flex justify-between">
                         <span>Last supervision</span>
                         <span className="font-medium">{lastSup ? formatDate(lastSup.actual_date || lastSup.scheduled_date) : "None recorded"}</span>
                       </div>
                       <div className="flex justify-between">
                         <span>Next due</span>
-                        <span className={cn("font-medium", isOverdue ? "text-red-600" : isDueSoon ? "text-amber-600" : "text-slate-900")}>
+                        <span className={cn("font-medium", isOverdue ? "text-red-600" : isDueSoon ? "text-amber-600" : "text-[var(--cs-navy)]")}>
                           {staff.next_supervision_due ? formatDate(staff.next_supervision_due) : "Not set"}
                         </span>
                       </div>
@@ -878,12 +887,12 @@ export default function SupervisionPage() {
               <CardContent>
                 {supervisionsQuery.isPending ? (
                   <div className="flex items-center justify-center py-8">
-                    <Loader2 className="h-5 w-5 animate-spin text-slate-400" />
+                    <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
                   </div>
                 ) : supervisionRecords.length === 0 ? (
-                  <div className="py-8 text-center text-sm text-slate-400">No supervision records yet. Schedule one above.</div>
+                  <div className="py-8 text-center text-sm text-[var(--cs-text-muted)]">No supervision records yet. Schedule one above.</div>
                 ) : filteredRecords.length === 0 && isFiltered ? (
-                  <div className="py-8 text-center text-slate-400">
+                  <div className="py-8 text-center text-[var(--cs-text-muted)]">
                     <Search className="h-8 w-8 mx-auto mb-2 text-slate-200" />
                     <div className="text-sm font-medium">No records match your filters</div>
                     <div className="text-xs mt-1">Try adjusting your search or status filter</div>
@@ -915,7 +924,7 @@ export default function SupervisionPage() {
                       <Avatar name={staff?.full_name || "?"} size="md" />
                       <div className="flex-1 space-y-3">
                         <div className="flex items-center gap-3 flex-wrap">
-                          <span className="text-base font-semibold text-slate-900">{staff?.full_name}</span>
+                          <span className="text-base font-semibold text-[var(--cs-navy)]">{staff?.full_name}</span>
                           <Badge className={cn("text-[10px] rounded-full", prob.status === "active" ? "bg-blue-100 text-blue-700" : "bg-emerald-100 text-emerald-700")}>
                             {prob.status === "active" ? "On Probation" : "Passed"}
                           </Badge>
@@ -925,23 +934,23 @@ export default function SupervisionPage() {
                         </div>
                         <div className="grid grid-cols-3 gap-4 text-sm">
                           <div>
-                            <div className="text-[10px] text-slate-400 mb-0.5">Started</div>
-                            <div className="font-medium text-slate-900">{formatDate(prob.startDate)}</div>
+                            <div className="text-[10px] text-[var(--cs-text-muted)] mb-0.5">Started</div>
+                            <div className="font-medium text-[var(--cs-navy)]">{formatDate(prob.startDate)}</div>
                           </div>
                           <div>
-                            <div className="text-[10px] text-slate-400 mb-0.5">{prob.status === "passed" ? "Completed" : "Due to end"}</div>
-                            <div className="font-medium text-slate-900">{formatDate(prob.endDate || "")}</div>
+                            <div className="text-[10px] text-[var(--cs-text-muted)] mb-0.5">{prob.status === "passed" ? "Completed" : "Due to end"}</div>
+                            <div className="font-medium text-[var(--cs-navy)]">{formatDate(prob.endDate || "")}</div>
                           </div>
                           <div>
-                            <div className="text-[10px] text-slate-400 mb-0.5">Reviews done</div>
-                            <div className="font-medium text-slate-900">{prob.reviews}</div>
+                            <div className="text-[10px] text-[var(--cs-text-muted)] mb-0.5">Reviews done</div>
+                            <div className="font-medium text-[var(--cs-navy)]">{prob.reviews}</div>
                           </div>
                         </div>
                         {prob.status === "active" && (
                           <div>
                             <div className="flex justify-between text-xs mb-1.5">
-                              <span className="text-slate-500">Probation progress</span>
-                              <span className="font-medium text-slate-900">{pct}%</span>
+                              <span className="text-[var(--cs-text-muted)]">Probation progress</span>
+                              <span className="font-medium text-[var(--cs-navy)]">{pct}%</span>
                             </div>
                             <Progress value={pct} color={pct > 80 ? "bg-emerald-500" : "bg-blue-500"} />
                           </div>
@@ -957,7 +966,7 @@ export default function SupervisionPage() {
                           </div>
                         )}
                         {prob.nextReview && (
-                          <div className="flex items-center gap-2 text-sm text-slate-600">
+                          <div className="flex items-center gap-2 text-sm text-[var(--cs-text-secondary)]">
                             <Calendar className="h-4 w-4 text-blue-500" />
                             Next review: <strong>{formatDate(prob.nextReview)}</strong>
                           </div>
@@ -990,33 +999,33 @@ export default function SupervisionPage() {
               return (
                 <div key={staff.id} className={cn(
                   "rounded-2xl border p-4 flex items-center gap-5 hover:shadow-md transition-all",
-                  isOverdue ? "border-red-200 bg-red-50" : isDueSoon ? "border-amber-200 bg-amber-50" : "border-slate-200 bg-white"
+                  isOverdue ? "border-red-200 bg-red-50" : isDueSoon ? "border-amber-200 bg-amber-50" : "border-[var(--cs-border)] bg-white"
                 )}>
                   <Avatar name={staff.full_name} size="md" />
                   <div className="flex-1 min-w-0 space-y-2">
                     <div className="flex items-center gap-3 flex-wrap">
-                      <span className="text-sm font-semibold text-slate-900">{staff.full_name}</span>
-                      <span className="text-xs text-slate-500">{staff.job_title}</span>
+                      <span className="text-sm font-semibold text-[var(--cs-navy)]">{staff.full_name}</span>
+                      <span className="text-xs text-[var(--cs-text-muted)]">{staff.job_title}</span>
                       {appraisal?.rating && (
                         <Badge className={cn("text-[9px] rounded-full capitalize", RATING_COLORS[appraisal.rating])}>
                           {appraisal.rating}
                         </Badge>
                       )}
                     </div>
-                    <div className="grid grid-cols-3 gap-4 text-xs text-slate-600">
+                    <div className="grid grid-cols-3 gap-4 text-xs text-[var(--cs-text-secondary)]">
                       <div>
-                        <span className="text-slate-400">Last appraisal</span>
-                        <div className="font-medium text-slate-900">{appraisal?.date ? formatDate(appraisal.date) : "None"}</div>
+                        <span className="text-[var(--cs-text-muted)]">Last appraisal</span>
+                        <div className="font-medium text-[var(--cs-navy)]">{appraisal?.date ? formatDate(appraisal.date) : "None"}</div>
                       </div>
                       <div>
-                        <span className="text-slate-400">Next due</span>
-                        <div className={cn("font-medium", isOverdue ? "text-red-600" : isDueSoon ? "text-amber-600" : "text-slate-900")}>
+                        <span className="text-[var(--cs-text-muted)]">Next due</span>
+                        <div className={cn("font-medium", isOverdue ? "text-red-600" : isDueSoon ? "text-amber-600" : "text-[var(--cs-navy)]")}>
                           {appraisal?.nextDue ? formatDate(appraisal.nextDue) : "Not set"}
                         </div>
                       </div>
                       <div>
-                        <span className="text-slate-400">Objectives</span>
-                        <div className="font-medium text-slate-900">{appraisal?.achieved || 0}/{appraisal?.objectives || 0} achieved</div>
+                        <span className="text-[var(--cs-text-muted)]">Objectives</span>
+                        <div className="font-medium text-[var(--cs-navy)]">{appraisal?.achieved || 0}/{appraisal?.objectives || 0} achieved</div>
                       </div>
                     </div>
                     {appraisal && appraisal.objectives > 0 && (
@@ -1046,7 +1055,7 @@ export default function SupervisionPage() {
                     <div className="flex items-center gap-3">
                       <Avatar name={staff.full_name} size="sm" />
                       <CardTitle className="text-sm font-semibold">{staff.full_name}</CardTitle>
-                      <span className="text-xs text-slate-400">{staffGoals.filter((g) => g.status === "achieved").length}/{staffGoals.length} achieved</span>
+                      <span className="text-xs text-[var(--cs-text-muted)]">{staffGoals.filter((g) => g.status === "achieved").length}/{staffGoals.length} achieved</span>
                     </div>
                   </CardHeader>
                   <CardContent>
@@ -1056,11 +1065,11 @@ export default function SupervisionPage() {
                           "flex items-center gap-4 rounded-xl px-3 py-2.5 border",
                           goal.status === "achieved" ? "bg-emerald-50 border-emerald-200" :
                           goal.status === "overdue" ? "bg-red-50 border-red-200" :
-                          "bg-slate-50 border-slate-200"
+                          "bg-slate-50 border-[var(--cs-border)]"
                         )}>
                           <div className="flex-1 min-w-0">
-                            <div className="text-sm font-medium text-slate-900 truncate">{goal.title}</div>
-                            <div className="text-xs text-slate-500 mt-0.5">Due {formatDate(goal.targetDate)}</div>
+                            <div className="text-sm font-medium text-[var(--cs-navy)] truncate">{goal.title}</div>
+                            <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">Due {formatDate(goal.targetDate)}</div>
                             <Progress
                               value={goal.progress}
                               color={goal.status === "achieved" ? "bg-emerald-500" : goal.status === "overdue" ? "bg-red-500" : "bg-blue-500"}

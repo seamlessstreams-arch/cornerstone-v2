@@ -43,7 +43,7 @@ function formatTheme(theme: string): string {
 }
 
 const STATUS_COLOURS: Record<KeyWorkSessionStatus, string> = {
-  planned: "bg-slate-100 text-slate-700",
+  planned: "bg-slate-100 text-[var(--cs-text-secondary)]",
   in_progress: "bg-blue-100 text-blue-800",
   completed: "bg-green-100 text-green-700",
   reviewed: "bg-violet-100 text-violet-800",
@@ -67,17 +67,17 @@ function PlanSection({ title, content }: { title: string; content: string | stri
   if (!content || (Array.isArray(content) && content.length === 0)) return null;
   return (
     <div className="space-y-1.5">
-      <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-500">{title}</p>
+      <p className="text-[10px] font-semibold uppercase tracking-wider text-[var(--cs-text-muted)]">{title}</p>
       {Array.isArray(content) ? (
         <ul className="space-y-1">
           {content.map((item, i) => (
-            <li key={i} className="flex items-start gap-2 text-xs text-slate-700">
-              <span className="text-slate-400 shrink-0 mt-0.5">{i + 1}.</span>{item}
+            <li key={i} className="flex items-start gap-2 text-xs text-[var(--cs-text-secondary)]">
+              <span className="text-[var(--cs-text-muted)] shrink-0 mt-0.5">{i + 1}.</span>{item}
             </li>
           ))}
         </ul>
       ) : (
-        <p className="text-sm text-slate-800 leading-relaxed">{content}</p>
+        <p className="text-sm text-[var(--cs-navy)] leading-relaxed">{content}</p>
       )}
     </div>
   );
@@ -89,7 +89,7 @@ function SessionCard({ session }: { session: KeyWorkSession }) {
   const childName = getYPName(session.child_id) || session.child_id;
   return (
     <Link href={`/intelligence/aria/keywork/${session.id}`} className="group block">
-      <div className="rounded-xl border border-slate-100 bg-white p-4 hover:shadow-sm hover:-translate-y-0.5 transition-all space-y-2">
+      <div className="rounded-xl border border-[var(--cs-border-subtle)] bg-white p-4 hover:shadow-sm hover:-translate-y-0.5 transition-all space-y-2">
         <div className="flex items-start justify-between gap-2">
           <div className="space-y-1 flex-1 min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
@@ -100,10 +100,10 @@ function SessionCard({ session }: { session: KeyWorkSession }) {
                 {formatTheme(session.theme)}
               </span>
             </div>
-            <p className="text-sm font-semibold text-slate-900">{session.title}</p>
-            <p className="text-xs text-slate-500">{childName} · {formatDate(session.created_at)}</p>
+            <p className="text-sm font-semibold text-[var(--cs-navy)]">{session.title}</p>
+            <p className="text-xs text-[var(--cs-text-muted)]">{childName} · {formatDate(session.created_at)}</p>
           </div>
-          <ChevronRight className="h-4 w-4 text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
+          <ChevronRight className="h-4 w-4 text-[var(--cs-text-gentle)] opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
         </div>
       </div>
     </Link>
@@ -208,7 +208,7 @@ function BuilderForm({ onClose, initialChildId = "" }: { onClose: () => void; in
             <BookOpen className="h-4 w-4 text-amber-500" />
             New Key Work Session
           </CardTitle>
-          <button onClick={onClose} className="rounded-lg p-1 text-slate-400 hover:text-slate-600 hover:bg-slate-100">
+          <button onClick={onClose} className="rounded-lg p-1 text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] hover:bg-[var(--cs-surface)]">
             <X className="h-4 w-4" />
           </button>
         </div>
@@ -217,11 +217,11 @@ function BuilderForm({ onClose, initialChildId = "" }: { onClose: () => void; in
         {/* Child selector */}
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-1.5">
-            <label className="text-xs font-medium text-slate-600">Young Person</label>
+            <label className="text-xs font-medium text-[var(--cs-text-secondary)]">Young Person</label>
             <select
               value={childId}
               onChange={(e) => setChildId(e.target.value)}
-              className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-300"
+              className="w-full rounded-lg border border-[var(--cs-border)] bg-white px-3 py-2 text-sm text-[var(--cs-navy)] focus:outline-none focus:ring-2 focus:ring-amber-300"
             >
               <option value="">Select young person</option>
               {youngPeople.map((yp) => (
@@ -230,7 +230,7 @@ function BuilderForm({ onClose, initialChildId = "" }: { onClose: () => void; in
             </select>
           </div>
           <div className="space-y-1.5">
-            <label className="text-xs font-medium text-slate-600">Child Age</label>
+            <label className="text-xs font-medium text-[var(--cs-text-secondary)]">Child Age</label>
             <input
               type="number"
               value={childAge}
@@ -238,18 +238,18 @@ function BuilderForm({ onClose, initialChildId = "" }: { onClose: () => void; in
               placeholder="e.g. 14"
               min={5}
               max={25}
-              className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-300"
+              className="w-full rounded-lg border border-[var(--cs-border)] bg-white px-3 py-2 text-sm text-[var(--cs-navy)] focus:outline-none focus:ring-2 focus:ring-amber-300"
             />
           </div>
         </div>
 
         {/* Theme */}
         <div className="space-y-1.5">
-          <label className="text-xs font-medium text-slate-600">Theme</label>
+          <label className="text-xs font-medium text-[var(--cs-text-secondary)]">Theme</label>
           <select
             value={theme}
             onChange={(e) => setTheme(e.target.value as KeyWorkTheme)}
-            className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-300"
+            className="w-full rounded-lg border border-[var(--cs-border)] bg-white px-3 py-2 text-sm text-[var(--cs-navy)] focus:outline-none focus:ring-2 focus:ring-amber-300"
           >
             {THEMES.map((t) => (
               <option key={t} value={t}>{formatTheme(t)}</option>
@@ -260,7 +260,7 @@ function BuilderForm({ onClose, initialChildId = "" }: { onClose: () => void; in
         {/* Reason */}
         <div className="space-y-1.5">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-medium text-slate-600">Reason for Session</label>
+            <label className="text-xs font-medium text-[var(--cs-text-secondary)]">Reason for Session</label>
             <DictationButton onTranscript={handleReasonDictation} size="sm" />
           </div>
           <textarea
@@ -268,30 +268,30 @@ function BuilderForm({ onClose, initialChildId = "" }: { onClose: () => void; in
             onChange={(e) => setReason(e.target.value)}
             rows={3}
             placeholder="Why is this session needed? What has prompted it?"
-            className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-300 resize-none"
+            className="w-full rounded-lg border border-[var(--cs-border)] bg-white px-3 py-2 text-sm text-[var(--cs-navy)] placeholder:text-[var(--cs-text-muted)] focus:outline-none focus:ring-2 focus:ring-amber-300 resize-none"
           />
         </div>
 
         {/* Aims and outcomes */}
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-1.5">
-            <label className="text-xs font-medium text-slate-600">Session Aims</label>
+            <label className="text-xs font-medium text-[var(--cs-text-secondary)]">Session Aims</label>
             <textarea
               value={aims}
               onChange={(e) => setAims(e.target.value)}
               rows={3}
               placeholder="What do you want to achieve?"
-              className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-300 resize-none"
+              className="w-full rounded-lg border border-[var(--cs-border)] bg-white px-3 py-2 text-sm text-[var(--cs-navy)] placeholder:text-[var(--cs-text-muted)] focus:outline-none focus:ring-2 focus:ring-amber-300 resize-none"
             />
           </div>
           <div className="space-y-1.5">
-            <label className="text-xs font-medium text-slate-600">Desired Outcomes</label>
+            <label className="text-xs font-medium text-[var(--cs-text-secondary)]">Desired Outcomes</label>
             <textarea
               value={desiredOutcomes}
               onChange={(e) => setDesiredOutcomes(e.target.value)}
               rows={3}
               placeholder="What do you want the child to take away?"
-              className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-300 resize-none"
+              className="w-full rounded-lg border border-[var(--cs-border)] bg-white px-3 py-2 text-sm text-[var(--cs-navy)] placeholder:text-[var(--cs-text-muted)] focus:outline-none focus:ring-2 focus:ring-amber-300 resize-none"
             />
           </div>
         </div>
@@ -299,7 +299,7 @@ function BuilderForm({ onClose, initialChildId = "" }: { onClose: () => void; in
         {/* Comm style + session length */}
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-1.5">
-            <label className="text-xs font-medium text-slate-600">Communication Style</label>
+            <label className="text-xs font-medium text-[var(--cs-text-secondary)]">Communication Style</label>
             <div className="flex flex-wrap gap-1.5">
               {COMM_STYLES.map((s) => (
                 <button
@@ -307,7 +307,7 @@ function BuilderForm({ onClose, initialChildId = "" }: { onClose: () => void; in
                   onClick={() => setCommStyle(s)}
                   className={cn(
                     "rounded-full px-3 py-1 text-xs font-medium capitalize transition-colors",
-                    commStyle === s ? "bg-amber-600 text-white" : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                    commStyle === s ? "bg-amber-600 text-white" : "bg-slate-100 text-[var(--cs-text-secondary)] hover:bg-slate-200"
                   )}
                 >
                   {s}
@@ -316,7 +316,7 @@ function BuilderForm({ onClose, initialChildId = "" }: { onClose: () => void; in
             </div>
           </div>
           <div className="space-y-1.5">
-            <label className="text-xs font-medium text-slate-600">Session Length</label>
+            <label className="text-xs font-medium text-[var(--cs-text-secondary)]">Session Length</label>
             <div className="flex flex-wrap gap-1.5">
               {SESSION_LENGTHS.map((l) => (
                 <button
@@ -324,7 +324,7 @@ function BuilderForm({ onClose, initialChildId = "" }: { onClose: () => void; in
                   onClick={() => setSessionLength(l)}
                   className={cn(
                     "rounded-full px-3 py-1 text-xs font-medium transition-colors",
-                    sessionLength === l ? "bg-amber-600 text-white" : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                    sessionLength === l ? "bg-amber-600 text-white" : "bg-slate-100 text-[var(--cs-text-secondary)] hover:bg-slate-200"
                   )}
                 >
                   {l}
@@ -356,10 +356,10 @@ function BuilderForm({ onClose, initialChildId = "" }: { onClose: () => void; in
 
         {/* Plan preview */}
         {plan && (
-          <div className="border-t border-slate-100 pt-4 space-y-4">
+          <div className="border-t border-[var(--cs-border-subtle)] pt-4 space-y-4">
             <div className="flex items-center gap-2">
               <Sparkles className="h-4 w-4 text-amber-500" />
-              <span className="text-sm font-semibold text-slate-900">{plan.session_title}</span>
+              <span className="text-sm font-semibold text-[var(--cs-navy)]">{plan.session_title}</span>
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2">
@@ -458,7 +458,7 @@ export default function KeyWorkBuilderPage() {
               <CardTitle className="text-sm font-semibold flex items-center gap-2">
                 <BookOpen className="h-4 w-4 text-amber-500" />
                 Sessions
-                <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-bold text-slate-600">{sessions.length}</span>
+                <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-bold text-[var(--cs-text-secondary)]">{sessions.length}</span>
               </CardTitle>
               <div className="flex items-center gap-1 flex-wrap">
                 {STATUS_TABS.map((tab) => (
@@ -469,7 +469,7 @@ export default function KeyWorkBuilderPage() {
                       "rounded-full px-3 py-1 text-xs font-medium transition-colors",
                       statusFilter === tab.value
                         ? "bg-slate-900 text-white"
-                        : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                        : "bg-slate-100 text-[var(--cs-text-secondary)] hover:bg-slate-200"
                     )}
                   >
                     {tab.label}
@@ -488,8 +488,8 @@ export default function KeyWorkBuilderPage() {
             ) : filtered.length === 0 ? (
               <div className="flex flex-col items-center gap-2 py-10 text-center">
                 <BookOpen className="h-10 w-10 text-slate-200" />
-                <p className="text-sm text-slate-500">No sessions found</p>
-                <p className="text-xs text-slate-400">Create a new key work session using the button above</p>
+                <p className="text-sm text-[var(--cs-text-muted)]">No sessions found</p>
+                <p className="text-xs text-[var(--cs-text-muted)]">Create a new key work session using the button above</p>
               </div>
             ) : (
               <div className="space-y-2">

@@ -51,7 +51,7 @@ function statusColour(s: MobilityStatus): string {
     case "variable_fluctuating":
       return "bg-amber-100 text-amber-800";
     default:
-      return "bg-slate-100 text-slate-800";
+      return "bg-slate-100 text-[var(--cs-navy)]";
   }
 }
 
@@ -213,7 +213,7 @@ export default function ChildMobilityPhysicalDisabilityPlanPage() {
           return (
             <div key={plan.id} className="rounded-xl border bg-white overflow-hidden">
               <button
-                className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                 onClick={() => setExpandedId(isExpanded ? null : plan.id)}
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -385,7 +385,7 @@ export default function ChildMobilityPhysicalDisabilityPlanPage() {
                       <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">
                         Child Voice
                       </p>
-                      <div className="bg-white rounded-lg p-3 border text-sm italic text-slate-700">
+                      <div className="bg-white rounded-lg p-3 border text-sm italic text-[var(--cs-text-secondary)]">
                         &ldquo;{plan.child_voice}&rdquo;
                       </div>
                     </div>
@@ -393,7 +393,7 @@ export default function ChildMobilityPhysicalDisabilityPlanPage() {
                       <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">
                         Staff Observation
                       </p>
-                      <div className="bg-white rounded-lg p-3 border text-sm text-slate-700">
+                      <div className="bg-white rounded-lg p-3 border text-sm text-[var(--cs-text-secondary)]">
                         {plan.staff_observation}
                       </div>
                     </div>

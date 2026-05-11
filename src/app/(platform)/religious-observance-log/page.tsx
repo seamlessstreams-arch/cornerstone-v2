@@ -56,7 +56,7 @@ const beliefBadgeColor = (faith: string) => {
   if (f.includes("buddh")) return "bg-rose-100 text-rose-800";
   if (f.includes("heritage") || f.includes("cultural"))
     return "bg-purple-100 text-purple-800";
-  return "bg-slate-100 text-slate-800";
+  return "bg-slate-100 text-[var(--cs-navy)]";
 };
 
 /* ── page ──────────────────────────────────────────────────────────── */
@@ -151,7 +151,7 @@ export default function ReligiousObservanceLogPage() {
         <Card><CardContent className="pt-4 pb-4 text-center"><p className="text-2xl font-bold text-emerald-700">{stats.activeSupport}</p><p className="text-xs text-muted-foreground">Children with Active Practice Support</p></CardContent></Card>
         <Card><CardContent className="pt-4 pb-4 text-center"><p className="text-2xl font-bold text-purple-700">{stats.beliefs}</p><p className="text-xs text-muted-foreground">Faiths / Beliefs Represented</p></CardContent></Card>
         <Card><CardContent className="pt-4 pb-4 text-center"><p className="text-2xl font-bold text-blue-700">{stats.upcomingFestivals}</p><p className="text-xs text-muted-foreground">Festivals Planned (next 90d)</p></CardContent></Card>
-        <Card><CardContent className="pt-4 pb-4 text-center"><p className={cn("text-2xl font-bold", stats.reviewsDue30 > 0 ? "text-amber-700" : "text-slate-700")}>{stats.reviewsDue30}</p><p className="text-xs text-muted-foreground">Reviews Due (30d)</p></CardContent></Card>
+        <Card><CardContent className="pt-4 pb-4 text-center"><p className={cn("text-2xl font-bold", stats.reviewsDue30 > 0 ? "text-amber-700" : "text-[var(--cs-text-secondary)]")}>{stats.reviewsDue30}</p><p className="text-xs text-muted-foreground">Reviews Due (30d)</p></CardContent></Card>
       </div>
 
       <div className="bg-gradient-to-r from-emerald-50 via-amber-50 to-purple-50 border border-emerald-200 rounded-lg p-4 mb-6">
@@ -316,9 +316,9 @@ export default function ReligiousObservanceLogPage() {
         })}
       </div>
 
-      <div className="mt-8 bg-slate-50 border border-slate-200 rounded-lg p-4">
-        <p className="text-sm font-medium text-slate-700 mb-1">Regulatory Context</p>
-        <p className="text-xs text-slate-600">
+      <div className="mt-8 bg-slate-50 border border-[var(--cs-border)] rounded-lg p-4">
+        <p className="text-sm font-medium text-[var(--cs-text-secondary)] mb-1">Regulatory Context</p>
+        <p className="text-xs text-[var(--cs-text-secondary)]">
           UNCRC Article 30 protects every child&apos;s right to enjoy their own culture, profess and practise their own religion, or use their own language. Article 14 protects freedom of thought, conscience and religion — including the right to none. The Equality Act 2010 lists religion or belief (including the absence of belief) as a protected characteristic; Children&apos;s Homes Regulations 2015 Schedule 1 (Quality Standard 1 — Child-Centred Care) and Regulation 6 require care that respects each child&apos;s identity, including religion and culture. The Statement of Purpose, placement plans and dietary needs records must reflect and support this. Children should never feel pressured to adopt or abandon a belief — staff support practice, not promotion.
         </p>
       </div>

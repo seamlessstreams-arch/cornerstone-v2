@@ -27,7 +27,7 @@ interface ActionOutcomeUpdateModalProps {
 // ── Constants ─────────────────────────────────────────────────────────────────
 
 const STATUS_OPTIONS: { value: Status; label: string; color: string }[] = [
-  { value: "open",        label: "Open",        color: "border-slate-300 text-slate-600"  },
+  { value: "open",        label: "Open",        color: "border-slate-300 text-[var(--cs-text-secondary)]"  },
   { value: "in_progress", label: "In Progress",  color: "border-blue-300 text-blue-700"   },
   { value: "completed",   label: "Completed",    color: "border-emerald-300 text-emerald-700" },
   { value: "stalled",     label: "Stalled",      color: "border-amber-300 text-amber-700" },
@@ -81,7 +81,7 @@ export function ActionOutcomeUpdateModal({ outcome, trigger }: ActionOutcomeUpda
     <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Trigger asChild>
         {trigger ?? (
-          <Button size="sm" variant="ghost" className="h-7 text-xs gap-1 text-slate-500 hover:text-slate-700">
+          <Button size="sm" variant="ghost" className="h-7 text-xs gap-1 text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)]">
             <Pencil className="h-3 w-3" />
             Update
           </Button>
@@ -90,15 +90,15 @@ export function ActionOutcomeUpdateModal({ outcome, trigger }: ActionOutcomeUpda
 
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 animate-in fade-in" />
-        <Dialog.Content className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl bg-white shadow-2xl p-6 animate-in slide-in-from-bottom-4">
+        <Dialog.Content className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl bg-white shadow-[var(--cs-shadow-elevated)] p-6 animate-in slide-in-from-bottom-4">
 
           {/* Header */}
           <div className="flex items-start justify-between mb-5">
             <div className="flex-1 min-w-0">
-              <Dialog.Title className="text-base font-bold text-slate-900 truncate">
+              <Dialog.Title className="text-base font-bold text-[var(--cs-navy)] truncate">
                 Update Action Outcome
               </Dialog.Title>
-              <Dialog.Description className="text-xs text-slate-500 mt-0.5 line-clamp-2">
+              <Dialog.Description className="text-xs text-[var(--cs-text-muted)] mt-0.5 line-clamp-2">
                 {outcome.title}
               </Dialog.Description>
             </div>
@@ -112,14 +112,14 @@ export function ActionOutcomeUpdateModal({ outcome, trigger }: ActionOutcomeUpda
           {success ? (
             <div className="flex flex-col items-center gap-3 py-10">
               <CheckCircle2 className="h-12 w-12 text-emerald-500" />
-              <p className="text-sm font-semibold text-slate-700">Updated successfully</p>
+              <p className="text-sm font-semibold text-[var(--cs-text-secondary)]">Updated successfully</p>
             </div>
           ) : (
             <div className="space-y-5">
 
               {/* Status */}
               <div>
-                <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide mb-2 block">Status</label>
+                <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide mb-2 block">Status</label>
                 <div className="flex flex-wrap gap-2">
                   {STATUS_OPTIONS.map((opt) => (
                     <button
@@ -129,7 +129,7 @@ export function ActionOutcomeUpdateModal({ outcome, trigger }: ActionOutcomeUpda
                         "px-3 py-1.5 rounded-full border text-xs font-semibold transition-all",
                         status === opt.value
                           ? opt.color + " ring-2 ring-offset-1 ring-current"
-                          : "border-slate-200 text-slate-400 hover:border-slate-300"
+                          : "border-[var(--cs-border)] text-[var(--cs-text-muted)] hover:border-slate-300"
                       )}
                     >
                       {opt.label}
@@ -140,7 +140,7 @@ export function ActionOutcomeUpdateModal({ outcome, trigger }: ActionOutcomeUpda
 
               {/* What was done */}
               <div>
-                <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1.5 block">
+                <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide mb-1.5 block">
                   What was done
                 </label>
                 <textarea
@@ -148,13 +148,13 @@ export function ActionOutcomeUpdateModal({ outcome, trigger }: ActionOutcomeUpda
                   onChange={(e) => setWhatWasDone(e.target.value)}
                   rows={3}
                   placeholder="Describe specifically what was done..."
-                  className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-violet-400 resize-none"
+                  className="w-full rounded-xl border border-[var(--cs-border)] px-3 py-2.5 text-sm text-[var(--cs-navy)] placeholder:text-[var(--cs-text-muted)] focus:outline-none focus:ring-2 focus:ring-violet-400 resize-none"
                 />
               </div>
 
               {/* What changed */}
               <div>
-                <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1.5 block">
+                <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide mb-1.5 block">
                   What changed / impact
                 </label>
                 <textarea
@@ -162,13 +162,13 @@ export function ActionOutcomeUpdateModal({ outcome, trigger }: ActionOutcomeUpda
                   onChange={(e) => setWhatChanged(e.target.value)}
                   rows={3}
                   placeholder="What difference did this make for the young person or the home?"
-                  className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-violet-400 resize-none"
+                  className="w-full rounded-xl border border-[var(--cs-border)] px-3 py-2.5 text-sm text-[var(--cs-navy)] placeholder:text-[var(--cs-text-muted)] focus:outline-none focus:ring-2 focus:ring-violet-400 resize-none"
                 />
               </div>
 
               {/* Effectiveness */}
               <div>
-                <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide mb-2 block">
+                <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide mb-2 block">
                   Did it work?
                 </label>
                 <div className="flex flex-wrap gap-2">
@@ -180,7 +180,7 @@ export function ActionOutcomeUpdateModal({ outcome, trigger }: ActionOutcomeUpda
                         "px-3 py-1.5 rounded-full border text-xs font-semibold transition-all",
                         effectiveness === opt.value
                           ? opt.color + " ring-2 ring-offset-1 ring-current"
-                          : "border-slate-200 bg-white text-slate-400 hover:border-slate-300"
+                          : "border-[var(--cs-border)] bg-white text-[var(--cs-text-muted)] hover:border-slate-300"
                       )}
                     >
                       {opt.label}
@@ -191,7 +191,7 @@ export function ActionOutcomeUpdateModal({ outcome, trigger }: ActionOutcomeUpda
 
               {/* Effectiveness notes */}
               <div>
-                <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1.5 block">
+                <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide mb-1.5 block">
                   Effectiveness notes
                 </label>
                 <textarea
@@ -199,13 +199,13 @@ export function ActionOutcomeUpdateModal({ outcome, trigger }: ActionOutcomeUpda
                   onChange={(e) => setEffNotes(e.target.value)}
                   rows={2}
                   placeholder="Any additional notes on how well this worked..."
-                  className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-violet-400 resize-none"
+                  className="w-full rounded-xl border border-[var(--cs-border)] px-3 py-2.5 text-sm text-[var(--cs-navy)] placeholder:text-[var(--cs-text-muted)] focus:outline-none focus:ring-2 focus:ring-violet-400 resize-none"
                 />
               </div>
 
               {/* Should continue */}
               <div>
-                <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide mb-2 block">
+                <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide mb-2 block">
                   Should we continue this approach?
                 </label>
                 <div className="flex gap-2">
@@ -221,7 +221,7 @@ export function ActionOutcomeUpdateModal({ outcome, trigger }: ActionOutcomeUpda
                         "flex-1 px-3 py-1.5 rounded-xl border text-xs font-semibold transition-all",
                         shouldContinue === opt.value
                           ? "border-violet-400 bg-violet-50 text-violet-700 ring-2 ring-violet-300 ring-offset-1"
-                          : "border-slate-200 text-slate-400 hover:border-slate-300"
+                          : "border-[var(--cs-border)] text-[var(--cs-text-muted)] hover:border-slate-300"
                       )}
                     >
                       {opt.label}

@@ -103,7 +103,7 @@ export default function LocalityRiskPage() {
           {[
             { label: "Total Risks", value: total, icon: MapPin, colour: "text-blue-600" },
             { label: "High / Critical", value: highCritical, icon: AlertTriangle, colour: highCritical > 0 ? "text-red-600" : "text-green-600" },
-            { label: "Reviews Due", value: reviewDue, icon: Eye, colour: reviewDue > 0 ? "text-orange-600" : "text-slate-400" },
+            { label: "Reviews Due", value: reviewDue, icon: Eye, colour: reviewDue > 0 ? "text-orange-600" : "text-[var(--cs-text-muted)]" },
             { label: "Mitigations Active", value: data.reduce((s, r) => s + r.mitigations.length, 0), icon: Shield, colour: "text-green-600" },
           ].map((s) => (
             <div key={s.label} className="rounded-xl border bg-white p-4 flex items-center gap-3">
@@ -144,7 +144,7 @@ export default function LocalityRiskPage() {
             return (
               <div key={risk.id} className="rounded-xl border bg-white overflow-hidden">
                 <button
-                  className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                  className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                   onClick={() => setExpanded(isExpanded ? null : risk.id)}
                 >
                   <div className="flex items-center gap-3 flex-1 min-w-0">

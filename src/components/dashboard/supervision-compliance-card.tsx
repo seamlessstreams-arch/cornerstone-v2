@@ -74,7 +74,7 @@ export function SupervisionComplianceCard() {
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-center py-6">
-            <Loader2 className="h-5 w-5 animate-spin text-slate-400" />
+            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
           </div>
         </CardContent>
       </Card>
@@ -105,9 +105,9 @@ export function SupervisionComplianceCard() {
             <div className={cn("text-[9px]", overdue > 0 ? "text-red-500" : "text-emerald-500")}>Overdue</div>
           </div>
           <div className={cn("rounded-xl p-2 text-center", dueSoon > 0 ? "bg-amber-50" : "bg-slate-50")}>
-            <Clock className={cn("h-3 w-3 mx-auto mb-0.5", dueSoon > 0 ? "text-amber-500" : "text-slate-400")} />
-            <div className={cn("text-sm font-bold tabular-nums", dueSoon > 0 ? "text-amber-700" : "text-slate-400")}>{dueSoon}</div>
-            <div className={cn("text-[9px]", dueSoon > 0 ? "text-amber-500" : "text-slate-400")}>Due Soon</div>
+            <Clock className={cn("h-3 w-3 mx-auto mb-0.5", dueSoon > 0 ? "text-amber-500" : "text-[var(--cs-text-muted)]")} />
+            <div className={cn("text-sm font-bold tabular-nums", dueSoon > 0 ? "text-amber-700" : "text-[var(--cs-text-muted)]")}>{dueSoon}</div>
+            <div className={cn("text-[9px]", dueSoon > 0 ? "text-amber-500" : "text-[var(--cs-text-muted)]")}>Due Soon</div>
           </div>
           <div className="rounded-xl bg-emerald-50 p-2 text-center">
             <CheckCircle2 className="h-3 w-3 text-emerald-500 mx-auto mb-0.5" />
@@ -119,7 +119,7 @@ export function SupervisionComplianceCard() {
         {/* Compliance bar */}
         <div className="space-y-1">
           <div className="flex items-center justify-between text-[10px] px-1">
-            <span className="text-slate-500">Compliance</span>
+            <span className="text-[var(--cs-text-muted)]">Compliance</span>
             <span className={cn(
               "font-bold tabular-nums",
               compliancePct >= 90 ? "text-emerald-600" : compliancePct >= 75 ? "text-amber-600" : "text-red-600",
@@ -141,7 +141,7 @@ export function SupervisionComplianceCard() {
         {/* Wellbeing score */}
         {avgWellbeing !== null && (
           <div className="flex items-center justify-between text-[10px] px-1">
-            <span className="flex items-center gap-1 text-slate-500">
+            <span className="flex items-center gap-1 text-[var(--cs-text-muted)]">
               <Heart className="h-3 w-3" /> Avg wellbeing
             </span>
             <span className={cn(
@@ -171,12 +171,12 @@ export function SupervisionComplianceCard() {
         {/* Overdue staff list */}
         {overdueStaff.length > 0 && (
           <div className="space-y-1">
-            <span className="text-[10px] font-medium text-slate-500 px-1">Overdue Staff</span>
+            <span className="text-[10px] font-medium text-[var(--cs-text-muted)] px-1">Overdue Staff</span>
             {overdueStaff.map((s) => (
               <Link key={s.id} href={`/staff/${s.id}`}>
-                <div className="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-slate-50 transition-colors bg-red-50/50">
+                <div className="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-[var(--cs-surface)] transition-colors bg-red-50/50">
                   <Users className="h-3 w-3 text-red-500 shrink-0" />
-                  <span className="text-[11px] font-medium text-slate-700 flex-1 truncate">
+                  <span className="text-[11px] font-medium text-[var(--cs-text-secondary)] flex-1 truncate">
                     {s.name}
                   </span>
                   <span className="text-[9px] text-red-500 font-semibold tabular-nums shrink-0">

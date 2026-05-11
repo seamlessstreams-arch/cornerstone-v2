@@ -57,7 +57,7 @@ const periodLabel = (start: string, end: string) => {
 /* ── status maps ───────────────────────────────────────────────────────────── */
 
 const STATUS_CLR: Record<Reg45Status, string> = {
-  draft: "bg-slate-100 text-slate-700",
+  draft: "bg-slate-100 text-[var(--cs-text-secondary)]",
   in_progress: "bg-amber-100 text-amber-800",
   submitted: "bg-blue-100 text-blue-800",
   approved: "bg-green-100 text-green-800",
@@ -75,7 +75,7 @@ const STATUS_LABEL: Record<Reg45Status, string> = {
 type SectionStatus = "not_started" | "in_progress" | "complete";
 
 const SECTION_STATUS_CLR: Record<SectionStatus, string> = {
-  not_started: "bg-slate-100 text-slate-500",
+  not_started: "bg-slate-100 text-[var(--cs-text-muted)]",
   in_progress: "bg-amber-100 text-amber-700",
   complete: "bg-green-100 text-green-700",
 };
@@ -360,7 +360,7 @@ export default function Reg45Page() {
       <Card className="mb-6">
         <CardContent className="pt-4 pb-4">
           <div className="flex items-center justify-between mb-2">
-            <p className="text-sm font-medium text-slate-700">Review Completion</p>
+            <p className="text-sm font-medium text-[var(--cs-text-secondary)]">Review Completion</p>
             <p className="text-sm text-muted-foreground">
               {progress.complete}/{progress.total} sections complete
             </p>
@@ -381,7 +381,7 @@ export default function Reg45Page() {
               {progress.inProgress} in progress
             </span>
             <span className="flex items-center gap-1">
-              <Circle className="h-3 w-3 text-slate-400" />
+              <Circle className="h-3 w-3 text-[var(--cs-text-muted)]" />
               {progress.notStarted} not started
             </span>
           </div>
@@ -406,7 +406,7 @@ export default function Reg45Page() {
           <div className="space-y-6">
             {/* main sections */}
             <div>
-              <h3 className="text-sm font-semibold text-slate-700 mb-3 flex items-center gap-2">
+              <h3 className="text-sm font-semibold text-[var(--cs-text-secondary)] mb-3 flex items-center gap-2">
                 <FileText className="h-4 w-4" />
                 Review Sections
               </h3>
@@ -420,13 +420,13 @@ export default function Reg45Page() {
                   return (
                     <Card key={section.key} className="overflow-hidden">
                       <div
-                        className="flex items-center justify-between px-4 py-3 cursor-pointer hover:bg-slate-50 transition-colors"
+                        className="flex items-center justify-between px-4 py-3 cursor-pointer hover:bg-[var(--cs-surface)] transition-colors"
                         onClick={() => toggleSection(section.key)}
                       >
                         <div className="flex items-center gap-3">
-                          <section.icon className="h-4 w-4 text-slate-500" />
+                          <section.icon className="h-4 w-4 text-[var(--cs-text-muted)]" />
                           <div>
-                            <p className="text-sm font-medium text-slate-800">{section.label}</p>
+                            <p className="text-sm font-medium text-[var(--cs-navy)]">{section.label}</p>
                             <p className="text-xs text-muted-foreground">{section.description}</p>
                           </div>
                         </div>
@@ -436,18 +436,18 @@ export default function Reg45Page() {
                             {status === "not_started" ? "Not Started" : status === "in_progress" ? "In Progress" : "Complete"}
                           </Badge>
                           {isExpanded ? (
-                            <ChevronUp className="h-4 w-4 text-slate-400" />
+                            <ChevronUp className="h-4 w-4 text-[var(--cs-text-muted)]" />
                           ) : (
-                            <ChevronDown className="h-4 w-4 text-slate-400" />
+                            <ChevronDown className="h-4 w-4 text-[var(--cs-text-muted)]" />
                           )}
                         </div>
                       </div>
 
                       {isExpanded && (
-                        <CardContent className="pt-0 pb-4 border-t border-slate-100">
+                        <CardContent className="pt-0 pb-4 border-t border-[var(--cs-border-subtle)]">
                           {content ? (
                             <div className="mt-3">
-                              <div className="bg-slate-50 rounded-lg p-3 text-xs text-slate-700 leading-relaxed whitespace-pre-wrap">
+                              <div className="bg-slate-50 rounded-lg p-3 text-xs text-[var(--cs-text-secondary)] leading-relaxed whitespace-pre-wrap">
                                 {content}
                               </div>
                               <div className="flex items-center gap-2 mt-3">
@@ -485,7 +485,7 @@ export default function Reg45Page() {
 
             {/* stakeholder sections */}
             <div>
-              <h3 className="text-sm font-semibold text-slate-700 mb-3 flex items-center gap-2">
+              <h3 className="text-sm font-semibold text-[var(--cs-text-secondary)] mb-3 flex items-center gap-2">
                 <MessageSquare className="h-4 w-4" />
                 Stakeholder Views
               </h3>
@@ -499,13 +499,13 @@ export default function Reg45Page() {
                   return (
                     <Card key={section.key} className="overflow-hidden">
                       <div
-                        className="flex items-center justify-between px-4 py-3 cursor-pointer hover:bg-slate-50 transition-colors"
+                        className="flex items-center justify-between px-4 py-3 cursor-pointer hover:bg-[var(--cs-surface)] transition-colors"
                         onClick={() => toggleSection(section.key)}
                       >
                         <div className="flex items-center gap-3">
-                          <section.icon className="h-4 w-4 text-slate-500" />
+                          <section.icon className="h-4 w-4 text-[var(--cs-text-muted)]" />
                           <div>
-                            <p className="text-sm font-medium text-slate-800">{section.label}</p>
+                            <p className="text-sm font-medium text-[var(--cs-navy)]">{section.label}</p>
                             <p className="text-xs text-muted-foreground">{section.description}</p>
                           </div>
                         </div>
@@ -515,18 +515,18 @@ export default function Reg45Page() {
                             {status === "not_started" ? "Not Started" : status === "in_progress" ? "In Progress" : "Complete"}
                           </Badge>
                           {isExpanded ? (
-                            <ChevronUp className="h-4 w-4 text-slate-400" />
+                            <ChevronUp className="h-4 w-4 text-[var(--cs-text-muted)]" />
                           ) : (
-                            <ChevronDown className="h-4 w-4 text-slate-400" />
+                            <ChevronDown className="h-4 w-4 text-[var(--cs-text-muted)]" />
                           )}
                         </div>
                       </div>
 
                       {isExpanded && (
-                        <CardContent className="pt-0 pb-4 border-t border-slate-100">
+                        <CardContent className="pt-0 pb-4 border-t border-[var(--cs-border-subtle)]">
                           {content ? (
                             <div className="mt-3">
-                              <div className="bg-slate-50 rounded-lg p-3 text-xs text-slate-700 leading-relaxed whitespace-pre-wrap">
+                              <div className="bg-slate-50 rounded-lg p-3 text-xs text-[var(--cs-text-secondary)] leading-relaxed whitespace-pre-wrap">
                                 {content}
                               </div>
                               <div className="flex items-center gap-2 mt-3">
@@ -566,7 +566,7 @@ export default function Reg45Page() {
             <Card>
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm font-semibold flex items-center gap-2">
-                  <ArrowRight className="h-4 w-4 text-slate-500" />
+                  <ArrowRight className="h-4 w-4 text-[var(--cs-text-muted)]" />
                   Review Status Workflow
                 </CardTitle>
               </CardHeader>
@@ -584,7 +584,7 @@ export default function Reg45Page() {
                       >
                         {STATUS_LABEL[s]}
                       </Badge>
-                      {i < 4 && <ArrowRight className="h-3 w-3 text-slate-300" />}
+                      {i < 4 && <ArrowRight className="h-3 w-3 text-[var(--cs-text-gentle)]" />}
                     </div>
                   ))}
                 </div>
@@ -605,7 +605,7 @@ export default function Reg45Page() {
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-sm font-semibold text-slate-700">Evidence for This Period</h3>
+                <h3 className="text-sm font-semibold text-[var(--cs-text-secondary)]">Evidence for This Period</h3>
                 <p className="text-xs text-muted-foreground">
                   {periodLabel(selectedReview.periodStart, selectedReview.periodEnd)}
                 </p>
@@ -629,7 +629,7 @@ export default function Reg45Page() {
                   <Card key={item.category}>
                     <CardContent className="pt-4 pb-3">
                       <div className="flex items-center justify-between mb-2">
-                        <p className="text-sm font-medium text-slate-800">{item.category}</p>
+                        <p className="text-sm font-medium text-[var(--cs-navy)]">{item.category}</p>
                         <Badge variant="outline" className="bg-blue-50 text-blue-700 text-[10px]">
                           {item.count} records
                         </Badge>
@@ -673,20 +673,20 @@ export default function Reg45Page() {
       {/* ── previous reviews summary ───────────────────────────────────── */}
       {selectedReviewId === "r1" && reviews.length > 1 && (
         <div className="mt-6">
-          <h3 className="text-sm font-semibold text-slate-700 mb-3">Previous Reviews</h3>
+          <h3 className="text-sm font-semibold text-[var(--cs-text-secondary)] mb-3">Previous Reviews</h3>
           <div className="space-y-2">
             {reviews.filter((r) => r.id !== "r1").map((r) => (
               <Card
                 key={r.id}
-                className="cursor-pointer hover:bg-slate-50 transition-colors"
+                className="cursor-pointer hover:bg-[var(--cs-surface)] transition-colors"
                 onClick={() => setSelectedReviewId(r.id)}
               >
                 <CardContent className="pt-3 pb-3">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <FileText className="h-4 w-4 text-slate-400" />
+                      <FileText className="h-4 w-4 text-[var(--cs-text-muted)]" />
                       <div>
-                        <p className="text-sm font-medium text-slate-800">
+                        <p className="text-sm font-medium text-[var(--cs-navy)]">
                           {periodLabel(r.periodStart, r.periodEnd)}
                         </p>
                         <p className="text-xs text-muted-foreground">

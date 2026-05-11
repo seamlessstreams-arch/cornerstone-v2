@@ -318,9 +318,9 @@ export default function HouseRulesPage() {
       </div>
 
       {/* ─── regulatory note ─── */}
-      <div className="mt-8 bg-slate-50 border border-slate-200 rounded-lg p-4">
-        <p className="text-sm font-medium text-slate-700 mb-1">Regulatory Context</p>
-        <p className="text-xs text-slate-600">
+      <div className="mt-8 bg-slate-50 border border-[var(--cs-border)] rounded-lg p-4">
+        <p className="text-sm font-medium text-[var(--cs-text-secondary)] mb-1">Regulatory Context</p>
+        <p className="text-xs text-[var(--cs-text-secondary)]">
           Regulation 19 of the Children&apos;s Homes Regulations 2015 requires that children are
           aware of and understand the home&apos;s rules. Rules must be proportionate, clearly
           communicated, and take account of children&apos;s views. The Quality Standards (Standard 3)

@@ -43,8 +43,8 @@ const TYPE_COLOURS: Record<string, string> = {
   stop_and_search: "bg-amber-100 text-amber-800",
   restorative_resolution: "bg-emerald-100 text-emerald-800",
   welfare_check_by_police: "bg-sky-100 text-sky-800",
-  information_sharing_only: "bg-slate-100 text-slate-800",
-  other: "bg-slate-100 text-slate-800",
+  information_sharing_only: "bg-slate-100 text-[var(--cs-navy)]",
+  other: "bg-slate-100 text-[var(--cs-navy)]",
 };
 
 const OUTCOME_COLOURS: Record<string, string> = {
@@ -56,7 +56,7 @@ const OUTCOME_COLOURS: Record<string, string> = {
   bail: "bg-amber-100 text-amber-800",
   released_no_charge: "bg-emerald-100 text-emerald-800",
   returned_to_home: "bg-sky-100 text-sky-800",
-  other: "bg-slate-100 text-slate-800",
+  other: "bg-slate-100 text-[var(--cs-navy)]",
 };
 
 /* ── helpers ───────────────────────────────────────────────────────────── */

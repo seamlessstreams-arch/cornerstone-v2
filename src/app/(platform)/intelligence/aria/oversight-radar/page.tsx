@@ -88,7 +88,7 @@ function RadarItemCard({
   return (
     <div
       className={cn(
-        "rounded-xl border-l-4 border border-slate-100 p-4 space-y-2 transition-opacity",
+        "rounded-xl border-l-4 border border-[var(--cs-border-subtle)] p-4 space-y-2 transition-opacity",
         colours.border,
         colours.bg,
         reviewed && "opacity-50"
@@ -101,15 +101,15 @@ function RadarItemCard({
               {item.category}
             </span>
             {item.regulation && (
-              <span className="rounded-full bg-slate-100 text-slate-500 border border-slate-200 px-2 py-0.5 text-[10px]">
+              <span className="rounded-full bg-slate-100 text-[var(--cs-text-muted)] border border-[var(--cs-border)] px-2 py-0.5 text-[10px]">
                 {item.regulation}
               </span>
             )}
           </div>
-          <p className="text-sm font-semibold text-slate-900">{item.issue}</p>
-          <p className="text-xs text-slate-600 leading-relaxed">{item.why_it_matters}</p>
+          <p className="text-sm font-semibold text-[var(--cs-navy)]">{item.issue}</p>
+          <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed">{item.why_it_matters}</p>
           {item.suggested_action && (
-            <p className="text-xs text-slate-500 italic border-l-2 border-slate-300 pl-2">{item.suggested_action}</p>
+            <p className="text-xs text-[var(--cs-text-muted)] italic border-l-2 border-slate-300 pl-2">{item.suggested_action}</p>
           )}
         </div>
         {reviewed && (
@@ -373,11 +373,11 @@ export default function OversightRadarPage() {
           <CardContent className="p-4">
             <div className="flex items-end gap-4 flex-wrap">
               <div className="space-y-1.5 flex-1 min-w-48">
-                <label className="text-xs font-medium text-slate-600">Scope</label>
+                <label className="text-xs font-medium text-[var(--cs-text-secondary)]">Scope</label>
                 <select
                   value={selectedChild}
                   onChange={(e) => setSelectedChild(e.target.value)}
-                  className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                  className="w-full rounded-lg border border-[var(--cs-border)] bg-white px-3 py-2 text-sm text-[var(--cs-navy)] focus:outline-none focus:ring-2 focus:ring-blue-300"
                 >
                   {youngPeople.map((yp) => (
                     <option key={yp.id} value={yp.id}>{yp.name}</option>
@@ -400,8 +400,8 @@ export default function OversightRadarPage() {
         </Card>
 
         {/* Colour legend */}
-        <div className="flex items-center gap-4 flex-wrap text-xs text-slate-600">
-          <span className="font-semibold text-slate-500 uppercase tracking-wider text-[10px]">Colour guide:</span>
+        <div className="flex items-center gap-4 flex-wrap text-xs text-[var(--cs-text-secondary)]">
+          <span className="font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider text-[10px]">Colour guide:</span>
           {[
             { colour: "bg-red-500", label: "Red — Urgent / Compliance" },
             { colour: "bg-amber-500", label: "Amber — Needs Follow-up" },
@@ -428,8 +428,8 @@ export default function OversightRadarPage() {
             <CardContent className="p-8 flex flex-col items-center gap-4 text-center">
               <ScanSearch className="h-12 w-12 text-blue-300" />
               <div>
-                <p className="text-sm font-semibold text-slate-700">Ready to scan</p>
-                <p className="text-xs text-slate-500 mt-1 max-w-sm">
+                <p className="text-sm font-semibold text-[var(--cs-text-secondary)]">Ready to scan</p>
+                <p className="text-xs text-[var(--cs-text-muted)] mt-1 max-w-sm">
                   Select a scope above and click &quot;Run Oversight Radar&quot; to identify missing evidence,
                   compliance gaps, and areas requiring management attention.
                 </p>
@@ -439,7 +439,7 @@ export default function OversightRadarPage() {
         )}
 
         {loading && (
-          <div className="flex items-center gap-3 py-8 justify-center text-sm text-slate-500">
+          <div className="flex items-center gap-3 py-8 justify-center text-sm text-[var(--cs-text-muted)]">
             <Loader2 className="h-6 w-6 animate-spin text-blue-500" />
             ARIA is scanning for oversight gaps and missing evidence…
           </div>
@@ -451,7 +451,7 @@ export default function OversightRadarPage() {
             {/* Summary + filter */}
             <div className="flex items-center gap-3 flex-wrap">
               <div className="flex items-center gap-2 flex-1 min-w-0">
-                <span className="text-sm font-semibold text-slate-700">
+                <span className="text-sm font-semibold text-[var(--cs-text-secondary)]">
                   {radarItems.length} item{radarItems.length !== 1 ? "s" : ""} identified
                 </span>
                 {counts.red > 0 && (
@@ -470,7 +470,7 @@ export default function OversightRadarPage() {
                       "rounded-full px-3 py-1 text-xs font-medium transition-colors",
                       severityFilter === tab.value
                         ? "bg-slate-900 text-white"
-                        : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                        : "bg-slate-100 text-[var(--cs-text-secondary)] hover:bg-slate-200"
                     )}
                   >
                     {tab.label}
@@ -482,7 +482,7 @@ export default function OversightRadarPage() {
             {filteredItems.length === 0 ? (
               <div className="flex flex-col items-center gap-2 py-8 text-center">
                 <CheckCircle2 className="h-10 w-10 text-emerald-300" />
-                <p className="text-sm text-slate-500">No items match this filter</p>
+                <p className="text-sm text-[var(--cs-text-muted)]">No items match this filter</p>
               </div>
             ) : (
               <div className="space-y-3">

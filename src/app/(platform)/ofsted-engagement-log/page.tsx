@@ -206,7 +206,7 @@ export default function OfstedEngagementLogPage() {
               label: "Outstanding actions",
               value: outstandingActions,
               icon: AlertTriangle,
-              colour: outstandingActions > 0 ? "text-amber-600" : "text-slate-400",
+              colour: outstandingActions > 0 ? "text-amber-600" : "text-[var(--cs-text-muted)]",
             },
             {
               label: "Days since last engagement",
@@ -321,7 +321,7 @@ export default function OfstedEngagementLogPage() {
             return (
               <div key={rec.id} className="rounded-xl border bg-white overflow-hidden">
                 <button
-                  className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                  className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                   onClick={() => setExpandedId(isExpanded ? null : rec.id)}
                 >
                   <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -332,7 +332,7 @@ export default function OfstedEngagementLogPage() {
                           ? "text-amber-600"
                           : rec.engagement_status === "following_up"
                           ? "text-blue-600"
-                          : "text-slate-500"
+                          : "text-[var(--cs-text-muted)]"
                       )}
                     />
                     <div className="min-w-0">
@@ -405,7 +405,7 @@ export default function OfstedEngagementLogPage() {
                           {rec.documents_shared.map((doc, i) => (
                             <Badge
                               key={`${rec.id}-doc-${i}`}
-                              className="bg-slate-100 text-slate-700 text-xs font-normal"
+                              className="bg-slate-100 text-[var(--cs-text-secondary)] text-xs font-normal"
                             >
                               {doc}
                             </Badge>
@@ -507,7 +507,7 @@ export default function OfstedEngagementLogPage() {
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <div className="rounded-lg bg-slate-50 border p-3">
-                <p className="font-medium text-slate-900 mb-1">Why we keep this log</p>
+                <p className="font-medium text-[var(--cs-navy)] mb-1">Why we keep this log</p>
                 <ul className="space-y-1 text-xs">
                   <li>Demonstrates open, ongoing relationship with Ofsted between inspections</li>
                   <li>Provides an audit trail for every notification, call, email and visit</li>
@@ -517,7 +517,7 @@ export default function OfstedEngagementLogPage() {
                 </ul>
               </div>
               <div className="rounded-lg bg-slate-50 border p-3">
-                <p className="font-medium text-slate-900 mb-1">What good practice looks like</p>
+                <p className="font-medium text-[var(--cs-navy)] mb-1">What good practice looks like</p>
                 <ul className="space-y-1 text-xs">
                   <li>Notify Ofsted on awareness of a Reg 40 event, not on confirmation</li>
                   <li>Confirm verbal exchanges (calls) in writing the same day</li>

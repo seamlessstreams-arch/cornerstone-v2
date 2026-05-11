@@ -62,7 +62,7 @@ export function MissingFromCareCard() {
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-center py-6">
-            <Loader2 className="h-5 w-5 animate-spin text-slate-400" />
+            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
           </div>
         </CardContent>
       </Card>
@@ -93,14 +93,14 @@ export function MissingFromCareCard() {
             <div className={cn("text-[9px]", active > 0 ? "text-red-500" : "text-emerald-500")}>Active</div>
           </div>
           <div className={cn("rounded-xl p-2 text-center", unresolved > 0 ? "bg-violet-50" : "bg-slate-50")}>
-            <FileText className={cn("h-3 w-3 mx-auto mb-0.5", unresolved > 0 ? "text-violet-500" : "text-slate-400")} />
-            <div className={cn("text-sm font-bold tabular-nums", unresolved > 0 ? "text-violet-700" : "text-slate-400")}>{unresolved}</div>
-            <div className={cn("text-[9px]", unresolved > 0 ? "text-violet-500" : "text-slate-400")}>RHI Due</div>
+            <FileText className={cn("h-3 w-3 mx-auto mb-0.5", unresolved > 0 ? "text-violet-500" : "text-[var(--cs-text-muted)]")} />
+            <div className={cn("text-sm font-bold tabular-nums", unresolved > 0 ? "text-violet-700" : "text-[var(--cs-text-muted)]")}>{unresolved}</div>
+            <div className={cn("text-[9px]", unresolved > 0 ? "text-violet-500" : "text-[var(--cs-text-muted)]")}>RHI Due</div>
           </div>
           <div className="rounded-xl bg-slate-50 p-2 text-center">
-            <MapPin className="h-3 w-3 text-slate-400 mx-auto mb-0.5" />
-            <div className="text-sm font-bold text-slate-700 tabular-nums">{totalThisMonth}</div>
-            <div className="text-[9px] text-slate-400">This Month</div>
+            <MapPin className="h-3 w-3 text-[var(--cs-text-muted)] mx-auto mb-0.5" />
+            <div className="text-sm font-bold text-[var(--cs-text-secondary)] tabular-nums">{totalThisMonth}</div>
+            <div className="text-[9px] text-[var(--cs-text-muted)]">This Month</div>
           </div>
         </div>
 
@@ -127,7 +127,7 @@ export function MissingFromCareCard() {
               <Link key={ep.id} href="/missing-from-care">
                 <div className="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-red-50/50 transition-colors bg-red-50/30">
                   <MapPin className="h-3 w-3 text-red-500 shrink-0" />
-                  <span className="text-[11px] font-medium text-slate-700 flex-1 truncate">
+                  <span className="text-[11px] font-medium text-[var(--cs-text-secondary)] flex-1 truncate">
                     {getYPName(ep.child_id)}
                   </span>
                   <span className="text-[9px] text-red-500 font-semibold shrink-0">

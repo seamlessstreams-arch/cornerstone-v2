@@ -368,7 +368,7 @@ const fuelColour = (f: FuelLevel): string => {
     case "3/4":
       return "text-emerald-700";
     case "1/2":
-      return "text-slate-700";
+      return "text-[var(--cs-text-secondary)]";
     case "1/4":
       return "text-amber-700";
     case "Refuel needed":
@@ -633,17 +633,17 @@ export default function VehiclePreUseCheckPage() {
 
       {/* Summary stats */}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-4 mb-6">
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-xs text-slate-600 uppercase tracking-wide">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-xs text-[var(--cs-text-secondary)] uppercase tracking-wide">
             <CalendarClock className="h-4 w-4" /> Checks today
           </div>
-          <div className="mt-2 text-3xl font-semibold text-slate-900">
+          <div className="mt-2 text-3xl font-semibold text-[var(--cs-navy)]">
             {summary.checksToday}
           </div>
-          <div className="mt-1 text-xs text-slate-500">recorded so far</div>
+          <div className="mt-1 text-xs text-[var(--cs-text-muted)]">recorded so far</div>
         </div>
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-xs text-slate-600 uppercase tracking-wide">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-xs text-[var(--cs-text-secondary)] uppercase tracking-wide">
             <AlertTriangle className="h-4 w-4" /> Defects this week
           </div>
           <div
@@ -658,10 +658,10 @@ export default function VehiclePreUseCheckPage() {
           >
             {summary.defectsThisWeek}
           </div>
-          <div className="mt-1 text-xs text-slate-500">last 7 days</div>
+          <div className="mt-1 text-xs text-[var(--cs-text-muted)]">last 7 days</div>
         </div>
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-xs text-slate-600 uppercase tracking-wide">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-xs text-[var(--cs-text-secondary)] uppercase tracking-wide">
             <ShieldCheck className="h-4 w-4" /> Vehicles in service
           </div>
           <div
@@ -673,17 +673,17 @@ export default function VehiclePreUseCheckPage() {
             )}
           >
             {summary.inService}
-            <span className="text-base font-normal text-slate-500">
+            <span className="text-base font-normal text-[var(--cs-text-muted)]">
               {" "}
               / {summary.vehiclesTotal}
             </span>
           </div>
-          <div className="mt-1 text-xs text-slate-500">
+          <div className="mt-1 text-xs text-[var(--cs-text-muted)]">
             currently cleared for use
           </div>
         </div>
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-xs text-slate-600 uppercase tracking-wide">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-xs text-[var(--cs-text-secondary)] uppercase tracking-wide">
             <FileText className="h-4 w-4" /> Insurance / MOT (30d)
           </div>
           <div
@@ -694,14 +694,14 @@ export default function VehiclePreUseCheckPage() {
           >
             {summary.expiring30}
           </div>
-          <div className="mt-1 text-xs text-slate-500">expiring within 30 days</div>
+          <div className="mt-1 text-xs text-[var(--cs-text-muted)]">expiring within 30 days</div>
         </div>
       </div>
 
       {/* Filters / sort */}
-      <div className="mb-4 flex flex-wrap items-center gap-3 rounded-lg border border-slate-200 bg-white p-3">
+      <div className="mb-4 flex flex-wrap items-center gap-3 rounded-lg border border-[var(--cs-border)] bg-white p-3">
         <div className="flex items-center gap-2">
-          <span className="text-xs font-medium text-slate-600">Vehicle</span>
+          <span className="text-xs font-medium text-[var(--cs-text-secondary)]">Vehicle</span>
           <Select value={filterVehicle} onValueChange={setFilterVehicle}>
             <SelectTrigger className="w-[220px] h-9">
               <SelectValue placeholder="All" />
@@ -717,7 +717,7 @@ export default function VehiclePreUseCheckPage() {
           </Select>
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-xs font-medium text-slate-600">Outcome</span>
+          <span className="text-xs font-medium text-[var(--cs-text-secondary)]">Outcome</span>
           <Select value={filterOutcome} onValueChange={setFilterOutcome}>
             <SelectTrigger className="w-[220px] h-9">
               <SelectValue placeholder="All" />
@@ -735,8 +735,8 @@ export default function VehiclePreUseCheckPage() {
           </Select>
         </div>
         <div className="flex items-center gap-2">
-          <ArrowUpDown className="h-4 w-4 text-slate-500" />
-          <span className="text-xs font-medium text-slate-600">Sort by</span>
+          <ArrowUpDown className="h-4 w-4 text-[var(--cs-text-muted)]" />
+          <span className="text-xs font-medium text-[var(--cs-text-secondary)]">Sort by</span>
           <Select
             value={sortKey}
             onValueChange={(v: string) => setSortKey(v as SortKey)}
@@ -755,7 +755,7 @@ export default function VehiclePreUseCheckPage() {
             </SelectContent>
           </Select>
         </div>
-        <div className="ml-auto text-xs text-slate-500">
+        <div className="ml-auto text-xs text-[var(--cs-text-muted)]">
           Showing {visible.length} of {RECORDS.length}
         </div>
       </div>
@@ -769,7 +769,7 @@ export default function VehiclePreUseCheckPage() {
           return (
             <div
               key={r.id}
-              className="rounded-lg border border-slate-200 bg-white shadow-sm"
+              className="rounded-lg border border-[var(--cs-border)] bg-white shadow-sm"
             >
               {/* Header */}
               <button
@@ -781,7 +781,7 @@ export default function VehiclePreUseCheckPage() {
               >
                 <div className="flex-1 min-w-0">
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="font-semibold text-slate-900">
+                    <span className="font-semibold text-[var(--cs-navy)]">
                       {r.vehicle}
                     </span>
                     <span
@@ -799,11 +799,11 @@ export default function VehiclePreUseCheckPage() {
                         {r.defectsFound.length === 1 ? "" : "s"}
                       </span>
                     )}
-                    <span className="text-sm font-semibold text-slate-700">
+                    <span className="text-sm font-semibold text-[var(--cs-text-secondary)]">
                       {passed}/{r.checks.length} checks pass
                     </span>
                   </div>
-                  <div className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-600">
+                  <div className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-[var(--cs-text-secondary)]">
                     <span className="flex items-center gap-1">
                       <CalendarClock className="h-3.5 w-3.5" />
                       {formatPretty(r.dateTime)}
@@ -829,45 +829,45 @@ export default function VehiclePreUseCheckPage() {
                 </div>
                 <div className="flex-shrink-0 pt-1">
                   {isOpen ? (
-                    <ChevronUp className="h-5 w-5 text-slate-400" />
+                    <ChevronUp className="h-5 w-5 text-[var(--cs-text-muted)]" />
                   ) : (
-                    <ChevronDown className="h-5 w-5 text-slate-400" />
+                    <ChevronDown className="h-5 w-5 text-[var(--cs-text-muted)]" />
                   )}
                 </div>
               </button>
 
               {/* Body */}
               {isOpen && (
-                <div className="border-t border-slate-200 p-4 space-y-5">
+                <div className="border-t border-[var(--cs-border)] p-4 space-y-5">
                   {/* Journey summary */}
                   <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
-                    <div className="rounded-md border border-slate-200 p-3">
-                      <div className="flex items-center gap-2 text-xs font-medium text-slate-700">
+                    <div className="rounded-md border border-[var(--cs-border)] p-3">
+                      <div className="flex items-center gap-2 text-xs font-medium text-[var(--cs-text-secondary)]">
                         <Clock className="h-4 w-4" /> Expected return
                       </div>
-                      <div className="mt-1 text-sm font-semibold text-slate-900">
+                      <div className="mt-1 text-sm font-semibold text-[var(--cs-navy)]">
                         {formatPretty(r.expectedReturn)}
                       </div>
                     </div>
-                    <div className="rounded-md border border-slate-200 p-3">
-                      <div className="flex items-center gap-2 text-xs font-medium text-slate-700">
+                    <div className="rounded-md border border-[var(--cs-border)] p-3">
+                      <div className="flex items-center gap-2 text-xs font-medium text-[var(--cs-text-secondary)]">
                         <Users className="h-4 w-4" /> Passengers expected
                       </div>
-                      <div className="mt-1 text-sm font-semibold text-slate-900">
+                      <div className="mt-1 text-sm font-semibold text-[var(--cs-navy)]">
                         {r.passengersExpected}
                       </div>
                     </div>
-                    <div className="rounded-md border border-slate-200 p-3">
-                      <div className="flex items-center gap-2 text-xs font-medium text-slate-700">
+                    <div className="rounded-md border border-[var(--cs-border)] p-3">
+                      <div className="flex items-center gap-2 text-xs font-medium text-[var(--cs-text-secondary)]">
                         <Gauge className="h-4 w-4" /> Mileage
                       </div>
-                      <div className="mt-1 text-sm font-semibold text-slate-900">
+                      <div className="mt-1 text-sm font-semibold text-[var(--cs-navy)]">
                         {r.mileageStart.toLocaleString("en-GB")}
                         {r.mileageEnd != null && (
                           <>
                             {" → "}
                             {r.mileageEnd.toLocaleString("en-GB")}
-                            <span className="ml-1 text-xs text-slate-500">
+                            <span className="ml-1 text-xs text-[var(--cs-text-muted)]">
                               ({r.mileageEnd - r.mileageStart} mi)
                             </span>
                           </>
@@ -886,7 +886,7 @@ export default function VehiclePreUseCheckPage() {
                           : "border-rose-200 bg-rose-50",
                       )}
                     >
-                      <div className="flex items-center gap-2 text-xs font-medium text-slate-700">
+                      <div className="flex items-center gap-2 text-xs font-medium text-[var(--cs-text-secondary)]">
                         <ShieldCheck className="h-4 w-4" /> Insurance
                       </div>
                       <div
@@ -910,7 +910,7 @@ export default function VehiclePreUseCheckPage() {
                             : "border-emerald-200 bg-emerald-50",
                       )}
                     >
-                      <div className="flex items-center gap-2 text-xs font-medium text-slate-700">
+                      <div className="flex items-center gap-2 text-xs font-medium text-[var(--cs-text-secondary)]">
                         <FileText className="h-4 w-4" /> MOT valid until
                       </div>
                       <div
@@ -941,7 +941,7 @@ export default function VehiclePreUseCheckPage() {
                           : "border-rose-200 bg-rose-50",
                       )}
                     >
-                      <div className="flex items-center gap-2 text-xs font-medium text-slate-700">
+                      <div className="flex items-center gap-2 text-xs font-medium text-[var(--cs-text-secondary)]">
                         <Wrench className="h-4 w-4" /> Breakdown cover
                       </div>
                       <div
@@ -965,7 +965,7 @@ export default function VehiclePreUseCheckPage() {
                           : "border-rose-200 bg-rose-50",
                       )}
                     >
-                      <div className="flex items-center gap-2 text-xs font-medium text-slate-700">
+                      <div className="flex items-center gap-2 text-xs font-medium text-[var(--cs-text-secondary)]">
                         <Heart className="h-4 w-4" /> Child seats
                       </div>
                       <div
@@ -1029,7 +1029,7 @@ export default function VehiclePreUseCheckPage() {
                             : "border-rose-200 bg-rose-50",
                         )}
                       >
-                        <div className="flex items-center gap-2 text-xs font-medium text-slate-700">
+                        <div className="flex items-center gap-2 text-xs font-medium text-[var(--cs-text-secondary)]">
                           <Icon className="h-4 w-4" /> {label}
                         </div>
                         <div
@@ -1046,10 +1046,10 @@ export default function VehiclePreUseCheckPage() {
 
                   {/* Walk-round checks */}
                   <div>
-                    <h3 className="text-sm font-semibold text-slate-900 flex items-center gap-2 mb-2">
+                    <h3 className="text-sm font-semibold text-[var(--cs-navy)] flex items-center gap-2 mb-2">
                       <Wrench className="h-4 w-4" /> Walk-round checks
                     </h3>
-                    <div className="rounded-md border border-slate-200">
+                    <div className="rounded-md border border-[var(--cs-border)]">
                       <ul className="divide-y divide-slate-100">
                         {r.checks.map((it, i) => (
                           <li
@@ -1064,14 +1064,14 @@ export default function VehiclePreUseCheckPage() {
                             <div className="flex-1">
                               <div
                                 className={cn(
-                                  "text-slate-800",
+                                  "text-[var(--cs-navy)]",
                                   !it.pass && "font-medium",
                                 )}
                               >
                                 {it.item}
                               </div>
                               {it.notes && (
-                                <div className="mt-1 text-xs text-slate-600 italic">
+                                <div className="mt-1 text-xs text-[var(--cs-text-secondary)] italic">
                                   {it.notes}
                                 </div>
                               )}
@@ -1084,11 +1084,11 @@ export default function VehiclePreUseCheckPage() {
 
                   {/* Tyre pressure note */}
                   {r.tyresPressureNotedNotes && (
-                    <div className="rounded-md border border-slate-200 p-3">
-                      <h4 className="text-sm font-semibold text-slate-900 flex items-center gap-2">
+                    <div className="rounded-md border border-[var(--cs-border)] p-3">
+                      <h4 className="text-sm font-semibold text-[var(--cs-navy)] flex items-center gap-2">
                         <CircleDot className="h-4 w-4" /> Tyre pressure note
                       </h4>
-                      <p className="mt-1 text-sm text-slate-700">
+                      <p className="mt-1 text-sm text-[var(--cs-text-secondary)]">
                         {r.tyresPressureNotedNotes}
                       </p>
                     </div>
@@ -1117,11 +1117,11 @@ export default function VehiclePreUseCheckPage() {
                   )}
 
                   {/* Incidents */}
-                  <div className="rounded-md border border-slate-200 p-3">
-                    <h4 className="text-sm font-semibold text-slate-900 flex items-center gap-2">
+                  <div className="rounded-md border border-[var(--cs-border)] p-3">
+                    <h4 className="text-sm font-semibold text-[var(--cs-navy)] flex items-center gap-2">
                       <FileText className="h-4 w-4" /> Incidents during journey
                     </h4>
-                    <p className="mt-1 text-sm text-slate-700">
+                    <p className="mt-1 text-sm text-[var(--cs-text-secondary)]">
                       {r.incidentsDuringJourney}
                     </p>
                   </div>
@@ -1137,7 +1137,7 @@ export default function VehiclePreUseCheckPage() {
                   </div>
 
                   {/* Footer line */}
-                  <div className="flex flex-wrap items-center gap-x-6 gap-y-1 text-xs text-slate-500 border-t border-slate-100 pt-3">
+                  <div className="flex flex-wrap items-center gap-x-6 gap-y-1 text-xs text-[var(--cs-text-muted)] border-t border-[var(--cs-border-subtle)] pt-3">
                     <span className="flex items-center gap-1">
                       <FileText className="h-3.5 w-3.5" />
                       Record ID: {r.id}
@@ -1154,15 +1154,15 @@ export default function VehiclePreUseCheckPage() {
         })}
 
         {visible.length === 0 && (
-          <div className="rounded-lg border border-dashed border-slate-300 bg-white p-8 text-center text-sm text-slate-500">
+          <div className="rounded-lg border border-dashed border-slate-300 bg-white p-8 text-center text-sm text-[var(--cs-text-muted)]">
             No pre-use checks match the current filters.
           </div>
         )}
       </div>
 
       {/* Regulatory note */}
-      <div className="mt-8 rounded-lg border border-slate-200 bg-slate-50 p-4 text-sm text-slate-700">
-        <h3 className="font-semibold text-slate-900 mb-1 flex items-center gap-2">
+      <div className="mt-8 rounded-lg border border-[var(--cs-border)] bg-slate-50 p-4 text-sm text-[var(--cs-text-secondary)]">
+        <h3 className="font-semibold text-[var(--cs-navy)] mb-1 flex items-center gap-2">
           <BookOpen className="h-4 w-4" /> Regulatory basis
         </h3>
         <p>

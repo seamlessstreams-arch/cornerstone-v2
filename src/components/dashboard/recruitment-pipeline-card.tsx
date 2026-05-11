@@ -50,7 +50,7 @@ export function RecruitmentPipelineCard() {
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-center py-6">
-            <Loader2 className="h-5 w-5 animate-spin text-slate-400" />
+            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
           </div>
         </CardContent>
       </Card>
@@ -112,9 +112,9 @@ export function RecruitmentPipelineCard() {
             <div className={cn("text-[9px]", hasBlockers ? "text-red-500" : "text-emerald-500")}>Blocked</div>
           </div>
           <div className="rounded-xl bg-slate-50 p-2 text-center">
-            <Clock className="h-3 w-3 text-slate-400 mx-auto mb-0.5" />
-            <div className="text-sm font-bold text-slate-700 tabular-nums">{stats?.avg_days_to_appoint ?? 0}d</div>
-            <div className="text-[9px] text-slate-400">Avg Appoint</div>
+            <Clock className="h-3 w-3 text-[var(--cs-text-muted)] mx-auto mb-0.5" />
+            <div className="text-sm font-bold text-[var(--cs-text-secondary)] tabular-nums">{stats?.avg_days_to_appoint ?? 0}d</div>
+            <div className="text-[9px] text-[var(--cs-text-muted)]">Avg Appoint</div>
           </div>
         </div>
 
@@ -123,14 +123,14 @@ export function RecruitmentPipelineCard() {
           <div className="space-y-1">
             {funnelCounts.map((stage) => (
               <div key={stage.key} className="flex items-center gap-2">
-                <span className="text-[10px] text-slate-500 w-20 text-right truncate">{stage.label}</span>
+                <span className="text-[10px] text-[var(--cs-text-muted)] w-20 text-right truncate">{stage.label}</span>
                 <div className="flex-1 h-3 bg-slate-50 rounded-full overflow-hidden">
                   <div
                     className={cn("h-full rounded-full transition-all", stage.color)}
                     style={{ width: `${Math.max(10, (stage.count / maxCount) * 100)}%` }}
                   />
                 </div>
-                <span className="text-[10px] font-semibold text-slate-700 w-4 text-right tabular-nums">{stage.count}</span>
+                <span className="text-[10px] font-semibold text-[var(--cs-text-secondary)] w-4 text-right tabular-nums">{stage.count}</span>
               </div>
             ))}
           </div>
@@ -139,7 +139,7 @@ export function RecruitmentPipelineCard() {
         {funnelCounts.length === 0 && (
           <div className="py-3 text-center">
             <CheckCircle2 className="h-6 w-6 text-slate-200 mx-auto mb-1" />
-            <p className="text-[11px] text-slate-400">No active candidates in pipeline</p>
+            <p className="text-[11px] text-[var(--cs-text-muted)]">No active candidates in pipeline</p>
           </div>
         )}
 
@@ -183,12 +183,12 @@ export function RecruitmentPipelineCard() {
           <div className="space-y-1">
             {activeVacancies.slice(0, 3).map((v) => (
               <Link key={v.id} href={`/recruitment/vacancies/${v.id}`}>
-                <div className="flex items-center gap-2 rounded-lg px-2 py-1.5 hover:bg-slate-50 transition-colors">
-                  <Briefcase className="h-3 w-3 text-slate-400 shrink-0" />
-                  <span className="text-[11px] font-medium text-slate-700 flex-1 truncate">{v.role_title}</span>
-                  <span className="text-[10px] text-slate-400">{v.applications_count} apps</span>
-                  <span className="text-[10px] text-slate-400">{v.days_open}d</span>
-                  <ChevronRight className="h-3 w-3 text-slate-300" />
+                <div className="flex items-center gap-2 rounded-lg px-2 py-1.5 hover:bg-[var(--cs-surface)] transition-colors">
+                  <Briefcase className="h-3 w-3 text-[var(--cs-text-muted)] shrink-0" />
+                  <span className="text-[11px] font-medium text-[var(--cs-text-secondary)] flex-1 truncate">{v.role_title}</span>
+                  <span className="text-[10px] text-[var(--cs-text-muted)]">{v.applications_count} apps</span>
+                  <span className="text-[10px] text-[var(--cs-text-muted)]">{v.days_open}d</span>
+                  <ChevronRight className="h-3 w-3 text-[var(--cs-text-gentle)]" />
                 </div>
               </Link>
             ))}

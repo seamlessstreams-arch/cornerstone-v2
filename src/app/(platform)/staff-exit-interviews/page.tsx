@@ -36,14 +36,14 @@ const REASON_COLORS: Record<StaffExitInterviewReason, string> = {
   resigned_personal: "bg-purple-100 text-purple-800",
   resigned_workload: "bg-orange-100 text-orange-800",
   retired: "bg-green-100 text-green-800",
-  end_of_contract: "bg-slate-100 text-slate-800",
+  end_of_contract: "bg-slate-100 text-[var(--cs-navy)]",
 };
 
 const STATUS_COLORS: Record<StaffExitInterviewStatus, string> = {
   completed: "bg-green-100 text-green-800",
   declined: "bg-red-100 text-red-800",
   pending: "bg-yellow-100 text-yellow-800",
-  not_applicable: "bg-slate-100 text-slate-800",
+  not_applicable: "bg-slate-100 text-[var(--cs-navy)]",
 };
 
 const REASON_TYPES: StaffExitInterviewReason[] = [
@@ -244,13 +244,13 @@ export default function StaffExitInterviewsPage() {
             return (
               <div key={rec.id} className="rounded-xl border bg-white overflow-hidden">
                 <button
-                  className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                  className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                   onClick={() => setExpanded(isExpanded ? null : rec.id)}
                 >
                   <div className="flex items-center gap-3 flex-1 min-w-0">
                     <UserMinus className={cn("h-5 w-5 shrink-0",
                       rec.reason === "dismissed" ? "text-red-600" :
-                      rec.status === "completed" ? "text-blue-600" : "text-slate-400"
+                      rec.status === "completed" ? "text-blue-600" : "text-[var(--cs-text-muted)]"
                     )} />
                     <div className="min-w-0">
                       <p className="font-medium">

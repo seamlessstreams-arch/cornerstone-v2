@@ -86,7 +86,7 @@ interface Evaluation {
   blockingReasons: string[];
   unmetChecks: CheckRowResult[];
   failedChecks: CheckRowResult[];
-  ariaLabel: "Aria suggested draft";
+  ariaLabel: "ARIA suggested draft";
   rationaleSummary: string;
   regulatoryLinks: string[];
 }
@@ -259,7 +259,7 @@ export default function SaferRecruitmentPage() {
       <div className="mb-6 flex items-start gap-3 rounded-lg border border-violet-200 bg-violet-50 p-4 text-sm text-violet-900">
         <ShieldCheck className="h-5 w-5 mt-0.5 text-violet-600" />
         <div>
-          <div className="font-semibold">Aria suggested draft, never final</div>
+          <div className="font-semibold">ARIA suggested draft, never final</div>
           <p className="text-violet-800">
             The Safer Recruitment Gate decides whether a worker can be marked
             <em> approved for unsupervised work</em>. Every mandatory check
@@ -279,7 +279,7 @@ export default function SaferRecruitmentPage() {
         <CardContent className="space-y-3">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1">Acting as</label>
+              <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Acting as</label>
               <Select value={actorRole} onValueChange={setActorRole}>
                 <SelectTrigger><SelectValue /></SelectTrigger>
                 <SelectContent>
@@ -290,11 +290,11 @@ export default function SaferRecruitmentPage() {
               </Select>
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1">Actor user id</label>
+              <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Actor user id</label>
               <Input value={actorUserId} onChange={(e) => setActorUserId(e.target.value)} />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1">Staff id</label>
+              <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Staff id</label>
               <Input value={staffId} onChange={(e) => setStaffId(e.target.value)} placeholder="e.g. staff_123" />
             </div>
           </div>
@@ -318,7 +318,7 @@ export default function SaferRecruitmentPage() {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
             <Card>
               <CardContent className="p-4">
-                <div className="text-xs uppercase text-slate-500 mb-1">Gate outcome</div>
+                <div className="text-xs uppercase text-[var(--cs-text-muted)] mb-1">Gate outcome</div>
                 <Badge className={cn("border", OUTCOME_COLOUR[evaluation.outcome])}>
                   {OUTCOME_LABEL[evaluation.outcome]}
                 </Badge>
@@ -326,15 +326,15 @@ export default function SaferRecruitmentPage() {
             </Card>
             <Card>
               <CardContent className="p-4">
-                <div className="text-xs uppercase text-slate-500 mb-1">Checks complete</div>
-                <div className="text-3xl font-semibold text-slate-900">
-                  {completedCount}<span className="text-base text-slate-500">/{totalCount}</span>
+                <div className="text-xs uppercase text-[var(--cs-text-muted)] mb-1">Checks complete</div>
+                <div className="text-3xl font-semibold text-[var(--cs-navy)]">
+                  {completedCount}<span className="text-base text-[var(--cs-text-muted)]">/{totalCount}</span>
                 </div>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="p-4">
-                <div className="text-xs uppercase text-slate-500 mb-1">Approved for unsupervised</div>
+                <div className="text-xs uppercase text-[var(--cs-text-muted)] mb-1">Approved for unsupervised</div>
                 <div className="text-sm">
                   {evaluation.approvedForUnsupervised ? (
                     <span className="text-emerald-700 font-medium">Yes</span>
@@ -346,7 +346,7 @@ export default function SaferRecruitmentPage() {
             </Card>
             <Card>
               <CardContent className="p-4">
-                <div className="text-xs uppercase text-slate-500 mb-1">Manager sign-off</div>
+                <div className="text-xs uppercase text-[var(--cs-text-muted)] mb-1">Manager sign-off</div>
                 <div className="text-sm">
                   {record.managerSignOff ? (
                     <span className="text-emerald-700 font-medium">Recorded</span>
@@ -355,7 +355,7 @@ export default function SaferRecruitmentPage() {
                   )}
                 </div>
                 {record.managerSignedOffAt ? (
-                  <div className="text-xs text-slate-500 mt-1">
+                  <div className="text-xs text-[var(--cs-text-muted)] mt-1">
                     {new Date(record.managerSignedOffAt).toLocaleDateString()} by {record.managerSignedOffBy}
                   </div>
                 ) : null}
@@ -368,7 +368,7 @@ export default function SaferRecruitmentPage() {
               <CardTitle className="text-base">Gate rationale</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-slate-800">{evaluation.rationaleSummary}</p>
+              <p className="text-sm text-[var(--cs-navy)]">{evaluation.rationaleSummary}</p>
               {evaluation.blockingReasons.length > 0 ? (
                 <ul className="mt-3 text-sm text-rose-900 space-y-1">
                   {evaluation.blockingReasons.map((b, i) => (
@@ -405,7 +405,7 @@ export default function SaferRecruitmentPage() {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="text-sm text-slate-700">
+              <div className="text-sm text-[var(--cs-text-secondary)]">
                 The Registered Manager signs off when all mandatory checks
                 are satisfied. Where checks remain outstanding, an RI may
                 record a senior risk acceptance with a written rationale to
@@ -454,7 +454,7 @@ export default function SaferRecruitmentPage() {
                     </Button>
                   </div>
                   {record.seniorRiskAcceptance ? (
-                    <div className="text-xs text-slate-600 mt-2 pt-2 border-t border-amber-200">
+                    <div className="text-xs text-[var(--cs-text-secondary)] mt-2 pt-2 border-t border-amber-200">
                       Existing acceptance on file
                       {record.seniorRiskAcceptanceAt
                         ? ` (${new Date(record.seniorRiskAcceptanceAt).toLocaleDateString()})`
@@ -472,7 +472,7 @@ export default function SaferRecruitmentPage() {
               <CardTitle className="text-base">Regulatory framework</CardTitle>
             </CardHeader>
             <CardContent>
-              <ul className="text-xs text-slate-600 space-y-1">
+              <ul className="text-xs text-[var(--cs-text-secondary)] space-y-1">
                 {evaluation.regulatoryLinks.map((s, i) => (
                   <li key={i}>· {s}</li>
                 ))}
@@ -508,10 +508,10 @@ function CheckRow({
             <XCircle className="h-4 w-4 text-rose-500 mt-0.5" />
           )}
           <div>
-            <div className="text-sm font-medium text-slate-800">{row.label}</div>
+            <div className="text-sm font-medium text-[var(--cs-navy)]">{row.label}</div>
             {row.reason ? <div className="text-xs text-rose-700 mt-0.5">{row.reason}</div> : null}
             {!row.satisfied ? (
-              <div className="text-xs text-slate-500 mt-0.5 italic">
+              <div className="text-xs text-[var(--cs-text-muted)] mt-0.5 italic">
                 Evidence required: {row.evidenceRequiredIfMissing}
               </div>
             ) : null}
@@ -673,7 +673,7 @@ function NumberPair({
 }) {
   return (
     <div className="flex items-center gap-1">
-      <span className="text-xs text-slate-500">{label}</span>
+      <span className="text-xs text-[var(--cs-text-muted)]">{label}</span>
       <Input
         type="number"
         min={0}

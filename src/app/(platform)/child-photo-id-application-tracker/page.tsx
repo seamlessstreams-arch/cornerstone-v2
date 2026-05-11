@@ -42,7 +42,7 @@ const STATUS_CLR: Record<PhotoIdStatus, string> = {
   issued: "bg-green-100 text-green-800",
   renewal_due: "bg-orange-100 text-orange-800",
   lost_replacement_applied: "bg-red-100 text-red-800",
-  not_applicable: "bg-slate-100 text-slate-800",
+  not_applicable: "bg-slate-100 text-[var(--cs-navy)]",
 };
 
 /* ── helpers ──────────────────────────────────────────────────────────────── */
@@ -239,7 +239,7 @@ export default function ChildPhotoIdApplicationTrackerPage() {
                             Expires {r.expiry_date}{days !== null && ` (${days >= 0 ? `${days}d` : `${Math.abs(days)}d ago`})`}
                           </Badge>
                         )}
-                        <Badge variant="outline" className={cn("text-xs", r.child_has_original ? "bg-teal-50 text-teal-800 border-teal-300" : "bg-slate-50 text-slate-700")}>
+                        <Badge variant="outline" className={cn("text-xs", r.child_has_original ? "bg-teal-50 text-teal-800 border-teal-300" : "bg-slate-50 text-[var(--cs-text-secondary)]")}>
                           {r.child_has_original ? "Child holds original" : "Held by placement"}
                         </Badge>
                       </div>

@@ -147,7 +147,7 @@ export default function DiversityCalendarPage() {
                   "px-2.5 py-1 rounded-full text-xs font-medium transition-colors",
                   filterCategory === "all"
                     ? "bg-slate-800 text-white"
-                    : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                    : "bg-slate-100 text-[var(--cs-text-secondary)] hover:bg-slate-200"
                 )}
               >
                 All Categories
@@ -160,7 +160,7 @@ export default function DiversityCalendarPage() {
                     "px-2.5 py-1 rounded-full text-xs font-medium transition-colors",
                     filterCategory === key
                       ? CATEGORY_COLOURS[key]
-                      : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                      : "bg-slate-100 text-[var(--cs-text-secondary)] hover:bg-slate-200"
                   )}
                 >
                   {label}
@@ -178,7 +178,7 @@ export default function DiversityCalendarPage() {
                   "px-2.5 py-1 rounded-full text-xs font-medium transition-colors",
                   filterStatus === key
                     ? STATUS_COLOURS[key]
-                    : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                    : "bg-slate-100 text-[var(--cs-text-secondary)] hover:bg-slate-200"
                 )}
               >
                 {label}
@@ -203,7 +203,7 @@ export default function DiversityCalendarPage() {
             return (
               <div key={event.id} className="rounded-xl border bg-white overflow-hidden">
                 <button
-                  className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                  className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                   onClick={() => setExpanded(isExpanded ? null : event.id)}
                 >
                   <div className="flex items-center gap-3 flex-1 min-w-0">

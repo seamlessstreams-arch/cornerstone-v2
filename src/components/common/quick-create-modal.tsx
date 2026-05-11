@@ -230,19 +230,19 @@ export function QuickCreateModal({
       className="fixed inset-0 z-[60] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4"
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
-      <div className="w-full max-w-lg bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+      <div className="w-full max-w-lg bg-white rounded-2xl shadow-[var(--cs-shadow-elevated)] overflow-hidden flex flex-col max-h-[90vh]">
         {/* Header */}
-        <div className="flex items-center justify-between px-5 pt-5 pb-3 border-b border-slate-100">
+        <div className="flex items-center justify-between px-5 pt-5 pb-3 border-b border-[var(--cs-border-subtle)]">
           <div className="flex items-center gap-2">
-            <Plus className="h-4 w-4 text-slate-400" />
-            <span className="text-sm font-bold text-slate-900">Create New</span>
+            <Plus className="h-4 w-4 text-[var(--cs-text-muted)]" />
+            <span className="text-sm font-bold text-[var(--cs-navy)]">Create New</span>
             {context.module && (
-              <Badge className="text-[9px] rounded-full bg-slate-100 text-slate-500 capitalize">
+              <Badge className="text-[9px] rounded-full bg-slate-100 text-[var(--cs-text-muted)] capitalize">
                 {context.module.replace(/-/g, " ")}
               </Badge>
             )}
           </div>
-          <button onClick={onClose} className="text-slate-400 hover:text-slate-600 transition-colors">
+          <button onClick={onClose} className="text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] transition-colors">
             <X className="h-5 w-5" />
           </button>
         </div>
@@ -255,8 +255,8 @@ export function QuickCreateModal({
               className={cn(
                 "flex items-center gap-1.5 px-4 py-2 rounded-t-xl text-xs font-semibold border-b-2 transition-all",
                 tab === "task"
-                  ? "border-slate-900 text-slate-900 bg-slate-50"
-                  : "border-transparent text-slate-500 hover:text-slate-700"
+                  ? "border-slate-900 text-[var(--cs-navy)] bg-slate-50"
+                  : "border-transparent text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)]"
               )}
             >
               <CheckSquare className="h-3.5 w-3.5" />Task
@@ -268,8 +268,8 @@ export function QuickCreateModal({
               className={cn(
                 "flex items-center gap-1.5 px-4 py-2 rounded-t-xl text-xs font-semibold border-b-2 transition-all",
                 tab === "form"
-                  ? "border-slate-900 text-slate-900 bg-slate-50"
-                  : "border-transparent text-slate-500 hover:text-slate-700"
+                  ? "border-slate-900 text-[var(--cs-navy)] bg-slate-50"
+                  : "border-transparent text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)]"
               )}
             >
               <FileText className="h-3.5 w-3.5" />Care Form
@@ -290,7 +290,7 @@ export function QuickCreateModal({
               ) : (
                 <>
                   <div>
-                    <label className="text-xs font-semibold text-slate-600 block mb-1.5">Title <span className="text-red-500">*</span></label>
+                    <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">Title <span className="text-red-500">*</span></label>
                     <Input
                       value={taskForm.title}
                       onChange={(e) => setTaskForm((f) => ({ ...f, title: e.target.value }))}
@@ -301,23 +301,23 @@ export function QuickCreateModal({
                   </div>
 
                   <div>
-                    <label className="text-xs font-semibold text-slate-600 block mb-1.5">Description</label>
+                    <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">Description</label>
                     <textarea
                       value={taskForm.description}
                       onChange={(e) => setTaskForm((f) => ({ ...f, description: e.target.value }))}
                       rows={2}
                       placeholder="Optional details…"
-                      className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-3 text-sm text-slate-700 resize-none focus:outline-none focus:ring-2 focus:ring-slate-400 placeholder:text-slate-400"
+                      className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3.5 py-3 text-sm text-[var(--cs-text-secondary)] resize-none focus:outline-none focus:ring-2 focus:ring-slate-400 placeholder:text-[var(--cs-text-muted)]"
                     />
                   </div>
 
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <label className="text-xs font-semibold text-slate-600 block mb-1.5">Priority</label>
+                      <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">Priority</label>
                       <select
                         value={taskForm.priority}
                         onChange={(e) => setTaskForm((f) => ({ ...f, priority: e.target.value as Task["priority"] }))}
-                        className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-400"
+                        className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2.5 text-sm text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-slate-400"
                       >
                         {TASK_PRIORITIES.map((p) => (
                           <option key={p} value={p}>{p.charAt(0).toUpperCase() + p.slice(1)}</option>
@@ -325,11 +325,11 @@ export function QuickCreateModal({
                       </select>
                     </div>
                     <div>
-                      <label className="text-xs font-semibold text-slate-600 block mb-1.5">Category</label>
+                      <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">Category</label>
                       <select
                         value={taskForm.category}
                         onChange={(e) => setTaskForm((f) => ({ ...f, category: e.target.value }))}
-                        className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-400"
+                        className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2.5 text-sm text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-slate-400"
                       >
                         {TASK_CATEGORIES.map((c) => (
                           <option key={c} value={c}>{TASK_CATEGORY_LABELS[c]}</option>
@@ -340,7 +340,7 @@ export function QuickCreateModal({
 
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <label className="text-xs font-semibold text-slate-600 block mb-1.5">Due Date</label>
+                      <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">Due Date</label>
                       <Input
                         type="date"
                         value={taskForm.due_date}
@@ -349,11 +349,11 @@ export function QuickCreateModal({
                       />
                     </div>
                     <div>
-                      <label className="text-xs font-semibold text-slate-600 block mb-1.5">Assign To</label>
+                      <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">Assign To</label>
                       <select
                         value={taskForm.assigned_to}
                         onChange={(e) => setTaskForm((f) => ({ ...f, assigned_to: e.target.value }))}
-                        className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-400"
+                        className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2.5 text-sm text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-slate-400"
                       >
                         <option value="">Unassigned</option>
                         {activeStaff.map((s) => (
@@ -365,11 +365,11 @@ export function QuickCreateModal({
 
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <label className="text-xs font-semibold text-slate-600 block mb-1.5">Linked Child</label>
+                      <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">Linked Child</label>
                       <select
                         value={taskForm.linked_child_id}
                         onChange={(e) => setTaskForm((f) => ({ ...f, linked_child_id: e.target.value }))}
-                        className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-400"
+                        className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2.5 text-sm text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-slate-400"
                       >
                         <option value="">None</option>
                         {currentYP.map((y) => (
@@ -383,9 +383,9 @@ export function QuickCreateModal({
                           type="checkbox"
                           checked={taskForm.requires_sign_off}
                           onChange={(e) => setTaskForm((f) => ({ ...f, requires_sign_off: e.target.checked }))}
-                          className="h-4 w-4 rounded border-slate-300 text-slate-900 focus:ring-slate-400"
+                          className="h-4 w-4 rounded border-slate-300 text-[var(--cs-navy)] focus:ring-slate-400"
                         />
-                        <span className="text-xs font-medium text-slate-600">Requires sign-off</span>
+                        <span className="text-xs font-medium text-[var(--cs-text-secondary)]">Requires sign-off</span>
                       </label>
                     </div>
                   </div>
@@ -411,7 +411,7 @@ export function QuickCreateModal({
               ) : (
                 <>
                   <div>
-                    <label className="text-xs font-semibold text-slate-600 block mb-1.5">Title <span className="text-red-500">*</span></label>
+                    <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">Title <span className="text-red-500">*</span></label>
                     <Input
                       value={careForm.title}
                       onChange={(e) => setCareForm((f) => ({ ...f, title: e.target.value }))}
@@ -423,11 +423,11 @@ export function QuickCreateModal({
 
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <label className="text-xs font-semibold text-slate-600 block mb-1.5">Form Type</label>
+                      <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">Form Type</label>
                       <select
                         value={careForm.form_type}
                         onChange={(e) => setCareForm((f) => ({ ...f, form_type: e.target.value }))}
-                        className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-400"
+                        className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2.5 text-sm text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-slate-400"
                       >
                         {CARE_FORM_TYPES.map((t) => (
                           <option key={t} value={t}>{CARE_FORM_TYPE_LABELS[t]}</option>
@@ -435,11 +435,11 @@ export function QuickCreateModal({
                       </select>
                     </div>
                     <div>
-                      <label className="text-xs font-semibold text-slate-600 block mb-1.5">Priority</label>
+                      <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">Priority</label>
                       <select
                         value={careForm.priority}
                         onChange={(e) => setCareForm((f) => ({ ...f, priority: e.target.value as CareFormValues["priority"] }))}
-                        className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-400"
+                        className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2.5 text-sm text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-slate-400"
                       >
                         {TASK_PRIORITIES.map((p) => (
                           <option key={p} value={p}>{p.charAt(0).toUpperCase() + p.slice(1)}</option>
@@ -449,23 +449,23 @@ export function QuickCreateModal({
                   </div>
 
                   <div>
-                    <label className="text-xs font-semibold text-slate-600 block mb-1.5">Description / Notes</label>
+                    <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">Description / Notes</label>
                     <textarea
                       value={careForm.description}
                       onChange={(e) => setCareForm((f) => ({ ...f, description: e.target.value }))}
                       rows={2}
                       placeholder="Context or instructions for this form…"
-                      className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-3 text-sm text-slate-700 resize-none focus:outline-none focus:ring-2 focus:ring-slate-400 placeholder:text-slate-400"
+                      className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3.5 py-3 text-sm text-[var(--cs-text-secondary)] resize-none focus:outline-none focus:ring-2 focus:ring-slate-400 placeholder:text-[var(--cs-text-muted)]"
                     />
                   </div>
 
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <label className="text-xs font-semibold text-slate-600 block mb-1.5">Linked Child</label>
+                      <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">Linked Child</label>
                       <select
                         value={careForm.linked_child_id}
                         onChange={(e) => setCareForm((f) => ({ ...f, linked_child_id: e.target.value }))}
-                        className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-400"
+                        className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2.5 text-sm text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-slate-400"
                       >
                         <option value="">None</option>
                         {currentYP.map((y) => (
@@ -474,11 +474,11 @@ export function QuickCreateModal({
                       </select>
                     </div>
                     <div>
-                      <label className="text-xs font-semibold text-slate-600 block mb-1.5">Assigned Staff</label>
+                      <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">Assigned Staff</label>
                       <select
                         value={careForm.linked_staff_id}
                         onChange={(e) => setCareForm((f) => ({ ...f, linked_staff_id: e.target.value }))}
-                        className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-400"
+                        className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2.5 text-sm text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-slate-400"
                       >
                         <option value="">Anyone</option>
                         {activeStaff.map((s) => (
@@ -489,7 +489,7 @@ export function QuickCreateModal({
                   </div>
 
                   <div>
-                    <label className="text-xs font-semibold text-slate-600 block mb-1.5">Due Date</label>
+                    <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">Due Date</label>
                     <Input
                       type="date"
                       value={careForm.due_date}
@@ -511,7 +511,7 @@ export function QuickCreateModal({
 
         {/* Footer actions */}
         {!taskSuccess && !formSuccess && (
-          <div className="flex gap-2 px-5 py-4 border-t border-slate-100">
+          <div className="flex gap-2 px-5 py-4 border-t border-[var(--cs-border-subtle)]">
             {tab === "task" && canCreateTask && (
               <Button
                 className="flex-1"

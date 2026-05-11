@@ -44,7 +44,7 @@ const CATEGORY_META: Record<ConsentCategory, { label: string; color: string }> =
   social_media:        { label: "Social Media",           color: "bg-indigo-100 text-indigo-800" },
   overnight_stays:     { label: "Overnight Stays",        color: "bg-teal-100 text-teal-800" },
   contact:             { label: "Contact Arrangements",   color: "bg-orange-100 text-orange-800" },
-  research:            { label: "Research Participation",  color: "bg-slate-100 text-slate-800" },
+  research:            { label: "Research Participation",  color: "bg-slate-100 text-[var(--cs-navy)]" },
 };
 
 const STATUS_META: Record<ConsentStatus, { label: string; icon: React.ReactNode; color: string }> = {

@@ -84,14 +84,14 @@ function outcomeBadgeClass(outcome: ContactOutcome) {
   if (outcome === "mixed")    return "bg-amber-100  text-amber-800";
   if (["difficult", "refused_by_yp"].includes(outcome))
     return "bg-red-100 text-red-800";
-  return "bg-slate-100 text-slate-600";
+  return "bg-slate-100 text-[var(--cs-text-secondary)]";
 }
 
 function arrangementStatusClass(s: ContactArrangementStatus) {
   if (s === "active")        return "bg-emerald-100 text-emerald-800";
   if (s === "under_review")  return "bg-amber-100  text-amber-800";
   if (s === "suspended")     return "bg-red-100    text-red-800";
-  return "bg-slate-100 text-slate-600";
+  return "bg-slate-100 text-[var(--cs-text-secondary)]";
 }
 
 function moodEmoji(mood: string | null) {
@@ -185,7 +185,7 @@ Safeguarding concern: ${log.safeguarding_concern ? log.safeguarding_detail : "no
     )}>
       {/* Header */}
       <div
-        className="flex items-center justify-between px-4 py-3 cursor-pointer hover:bg-slate-50 transition-colors"
+        className="flex items-center justify-between px-4 py-3 cursor-pointer hover:bg-[var(--cs-surface)] transition-colors"
         onClick={() => setOpen((v) => !v)}
       >
         <div className="flex items-center gap-3 min-w-0">
@@ -194,23 +194,23 @@ Safeguarding concern: ${log.safeguarding_concern ? log.safeguarding_detail : "no
           </div>
           <div className="min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="font-semibold text-sm text-slate-900">
+              <span className="font-semibold text-sm text-[var(--cs-navy)]">
                 {getYPName(log.child_id)}
               </span>
-              <span className="text-slate-400 text-xs">·</span>
-              <span className="text-sm text-slate-600">
+              <span className="text-[var(--cs-text-muted)] text-xs">·</span>
+              <span className="text-sm text-[var(--cs-text-secondary)]">
                 {log.contact_person?.name ?? "Unknown"} ({log.contact_person?.relationship ?? "??"})
               </span>
-              <span className="text-slate-400 text-xs">·</span>
-              <span className="text-xs text-slate-500">{CONTACT_TYPE_LABELS[log.contact_type]}</span>
+              <span className="text-[var(--cs-text-muted)] text-xs">·</span>
+              <span className="text-xs text-[var(--cs-text-muted)]">{CONTACT_TYPE_LABELS[log.contact_type]}</span>
             </div>
             <div className="flex items-center gap-2 mt-0.5 flex-wrap">
-              <span className="text-xs text-slate-500">{formatDate(log.date)}</span>
+              <span className="text-xs text-[var(--cs-text-muted)]">{formatDate(log.date)}</span>
               {log.duration_minutes && (
-                <span className="text-xs text-slate-400">{log.duration_minutes}min</span>
+                <span className="text-xs text-[var(--cs-text-muted)]">{log.duration_minutes}min</span>
               )}
               {log.yp_mood_before && log.yp_mood_after && (
-                <span className="text-xs text-slate-500">
+                <span className="text-xs text-[var(--cs-text-muted)]">
                   {moodEmoji(log.yp_mood_before)} → {moodEmoji(log.yp_mood_after)}
                 </span>
               )}
@@ -235,11 +235,11 @@ Safeguarding concern: ${log.safeguarding_concern ? log.safeguarding_detail : "no
             </Badge>
           )}
           {isCancelled && (
-            <Badge className="bg-slate-100 text-slate-600 text-xs gap-1">
+            <Badge className="bg-slate-100 text-[var(--cs-text-secondary)] text-xs gap-1">
               <XCircle className="w-3 h-3" /> Cancelled
             </Badge>
           )}
-          {open ? <ChevronUp className="w-4 h-4 text-slate-400" /> : <ChevronDown className="w-4 h-4 text-slate-400" />}
+          {open ? <ChevronUp className="w-4 h-4 text-[var(--cs-text-muted)]" /> : <ChevronDown className="w-4 h-4 text-[var(--cs-text-muted)]" />}
         </div>
       </div>
 
@@ -248,8 +248,8 @@ Safeguarding concern: ${log.safeguarding_concern ? log.safeguarding_detail : "no
         <div className="border-t px-4 py-4 space-y-4">
           {/* Narrative */}
           <div>
-            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">Contact narrative</p>
-            <p className="text-sm text-slate-700 leading-relaxed">{log.narrative}</p>
+            <p className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-1">Contact narrative</p>
+            <p className="text-sm text-[var(--cs-text-secondary)] leading-relaxed">{log.narrative}</p>
           </div>
 
           {/* YP Voice */}
@@ -265,8 +265,8 @@ Safeguarding concern: ${log.safeguarding_concern ? log.safeguarding_detail : "no
           {/* Cancelled reason */}
           {isCancelled && log.cancelled_reason && (
             <div className="bg-slate-50 border rounded-lg p-3">
-              <p className="text-xs font-semibold text-slate-500 mb-1">Cancellation reason</p>
-              <p className="text-sm text-slate-700">{log.cancelled_reason}</p>
+              <p className="text-xs font-semibold text-[var(--cs-text-muted)] mb-1">Cancellation reason</p>
+              <p className="text-sm text-[var(--cs-text-secondary)]">{log.cancelled_reason}</p>
             </div>
           )}
 
@@ -303,8 +303,8 @@ Safeguarding concern: ${log.safeguarding_concern ? log.safeguarding_detail : "no
           {/* Gifts */}
           {log.gifts_received && log.gifts_detail && (
             <div className="bg-slate-50 border rounded-lg p-3">
-              <p className="text-xs font-semibold text-slate-500 mb-1">Gifts received</p>
-              <p className="text-sm text-slate-700">{log.gifts_detail}</p>
+              <p className="text-xs font-semibold text-[var(--cs-text-muted)] mb-1">Gifts received</p>
+              <p className="text-sm text-[var(--cs-text-secondary)]">{log.gifts_detail}</p>
             </div>
           )}
 
@@ -320,11 +320,11 @@ Safeguarding concern: ${log.safeguarding_concern ? log.safeguarding_detail : "no
 
           {/* Supervision / social worker */}
           <div className="flex items-center gap-3 pt-1 flex-wrap">
-            <span className="text-xs text-slate-500">
-              Supervision: <span className="font-medium text-slate-700">{SUPERVISION_LABELS[log.supervision_level]}</span>
+            <span className="text-xs text-[var(--cs-text-muted)]">
+              Supervision: <span className="font-medium text-[var(--cs-text-secondary)]">{SUPERVISION_LABELS[log.supervision_level]}</span>
             </span>
             {log.location && (
-              <span className="text-xs text-slate-500 flex items-center gap-1">
+              <span className="text-xs text-[var(--cs-text-muted)] flex items-center gap-1">
                 <MapPin className="w-3 h-3" /> {log.location}
               </span>
             )}
@@ -371,7 +371,7 @@ Safeguarding concern: ${log.safeguarding_concern ? log.safeguarding_detail : "no
 
           {showSwForm && (
             <div className="bg-slate-50 border rounded-lg p-3 space-y-2">
-              <p className="text-xs font-semibold text-slate-600">Note for social worker notification (optional)</p>
+              <p className="text-xs font-semibold text-[var(--cs-text-secondary)]">Note for social worker notification (optional)</p>
               <Textarea
                 className="h-20 text-sm resize-none"
                 placeholder="Add a brief note about what was shared with the social worker…"
@@ -389,7 +389,7 @@ Safeguarding concern: ${log.safeguarding_concern ? log.safeguarding_detail : "no
             </div>
           )}
 
-          <p className="text-xs text-slate-400">
+          <p className="text-xs text-[var(--cs-text-muted)]">
             Recorded by staff · {formatDate(log.created_at.split("T")[0])}
           </p>
         </div>
@@ -490,7 +490,7 @@ function ArrangementCard({
     )}>
       {/* Header */}
       <div
-        className="flex items-center justify-between px-4 py-3 cursor-pointer hover:bg-slate-50 transition-colors"
+        className="flex items-center justify-between px-4 py-3 cursor-pointer hover:bg-[var(--cs-surface)] transition-colors"
         onClick={() => setOpen((v) => !v)}
       >
         <div className="flex items-center gap-3 min-w-0">
@@ -499,20 +499,20 @@ function ArrangementCard({
           </div>
           <div className="min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="font-semibold text-sm text-slate-900">
+              <span className="font-semibold text-sm text-[var(--cs-navy)]">
                 {getYPName(arrangement.child_id)}
               </span>
-              <span className="text-slate-400 text-xs">↔</span>
-              <span className="text-sm text-slate-700">
+              <span className="text-[var(--cs-text-muted)] text-xs">↔</span>
+              <span className="text-sm text-[var(--cs-text-secondary)]">
                 {arrangement.contact_person?.name ?? "Unknown"} ({arrangement.contact_person?.relationship ?? "??"})
               </span>
             </div>
             <div className="flex items-center gap-2 mt-0.5 flex-wrap">
-              <span className="text-xs text-slate-500">
+              <span className="text-xs text-[var(--cs-text-muted)]">
                 {CONTACT_TYPE_LABELS[arrangement.contact_type]} · {arrangement.frequency}
               </span>
               {arrangement.frequency_detail && (
-                <span className="text-xs text-slate-400">{arrangement.frequency_detail}</span>
+                <span className="text-xs text-[var(--cs-text-muted)]">{arrangement.frequency_detail}</span>
               )}
             </div>
           </div>
@@ -527,10 +527,10 @@ function ArrangementCard({
           <Badge className={cn("text-xs", arrangementStatusClass(arrangement.status))}>
             {ARRANGEMENT_STATUS_LABELS[arrangement.status]}
           </Badge>
-          <Badge className="bg-slate-100 text-slate-600 text-xs">
+          <Badge className="bg-slate-100 text-[var(--cs-text-secondary)] text-xs">
             {logs.length} log{logs.length !== 1 ? "s" : ""}
           </Badge>
-          {open ? <ChevronUp className="w-4 h-4 text-slate-400" /> : <ChevronDown className="w-4 h-4 text-slate-400" />}
+          {open ? <ChevronUp className="w-4 h-4 text-[var(--cs-text-muted)]" /> : <ChevronDown className="w-4 h-4 text-[var(--cs-text-muted)]" />}
         </div>
       </div>
 
@@ -540,27 +540,27 @@ function ArrangementCard({
           {/* Arrangement details */}
           <div className="grid grid-cols-2 gap-3 text-sm">
             <div>
-              <p className="text-xs text-slate-500 mb-0.5">Supervision</p>
-              <p className="font-medium text-slate-800">{SUPERVISION_LABELS[arrangement.supervision_level]}</p>
+              <p className="text-xs text-[var(--cs-text-muted)] mb-0.5">Supervision</p>
+              <p className="font-medium text-[var(--cs-navy)]">{SUPERVISION_LABELS[arrangement.supervision_level]}</p>
             </div>
             {arrangement.location && (
               <div>
-                <p className="text-xs text-slate-500 mb-0.5">Location</p>
-                <p className="font-medium text-slate-800 flex items-center gap-1">
-                  <MapPin className="w-3.5 h-3.5 text-slate-400" /> {arrangement.location}
+                <p className="text-xs text-[var(--cs-text-muted)] mb-0.5">Location</p>
+                <p className="font-medium text-[var(--cs-navy)] flex items-center gap-1">
+                  <MapPin className="w-3.5 h-3.5 text-[var(--cs-text-muted)]" /> {arrangement.location}
                 </p>
               </div>
             )}
             {arrangement.court_ordered && (
               <div>
-                <p className="text-xs text-slate-500 mb-0.5">Court ordered</p>
-                <p className="font-medium text-slate-800">Yes {arrangement.court_order_reference ? `(${arrangement.court_order_reference})` : ""}</p>
+                <p className="text-xs text-[var(--cs-text-muted)] mb-0.5">Court ordered</p>
+                <p className="font-medium text-[var(--cs-navy)]">Yes {arrangement.court_order_reference ? `(${arrangement.court_order_reference})` : ""}</p>
               </div>
             )}
             {arrangement.review_date && (
               <div>
-                <p className="text-xs text-slate-500 mb-0.5">Next review</p>
-                <p className="font-medium text-slate-800">{formatDate(arrangement.review_date)}</p>
+                <p className="text-xs text-[var(--cs-text-muted)] mb-0.5">Next review</p>
+                <p className="font-medium text-[var(--cs-navy)]">{formatDate(arrangement.review_date)}</p>
               </div>
             )}
           </div>
@@ -619,22 +619,22 @@ function ArrangementCard({
           {logs.length > 0 && (
             <div className="grid grid-cols-3 gap-3">
               <div className="bg-slate-50 rounded-lg p-3 text-center">
-                <p className="text-xl font-bold text-slate-800">{logs.length}</p>
-                <p className="text-xs text-slate-500">Total sessions</p>
+                <p className="text-xl font-bold text-[var(--cs-navy)]">{logs.length}</p>
+                <p className="text-xs text-[var(--cs-text-muted)]">Total sessions</p>
               </div>
               <div className={cn(
                 "rounded-lg p-3 text-center",
                 concernCount > 0 ? "bg-amber-50" : "bg-slate-50",
               )}>
-                <p className={cn("text-xl font-bold", concernCount > 0 ? "text-amber-700" : "text-slate-800")}>{concernCount}</p>
-                <p className="text-xs text-slate-500">With concerns</p>
+                <p className={cn("text-xl font-bold", concernCount > 0 ? "text-amber-700" : "text-[var(--cs-navy)]")}>{concernCount}</p>
+                <p className="text-xs text-[var(--cs-text-muted)]">With concerns</p>
               </div>
               <div className={cn(
                 "rounded-lg p-3 text-center",
                 distressCount >= 2 ? "bg-red-50" : "bg-slate-50",
               )}>
-                <p className={cn("text-xl font-bold", distressCount >= 2 ? "text-red-700" : "text-slate-800")}>{distressCount}</p>
-                <p className="text-xs text-slate-500">Post-contact distress</p>
+                <p className={cn("text-xl font-bold", distressCount >= 2 ? "text-red-700" : "text-[var(--cs-navy)]")}>{distressCount}</p>
+                <p className="text-xs text-[var(--cs-text-muted)]">Post-contact distress</p>
               </div>
             </div>
           )}
@@ -651,11 +651,11 @@ function ArrangementCard({
             </Button>
           ) : (
             <div className="border rounded-xl p-4 bg-slate-50 space-y-3">
-              <p className="text-sm font-semibold text-slate-700">Log contact session</p>
+              <p className="text-sm font-semibold text-[var(--cs-text-secondary)]">Log contact session</p>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs text-slate-500 mb-1 block">Date</label>
+                  <label className="text-xs text-[var(--cs-text-muted)] mb-1 block">Date</label>
                   <input
                     type="date"
                     className="w-full border rounded-md px-2 py-1.5 text-sm"
@@ -664,7 +664,7 @@ function ArrangementCard({
                   />
                 </div>
                 <div>
-                  <label className="text-xs text-slate-500 mb-1 block">Outcome</label>
+                  <label className="text-xs text-[var(--cs-text-muted)] mb-1 block">Outcome</label>
                   <Select value={logOutcome} onValueChange={(v) => setLogOutcome(v as ContactOutcome)}>
                     <SelectTrigger className="h-8 text-sm">
                       <SelectValue />
@@ -680,7 +680,7 @@ function ArrangementCard({
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs text-slate-500 mb-1 block">YP mood before</label>
+                  <label className="text-xs text-[var(--cs-text-muted)] mb-1 block">YP mood before</label>
                   <Select value={logMoodBefore} onValueChange={setLogMoodBefore}>
                     <SelectTrigger className="h-8 text-sm"><SelectValue placeholder="Select…" /></SelectTrigger>
                     <SelectContent>
@@ -691,7 +691,7 @@ function ArrangementCard({
                   </Select>
                 </div>
                 <div>
-                  <label className="text-xs text-slate-500 mb-1 block">YP mood after</label>
+                  <label className="text-xs text-[var(--cs-text-muted)] mb-1 block">YP mood after</label>
                   <Select value={logMoodAfter} onValueChange={setLogMoodAfter}>
                     <SelectTrigger className="h-8 text-sm"><SelectValue placeholder="Select…" /></SelectTrigger>
                     <SelectContent>
@@ -704,7 +704,7 @@ function ArrangementCard({
               </div>
 
               <div>
-                <label className="text-xs text-slate-500 mb-1 block">Contact narrative *</label>
+                <label className="text-xs text-[var(--cs-text-muted)] mb-1 block">Contact narrative *</label>
                 <Textarea
                   className="h-28 text-sm resize-none"
                   placeholder="What happened during the contact session? How did it go? Be specific about the young person's experience…"
@@ -714,7 +714,7 @@ function ArrangementCard({
               </div>
 
               <div>
-                <label className="text-xs text-slate-500 mb-1 block">Voice of the child (what did they say about the contact?)</label>
+                <label className="text-xs text-[var(--cs-text-muted)] mb-1 block">Voice of the child (what did they say about the contact?)</label>
                 <Textarea
                   className="h-16 text-sm resize-none"
                   placeholder="Direct quote or paraphrase of what the young person said about contact…"
@@ -731,7 +731,7 @@ function ArrangementCard({
                     checked={logConcerns}
                     onChange={(e) => setLogConcerns(e.target.checked)}
                   />
-                  <span className="text-sm text-slate-700">Concerns identified during or after contact</span>
+                  <span className="text-sm text-[var(--cs-text-secondary)]">Concerns identified during or after contact</span>
                 </label>
                 {logConcerns && (
                   <Textarea
@@ -774,7 +774,7 @@ function ArrangementCard({
           {/* Contact log history */}
           {logs.length > 0 && (
             <div className="space-y-3">
-              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Contact history</p>
+              <p className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide">Contact history</p>
               {logs.map((log) => (
                 <ContactLogCard
                   key={log.id}
@@ -911,18 +911,18 @@ export default function FamilyContactPage() {
         <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
           {[
             { icon: PhoneCall, label: "Active", value: stats.activeArrangements, colour: "text-blue-700", bg: "bg-blue-50" },
-            { icon: PauseCircle, label: "Suspended", value: stats.suspended, colour: stats.suspended > 0 ? "text-red-700" : "text-slate-500", bg: stats.suspended > 0 ? "bg-red-50" : "bg-slate-50" },
-            { icon: Clock, label: "Under Review", value: stats.underReview, colour: stats.underReview > 0 ? "text-amber-700" : "text-slate-500", bg: stats.underReview > 0 ? "bg-amber-50" : "bg-slate-50" },
+            { icon: PauseCircle, label: "Suspended", value: stats.suspended, colour: stats.suspended > 0 ? "text-red-700" : "text-[var(--cs-text-muted)]", bg: stats.suspended > 0 ? "bg-red-50" : "bg-slate-50" },
+            { icon: Clock, label: "Under Review", value: stats.underReview, colour: stats.underReview > 0 ? "text-amber-700" : "text-[var(--cs-text-muted)]", bg: stats.underReview > 0 ? "bg-amber-50" : "bg-slate-50" },
             { icon: CalendarDays, label: "Court Ordered", value: stats.courtOrdered, colour: "text-indigo-700", bg: "bg-indigo-50" },
-            { icon: MessageSquare, label: "Total Sessions", value: stats.totalSessions, colour: "text-slate-700", bg: "bg-slate-50" },
+            { icon: MessageSquare, label: "Total Sessions", value: stats.totalSessions, colour: "text-[var(--cs-text-secondary)]", bg: "bg-slate-50" },
             { icon: AlertTriangle, label: "Concerns", value: stats.concernsThisMonth, colour: stats.concernsThisMonth > 0 ? "text-orange-700" : "text-emerald-700", bg: stats.concernsThisMonth > 0 ? "bg-orange-50" : "bg-emerald-50" },
             { icon: ShieldAlert, label: "Safeguarding", value: stats.safeguardingConcerns, colour: stats.safeguardingConcerns > 0 ? "text-red-700" : "text-emerald-700", bg: stats.safeguardingConcerns > 0 ? "bg-red-50" : "bg-emerald-50" },
             { icon: Heart, label: "Distress Pattern", value: stats.distressPattern, colour: stats.distressPattern > 0 ? "text-red-700" : "text-emerald-700", bg: stats.distressPattern > 0 ? "bg-red-50" : "bg-emerald-50" },
           ].map(({ label, value, colour, bg, icon: Icon }) => (
-            <div key={label} className={cn("rounded-xl border border-slate-100 p-3", bg)}>
+            <div key={label} className={cn("rounded-xl border border-[var(--cs-border-subtle)] p-3", bg)}>
               <div className="flex items-center gap-2 mb-1">
                 <Icon className={cn("h-3.5 w-3.5 shrink-0", colour)} />
-                <span className="text-[10px] text-slate-500 font-medium">{label}</span>
+                <span className="text-[10px] text-[var(--cs-text-muted)] font-medium">{label}</span>
               </div>
               <div className={cn("text-lg font-bold tabular-nums", colour)}>{value}</div>
             </div>
@@ -935,7 +935,7 @@ export default function FamilyContactPage() {
         {/* Search + Filters */}
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1 max-w-sm">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
             <Input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -971,11 +971,11 @@ export default function FamilyContactPage() {
 
             {/* Sort */}
             <div className="flex items-center gap-1.5">
-              <ArrowUpDown className="h-3.5 w-3.5 text-slate-400" />
+              <ArrowUpDown className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
               <select
                 value={sortKey}
                 onChange={(e) => setSortKey(e.target.value as typeof sortKey)}
-                className="rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-[11px] text-slate-700 focus:border-blue-300 focus:ring-1 focus:ring-blue-200 outline-none"
+                className="rounded-lg border border-[var(--cs-border)] bg-white px-2.5 py-1 text-[11px] text-[var(--cs-text-secondary)] focus:border-blue-300 focus:ring-1 focus:ring-blue-200 outline-none"
               >
                 <option value="yp">By young person</option>
                 <option value="status">By status</option>
@@ -988,9 +988,9 @@ export default function FamilyContactPage() {
 
         {/* Results count */}
         {(search || filterYp !== "all" || filterStatus !== "all") && (
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-[var(--cs-text-muted)]">
             Showing {filtered.length} of {arrangements.length} arrangement{arrangements.length !== 1 ? "s" : ""}
-            {search && <span className="text-slate-400"> matching &ldquo;{search}&rdquo;</span>}
+            {search && <span className="text-[var(--cs-text-muted)]"> matching &ldquo;{search}&rdquo;</span>}
           </p>
         )}
 
@@ -1002,7 +1002,7 @@ export default function FamilyContactPage() {
             ))}
           </div>
         ) : filtered.length === 0 ? (
-          <div className="text-center py-16 text-slate-400">
+          <div className="text-center py-16 text-[var(--cs-text-muted)]">
             <PhoneCall className="w-10 h-10 mx-auto mb-3 opacity-30" />
             <p className="font-medium">No contact arrangements found</p>
           </div>

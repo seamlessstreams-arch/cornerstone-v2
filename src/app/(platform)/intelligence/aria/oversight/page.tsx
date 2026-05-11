@@ -89,7 +89,7 @@ function StatusBar({ status }: { status: "draft" | "edit" | "approved" }) {
         <React.Fragment key={step}>
           <div className={cn(
             "flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium",
-            i <= idx ? "bg-slate-900 text-white" : "bg-slate-100 text-slate-400"
+            i <= idx ? "bg-slate-900 text-white" : "bg-slate-100 text-[var(--cs-text-muted)]"
           )}>
             {i < idx && <CheckCircle2 className="h-3 w-3" />}
             {step}
@@ -109,8 +109,8 @@ function OversightSection({ title, content }: { title: string; content: string |
   if (!content) return null;
   return (
     <div className="space-y-1.5">
-      <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">{title}</p>
-      <p className="text-sm text-slate-800 leading-relaxed">{content}</p>
+      <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider">{title}</p>
+      <p className="text-sm text-[var(--cs-navy)] leading-relaxed">{content}</p>
     </div>
   );
 }
@@ -171,7 +171,7 @@ function LiveAnalysisPanel({ analysis }: { analysis: ManagementOversightOutput }
         {/* Quality Score */}
         <div>
           <div className="flex items-center justify-between mb-1">
-            <span className="text-slate-600 font-medium">Quality Score</span>
+            <span className="text-[var(--cs-text-secondary)] font-medium">Quality Score</span>
             <span className={cn("font-bold text-sm tabular-nums", scoreColour)}>{analysis.qualityScore}/100</span>
           </div>
           <Progress value={analysis.qualityScore} className={cn("h-2", progressColour)} />
@@ -179,12 +179,12 @@ function LiveAnalysisPanel({ analysis }: { analysis: ManagementOversightOutput }
 
         {/* Risk & Judgement */}
         <div className="grid grid-cols-2 gap-2">
-          <div className="rounded-lg border border-slate-200 bg-white p-2 text-center">
-            <div className="text-[10px] text-slate-400 mb-0.5">Risk Level</div>
+          <div className="rounded-lg border border-[var(--cs-border)] bg-white p-2 text-center">
+            <div className="text-[10px] text-[var(--cs-text-muted)] mb-0.5">Risk Level</div>
             <Badge className={cn("text-[10px] rounded-full", riskCfg.bg, riskCfg.colour)}>{riskCfg.label}</Badge>
           </div>
-          <div className="rounded-lg border border-slate-200 bg-white p-2 text-center">
-            <div className="text-[10px] text-slate-400 mb-0.5">Practice</div>
+          <div className="rounded-lg border border-[var(--cs-border)] bg-white p-2 text-center">
+            <div className="text-[10px] text-[var(--cs-text-muted)] mb-0.5">Practice</div>
             <Badge className={cn("text-[10px] rounded-full", judgeCfg.bg, judgeCfg.colour)}>{judgeCfg.label}</Badge>
           </div>
         </div>
@@ -224,7 +224,7 @@ function LiveAnalysisPanel({ analysis }: { analysis: ManagementOversightOutput }
         {/* Strengths */}
         {analysis.strengths.length > 0 && (
           <div>
-            <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-1">Strengths</p>
+            <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-1">Strengths</p>
             <ul className="space-y-1">
               {analysis.strengths.map((s, i) => (
                 <li key={i} className="flex items-start gap-1.5 text-emerald-700">
@@ -238,7 +238,7 @@ function LiveAnalysisPanel({ analysis }: { analysis: ManagementOversightOutput }
         {/* Missing Evidence */}
         {analysis.missingEvidence.length > 0 && (
           <div>
-            <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-1">Recording Gaps</p>
+            <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-1">Recording Gaps</p>
             <ul className="space-y-1">
               {analysis.missingEvidence.map((m, i) => (
                 <li key={i} className="flex items-start gap-1.5 text-amber-700">
@@ -252,20 +252,20 @@ function LiveAnalysisPanel({ analysis }: { analysis: ManagementOversightOutput }
         {/* Suggested Actions */}
         {analysis.suggestedActions.length > 0 && (
           <div>
-            <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-1">Suggested Actions</p>
+            <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-1">Suggested Actions</p>
             <ul className="space-y-1.5">
               {analysis.suggestedActions.map((a, i) => (
-                <li key={i} className="rounded-lg border border-slate-200 bg-white p-2">
+                <li key={i} className="rounded-lg border border-[var(--cs-border)] bg-white p-2">
                   <div className="flex items-center gap-1.5 mb-0.5">
                     <Target className="h-3 w-3 text-violet-500" />
-                    <span className="font-semibold text-slate-800">{a.title}</span>
+                    <span className="font-semibold text-[var(--cs-navy)]">{a.title}</span>
                     <Badge className={cn("text-[9px] rounded-full ml-auto",
-                      a.priority === "high" ? "bg-red-100 text-red-700" : a.priority === "medium" ? "bg-amber-100 text-amber-700" : "bg-slate-100 text-slate-600"
+                      a.priority === "high" ? "bg-red-100 text-red-700" : a.priority === "medium" ? "bg-amber-100 text-amber-700" : "bg-slate-100 text-[var(--cs-text-secondary)]"
                     )}>
                       {a.priority} · {a.dueInDays}d
                     </Badge>
                   </div>
-                  <p className="text-slate-600 leading-relaxed">{a.description}</p>
+                  <p className="text-[var(--cs-text-secondary)] leading-relaxed">{a.description}</p>
                 </li>
               ))}
             </ul>
@@ -275,10 +275,10 @@ function LiveAnalysisPanel({ analysis }: { analysis: ManagementOversightOutput }
         {/* Regulatory Links */}
         {analysis.regulatoryLinks.length > 0 && (
           <div>
-            <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-1">Regulatory Framework</p>
+            <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-1">Regulatory Framework</p>
             <ul className="space-y-0.5">
               {analysis.regulatoryLinks.map((r, i) => (
-                <li key={i} className="flex items-start gap-1.5 text-slate-600">
+                <li key={i} className="flex items-start gap-1.5 text-[var(--cs-text-secondary)]">
                   <Scale className="h-3 w-3 shrink-0 mt-0.5 text-indigo-400" />{r}
                 </li>
               ))}
@@ -286,7 +286,7 @@ function LiveAnalysisPanel({ analysis }: { analysis: ManagementOversightOutput }
           </div>
         )}
 
-        <div className="text-[10px] text-slate-400 italic border-t border-violet-200 pt-2">
+        <div className="text-[10px] text-[var(--cs-text-muted)] italic border-t border-violet-200 pt-2">
           ARIA confidence: {Math.round(analysis.ariaConfidence * 100)}% · Analysis updates in real-time as you type
         </div>
       </CardContent>
@@ -515,11 +515,11 @@ export default function OversightGeneratorPage() {
               <CardContent className="space-y-4">
                 {/* Child selector */}
                 <div className="space-y-1.5">
-                  <label className="text-xs font-medium text-slate-600">Young Person</label>
+                  <label className="text-xs font-medium text-[var(--cs-text-secondary)]">Young Person</label>
                   <select
                     value={childId}
                     onChange={(e) => setChildId(e.target.value)}
-                    className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-300"
+                    className="w-full rounded-lg border border-[var(--cs-border)] bg-white px-3 py-2 text-sm text-[var(--cs-navy)] focus:outline-none focus:ring-2 focus:ring-emerald-300"
                   >
                     <option value="">Select young person (optional for home-level)</option>
                     {youngPeople.map((yp) => (
@@ -530,11 +530,11 @@ export default function OversightGeneratorPage() {
 
                 {/* Record type */}
                 <div className="space-y-1.5">
-                  <label className="text-xs font-medium text-slate-600">Record Type</label>
+                  <label className="text-xs font-medium text-[var(--cs-text-secondary)]">Record Type</label>
                   <select
                     value={recordType}
                     onChange={(e) => setRecordType(e.target.value)}
-                    className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-300"
+                    className="w-full rounded-lg border border-[var(--cs-border)] bg-white px-3 py-2 text-sm text-[var(--cs-navy)] focus:outline-none focus:ring-2 focus:ring-emerald-300"
                   >
                     {RECORD_TYPES.map((r) => (
                       <option key={r.value} value={r.value}>{r.label}</option>
@@ -544,7 +544,7 @@ export default function OversightGeneratorPage() {
 
                 {/* Writing style */}
                 <div className="space-y-1.5">
-                  <label className="text-xs font-medium text-slate-600">Writing Style</label>
+                  <label className="text-xs font-medium text-[var(--cs-text-secondary)]">Writing Style</label>
                   <div className="grid gap-2 sm:grid-cols-2">
                     {WRITING_STYLES.map((style) => (
                       <button
@@ -554,11 +554,11 @@ export default function OversightGeneratorPage() {
                           "rounded-xl border p-3 text-left transition-all",
                           writingStyle === style.value
                             ? "border-emerald-400 bg-emerald-50"
-                            : "border-slate-200 bg-white hover:border-slate-300"
+                            : "border-[var(--cs-border)] bg-white hover:border-slate-300"
                         )}
                       >
-                        <div className="text-xs font-semibold text-slate-900">{style.label}</div>
-                        <div className="text-[10px] text-slate-500 mt-0.5">{style.description}</div>
+                        <div className="text-xs font-semibold text-[var(--cs-navy)]">{style.label}</div>
+                        <div className="text-[10px] text-[var(--cs-text-muted)] mt-0.5">{style.description}</div>
                       </button>
                     ))}
                   </div>
@@ -567,7 +567,7 @@ export default function OversightGeneratorPage() {
                 {/* Record content */}
                 <div className="space-y-1.5">
                   <div className="flex items-center justify-between">
-                    <label className="text-xs font-medium text-slate-600">Record Content</label>
+                    <label className="text-xs font-medium text-[var(--cs-text-secondary)]">Record Content</label>
                     <div className="flex items-center gap-2">
                       {prefilling && (
                         <span className="flex items-center gap-1 text-[10px] text-emerald-600">
@@ -583,8 +583,8 @@ export default function OversightGeneratorPage() {
                     rows={8}
                     placeholder="Paste the record content here — the incident, daily log entry, or other record you want oversight generated for."
                     className={cn(
-                      "w-full rounded-lg border px-3 py-2 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-300 resize-none leading-relaxed",
-                      prefilling ? "border-emerald-200 bg-emerald-50/30" : "border-slate-200 bg-white"
+                      "w-full rounded-lg border px-3 py-2 text-sm text-[var(--cs-navy)] placeholder:text-[var(--cs-text-muted)] focus:outline-none focus:ring-2 focus:ring-emerald-300 resize-none leading-relaxed",
+                      prefilling ? "border-emerald-200 bg-emerald-50/30" : "border-[var(--cs-border)] bg-white"
                     )}
                   />
                   {recordContent.length > 0 && !prefilling && (
@@ -638,7 +638,7 @@ export default function OversightGeneratorPage() {
 
                   {/* Structured sections */}
                   {parsedResult && (
-                    <div className="space-y-4 border-b border-slate-100 pb-5">
+                    <div className="space-y-4 border-b border-[var(--cs-border-subtle)] pb-5">
                       <OversightSection title="Summary" content={parsedResult.summary} />
                       <OversightSection title="Quality of Staff Response" content={parsedResult.quality_of_staff_response} />
                       <OversightSection title="Child's Emotional Presentation" content={parsedResult.childs_emotional_presentation} />
@@ -654,11 +654,11 @@ export default function OversightGeneratorPage() {
                       <OversightSection title="What Could Be Improved" content={parsedResult.what_could_improve} />
                       {parsedResult.follow_up_actions && parsedResult.follow_up_actions.length > 0 && (
                         <div>
-                          <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2">Follow-up Actions</p>
+                          <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-2">Follow-up Actions</p>
                           <ul className="space-y-1">
                             {parsedResult.follow_up_actions.map((a, i) => (
-                              <li key={i} className="flex items-start gap-2 text-sm text-slate-800">
-                                <span className="text-slate-400 shrink-0 mt-0.5">{i + 1}.</span>{a}
+                              <li key={i} className="flex items-start gap-2 text-sm text-[var(--cs-navy)]">
+                                <span className="text-[var(--cs-text-muted)] shrink-0 mt-0.5">{i + 1}.</span>{a}
                               </li>
                             ))}
                           </ul>
@@ -672,15 +672,15 @@ export default function OversightGeneratorPage() {
                   {/* Editable textarea */}
                   <div className="space-y-1.5">
                     <div className="flex items-center gap-2">
-                      <Edit3 className="h-3.5 w-3.5 text-slate-400" />
-                      <label className="text-xs font-medium text-slate-600">Edit Oversight Draft</label>
+                      <Edit3 className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
+                      <label className="text-xs font-medium text-[var(--cs-text-secondary)]">Edit Oversight Draft</label>
                     </div>
                     <textarea
                       value={editedText}
                       onChange={(e) => setEditedText(e.target.value)}
                       rows={12}
                       disabled={status === "approved"}
-                      className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-300 resize-none leading-relaxed disabled:bg-slate-50 disabled:text-slate-500"
+                      className="w-full rounded-lg border border-[var(--cs-border)] bg-white px-3 py-2 text-sm text-[var(--cs-navy)] focus:outline-none focus:ring-2 focus:ring-emerald-300 resize-none leading-relaxed disabled:bg-slate-50 disabled:text-[var(--cs-text-muted)]"
                     />
                   </div>
 
@@ -726,9 +726,9 @@ export default function OversightGeneratorPage() {
                 <CardHeader className="pb-2">
                   <CardTitle className="text-xs font-semibold text-emerald-700 uppercase tracking-wider">How it works</CardTitle>
                 </CardHeader>
-                <CardContent className="text-xs text-slate-600 space-y-3 leading-relaxed">
+                <CardContent className="text-xs text-[var(--cs-text-secondary)] space-y-3 leading-relaxed">
                   <p>ARIA will generate structured management oversight commentary covering:</p>
-                  <ul className="space-y-1 list-disc list-inside text-slate-600">
+                  <ul className="space-y-1 list-disc list-inside text-[var(--cs-text-secondary)]">
                     <li>Quality of staff response</li>
                     <li>Child&apos;s emotional presentation</li>
                     <li>Child&apos;s voice and views</li>
@@ -738,7 +738,7 @@ export default function OversightGeneratorPage() {
                     <li>Follow-up actions</li>
                     <li>Learning for the team</li>
                   </ul>
-                  <p className="text-[10px] text-slate-500 italic border-t border-emerald-200 pt-2">
+                  <p className="text-[10px] text-[var(--cs-text-muted)] italic border-t border-emerald-200 pt-2">
                     Start typing or pasting a record to see live analysis. All oversight must be reviewed by a manager before approval.
                   </p>
                 </CardContent>

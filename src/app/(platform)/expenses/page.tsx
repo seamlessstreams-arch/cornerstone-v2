@@ -44,9 +44,9 @@ const CAT_COLORS: Record<string, string> = {
   clothing: "bg-pink-100 text-pink-700",
   transport: "bg-blue-100 text-blue-700",
   maintenance: "bg-orange-100 text-orange-700",
-  office_supplies: "bg-slate-100 text-slate-600",
+  office_supplies: "bg-slate-100 text-[var(--cs-text-secondary)]",
   training: "bg-teal-100 text-teal-700",
-  other: "bg-slate-100 text-slate-600",
+  other: "bg-slate-100 text-[var(--cs-text-secondary)]",
 };
 
 const EXPENSE_EXPORT_COLS: ExportColumn<Expense>[] = [
@@ -62,7 +62,7 @@ const EXPENSE_EXPORT_COLS: ExportColumn<Expense>[] = [
 ];
 
 const STATUS_COLORS: Record<string, string> = {
-  draft: "bg-slate-100 text-slate-500",
+  draft: "bg-slate-100 text-[var(--cs-text-muted)]",
   submitted: "bg-amber-100 text-amber-700",
   approved: "bg-emerald-100 text-emerald-700",
   rejected: "bg-red-100 text-red-700",
@@ -84,13 +84,13 @@ function ExpenseRow({
 }: { expense: Expense; onApprove: () => void; onReject: () => void }) {
   const Icon = CAT_ICONS[expense.category] || Receipt;
   return (
-    <div className="flex items-center gap-3 rounded-xl px-3 py-3 hover:bg-slate-50 transition-colors group">
+    <div className="flex items-center gap-3 rounded-xl px-3 py-3 hover:bg-[var(--cs-surface)] transition-colors group">
       <div className={cn("h-9 w-9 rounded-xl flex items-center justify-center shrink-0", CAT_COLORS[expense.category] || "bg-slate-100")}>
         <Icon className="h-4 w-4" />
       </div>
       <div className="flex-1 min-w-0">
-        <div className="text-sm font-medium text-slate-900 truncate">{expense.description}</div>
-        <div className="flex items-center gap-2 mt-0.5 text-xs text-slate-500">
+        <div className="text-sm font-medium text-[var(--cs-navy)] truncate">{expense.description}</div>
+        <div className="flex items-center gap-2 mt-0.5 text-xs text-[var(--cs-text-muted)]">
           <span>{getStaffName(expense.submitted_by).split(" ")[0]}</span>
           <span>·</span>
           <span>{formatDate(expense.date)}</span>
@@ -99,7 +99,7 @@ function ExpenseRow({
           {expense.payment_method && <><span>·</span><span className="capitalize">{expense.payment_method}</span></>}
         </div>
       </div>
-      <div className="text-base font-bold text-slate-900 shrink-0">£{expense.amount.toFixed(2)}</div>
+      <div className="text-base font-bold text-[var(--cs-navy)] shrink-0">£{expense.amount.toFixed(2)}</div>
       <Badge className={cn("text-[10px] rounded-full shrink-0 capitalize", STATUS_COLORS[expense.status] || "bg-slate-100")}>
         {expense.status}
       </Badge>
@@ -259,12 +259,12 @@ export default function ExpensesPage() {
             { label: "No Receipt", value: stats.noReceipt, sub: "Submitted claims", icon: AlertTriangle, color: "text-red-600", bg: "bg-red-50" },
             { label: "Total on Record", value: `£${grandTotal.toFixed(0)}`, sub: `${expenses.length} claims`, icon: Coins, color: "text-emerald-600", bg: "bg-emerald-50" },
           ].map(({ label, value, sub, icon: Icon, color, bg }) => (
-            <div key={label} className="rounded-2xl border border-slate-200 bg-white p-5">
+            <div key={label} className="rounded-2xl border border-[var(--cs-border)] bg-white p-5">
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">{label}</div>
+                  <div className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider">{label}</div>
                   <div className={cn("mt-1 text-2xl font-bold tabular-nums", color)}>{value}</div>
-                  <div className="text-xs text-slate-400 mt-0.5">{sub}</div>
+                  <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">{sub}</div>
                 </div>
                 <div className={cn("rounded-2xl p-3", bg)}><Icon className={cn("h-5 w-5", color)} /></div>
               </div>
@@ -278,7 +278,7 @@ export default function ExpensesPage() {
             <CardHeader className="pb-2">
               <div className="flex items-center justify-between">
                 <CardTitle className="text-base">New Expense Claim</CardTitle>
-                <button onClick={() => setShowNewForm(false)} className="text-slate-400 hover:text-slate-600">
+                <button onClick={() => setShowNewForm(false)} className="text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)]">
                   <X className="h-4 w-4" />
                 </button>
               </div>
@@ -286,11 +286,11 @@ export default function ExpensesPage() {
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="text-xs font-semibold text-slate-700 block mb-1">Category</label>
+                  <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1">Category</label>
                   <select
                     value={form.category}
                     onChange={(e) => setForm((f) => ({ ...f, category: e.target.value }))}
-                    className="w-full h-9 rounded-xl border border-slate-200 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full h-9 rounded-xl border border-[var(--cs-border)] px-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                   >
                     {EXPENSE_CATEGORIES.map((cat) => (
                       <option key={cat} value={cat}>{CAT_LABELS[cat] || cat}</option>
@@ -298,7 +298,7 @@ export default function ExpensesPage() {
                   </select>
                 </div>
                 <div>
-                  <label className="text-xs font-semibold text-slate-700 block mb-1">Amount (£) <span className="text-red-500">*</span></label>
+                  <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1">Amount (£) <span className="text-red-500">*</span></label>
                   <input
                     type="number"
                     step="0.01"
@@ -306,24 +306,24 @@ export default function ExpensesPage() {
                     placeholder="0.00"
                     value={form.amount}
                     onChange={(e) => setForm((f) => ({ ...f, amount: e.target.value }))}
-                    className="w-full h-9 rounded-xl border border-slate-200 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full h-9 rounded-xl border border-[var(--cs-border)] px-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
                 <div>
-                  <label className="text-xs font-semibold text-slate-700 block mb-1">Date <span className="text-red-500">*</span></label>
+                  <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1">Date <span className="text-red-500">*</span></label>
                   <input
                     type="date"
                     value={form.date}
                     onChange={(e) => setForm((f) => ({ ...f, date: e.target.value }))}
-                    className="w-full h-9 rounded-xl border border-slate-200 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full h-9 rounded-xl border border-[var(--cs-border)] px-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
                 <div>
-                  <label className="text-xs font-semibold text-slate-700 block mb-1">Payment method</label>
+                  <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1">Payment method</label>
                   <select
                     value={form.payment_method}
                     onChange={(e) => setForm((f) => ({ ...f, payment_method: e.target.value }))}
-                    className="w-full h-9 rounded-xl border border-slate-200 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full h-9 rounded-xl border border-[var(--cs-border)] px-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                   >
                     <option>Personal card</option>
                     <option>House card</option>
@@ -333,11 +333,11 @@ export default function ExpensesPage() {
                   </select>
                 </div>
                 <div className="md:col-span-2">
-                  <label className="text-xs font-semibold text-slate-700 block mb-1">Description <span className="text-red-500">*</span></label>
+                  <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1">Description <span className="text-red-500">*</span></label>
                   <textarea
                     value={form.description}
                     onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
-                    className="w-full rounded-xl border border-slate-200 p-2.5 text-sm resize-none h-20 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full rounded-xl border border-[var(--cs-border)] p-2.5 text-sm resize-none h-20 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Describe what was purchased and why..."
                   />
                 </div>
@@ -364,7 +364,7 @@ export default function ExpensesPage() {
                   <CardTitle className="text-base flex items-center gap-2 flex-1">
                     <Receipt className="h-4 w-4 text-blue-500" />All Claims
                     {(search || statusFilter !== "all") && (
-                      <span className="text-xs font-normal text-slate-400 ml-1">
+                      <span className="text-xs font-normal text-[var(--cs-text-muted)] ml-1">
                         {filtered.length} result{filtered.length !== 1 ? "s" : ""}
                       </span>
                     )}
@@ -373,14 +373,14 @@ export default function ExpensesPage() {
                     {(["all", "submitted", "approved", "paid", "draft"] as StatusFilter[]).map((s) => (
                       <button key={s} onClick={() => setStatusFilter(s)}
                         className={cn("px-2.5 py-1 rounded-lg text-xs font-medium capitalize transition-all",
-                          statusFilter === s ? "bg-slate-900 text-white" : "bg-slate-100 text-slate-600 hover:bg-slate-200")}
+                          statusFilter === s ? "bg-slate-900 text-white" : "bg-slate-100 text-[var(--cs-text-secondary)] hover:bg-slate-200")}
                       >{s}</button>
                     ))}
                   </div>
                 </div>
                 <div className="flex items-center gap-2 mt-2">
                   <div className="relative flex-1">
-                    <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+                    <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
                     <Input
                       placeholder="Search description, staff, category…"
                       value={search}
@@ -391,7 +391,7 @@ export default function ExpensesPage() {
                   <select
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value as SortKey)}
-                    className="h-8 rounded-lg border border-slate-200 bg-white px-2 text-xs text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="h-8 rounded-lg border border-[var(--cs-border)] bg-white px-2 text-xs text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-blue-500"
                   >
                     <option value="newest">Newest first</option>
                     <option value="oldest">Oldest first</option>
@@ -402,7 +402,7 @@ export default function ExpensesPage() {
               </CardHeader>
               <CardContent>
                 {expensesQuery.isLoading ? (
-                  <div className="py-12 text-center text-sm text-slate-400">Loading expenses…</div>
+                  <div className="py-12 text-center text-sm text-[var(--cs-text-muted)]">Loading expenses…</div>
                 ) : (
                   <div className="divide-y divide-slate-100">
                     {filtered.map((expense) => (
@@ -414,7 +414,7 @@ export default function ExpensesPage() {
                       />
                     ))}
                     {filtered.length === 0 && (
-                      <div className="py-12 text-center text-sm text-slate-400">
+                      <div className="py-12 text-center text-sm text-[var(--cs-text-muted)]">
                         {search || statusFilter !== "all" ? "No expenses match your filters" : "No expenses on record"}
                       </div>
                     )}
@@ -441,9 +441,9 @@ export default function ExpensesPage() {
                           <div className={cn("h-6 w-6 rounded-lg flex items-center justify-center shrink-0", CAT_COLORS[cat] || "bg-slate-100")}>
                             <Icon className="h-3 w-3" />
                           </div>
-                          <span className="text-xs text-slate-700 flex-1 truncate">{CAT_LABELS[cat] || cat}</span>
-                          <span className="text-xs font-semibold text-slate-900">£{total.toFixed(2)}</span>
-                          <span className="text-[10px] text-slate-400 w-8 text-right">{pct}%</span>
+                          <span className="text-xs text-[var(--cs-text-secondary)] flex-1 truncate">{CAT_LABELS[cat] || cat}</span>
+                          <span className="text-xs font-semibold text-[var(--cs-navy)]">£{total.toFixed(2)}</span>
+                          <span className="text-[10px] text-[var(--cs-text-muted)] w-8 text-right">{pct}%</span>
                         </div>
                         <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden ml-8">
                           <div className="h-full bg-blue-500 rounded-full transition-all" style={{ width: `${pct}%` }} />
@@ -468,9 +468,9 @@ export default function ExpensesPage() {
                     return (
                       <div key={staff.id} className="flex items-center gap-3">
                         <Avatar name={staff.full_name} size="xs" />
-                        <span className="text-xs text-slate-700 flex-1 truncate">{staff.first_name}</span>
-                        <span className="text-xs font-semibold text-slate-900">£{total.toFixed(2)}</span>
-                        <span className="text-[10px] text-slate-400">{staffExpenses.length} claims</span>
+                        <span className="text-xs text-[var(--cs-text-secondary)] flex-1 truncate">{staff.first_name}</span>
+                        <span className="text-xs font-semibold text-[var(--cs-navy)]">£{total.toFixed(2)}</span>
+                        <span className="text-[10px] text-[var(--cs-text-muted)]">{staffExpenses.length} claims</span>
                       </div>
                     );
                   })}

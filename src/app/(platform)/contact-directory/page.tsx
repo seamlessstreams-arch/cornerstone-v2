@@ -45,7 +45,7 @@ const CATEGORY_CONFIG: Record<ContactCategory, { label: string; colour: string }
   dentist:         { label: "Dentist",         colour: "bg-cyan-100 text-cyan-700"     },
   camhs:           { label: "CAMHS",           colour: "bg-rose-100 text-rose-700"     },
   school:          { label: "School",          colour: "bg-amber-100 text-amber-700"   },
-  police:          { label: "Police",          colour: "bg-slate-100 text-slate-700"   },
+  police:          { label: "Police",          colour: "bg-slate-100 text-[var(--cs-text-secondary)]"   },
   ofsted:          { label: "Ofsted",          colour: "bg-red-100 text-red-700"       },
   local_authority: { label: "Local Authority", colour: "bg-indigo-100 text-indigo-700" },
   advocate:        { label: "Advocate",        colour: "bg-emerald-100 text-emerald-700" },

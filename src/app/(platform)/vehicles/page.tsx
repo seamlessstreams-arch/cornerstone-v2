@@ -122,7 +122,7 @@ const STATUS_CFG = {
   available: { color: "text-emerald-700", bg: "bg-emerald-100", label: "Available" },
   restricted: { color: "text-red-700", bg: "bg-red-100", label: "Restricted" },
   in_use: { color: "text-amber-700", bg: "bg-amber-100", label: "In Use" },
-  off_road: { color: "text-slate-600", bg: "bg-slate-100", label: "Off Road" },
+  off_road: { color: "text-[var(--cs-text-secondary)]", bg: "bg-slate-100", label: "Off Road" },
 };
 
 const CHECK_ITEM_CFG = {
@@ -206,21 +206,21 @@ function VehicleCheckForm({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm" onClick={onClose}>
-      <div className="w-full max-w-xl bg-white rounded-2xl shadow-2xl overflow-hidden" onClick={(e) => e.stopPropagation()}>
+      <div className="w-full max-w-xl bg-white rounded-2xl shadow-[var(--cs-shadow-elevated)] overflow-hidden" onClick={(e) => e.stopPropagation()}>
         <div className="px-6 py-4 border-b bg-slate-50 flex items-center justify-between">
-          <div className="font-bold text-slate-900">Log Vehicle Check</div>
-          <button onClick={onClose} className="text-slate-400 hover:text-slate-600 text-lg leading-none">&times;</button>
+          <div className="font-bold text-[var(--cs-navy)]">Log Vehicle Check</div>
+          <button onClick={onClose} className="text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] text-lg leading-none">&times;</button>
         </div>
 
         <div className="p-6 space-y-5 max-h-[80vh] overflow-y-auto">
           {/* Vehicle + Driver */}
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide block mb-1">Vehicle</label>
+              <label className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide block mb-1">Vehicle</label>
               <select
                 value={form.vehicle_id as string}
                 onChange={(e) => handleVehicleChange(e.target.value)}
-                className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm"
+                className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2 text-sm"
               >
                 {vehicles.map((v) => (
                   <option key={v.id} value={v.id}>{v.registration} — {v.make} {v.model}</option>
@@ -228,28 +228,28 @@ function VehicleCheckForm({
               </select>
             </div>
             <div>
-              <label className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide block mb-1">Driver</label>
+              <label className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide block mb-1">Driver</label>
               <input
                 value={form.driver as string}
                 onChange={(e) => set("driver", e.target.value)}
                 placeholder="Driver name..."
-                className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm"
+                className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2 text-sm"
               />
             </div>
           </div>
 
           <div>
-            <label className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide block mb-1">Check Date</label>
-            <input type="date" value={form.check_date as string} onChange={(e) => set("check_date", e.target.value)} className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm" />
+            <label className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide block mb-1">Check Date</label>
+            <input type="date" value={form.check_date as string} onChange={(e) => set("check_date", e.target.value)} className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2 text-sm" />
           </div>
 
           {/* Check items */}
           <div>
-            <label className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide block mb-3">Vehicle Condition Checks</label>
+            <label className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide block mb-3">Vehicle Condition Checks</label>
             <div className="grid grid-cols-1 gap-2">
               {checkItems.map((key) => (
                 <div key={key} className="flex items-center gap-3">
-                  <span className="text-sm text-slate-700 capitalize w-24 shrink-0">{key}</span>
+                  <span className="text-sm text-[var(--cs-text-secondary)] capitalize w-24 shrink-0">{key}</span>
                   <div className="flex gap-1">
                     {(["pass", "advisory", "fail"] as const).map((val) => (
                       <button
@@ -261,7 +261,7 @@ function VehicleCheckForm({
                             ? val === "pass" ? "bg-emerald-100 text-emerald-700 border-emerald-300"
                               : val === "advisory" ? "bg-amber-100 text-amber-700 border-amber-300"
                               : "bg-red-100 text-red-700 border-red-300"
-                            : "bg-slate-50 text-slate-500 border-slate-200 hover:bg-slate-100"
+                            : "bg-slate-50 text-[var(--cs-text-muted)] border-[var(--cs-border)] hover:bg-[var(--cs-surface)]"
                         )}
                       >
                         {val}
@@ -276,16 +276,16 @@ function VehicleCheckForm({
           {/* Mileage + Fuel */}
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <label className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide block mb-1">Mileage Start</label>
-              <input type="number" value={form.mileage_start as number} onChange={(e) => set("mileage_start", Number(e.target.value))} className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm" />
+              <label className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide block mb-1">Mileage Start</label>
+              <input type="number" value={form.mileage_start as number} onChange={(e) => set("mileage_start", Number(e.target.value))} className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2 text-sm" />
             </div>
             <div>
-              <label className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide block mb-1">Mileage End</label>
-              <input type="number" value={form.mileage_end as string} onChange={(e) => set("mileage_end", e.target.value)} placeholder="Optional" className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm" />
+              <label className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide block mb-1">Mileage End</label>
+              <input type="number" value={form.mileage_end as string} onChange={(e) => set("mileage_end", e.target.value)} placeholder="Optional" className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2 text-sm" />
             </div>
             <div>
-              <label className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide block mb-1">Fuel Level</label>
-              <select value={form.fuel_level as string} onChange={(e) => set("fuel_level", e.target.value)} className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm">
+              <label className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide block mb-1">Fuel Level</label>
+              <select value={form.fuel_level as string} onChange={(e) => set("fuel_level", e.target.value)} className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2 text-sm">
                 {FUEL_LEVELS.map((f) => <option key={f} value={f}>{f}</option>)}
               </select>
             </div>
@@ -293,24 +293,24 @@ function VehicleCheckForm({
 
           {/* Defects */}
           <div>
-            <label className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide block mb-1">Defects / Issues</label>
+            <label className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide block mb-1">Defects / Issues</label>
             <textarea
               value={form.defects as string}
               onChange={(e) => set("defects", e.target.value)}
               rows={3}
               placeholder="Describe any defects, advisories, or issues observed..."
-              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm resize-none"
+              className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2 text-sm resize-none"
             />
           </div>
 
           <div>
-            <label className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide block mb-1">Additional Notes</label>
+            <label className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide block mb-1">Additional Notes</label>
             <textarea
               value={form.notes as string}
               onChange={(e) => set("notes", e.target.value)}
               rows={2}
               placeholder="Any other observations..."
-              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm resize-none"
+              className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2 text-sm resize-none"
             />
           </div>
 
@@ -406,16 +406,16 @@ function FleetOverviewTab({
       {/* Fleet stats */}
       <div className="grid grid-cols-2 lg:grid-cols-5 gap-3">
         {[
-          { label: "Total Vehicles", value: meta.total, color: "text-slate-700", bg: "bg-slate-50", icon: Car },
+          { label: "Total Vehicles", value: meta.total, color: "text-[var(--cs-text-secondary)]", bg: "bg-slate-50", icon: Car },
           { label: "Available", value: meta.available, color: "text-emerald-600", bg: "bg-emerald-50", icon: CheckCircle2 },
           { label: "Restricted", value: meta.restricted, color: "text-red-600", bg: "bg-red-50", icon: XCircle },
           { label: "Active Defects", value: meta.defects, color: "text-amber-600", bg: "bg-amber-50", icon: Wrench },
           { label: "Compliance Alerts", value: meta.compliance_alerts, color: "text-rose-600", bg: "bg-rose-50", icon: AlertTriangle },
         ].map(({ label, value, color, bg, icon: Icon }) => (
-          <div key={label} className="rounded-2xl border border-slate-200 bg-white p-4">
+          <div key={label} className="rounded-2xl border border-[var(--cs-border)] bg-white p-4">
             <div className="flex items-start justify-between gap-2">
               <div>
-                <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">{label}</div>
+                <div className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider">{label}</div>
                 <div className={cn("mt-1 text-2xl font-bold", color)}>{value}</div>
               </div>
               <div className={cn("rounded-xl p-2", bg)}>
@@ -445,23 +445,23 @@ function FleetOverviewTab({
           return (
             <div key={vehicle.id} className={cn(
               "rounded-2xl border bg-white p-5",
-              hasDefect ? "border-amber-200" : "border-slate-200"
+              hasDefect ? "border-amber-200" : "border-[var(--cs-border)]"
             )}>
               {/* Header */}
               <div className="flex items-start justify-between gap-3 mb-4">
                 <div className="flex items-start gap-3">
                   <div className="rounded-2xl bg-slate-100 p-3">
-                    <Car className="h-6 w-6 text-slate-600" />
+                    <Car className="h-6 w-6 text-[var(--cs-text-secondary)]" />
                   </div>
                   <div>
                     <div className="flex items-center gap-2">
-                      <span className="text-base font-bold text-slate-900 tracking-wide">{vehicle.registration}</span>
+                      <span className="text-base font-bold text-[var(--cs-navy)] tracking-wide">{vehicle.registration}</span>
                       <Badge className={cn("text-[9px] rounded-full border-0", statusCfg.bg, statusCfg.color)}>
                         {statusCfg.label}
                       </Badge>
                     </div>
-                    <div className="text-xs text-slate-600 mt-0.5">{vehicle.year} {vehicle.make} {vehicle.model} · {vehicle.colour}</div>
-                    <div className="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
+                    <div className="text-xs text-[var(--cs-text-secondary)] mt-0.5">{vehicle.year} {vehicle.make} {vehicle.model} · {vehicle.colour}</div>
+                    <div className="text-xs text-[var(--cs-text-muted)] mt-0.5 flex items-center gap-1.5">
                       <Users className="h-3 w-3" />{vehicle.seats} seats
                       <Gauge className="h-3 w-3 ml-1" />{vehicle.mileage.toLocaleString()} mi
                     </div>
@@ -483,7 +483,7 @@ function FleetOverviewTab({
                       status === "expired" ? "border-red-200" : status === "warning" ? "border-amber-200" : "border-transparent"
                     )}>
                       <Icon className={cn("h-3.5 w-3.5 mx-auto mb-1", cfg.color)} />
-                      <div className="text-[9px] font-semibold text-slate-500">{label}</div>
+                      <div className="text-[9px] font-semibold text-[var(--cs-text-muted)]">{label}</div>
                       <div className={cn("text-[10px] font-bold mt-0.5", cfg.color)}>
                         {days < 0 ? "Expired" : days === 0 ? "Today!" : days < 30 ? `${days}d` : formatDate(expiry).split(" ").slice(0, 2).join(" ")}
                       </div>
@@ -504,7 +504,7 @@ function FleetOverviewTab({
                     checkResult === "advisory" ? <AlertTriangle className="h-4 w-4 text-amber-600 shrink-0" /> :
                       <XCircle className="h-4 w-4 text-red-600 shrink-0" />}
                   <div className="flex-1 min-w-0">
-                    <div className="text-xs font-medium text-slate-700">
+                    <div className="text-xs font-medium text-[var(--cs-text-secondary)]">
                       Last check: {formatDate(latestCheck.check_date)} · Driver: {latestCheck.driver}
                     </div>
                     {latestCheck.defects && (
@@ -518,7 +518,7 @@ function FleetOverviewTab({
                   </div>
                 </div>
               ) : (
-                <div className="rounded-xl bg-slate-50 border border-slate-200 px-3 py-2.5 text-xs text-slate-400 italic">
+                <div className="rounded-xl bg-slate-50 border border-[var(--cs-border)] px-3 py-2.5 text-xs text-[var(--cs-text-muted)] italic">
                   No vehicle check recorded yet
                 </div>
               )}
@@ -552,10 +552,10 @@ function FleetOverviewTab({
                       d.overall_result === "fail" ? "bg-red-500" : "bg-amber-500"
                     )} />
                     <div className="flex-1 min-w-0">
-                      <span className="text-xs font-semibold text-slate-800">{vehicle?.registration} — {vehicle?.make} {vehicle?.model}</span>
-                      {d.defects && <div className="text-xs text-slate-600 mt-0.5 truncate">{d.defects}</div>}
+                      <span className="text-xs font-semibold text-[var(--cs-navy)]">{vehicle?.registration} — {vehicle?.make} {vehicle?.model}</span>
+                      {d.defects && <div className="text-xs text-[var(--cs-text-secondary)] mt-0.5 truncate">{d.defects}</div>}
                     </div>
-                    <div className="text-xs text-slate-400">{formatDate(d.check_date)}</div>
+                    <div className="text-xs text-[var(--cs-text-muted)]">{formatDate(d.check_date)}</div>
                     <Badge className={cn("text-[9px] rounded-full border-0 capitalize", RESULT_CFG[d.overall_result].bg, RESULT_CFG[d.overall_result].color)}>
                       {RESULT_CFG[d.overall_result].label}
                     </Badge>
@@ -609,14 +609,14 @@ function CheckHistoryTab({
     <div className="space-y-4">
       <div className="flex flex-wrap items-center gap-3">
         <div className="relative flex-1 min-w-[200px] max-w-sm">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--cs-text-muted)]" />
           <Input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search checks, drivers..." className="pl-9" />
         </div>
-        <select value={filterVehicle} onChange={(e) => setFilterVehicle(e.target.value)} className="h-9 rounded-lg border border-slate-200 bg-white px-2 text-xs">
+        <select value={filterVehicle} onChange={(e) => setFilterVehicle(e.target.value)} className="h-9 rounded-lg border border-[var(--cs-border)] bg-white px-2 text-xs">
           <option value="">All vehicles</option>
           {vehicles.map((v) => <option key={v.id} value={v.id}>{v.registration}</option>)}
         </select>
-        <select value={filterResult} onChange={(e) => setFilterResult(e.target.value)} className="h-9 rounded-lg border border-slate-200 bg-white px-2 text-xs">
+        <select value={filterResult} onChange={(e) => setFilterResult(e.target.value)} className="h-9 rounded-lg border border-[var(--cs-border)] bg-white px-2 text-xs">
           <option value="">All results</option>
           <option value="pass">Pass</option>
           <option value="advisory">Advisory</option>
@@ -629,7 +629,7 @@ function CheckHistoryTab({
 
       <div className="space-y-3">
         {filtered.length === 0 && (
-          <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center text-sm text-slate-400">No vehicle checks match your filters.</div>
+          <div className="rounded-2xl border border-[var(--cs-border)] bg-white p-8 text-center text-sm text-[var(--cs-text-muted)]">No vehicle checks match your filters.</div>
         )}
         {filtered.map((check) => {
           const vehicle = vehicles.find((v) => v.id === check.vehicle_id);
@@ -641,20 +641,20 @@ function CheckHistoryTab({
               "rounded-2xl border bg-white p-4 transition-all hover:shadow-sm",
               check.overall_result === "fail" ? "border-l-4 border-l-red-500 border-red-200" :
                 check.overall_result === "advisory" ? "border-l-4 border-l-amber-400 border-amber-200" :
-                  "border-slate-200"
+                  "border-[var(--cs-border)]"
             )}>
               <div className="flex items-start gap-4 flex-wrap">
                 <div className="flex-1 min-w-[200px]">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-sm font-bold text-slate-900">
+                    <span className="text-sm font-bold text-[var(--cs-navy)]">
                       {vehicle?.registration || check.vehicle_id}
                     </span>
-                    <span className="text-xs text-slate-500">{vehicle?.make} {vehicle?.model}</span>
+                    <span className="text-xs text-[var(--cs-text-muted)]">{vehicle?.make} {vehicle?.model}</span>
                     <Badge className={cn("text-[9px] rounded-full border-0", resultCfg.bg, resultCfg.color)}>
                       {resultCfg.label}
                     </Badge>
                   </div>
-                  <div className="text-xs text-slate-500 mt-0.5 flex items-center gap-3 flex-wrap">
+                  <div className="text-xs text-[var(--cs-text-muted)] mt-0.5 flex items-center gap-3 flex-wrap">
                     <span>{formatDate(check.check_date)}</span>
                     <span>Driver: {check.driver}</span>
                     <span>Fuel: {check.fuel_level}</span>
@@ -666,7 +666,7 @@ function CheckHistoryTab({
                     </div>
                   )}
                   {check.notes && (
-                    <p className="text-xs text-slate-500 mt-1.5 italic">{check.notes}</p>
+                    <p className="text-xs text-[var(--cs-text-muted)] mt-1.5 italic">{check.notes}</p>
                   )}
                 </div>
 
@@ -739,12 +739,12 @@ function TransportComplianceTab({ data }: { data: VehiclesData }) {
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
-                    <tr className="border-b border-slate-100">
-                      <th className="py-2 px-3 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wide">Vehicle</th>
-                      <th className="py-2 px-3 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wide">Item</th>
-                      <th className="py-2 px-3 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wide">Expiry / Due</th>
-                      <th className="py-2 px-3 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wide">Status</th>
-                      <th className="py-2 px-3 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wide">Requirement</th>
+                    <tr className="border-b border-[var(--cs-border-subtle)]">
+                      <th className="py-2 px-3 text-left text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide">Vehicle</th>
+                      <th className="py-2 px-3 text-left text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide">Item</th>
+                      <th className="py-2 px-3 text-left text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide">Expiry / Due</th>
+                      <th className="py-2 px-3 text-left text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide">Status</th>
+                      <th className="py-2 px-3 text-left text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide">Requirement</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-50">
@@ -753,18 +753,18 @@ function TransportComplianceTab({ data }: { data: VehiclesData }) {
                       const cfg = EXP_CFG[status];
                       const days = daysUntil(expiry);
                       return (
-                        <tr key={`${vehicle}-${item}`} className="hover:bg-slate-50/50">
+                        <tr key={`${vehicle}-${item}`} className="hover:bg-[var(--cs-surface)]/50">
                           <td className="py-3 px-3">
-                            <span className="text-xs font-bold text-slate-800 tracking-wide">{vehicle}</span>
+                            <span className="text-xs font-bold text-[var(--cs-navy)] tracking-wide">{vehicle}</span>
                           </td>
                           <td className="py-3 px-3">
-                            <span className="text-xs text-slate-700">{item}</span>
+                            <span className="text-xs text-[var(--cs-text-secondary)]">{item}</span>
                           </td>
                           <td className="py-3 px-3">
                             <div className={cn("text-xs font-semibold", cfg.color)}>
                               {formatDate(expiry)}
                             </div>
-                            <div className="text-[10px] text-slate-400">
+                            <div className="text-[10px] text-[var(--cs-text-muted)]">
                               {days < 0 ? "Expired" : `${days} days`}
                             </div>
                           </td>
@@ -777,7 +777,7 @@ function TransportComplianceTab({ data }: { data: VehiclesData }) {
                             </div>
                           </td>
                           <td className="py-3 px-3">
-                            <span className="text-[10px] text-slate-400">{required}</span>
+                            <span className="text-[10px] text-[var(--cs-text-muted)]">{required}</span>
                           </td>
                         </tr>
                       );
@@ -792,7 +792,7 @@ function TransportComplianceTab({ data }: { data: VehiclesData }) {
 
       {/* Additional checks */}
       <div>
-        <h3 className="text-sm font-semibold text-slate-700 mb-3">Transport Safety Checks</h3>
+        <h3 className="text-sm font-semibold text-[var(--cs-text-secondary)] mb-3">Transport Safety Checks</h3>
         <div className="grid gap-3">
           {additionalChecks.map(({ label, description, status, lastChecked, note }) => {
             const cfg = statusCfg[status];
@@ -805,13 +805,13 @@ function TransportComplianceTab({ data }: { data: VehiclesData }) {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-start justify-between gap-3 flex-wrap">
                     <div>
-                      <div className="text-sm font-semibold text-slate-900">{label}</div>
-                      <div className="text-xs text-slate-500 mt-0.5">{description}</div>
+                      <div className="text-sm font-semibold text-[var(--cs-navy)]">{label}</div>
+                      <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">{description}</div>
                     </div>
                     <Badge className={cn("text-[9px] rounded-full border-0 shrink-0", cfg.bg, cfg.color)}>{cfg.label}</Badge>
                   </div>
-                  {note && <div className="text-xs text-slate-600 mt-2 italic">{note}</div>}
-                  <div className="text-[10px] text-slate-400 mt-1">Last reviewed: {formatDate(lastChecked)}</div>
+                  {note && <div className="text-xs text-[var(--cs-text-secondary)] mt-2 italic">{note}</div>}
+                  <div className="text-[10px] text-[var(--cs-text-muted)] mt-1">Last reviewed: {formatDate(lastChecked)}</div>
                 </div>
               </div>
             );
@@ -849,8 +849,8 @@ function TransportComplianceTab({ data }: { data: VehiclesData }) {
                   )}>
                     <AlertCircle className={cn("h-4 w-4 shrink-0", isUrgent ? "text-red-500" : "text-amber-500")} />
                     <div className="flex-1">
-                      <span className="text-xs font-semibold text-slate-800">{label}</span>
-                      <span className="text-xs text-slate-500 ml-2">expires {formatDate(expiry)}</span>
+                      <span className="text-xs font-semibold text-[var(--cs-navy)]">{label}</span>
+                      <span className="text-xs text-[var(--cs-text-muted)] ml-2">expires {formatDate(expiry)}</span>
                     </div>
                     <span className={cn("text-xs font-bold", isUrgent ? "text-red-700" : "text-amber-700")}>{days} days</span>
                     <Button
@@ -952,8 +952,8 @@ export default function VehiclesPage() {
               className={cn(
                 "flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium transition-all relative",
                 tab === id
-                  ? "bg-white text-slate-900 shadow-sm"
-                  : "text-slate-600 hover:text-slate-900"
+                  ? "bg-white text-[var(--cs-navy)] shadow-sm"
+                  : "text-[var(--cs-text-secondary)] hover:text-[var(--cs-navy)]"
               )}
             >
               <Icon className="h-3.5 w-3.5" />
@@ -968,9 +968,9 @@ export default function VehiclesPage() {
         </div>
 
         {isLoading && (
-          <div className="flex items-center justify-center py-16 text-slate-400">
+          <div className="flex items-center justify-center py-16 text-[var(--cs-text-muted)]">
             <div className="flex flex-col items-center gap-2">
-              <div className="h-8 w-8 animate-spin rounded-full border-2 border-slate-200 border-t-slate-600" />
+              <div className="h-8 w-8 animate-spin rounded-full border-2 border-[var(--cs-border)] border-t-slate-600" />
               <span className="text-sm">Loading vehicle data...</span>
             </div>
           </div>

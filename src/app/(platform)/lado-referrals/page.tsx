@@ -38,7 +38,7 @@ const ALLG_CLR: Record<LadoAllegationType, string> = {
   physical_abuse: "bg-red-100 text-red-800", emotional_abuse: "bg-orange-100 text-orange-800",
   sexual_abuse: "bg-red-100 text-red-800", neglect: "bg-amber-100 text-amber-800",
   inappropriate_behaviour: "bg-yellow-100 text-yellow-800", inappropriate_relationship: "bg-purple-100 text-purple-800",
-  boundary_violation: "bg-blue-100 text-blue-800", other: "bg-slate-100 text-slate-800",
+  boundary_violation: "bg-blue-100 text-blue-800", other: "bg-slate-100 text-[var(--cs-navy)]",
 };
 
 const OUTCOME_CLR: Record<LadoOutcome, string> = { substantiated: "bg-red-100 text-red-800", unsubstantiated: "bg-amber-100 text-amber-800", unfounded: "bg-green-100 text-green-800", malicious: "bg-purple-100 text-purple-800", pending: "bg-blue-100 text-blue-800" };
@@ -46,11 +46,11 @@ const OUTCOME_CLR: Record<LadoOutcome, string> = { substantiated: "bg-red-100 te
 const STATUS_CLR: Record<LadoReferralStatus, string> = {
   initial_assessment: "bg-blue-100 text-blue-800", lado_contacted: "bg-indigo-100 text-indigo-800",
   strategy_meeting: "bg-yellow-100 text-yellow-800", investigation: "bg-orange-100 text-orange-800",
-  outcome_reached: "bg-purple-100 text-purple-800", closed: "bg-slate-100 text-slate-800",
+  outcome_reached: "bg-purple-100 text-purple-800", closed: "bg-slate-100 text-[var(--cs-navy)]",
   nfa: "bg-green-100 text-green-800",
 };
 
-const STAFF_ACTION_CLR: Record<LadoStaffAction, string> = { suspended: "bg-red-100 text-red-800", restricted_duties: "bg-orange-100 text-orange-800", normal_duties: "bg-green-100 text-green-800", resigned: "bg-slate-100 text-slate-800", dismissed: "bg-red-100 text-red-800", cleared: "bg-green-100 text-green-800" };
+const STAFF_ACTION_CLR: Record<LadoStaffAction, string> = { suspended: "bg-red-100 text-red-800", restricted_duties: "bg-orange-100 text-orange-800", normal_duties: "bg-green-100 text-green-800", resigned: "bg-slate-100 text-[var(--cs-navy)]", dismissed: "bg-red-100 text-red-800", cleared: "bg-green-100 text-green-800" };
 
 const BORDER_OUTCOME: Record<LadoOutcome, string> = { substantiated: "border-l-red-600", unsubstantiated: "border-l-amber-400", unfounded: "border-l-green-400", malicious: "border-l-purple-500", pending: "border-l-blue-400" };
 

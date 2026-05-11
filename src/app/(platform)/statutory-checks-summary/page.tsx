@@ -59,7 +59,7 @@ const CATEGORY_CLR: Record<StatutoryCheckCategory, string> = {
   home_wide: "bg-blue-100 text-blue-800",
   workforce: "bg-teal-100 text-teal-800",
   environmental: "bg-orange-100 text-orange-800",
-  financial: "bg-slate-100 text-slate-800",
+  financial: "bg-slate-100 text-[var(--cs-navy)]",
 };
 
 /* ── component ─────────────────────────────────────────────────────────────── */
@@ -183,7 +183,7 @@ export default function StatutoryChecksSummaryPage() {
             { label: "Total Checks Tracked", value: totalChecks, icon: ShieldCheck, colour: "text-indigo-600" },
             { label: "Compliant", value: `${compliantPct}%`, icon: CheckCircle2, colour: "text-green-600" },
             { label: "Due Within 30 Days", value: dueSoonCount, icon: Clock, colour: "text-amber-600" },
-            { label: "Overdue", value: overdueCount, icon: AlertTriangle, colour: overdueCount > 0 ? "text-red-600" : "text-slate-400" },
+            { label: "Overdue", value: overdueCount, icon: AlertTriangle, colour: overdueCount > 0 ? "text-red-600" : "text-[var(--cs-text-muted)]" },
           ].map(s => (
             <Card key={s.label}>
               <CardContent className="pt-4 flex items-center gap-3">
@@ -268,7 +268,7 @@ export default function StatutoryChecksSummaryPage() {
                   <CardHeader className="pb-2">
                     <div className="flex items-start justify-between gap-3">
                       <div className="flex items-start gap-2 flex-wrap flex-1 min-w-0">
-                        <CategoryIcon className="h-5 w-5 text-slate-500 mt-0.5 shrink-0" />
+                        <CategoryIcon className="h-5 w-5 text-[var(--cs-text-muted)] mt-0.5 shrink-0" />
                         <div className="flex-1 min-w-0">
                           <CardTitle className="text-base">{r.check_name}</CardTitle>
                           <div className="flex flex-wrap gap-1.5 mt-1.5">
@@ -282,7 +282,7 @@ export default function StatutoryChecksSummaryPage() {
                       <div className="flex items-center gap-3 shrink-0">
                         <div className="text-right">
                           <p className="text-[10px] text-muted-foreground uppercase tracking-wide">Next due</p>
-                          <p className={cn("text-xs font-semibold", isOverdue ? "text-red-700" : "text-slate-700")}>{r.next_due_date}</p>
+                          <p className={cn("text-xs font-semibold", isOverdue ? "text-red-700" : "text-[var(--cs-text-secondary)]")}>{r.next_due_date}</p>
                         </div>
                         {open ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
                       </div>
@@ -292,7 +292,7 @@ export default function StatutoryChecksSummaryPage() {
                 {open && (
                   <CardContent className="space-y-4 pt-0">
                     {/* summary */}
-                    <p className="text-sm text-slate-700">{r.summary}</p>
+                    <p className="text-sm text-[var(--cs-text-secondary)]">{r.summary}</p>
 
                     {/* key facts grid */}
                     <div className="grid md:grid-cols-2 gap-4 text-sm">

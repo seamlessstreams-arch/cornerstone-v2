@@ -90,7 +90,7 @@ export function IncidentTrendsCard() {
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-center py-6">
-            <Loader2 className="h-5 w-5 animate-spin text-slate-400" />
+            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
           </div>
         </CardContent>
       </Card>
@@ -123,19 +123,19 @@ export function IncidentTrendsCard() {
             <div className={cn("text-[9px]", open > 0 ? "text-orange-500" : "text-emerald-500")}>Open</div>
           </div>
           <div className={cn("rounded-xl p-2 text-center", critical > 0 ? "bg-red-50" : "bg-slate-50")}>
-            <TriangleAlert className={cn("h-3 w-3 mx-auto mb-0.5", critical > 0 ? "text-red-500" : "text-slate-400")} />
-            <div className={cn("text-sm font-bold tabular-nums", critical > 0 ? "text-red-700" : "text-slate-400")}>{critical}</div>
-            <div className={cn("text-[9px]", critical > 0 ? "text-red-500" : "text-slate-400")}>Critical</div>
+            <TriangleAlert className={cn("h-3 w-3 mx-auto mb-0.5", critical > 0 ? "text-red-500" : "text-[var(--cs-text-muted)]")} />
+            <div className={cn("text-sm font-bold tabular-nums", critical > 0 ? "text-red-700" : "text-[var(--cs-text-muted)]")}>{critical}</div>
+            <div className={cn("text-[9px]", critical > 0 ? "text-red-500" : "text-[var(--cs-text-muted)]")}>Critical</div>
           </div>
           <div className={cn("rounded-xl p-2 text-center", awaitingOversight > 0 ? "bg-violet-50" : "bg-slate-50")}>
-            <Eye className={cn("h-3 w-3 mx-auto mb-0.5", awaitingOversight > 0 ? "text-violet-500" : "text-slate-400")} />
-            <div className={cn("text-sm font-bold tabular-nums", awaitingOversight > 0 ? "text-violet-700" : "text-slate-400")}>{awaitingOversight}</div>
-            <div className={cn("text-[9px]", awaitingOversight > 0 ? "text-violet-500" : "text-slate-400")}>Oversight</div>
+            <Eye className={cn("h-3 w-3 mx-auto mb-0.5", awaitingOversight > 0 ? "text-violet-500" : "text-[var(--cs-text-muted)]")} />
+            <div className={cn("text-sm font-bold tabular-nums", awaitingOversight > 0 ? "text-violet-700" : "text-[var(--cs-text-muted)]")}>{awaitingOversight}</div>
+            <div className={cn("text-[9px]", awaitingOversight > 0 ? "text-violet-500" : "text-[var(--cs-text-muted)]")}>Oversight</div>
           </div>
           <div className="rounded-xl bg-slate-50 p-2 text-center">
-            <TrendingUp className="h-3 w-3 text-slate-400 mx-auto mb-0.5" />
-            <div className="text-sm font-bold text-slate-700 tabular-nums">{thisWeek}</div>
-            <div className="text-[9px] text-slate-400">This Week</div>
+            <TrendingUp className="h-3 w-3 text-[var(--cs-text-muted)] mx-auto mb-0.5" />
+            <div className="text-sm font-bold text-[var(--cs-text-secondary)] tabular-nums">{thisWeek}</div>
+            <div className="text-[9px] text-[var(--cs-text-muted)]">This Week</div>
           </div>
         </div>
 
@@ -143,8 +143,8 @@ export function IncidentTrendsCard() {
         {totalBreakdown > 0 && (
           <div className="space-y-1">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] font-medium text-slate-500">Open by Severity</span>
-              <span className="text-[10px] text-slate-400">{totalBreakdown} total</span>
+              <span className="text-[10px] font-medium text-[var(--cs-text-muted)]">Open by Severity</span>
+              <span className="text-[10px] text-[var(--cs-text-muted)]">{totalBreakdown} total</span>
             </div>
             <div className="flex h-2 rounded-full overflow-hidden bg-slate-100">
               {(["critical", "high", "medium", "low"] as const).map((sev) => {
@@ -167,7 +167,7 @@ export function IncidentTrendsCard() {
                 return (
                   <div key={sev} className="flex items-center gap-1">
                     <span className={cn("w-2 h-2 rounded-full", SEVERITY_CONFIG[sev].colour)} />
-                    <span className="text-[9px] text-slate-500">{SEVERITY_CONFIG[sev].label} {count}</span>
+                    <span className="text-[9px] text-[var(--cs-text-muted)]">{SEVERITY_CONFIG[sev].label} {count}</span>
                   </div>
                 );
               })}
@@ -224,19 +224,19 @@ export function IncidentTrendsCard() {
               };
               return (
                 <Link key={incident.id} href={`/incidents/${incident.id}`}>
-                  <div className="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-slate-50 transition-colors">
+                  <div className="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-[var(--cs-surface)] transition-colors">
                     <span className={cn("w-2 h-2 rounded-full shrink-0", sevConfig.colour)} />
-                    <span className="text-[11px] font-medium text-slate-700 flex-1 truncate">
+                    <span className="text-[11px] font-medium text-[var(--cs-text-secondary)] flex-1 truncate">
                       {incident.type.replace(/_/g, " ")} — {incident.reference}
                     </span>
-                    <span className="text-[9px] text-slate-400 tabular-nums shrink-0">
+                    <span className="text-[9px] text-[var(--cs-text-muted)] tabular-nums shrink-0">
                       {formatRelative(incident.created_at)}
                     </span>
                     <Badge className={cn(
                       "text-[8px] px-1.5 py-0 rounded-full border-0",
                       incident.status === "open" ? "bg-orange-100 text-orange-700"
                       : incident.status === "under_review" ? "bg-blue-100 text-blue-700"
-                      : "bg-slate-100 text-slate-500",
+                      : "bg-slate-100 text-[var(--cs-text-muted)]",
                     )}>
                       {incident.status.replace(/_/g, " ")}
                     </Badge>

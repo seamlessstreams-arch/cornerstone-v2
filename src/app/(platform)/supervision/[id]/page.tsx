@@ -37,7 +37,7 @@ import {
 
 const TYPE_COLOURS: Record<string, string> = {
   formal:              "bg-blue-100 text-blue-700 border-blue-200",
-  informal:            "bg-slate-100 text-slate-700 border-slate-200",
+  informal:            "bg-slate-100 text-[var(--cs-text-secondary)] border-[var(--cs-border)]",
   group:               "bg-violet-100 text-violet-700 border-violet-200",
   reflective_practice: "bg-teal-100 text-teal-700 border-teal-200",
   probation_review:    "bg-amber-100 text-amber-700 border-amber-200",
@@ -62,7 +62,7 @@ function WellbeingGauge({ score }: { score: number }) {
   return (
     <div className="space-y-1.5">
       <div className="flex items-center justify-between">
-        <span className="text-xs text-slate-500">Wellbeing</span>
+        <span className="text-xs text-[var(--cs-text-muted)]">Wellbeing</span>
         <span className={cn("text-lg font-bold tabular-nums", colour)}>
           {score}/10
           <span className="text-xs font-normal ml-1">— {label}</span>
@@ -96,7 +96,7 @@ function ActionRow({
           ? "border-emerald-100 bg-emerald-50/50"
           : isOverdue
           ? "border-red-100 bg-red-50/50"
-          : "border-slate-100 bg-white"
+          : "border-[var(--cs-border-subtle)] bg-white"
       )}
     >
       <button
@@ -106,21 +106,21 @@ function ActionRow({
         title={isComplete ? "Mark pending" : "Mark complete"}
       >
         {toggling ? (
-          <Loader2 className="h-4 w-4 animate-spin text-slate-400" />
+          <Loader2 className="h-4 w-4 animate-spin text-[var(--cs-text-muted)]" />
         ) : isComplete ? (
           <CheckCircle2 className="h-4 w-4 text-emerald-600" />
         ) : (
-          <Circle className={cn("h-4 w-4", isOverdue ? "text-red-500" : "text-slate-400")} />
+          <Circle className={cn("h-4 w-4", isOverdue ? "text-red-500" : "text-[var(--cs-text-muted)]")} />
         )}
       </button>
       <div className="flex-1 min-w-0">
-        <p className={cn("text-sm", isComplete && "line-through text-slate-400")}>
+        <p className={cn("text-sm", isComplete && "line-through text-[var(--cs-text-muted)]")}>
           {action.description}
         </p>
-        <div className="mt-1 flex items-center gap-2 text-[10px] text-slate-400">
+        <div className="mt-1 flex items-center gap-2 text-[10px] text-[var(--cs-text-muted)]">
           <span>{getStaffName(action.owner)}</span>
           {action.due_date && (
-            <span className={cn("font-medium", isOverdue && !isComplete ? "text-red-600" : "text-slate-400")}>
+            <span className={cn("font-medium", isOverdue && !isComplete ? "text-red-600" : "text-[var(--cs-text-muted)]")}>
               {isOverdue && !isComplete ? "OVERDUE — " : ""}
               {formatDate(action.due_date)}
             </span>
@@ -275,7 +275,7 @@ export default function SupervisionDetailPage({
           <Button
             variant="outline"
             size="sm"
-            className="gap-1.5 text-slate-600"
+            className="gap-1.5 text-[var(--cs-text-secondary)]"
             onClick={() => router.back()}
           >
             <ArrowLeft className="h-3.5 w-3.5" />
@@ -308,23 +308,23 @@ export default function SupervisionDetailPage({
                   <Avatar name={staffName} size="lg" />
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap mb-1">
-                      <span className="text-xl font-bold text-slate-900">{staffName}</span>
+                      <span className="text-xl font-bold text-[var(--cs-navy)]">{staffName}</span>
                       <Badge className={cn("rounded-full text-[10px] border", TYPE_COLOURS[sup.type])}>
                         {typeLabel}
                       </Badge>
-                      <Badge className={cn("rounded-full text-[10px]", STATUS_COLOURS[sup.status] ?? "bg-slate-100 text-slate-700")}>
+                      <Badge className={cn("rounded-full text-[10px]", STATUS_COLOURS[sup.status] ?? "bg-slate-100 text-[var(--cs-text-secondary)]")}>
                         {sup.status.charAt(0).toUpperCase() + sup.status.slice(1)}
                       </Badge>
                     </div>
-                    <div className="flex items-center gap-1.5 text-xs text-slate-500 flex-wrap">
+                    <div className="flex items-center gap-1.5 text-xs text-[var(--cs-text-muted)] flex-wrap">
                       <User className="h-3.5 w-3.5 shrink-0" />
                       <span>Supervised by {supervisorName}</span>
-                      <span className="text-slate-300">·</span>
+                      <span className="text-[var(--cs-text-gentle)]">·</span>
                       <Calendar className="h-3.5 w-3.5 shrink-0" />
                       <span>{formatDate(date)}</span>
                       {sup.duration_minutes && (
                         <>
-                          <span className="text-slate-300">·</span>
+                          <span className="text-[var(--cs-text-gentle)]">·</span>
                           <Clock className="h-3.5 w-3.5 shrink-0" />
                           <span>{sup.duration_minutes} min</span>
                         </>
@@ -335,23 +335,23 @@ export default function SupervisionDetailPage({
 
                 {/* Wellbeing */}
                 {sup.wellbeing_score != null && (
-                  <div className="mt-4 pt-4 border-t border-slate-100">
+                  <div className="mt-4 pt-4 border-t border-[var(--cs-border-subtle)]">
                     <WellbeingGauge score={sup.wellbeing_score} />
                   </div>
                 )}
 
                 {/* Signatures */}
-                <div className="mt-4 pt-4 border-t border-slate-100 grid grid-cols-2 gap-3">
+                <div className="mt-4 pt-4 border-t border-[var(--cs-border-subtle)] grid grid-cols-2 gap-3">
                   <div className={cn(
                     "flex items-center gap-2 rounded-lg border px-3 py-2 text-xs font-medium",
-                    sup.staff_signature ? "border-emerald-200 bg-emerald-50 text-emerald-700" : "border-slate-200 bg-slate-50 text-slate-500"
+                    sup.staff_signature ? "border-emerald-200 bg-emerald-50 text-emerald-700" : "border-[var(--cs-border)] bg-slate-50 text-[var(--cs-text-muted)]"
                   )}>
                     <PenLine className="h-3.5 w-3.5 shrink-0" />
                     Staff signature: {sup.staff_signature ? "Signed" : "Pending"}
                   </div>
                   <div className={cn(
                     "flex items-center gap-2 rounded-lg border px-3 py-2 text-xs font-medium",
-                    sup.supervisor_signature ? "border-emerald-200 bg-emerald-50 text-emerald-700" : "border-slate-200 bg-slate-50 text-slate-500"
+                    sup.supervisor_signature ? "border-emerald-200 bg-emerald-50 text-emerald-700" : "border-[var(--cs-border)] bg-slate-50 text-[var(--cs-text-muted)]"
                   )}>
                     <Shield className="h-3.5 w-3.5 shrink-0" />
                     Supervisor: {sup.supervisor_signature ? "Signed" : "Pending"}
@@ -370,11 +370,11 @@ export default function SupervisionDetailPage({
               </CardHeader>
               <CardContent className="pt-0">
                 {sup.discussion_points ? (
-                  <div className="rounded-xl bg-slate-50 border border-slate-100 p-4 text-sm text-slate-700 leading-relaxed whitespace-pre-wrap">
+                  <div className="rounded-xl bg-slate-50 border border-[var(--cs-border-subtle)] p-4 text-sm text-[var(--cs-text-secondary)] leading-relaxed whitespace-pre-wrap">
                     {sup.discussion_points}
                   </div>
                 ) : (
-                  <div className="rounded-xl bg-slate-50 border border-slate-100 p-4 text-sm text-slate-400 italic">
+                  <div className="rounded-xl bg-slate-50 border border-[var(--cs-border-subtle)] p-4 text-sm text-[var(--cs-text-muted)] italic">
                     No discussion points recorded for this supervision.
                   </div>
                 )}
@@ -388,7 +388,7 @@ export default function SupervisionDetailPage({
                   <ClipboardList className="h-4 w-4 text-violet-500" />
                   Actions Agreed
                   {sup.actions_agreed.length > 0 && (
-                    <span className="ml-auto text-xs font-normal text-slate-500">
+                    <span className="ml-auto text-xs font-normal text-[var(--cs-text-muted)]">
                       {completedActions.length}/{sup.actions_agreed.length} complete
                       {overdueActions.length > 0 && (
                         <span className="ml-2 text-red-600 font-semibold">
@@ -401,7 +401,7 @@ export default function SupervisionDetailPage({
               </CardHeader>
               <CardContent className="pt-0 space-y-2">
                 {sup.actions_agreed.length === 0 ? (
-                  <p className="text-sm text-slate-400 italic py-2">No actions were agreed at this supervision.</p>
+                  <p className="text-sm text-[var(--cs-text-muted)] italic py-2">No actions were agreed at this supervision.</p>
                 ) : (
                   sup.actions_agreed.map((action) => (
                     <ActionRow
@@ -421,7 +421,7 @@ export default function SupervisionDetailPage({
                 <div className="absolute top-2 right-2 z-10">
                   <button
                     onClick={() => setShowAria(false)}
-                    className="rounded-full p-1 bg-white shadow border border-slate-200 text-slate-400 hover:text-slate-600 transition-colors"
+                    className="rounded-full p-1 bg-white shadow border border-[var(--cs-border)] text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] transition-colors"
                   >
                     ✕
                   </button>
@@ -448,7 +448,7 @@ export default function SupervisionDetailPage({
                 {
                   label: "Total Actions",
                   value: sup.actions_agreed.length,
-                  colour: "text-slate-800",
+                  colour: "text-[var(--cs-navy)]",
                   bg: "bg-slate-50",
                 },
                 {
@@ -460,13 +460,13 @@ export default function SupervisionDetailPage({
                 {
                   label: "Pending",
                   value: pendingActions.length,
-                  colour: pendingActions.length > 0 ? "text-amber-700" : "text-slate-500",
+                  colour: pendingActions.length > 0 ? "text-amber-700" : "text-[var(--cs-text-muted)]",
                   bg: pendingActions.length > 0 ? "bg-amber-50" : "bg-slate-50",
                 },
                 {
                   label: "Overdue",
                   value: overdueActions.length,
-                  colour: overdueActions.length > 0 ? "text-red-700" : "text-slate-400",
+                  colour: overdueActions.length > 0 ? "text-red-700" : "text-[var(--cs-text-muted)]",
                   bg: overdueActions.length > 0 ? "bg-red-50" : "bg-slate-50",
                 },
               ].map((stat) => (
@@ -474,7 +474,7 @@ export default function SupervisionDetailPage({
                   <div className={cn("text-2xl font-bold tabular-nums", stat.colour)}>
                     {stat.value}
                   </div>
-                  <div className="text-[10px] text-slate-500 leading-tight mt-0.5">{stat.label}</div>
+                  <div className="text-[10px] text-[var(--cs-text-muted)] leading-tight mt-0.5">{stat.label}</div>
                 </div>
               ))}
             </div>
@@ -484,14 +484,14 @@ export default function SupervisionDetailPage({
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm">Record Info</CardTitle>
               </CardHeader>
-              <CardContent className="pt-0 space-y-2.5 text-xs text-slate-600">
+              <CardContent className="pt-0 space-y-2.5 text-xs text-[var(--cs-text-secondary)]">
                 <div className="flex items-center gap-2">
-                  <Calendar className="h-3.5 w-3.5 shrink-0 text-slate-400" />
+                  <Calendar className="h-3.5 w-3.5 shrink-0 text-[var(--cs-text-muted)]" />
                   <span>Scheduled: {formatDate(sup.scheduled_date)}</span>
                 </div>
                 {sup.actual_date && sup.actual_date !== sup.scheduled_date && (
                   <div className="flex items-center gap-2">
-                    <Calendar className="h-3.5 w-3.5 shrink-0 text-slate-400" />
+                    <Calendar className="h-3.5 w-3.5 shrink-0 text-[var(--cs-text-muted)]" />
                     <span>Held: {formatDate(sup.actual_date)}</span>
                   </div>
                 )}
@@ -502,11 +502,11 @@ export default function SupervisionDetailPage({
                   </div>
                 )}
                 <div className="flex items-center gap-2">
-                  <Users className="h-3.5 w-3.5 shrink-0 text-slate-400" />
+                  <Users className="h-3.5 w-3.5 shrink-0 text-[var(--cs-text-muted)]" />
                   <span>Created by {getStaffName(sup.created_by)}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Clock className="h-3.5 w-3.5 shrink-0 text-slate-400" />
+                  <Clock className="h-3.5 w-3.5 shrink-0 text-[var(--cs-text-muted)]" />
                   <span>Updated {formatRelative(sup.updated_at)}</span>
                 </div>
               </CardContent>
@@ -532,10 +532,10 @@ export default function SupervisionDetailPage({
                         ? "text-amber-600"
                         : "text-red-600"
                     )} />
-                    <span className="text-xs font-semibold text-slate-700">Wellbeing at {formatDate(date)}</span>
+                    <span className="text-xs font-semibold text-[var(--cs-text-secondary)]">Wellbeing at {formatDate(date)}</span>
                   </div>
-                  <div className="text-3xl font-bold tabular-nums text-slate-800">{sup.wellbeing_score}/10</div>
-                  <p className="text-[11px] text-slate-500 mt-1.5 leading-relaxed">
+                  <div className="text-3xl font-bold tabular-nums text-[var(--cs-navy)]">{sup.wellbeing_score}/10</div>
+                  <p className="text-[11px] text-[var(--cs-text-muted)] mt-1.5 leading-relaxed">
                     {sup.wellbeing_score >= 8
                       ? "Staff wellbeing reported as good. Continue supportive supervision."
                       : sup.wellbeing_score >= 6
@@ -613,16 +613,16 @@ export default function SupervisionDetailPage({
                       "flex items-start gap-2.5 rounded-xl border px-3 py-2",
                       doc.ai_risk_level === "high" || doc.ai_risk_level === "critical"
                         ? "border-red-200 bg-red-50/40"
-                        : "border-slate-100 bg-white",
+                        : "border-[var(--cs-border-subtle)] bg-white",
                     )}>
-                      <FileText className="h-3.5 w-3.5 text-slate-400 shrink-0 mt-0.5" />
+                      <FileText className="h-3.5 w-3.5 text-[var(--cs-text-muted)] shrink-0 mt-0.5" />
                       <div className="flex-1 min-w-0">
-                        <p className="text-xs font-semibold text-slate-800 truncate">{doc.original_file_name}</p>
-                        <p className="text-[10px] text-slate-400">
+                        <p className="text-xs font-semibold text-[var(--cs-navy)] truncate">{doc.original_file_name}</p>
+                        <p className="text-[10px] text-[var(--cs-text-muted)]">
                           {doc.document_category ? DOCUMENT_CATEGORY_LABELS[doc.document_category] : "Uncategorised"}
                           {doc.document_status ? ` · ${doc.document_status.replace(/_/g, " ")}` : ""}
                         </p>
-                        {doc.ai_summary && <p className="text-[10px] text-slate-500 mt-0.5 line-clamp-2">{doc.ai_summary}</p>}
+                        {doc.ai_summary && <p className="text-[10px] text-[var(--cs-text-muted)] mt-0.5 line-clamp-2">{doc.ai_summary}</p>}
                       </div>
                       {doc.ai_risk_level && doc.ai_risk_level !== "low" && (
                         <span className={cn(
@@ -641,14 +641,14 @@ export default function SupervisionDetailPage({
             )}
 
             {/* Compliance note */}
-            <div className="rounded-xl bg-slate-50 border border-slate-100 px-4 py-3">
+            <div className="rounded-xl bg-slate-50 border border-[var(--cs-border-subtle)] px-4 py-3">
               <div className="flex items-start gap-2">
-                <Shield className="h-3.5 w-3.5 text-slate-400 mt-0.5 shrink-0" />
+                <Shield className="h-3.5 w-3.5 text-[var(--cs-text-muted)] mt-0.5 shrink-0" />
                 <div>
-                  <p className="text-[10px] font-semibold text-slate-600 uppercase tracking-wide mb-1">
+                  <p className="text-[10px] font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide mb-1">
                     Regulation 22 — Supervision
                   </p>
-                  <p className="text-[10px] text-slate-500 leading-relaxed">
+                  <p className="text-[10px] text-[var(--cs-text-muted)] leading-relaxed">
                     All staff in regulated children's homes must receive formal
                     supervision at least every four to six weeks. This record
                     is a legal document and may be inspected by Ofsted (ILACS).

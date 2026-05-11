@@ -45,7 +45,7 @@ const restrictorColour: Record<string, string> = {
   permanent_fixed: "bg-teal-100 text-teal-800 border-teal-200",
   pin_lock: "bg-indigo-100 text-indigo-800 border-indigo-200",
   combination: "bg-violet-100 text-violet-800 border-violet-200",
-  standard_window_lock: "bg-slate-100 text-slate-800 border-slate-200",
+  standard_window_lock: "bg-slate-100 text-[var(--cs-navy)] border-[var(--cs-border)]",
   none_child_accessible: "bg-red-100 text-red-900 border-red-300",
 };
 
@@ -153,8 +153,8 @@ export default function BuildingWindowRestrictorChecksPage() {
 
       <div className="flex flex-col sm:flex-row gap-3 mb-4">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
-          <input type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search location, window type or restrictor..." className="w-full pl-9 pr-3 py-2 text-sm border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--cs-text-muted)]" />
+          <input type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search location, window type or restrictor..." className="w-full pl-9 pr-3 py-2 text-sm border border-[var(--cs-border)] rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500" />
         </div>
         <Select value={locationFilter} onValueChange={setLocationFilter}>
           <SelectTrigger className="w-full sm:w-72"><SelectValue placeholder="Window location" /></SelectTrigger>
@@ -181,12 +181,12 @@ export default function BuildingWindowRestrictorChecksPage() {
           const dueSoon = r.next_due_date >= today && r.next_due_date <= thirtyDaysFromNow;
           const overdue = r.next_due_date < today;
           return (
-            <div key={r.id} className={cn("rounded-lg border bg-white overflow-hidden", failed ? "border-red-300 ring-1 ring-red-200" : "border-slate-200")}>
+            <div key={r.id} className={cn("rounded-lg border bg-white overflow-hidden", failed ? "border-red-300 ring-1 ring-red-200" : "border-[var(--cs-border)]")}>
               <button onClick={() => setExpandedId(isOpen ? null : r.id)} className={cn("w-full p-4 flex items-start justify-between gap-3 text-left", failed ? "hover:bg-red-50/40" : "hover:bg-sky-50/40")}>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap mb-1">
                     {failed ? <AlertTriangle className="h-4 w-4 text-red-600" /> : <ShieldCheck className="h-4 w-4 text-sky-600" />}
-                    <span className="font-semibold text-slate-900">{r.inspection_date}</span>
+                    <span className="font-semibold text-[var(--cs-navy)]">{r.inspection_date}</span>
                     <span className={cn("text-xs px-2 py-0.5 rounded-full border", outcomeColour[r.outcome])}>{WINDOW_CHECK_OUTCOME_LABEL[r.outcome]}</span>
                     <span className={cn("text-xs px-2 py-0.5 rounded-full border", restrictorColour[r.restrictor_type])}>{RESTRICTOR_TYPE_LABEL[r.restrictor_type]}</span>
                     <span className={cn("text-xs px-2 py-0.5 rounded-full border", r.opening_compliance_with_100mm_rule ? "bg-emerald-100 text-emerald-800 border-emerald-200" : "bg-red-100 text-red-900 border-red-300")}>
@@ -203,22 +203,22 @@ export default function BuildingWindowRestrictorChecksPage() {
                       <span className="text-xs px-2 py-0.5 rounded-full border bg-amber-100 text-amber-800 border-amber-200">Re-check {r.next_due_date}</span>
                     ) : null}
                   </div>
-                  <div className="text-sm text-slate-600">{r.window_location} · {WINDOW_TYPE_LABEL[r.window_type]} · {WINDOW_FLOOR_LEVEL_LABEL[r.floor_level]} floor</div>
+                  <div className="text-sm text-[var(--cs-text-secondary)]">{r.window_location} · {WINDOW_TYPE_LABEL[r.window_type]} · {WINDOW_FLOOR_LEVEL_LABEL[r.floor_level]} floor</div>
                 </div>
-                {isOpen ? <ChevronUp className="h-5 w-5 text-slate-400" /> : <ChevronDown className="h-5 w-5 text-slate-400" />}
+                {isOpen ? <ChevronUp className="h-5 w-5 text-[var(--cs-text-muted)]" /> : <ChevronDown className="h-5 w-5 text-[var(--cs-text-muted)]" />}
               </button>
               {isOpen && (
-                <div className={cn("px-4 pb-4 border-t", failed ? "border-red-100 bg-red-50/30" : "border-slate-100 bg-sky-50/20")}>
+                <div className={cn("px-4 pb-4 border-t", failed ? "border-red-100 bg-red-50/30" : "border-[var(--cs-border-subtle)] bg-sky-50/20")}>
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 pt-4">
-                    <div className="rounded-md border border-slate-200 bg-white p-3 lg:col-span-2">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Inspection details</div>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-sm text-slate-700">
-                        <div><span className="text-slate-500">Location:</span> {r.window_location}</div>
-                        <div><span className="text-slate-500">Window type:</span> {WINDOW_TYPE_LABEL[r.window_type]}</div>
-                        <div><span className="text-slate-500">Floor level:</span> {WINDOW_FLOOR_LEVEL_LABEL[r.floor_level]}</div>
-                        <div><span className="text-slate-500">Inspected:</span> {r.inspection_date}</div>
-                        <div><span className="text-slate-500">Inspected by:</span> {getStaffName(r.inspected_by)}</div>
-                        <div><span className="text-slate-500">Outcome:</span> {WINDOW_CHECK_OUTCOME_LABEL[r.outcome]}</div>
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3 lg:col-span-2">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Inspection details</div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-sm text-[var(--cs-text-secondary)]">
+                        <div><span className="text-[var(--cs-text-muted)]">Location:</span> {r.window_location}</div>
+                        <div><span className="text-[var(--cs-text-muted)]">Window type:</span> {WINDOW_TYPE_LABEL[r.window_type]}</div>
+                        <div><span className="text-[var(--cs-text-muted)]">Floor level:</span> {WINDOW_FLOOR_LEVEL_LABEL[r.floor_level]}</div>
+                        <div><span className="text-[var(--cs-text-muted)]">Inspected:</span> {r.inspection_date}</div>
+                        <div><span className="text-[var(--cs-text-muted)]">Inspected by:</span> {getStaffName(r.inspected_by)}</div>
+                        <div><span className="text-[var(--cs-text-muted)]">Outcome:</span> {WINDOW_CHECK_OUTCOME_LABEL[r.outcome]}</div>
                       </div>
                     </div>
                     <div className="rounded-md border border-sky-200 bg-sky-50 p-3">
@@ -249,9 +249,9 @@ export default function BuildingWindowRestrictorChecksPage() {
                         {r.opening_compliance_with_100mm_rule ? "Compliant." : "NON-COMPLIANT — restrict immediately."}
                       </div>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Signage in place</div>
-                      <div className="text-sm text-slate-700">
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Signage in place</div>
+                      <div className="text-sm text-[var(--cs-text-secondary)]">
                         {r.signage_in_place ? (
                           <span className="inline-flex items-center gap-1 text-emerald-700"><CheckCircle className="h-3.5 w-3.5" /> Yes — &lsquo;Do not tamper&rsquo; notice present</span>
                         ) : (
@@ -259,9 +259,9 @@ export default function BuildingWindowRestrictorChecksPage() {
                         )}
                       </div>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Child awareness</div>
-                      <div className="text-sm text-slate-700">
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Child awareness</div>
+                      <div className="text-sm text-[var(--cs-text-secondary)]">
                         {r.child_aware ? (
                           <span className="inline-flex items-center gap-1 text-emerald-700"><CheckCircle className="h-3.5 w-3.5" /> Briefed age-appropriately — knows not to tamper</span>
                         ) : (
@@ -290,14 +290,14 @@ export default function BuildingWindowRestrictorChecksPage() {
                         <ul className="text-sm text-red-900 space-y-1">{r.flags_concerns.map((f, i) => (<li key={i} className="flex gap-2"><span>!</span><span>{f}</span></li>))}</ul>
                       </div>
                     )}
-                    <div className="rounded-md border border-slate-200 bg-white p-3 lg:col-span-2">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Next due</div>
-                      <div className="text-sm text-slate-700">
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3 lg:col-span-2">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Next due</div>
+                      <div className="text-sm text-[var(--cs-text-secondary)]">
                         Re-check by <span className="font-medium">{r.next_due_date}</span>{" "}
                         {failed ? "(emergency re-test post-repair)" : "(quarterly cycle — RoSPA guidance for child-occupied premises)"}
                       </div>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3 lg:col-span-2 text-xs text-slate-500">
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3 lg:col-span-2 text-xs text-[var(--cs-text-muted)]">
                       Inspected by {getStaffName(r.inspected_by)}
                     </div>
                   </div>

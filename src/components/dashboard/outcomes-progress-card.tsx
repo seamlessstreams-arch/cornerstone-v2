@@ -34,7 +34,7 @@ export function OutcomesProgressCard() {
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-center py-6">
-            <Loader2 className="h-5 w-5 animate-spin text-slate-400" />
+            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
           </div>
         </CardContent>
       </Card>
@@ -74,15 +74,15 @@ export function OutcomesProgressCard() {
             <div className="text-[9px] text-emerald-500">Improving</div>
           </div>
           <div className={cn("rounded-xl p-2 text-center", meta.declining > 0 ? "bg-red-50" : "bg-slate-50")}>
-            <TrendingDown className={cn("h-3 w-3 mx-auto mb-0.5", meta.declining > 0 ? "text-red-500" : "text-slate-400")} />
-            <div className={cn("text-sm font-bold tabular-nums", meta.declining > 0 ? "text-red-700" : "text-slate-400")}>{meta.declining}</div>
-            <div className={cn("text-[9px]", meta.declining > 0 ? "text-red-500" : "text-slate-400")}>Declining</div>
+            <TrendingDown className={cn("h-3 w-3 mx-auto mb-0.5", meta.declining > 0 ? "text-red-500" : "text-[var(--cs-text-muted)]")} />
+            <div className={cn("text-sm font-bold tabular-nums", meta.declining > 0 ? "text-red-700" : "text-[var(--cs-text-muted)]")}>{meta.declining}</div>
+            <div className={cn("text-[9px]", meta.declining > 0 ? "text-red-500" : "text-[var(--cs-text-muted)]")}>Declining</div>
           </div>
         </div>
 
         {/* Average rating */}
         <div className="flex items-center justify-between text-[10px] px-1">
-          <span className="text-slate-500">Average rating</span>
+          <span className="text-[var(--cs-text-muted)]">Average rating</span>
           <div className="flex items-center gap-1">
             <div className="flex items-center gap-0.5">
               {Array.from({ length: 5 }).map((_, i) => (
@@ -97,13 +97,13 @@ export function OutcomesProgressCard() {
                 />
               ))}
             </div>
-            <span className="font-bold text-slate-700 tabular-nums">{meta.avg_rating}/5</span>
+            <span className="font-bold text-[var(--cs-text-secondary)] tabular-nums">{meta.avg_rating}/5</span>
           </div>
         </div>
 
         {/* Stable count */}
         <div className="flex items-center justify-between text-[10px] px-1">
-          <span className="text-slate-500 flex items-center gap-1">
+          <span className="text-[var(--cs-text-muted)] flex items-center gap-1">
             <Minus className="h-3 w-3" /> Stable
           </span>
           <span className="font-bold text-amber-600 tabular-nums">{meta.stable}</span>
@@ -112,7 +112,7 @@ export function OutcomesProgressCard() {
         {/* Achieved count */}
         {meta.achieved > 0 && (
           <div className="flex items-center justify-between text-[10px] px-1">
-            <span className="text-slate-500 flex items-center gap-1">
+            <span className="text-[var(--cs-text-muted)] flex items-center gap-1">
               <CheckCircle2 className="h-3 w-3" /> Achieved
             </span>
             <span className="font-bold text-emerald-600 tabular-nums">{meta.achieved}</span>

@@ -194,7 +194,7 @@ export default function AuditsPage() {
   const hasFilters = filter !== "all" || search;
 
   const renderAuditCard = (audit: Audit) => (
-    <div key={audit.id} className="flex items-center gap-4 rounded-xl border border-slate-200 bg-white p-4 hover:shadow-sm transition-all">
+    <div key={audit.id} className="flex items-center gap-4 rounded-xl border border-[var(--cs-border)] bg-white p-4 hover:shadow-sm transition-all">
       <div className={cn(
         "h-10 w-10 rounded-xl flex items-center justify-center shrink-0",
         audit.status === "completed" ? "bg-emerald-100"
@@ -209,9 +209,9 @@ export default function AuditsPage() {
         )} />
       </div>
       <div className="flex-1 min-w-0">
-        <div className="text-sm font-semibold text-slate-900">{audit.title}</div>
+        <div className="text-sm font-semibold text-[var(--cs-navy)]">{audit.title}</div>
         <div className="flex items-center gap-2 mt-0.5">
-          <span className="text-xs text-slate-500">{formatDate(audit.date)}</span>
+          <span className="text-xs text-[var(--cs-text-muted)]">{formatDate(audit.date)}</span>
           {audit.category && (
             <Badge variant="outline" className="text-[10px] rounded-full">{CATEGORY_LABEL[audit.category] ?? audit.category}</Badge>
           )}
@@ -226,7 +226,7 @@ export default function AuditsPage() {
               color={audit.score >= 90 ? "bg-emerald-500" : audit.score >= 70 ? "bg-amber-500" : "bg-red-500"}
               className="h-1.5"
             />
-            <div className="text-[10px] text-slate-400 mt-1">
+            <div className="text-[10px] text-[var(--cs-text-muted)] mt-1">
               {audit.score}/{audit.max_score}
             </div>
           </div>
@@ -350,10 +350,10 @@ export default function AuditsPage() {
               { label: "Open Findings", value: totalFindings, icon: AlertTriangle, color: "text-orange-600", bg: "bg-orange-50" },
               { label: "Avg Score", value: `${avgScore}%`, icon: BarChart3, color: avgScore >= 80 ? "text-emerald-600" : avgScore >= 60 ? "text-amber-600" : "text-red-600", bg: avgScore >= 80 ? "bg-emerald-50" : avgScore >= 60 ? "bg-amber-50" : "bg-red-50" },
             ].map(({ label, value, icon: Icon, color, bg }) => (
-              <div key={label} className="rounded-2xl border border-slate-200 bg-white p-5">
+              <div key={label} className="rounded-2xl border border-[var(--cs-border)] bg-white p-5">
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">{label}</div>
+                    <div className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider">{label}</div>
                     <div className={cn("mt-1 text-3xl font-bold tabular-nums", color)}>{value}</div>
                   </div>
                   <div className={cn("rounded-2xl p-3", bg)}><Icon className={cn("h-5 w-5", color)} /></div>
@@ -378,10 +378,10 @@ export default function AuditsPage() {
                     const scoreColour = stat.avgScore >= 80 ? "text-emerald-600" : stat.avgScore >= 60 ? "text-amber-600" : "text-red-600";
                     const barColour = stat.avgScore >= 80 ? "bg-emerald-400" : stat.avgScore >= 60 ? "bg-amber-400" : "bg-red-400";
                     return (
-                      <div key={cat.value} className="rounded-xl border border-slate-100 bg-slate-50 p-3">
+                      <div key={cat.value} className="rounded-xl border border-[var(--cs-border-subtle)] bg-slate-50 p-3">
                         <div className="flex items-center justify-between mb-1.5">
-                          <span className="text-[11px] font-medium text-slate-600">{cat.label}</span>
-                          <span className={cn("text-[11px] font-bold tabular-nums", stat.completed > 0 ? scoreColour : "text-slate-400")}>
+                          <span className="text-[11px] font-medium text-[var(--cs-text-secondary)]">{cat.label}</span>
+                          <span className={cn("text-[11px] font-bold tabular-nums", stat.completed > 0 ? scoreColour : "text-[var(--cs-text-muted)]")}>
                             {stat.completed > 0 ? `${stat.avgScore}%` : "—"}
                           </span>
                         </div>
@@ -391,7 +391,7 @@ export default function AuditsPage() {
                           )}
                         </div>
                         <div className="flex items-center justify-between mt-1.5">
-                          <span className="text-[10px] text-slate-400">{stat.completed} completed</span>
+                          <span className="text-[10px] text-[var(--cs-text-muted)]">{stat.completed} completed</span>
                           {stat.findings > 0 && (
                             <span className="text-[10px] text-amber-600">{stat.findings} findings</span>
                           )}
@@ -412,7 +412,7 @@ export default function AuditsPage() {
 
                 {/* Search */}
                 <div className="relative min-w-[180px] max-w-xs">
-                  <Search className="absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-400" />
+                  <Search className="absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[var(--cs-text-muted)]" />
                   <Input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search audits…" className="pl-9 h-8 text-xs" />
                 </div>
 
@@ -424,7 +424,7 @@ export default function AuditsPage() {
                       onClick={() => setFilter(f)}
                       className={cn(
                         "px-3 py-1.5 rounded-lg text-xs font-medium capitalize",
-                        filter === f ? "bg-slate-900 text-white" : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                        filter === f ? "bg-slate-900 text-white" : "bg-slate-100 text-[var(--cs-text-secondary)] hover:bg-slate-200"
                       )}
                     >
                       {f.replace(/_/g, " ")}
@@ -434,11 +434,11 @@ export default function AuditsPage() {
 
                 {/* Sort */}
                 <div className="flex items-center gap-1.5">
-                  <ArrowUpDown className="h-3.5 w-3.5 text-slate-400" />
+                  <ArrowUpDown className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
                   <select
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value as AuditSortKey)}
-                    className="rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-xs text-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-900"
+                    className="rounded-lg border border-[var(--cs-border)] bg-white px-2 py-1.5 text-xs text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-slate-900"
                   >
                     <option value="date">Date</option>
                     <option value="score">Score</option>
@@ -448,17 +448,17 @@ export default function AuditsPage() {
                 </div>
 
                 {/* Group toggle */}
-                <div className="flex gap-0.5 rounded-lg border border-slate-200 bg-white p-0.5">
+                <div className="flex gap-0.5 rounded-lg border border-[var(--cs-border)] bg-white p-0.5">
                   <button
                     onClick={() => setGroupBy("none")}
-                    className={cn("rounded-md px-2 py-1 text-xs transition-colors", groupBy === "none" ? "bg-slate-900 text-white" : "text-slate-500 hover:text-slate-700")}
+                    className={cn("rounded-md px-2 py-1 text-xs transition-colors", groupBy === "none" ? "bg-slate-900 text-white" : "text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)]")}
                     title="Flat list"
                   >
                     <LayoutList className="h-3.5 w-3.5" />
                   </button>
                   <button
                     onClick={() => setGroupBy("category")}
-                    className={cn("rounded-md px-2 py-1 text-xs transition-colors", groupBy === "category" ? "bg-slate-900 text-white" : "text-slate-500 hover:text-slate-700")}
+                    className={cn("rounded-md px-2 py-1 text-xs transition-colors", groupBy === "category" ? "bg-slate-900 text-white" : "text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)]")}
                     title="Group by category"
                   >
                     <FolderOpen className="h-3.5 w-3.5" />
@@ -468,7 +468,7 @@ export default function AuditsPage() {
             </CardHeader>
             <CardContent>
               {auditsQuery.isLoading ? (
-                <div className="py-8 text-center text-sm text-slate-400">Loading audits…</div>
+                <div className="py-8 text-center text-sm text-[var(--cs-text-muted)]">Loading audits…</div>
               ) : (
                 <div className="space-y-3">
                   {/* Flat list */}
@@ -478,10 +478,10 @@ export default function AuditsPage() {
                   {grouped && Array.from(grouped.entries()).map(([cat, catAudits]) => (
                     <div key={cat} className="space-y-2">
                       <div className="flex items-center gap-2 pt-2 pb-1">
-                        <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
+                        <span className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide">
                           {CATEGORY_LABEL[cat] ?? cat}
                         </span>
-                        <span className="text-[10px] text-slate-400 bg-slate-100 rounded-full px-1.5 py-0.5 tabular-nums">{catAudits.length}</span>
+                        <span className="text-[10px] text-[var(--cs-text-muted)] bg-slate-100 rounded-full px-1.5 py-0.5 tabular-nums">{catAudits.length}</span>
                         <div className="flex-1 h-px bg-slate-100" />
                       </div>
                       {catAudits.map(renderAuditCard)}
@@ -489,7 +489,7 @@ export default function AuditsPage() {
                   ))}
 
                   {filtered.length === 0 && (
-                    <div className="py-8 text-center text-sm text-slate-400">
+                    <div className="py-8 text-center text-sm text-[var(--cs-text-muted)]">
                       {hasFilters ? "No audits match your filters." : "No audits yet. Schedule your first audit to get started."}
                     </div>
                   )}
@@ -499,8 +499,8 @@ export default function AuditsPage() {
           </Card>
 
           {/* ── Regulatory footer ─────────────────────────────────────────── */}
-          <div className="rounded-xl border border-slate-100 bg-slate-50 px-4 py-3 text-xs text-slate-500">
-            <span className="font-semibold text-slate-600">Regulatory Basis — </span>
+          <div className="rounded-xl border border-[var(--cs-border-subtle)] bg-slate-50 px-4 py-3 text-xs text-[var(--cs-text-muted)]">
+            <span className="font-semibold text-[var(--cs-text-secondary)]">Regulatory Basis — </span>
             Children&apos;s Homes Regulations 2015: Reg 45 (independent person reviews) and the Guide to the Quality Standards (2.11) require
             regular internal auditing covering medication, health & safety, care records, safeguarding, staffing, environment, and finance.
             Audit findings must generate training needs and improvement actions. Ofsted inspectors review audit schedules and follow-up as evidence
@@ -516,18 +516,18 @@ export default function AuditsPage() {
           onClick={() => setShowNew(false)}
         >
           <div
-            className="w-full max-w-md bg-white rounded-2xl shadow-2xl p-6"
+            className="w-full max-w-md bg-white rounded-2xl shadow-[var(--cs-shadow-elevated)] p-6"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between mb-4">
-              <span className="text-sm font-bold text-slate-900">Schedule New Audit</span>
-              <button onClick={() => setShowNew(false)} className="text-slate-400 hover:text-slate-600">
+              <span className="text-sm font-bold text-[var(--cs-navy)]">Schedule New Audit</span>
+              <button onClick={() => setShowNew(false)} className="text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)]">
                 <X className="h-4 w-4" />
               </button>
             </div>
             <div className="space-y-3">
               <div>
-                <label className="text-xs font-semibold text-slate-600 block mb-1.5">
+                <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">
                   Audit title <span className="text-red-500">*</span>
                 </label>
                 <Input
@@ -538,11 +538,11 @@ export default function AuditsPage() {
                 />
               </div>
               <div>
-                <label className="text-xs font-semibold text-slate-600 block mb-1.5">Category</label>
+                <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">Category</label>
                 <select
                   value={form.category}
                   onChange={(e) => setForm((f) => ({ ...f, category: e.target.value }))}
-                  className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-400"
+                  className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2.5 text-sm text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-slate-400"
                 >
                   {AUDIT_CATEGORIES.map((c) => (
                     <option key={c.value} value={c.value}>{c.label}</option>
@@ -550,7 +550,7 @@ export default function AuditsPage() {
                 </select>
               </div>
               <div>
-                <label className="text-xs font-semibold text-slate-600 block mb-1.5">Scheduled date</label>
+                <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">Scheduled date</label>
                 <Input
                   type="date"
                   value={form.date}

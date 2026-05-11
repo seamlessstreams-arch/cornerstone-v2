@@ -97,7 +97,7 @@ export function CarePlanComplianceCard() {
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-center py-6">
-            <Loader2 className="h-5 w-5 animate-spin text-slate-400" />
+            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
           </div>
         </CardContent>
       </Card>
@@ -123,14 +123,14 @@ export function CarePlanComplianceCard() {
         {/* RAG distribution */}
         <div className="grid grid-cols-3 gap-2">
           <div className={cn("rounded-xl p-2 text-center", redCount > 0 ? "bg-red-50" : "bg-slate-50")}>
-            <AlertTriangle className={cn("h-3 w-3 mx-auto mb-0.5", redCount > 0 ? "text-red-500" : "text-slate-400")} />
-            <div className={cn("text-sm font-bold tabular-nums", redCount > 0 ? "text-red-700" : "text-slate-400")}>{redCount}</div>
-            <div className={cn("text-[9px]", redCount > 0 ? "text-red-500" : "text-slate-400")}>At Risk</div>
+            <AlertTriangle className={cn("h-3 w-3 mx-auto mb-0.5", redCount > 0 ? "text-red-500" : "text-[var(--cs-text-muted)]")} />
+            <div className={cn("text-sm font-bold tabular-nums", redCount > 0 ? "text-red-700" : "text-[var(--cs-text-muted)]")}>{redCount}</div>
+            <div className={cn("text-[9px]", redCount > 0 ? "text-red-500" : "text-[var(--cs-text-muted)]")}>At Risk</div>
           </div>
           <div className={cn("rounded-xl p-2 text-center", amberCount > 0 ? "bg-amber-50" : "bg-slate-50")}>
-            <Clock className={cn("h-3 w-3 mx-auto mb-0.5", amberCount > 0 ? "text-amber-500" : "text-slate-400")} />
-            <div className={cn("text-sm font-bold tabular-nums", amberCount > 0 ? "text-amber-700" : "text-slate-400")}>{amberCount}</div>
-            <div className={cn("text-[9px]", amberCount > 0 ? "text-amber-500" : "text-slate-400")}>Review</div>
+            <Clock className={cn("h-3 w-3 mx-auto mb-0.5", amberCount > 0 ? "text-amber-500" : "text-[var(--cs-text-muted)]")} />
+            <div className={cn("text-sm font-bold tabular-nums", amberCount > 0 ? "text-amber-700" : "text-[var(--cs-text-muted)]")}>{amberCount}</div>
+            <div className={cn("text-[9px]", amberCount > 0 ? "text-amber-500" : "text-[var(--cs-text-muted)]")}>Review</div>
           </div>
           <div className="rounded-xl bg-emerald-50 p-2 text-center">
             <CheckCircle2 className="h-3 w-3 text-emerald-500 mx-auto mb-0.5" />
@@ -142,7 +142,7 @@ export function CarePlanComplianceCard() {
         {/* Goal metrics */}
         <div className="flex items-center justify-between text-[10px] px-1">
           <div className="flex items-center gap-3">
-            <span className="flex items-center gap-1 text-slate-600">
+            <span className="flex items-center gap-1 text-[var(--cs-text-secondary)]">
               <Target className="h-3 w-3" /> {totalGoals} goals
             </span>
             {achievedGoals > 0 && (
@@ -188,22 +188,22 @@ export function CarePlanComplianceCard() {
         {/* Upcoming LAC reviews */}
         {lacItems.length > 0 && (
           <div className="space-y-1">
-            <span className="text-[10px] font-medium text-slate-500 px-1">LAC Reviews</span>
+            <span className="text-[10px] font-medium text-[var(--cs-text-muted)] px-1">LAC Reviews</span>
             {lacItems.map((item) => {
               const isOverdue = item.days < 0;
               return (
                 <Link key={item.childId} href={`/young-people/${item.childId}`}>
                   <div className={cn(
-                    "flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-slate-50 transition-colors",
+                    "flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-[var(--cs-surface)] transition-colors",
                     isOverdue && "bg-red-50/50",
                   )}>
                     <Calendar className={cn("h-3 w-3 shrink-0", isOverdue ? "text-red-500" : "text-amber-500")} />
-                    <span className="text-[11px] font-medium text-slate-700 flex-1 truncate">
+                    <span className="text-[11px] font-medium text-[var(--cs-text-secondary)] flex-1 truncate">
                       {getYPName(item.childId)}
                     </span>
                     <span className={cn(
                       "text-[9px] tabular-nums shrink-0 font-medium",
-                      isOverdue ? "text-red-600" : item.days <= 14 ? "text-amber-600" : "text-slate-400",
+                      isOverdue ? "text-red-600" : item.days <= 14 ? "text-amber-600" : "text-[var(--cs-text-muted)]",
                     )}>
                       {isOverdue ? `${Math.abs(item.days)}d overdue` : item.days === 0 ? "today" : `in ${item.days}d`}
                     </span>
@@ -225,8 +225,8 @@ export function CarePlanComplianceCard() {
         )}
 
         {total === 0 && (
-          <div className="text-center py-4 text-slate-400">
-            <ClipboardList className="h-5 w-5 mx-auto mb-1 text-slate-300" />
+          <div className="text-center py-4 text-[var(--cs-text-muted)]">
+            <ClipboardList className="h-5 w-5 mx-auto mb-1 text-[var(--cs-text-gentle)]" />
             <p className="text-[10px]">No care plans loaded</p>
           </div>
         )}

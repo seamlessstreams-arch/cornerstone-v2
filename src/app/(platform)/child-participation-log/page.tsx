@@ -46,7 +46,7 @@ const categoryColor = (cat: string) => {
     staffing: "bg-indigo-100 text-indigo-800",
     complaints: "bg-red-100 text-red-800",
     menu: "bg-pink-100 text-pink-800",
-    policy: "bg-slate-100 text-slate-800",
+    policy: "bg-slate-100 text-[var(--cs-navy)]",
   };
   return colors[cat] ?? "bg-gray-100 text-gray-800";
 };
@@ -93,7 +93,7 @@ export default function ChildParticipationLogPage() {
     return (
       <PageShell title="Child Participation Log" subtitle="Loading...">
         <div className="flex items-center justify-center py-12">
-          <Loader2 className="h-8 w-8 animate-spin text-slate-400" />
+          <Loader2 className="h-8 w-8 animate-spin text-[var(--cs-text-muted)]" />
         </div>
       </PageShell>
     );
@@ -291,9 +291,9 @@ export default function ChildParticipationLogPage() {
         })}
       </div>
 
-      <div className="mt-8 bg-slate-50 border border-slate-200 rounded-lg p-4">
-        <p className="text-sm font-medium text-slate-700 mb-1">Regulatory Context</p>
-        <p className="text-xs text-slate-600">
+      <div className="mt-8 bg-slate-50 border border-[var(--cs-border)] rounded-lg p-4">
+        <p className="text-sm font-medium text-[var(--cs-text-secondary)] mb-1">Regulatory Context</p>
+        <p className="text-xs text-[var(--cs-text-secondary)]">
           Quality Standard 1 (Child-Centred Care) requires that children are consulted about
           decisions that affect them and that their views are given due weight according to their
           age and understanding (Children Act 1989 s.22). Regulation 7 requires that the child&apos;s

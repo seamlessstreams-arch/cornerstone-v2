@@ -35,7 +35,7 @@ const PRIORITY_COLOURS: Record<string, string> = {
   urgent: "bg-red-100 text-red-800 border-red-200",
   high: "bg-orange-100 text-orange-800 border-orange-200",
   medium: "bg-amber-100 text-amber-800 border-amber-200",
-  low: "bg-slate-100 text-slate-700 border-slate-200",
+  low: "bg-slate-100 text-[var(--cs-text-secondary)] border-[var(--cs-border)]",
 };
 
 function formatType(t: string): string {
@@ -70,15 +70,15 @@ function RecommendationCard({
   }
 
   const statusColours: Record<string, string> = {
-    pending: "bg-slate-100 text-slate-700",
+    pending: "bg-slate-100 text-[var(--cs-text-secondary)]",
     task_created: "bg-blue-100 text-blue-800",
     actioned: "bg-emerald-100 text-emerald-800",
-    dismissed: "bg-slate-50 text-slate-400",
+    dismissed: "bg-slate-50 text-[var(--cs-text-muted)]",
   };
 
   return (
     <div className={cn(
-      "rounded-xl border border-slate-100 bg-white p-4 space-y-3 transition-opacity",
+      "rounded-xl border border-[var(--cs-border-subtle)] bg-white p-4 space-y-3 transition-opacity",
       rec.status === "dismissed" && "opacity-50",
       rec.status === "actioned" && "opacity-70"
     )}>
@@ -97,17 +97,17 @@ function RecommendationCard({
         </div>
 
         {/* Title */}
-        <p className="text-sm font-bold text-slate-900">{rec.title}</p>
+        <p className="text-sm font-bold text-[var(--cs-navy)]">{rec.title}</p>
 
         {/* Reason */}
-        <p className="text-xs text-slate-600 leading-relaxed">{rec.reason}</p>
+        <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed">{rec.reason}</p>
 
         {/* Metadata */}
-        <div className="flex items-center gap-3 flex-wrap text-[10px] text-slate-400">
+        <div className="flex items-center gap-3 flex-wrap text-[10px] text-[var(--cs-text-muted)]">
           {childName && <span>{childName}</span>}
           {rec.assigned_role && <span>→ {rec.assigned_role}</span>}
           {rec.deadline && (
-            <span className={cn("font-medium", isOverdue ? "text-red-600" : "text-slate-500")}>
+            <span className={cn("font-medium", isOverdue ? "text-red-600" : "text-[var(--cs-text-muted)]")}>
               {isOverdue ? "OVERDUE — " : "Due "}
               {formatDate(rec.deadline)}
             </span>
@@ -117,7 +117,7 @@ function RecommendationCard({
 
       {/* Actions */}
       {rec.status === "pending" && (
-        <div className="flex items-center gap-2 flex-wrap pt-1 border-t border-slate-100">
+        <div className="flex items-center gap-2 flex-wrap pt-1 border-t border-[var(--cs-border-subtle)]">
           <Button
             size="sm"
             variant="outline"
@@ -142,14 +142,14 @@ function RecommendationCard({
             <Button
               size="sm"
               variant="ghost"
-              className="h-7 px-2.5 text-xs gap-1 text-slate-400"
+              className="h-7 px-2.5 text-xs gap-1 text-[var(--cs-text-muted)]"
               onClick={() => setConfirmDismiss(true)}
             >
               <X className="h-3 w-3" />Dismiss
             </Button>
           ) : (
             <div className="flex items-center gap-2">
-              <span className="text-xs text-slate-600">Confirm dismiss?</span>
+              <span className="text-xs text-[var(--cs-text-secondary)]">Confirm dismiss?</span>
               <Button
                 size="sm"
                 className="h-7 px-2.5 text-xs bg-slate-700 hover:bg-slate-900 text-white"
@@ -227,9 +227,9 @@ export default function RecommendationsPage() {
             { label: "Urgent", value: urgent.length, colour: "text-red-600" },
             { label: "Actioned", value: actioned.length, colour: "text-emerald-600" },
           ].map(({ label, value, colour }) => (
-            <div key={label} className="rounded-xl border border-slate-100 bg-white p-3">
+            <div key={label} className="rounded-xl border border-[var(--cs-border-subtle)] bg-white p-3">
               <div className={cn("text-2xl font-bold tabular-nums", colour)}>{value}</div>
-              <div className="text-xs text-slate-500 mt-0.5">{label}</div>
+              <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">{label}</div>
             </div>
           ))}
         </div>
@@ -243,7 +243,7 @@ export default function RecommendationsPage() {
                 onClick={() => setStatusFilter(tab.value)}
                 className={cn(
                   "rounded-full px-3 py-1 text-xs font-medium transition-colors",
-                  statusFilter === tab.value ? "bg-slate-900 text-white" : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                  statusFilter === tab.value ? "bg-slate-900 text-white" : "bg-slate-100 text-[var(--cs-text-secondary)] hover:bg-slate-200"
                 )}
               >
                 {tab.label}
@@ -253,7 +253,7 @@ export default function RecommendationsPage() {
           <select
             value={childFilter}
             onChange={(e) => setChildFilter(e.target.value)}
-            className="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-orange-300"
+            className="rounded-lg border border-[var(--cs-border)] bg-white px-3 py-1.5 text-xs text-[var(--cs-navy)] focus:outline-none focus:ring-2 focus:ring-orange-300"
             disabled={ypLoading}
           >
             {ypFilterOptions.map((yp) => (
@@ -270,8 +270,8 @@ export default function RecommendationsPage() {
         ) : filtered.length === 0 ? (
           <div className="flex flex-col items-center gap-3 py-14 text-center">
             <Lightbulb className="h-12 w-12 text-slate-200" />
-            <p className="text-sm font-semibold text-slate-700">No pending recommendations</p>
-            <p className="text-xs text-slate-400">ARIA is up to date — all recommendations have been actioned</p>
+            <p className="text-sm font-semibold text-[var(--cs-text-secondary)]">No pending recommendations</p>
+            <p className="text-xs text-[var(--cs-text-muted)]">ARIA is up to date — all recommendations have been actioned</p>
           </div>
         ) : (
           <div className="space-y-3">

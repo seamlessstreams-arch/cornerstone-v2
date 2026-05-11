@@ -160,7 +160,7 @@ export default function PreAdmissionChecklistPage() {
           return (
             <div key={checklist.id} className="rounded-xl border bg-white overflow-hidden">
               <button
-                className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                 onClick={() => setExpandedId(isExpanded ? null : checklist.id)}
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -200,10 +200,10 @@ export default function PreAdmissionChecklistPage() {
                           {item.completed ? (
                             <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 shrink-0" />
                           ) : (
-                            <Circle className="h-4 w-4 text-slate-300 mt-0.5 shrink-0" />
+                            <Circle className="h-4 w-4 text-[var(--cs-text-gentle)] mt-0.5 shrink-0" />
                           )}
                           <div className="flex-1">
-                            <span className={cn(item.completed ? "text-slate-700" : "text-slate-500")}>{item.task}</span>
+                            <span className={cn(item.completed ? "text-[var(--cs-text-secondary)]" : "text-[var(--cs-text-muted)]")}>{item.task}</span>
                             {item.notes && <span className="text-xs text-muted-foreground ml-2">({item.notes})</span>}
                             {item.completed_date && (
                               <span className="text-xs text-muted-foreground ml-2">

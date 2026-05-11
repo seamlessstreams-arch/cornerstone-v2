@@ -44,7 +44,7 @@ import { EmptyState } from "@/components/ui/empty-state";
 // ── Constants ─────────────────────────────────────────────────────────────────
 
 const SEV_BADGE: Record<string, string> = {
-  low:      "bg-slate-100 text-slate-700",
+  low:      "bg-slate-100 text-[var(--cs-text-secondary)]",
   medium:   "bg-amber-100 text-amber-800",
   high:     "bg-orange-100 text-orange-800",
   critical: "bg-red-100 text-red-800",
@@ -68,8 +68,8 @@ const CONTACT_OUTCOME_COLORS: Record<string, string> = {
   positive: "text-emerald-600 bg-emerald-50 border-emerald-200",
   mixed: "text-amber-600 bg-amber-50 border-amber-200",
   difficult: "text-orange-600 bg-orange-50 border-orange-200",
-  did_not_happen: "text-slate-500 bg-slate-50 border-slate-200",
-  cancelled_by_family: "text-slate-500 bg-slate-50 border-slate-200",
+  did_not_happen: "text-[var(--cs-text-muted)] bg-slate-50 border-[var(--cs-border)]",
+  cancelled_by_family: "text-[var(--cs-text-muted)] bg-slate-50 border-[var(--cs-border)]",
   cancelled_by_yp: "text-violet-600 bg-violet-50 border-violet-200",
 };
 
@@ -77,7 +77,7 @@ const CONTACT_OUTCOME_COLORS: Record<string, string> = {
 
 function SectionHeading({ icon: Icon, label, count }: { icon: React.ElementType; label: string; count?: number }) {
   return (
-    <h3 className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest mb-3 flex items-center gap-2">
+    <h3 className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-widest mb-3 flex items-center gap-2">
       <Icon className="h-3.5 w-3.5" />{label}
       {count !== undefined && (
         <span className="ml-auto text-[10px] font-normal">{count} record{count !== 1 ? "s" : ""}</span>
@@ -90,9 +90,9 @@ function InfoRow({ label, value, icon: Icon }: { label: string; value: React.Rea
   if (!value) return null;
   return (
     <div className="flex items-start gap-2 text-xs">
-      {Icon && <Icon className="h-3.5 w-3.5 text-slate-400 mt-0.5 shrink-0" />}
-      <span className="text-slate-500 shrink-0 w-32">{label}</span>
-      <span className="text-slate-900 font-medium">{value}</span>
+      {Icon && <Icon className="h-3.5 w-3.5 text-[var(--cs-text-muted)] mt-0.5 shrink-0" />}
+      <span className="text-[var(--cs-text-muted)] shrink-0 w-32">{label}</span>
+      <span className="text-[var(--cs-navy)] font-medium">{value}</span>
     </div>
   );
 }
@@ -104,12 +104,12 @@ function EmptyTabState({ icon: Icon, label, description, action }: {
   action?: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-200 bg-white px-8 py-10 text-center">
+    <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-[var(--cs-border)] bg-white px-8 py-10 text-center">
       <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-50 mb-4">
-        <Icon className="h-7 w-7 text-slate-300" />
+        <Icon className="h-7 w-7 text-[var(--cs-text-gentle)]" />
       </div>
-      <p className="text-[15px] font-semibold text-slate-800 mb-1">{label}</p>
-      <p className="text-sm text-slate-500 max-w-sm leading-relaxed mb-0">{description}</p>
+      <p className="text-[15px] font-semibold text-[var(--cs-navy)] mb-1">{label}</p>
+      <p className="text-sm text-[var(--cs-text-muted)] max-w-sm leading-relaxed mb-0">{description}</p>
       {action && <div className="mt-6">{action}</div>}
     </div>
   );
@@ -150,13 +150,13 @@ function ChildVoiceSummarySection({ childId, childName }: { childId: string; chi
       </div>
       {showModal && summary && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm" onClick={() => setShowModal(false)}>
-          <div className="w-full max-w-2xl bg-white shadow-2xl rounded-2xl overflow-hidden" onClick={(e) => e.stopPropagation()}>
+          <div className="w-full max-w-2xl bg-white shadow-[var(--cs-shadow-elevated)] rounded-2xl overflow-hidden" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center justify-between px-6 py-4 border-b">
-              <div className="flex items-center gap-2"><BookOpen className="h-5 w-5 text-emerald-600" /><span className="text-lg font-bold text-slate-900">Child Voice Summary</span></div>
-              <button onClick={() => setShowModal(false)} className="text-slate-400 hover:text-slate-600"><X className="h-5 w-5" /></button>
+              <div className="flex items-center gap-2"><BookOpen className="h-5 w-5 text-emerald-600" /><span className="text-lg font-bold text-[var(--cs-navy)]">Child Voice Summary</span></div>
+              <button onClick={() => setShowModal(false)} className="text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)]"><X className="h-5 w-5" /></button>
             </div>
             <div className="max-h-[60vh] overflow-y-auto p-6">
-              <div className="prose prose-sm max-w-none text-sm text-slate-700 leading-relaxed whitespace-pre-wrap">{summary}</div>
+              <div className="prose prose-sm max-w-none text-sm text-[var(--cs-text-secondary)] leading-relaxed whitespace-pre-wrap">{summary}</div>
             </div>
             <div className="px-6 py-4 border-t">
               <Button onClick={() => setShowModal(false)} className="w-full">Close</Button>
@@ -206,13 +206,13 @@ function WhatChangedSection({ childName, incidents, chronology, recentLog }: {
       </div>
       {showModal && analysis && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm" onClick={() => setShowModal(false)}>
-          <div className="w-full max-w-2xl bg-white shadow-2xl rounded-2xl overflow-hidden" onClick={(e) => e.stopPropagation()}>
+          <div className="w-full max-w-2xl bg-white shadow-[var(--cs-shadow-elevated)] rounded-2xl overflow-hidden" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center justify-between px-6 py-4 border-b">
-              <div className="flex items-center gap-2"><Activity className="h-5 w-5 text-violet-600" /><span className="text-lg font-bold text-slate-900">What Has Changed — {childName}</span></div>
-              <button onClick={() => setShowModal(false)} className="text-slate-400 hover:text-slate-600"><X className="h-5 w-5" /></button>
+              <div className="flex items-center gap-2"><Activity className="h-5 w-5 text-violet-600" /><span className="text-lg font-bold text-[var(--cs-navy)]">What Has Changed — {childName}</span></div>
+              <button onClick={() => setShowModal(false)} className="text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)]"><X className="h-5 w-5" /></button>
             </div>
             <div className="max-h-[60vh] overflow-y-auto p-6">
-              <div className="prose prose-sm max-w-none text-sm text-slate-700 leading-relaxed whitespace-pre-wrap">{analysis}</div>
+              <div className="prose prose-sm max-w-none text-sm text-[var(--cs-text-secondary)] leading-relaxed whitespace-pre-wrap">{analysis}</div>
             </div>
             <div className="px-6 py-4 border-t"><Button onClick={() => setShowModal(false)} className="w-full">Close</Button></div>
           </div>
@@ -311,7 +311,7 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
   if (query.isLoading) {
     return (
       <PageShell title="Young Person Profile" showQuickCreate={false}>
-        <div className="flex items-center justify-center py-24 gap-2 text-slate-400">
+        <div className="flex items-center justify-center py-24 gap-2 text-[var(--cs-text-muted)]">
           <Loader2 className="h-5 w-5 animate-spin" />
           <span className="text-sm">Loading profile…</span>
         </div>
@@ -324,7 +324,7 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
       <PageShell title="Young Person Profile" showQuickCreate={false}>
         <div className="flex flex-col items-center gap-3 py-24 text-center">
           <AlertCircle className="h-10 w-10 text-red-400" />
-          <p className="text-sm font-medium text-slate-600">Profile not found</p>
+          <p className="text-sm font-medium text-[var(--cs-text-secondary)]">Profile not found</p>
           <Button size="sm" variant="outline" onClick={() => router.push("/young-people")}>
             <ArrowLeft className="h-3.5 w-3.5 mr-1" />Back
           </Button>
@@ -425,7 +425,7 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
             <Avatar name={displayName} size="lg" className="shrink-0" />
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 flex-wrap">
-                <h2 className="text-xl font-bold text-slate-900">{displayName} {yp.last_name}</h2>
+                <h2 className="text-xl font-bold text-[var(--cs-navy)]">{displayName} {yp.last_name}</h2>
                 <Badge variant={yp.status === "current" ? "success" : "secondary"} className="rounded-full capitalize text-[10px]">
                   {yp.status}
                 </Badge>
@@ -435,21 +435,21 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
                   </Badge>
                 )}
               </div>
-              <div className="text-sm text-slate-500 mt-0.5">{yp.placement_type} · {yp.local_authority}</div>
+              <div className="text-sm text-[var(--cs-text-muted)] mt-0.5">{yp.placement_type} · {yp.local_authority}</div>
 
               {/* Stats row */}
               <div className="mt-3 flex flex-wrap gap-5">
                 {[
                   { label: "Incidents",  value: meta?.open_incidents ?? 0,       color: meta?.open_incidents ? "text-red-600" : "text-emerald-600" },
-                  { label: "Tasks",      value: meta?.active_tasks ?? 0,         color: meta?.active_tasks ? "text-amber-600" : "text-slate-700" },
+                  { label: "Tasks",      value: meta?.active_tasks ?? 0,         color: meta?.active_tasks ? "text-amber-600" : "text-[var(--cs-text-secondary)]" },
                   { label: "Medication", value: yp.active_medications ?? 0,      color: "text-blue-600" },
-                  { label: "Missing",    value: yp.missing_episodes_total ?? 0,  color: yp.missing_episodes_total ? "text-violet-600" : "text-slate-700" },
+                  { label: "Missing",    value: yp.missing_episodes_total ?? 0,  color: yp.missing_episodes_total ? "text-violet-600" : "text-[var(--cs-text-secondary)]" },
                   { label: "Key Work",   value: keyWorkSessions.length,           color: "text-teal-600" },
                   { label: "Contacts",   value: arrangements.length,             color: "text-indigo-600" },
                 ].map(({ label, value, color }) => (
                   <div key={label} className="text-center">
                     <div className={cn("text-2xl font-bold leading-none tabular-nums", color)}>{value}</div>
-                    <div className="text-[10px] text-slate-400 mt-0.5">{label}</div>
+                    <div className="text-[10px] text-[var(--cs-text-muted)] mt-0.5">{label}</div>
                   </div>
                 ))}
               </div>
@@ -476,7 +476,7 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
         </div>
 
         {/* ── Tab bar ────────────────────────────────────────────────────────── */}
-        <div className="flex items-end overflow-x-auto border-b border-slate-200 gap-0.5 scrollbar-none -mb-1">
+        <div className="flex items-end overflow-x-auto border-b border-[var(--cs-border)] gap-0.5 scrollbar-none -mb-1">
           {TAB_GROUPS.map((group, gi) => (
             <React.Fragment key={group.label}>
               {gi > 0 && (
@@ -490,7 +490,7 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
                     "flex items-center gap-1.5 px-3 py-2 text-[12px] font-medium border-b-2 whitespace-nowrap transition-all shrink-0",
                     tab === tabId
                       ? "border-indigo-500 text-indigo-700"
-                      : "border-transparent text-slate-500 hover:text-slate-700 hover:bg-slate-50"
+                      : "border-transparent text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] hover:bg-[var(--cs-surface)]"
                   )}
                 >
                   <Icon className="h-3.5 w-3.5 shrink-0" />
@@ -498,7 +498,7 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
                   {count !== undefined && count > 0 && (
                     <span className={cn(
                       "rounded-full px-1.5 text-[9px] font-bold",
-                      tab === tabId ? "bg-indigo-100 text-indigo-700" : "bg-slate-200 text-slate-600",
+                      tab === tabId ? "bg-indigo-100 text-indigo-700" : "bg-slate-200 text-[var(--cs-text-secondary)]",
                     )}>
                       {count}
                     </span>
@@ -534,38 +534,38 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
               <SectionHeading icon={User} label="Key Contacts" />
               {yp.key_worker && (
                 <div className="space-y-1">
-                  <div className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Key Worker</div>
+                  <div className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider">Key Worker</div>
                   <div className="flex items-center gap-2">
                     <Avatar name={yp.key_worker.full_name} size="sm" />
                     <div>
-                      <div className="text-xs font-semibold text-slate-900">{yp.key_worker.full_name}</div>
-                      <div className="text-[10px] text-slate-500">{yp.key_worker.job_title}</div>
+                      <div className="text-xs font-semibold text-[var(--cs-navy)]">{yp.key_worker.full_name}</div>
+                      <div className="text-[10px] text-[var(--cs-text-muted)]">{yp.key_worker.job_title}</div>
                     </div>
                   </div>
                 </div>
               )}
               {yp.secondary_worker && (
                 <div className="space-y-1">
-                  <div className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Secondary Worker</div>
+                  <div className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider">Secondary Worker</div>
                   <div className="flex items-center gap-2">
                     <Avatar name={yp.secondary_worker.full_name} size="sm" />
                     <div>
-                      <div className="text-xs font-semibold text-slate-900">{yp.secondary_worker.full_name}</div>
-                      <div className="text-[10px] text-slate-500">{yp.secondary_worker.job_title}</div>
+                      <div className="text-xs font-semibold text-[var(--cs-navy)]">{yp.secondary_worker.full_name}</div>
+                      <div className="text-[10px] text-[var(--cs-text-muted)]">{yp.secondary_worker.job_title}</div>
                     </div>
                   </div>
                 </div>
               )}
               <div className="space-y-1.5">
-                <div className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Social Worker</div>
-                <div className="text-xs font-semibold text-slate-900">{yp.social_worker_name}</div>
+                <div className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider">Social Worker</div>
+                <div className="text-xs font-semibold text-[var(--cs-navy)]">{yp.social_worker_name}</div>
                 {yp.social_worker_phone && <a href={`tel:${yp.social_worker_phone}`} className="flex items-center gap-1 text-xs text-blue-600 hover:underline"><Phone className="h-3 w-3" />{yp.social_worker_phone}</a>}
                 {yp.social_worker_email && <a href={`mailto:${yp.social_worker_email}`} className="flex items-center gap-1 text-xs text-blue-600 hover:underline"><Mail className="h-3 w-3" />{yp.social_worker_email}</a>}
               </div>
               {yp.iro_name && (
                 <div className="space-y-1.5">
-                  <div className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">IRO</div>
-                  <div className="text-xs font-semibold text-slate-900">{yp.iro_name}</div>
+                  <div className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider">IRO</div>
+                  <div className="text-xs font-semibold text-[var(--cs-navy)]">{yp.iro_name}</div>
                   {yp.iro_phone && <a href={`tel:${yp.iro_phone}`} className="flex items-center gap-1 text-xs text-blue-600 hover:underline"><Phone className="h-3 w-3" />{yp.iro_phone}</a>}
                 </div>
               )}
@@ -585,10 +585,10 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
                         task.priority === "urgent" ? "bg-red-500" :
                         task.priority === "high" ? "bg-orange-500" : "bg-slate-400"
                       )} />
-                      <span className="flex-1 text-slate-700 font-medium truncate">{task.title}</span>
+                      <span className="flex-1 text-[var(--cs-text-secondary)] font-medium truncate">{task.title}</span>
                       {task.due_date && (
                         <span className={cn("text-[10px] shrink-0",
-                          task.due_date < new Date().toISOString().slice(0, 10) ? "text-red-600 font-semibold" : "text-slate-400"
+                          task.due_date < new Date().toISOString().slice(0, 10) ? "text-red-600 font-semibold" : "text-[var(--cs-text-muted)]"
                         )}>
                           {formatRelative(task.due_date)}
                         </span>
@@ -614,7 +614,7 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
                     <span className="absolute -left-6 top-3 flex h-2.5 w-2.5 items-center justify-center">
                       <span className={cn("h-2.5 w-2.5 rounded-full shrink-0", MOOD_COLOR(entry.mood_score))} />
                     </span>
-                    <div className="rounded-2xl border border-slate-100 bg-white p-4">
+                    <div className="rounded-2xl border border-[var(--cs-border-subtle)] bg-white p-4">
                       <div className="flex items-center gap-2 mb-2">
                         <span className={cn(
                           "rounded-full px-2 py-0.5 text-[10px] font-semibold capitalize",
@@ -622,20 +622,20 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
                           entry.entry_type === "health" ? "bg-blue-100 text-blue-700" :
                           entry.entry_type === "education" ? "bg-teal-100 text-teal-700" :
                           entry.entry_type === "mood" ? "bg-violet-100 text-violet-700" :
-                          "bg-slate-100 text-slate-600"
+                          "bg-slate-100 text-[var(--cs-text-secondary)]"
                         )}>
                           {entry.entry_type}
                         </span>
                         {entry.mood_score !== null && (
-                          <span className="text-[10px] text-slate-400">Mood: {entry.mood_score}/10</span>
+                          <span className="text-[10px] text-[var(--cs-text-muted)]">Mood: {entry.mood_score}/10</span>
                         )}
                         {entry.is_significant && (
                           <Badge variant="warning" className="text-[9px] rounded-full">Significant</Badge>
                         )}
-                        <span className="ml-auto text-[10px] text-slate-400">{formatDate(entry.date)} {entry.time}</span>
+                        <span className="ml-auto text-[10px] text-[var(--cs-text-muted)]">{formatDate(entry.date)} {entry.time}</span>
                       </div>
-                      <p className="text-xs text-slate-700 leading-relaxed">{entry.content}</p>
-                      <div className="mt-2 text-[10px] text-slate-400">by {getStaffName(entry.staff_id)}</div>
+                      <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed">{entry.content}</p>
+                      <div className="mt-2 text-[10px] text-[var(--cs-text-muted)]">by {getStaffName(entry.staff_id)}</div>
                     </div>
                   </div>
                 ))}
@@ -665,11 +665,11 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
                   <div key={entry.id} className="rounded-2xl border border-teal-100 bg-white p-4">
                     <div className="flex items-center gap-2 mb-3">
                       <span className="text-[10px] font-semibold text-teal-600 bg-teal-50 rounded-full px-2 py-0.5">{entry.source}</span>
-                      <span className="text-[10px] text-slate-400">{entry.context}</span>
-                      <span className="ml-auto text-[10px] text-slate-400">{formatDate(entry.date)}</span>
+                      <span className="text-[10px] text-[var(--cs-text-muted)]">{entry.context}</span>
+                      <span className="ml-auto text-[10px] text-[var(--cs-text-muted)]">{formatDate(entry.date)}</span>
                     </div>
                     <blockquote className="border-l-2 border-teal-300 pl-3">
-                      <p className="text-sm text-slate-800 leading-relaxed italic">&ldquo;{entry.text}&rdquo;</p>
+                      <p className="text-sm text-[var(--cs-navy)] leading-relaxed italic">&ldquo;{entry.text}&rdquo;</p>
                     </blockquote>
                   </div>
                 ))}
@@ -693,7 +693,7 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
                   )}
                 </div>
               ) : (
-                <p className="text-xs text-slate-400 italic">No GP recorded</p>
+                <p className="text-xs text-[var(--cs-text-muted)] italic">No GP recorded</p>
               )}
               {yp.dietary_requirements && (
                 <InfoRow label="Dietary req." value={yp.dietary_requirements} />
@@ -728,7 +728,7 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
                       </Badge>
                     ))}
                   {yp.risk_flags.filter((f) => ["self_harm", "mental_health", "substance_misuse"].includes(f)).length === 0 && (
-                    <p className="text-xs text-slate-400">No health-specific risk flags</p>
+                    <p className="text-xs text-[var(--cs-text-muted)]">No health-specific risk flags</p>
                   )}
                 </div>
               </div>
@@ -740,7 +740,7 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
                 <button onClick={() => setTab("medication")} className="text-[11px] text-blue-600 hover:underline">Full medication tab →</button>
               </div>
               {(related?.medications?.length ?? 0) === 0 ? (
-                <p className="text-xs text-slate-400 italic">No active medications</p>
+                <p className="text-xs text-[var(--cs-text-muted)] italic">No active medications</p>
               ) : (
                 <div className="space-y-2">
                   {related?.medications?.slice(0, 3).map((med: Medication) => (
@@ -766,26 +766,26 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
                 <div key={med.id} className="rounded-2xl border bg-white p-4">
                   <div className="flex items-start justify-between gap-2">
                     <div>
-                      <div className="text-sm font-bold text-slate-900">{med.name} — {med.dosage}</div>
-                      <div className="text-xs text-slate-500 mt-0.5">{med.type === "regular" ? "Regular" : "PRN (as required)"}</div>
+                      <div className="text-sm font-bold text-[var(--cs-navy)]">{med.name} — {med.dosage}</div>
+                      <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">{med.type === "regular" ? "Regular" : "PRN (as required)"}</div>
                     </div>
                     <Badge variant={med.type === "regular" ? "default" : "secondary"} className="text-[9px] rounded-full capitalize">
                       {med.type}
                     </Badge>
                   </div>
                   <div className="mt-3 grid sm:grid-cols-2 gap-2 text-xs">
-                    <div><span className="text-slate-400">Frequency: </span><span className="font-medium text-slate-700">{med.frequency}</span></div>
-                    <div><span className="text-slate-400">Route: </span><span className="font-medium text-slate-700">{med.route}</span></div>
-                    <div><span className="text-slate-400">Prescriber: </span><span className="font-medium text-slate-700">{med.prescriber}</span></div>
-                    <div><span className="text-slate-400">Pharmacy: </span><span className="font-medium text-slate-700">{med.pharmacy}</span></div>
-                    <div><span className="text-slate-400">Stock: </span><span className="font-medium text-slate-700">{med.stock_count} remaining</span></div>
-                    <div><span className="text-slate-400">Started: </span><span className="font-medium text-slate-700">{formatDate(med.start_date)}</span></div>
+                    <div><span className="text-[var(--cs-text-muted)]">Frequency: </span><span className="font-medium text-[var(--cs-text-secondary)]">{med.frequency}</span></div>
+                    <div><span className="text-[var(--cs-text-muted)]">Route: </span><span className="font-medium text-[var(--cs-text-secondary)]">{med.route}</span></div>
+                    <div><span className="text-[var(--cs-text-muted)]">Prescriber: </span><span className="font-medium text-[var(--cs-text-secondary)]">{med.prescriber}</span></div>
+                    <div><span className="text-[var(--cs-text-muted)]">Pharmacy: </span><span className="font-medium text-[var(--cs-text-secondary)]">{med.pharmacy}</span></div>
+                    <div><span className="text-[var(--cs-text-muted)]">Stock: </span><span className="font-medium text-[var(--cs-text-secondary)]">{med.stock_count} remaining</span></div>
+                    <div><span className="text-[var(--cs-text-muted)]">Started: </span><span className="font-medium text-[var(--cs-text-secondary)]">{formatDate(med.start_date)}</span></div>
                   </div>
                   {med.special_instructions && (
                     <div className="mt-2 rounded-lg bg-blue-50 border border-blue-100 px-3 py-2 text-xs text-blue-800">{med.special_instructions}</div>
                   )}
                   {med.side_effects && (
-                    <div className="mt-2 text-xs text-slate-500"><span className="font-medium">Side effects: </span>{med.side_effects}</div>
+                    <div className="mt-2 text-xs text-[var(--cs-text-muted)]"><span className="font-medium">Side effects: </span>{med.side_effects}</div>
                   )}
                 </div>
               ))
@@ -818,12 +818,12 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
             <div className="rounded-2xl border bg-white p-4 space-y-3">
               <SectionHeading icon={BookOpen} label="Education Notes" />
               <div className="rounded-xl bg-slate-50 px-3 py-2.5">
-                <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wide mb-1">Personal Education Plan (PEP)</p>
-                <p className="text-xs text-slate-600">PEP records are maintained by the placing local authority. Contact the social worker for access.</p>
+                <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-1">Personal Education Plan (PEP)</p>
+                <p className="text-xs text-[var(--cs-text-secondary)]">PEP records are maintained by the placing local authority. Contact the social worker for access.</p>
               </div>
               <div className="rounded-xl bg-slate-50 px-3 py-2.5">
-                <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wide mb-1">EHCP / SEN</p>
-                <p className="text-xs text-slate-600">Education, Health and Care Plan details held by the placing authority.</p>
+                <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-1">EHCP / SEN</p>
+                <p className="text-xs text-[var(--cs-text-secondary)]">Education, Health and Care Plan details held by the placing authority.</p>
               </div>
               <Link href="/documents" className="flex items-center gap-2 text-xs text-blue-600 hover:underline">
                 <FileText className="h-3.5 w-3.5" />View education documents →
@@ -864,14 +864,14 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
                   >
                     <div className="flex items-start justify-between gap-2">
                       <div>
-                        <div className="text-sm font-semibold text-slate-900">{form.title}</div>
-                        <div className="text-xs text-slate-500 mt-0.5 capitalize">{form.form_type.replace(/_/g, " ")}</div>
+                        <div className="text-sm font-semibold text-[var(--cs-navy)]">{form.title}</div>
+                        <div className="text-xs text-[var(--cs-text-muted)] mt-0.5 capitalize">{form.form_type.replace(/_/g, " ")}</div>
                       </div>
                       <div className="flex items-center gap-2 shrink-0">
                         <Badge variant={form.status === "approved" ? "success" : form.status === "pending_review" ? "warning" : "secondary"} className="text-[9px] rounded-full capitalize">
                           {form.status.replace(/_/g, " ")}
                         </Badge>
-                        <ChevronRight className="h-4 w-4 text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <ChevronRight className="h-4 w-4 text-[var(--cs-text-gentle)] opacity-0 group-hover:opacity-100 transition-opacity" />
                       </div>
                     </div>
                   </div>
@@ -886,8 +886,8 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
           <div className="space-y-4">
             <div className="flex items-center justify-between gap-3">
               <div>
-                <h3 className="text-sm font-semibold text-slate-900">Key Work Sessions</h3>
-                <p className="text-xs text-slate-500 mt-0.5">Individual key work record for {displayName} — Reg 36 Children&apos;s Homes Regulations 2015</p>
+                <h3 className="text-sm font-semibold text-[var(--cs-navy)]">Key Work Sessions</h3>
+                <p className="text-xs text-[var(--cs-text-muted)] mt-0.5">Individual key work record for {displayName} — Reg 36 Children&apos;s Homes Regulations 2015</p>
               </div>
               <div className="flex items-center gap-2">
                 <Link href="/intelligence/aria/keywork">
@@ -908,14 +908,14 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
                 </p>
                 <div className="grid sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="text-[10px] font-semibold text-slate-600 uppercase tracking-wide block mb-1">Session Title *</label>
-                    <input className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-teal-400 placeholder:text-slate-400"
+                    <label className="text-[10px] font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide block mb-1">Session Title *</label>
+                    <input className="w-full rounded-xl border border-[var(--cs-border)] bg-white px-3 py-2 text-sm text-[var(--cs-navy)] focus:outline-none focus:ring-2 focus:ring-teal-400 placeholder:text-[var(--cs-text-muted)]"
                       placeholder="e.g. Safety planning session"
                       value={kwForm.title} onChange={(e) => setKwForm((p) => ({ ...p, title: e.target.value }))} />
                   </div>
                   <div>
-                    <label className="text-[10px] font-semibold text-slate-600 uppercase tracking-wide block mb-1">Theme</label>
-                    <select className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-teal-400"
+                    <label className="text-[10px] font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide block mb-1">Theme</label>
+                    <select className="w-full rounded-xl border border-[var(--cs-border)] bg-white px-3 py-2 text-sm text-[var(--cs-navy)] focus:outline-none focus:ring-2 focus:ring-teal-400"
                       value={kwForm.theme} onChange={(e) => setKwForm((p) => ({ ...p, theme: e.target.value as KeyWorkTheme }))}>
                       {(["staying_safe_online","missing_from_care","exploitation","healthy_relationships","emotional_regulation","trust","identity","self_esteem","education","safety_planning","voice_of_the_child","future_goals","general"] as KeyWorkTheme[]).map((t) => (
                         <option key={t} value={t}>{t.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())}</option>
@@ -924,35 +924,35 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
                   </div>
                 </div>
                 <div>
-                  <label className="text-[10px] font-semibold text-slate-600 uppercase tracking-wide block mb-1">Reason for Session</label>
-                  <textarea rows={2} className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 resize-none focus:outline-none focus:ring-2 focus:ring-teal-400 placeholder:text-slate-400"
+                  <label className="text-[10px] font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide block mb-1">Reason for Session</label>
+                  <textarea rows={2} className="w-full rounded-xl border border-[var(--cs-border)] bg-white px-3 py-2 text-sm text-[var(--cs-navy)] resize-none focus:outline-none focus:ring-2 focus:ring-teal-400 placeholder:text-[var(--cs-text-muted)]"
                     placeholder="Why was this session held?"
                     value={kwForm.reason} onChange={(e) => setKwForm((p) => ({ ...p, reason: e.target.value }))} />
                 </div>
                 <div className="grid sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="text-[10px] font-semibold text-slate-600 uppercase tracking-wide block mb-1">Aims</label>
-                    <textarea rows={2} className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 resize-none focus:outline-none focus:ring-2 focus:ring-teal-400 placeholder:text-slate-400"
+                    <label className="text-[10px] font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide block mb-1">Aims</label>
+                    <textarea rows={2} className="w-full rounded-xl border border-[var(--cs-border)] bg-white px-3 py-2 text-sm text-[var(--cs-navy)] resize-none focus:outline-none focus:ring-2 focus:ring-teal-400 placeholder:text-[var(--cs-text-muted)]"
                       placeholder="What did you aim to achieve?"
                       value={kwForm.aims} onChange={(e) => setKwForm((p) => ({ ...p, aims: e.target.value }))} />
                   </div>
                   <div>
-                    <label className="text-[10px] font-semibold text-slate-600 uppercase tracking-wide block mb-1">Desired Outcomes</label>
-                    <textarea rows={2} className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 resize-none focus:outline-none focus:ring-2 focus:ring-teal-400 placeholder:text-slate-400"
+                    <label className="text-[10px] font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide block mb-1">Desired Outcomes</label>
+                    <textarea rows={2} className="w-full rounded-xl border border-[var(--cs-border)] bg-white px-3 py-2 text-sm text-[var(--cs-navy)] resize-none focus:outline-none focus:ring-2 focus:ring-teal-400 placeholder:text-[var(--cs-text-muted)]"
                       placeholder="What were the hoped-for outcomes?"
                       value={kwForm.desired_outcomes} onChange={(e) => setKwForm((p) => ({ ...p, desired_outcomes: e.target.value }))} />
                   </div>
                 </div>
                 <div>
                   <label className="text-[10px] font-semibold text-teal-700 uppercase tracking-wide block mb-1">Child Voice *</label>
-                  <textarea rows={3} className="w-full rounded-xl border border-teal-200 bg-white px-3 py-2 text-sm text-slate-800 resize-none focus:outline-none focus:ring-2 focus:ring-teal-400 placeholder:text-slate-400"
+                  <textarea rows={3} className="w-full rounded-xl border border-teal-200 bg-white px-3 py-2 text-sm text-[var(--cs-navy)] resize-none focus:outline-none focus:ring-2 focus:ring-teal-400 placeholder:text-[var(--cs-text-muted)]"
                     placeholder={`What did ${displayName} say, feel, or express? Use their own words where possible…`}
                     value={kwForm.child_voice} onChange={(e) => setKwForm((p) => ({ ...p, child_voice: e.target.value }))} />
                   <p className="text-[10px] text-teal-600 mt-1">Record faithfully — this is the voice of the child</p>
                 </div>
                 <div>
-                  <label className="text-[10px] font-semibold text-slate-600 uppercase tracking-wide block mb-1">Staff Reflection</label>
-                  <textarea rows={2} className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 resize-none focus:outline-none focus:ring-2 focus:ring-teal-400 placeholder:text-slate-400"
+                  <label className="text-[10px] font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide block mb-1">Staff Reflection</label>
+                  <textarea rows={2} className="w-full rounded-xl border border-[var(--cs-border)] bg-white px-3 py-2 text-sm text-[var(--cs-navy)] resize-none focus:outline-none focus:ring-2 focus:ring-teal-400 placeholder:text-[var(--cs-text-muted)]"
                     placeholder="How did the session go? What will you do differently next time?"
                     value={kwForm.staff_reflection} onChange={(e) => setKwForm((p) => ({ ...p, staff_reflection: e.target.value }))} />
                 </div>
@@ -982,37 +982,37 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
                     session.status === "approved" ? "bg-emerald-100 text-emerald-700" :
                     session.status === "reviewed" ? "bg-blue-100 text-blue-700" :
                     session.status === "completed" ? "bg-teal-100 text-teal-700" :
-                    "bg-slate-100 text-slate-600";
+                    "bg-slate-100 text-[var(--cs-text-secondary)]";
                   return (
-                    <div key={session.id} className="rounded-2xl border border-slate-100 bg-white p-4 space-y-3">
+                    <div key={session.id} className="rounded-2xl border border-[var(--cs-border-subtle)] bg-white p-4 space-y-3">
                       <div className="flex items-start gap-3">
                         <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-teal-100 shrink-0">
                           <MessageCircle className="h-4 w-4 text-teal-600" />
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 flex-wrap">
-                            <span className="text-sm font-semibold text-slate-900">{session.title}</span>
+                            <span className="text-sm font-semibold text-[var(--cs-navy)]">{session.title}</span>
                             <Badge className={cn("text-[9px] rounded-full capitalize h-4 px-1.5", statusColour)}>{session.status}</Badge>
                           </div>
                           <div className="flex items-center gap-2 mt-0.5 flex-wrap">
-                            <span className="flex items-center gap-1 text-[10px] text-slate-500"><Tag className="h-2.5 w-2.5" />{session.theme.replace(/_/g, " ")}</span>
-                            {session.created_at && <span className="text-[10px] text-slate-400">{formatRelative(session.created_at.slice(0, 10))}</span>}
-                            {session.created_by && <span className="text-[10px] text-slate-400">· {getStaffName(session.created_by)}</span>}
+                            <span className="flex items-center gap-1 text-[10px] text-[var(--cs-text-muted)]"><Tag className="h-2.5 w-2.5" />{session.theme.replace(/_/g, " ")}</span>
+                            {session.created_at && <span className="text-[10px] text-[var(--cs-text-muted)]">{formatRelative(session.created_at.slice(0, 10))}</span>}
+                            {session.created_by && <span className="text-[10px] text-[var(--cs-text-muted)]">· {getStaffName(session.created_by)}</span>}
                           </div>
                         </div>
                       </div>
-                      {session.reason && <div><p className="text-[10px] font-semibold text-slate-400 uppercase tracking-wide mb-0.5">Reason</p><p className="text-xs text-slate-600 leading-relaxed">{session.reason}</p></div>}
+                      {session.reason && <div><p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-0.5">Reason</p><p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed">{session.reason}</p></div>}
                       {session.child_voice && (
                         <div className="rounded-xl border border-teal-100 bg-teal-50 p-3">
                           <p className="text-[10px] font-semibold text-teal-700 uppercase tracking-wide mb-1 flex items-center gap-1"><MessageCircle className="h-2.5 w-2.5" />Child Voice</p>
                           <p className="text-xs text-teal-900 leading-relaxed italic">&ldquo;{session.child_voice}&rdquo;</p>
                         </div>
                       )}
-                      {session.staff_reflection && <div><p className="text-[10px] font-semibold text-slate-400 uppercase tracking-wide mb-0.5">Staff Reflection</p><p className="text-xs text-slate-600 leading-relaxed">{session.staff_reflection}</p></div>}
+                      {session.staff_reflection && <div><p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-0.5">Staff Reflection</p><p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed">{session.staff_reflection}</p></div>}
                       {session.aria_summary && (
                         <div className="rounded-xl border border-violet-100 bg-violet-50/40 px-3 py-2">
                           <p className="text-[10px] font-semibold text-violet-600 uppercase tracking-wide mb-0.5 flex items-center gap-1"><Sparkles className="h-2.5 w-2.5" />Aria Summary</p>
-                          <p className="text-xs text-slate-700">{session.aria_summary}</p>
+                          <p className="text-xs text-[var(--cs-text-secondary)]">{session.aria_summary}</p>
                         </div>
                       )}
                     </div>
@@ -1021,11 +1021,11 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
               </div>
             )}
 
-            <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 flex items-start gap-2.5">
-              <Shield className="h-3.5 w-3.5 text-slate-400 mt-0.5 shrink-0" />
+            <div className="rounded-xl border border-[var(--cs-border)] bg-slate-50 p-4 flex items-start gap-2.5">
+              <Shield className="h-3.5 w-3.5 text-[var(--cs-text-muted)] mt-0.5 shrink-0" />
               <div>
-                <p className="text-[10px] font-semibold text-slate-600 uppercase tracking-wide mb-0.5">Regulation 36 — Key Working</p>
-                <p className="text-[10px] text-slate-500 leading-relaxed">Each looked after child must have a designated keyworker who maintains regular individual sessions. Sessions must be recorded and evidence the child&apos;s voice, aims, and follow-up actions.</p>
+                <p className="text-[10px] font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide mb-0.5">Regulation 36 — Key Working</p>
+                <p className="text-[10px] text-[var(--cs-text-muted)] leading-relaxed">Each looked after child must have a designated keyworker who maintains regular individual sessions. Sessions must be recorded and evidence the child&apos;s voice, aims, and follow-up actions.</p>
               </div>
             </div>
           </div>
@@ -1036,8 +1036,8 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-sm font-semibold text-slate-900">Family Contact</h3>
-                <p className="text-xs text-slate-500 mt-0.5">Approved contact arrangements and recorded sessions for {displayName}</p>
+                <h3 className="text-sm font-semibold text-[var(--cs-navy)]">Family Contact</h3>
+                <p className="text-xs text-[var(--cs-text-muted)] mt-0.5">Approved contact arrangements and recorded sessions for {displayName}</p>
               </div>
               <Link href="/family-contact">
                 <Button variant="outline" size="sm" className="text-xs gap-1.5">
@@ -1047,7 +1047,7 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
             </div>
 
             {contactArrangementsQuery.isLoading ? (
-              <div className="flex items-center gap-2 py-6 text-slate-400"><Loader2 className="h-4 w-4 animate-spin" /><span className="text-sm">Loading contact data…</span></div>
+              <div className="flex items-center gap-2 py-6 text-[var(--cs-text-muted)]"><Loader2 className="h-4 w-4 animate-spin" /><span className="text-sm">Loading contact data…</span></div>
             ) : arrangements.length === 0 ? (
               <EmptyTabState
                 icon={HeartHandshake}
@@ -1063,17 +1063,17 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
                     <div key={arr.id} className="rounded-2xl border bg-white p-4">
                       <div className="flex items-start justify-between gap-2">
                         <div>
-                          <div className="text-sm font-semibold text-slate-900 capitalize">
+                          <div className="text-sm font-semibold text-[var(--cs-navy)] capitalize">
                             {CONTACT_TYPE_LABELS[arr.contact_type] ?? arr.contact_type}
                           </div>
-                          <div className="text-xs text-slate-500 mt-0.5">
+                          <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">
                             {arr.frequency_detail} · {arr.supervision_level?.replace(/_/g, " ")}
                           </div>
                         </div>
                         <Badge className={cn("text-[9px] rounded-full capitalize",
                           arr.status === "active" ? "bg-emerald-100 text-emerald-700" :
                           arr.status === "suspended" ? "bg-amber-100 text-amber-700" :
-                          "bg-slate-100 text-slate-600"
+                          "bg-slate-100 text-[var(--cs-text-secondary)]"
                         )}>
                           {arr.status}
                         </Badge>
@@ -1091,15 +1091,15 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
                   <div className="space-y-2">
                     <SectionHeading icon={Clock} label="Recent Contact Sessions" count={contactLogs.length} />
                     {contactLogs.slice(0, 5).map((log) => (
-                      <div key={log.id} className={cn("rounded-2xl border p-4", CONTACT_OUTCOME_COLORS[log.outcome] ?? "border-slate-100 bg-white")}>
+                      <div key={log.id} className={cn("rounded-2xl border p-4", CONTACT_OUTCOME_COLORS[log.outcome] ?? "border-[var(--cs-border-subtle)] bg-white")}>
                         <div className="flex items-center gap-2 mb-1">
-                          <span className="text-sm font-semibold text-slate-900">{formatDate(log.date)}</span>
-                          <span className="text-xs text-slate-500">{CONTACT_TYPE_LABELS[log.contact_type] ?? log.contact_type}</span>
+                          <span className="text-sm font-semibold text-[var(--cs-navy)]">{formatDate(log.date)}</span>
+                          <span className="text-xs text-[var(--cs-text-muted)]">{CONTACT_TYPE_LABELS[log.contact_type] ?? log.contact_type}</span>
                           <Badge className={cn("text-[9px] rounded-full capitalize ml-auto", CONTACT_OUTCOME_COLORS[log.outcome])}>
                             {log.outcome?.replace(/_/g, " ")}
                           </Badge>
                         </div>
-                        {log.narrative && <p className="text-xs text-slate-600 leading-relaxed line-clamp-2">{log.narrative}</p>}
+                        {log.narrative && <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed line-clamp-2">{log.narrative}</p>}
                         {log.yp_voice && (
                           <div className="mt-2 rounded-lg border-l-2 border-teal-300 pl-3">
                             <p className="text-xs text-teal-800 italic">&ldquo;{log.yp_voice}&rdquo;</p>
@@ -1118,7 +1118,7 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
         {tab === "missing" && (
           <div className="space-y-3">
             {missingQuery.isLoading ? (
-              <div className="flex items-center gap-2 py-6 text-slate-400"><Loader2 className="h-4 w-4 animate-spin" /><span className="text-sm">Loading missing episodes…</span></div>
+              <div className="flex items-center gap-2 py-6 text-[var(--cs-text-muted)]"><Loader2 className="h-4 w-4 animate-spin" /><span className="text-sm">Loading missing episodes…</span></div>
             ) : missingEpisodes.length === 0 ? (
               <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-8 text-center">
                 <CheckCircle2 className="h-10 w-10 text-emerald-400 mx-auto mb-3" />
@@ -1148,7 +1148,7 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
                     <div className="flex items-start justify-between gap-2">
                       <div>
                         <div className="flex items-center gap-2">
-                          <span className="text-sm font-bold text-slate-900">{episode.reference}</span>
+                          <span className="text-sm font-bold text-[var(--cs-navy)]">{episode.reference}</span>
                           <Badge className={cn("text-[9px] rounded-full capitalize", SEV_BADGE[episode.risk_level])}>
                             {episode.risk_level} risk
                           </Badge>
@@ -1156,7 +1156,7 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
                             <Badge variant="destructive" className="text-[9px] rounded-full">Active</Badge>
                           )}
                         </div>
-                        <div className="text-xs text-slate-500 mt-0.5">
+                        <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">
                           Missing: {formatDate(episode.date_missing)} at {episode.time_missing}
                           {episode.date_returned && ` · Returned: ${formatDate(episode.date_returned)}`}
                           {episode.duration_hours && ` · ${Math.round(episode.duration_hours)}h`}
@@ -1170,7 +1170,7 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
                         <div className={cn("font-semibold", episode.reported_to_police ? "text-emerald-700" : "text-red-700")}>
                           {episode.reported_to_police ? "✓" : "✗"} Police
                         </div>
-                        {episode.police_reference && <div className="text-[10px] text-slate-500">{episode.police_reference}</div>}
+                        {episode.police_reference && <div className="text-[10px] text-[var(--cs-text-muted)]">{episode.police_reference}</div>}
                       </div>
                       <div className={cn("rounded-lg px-2.5 py-2 text-center",
                         episode.reported_to_la ? "bg-emerald-50" : "bg-red-50"
@@ -1184,11 +1184,11 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
                       )}>
                         <div className={cn("font-semibold",
                           episode.return_interview_completed ? "text-emerald-700" :
-                          episode.date_returned ? "text-amber-700" : "text-slate-400"
+                          episode.date_returned ? "text-amber-700" : "text-[var(--cs-text-muted)]"
                         )}>
                           {episode.return_interview_completed ? "✓" : "—"} Return Interview
                         </div>
-                        {episode.return_interview_date && <div className="text-[10px] text-slate-500">{formatDate(episode.return_interview_date)}</div>}
+                        {episode.return_interview_date && <div className="text-[10px] text-[var(--cs-text-muted)]">{formatDate(episode.return_interview_date)}</div>}
                       </div>
                     </div>
                     {episode.contextual_safeguarding_risk && (
@@ -1197,7 +1197,7 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
                       </div>
                     )}
                     {episode.pattern_notes && (
-                      <div className="mt-2 text-xs text-slate-600 bg-slate-50 rounded-lg px-2.5 py-2">
+                      <div className="mt-2 text-xs text-[var(--cs-text-secondary)] bg-slate-50 rounded-lg px-2.5 py-2">
                         <span className="font-medium">Pattern notes: </span>{episode.pattern_notes}
                       </div>
                     )}
@@ -1225,20 +1225,20 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
                   <div className="flex items-start justify-between gap-2">
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="text-sm font-bold text-slate-900">{inc.reference}</span>
+                        <span className="text-sm font-bold text-[var(--cs-navy)]">{inc.reference}</span>
                         <span className={cn("rounded-full px-2 py-0.5 text-[10px] font-semibold capitalize", SEV_BADGE[inc.severity])}>{inc.severity}</span>
                         <Badge variant={inc.status === "open" ? "destructive" : inc.status === "closed" ? "success" : "warning"} className="text-[9px] rounded-full capitalize">
                           {inc.status.replace("_", " ")}
                         </Badge>
                       </div>
-                      <div className="text-xs text-slate-500 mt-0.5">{INCIDENT_TYPE_LABELS[inc.type]}</div>
+                      <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">{INCIDENT_TYPE_LABELS[inc.type]}</div>
                     </div>
                     <div className="flex items-center gap-2 shrink-0">
-                      <span className="text-xs text-slate-400">{formatDate(inc.date)}</span>
-                      <ChevronRight className="h-4 w-4 text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity" />
+                      <span className="text-xs text-[var(--cs-text-muted)]">{formatDate(inc.date)}</span>
+                      <ChevronRight className="h-4 w-4 text-[var(--cs-text-gentle)] opacity-0 group-hover:opacity-100 transition-opacity" />
                     </div>
                   </div>
-                  <p className="text-xs text-slate-600 mt-2 line-clamp-2">{inc.description}</p>
+                  <p className="text-xs text-[var(--cs-text-secondary)] mt-2 line-clamp-2">{inc.description}</p>
                 </div>
               ))
             )}
@@ -1272,8 +1272,8 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
                   >
                     <div className="flex items-center justify-between gap-2">
                       <div>
-                        <div className="text-sm font-semibold text-slate-900">{form.title}</div>
-                        <div className="text-xs text-slate-500 mt-0.5 capitalize">{form.form_type.replace(/_/g, " ")}</div>
+                        <div className="text-sm font-semibold text-[var(--cs-navy)]">{form.title}</div>
+                        <div className="text-xs text-[var(--cs-text-muted)] mt-0.5 capitalize">{form.form_type.replace(/_/g, " ")}</div>
                       </div>
                       <Badge variant={form.status === "approved" ? "success" : "warning"} className="text-[9px] rounded-full capitalize">
                         {form.status.replace(/_/g, " ")}
@@ -1312,17 +1312,17 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
                   <div className="flex items-start justify-between gap-2">
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="text-sm font-semibold text-slate-900">{entry.title}</span>
+                        <span className="text-sm font-semibold text-[var(--cs-navy)]">{entry.title}</span>
                         {entry.significance === "critical" && <Badge variant="destructive" className="text-[9px] rounded-full">Critical</Badge>}
                         {entry.significance === "significant" && <Badge variant="warning" className="text-[9px] rounded-full">Significant</Badge>}
                       </div>
-                      <div className="text-xs text-slate-500 mt-0.5 capitalize">
+                      <div className="text-xs text-[var(--cs-text-muted)] mt-0.5 capitalize">
                         {entry.category.replace("_", " ")} · {formatDate(entry.date)}{entry.time && ` at ${entry.time}`}
                       </div>
                     </div>
                   </div>
-                  <p className="text-xs text-slate-600 mt-2 leading-relaxed">{entry.description}</p>
-                  <div className="text-[10px] text-slate-400 mt-2">Recorded by {getStaffName(entry.recorded_by)}</div>
+                  <p className="text-xs text-[var(--cs-text-secondary)] mt-2 leading-relaxed">{entry.description}</p>
+                  <div className="text-[10px] text-[var(--cs-text-muted)] mt-2">Recorded by {getStaffName(entry.recorded_by)}</div>
                 </div>
               ))
             )}
@@ -1334,8 +1334,8 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-sm font-semibold text-slate-900">Linked Documents</h3>
-                <p className="text-xs text-slate-500 mt-0.5">All documents uploaded and linked to {displayName}</p>
+                <h3 className="text-sm font-semibold text-[var(--cs-navy)]">Linked Documents</h3>
+                <p className="text-xs text-[var(--cs-text-muted)] mt-0.5">All documents uploaded and linked to {displayName}</p>
               </div>
               <SmartUploadButton variant="inline" label="Upload Document" linkedChildId={id} uploadContext={`${displayName} ${yp.last_name} — document upload`} />
             </div>
@@ -1351,7 +1351,7 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
               <div className="space-y-3">
                 {linkedDocs.map((doc) => {
                   const riskLeft: Record<string, string> = { low: "border-l-emerald-400", medium: "border-l-amber-400", high: "border-l-orange-500", critical: "border-l-red-600" };
-                  const statusBg: Record<string, string> = { review: "bg-amber-100 text-amber-700", approved: "bg-blue-100 text-blue-700", actioned: "bg-emerald-100 text-emerald-700", analysing: "bg-violet-100 text-violet-700", pending: "bg-slate-100 text-slate-600" };
+                  const statusBg: Record<string, string> = { review: "bg-amber-100 text-amber-700", approved: "bg-blue-100 text-blue-700", actioned: "bg-emerald-100 text-emerald-700", analysing: "bg-violet-100 text-violet-700", pending: "bg-slate-100 text-[var(--cs-text-secondary)]" };
                   return (
                     <div key={doc.id} className={`rounded-2xl border bg-white p-4 border-l-4 ${riskLeft[doc.ai_risk_level ?? "low"] ?? "border-l-slate-200"}`}>
                       <div className="flex items-start gap-3">
@@ -1360,15 +1360,15 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 flex-wrap mb-1">
-                            <span className="text-sm font-semibold text-slate-900 truncate">{doc.original_file_name}</span>
+                            <span className="text-sm font-semibold text-[var(--cs-navy)] truncate">{doc.original_file_name}</span>
                             {doc.document_status && (
                               <span className={`rounded-full px-2 py-0.5 text-[10px] font-semibold capitalize ${statusBg[doc.document_status] ?? statusBg.pending}`}>
                                 {doc.document_status.replace(/_/g, " ")}
                               </span>
                             )}
                           </div>
-                          {doc.ai_result?.ai_summary && <p className="text-xs text-slate-600 leading-relaxed line-clamp-2">{doc.ai_result.ai_summary}</p>}
-                          <div className="flex items-center gap-3 mt-2 text-[10px] text-slate-400">
+                          {doc.ai_result?.ai_summary && <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed line-clamp-2">{doc.ai_result.ai_summary}</p>}
+                          <div className="flex items-center gap-3 mt-2 text-[10px] text-[var(--cs-text-muted)]">
                             <span>{formatDate(doc.uploaded_at)}</span>
                             {doc.tasks_created.length > 0 && <span className="text-violet-600 font-medium">{doc.tasks_created.length} task{doc.tasks_created.length !== 1 ? "s" : ""} created</span>}
                           </div>
@@ -1399,8 +1399,8 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
                   <Brain className="h-4 w-4 text-violet-600" />
                 </div>
                 <div>
-                  <div className="text-sm font-semibold text-slate-900">Raise Training Need</div>
-                  <div className="text-xs text-slate-500">Flag a staff training need from {displayName}&apos;s care profile</div>
+                  <div className="text-sm font-semibold text-[var(--cs-navy)]">Raise Training Need</div>
+                  <div className="text-xs text-[var(--cs-text-muted)]">Flag a staff training need from {displayName}&apos;s care profile</div>
                 </div>
               </div>
               <div className="grid sm:grid-cols-2 gap-2">
@@ -1431,13 +1431,13 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
                       "flex items-center justify-between gap-2 rounded-xl border px-3 py-2.5 text-left text-xs transition-colors",
                       needsCreated.has(key)
                         ? "border-emerald-200 bg-emerald-50 text-emerald-700 cursor-default"
-                        : "border-slate-200 bg-white hover:border-violet-300 hover:bg-violet-50 text-slate-700"
+                        : "border-[var(--cs-border)] bg-white hover:border-violet-300 hover:bg-violet-50 text-[var(--cs-text-secondary)]"
                     )}
                   >
                     {needsCreated.has(key) ? (
                       <><CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" /><span className="font-medium">{label}</span><span className="text-emerald-500 text-[10px]">logged</span></>
                     ) : (
-                      <><Brain className="h-3.5 w-3.5 text-violet-500" /><span className="font-medium">{label}</span><Sparkles className="h-3 w-3 text-slate-300" /></>
+                      <><Brain className="h-3.5 w-3.5 text-violet-500" /><span className="font-medium">{label}</span><Sparkles className="h-3 w-3 text-[var(--cs-text-gentle)]" /></>
                     )}
                   </button>
                 ))}

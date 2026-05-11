@@ -95,7 +95,7 @@ export function ExportButton<T>({
       size={size}
       onClick={handleExport}
       disabled={disabled || data.length === 0}
-      className={cn("gap-1.5 text-slate-500", className)}
+      className={cn("gap-1.5 text-[var(--cs-text-muted)]", className)}
       data-no-print
     >
       <Download className="h-3.5 w-3.5" />

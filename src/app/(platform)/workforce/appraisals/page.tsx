@@ -101,7 +101,7 @@ function TeamCompetencyGrid({
             const pct = (avg / 5) * 100;
             return (
               <div key={domain} className="flex items-center gap-2">
-                <p className="text-[10px] text-slate-500 w-24 truncate shrink-0" title={COMPETENCY_DOMAIN_LABELS[domain]}>
+                <p className="text-[10px] text-[var(--cs-text-muted)] w-24 truncate shrink-0" title={COMPETENCY_DOMAIN_LABELS[domain]}>
                   {COMPETENCY_DOMAIN_LABELS[domain].split(" ").slice(0, 2).join(" ")}
                 </p>
                 <div className="flex-1 h-2 rounded-full bg-slate-100 overflow-hidden">
@@ -130,7 +130,7 @@ function TeamCompetencyGrid({
             { label: "Competent (3)", colour: "bg-blue-400" },
             { label: "Developing (1-2)", colour: "bg-amber-400" },
           ].map((l) => (
-            <div key={l.label} className="flex items-center gap-1 text-[9px] text-slate-400">
+            <div key={l.label} className="flex items-center gap-1 text-[9px] text-[var(--cs-text-muted)]">
               <div className={cn("w-2 h-2 rounded-full", l.colour)} />
               {l.label}
             </div>
@@ -163,7 +163,7 @@ function RatingDistribution({ ratingCounts }: { ratingCounts: Record<string, num
           const cfg = RATING_CONFIG[rating];
           return (
             <div key={rating} className="flex items-center gap-2">
-              <p className="text-[10px] text-slate-500 w-20 truncate shrink-0">{cfg.label}</p>
+              <p className="text-[10px] text-[var(--cs-text-muted)] w-20 truncate shrink-0">{cfg.label}</p>
               <div className="flex-1 h-3 rounded-full bg-slate-100 overflow-hidden">
                 <div
                   className={cn(
@@ -175,7 +175,7 @@ function RatingDistribution({ ratingCounts }: { ratingCounts: Record<string, num
                   style={{ width: `${pct}%` }}
                 />
               </div>
-              <span className="text-[11px] font-bold tabular-nums text-slate-700 w-4 text-right">{count}</span>
+              <span className="text-[11px] font-bold tabular-nums text-[var(--cs-text-secondary)] w-4 text-right">{count}</span>
             </div>
           );
         })}
@@ -215,12 +215,12 @@ function StaffAppraisalPanel({
           )}>
             <User className={cn(
               "h-4 w-4",
-              hasOverdue ? "text-red-600" : latestCompleted ? "text-emerald-600" : "text-slate-400",
+              hasOverdue ? "text-red-600" : latestCompleted ? "text-emerald-600" : "text-[var(--cs-text-muted)]",
             )} />
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-0.5">
-              <p className="text-sm font-bold text-slate-800">{staffName}</p>
+              <p className="text-sm font-bold text-[var(--cs-navy)]">{staffName}</p>
               {hasOverdue && (
                 <Badge className="text-[9px] h-4 px-1.5 bg-red-100 text-red-700 border-0">Overdue</Badge>
               )}
@@ -230,7 +230,7 @@ function StaffAppraisalPanel({
                 </Badge>
               )}
             </div>
-            <div className="flex items-center gap-3 text-[10px] text-slate-400">
+            <div className="flex items-center gap-3 text-[10px] text-[var(--cs-text-muted)]">
               <span>{appraisals.length} appraisal{appraisals.length !== 1 ? "s" : ""}</span>
               {latestCompleted && <span>Last: {latestCompleted.appraisal_date}</span>}
               {perStaffMeta?.next_review_date && (
@@ -241,11 +241,11 @@ function StaffAppraisalPanel({
               )}
             </div>
           </div>
-          {expanded ? <ChevronUp className="h-4 w-4 text-slate-400" /> : <ChevronDown className="h-4 w-4 text-slate-400" />}
+          {expanded ? <ChevronUp className="h-4 w-4 text-[var(--cs-text-muted)]" /> : <ChevronDown className="h-4 w-4 text-[var(--cs-text-muted)]" />}
         </button>
 
         {expanded && (
-          <div className="mt-3 pt-3 border-t border-slate-100 space-y-3">
+          <div className="mt-3 pt-3 border-t border-[var(--cs-border-subtle)] space-y-3">
             {sorted.map((appraisal) => (
               <AppraisalRow key={appraisal.id} appraisal={appraisal} staffName={staffName} showName={false} />
             ))}
@@ -280,7 +280,7 @@ function AppraisalRow({
   return (
     <div className={cn(
       "rounded-xl border bg-white transition-all",
-      appraisal.status === "overdue" ? "border-red-200" : "border-slate-200",
+      appraisal.status === "overdue" ? "border-red-200" : "border-[var(--cs-border)]",
     )}>
       <button
         onClick={() => setExpanded(!expanded)}
@@ -289,7 +289,7 @@ function AppraisalRow({
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2 flex-wrap mb-1">
-              {showName && <p className="text-sm font-bold text-slate-800">{staffName}</p>}
+              {showName && <p className="text-sm font-bold text-[var(--cs-navy)]">{staffName}</p>}
               <Badge variant="outline" className={cn("text-[10px] border gap-0.5", statusCfg.colour)}>
                 <StatusIcon className="h-2.5 w-2.5" />
                 {statusCfg.label}
@@ -300,14 +300,14 @@ function AppraisalRow({
                 </Badge>
               )}
             </div>
-            <div className="flex items-center gap-2 text-[11px] text-slate-500">
-              <TypeIcon className="h-3 w-3 text-slate-400" />
+            <div className="flex items-center gap-2 text-[11px] text-[var(--cs-text-muted)]">
+              <TypeIcon className="h-3 w-3 text-[var(--cs-text-muted)]" />
               <span>{TYPE_LABELS[appraisal.appraisal_type]}</span>
-              <span className="text-slate-300">·</span>
+              <span className="text-[var(--cs-text-gentle)]">·</span>
               <span>{appraisal.appraisal_date}</span>
               {avgScore > 0 && (
                 <>
-                  <span className="text-slate-300">·</span>
+                  <span className="text-[var(--cs-text-gentle)]">·</span>
                   <span className={cn(
                     "font-semibold",
                     avgScore >= 4 ? "text-emerald-600" : avgScore >= 3 ? "text-blue-600" : "text-amber-600",
@@ -318,7 +318,7 @@ function AppraisalRow({
               )}
             </div>
           </div>
-          {expanded ? <ChevronUp className="h-4 w-4 text-slate-400 shrink-0 mt-1" /> : <ChevronDown className="h-4 w-4 text-slate-400 shrink-0 mt-1" />}
+          {expanded ? <ChevronUp className="h-4 w-4 text-[var(--cs-text-muted)] shrink-0 mt-1" /> : <ChevronDown className="h-4 w-4 text-[var(--cs-text-muted)] shrink-0 mt-1" />}
         </div>
       </button>
 
@@ -328,8 +328,8 @@ function AppraisalRow({
           {competencyEntries.length > 0 && (
             <div className="grid grid-cols-2 sm:grid-cols-5 gap-1.5">
               {competencyEntries.map(([domain, score]) => (
-                <div key={domain} className="rounded-lg bg-slate-50 border border-slate-100 p-2 text-center">
-                  <p className="text-[9px] text-slate-400 truncate leading-tight mb-1" title={COMPETENCY_DOMAIN_LABELS[domain]}>
+                <div key={domain} className="rounded-lg bg-slate-50 border border-[var(--cs-border-subtle)] p-2 text-center">
+                  <p className="text-[9px] text-[var(--cs-text-muted)] truncate leading-tight mb-1" title={COMPETENCY_DOMAIN_LABELS[domain]}>
                     {COMPETENCY_DOMAIN_LABELS[domain].split(" ").slice(0, 2).join(" ")}
                   </p>
                   <p className={cn(
@@ -338,7 +338,7 @@ function AppraisalRow({
                   )}>
                     {score}
                   </p>
-                  <p className="text-[8px] text-slate-400">
+                  <p className="text-[8px] text-[var(--cs-text-muted)]">
                     {COMPETENCY_LEVEL_LABELS[score as CompetencyLevel]}
                   </p>
                 </div>
@@ -378,12 +378,12 @@ function AppraisalRow({
           )}
 
           {appraisal.staff_comments && (
-            <div className="rounded-lg bg-slate-50 border border-slate-100 px-3 py-2">
-              <p className="text-[10px] font-semibold text-slate-600 mb-0.5 flex items-center gap-1">
+            <div className="rounded-lg bg-slate-50 border border-[var(--cs-border-subtle)] px-3 py-2">
+              <p className="text-[10px] font-semibold text-[var(--cs-text-secondary)] mb-0.5 flex items-center gap-1">
                 <User className="h-3 w-3" />
                 Staff Comments
               </p>
-              <p className="text-xs text-slate-700 leading-relaxed">{appraisal.staff_comments}</p>
+              <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed">{appraisal.staff_comments}</p>
             </div>
           )}
 
@@ -403,11 +403,11 @@ function AppraisalRow({
               {appraisal.signed_by_staff && (
                 <span className="flex items-center gap-1 text-[10px] text-emerald-600">
                   <CheckCircle2 className="h-3 w-3" /> Signed by staff
-                  {appraisal.signed_at && <span className="text-slate-400 ml-1">{formatDate(appraisal.signed_at)}</span>}
+                  {appraisal.signed_at && <span className="text-[var(--cs-text-muted)] ml-1">{formatDate(appraisal.signed_at)}</span>}
                 </span>
               )}
               {appraisal.next_review_date && (
-                <span className="flex items-center gap-1 text-[10px] text-slate-400">
+                <span className="flex items-center gap-1 text-[10px] text-[var(--cs-text-muted)]">
                   <Calendar className="h-3 w-3" /> Next: {appraisal.next_review_date}
                 </span>
               )}
@@ -532,20 +532,20 @@ export default function AppraisalsPage() {
           {[
             {
               label: "Overdue", value: overdue,
-              colour: overdue > 0 ? "text-red-700" : "text-slate-300",
+              colour: overdue > 0 ? "text-red-700" : "text-[var(--cs-text-gentle)]",
               bg: overdue > 0 ? "border-red-200 bg-red-50" : "",
-              icon: <AlertTriangle className={cn("h-4 w-4", overdue > 0 ? "text-red-500" : "text-slate-300")} />,
+              icon: <AlertTriangle className={cn("h-4 w-4", overdue > 0 ? "text-red-500" : "text-[var(--cs-text-gentle)]")} />,
             },
             {
               label: "Scheduled", value: scheduled,
-              colour: scheduled > 0 ? "text-blue-700" : "text-slate-300",
+              colour: scheduled > 0 ? "text-blue-700" : "text-[var(--cs-text-gentle)]",
               bg: scheduled > 0 ? "border-blue-200 bg-blue-50" : "",
-              icon: <Calendar className={cn("h-4 w-4", scheduled > 0 ? "text-blue-500" : "text-slate-300")} />,
+              icon: <Calendar className={cn("h-4 w-4", scheduled > 0 ? "text-blue-500" : "text-[var(--cs-text-gentle)]")} />,
             },
             {
               label: "In Progress", value: inProgress,
-              colour: inProgress > 0 ? "text-amber-700" : "text-slate-300",
-              icon: <Clock className={cn("h-4 w-4", inProgress > 0 ? "text-amber-500" : "text-slate-300")} />,
+              colour: inProgress > 0 ? "text-amber-700" : "text-[var(--cs-text-gentle)]",
+              icon: <Clock className={cn("h-4 w-4", inProgress > 0 ? "text-amber-500" : "text-[var(--cs-text-gentle)]")} />,
             },
             {
               label: "Completed", value: completed,
@@ -558,10 +558,10 @@ export default function AppraisalsPage() {
               icon: <FileText className="h-4 w-4 text-indigo-500" />,
             },
           ].map(({ label, value, colour, bg, icon }) => (
-            <div key={label} className={cn("rounded-xl border border-slate-100 bg-white p-3 text-center", bg)}>
+            <div key={label} className={cn("rounded-xl border border-[var(--cs-border-subtle)] bg-white p-3 text-center", bg)}>
               <div className="flex justify-center mb-1">{icon}</div>
               <div className={cn("text-xl font-bold tabular-nums", colour)}>{value}</div>
-              <div className="text-[10px] text-slate-500 mt-0.5">{label}</div>
+              <div className="text-[10px] text-[var(--cs-text-muted)] mt-0.5">{label}</div>
             </div>
           ))}
         </div>
@@ -577,7 +577,7 @@ export default function AppraisalsPage() {
         {/* ── View Toggle + Filters ───────────────────────────────────────── */}
         <div className="flex items-center gap-2 flex-wrap">
           {/* View mode */}
-          <div className="flex items-center rounded-lg border border-slate-200 overflow-hidden">
+          <div className="flex items-center rounded-lg border border-[var(--cs-border)] overflow-hidden">
             {([
               { mode: "list" as ViewMode, icon: FileText, label: "All" },
               { mode: "staff" as ViewMode, icon: Users, label: "By Staff" },
@@ -589,7 +589,7 @@ export default function AppraisalsPage() {
                   "flex items-center gap-1 px-3 py-1.5 text-[11px] font-medium transition-all",
                   viewMode === mode
                     ? "bg-indigo-600 text-white"
-                    : "text-slate-500 hover:bg-slate-50",
+                    : "text-[var(--cs-text-muted)] hover:bg-[var(--cs-surface)]",
                 )}
               >
                 <Icon className="h-3 w-3" />
@@ -601,7 +601,7 @@ export default function AppraisalsPage() {
           {/* Search */}
           {viewMode === "list" && (
             <div className="relative flex-1 min-w-[180px] max-w-sm">
-              <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+              <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
               <Input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
@@ -622,7 +622,7 @@ export default function AppraisalsPage() {
                     "px-2.5 py-1 rounded-full text-[10px] font-medium border transition-all",
                     filter === f
                       ? "bg-indigo-600 text-white border-indigo-600"
-                      : "bg-white text-slate-500 border-slate-200 hover:border-indigo-300",
+                      : "bg-white text-[var(--cs-text-muted)] border-[var(--cs-border)] hover:border-indigo-300",
                   )}
                 >
                   {f === "all" ? "All" : f === "in_progress" ? "In Progress" : f.charAt(0).toUpperCase() + f.slice(1)}
@@ -642,7 +642,7 @@ export default function AppraisalsPage() {
                     "px-2.5 py-1 rounded-full text-[10px] font-medium border transition-all",
                     typeFilter === t
                       ? "bg-violet-600 text-white border-violet-600"
-                      : "bg-white text-slate-500 border-slate-200 hover:border-violet-300",
+                      : "bg-white text-[var(--cs-text-muted)] border-[var(--cs-border)] hover:border-violet-300",
                   )}
                 >
                   {t === "all" ? "All Types" : TYPE_LABELS[t]}
@@ -654,14 +654,14 @@ export default function AppraisalsPage() {
           {/* Sort */}
           {viewMode === "list" && (
             <div className="flex items-center gap-1 ml-auto">
-              <ArrowUpDown className="h-3 w-3 text-slate-400" />
+              <ArrowUpDown className="h-3 w-3 text-[var(--cs-text-muted)]" />
               {(["newest", "rating", "oldest"] as const).map((mode) => (
                 <button
                   key={mode}
                   onClick={() => setSortMode(mode)}
                   className={cn(
                     "text-[10px] px-2 py-1 rounded-md transition-all capitalize",
-                    sortMode === mode ? "bg-indigo-100 text-indigo-700 font-semibold" : "text-slate-400 hover:text-slate-600",
+                    sortMode === mode ? "bg-indigo-100 text-indigo-700 font-semibold" : "text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)]",
                   )}
                 >
                   {mode}
@@ -692,16 +692,16 @@ export default function AppraisalsPage() {
         {viewMode === "list" && (
           <>
             <div className="flex items-center justify-between">
-              <span className="text-[11px] text-slate-400">
+              <span className="text-[11px] text-[var(--cs-text-muted)]">
                 {displayed.length} appraisal{displayed.length !== 1 ? "s" : ""}
               </span>
             </div>
 
             {displayed.length === 0 ? (
-              <div className="text-center py-12 text-slate-400">
-                <UserCheck className="h-8 w-8 mx-auto mb-2 text-slate-300" />
-                <p className="text-sm font-medium text-slate-500">No appraisals match your filters</p>
-                <p className="text-xs text-slate-400 mt-1">Try adjusting your search or filter criteria</p>
+              <div className="text-center py-12 text-[var(--cs-text-muted)]">
+                <UserCheck className="h-8 w-8 mx-auto mb-2 text-[var(--cs-text-gentle)]" />
+                <p className="text-sm font-medium text-[var(--cs-text-muted)]">No appraisals match your filters</p>
+                <p className="text-xs text-[var(--cs-text-muted)] mt-1">Try adjusting your search or filter criteria</p>
               </div>
             ) : (
               <div className="space-y-3">
@@ -718,8 +718,8 @@ export default function AppraisalsPage() {
         )}
 
         {/* ── Regulatory Footer ───────────────────────────────────────────── */}
-        <div className="rounded-xl border border-slate-100 bg-slate-50 px-4 py-3 text-xs text-slate-500">
-          <span className="font-semibold text-slate-600">Regulatory Basis — </span>
+        <div className="rounded-xl border border-[var(--cs-border-subtle)] bg-slate-50 px-4 py-3 text-xs text-[var(--cs-text-muted)]">
+          <span className="font-semibold text-[var(--cs-text-secondary)]">Regulatory Basis — </span>
           Children&apos;s Homes Regulations 2015: Reg 33 (monitoring the children&apos;s home), Reg 34 (regular supervision and appraisal of all staff).
           ILACS — Quality of Care: evidence of staff receiving regular, structured appraisal linked to professional development.
         </div>

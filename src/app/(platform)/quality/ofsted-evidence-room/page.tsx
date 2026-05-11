@@ -730,8 +730,8 @@ export default function OfstedEvidenceRoomPage() {
                 <FileText className="h-5 w-5 text-blue-600" />
               </div>
               <div>
-                <p className="text-2xl font-semibold text-slate-900">{totalItems}</p>
-                <p className="text-xs text-slate-500">Total evidence items</p>
+                <p className="text-2xl font-semibold text-[var(--cs-navy)]">{totalItems}</p>
+                <p className="text-xs text-[var(--cs-text-muted)]">Total evidence items</p>
               </div>
             </div>
           </CardContent>
@@ -744,8 +744,8 @@ export default function OfstedEvidenceRoomPage() {
                 <TrendingUp className="h-5 w-5 text-emerald-600" />
               </div>
               <div>
-                <p className="text-2xl font-semibold text-slate-900">{itemsThisMonth}</p>
-                <p className="text-xs text-slate-500">Items this month</p>
+                <p className="text-2xl font-semibold text-[var(--cs-navy)]">{itemsThisMonth}</p>
+                <p className="text-xs text-[var(--cs-text-muted)]">Items this month</p>
               </div>
             </div>
           </CardContent>
@@ -758,8 +758,8 @@ export default function OfstedEvidenceRoomPage() {
                 <AlertTriangle className="h-5 w-5 text-amber-600" />
               </div>
               <div>
-                <p className="text-2xl font-semibold text-slate-900">{gapCount}</p>
-                <p className="text-xs text-slate-500">Gaps found</p>
+                <p className="text-2xl font-semibold text-[var(--cs-navy)]">{gapCount}</p>
+                <p className="text-xs text-[var(--cs-text-muted)]">Gaps found</p>
               </div>
             </div>
           </CardContent>
@@ -772,8 +772,8 @@ export default function OfstedEvidenceRoomPage() {
                 <BookOpen className="h-5 w-5 text-violet-600" />
               </div>
               <div>
-                <p className="text-2xl font-semibold text-slate-900">{packItems.length > 0 ? 1 : 0}</p>
-                <p className="text-xs text-slate-500">Evidence packs</p>
+                <p className="text-2xl font-semibold text-[var(--cs-navy)]">{packItems.length > 0 ? 1 : 0}</p>
+                <p className="text-xs text-[var(--cs-text-muted)]">Evidence packs</p>
               </div>
             </div>
           </CardContent>
@@ -806,13 +806,13 @@ export default function OfstedEvidenceRoomPage() {
           <div className="flex flex-wrap items-center gap-3">
             {/* search */}
             <div className="relative flex-1 min-w-[200px]">
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--cs-text-muted)]" />
               <input
                 type="text"
                 placeholder="Search evidence..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="h-9 w-full rounded-lg border border-slate-200 bg-white pl-9 pr-3 text-sm focus:outline-none focus:ring-1 focus:ring-slate-400"
+                className="h-9 w-full rounded-lg border border-[var(--cs-border)] bg-white pl-9 pr-3 text-sm focus:outline-none focus:ring-1 focus:ring-slate-400"
               />
             </div>
 
@@ -886,7 +886,7 @@ export default function OfstedEvidenceRoomPage() {
                 "flex h-9 items-center gap-2 rounded-lg border px-3 text-sm font-medium transition-colors",
                 showGapsOnly
                   ? "border-amber-300 bg-amber-50 text-amber-800"
-                  : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50",
+                  : "border-[var(--cs-border)] bg-white text-[var(--cs-text-secondary)] hover:bg-[var(--cs-surface)]",
               )}
             >
               <AlertTriangle className="h-3.5 w-3.5" />
@@ -901,13 +901,13 @@ export default function OfstedEvidenceRoomPage() {
         {/* ── evidence list (2 cols) ─────────────────────────────────────── */}
         <div className="lg:col-span-2 space-y-3">
           <div className="flex items-center justify-between mb-1">
-            <h2 className="text-sm font-semibold text-slate-700">
+            <h2 className="text-sm font-semibold text-[var(--cs-text-secondary)]">
               {showGapsOnly
                 ? "Evidence Gaps"
                 : `Evidence Items (${filteredEvidence.length})`}
             </h2>
             {filteredEvidence.length > 0 && !showGapsOnly && (
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-[var(--cs-text-muted)]">
                 Sorted by date, most recent first
               </p>
             )}
@@ -969,17 +969,17 @@ export default function OfstedEvidenceRoomPage() {
             </CardHeader>
             <CardContent className="space-y-4">
               {packItems.length === 0 ? (
-                <p className="text-sm text-slate-500">
+                <p className="text-sm text-[var(--cs-text-muted)]">
                   No items added yet. Use the &quot;Add to Pack&quot; button on
                   evidence items to build an inspection evidence pack.
                 </p>
               ) : (
                 <>
-                  <div className="rounded-lg border border-slate-200 bg-slate-50 p-3">
-                    <p className="text-sm font-medium text-slate-700">
+                  <div className="rounded-lg border border-[var(--cs-border)] bg-slate-50 p-3">
+                    <p className="text-sm font-medium text-[var(--cs-text-secondary)]">
                       {packItems.length} item{packItems.length !== 1 ? "s" : ""} selected
                     </p>
-                    <p className="text-xs text-slate-500 mt-1">
+                    <p className="text-xs text-[var(--cs-text-muted)] mt-1">
                       Covering{" "}
                       {new Set(
                         evidenceItems.filter((e) => packItems.includes(e.id)).map(
@@ -1002,7 +1002,7 @@ export default function OfstedEvidenceRoomPage() {
                       (ev) => (
                         <li
                           key={ev.id}
-                          className="flex items-start gap-2 text-xs text-slate-600"
+                          className="flex items-start gap-2 text-xs text-[var(--cs-text-secondary)]"
                         >
                           <CheckCircle2 className="h-3.5 w-3.5 mt-0.5 text-emerald-500 shrink-0" />
                           <span className="line-clamp-1">{ev.title}</span>
@@ -1028,7 +1028,7 @@ export default function OfstedEvidenceRoomPage() {
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="w-full text-slate-500"
+                  className="w-full text-[var(--cs-text-muted)]"
                   onClick={() => setPackItems([])}
                 >
                   Clear selection
@@ -1053,16 +1053,16 @@ export default function OfstedEvidenceRoomPage() {
                   </Badge>
                 </CardTitle>
                 {gapPanelOpen ? (
-                  <ChevronUp className="h-4 w-4 text-slate-400" />
+                  <ChevronUp className="h-4 w-4 text-[var(--cs-text-muted)]" />
                 ) : (
-                  <ChevronDown className="h-4 w-4 text-slate-400" />
+                  <ChevronDown className="h-4 w-4 text-[var(--cs-text-muted)]" />
                 )}
               </button>
             </CardHeader>
 
             {gapPanelOpen && (
               <CardContent className="space-y-3 pt-0">
-                <p className="text-xs text-slate-500">
+                <p className="text-xs text-[var(--cs-text-muted)]">
                   Areas where evidence is missing, overdue, or insufficient for
                   inspection readiness.
                 </p>
@@ -1077,7 +1077,7 @@ export default function OfstedEvidenceRoomPage() {
           <Card>
             <CardHeader className="pb-3">
               <CardTitle className="flex items-center gap-2 text-sm">
-                <BarChart3 className="h-4 w-4 text-slate-500" />
+                <BarChart3 className="h-4 w-4 text-[var(--cs-text-muted)]" />
                 Category Coverage
               </CardTitle>
             </CardHeader>
@@ -1090,7 +1090,7 @@ export default function OfstedEvidenceRoomPage() {
                   );
                   return (
                     <div key={group.label} className="flex items-center justify-between">
-                      <span className="text-xs text-slate-600 truncate mr-2">
+                      <span className="text-xs text-[var(--cs-text-secondary)] truncate mr-2">
                         {group.label}
                       </span>
                       <div className="flex items-center gap-2">
@@ -1103,7 +1103,7 @@ export default function OfstedEvidenceRoomPage() {
                             style={{ width: `${Math.min((count / 3) * 100, 100)}%` }}
                           />
                         </div>
-                        <span className="text-xs font-medium text-slate-500 w-5 text-right">
+                        <span className="text-xs font-medium text-[var(--cs-text-muted)] w-5 text-right">
                           {count}
                         </span>
                       </div>
@@ -1118,12 +1118,12 @@ export default function OfstedEvidenceRoomPage() {
       {/* ── ILACS Evidence Pack View ──────────────────────────────────────── */}
       {showPack && generatedPack && (
         <div className="fixed inset-0 z-50 bg-black/40 flex items-start justify-center pt-10 overflow-y-auto">
-          <div className="bg-white rounded-xl shadow-2xl w-full max-w-3xl mx-4 mb-10">
+          <div className="bg-white rounded-xl shadow-[var(--cs-shadow-elevated)] w-full max-w-3xl mx-4 mb-10">
             {/* Pack Header */}
             <div className="border-b p-6">
               <div className="flex items-start justify-between">
                 <div>
-                  <h2 className="text-lg font-semibold text-slate-900 flex items-center gap-2">
+                  <h2 className="text-lg font-semibold text-[var(--cs-navy)] flex items-center gap-2">
                     <BookOpen className="h-5 w-5 text-violet-600" />
                     Inspection Evidence Pack
                   </h2>
@@ -1139,11 +1139,11 @@ export default function OfstedEvidenceRoomPage() {
               {/* Summary Stats */}
               <div className="grid grid-cols-4 gap-3 mt-4">
                 <div className="bg-slate-50 rounded-lg p-3 text-center">
-                  <p className="text-2xl font-bold text-slate-900">{generatedPack.totalItems}</p>
+                  <p className="text-2xl font-bold text-[var(--cs-navy)]">{generatedPack.totalItems}</p>
                   <p className="text-xs text-muted-foreground">Evidence Items</p>
                 </div>
                 <div className="bg-slate-50 rounded-lg p-3 text-center">
-                  <p className="text-2xl font-bold text-slate-900">{generatedPack.coveragePercent}%</p>
+                  <p className="text-2xl font-bold text-[var(--cs-navy)]">{generatedPack.coveragePercent}%</p>
                   <p className="text-xs text-muted-foreground">Category Coverage</p>
                 </div>
                 <div className="bg-slate-50 rounded-lg p-3 text-center">
@@ -1153,7 +1153,7 @@ export default function OfstedEvidenceRoomPage() {
                   <p className="text-xs text-muted-foreground">Avg Confidence</p>
                 </div>
                 <div className="bg-slate-50 rounded-lg p-3 text-center">
-                  <p className="text-2xl font-bold text-slate-900">{generatedPack.byArea.filter((a) => a.items.length > 0).length}/3</p>
+                  <p className="text-2xl font-bold text-[var(--cs-navy)]">{generatedPack.byArea.filter((a) => a.items.length > 0).length}/3</p>
                   <p className="text-xs text-muted-foreground">ILACS Areas Covered</p>
                 </div>
               </div>
@@ -1173,17 +1173,17 @@ export default function OfstedEvidenceRoomPage() {
                   </div>
 
                   {area.items.length === 0 ? (
-                    <div className="border border-dashed border-slate-200 rounded-lg p-4 text-center">
-                      <p className="text-sm text-slate-400">No evidence selected for this judgement area</p>
-                      <p className="text-xs text-slate-400 mt-1">Consider adding evidence that demonstrates quality in this area</p>
+                    <div className="border border-dashed border-[var(--cs-border)] rounded-lg p-4 text-center">
+                      <p className="text-sm text-[var(--cs-text-muted)]">No evidence selected for this judgement area</p>
+                      <p className="text-xs text-[var(--cs-text-muted)] mt-1">Consider adding evidence that demonstrates quality in this area</p>
                     </div>
                   ) : (
                     <div className="space-y-2">
                       {area.items.map((ev) => (
-                        <div key={ev.id} className="border border-slate-200 rounded-lg p-3 flex items-start gap-3">
+                        <div key={ev.id} className="border border-[var(--cs-border)] rounded-lg p-3 flex items-start gap-3">
                           <div className={cn("w-2 h-2 rounded-full mt-1.5 shrink-0", CONFIDENCE_DOT[confidenceLevel(ev.confidenceScore)])} />
                           <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-slate-800 line-clamp-1">{ev.title}</p>
+                            <p className="text-sm font-medium text-[var(--cs-navy)] line-clamp-1">{ev.title}</p>
                             {ev.summary && (
                               <p className="text-xs text-muted-foreground mt-0.5 line-clamp-2">{ev.summary}</p>
                             )}
@@ -1220,10 +1220,10 @@ export default function OfstedEvidenceRoomPage() {
                   </div>
                   <div className="space-y-2">
                     {generatedPack.uncategorised.map((ev) => (
-                      <div key={ev.id} className="border border-slate-200 rounded-lg p-3 flex items-start gap-3">
+                      <div key={ev.id} className="border border-[var(--cs-border)] rounded-lg p-3 flex items-start gap-3">
                         <div className={cn("w-2 h-2 rounded-full mt-1.5 shrink-0", CONFIDENCE_DOT[confidenceLevel(ev.confidenceScore)])} />
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-slate-800 line-clamp-1">{ev.title}</p>
+                          <p className="text-sm font-medium text-[var(--cs-navy)] line-clamp-1">{ev.title}</p>
                           <div className="flex items-center gap-2 mt-1">
                             <Badge variant="outline" className="text-[10px]">
                               {CATEGORY_LABELS[ev.evidenceCategory]}
@@ -1237,8 +1237,8 @@ export default function OfstedEvidenceRoomPage() {
               )}
 
               {/* Readiness Assessment */}
-              <div className="bg-slate-50 rounded-lg p-4 border border-slate-200">
-                <h3 className="text-sm font-semibold text-slate-800 mb-2 flex items-center gap-2">
+              <div className="bg-slate-50 rounded-lg p-4 border border-[var(--cs-border)]">
+                <h3 className="text-sm font-semibold text-[var(--cs-navy)] mb-2 flex items-center gap-2">
                   <ClipboardCheck className="h-4 w-4 text-emerald-600" />
                   Readiness Assessment
                 </h3>
@@ -1298,20 +1298,20 @@ function EvidenceCard({ item, childName, inPack, onTogglePack }: EvidenceCardPro
       <CardContent className="p-4">
         {/* top row: title + confidence */}
         <div className="flex items-start justify-between gap-3 mb-2">
-          <h3 className="text-sm font-semibold text-slate-800 leading-snug">
+          <h3 className="text-sm font-semibold text-[var(--cs-navy)] leading-snug">
             {item.title}
           </h3>
           <div className="flex items-center gap-1.5 shrink-0" title={`Confidence: ${CONFIDENCE_LABEL[level]}`}>
             <span
               className={cn("h-2.5 w-2.5 rounded-full shrink-0", CONFIDENCE_DOT[level])}
             />
-            <span className="text-xs text-slate-500">{item.confidenceScore}%</span>
+            <span className="text-xs text-[var(--cs-text-muted)]">{item.confidenceScore}%</span>
           </div>
         </div>
 
         {/* summary */}
         {item.summary && (
-          <p className="text-sm text-slate-600 leading-relaxed mb-3">{item.summary}</p>
+          <p className="text-sm text-[var(--cs-text-secondary)] leading-relaxed mb-3">{item.summary}</p>
         )}
 
         {/* badges row */}
@@ -1333,7 +1333,7 @@ function EvidenceCard({ item, childName, inPack, onTogglePack }: EvidenceCardPro
         </div>
 
         {/* meta row */}
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-500 mb-3">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-[var(--cs-text-muted)] mb-3">
           <span className="flex items-center gap-1">
             <CircleDot className="h-3 w-3" />
             {SOURCE_LABELS[item.sourceLabel]}
@@ -1398,13 +1398,13 @@ function GapCard({ gap, childName }: GapCardProps) {
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-start justify-between gap-2 mb-1">
-              <h3 className="text-sm font-semibold text-slate-800">{gap.title}</h3>
+              <h3 className="text-sm font-semibold text-[var(--cs-navy)]">{gap.title}</h3>
               <Badge variant={SEVERITY_VARIANT[gap.severity]} className="shrink-0 text-[11px]">
                 {SEVERITY_LABEL[gap.severity]}
               </Badge>
             </div>
 
-            <p className="text-sm text-slate-600 mb-2">{gap.description}</p>
+            <p className="text-sm text-[var(--cs-text-secondary)] mb-2">{gap.description}</p>
 
             {childName && (
               <Badge variant="outline" className="text-[11px] mb-2">
@@ -1414,11 +1414,11 @@ function GapCard({ gap, childName }: GapCardProps) {
             )}
 
             <div className="rounded-lg bg-white border border-amber-200 p-3 mt-2">
-              <p className="text-xs font-medium text-slate-700 mb-1 flex items-center gap-1">
+              <p className="text-xs font-medium text-[var(--cs-text-secondary)] mb-1 flex items-center gap-1">
                 <ClipboardCheck className="h-3 w-3 text-amber-600" />
                 Recommendation
               </p>
-              <p className="text-xs text-slate-600 leading-relaxed">
+              <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed">
                 {gap.recommendation}
               </p>
             </div>
@@ -1433,17 +1433,17 @@ function GapCard({ gap, childName }: GapCardProps) {
 
 function GapCardCompact({ gap, childName }: GapCardProps) {
   return (
-    <div className="rounded-lg border border-slate-200 bg-white p-3">
+    <div className="rounded-lg border border-[var(--cs-border)] bg-white p-3">
       <div className="flex items-start justify-between gap-2 mb-1">
-        <h4 className="text-xs font-semibold text-slate-700 leading-snug">{gap.title}</h4>
+        <h4 className="text-xs font-semibold text-[var(--cs-text-secondary)] leading-snug">{gap.title}</h4>
         <Badge variant={SEVERITY_VARIANT[gap.severity]} className="shrink-0 text-[10px] px-1.5">
           {SEVERITY_LABEL[gap.severity]}
         </Badge>
       </div>
       {childName && (
-        <span className="text-[11px] text-slate-500">{childName}</span>
+        <span className="text-[11px] text-[var(--cs-text-muted)]">{childName}</span>
       )}
-      <p className="text-[11px] text-slate-500 mt-1 leading-relaxed line-clamp-2">
+      <p className="text-[11px] text-[var(--cs-text-muted)] mt-1 leading-relaxed line-clamp-2">
         {gap.recommendation}
       </p>
     </div>

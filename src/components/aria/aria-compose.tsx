@@ -4,7 +4,7 @@
 // AriaCompose
 //
 // A reusable composer for any long-text field in Cornerstone. Pairs a
-// textarea with the Aria microphone button and an "Ask Aria" command picker,
+// textarea with the Aria microphone button and an "Ask ARIA" command picker,
 // then renders the suggested draft for the manager to insert, send back to
 // Aria for refinement, or discard.
 //
@@ -96,7 +96,7 @@ export interface AriaComposeProps {
   sourceRecordId?: string;
   sourceField?: string;
 
-  // Optional override of the default Aria command shown in the picker.
+  // Optional override of the default ARIA command shown in the picker.
   defaultCommand?: AriaCommandId;
   // Optional override of the visible quick-pick commands.
   commands?: CommandSpec[];
@@ -115,7 +115,7 @@ export interface AriaComposeProps {
 interface AriaResult {
   outputId?: string;
   generatedText: string;
-  ariaLabel: "Aria suggested draft";
+  ariaLabel: "ARIA suggested draft";
   llmUsed: boolean;
   approvalRequired: boolean;
   persisted: boolean;
@@ -165,7 +165,7 @@ export function AriaCompose(props: AriaComposeProps) {
 
   async function runCommand() {
     if (!value || value.trim().length < 5) {
-      setError("Add some text to the field before running an Aria command.");
+      setError("Add some text to the field before running an ARIA command.");
       return;
     }
     setRunning(true);
@@ -192,7 +192,7 @@ export function AriaCompose(props: AriaComposeProps) {
       });
       const data = await res.json();
       if (!res.ok) {
-        setError(data.error ?? "Aria command failed.");
+        setError(data.error ?? "ARIA command failed.");
       } else {
         setResult(data.data as AriaResult);
         setResultEdited((data.data as AriaResult).generatedText ?? "");
@@ -254,7 +254,7 @@ export function AriaCompose(props: AriaComposeProps) {
   return (
     <div className={cn("space-y-2", className)}>
       {label ? (
-        <label className="block text-xs font-semibold text-slate-600">{label}</label>
+        <label className="block text-xs font-semibold text-[var(--cs-text-secondary)]">{label}</label>
       ) : null}
       <div className="flex items-start gap-2">
         <Textarea
@@ -280,7 +280,7 @@ export function AriaCompose(props: AriaComposeProps) {
       {canUseAria && visibleCommands.length > 0 ? (
         <div className="flex items-center gap-2 flex-wrap">
           <Sparkles className="h-3.5 w-3.5 text-violet-500" />
-          <span className="text-xs text-slate-500">Ask Aria:</span>
+          <span className="text-xs text-[var(--cs-text-muted)]">Ask ARIA:</span>
           <Select value={commandId} onValueChange={(v) => setCommandId(v as AriaCommandId)}>
             <SelectTrigger className="h-8 w-56 text-sm">
               <SelectValue />
@@ -319,7 +319,7 @@ export function AriaCompose(props: AriaComposeProps) {
             <CardTitle className="flex items-center justify-between gap-2 text-sm">
               <span className="flex items-center gap-2">
                 <Sparkles className="h-3.5 w-3.5 text-violet-500" />
-                <span>Aria suggested draft</span>
+                <span>ARIA suggested draft</span>
                 <Badge className="border bg-violet-50 text-violet-800 border-violet-200 text-xs">
                   {result.llmUsed ? "Generated" : "Not configured"}
                 </Badge>
@@ -342,7 +342,7 @@ export function AriaCompose(props: AriaComposeProps) {
                 className="min-h-[180px] text-sm"
               />
             ) : (
-              <pre className="whitespace-pre-wrap text-sm text-slate-800 font-sans">
+              <pre className="whitespace-pre-wrap text-sm text-[var(--cs-navy)] font-sans">
                 {result.generatedText}
               </pre>
             )}

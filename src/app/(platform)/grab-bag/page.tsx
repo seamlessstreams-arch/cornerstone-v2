@@ -146,8 +146,8 @@ export default function GrabBagPage() {
           {[
             { label: "Total Bags", value: totalBags, icon: Briefcase, colour: "text-blue-600" },
             { label: "Complete", value: completeBags, icon: CheckCircle2, colour: "text-green-600" },
-            { label: "Issues", value: issuesBags, icon: AlertTriangle, colour: issuesBags > 0 ? "text-red-600" : "text-slate-400" },
-            { label: "Checks Overdue", value: overdueChecks, icon: Clock, colour: overdueChecks > 0 ? "text-orange-600" : "text-slate-400" },
+            { label: "Issues", value: issuesBags, icon: AlertTriangle, colour: issuesBags > 0 ? "text-red-600" : "text-[var(--cs-text-muted)]" },
+            { label: "Checks Overdue", value: overdueChecks, icon: Clock, colour: overdueChecks > 0 ? "text-orange-600" : "text-[var(--cs-text-muted)]" },
           ].map((s) => (
             <div key={s.label} className="rounded-xl border bg-white p-4 flex items-center gap-3">
               <s.icon className={cn("h-5 w-5", s.colour)} />
@@ -208,7 +208,7 @@ export default function GrabBagPage() {
             return (
               <div key={bag.id} className="rounded-xl border bg-white overflow-hidden">
                 <button
-                  className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                  className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                   onClick={() => setExpanded(isExpanded ? null : bag.id)}
                 >
                   <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -266,7 +266,7 @@ export default function GrabBagPage() {
                               {item.present ? (
                                 <CheckCircle2 className={cn("h-4 w-4 mt-0.5 shrink-0", isExpired ? "text-orange-600" : "text-green-600")} />
                               ) : (
-                                <XCircle className={cn("h-4 w-4 mt-0.5 shrink-0", item.required ? "text-red-600" : "text-slate-400")} />
+                                <XCircle className={cn("h-4 w-4 mt-0.5 shrink-0", item.required ? "text-red-600" : "text-[var(--cs-text-muted)]")} />
                               )}
                               <div className="flex-1">
                                 <div className="flex items-center gap-2">

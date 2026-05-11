@@ -53,14 +53,14 @@ export default function AriaComposePage() {
   const [oversight, setOversight] = useState("");
 
   return (
-    <PageShell title="Aria — Compose">
+    <PageShell title="ARIA — Compose">
       <div className="mb-6 flex items-start gap-3 rounded-lg border border-violet-200 bg-violet-50 p-4 text-sm text-violet-900">
         <Sparkles className="h-5 w-5 mt-0.5 text-violet-600" />
         <div>
-          <div className="font-semibold">Aria suggested draft, never final</div>
+          <div className="font-semibold">ARIA suggested draft, never final</div>
           <p className="text-violet-800">
             This page demonstrates the universal Aria layer in action. Each field
-            below has the Aria microphone button and the Ask Aria command picker.
+            below has the Aria microphone button and the Ask ARIA command picker.
             Aria runs on the server, every output is labelled as a draft, and
             every approve, edit, reject or rewrite-request is audit-logged. The
             same widget drops into any long-text field across Cornerstone.
@@ -78,11 +78,11 @@ export default function AriaComposePage() {
         <CardContent>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1">User id (audit log)</label>
+              <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">User id (audit log)</label>
               <Input value={actorUserId} onChange={(e) => setActorUserId(e.target.value)} />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1">Role</label>
+              <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Role</label>
               <Select value={actorRole} onValueChange={(v) => setActorRole(v as AriaRole)}>
                 <SelectTrigger><SelectValue /></SelectTrigger>
                 <SelectContent>
@@ -93,11 +93,11 @@ export default function AriaComposePage() {
               </Select>
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1">Home id</label>
+              <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Home id</label>
               <Input value={homeId} onChange={(e) => setHomeId(e.target.value)} />
             </div>
           </div>
-          <p className="text-xs text-slate-500 mt-3">
+          <p className="text-xs text-[var(--cs-text-muted)] mt-3">
             Aria respects roles. Mic button, Ask-Aria picker, and HR-permissioned
             commands all hide for roles that don&apos;t hold the relevant Aria
             permission. The server enforces every check independently.
@@ -196,7 +196,7 @@ export default function AriaComposePage() {
         <CardHeader>
           <CardTitle className="text-base">Adoption pattern</CardTitle>
         </CardHeader>
-        <CardContent className="text-sm text-slate-700 space-y-2">
+        <CardContent className="text-sm text-[var(--cs-text-secondary)] space-y-2">
           <p>
             Drop <code className="text-xs bg-slate-100 rounded px-1 py-0.5">AriaCompose</code> into any existing
             form. Pass the actor identity and role from your auth context, the

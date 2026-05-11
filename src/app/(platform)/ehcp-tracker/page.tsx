@@ -39,7 +39,7 @@ import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 /* ── helpers ───────────────────────────────────────────────────────────────── */
 
 const STATUS_META: Record<EhcpPlanStatus, { label: string; color: string }> = {
-  pre_assessment: { label: "Pre-assessment", color: "bg-slate-100 text-slate-700" },
+  pre_assessment: { label: "Pre-assessment", color: "bg-slate-100 text-[var(--cs-text-secondary)]" },
   needs_assessment_in_progress: {
     label: "Needs Assessment",
     color: "bg-blue-100 text-blue-800",
@@ -324,12 +324,12 @@ export default function EhcpTrackerPage() {
                   <CardContent className="pt-0 space-y-4 text-sm">
                     {/* SEN Support note for Jordan */}
                     {isPre && (
-                      <div className="bg-slate-50 border border-slate-200 rounded p-3">
-                        <p className="font-medium text-xs text-slate-800 mb-1 flex items-center gap-1">
+                      <div className="bg-slate-50 border border-[var(--cs-border)] rounded p-3">
+                        <p className="font-medium text-xs text-[var(--cs-navy)] mb-1 flex items-center gap-1">
                           <ClipboardList className="h-3.5 w-3.5" />
                           No EHCP — SEN Support only
                         </p>
-                        <p className="text-xs text-slate-700">
+                        <p className="text-xs text-[var(--cs-text-secondary)]">
                           {getYPName(r.child_id)} does not currently have an EHCP. Educational
                           needs are met through the school&apos;s graduated SEN Support approach
                           (assess-plan-do-review). An EHCP needs assessment can be requested by

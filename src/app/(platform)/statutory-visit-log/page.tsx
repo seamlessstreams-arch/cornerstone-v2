@@ -41,7 +41,7 @@ const PRESENTED_CLR: Record<StatutoryVisitChildPresented, string> = {
   settled: "bg-green-100 text-green-800",
   engaged: "bg-emerald-100 text-emerald-800",
   anxious: "bg-amber-100 text-amber-800",
-  withdrawn: "bg-slate-100 text-slate-700",
+  withdrawn: "bg-slate-100 text-[var(--cs-text-secondary)]",
   distressed: "bg-red-100 text-red-800",
 };
 
@@ -520,18 +520,18 @@ export default function StatutoryVisitLogPage() {
         </div>
 
         {/* ── Regulatory note ──────────────────────────────────────────── */}
-        <Card className="bg-slate-50 border-slate-200">
+        <Card className="bg-slate-50 border-[var(--cs-border)]">
           <CardContent className="pt-4 pb-3">
-            <p className="text-xs font-medium text-slate-700 flex items-center gap-1.5 mb-2">
+            <p className="text-xs font-medium text-[var(--cs-text-secondary)] flex items-center gap-1.5 mb-2">
               <Shield className="h-3.5 w-3.5" /> Regulatory Framework
             </p>
-            <ul className="text-xs text-slate-600 space-y-1">
+            <ul className="text-xs text-[var(--cs-text-secondary)] space-y-1">
               <li><span className="font-medium">Care Planning, Placement &amp; Case Review (England) Regulations 2010, Reg 28</span> — Statutory visiting duties: the responsible authority must ensure a visit by a representative within 7 working days of placement, then within 6 weeks, then at intervals of not more than 6 weeks during the first year, and thereafter at intervals of not more than 3 months (or more often if the placement plan or child requires).</li>
               <li><span className="font-medium">Reg 28(4)</span> — On each visit the representative must, so far as reasonably practicable, see and speak to the child alone (unless the child, being of sufficient age and understanding, refuses).</li>
               <li><span className="font-medium">Quality Standard 4 (Children&apos;s Homes Regulations 2015)</span> — The enjoyment and achievement standard requires the home to support each child to participate in decisions about their care and have their wishes and feelings heard.</li>
               <li><span className="font-medium">Quality Standard 5</span> — The home enables children to maintain and develop relationships with those important to them, including their social worker, and supports effective placement reviews.</li>
             </ul>
-            <p className="text-xs text-slate-500 mt-2">
+            <p className="text-xs text-[var(--cs-text-muted)] mt-2">
               The home keeps its own log of statutory visits to evidence active partnership with placing authorities, monitor compliance with statutory timeframes, and ensure each child&apos;s voice is consistently captured.
             </p>
           </CardContent>

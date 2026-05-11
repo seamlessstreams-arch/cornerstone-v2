@@ -228,7 +228,7 @@ const categoryConfig: Record<TimelineEvent["category"], { icon: typeof Heart; co
   Health: { icon: Shield, colour: "text-cyan-600 bg-cyan-50" },
   Education: { icon: GraduationCap, colour: "text-amber-600 bg-amber-50" },
   Family: { icon: Users, colour: "text-pink-600 bg-pink-50" },
-  Legal: { icon: Shield, colour: "text-slate-600 bg-slate-50" },
+  Legal: { icon: Shield, colour: "text-[var(--cs-text-secondary)] bg-slate-50" },
 };
 
 const impactColour: Record<string, string> = {
@@ -373,7 +373,7 @@ export default function TraumaInformedTimelinePage() {
           return (
             <div key={evt.id} className="rounded-xl border bg-white overflow-hidden">
               <button
-                className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                 onClick={() => setExpandedId(isExpanded ? null : evt.id)}
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0">

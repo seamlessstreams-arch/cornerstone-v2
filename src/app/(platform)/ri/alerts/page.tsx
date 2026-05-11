@@ -49,13 +49,13 @@ const SEVERITY_COLOURS: Record<string, string> = {
   critical: "border-red-300 bg-red-50",
   high:     "border-orange-200 bg-orange-50",
   medium:   "border-amber-200 bg-amber-50",
-  low:      "border-slate-200 bg-slate-50",
+  low:      "border-[var(--cs-border)] bg-slate-50",
 };
 const SEVERITY_BADGE: Record<string, string> = {
   critical: "bg-red-100 text-red-700",
   high:     "bg-orange-100 text-orange-700",
   medium:   "bg-amber-100 text-amber-700",
-  low:      "bg-slate-100 text-slate-600",
+  low:      "bg-slate-100 text-[var(--cs-text-secondary)]",
 };
 const SEVERITY_DOT: Record<string, string> = {
   critical: "bg-red-500",
@@ -95,7 +95,7 @@ function AlertCard({ alert }: { alert: RiAlert }) {
   const resolveMutation = useResolveRiAlert();
   const createNeed      = useCreateTrainingNeed();
 
-  const typeConfig = TYPE_CONFIG[alert.alert_type] ?? { label: alert.alert_type, icon: <AlertTriangle className="h-3.5 w-3.5" />, colour: "text-slate-600 bg-slate-50" };
+  const typeConfig = TYPE_CONFIG[alert.alert_type] ?? { label: alert.alert_type, icon: <AlertTriangle className="h-3.5 w-3.5" />, colour: "text-[var(--cs-text-secondary)] bg-slate-50" };
 
   const createTrainingNeed = () => {
     const priority = alert.severity === "critical" ? "urgent"
@@ -143,7 +143,7 @@ function AlertCard({ alert }: { alert: RiAlert }) {
           <div className="flex-1 min-w-0">
             <div className="flex items-start gap-2 justify-between">
               <div className="min-w-0">
-                <p className="text-sm font-semibold text-slate-900 leading-snug">{alert.title}</p>
+                <p className="text-sm font-semibold text-[var(--cs-navy)] leading-snug">{alert.title}</p>
                 <div className="flex items-center gap-2 mt-1.5 flex-wrap">
                   <Badge className={cn("text-[10px] h-4 px-1.5 border", SEVERITY_BADGE[alert.severity])}>
                     {alert.severity}
@@ -158,33 +158,33 @@ function AlertCard({ alert }: { alert: RiAlert }) {
                       Resolved
                     </Badge>
                   ) : (
-                    <span className="text-[10px] text-slate-400 flex items-center gap-0.5">
+                    <span className="text-[10px] text-[var(--cs-text-muted)] flex items-center gap-0.5">
                       <Clock className="h-2.5 w-2.5" />
                       {daysOpen}d open
                     </span>
                   )}
-                  <span className="text-[10px] text-slate-400">{formatDate(alert.created_at)}</span>
+                  <span className="text-[10px] text-[var(--cs-text-muted)]">{formatDate(alert.created_at)}</span>
                 </div>
               </div>
             </div>
 
             {/* Collapsed preview */}
             {!expanded && (
-              <p className="text-[12px] text-slate-500 mt-2 line-clamp-2 leading-relaxed">
+              <p className="text-[12px] text-[var(--cs-text-muted)] mt-2 line-clamp-2 leading-relaxed">
                 {alert.description}
               </p>
             )}
 
             {/* Expanded detail */}
             {expanded && (
-              <div className="mt-3 space-y-3 pt-3 border-t border-slate-100/80">
-                <p className="text-sm text-slate-700 leading-relaxed">{alert.description}</p>
+              <div className="mt-3 space-y-3 pt-3 border-t border-[var(--cs-border-subtle)]/80">
+                <p className="text-sm text-[var(--cs-text-secondary)] leading-relaxed">{alert.description}</p>
 
                 {/* Data evidence chips */}
                 {alert.data_evidence && Object.keys(alert.data_evidence).length > 0 && (
                   <div className="flex flex-wrap gap-1.5">
                     {Object.entries(alert.data_evidence).map(([key, val]) => (
-                      <span key={key} className="inline-flex items-center gap-1 rounded-md bg-slate-100 px-2 py-0.5 text-[10px] text-slate-600 font-mono">
+                      <span key={key} className="inline-flex items-center gap-1 rounded-md bg-slate-100 px-2 py-0.5 text-[10px] text-[var(--cs-text-secondary)] font-mono">
                         {key.replace(/_/g, " ")}: {typeof val === "object" ? JSON.stringify(val) : String(val)}
                       </span>
                     ))}
@@ -271,7 +271,7 @@ function AlertCard({ alert }: { alert: RiAlert }) {
           {/* Expand toggle */}
           <button
             onClick={() => setExpanded((p) => !p)}
-            className="text-slate-400 hover:text-slate-600 shrink-0 mt-1 rounded-md p-1 hover:bg-slate-100 transition-colors"
+            className="text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] shrink-0 mt-1 rounded-md p-1 hover:bg-[var(--cs-surface)] transition-colors"
           >
             {expanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
           </button>
@@ -305,10 +305,10 @@ function SeverityBar({ counts }: { counts: Record<RiAlertSeverity, number> }) {
       </div>
       <div className="flex items-center gap-3">
         {SEVERITY_ORDER.map((sev) => (
-          <div key={sev} className="flex items-center gap-1 text-[10px] text-slate-500">
+          <div key={sev} className="flex items-center gap-1 text-[10px] text-[var(--cs-text-muted)]">
             <div className={cn("w-2 h-2 rounded-full", SEVERITY_DOT[sev])} />
             <span className="capitalize">{sev}</span>
-            <span className="font-semibold text-slate-700">{counts[sev]}</span>
+            <span className="font-semibold text-[var(--cs-text-secondary)]">{counts[sev]}</span>
           </div>
         ))}
       </div>
@@ -351,15 +351,15 @@ function AlertTimeline({ timeline }: { timeline: { week: string; created: number
           })}
         </div>
         <div className="flex justify-between mt-1">
-          <span className="text-[9px] text-slate-400">{timeline[0]?.week}</span>
-          <span className="text-[9px] text-slate-400">Now</span>
+          <span className="text-[9px] text-[var(--cs-text-muted)]">{timeline[0]?.week}</span>
+          <span className="text-[9px] text-[var(--cs-text-muted)]">Now</span>
         </div>
         <div className="flex items-center gap-3 mt-2">
-          <div className="flex items-center gap-1 text-[10px] text-slate-500">
+          <div className="flex items-center gap-1 text-[10px] text-[var(--cs-text-muted)]">
             <div className="w-2 h-2 rounded-sm bg-red-300" />
             Created
           </div>
-          <div className="flex items-center gap-1 text-[10px] text-slate-500">
+          <div className="flex items-center gap-1 text-[10px] text-[var(--cs-text-muted)]">
             <div className="w-2 h-2 rounded-sm bg-emerald-300" />
             Resolved
           </div>
@@ -405,13 +405,13 @@ function TypeBreakdown({
                   isActive
                     ? "ring-2 ring-indigo-300 border-indigo-300 bg-indigo-50"
                     : count > 0
-                      ? "hover:bg-slate-50 border-slate-100"
+                      ? "hover:bg-[var(--cs-surface)] border-[var(--cs-border-subtle)]"
                       : "border-slate-50 opacity-40",
                 )}
               >
                 <span className={cn("shrink-0", cfg.colour.split(" ")[0])}>{cfg.icon}</span>
-                <span className="text-[10px] text-slate-600 truncate flex-1">{cfg.label}</span>
-                <span className={cn("text-[11px] font-bold tabular-nums", count > 0 ? "text-slate-900" : "text-slate-300")}>
+                <span className="text-[10px] text-[var(--cs-text-secondary)] truncate flex-1">{cfg.label}</span>
+                <span className={cn("text-[11px] font-bold tabular-nums", count > 0 ? "text-[var(--cs-navy)]" : "text-[var(--cs-text-gentle)]")}>
                   {count}
                 </span>
               </button>
@@ -509,22 +509,22 @@ export default function RiAlertsPage() {
             {
               label: "Critical",
               value: severityCounts.critical,
-              colour: severityCounts.critical > 0 ? "text-red-700" : "text-slate-300",
+              colour: severityCounts.critical > 0 ? "text-red-700" : "text-[var(--cs-text-gentle)]",
               bg: severityCounts.critical > 0 ? "bg-red-50 border-red-100" : "",
-              icon: <ShieldAlert className={cn("h-4 w-4", severityCounts.critical > 0 ? "text-red-500" : "text-slate-300")} />,
+              icon: <ShieldAlert className={cn("h-4 w-4", severityCounts.critical > 0 ? "text-red-500" : "text-[var(--cs-text-gentle)]")} />,
             },
             {
               label: "High",
               value: severityCounts.high,
-              colour: severityCounts.high > 0 ? "text-orange-700" : "text-slate-300",
+              colour: severityCounts.high > 0 ? "text-orange-700" : "text-[var(--cs-text-gentle)]",
               bg: severityCounts.high > 0 ? "bg-orange-50 border-orange-100" : "",
-              icon: <AlertTriangle className={cn("h-4 w-4", severityCounts.high > 0 ? "text-orange-500" : "text-slate-300")} />,
+              icon: <AlertTriangle className={cn("h-4 w-4", severityCounts.high > 0 ? "text-orange-500" : "text-[var(--cs-text-gentle)]")} />,
             },
             {
               label: "Active",
               value: active.length,
-              colour: active.length > 0 ? "text-amber-700" : "text-slate-300",
-              icon: <Flame className={cn("h-4 w-4", active.length > 0 ? "text-amber-500" : "text-slate-300")} />,
+              colour: active.length > 0 ? "text-amber-700" : "text-[var(--cs-text-gentle)]",
+              icon: <Flame className={cn("h-4 w-4", active.length > 0 ? "text-amber-500" : "text-[var(--cs-text-gentle)]")} />,
             },
             {
               label: "Resolved",
@@ -539,10 +539,10 @@ export default function RiAlertsPage() {
               icon: <Clock className="h-4 w-4 text-indigo-500" />,
             },
           ].map(({ label, value, colour, bg, icon }) => (
-            <div key={label} className={cn("rounded-xl border border-slate-100 bg-white p-3 text-center", bg)}>
+            <div key={label} className={cn("rounded-xl border border-[var(--cs-border-subtle)] bg-white p-3 text-center", bg)}>
               <div className="flex justify-center mb-1">{icon}</div>
               <div className={cn("text-xl font-bold tabular-nums", colour)}>{value}</div>
-              <div className="text-[10px] text-slate-500 mt-0.5">{label}</div>
+              <div className="text-[10px] text-[var(--cs-text-muted)] mt-0.5">{label}</div>
             </div>
           ))}
         </div>
@@ -551,7 +551,7 @@ export default function RiAlertsPage() {
         {active.length > 0 && (
           <Card>
             <CardContent className="py-3 px-4">
-              <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-2">
+              <p className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-2">
                 Active Alert Severity
               </p>
               <SeverityBar counts={severityCounts} />
@@ -573,7 +573,7 @@ export default function RiAlertsPage() {
         <div className="flex items-center gap-2 flex-wrap">
           {/* Search */}
           <div className="relative flex-1 min-w-[200px] max-w-sm">
-            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
             <Input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -592,7 +592,7 @@ export default function RiAlertsPage() {
                   "inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-medium border transition-all capitalize",
                   sevFilter === sev
                     ? cn(SEVERITY_BADGE[sev], "ring-2 ring-offset-1 ring-slate-300")
-                    : "border-slate-200 text-slate-500 hover:bg-slate-50",
+                    : "border-[var(--cs-border)] text-[var(--cs-text-muted)] hover:bg-[var(--cs-surface)]",
                 )}
               >
                 <div className={cn("w-1.5 h-1.5 rounded-full", SEVERITY_DOT[sev])} />
@@ -603,7 +603,7 @@ export default function RiAlertsPage() {
 
           {/* Sort */}
           <div className="flex items-center gap-1 ml-auto">
-            <ArrowUpDown className="h-3 w-3 text-slate-400" />
+            <ArrowUpDown className="h-3 w-3 text-[var(--cs-text-muted)]" />
             {(["newest", "severity", "oldest"] as SortMode[]).map((mode) => (
               <button
                 key={mode}
@@ -612,7 +612,7 @@ export default function RiAlertsPage() {
                   "text-[10px] px-2 py-1 rounded-md transition-all capitalize",
                   sortMode === mode
                     ? "bg-indigo-100 text-indigo-700 font-semibold"
-                    : "text-slate-400 hover:text-slate-600",
+                    : "text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)]",
                 )}
               >
                 {mode}
@@ -626,7 +626,7 @@ export default function RiAlertsPage() {
           <div className="flex items-center gap-2">
             <button
               onClick={() => setShowResolved((p) => !p)}
-              className="text-xs text-slate-500 underline hover:text-slate-700"
+              className="text-xs text-[var(--cs-text-muted)] underline hover:text-[var(--cs-text-secondary)]"
             >
               {showResolved ? "Hide resolved" : `Show ${resolved.length} resolved`}
             </button>
@@ -637,21 +637,21 @@ export default function RiAlertsPage() {
               </Badge>
             )}
           </div>
-          <span className="text-[11px] text-slate-400">
+          <span className="text-[11px] text-[var(--cs-text-muted)]">
             {displayed.length} alert{displayed.length !== 1 ? "s" : ""}
           </span>
         </div>
 
         {/* ── Alert List ──────────────────────────────────────────────────── */}
         {isLoading ? (
-          <div className="text-sm text-slate-500 text-center py-8">Loading…</div>
+          <div className="text-sm text-[var(--cs-text-muted)] text-center py-8">Loading…</div>
         ) : displayed.length === 0 ? (
           <div className="text-center py-16">
             <Shield className="h-10 w-10 text-emerald-300 mx-auto mb-3" />
-            <p className="text-sm font-medium text-slate-600">
+            <p className="text-sm font-medium text-[var(--cs-text-secondary)]">
               {activeFilterCount > 0 ? "No alerts match your filters" : "No active alerts"}
             </p>
-            <p className="text-xs text-slate-400 mt-1">
+            <p className="text-xs text-[var(--cs-text-muted)] mt-1">
               {activeFilterCount > 0
                 ? "Try adjusting your search or filter criteria"
                 : "Alerts are generated automatically as governance issues are detected"}

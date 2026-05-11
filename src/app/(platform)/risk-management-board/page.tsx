@@ -65,7 +65,7 @@ const CATEGORY_CONFIG: Record<StrategicRiskCategory, { icon: React.ElementType; 
   regulatory:     { icon: Scale,       color: "text-violet-700",  bg: "bg-violet-50",  border: "border-violet-200"  },
   financial:      { icon: Coins,       color: "text-emerald-700", bg: "bg-emerald-50", border: "border-emerald-200" },
   reputational:   { icon: Megaphone,   color: "text-rose-700",    bg: "bg-rose-50",    border: "border-rose-200"    },
-  strategic:      { icon: Target,      color: "text-slate-700",   bg: "bg-slate-50",   border: "border-slate-200"   },
+  strategic:      { icon: Target,      color: "text-[var(--cs-text-secondary)]",   bg: "bg-slate-50",   border: "border-[var(--cs-border)]"   },
   safeguarding:   { icon: ShieldAlert, color: "text-red-700",     bg: "bg-red-50",     border: "border-red-200"     },
   environmental:  { icon: Leaf,        color: "text-teal-700",    bg: "bg-teal-50",    border: "border-teal-200"    },
   cyber_data:     { icon: Lock,        color: "text-cyan-700",    bg: "bg-cyan-50",    border: "border-cyan-200"    },
@@ -99,7 +99,7 @@ function trendIcon(t: StrategicRiskTrendDirection) {
 function trendColor(t: StrategicRiskTrendDirection) {
   if (t === "increasing") return "text-red-600";
   if (t === "decreasing") return "text-emerald-600";
-  return "text-slate-500";
+  return "text-[var(--cs-text-muted)]";
 }
 
 /* ── page ──────────────────────────────────────────────────────────── */
@@ -197,7 +197,7 @@ export default function RiskManagementBoardPage() {
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
         {[
-          { label: "Total strategic risks", value: stats.total, color: "text-slate-700", bg: "bg-slate-50", border: "border-slate-200", icon: Gauge },
+          { label: "Total strategic risks", value: stats.total, color: "text-[var(--cs-text-secondary)]", bg: "bg-slate-50", border: "border-[var(--cs-border)]", icon: Gauge },
           { label: "High impact (residual ≥ 15)", value: stats.highImpact, color: "text-orange-700", bg: "bg-orange-50", border: "border-orange-200", icon: AlertTriangle },
           { label: "Above risk appetite", value: stats.aboveAppetite, color: "text-red-700", bg: "bg-red-50", border: "border-red-200", icon: AlertOctagon },
           { label: "Reviews due within 30 days", value: stats.reviewsDue30, color: "text-amber-700", bg: "bg-amber-50", border: "border-amber-200", icon: Calendar },
@@ -208,7 +208,7 @@ export default function RiskManagementBoardPage() {
               <Icon className={cn("h-5 w-5 flex-shrink-0", s.color)} />
               <div>
                 <div className={cn("text-xl font-bold leading-none", s.color)}>{s.value}</div>
-                <div className="text-[10px] text-slate-500 font-medium mt-1">{s.label}</div>
+                <div className="text-[10px] text-[var(--cs-text-muted)] font-medium mt-1">{s.label}</div>
               </div>
             </div>
           );
@@ -237,7 +237,7 @@ export default function RiskManagementBoardPage() {
         </Select>
 
         <div className="flex items-center gap-1">
-          <ArrowUpDown className="h-3.5 w-3.5 text-slate-400" />
+          <ArrowUpDown className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
           <Select value={sortBy} onValueChange={setSortBy}>
             <SelectTrigger className="h-8 w-[180px] text-xs"><SelectValue /></SelectTrigger>
             <SelectContent>
@@ -251,7 +251,7 @@ export default function RiskManagementBoardPage() {
           </Select>
         </div>
 
-        <span className="ml-auto text-[11px] text-slate-500">Showing {visible.length} of {risks.length}</span>
+        <span className="ml-auto text-[11px] text-[var(--cs-text-muted)]">Showing {visible.length} of {risks.length}</span>
       </div>
 
       <div className="space-y-3">
@@ -274,10 +274,10 @@ export default function RiskManagementBoardPage() {
 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap mb-1">
-                    <h3 className="text-sm font-semibold text-slate-900">{r.risk_title}</h3>
-                    {r.board_level && <span className="text-[10px] font-medium px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200">Board-level</span>}
+                    <h3 className="text-sm font-semibold text-[var(--cs-navy)]">{r.risk_title}</h3>
+                    {r.board_level && <span className="text-[10px] font-medium px-1.5 py-0.5 rounded bg-slate-100 text-[var(--cs-text-secondary)] border border-[var(--cs-border)]">Board-level</span>}
                   </div>
-                  <div className="flex items-center gap-2 flex-wrap text-[11px] text-slate-500">
+                  <div className="flex items-center gap-2 flex-wrap text-[11px] text-[var(--cs-text-muted)]">
                     <span className={cn("flex items-center gap-1 font-medium", cat.color)}><CatIcon className="h-3 w-3" />{STRATEGIC_RISK_CATEGORY_LABEL[r.category]}</span>
                     <span>·</span>
                     <span>Owner: {getStaffName(r.risk_owner)}</span>
@@ -290,36 +290,36 @@ export default function RiskManagementBoardPage() {
                   <div className={cn("text-[10px] font-semibold px-2 py-1 rounded border", residual.bg, residual.color, residual.border)}>Residual {r.residual_risk_score} · {residual.label}</div>
                   <div className={cn("text-[10px] font-medium px-2 py-1 rounded border flex items-center gap-1", appetite.bg, appetite.color, appetite.border)}>{STRATEGIC_RISK_APPETITE_ALIGNMENT_LABEL[r.risk_appetite_alignment]}</div>
                   <div className={cn("flex items-center gap-1", trendColor(r.trend))}><TrendIcon className="h-3.5 w-3.5" /><span className="text-[10px] font-medium">{STRATEGIC_RISK_TREND_DIRECTION_LABEL[r.trend]}</span></div>
-                  {isExpanded ? <ChevronUp className="h-4 w-4 text-slate-400" /> : <ChevronDown className="h-4 w-4 text-slate-400" />}
+                  {isExpanded ? <ChevronUp className="h-4 w-4 text-[var(--cs-text-muted)]" /> : <ChevronDown className="h-4 w-4 text-[var(--cs-text-muted)]" />}
                 </div>
               </div>
 
               {isExpanded && (
                 <div className="border-t px-4 pb-4 pt-3 space-y-4">
                   <div>
-                    <h4 className="text-[11px] font-semibold text-slate-600 uppercase tracking-wide mb-1">Description</h4>
-                    <p className="text-xs text-slate-700 leading-relaxed">{r.description}</p>
+                    <h4 className="text-[11px] font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide mb-1">Description</h4>
+                    <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed">{r.description}</p>
                   </div>
 
                   <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
-                    <div className="rounded-lg bg-slate-50 border border-slate-100 p-2.5 text-center"><div className="text-lg font-bold text-slate-700">{r.current_likelihood}</div><div className="text-[10px] text-slate-500">Likelihood (1-5)</div></div>
-                    <div className="rounded-lg bg-slate-50 border border-slate-100 p-2.5 text-center"><div className="text-lg font-bold text-slate-700">{r.current_impact}</div><div className="text-[10px] text-slate-500">Impact (1-5)</div></div>
-                    <div className={cn("rounded-lg border p-2.5 text-center", inherent.bg, inherent.border)}><div className={cn("text-lg font-bold", inherent.color)}>{r.inherent_risk_score}</div><div className="text-[10px] text-slate-500">Inherent</div></div>
-                    <div className={cn("rounded-lg border p-2.5 text-center", residual.bg, residual.border)}><div className={cn("text-lg font-bold", residual.color)}>{r.residual_risk_score}</div><div className="text-[10px] text-slate-500">Residual</div></div>
-                    <div className={cn("rounded-lg border p-2.5 text-center", target.bg, target.border)}><div className={cn("text-lg font-bold", target.color)}>{r.target_risk_score}</div><div className="text-[10px] text-slate-500">Target</div></div>
+                    <div className="rounded-lg bg-slate-50 border border-[var(--cs-border-subtle)] p-2.5 text-center"><div className="text-lg font-bold text-[var(--cs-text-secondary)]">{r.current_likelihood}</div><div className="text-[10px] text-[var(--cs-text-muted)]">Likelihood (1-5)</div></div>
+                    <div className="rounded-lg bg-slate-50 border border-[var(--cs-border-subtle)] p-2.5 text-center"><div className="text-lg font-bold text-[var(--cs-text-secondary)]">{r.current_impact}</div><div className="text-[10px] text-[var(--cs-text-muted)]">Impact (1-5)</div></div>
+                    <div className={cn("rounded-lg border p-2.5 text-center", inherent.bg, inherent.border)}><div className={cn("text-lg font-bold", inherent.color)}>{r.inherent_risk_score}</div><div className="text-[10px] text-[var(--cs-text-muted)]">Inherent</div></div>
+                    <div className={cn("rounded-lg border p-2.5 text-center", residual.bg, residual.border)}><div className={cn("text-lg font-bold", residual.color)}>{r.residual_risk_score}</div><div className="text-[10px] text-[var(--cs-text-muted)]">Residual</div></div>
+                    <div className={cn("rounded-lg border p-2.5 text-center", target.bg, target.border)}><div className={cn("text-lg font-bold", target.color)}>{r.target_risk_score}</div><div className="text-[10px] text-[var(--cs-text-muted)]">Target</div></div>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    <div className="rounded-md border border-slate-100 bg-slate-50 p-2.5">
-                      <div className="text-[10px] uppercase tracking-wide text-slate-500 mb-0.5">Velocity of change</div>
-                      <div className="text-xs font-semibold text-slate-700 flex items-center gap-1.5"><Activity className="h-3 w-3" />{STRATEGIC_RISK_VELOCITY_LABEL[r.velocity_of_change]}</div>
+                    <div className="rounded-md border border-[var(--cs-border-subtle)] bg-slate-50 p-2.5">
+                      <div className="text-[10px] uppercase tracking-wide text-[var(--cs-text-muted)] mb-0.5">Velocity of change</div>
+                      <div className="text-xs font-semibold text-[var(--cs-text-secondary)] flex items-center gap-1.5"><Activity className="h-3 w-3" />{STRATEGIC_RISK_VELOCITY_LABEL[r.velocity_of_change]}</div>
                     </div>
-                    <div className="rounded-md border border-slate-100 bg-slate-50 p-2.5">
-                      <div className="text-[10px] uppercase tracking-wide text-slate-500 mb-0.5">Trend</div>
+                    <div className="rounded-md border border-[var(--cs-border-subtle)] bg-slate-50 p-2.5">
+                      <div className="text-[10px] uppercase tracking-wide text-[var(--cs-text-muted)] mb-0.5">Trend</div>
                       <div className={cn("text-xs font-semibold flex items-center gap-1.5", trendColor(r.trend))}><TrendIcon className="h-3 w-3" />{STRATEGIC_RISK_TREND_DIRECTION_LABEL[r.trend]}</div>
                     </div>
                     <div className={cn("rounded-md border p-2.5", appetite.bg, appetite.border)}>
-                      <div className="text-[10px] uppercase tracking-wide text-slate-500 mb-0.5">Appetite alignment</div>
+                      <div className="text-[10px] uppercase tracking-wide text-[var(--cs-text-muted)] mb-0.5">Appetite alignment</div>
                       <div className={cn("text-xs font-semibold", appetite.color)}>{STRATEGIC_RISK_APPETITE_ALIGNMENT_LABEL[r.risk_appetite_alignment]}</div>
                     </div>
                   </div>
@@ -328,7 +328,7 @@ export default function RiskManagementBoardPage() {
                     <h4 className="text-[11px] font-semibold text-emerald-700 uppercase tracking-wide mb-2">Current controls ({r.current_controls.length})</h4>
                     <ul className="space-y-1.5">
                       {r.current_controls.map((c, i) => (
-                        <li key={i} className="flex items-start gap-2 text-xs text-slate-700"><CheckCircle2 className="h-3 w-3 text-emerald-500 mt-0.5 flex-shrink-0" />{c}</li>
+                        <li key={i} className="flex items-start gap-2 text-xs text-[var(--cs-text-secondary)]"><CheckCircle2 className="h-3 w-3 text-emerald-500 mt-0.5 flex-shrink-0" />{c}</li>
                       ))}
                     </ul>
                   </div>
@@ -338,32 +338,32 @@ export default function RiskManagementBoardPage() {
                       <h4 className="text-[11px] font-semibold text-amber-700 uppercase tracking-wide mb-2">Additional controls required ({r.additional_controls_required.length})</h4>
                       <ul className="space-y-1.5">
                         {r.additional_controls_required.map((c, i) => (
-                          <li key={i} className="flex items-start gap-2 text-xs text-slate-700"><AlertTriangle className="h-3 w-3 text-amber-500 mt-0.5 flex-shrink-0" />{c}</li>
+                          <li key={i} className="flex items-start gap-2 text-xs text-[var(--cs-text-secondary)]"><AlertTriangle className="h-3 w-3 text-amber-500 mt-0.5 flex-shrink-0" />{c}</li>
                         ))}
                       </ul>
                     </div>
                   )}
 
                   <div>
-                    <h4 className="text-[11px] font-semibold text-slate-600 uppercase tracking-wide mb-2">Key risk indicators</h4>
-                    <div className="overflow-hidden border border-slate-100 rounded-md">
+                    <h4 className="text-[11px] font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide mb-2">Key risk indicators</h4>
+                    <div className="overflow-hidden border border-[var(--cs-border-subtle)] rounded-md">
                       <table className="w-full text-xs">
                         <thead className="bg-slate-50">
                           <tr className="text-left">
-                            <th className="px-2.5 py-1.5 font-medium text-slate-600 text-[10px] uppercase tracking-wide">Indicator</th>
-                            <th className="px-2.5 py-1.5 font-medium text-slate-600 text-[10px] uppercase tracking-wide">Current</th>
-                            <th className="px-2.5 py-1.5 font-medium text-slate-600 text-[10px] uppercase tracking-wide">Threshold</th>
-                            <th className="px-2.5 py-1.5 font-medium text-slate-600 text-[10px] uppercase tracking-wide">Status</th>
+                            <th className="px-2.5 py-1.5 font-medium text-[var(--cs-text-secondary)] text-[10px] uppercase tracking-wide">Indicator</th>
+                            <th className="px-2.5 py-1.5 font-medium text-[var(--cs-text-secondary)] text-[10px] uppercase tracking-wide">Current</th>
+                            <th className="px-2.5 py-1.5 font-medium text-[var(--cs-text-secondary)] text-[10px] uppercase tracking-wide">Threshold</th>
+                            <th className="px-2.5 py-1.5 font-medium text-[var(--cs-text-secondary)] text-[10px] uppercase tracking-wide">Status</th>
                           </tr>
                         </thead>
                         <tbody>
                           {r.key_risk_indicators.map((k, i) => {
                             const cfg = KRI_CONFIG[k.status];
                             return (
-                              <tr key={i} className="border-t border-slate-100">
-                                <td className="px-2.5 py-1.5 text-slate-700">{k.indicator}</td>
-                                <td className="px-2.5 py-1.5 text-slate-700 font-medium">{k.current_value}</td>
-                                <td className="px-2.5 py-1.5 text-slate-500">{k.threshold}</td>
+                              <tr key={i} className="border-t border-[var(--cs-border-subtle)]">
+                                <td className="px-2.5 py-1.5 text-[var(--cs-text-secondary)]">{k.indicator}</td>
+                                <td className="px-2.5 py-1.5 text-[var(--cs-text-secondary)] font-medium">{k.current_value}</td>
+                                <td className="px-2.5 py-1.5 text-[var(--cs-text-muted)]">{k.threshold}</td>
                                 <td className="px-2.5 py-1.5">
                                   <span className={cn("inline-block text-[10px] font-semibold px-2 py-0.5 rounded border", cfg.bg, cfg.color, cfg.border)}>{STRATEGIC_RISK_KRI_STATUS_LABEL[k.status]}</span>
                                 </td>
@@ -382,12 +382,12 @@ export default function RiskManagementBoardPage() {
 
                   {r.interconnected_risks.length > 0 && (
                     <div>
-                      <h4 className="text-[11px] font-semibold text-slate-600 uppercase tracking-wide mb-1.5 flex items-center gap-1"><Link2 className="h-3 w-3" />Interconnected risks</h4>
+                      <h4 className="text-[11px] font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide mb-1.5 flex items-center gap-1"><Link2 className="h-3 w-3" />Interconnected risks</h4>
                       <div className="flex flex-wrap gap-1.5">
                         {r.interconnected_risks.map((id) => {
                           const linked = risks.find((x) => x.id === id);
                           return (
-                            <span key={id} className="text-[10px] px-2 py-0.5 rounded border bg-slate-50 border-slate-200 text-slate-600">
+                            <span key={id} className="text-[10px] px-2 py-0.5 rounded border bg-slate-50 border-[var(--cs-border)] text-[var(--cs-text-secondary)]">
                               {linked ? linked.risk_title : id}
                             </span>
                           );
@@ -396,7 +396,7 @@ export default function RiskManagementBoardPage() {
                     </div>
                   )}
 
-                  <div className="flex items-center gap-4 flex-wrap text-[10px] text-slate-400 pt-1 border-t border-slate-100">
+                  <div className="flex items-center gap-4 flex-wrap text-[10px] text-[var(--cs-text-muted)] pt-1 border-t border-[var(--cs-border-subtle)]">
                     <span className="flex items-center gap-1"><UserCog className="h-3 w-3" />Owner: {getStaffName(r.risk_owner)}</span>
                     <span>Review frequency: {r.review_frequency}</span>
                     <span>Last reviewed: {r.last_reviewed}</span>
@@ -409,7 +409,7 @@ export default function RiskManagementBoardPage() {
         })}
 
         {visible.length === 0 && (
-          <div className="text-center py-16 text-slate-400">
+          <div className="text-center py-16 text-[var(--cs-text-muted)]">
             <ShieldAlert className="h-10 w-10 mx-auto mb-3 opacity-40" />
             <p className="text-sm font-medium">No strategic risks match the current filters</p>
             <p className="text-xs mt-1">Adjust category or appetite filter to see results</p>
@@ -417,12 +417,12 @@ export default function RiskManagementBoardPage() {
         )}
       </div>
 
-      <div className="mt-8 rounded-lg bg-slate-50 border border-slate-200 p-4">
+      <div className="mt-8 rounded-lg bg-slate-50 border border-[var(--cs-border)] p-4">
         <div className="flex items-start gap-3">
           <Scale className="h-5 w-5 text-indigo-500 mt-0.5 flex-shrink-0" />
           <div>
-            <h4 className="text-xs font-semibold text-slate-700 mb-1">About the Strategic Risk Management Board</h4>
-            <p className="text-[11px] text-slate-500 leading-relaxed">
+            <h4 className="text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">About the Strategic Risk Management Board</h4>
+            <p className="text-[11px] text-[var(--cs-text-muted)] leading-relaxed">
               This board is the home&apos;s organisational risk register. It captures risks to the home as a regulated business and is reviewed by the Registered Manager and Responsible Individual on the cadence shown against each risk. It is the evidence base for The Children&apos;s Homes (England) Regulations 2015, Schedule 1 and the Quality Standards — specifically Quality Standard 13 (Leadership &amp; Management), which requires the Registered Manager to understand and mitigate risks to the quality of care, and to demonstrate clear accountability, decision-making and oversight at board level. Strategic risks recorded here are distinct from operational risks held in the Risk Register and individual risk plans recorded in each child&apos;s care plan.
             </p>
           </div>

@@ -53,7 +53,7 @@ const CATEGORY_CONFIG: Record<FireRiskCategory, string> = {
   detection:        "bg-blue-50 text-blue-700",
   suppression:      "bg-cyan-50 text-cyan-700",
   human_factors:    "bg-purple-50 text-purple-700",
-  storage:          "bg-slate-50 text-slate-700",
+  storage:          "bg-slate-50 text-[var(--cs-text-secondary)]",
 };
 
 // ── Component ─────────────────────────────────────────────────────────────────

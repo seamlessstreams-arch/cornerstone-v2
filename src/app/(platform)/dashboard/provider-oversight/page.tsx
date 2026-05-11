@@ -400,7 +400,7 @@ export default function ProviderOversightPage() {
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <CardTitle className="flex items-center gap-2">
-                    <Building2 className="h-5 w-5 text-slate-600" />
+                    <Building2 className="h-5 w-5 text-[var(--cs-text-secondary)]" />
                     {home.name}
                   </CardTitle>
                   <div className="flex items-center gap-2">
@@ -441,25 +441,25 @@ export default function ProviderOversightPage() {
                 <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
                   <div className="border rounded-lg p-3 space-y-1">
                     <p className="text-xs text-muted-foreground">Open Risks</p>
-                    <p className={cn("text-lg font-bold", home.openRisks > 3 ? "text-red-600" : "text-slate-900")}>
+                    <p className={cn("text-lg font-bold", home.openRisks > 3 ? "text-red-600" : "text-[var(--cs-navy)]")}>
                       {home.openRisks}
                     </p>
                   </div>
                   <div className="border rounded-lg p-3 space-y-1">
                     <p className="text-xs text-muted-foreground">Serious Incidents</p>
-                    <p className={cn("text-lg font-bold", home.seriousIncidents > 0 ? "text-red-600" : "text-slate-900")}>
+                    <p className={cn("text-lg font-bold", home.seriousIncidents > 0 ? "text-red-600" : "text-[var(--cs-navy)]")}>
                       {home.seriousIncidents}
                     </p>
                   </div>
                   <div className="border rounded-lg p-3 space-y-1">
                     <p className="text-xs text-muted-foreground">Overdue Actions</p>
-                    <p className={cn("text-lg font-bold", home.overdueActions > 5 ? "text-red-600" : "text-slate-900")}>
+                    <p className={cn("text-lg font-bold", home.overdueActions > 5 ? "text-red-600" : "text-[var(--cs-navy)]")}>
                       {home.overdueActions}
                     </p>
                   </div>
                   <div className="border rounded-lg p-3 space-y-1">
                     <p className="text-xs text-muted-foreground">Missing Episodes</p>
-                    <p className={cn("text-lg font-bold", home.missingEpisodes > 2 ? "text-red-600" : "text-slate-900")}>
+                    <p className={cn("text-lg font-bold", home.missingEpisodes > 2 ? "text-red-600" : "text-[var(--cs-navy)]")}>
                       {home.missingEpisodes}
                     </p>
                   </div>
@@ -534,8 +534,8 @@ export default function ProviderOversightPage() {
 
                 {/* Complaints */}
                 <div className="flex items-center gap-4 text-sm">
-                  <span className="text-muted-foreground">Complaints: <span className="font-medium text-slate-900">{home.complaints}</span></span>
-                  <span className="text-muted-foreground">Last reviewed: <span className="font-medium text-slate-900">{new Date(home.lastReviewed).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}</span></span>
+                  <span className="text-muted-foreground">Complaints: <span className="font-medium text-[var(--cs-navy)]">{home.complaints}</span></span>
+                  <span className="text-muted-foreground">Last reviewed: <span className="font-medium text-[var(--cs-navy)]">{new Date(home.lastReviewed).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}</span></span>
                 </div>
 
                 {/* ARIA Risk Flags */}
@@ -615,7 +615,7 @@ export default function ProviderOversightPage() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <FileText className="h-5 w-5 text-slate-600" />
+              <FileText className="h-5 w-5 text-[var(--cs-text-secondary)]" />
               Oversight Log
             </CardTitle>
           </CardHeader>

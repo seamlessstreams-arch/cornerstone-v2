@@ -93,8 +93,8 @@ export default function OutcomeStarPage() {
                   <div className="flex items-center justify-between mb-2">
                     <p className="font-bold">{getYPName(a.child_id)}</p>
                     <div className="flex items-center gap-1">
-                      {trend > 0 ? <TrendingUp className="h-4 w-4 text-green-600" /> : trend < 0 ? <TrendingDown className="h-4 w-4 text-red-600" /> : <Minus className="h-4 w-4 text-slate-400" />}
-                      <span className={cn("text-xs font-medium", trend > 0 ? "text-green-700" : trend < 0 ? "text-red-700" : "text-slate-500")}>
+                      {trend > 0 ? <TrendingUp className="h-4 w-4 text-green-600" /> : trend < 0 ? <TrendingDown className="h-4 w-4 text-red-600" /> : <Minus className="h-4 w-4 text-[var(--cs-text-muted)]" />}
+                      <span className={cn("text-xs font-medium", trend > 0 ? "text-green-700" : trend < 0 ? "text-red-700" : "text-[var(--cs-text-muted)]")}>
                         {trend > 0 ? "+" : ""}{trend.toFixed(1)}
                       </span>
                     </div>
@@ -151,8 +151,8 @@ export default function OutcomeStarPage() {
                             <p className={cn("text-lg font-bold", scoreColor(score).split(" ")[0])}>{score}</p>
                             {change !== null && (
                               <div className="flex items-center justify-center gap-0.5 text-[10px]">
-                                {change > 0 ? <TrendingUp className="h-3 w-3 text-green-600" /> : change < 0 ? <TrendingDown className="h-3 w-3 text-red-600" /> : <Minus className="h-3 w-3 text-slate-400" />}
-                                <span className={change > 0 ? "text-green-700" : change < 0 ? "text-red-700" : "text-slate-500"}>
+                                {change > 0 ? <TrendingUp className="h-3 w-3 text-green-600" /> : change < 0 ? <TrendingDown className="h-3 w-3 text-red-600" /> : <Minus className="h-3 w-3 text-[var(--cs-text-muted)]" />}
+                                <span className={change > 0 ? "text-green-700" : change < 0 ? "text-red-700" : "text-[var(--cs-text-muted)]"}>
                                   {change > 0 ? "+" : ""}{change} from {prev}
                                 </span>
                               </div>

@@ -275,9 +275,9 @@ export default function MissingReturnInterviewsPage() {
         })}
       </div>
 
-      <div className="mt-8 bg-slate-50 border border-slate-200 rounded-lg p-4">
-        <p className="text-sm font-medium text-slate-700 mb-1">Regulatory Context</p>
-        <p className="text-xs text-slate-600">
+      <div className="mt-8 bg-slate-50 border border-[var(--cs-border)] rounded-lg p-4">
+        <p className="text-sm font-medium text-[var(--cs-text-secondary)] mb-1">Regulatory Context</p>
+        <p className="text-xs text-[var(--cs-text-secondary)]">
           Statutory guidance on children who run away or go missing from home or care (2014) requires
           that all children are offered an independent return home interview within 72 hours of their
           return. Regulation 34 of the Children&apos;s Homes Regulations 2015 requires the registered

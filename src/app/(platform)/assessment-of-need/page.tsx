@@ -214,7 +214,7 @@ export default function AssessmentOfNeedPage() {
           {[
             { label: "Active Assessments", value: activeAssessments, icon: ClipboardList, clr: "text-indigo-600" },
             { label: "Within Deadline", value: `${withinDeadlinePct}%`, icon: CheckCircle2, clr: withinDeadlinePct === 100 ? "text-green-600" : "text-amber-600" },
-            { label: "Complex / Highly Complex", value: complexCount, icon: Layers, clr: complexCount > 0 ? "text-orange-600" : "text-slate-600" },
+            { label: "Complex / Highly Complex", value: complexCount, icon: Layers, clr: complexCount > 0 ? "text-orange-600" : "text-[var(--cs-text-secondary)]" },
             { label: "Reviews Due", value: reviewsDue, icon: Clock, clr: reviewsDue > 0 ? "text-amber-600" : "text-green-600" },
           ].map((s) => (
             <Card key={s.label}>
@@ -387,14 +387,14 @@ export default function AssessmentOfNeedPage() {
                         <p className="font-semibold text-indigo-800 flex items-center gap-1 mb-1">
                           <MessageSquare className="h-4 w-4" /> Child&apos;s Voice
                         </p>
-                        <p className="text-xs text-slate-700 mb-1"><span className="font-medium">Method:</span> {r.child_input_method}</p>
-                        <p className="text-xs text-slate-700">{r.child_input}</p>
+                        <p className="text-xs text-[var(--cs-text-secondary)] mb-1"><span className="font-medium">Method:</span> {r.child_input_method}</p>
+                        <p className="text-xs text-[var(--cs-text-secondary)]">{r.child_input}</p>
                       </div>
                       <div className="rounded-lg border border-emerald-200 bg-emerald-50/40 p-3">
                         <p className="font-semibold text-emerald-800 flex items-center gap-1 mb-1">
                           <Users className="h-4 w-4" /> Family Input
                         </p>
-                        <p className="text-xs text-slate-700">{r.family_input}</p>
+                        <p className="text-xs text-[var(--cs-text-secondary)]">{r.family_input}</p>
                       </div>
                     </div>
 
@@ -416,7 +416,7 @@ export default function AssessmentOfNeedPage() {
                         <p className="font-semibold text-red-800 flex items-center gap-1 mb-1">
                           <AlertTriangle className="h-4 w-4" /> Key Risks
                         </p>
-                        <ul className="list-disc list-inside text-xs text-slate-700 space-y-0.5">
+                        <ul className="list-disc list-inside text-xs text-[var(--cs-text-secondary)] space-y-0.5">
                           {r.key_risks.map((k, i) => (<li key={i}>{k}</li>))}
                         </ul>
                       </div>
@@ -424,7 +424,7 @@ export default function AssessmentOfNeedPage() {
                         <p className="font-semibold text-green-800 flex items-center gap-1 mb-1">
                           <Shield className="h-4 w-4" /> Protective Factors
                         </p>
-                        <ul className="list-disc list-inside text-xs text-slate-700 space-y-0.5">
+                        <ul className="list-disc list-inside text-xs text-[var(--cs-text-secondary)] space-y-0.5">
                           {r.key_protective_factors.map((k, i) => (<li key={i}>{k}</li>))}
                         </ul>
                       </div>
@@ -451,7 +451,7 @@ export default function AssessmentOfNeedPage() {
                       <p className="font-semibold text-violet-800 flex items-center gap-1 mb-1">
                         <Compass className="h-4 w-4" /> Pedagogical Approach Identified
                       </p>
-                      <p className="text-xs text-slate-700">{r.pedagogical_approach_identified}</p>
+                      <p className="text-xs text-[var(--cs-text-secondary)]">{r.pedagogical_approach_identified}</p>
                     </div>
 
                     {/* review schedule */}

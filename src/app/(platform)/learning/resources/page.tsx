@@ -47,11 +47,11 @@ const PATHWAY_LABELS: Record<LearningPathway, string> = {
 };
 
 const STATUS_COLOURS: Record<string, string> = {
-  draft: "bg-slate-100 text-slate-700",
+  draft: "bg-slate-100 text-[var(--cs-text-secondary)]",
   reviewed: "bg-blue-100 text-blue-700",
   approved: "bg-emerald-100 text-emerald-700",
   published: "bg-violet-100 text-violet-700",
-  archived: "bg-slate-100 text-slate-500",
+  archived: "bg-slate-100 text-[var(--cs-text-muted)]",
 };
 
 function ariaMode(type: GeneratedResourceType): string {
@@ -81,11 +81,11 @@ function ResultSection({ label, value }: { label: string; value: unknown }) {
   if (Array.isArray(value)) {
     return (
       <div className="space-y-1">
-        <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide">{label}</p>
+        <p className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide">{label}</p>
         <ul className="space-y-1">
           {value.map((item, i) => (
-            <li key={i} className="text-sm text-slate-700 flex gap-2">
-              <span className="text-slate-400 shrink-0">•</span>
+            <li key={i} className="text-sm text-[var(--cs-text-secondary)] flex gap-2">
+              <span className="text-[var(--cs-text-muted)] shrink-0">•</span>
               <span>{typeof item === "string" ? item : JSON.stringify(item)}</span>
             </li>
           ))}
@@ -96,8 +96,8 @@ function ResultSection({ label, value }: { label: string; value: unknown }) {
   if (typeof value === "string") {
     return (
       <div className="space-y-1">
-        <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide">{label}</p>
-        <p className="text-sm text-slate-700 leading-relaxed whitespace-pre-wrap">{value}</p>
+        <p className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide">{label}</p>
+        <p className="text-sm text-[var(--cs-text-secondary)] leading-relaxed whitespace-pre-wrap">{value}</p>
       </div>
     );
   }
@@ -137,7 +137,7 @@ function ResourceCard({ resource }: { resource: GeneratedResource }) {
   };
 
   return (
-    <Card className="border border-slate-100">
+    <Card className="border border-[var(--cs-border-subtle)]">
       <CardContent className="p-4">
         <div className="flex items-start gap-3">
           <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-violet-50">
@@ -145,7 +145,7 @@ function ResourceCard({ resource }: { resource: GeneratedResource }) {
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-start justify-between gap-2">
-              <p className="text-sm font-semibold text-slate-900 truncate">{resource.title}</p>
+              <p className="text-sm font-semibold text-[var(--cs-navy)] truncate">{resource.title}</p>
               <div className="flex items-center gap-1.5 shrink-0">
                 <Badge className={cn("text-[10px] h-4 px-1.5", STATUS_COLOURS[resource.status] ?? "")}>
                   {resource.status}
@@ -161,7 +161,7 @@ function ResourceCard({ resource }: { resource: GeneratedResource }) {
                   {PATHWAY_LABELS[resource.pathway]}
                 </Badge>
               )}
-              <span className="text-[10px] text-slate-400 flex items-center gap-0.5">
+              <span className="text-[10px] text-[var(--cs-text-muted)] flex items-center gap-0.5">
                 <Clock className="h-2.5 w-2.5" />
                 {formatDate(resource.created_at)}
               </span>
@@ -333,7 +333,7 @@ export default function ResourceGeneratorPage() {
           <CardContent className="space-y-4">
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
-                <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Topic</label>
+                <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Topic</label>
                 <Input
                   className="mt-1"
                   placeholder="e.g. County Lines awareness for staff"
@@ -342,7 +342,7 @@ export default function ResourceGeneratorPage() {
                 />
               </div>
               <div>
-                <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Resource Type</label>
+                <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Resource Type</label>
                 <Select value={resourceType} onValueChange={(v) => setResourceType(v as GeneratedResourceType)}>
                   <SelectTrigger className="mt-1"><SelectValue /></SelectTrigger>
                   <SelectContent>
@@ -353,7 +353,7 @@ export default function ResourceGeneratorPage() {
                 </Select>
               </div>
               <div>
-                <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Pathway</label>
+                <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Pathway</label>
                 <Select value={pathway} onValueChange={(v) => setPathway(v as LearningPathway)}>
                   <SelectTrigger className="mt-1"><SelectValue /></SelectTrigger>
                   <SelectContent>
@@ -364,7 +364,7 @@ export default function ResourceGeneratorPage() {
                 </Select>
               </div>
               <div>
-                <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Reading Level</label>
+                <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Reading Level</label>
                 <Select value={readingLevel} onValueChange={(v) => setReadingLevel(v as "standard" | "accessible" | "simple")}>
                   <SelectTrigger className="mt-1"><SelectValue /></SelectTrigger>
                   <SelectContent>
@@ -375,7 +375,7 @@ export default function ResourceGeneratorPage() {
                 </Select>
               </div>
               <div>
-                <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Tone</label>
+                <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Tone</label>
                 <Select value={tone} onValueChange={(v) => setTone(v as "professional" | "warm" | "child_friendly")}>
                   <SelectTrigger className="mt-1"><SelectValue /></SelectTrigger>
                   <SelectContent>
@@ -387,7 +387,7 @@ export default function ResourceGeneratorPage() {
               </div>
             </div>
             <div>
-              <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Additional Context</label>
+              <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Additional Context</label>
               <Textarea
                 className="mt-1 text-sm"
                 rows={3}
@@ -440,14 +440,14 @@ export default function ResourceGeneratorPage() {
         {/* Existing resources */}
         <div>
           <div className="flex items-center justify-between mb-3">
-            <h3 className="text-sm font-semibold text-slate-700">Saved Resources</h3>
-            <span className="text-xs text-slate-400">{resources.length} resource{resources.length !== 1 ? "s" : ""}</span>
+            <h3 className="text-sm font-semibold text-[var(--cs-text-secondary)]">Saved Resources</h3>
+            <span className="text-xs text-[var(--cs-text-muted)]">{resources.length} resource{resources.length !== 1 ? "s" : ""}</span>
           </div>
           {isLoading ? (
-            <p className="text-sm text-slate-500 text-center py-8">Loading resources…</p>
+            <p className="text-sm text-[var(--cs-text-muted)] text-center py-8">Loading resources…</p>
           ) : resources.length === 0 ? (
-            <div className="text-center py-12 text-slate-500">
-              <BookOpen className="h-10 w-10 text-slate-300 mx-auto mb-3" />
+            <div className="text-center py-12 text-[var(--cs-text-muted)]">
+              <BookOpen className="h-10 w-10 text-[var(--cs-text-gentle)] mx-auto mb-3" />
               <p className="text-sm font-medium">No resources saved yet</p>
               <p className="text-xs mt-1">Generate and save your first resource above</p>
             </div>

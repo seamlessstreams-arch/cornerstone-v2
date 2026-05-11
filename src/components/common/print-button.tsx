@@ -165,7 +165,7 @@ export function PrintButton({
       variant={variant}
       size={size}
       onClick={handlePrint}
-      className={cn("gap-1.5 text-slate-500 data-[no-print]:hidden", className)}
+      className={cn("gap-1.5 text-[var(--cs-text-muted)] data-[no-print]:hidden", className)}
       data-no-print
     >
       <Printer className="h-3.5 w-3.5" />

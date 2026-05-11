@@ -59,7 +59,7 @@ const SCCIF_COLOUR: Record<SccifJudgementArea, string> = {
 };
 
 const CATEGORY_COLOUR: Record<ReadinessCategory, string> = {
-  statutory_documentation: "bg-slate-100 text-slate-700 border-slate-200",
+  statutory_documentation: "bg-slate-100 text-[var(--cs-text-secondary)] border-[var(--cs-border)]",
   records_of_practice: "bg-blue-50 text-blue-700 border-blue-200",
   childrens_voice_evidence: "bg-pink-50 text-pink-700 border-pink-200",
   outcome_data: "bg-teal-50 text-teal-700 border-teal-200",
@@ -184,7 +184,7 @@ export default function InspectionReadinessPackPage() {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <input
               placeholder="Search items, descriptions, examples, commentary..."
-              className="w-full rounded-lg border border-slate-200 bg-white pl-9 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900"
+              className="w-full rounded-lg border border-[var(--cs-border)] bg-white pl-9 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
@@ -251,7 +251,7 @@ export default function InspectionReadinessPackPage() {
         <div className="space-y-3">
           {filtered.length === 0 && (
             <div className="text-center py-12 text-muted-foreground">
-              <ClipboardCheck className="h-10 w-10 mx-auto mb-3 text-slate-300" />
+              <ClipboardCheck className="h-10 w-10 mx-auto mb-3 text-[var(--cs-text-gentle)]" />
               No readiness items match your filters.
             </div>
           )}
@@ -268,7 +268,7 @@ export default function InspectionReadinessPackPage() {
               >
                 {/* collapsed header */}
                 <button
-                  className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                  className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                   onClick={() => setExpandedId(isExpanded ? null : item.id)}
                 >
                   <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -311,12 +311,12 @@ export default function InspectionReadinessPackPage() {
                     <Card>
                       <CardHeader className="pb-2">
                         <CardTitle className="text-sm flex items-center gap-2">
-                          <FileText className="h-4 w-4 text-slate-500" />
+                          <FileText className="h-4 w-4 text-[var(--cs-text-muted)]" />
                           Description
                         </CardTitle>
                       </CardHeader>
                       <CardContent>
-                        <p className="text-sm text-slate-700">{item.description}</p>
+                        <p className="text-sm text-[var(--cs-text-secondary)]">{item.description}</p>
                       </CardContent>
                     </Card>
 
@@ -331,45 +331,45 @@ export default function InspectionReadinessPackPage() {
                       <CardContent>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3 text-sm">
                           <div className="flex items-start gap-2">
-                            <MapPin className="h-3.5 w-3.5 text-slate-400 shrink-0 mt-0.5" />
+                            <MapPin className="h-3.5 w-3.5 text-[var(--cs-text-muted)] shrink-0 mt-0.5" />
                             <div>
                               <p className="text-xs text-muted-foreground">Location</p>
-                              <p className="text-slate-700">{item.location_of_document}</p>
+                              <p className="text-[var(--cs-text-secondary)]">{item.location_of_document}</p>
                             </div>
                           </div>
                           <div className="flex items-start gap-2">
-                            <User className="h-3.5 w-3.5 text-slate-400 shrink-0 mt-0.5" />
+                            <User className="h-3.5 w-3.5 text-[var(--cs-text-muted)] shrink-0 mt-0.5" />
                             <div>
                               <p className="text-xs text-muted-foreground">Responsible Owner</p>
-                              <p className="text-slate-700">{getStaffName(item.responsible_owner)}</p>
+                              <p className="text-[var(--cs-text-secondary)]">{getStaffName(item.responsible_owner)}</p>
                             </div>
                           </div>
                           <div className="flex items-start gap-2">
-                            <Calendar className="h-3.5 w-3.5 text-slate-400 shrink-0 mt-0.5" />
+                            <Calendar className="h-3.5 w-3.5 text-[var(--cs-text-muted)] shrink-0 mt-0.5" />
                             <div>
                               <p className="text-xs text-muted-foreground">Last Updated</p>
-                              <p className="text-slate-700">{item.last_updated}</p>
+                              <p className="text-[var(--cs-text-secondary)]">{item.last_updated}</p>
                             </div>
                           </div>
                           <div className="flex items-start gap-2">
-                            <Calendar className="h-3.5 w-3.5 text-slate-400 shrink-0 mt-0.5" />
+                            <Calendar className="h-3.5 w-3.5 text-[var(--cs-text-muted)] shrink-0 mt-0.5" />
                             <div>
                               <p className="text-xs text-muted-foreground">Next Review Due</p>
-                              <p className="text-slate-700">{item.next_review_due}</p>
+                              <p className="text-[var(--cs-text-secondary)]">{item.next_review_due}</p>
                             </div>
                           </div>
                           <div className="flex items-start gap-2">
                             <Star className="h-3.5 w-3.5 text-violet-500 shrink-0 mt-0.5" />
                             <div>
                               <p className="text-xs text-muted-foreground">Evidence Quality</p>
-                              <p className="text-slate-700 font-medium">{item.evidence_quality_rating} / 5</p>
+                              <p className="text-[var(--cs-text-secondary)] font-medium">{item.evidence_quality_rating} / 5</p>
                             </div>
                           </div>
                           <div className="flex items-start gap-2">
-                            <FileText className="h-3.5 w-3.5 text-slate-400 shrink-0 mt-0.5" />
+                            <FileText className="h-3.5 w-3.5 text-[var(--cs-text-muted)] shrink-0 mt-0.5" />
                             <div>
                               <p className="text-xs text-muted-foreground">Current Version</p>
-                              <p className="text-slate-700">{item.current_version}</p>
+                              <p className="text-[var(--cs-text-secondary)]">{item.current_version}</p>
                             </div>
                           </div>
                         </div>
@@ -387,7 +387,7 @@ export default function InspectionReadinessPackPage() {
                       <CardContent>
                         <ul className="space-y-2">
                           {item.examples_included.map((ex, i) => (
-                            <li key={i} className="flex items-start gap-2 text-sm text-slate-700">
+                            <li key={i} className="flex items-start gap-2 text-sm text-[var(--cs-text-secondary)]">
                               <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400 shrink-0 mt-0.5" />
                               {ex}
                             </li>
@@ -410,7 +410,7 @@ export default function InspectionReadinessPackPage() {
                             "text-xs px-2 py-0.5 border inline-flex items-center gap-1",
                             item.child_voice_woven
                               ? "bg-pink-50 text-pink-700 border-pink-200"
-                              : "bg-slate-50 text-slate-500 border-slate-200"
+                              : "bg-slate-50 text-[var(--cs-text-muted)] border-[var(--cs-border)]"
                           )}>
                             <MessageSquare className="h-3 w-3" />
                             {item.child_voice_woven ? "Child voice woven" : "Child voice not woven"}
@@ -428,7 +428,7 @@ export default function InspectionReadinessPackPage() {
                             "text-xs px-2 py-0.5 border inline-flex items-center gap-1",
                             item.accessible_to_children
                               ? "bg-emerald-50 text-emerald-700 border-emerald-200"
-                              : "bg-slate-50 text-slate-500 border-slate-200"
+                              : "bg-slate-50 text-[var(--cs-text-muted)] border-[var(--cs-border)]"
                           )}>
                             {item.accessible_to_children ? <Eye className="h-3 w-3" /> : <EyeOff className="h-3 w-3" />}
                             {item.accessible_to_children ? "Accessible to children" : "Not for children"}
@@ -446,7 +446,7 @@ export default function InspectionReadinessPackPage() {
                         </CardTitle>
                       </CardHeader>
                       <CardContent>
-                        <p className="text-sm text-slate-700 whitespace-pre-line">{item.commentary}</p>
+                        <p className="text-sm text-[var(--cs-text-secondary)] whitespace-pre-line">{item.commentary}</p>
                       </CardContent>
                     </Card>
                   </div>

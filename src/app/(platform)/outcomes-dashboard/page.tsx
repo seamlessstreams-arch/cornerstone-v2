@@ -235,7 +235,7 @@ export default function OutcomesDashboardPage() {
                         <Badge variant="outline" className={SCCIF_BADGE[r.sccif_judgement_area]}>
                           {OUTCOME_SCCIF_AREA_LABEL[r.sccif_judgement_area]}
                         </Badge>
-                        <Badge variant="outline" className="bg-slate-50 text-slate-700 border-slate-200">
+                        <Badge variant="outline" className="bg-slate-50 text-[var(--cs-text-secondary)] border-[var(--cs-border)]">
                           {OUTCOME_DASHBOARD_DOMAIN_LABEL[r.domain]}
                         </Badge>
                         <Badge variant="outline" className={RAG_CLR[r.risk_rating]}>
@@ -269,9 +269,9 @@ export default function OutcomesDashboardPage() {
                         <p className="text-[10px] uppercase tracking-wide text-blue-700">Current</p>
                         <p className="text-sm font-semibold text-blue-900">{r.current_value}</p>
                       </div>
-                      <div className="bg-slate-50 border border-slate-200 rounded p-2">
-                        <p className="text-[10px] uppercase tracking-wide text-slate-600">Baseline</p>
-                        <p className="text-sm font-semibold text-slate-800">{r.baseline}</p>
+                      <div className="bg-slate-50 border border-[var(--cs-border)] rounded p-2">
+                        <p className="text-[10px] uppercase tracking-wide text-[var(--cs-text-secondary)]">Baseline</p>
+                        <p className="text-sm font-semibold text-[var(--cs-navy)]">{r.baseline}</p>
                       </div>
                       <div className="bg-emerald-50 border border-emerald-200 rounded p-2">
                         <p className="text-[10px] uppercase tracking-wide text-emerald-700">Target</p>

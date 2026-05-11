@@ -106,7 +106,7 @@ export default function ChildWorkExperienceTrackerPage() {
     return (
       <PageShell title="Work Experience & Career Exposure" subtitle="Loading...">
         <div className="flex items-center justify-center py-12">
-          <Loader2 className="h-8 w-8 animate-spin text-slate-400" />
+          <Loader2 className="h-8 w-8 animate-spin text-[var(--cs-text-muted)]" />
         </div>
       </PageShell>
     );
@@ -124,45 +124,45 @@ export default function ChildWorkExperienceTrackerPage() {
       }
     >
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-slate-600 text-sm mb-1">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-[var(--cs-text-secondary)] text-sm mb-1">
             <Briefcase className="h-4 w-4" />
             <span>Total records</span>
           </div>
-          <div className="text-2xl font-semibold text-slate-900">{stats.total}</div>
+          <div className="text-2xl font-semibold text-[var(--cs-navy)]">{stats.total}</div>
         </div>
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-slate-600 text-sm mb-1">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-[var(--cs-text-secondary)] text-sm mb-1">
             <Calendar className="h-4 w-4" />
             <span>Showing</span>
           </div>
-          <div className="text-2xl font-semibold text-slate-900">{filtered.length}</div>
+          <div className="text-2xl font-semibold text-[var(--cs-navy)]">{filtered.length}</div>
         </div>
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-slate-600 text-sm mb-1">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-[var(--cs-text-secondary)] text-sm mb-1">
             <Star className="h-4 w-4" />
             <span>Mentor connections</span>
           </div>
-          <div className="text-2xl font-semibold text-slate-900">{stats.mentorConnections}</div>
+          <div className="text-2xl font-semibold text-[var(--cs-navy)]">{stats.mentorConnections}</div>
         </div>
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-slate-600 text-sm mb-1">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-[var(--cs-text-secondary)] text-sm mb-1">
             <Award className="h-4 w-4" />
             <span>Types covered</span>
           </div>
-          <div className="text-2xl font-semibold text-slate-900">{[...new Set(records.map((r) => r.type))].length}</div>
+          <div className="text-2xl font-semibold text-[var(--cs-navy)]">{[...new Set(records.map((r) => r.type))].length}</div>
         </div>
       </div>
 
       <div className="flex flex-col sm:flex-row gap-3 mb-4">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--cs-text-muted)]" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search young person, employer, industry, type..."
-            className="w-full pl-9 pr-3 py-2 text-sm border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500"
+            className="w-full pl-9 pr-3 py-2 text-sm border border-[var(--cs-border)] rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500"
           />
         </div>
         <Select value={typeFilter} onValueChange={setTypeFilter}>
@@ -193,19 +193,19 @@ export default function ChildWorkExperienceTrackerPage() {
         {filtered.map((r) => {
           const isOpen = expandedId === r.id;
           return (
-            <div key={r.id} className="rounded-lg border border-slate-200 bg-white overflow-hidden">
+            <div key={r.id} className="rounded-lg border border-[var(--cs-border)] bg-white overflow-hidden">
               <button
                 onClick={() => setExpandedId(isOpen ? null : r.id)}
-                className="w-full p-4 flex items-start justify-between gap-3 hover:bg-slate-50 text-left"
+                className="w-full p-4 flex items-start justify-between gap-3 hover:bg-[var(--cs-surface)] text-left"
               >
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap mb-1">
-                    <span className="font-semibold text-slate-900">{getYPName(r.child_id)}</span>
-                    <span className="text-slate-700">{r.employer ?? r.industry}</span>
-                    <span className={cn("text-xs px-2 py-0.5 rounded-full border", typeColour[r.type] ?? "bg-slate-100 text-slate-800 border-slate-200")}>
+                    <span className="font-semibold text-[var(--cs-navy)]">{getYPName(r.child_id)}</span>
+                    <span className="text-[var(--cs-text-secondary)]">{r.employer ?? r.industry}</span>
+                    <span className={cn("text-xs px-2 py-0.5 rounded-full border", typeColour[r.type] ?? "bg-slate-100 text-[var(--cs-navy)] border-[var(--cs-border)]")}>
                       {WORK_EXP_TYPE_LABEL[r.type]}
                     </span>
-                    <span className="text-xs px-2 py-0.5 rounded-full border bg-slate-100 text-slate-700 border-slate-200">
+                    <span className="text-xs px-2 py-0.5 rounded-full border bg-slate-100 text-[var(--cs-text-secondary)] border-[var(--cs-border)]">
                       {r.industry}
                     </span>
                     <span className="text-xs px-2 py-0.5 rounded-full border bg-amber-100 text-amber-800 border-amber-200">
@@ -217,30 +217,30 @@ export default function ChildWorkExperienceTrackerPage() {
                       </span>
                     ) : null}
                   </div>
-                  <div className="text-sm text-slate-600">
+                  <div className="text-sm text-[var(--cs-text-secondary)]">
                     {r.start_date}
                     {r.end_date ? ` → ${r.end_date}` : ""} · {getStaffName(r.key_worker)}
                   </div>
                 </div>
-                {isOpen ? <ChevronUp className="h-5 w-5 text-slate-400" /> : <ChevronDown className="h-5 w-5 text-slate-400" />}
+                {isOpen ? <ChevronUp className="h-5 w-5 text-[var(--cs-text-muted)]" /> : <ChevronDown className="h-5 w-5 text-[var(--cs-text-muted)]" />}
               </button>
               {isOpen ? (
-                <div className="px-4 pb-4 border-t border-slate-100 bg-slate-50/50">
+                <div className="px-4 pb-4 border-t border-[var(--cs-border-subtle)] bg-slate-50/50">
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 pt-4">
-                    <div className="rounded-md border border-slate-200 bg-white p-3 lg:col-span-2">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Placement / session details</div>
-                      <div className="grid grid-cols-2 gap-3 text-sm text-slate-700">
-                        <div><span className="text-slate-500">Employer:</span> {r.employer ?? "—"}</div>
-                        <div><span className="text-slate-500">Industry:</span> {r.industry}</div>
-                        <div><span className="text-slate-500">Supervisor:</span> {r.supervisor_name ?? "—"}</div>
-                        <div><span className="text-slate-500">Role:</span> {r.supervisor_role ?? "—"}</div>
-                        <div><span className="text-slate-500">Started:</span> {r.start_date}</div>
-                        <div><span className="text-slate-500">Ended:</span> {r.end_date ?? "—"}</div>
-                        <div><span className="text-slate-500">Days/hours:</span> {r.days_hours_total}</div>
-                        <div><span className="text-slate-500">Travel budget:</span> {r.travel_budget_used != null ? `£${r.travel_budget_used.toFixed(2)}` : "—"}</div>
-                        <div><span className="text-slate-500">Risk assessed:</span> {r.risk_assessment_done ? "Yes" : "No"}</div>
-                        <div><span className="text-slate-500">Safeguarding checked:</span> {r.safeguarding_checked ? "Yes" : "No"}</div>
-                        <div><span className="text-slate-500">Review:</span> {r.review_date}</div>
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3 lg:col-span-2">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Placement / session details</div>
+                      <div className="grid grid-cols-2 gap-3 text-sm text-[var(--cs-text-secondary)]">
+                        <div><span className="text-[var(--cs-text-muted)]">Employer:</span> {r.employer ?? "—"}</div>
+                        <div><span className="text-[var(--cs-text-muted)]">Industry:</span> {r.industry}</div>
+                        <div><span className="text-[var(--cs-text-muted)]">Supervisor:</span> {r.supervisor_name ?? "—"}</div>
+                        <div><span className="text-[var(--cs-text-muted)]">Role:</span> {r.supervisor_role ?? "—"}</div>
+                        <div><span className="text-[var(--cs-text-muted)]">Started:</span> {r.start_date}</div>
+                        <div><span className="text-[var(--cs-text-muted)]">Ended:</span> {r.end_date ?? "—"}</div>
+                        <div><span className="text-[var(--cs-text-muted)]">Days/hours:</span> {r.days_hours_total}</div>
+                        <div><span className="text-[var(--cs-text-muted)]">Travel budget:</span> {r.travel_budget_used != null ? `£${r.travel_budget_used.toFixed(2)}` : "—"}</div>
+                        <div><span className="text-[var(--cs-text-muted)]">Risk assessed:</span> {r.risk_assessment_done ? "Yes" : "No"}</div>
+                        <div><span className="text-[var(--cs-text-muted)]">Safeguarding checked:</span> {r.safeguarding_checked ? "Yes" : "No"}</div>
+                        <div><span className="text-[var(--cs-text-muted)]">Review:</span> {r.review_date}</div>
                       </div>
                     </div>
 
@@ -281,26 +281,26 @@ export default function ChildWorkExperienceTrackerPage() {
                       <p className="text-sm text-violet-900 italic">&ldquo;{r.child_reflection}&rdquo;</p>
                     </div>
 
-                    <div className="rounded-md border border-slate-200 bg-white p-3">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Links to aspirations</div>
-                      <ul className="text-sm text-slate-700 space-y-1">
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Links to aspirations</div>
+                      <ul className="text-sm text-[var(--cs-text-secondary)] space-y-1">
                         {r.links_to_aspirations.map((s, i) => (
                           <li key={i} className="flex gap-2"><span>→</span><span>{s}</span></li>
                         ))}
                       </ul>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Follow-up opportunity</div>
-                      <p className="text-sm text-slate-700">{r.follow_up_opportunity ?? "None recorded yet"}</p>
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Follow-up opportunity</div>
+                      <p className="text-sm text-[var(--cs-text-secondary)]">{r.follow_up_opportunity ?? "None recorded yet"}</p>
                     </div>
 
-                    <div className="rounded-md border border-slate-200 bg-white p-3 lg:col-span-2">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Child voice</div>
-                      <p className="text-sm text-slate-700 italic">&ldquo;{r.child_voice}&rdquo;</p>
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3 lg:col-span-2">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Child voice</div>
+                      <p className="text-sm text-[var(--cs-text-secondary)] italic">&ldquo;{r.child_voice}&rdquo;</p>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3 lg:col-span-2">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Staff observation</div>
-                      <p className="text-sm text-slate-700">{r.staff_observation}</p>
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3 lg:col-span-2">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Staff observation</div>
+                      <p className="text-sm text-[var(--cs-text-secondary)]">{r.staff_observation}</p>
                     </div>
                     <div className="lg:col-span-2">
                       <SmartLinkPanel sourceType="work-exp-records" sourceId={r.id} childId={r.child_id} compact />

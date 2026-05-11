@@ -87,32 +87,32 @@ function TimesheetRow({
   const statusConfig = {
     complete:      { label: "Submitted",     color: "bg-emerald-100 text-emerald-700" },
     partial:       { label: "Partial",       color: "bg-amber-100 text-amber-700" },
-    not_submitted: { label: "Not submitted", color: "bg-slate-100 text-slate-500" },
-  }[data.status] ?? { label: "Unknown", color: "bg-slate-100 text-slate-500" };
+    not_submitted: { label: "Not submitted", color: "bg-slate-100 text-[var(--cs-text-muted)]" },
+  }[data.status] ?? { label: "Unknown", color: "bg-slate-100 text-[var(--cs-text-muted)]" };
 
   return (
-    <div className="flex items-center gap-4 rounded-xl px-3 py-3 hover:bg-slate-50 transition-colors group">
+    <div className="flex items-center gap-4 rounded-xl px-3 py-3 hover:bg-[var(--cs-surface)] transition-colors group">
       <Avatar name={data.staff.full_name} size="sm" />
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
-          <span className="text-sm font-medium text-slate-900">{data.staff.full_name}</span>
+          <span className="text-sm font-medium text-[var(--cs-navy)]">{data.staff.full_name}</span>
           {approved && <Badge className="text-[9px] rounded-full bg-emerald-100 text-emerald-700">Approved</Badge>}
         </div>
-        <div className="text-xs text-slate-500">{data.staff.job_title} · {data.staff.contracted_hours}h/wk contracted</div>
+        <div className="text-xs text-[var(--cs-text-muted)]">{data.staff.job_title} · {data.staff.contracted_hours}h/wk contracted</div>
       </div>
       <div className="text-center w-20">
-        <div className="text-sm font-semibold text-slate-900">{hoursLabel(data.totalScheduledMins)}</div>
-        <div className="text-[10px] text-slate-400">Worked</div>
+        <div className="text-sm font-semibold text-[var(--cs-navy)]">{hoursLabel(data.totalScheduledMins)}</div>
+        <div className="text-[10px] text-[var(--cs-text-muted)]">Worked</div>
       </div>
       <div className="text-center w-20">
-        <div className={cn("text-sm font-semibold", data.overtimeMinutes > 0 ? "text-orange-600" : "text-slate-400")}>
+        <div className={cn("text-sm font-semibold", data.overtimeMinutes > 0 ? "text-orange-600" : "text-[var(--cs-text-muted)]")}>
           {data.overtimeMinutes > 0 ? hoursLabel(data.overtimeMinutes) : "—"}
         </div>
-        <div className="text-[10px] text-slate-400">Overtime</div>
+        <div className="text-[10px] text-[var(--cs-text-muted)]">Overtime</div>
       </div>
       <div className="text-center w-24">
-        <div className="text-sm font-semibold text-slate-900">£{data.overtimePay.toFixed(2)}</div>
-        <div className="text-[10px] text-slate-400">OT pay</div>
+        <div className="text-sm font-semibold text-[var(--cs-navy)]">£{data.overtimePay.toFixed(2)}</div>
+        <div className="text-[10px] text-[var(--cs-text-muted)]">OT pay</div>
       </div>
       <Badge className={cn("text-[10px] rounded-full shrink-0", statusConfig.color)}>{statusConfig.label}</Badge>
       <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -327,7 +327,7 @@ export default function TimesheetsPage() {
     >
       {isLoading ? (
         <div className="flex items-center justify-center py-20">
-          <Loader2 className="h-6 w-6 animate-spin text-slate-400" />
+          <Loader2 className="h-6 w-6 animate-spin text-[var(--cs-text-muted)]" />
         </div>
       ) : (
         <div id="timesheets-content" className="space-y-6">
@@ -339,12 +339,12 @@ export default function TimesheetsPage() {
               { label: "Pending Approval", value: totals.pendingApproval, icon: AlertTriangle, color: "text-amber-600", bg: "bg-amber-50", sub: "Timesheets" },
               { label: "Clocked In Now", value: CLOCK_LOG.filter((c) => c.status === "clocked_in").length, icon: Play, color: "text-emerald-600", bg: "bg-emerald-50", sub: "Live" },
             ].map(({ label, value, icon: Icon, color, bg, sub }) => (
-              <div key={label} className="rounded-2xl border border-slate-200 bg-white p-5">
+              <div key={label} className="rounded-2xl border border-[var(--cs-border)] bg-white p-5">
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">{label}</div>
+                    <div className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider">{label}</div>
                     <div className={cn("mt-1 text-2xl font-bold tabular-nums", color)}>{value}</div>
-                    <div className="text-xs text-slate-400 mt-0.5">{sub}</div>
+                    <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">{sub}</div>
                   </div>
                   <div className={cn("rounded-2xl p-3", bg)}>
                     <Icon className={cn("h-5 w-5", color)} />
@@ -362,7 +362,7 @@ export default function TimesheetsPage() {
                 onClick={() => setTab(id)}
                 className={cn(
                   "flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-all",
-                  tab === id ? "bg-white text-slate-900 shadow-sm" : "text-slate-500 hover:text-slate-700"
+                  tab === id ? "bg-white text-[var(--cs-navy)] shadow-sm" : "text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)]"
                 )}
               >
                 <Icon className="h-3.5 w-3.5" />{label}
@@ -376,7 +376,7 @@ export default function TimesheetsPage() {
               {/* Search & filters */}
               <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
                 <div className="relative flex-1 w-full sm:max-w-sm">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
                   <Input
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
@@ -384,7 +384,7 @@ export default function TimesheetsPage() {
                     className="pl-9 h-9 text-sm rounded-xl"
                   />
                 </div>
-                <div className="flex items-center gap-1.5 text-xs text-slate-500 shrink-0">
+                <div className="flex items-center gap-1.5 text-xs text-[var(--cs-text-muted)] shrink-0">
                   <ArrowUpDown className="h-3.5 w-3.5" />
                   <select value={sortBy} onChange={(e) => setSortBy(e.target.value as typeof sortBy)} className="bg-white border rounded-md px-2 py-1.5 text-xs">
                     <option value="name">Name A–Z</option>
@@ -407,7 +407,7 @@ export default function TimesheetsPage() {
                         "px-3 py-1.5 text-[11px] font-medium rounded-full border transition-colors",
                         statusFilter === key
                           ? "bg-slate-900 text-white border-slate-900"
-                          : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50"
+                          : "bg-white text-[var(--cs-text-secondary)] border-[var(--cs-border)] hover:bg-[var(--cs-surface)]"
                       )}
                     >
                       {label}
@@ -418,7 +418,7 @@ export default function TimesheetsPage() {
 
               {/* Results count */}
               {isTimesheetFiltered && (
-                <div className="text-xs text-slate-500">
+                <div className="text-xs text-[var(--cs-text-muted)]">
                   Showing {filteredTimesheetData.length} of {timesheetData.length} staff
                 </div>
               )}
@@ -435,7 +435,7 @@ export default function TimesheetsPage() {
                           key={w}
                           onClick={() => setWeekFilter(w)}
                           className={cn("px-3 py-1.5 rounded-lg text-xs font-medium capitalize transition-all",
-                            weekFilter === w ? "bg-slate-900 text-white" : "bg-slate-100 text-slate-600 hover:bg-slate-200")}
+                            weekFilter === w ? "bg-slate-900 text-white" : "bg-slate-100 text-[var(--cs-text-secondary)] hover:bg-slate-200")}
                         >
                           {w.replace(/_/g, " ")}
                         </button>
@@ -445,7 +445,7 @@ export default function TimesheetsPage() {
                 </CardHeader>
                 <CardContent>
                   {filteredTimesheetData.length === 0 && isTimesheetFiltered ? (
-                    <div className="py-8 text-center text-slate-400">
+                    <div className="py-8 text-center text-[var(--cs-text-muted)]">
                       <Search className="h-8 w-8 mx-auto mb-2 text-slate-200" />
                       <div className="text-sm font-medium">No timesheets match your filters</div>
                       <div className="text-xs mt-1">Try adjusting your search or status filter</div>
@@ -483,13 +483,13 @@ export default function TimesheetsPage() {
                       <div key={entry.staffId} className={cn(
                         "flex items-center gap-3 rounded-xl px-3 py-3 border",
                         entry.status === "clocked_in" ? "bg-emerald-50 border-emerald-200"
-                          : entry.status === "completed" ? "bg-slate-50 border-slate-200"
-                          : "bg-white border-slate-200"
+                          : entry.status === "completed" ? "bg-slate-50 border-[var(--cs-border)]"
+                          : "bg-white border-[var(--cs-border)]"
                       )}>
                         <Avatar name={getStaffName(entry.staffId)} size="sm" />
                         <div className="flex-1 min-w-0">
-                          <div className="text-sm font-medium text-slate-900">{getStaffName(entry.staffId)}</div>
-                          <div className="text-xs text-slate-500">Shift {entry.shiftStart} – {entry.shiftEnd}</div>
+                          <div className="text-sm font-medium text-[var(--cs-navy)]">{getStaffName(entry.staffId)}</div>
+                          <div className="text-xs text-[var(--cs-text-muted)]">Shift {entry.shiftStart} – {entry.shiftEnd}</div>
                         </div>
                         <div className="text-right">
                           {entry.clockIn && (
@@ -498,19 +498,19 @@ export default function TimesheetsPage() {
                             </div>
                           )}
                           {entry.clockOut && (
-                            <div className="flex items-center gap-1 text-xs text-slate-500">
+                            <div className="flex items-center gap-1 text-xs text-[var(--cs-text-muted)]">
                               <Square className="h-3 w-3" />{entry.clockOut}
                             </div>
                           )}
                           {entry.break && (
-                            <div className="flex items-center gap-1 text-[10px] text-slate-400">
+                            <div className="flex items-center gap-1 text-[10px] text-[var(--cs-text-muted)]">
                               <Coffee className="h-2.5 w-2.5" />{entry.break}
                             </div>
                           )}
                         </div>
                         <Badge className={cn("text-[9px] rounded-full shrink-0",
                           entry.status === "clocked_in" ? "bg-emerald-100 text-emerald-700"
-                            : entry.status === "completed" ? "bg-slate-100 text-slate-600"
+                            : entry.status === "completed" ? "bg-slate-100 text-[var(--cs-text-secondary)]"
                             : "bg-blue-100 text-blue-700"
                         )}>
                           {entry.status === "clocked_in" ? "On shift" : entry.status === "completed" ? "Completed" : "Scheduled"}
@@ -533,11 +533,11 @@ export default function TimesheetsPage() {
                       </div>
                     )}
                     <div>
-                      <label className="text-xs font-semibold text-slate-700 block mb-1">Staff member</label>
+                      <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1">Staff member</label>
                       <select
                         value={clockForm.staffId}
                         onChange={(e) => setClockForm((f) => ({ ...f, staffId: e.target.value }))}
-                        className="w-full rounded-xl border border-slate-200 p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full rounded-xl border border-[var(--cs-border)] p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                       >
                         <option value="">Select staff...</option>
                         {activeStaff.map((s) => (
@@ -547,39 +547,39 @@ export default function TimesheetsPage() {
                     </div>
                     <div className="grid grid-cols-2 gap-3">
                       <div>
-                        <label className="text-xs font-semibold text-slate-700 block mb-1">Clock in time</label>
+                        <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1">Clock in time</label>
                         <input
                           type="time"
                           value={clockForm.clockIn}
                           onChange={(e) => setClockForm((f) => ({ ...f, clockIn: e.target.value }))}
-                          className="w-full rounded-xl border border-slate-200 p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="w-full rounded-xl border border-[var(--cs-border)] p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                       </div>
                       <div>
-                        <label className="text-xs font-semibold text-slate-700 block mb-1">Clock out time</label>
+                        <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1">Clock out time</label>
                         <input
                           type="time"
                           value={clockForm.clockOut}
                           onChange={(e) => setClockForm((f) => ({ ...f, clockOut: e.target.value }))}
-                          className="w-full rounded-xl border border-slate-200 p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="w-full rounded-xl border border-[var(--cs-border)] p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                       </div>
                     </div>
                     <div>
-                      <label className="text-xs font-semibold text-slate-700 block mb-1">Break duration (minutes)</label>
+                      <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1">Break duration (minutes)</label>
                       <input
                         type="number"
                         value={clockForm.breakMins}
                         onChange={(e) => setClockForm((f) => ({ ...f, breakMins: e.target.value }))}
-                        className="w-full rounded-xl border border-slate-200 p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full rounded-xl border border-[var(--cs-border)] p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                       />
                     </div>
                     <div>
-                      <label className="text-xs font-semibold text-slate-700 block mb-1">Reason for manual entry</label>
+                      <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1">Reason for manual entry</label>
                       <textarea
                         value={clockForm.reason}
                         onChange={(e) => setClockForm((f) => ({ ...f, reason: e.target.value }))}
-                        className="w-full rounded-xl border border-slate-200 p-2.5 text-sm resize-none h-20 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full rounded-xl border border-[var(--cs-border)] p-2.5 text-sm resize-none h-20 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         placeholder="e.g. System was unavailable during shift"
                       />
                     </div>
@@ -607,20 +607,20 @@ export default function TimesheetsPage() {
                     <div key={d.staff.id} className="flex items-center gap-4 rounded-xl bg-orange-50 border border-orange-200 px-4 py-3">
                       <Avatar name={d.staff.full_name} size="sm" />
                       <div className="flex-1">
-                        <div className="text-sm font-medium text-slate-900">{d.staff.full_name}</div>
-                        <div className="text-xs text-slate-500">{d.staff.job_title}</div>
+                        <div className="text-sm font-medium text-[var(--cs-navy)]">{d.staff.full_name}</div>
+                        <div className="text-xs text-[var(--cs-text-muted)]">{d.staff.job_title}</div>
                       </div>
                       <div className="text-center">
                         <div className="text-base font-bold text-orange-700">{hoursLabel(d.overtimeMinutes)}</div>
                         <div className="text-[10px] text-orange-500">Overtime</div>
                       </div>
                       <div className="text-center">
-                        <div className="text-base font-bold text-slate-900">£{(d.hourlyRate * 1.5).toFixed(2)}/h</div>
-                        <div className="text-[10px] text-slate-400">OT rate (1.5x)</div>
+                        <div className="text-base font-bold text-[var(--cs-navy)]">£{(d.hourlyRate * 1.5).toFixed(2)}/h</div>
+                        <div className="text-[10px] text-[var(--cs-text-muted)]">OT rate (1.5x)</div>
                       </div>
                       <div className="text-center">
                         <div className="text-base font-bold text-emerald-700">£{d.overtimePay.toFixed(2)}</div>
-                        <div className="text-[10px] text-slate-400">Payable</div>
+                        <div className="text-[10px] text-[var(--cs-text-muted)]">Payable</div>
                       </div>
                       <Button
                         size="sm"
@@ -641,7 +641,7 @@ export default function TimesheetsPage() {
                     </div>
                   ))}
                   {timesheetData.filter((d) => d.overtimeMinutes === 0).length > 0 && (
-                    <div className="text-center py-4 text-sm text-slate-400">
+                    <div className="text-center py-4 text-sm text-[var(--cs-text-muted)]">
                       {timesheetData.filter((d) => d.overtimeMinutes === 0).length} staff with no overtime this period
                     </div>
                   )}
@@ -661,35 +661,35 @@ export default function TimesheetsPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    <div className="rounded-2xl bg-slate-50 border border-slate-200 p-4">
+                    <div className="rounded-2xl bg-slate-50 border border-[var(--cs-border)] p-4">
                       <div className="grid grid-cols-3 gap-4 text-center">
                         <div>
-                          <div className="text-2xl font-bold text-slate-900">{activeStaff.length}</div>
-                          <div className="text-xs text-slate-500">Staff in export</div>
+                          <div className="text-2xl font-bold text-[var(--cs-navy)]">{activeStaff.length}</div>
+                          <div className="text-xs text-[var(--cs-text-muted)]">Staff in export</div>
                         </div>
                         <div>
-                          <div className="text-2xl font-bold text-slate-900">£{timesheetData.reduce((a, d) => a + d.overtimePay, 0).toFixed(2)}</div>
-                          <div className="text-xs text-slate-500">Overtime total</div>
+                          <div className="text-2xl font-bold text-[var(--cs-navy)]">£{timesheetData.reduce((a, d) => a + d.overtimePay, 0).toFixed(2)}</div>
+                          <div className="text-xs text-[var(--cs-text-muted)]">Overtime total</div>
                         </div>
                         <div>
                           <div className="text-2xl font-bold text-emerald-700">Ready</div>
-                          <div className="text-xs text-slate-500">Export status</div>
+                          <div className="text-xs text-[var(--cs-text-muted)]">Export status</div>
                         </div>
                       </div>
                     </div>
 
                     <div className="space-y-2">
                       {timesheetData.map((d) => (
-                        <div key={d.staff.id} className="flex items-center gap-4 rounded-xl border border-slate-200 px-4 py-3">
+                        <div key={d.staff.id} className="flex items-center gap-4 rounded-xl border border-[var(--cs-border)] px-4 py-3">
                           <div className="flex-1">
-                            <div className="text-sm font-medium text-slate-900">{d.staff.full_name}</div>
-                            <div className="text-xs text-slate-500">
+                            <div className="text-sm font-medium text-[var(--cs-navy)]">{d.staff.full_name}</div>
+                            <div className="text-xs text-[var(--cs-text-muted)]">
                               Payroll ID: {d.staff.payroll_id || "—"} · {d.staff.contracted_hours}h contracted
                             </div>
                           </div>
-                          <div className="text-sm text-slate-600">{hoursLabel(d.totalScheduledMins)} worked</div>
+                          <div className="text-sm text-[var(--cs-text-secondary)]">{hoursLabel(d.totalScheduledMins)} worked</div>
                           <div className="text-sm font-semibold text-orange-600">+{hoursLabel(d.overtimeMinutes)} OT</div>
-                          <div className="text-sm font-bold text-slate-900">£{d.overtimePay.toFixed(2)} extra</div>
+                          <div className="text-sm font-bold text-[var(--cs-navy)]">£{d.overtimePay.toFixed(2)} extra</div>
                           <Badge className={cn("text-[9px] rounded-full", effectiveApprovedIds.has(d.staff.id) ? "bg-emerald-100 text-emerald-700" : "bg-amber-100 text-amber-700")}>
                             {effectiveApprovedIds.has(d.staff.id) ? "Approved" : "Pending"}
                           </Badge>

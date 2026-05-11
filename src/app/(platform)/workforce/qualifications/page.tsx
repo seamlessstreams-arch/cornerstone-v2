@@ -41,7 +41,7 @@ const QUAL_EXPORT_COLS: ExportColumn<QualificationRecord>[] = [
 // ── Config ───────────────────────────────────────────────────────────────────
 
 const STATUS_CONFIG: Record<QualificationStatus, { label: string; colour: string; icon: React.ElementType; bg: string }> = {
-  not_started: { label: "Not Started", colour: "text-slate-600",    icon: Clock,          bg: "bg-slate-50 border-slate-200"       },
+  not_started: { label: "Not Started", colour: "text-[var(--cs-text-secondary)]",    icon: Clock,          bg: "bg-slate-50 border-[var(--cs-border)]"       },
   in_progress: { label: "In Progress", colour: "text-amber-700",    icon: Clock,          bg: "bg-amber-50 border-amber-200"       },
   completed:   { label: "Completed",   colour: "text-emerald-700",  icon: CheckCircle2,   bg: "bg-emerald-50 border-emerald-200"   },
   expired:     { label: "Expired",     colour: "text-red-700",      icon: AlertTriangle,  bg: "bg-red-50 border-red-200"           },
@@ -109,11 +109,11 @@ function StaffQualPanel({
   return (
     <div className={cn(
       "rounded-2xl border bg-white overflow-hidden",
-      hasIssues ? "border-red-200" : expiring > 0 ? "border-amber-200" : "border-slate-200",
+      hasIssues ? "border-red-200" : expiring > 0 ? "border-amber-200" : "border-[var(--cs-border)]",
     )}>
       {/* Header */}
       <div
-        className="flex items-center gap-3 p-4 cursor-pointer hover:bg-slate-50/50 transition-colors"
+        className="flex items-center gap-3 p-4 cursor-pointer hover:bg-[var(--cs-surface)]/50 transition-colors"
         onClick={() => setExpanded((v) => !v)}
       >
         <div className={cn(
@@ -127,8 +127,8 @@ function StaffQualPanel({
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-0.5">
-            <p className="text-sm font-semibold text-slate-800">{staffName}</p>
-            <span className="text-xs text-slate-400">{staffRole}</span>
+            <p className="text-sm font-semibold text-[var(--cs-navy)]">{staffName}</p>
+            <span className="text-xs text-[var(--cs-text-muted)]">{staffRole}</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="flex-1 h-1.5 rounded-full bg-slate-100 overflow-hidden max-w-[200px]">
@@ -140,7 +140,7 @@ function StaffQualPanel({
                 style={{ width: `${pct}%` }}
               />
             </div>
-            <span className="text-[10px] text-slate-400">{completed}/{quals.length}</span>
+            <span className="text-[10px] text-[var(--cs-text-muted)]">{completed}/{quals.length}</span>
           </div>
         </div>
         <div className="flex items-center gap-2 shrink-0">
@@ -162,13 +162,13 @@ function StaffQualPanel({
           {pct === 100 && !expiring && (
             <CheckCircle2 className="h-4 w-4 text-emerald-500" />
           )}
-          {expanded ? <ChevronUp className="h-4 w-4 text-slate-300" /> : <ChevronDown className="h-4 w-4 text-slate-300" />}
+          {expanded ? <ChevronUp className="h-4 w-4 text-[var(--cs-text-gentle)]" /> : <ChevronDown className="h-4 w-4 text-[var(--cs-text-gentle)]" />}
         </div>
       </div>
 
       {/* Expanded qualification list */}
       {expanded && (
-        <div className="border-t border-slate-100 px-4 pb-3 pt-2 space-y-1.5">
+        <div className="border-t border-[var(--cs-border-subtle)] px-4 pb-3 pt-2 space-y-1.5">
           {quals.map((qual) => {
             const cfg = STATUS_CONFIG[qual.status];
             const StatusIcon = cfg.icon;
@@ -179,12 +179,12 @@ function StaffQualPanel({
             return (
               <div key={qual.id} className={cn(
                 "flex items-center gap-3 rounded-xl px-3 py-2 text-sm",
-                isGap ? "bg-red-50" : isExpired ? "bg-red-50/50" : isExpiring ? "bg-amber-50/50" : "hover:bg-slate-50",
+                isGap ? "bg-red-50" : isExpired ? "bg-red-50/50" : isExpiring ? "bg-amber-50/50" : "hover:bg-[var(--cs-surface)]",
               )}>
                 <StatusIcon className={cn("h-3.5 w-3.5 shrink-0", cfg.colour)} />
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-xs font-medium text-slate-800">{qual.qualification_name}</span>
+                    <span className="text-xs font-medium text-[var(--cs-navy)]">{qual.qualification_name}</span>
                     {qual.mandatory && (
                       <Badge variant="outline" className="text-[8px] border-rose-200 text-rose-700 bg-rose-50 px-1 py-0">
                         Mandatory
@@ -192,7 +192,7 @@ function StaffQualPanel({
                     )}
                   </div>
                   {qual.awarding_body && (
-                    <span className="text-[10px] text-slate-400">{qual.awarding_body}</span>
+                    <span className="text-[10px] text-[var(--cs-text-muted)]">{qual.awarding_body}</span>
                   )}
                 </div>
                 <div className="flex items-center gap-2 shrink-0">
@@ -243,27 +243,27 @@ function DBSTrackerCard({
   }));
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white overflow-hidden">
-      <div className="flex items-center justify-between px-5 py-3 bg-slate-50 border-b border-slate-100">
+    <div className="rounded-2xl border border-[var(--cs-border)] bg-white overflow-hidden">
+      <div className="flex items-center justify-between px-5 py-3 bg-slate-50 border-b border-[var(--cs-border-subtle)]">
         <div className="flex items-center gap-2">
           <Fingerprint className="h-4 w-4 text-violet-500" />
-          <h3 className="text-sm font-bold text-slate-800">DBS & Right to Work</h3>
+          <h3 className="text-sm font-bold text-[var(--cs-navy)]">DBS & Right to Work</h3>
         </div>
-        <div className="flex items-center gap-3 text-[10px] text-slate-500">
+        <div className="flex items-center gap-3 text-[10px] text-[var(--cs-text-muted)]">
           <span className="flex items-center gap-1"><CheckCircle2 className="h-3 w-3 text-emerald-500" />{dbsClear}/{activeStaff.length} DBS clear</span>
           <span className="flex items-center gap-1"><Shield className="h-3 w-3 text-violet-500" />{updateService} on update service</span>
         </div>
       </div>
       <div className="divide-y divide-slate-50">
         {dbsRecords.map((r) => (
-          <div key={r.staff_id} className="flex items-center gap-3 px-5 py-2.5 hover:bg-slate-50/50 transition-colors">
+          <div key={r.staff_id} className="flex items-center gap-3 px-5 py-2.5 hover:bg-[var(--cs-surface)]/50 transition-colors">
             <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500 shrink-0" />
             <div className="flex-1 min-w-0">
-              <span className="text-xs font-medium text-slate-700">{r.name}</span>
-              <span className="text-[10px] text-slate-400 ml-2">{r.role}</span>
+              <span className="text-xs font-medium text-[var(--cs-text-secondary)]">{r.name}</span>
+              <span className="text-[10px] text-[var(--cs-text-muted)] ml-2">{r.role}</span>
             </div>
             <div className="flex items-center gap-2 shrink-0">
-              <span className="text-[10px] text-slate-400 font-mono">{r.dbs_number}</span>
+              <span className="text-[10px] text-[var(--cs-text-muted)] font-mono">{r.dbs_number}</span>
               {r.update_service && (
                 <Badge className="text-[8px] bg-violet-100 text-violet-700 border-0 rounded-full px-1.5">
                   Update service
@@ -300,19 +300,19 @@ function ComplianceHeatmap({
   const activeStaff = staff.slice(0, 8); // limit for display
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white overflow-hidden">
-      <div className="flex items-center gap-2 px-5 py-3 bg-slate-50 border-b border-slate-100">
+    <div className="rounded-2xl border border-[var(--cs-border)] bg-white overflow-hidden">
+      <div className="flex items-center gap-2 px-5 py-3 bg-slate-50 border-b border-[var(--cs-border-subtle)]">
         <BarChart3 className="h-4 w-4 text-indigo-500" />
-        <h3 className="text-sm font-bold text-slate-800">Compliance Matrix</h3>
-        <span className="text-[10px] text-slate-400 ml-auto">Mandatory qualifications coverage</span>
+        <h3 className="text-sm font-bold text-[var(--cs-navy)]">Compliance Matrix</h3>
+        <span className="text-[10px] text-[var(--cs-text-muted)] ml-auto">Mandatory qualifications coverage</span>
       </div>
       <div className="overflow-x-auto">
         <table className="w-full text-[10px]">
           <thead>
-            <tr className="border-b border-slate-100">
-              <th className="text-left px-3 py-2 font-semibold text-slate-500 w-32 sticky left-0 bg-white z-10">Staff</th>
+            <tr className="border-b border-[var(--cs-border-subtle)]">
+              <th className="text-left px-3 py-2 font-semibold text-[var(--cs-text-muted)] w-32 sticky left-0 bg-white z-10">Staff</th>
               {qualNames.map((q) => (
-                <th key={q} className="px-2 py-2 font-medium text-slate-400 text-center min-w-[60px]">
+                <th key={q} className="px-2 py-2 font-medium text-[var(--cs-text-muted)] text-center min-w-[60px]">
                   <span className="line-clamp-2">{q.replace("Level 3 Diploma", "L3").replace("Level 5 Diploma", "L5").replace("Safeguarding Level 3", "S/G L3").replace("First Aid at Work", "First Aid").replace("Medication Administration", "Meds").replace("Fire Safety", "Fire").replace("Restraint (Team Teach / PRICE)", "Restraint").replace("GDPR / Data Protection", "GDPR").replace("Health & Safety", "H&S").replace("Food Hygiene", "Food")}</span>
                 </th>
               ))}
@@ -320,8 +320,8 @@ function ComplianceHeatmap({
           </thead>
           <tbody>
             {activeStaff.map((s) => (
-              <tr key={s.id} className="border-b border-slate-50 hover:bg-slate-50/50">
-                <td className="px-3 py-2 font-medium text-slate-700 sticky left-0 bg-white z-10">
+              <tr key={s.id} className="border-b border-slate-50 hover:bg-[var(--cs-surface)]/50">
+                <td className="px-3 py-2 font-medium text-[var(--cs-text-secondary)] sticky left-0 bg-white z-10">
                   {s.full_name.split(" ")[0]}
                 </td>
                 {qualNames.map((qName) => {
@@ -332,7 +332,7 @@ function ComplianceHeatmap({
                     return (
                       <td key={qName} className="px-2 py-2 text-center">
                         <div className="w-5 h-5 rounded mx-auto bg-slate-100 flex items-center justify-center">
-                          <Minus className="h-3 w-3 text-slate-300" />
+                          <Minus className="h-3 w-3 text-[var(--cs-text-gentle)]" />
                         </div>
                       </td>
                     );
@@ -345,7 +345,7 @@ function ComplianceHeatmap({
                   const icon = match.status === "completed" ? "text-emerald-600" :
                     match.status === "expired" ? "text-red-600" :
                     match.status === "in_progress" ? "text-amber-600" :
-                    "text-slate-400";
+                    "text-[var(--cs-text-muted)]";
                   return (
                     <td key={qName} className="px-2 py-2 text-center">
                       <div className={cn("w-5 h-5 rounded mx-auto flex items-center justify-center", bg)}>
@@ -368,12 +368,12 @@ function ComplianceHeatmap({
         </table>
       </div>
       {/* Legend */}
-      <div className="flex items-center gap-4 px-5 py-2 border-t border-slate-100 text-[9px] text-slate-400">
+      <div className="flex items-center gap-4 px-5 py-2 border-t border-[var(--cs-border-subtle)] text-[9px] text-[var(--cs-text-muted)]">
         <span className="flex items-center gap-1"><div className="w-3 h-3 rounded bg-emerald-100 flex items-center justify-center"><CheckCircle2 className="h-2 w-2 text-emerald-600" /></div> Complete</span>
         <span className="flex items-center gap-1"><div className="w-3 h-3 rounded bg-amber-100 flex items-center justify-center"><Clock className="h-2 w-2 text-amber-600" /></div> In progress</span>
         <span className="flex items-center gap-1"><div className="w-3 h-3 rounded bg-red-100 flex items-center justify-center"><XCircle className="h-2 w-2 text-red-600" /></div> Expired</span>
         <span className="flex items-center gap-1"><div className="w-3 h-3 rounded bg-red-50 flex items-center justify-center"><AlertTriangle className="h-2 w-2 text-red-400" /></div> Not started</span>
-        <span className="flex items-center gap-1"><div className="w-3 h-3 rounded bg-slate-100 flex items-center justify-center"><Minus className="h-2 w-2 text-slate-300" /></div> N/A</span>
+        <span className="flex items-center gap-1"><div className="w-3 h-3 rounded bg-slate-100 flex items-center justify-center"><Minus className="h-2 w-2 text-[var(--cs-text-gentle)]" /></div> N/A</span>
       </div>
     </div>
   );
@@ -479,20 +479,20 @@ export default function QualificationsPage() {
             { label: "Team Compliance", value: `${teamPct}%`, colour: teamPct >= 80 ? "text-emerald-600" : teamPct >= 60 ? "text-amber-600" : "text-red-600", bg: teamPct >= 80 ? "bg-emerald-50 border-emerald-100" : teamPct >= 60 ? "bg-amber-50 border-amber-100" : "bg-red-50 border-red-100" },
             { label: "Mandatory Gaps", value: gaps, colour: gaps > 0 ? "text-red-600" : "text-emerald-600", bg: gaps > 0 ? "bg-red-50 border-red-100" : "bg-emerald-50 border-emerald-100" },
             { label: "Expired", value: expired, colour: expired > 0 ? "text-red-600" : "text-emerald-600", bg: expired > 0 ? "bg-red-50 border-red-100" : "bg-emerald-50 border-emerald-100" },
-            { label: "Expiring (90d)", value: expiring, colour: expiring > 0 ? "text-amber-600" : "text-slate-400", bg: expiring > 0 ? "bg-amber-50 border-amber-100" : "bg-slate-50 border-slate-100" },
+            { label: "Expiring (90d)", value: expiring, colour: expiring > 0 ? "text-amber-600" : "text-[var(--cs-text-muted)]", bg: expiring > 0 ? "bg-amber-50 border-amber-100" : "bg-slate-50 border-[var(--cs-border-subtle)]" },
             { label: "Completed", value: completed, colour: "text-emerald-600", bg: "bg-emerald-50 border-emerald-100" },
           ].map((k) => (
             <div key={k.label} className={cn("rounded-2xl border p-4 text-center", k.bg)}>
               <p className={cn("text-2xl font-bold tabular-nums", k.colour)}>{k.value}</p>
-              <p className="text-[10px] text-slate-500 mt-0.5 font-medium">{k.label}</p>
+              <p className="text-[10px] text-[var(--cs-text-muted)] mt-0.5 font-medium">{k.label}</p>
             </div>
           ))}
         </div>
 
         {/* ── Team compliance bar ── */}
-        <div className="rounded-2xl border border-slate-200 bg-white p-4">
+        <div className="rounded-2xl border border-[var(--cs-border)] bg-white p-4">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-semibold text-slate-600">Overall Team Compliance</span>
+            <span className="text-xs font-semibold text-[var(--cs-text-secondary)]">Overall Team Compliance</span>
             <span className={cn(
               "text-sm font-bold",
               teamPct >= 80 ? "text-emerald-600" : teamPct >= 60 ? "text-amber-600" : "text-red-600",
@@ -501,7 +501,7 @@ export default function QualificationsPage() {
             </span>
           </div>
           <Progress value={teamPct} className="h-2" />
-          <p className="text-[10px] text-slate-400 mt-1.5">
+          <p className="text-[10px] text-[var(--cs-text-muted)] mt-1.5">
             {completed + allQuals.filter((q) => q.status === "exempt").length} of {allQuals.length} qualifications completed or exempt
           </p>
         </div>
@@ -517,8 +517,8 @@ export default function QualificationsPage() {
                 className={cn(
                   "px-3 py-1.5 rounded-lg text-xs font-medium transition-all",
                   view === v
-                    ? "bg-white text-slate-900 shadow-sm"
-                    : "text-slate-500 hover:text-slate-700",
+                    ? "bg-white text-[var(--cs-navy)] shadow-sm"
+                    : "text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)]",
                 )}
               >
                 {v === "staff" ? "By Staff" : v === "list" ? "All" : "Matrix"}
@@ -536,7 +536,7 @@ export default function QualificationsPage() {
                   "px-3 py-1 rounded-full text-xs font-medium border transition-all",
                   filter === f
                     ? "bg-indigo-600 text-white border-indigo-600"
-                    : "bg-white text-slate-600 border-slate-200 hover:border-indigo-300",
+                    : "bg-white text-[var(--cs-text-secondary)] border-[var(--cs-border)] hover:border-indigo-300",
                 )}
               >
                 {f === "all" ? "All" : f === "mandatory" ? "Mandatory" : f.replace("_", " ").replace(/\b\w/g, (l) => l.toUpperCase())}
@@ -545,7 +545,7 @@ export default function QualificationsPage() {
           </div>
 
           {/* Sort */}
-          <div className="flex items-center gap-1.5 text-xs text-slate-500 shrink-0">
+          <div className="flex items-center gap-1.5 text-xs text-[var(--cs-text-muted)] shrink-0">
             <ArrowUpDown className="h-3.5 w-3.5" />
             <select value={sortBy} onChange={(e) => setSortBy(e.target.value as typeof sortBy)} className="bg-white border rounded-md px-2 py-1.5 text-xs">
               <option value="staff">Staff A–Z</option>
@@ -556,12 +556,12 @@ export default function QualificationsPage() {
           </div>
           {/* Search */}
           <div className="relative w-48">
-            <Search className="absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-400" />
+            <Search className="absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[var(--cs-text-muted)]" />
             <input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search..."
-              className="w-full rounded-lg border border-slate-200 bg-white pl-8 pr-3 py-1.5 text-xs"
+              className="w-full rounded-lg border border-[var(--cs-border)] bg-white pl-8 pr-3 py-1.5 text-xs"
             />
           </div>
         </div>
@@ -569,7 +569,7 @@ export default function QualificationsPage() {
         {/* ── Loading ── */}
         {isLoading && (
           <div className="flex items-center justify-center py-16">
-            <Loader2 className="h-6 w-6 animate-spin text-slate-400" />
+            <Loader2 className="h-6 w-6 animate-spin text-[var(--cs-text-muted)]" />
           </div>
         )}
 
@@ -577,8 +577,8 @@ export default function QualificationsPage() {
         {!isLoading && view === "staff" && (
           <div className="space-y-3">
             {staffGroups.length === 0 ? (
-              <div className="text-center py-12 text-slate-400">
-                <Award className="h-8 w-8 mx-auto mb-2 text-slate-300" />
+              <div className="text-center py-12 text-[var(--cs-text-muted)]">
+                <Award className="h-8 w-8 mx-auto mb-2 text-[var(--cs-text-gentle)]" />
                 <p className="text-sm">No qualifications found</p>
               </div>
             ) : (
@@ -598,8 +598,8 @@ export default function QualificationsPage() {
         {!isLoading && view === "list" && (
           <div className="space-y-2">
             {filtered.length === 0 ? (
-              <div className="text-center py-12 text-slate-400">
-                <Award className="h-8 w-8 mx-auto mb-2 text-slate-300" />
+              <div className="text-center py-12 text-[var(--cs-text-muted)]">
+                <Award className="h-8 w-8 mx-auto mb-2 text-[var(--cs-text-gentle)]" />
                 <p className="text-sm">No qualifications found</p>
               </div>
             ) : (
@@ -614,12 +614,12 @@ export default function QualificationsPage() {
                     qual.status === "expired" ? "border-red-200"
                     : isExpiring ? "border-amber-200"
                     : qual.mandatory && qual.status === "not_started" ? "border-red-200"
-                    : "border-slate-200",
+                    : "border-[var(--cs-border)]",
                   )}>
                     <div className="flex items-start justify-between gap-3">
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 flex-wrap mb-1">
-                          <p className="text-sm font-semibold text-slate-800">{qual.qualification_name}</p>
+                          <p className="text-sm font-semibold text-[var(--cs-navy)]">{qual.qualification_name}</p>
                           {qual.mandatory && (
                             <Badge variant="outline" className="text-[10px] border-rose-200 text-rose-700 bg-rose-50">Mandatory</Badge>
                           )}
@@ -628,16 +628,16 @@ export default function QualificationsPage() {
                             {statusCfg.label}
                           </Badge>
                         </div>
-                        <div className="flex items-center gap-3 flex-wrap text-xs text-slate-500">
-                          <span className="font-medium text-slate-700">{getStaffName(qual.staff_id)}</span>
+                        <div className="flex items-center gap-3 flex-wrap text-xs text-[var(--cs-text-muted)]">
+                          <span className="font-medium text-[var(--cs-text-secondary)]">{getStaffName(qual.staff_id)}</span>
                           {qual.awarding_body && <span>{qual.awarding_body}</span>}
                           {qual.level && <span>{qual.level}</span>}
                         </div>
                         {qual.regulatory_requirement && (
-                          <p className="text-[10px] text-slate-400 mt-1">{qual.regulatory_requirement}</p>
+                          <p className="text-[10px] text-[var(--cs-text-muted)] mt-1">{qual.regulatory_requirement}</p>
                         )}
                       </div>
-                      <div className="text-right text-xs text-slate-400 shrink-0">
+                      <div className="text-right text-xs text-[var(--cs-text-muted)] shrink-0">
                         {qual.completed_at && (
                           <div className="flex items-center gap-1 text-emerald-600 justify-end">
                             <CheckCircle2 className="h-3 w-3" />
@@ -647,7 +647,7 @@ export default function QualificationsPage() {
                         {qual.expiry_date && (
                           <div className={cn(
                             "flex items-center gap-1 justify-end mt-0.5",
-                            isExpiring ? "text-amber-600" : "text-slate-400",
+                            isExpiring ? "text-amber-600" : "text-[var(--cs-text-muted)]",
                           )}>
                             <Calendar className="h-3 w-3" />
                             <span>Exp: {qual.expiry_date}</span>
@@ -679,8 +679,8 @@ export default function QualificationsPage() {
         )}
 
         {/* ── Regulatory note ── */}
-        <div className="rounded-xl border border-slate-100 bg-slate-50 px-4 py-3 text-xs text-slate-500">
-          <span className="font-semibold text-slate-600">Regulatory Basis — </span>
+        <div className="rounded-xl border border-[var(--cs-border-subtle)] bg-slate-50 px-4 py-3 text-xs text-[var(--cs-text-muted)]">
+          <span className="font-semibold text-[var(--cs-text-secondary)]">Regulatory Basis — </span>
           Children&apos;s Homes Regulations 2015: Reg 29 (RM must hold Level 5 or equivalent), Reg 32 (staff must hold
           or be working towards Level 3 within 2 years of appointment). Reg 5 — DBS and right to work checks mandatory
           before start. DBS Update Service subscription recommended for annual rechecks. Failure to meet qualification

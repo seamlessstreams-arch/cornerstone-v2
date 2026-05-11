@@ -418,9 +418,9 @@ export default function SleepAssessmentsPage() {
       </div>
 
       {/* ─── regulatory note ─── */}
-      <div className="mt-8 bg-slate-50 border border-slate-200 rounded-lg p-4">
-        <p className="text-sm font-medium text-slate-700 mb-1">Regulatory Context</p>
-        <p className="text-xs text-slate-600">
+      <div className="mt-8 bg-slate-50 border border-[var(--cs-border)] rounded-lg p-4">
+        <p className="text-sm font-medium text-[var(--cs-text-secondary)] mb-1">Regulatory Context</p>
+        <p className="text-xs text-[var(--cs-text-secondary)]">
           Quality Standard 6 (Health and Wellbeing) requires that children&apos;s physical health
           needs are understood and met, which includes adequate sleep. Regulation 10 (Health and
           Wellbeing) requires that the health needs of each child are identified and appropriate

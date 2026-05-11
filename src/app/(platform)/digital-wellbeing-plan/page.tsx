@@ -82,7 +82,7 @@ export default function DigitalWellbeingPlanPage() {
     return (
       <PageShell title="Digital Wellbeing Plan" subtitle="Loading...">
         <div className="flex items-center justify-center py-12">
-          <Loader2 className="h-8 w-8 animate-spin text-slate-400" />
+          <Loader2 className="h-8 w-8 animate-spin text-[var(--cs-text-muted)]" />
         </div>
       </PageShell>
     );
@@ -156,7 +156,7 @@ export default function DigitalWellbeingPlanPage() {
           return (
             <div key={p.id} className="rounded-xl border bg-white overflow-hidden">
               <button
-                className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                 onClick={() => setExpandedId(isExpanded ? null : p.id)}
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -220,7 +220,7 @@ export default function DigitalWellbeingPlanPage() {
                           <div className="flex items-center justify-between">
                             <span className="font-medium">{a.app}</span>
                             <div className="flex items-center gap-1">
-                              <span className="text-xs px-1.5 py-0.5 rounded-full bg-slate-100 text-slate-700">{APP_TYPE_LABEL[a.type]}</span>
+                              <span className="text-xs px-1.5 py-0.5 rounded-full bg-slate-100 text-[var(--cs-text-secondary)]">{APP_TYPE_LABEL[a.type]}</span>
                               <span className={cn("text-xs px-1.5 py-0.5 rounded-full",
                                 a.oversight_level === "active_monitoring" ? "bg-amber-100 text-amber-800" :
                                 a.oversight_level === "light" ? "bg-blue-100 text-blue-800" :
@@ -288,13 +288,13 @@ export default function DigitalWellbeingPlanPage() {
 
                   {/* filters */}
                   <div className="bg-slate-50 rounded-lg p-3 border">
-                    <p className="text-xs font-semibold text-slate-800 uppercase tracking-wide mb-1">
+                    <p className="text-xs font-semibold text-[var(--cs-navy)] uppercase tracking-wide mb-1">
                       <Lock className="h-3 w-3 inline mr-1" />Filters &amp; Controls in Place
                     </p>
                     <ul className="space-y-1">
                       {p.filtering_in_place.map((f, i) => (
                         <li key={i} className="text-sm flex items-start gap-1">
-                          <Wifi className="h-3 w-3 text-slate-500 mt-1 shrink-0" />
+                          <Wifi className="h-3 w-3 text-[var(--cs-text-muted)] mt-1 shrink-0" />
                           <span>{f}</span>
                         </li>
                       ))}
@@ -317,7 +317,7 @@ export default function DigitalWellbeingPlanPage() {
 
                   {p.notes && (
                     <div className="bg-slate-50 rounded-lg p-3 border">
-                      <p className="text-xs font-semibold text-slate-800 uppercase tracking-wide mb-1">Notes</p>
+                      <p className="text-xs font-semibold text-[var(--cs-navy)] uppercase tracking-wide mb-1">Notes</p>
                       <p className="text-sm">{p.notes}</p>
                     </div>
                   )}

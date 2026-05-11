@@ -427,9 +427,9 @@ export default function PlacementImpactAssessmentPage() {
       </div>
 
       {/* ─── regulatory note ─── */}
-      <div className="mt-8 bg-slate-50 border border-slate-200 rounded-lg p-4">
-        <p className="text-sm font-medium text-slate-700 mb-1">Regulatory Context</p>
-        <p className="text-xs text-slate-600">
+      <div className="mt-8 bg-slate-50 border border-[var(--cs-border)] rounded-lg p-4">
+        <p className="text-sm font-medium text-[var(--cs-text-secondary)] mb-1">Regulatory Context</p>
+        <p className="text-xs text-[var(--cs-text-secondary)]">
           Regulation 14 of the Children&apos;s Homes Regulations 2015 requires that before admitting
           a child, the registered person assesses whether the placement is consistent with the
           home&apos;s Statement of Purpose and will not be detrimental to existing children. Quality

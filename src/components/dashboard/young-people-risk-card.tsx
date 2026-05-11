@@ -65,7 +65,7 @@ export function YoungPeopleRiskCard() {
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-center py-6">
-            <Loader2 className="h-5 w-5 animate-spin text-slate-400" />
+            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
           </div>
         </CardContent>
       </Card>
@@ -101,14 +101,14 @@ export function YoungPeopleRiskCard() {
         {/* Summary row */}
         <div className="flex items-center gap-3 text-[11px]">
           <div className="flex items-center gap-1">
-            <AlertTriangle className={cn("h-3 w-3", totalRiskFlags > 0 ? "text-red-500" : "text-slate-300")} />
-            <span className={cn("font-semibold", totalRiskFlags > 0 ? "text-red-700" : "text-slate-400")}>
+            <AlertTriangle className={cn("h-3 w-3", totalRiskFlags > 0 ? "text-red-500" : "text-[var(--cs-text-gentle)]")} />
+            <span className={cn("font-semibold", totalRiskFlags > 0 ? "text-red-700" : "text-[var(--cs-text-muted)]")}>
               {totalRiskFlags} risk flag{totalRiskFlags !== 1 ? "s" : ""}
             </span>
           </div>
           <div className="flex items-center gap-1">
-            <Flame className={cn("h-3 w-3", totalOpenIncidents > 0 ? "text-orange-500" : "text-slate-300")} />
-            <span className={cn("font-semibold", totalOpenIncidents > 0 ? "text-orange-700" : "text-slate-400")}>
+            <Flame className={cn("h-3 w-3", totalOpenIncidents > 0 ? "text-orange-500" : "text-[var(--cs-text-gentle)]")} />
+            <span className={cn("font-semibold", totalOpenIncidents > 0 ? "text-orange-700" : "text-[var(--cs-text-muted)]")}>
               {totalOpenIncidents} open incident{totalOpenIncidents !== 1 ? "s" : ""}
             </span>
           </div>
@@ -123,7 +123,7 @@ export function YoungPeopleRiskCard() {
         {/* Per-child rows */}
         {current.map((yp) => (
           <Link key={yp.id} href={`/young-people/${yp.id}`}>
-            <div className="flex items-center gap-2.5 rounded-xl px-2 py-2 hover:bg-slate-50 transition-colors -mx-1">
+            <div className="flex items-center gap-2.5 rounded-xl px-2 py-2 hover:bg-[var(--cs-surface)] transition-colors -mx-1">
               {/* Avatar */}
               <div className="w-7 h-7 rounded-full bg-rose-100 flex items-center justify-center shrink-0">
                 <span className="text-[10px] font-bold text-rose-700">
@@ -134,12 +134,12 @@ export function YoungPeopleRiskCard() {
               {/* Name + key worker */}
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-1.5">
-                  <span className="text-[11px] font-semibold text-slate-800 truncate">
+                  <span className="text-[11px] font-semibold text-[var(--cs-navy)] truncate">
                     {yp.preferred_name || yp.first_name}
                   </span>
-                  <span className="text-[10px] text-slate-400">{yp.age}y</span>
+                  <span className="text-[10px] text-[var(--cs-text-muted)]">{yp.age}y</span>
                 </div>
-                <div className="flex items-center gap-1 text-[10px] text-slate-400">
+                <div className="flex items-center gap-1 text-[10px] text-[var(--cs-text-muted)]">
                   <User className="h-2.5 w-2.5" />
                   <span className="truncate">
                     {yp.key_worker ? yp.key_worker.first_name : "Unassigned"}
@@ -174,7 +174,7 @@ export function YoungPeopleRiskCard() {
                 </Badge>
               </div>
 
-              <ChevronRight className="h-3 w-3 text-slate-300 shrink-0" />
+              <ChevronRight className="h-3 w-3 text-[var(--cs-text-gentle)] shrink-0" />
             </div>
           </Link>
         ))}

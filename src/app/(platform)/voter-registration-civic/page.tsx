@@ -198,7 +198,7 @@ const exportCols: ExportColumn<CivicRecord>[] = [
 ];
 
 const statusColour: Record<CivicRecord["voterRegistrationStatus"], string> = {
-  "Too young": "bg-slate-100 text-slate-800 border-slate-200",
+  "Too young": "bg-slate-100 text-[var(--cs-navy)] border-[var(--cs-border)]",
   "Eligible — not registered": "bg-amber-100 text-amber-800 border-amber-200",
   "Registered (attainer)": "bg-blue-100 text-blue-800 border-blue-200",
   "Registered — full": "bg-emerald-100 text-emerald-800 border-emerald-200",
@@ -250,45 +250,45 @@ export default function VoterRegistrationCivicPage() {
       }
     >
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-slate-600 text-sm mb-1">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-[var(--cs-text-secondary)] text-sm mb-1">
             <Vote className="h-4 w-4" />
             <span>Registered</span>
           </div>
-          <div className="text-2xl font-semibold text-slate-900">{stats.registered}</div>
+          <div className="text-2xl font-semibold text-[var(--cs-navy)]">{stats.registered}</div>
         </div>
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-slate-600 text-sm mb-1">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-[var(--cs-text-secondary)] text-sm mb-1">
             <CheckCircle className="h-4 w-4" />
             <span>Reps contacted</span>
           </div>
-          <div className="text-2xl font-semibold text-slate-900">{stats.repsContacted}</div>
+          <div className="text-2xl font-semibold text-[var(--cs-navy)]">{stats.repsContacted}</div>
         </div>
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-slate-600 text-sm mb-1">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-[var(--cs-text-secondary)] text-sm mb-1">
             <Landmark className="h-4 w-4" />
             <span>Eligible, not yet registered</span>
           </div>
-          <div className="text-2xl font-semibold text-slate-900">{stats.eligibleNotRegistered}</div>
+          <div className="text-2xl font-semibold text-[var(--cs-navy)]">{stats.eligibleNotRegistered}</div>
         </div>
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="flex items-center gap-2 text-slate-600 text-sm mb-1">
+        <div className="rounded-lg border border-[var(--cs-border)] bg-white p-4">
+          <div className="flex items-center gap-2 text-[var(--cs-text-secondary)] text-sm mb-1">
             <Calendar className="h-4 w-4" />
             <span>Reviews due (60d)</span>
           </div>
-          <div className="text-2xl font-semibold text-slate-900">{stats.reviewsDue}</div>
+          <div className="text-2xl font-semibold text-[var(--cs-navy)]">{stats.reviewsDue}</div>
         </div>
       </div>
 
       <div className="flex flex-col sm:flex-row gap-3 mb-4">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--cs-text-muted)]" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search young person or cause..."
-            className="w-full pl-9 pr-3 py-2 text-sm border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full pl-9 pr-3 py-2 text-sm border border-[var(--cs-border)] rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
         <Select value={statusFilter} onValueChange={setStatusFilter}>
@@ -323,15 +323,15 @@ export default function VoterRegistrationCivicPage() {
         {filtered.map((r) => {
           const isOpen = expandedId === r.id;
           return (
-            <div key={r.id} className="rounded-lg border border-slate-200 bg-white overflow-hidden">
+            <div key={r.id} className="rounded-lg border border-[var(--cs-border)] bg-white overflow-hidden">
               <button
                 onClick={() => setExpandedId(isOpen ? null : r.id)}
-                className="w-full p-4 flex items-start justify-between gap-3 hover:bg-slate-50 text-left"
+                className="w-full p-4 flex items-start justify-between gap-3 hover:bg-[var(--cs-surface)] text-left"
               >
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap mb-1">
-                    <span className="font-semibold text-slate-900">{getYPName(r.youngPerson)}</span>
-                    <span className="text-slate-500">age {r.ageAtRecord}</span>
+                    <span className="font-semibold text-[var(--cs-navy)]">{getYPName(r.youngPerson)}</span>
+                    <span className="text-[var(--cs-text-muted)]">age {r.ageAtRecord}</span>
                     <span className={cn("text-xs px-2 py-0.5 rounded-full border", statusColour[r.voterRegistrationStatus])}>
                       {r.voterRegistrationStatus}
                     </span>
@@ -346,25 +346,25 @@ export default function VoterRegistrationCivicPage() {
                       </span>
                     ) : null}
                   </div>
-                  <div className="text-sm text-slate-600">
+                  <div className="text-sm text-[var(--cs-text-secondary)]">
                     Recorded {r.recordedDate} · Review {r.reviewDate} · {getStaffName(r.keyWorker)}
                   </div>
                 </div>
-                {isOpen ? <ChevronUp className="h-5 w-5 text-slate-400" /> : <ChevronDown className="h-5 w-5 text-slate-400" />}
+                {isOpen ? <ChevronUp className="h-5 w-5 text-[var(--cs-text-muted)]" /> : <ChevronDown className="h-5 w-5 text-[var(--cs-text-muted)]" />}
               </button>
               {isOpen ? (
-                <div className="px-4 pb-4 border-t border-slate-100 bg-slate-50/50">
+                <div className="px-4 pb-4 border-t border-[var(--cs-border-subtle)] bg-slate-50/50">
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 pt-4">
-                    <div className="rounded-md border border-slate-200 bg-white p-3 lg:col-span-2">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Child Voice</div>
-                      <p className="text-sm text-slate-700 italic">&ldquo;{r.childVoice}&rdquo;</p>
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3 lg:col-span-2">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Child Voice</div>
+                      <p className="text-sm text-[var(--cs-text-secondary)] italic">&ldquo;{r.childVoice}&rdquo;</p>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3 lg:col-span-2">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Staff Observation</div>
-                      <p className="text-sm text-slate-700">{r.staffObservation}</p>
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3 lg:col-span-2">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Staff Observation</div>
+                      <p className="text-sm text-[var(--cs-text-secondary)]">{r.staffObservation}</p>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Causes of interest</div>
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Causes of interest</div>
                       <div className="flex flex-wrap gap-1.5">
                         {r.causesOfInterest.map((c, i) => (
                           <span key={i} className="text-xs px-2 py-0.5 rounded-full border bg-blue-50 text-blue-800 border-blue-200">
@@ -373,38 +373,38 @@ export default function VoterRegistrationCivicPage() {
                         ))}
                       </div>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Community activities</div>
-                      <ul className="text-sm text-slate-700 space-y-1">
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Community activities</div>
+                      <ul className="text-sm text-[var(--cs-text-secondary)] space-y-1">
                         {r.communityActivities.map((c, i) => (
                           <li key={i} className="flex gap-2"><span className="text-emerald-500">·</span><span>{c}</span></li>
                         ))}
                       </ul>
                     </div>
-                    <div className="rounded-md border border-slate-200 bg-white p-3 lg:col-span-2">
-                      <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Civic education covered</div>
-                      <ul className="text-sm text-slate-700 space-y-1">
+                    <div className="rounded-md border border-[var(--cs-border)] bg-white p-3 lg:col-span-2">
+                      <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Civic education covered</div>
+                      <ul className="text-sm text-[var(--cs-text-secondary)] space-y-1">
                         {r.civicEducationCovered.map((c, i) => (
-                          <li key={i} className="flex gap-2"><span className="text-slate-400">·</span><span>{c}</span></li>
+                          <li key={i} className="flex gap-2"><span className="text-[var(--cs-text-muted)]">·</span><span>{c}</span></li>
                         ))}
                       </ul>
                     </div>
                     {r.electionsEligibleNext.length ? (
-                      <div className="rounded-md border border-slate-200 bg-white p-3">
-                        <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Elections eligible next</div>
-                        <ul className="text-sm text-slate-700 space-y-1">
+                      <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                        <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Elections eligible next</div>
+                        <ul className="text-sm text-[var(--cs-text-secondary)] space-y-1">
                           {r.electionsEligibleNext.map((e, i) => (
-                            <li key={i} className="flex gap-2 justify-between"><span>{e.name}</span><span className="text-slate-500">{e.date}</span></li>
+                            <li key={i} className="flex gap-2 justify-between"><span>{e.name}</span><span className="text-[var(--cs-text-muted)]">{e.date}</span></li>
                           ))}
                         </ul>
                       </div>
                     ) : null}
                     {r.representativesKnown.length ? (
-                      <div className="rounded-md border border-slate-200 bg-white p-3">
-                        <div className="text-xs font-semibold text-slate-500 uppercase mb-2">Reps known</div>
-                        <ul className="text-sm text-slate-700 space-y-1">
+                      <div className="rounded-md border border-[var(--cs-border)] bg-white p-3">
+                        <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase mb-2">Reps known</div>
+                        <ul className="text-sm text-[var(--cs-text-secondary)] space-y-1">
                           {r.representativesKnown.map((rep, i) => (
-                            <li key={i} className="flex gap-2"><Users className="h-3.5 w-3.5 text-slate-400 mt-0.5" /><span>{rep}</span></li>
+                            <li key={i} className="flex gap-2"><Users className="h-3.5 w-3.5 text-[var(--cs-text-muted)] mt-0.5" /><span>{rep}</span></li>
                           ))}
                         </ul>
                       </div>

@@ -47,7 +47,7 @@ const areaColour: Record<string, string> = {
   safety: "bg-red-100 text-red-800",
   behaviour: "bg-purple-100 text-purple-800",
   voice: "bg-blue-100 text-blue-800",
-  privacy: "bg-slate-100 text-slate-800",
+  privacy: "bg-slate-100 text-[var(--cs-navy)]",
   health: "bg-green-100 text-green-800",
   education: "bg-amber-100 text-amber-800",
   wellbeing: "bg-pink-100 text-pink-800",
@@ -197,7 +197,7 @@ export default function ChildFriendlyPoliciesPage() {
           return (
             <div key={policy.id} className="rounded-xl border bg-white overflow-hidden">
               <button
-                className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                 onClick={() => setExpandedId(isExpanded ? null : policy.id)}
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0">

@@ -63,7 +63,7 @@ function CardSkeleton({ rows = 4 }: { rows?: number }) {
 
 function ClimateCardSkeleton() {
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-4 space-y-3">
+    <div className="rounded-2xl border border-[var(--cs-border)] bg-white p-4 space-y-3">
       <Skeleton className="h-3 w-24" />
       <Skeleton className="h-7 w-10" />
       <Skeleton className="h-2 w-full" />
@@ -90,7 +90,7 @@ function scoreBarColor(score: number): string {
 // ─── Delta arrow ──────────────────────────────────────────────────────────────
 
 function DeltaArrow({ delta }: { delta: number | null }) {
-  if (delta === null || delta === 0) return <Minus className="h-3.5 w-3.5 text-slate-400" />;
+  if (delta === null || delta === 0) return <Minus className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />;
   if (delta > 0) return <TrendingUp className="h-3.5 w-3.5 text-emerald-500" />;
   return <TrendingDown className="h-3.5 w-3.5 text-red-500" />;
 }
@@ -106,11 +106,11 @@ function ClimateScoreCard({
   icon: React.ElementType;
 }) {
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-4 space-y-3">
+    <div className="rounded-2xl border border-[var(--cs-border)] bg-white p-4 space-y-3">
       <div className="flex items-center justify-between gap-1">
         <div className="flex items-center gap-1.5">
-          <Icon className="h-3.5 w-3.5 text-slate-400" />
-          <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">{label}</span>
+          <Icon className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
+          <span className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider">{label}</span>
         </div>
         {delta !== undefined && <DeltaArrow delta={delta ?? null} />}
       </div>
@@ -268,8 +268,8 @@ function HomeClimateSection() {
   if (isLoading) {
     return (
       <section className="space-y-3">
-        <h2 className="text-sm font-semibold text-slate-700 flex items-center gap-2">
-          <Activity className="h-4 w-4 text-slate-400" />Home Climate
+        <h2 className="text-sm font-semibold text-[var(--cs-text-secondary)] flex items-center gap-2">
+          <Activity className="h-4 w-4 text-[var(--cs-text-muted)]" />Home Climate
         </h2>
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
           {Array.from({ length: 5 }).map((_, i) => <ClimateCardSkeleton key={i} />)}
@@ -281,8 +281,8 @@ function HomeClimateSection() {
   return (
     <section className="space-y-3">
       <div className="flex items-center justify-between gap-3 flex-wrap">
-        <h2 className="text-sm font-semibold text-slate-700 flex items-center gap-2">
-          <Activity className="h-4 w-4 text-slate-400" />Home Climate
+        <h2 className="text-sm font-semibold text-[var(--cs-text-secondary)] flex items-center gap-2">
+          <Activity className="h-4 w-4 text-[var(--cs-text-muted)]" />Home Climate
         </h2>
         <Button
           size="sm"
@@ -329,7 +329,7 @@ function HomeClimateSection() {
           {climate.narrative && (
             <div className="rounded-2xl border border-violet-100 bg-violet-50 p-4">
               <div className="text-[10px] font-semibold text-violet-600 uppercase tracking-wider mb-1">ARIA Analysis</div>
-              <p className="text-xs text-slate-700 leading-relaxed">{climate.narrative}</p>
+              <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed">{climate.narrative}</p>
             </div>
           )}
 
@@ -354,7 +354,7 @@ const SEV_CLASSES: Record<string, string> = {
   critical: "bg-red-100 text-red-800",
   high:     "bg-orange-100 text-orange-800",
   medium:   "bg-amber-100 text-amber-800",
-  low:      "bg-slate-100 text-slate-700",
+  low:      "bg-slate-100 text-[var(--cs-text-secondary)]",
 };
 
 const SEV_BORDER: Record<string, string> = {
@@ -431,8 +431,8 @@ function PatternAlertsSection() {
         {alerts.length === 0 ? (
           <div className="flex flex-col items-center gap-2 py-8 text-center">
             <CheckCircle2 className="h-10 w-10 text-slate-200" />
-            <p className="text-sm text-slate-500">No active pattern alerts</p>
-            <p className="text-xs text-slate-400">ARIA is monitoring for emerging patterns</p>
+            <p className="text-sm text-[var(--cs-text-muted)]">No active pattern alerts</p>
+            <p className="text-xs text-[var(--cs-text-muted)]">ARIA is monitoring for emerging patterns</p>
           </div>
         ) : (
           <div className="space-y-3">
@@ -440,7 +440,7 @@ function PatternAlertsSection() {
               <div
                 key={alert.id}
                 className={cn(
-                  "rounded-xl border-l-4 border border-slate-100 bg-slate-50 p-4 space-y-2",
+                  "rounded-xl border-l-4 border border-[var(--cs-border-subtle)] bg-slate-50 p-4 space-y-2",
                   SEV_BORDER[alert.severity]
                 )}
               >
@@ -453,17 +453,17 @@ function PatternAlertsSection() {
                       )}>
                         {alert.severity}
                       </span>
-                      <span className="text-xs font-semibold text-slate-900">{alert.title}</span>
+                      <span className="text-xs font-semibold text-[var(--cs-navy)]">{alert.title}</span>
                     </div>
                     {alert.description && (
-                      <p className="text-xs text-slate-600 leading-relaxed">{alert.description}</p>
+                      <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed">{alert.description}</p>
                     )}
                     {alert.reflective_prompt && (
-                      <p className="text-[11px] text-slate-500 italic leading-relaxed">
+                      <p className="text-[11px] text-[var(--cs-text-muted)] italic leading-relaxed">
                         Reflect: "{alert.reflective_prompt}"
                       </p>
                     )}
-                    <div className="text-[10px] text-slate-400">{formatDate(alert.detected_at)}</div>
+                    <div className="text-[10px] text-[var(--cs-text-muted)]">{formatDate(alert.detected_at)}</div>
                   </div>
                   <div className="flex gap-1.5 shrink-0">
                     {alert.status === "active" && (
@@ -488,13 +488,13 @@ function PatternAlertsSection() {
                   </div>
                 </div>
                 {resolvingId === alert.id && (
-                  <div className="pt-2 space-y-2 border-t border-slate-200 mt-2">
+                  <div className="pt-2 space-y-2 border-t border-[var(--cs-border)] mt-2">
                     <textarea
                       value={resolveNotes[alert.id] ?? ""}
                       onChange={(e) => setResolveNotes((prev) => ({ ...prev, [alert.id]: e.target.value }))}
                       rows={2}
                       placeholder="Describe how this was resolved..."
-                      className="w-full rounded-lg border border-slate-200 px-3 py-2 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-300 resize-none"
+                      className="w-full rounded-lg border border-[var(--cs-border)] px-3 py-2 text-xs text-[var(--cs-navy)] placeholder:text-[var(--cs-text-muted)] focus:outline-none focus:ring-2 focus:ring-emerald-300 resize-none"
                     />
                     <div className="flex gap-2">
                       <Button size="sm" variant="ghost" className="text-xs h-7" onClick={() => setResolvingId(null)}>
@@ -608,21 +608,21 @@ function RecentInterventionsSection() {
           {allInterventions.length === 0 ? (
             <div className="flex flex-col items-center gap-2 py-8 text-center">
               <ClipboardList className="h-10 w-10 text-slate-200" />
-              <p className="text-sm text-slate-500">No active interventions</p>
+              <p className="text-sm text-[var(--cs-text-muted)]">No active interventions</p>
             </div>
           ) : (
             <div className="space-y-2">
               {allInterventions.map((intervention) => (
                 <div
                   key={intervention.id}
-                  className="flex items-center gap-3 rounded-xl border border-slate-100 bg-white px-3 py-2.5 hover:shadow-sm hover:-translate-y-0.5 transition-all group"
+                  className="flex items-center gap-3 rounded-xl border border-[var(--cs-border-subtle)] bg-white px-3 py-2.5 hover:shadow-sm hover:-translate-y-0.5 transition-all group"
                 >
                   <Link
                     href={`/young-people/${intervention.child_id}?tab=intelligence`}
                     className="flex-1 min-w-0"
                   >
-                    <div className="text-xs font-semibold text-slate-900 truncate">{intervention.title}</div>
-                    <div className="text-[10px] text-slate-400 mt-0.5">{formatRelative(intervention.started_at)}</div>
+                    <div className="text-xs font-semibold text-[var(--cs-navy)] truncate">{intervention.title}</div>
+                    <div className="text-[10px] text-[var(--cs-text-muted)] mt-0.5">{formatRelative(intervention.started_at)}</div>
                   </Link>
                   <div className="flex items-center gap-1.5 shrink-0">
                     {INT_STATUS[intervention.status] && (
@@ -646,7 +646,7 @@ function RecentInterventionsSection() {
                       )}
                       Review
                     </button>
-                    <ChevronRight className="h-3.5 w-3.5 text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <ChevronRight className="h-3.5 w-3.5 text-[var(--cs-text-gentle)] opacity-0 group-hover:opacity-100 transition-opacity" />
                   </div>
                 </div>
               ))}
@@ -661,23 +661,23 @@ function RecentInterventionsSection() {
           onClick={() => setShowReviewModal(false)}
         >
           <div
-            className="w-full max-w-2xl bg-white shadow-2xl rounded-2xl overflow-hidden"
+            className="w-full max-w-2xl bg-white shadow-[var(--cs-shadow-elevated)] rounded-2xl overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="sticky top-0 z-10 bg-white border-b px-6 py-4 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <ClipboardList className="h-5 w-5 text-violet-600" />
                 <div>
-                  <div className="text-sm font-bold text-slate-900">ARIA — Intervention Review</div>
-                  <div className="text-xs text-slate-500 truncate max-w-sm">{reviewTitle}</div>
+                  <div className="text-sm font-bold text-[var(--cs-navy)]">ARIA — Intervention Review</div>
+                  <div className="text-xs text-[var(--cs-text-muted)] truncate max-w-sm">{reviewTitle}</div>
                 </div>
               </div>
-              <button onClick={() => setShowReviewModal(false)} className="text-slate-400 hover:text-slate-600">
+              <button onClick={() => setShowReviewModal(false)} className="text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)]">
                 <X className="h-5 w-5" />
               </button>
             </div>
             <div className="max-h-[60vh] overflow-y-auto p-6">
-              <div className="prose prose-sm max-w-none text-sm text-slate-700 leading-relaxed whitespace-pre-wrap">
+              <div className="prose prose-sm max-w-none text-sm text-[var(--cs-text-secondary)] leading-relaxed whitespace-pre-wrap">
                 {reviewResult}
               </div>
             </div>
@@ -725,7 +725,7 @@ function VoiceCoverageSection() {
         {recentVoice.length === 0 ? (
           <div className="flex flex-col items-center gap-2 py-8 text-center">
             <MessageSquareQuote className="h-10 w-10 text-slate-200" />
-            <p className="text-sm text-slate-500">No voice records captured recently</p>
+            <p className="text-sm text-[var(--cs-text-muted)]">No voice records captured recently</p>
           </div>
         ) : (
           <div className="space-y-3">
@@ -748,10 +748,10 @@ function VoiceCoverageSection() {
                       }
                     </span>
                   )}
-                  <span className="ml-auto text-[10px] text-slate-400">{formatRelative(record.recorded_at)}</span>
+                  <span className="ml-auto text-[10px] text-[var(--cs-text-muted)]">{formatRelative(record.recorded_at)}</span>
                 </div>
                 {(record.direct_quote ?? record.paraphrase) && (
-                  <p className="text-xs text-slate-600 leading-relaxed line-clamp-2 italic">
+                  <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed line-clamp-2 italic">
                     "{record.direct_quote ?? record.paraphrase}"
                   </p>
                 )}
@@ -785,30 +785,30 @@ const STATUS_CLASSES: Record<string, string> = {
   completed:   "bg-emerald-100 text-emerald-800",
   overdue:     "bg-red-100 text-red-800",
   stalled:     "bg-amber-100 text-amber-800",
-  cancelled:   "bg-slate-100 text-slate-500",
+  cancelled:   "bg-slate-100 text-[var(--cs-text-muted)]",
 };
 
 function ActionOutcomeRow({ action }: { action: ActionOutcome }) {
   return (
-    <div className="flex items-center gap-3 rounded-xl border border-slate-100 bg-white px-3 py-2.5">
+    <div className="flex items-center gap-3 rounded-xl border border-[var(--cs-border-subtle)] bg-white px-3 py-2.5">
       <div className="flex-1 min-w-0 space-y-0.5">
-        <div className="text-xs font-semibold text-slate-900 truncate">{action.title}</div>
+        <div className="text-xs font-semibold text-[var(--cs-navy)] truncate">{action.title}</div>
         <div className="flex items-center gap-2 flex-wrap">
           {action.child_id && CHILD_NAMES[action.child_id] && (
-            <span className="text-[10px] text-slate-500">{CHILD_NAMES[action.child_id]}</span>
+            <span className="text-[10px] text-[var(--cs-text-muted)]">{CHILD_NAMES[action.child_id]}</span>
           )}
           {action.due_date && (
-            <span className="text-[10px] text-slate-400">Due {formatDate(action.due_date)}</span>
+            <span className="text-[10px] text-[var(--cs-text-muted)]">Due {formatDate(action.due_date)}</span>
           )}
           {action.owner_id && OWNER_NAMES[action.owner_id] && (
-            <span className="text-[10px] text-slate-400">{OWNER_NAMES[action.owner_id]}</span>
+            <span className="text-[10px] text-[var(--cs-text-muted)]">{OWNER_NAMES[action.owner_id]}</span>
           )}
         </div>
       </div>
       <div className="flex items-center gap-1.5 shrink-0">
         <span className={cn(
           "rounded-full px-2 py-0.5 text-[10px] font-semibold capitalize",
-          STATUS_CLASSES[action.status] ?? "bg-slate-100 text-slate-600"
+          STATUS_CLASSES[action.status] ?? "bg-slate-100 text-[var(--cs-text-secondary)]"
         )}>
           {action.status.replace("_", " ")}
         </span>
@@ -873,8 +873,8 @@ function ActionOutcomesSection() {
         {openActions.length > 0 && (
           <div className="space-y-2">
             <div className="flex items-center gap-1.5">
-              <CheckCircle2 className="h-3 w-3 text-slate-400" />
-              <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-500">
+              <CheckCircle2 className="h-3 w-3 text-[var(--cs-text-muted)]" />
+              <span className="text-[10px] font-semibold uppercase tracking-wider text-[var(--cs-text-muted)]">
                 Open / In Progress
               </span>
             </div>
@@ -887,8 +887,8 @@ function ActionOutcomesSection() {
         {overdueActions.length === 0 && openActions.length === 0 && (
           <div className="flex flex-col items-center gap-2 py-8 text-center">
             <Target className="h-10 w-10 text-slate-200" />
-            <p className="text-sm text-slate-500">No open action outcomes</p>
-            <p className="text-xs text-slate-400">Log agreed actions to track progress here</p>
+            <p className="text-sm text-[var(--cs-text-muted)]">No open action outcomes</p>
+            <p className="text-xs text-[var(--cs-text-muted)]">Log agreed actions to track progress here</p>
           </div>
         )}
       </CardContent>
@@ -902,7 +902,7 @@ const SEV_CLASSES_SCAN: Record<string, string> = {
   critical: "border-red-300 bg-red-50 text-red-800",
   high:     "border-orange-300 bg-orange-50 text-orange-800",
   medium:   "border-amber-300 bg-amber-50 text-amber-800",
-  low:      "border-slate-300 bg-slate-50 text-slate-700",
+  low:      "border-slate-300 bg-slate-50 text-[var(--cs-text-secondary)]",
 };
 
 const CHILD_NAME_MAP_SCAN: Record<string, string> = {
@@ -1095,7 +1095,7 @@ function AriaPatternScanSection() {
         )}
 
         {scanning && (
-          <div className="flex items-center gap-3 py-6 text-xs text-slate-500">
+          <div className="flex items-center gap-3 py-6 text-xs text-[var(--cs-text-muted)]">
             <Loader2 className="h-5 w-5 animate-spin text-violet-500" />
             ARIA is scanning intelligence data across all children…
           </div>
@@ -1105,12 +1105,12 @@ function AriaPatternScanSection() {
           patterns.length === 0 ? (
             <div className="flex flex-col items-center gap-2 py-6 text-center">
               <CheckCircle2 className="h-10 w-10 text-emerald-300" />
-              <p className="text-sm font-semibold text-slate-700">No significant patterns detected</p>
-              <p className="text-xs text-slate-400">ARIA found no new patterns requiring attention at this time.</p>
+              <p className="text-sm font-semibold text-[var(--cs-text-secondary)]">No significant patterns detected</p>
+              <p className="text-xs text-[var(--cs-text-muted)]">ARIA found no new patterns requiring attention at this time.</p>
             </div>
           ) : (
             <div className="space-y-3">
-              <p className="text-[11px] text-slate-500">
+              <p className="text-[11px] text-[var(--cs-text-muted)]">
                 ARIA identified <strong>{patterns.length}</strong> pattern{patterns.length !== 1 ? "s" : ""}.
                 Review each and save any that are accurate to add them to active alerts.
               </p>
@@ -1121,7 +1121,7 @@ function AriaPatternScanSection() {
                     key={idx}
                     className={cn(
                       "rounded-xl border p-4 space-y-2",
-                      SEV_CLASSES_SCAN[p.severity] ?? "border-slate-200 bg-slate-50"
+                      SEV_CLASSES_SCAN[p.severity] ?? "border-[var(--cs-border)] bg-slate-50"
                     )}
                   >
                     <div className="flex items-start justify-between gap-3">
@@ -1132,7 +1132,7 @@ function AriaPatternScanSection() {
                             p.severity === "critical" ? "bg-red-200 text-red-800" :
                             p.severity === "high"     ? "bg-orange-200 text-orange-800" :
                             p.severity === "medium"   ? "bg-amber-200 text-amber-700" :
-                            "bg-slate-200 text-slate-600"
+                            "bg-slate-200 text-[var(--cs-text-secondary)]"
                           )}>
                             {p.severity}
                           </span>

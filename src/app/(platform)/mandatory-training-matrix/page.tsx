@@ -32,7 +32,7 @@ const STATUS_CLR: Record<TrainingCourseStatus, string> = {
   valid: "bg-green-100 text-green-800",
   expiring_soon: "bg-amber-100 text-amber-800",
   expired: "bg-red-100 text-red-800",
-  not_completed: "bg-slate-100 text-slate-700",
+  not_completed: "bg-slate-100 text-[var(--cs-text-secondary)]",
 };
 
 const STATUS_DOT: Record<TrainingCourseStatus, string> = {
@@ -57,7 +57,7 @@ const COMPLIANCE_BORDER: Record<TrainingOverallCompliance, string> = {
 const CATEGORY_CLR: Record<TrainingCourseCategory, string> = {
   mandatory: "bg-blue-50 text-blue-700 border-blue-200",
   role_specific: "bg-purple-50 text-purple-700 border-purple-200",
-  best_practice: "bg-slate-50 text-slate-700 border-slate-200",
+  best_practice: "bg-slate-50 text-[var(--cs-text-secondary)] border-[var(--cs-border)]",
 };
 
 export default function MandatoryTrainingMatrixPage() {
@@ -312,7 +312,7 @@ export default function MandatoryTrainingMatrixPage() {
                               {t.certificate_on_file ? (
                                 <FileCheck className="h-3.5 w-3.5 text-green-600" aria-label="Certificate on file" />
                               ) : (
-                                <FileCheck className="h-3.5 w-3.5 text-slate-300" aria-label="No certificate" />
+                                <FileCheck className="h-3.5 w-3.5 text-[var(--cs-text-gentle)]" aria-label="No certificate" />
                               )}
                             </div>
                           </div>

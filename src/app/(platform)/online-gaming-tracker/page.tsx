@@ -182,7 +182,7 @@ export default function OnlineGamingTrackerPage() {
           return (
             <div key={r.id} className={cn("rounded-xl border bg-white overflow-hidden", hasFlags && "border-red-200")}>
               <button
-                className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                 onClick={() => setExpandedId(isExpanded ? null : r.id)}
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -201,7 +201,7 @@ export default function OnlineGamingTrackerPage() {
                   <span className="text-xs px-2 py-0.5 rounded-full font-medium bg-violet-100 text-violet-800">
                     {r.weekly_hours} hrs/wk
                   </span>
-                  <span className={cn("text-xs px-2 py-0.5 rounded-full font-medium inline-flex items-center gap-1", r.voice_chat_used ? "bg-amber-100 text-amber-800" : "bg-slate-100 text-slate-700")}>
+                  <span className={cn("text-xs px-2 py-0.5 rounded-full font-medium inline-flex items-center gap-1", r.voice_chat_used ? "bg-amber-100 text-amber-800" : "bg-slate-100 text-[var(--cs-text-secondary)]")}>
                     <Headphones className="h-3 w-3" />
                     {r.voice_chat_used ? "Voice" : "No voice"}
                   </span>

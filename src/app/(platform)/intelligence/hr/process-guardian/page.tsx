@@ -119,7 +119,7 @@ const JUDGEMENT_COLOUR: Record<GuardianReview["fairnessJudgement"], string> = {
 };
 
 const SEVERITY_COLOUR: Record<GuardianFlag["severity"], string> = {
-  info: "bg-slate-100 text-slate-700 border-slate-200",
+  info: "bg-slate-100 text-[var(--cs-text-secondary)] border-[var(--cs-border)]",
   advisory: "bg-blue-100 text-blue-800 border-blue-200",
   warning: "bg-amber-100 text-amber-800 border-amber-200",
   block: "bg-red-100 text-red-800 border-red-200",
@@ -129,7 +129,7 @@ const PRIORITY_COLOUR: Record<string, string> = {
   urgent: "bg-red-100 text-red-800 border-red-200",
   high: "bg-orange-100 text-orange-800 border-orange-200",
   medium: "bg-amber-100 text-amber-800 border-amber-200",
-  low: "bg-slate-100 text-slate-700 border-slate-200",
+  low: "bg-slate-100 text-[var(--cs-text-secondary)] border-[var(--cs-border)]",
 };
 
 export default function HrProcessGuardianPage() {
@@ -259,12 +259,12 @@ export default function HrProcessGuardianPage() {
   const review = result?.review;
 
   return (
-    <PageShell title="Aria — HR Process Guardian">
+    <PageShell title="ARIA — HR Process Guardian">
       {/* Aria draft banner */}
       <div className="mb-6 flex items-start gap-3 rounded-lg border border-violet-200 bg-violet-50 p-4 text-sm text-violet-900">
         <Sparkles className="h-5 w-5 mt-0.5 text-violet-600" />
         <div>
-          <div className="font-semibold">Aria suggested draft, never final</div>
+          <div className="font-semibold">ARIA suggested draft, never final</div>
           <p className="text-violet-800">
             Run a draft HR letter, suspension decision, or disciplinary outcome
             through the Process Guardian before sending. The Guardian checks
@@ -288,7 +288,7 @@ export default function HrProcessGuardianPage() {
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1">Action type</label>
+              <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Action type</label>
               <Select value={draftActionType} onValueChange={setDraftActionType}>
                 <SelectTrigger><SelectValue /></SelectTrigger>
                 <SelectContent>
@@ -299,19 +299,19 @@ export default function HrProcessGuardianPage() {
               </Select>
             </div>
             <div className="lg:col-span-2">
-              <label className="block text-xs font-semibold text-slate-600 mb-1">Subject line</label>
+              <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Subject line</label>
               <Input value={draftSubject} onChange={(e) => setDraftSubject(e.target.value)} placeholder="e.g. Invitation to disciplinary meeting" />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1">Staff ID</label>
+              <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Staff ID</label>
               <Input value={staffId} onChange={(e) => setStaffId(e.target.value)} placeholder="e.g. staff_123" />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1">Case ID (optional)</label>
+              <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Case ID (optional)</label>
               <Input value={caseId} onChange={(e) => setCaseId(e.target.value)} placeholder="e.g. hrc_2026_0007" />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1">Acting as</label>
+              <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Acting as</label>
               <Select value={actorRole} onValueChange={setActorRole}>
                 <SelectTrigger><SelectValue /></SelectTrigger>
                 <SelectContent>
@@ -322,12 +322,12 @@ export default function HrProcessGuardianPage() {
               </Select>
             </div>
             <div className="sm:col-span-2 lg:col-span-3">
-              <label className="block text-xs font-semibold text-slate-600 mb-1">Actor user ID (audit log)</label>
+              <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Actor user ID (audit log)</label>
               <Input value={actorUserId} onChange={(e) => setActorUserId(e.target.value)} />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-semibold text-slate-600 mb-1">Draft body</label>
+            <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Draft body</label>
             <Textarea
               value={draftBody}
               onChange={(e) => setDraftBody(e.target.value)}
@@ -337,8 +337,8 @@ export default function HrProcessGuardianPage() {
           </div>
 
           {/* Case context grid */}
-          <div className="rounded-md border border-slate-200 p-3 space-y-3">
-            <div className="text-xs font-semibold text-slate-500 uppercase">Case context</div>
+          <div className="rounded-md border border-[var(--cs-border)] p-3 space-y-3">
+            <div className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase">Case context</div>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-sm">
               <Checkbox label="Investigation completed" checked={investigationCompleted} onChange={setInvestigationCompleted} />
               <Checkbox label="Evidence shared with employee" checked={evidenceShared} onChange={setEvidenceShared} />
@@ -348,7 +348,7 @@ export default function HrProcessGuardianPage() {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-semibold text-slate-600 mb-1">Safeguarding status</label>
+                <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Safeguarding status</label>
                 <Select value={safeguardingStatus} onValueChange={setSafeguardingStatus}>
                   <SelectTrigger><SelectValue /></SelectTrigger>
                   <SelectContent>
@@ -364,7 +364,7 @@ export default function HrProcessGuardianPage() {
                 </Select>
               </div>
               <div>
-                <label className="block text-xs font-semibold text-slate-600 mb-1">Child impact status</label>
+                <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Child impact status</label>
                 <Select value={childImpactStatus} onValueChange={setChildImpactStatus}>
                   <SelectTrigger><SelectValue /></SelectTrigger>
                   <SelectContent>
@@ -377,7 +377,7 @@ export default function HrProcessGuardianPage() {
               </div>
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1">Prior warnings on file (one per line)</label>
+              <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Prior warnings on file (one per line)</label>
               <Textarea
                 value={priorWarningsRaw}
                 onChange={(e) => setPriorWarningsRaw(e.target.value)}
@@ -407,13 +407,13 @@ export default function HrProcessGuardianPage() {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
             <Card>
               <CardContent className="p-4">
-                <div className="text-xs uppercase text-slate-500 mb-1">Fairness score</div>
-                <div className="text-3xl font-semibold text-slate-900">{review.fairnessScore}<span className="text-base text-slate-500">/100</span></div>
+                <div className="text-xs uppercase text-[var(--cs-text-muted)] mb-1">Fairness score</div>
+                <div className="text-3xl font-semibold text-[var(--cs-navy)]">{review.fairnessScore}<span className="text-base text-[var(--cs-text-muted)]">/100</span></div>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="p-4">
-                <div className="text-xs uppercase text-slate-500 mb-1">Judgement</div>
+                <div className="text-xs uppercase text-[var(--cs-text-muted)] mb-1">Judgement</div>
                 <Badge className={cn("border", JUDGEMENT_COLOUR[review.fairnessJudgement])}>
                   {review.fairnessJudgement.replace(/_/g, " ")}
                 </Badge>
@@ -421,16 +421,16 @@ export default function HrProcessGuardianPage() {
             </Card>
             <Card>
               <CardContent className="p-4">
-                <div className="text-xs uppercase text-slate-500 mb-1">Proportionality</div>
-                <div className="text-sm text-slate-900">{review.proportionality.rating}</div>
-                <div className="text-xs text-slate-500 mt-0.5 line-clamp-2">{review.proportionality.rationale}</div>
+                <div className="text-xs uppercase text-[var(--cs-text-muted)] mb-1">Proportionality</div>
+                <div className="text-sm text-[var(--cs-navy)]">{review.proportionality.rating}</div>
+                <div className="text-xs text-[var(--cs-text-muted)] mt-0.5 line-clamp-2">{review.proportionality.rationale}</div>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="p-4">
-                <div className="text-xs uppercase text-slate-500 mb-1">Aria confidence</div>
-                <div className="text-3xl font-semibold text-slate-900">{Math.round(review.ariaConfidence * 100)}%</div>
-                <div className="text-xs text-slate-500 mt-0.5">{review.llmUsed ? "LLM-enhanced" : "Deterministic only"}</div>
+                <div className="text-xs uppercase text-[var(--cs-text-muted)] mb-1">Aria confidence</div>
+                <div className="text-3xl font-semibold text-[var(--cs-navy)]">{Math.round(review.ariaConfidence * 100)}%</div>
+                <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">{review.llmUsed ? "LLM-enhanced" : "Deterministic only"}</div>
               </CardContent>
             </Card>
           </div>
@@ -451,11 +451,11 @@ export default function HrProcessGuardianPage() {
                     <li key={i} className="border-l-2 pl-3" style={{ borderColor: f.severity === "block" ? "#fecaca" : f.severity === "warning" ? "#fde68a" : "#bfdbfe" }}>
                       <div className="flex items-center gap-2 mb-1 flex-wrap">
                         <Badge className={cn("border text-xs", SEVERITY_COLOUR[f.severity])}>{f.severity}</Badge>
-                        <span className="text-xs text-slate-500">{f.category.replace(/_/g, " ")}</span>
+                        <span className="text-xs text-[var(--cs-text-muted)]">{f.category.replace(/_/g, " ")}</span>
                       </div>
-                      <p className="text-sm text-slate-800">{f.message}</p>
+                      <p className="text-sm text-[var(--cs-navy)]">{f.message}</p>
                       {f.suggestion ? (
-                        <p className="text-xs text-slate-600 mt-1 italic">Suggestion: {f.suggestion}</p>
+                        <p className="text-xs text-[var(--cs-text-secondary)] mt-1 italic">Suggestion: {f.suggestion}</p>
                       ) : null}
                     </li>
                   ))}
@@ -467,34 +467,34 @@ export default function HrProcessGuardianPage() {
           {/* Two-column body */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
             <div className="space-y-4">
-              <SmallCard title="ACAS alignment" icon={<Scale className="h-4 w-4 text-slate-500" />}>
+              <SmallCard title="ACAS alignment" icon={<Scale className="h-4 w-4 text-[var(--cs-text-muted)]" />}>
                 <Kv obj={review.acasAlignment} />
               </SmallCard>
-              <SmallCard title="Safeguarding alignment" icon={<Shield className="h-4 w-4 text-slate-500" />}>
+              <SmallCard title="Safeguarding alignment" icon={<Shield className="h-4 w-4 text-[var(--cs-text-muted)]" />}>
                 <Kv obj={review.safeguardingAlignment} />
               </SmallCard>
-              <SmallCard title="Discrimination risk" icon={<Gavel className="h-4 w-4 text-slate-500" />}>
-                <p className="text-sm text-slate-700">Score: {review.discriminationRisk.score}</p>
+              <SmallCard title="Discrimination risk" icon={<Gavel className="h-4 w-4 text-[var(--cs-text-muted)]" />}>
+                <p className="text-sm text-[var(--cs-text-secondary)]">Score: {review.discriminationRisk.score}</p>
                 {review.discriminationRisk.signals.length > 0 ? (
-                  <ul className="text-sm text-slate-700 mt-1 space-y-1">
+                  <ul className="text-sm text-[var(--cs-text-secondary)] mt-1 space-y-1">
                     {review.discriminationRisk.signals.map((s, i) => (
                       <li key={i}>· Reference to {s} detected</li>
                     ))}
                   </ul>
                 ) : (
-                  <p className="text-xs text-slate-500">No protected-characteristic references detected.</p>
+                  <p className="text-xs text-[var(--cs-text-muted)]">No protected-characteristic references detected.</p>
                 )}
               </SmallCard>
-              <SmallCard title="Evidence quality" icon={<ListChecks className="h-4 w-4 text-slate-500" />}>
-                <p className="text-sm text-slate-700">Rating: {review.evidenceQuality.rating}</p>
-                <ul className="text-sm text-slate-700 mt-1 space-y-1">
+              <SmallCard title="Evidence quality" icon={<ListChecks className="h-4 w-4 text-[var(--cs-text-muted)]" />}>
+                <p className="text-sm text-[var(--cs-text-secondary)]">Rating: {review.evidenceQuality.rating}</p>
+                <ul className="text-sm text-[var(--cs-text-secondary)] mt-1 space-y-1">
                   {review.evidenceQuality.notes.map((s, i) => <li key={i}>· {s}</li>)}
                 </ul>
               </SmallCard>
-              <SmallCard title="Wording risk" icon={<Pencil className="h-4 w-4 text-slate-500" />}>
-                <p className="text-sm text-slate-700">Rating: {review.wordingRisk.rating}</p>
+              <SmallCard title="Wording risk" icon={<Pencil className="h-4 w-4 text-[var(--cs-text-muted)]" />}>
+                <p className="text-sm text-[var(--cs-text-secondary)]">Rating: {review.wordingRisk.rating}</p>
                 {review.prejudgmentSignals.length > 0 ? (
-                  <p className="text-xs text-slate-600 mt-1">Prejudgment phrases detected: {review.prejudgmentSignals.join(", ")}</p>
+                  <p className="text-xs text-[var(--cs-text-secondary)] mt-1">Prejudgment phrases detected: {review.prejudgmentSignals.join(", ")}</p>
                 ) : null}
               </SmallCard>
             </div>
@@ -515,7 +515,7 @@ export default function HrProcessGuardianPage() {
                   {editing ? (
                     <Textarea value={editedSafer} onChange={(e) => setEditedSafer(e.target.value)} className="min-h-[260px] text-sm" />
                   ) : (
-                    <pre className="whitespace-pre-wrap text-sm text-slate-800 font-sans">{editedSafer}</pre>
+                    <pre className="whitespace-pre-wrap text-sm text-[var(--cs-navy)] font-sans">{editedSafer}</pre>
                   )}
                 </CardContent>
               </Card>
@@ -530,7 +530,7 @@ export default function HrProcessGuardianPage() {
                     <RightsLine label="Appeal rights communicated" ok={review.rightsCheck.appealRightsCommunicated} />
                     <RightsLine label="Representation offered" ok={review.rightsCheck.representationOffered} />
                   </ul>
-                  <p className="text-xs text-slate-500 mt-2">{review.rightsCheck.rationale}</p>
+                  <p className="text-xs text-[var(--cs-text-muted)] mt-2">{review.rightsCheck.rationale}</p>
                 </CardContent>
               </Card>
 
@@ -546,9 +546,9 @@ export default function HrProcessGuardianPage() {
                           <div className="flex items-center gap-2 mb-1 flex-wrap">
                             <span className="font-medium text-sm">{a.title}</span>
                             <Badge className={cn("border text-xs", PRIORITY_COLOUR[a.priority] ?? "")}>{a.priority}</Badge>
-                            <span className="text-xs text-slate-500">due {a.dueDays}d, {a.assignedRole}</span>
+                            <span className="text-xs text-[var(--cs-text-muted)]">due {a.dueDays}d, {a.assignedRole}</span>
                           </div>
-                          <p className="text-sm text-slate-600">{a.description}</p>
+                          <p className="text-sm text-[var(--cs-text-secondary)]">{a.description}</p>
                         </li>
                       ))}
                     </ul>
@@ -561,7 +561,7 @@ export default function HrProcessGuardianPage() {
                   <CardTitle className="text-base">Regulatory framework</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <ul className="text-xs text-slate-600 space-y-1">
+                  <ul className="text-xs text-[var(--cs-text-secondary)] space-y-1">
                     {review.regulatoryLinks.map((s, i) => <li key={i}>· {s}</li>)}
                   </ul>
                 </CardContent>
@@ -573,22 +573,22 @@ export default function HrProcessGuardianPage() {
           <Card className="mb-6">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-base">
-                <History className="h-4 w-4 text-slate-500" /> Manager decision
+                <History className="h-4 w-4 text-[var(--cs-text-muted)]" /> Manager decision
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="text-xs text-slate-500">
-                Acting as <span className="font-medium text-slate-700">{actorUserId}</span> ({actorRole}).
+              <div className="text-xs text-[var(--cs-text-muted)]">
+                Acting as <span className="font-medium text-[var(--cs-text-secondary)]">{actorUserId}</span> ({actorRole}).
                 {result?.reviewId ? ` Review ${result.reviewId}` : " Persistence not active in this environment."}
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-600 mb-1">Rejection reason (required for Reject)</label>
+                  <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Rejection reason (required for Reject)</label>
                   <Textarea value={rejectionReason} onChange={(e) => setRejectionReason(e.target.value)} className="min-h-[60px] text-sm" />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-slate-600 mb-1">Rewrite instructions (required for Request rewrite)</label>
+                  <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Rewrite instructions (required for Request rewrite)</label>
                   <Textarea value={rewriteInstructions} onChange={(e) => setRewriteInstructions(e.target.value)} className="min-h-[60px] text-sm" />
                 </div>
               </div>
@@ -613,15 +613,15 @@ export default function HrProcessGuardianPage() {
               </div>
 
               {decisionMessage ? (
-                <div className="text-sm text-slate-700 bg-slate-50 border border-slate-200 rounded-md px-3 py-2">{decisionMessage}</div>
+                <div className="text-sm text-[var(--cs-text-secondary)] bg-slate-50 border border-[var(--cs-border)] rounded-md px-3 py-2">{decisionMessage}</div>
               ) : null}
             </CardContent>
           </Card>
         </>
       ) : (
         <Card>
-          <CardContent className="p-6 text-sm text-slate-600">
-            <p className="font-medium text-slate-800 mb-1">Empty state</p>
+          <CardContent className="p-6 text-sm text-[var(--cs-text-secondary)]">
+            <p className="font-medium text-[var(--cs-navy)] mb-1">Empty state</p>
             <p>
               Paste a draft HR letter or decision wording above and run the
               Process Guardian. The Guardian will check fairness, ACAS
@@ -663,13 +663,13 @@ function SmallCard({ title, icon, children }: { title: string; icon: React.React
 
 function Kv({ obj }: { obj: Record<string, boolean | string> }) {
   const entries = Object.entries(obj);
-  if (entries.length === 0) return <p className="text-xs text-slate-500">No data captured for this check.</p>;
+  if (entries.length === 0) return <p className="text-xs text-[var(--cs-text-muted)]">No data captured for this check.</p>;
   return (
     <ul className="text-sm space-y-1">
       {entries.map(([k, v]) => (
         <li key={k} className="flex items-center gap-2">
-          <span className="text-slate-500 text-xs">{k.replace(/_/g, " ")}:</span>
-          <span className="text-slate-800">{typeof v === "boolean" ? (v ? "yes" : "no") : v}</span>
+          <span className="text-[var(--cs-text-muted)] text-xs">{k.replace(/_/g, " ")}:</span>
+          <span className="text-[var(--cs-navy)]">{typeof v === "boolean" ? (v ? "yes" : "no") : v}</span>
         </li>
       ))}
     </ul>
@@ -680,7 +680,7 @@ function RightsLine({ label, ok }: { label: string; ok: boolean }) {
   return (
     <li className="flex items-center gap-2">
       {ok ? <CheckCircle2 className="h-4 w-4 text-emerald-500" /> : <XCircle className="h-4 w-4 text-amber-500" />}
-      <span className={cn("text-sm", ok ? "text-slate-800" : "text-amber-800")}>{label}</span>
+      <span className={cn("text-sm", ok ? "text-[var(--cs-navy)]" : "text-amber-800")}>{label}</span>
     </li>
   );
 }

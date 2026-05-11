@@ -33,7 +33,7 @@ import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 
 /* ── helpers ───────────────────────────────────────────────────────────────── */
 
-const STATUS_CLR: Record<DoLReviewStatus, string> = { current: "bg-amber-100 text-amber-800", under_review: "bg-blue-100 text-blue-800", removed: "bg-green-100 text-green-800", expired: "bg-slate-100 text-slate-700", court_pending: "bg-purple-100 text-purple-800" };
+const STATUS_CLR: Record<DoLReviewStatus, string> = { current: "bg-amber-100 text-amber-800", under_review: "bg-blue-100 text-blue-800", removed: "bg-green-100 text-green-800", expired: "bg-slate-100 text-[var(--cs-text-secondary)]", court_pending: "bg-purple-100 text-purple-800" };
 const STATUS_BORDER: Record<DoLReviewStatus, string> = { current: "border-l-amber-400", under_review: "border-l-blue-400", removed: "border-l-green-400", expired: "border-l-slate-300", court_pending: "border-l-purple-400" };
 
 /* ── page ──────────────────────────────────────────────────────────────────── */
@@ -201,7 +201,7 @@ export default function DeprivationOfLibertyPage() {
                         <p className="font-medium mb-1">Alternatives Considered</p>
                         <ul className="space-y-1">
                           {r.alternatives_considered.map((a, i) => (
-                            <li key={i} className="flex items-start gap-2 text-xs"><AlertTriangle className="h-3.5 w-3.5 text-slate-400 shrink-0 mt-0.5" /><span>{a}</span></li>
+                            <li key={i} className="flex items-start gap-2 text-xs"><AlertTriangle className="h-3.5 w-3.5 text-[var(--cs-text-muted)] shrink-0 mt-0.5" /><span>{a}</span></li>
                           ))}
                         </ul>
                       </div>

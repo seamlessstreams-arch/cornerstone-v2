@@ -89,18 +89,18 @@ function VoiceCard({ record }: { record: VoiceRecord }) {
       "rounded-2xl border bg-white overflow-hidden transition-all",
       heeded === true ? "border-emerald-200" :
       heeded === false ? "border-red-200" :
-      "border-slate-200",
+      "border-[var(--cs-border)]",
     )}>
       <div className="flex items-start gap-3 p-4">
         <div className={cn("w-10 h-10 rounded-xl flex items-center justify-center shrink-0", themeCfg?.bg ?? "bg-slate-50")}>
-          <ThemeIcon className={cn("h-4 w-4", themeCfg?.color ?? "text-slate-500")} />
+          <ThemeIcon className={cn("h-4 w-4", themeCfg?.color ?? "text-[var(--cs-text-muted)]")} />
         </div>
 
         <div className="flex-1 min-w-0">
           {/* Direct quote — prominent */}
           {record.direct_quote && (
             <div className="mb-2">
-              <p className="text-sm text-slate-800 italic leading-relaxed">
+              <p className="text-sm text-[var(--cs-navy)] italic leading-relaxed">
                 &ldquo;{record.direct_quote}&rdquo;
               </p>
             </div>
@@ -110,7 +110,7 @@ function VoiceCard({ record }: { record: VoiceRecord }) {
             <Badge variant="outline" className={cn("text-[10px] px-1.5 py-0 border", themeCfg?.border, themeCfg?.bg, themeCfg?.color)}>
               {themeCfg?.label ?? record.theme}
             </Badge>
-            <span className="text-[10px] px-2 py-0.5 rounded-full border bg-slate-50 text-slate-500 border-slate-200">
+            <span className="text-[10px] px-2 py-0.5 rounded-full border bg-slate-50 text-[var(--cs-text-muted)] border-[var(--cs-border)]">
               {CAPTURE_METHOD_LABELS[record.capture_method] ?? record.capture_method}
             </span>
             {heeded === true && (
@@ -130,7 +130,7 @@ function VoiceCard({ record }: { record: VoiceRecord }) {
             )}
           </div>
 
-          <div className="flex items-center gap-3 text-xs text-slate-500 flex-wrap">
+          <div className="flex items-center gap-3 text-xs text-[var(--cs-text-muted)] flex-wrap">
             <span className="flex items-center gap-1">
               <User className="h-3 w-3" />{getYPName(record.child_id)}
             </span>
@@ -143,18 +143,18 @@ function VoiceCard({ record }: { record: VoiceRecord }) {
           </div>
         </div>
 
-        <button onClick={() => setExpanded(!expanded)} className="text-slate-400 hover:text-slate-600 shrink-0">
+        <button onClick={() => setExpanded(!expanded)} className="text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] shrink-0">
           {expanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
         </button>
       </div>
 
       {expanded && (
-        <div className="border-t border-slate-100 px-4 pb-4 pt-3 space-y-3">
+        <div className="border-t border-[var(--cs-border-subtle)] px-4 pb-4 pt-3 space-y-3">
           {/* Paraphrase / professional interpretation */}
           {record.paraphrase && (
-            <div className="rounded-xl border border-slate-200 bg-slate-50 p-3">
-              <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest mb-1">Professional Interpretation</p>
-              <p className="text-xs text-slate-700 leading-relaxed">{record.paraphrase}</p>
+            <div className="rounded-xl border border-[var(--cs-border)] bg-slate-50 p-3">
+              <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-widest mb-1">Professional Interpretation</p>
+              <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed">{record.paraphrase}</p>
             </div>
           )}
 
@@ -165,9 +165,9 @@ function VoiceCard({ record }: { record: VoiceRecord }) {
                 <Target className="h-3 w-3 text-indigo-600" />
                 <p className="text-[10px] font-semibold text-indigo-700 uppercase tracking-widest">What We Did</p>
               </div>
-              <p className="text-xs text-slate-700 leading-relaxed">{record.action_taken}</p>
+              <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed">{record.action_taken}</p>
               {record.action_owner && (
-                <p className="text-[10px] text-slate-400 mt-1">Owner: {getStaffName(record.action_owner)}</p>
+                <p className="text-[10px] text-[var(--cs-text-muted)] mt-1">Owner: {getStaffName(record.action_owner)}</p>
               )}
             </div>
           )}
@@ -176,13 +176,13 @@ function VoiceCard({ record }: { record: VoiceRecord }) {
           {record.action_outcome && (
             <div className={cn(
               "rounded-xl border p-3",
-              heeded ? "border-emerald-100 bg-emerald-50/40" : "border-slate-200 bg-white",
+              heeded ? "border-emerald-100 bg-emerald-50/40" : "border-[var(--cs-border)] bg-white",
             )}>
               <div className="flex items-center gap-1.5 mb-1">
-                <CheckCircle2 className={cn("h-3 w-3", heeded ? "text-emerald-600" : "text-slate-500")} />
-                <p className={cn("text-[10px] font-semibold uppercase tracking-widest", heeded ? "text-emerald-700" : "text-slate-500")}>Outcome</p>
+                <CheckCircle2 className={cn("h-3 w-3", heeded ? "text-emerald-600" : "text-[var(--cs-text-muted)]")} />
+                <p className={cn("text-[10px] font-semibold uppercase tracking-widest", heeded ? "text-emerald-700" : "text-[var(--cs-text-muted)]")}>Outcome</p>
               </div>
-              <p className="text-xs text-slate-700 leading-relaxed">{record.action_outcome}</p>
+              <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed">{record.action_outcome}</p>
             </div>
           )}
         </div>
@@ -252,7 +252,7 @@ function NewVoiceDialog({
         <div className="space-y-3 text-sm">
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="text-xs text-slate-500 font-medium mb-1 block">Young person</label>
+              <label className="text-xs text-[var(--cs-text-muted)] font-medium mb-1 block">Young person</label>
               <Select value={form.child_id} onValueChange={(v) => setForm((p) => ({ ...p, child_id: v }))}>
                 <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
                 <SelectContent>
@@ -263,7 +263,7 @@ function NewVoiceDialog({
               </Select>
             </div>
             <div>
-              <label className="text-xs text-slate-500 font-medium mb-1 block">Theme</label>
+              <label className="text-xs text-[var(--cs-text-muted)] font-medium mb-1 block">Theme</label>
               <Select value={form.theme} onValueChange={(v) => setForm((p) => ({ ...p, theme: v as VoiceTheme }))}>
                 <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
                 <SelectContent>
@@ -276,7 +276,7 @@ function NewVoiceDialog({
           </div>
 
           <div>
-            <label className="text-xs text-slate-500 font-medium mb-1 block">Capture method</label>
+            <label className="text-xs text-[var(--cs-text-muted)] font-medium mb-1 block">Capture method</label>
             <Select value={form.capture_method} onValueChange={(v) => setForm((p) => ({ ...p, capture_method: v as VoiceRecord["capture_method"] }))}>
               <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
               <SelectContent>
@@ -288,8 +288,8 @@ function NewVoiceDialog({
           </div>
 
           <div>
-            <label className="text-xs text-slate-500 font-medium mb-1 block">
-              Direct quote <span className="text-slate-400 font-normal">(in the young person&apos;s own words)</span>
+            <label className="text-xs text-[var(--cs-text-muted)] font-medium mb-1 block">
+              Direct quote <span className="text-[var(--cs-text-muted)] font-normal">(in the young person&apos;s own words)</span>
             </label>
             <Textarea
               value={form.direct_quote}
@@ -301,7 +301,7 @@ function NewVoiceDialog({
           </div>
 
           <div>
-            <label className="text-xs text-slate-500 font-medium mb-1 block">Professional interpretation</label>
+            <label className="text-xs text-[var(--cs-text-muted)] font-medium mb-1 block">Professional interpretation</label>
             <Textarea
               value={form.paraphrase}
               onChange={(e) => setForm((p) => ({ ...p, paraphrase: e.target.value }))}
@@ -312,7 +312,7 @@ function NewVoiceDialog({
           </div>
 
           <div>
-            <label className="text-xs text-slate-500 font-medium mb-1 block">Action taken</label>
+            <label className="text-xs text-[var(--cs-text-muted)] font-medium mb-1 block">Action taken</label>
             <Textarea
               value={form.action_taken}
               onChange={(e) => setForm((p) => ({ ...p, action_taken: e.target.value }))}
@@ -323,7 +323,7 @@ function NewVoiceDialog({
           </div>
 
           <div>
-            <label className="text-xs text-slate-500 font-medium mb-1 block">Action owner</label>
+            <label className="text-xs text-[var(--cs-text-muted)] font-medium mb-1 block">Action owner</label>
             <Select value={form.action_owner} onValueChange={(v) => setForm((p) => ({ ...p, action_owner: v }))}>
               <SelectTrigger className="h-8 text-xs"><SelectValue placeholder="Select staff member" /></SelectTrigger>
               <SelectContent>
@@ -334,7 +334,7 @@ function NewVoiceDialog({
             </Select>
           </div>
 
-          <p className="text-[10px] text-slate-400">
+          <p className="text-[10px] text-[var(--cs-text-muted)]">
             Ofsted explicitly assess whether children&apos;s voices are captured, heard, and acted upon.
             Record direct quotes wherever possible — this is the strongest form of evidence.
           </p>
@@ -472,7 +472,7 @@ export default function VoiceOfTheChildPage() {
             <div key={label} className={cn("rounded-2xl border p-4 text-center", bg)}>
               <Icon className={cn("h-4 w-4 mx-auto mb-1", colour)} />
               <div className={cn("text-2xl font-bold tabular-nums", colour)}>{value}</div>
-              <div className="text-[10px] text-slate-500 mt-0.5 font-medium">{label}</div>
+              <div className="text-[10px] text-[var(--cs-text-muted)] mt-0.5 font-medium">{label}</div>
             </div>
           ))}
         </div>
@@ -490,11 +490,11 @@ export default function VoiceOfTheChildPage() {
                   "flex-1 rounded-xl border p-3 text-center transition-all",
                   childFilter === id
                     ? "bg-teal-50 border-teal-300 ring-1 ring-teal-200"
-                    : "bg-white border-slate-200 hover:border-teal-200",
+                    : "bg-white border-[var(--cs-border)] hover:border-teal-200",
                 )}
               >
-                <p className="text-sm font-semibold text-slate-800">{getYPName(id)}</p>
-                <p className="text-xs text-slate-500 mt-0.5">
+                <p className="text-sm font-semibold text-[var(--cs-navy)]">{getYPName(id)}</p>
+                <p className="text-xs text-[var(--cs-text-muted)] mt-0.5">
                   {count} record{count !== 1 ? "s" : ""} · {heeded} heeded
                 </p>
               </button>
@@ -532,16 +532,16 @@ export default function VoiceOfTheChildPage() {
         {/* ── Search + filters ─────────────────────────────────────────────── */}
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1 max-w-sm">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
             <Input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search quotes, themes, actions…" className="pl-9 h-8 text-xs" />
           </div>
           <div className="flex items-center gap-3 flex-wrap">
             <div className="flex items-center gap-1.5">
-              <Filter className="h-3.5 w-3.5 text-slate-400" />
+              <Filter className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
               <select
                 value={heededFilter}
                 onChange={(e) => setHeededFilter(e.target.value as typeof heededFilter)}
-                className="rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-[11px] text-slate-700 focus:border-teal-300 focus:ring-1 focus:ring-teal-200 outline-none"
+                className="rounded-lg border border-[var(--cs-border)] bg-white px-2.5 py-1 text-[11px] text-[var(--cs-text-secondary)] focus:border-teal-300 focus:ring-1 focus:ring-teal-200 outline-none"
               >
                 <option value="all">All records</option>
                 <option value="heeded">Voice heeded</option>
@@ -550,11 +550,11 @@ export default function VoiceOfTheChildPage() {
               </select>
             </div>
             <div className="flex items-center gap-1.5">
-              <ArrowUpDown className="h-3.5 w-3.5 text-slate-400" />
+              <ArrowUpDown className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
-                className="rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-[11px] text-slate-700 focus:border-teal-300 focus:ring-1 focus:ring-teal-200 outline-none"
+                className="rounded-lg border border-[var(--cs-border)] bg-white px-2.5 py-1 text-[11px] text-[var(--cs-text-secondary)] focus:border-teal-300 focus:ring-1 focus:ring-teal-200 outline-none"
               >
                 <option value="date">Date (newest)</option>
                 <option value="child">Young person</option>
@@ -566,7 +566,7 @@ export default function VoiceOfTheChildPage() {
 
         {(search || childFilter !== "all" || themeFilter !== "all" || heededFilter !== "all") && (
           <div className="flex items-center gap-2">
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-[var(--cs-text-muted)]">
               {filtered.length} result{filtered.length !== 1 ? "s" : ""}
               {search && <span> matching &ldquo;{search}&rdquo;</span>}
             </p>
@@ -582,19 +582,19 @@ export default function VoiceOfTheChildPage() {
         {/* ── Loading ──────────────────────────────────────────────────────── */}
         {isLoading && (
           <div className="flex items-center justify-center py-16">
-            <Loader2 className="h-6 w-6 animate-spin text-slate-400" />
-            <span className="ml-2 text-sm text-slate-400">Loading voice records…</span>
+            <Loader2 className="h-6 w-6 animate-spin text-[var(--cs-text-muted)]" />
+            <span className="ml-2 text-sm text-[var(--cs-text-muted)]">Loading voice records…</span>
           </div>
         )}
 
         {/* ── Voice records list ───────────────────────────────────────────── */}
         {!isLoading && filtered.length === 0 && (
-          <div className="text-center py-16 text-slate-500">
-            <Mic className="h-10 w-10 text-slate-300 mx-auto mb-3" />
+          <div className="text-center py-16 text-[var(--cs-text-muted)]">
+            <Mic className="h-10 w-10 text-[var(--cs-text-gentle)] mx-auto mb-3" />
             <p className="text-sm font-medium">
               {search ? `No voice records match "${search}"` : "No voice records captured yet"}
             </p>
-            <p className="text-xs text-slate-400 mt-1">
+            <p className="text-xs text-[var(--cs-text-muted)] mt-1">
               Capture what your young people are saying — in their own words where possible.
             </p>
           </div>
@@ -609,8 +609,8 @@ export default function VoiceOfTheChildPage() {
         )}
 
         {/* ── Regulatory note ──────────────────────────────────────────────── */}
-        <div className="rounded-xl border border-slate-100 bg-slate-50 px-4 py-3 text-xs text-slate-500">
-          <span className="font-semibold text-slate-600">Regulatory Basis — </span>
+        <div className="rounded-xl border border-[var(--cs-border-subtle)] bg-slate-50 px-4 py-3 text-xs text-[var(--cs-text-muted)]">
+          <span className="font-semibold text-[var(--cs-text-secondary)]">Regulatory Basis — </span>
           Children&apos;s Homes Quality Standards 2015, Standard 1 (Overall Experiences and Progress):
           children must be listened to and their views taken seriously. Standard 3 (Rights and Responsibilities):
           children must know how to express their wishes and feelings. UNCRC Article 12: the right of the child

@@ -41,9 +41,9 @@ function shiftStatusConfig(s: Shift["status"]) {
     case "completed":   return { label: "Completed",   colour: "bg-emerald-100 text-emerald-700 border-emerald-200" };
     case "in_progress": return { label: "In progress", colour: "bg-blue-100 text-blue-700 border-blue-200" };
     case "no_show":     return { label: "No show",     colour: "bg-red-100 text-red-700 border-red-200" };
-    case "cancelled":   return { label: "Cancelled",   colour: "bg-slate-100 text-slate-500 border-slate-200" };
+    case "cancelled":   return { label: "Cancelled",   colour: "bg-slate-100 text-[var(--cs-text-muted)] border-[var(--cs-border)]" };
     case "confirmed":   return { label: "Confirmed",   colour: "bg-violet-100 text-violet-700 border-violet-200" };
-    default:            return { label: "Scheduled",   colour: "bg-slate-100 text-slate-600 border-slate-200" };
+    default:            return { label: "Scheduled",   colour: "bg-slate-100 text-[var(--cs-text-secondary)] border-[var(--cs-border)]" };
   }
 }
 
@@ -60,21 +60,21 @@ function ShiftRow({ shift }: { shift: Shift }) {
   const hasOvertime = shift.overtime_minutes > 0;
 
   return (
-    <div className="flex items-center gap-4 rounded-xl px-3 py-3 hover:bg-slate-50 transition-colors">
+    <div className="flex items-center gap-4 rounded-xl px-3 py-3 hover:bg-[var(--cs-surface)] transition-colors">
       {/* Date */}
       <div className="w-20 shrink-0">
-        <div className="text-xs font-semibold text-slate-800">{formatDate(shift.date)}</div>
-        <div className="text-[10px] text-slate-400 capitalize">
+        <div className="text-xs font-semibold text-[var(--cs-navy)]">{formatDate(shift.date)}</div>
+        <div className="text-[10px] text-[var(--cs-text-muted)] capitalize">
           {SHIFT_TYPE_LABEL[shift.shift_type] ?? shift.shift_type}
         </div>
       </div>
 
       {/* Scheduled time */}
       <div className="w-28 shrink-0">
-        <div className="text-xs font-mono text-slate-700">
+        <div className="text-xs font-mono text-[var(--cs-text-secondary)]">
           {shift.start_time} – {shift.end_time}
         </div>
-        <div className="text-[10px] text-slate-400 flex items-center gap-1">
+        <div className="text-[10px] text-[var(--cs-text-muted)] flex items-center gap-1">
           <Coffee className="h-2.5 w-2.5" />{shift.break_minutes}m break
         </div>
       </div>
@@ -88,21 +88,21 @@ function ShiftRow({ shift }: { shift: Shift }) {
               {shift.clock_in_at}
             </div>
             {shift.clock_out_at && (
-              <div className="flex items-center gap-1 text-[11px] text-slate-500">
+              <div className="flex items-center gap-1 text-[11px] text-[var(--cs-text-muted)]">
                 <Square className="h-2.5 w-2.5" />
                 {shift.clock_out_at}
               </div>
             )}
           </div>
         ) : (
-          <span className="text-[11px] text-slate-400">—</span>
+          <span className="text-[11px] text-[var(--cs-text-muted)]">—</span>
         )}
       </div>
 
       {/* Duration */}
       <div className="w-16 text-center shrink-0">
-        <div className="text-sm font-semibold text-slate-900">{hoursLabel(dur)}</div>
-        <div className="text-[10px] text-slate-400">worked</div>
+        <div className="text-sm font-semibold text-[var(--cs-navy)]">{hoursLabel(dur)}</div>
+        <div className="text-[10px] text-[var(--cs-text-muted)]">worked</div>
       </div>
 
       {/* Overtime */}
@@ -110,10 +110,10 @@ function ShiftRow({ shift }: { shift: Shift }) {
         {hasOvertime ? (
           <>
             <div className="text-sm font-semibold text-orange-600">{hoursLabel(shift.overtime_minutes)}</div>
-            <div className="text-[10px] text-slate-400">OT</div>
+            <div className="text-[10px] text-[var(--cs-text-muted)]">OT</div>
           </>
         ) : (
-          <span className="text-xs text-slate-300">—</span>
+          <span className="text-xs text-[var(--cs-text-gentle)]">—</span>
         )}
       </div>
 
@@ -124,7 +124,7 @@ function ShiftRow({ shift }: { shift: Shift }) {
 
       {/* Notes */}
       {shift.notes && (
-        <span className="text-[10px] text-slate-400 max-w-32 truncate" title={shift.notes}>
+        <span className="text-[10px] text-[var(--cs-text-muted)] max-w-32 truncate" title={shift.notes}>
           {shift.notes}
         </span>
       )}
@@ -220,7 +220,7 @@ export default function TimesheetDetailPage({
   if (!staff) {
     return (
       <PageShell title="Not found">
-        <p className="text-slate-500 text-sm">Staff member not found.</p>
+        <p className="text-[var(--cs-text-muted)] text-sm">Staff member not found.</p>
         <Button variant="outline" className="mt-4 gap-1.5" onClick={() => router.push("/timesheets")}>
           <ChevronLeft className="h-4 w-4" />Back to timesheets
         </Button>
@@ -250,7 +250,7 @@ export default function TimesheetDetailPage({
         <div className="mb-6 relative">
           <button
             onClick={() => setShowAria(false)}
-            className="absolute top-3 right-3 z-10 text-slate-400 hover:text-slate-600 text-xs"
+            className="absolute top-3 right-3 z-10 text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] text-xs"
           >
             ✕ Close
           </button>
@@ -270,12 +270,12 @@ export default function TimesheetDetailPage({
             <Avatar name={staff.full_name} size="lg" />
             <div className="flex-1 min-w-0 space-y-1.5">
               <div className="flex items-center gap-2 flex-wrap">
-                <h2 className="text-lg font-bold text-slate-900">{staff.full_name}</h2>
-                <Badge className="text-[10px] rounded-full bg-slate-100 text-slate-700 border border-slate-200">
+                <h2 className="text-lg font-bold text-[var(--cs-navy)]">{staff.full_name}</h2>
+                <Badge className="text-[10px] rounded-full bg-slate-100 text-[var(--cs-text-secondary)] border border-[var(--cs-border)]">
                   {staff.job_title}
                 </Badge>
               </div>
-              <div className="flex flex-wrap items-center gap-3 text-xs text-slate-500">
+              <div className="flex flex-wrap items-center gap-3 text-xs text-[var(--cs-text-muted)]">
                 <span className="flex items-center gap-1">
                   <Clock className="h-3 w-3" />
                   {staff.contracted_hours}h/wk · {contractedHrsPerDay.toFixed(1)}h/day avg
@@ -329,7 +329,7 @@ export default function TimesheetDetailPage({
             value: `${totals.variance >= 0 ? "+" : ""}${hoursLabel(Math.abs(totals.variance))}`,
             sub: totals.variance >= 0 ? "over contracted" : "under contracted",
             icon: TrendingUp,
-            colour: totals.variance >= 0 ? "text-orange-600" : "text-slate-500",
+            colour: totals.variance >= 0 ? "text-orange-600" : "text-[var(--cs-text-muted)]",
             bg: totals.variance >= 0 ? "bg-orange-50" : "bg-slate-50",
           },
           {
@@ -337,7 +337,7 @@ export default function TimesheetDetailPage({
             value: hoursLabel(totals.overtimeMins),
             sub: `£${totals.otPay.toFixed(2)} payable`,
             icon: Timer,
-            colour: totals.overtimeMins > 0 ? "text-orange-600" : "text-slate-400",
+            colour: totals.overtimeMins > 0 ? "text-orange-600" : "text-[var(--cs-text-muted)]",
             bg: totals.overtimeMins > 0 ? "bg-orange-50" : "bg-slate-50",
           },
           {
@@ -363,13 +363,13 @@ export default function TimesheetDetailPage({
             colour: "text-emerald-600", bg: "bg-emerald-50",
           },
         ].map(({ label, value, sub, icon: Icon, colour, bg }) => (
-          <div key={label} className="rounded-2xl border border-slate-200 bg-white p-4">
+          <div key={label} className="rounded-2xl border border-[var(--cs-border)] bg-white p-4">
             <div className={cn("rounded-xl p-2 inline-flex mb-2", bg)}>
               <Icon className={cn("h-4 w-4", colour)} />
             </div>
             <div className={cn("text-xl font-bold tabular-nums", colour)}>{value}</div>
-            <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mt-0.5">{label}</div>
-            <div className="text-[10px] text-slate-400 mt-0.5">{sub}</div>
+            <div className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mt-0.5">{label}</div>
+            <div className="text-[10px] text-[var(--cs-text-muted)] mt-0.5">{sub}</div>
           </div>
         ))}
       </div>
@@ -380,22 +380,22 @@ export default function TimesheetDetailPage({
         <div className="lg:col-span-2">
           <Card className="rounded-2xl shadow-sm">
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-semibold text-slate-700 flex items-center gap-2">
+              <CardTitle className="text-sm font-semibold text-[var(--cs-text-secondary)] flex items-center gap-2">
                 <Calendar className="h-4 w-4 text-blue-500" />Shift log — last 14 days
-                <Badge className="text-[10px] rounded-full bg-slate-100 text-slate-600 ml-auto">
+                <Badge className="text-[10px] rounded-full bg-slate-100 text-[var(--cs-text-secondary)] ml-auto">
                   {staffShifts.length} shifts
                 </Badge>
               </CardTitle>
             </CardHeader>
             <CardContent>
               {staffShifts.length === 0 ? (
-                <div className="py-10 text-center text-sm text-slate-400">
+                <div className="py-10 text-center text-sm text-[var(--cs-text-muted)]">
                   No shifts found for this period.
                 </div>
               ) : (
                 <div className="divide-y divide-slate-100">
                   {/* Column headers */}
-                  <div className="flex items-center gap-4 px-3 pb-2 text-[10px] font-semibold text-slate-400 uppercase tracking-wider">
+                  <div className="flex items-center gap-4 px-3 pb-2 text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider">
                     <div className="w-20">Date</div>
                     <div className="w-28">Scheduled</div>
                     <div className="w-28">Clock in/out</div>
@@ -417,7 +417,7 @@ export default function TimesheetDetailPage({
           {/* Pay breakdown */}
           <Card className="rounded-2xl shadow-sm">
             <CardHeader className="pb-2">
-              <CardTitle className="text-xs font-semibold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
+              <CardTitle className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider flex items-center gap-1.5">
                 <Coins className="h-3.5 w-3.5" />Pay summary (est.)
               </CardTitle>
             </CardHeader>
@@ -428,19 +428,19 @@ export default function TimesheetDetailPage({
               ].map(({ label, amount, sub }) => (
                 <div key={label} className="flex items-start justify-between gap-2">
                   <div>
-                    <div className="text-xs font-medium text-slate-800">{label}</div>
-                    <div className="text-[10px] text-slate-400">{sub}</div>
+                    <div className="text-xs font-medium text-[var(--cs-navy)]">{label}</div>
+                    <div className="text-[10px] text-[var(--cs-text-muted)]">{sub}</div>
                   </div>
-                  <div className="text-sm font-semibold text-slate-900">£{amount.toFixed(2)}</div>
+                  <div className="text-sm font-semibold text-[var(--cs-navy)]">£{amount.toFixed(2)}</div>
                 </div>
               ))}
-              <div className="border-t border-slate-100 pt-2 flex items-center justify-between">
-                <span className="text-xs font-semibold text-slate-700">Estimated total</span>
+              <div className="border-t border-[var(--cs-border-subtle)] pt-2 flex items-center justify-between">
+                <span className="text-xs font-semibold text-[var(--cs-text-secondary)]">Estimated total</span>
                 <span className="text-base font-bold text-emerald-700">
                   £{(totals.regularPay + totals.otPay).toFixed(2)}
                 </span>
               </div>
-              <p className="text-[10px] text-slate-400">
+              <p className="text-[10px] text-[var(--cs-text-muted)]">
                 Estimate only. Final pay subject to payroll processing.
               </p>
             </CardContent>
@@ -449,7 +449,7 @@ export default function TimesheetDetailPage({
           {/* Shift type breakdown */}
           <Card className="rounded-2xl shadow-sm">
             <CardHeader className="pb-2">
-              <CardTitle className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+              <CardTitle className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider">
                 Shift types
               </CardTitle>
             </CardHeader>
@@ -462,13 +462,13 @@ export default function TimesheetDetailPage({
                 }, {})
               ).map(([type, count]) => (
                 <div key={type} className="flex items-center justify-between text-xs">
-                  <span className="text-slate-600 capitalize">{type}</span>
+                  <span className="text-[var(--cs-text-secondary)] capitalize">{type}</span>
                   <div className="flex items-center gap-1.5">
                     <div
                       className="h-1.5 bg-blue-400 rounded-full"
                       style={{ width: `${Math.round((count / staffShifts.length) * 80)}px` }}
                     />
-                    <span className="font-semibold text-slate-800 w-3">{count}</span>
+                    <span className="font-semibold text-[var(--cs-navy)] w-3">{count}</span>
                   </div>
                 </div>
               ))}
@@ -478,7 +478,7 @@ export default function TimesheetDetailPage({
           {/* Attendance summary */}
           <Card className="rounded-2xl shadow-sm">
             <CardHeader className="pb-2">
-              <CardTitle className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+              <CardTitle className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider">
                 Attendance
               </CardTitle>
             </CardHeader>
@@ -491,8 +491,8 @@ export default function TimesheetDetailPage({
               ].map(({ label, count, colour }) => (
                 <div key={label} className="flex items-center gap-2.5">
                   <div className={cn("h-2 w-2 rounded-full shrink-0", colour)} />
-                  <span className="text-xs text-slate-600 flex-1">{label}</span>
-                  <span className="text-xs font-semibold text-slate-800">{count}</span>
+                  <span className="text-xs text-[var(--cs-text-secondary)] flex-1">{label}</span>
+                  <span className="text-xs font-semibold text-[var(--cs-navy)]">{count}</span>
                 </div>
               ))}
               <div className="pt-1">
@@ -506,7 +506,7 @@ export default function TimesheetDetailPage({
                     />
                   )}
                 </div>
-                <div className="flex justify-between mt-0.5 text-[10px] text-slate-400">
+                <div className="flex justify-between mt-0.5 text-[10px] text-[var(--cs-text-muted)]">
                   <span>Attendance rate</span>
                   <span>
                     {staffShifts.length > 0
@@ -519,8 +519,8 @@ export default function TimesheetDetailPage({
           </Card>
 
           {/* Quick links */}
-          <div className="rounded-2xl border border-slate-100 bg-slate-50 p-4 space-y-2">
-            <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-2">Related</p>
+          <div className="rounded-2xl border border-[var(--cs-border-subtle)] bg-slate-50 p-4 space-y-2">
+            <p className="text-[10px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-2">Related</p>
             {[
               { label: "Staff profile", href: `/staff/${staff.id}` },
               { label: "Rota", href: "/rota" },
@@ -530,10 +530,10 @@ export default function TimesheetDetailPage({
               <button
                 key={href}
                 onClick={() => router.push(href)}
-                className="w-full text-left flex items-center justify-between rounded-lg hover:bg-white hover:shadow-sm px-3 py-2 text-xs text-slate-600 transition-all"
+                className="w-full text-left flex items-center justify-between rounded-lg hover:bg-white hover:shadow-sm px-3 py-2 text-xs text-[var(--cs-text-secondary)] transition-all"
               >
                 {label}
-                <ArrowRight className="h-3 w-3 text-slate-400" />
+                <ArrowRight className="h-3 w-3 text-[var(--cs-text-muted)]" />
               </button>
             ))}
           </div>

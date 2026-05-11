@@ -32,7 +32,7 @@ const STATUS_OPTIONS: {
   { value: "paused",       label: "Paused",       color: "border-amber-400 text-amber-700 bg-amber-50"        },
   { value: "under_review", label: "Under Review", color: "border-violet-400 text-violet-700 bg-violet-50"     },
   { value: "completed",    label: "Completed",    color: "border-blue-400 text-blue-700 bg-blue-50"           },
-  { value: "stopped",      label: "Stopped",      color: "border-slate-400 text-slate-600 bg-slate-50"        },
+  { value: "stopped",      label: "Stopped",      color: "border-slate-400 text-[var(--cs-text-secondary)] bg-slate-50"        },
 ];
 
 // ── Outcome options ───────────────────────────────────────────────────────────
@@ -45,8 +45,8 @@ const OUTCOME_OPTIONS: {
   { value: "working",           label: "Working",           color: "border-emerald-400 text-emerald-700 bg-emerald-50" },
   { value: "partially_working", label: "Partially Working", color: "border-amber-400 text-amber-700 bg-amber-50"       },
   { value: "not_working",       label: "Not Working",       color: "border-red-400 text-red-700 bg-red-50"             },
-  { value: "too_early",         label: "Too Early to Tell", color: "border-slate-300 text-slate-500 bg-slate-50"       },
-  { value: "unknown",           label: "Unknown",           color: "border-slate-200 text-slate-400 bg-white"          },
+  { value: "too_early",         label: "Too Early to Tell", color: "border-slate-300 text-[var(--cs-text-muted)] bg-slate-50"       },
+  { value: "unknown",           label: "Unknown",           color: "border-[var(--cs-border)] text-[var(--cs-text-muted)] bg-white"          },
 ];
 
 // ── Component ─────────────────────────────────────────────────────────────────
@@ -102,7 +102,7 @@ export function InterventionUpdateModal({
     <Dialog.Root open={open} onOpenChange={handleOpenChange}>
       <Dialog.Trigger asChild>
         {trigger ?? (
-          <Button size="sm" variant="ghost" className="h-7 text-xs gap-1 text-slate-500 hover:text-slate-700">
+          <Button size="sm" variant="ghost" className="h-7 text-xs gap-1 text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)]">
             <Pencil className="h-3 w-3" />
             Update
           </Button>
@@ -111,20 +111,20 @@ export function InterventionUpdateModal({
 
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm animate-in fade-in" />
-        <Dialog.Content className="fixed left-1/2 top-1/2 z-50 w-full max-w-lg -translate-x-1/2 -translate-y-1/2 max-h-[90vh] overflow-y-auto rounded-2xl bg-white shadow-2xl focus:outline-none animate-in slide-in-from-bottom-4">
+        <Dialog.Content className="fixed left-1/2 top-1/2 z-50 w-full max-w-lg -translate-x-1/2 -translate-y-1/2 max-h-[90vh] overflow-y-auto rounded-2xl bg-white shadow-[var(--cs-shadow-elevated)] focus:outline-none animate-in slide-in-from-bottom-4">
 
           {/* Header */}
-          <div className="flex items-start justify-between gap-4 border-b border-slate-100 px-6 py-4">
+          <div className="flex items-start justify-between gap-4 border-b border-[var(--cs-border-subtle)] px-6 py-4">
             <div className="min-w-0 flex-1">
-              <Dialog.Title className="text-base font-bold text-slate-900">
+              <Dialog.Title className="text-base font-bold text-[var(--cs-navy)]">
                 Update Intervention
               </Dialog.Title>
-              <Dialog.Description className="text-xs text-slate-500 mt-0.5 line-clamp-2">
+              <Dialog.Description className="text-xs text-[var(--cs-text-muted)] mt-0.5 line-clamp-2">
                 {intervention.title}
               </Dialog.Description>
             </div>
             <Dialog.Close asChild>
-              <button className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-600 transition-colors shrink-0" aria-label="Close">
+              <button className="rounded-lg p-1.5 text-[var(--cs-text-muted)] hover:bg-[var(--cs-surface)] hover:text-[var(--cs-text-secondary)] transition-colors shrink-0" aria-label="Close">
                 <X className="h-4 w-4" />
               </button>
             </Dialog.Close>
@@ -133,14 +133,14 @@ export function InterventionUpdateModal({
           {success ? (
             <div className="flex flex-col items-center gap-3 py-12 px-6">
               <CheckCircle2 className="h-12 w-12 text-emerald-500" />
-              <p className="text-sm font-bold text-slate-800">Intervention updated</p>
+              <p className="text-sm font-bold text-[var(--cs-navy)]">Intervention updated</p>
             </div>
           ) : (
             <div className="space-y-5 px-6 py-5">
 
               {/* Status */}
               <div>
-                <label className="block text-[11px] font-semibold text-slate-600 uppercase tracking-wider mb-2">
+                <label className="block text-[11px] font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wider mb-2">
                   Status
                 </label>
                 <div className="flex flex-wrap gap-2">
@@ -153,7 +153,7 @@ export function InterventionUpdateModal({
                         "px-3 py-1.5 rounded-full border text-xs font-semibold transition-all",
                         status === opt.value
                           ? opt.color + " ring-2 ring-offset-1 ring-current"
-                          : "border-slate-200 text-slate-400 hover:border-slate-300"
+                          : "border-[var(--cs-border)] text-[var(--cs-text-muted)] hover:border-slate-300"
                       )}
                     >
                       {opt.label}
@@ -164,7 +164,7 @@ export function InterventionUpdateModal({
 
               {/* Outcome */}
               <div>
-                <label className="block text-[11px] font-semibold text-slate-600 uppercase tracking-wider mb-2">
+                <label className="block text-[11px] font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wider mb-2">
                   Is it working?
                 </label>
                 <div className="flex flex-wrap gap-2">
@@ -177,7 +177,7 @@ export function InterventionUpdateModal({
                         "px-3 py-1.5 rounded-full border text-xs font-semibold transition-all",
                         outcome === opt.value
                           ? opt.color + " ring-2 ring-offset-1 ring-current"
-                          : "border-slate-200 text-slate-400 hover:border-slate-300"
+                          : "border-[var(--cs-border)] text-[var(--cs-text-muted)] hover:border-slate-300"
                       )}
                     >
                       {opt.label}
@@ -188,9 +188,9 @@ export function InterventionUpdateModal({
 
               {/* Outcome notes */}
               <div>
-                <label className="block text-[11px] font-semibold text-slate-600 uppercase tracking-wider mb-1.5">
+                <label className="block text-[11px] font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wider mb-1.5">
                   Outcome notes
-                  <span className="ml-1.5 text-[9px] font-normal normal-case text-slate-400">(optional)</span>
+                  <span className="ml-1.5 text-[9px] font-normal normal-case text-[var(--cs-text-muted)]">(optional)</span>
                 </label>
                 <div className="relative">
                   <textarea
@@ -198,7 +198,7 @@ export function InterventionUpdateModal({
                     onChange={(e) => setOutcomeNotes(e.target.value)}
                     rows={3}
                     placeholder="What evidence do you have? What has changed for this young person?"
-                    className="w-full resize-none rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 pr-10 text-xs text-slate-800 placeholder:text-slate-400 focus:border-violet-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-violet-100 transition-colors"
+                    className="w-full resize-none rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2.5 pr-10 text-xs text-[var(--cs-navy)] placeholder:text-[var(--cs-text-muted)] focus:border-violet-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-violet-100 transition-colors"
                   />
                   <div className="absolute right-2 top-2">
                     <DictationButton
@@ -214,15 +214,15 @@ export function InterventionUpdateModal({
 
               {/* Review date */}
               <div>
-                <label className="block text-[11px] font-semibold text-slate-600 uppercase tracking-wider mb-1.5">
+                <label className="block text-[11px] font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wider mb-1.5">
                   Next review date
-                  <span className="ml-1.5 text-[9px] font-normal normal-case text-slate-400">(optional)</span>
+                  <span className="ml-1.5 text-[9px] font-normal normal-case text-[var(--cs-text-muted)]">(optional)</span>
                 </label>
                 <input
                   type="date"
                   value={reviewDate}
                   onChange={(e) => setReviewDate(e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-xs text-slate-800 focus:border-violet-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-violet-100 transition-colors"
+                  className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2.5 text-xs text-[var(--cs-navy)] focus:border-violet-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-violet-100 transition-colors"
                 />
               </div>
 

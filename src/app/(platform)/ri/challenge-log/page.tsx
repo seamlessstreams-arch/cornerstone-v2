@@ -118,7 +118,7 @@ function ChallengeCard({ log, onRespond }: { log: RiChallengeLog; onRespond: (lo
   };
 
   return (
-    <Card className={cn("border", log.escalation_level === "critical" || log.escalation_level === "formal" ? "border-red-200" : "border-slate-100")}>
+    <Card className={cn("border", log.escalation_level === "critical" || log.escalation_level === "formal" ? "border-red-200" : "border-[var(--cs-border-subtle)]")}>
       <CardContent className="p-4 space-y-3">
         <div className="flex items-start gap-3">
           <div className={cn("flex h-8 w-8 shrink-0 items-center justify-center rounded-lg", log.escalation_level === "critical" ? "bg-red-100" : log.escalation_level === "formal" ? "bg-red-100" : "bg-amber-100")}>
@@ -126,7 +126,7 @@ function ChallengeCard({ log, onRespond }: { log: RiChallengeLog; onRespond: (lo
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-start gap-2 justify-between">
-              <p className="text-sm font-semibold text-slate-900">{log.title}</p>
+              <p className="text-sm font-semibold text-[var(--cs-navy)]">{log.title}</p>
               <div className="flex items-center gap-1.5 shrink-0">
                 <Badge className={cn("text-[10px] h-4 px-1.5", STATUS_COLOURS[log.status] ?? "")}>
                   {log.status.replace("_", " ")}
@@ -138,47 +138,47 @@ function ChallengeCard({ log, onRespond }: { log: RiChallengeLog; onRespond: (lo
             </div>
             <div className="flex items-center gap-3 mt-1">
               <Badge variant="outline" className="text-[10px] h-4 px-1.5">{AREA_LABELS[log.challenge_area]}</Badge>
-              <span className="text-[10px] text-slate-400">{formatDate(log.created_at)}</span>
+              <span className="text-[10px] text-[var(--cs-text-muted)]">{formatDate(log.created_at)}</span>
               {log.action_due_date && (
-                <span className="text-[10px] text-slate-400 flex items-center gap-0.5">
+                <span className="text-[10px] text-[var(--cs-text-muted)] flex items-center gap-0.5">
                   <Clock className="h-2.5 w-2.5" />
                   Due {formatDate(log.action_due_date)}
                 </span>
               )}
             </div>
           </div>
-          <button onClick={() => setExpanded((p) => !p)} className="text-slate-400 hover:text-slate-600 shrink-0 mt-1">
+          <button onClick={() => setExpanded((p) => !p)} className="text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] shrink-0 mt-1">
             {expanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
           </button>
         </div>
 
         {expanded && (
-          <div className="space-y-3 pt-2 border-t border-slate-100">
+          <div className="space-y-3 pt-2 border-t border-[var(--cs-border-subtle)]">
             <div>
-              <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide mb-1">Evidence Summary</p>
-              <p className="text-sm text-slate-700 leading-relaxed">{log.evidence_summary}</p>
+              <p className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-1">Evidence Summary</p>
+              <p className="text-sm text-[var(--cs-text-secondary)] leading-relaxed">{log.evidence_summary}</p>
             </div>
             <div>
-              <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide mb-1">Challenge to Manager</p>
+              <p className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-1">Challenge to Manager</p>
               <div className="rounded-lg bg-amber-50 border border-amber-100 p-3">
                 <p className="text-sm text-amber-900 leading-relaxed whitespace-pre-wrap">{log.challenge_text}</p>
               </div>
             </div>
             {log.manager_response && (
               <div>
-                <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide mb-1">Manager Response</p>
+                <p className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-1">Manager Response</p>
                 <div className="rounded-lg bg-blue-50 border border-blue-100 p-3">
                   <p className="text-sm text-blue-900 leading-relaxed whitespace-pre-wrap">{log.manager_response}</p>
                 </div>
                 {log.manager_responded_at && (
-                  <p className="text-[10px] text-slate-400 mt-1">Responded {formatDate(log.manager_responded_at)}</p>
+                  <p className="text-[10px] text-[var(--cs-text-muted)] mt-1">Responded {formatDate(log.manager_responded_at)}</p>
                 )}
               </div>
             )}
             {log.action_required && (
               <div>
-                <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide mb-1">Action Required</p>
-                <p className="text-sm text-slate-700">{log.action_required}</p>
+                <p className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-1">Action Required</p>
+                <p className="text-sm text-[var(--cs-text-secondary)]">{log.action_required}</p>
               </div>
             )}
             <div className="flex gap-2 flex-wrap pt-1 items-center">
@@ -290,12 +290,12 @@ function NewChallengeDialog({ open, onClose }: { open: boolean; onClose: () => v
         </DialogHeader>
         <div className="space-y-4">
           <div>
-            <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Challenge Title</label>
+            <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Challenge Title</label>
             <Input className="mt-1" placeholder="e.g. Inadequate oversight of medication refusals" value={title} onChange={(e) => setTitle(e.target.value)} />
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Area</label>
+              <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Area</label>
               <Select value={area} onValueChange={(v) => setArea(v as RiChallengeArea)}>
                 <SelectTrigger className="mt-1"><SelectValue /></SelectTrigger>
                 <SelectContent>
@@ -306,7 +306,7 @@ function NewChallengeDialog({ open, onClose }: { open: boolean; onClose: () => v
               </Select>
             </div>
             <div>
-              <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Escalation</label>
+              <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Escalation</label>
               <Select value={escalation} onValueChange={(v) => setEscalation(v as RiEscalationLevel)}>
                 <SelectTrigger className="mt-1"><SelectValue /></SelectTrigger>
                 <SelectContent>
@@ -319,12 +319,12 @@ function NewChallengeDialog({ open, onClose }: { open: boolean; onClose: () => v
             </div>
           </div>
           <div>
-            <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Evidence Summary</label>
+            <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Evidence Summary</label>
             <Textarea className="mt-1 text-sm" rows={3} placeholder="Summarise the evidence or data that underpins this challenge…" value={evidence} onChange={(e) => setEvidence(e.target.value)} />
           </div>
           <div>
             <div className="flex items-center justify-between mb-1">
-              <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Challenge to Manager</label>
+              <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Challenge to Manager</label>
               <Button size="sm" variant="ghost" className="h-6 text-xs text-violet-600 gap-1 px-2" onClick={draftWithAria} disabled={ariaDrafting || !evidence.trim()}>
                 <Sparkles className="h-3 w-3" />
                 {ariaDrafting ? "Drafting…" : "ARIA Draft"}
@@ -333,7 +333,7 @@ function NewChallengeDialog({ open, onClose }: { open: boolean; onClose: () => v
             <Textarea className="mt-0 text-sm" rows={5} placeholder="Write the formal challenge question or statement for the manager…" value={challenge} onChange={(e) => setChallenge(e.target.value)} />
           </div>
           <div>
-            <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Action Required</label>
+            <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Action Required</label>
             <Input className="mt-1" placeholder="e.g. Provide written action plan within 7 days" value={actionRequired} onChange={(e) => setActionRequired(e.target.value)} />
           </div>
         </div>
@@ -384,11 +384,11 @@ function ResponseDialog({ log, onClose }: { log: RiChallengeLog; onClose: () => 
             <p className="text-sm text-amber-900 line-clamp-3">{log.challenge_text}</p>
           </div>
           <div>
-            <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Manager Response</label>
+            <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Manager Response</label>
             <Textarea className="mt-1 text-sm" rows={4} value={response} onChange={(e) => setResponse(e.target.value)} placeholder="Record what the manager said or provided in response…" />
           </div>
           <div>
-            <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Action Agreed</label>
+            <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Action Agreed</label>
             <Input className="mt-1" value={action} onChange={(e) => setAction(e.target.value)} placeholder="What action did the manager commit to?" />
           </div>
         </div>
@@ -486,12 +486,12 @@ export default function ChallengeLogPage() {
         <div className="grid gap-3 sm:grid-cols-3">
           {[
             { label: "Open / Pending", value: openCount, colour: openCount > 0 ? "text-amber-700" : "text-emerald-700" },
-            { label: "Total Challenges", value: logs.length, colour: "text-slate-700" },
+            { label: "Total Challenges", value: logs.length, colour: "text-[var(--cs-text-secondary)]" },
             { label: "Resolved", value: logs.filter((l) => l.status === "resolved").length, colour: "text-emerald-700" },
           ].map(({ label, value, colour }) => (
-            <div key={label} className="rounded-xl border border-slate-100 bg-white p-4 text-center">
+            <div key={label} className="rounded-xl border border-[var(--cs-border-subtle)] bg-white p-4 text-center">
               <div className={cn("text-2xl font-bold tabular-nums", colour)}>{value}</div>
-              <div className="text-xs text-slate-500 mt-0.5">{label}</div>
+              <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">{label}</div>
             </div>
           ))}
         </div>
@@ -499,7 +499,7 @@ export default function ChallengeLogPage() {
         {/* Search + Filters */}
         <div className="flex items-center gap-3 flex-wrap">
           <div className="relative flex-1 min-w-[200px] max-w-sm">
-            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
             <Input
               placeholder="Search challenges, evidence, responses…"
               value={search}
@@ -507,7 +507,7 @@ export default function ChallengeLogPage() {
               className="pl-8 h-8 text-xs rounded-lg"
             />
           </div>
-          <div className="flex items-center gap-1.5 text-xs text-slate-500 shrink-0">
+          <div className="flex items-center gap-1.5 text-xs text-[var(--cs-text-muted)] shrink-0">
             <ArrowUpDown className="h-3.5 w-3.5" />
             <select value={sortBy} onChange={(e) => setSortBy(e.target.value as typeof sortBy)} className="bg-white border rounded-md px-2 py-1.5 text-xs">
               <option value="date">Newest first</option>
@@ -521,23 +521,23 @@ export default function ChallengeLogPage() {
               <button
                 key={f}
                 onClick={() => setStatusFilter(f)}
-                className={cn("rounded-full px-3 py-1 text-xs font-medium transition-colors", statusFilter === f ? "bg-slate-900 text-white" : "bg-slate-100 text-slate-600 hover:bg-slate-200")}
+                className={cn("rounded-full px-3 py-1 text-xs font-medium transition-colors", statusFilter === f ? "bg-slate-900 text-white" : "bg-slate-100 text-[var(--cs-text-secondary)] hover:bg-slate-200")}
               >
                 {f === "all" ? "All" : f === "open" ? "Open / Active" : "Resolved"}
               </button>
             ))}
           </div>
           {(search || statusFilter !== "all") && (
-            <span className="text-xs text-slate-400">{filtered.length} result{filtered.length !== 1 ? "s" : ""}</span>
+            <span className="text-xs text-[var(--cs-text-muted)]">{filtered.length} result{filtered.length !== 1 ? "s" : ""}</span>
           )}
         </div>
 
         {/* List */}
         {isLoading ? (
-          <div className="text-center text-sm text-slate-500 py-12">Loading challenges…</div>
+          <div className="text-center text-sm text-[var(--cs-text-muted)] py-12">Loading challenges…</div>
         ) : filtered.length === 0 ? (
-          <div className="text-center py-16 text-slate-500">
-            <Gavel className="h-10 w-10 text-slate-300 mx-auto mb-3" />
+          <div className="text-center py-16 text-[var(--cs-text-muted)]">
+            <Gavel className="h-10 w-10 text-[var(--cs-text-gentle)] mx-auto mb-3" />
             <p className="text-sm font-medium">{statusFilter === "all" ? "No challenges recorded yet" : `No ${statusFilter} challenges`}</p>
             <p className="text-xs mt-1">RI challenges provide a formal evidence trail of governance oversight</p>
             <Button size="sm" className="mt-4 gap-1" onClick={() => setShowNew(true)}>

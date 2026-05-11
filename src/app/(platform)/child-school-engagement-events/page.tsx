@@ -37,7 +37,7 @@ const EVENT_COLOURS: Record<string, string> = {
   leavers_assembly: "bg-rose-100 text-rose-800",
   prom: "bg-pink-100 text-pink-800",
   open_evening: "bg-blue-100 text-blue-800",
-  pep_attendance: "bg-slate-100 text-slate-800",
+  pep_attendance: "bg-slate-100 text-[var(--cs-navy)]",
   subject_taster_fair: "bg-cyan-100 text-cyan-800",
 };
 

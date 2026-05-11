@@ -53,16 +53,16 @@ function TrainingRow({ staff }: { staff: StaffEnriched }) {
   return (
     <Link
       href={`/staff/${staff.id}`}
-      className="flex items-center gap-3 rounded-xl px-3 py-2.5 hover:bg-slate-50 transition-colors group"
+      className="flex items-center gap-3 rounded-xl px-3 py-2.5 hover:bg-[var(--cs-surface)] transition-colors group"
     >
       <Avatar name={staff.full_name} size="sm" />
       <div className="flex-1 min-w-0">
-        <div className="text-sm font-medium text-slate-900 truncate">
+        <div className="text-sm font-medium text-[var(--cs-navy)] truncate">
           {staff.full_name}
         </div>
         <div className="flex items-center gap-2 mt-0.5">
-          <span className="text-[10px] text-slate-400 truncate">{staff.job_title}</span>
-          <div className="flex items-center gap-1 text-[10px] text-slate-400">
+          <span className="text-[10px] text-[var(--cs-text-muted)] truncate">{staff.job_title}</span>
+          <div className="flex items-center gap-1 text-[10px] text-[var(--cs-text-muted)]">
             <span className="text-emerald-600 font-medium">{compliant}</span>
             {expired > 0 && <span className="text-red-600 font-medium">/{expired} exp</span>}
             {expiring > 0 && <span className="text-amber-600 font-medium">/{expiring} soon</span>}
@@ -83,7 +83,7 @@ function TrainingRow({ staff }: { staff: StaffEnriched }) {
         <StatusIcon className="h-3 w-3" />
         {statusLabel}
       </Badge>
-      <ChevronRight className="h-3.5 w-3.5 text-slate-300 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
+      <ChevronRight className="h-3.5 w-3.5 text-[var(--cs-text-gentle)] shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
     </Link>
   );
 }
@@ -144,7 +144,7 @@ export function TrainingComplianceCard() {
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-center py-8">
-            <Loader2 className="h-5 w-5 animate-spin text-slate-400" />
+            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
           </div>
         </CardContent>
       </Card>
@@ -183,9 +183,9 @@ export function TrainingComplianceCard() {
       </CardHeader>
       <CardContent className="pt-0">
         {/* Team compliance summary */}
-        <div className="rounded-xl bg-slate-50 border border-slate-100 p-3 mb-3">
+        <div className="rounded-xl bg-slate-50 border border-[var(--cs-border-subtle)] p-3 mb-3">
           <div className="flex items-center justify-between mb-1.5">
-            <span className="text-[11px] font-medium text-slate-500">Team Compliance Rate</span>
+            <span className="text-[11px] font-medium text-[var(--cs-text-muted)]">Team Compliance Rate</span>
             <span className={cn(
               "text-sm font-bold tabular-nums",
               teamStats.rate >= 90 ? "text-emerald-600" :
@@ -199,7 +199,7 @@ export function TrainingComplianceCard() {
             className="h-2"
             color={teamStats.rate >= 90 ? "bg-emerald-500" : teamStats.rate >= 70 ? "bg-amber-500" : "bg-red-500"}
           />
-          <div className="flex items-center justify-between mt-1.5 text-[10px] text-slate-400">
+          <div className="flex items-center justify-between mt-1.5 text-[10px] text-[var(--cs-text-muted)]">
             <span>{teamStats.compliantItems} current</span>
             {teamStats.expiringItems > 0 && (
               <span className="text-amber-600">{teamStats.expiringItems} expiring</span>

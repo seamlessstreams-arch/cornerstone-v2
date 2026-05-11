@@ -55,7 +55,7 @@ const STATUS_COLOUR: Record<QualificationStatus | "unknown", string> = {
   not_started: "text-red-500",
   expired:     "text-red-600",
   exempt:      "text-blue-500",
-  unknown:     "text-slate-400",
+  unknown:     "text-[var(--cs-text-muted)]",
 };
 
 const STATUS_CELL: Record<QualificationStatus | "unknown", string> = {
@@ -64,7 +64,7 @@ const STATUS_CELL: Record<QualificationStatus | "unknown", string> = {
   not_started: "bg-red-50 border-red-200",
   expired:     "bg-red-100 border-red-300",
   exempt:      "bg-blue-50 border-blue-200",
-  unknown:     "bg-slate-50 border-slate-200",
+  unknown:     "bg-slate-50 border-[var(--cs-border)]",
 };
 
 const STATUS_LABEL: Record<QualificationStatus | "unknown", string> = {
@@ -104,7 +104,7 @@ function CategoryCompliance({
           const pct = staffList.length > 0 ? Math.round((compliant / staffList.length) * 100) : 0;
           return (
             <div key={cat.key} className="flex items-center gap-2">
-              <p className="text-[10px] text-slate-500 w-20 truncate shrink-0">{cat.label}</p>
+              <p className="text-[10px] text-[var(--cs-text-muted)] w-20 truncate shrink-0">{cat.label}</p>
               <div className="flex-1 h-2 rounded-full bg-slate-100 overflow-hidden">
                 <div
                   className={cn(
@@ -162,7 +162,7 @@ function StaffCompliance({
       <CardContent className="pt-0 space-y-2">
         {ranked.map((s) => (
           <div key={s.id} className="flex items-center gap-2">
-            <p className="text-[10px] text-slate-600 w-16 truncate shrink-0 font-medium">
+            <p className="text-[10px] text-[var(--cs-text-secondary)] w-16 truncate shrink-0 font-medium">
               {s.name.split(" ")[0]}
             </p>
             <div className="flex-1 h-2 rounded-full bg-slate-100 overflow-hidden">
@@ -337,7 +337,7 @@ export default function TrainingMatrixPage() {
           <PrintButton title="Training Compliance Matrix" subtitle="Oak House Workforce" targetId="training-matrix-content" />
           <SmartUploadButton variant="inline" label="Upload Certificate" uploadContext="Workforce Intelligence — training certificate or compliance evidence upload" />
           <Link href="/workforce/qualifications">
-            <button className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50 transition-colors">
+            <button className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--cs-border)] bg-white px-3 py-1.5 text-xs font-medium text-[var(--cs-text-secondary)] hover:bg-[var(--cs-surface)] transition-colors">
               <GraduationCap className="h-3.5 w-3.5" />
               Qualifications
             </button>
@@ -367,9 +367,9 @@ export default function TrainingMatrixPage() {
             {
               label: "Expiring <90d",
               value: expiringCount,
-              colour: expiringCount > 0 ? "text-amber-700" : "text-slate-400",
+              colour: expiringCount > 0 ? "text-amber-700" : "text-[var(--cs-text-muted)]",
               bg: expiringCount > 0 ? "border-amber-200 bg-amber-50" : "",
-              icon: <CalendarClock className={cn("h-4 w-4", expiringCount > 0 ? "text-amber-500" : "text-slate-300")} />,
+              icon: <CalendarClock className={cn("h-4 w-4", expiringCount > 0 ? "text-amber-500" : "text-[var(--cs-text-gentle)]")} />,
             },
             {
               label: "Fully Compliant",
@@ -384,10 +384,10 @@ export default function TrainingMatrixPage() {
               icon: <GraduationCap className="h-4 w-4 text-indigo-500" />,
             },
           ].map(({ label, value, colour, bg, icon }) => (
-            <div key={label} className={cn("rounded-xl border border-slate-100 bg-white p-3 text-center", bg)}>
+            <div key={label} className={cn("rounded-xl border border-[var(--cs-border-subtle)] bg-white p-3 text-center", bg)}>
               <div className="flex justify-center mb-1">{icon}</div>
               <div className={cn("text-xl font-bold tabular-nums", colour)}>{value}</div>
-              <div className="text-[10px] text-slate-500 mt-0.5">{label}</div>
+              <div className="text-[10px] text-[var(--cs-text-muted)] mt-0.5">{label}</div>
             </div>
           ))}
         </div>
@@ -406,7 +406,7 @@ export default function TrainingMatrixPage() {
             <p className={cn("text-sm font-bold", teamGaps > 0 ? "text-red-700" : "text-emerald-700")}>
               {teamGaps > 0 ? `${teamGaps} mandatory training gaps across the team` : "All mandatory training compliant"}
             </p>
-            <span className="text-[11px] text-slate-400 ml-auto">{compliantSlots}/{totalMandatorySlots} slots filled</span>
+            <span className="text-[11px] text-[var(--cs-text-muted)] ml-auto">{compliantSlots}/{totalMandatorySlots} slots filled</span>
           </div>
           <div className="h-2 rounded-full bg-white/60 overflow-hidden">
             <div
@@ -434,7 +434,7 @@ export default function TrainingMatrixPage() {
         {/* ── Filter Bar ──────────────────────────────────────────────────── */}
         <div className="flex items-center gap-2 flex-wrap">
           <div className="relative flex-1 min-w-[180px] max-w-sm">
-            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
             <Input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -448,14 +448,14 @@ export default function TrainingMatrixPage() {
               "inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-[10px] font-medium border transition-all",
               filterMode === "gaps_only"
                 ? "bg-red-100 text-red-700 border-red-200"
-                : "bg-white text-slate-500 border-slate-200 hover:border-red-200",
+                : "bg-white text-[var(--cs-text-muted)] border-[var(--cs-border)] hover:border-red-200",
             )}
           >
             <Filter className="h-3 w-3" />
             {filterMode === "gaps_only" ? "Showing gaps only" : "Show gaps only"}
             {filterMode === "gaps_only" && <X className="h-3 w-3 ml-0.5" />}
           </button>
-          <span className="text-[11px] text-slate-400 ml-auto">
+          <span className="text-[11px] text-[var(--cs-text-muted)] ml-auto">
             {filteredStaff.length} staff shown
           </span>
         </div>
@@ -469,31 +469,31 @@ export default function TrainingMatrixPage() {
                 <div className={cn("w-6 h-6 rounded-md border flex items-center justify-center", STATUS_CELL[s])}>
                   <Icon className={cn("h-3.5 w-3.5", STATUS_COLOUR[s])} />
                 </div>
-                <span className="text-slate-600">{STATUS_LABEL[s]}</span>
+                <span className="text-[var(--cs-text-secondary)]">{STATUS_LABEL[s]}</span>
               </div>
             );
           })}
         </div>
 
         {/* ── Matrix Table ────────────────────────────────────────────────── */}
-        <div className="rounded-2xl border border-slate-200 bg-white overflow-hidden">
+        <div className="rounded-2xl border border-[var(--cs-border)] bg-white overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-slate-100 bg-slate-50">
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 min-w-[160px] sticky left-0 bg-slate-50 z-10">
+                <tr className="border-b border-[var(--cs-border-subtle)] bg-slate-50">
+                  <th className="text-left px-4 py-3 text-xs font-semibold text-[var(--cs-text-muted)] min-w-[160px] sticky left-0 bg-slate-50 z-10">
                     Staff Member
                   </th>
                   {TRAINING_CATEGORIES.map((cat) => (
                     <th key={cat.key} className="px-2 py-3 text-center min-w-[72px]">
-                      <div className="text-[10px] font-semibold text-slate-500 leading-tight">{cat.short}</div>
+                      <div className="text-[10px] font-semibold text-[var(--cs-text-muted)] leading-tight">{cat.short}</div>
                       {cat.mandatory && (
                         <div className="text-[8px] text-rose-500 font-semibold uppercase">Req</div>
                       )}
                     </th>
                   ))}
                   <th className="px-3 py-3 text-center min-w-[60px]">
-                    <div className="text-[10px] font-semibold text-slate-500">Score</div>
+                    <div className="text-[10px] font-semibold text-[var(--cs-text-muted)]">Score</div>
                   </th>
                 </tr>
               </thead>
@@ -507,7 +507,7 @@ export default function TrainingMatrixPage() {
                     ? Math.round((compliant / mandatoryCategories.length) * 100)
                     : 0;
                   return (
-                    <tr key={member.id} className="hover:bg-slate-50/50 transition-colors">
+                    <tr key={member.id} className="hover:bg-[var(--cs-surface)]/50 transition-colors">
                       <td className="px-4 py-2.5 sticky left-0 bg-white z-10">
                         <Link
                           href={`/workforce/staff/${member.id}`}
@@ -517,8 +517,8 @@ export default function TrainingMatrixPage() {
                             {member.full_name.split(" ").map((n: string) => n[0]).join("").slice(0, 2)}
                           </div>
                           <div>
-                            <p className="text-xs font-semibold text-slate-800">{member.full_name}</p>
-                            <p className="text-[9px] text-slate-400">{member.job_title}</p>
+                            <p className="text-xs font-semibold text-[var(--cs-navy)]">{member.full_name}</p>
+                            <p className="text-[9px] text-[var(--cs-text-muted)]">{member.job_title}</p>
                           </div>
                         </Link>
                       </td>
@@ -563,8 +563,8 @@ export default function TrainingMatrixPage() {
         </div>
 
         {/* ── Regulatory Footer ───────────────────────────────────────────── */}
-        <div className="rounded-xl border border-slate-100 bg-slate-50 px-4 py-3 text-xs text-slate-500">
-          <span className="font-semibold text-slate-600">Regulatory Basis — </span>
+        <div className="rounded-xl border border-[var(--cs-border-subtle)] bg-slate-50 px-4 py-3 text-xs text-[var(--cs-text-muted)]">
+          <span className="font-semibold text-[var(--cs-text-secondary)]">Regulatory Basis — </span>
           Children&apos;s Homes Regulations 2015: Reg 32 (staff qualifications), Reg 33 (induction training),
           Reg 34 (ongoing training). Training matrix is evidence for Reg 44/45 and ILACS inspection — mandatory
           training gaps are a regulatory risk.

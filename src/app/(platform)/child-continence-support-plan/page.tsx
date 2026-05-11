@@ -306,10 +306,10 @@ export default function ChildContinenceSupportPlanPage() {
                         </ul>
                       </div>
                       <div className="rounded p-2 border border-slate-300 bg-slate-50">
-                        <p className="text-xs font-semibold text-slate-900 mb-1">Staff DO NOT</p>
+                        <p className="text-xs font-semibold text-[var(--cs-navy)] mb-1">Staff DO NOT</p>
                         <ul className="space-y-0.5">
                           {r.staff_do_not_strategies.map((s, i) => (
-                            <li key={i} className="text-xs text-slate-800">• {s}</li>
+                            <li key={i} className="text-xs text-[var(--cs-navy)]">• {s}</li>
                           ))}
                         </ul>
                       </div>

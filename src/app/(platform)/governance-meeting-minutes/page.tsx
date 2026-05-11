@@ -371,13 +371,13 @@ export default function GovernanceMeetingMinutesPage() {
                   {/* regulatory topics & risk items */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <p className="text-sm font-medium text-slate-700 mb-2 flex items-center gap-1">
+                      <p className="text-sm font-medium text-[var(--cs-text-secondary)] mb-2 flex items-center gap-1">
                         <Shield className="h-4 w-4" /> Regulatory Topics
                       </p>
                       <ul className="space-y-1">
                         {meeting.regulatory_topics.map((topic, i) => (
                           <li key={i} className="text-sm text-muted-foreground flex items-start gap-2">
-                            <span className="text-slate-400 mt-1.5">•</span> {topic}
+                            <span className="text-[var(--cs-text-muted)] mt-1.5">•</span> {topic}
                           </li>
                         ))}
                       </ul>
@@ -417,9 +417,9 @@ export default function GovernanceMeetingMinutesPage() {
       </div>
 
       {/* ─── regulatory note ─── */}
-      <div className="mt-8 bg-slate-50 border border-slate-200 rounded-lg p-4">
-        <p className="text-sm font-medium text-slate-700 mb-1">Regulatory Context</p>
-        <p className="text-xs text-slate-600">
+      <div className="mt-8 bg-slate-50 border border-[var(--cs-border)] rounded-lg p-4">
+        <p className="text-sm font-medium text-[var(--cs-text-secondary)] mb-1">Regulatory Context</p>
+        <p className="text-xs text-[var(--cs-text-secondary)]">
           Regulation 45 requires the registered person to review the quality of care provided at least
           every six months and produce a written report. Quality Standard 25 requires that governance
           and accountability arrangements are effective and ensure the home operates in line with its

@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo } from "react";
 import { PageShell } from "@/components/layout/page-shell";
+import { PageGuidance } from "@/components/ui/page-guidance";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -30,7 +31,7 @@ const SHIFT_COLORS: Record<string, string> = {
   waking_night: "bg-violet-100 text-violet-800 border-violet-200",
   short: "bg-sky-100 text-sky-800 border-sky-200",
   handover: "bg-amber-100 text-amber-800 border-amber-200",
-  on_call: "bg-slate-100 text-slate-700 border-slate-200",
+  on_call: "bg-slate-100 text-[var(--cs-text-secondary)] border-[var(--cs-border)]",
   training_day: "bg-blue-100 text-blue-800 border-blue-200",
 };
 
@@ -292,19 +293,26 @@ export default function RotaPage() {
       }
     >
       <div id="rota-content" className="space-y-6 animate-fade-in">
+        <PageGuidance
+          title="Staff rota & scheduling"
+          description="Weekly shift planner with gap detection. Open shifts are highlighted in amber and must be filled to maintain safe staffing ratios at all times."
+          evidenceTip="Reg 40 requires adequate staffing. Document your rationale when running below planned levels — inspectors need to see risk was managed."
+          ariaTip="ARIA can analyse shift patterns to identify fatigue risks and suggest optimal rota configurations based on children's needs."
+          regulationRef="Children's Homes Regulations 2015, Reg 40(2)(c) — Staffing of children's homes"
+        />
 
         {/* Today's Summary */}
         <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
           {[
             { label: "On Shift Today",    value: meta?.on_shift_today    ?? "—", color: "text-emerald-600" },
             { label: "Sleep-ins Tonight", value: meta?.sleep_ins_tonight ?? "—", color: "text-indigo-600" },
-            { label: "Open Shifts",       value: meta?.open_shifts       ?? "—", color: meta?.open_shifts ? "text-amber-600" : "text-slate-900", ring: (meta?.open_shifts ?? 0) > 0 },
+            { label: "Open Shifts",       value: meta?.open_shifts       ?? "—", color: meta?.open_shifts ? "text-amber-600" : "text-[var(--cs-navy)]", ring: (meta?.open_shifts ?? 0) > 0 },
             { label: "On Leave",          value: meta?.on_leave_today    ?? "—", color: "text-blue-600" },
             { label: "Late Arrivals",     value: meta?.late_arrivals     ?? "—", color: meta?.late_arrivals ? "text-red-600" : "text-emerald-600" },
           ].map(({ label, value, color, ring }) => (
             <div key={label} className={cn("rounded-2xl border bg-white p-4 text-center", ring && "ring-1 ring-amber-200")}>
               <div className={cn("text-2xl font-bold tabular-nums", color)}>{value}</div>
-              <div className="text-xs text-slate-500">{label}</div>
+              <div className="text-xs text-[var(--cs-text-muted)]">{label}</div>
             </div>
           ))}
         </div>
@@ -320,9 +328,9 @@ export default function RotaPage() {
               {meta!.open_shift_dates.map((s, i) => (
                 <div key={i} className="flex items-center justify-between rounded-xl bg-white px-3 py-2 border border-amber-100">
                   <div className="text-xs">
-                    <span className="font-medium text-slate-900">{formatDate(s.date)}</span>
-                    <span className="text-slate-500 ml-2">{s.start} – {s.end}</span>
-                    <span className="text-slate-400 ml-2">({SHIFT_TYPE_LABELS[s.type as keyof typeof SHIFT_TYPE_LABELS] || s.type})</span>
+                    <span className="font-medium text-[var(--cs-navy)]">{formatDate(s.date)}</span>
+                    <span className="text-[var(--cs-text-muted)] ml-2">{s.start} – {s.end}</span>
+                    <span className="text-[var(--cs-text-muted)] ml-2">({SHIFT_TYPE_LABELS[s.type as keyof typeof SHIFT_TYPE_LABELS] || s.type})</span>
                   </div>
                   <div className="flex gap-1.5">
                     <Button size="sm" variant="outline" className="text-xs h-7" disabled>Offer to Bank</Button>
@@ -346,10 +354,10 @@ export default function RotaPage() {
               {pendingSwaps.map((swap) => (
                 <div key={swap.id} className="flex items-center justify-between rounded-xl bg-white px-3 py-2 border border-indigo-100">
                   <div className="text-xs flex-1">
-                    <span className="font-medium text-slate-900">{seedGetStaffName(swap.requester_id)}</span>
-                    <span className="text-slate-400 mx-1.5">&rarr;</span>
-                    <span className="font-medium text-slate-900">{seedGetStaffName(swap.target_staff_id)}</span>
-                    <span className="text-slate-500 ml-2 truncate max-w-[300px] inline-block align-bottom">{swap.reason}</span>
+                    <span className="font-medium text-[var(--cs-navy)]">{seedGetStaffName(swap.requester_id)}</span>
+                    <span className="text-[var(--cs-text-muted)] mx-1.5">&rarr;</span>
+                    <span className="font-medium text-[var(--cs-navy)]">{seedGetStaffName(swap.target_staff_id)}</span>
+                    <span className="text-[var(--cs-text-muted)] ml-2 truncate max-w-[300px] inline-block align-bottom">{swap.reason}</span>
                   </div>
                   <div className="flex gap-1.5 shrink-0 ml-2">
                     <Button
@@ -376,20 +384,20 @@ export default function RotaPage() {
 
         {/* Shift type breakdown + total hours */}
         {shiftTypeBreakdown.length > 0 && (
-          <div className="rounded-2xl border border-slate-200 bg-white p-4">
+          <div className="rounded-2xl border border-[var(--cs-border)] bg-white p-4">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <BarChart3 className="h-4 w-4 text-indigo-500" />
-                <span className="text-xs font-semibold text-slate-600">Week Shift Distribution</span>
+                <span className="text-xs font-semibold text-[var(--cs-text-secondary)]">Week Shift Distribution</span>
               </div>
-              <div className="flex items-center gap-1.5 text-xs text-slate-500">
+              <div className="flex items-center gap-1.5 text-xs text-[var(--cs-text-muted)]">
                 <Timer className="h-3.5 w-3.5" />
                 <span className="font-medium tabular-nums">{totalWeeklyHours}h</span> total
               </div>
             </div>
             <div className="flex items-center gap-2 flex-wrap">
               {shiftTypeBreakdown.map(({ type, count, label }) => (
-                <div key={type} className={cn("rounded-lg border px-2.5 py-1.5 text-[11px] font-medium", SHIFT_COLORS[type] || "bg-slate-100 text-slate-700")}>
+                <div key={type} className={cn("rounded-lg border px-2.5 py-1.5 text-[11px] font-medium", SHIFT_COLORS[type] || "bg-slate-100 text-[var(--cs-text-secondary)]")}>
                   {label} <span className="opacity-75 tabular-nums">×{count}</span>
                 </div>
               ))}
@@ -412,8 +420,8 @@ export default function RotaPage() {
                   <div className="flex items-center gap-2">
                     <Avatar name={s.full_name} size="sm" />
                     <div>
-                      <div className="text-xs font-medium text-slate-900">{s.full_name}</div>
-                      <div className="text-[10px] text-slate-500">{s.job_title}</div>
+                      <div className="text-xs font-medium text-[var(--cs-navy)]">{s.full_name}</div>
+                      <div className="text-[10px] text-[var(--cs-text-muted)]">{s.job_title}</div>
                     </div>
                   </div>
                   <div className="text-right">
@@ -432,19 +440,19 @@ export default function RotaPage() {
             <ChevronLeft className="h-4 w-4" /> Previous
           </Button>
           <div className="flex items-center gap-3 flex-1 justify-center">
-            <span className="text-sm font-semibold text-slate-900">{weekLabel}</span>
+            <span className="text-sm font-semibold text-[var(--cs-navy)]">{weekLabel}</span>
             {weekOffset !== 0 && (
               <Button variant="ghost" size="sm" onClick={() => setWeekOffset(0)}>Today</Button>
             )}
           </div>
           <div className="relative w-48">
-            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
             <input
               type="text"
               placeholder="Filter staff..."
               value={staffSearch}
               onChange={(e) => setStaffSearch(e.target.value)}
-              className="w-full rounded-lg border border-slate-200 bg-white py-1.5 pl-8 pr-3 text-xs text-slate-700 placeholder:text-slate-400 focus:border-indigo-300 focus:ring-1 focus:ring-indigo-200 outline-none transition-all"
+              className="w-full rounded-lg border border-[var(--cs-border)] bg-white py-1.5 pl-8 pr-3 text-xs text-[var(--cs-text-secondary)] placeholder:text-[var(--cs-text-muted)] focus:border-[var(--cs-aria-gold)] focus:ring-1 focus:ring-[var(--cs-aria-gold)]/30 outline-none transition-all"
             />
           </div>
           <Button variant="outline" size="sm" onClick={() => setWeekOffset(weekOffset + 1)}>
@@ -455,7 +463,7 @@ export default function RotaPage() {
         {/* Rota Grid */}
         {isLoading ? (
           <div className="flex items-center justify-center py-20">
-            <Loader2 className="h-6 w-6 animate-spin text-slate-400" />
+            <Loader2 className="h-6 w-6 animate-spin text-[var(--cs-text-muted)]" />
           </div>
         ) : (
           <Card className="overflow-hidden">
@@ -463,12 +471,12 @@ export default function RotaPage() {
               <table className="w-full min-w-[900px]">
                 <thead>
                   <tr className="border-b bg-slate-50">
-                    <th className="py-3 px-4 text-left text-xs font-semibold text-slate-600 w-[180px] sticky left-0 bg-slate-50 z-10">Staff</th>
+                    <th className="py-3 px-4 text-left text-xs font-semibold text-[var(--cs-text-secondary)] w-[180px] sticky left-0 bg-slate-50 z-10">Staff</th>
                     {weekDates.map((date) => {
                       const d = new Date(date + "T00:00:00");
                       const isToday = date === today;
                       return (
-                        <th key={date} className={cn("py-3 px-2 text-center text-xs font-medium min-w-[120px]", isToday ? "bg-blue-50 text-blue-700" : "text-slate-600")}>
+                        <th key={date} className={cn("py-3 px-2 text-center text-xs font-medium min-w-[120px]", isToday ? "bg-blue-50 text-blue-700" : "text-[var(--cs-text-secondary)]")}>
                           <div>{d.toLocaleDateString("en-GB", { weekday: "short" })}</div>
                           <div className={cn("text-lg font-bold mt-0.5", isToday && "text-blue-700")}>{d.getDate()}</div>
                         </th>
@@ -483,13 +491,13 @@ export default function RotaPage() {
                     const weekHrs = Math.round(weekMins / 60 * 10) / 10;
                     const overContracted = staff.contracted_hours > 0 && weekHrs > staff.contracted_hours;
                     return (
-                      <tr key={staff.id} className="border-b hover:bg-slate-50/50">
+                      <tr key={staff.id} className="border-b hover:bg-[var(--cs-surface)]/50">
                         <td className="py-2 px-4 sticky left-0 bg-white z-10">
                           <div className="flex items-center gap-2">
                             <Avatar name={staff.full_name} size="sm" />
                             <div>
-                              <div className="text-xs font-medium text-slate-900">{staff.full_name}</div>
-                              <div className={cn("text-[10px]", overContracted ? "text-red-500 font-medium" : "text-slate-400")}>
+                              <div className="text-xs font-medium text-[var(--cs-navy)]">{staff.full_name}</div>
+                              <div className={cn("text-[10px]", overContracted ? "text-red-500 font-medium" : "text-[var(--cs-text-muted)]")}>
                                 {weekHrs > 0 ? `${weekHrs}h` : "—"} / {staff.contracted_hours}h
                               </div>
                             </div>
@@ -504,7 +512,7 @@ export default function RotaPage() {
                             <td key={date} className={cn("py-2 px-2 text-center", isToday && "bg-blue-50/50")}>
                               {shift ? (
                                 <div className="group relative">
-                                  <div className={cn("rounded-lg border px-2 py-1.5 text-[10px] font-medium cursor-pointer hover:opacity-80 transition-opacity", SHIFT_COLORS[shift.shift_type] || "bg-slate-100 text-slate-700")}>
+                                  <div className={cn("rounded-lg border px-2 py-1.5 text-[10px] font-medium cursor-pointer hover:opacity-80 transition-opacity", SHIFT_COLORS[shift.shift_type] || "bg-slate-100 text-[var(--cs-text-secondary)]")}>
                                     <div>{SHIFT_TYPE_LABELS[shift.shift_type] || shift.shift_type}</div>
                                     <div className="text-[9px] opacity-75">{shift.start_time}–{shift.end_time}</div>
                                     {shift.status === "in_progress" && (
@@ -525,7 +533,7 @@ export default function RotaPage() {
                                 </div>
                               ) : (
                                 <div
-                                  className="rounded-lg border border-dashed border-slate-200 px-2 py-1.5 text-[10px] text-slate-300 cursor-pointer hover:bg-violet-50 hover:border-violet-300 hover:text-violet-500 transition-colors"
+                                  className="rounded-lg border border-dashed border-[var(--cs-border)] px-2 py-1.5 text-[10px] text-[var(--cs-text-gentle)] cursor-pointer hover:bg-violet-50 hover:border-violet-300 hover:text-violet-500 transition-colors"
                                   onClick={() => openAddShift(staff.id, staff.full_name, date)}
                                   title={`Add shift for ${staff.full_name}`}
                                 >
@@ -567,21 +575,21 @@ export default function RotaPage() {
                           )}
                         </div>
                         <div className="flex-1">
-                          <div className="text-sm font-semibold text-slate-900">{staff.full_name}</div>
-                          <div className="text-xs text-slate-500">{staff.job_title}</div>
+                          <div className="text-sm font-semibold text-[var(--cs-navy)]">{staff.full_name}</div>
+                          <div className="text-xs text-[var(--cs-text-muted)]">{staff.job_title}</div>
                         </div>
                         <Badge className={cn("rounded-full text-[10px] border shrink-0", SHIFT_COLORS[shift.shift_type])}>
                           {SHIFT_TYPE_LABELS[shift.shift_type] || shift.shift_type}
                         </Badge>
                       </div>
                       <div className="mt-2 grid grid-cols-2 gap-2 text-[10px]">
-                        <div className="text-slate-500"><Clock className="h-3 w-3 inline mr-0.5" />{shift.start_time} – {shift.end_time}</div>
+                        <div className="text-[var(--cs-text-muted)]"><Clock className="h-3 w-3 inline mr-0.5" />{shift.start_time} – {shift.end_time}</div>
                         {shift.clock_in_at && (
                           <div className="text-emerald-600"><CheckCircle2 className="h-3 w-3 inline mr-0.5" />Clocked in</div>
                         )}
                         {shift.notes && <div className="col-span-2 text-amber-600 font-medium">{shift.notes}</div>}
                       </div>
-                      <div className="mt-2 pt-2 border-t border-slate-100">
+                      <div className="mt-2 pt-2 border-t border-[var(--cs-border-subtle)]">
                         <Button
                           size="sm"
                           variant="outline"
@@ -600,16 +608,16 @@ export default function RotaPage() {
         )}
         {/* Empty state for filtered search */}
         {!isLoading && filteredStaff.length === 0 && staffSearch && (
-          <div className="text-center py-8 text-slate-400">
-            <Search className="h-6 w-6 mx-auto mb-2 text-slate-300" />
+          <div className="text-center py-8 text-[var(--cs-text-muted)]">
+            <Search className="h-6 w-6 mx-auto mb-2 text-[var(--cs-text-gentle)]" />
             <p className="text-sm">No staff matching &ldquo;{staffSearch}&rdquo;</p>
             <button onClick={() => setStaffSearch("")} className="text-xs text-indigo-600 hover:underline mt-1">Clear search</button>
           </div>
         )}
 
         {/* Regulatory note */}
-        <div className="rounded-xl border border-slate-100 bg-slate-50 px-4 py-3 text-xs text-slate-500">
-          <span className="font-semibold text-slate-600">Regulation 22 (Staffing) — </span>
+        <div className="rounded-xl border border-[var(--cs-border-subtle)] bg-slate-50 px-4 py-3 text-xs text-[var(--cs-text-muted)]">
+          <span className="font-semibold text-[var(--cs-text-secondary)]">Regulation 22 (Staffing) — </span>
           The registered person must ensure there are sufficient numbers of suitably qualified, competent, skilled and
           experienced staff deployed at all times to meet the care needs of each child. Rotas must demonstrate adequate
           waking and sleeping cover, with contingency for absences. Open shifts should be filled promptly to maintain
@@ -625,28 +633,28 @@ export default function RotaPage() {
         onClick={() => setAddShift(null)}
       >
         <div
-          className="w-full max-w-md bg-white shadow-2xl rounded-2xl overflow-hidden"
+          className="w-full max-w-md bg-white shadow-[var(--cs-shadow-elevated)] rounded-2xl overflow-hidden"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="flex items-center justify-between px-6 py-4 border-b">
             <div>
-              <div className="text-sm font-bold text-slate-900">Add Shift</div>
-              <div className="text-xs text-slate-500 mt-0.5">
+              <div className="text-sm font-bold text-[var(--cs-navy)]">Add Shift</div>
+              <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">
                 {addShift.staffName} · {new Date(addShift.date + "T00:00:00").toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long" })}
               </div>
             </div>
-            <button onClick={() => setAddShift(null)} className="text-slate-400 hover:text-slate-600">
+            <button onClick={() => setAddShift(null)} className="text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)]">
               <X className="h-5 w-5" />
             </button>
           </div>
 
           <div className="p-6 space-y-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1.5">Shift Type</label>
+              <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1.5">Shift Type</label>
               <select
                 value={shiftType}
                 onChange={(e) => setShiftType(e.target.value)}
-                className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-violet-400"
+                className="w-full rounded-lg border border-[var(--cs-border)] px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-violet-400"
               >
                 {SHIFT_TYPES.map((type) => (
                   <option key={type} value={type}>{SHIFT_TYPE_LABELS[type]}</option>
@@ -656,33 +664,33 @@ export default function RotaPage() {
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1.5">Start Time</label>
+                <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1.5">Start Time</label>
                 <input
                   type="time"
                   value={startTime}
                   onChange={(e) => setStartTime(e.target.value)}
-                  className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-violet-400"
+                  className="w-full rounded-lg border border-[var(--cs-border)] px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-violet-400"
                 />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1.5">End Time</label>
+                <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1.5">End Time</label>
                 <input
                   type="time"
                   value={endTime}
                   onChange={(e) => setEndTime(e.target.value)}
-                  className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-violet-400"
+                  className="w-full rounded-lg border border-[var(--cs-border)] px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-violet-400"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1.5">Notes (optional)</label>
+              <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1.5">Notes (optional)</label>
               <input
                 type="text"
                 value={shiftNotes}
                 onChange={(e) => setShiftNotes(e.target.value)}
                 placeholder="e.g. Cover for Anna"
-                className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-violet-400"
+                className="w-full rounded-lg border border-[var(--cs-border)] px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-violet-400"
               />
             </div>
 
@@ -719,20 +727,20 @@ export default function RotaPage() {
         <div className="bg-white rounded-2xl shadow-xl w-full max-w-sm mx-4 p-6 space-y-5">
           <div className="flex items-center justify-between">
             <div>
-              <div className="text-base font-semibold text-slate-900">Fill Open Shift</div>
-              <div className="text-xs text-slate-500 mt-0.5">
+              <div className="text-base font-semibold text-[var(--cs-navy)]">Fill Open Shift</div>
+              <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">
                 {formatDate(fillShift.date)} · {fillShift.start}–{fillShift.end} · {SHIFT_TYPE_LABELS[fillShift.type as keyof typeof SHIFT_TYPE_LABELS] || fillShift.type}
               </div>
             </div>
-            <button onClick={() => setFillShift(null)} className="text-slate-400 hover:text-slate-600">
+            <button onClick={() => setFillShift(null)} className="text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)]">
               <X className="h-5 w-5" />
             </button>
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-xs font-medium text-slate-700">Assign to staff member</label>
+            <label className="text-xs font-medium text-[var(--cs-text-secondary)]">Assign to staff member</label>
             <select
-              className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+              className="w-full rounded-xl border border-[var(--cs-border)] bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
               value={fillStaffId}
               onChange={(e) => setFillStaffId(e.target.value)}
             >
@@ -770,28 +778,28 @@ export default function RotaPage() {
         onClick={() => setSwapModal(null)}
       >
         <div
-          className="w-full max-w-md bg-white shadow-2xl rounded-2xl overflow-hidden"
+          className="w-full max-w-md bg-white shadow-[var(--cs-shadow-elevated)] rounded-2xl overflow-hidden"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="flex items-center justify-between px-6 py-4 border-b">
             <div>
-              <div className="text-sm font-bold text-slate-900">Request Shift Swap</div>
-              <div className="text-xs text-slate-500 mt-0.5">
+              <div className="text-sm font-bold text-[var(--cs-navy)]">Request Shift Swap</div>
+              <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">
                 {swapModal.staffName} &middot; {new Date(swapModal.date + "T00:00:00").toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long" })}
               </div>
             </div>
-            <button onClick={() => setSwapModal(null)} className="text-slate-400 hover:text-slate-600">
+            <button onClick={() => setSwapModal(null)} className="text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)]">
               <X className="h-5 w-5" />
             </button>
           </div>
 
           <div className="p-6 space-y-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1.5">Swap With</label>
+              <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1.5">Swap With</label>
               <select
                 value={swapTargetStaffId}
                 onChange={(e) => setSwapTargetStaffId(e.target.value)}
-                className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                className="w-full rounded-lg border border-[var(--cs-border)] px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--cs-aria-gold)]/40"
               >
                 <option value="">Select staff member...</option>
                 {activeStaff.filter((s) => s.id !== swapModal.staffId).map((s) => (
@@ -802,11 +810,11 @@ export default function RotaPage() {
 
             {swapTargetStaffId && (
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1.5">Target Shift (optional)</label>
+                <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1.5">Target Shift (optional)</label>
                 <select
                   value={swapTargetShiftId}
                   onChange={(e) => setSwapTargetShiftId(e.target.value)}
-                  className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                  className="w-full rounded-lg border border-[var(--cs-border)] px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--cs-aria-gold)]/40"
                 >
                   <option value="">Any available shift</option>
                   {shifts.filter((s) => s.staff_id === swapTargetStaffId).map((s) => (
@@ -819,13 +827,13 @@ export default function RotaPage() {
             )}
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1.5">Reason</label>
+              <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1.5">Reason</label>
               <input
                 type="text"
                 value={swapReason}
                 onChange={(e) => setSwapReason(e.target.value)}
                 placeholder="e.g. Medical appointment, family commitment"
-                className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                className="w-full rounded-lg border border-[var(--cs-border)] px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--cs-aria-gold)]/40"
               />
             </div>
 
@@ -863,26 +871,26 @@ export default function RotaPage() {
         onClick={() => setAbsenceModal(null)}
       >
         <div
-          className="w-full max-w-sm bg-white shadow-2xl rounded-2xl overflow-hidden"
+          className="w-full max-w-sm bg-white shadow-[var(--cs-shadow-elevated)] rounded-2xl overflow-hidden"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="flex items-center justify-between px-6 py-4 border-b">
             <div>
-              <div className="text-sm font-bold text-slate-900">Mark Absent</div>
-              <div className="text-xs text-slate-500 mt-0.5">{absenceModal.staffName}</div>
+              <div className="text-sm font-bold text-[var(--cs-navy)]">Mark Absent</div>
+              <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">{absenceModal.staffName}</div>
             </div>
-            <button onClick={() => setAbsenceModal(null)} className="text-slate-400 hover:text-slate-600">
+            <button onClick={() => setAbsenceModal(null)} className="text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)]">
               <X className="h-5 w-5" />
             </button>
           </div>
 
           <div className="p-6 space-y-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1.5">Reason</label>
+              <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1.5">Reason</label>
               <select
                 value={absenceReason}
                 onChange={(e) => setAbsenceReason(e.target.value as "sick" | "emergency" | "no-show" | "other")}
-                className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-400"
+                className="w-full rounded-lg border border-[var(--cs-border)] px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-400"
               >
                 <option value="sick">Sick</option>
                 <option value="emergency">Emergency</option>
@@ -892,13 +900,13 @@ export default function RotaPage() {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1.5">Notes (optional)</label>
+              <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1.5">Notes (optional)</label>
               <input
                 type="text"
                 value={absenceNotes}
                 onChange={(e) => setAbsenceNotes(e.target.value)}
                 placeholder="e.g. Called in at 7am, feeling unwell"
-                className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-400"
+                className="w-full rounded-lg border border-[var(--cs-border)] px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-400"
               />
             </div>
           </div>

@@ -34,9 +34,9 @@ const TYPE_CLR: Record<HealthMonitoringType, string> = {
   dental: "bg-blue-100 text-blue-800", optician: "bg-purple-100 text-purple-800",
   immunisation: "bg-green-100 text-green-800", gp_registration: "bg-teal-100 text-teal-800",
   annual_health: "bg-indigo-100 text-indigo-800", hearing: "bg-amber-100 text-amber-800",
-  growth: "bg-pink-100 text-pink-800", sexual_health: "bg-slate-100 text-slate-800",
+  growth: "bg-pink-100 text-pink-800", sexual_health: "bg-slate-100 text-[var(--cs-navy)]",
 };
-const STAT_CLR: Record<HealthMonitoringStatus, string> = { completed: "bg-green-100 text-green-800", scheduled: "bg-blue-100 text-blue-800", overdue: "bg-red-100 text-red-800", declined: "bg-amber-100 text-amber-800", cancelled: "bg-gray-100 text-gray-800", not_due: "bg-slate-100 text-slate-800" };
+const STAT_CLR: Record<HealthMonitoringStatus, string> = { completed: "bg-green-100 text-green-800", scheduled: "bg-blue-100 text-blue-800", overdue: "bg-red-100 text-red-800", declined: "bg-amber-100 text-amber-800", cancelled: "bg-gray-100 text-gray-800", not_due: "bg-slate-100 text-[var(--cs-navy)]" };
 
 /* ── component ─────────────────────────────────────────────────────────────── */
 

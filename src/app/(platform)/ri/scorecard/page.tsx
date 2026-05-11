@@ -43,12 +43,12 @@ function ScoreBar({ label, score, prev }: { label: string; score: number; prev?:
   const delta = prev !== undefined ? score - prev : undefined;
 
   return (
-    <div className="group space-y-1.5 p-3 rounded-xl hover:bg-slate-50 transition-colors">
+    <div className="group space-y-1.5 p-3 rounded-xl hover:bg-[var(--cs-surface)] transition-colors">
       <div className="flex items-center justify-between text-xs">
-        <span className="text-slate-600 font-medium">{label}</span>
+        <span className="text-[var(--cs-text-secondary)] font-medium">{label}</span>
         <div className="flex items-center gap-1.5">
           {delta !== undefined && (
-            <span className={cn("text-[10px]", delta > 0 ? "text-emerald-600" : delta < 0 ? "text-red-600" : "text-slate-400")}>
+            <span className={cn("text-[10px]", delta > 0 ? "text-emerald-600" : delta < 0 ? "text-red-600" : "text-[var(--cs-text-muted)]")}>
               {delta > 0 ? <TrendingUp className="h-3 w-3 inline" /> : delta < 0 ? <TrendingDown className="h-3 w-3 inline" /> : <Minus className="h-3 w-3 inline" />}
               {delta !== 0 && ` ${Math.abs(delta)}`}
             </span>
@@ -195,7 +195,7 @@ export default function ScorecardPage() {
         <div className="rounded-2xl bg-slate-900 p-6 text-white flex items-center gap-6">
           <div className="text-center shrink-0">
             <div className="text-6xl font-bold tabular-nums">{overallScore}</div>
-            <div className="text-xs text-slate-400 mt-1">Overall Score</div>
+            <div className="text-xs text-[var(--cs-text-muted)] mt-1">Overall Score</div>
           </div>
           <div className="flex-1 space-y-2">
             <div className="flex items-center gap-2">
@@ -207,7 +207,7 @@ export default function ScorecardPage() {
             </div>
             <div className="flex items-center gap-1.5">
               <Zap className="h-3 w-3 text-emerald-400" />
-              <span className="text-[10px] text-slate-400">{liveMetricCount} of {ALL_METRICS.length} metrics computed from live data</span>
+              <span className="text-[10px] text-[var(--cs-text-muted)]">{liveMetricCount} of {ALL_METRICS.length} metrics computed from live data</span>
             </div>
             <div className="h-2 rounded-full bg-white/10">
               <div
@@ -215,7 +215,7 @@ export default function ScorecardPage() {
                 style={{ width: `${overallScore}%` }}
               />
             </div>
-            <p className="text-xs text-slate-400">Composite of 15 governance indicators. Safeguarding weighted 2×.</p>
+            <p className="text-xs text-[var(--cs-text-muted)]">Composite of 15 governance indicators. Safeguarding weighted 2×.</p>
           </div>
         </div>
 
@@ -231,7 +231,7 @@ export default function ScorecardPage() {
                 <div className={cn("w-3 h-3 rounded-full", t.dot)} />
               </div>
               <div className={cn("text-xl font-bold tabular-nums", t.colour)}>{t.count}</div>
-              <div className="text-[10px] text-slate-500 mt-0.5">{t.label}</div>
+              <div className="text-[10px] text-[var(--cs-text-muted)] mt-0.5">{t.label}</div>
             </div>
           ))}
         </div>
@@ -268,7 +268,7 @@ export default function ScorecardPage() {
                       <span className={cn("shrink-0 text-[9px] font-semibold px-1.5 py-0.5 rounded-full border",
                         m.live
                           ? "text-emerald-700 bg-emerald-50 border-emerald-200"
-                          : "text-slate-400 bg-slate-50 border-slate-200"
+                          : "text-[var(--cs-text-muted)] bg-slate-50 border-[var(--cs-border)]"
                       )}>
                         {m.live ? "LIVE" : "EST"}
                       </span>
@@ -297,15 +297,15 @@ export default function ScorecardPage() {
               { label: "Compliance Position", content: aria.compliance_position },
             ].map(({ label, content }) => content && (
               <div key={label}>
-                <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">{label}</p>
-                <div className="rounded-xl border border-slate-100 bg-white p-4">
-                  <p className="text-sm text-slate-700 leading-relaxed">{content}</p>
+                <p className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-2">{label}</p>
+                <div className="rounded-xl border border-[var(--cs-border-subtle)] bg-white p-4">
+                  <p className="text-sm text-[var(--cs-text-secondary)] leading-relaxed">{content}</p>
                 </div>
               </div>
             ))}
             {aria.challenge_questions_for_manager?.length > 0 && (
               <div>
-                <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">Challenge Questions for Manager</p>
+                <p className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-2">Challenge Questions for Manager</p>
                 <div className="space-y-2">
                   {aria.challenge_questions_for_manager.map((q, i) => (
                     <div key={i} className="rounded-xl border border-amber-100 bg-amber-50 px-4 py-3">

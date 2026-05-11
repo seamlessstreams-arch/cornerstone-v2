@@ -39,7 +39,7 @@ function rtwStatusColor(status: RecruitmentCheck["status"]): string {
     case "in_progress": return "bg-blue-100 text-blue-700";
     case "received": return "bg-amber-100 text-amber-700";
     case "concern_flagged": return "bg-red-100 text-red-700";
-    default: return "bg-slate-100 text-slate-500";
+    default: return "bg-slate-100 text-[var(--cs-text-muted)]";
   }
 }
 
@@ -72,23 +72,23 @@ function RTWRow({ candidate, rtwCheck }: RTWRowProps) {
   const isTimeLimited = rtwCheck?.expiry_date != null;
 
   return (
-    <tr className="border-b border-slate-100 last:border-0 hover:bg-slate-50 transition-colors">
+    <tr className="border-b border-[var(--cs-border-subtle)] last:border-0 hover:bg-[var(--cs-surface)] transition-colors">
       <td className="px-4 py-3">
-        <div className="text-sm font-medium text-slate-900">
+        <div className="text-sm font-medium text-[var(--cs-navy)]">
           {candidate.first_name} {candidate.last_name}
         </div>
-        <div className="text-[10px] text-slate-400">{candidate.role_applied}</div>
+        <div className="text-[10px] text-[var(--cs-text-muted)]">{candidate.role_applied}</div>
       </td>
-      <td className="px-4 py-3 text-xs text-slate-600">
+      <td className="px-4 py-3 text-xs text-[var(--cs-text-secondary)]">
         {rtwCheck?.document_type ?? "—"}
       </td>
-      <td className="px-4 py-3 text-xs text-slate-600 font-mono">
+      <td className="px-4 py-3 text-xs text-[var(--cs-text-secondary)] font-mono">
         —
       </td>
-      <td className="px-4 py-3 text-xs text-slate-600">
+      <td className="px-4 py-3 text-xs text-[var(--cs-text-secondary)]">
         {rtwCheck?.verified_by ?? "—"}
       </td>
-      <td className="px-4 py-3 text-xs text-slate-600">
+      <td className="px-4 py-3 text-xs text-[var(--cs-text-secondary)]">
         {formatDate(rtwCheck?.verified_at ?? null)}
       </td>
       <td className="px-4 py-3">
@@ -99,7 +99,7 @@ function RTWRow({ candidate, rtwCheck }: RTWRowProps) {
             {expiryDays < 90 && ` (${expiryDays}d)`}
           </Badge>
         ) : (
-          <span className="text-[10px] text-slate-400">N/A</span>
+          <span className="text-[10px] text-[var(--cs-text-muted)]">N/A</span>
         )}
       </td>
       <td className="px-4 py-3">
@@ -177,27 +177,27 @@ export default function RightToWorkPage() {
         <Card className="rounded-2xl">
           <CardContent className="pt-4 pb-4">
             <div className="text-2xl font-bold text-emerald-600">{stats.verified}</div>
-            <div className="text-xs text-slate-500 mt-0.5">Verified</div>
+            <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">Verified</div>
           </CardContent>
         </Card>
         <Card className="rounded-2xl">
           <CardContent className="pt-4 pb-4">
             <div className="text-2xl font-bold text-blue-600">{stats.pending}</div>
-            <div className="text-xs text-slate-500 mt-0.5">Pending</div>
+            <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">Pending</div>
           </CardContent>
         </Card>
         <Card className="rounded-2xl">
           <CardContent className="pt-4 pb-4">
             <div className="text-2xl font-bold text-amber-600">{stats.time_limited}</div>
-            <div className="text-xs text-slate-500 mt-0.5">Time-Limited (expiry tracking)</div>
+            <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">Time-Limited (expiry tracking)</div>
           </CardContent>
         </Card>
         <Card className="rounded-2xl">
           <CardContent className="pt-4 pb-4">
-            <div className={cn("text-2xl font-bold", stats.not_checked > 0 ? "text-red-600" : "text-slate-500")}>
+            <div className={cn("text-2xl font-bold", stats.not_checked > 0 ? "text-red-600" : "text-[var(--cs-text-muted)]")}>
               {stats.not_checked}
             </div>
-            <div className="text-xs text-slate-500 mt-0.5">Not Checked</div>
+            <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">Not Checked</div>
           </CardContent>
         </Card>
       </div>
@@ -224,7 +224,7 @@ export default function RightToWorkPage() {
       {!isLoading && rows.length > 0 && (
         <div className="flex items-center gap-3 mb-5">
           <div className="relative w-64">
-            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
             <Input
               placeholder="Search candidates…"
               value={search}
@@ -233,7 +233,7 @@ export default function RightToWorkPage() {
             />
           </div>
           {search.trim() && (
-            <span className="text-xs text-slate-400">{filteredRows.length} of {rows.length} candidates</span>
+            <span className="text-xs text-[var(--cs-text-muted)]">{filteredRows.length} of {rows.length} candidates</span>
           )}
         </div>
       )}
@@ -242,12 +242,12 @@ export default function RightToWorkPage() {
       <Card className="rounded-2xl">
         <CardContent className="p-0">
           {isLoading ? (
-            <div className="flex items-center justify-center py-20 text-slate-400">
+            <div className="flex items-center justify-center py-20 text-[var(--cs-text-muted)]">
               <Loader2 className="h-8 w-8 animate-spin mr-2" />
               <span className="text-sm">Loading right to work data...</span>
             </div>
           ) : filteredRows.length === 0 ? (
-            <div className="py-12 text-center text-slate-400">
+            <div className="py-12 text-center text-[var(--cs-text-muted)]">
               <FileCheck className="h-10 w-10 mx-auto mb-3 text-slate-200" />
               <div className="text-sm">{search.trim() ? "No candidates match your search" : "No candidates to display"}</div>
             </div>
@@ -255,14 +255,14 @@ export default function RightToWorkPage() {
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-slate-100">
-                    <th className="px-4 py-3 text-left text-[10px] font-semibold uppercase tracking-wide text-slate-400">Candidate</th>
-                    <th className="px-4 py-3 text-left text-[10px] font-semibold uppercase tracking-wide text-slate-400">Document Type</th>
-                    <th className="px-4 py-3 text-left text-[10px] font-semibold uppercase tracking-wide text-slate-400">Document Ref</th>
-                    <th className="px-4 py-3 text-left text-[10px] font-semibold uppercase tracking-wide text-slate-400">Verified By</th>
-                    <th className="px-4 py-3 text-left text-[10px] font-semibold uppercase tracking-wide text-slate-400">Verified Date</th>
-                    <th className="px-4 py-3 text-left text-[10px] font-semibold uppercase tracking-wide text-slate-400">Expiry</th>
-                    <th className="px-4 py-3 text-left text-[10px] font-semibold uppercase tracking-wide text-slate-400">Status</th>
+                  <tr className="border-b border-[var(--cs-border-subtle)]">
+                    <th className="px-4 py-3 text-left text-[10px] font-semibold uppercase tracking-wide text-[var(--cs-text-muted)]">Candidate</th>
+                    <th className="px-4 py-3 text-left text-[10px] font-semibold uppercase tracking-wide text-[var(--cs-text-muted)]">Document Type</th>
+                    <th className="px-4 py-3 text-left text-[10px] font-semibold uppercase tracking-wide text-[var(--cs-text-muted)]">Document Ref</th>
+                    <th className="px-4 py-3 text-left text-[10px] font-semibold uppercase tracking-wide text-[var(--cs-text-muted)]">Verified By</th>
+                    <th className="px-4 py-3 text-left text-[10px] font-semibold uppercase tracking-wide text-[var(--cs-text-muted)]">Verified Date</th>
+                    <th className="px-4 py-3 text-left text-[10px] font-semibold uppercase tracking-wide text-[var(--cs-text-muted)]">Expiry</th>
+                    <th className="px-4 py-3 text-left text-[10px] font-semibold uppercase tracking-wide text-[var(--cs-text-muted)]">Status</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -280,11 +280,11 @@ export default function RightToWorkPage() {
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
           <div className="bg-white rounded-2xl shadow-xl p-6 w-full max-w-md mx-4">
-            <div className="text-sm font-semibold text-slate-900 mb-4">Add Right to Work Verification</div>
+            <div className="text-sm font-semibold text-[var(--cs-navy)] mb-4">Add Right to Work Verification</div>
             <div className="space-y-3">
               <div>
-                <label className="text-xs font-medium text-slate-500 mb-1 block">Candidate</label>
-                <select className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900">
+                <label className="text-xs font-medium text-[var(--cs-text-muted)] mb-1 block">Candidate</label>
+                <select className="w-full rounded-xl border border-[var(--cs-border)] px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900">
                   <option value="">Select candidate...</option>
                   {(data?.candidates ?? []).map((c: CandidateDetail) => (
                     <option key={c.id} value={c.id}>{c.first_name} {c.last_name}</option>
@@ -292,8 +292,8 @@ export default function RightToWorkPage() {
                 </select>
               </div>
               <div>
-                <label className="text-xs font-medium text-slate-500 mb-1 block">Document Type</label>
-                <select className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900">
+                <label className="text-xs font-medium text-[var(--cs-text-muted)] mb-1 block">Document Type</label>
+                <select className="w-full rounded-xl border border-[var(--cs-border)] px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900">
                   <option>UK Passport</option>
                   <option>EU Settled Status</option>
                   <option>BRP Card</option>
@@ -302,16 +302,16 @@ export default function RightToWorkPage() {
                 </select>
               </div>
               <div>
-                <label className="text-xs font-medium text-slate-500 mb-1 block">Verified By</label>
-                <input type="text" placeholder="Name of person who verified" className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900" />
+                <label className="text-xs font-medium text-[var(--cs-text-muted)] mb-1 block">Verified By</label>
+                <input type="text" placeholder="Name of person who verified" className="w-full rounded-xl border border-[var(--cs-border)] px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900" />
               </div>
               <div>
-                <label className="text-xs font-medium text-slate-500 mb-1 block">Verification Date</label>
-                <input type="date" className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900" />
+                <label className="text-xs font-medium text-[var(--cs-text-muted)] mb-1 block">Verification Date</label>
+                <input type="date" className="w-full rounded-xl border border-[var(--cs-border)] px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900" />
               </div>
               <div>
-                <label className="text-xs font-medium text-slate-500 mb-1 block">Expiry Date (if time-limited)</label>
-                <input type="date" className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900" />
+                <label className="text-xs font-medium text-[var(--cs-text-muted)] mb-1 block">Expiry Date (if time-limited)</label>
+                <input type="date" className="w-full rounded-xl border border-[var(--cs-border)] px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900" />
               </div>
             </div>
             <div className="flex gap-2 mt-5">

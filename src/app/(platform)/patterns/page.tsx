@@ -51,7 +51,7 @@ const STATUS_CONFIG: Record<PatternStatus, { label: string; icon: React.ElementT
   active:       { label: "Active",       icon: Zap,           color: "text-red-700",     bg: "bg-red-50",     border: "border-red-200"     },
   acknowledged: { label: "Acknowledged", icon: Eye,           color: "text-amber-700",   bg: "bg-amber-50",   border: "border-amber-200"   },
   resolved:     { label: "Resolved",     icon: CheckCircle2,  color: "text-emerald-700", bg: "bg-emerald-50", border: "border-emerald-200" },
-  dismissed:    { label: "Dismissed",    icon: XCircle,       color: "text-slate-600",   bg: "bg-slate-50",   border: "border-slate-200"   },
+  dismissed:    { label: "Dismissed",    icon: XCircle,       color: "text-[var(--cs-text-secondary)]",   bg: "bg-slate-50",   border: "border-[var(--cs-border)]"   },
 };
 
 const ALERT_TYPE_LABELS: Record<string, { label: string; icon: React.ElementType }> = {
@@ -139,7 +139,7 @@ function PatternCard({
 
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap mb-1">
-            <h3 className="text-sm font-semibold text-slate-900">{pattern.title}</h3>
+            <h3 className="text-sm font-semibold text-[var(--cs-navy)]">{pattern.title}</h3>
             {isPositive && (
               <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 text-[10px] px-1.5 py-0">
                 ✦ Positive
@@ -147,7 +147,7 @@ function PatternCard({
             )}
           </div>
 
-          <div className="flex items-center gap-2 flex-wrap text-[11px] text-slate-500">
+          <div className="flex items-center gap-2 flex-wrap text-[11px] text-[var(--cs-text-muted)]">
             <span className="flex items-center gap-1">
               <TypeIcon className="h-3 w-3" />
               {typeInfo.label}
@@ -179,9 +179,9 @@ function PatternCard({
             {st.label}
           </Badge>
           {expanded ? (
-            <ChevronUp className="h-4 w-4 text-slate-400" />
+            <ChevronUp className="h-4 w-4 text-[var(--cs-text-muted)]" />
           ) : (
-            <ChevronDown className="h-4 w-4 text-slate-400" />
+            <ChevronDown className="h-4 w-4 text-[var(--cs-text-muted)]" />
           )}
         </div>
       </div>
@@ -191,8 +191,8 @@ function PatternCard({
         <div className="border-t px-4 pb-4 pt-3 space-y-4">
           {/* Description */}
           <div>
-            <h4 className="text-[11px] font-semibold text-slate-600 uppercase tracking-wide mb-1">Pattern Description</h4>
-            <p className="text-xs text-slate-700 leading-relaxed">{pattern.description}</p>
+            <h4 className="text-[11px] font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide mb-1">Pattern Description</h4>
+            <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed">{pattern.description}</p>
           </div>
 
           {/* Reflective Prompt */}
@@ -211,23 +211,23 @@ function PatternCard({
           {/* Evidence References */}
           {pattern.evidence_refs.length > 0 && (
             <div>
-              <h4 className="text-[11px] font-semibold text-slate-600 uppercase tracking-wide mb-2">
+              <h4 className="text-[11px] font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide mb-2">
                 Supporting Evidence ({pattern.evidence_refs.length})
               </h4>
               <div className="space-y-1.5">
                 {pattern.evidence_refs.map((ev, i) => {
                   const EvidIcon = EVIDENCE_TYPE_ICONS[ev.type] ?? FileText;
                   return (
-                    <div key={i} className="flex items-start gap-2 rounded-md bg-slate-50 border border-slate-100 p-2.5">
-                      <EvidIcon className="h-3.5 w-3.5 text-slate-400 mt-0.5 flex-shrink-0" />
+                    <div key={i} className="flex items-start gap-2 rounded-md bg-slate-50 border border-[var(--cs-border-subtle)] p-2.5">
+                      <EvidIcon className="h-3.5 w-3.5 text-[var(--cs-text-muted)] mt-0.5 flex-shrink-0" />
                       <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 text-[10px] text-slate-500 mb-0.5">
+                        <div className="flex items-center gap-2 text-[10px] text-[var(--cs-text-muted)] mb-0.5">
                           <span className="capitalize font-medium">{ev.type.replace(/_/g, " ")}</span>
                           <span>·</span>
                           <span>{formatDate(ev.date)}</span>
-                          <span className="text-[9px] text-slate-400 font-mono">{ev.id}</span>
+                          <span className="text-[9px] text-[var(--cs-text-muted)] font-mono">{ev.id}</span>
                         </div>
-                        <p className="text-xs text-slate-700">{ev.excerpt}</p>
+                        <p className="text-xs text-[var(--cs-text-secondary)]">{ev.excerpt}</p>
                       </div>
                     </div>
                   );
@@ -238,7 +238,7 @@ function PatternCard({
 
           {/* Acknowledgement / Resolution info */}
           {(pattern.acknowledged_by || pattern.resolved_by) && (
-            <div className="flex items-center gap-4 text-[10px] text-slate-400 pt-1 border-t border-slate-100">
+            <div className="flex items-center gap-4 text-[10px] text-[var(--cs-text-muted)] pt-1 border-t border-[var(--cs-border-subtle)]">
               {pattern.acknowledged_by && (
                 <span>Acknowledged by {getStaffName(pattern.acknowledged_by)} — {formatDate(pattern.acknowledged_at!)}</span>
               )}
@@ -276,7 +276,7 @@ function PatternCard({
               <Button
                 size="sm"
                 variant="outline"
-                className="text-xs h-7 bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100"
+                className="text-xs h-7 bg-slate-50 border-[var(--cs-border)] text-[var(--cs-text-secondary)] hover:bg-[var(--cs-surface)]"
                 onClick={(e) => { e.stopPropagation(); onDismiss(); }}
                 disabled={busy}
               >
@@ -433,8 +433,8 @@ export default function PatternAlertsPage() {
     return (
       <PageShell title="Pattern Alerts" subtitle="ARIA-detected behavioural & environmental patterns">
         <div className="flex items-center justify-center py-20">
-          <Loader2 className="h-6 w-6 animate-spin text-slate-400" />
-          <span className="ml-2 text-sm text-slate-400">Loading pattern alerts…</span>
+          <Loader2 className="h-6 w-6 animate-spin text-[var(--cs-text-muted)]" />
+          <span className="ml-2 text-sm text-[var(--cs-text-muted)]">Loading pattern alerts…</span>
         </div>
       </PageShell>
     );
@@ -474,7 +474,7 @@ export default function PatternAlertsPage() {
             className={cn("rounded-lg border p-3 text-center", s.bg, s.border)}
           >
             <div className={cn("text-xl font-bold", s.color)}>{s.value}</div>
-            <div className="text-[10px] text-slate-500 font-medium mt-0.5">{s.label}</div>
+            <div className="text-[10px] text-[var(--cs-text-muted)] font-medium mt-0.5">{s.label}</div>
           </div>
         ))}
       </div>
@@ -506,7 +506,7 @@ export default function PatternAlertsPage() {
               "px-3 py-2 text-xs font-medium whitespace-nowrap border-b-2 -mb-px transition-colors",
               tab === t.key
                 ? "border-blue-600 text-blue-700"
-                : "border-transparent text-slate-500 hover:text-slate-700"
+                : "border-transparent text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)]"
             )}
           >
             {t.label}
@@ -518,7 +518,7 @@ export default function PatternAlertsPage() {
       {/* ── Filters ───────────────────────────────────────────────────────── */}
       <div className="flex flex-wrap items-center gap-2 mb-4">
         <div className="relative flex-1 min-w-[200px] max-w-xs">
-          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
           <Input
             placeholder="Search patterns…"
             value={search}
@@ -527,7 +527,7 @@ export default function PatternAlertsPage() {
           />
         </div>
 
-        <div className="flex items-center gap-1 text-xs text-slate-500">
+        <div className="flex items-center gap-1 text-xs text-[var(--cs-text-muted)]">
           <Filter className="h-3.5 w-3.5" />
         </div>
 
@@ -558,7 +558,7 @@ export default function PatternAlertsPage() {
         </Select>
 
         <div className="flex items-center gap-1">
-          <ArrowUpDown className="h-3.5 w-3.5 text-slate-400" />
+          <ArrowUpDown className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
           <Select value={sortBy} onValueChange={setSortBy}>
             <SelectTrigger className="h-8 w-[120px] text-xs">
               <SelectValue />
@@ -576,7 +576,7 @@ export default function PatternAlertsPage() {
           <Button
             variant="ghost"
             size="sm"
-            className="h-8 text-xs text-slate-500"
+            className="h-8 text-xs text-[var(--cs-text-muted)]"
             onClick={() => { setSearch(""); setSeverityFilter("all"); setTypeFilter("all"); }}
           >
             <X className="h-3 w-3 mr-1" /> Clear
@@ -586,7 +586,7 @@ export default function PatternAlertsPage() {
 
       {/* ── Pattern List ──────────────────────────────────────────────────── */}
       {filtered.length === 0 ? (
-        <div className="text-center py-16 text-slate-400">
+        <div className="text-center py-16 text-[var(--cs-text-muted)]">
           <Radar className="h-10 w-10 mx-auto mb-3 opacity-40" />
           <p className="text-sm font-medium">No patterns found</p>
           <p className="text-xs mt-1">
@@ -614,17 +614,17 @@ export default function PatternAlertsPage() {
       )}
 
       {/* ── Footer count ──────────────────────────────────────────────────── */}
-      <div className="text-center text-[10px] text-slate-400 mt-6">
+      <div className="text-center text-[10px] text-[var(--cs-text-muted)] mt-6">
         Showing {filtered.length} of {stats.total} pattern{stats.total !== 1 ? "s" : ""}
       </div>
 
       {/* ── Regulatory Note ───────────────────────────────────────────────── */}
-      <div className="mt-8 rounded-lg bg-slate-50 border border-slate-200 p-4">
+      <div className="mt-8 rounded-lg bg-slate-50 border border-[var(--cs-border)] p-4">
         <div className="flex items-start gap-3">
           <Sparkles className="h-5 w-5 text-violet-500 mt-0.5 flex-shrink-0" />
           <div>
-            <h4 className="text-xs font-semibold text-slate-700 mb-1">About Pattern Alerts</h4>
-            <p className="text-[11px] text-slate-500 leading-relaxed">
+            <h4 className="text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">About Pattern Alerts</h4>
+            <p className="text-[11px] text-[var(--cs-text-muted)] leading-relaxed">
               Pattern alerts are generated by ARIA when it detects recurring behavioural, environmental, or staffing
               patterns across the home&apos;s data. Each alert includes supporting evidence, a reflective prompt to guide
               professional thinking, and a workflow (acknowledge → resolve). Promptly reviewing and acting on patterns

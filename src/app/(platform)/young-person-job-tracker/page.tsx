@@ -72,7 +72,7 @@ const data: YpJob[] = [
 const statusColour: Record<string, string> = {
   Active: "bg-green-100 text-green-800",
   "Trial period": "bg-amber-100 text-amber-800",
-  Ended: "bg-slate-100 text-slate-800",
+  Ended: "bg-slate-100 text-[var(--cs-navy)]",
   "On hold": "bg-blue-100 text-blue-800",
 };
 
@@ -126,7 +126,7 @@ export default function YoungPersonJobTrackerPage() {
           const isExpanded = expandedId === j.id;
           return (
             <div key={j.id} className="rounded-xl border bg-white overflow-hidden">
-              <button className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors" onClick={() => setExpandedId(isExpanded ? null : j.id)}>
+              <button className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors" onClick={() => setExpandedId(isExpanded ? null : j.id)}>
                 <div className="flex items-center gap-3 flex-1 min-w-0"><Briefcase className="h-5 w-5 text-amber-600 shrink-0" /><div className="min-w-0"><p className="font-medium truncate">{getYPName(j.youngPerson)} — {j.jobTitle}</p><p className="text-xs text-muted-foreground mt-0.5">{j.employer} &middot; {j.hoursPerWeek}h/wk &middot; £{j.payRate} {j.payRateUnit}</p></div></div>
                 <div className="flex items-center gap-2 shrink-0 ml-3"><span className={cn("text-xs px-2 py-0.5 rounded-full font-medium", statusColour[j.ongoingStatus])}>{j.ongoingStatus}</span>{isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}</div>
               </button>
@@ -139,7 +139,7 @@ export default function YoungPersonJobTrackerPage() {
                   <div className="bg-emerald-50 rounded-lg p-3"><p className="text-xs font-semibold text-emerald-800 uppercase tracking-wide mb-1"><Heart className="h-3 w-3 inline mr-1" />Child&apos;s Experience</p><p>{j.childExperience}</p></div>
                   <div className="bg-amber-50 rounded-lg p-3"><p className="text-xs font-semibold text-amber-800 uppercase tracking-wide mb-1"><Wallet className="h-3 w-3 inline mr-1" />Earnings</p><p>£{j.earningsToDate} to date. {j.earningsManagement}</p></div>
                   <div className="flex flex-wrap gap-4 text-xs text-muted-foreground pt-2 border-t"><span><Clock className="h-3 w-3 inline mr-1" />Started {j.startDate}</span><span>Reviewed: {j.reviewedDate} by {getStaffName(j.reviewedBy)}</span><span>Travel: {j.travelArrangements}</span></div>
-                  {j.notes && <div className="bg-slate-50 rounded-lg p-3 border"><p className="text-xs font-semibold text-slate-800 uppercase tracking-wide mb-1">Notes</p><p>{j.notes}</p></div>}
+                  {j.notes && <div className="bg-slate-50 rounded-lg p-3 border"><p className="text-xs font-semibold text-[var(--cs-navy)] uppercase tracking-wide mb-1">Notes</p><p>{j.notes}</p></div>}
                 </div>
               )}
             </div>

@@ -32,7 +32,7 @@ import { LIVING_SKILL_LEVEL_LABEL, LIVING_SKILLS_READINESS_LABEL } from "@/types
 /* ── constants ───────────────────────────────────────────────────────── */
 
 const levelColour: Record<LivingSkillLevel, string> = {
-  not_yet_started: "bg-slate-100 text-slate-700",
+  not_yet_started: "bg-slate-100 text-[var(--cs-text-secondary)]",
   emerging: "bg-amber-100 text-amber-800",
   developing: "bg-blue-100 text-blue-800",
   established: "bg-emerald-100 text-emerald-800",
@@ -40,7 +40,7 @@ const levelColour: Record<LivingSkillLevel, string> = {
 };
 
 const readinessColour: Record<LivingSkillsReadiness, string> = {
-  early_stage: "bg-slate-100 text-slate-800",
+  early_stage: "bg-slate-100 text-[var(--cs-navy)]",
   building_foundations: "bg-blue-100 text-blue-800",
   developing_strongly: "bg-emerald-100 text-emerald-800",
   approaching_ready: "bg-green-200 text-green-900",
@@ -165,7 +165,7 @@ export default function IndependentLivingSkillsAssessmentPage() {
           return (
             <div key={a.id} className="rounded-xl border bg-white overflow-hidden">
               <button
-                className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                 onClick={() => setExpandedId(isExpanded ? null : a.id)}
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -261,7 +261,7 @@ export default function IndependentLivingSkillsAssessmentPage() {
                   </div>
 
                   <div className="bg-slate-50 rounded-lg p-3 border">
-                    <p className="text-xs font-semibold text-slate-800 uppercase tracking-wide mb-1">Pathway Links</p>
+                    <p className="text-xs font-semibold text-[var(--cs-navy)] uppercase tracking-wide mb-1">Pathway Links</p>
                     <div className="flex flex-wrap gap-1">
                       {a.pathway_links.map((p, i) => (
                         <span key={i} className="text-xs px-2 py-0.5 rounded-full bg-blue-50 text-blue-700">{p}</span>
@@ -271,7 +271,7 @@ export default function IndependentLivingSkillsAssessmentPage() {
 
                   {a.notes && (
                     <div className="bg-slate-50 rounded-lg p-3 border">
-                      <p className="text-xs font-semibold text-slate-800 uppercase tracking-wide mb-1">Assessor Notes</p>
+                      <p className="text-xs font-semibold text-[var(--cs-navy)] uppercase tracking-wide mb-1">Assessor Notes</p>
                       <p className="text-sm">{a.notes}</p>
                     </div>
                   )}

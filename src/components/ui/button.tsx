@@ -8,14 +8,15 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-slate-900 text-white shadow-sm hover:bg-slate-800",
-        destructive: "bg-red-600 text-white shadow-sm hover:bg-red-700",
-        outline: "border border-slate-200 bg-white text-slate-700 shadow-sm hover:bg-slate-50",
-        secondary: "bg-slate-100 text-slate-900 shadow-sm hover:bg-slate-200",
-        ghost: "text-slate-700 hover:bg-slate-100",
-        link: "text-blue-600 underline-offset-4 hover:underline",
-        success: "bg-emerald-600 text-white shadow-sm hover:bg-emerald-700",
-        warning: "bg-amber-500 text-white shadow-sm hover:bg-amber-600",
+        default: "bg-[var(--cs-navy)] text-white shadow-sm hover:bg-[var(--cs-navy)]/90",
+        destructive: "bg-[var(--cs-risk)] text-white shadow-sm hover:bg-[var(--cs-risk)]/90",
+        outline: "border border-[var(--cs-border)] bg-[var(--cs-surface-elevated)] text-[var(--cs-text-secondary)] shadow-sm hover:bg-[var(--cs-surface)]",
+        secondary: "bg-[var(--cs-surface)] text-[var(--cs-navy)] shadow-sm hover:bg-[var(--cs-surface)]/80 border border-[var(--cs-border)]",
+        ghost: "text-[var(--cs-text-secondary)] hover:bg-[var(--cs-surface)]",
+        link: "text-[var(--cs-info)] underline-offset-4 hover:underline",
+        success: "bg-[var(--cs-success)] text-white shadow-sm hover:bg-[var(--cs-success)]/90",
+        warning: "bg-[var(--cs-warning)] text-white shadow-sm hover:bg-[var(--cs-warning)]/90",
+        aria: "bg-[var(--cs-aria-gold)] text-[var(--cs-navy)] shadow-sm hover:bg-[var(--cs-aria-gold)]/90 shadow-[var(--cs-shadow-glow-gold)]",
       },
       size: {
         default: "h-10 px-4 py-2",

@@ -5,7 +5,7 @@
 //
 // Manager-facing risk assessment for whether to suspend, with welfare plan,
 // alternatives review, advice trail, and proposed decision. Produces an
-// Aria suggested draft of written reasons. Manager remains the decision-maker
+// ARIA suggested draft of written reasons. Manager remains the decision-maker
 // and is expected to also run the suspension letter itself through the
 // HR Process Guardian (separate page).
 // ══════════════════════════════════════════════════════════════════════════════
@@ -138,7 +138,7 @@ const PROPORTIONALITY_COLOUR: Record<Analysis["proportionalityRating"], string> 
 };
 
 const SEVERITY_COLOUR: Record<Flag["severity"], string> = {
-  info: "bg-slate-100 text-slate-700 border-slate-200",
+  info: "bg-slate-100 text-[var(--cs-text-secondary)] border-[var(--cs-border)]",
   advisory: "bg-blue-100 text-blue-800 border-blue-200",
   warning: "bg-amber-100 text-amber-800 border-amber-200",
   block: "bg-red-100 text-red-800 border-red-200",
@@ -148,7 +148,7 @@ const PRIORITY_COLOUR: Record<string, string> = {
   urgent: "bg-red-100 text-red-800 border-red-200",
   high: "bg-orange-100 text-orange-800 border-orange-200",
   medium: "bg-amber-100 text-amber-800 border-amber-200",
-  low: "bg-slate-100 text-slate-700 border-slate-200",
+  low: "bg-slate-100 text-[var(--cs-text-secondary)] border-[var(--cs-border)]",
 };
 
 export default function SuspensionDecisionPage() {
@@ -263,7 +263,7 @@ export default function SuspensionDecisionPage() {
       <div className="mb-6 flex items-start gap-3 rounded-lg border border-violet-200 bg-violet-50 p-4 text-sm text-violet-900">
         <Sparkles className="h-5 w-5 mt-0.5 text-violet-600" />
         <div>
-          <div className="font-semibold">Aria suggested draft, never final</div>
+          <div className="font-semibold">ARIA suggested draft, never final</div>
           <p className="text-violet-800">
             Use this tool to think through whether suspension is the proportionate response. Suspension is a neutral
             act pending investigation. The output is a structured risk assessment, a welfare plan, and an Aria
@@ -283,7 +283,7 @@ export default function SuspensionDecisionPage() {
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1">Acting as</label>
+              <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Acting as</label>
               <Select value={actorRole} onValueChange={setActorRole}>
                 <SelectTrigger><SelectValue /></SelectTrigger>
                 <SelectContent>
@@ -294,20 +294,20 @@ export default function SuspensionDecisionPage() {
               </Select>
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1">Actor user id</label>
+              <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Actor user id</label>
               <Input value={actorUserId} onChange={(e) => setActorUserId(e.target.value)} />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1">Staff id</label>
+              <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Staff id</label>
               <Input value={staffId} onChange={(e) => setStaffId(e.target.value)} placeholder="e.g. staff_123" />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1">Case id (optional)</label>
+              <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Case id (optional)</label>
               <Input value={caseId} onChange={(e) => setCaseId(e.target.value)} />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-semibold text-slate-600 mb-1">Concern summary</label>
+            <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Concern summary</label>
             <Textarea
               value={concernSummary}
               onChange={(e) => setConcernSummary(e.target.value)}
@@ -327,10 +327,10 @@ export default function SuspensionDecisionPage() {
         </CardHeader>
         <CardContent className="space-y-3">
           {RISK_FACTORS.map((f) => (
-            <div key={f.key} className="grid grid-cols-1 lg:grid-cols-3 gap-2 items-start border-b border-slate-100 pb-3 last:border-0 last:pb-0">
+            <div key={f.key} className="grid grid-cols-1 lg:grid-cols-3 gap-2 items-start border-b border-[var(--cs-border-subtle)] pb-3 last:border-0 last:pb-0">
               <div>
-                <div className="text-sm font-medium text-slate-800">{f.label}</div>
-                <div className="text-xs text-slate-500">{f.help}</div>
+                <div className="text-sm font-medium text-[var(--cs-navy)]">{f.label}</div>
+                <div className="text-xs text-[var(--cs-text-muted)]">{f.help}</div>
               </div>
               <Select
                 value={riskFactors[f.key].rating}
@@ -378,7 +378,7 @@ export default function SuspensionDecisionPage() {
             ))}
           </div>
           <div>
-            <label className="block text-xs font-semibold text-slate-600 mb-1">
+            <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">
               Rationale for not proceeding with an alternative
             </label>
             <Textarea
@@ -464,7 +464,7 @@ export default function SuspensionDecisionPage() {
             <Input type="date" value={firstReviewDate} onChange={(e) => setFirstReviewDate(e.target.value)} placeholder="First review date" />
           </div>
           <div>
-            <label className="block text-xs font-semibold text-slate-600 mb-1">Welfare support offered (one per line)</label>
+            <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Welfare support offered (one per line)</label>
             <Textarea
               value={welfareSupportRaw}
               onChange={(e) => setWelfareSupportRaw(e.target.value)}
@@ -498,7 +498,7 @@ export default function SuspensionDecisionPage() {
           </div>
           {proposedDecision === "alternative_arrangement" ? (
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1">Alternative arrangement description</label>
+              <label className="block text-xs font-semibold text-[var(--cs-text-secondary)] mb-1">Alternative arrangement description</label>
               <Textarea
                 value={alternativeArrangementDescription}
                 onChange={(e) => setAlternativeArrangementDescription(e.target.value)}
@@ -528,27 +528,27 @@ export default function SuspensionDecisionPage() {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
             <Card>
               <CardContent className="p-4">
-                <div className="text-xs uppercase text-slate-500 mb-1">Aggregate risk</div>
+                <div className="text-xs uppercase text-[var(--cs-text-muted)] mb-1">Aggregate risk</div>
                 <Badge className={cn("border", RISK_COLOUR[analysis.overallRiskGrade])}>
                   {analysis.overallRiskGrade.replace(/_/g, " ")}
                 </Badge>
-                <div className="text-xs text-slate-500 mt-1">
+                <div className="text-xs text-[var(--cs-text-muted)] mt-1">
                   Driven by {analysis.highestRiskFactor.replace(/_/g, " ")}
                 </div>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="p-4">
-                <div className="text-xs uppercase text-slate-500 mb-1">Proportionality</div>
+                <div className="text-xs uppercase text-[var(--cs-text-muted)] mb-1">Proportionality</div>
                 <Badge className={cn("border", PROPORTIONALITY_COLOUR[analysis.proportionalityRating])}>
                   {analysis.proportionalityRating}
                 </Badge>
-                <div className="text-xs text-slate-500 mt-1 line-clamp-2">{analysis.proportionalityRationale}</div>
+                <div className="text-xs text-[var(--cs-text-muted)] mt-1 line-clamp-2">{analysis.proportionalityRationale}</div>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="p-4">
-                <div className="text-xs uppercase text-slate-500 mb-1">Flags</div>
+                <div className="text-xs uppercase text-[var(--cs-text-muted)] mb-1">Flags</div>
                 <div className="flex gap-2 text-sm">
                   <span className="text-red-700">{analysis.flags.filter((f) => f.severity === "block").length} block</span>
                   <span className="text-amber-700">{analysis.flags.filter((f) => f.severity === "warning").length} warn</span>
@@ -558,8 +558,8 @@ export default function SuspensionDecisionPage() {
             </Card>
             <Card>
               <CardContent className="p-4">
-                <div className="text-xs uppercase text-slate-500 mb-1">Aria confidence</div>
-                <div className="text-3xl font-semibold text-slate-900">{Math.round(analysis.ariaConfidence * 100)}%</div>
+                <div className="text-xs uppercase text-[var(--cs-text-muted)] mb-1">Aria confidence</div>
+                <div className="text-3xl font-semibold text-[var(--cs-navy)]">{Math.round(analysis.ariaConfidence * 100)}%</div>
               </CardContent>
             </Card>
           </div>
@@ -583,10 +583,10 @@ export default function SuspensionDecisionPage() {
                         <li key={i} className="border-l-2 pl-3" style={{ borderColor: f.severity === "block" ? "#fecaca" : f.severity === "warning" ? "#fde68a" : "#bfdbfe" }}>
                           <div className="flex items-center gap-2 mb-1 flex-wrap">
                             <Badge className={cn("border text-xs", SEVERITY_COLOUR[f.severity])}>{f.severity}</Badge>
-                            <span className="text-xs text-slate-500">{f.category}</span>
+                            <span className="text-xs text-[var(--cs-text-muted)]">{f.category}</span>
                           </div>
-                          <p className="text-sm text-slate-800">{f.message}</p>
-                          {f.suggestion ? <p className="text-xs text-slate-600 mt-1 italic">Suggestion: {f.suggestion}</p> : null}
+                          <p className="text-sm text-[var(--cs-navy)]">{f.message}</p>
+                          {f.suggestion ? <p className="text-xs text-[var(--cs-text-secondary)] mt-1 italic">Suggestion: {f.suggestion}</p> : null}
                         </li>
                       ))}
                     </ul>
@@ -608,9 +608,9 @@ export default function SuspensionDecisionPage() {
                           <div className="flex items-center gap-2 mb-1 flex-wrap">
                             <span className="font-medium text-sm">{a.title}</span>
                             <Badge className={cn("border text-xs", PRIORITY_COLOUR[a.priority] ?? "")}>{a.priority}</Badge>
-                            <span className="text-xs text-slate-500">due {a.dueDays}d, {a.assignedRole}</span>
+                            <span className="text-xs text-[var(--cs-text-muted)]">due {a.dueDays}d, {a.assignedRole}</span>
                           </div>
-                          <p className="text-sm text-slate-600">{a.description}</p>
+                          <p className="text-sm text-[var(--cs-text-secondary)]">{a.description}</p>
                         </li>
                       ))}
                     </ul>
@@ -623,11 +623,11 @@ export default function SuspensionDecisionPage() {
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2 text-base">
-                    <Sparkles className="h-4 w-4 text-violet-500" /> Aria suggested draft of written reasons
+                    <Sparkles className="h-4 w-4 text-violet-500" /> ARIA suggested draft of written reasons
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <pre className="whitespace-pre-wrap text-sm text-slate-800 font-sans">{analysis.writtenReasonsDraft}</pre>
+                  <pre className="whitespace-pre-wrap text-sm text-[var(--cs-navy)] font-sans">{analysis.writtenReasonsDraft}</pre>
                 </CardContent>
               </Card>
 
@@ -635,7 +635,7 @@ export default function SuspensionDecisionPage() {
                 <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2 text-base">
-                      <Calendar className="h-4 w-4 text-slate-500" /> Suggested review schedule
+                      <Calendar className="h-4 w-4 text-[var(--cs-text-muted)]" /> Suggested review schedule
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -643,7 +643,7 @@ export default function SuspensionDecisionPage() {
                       {analysis.reviewSchedule.map((r) => (
                         <li key={r.reviewNumber} className="flex justify-between">
                           <span>Review {r.reviewNumber}</span>
-                          <span className="text-slate-600">{r.expectedDate}</span>
+                          <span className="text-[var(--cs-text-secondary)]">{r.expectedDate}</span>
                         </li>
                       ))}
                     </ul>
@@ -656,7 +656,7 @@ export default function SuspensionDecisionPage() {
                   <CardTitle className="text-base">Regulatory framework</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <ul className="text-xs text-slate-600 space-y-1">
+                  <ul className="text-xs text-[var(--cs-text-secondary)] space-y-1">
                     {analysis.regulatoryLinks.map((s, i) => <li key={i}>· {s}</li>)}
                   </ul>
                 </CardContent>

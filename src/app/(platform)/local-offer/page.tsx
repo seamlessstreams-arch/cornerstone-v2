@@ -27,7 +27,7 @@ const CAT_META: Record<LocalOfferCategory, { label: string; color: string; icon:
   independence: { label: "Independence", color: "bg-teal-100 text-teal-800", icon: Star },
   therapeutic: { label: "Therapeutic", color: "bg-indigo-100 text-indigo-800", icon: Heart },
   environment: { label: "Environment", color: "bg-emerald-100 text-emerald-800", icon: Home },
-  workforce: { label: "Workforce", color: "bg-slate-100 text-slate-700", icon: Users },
+  workforce: { label: "Workforce", color: "bg-slate-100 text-[var(--cs-text-secondary)]", icon: Users },
 };
 
 /* ── page ──────────────────────────────────────────────────────────────────── */

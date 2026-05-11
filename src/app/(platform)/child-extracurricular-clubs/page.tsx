@@ -40,7 +40,7 @@ const categoryColour: Record<ExtracurricularCategory, string> = {
   art_craft: "bg-pink-100 text-pink-800",
   volunteering: "bg-emerald-100 text-emerald-800",
   youth_advocacy: "bg-rose-100 text-rose-800",
-  other: "bg-slate-100 text-slate-800",
+  other: "bg-slate-100 text-[var(--cs-navy)]",
 };
 
 const socialFitColour: Record<ClubSocialFit, string> = {
@@ -48,7 +48,7 @@ const socialFitColour: Record<ClubSocialFit, string> = {
   settled: "bg-sky-100 text-sky-800",
   strong_friendships: "bg-emerald-100 text-emerald-800",
   mixed: "bg-amber-100 text-amber-800",
-  stepping_back: "bg-slate-100 text-slate-800",
+  stepping_back: "bg-slate-100 text-[var(--cs-navy)]",
 };
 
 const exportCols: ExportColumn<ExtracurricularClubRecord>[] = [
@@ -251,7 +251,7 @@ export default function ChildExtracurricularClubsPage() {
           return (
             <div key={c.id} className="rounded-xl border bg-white overflow-hidden">
               <button
-                className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                 onClick={() => setExpandedId(isExpanded ? null : c.id)}
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -278,7 +278,7 @@ export default function ChildExtracurricularClubsPage() {
                       "text-xs px-2 py-0.5 rounded-full font-medium",
                       c.ongoing
                         ? "bg-emerald-100 text-emerald-800"
-                        : "bg-slate-100 text-slate-700"
+                        : "bg-slate-100 text-[var(--cs-text-secondary)]"
                     )}
                   >
                     {c.ongoing ? "Ongoing" : "Ended"}
@@ -387,7 +387,7 @@ export default function ChildExtracurricularClubsPage() {
                   </div>
 
                   <div className="bg-white rounded-lg p-3 border">
-                    <p className="text-xs font-semibold text-slate-700 uppercase tracking-wide mb-1">
+                    <p className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide mb-1">
                       Staff Observation
                     </p>
                     <p className="text-sm">{c.staff_observation}</p>

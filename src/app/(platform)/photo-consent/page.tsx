@@ -33,7 +33,7 @@ const STATUS_CLR: Record<PhotoConsentStatus, string> = {
   granted: "bg-green-100 text-green-800",
   refused: "bg-red-100 text-red-800",
   conditional: "bg-amber-100 text-amber-800",
-  expired: "bg-slate-100 text-slate-800",
+  expired: "bg-slate-100 text-[var(--cs-navy)]",
   pending_sw: "bg-blue-100 text-blue-800",
 };
 
@@ -140,7 +140,7 @@ export default function PhotoConsentPage() {
                       <p className="font-medium mb-2">Consent Permissions</p>
                       <div className="space-y-2">
                         {r.permissions.map((p, i) => (
-                          <div key={i} className={cn("rounded-lg p-3 border", p.status === "granted" ? "bg-green-50 border-green-200" : p.status === "refused" ? "bg-red-50 border-red-200" : p.status === "conditional" ? "bg-amber-50 border-amber-200" : "bg-slate-50 border-slate-200")}>
+                          <div key={i} className={cn("rounded-lg p-3 border", p.status === "granted" ? "bg-green-50 border-green-200" : p.status === "refused" ? "bg-red-50 border-red-200" : p.status === "conditional" ? "bg-amber-50 border-amber-200" : "bg-slate-50 border-[var(--cs-border)]")}>
                             <div className="flex items-center justify-between mb-1">
                               <p className="font-medium text-xs">{PHOTO_CONSENT_CATEGORY_LABEL[p.category]}</p>
                               <Badge variant="outline" className={STATUS_CLR[p.status]}>{PHOTO_CONSENT_STATUS_LABEL[p.status]}</Badge>

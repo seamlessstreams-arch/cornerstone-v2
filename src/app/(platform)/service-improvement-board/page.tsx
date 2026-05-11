@@ -38,13 +38,13 @@ import {
 /* ── local config ─────────────────────────────────────────────────────────── */
 
 const statusColour: Record<ServiceImprovementStatus, string> = {
-  proposed: "bg-slate-100 text-slate-800",
+  proposed: "bg-slate-100 text-[var(--cs-navy)]",
   approved: "bg-blue-100 text-blue-800",
   in_progress: "bg-amber-100 text-amber-800",
   implemented: "bg-emerald-100 text-emerald-800",
   embedded: "bg-green-100 text-green-800",
   on_hold: "bg-purple-100 text-purple-800",
-  closed: "bg-slate-100 text-slate-800",
+  closed: "bg-slate-100 text-[var(--cs-navy)]",
 };
 
 const ragColour: Record<ServiceImprovementRagRating, string> = {
@@ -191,7 +191,7 @@ export default function ServiceImprovementBoardPage() {
           return (
             <div key={init.id} className="rounded-xl border bg-white overflow-hidden">
               <button
-                className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"
+                className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
                 onClick={() => setExpandedId(isExpanded ? null : init.id)}
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -248,7 +248,7 @@ export default function ServiceImprovementBoardPage() {
                           {m.achieved ? (
                             <CheckCircle className="h-4 w-4 text-green-500 shrink-0" />
                           ) : (
-                            <Clock className="h-4 w-4 text-slate-400 shrink-0" />
+                            <Clock className="h-4 w-4 text-[var(--cs-text-muted)] shrink-0" />
                           )}
                           <span className="flex-1">{m.milestone}</span>
                           <span className="text-xs text-muted-foreground whitespace-nowrap">

@@ -161,10 +161,10 @@ function NarrativeGenerator() {
               <Brain className="h-5 w-5 text-white" />
             </div>
             <div>
-              <CardTitle className="text-base font-semibold text-slate-900">
+              <CardTitle className="text-base font-semibold text-[var(--cs-navy)]">
                 Reg 44/45 Narrative Generator
               </CardTitle>
-              <p className="text-xs text-slate-500 mt-0.5">
+              <p className="text-xs text-[var(--cs-text-muted)] mt-0.5">
                 ARIA generates a professional draft for regulatory reporting
               </p>
             </div>
@@ -181,14 +181,14 @@ function NarrativeGenerator() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {/* Report type */}
           <div className="space-y-1.5">
-            <label className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
+            <label className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider">
               Report Type
             </label>
             <select
               value={reportType}
               onChange={(e) => setReportType(e.target.value)}
               disabled={isGenerating}
-              className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-100 disabled:opacity-50"
+              className="w-full rounded-lg border border-[var(--cs-border)] bg-white px-3 py-2 text-sm text-[var(--cs-navy)] shadow-sm focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-100 disabled:opacity-50"
             >
               <option>Reg 44 Independent Visit Report</option>
               <option>Reg 45 Quality of Care Report</option>
@@ -197,14 +197,14 @@ function NarrativeGenerator() {
 
           {/* Period */}
           <div className="space-y-1.5">
-            <label className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
+            <label className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider">
               Period
             </label>
             <select
               value={period}
               onChange={(e) => setPeriod(e.target.value)}
               disabled={isGenerating}
-              className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-100 disabled:opacity-50"
+              className="w-full rounded-lg border border-[var(--cs-border)] bg-white px-3 py-2 text-sm text-[var(--cs-navy)] shadow-sm focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-100 disabled:opacity-50"
             >
               <option>Last 28 days</option>
               <option>Last 3 months</option>
@@ -237,8 +237,8 @@ function NarrativeGenerator() {
 
         {/* Additional context */}
         <div className="space-y-1.5">
-          <label className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
-            Additional Context <span className="normal-case font-normal text-slate-400">(optional)</span>
+          <label className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider">
+            Additional Context <span className="normal-case font-normal text-[var(--cs-text-muted)]">(optional)</span>
           </label>
           <textarea
             value={additionalContext}
@@ -246,7 +246,7 @@ function NarrativeGenerator() {
             disabled={isGenerating}
             placeholder="Add any specific themes, events, or context you want ARIA to include in the narrative..."
             rows={3}
-            className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 placeholder:text-slate-400 shadow-sm focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-100 disabled:opacity-50 resize-none"
+            className="w-full rounded-lg border border-[var(--cs-border)] bg-white px-3 py-2 text-sm text-[var(--cs-text-secondary)] placeholder:text-[var(--cs-text-muted)] shadow-sm focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-100 disabled:opacity-50 resize-none"
           />
         </div>
 
@@ -289,7 +289,7 @@ function NarrativeGenerator() {
               )}
             </div>
             <div className="p-4">
-              <pre className="whitespace-pre-wrap font-mono text-sm text-slate-800 leading-relaxed min-h-[80px]">
+              <pre className="whitespace-pre-wrap font-mono text-sm text-[var(--cs-navy)] leading-relaxed min-h-[80px]">
                 {output}
                 {isGenerating && (
                   <span className="inline-block w-2 h-4 bg-violet-400 animate-pulse ml-0.5 align-middle" />
@@ -347,13 +347,13 @@ function LiveIntelligenceSummary() {
         <CardContent className="p-4">
           <div className="flex items-start justify-between">
             <div>
-              <div className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 mb-1">
+              <div className="text-[11px] font-semibold uppercase tracking-wider text-[var(--cs-text-muted)] mb-1">
                 Active Alerts
               </div>
               {alertsQuery.isLoading ? (
                 <div className="flex items-center gap-1.5 mt-2">
-                  <Loader2 className="h-4 w-4 animate-spin text-slate-400" />
-                  <span className="text-xs text-slate-400">Loading…</span>
+                  <Loader2 className="h-4 w-4 animate-spin text-[var(--cs-text-muted)]" />
+                  <span className="text-xs text-[var(--cs-text-muted)]">Loading…</span>
                 </div>
               ) : (
                 <>
@@ -416,13 +416,13 @@ function LiveIntelligenceSummary() {
         <CardContent className="p-4">
           <div className="flex items-start justify-between">
             <div>
-              <div className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 mb-1">
+              <div className="text-[11px] font-semibold uppercase tracking-wider text-[var(--cs-text-muted)] mb-1">
                 Overdue Actions
               </div>
               {actionsQuery.isLoading ? (
                 <div className="flex items-center gap-1.5 mt-2">
-                  <Loader2 className="h-4 w-4 animate-spin text-slate-400" />
-                  <span className="text-xs text-slate-400">Loading…</span>
+                  <Loader2 className="h-4 w-4 animate-spin text-[var(--cs-text-muted)]" />
+                  <span className="text-xs text-[var(--cs-text-muted)]">Loading…</span>
                 </div>
               ) : (
                 <>
@@ -463,29 +463,29 @@ function LiveIntelligenceSummary() {
       </Card>
 
       {/* Home Climate */}
-      <Card className={cn("border", CLIMATE_LEVEL_BG[climateLevel] ?? "border-slate-200 bg-white")}>
+      <Card className={cn("border", CLIMATE_LEVEL_BG[climateLevel] ?? "border-[var(--cs-border)] bg-white")}>
         <CardContent className="p-4">
           <div className="flex items-start justify-between">
             <div>
-              <div className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 mb-1">
+              <div className="text-[11px] font-semibold uppercase tracking-wider text-[var(--cs-text-muted)] mb-1">
                 Home Climate
               </div>
               {climateQuery.isLoading ? (
                 <div className="flex items-center gap-1.5 mt-2">
-                  <Loader2 className="h-4 w-4 animate-spin text-slate-400" />
-                  <span className="text-xs text-slate-400">Loading…</span>
+                  <Loader2 className="h-4 w-4 animate-spin text-[var(--cs-text-muted)]" />
+                  <span className="text-xs text-[var(--cs-text-muted)]">Loading…</span>
                 </div>
               ) : (
                 <>
                   <div className={cn(
                     "text-3xl font-black capitalize",
-                    CLIMATE_LEVEL_COLORS[climateLevel] ?? "text-slate-700"
+                    CLIMATE_LEVEL_COLORS[climateLevel] ?? "text-[var(--cs-text-secondary)]"
                   )}>
                     {climateLevel}
                   </div>
                   {climateScore !== null && (
-                    <div className="text-xs text-slate-500 mt-1">
-                      Score: <span className="font-semibold text-slate-700">{climateScore}/100</span>
+                    <div className="text-xs text-[var(--cs-text-muted)] mt-1">
+                      Score: <span className="font-semibold text-[var(--cs-text-secondary)]">{climateScore}/100</span>
                     </div>
                   )}
                 </>
@@ -500,7 +500,7 @@ function LiveIntelligenceSummary() {
             )}>
               <Zap className={cn(
                 "h-5 w-5",
-                CLIMATE_LEVEL_COLORS[climateLevel] ?? "text-slate-600"
+                CLIMATE_LEVEL_COLORS[climateLevel] ?? "text-[var(--cs-text-secondary)]"
               )} />
             </div>
           </div>
@@ -518,7 +518,7 @@ const ACTION_STATUS_CFG: Record<string, { label: string; colour: string; bg: str
   completed:   { label: "Completed",   colour: "text-emerald-700", bg: "bg-emerald-50 border-emerald-200", icon: CheckCircle2 },
   overdue:     { label: "Overdue",     colour: "text-red-700",     bg: "bg-red-50 border-red-200",      icon: AlertTriangle },
   stalled:     { label: "Stalled",     colour: "text-orange-700",  bg: "bg-orange-50 border-orange-200", icon: AlertTriangle },
-  cancelled:   { label: "Cancelled",   colour: "text-slate-500",   bg: "bg-slate-50 border-slate-200",  icon: FileText },
+  cancelled:   { label: "Cancelled",   colour: "text-[var(--cs-text-muted)]",   bg: "bg-slate-50 border-[var(--cs-border)]",  icon: FileText },
 };
 
 const ACTION_EXPORT_COLS: ExportColumn<ActionOutcome>[] = [
@@ -578,20 +578,20 @@ function ActionPlanPanel() {
       {/* Summary strip */}
       <div className="grid grid-cols-4 gap-3">
         <div className="rounded-xl border bg-white p-3 text-center">
-          <div className="text-xl font-bold text-slate-800 tabular-nums">{actions.length}</div>
-          <div className="text-[10px] text-slate-500">Total Actions</div>
+          <div className="text-xl font-bold text-[var(--cs-navy)] tabular-nums">{actions.length}</div>
+          <div className="text-[10px] text-[var(--cs-text-muted)]">Total Actions</div>
         </div>
         <div className={cn("rounded-xl border p-3 text-center", openCount > 0 ? "bg-blue-50 border-blue-200" : "bg-white")}>
-          <div className={cn("text-xl font-bold tabular-nums", openCount > 0 ? "text-blue-700" : "text-slate-400")}>{openCount}</div>
-          <div className="text-[10px] text-slate-500">Open</div>
+          <div className={cn("text-xl font-bold tabular-nums", openCount > 0 ? "text-blue-700" : "text-[var(--cs-text-muted)]")}>{openCount}</div>
+          <div className="text-[10px] text-[var(--cs-text-muted)]">Open</div>
         </div>
         <div className={cn("rounded-xl border p-3 text-center", overdueCount > 0 ? "bg-red-50 border-red-200" : "bg-white")}>
-          <div className={cn("text-xl font-bold tabular-nums", overdueCount > 0 ? "text-red-700" : "text-slate-400")}>{overdueCount}</div>
-          <div className="text-[10px] text-slate-500">Overdue</div>
+          <div className={cn("text-xl font-bold tabular-nums", overdueCount > 0 ? "text-red-700" : "text-[var(--cs-text-muted)]")}>{overdueCount}</div>
+          <div className="text-[10px] text-[var(--cs-text-muted)]">Overdue</div>
         </div>
         <div className={cn("rounded-xl border p-3 text-center", completedCount > 0 ? "bg-emerald-50 border-emerald-200" : "bg-white")}>
-          <div className={cn("text-xl font-bold tabular-nums", completedCount > 0 ? "text-emerald-700" : "text-slate-400")}>{completedCount}</div>
-          <div className="text-[10px] text-slate-500">Completed</div>
+          <div className={cn("text-xl font-bold tabular-nums", completedCount > 0 ? "text-emerald-700" : "text-[var(--cs-text-muted)]")}>{completedCount}</div>
+          <div className="text-[10px] text-[var(--cs-text-muted)]">Completed</div>
         </div>
       </div>
 
@@ -604,7 +604,7 @@ function ActionPlanPanel() {
               onClick={() => setFilter(f)}
               className={cn(
                 "px-3 py-1.5 rounded-full text-xs font-medium border transition-all capitalize",
-                filter === f ? "bg-slate-900 text-white border-slate-900" : "bg-white text-slate-600 border-slate-200 hover:border-slate-300"
+                filter === f ? "bg-slate-900 text-white border-slate-900" : "bg-white text-[var(--cs-text-secondary)] border-[var(--cs-border)] hover:border-slate-300"
               )}
             >
               {f}
@@ -621,17 +621,17 @@ function ActionPlanPanel() {
 
       {/* Action list */}
       {allActionsQuery.isLoading ? (
-        <div className="flex items-center justify-center py-12 text-slate-400">
+        <div className="flex items-center justify-center py-12 text-[var(--cs-text-muted)]">
           <Loader2 className="h-5 w-5 animate-spin mr-2" />
           <span className="text-sm">Loading actions…</span>
         </div>
       ) : filtered.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-8 text-center">
+        <div className="rounded-2xl border border-dashed border-[var(--cs-border)] bg-slate-50 p-8 text-center">
           <CheckCircle2 className="h-8 w-8 text-emerald-400 mx-auto mb-2" />
-          <div className="text-sm font-medium text-slate-600">
+          <div className="text-sm font-medium text-[var(--cs-text-secondary)]">
             {filter === "overdue" ? "No overdue actions" : filter === "completed" ? "No completed actions" : "No open actions"}
           </div>
-          <div className="text-xs text-slate-400 mt-1">
+          <div className="text-xs text-[var(--cs-text-muted)] mt-1">
             {filter === "open" ? "All actions have been resolved" : "Try a different filter"}
           </div>
         </div>
@@ -650,7 +650,7 @@ function ActionPlanPanel() {
                 "rounded-2xl border bg-white overflow-hidden transition-all",
                 action.status === "overdue" ? "border-l-4 border-l-red-500 border-red-200" :
                 action.status === "stalled" ? "border-l-4 border-l-orange-400 border-orange-200" :
-                "border-slate-200"
+                "border-[var(--cs-border)]"
               )}>
                 <button
                   onClick={() => setExpandedId(isExpanded ? null : action.id)}
@@ -661,7 +661,7 @@ function ActionPlanPanel() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-sm font-semibold text-slate-900">{action.what_was_agreed}</span>
+                      <span className="text-sm font-semibold text-[var(--cs-navy)]">{action.what_was_agreed}</span>
                       <Badge className={cn("text-[9px] rounded-full border-0", cfg.bg, cfg.colour)}>
                         {cfg.label}
                       </Badge>
@@ -669,7 +669,7 @@ function ActionPlanPanel() {
                         <Badge className="text-[9px] rounded-full bg-violet-100 text-violet-700 border-0 capitalize">{action.effectiveness.replace(/_/g, " ")}</Badge>
                       )}
                     </div>
-                    <div className="flex items-center gap-3 text-xs text-slate-500 mt-1">
+                    <div className="flex items-center gap-3 text-xs text-[var(--cs-text-muted)] mt-1">
                       {action.owner_id && (
                         <span>Owner: {getStaffName(action.owner_id)}</span>
                       )}
@@ -681,7 +681,7 @@ function ActionPlanPanel() {
                           <Calendar className="h-3 w-3" />
                           {formatDate(action.due_date)}
                           {daysUntilDue !== null && daysUntilDue > 0 && (
-                            <span className="text-slate-400">({daysUntilDue}d)</span>
+                            <span className="text-[var(--cs-text-muted)]">({daysUntilDue}d)</span>
                           )}
                         </span>
                       )}
@@ -690,7 +690,7 @@ function ActionPlanPanel() {
                 </button>
 
                 {isExpanded && (
-                  <div className="px-4 pb-4 space-y-3 border-t border-slate-100 pt-3">
+                  <div className="px-4 pb-4 space-y-3 border-t border-[var(--cs-border-subtle)] pt-3">
                     {/* Why it matters */}
                     <div className="rounded-xl bg-blue-50 border border-blue-100 px-3 py-2">
                       <div className="text-[10px] font-semibold text-blue-600 mb-0.5">Why This Matters</div>
@@ -715,9 +715,9 @@ function ActionPlanPanel() {
 
                     {/* Effectiveness notes */}
                     {action.effectiveness_notes && (
-                      <div className="rounded-xl bg-slate-50 border border-slate-100 px-3 py-2">
-                        <div className="text-[10px] font-semibold text-slate-600 mb-0.5">Effectiveness Notes</div>
-                        <div className="text-xs text-slate-800">{action.effectiveness_notes}</div>
+                      <div className="rounded-xl bg-slate-50 border border-[var(--cs-border-subtle)] px-3 py-2">
+                        <div className="text-[10px] font-semibold text-[var(--cs-text-secondary)] mb-0.5">Effectiveness Notes</div>
+                        <div className="text-xs text-[var(--cs-navy)]">{action.effectiveness_notes}</div>
                       </div>
                     )}
 
@@ -747,7 +747,7 @@ function ActionPlanPanel() {
                     )}
 
                     {/* Created info */}
-                    <div className="flex items-center gap-4 text-[10px] text-slate-400 pt-1">
+                    <div className="flex items-center gap-4 text-[10px] text-[var(--cs-text-muted)] pt-1">
                       <span>Created: {formatDate(action.created_at)}</span>
                       {action.due_date && (
                         <span>Due: {formatDate(action.due_date)}</span>
@@ -762,8 +762,8 @@ function ActionPlanPanel() {
       )}
 
       {/* Regulatory note */}
-      <div className="rounded-xl border border-slate-100 bg-slate-50 px-4 py-3 text-xs text-slate-500">
-        <span className="font-semibold text-slate-600">Regulatory Note — </span>
+      <div className="rounded-xl border border-[var(--cs-border-subtle)] bg-slate-50 px-4 py-3 text-xs text-[var(--cs-text-muted)]">
+        <span className="font-semibold text-[var(--cs-text-secondary)]">Regulatory Note — </span>
         All actions arising from Ofsted inspections, Reg 44 visits, and internal quality audits must be tracked
         through to completion with evidence of impact. Ofsted inspectors will review the action plan during
         the opening meeting.
@@ -838,8 +838,8 @@ export default function InspectionPage() {
               className={cn(
                 "flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium transition-all",
                 activeTab === id
-                  ? "bg-white text-slate-900 shadow-sm"
-                  : "text-slate-500 hover:text-slate-700 hover:bg-white/50"
+                  ? "bg-white text-[var(--cs-navy)] shadow-sm"
+                  : "text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] hover:bg-white/50"
               )}
             >
               <Icon className="h-4 w-4" />
@@ -860,22 +860,22 @@ export default function InspectionPage() {
             <div className="text-4xl font-black text-blue-700">{HOME.last_inspection_grade}</div>
             <div className="text-xs text-blue-500 mt-1">{HOME.last_inspection_date}</div>
           </div>
-          <div className="rounded-2xl border border-slate-200 bg-white p-5">
-            <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Readiness Score</div>
+          <div className="rounded-2xl border border-[var(--cs-border)] bg-white p-5">
+            <div className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider">Readiness Score</div>
             <div className={cn("mt-1 text-3xl font-bold", avgReadiness >= 85 ? "text-emerald-600" : avgReadiness >= 70 ? "text-amber-600" : "text-red-600")}>
               {avgReadiness}%
             </div>
-            <div className="text-xs text-slate-400 mt-0.5">{warnings} areas need attention</div>
+            <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">{warnings} areas need attention</div>
           </div>
-          <div className="rounded-2xl border border-slate-200 bg-white p-5">
-            <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Est. Next Inspection</div>
-            <div className="mt-1 text-2xl font-bold text-slate-900">{formatDate(nextInspectionEstimate)}</div>
-            <div className="text-xs text-slate-400 mt-0.5">±3 months (rolling)</div>
+          <div className="rounded-2xl border border-[var(--cs-border)] bg-white p-5">
+            <div className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider">Est. Next Inspection</div>
+            <div className="mt-1 text-2xl font-bold text-[var(--cs-navy)]">{formatDate(nextInspectionEstimate)}</div>
+            <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">±3 months (rolling)</div>
           </div>
-          <div className="rounded-2xl border border-slate-200 bg-white p-5">
-            <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Reg 44 Visits</div>
+          <div className="rounded-2xl border border-[var(--cs-border)] bg-white p-5">
+            <div className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider">Reg 44 Visits</div>
             <div className="mt-1 text-3xl font-bold text-violet-600">3</div>
-            <div className="text-xs text-slate-400 mt-0.5">This year</div>
+            <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">This year</div>
           </div>
         </div>
 
@@ -883,8 +883,8 @@ export default function InspectionPage() {
         <div>
           <div className="flex items-center gap-2 mb-3">
             <Sparkles className="h-4 w-4 text-violet-500" />
-            <h2 className="text-sm font-semibold text-slate-700">Live Intelligence</h2>
-            <span className="text-xs text-slate-400">— real-time signals from across the home</span>
+            <h2 className="text-sm font-semibold text-[var(--cs-text-secondary)]">Live Intelligence</h2>
+            <span className="text-xs text-[var(--cs-text-muted)]">— real-time signals from across the home</span>
           </div>
           <LiveIntelligenceSummary />
         </div>
@@ -903,7 +903,7 @@ export default function InspectionPage() {
                 {readinessAreas.map(({ area, score, status }) => (
                   <div key={area} className="space-y-1">
                     <div className="flex justify-between text-xs">
-                      <span className={cn("text-slate-700", status === "warn" ? "text-amber-700 font-medium" : "")}>{area}</span>
+                      <span className={cn("text-[var(--cs-text-secondary)]", status === "warn" ? "text-amber-700 font-medium" : "")}>{area}</span>
                       <span className={cn("font-semibold", score >= 85 ? "text-emerald-600" : score >= 70 ? "text-amber-600" : "text-red-600")}>{score}%</span>
                     </div>
                     <Progress
@@ -927,15 +927,15 @@ export default function InspectionPage() {
             <CardContent>
               <div className="space-y-3">
                 {INSPECTION_HISTORY.map((insp) => (
-                  <div key={insp.date} className="rounded-xl border border-slate-200 p-3 space-y-2">
+                  <div key={insp.date} className="rounded-xl border border-[var(--cs-border)] p-3 space-y-2">
                     <div className="flex items-center gap-2">
-                      <span className="text-sm font-semibold text-slate-900">{insp.type}</span>
+                      <span className="text-sm font-semibold text-[var(--cs-navy)]">{insp.type}</span>
                       <Badge className={cn("text-[9px] rounded-full border", GRADE_COLORS[insp.grade] || "bg-slate-100")}>
                         {insp.grade}
                       </Badge>
                     </div>
-                    <div className="text-xs text-slate-500">{formatDate(insp.date)} · {insp.inspector}</div>
-                    <div className="text-xs text-slate-600">{insp.actionsComplete}/{insp.actions} actions completed</div>
+                    <div className="text-xs text-[var(--cs-text-muted)]">{formatDate(insp.date)} · {insp.inspector}</div>
+                    <div className="text-xs text-[var(--cs-text-secondary)]">{insp.actionsComplete}/{insp.actions} actions completed</div>
                     <Button
                       size="sm"
                       variant="outline"

@@ -151,7 +151,7 @@ export default function PracticeObservationsPage() {
       <div id="observations-content" className="space-y-0">
       {showAria && (
         <div className="relative">
-          <button onClick={() => setShowAria(false)} className="absolute top-3 right-3 z-10 text-slate-400 hover:text-slate-600 text-xs">✕ Close</button>
+          <button onClick={() => setShowAria(false)} className="absolute top-3 right-3 z-10 text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] text-xs">✕ Close</button>
           <AriaPanel
             mode="staff_development_summary"
             pageContext={`Practice observations: ${allObs.length} total. Outstanding: ${outstanding}. Requires support: ${needsSupport}. Staff observed: ${staffObserved.map(getStaffName).join(", ")}.`}
@@ -161,37 +161,37 @@ export default function PracticeObservationsPage() {
 
       {/* KPI row */}
       <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
-        <div className="rounded-xl border border-slate-200 bg-white p-3 text-center">
+        <div className="rounded-xl border border-[var(--cs-border)] bg-white p-3 text-center">
           <Eye className="h-4 w-4 text-indigo-500 mx-auto mb-1" />
-          <div className="text-lg font-bold text-slate-800 tabular-nums">{allObs.length}</div>
-          <div className="text-[10px] text-slate-500">Total</div>
+          <div className="text-lg font-bold text-[var(--cs-navy)] tabular-nums">{allObs.length}</div>
+          <div className="text-[10px] text-[var(--cs-text-muted)]">Total</div>
         </div>
         <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-center">
           <Star className="h-4 w-4 text-emerald-500 mx-auto mb-1" />
           <div className="text-lg font-bold text-emerald-700 tabular-nums">{outstanding}</div>
-          <div className="text-[10px] text-slate-500">Outstanding</div>
+          <div className="text-[10px] text-[var(--cs-text-muted)]">Outstanding</div>
         </div>
         <div className="rounded-xl border border-blue-200 bg-blue-50 p-3 text-center">
           <CheckCircle2 className="h-4 w-4 text-blue-500 mx-auto mb-1" />
           <div className="text-lg font-bold text-blue-700 tabular-nums">{meetsStandard}</div>
-          <div className="text-[10px] text-slate-500">Meets Standard</div>
+          <div className="text-[10px] text-[var(--cs-text-muted)]">Meets Standard</div>
         </div>
         <div className="rounded-xl border border-amber-200 bg-amber-50 p-3 text-center">
           <Clock className="h-4 w-4 text-amber-500 mx-auto mb-1" />
           <div className="text-lg font-bold text-amber-700 tabular-nums">{developing}</div>
-          <div className="text-[10px] text-slate-500">Developing</div>
+          <div className="text-[10px] text-[var(--cs-text-muted)]">Developing</div>
         </div>
-        <div className={cn("rounded-xl border p-3 text-center", needsSupport > 0 ? "border-red-200 bg-red-50" : "border-slate-200 bg-white")}>
-          <AlertTriangle className={cn("h-4 w-4 mx-auto mb-1", needsSupport > 0 ? "text-red-500" : "text-slate-300")} />
-          <div className={cn("text-lg font-bold tabular-nums", needsSupport > 0 ? "text-red-700" : "text-slate-400")}>{needsSupport}</div>
-          <div className="text-[10px] text-slate-500">Needs Support</div>
+        <div className={cn("rounded-xl border p-3 text-center", needsSupport > 0 ? "border-red-200 bg-red-50" : "border-[var(--cs-border)] bg-white")}>
+          <AlertTriangle className={cn("h-4 w-4 mx-auto mb-1", needsSupport > 0 ? "text-red-500" : "text-[var(--cs-text-gentle)]")} />
+          <div className={cn("text-lg font-bold tabular-nums", needsSupport > 0 ? "text-red-700" : "text-[var(--cs-text-muted)]")}>{needsSupport}</div>
+          <div className="text-[10px] text-[var(--cs-text-muted)]">Needs Support</div>
         </div>
       </div>
 
       {/* Staff observation coverage */}
       {staff.length > 0 && (
         <div className="flex items-center gap-3">
-          <span className="text-[10px] font-medium text-slate-500 shrink-0">Staff Observed</span>
+          <span className="text-[10px] font-medium text-[var(--cs-text-muted)] shrink-0">Staff Observed</span>
           <div className="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden">
             <div
               className={cn(
@@ -215,16 +215,16 @@ export default function PracticeObservationsPage() {
       {/* Search + Outcome filter */}
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1 max-w-sm">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
           <input
             type="text"
             placeholder="Search by staff, observer or context..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full rounded-lg border border-slate-200 bg-white py-1.5 pl-9 pr-3 text-xs text-slate-700 placeholder:text-slate-400 focus:border-indigo-300 focus:ring-1 focus:ring-indigo-200 outline-none transition-all"
+            className="w-full rounded-lg border border-[var(--cs-border)] bg-white py-1.5 pl-9 pr-3 text-xs text-[var(--cs-text-secondary)] placeholder:text-[var(--cs-text-muted)] focus:border-[var(--cs-aria-gold)] focus:ring-1 focus:ring-[var(--cs-aria-gold)]/30 outline-none transition-all"
           />
         </div>
-        <div className="flex items-center gap-1.5 text-xs text-slate-500 shrink-0">
+        <div className="flex items-center gap-1.5 text-xs text-[var(--cs-text-muted)] shrink-0">
           <ArrowUpDown className="h-3.5 w-3.5" />
           <select value={sortBy} onChange={(e) => setSortBy(e.target.value as typeof sortBy)} className="bg-white border rounded-md px-2 py-1.5 text-xs">
             <option value="date">Newest first</option>
@@ -248,7 +248,7 @@ export default function PracticeObservationsPage() {
                 "px-2.5 py-1 rounded-full text-[11px] font-medium border transition-all",
                 outcomeFilter === tab.key
                   ? "bg-indigo-600 text-white border-indigo-600"
-                  : "bg-white text-slate-600 border-slate-200 hover:border-indigo-300",
+                  : "bg-white text-[var(--cs-text-secondary)] border-[var(--cs-border)] hover:border-indigo-300",
               )}
             >
               {tab.label} ({tab.count})
@@ -265,7 +265,7 @@ export default function PracticeObservationsPage() {
             "px-3 py-1 rounded-full text-xs font-medium border transition-all",
             selectedStaff === "all"
               ? "bg-slate-800 text-white border-slate-800"
-              : "bg-white text-slate-600 border-slate-200 hover:border-slate-400",
+              : "bg-white text-[var(--cs-text-secondary)] border-[var(--cs-border)] hover:border-slate-400",
           )}
         >
           All Staff ({allObs.length})
@@ -278,7 +278,7 @@ export default function PracticeObservationsPage() {
               "px-3 py-1 rounded-full text-xs font-medium border transition-all",
               selectedStaff === id
                 ? "bg-slate-800 text-white border-slate-800"
-                : "bg-white text-slate-600 border-slate-200 hover:border-slate-400",
+                : "bg-white text-[var(--cs-text-secondary)] border-[var(--cs-border)] hover:border-slate-400",
             )}
           >
             {getStaffName(id).split(" ")[0]} ({count})
@@ -293,14 +293,14 @@ export default function PracticeObservationsPage() {
 
       {/* Observation cards */}
       {filtered.length === 0 && allObs.length > 0 ? (
-        <div className="text-center py-8 text-slate-400">
-          <Search className="h-6 w-6 mx-auto mb-2 text-slate-300" />
+        <div className="text-center py-8 text-[var(--cs-text-muted)]">
+          <Search className="h-6 w-6 mx-auto mb-2 text-[var(--cs-text-gentle)]" />
           <p className="text-sm">No observations match your filters</p>
           <p className="text-xs mt-1">Try adjusting the search, outcome or staff filter</p>
         </div>
       ) : filtered.length === 0 ? (
-        <div className="text-center py-12 text-slate-400">
-          <Microscope className="h-8 w-8 mx-auto mb-2 text-slate-300" />
+        <div className="text-center py-12 text-[var(--cs-text-muted)]">
+          <Microscope className="h-8 w-8 mx-auto mb-2 text-[var(--cs-text-gentle)]" />
           <p className="text-sm">No observations recorded yet</p>
           <p className="text-xs mt-1">Direct practice observations are required by Reg 34</p>
         </div>
@@ -311,29 +311,29 @@ export default function PracticeObservationsPage() {
             const OutcomeIcon = outcomeCfg.icon;
 
             return (
-              <div key={obs.id} className="rounded-2xl border border-slate-200 bg-white overflow-hidden">
+              <div key={obs.id} className="rounded-2xl border border-[var(--cs-border)] bg-white overflow-hidden">
                 {/* Header */}
-                <div className="flex items-start justify-between gap-3 px-4 py-3 bg-slate-50 border-b border-slate-100">
+                <div className="flex items-start justify-between gap-3 px-4 py-3 bg-slate-50 border-b border-[var(--cs-border-subtle)]">
                   <div>
                     <div className="flex items-center gap-2 flex-wrap mb-1">
-                      <p className="text-sm font-bold text-slate-800">{getStaffName(obs.staff_id)}</p>
+                      <p className="text-sm font-bold text-[var(--cs-navy)]">{getStaffName(obs.staff_id)}</p>
                       <Badge variant="outline" className={cn("text-[10px] border", outcomeCfg.colour)}>
                         <OutcomeIcon className="h-2.5 w-2.5 mr-1" />
                         {outcomeCfg.label}
                       </Badge>
                     </div>
-                    <p className="text-xs text-slate-500">
+                    <p className="text-xs text-[var(--cs-text-muted)]">
                       {obs.observation_date} · {obs.context} · Observer: {getStaffName(obs.observer_id)}
                     </p>
                   </div>
                   <Link href={`/workforce/staff/${obs.staff_id}`}>
-                    <ChevronRight className="h-4 w-4 text-slate-300 hover:text-slate-500 transition-colors" />
+                    <ChevronRight className="h-4 w-4 text-[var(--cs-text-gentle)] hover:text-[var(--cs-text-muted)] transition-colors" />
                   </Link>
                 </div>
 
                 <div className="p-4 space-y-3">
                   {/* Narrative */}
-                  <p className="text-xs text-slate-700 leading-relaxed">{obs.narrative}</p>
+                  <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed">{obs.narrative}</p>
 
                   {/* Domains observed */}
                   <div className="flex flex-wrap gap-1.5">
@@ -398,8 +398,8 @@ export default function PracticeObservationsPage() {
         </div>
       )}
 
-      <div className="rounded-xl border border-slate-100 bg-slate-50 px-4 py-3 text-xs text-slate-500">
-        <span className="font-semibold text-slate-600">Regulatory Basis — </span>
+      <div className="rounded-xl border border-[var(--cs-border-subtle)] bg-slate-50 px-4 py-3 text-xs text-[var(--cs-text-muted)]">
+        <span className="font-semibold text-[var(--cs-text-secondary)]">Regulatory Basis — </span>
         Children&apos;s Homes Regulations 2015: Reg 34 (staff must receive regular supervision, including direct
         observation of practice). ILACS — Quality of Care: inspectors look for evidence that managers observe and
         assess staff practice directly.

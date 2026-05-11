@@ -745,7 +745,7 @@ export default function HrRiskCommandCentrePage() {
                   <div className="flex items-start gap-2">
                     <Sparkles className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
                     <div className="text-muted-foreground">
-                      <span className="font-medium text-foreground">Aria suggested review:</span>{" "}
+                      <span className="font-medium text-foreground">ARIA suggested review:</span>{" "}
                       Suspension has been in place for {c.daysSinceOpened} days. Regulation and ACAS guidance
                       require that suspensions are reviewed regularly and are not left open-ended.
                       The manager should confirm: is the investigation progressing? Has a welfare
@@ -754,7 +754,7 @@ export default function HrRiskCommandCentrePage() {
                     </div>
                   </div>
                   <p className="text-xs text-muted-foreground mt-2 italic">
-                    Aria suggested draft — the Registered Manager confirms the review.
+                    ARIA suggested draft — the Registered Manager confirms the review.
                   </p>
                 </div>
               </div>
@@ -811,7 +811,7 @@ export default function HrRiskCommandCentrePage() {
               </p>
             </div>
             <p className="text-xs italic">
-              Aria suggested draft — the Registered Manager reviews and takes action as they see fit.
+              ARIA suggested draft — the Registered Manager reviews and takes action as they see fit.
             </p>
           </div>
         </CardContent>

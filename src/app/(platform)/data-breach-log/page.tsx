@@ -352,11 +352,11 @@ export default function DataBreachLogPage() {
                         {b.training_arising.map((t, i) => <li key={i}>{t}</li>)}
                       </ul>
                     </div>
-                    <div className="rounded-md bg-slate-50 border border-slate-200 p-3">
-                      <h4 className="text-xs font-semibold text-slate-700 mb-1 flex items-center gap-1">
+                    <div className="rounded-md bg-slate-50 border border-[var(--cs-border)] p-3">
+                      <h4 className="text-xs font-semibold text-[var(--cs-text-secondary)] mb-1 flex items-center gap-1">
                         <FileText className="h-3 w-3" /> Policy arising
                       </h4>
-                      <p className="text-sm text-slate-800">{b.policy_arising}</p>
+                      <p className="text-sm text-[var(--cs-navy)]">{b.policy_arising}</p>
                     </div>
                   </div>
 
