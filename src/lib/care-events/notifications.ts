@@ -26,7 +26,7 @@ import { loadReturnedRecordsQueue } from "@/lib/care-events/returned-records";
 import { loadAmendmentReviewQueue } from "@/lib/care-events/amendment-review";
 import { loadRoutingHealth } from "@/lib/care-events/routing-health";
 import { detectExportAbuse } from "@/lib/care-events/export-abuse";
-import { detectTrajectoryAlerts } from "@/lib/care-events/inspection-trajectory";
+import { detectTrajectoryAlerts, detectTrajectoryAckOverdueReminders } from "@/lib/care-events/inspection-trajectory";
 
 export type NotificationSeverity = "info" | "warning" | "critical";
 export type NotificationAudience = "manager" | "staff";
@@ -38,7 +38,8 @@ export type NotificationSource =
   | "routing_failure"
   | "sensitive_export"
   | "export_abuse"
-  | "trajectory_alert";
+  | "trajectory_alert"
+  | "trajectory_ack_overdue";
 
 export interface NotificationItem {
   id: string;                     // source:source_id
@@ -273,6 +274,29 @@ export function loadNotifications(homeId: string): NotificationStream {
       title: `Readiness trajectory: ${alert.kind.replace(/_/g, " ")}`,
       body: alert.message,
       created_at: alert.detected_at,
+      link_href: `/intelligence/care-events/inspection-bundle/trajectory`,
+    });
+  }
+
+  // ── Trajectory ack-overdue reminders (M50) ────────────────────────
+  //
+  // Open alerts that have sat unacked beyond the per-severity threshold are
+  // re-promoted as a distinct reminder so management cannot silently let a
+  // signal age. Acknowledging the underlying alert removes both the original
+  // alert and this reminder on the next refresh.
+  for (const r of detectTrajectoryAckOverdueReminders(homeId)) {
+    built.push({
+      id: `trajectory_ack_overdue:${r.id}`,
+      source: "trajectory_ack_overdue",
+      source_id: r.id,
+      home_id: r.home_id,
+      child_id: null,
+      audience: "manager",
+      target_staff_id: null,
+      severity: r.severity,
+      title: `Trajectory alert unacknowledged: ${r.alert_kind.replace(/_/g, " ")}`,
+      body: r.message,
+      created_at: r.detected_at,
       link_href: `/intelligence/care-events/inspection-bundle/trajectory`,
     });
   }

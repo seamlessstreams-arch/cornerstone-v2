@@ -49,6 +49,7 @@ const SOURCE_LABEL: Record<NotificationSource, string> = {
   sensitive_export:        "Sensitive export",
   export_abuse:            "Export risk",
   trajectory_alert:        "Readiness trajectory",
+  trajectory_ack_overdue:  "Trajectory ack overdue",
 };
 
 const AUDIENCE_LABEL: Record<NotificationAudience, string> = {

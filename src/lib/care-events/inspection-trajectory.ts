@@ -249,3 +249,59 @@ export function listTrajectoryAlertAcks(homeId: string): TrajectoryAlertAck[] {
     b.acked_at.localeCompare(a.acked_at),
   );
 }
+
+// ── Ack-overdue reminders (M50) ───────────────────────────────────────────────
+//
+// Open trajectory alerts that have sat unacked beyond a threshold become a
+// fresh reminder so management cannot quietly let signals rot. Threshold
+// scales with severity: critical alerts fire at 48h, warnings at 7d.
+
+export const ACK_OVERDUE_CRITICAL_HOURS = 48;
+export const ACK_OVERDUE_WARNING_DAYS = 7;
+
+export interface TrajectoryAckOverdueReminder {
+  id: string;                       // deterministic; safe for notification dedup
+  home_id: string;
+  alert_id: string;
+  alert_kind: TrajectoryAlertKind;
+  severity: TrajectoryAlertSeverity;
+  bundle_id: string | null;
+  age_hours: number;
+  message: string;
+  detected_at: string;              // alert's original detected_at
+}
+
+export function detectTrajectoryAckOverdueReminders(
+  homeId: string,
+): TrajectoryAckOverdueReminder[] {
+  const alerts = detectTrajectoryAlerts(homeId);
+  const out: TrajectoryAckOverdueReminder[] = [];
+  const now = Date.now();
+  const HOUR = 60 * 60 * 1000;
+  const criticalThreshold = ACK_OVERDUE_CRITICAL_HOURS * HOUR;
+  const warningThreshold = ACK_OVERDUE_WARNING_DAYS * 24 * HOUR;
+
+  for (const a of alerts) {
+    const ageMs = now - new Date(a.detected_at).getTime();
+    if (ageMs < 0) continue;
+    const threshold = a.severity === "critical" ? criticalThreshold : warningThreshold;
+    if (ageMs < threshold) continue;
+    const age_hours = Math.floor(ageMs / HOUR);
+    out.push({
+      id: `traj_ack_overdue_${a.id}`,
+      home_id: a.home_id,
+      alert_id: a.id,
+      alert_kind: a.kind,
+      severity: a.severity,
+      bundle_id: a.bundle_id,
+      age_hours,
+      message:
+        a.severity === "critical"
+          ? `Critical trajectory alert "${a.kind.replace(/_/g, " ")}" unacknowledged for ${age_hours}h (threshold ${ACK_OVERDUE_CRITICAL_HOURS}h).`
+          : `Warning trajectory alert "${a.kind.replace(/_/g, " ")}" unacknowledged for ${Math.floor(age_hours / 24)}d (threshold ${ACK_OVERDUE_WARNING_DAYS}d).`,
+      detected_at: a.detected_at,
+    });
+  }
+
+  return out;
+}
