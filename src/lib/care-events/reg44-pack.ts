@@ -232,3 +232,50 @@ export function generateReg44Pack(
     },
   };
 }
+
+// ── Persistence (M35) ────────────────────────────────────────────────────────
+//
+// Reg 44 packs are immutable evidence. Once persisted they are never
+// modified. The id is deterministic per home + generated_at so re-saving the
+// same pack is a no-op. Read APIs surface them in newest-first order.
+
+import type { PersistedReg44Pack } from "@/lib/db/store";
+
+export interface PersistedReg44PackRow {
+  id: string;
+  home_id: string;
+  generated_at: string;
+  generated_by: string | null;
+  schema_version: number;
+  window_start: string;
+  window_end: string;
+  headline_children: number;
+  headline_safeguarding_events: number;
+}
+
+export function persistReg44Pack(pack: Reg44Pack): PersistedReg44Pack {
+  const row: PersistedReg44Pack = {
+    id: pack.id,
+    home_id: pack.home_id,
+    generated_at: pack.generated_at,
+    generated_by: pack.generated_by,
+    schema_version: pack.schema_version,
+    window_start: pack.window.start,
+    window_end: pack.window.end,
+    headline_children: pack.headline.children_in_residence,
+    headline_safeguarding_events: pack.headline.safeguarding_events,
+    payload: pack,
+  };
+  return db.reg44Packs.create(row);
+}
+
+export function listPersistedReg44Packs(homeId: string): PersistedReg44PackRow[] {
+  return db.reg44Packs
+    .findAll(homeId)
+    .map(({ payload: _payload, ...row }) => row)
+    .sort((a, b) => b.generated_at.localeCompare(a.generated_at));
+}
+
+export function getPersistedReg44Pack(id: string): PersistedReg44Pack | null {
+  return db.reg44Packs.findById(id);
+}

@@ -1,11 +1,11 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// Reg 44 Visit Evidence Pack page  (Milestone 33)
+// Reg 44 Visit Evidence Pack page  (Milestones 33 + 35)
 //
 // Generate a fresh evidence bundle for the independent visitor and download
-// it as JSON for the visit file. The pack covers a chosen window (default
-// 30 days) and pulls every record the visitor typically requests.
+// it as JSON for the visit file. Each generated pack is persisted as
+// immutable evidence and listed in the History panel.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { useState } from "react";
@@ -13,20 +13,31 @@ import { PageShell } from "@/components/layout/page-shell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { FileText, Download, Loader2 } from "lucide-react";
-import { useGenerateReg44Pack } from "@/hooks/use-reg44-pack";
+import { FileText, Download, Loader2, History } from "lucide-react";
+import {
+  useGenerateAndPersistReg44Pack,
+  usePersistedReg44Packs,
+  useFetchPersistedReg44Pack,
+} from "@/hooks/use-reg44-pack";
 import type { Reg44Pack } from "@/lib/care-events/reg44-pack";
 
 const HOME_ID = "home_oak";
 const WINDOW_OPTIONS = [7, 30, 90] as const;
 
 export default function Reg44PackPage() {
-  const gen = useGenerateReg44Pack(HOME_ID);
+  const gen = useGenerateAndPersistReg44Pack(HOME_ID);
+  const history = usePersistedReg44Packs(HOME_ID);
+  const fetchOne = useFetchPersistedReg44Pack();
   const [days, setDays] = useState<number>(30);
   const [pack, setPack] = useState<Reg44Pack | null>(null);
 
   async function generate() {
     const r = await gen.mutateAsync(days);
+    setPack(r.data);
+  }
+
+  async function open(id: string) {
+    const r = await fetchOne.mutateAsync(id);
     setPack(r.data);
   }
 
@@ -78,6 +89,55 @@ export default function Reg44PackPage() {
           </CardContent>
         </Card>
       )}
+
+      <Card>
+        <CardHeader className="pb-2">
+          <CardTitle className="text-sm flex items-center gap-2">
+            <History className="h-4 w-4" />
+            History
+            <Badge variant="outline" className="text-xs">
+              {history.data?.data.length ?? 0}
+            </Badge>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          {history.isLoading && (
+            <p className="text-sm text-slate-500">Loading…</p>
+          )}
+          {history.data && history.data.data.length === 0 && (
+            <p className="text-sm text-slate-500">No persisted packs yet.</p>
+          )}
+          {history.data && history.data.data.length > 0 && (
+            <ul className="divide-y divide-slate-100 text-sm">
+              {history.data.data.map((row) => (
+                <li key={row.id} className="flex items-center justify-between gap-2 py-2">
+                  <div>
+                    <p className="font-mono text-xs text-slate-500">{row.id}</p>
+                    <p>
+                      {row.window_start} → {row.window_end}
+                      <span className="mx-2 text-slate-300">·</span>
+                      {row.headline_children} children
+                      <span className="mx-2 text-slate-300">·</span>
+                      {row.headline_safeguarding_events} safeguarding
+                    </p>
+                    <p className="text-xs text-slate-500">
+                      {new Date(row.generated_at).toLocaleString()} · by {row.generated_by ?? "unknown"}
+                    </p>
+                  </div>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => open(row.id)}
+                    disabled={fetchOne.isPending}
+                  >
+                    Open
+                  </Button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </CardContent>
+      </Card>
 
       {pack && (
         <div className="space-y-6">

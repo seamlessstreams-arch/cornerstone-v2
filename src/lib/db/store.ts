@@ -442,6 +442,21 @@ export interface UserNotificationState {
   updated_at: string;
 }
 
+// Persisted Reg 44 visit evidence pack header (M35). The full payload
+// is the engine's Reg44Pack; kept loose here to avoid a circular import.
+export interface PersistedReg44Pack {
+  id: string;
+  home_id: string;
+  generated_at: string;
+  generated_by: string | null;
+  schema_version: number;
+  window_start: string;
+  window_end: string;
+  headline_children: number;
+  headline_safeguarding_events: number;
+  payload: unknown;
+}
+
 // ── Mutable collections ───────────────────────────────────────────────────────
 
 const store = {
@@ -1076,6 +1091,9 @@ const store = {
 
   // ── User Notification State (M34) ────────────────────────────────────────
   userNotificationStates: [] as UserNotificationState[],
+
+  // ── Persisted Reg 44 Packs (M35) ────────────────────────────────────────
+  reg44Packs: [] as PersistedReg44Pack[],
 
   // ── Branding ─────────────────────────────────────────────────────────────
   systemBranding: {
@@ -11032,6 +11050,21 @@ export const db = {
       if (store.inspectionSnapshots.some((s) => s.id === snap.id)) return snap;
       store.inspectionSnapshots.push(snap);
       return snap;
+    },
+  },
+
+  // ── Persisted Reg 44 Packs (M35) ────────────────────────────────────────
+  reg44Packs: {
+    findAll: (homeId?: string) =>
+      homeId
+        ? store.reg44Packs.filter((p) => p.home_id === homeId)
+        : store.reg44Packs,
+    findById: (id: string) => store.reg44Packs.find((p) => p.id === id) ?? null,
+    create: (pack: PersistedReg44Pack): PersistedReg44Pack => {
+      // immutable: reject duplicate ids
+      if (store.reg44Packs.some((p) => p.id === pack.id)) return pack;
+      store.reg44Packs.push(pack);
+      return pack;
     },
   },
 
