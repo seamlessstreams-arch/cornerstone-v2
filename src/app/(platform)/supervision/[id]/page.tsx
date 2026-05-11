@@ -26,6 +26,7 @@ import type { Supervision, SupervisionAction } from "@/types";
 import { PrintButton } from "@/components/common/print-button";
 import { SmartUploadButton } from "@/components/documents/smart-upload-button";
 import { useDocumentIntelligence } from "@/hooks/use-doc-intelligence";
+import { CareEventsPanel } from "@/components/care-events/care-events-panel";
 import { DOCUMENT_CATEGORY_LABELS } from "@/types/documents";
 import {
   ArrowLeft, Clock, CheckCircle2, Circle, AlertTriangle,
@@ -268,6 +269,7 @@ export default function SupervisionDetailPage({
     <PageShell
       title="Supervision Record"
       subtitle={`${staffName} · ${typeLabel} · ${formatDate(date)}`}
+      ariaContext={{ pageTitle: "Recent Care Events", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Supervision Record" subtitle="Oak House — Supervision Session" targetId="supervision-detail-content" />
@@ -428,7 +430,7 @@ export default function SupervisionDetailPage({
                 </div>
                 <AriaPanel
                   mode="oversee"
-                  pageContext="Supervision Record Detail"
+                  pageContext="Supervision Record — reflective supervision session notes, practice standards, caseload review, staff wellbeing, development areas, actions and accountability"
                   recordType="supervision"
                   sourceContent={ariaSourceContent}
                   userRole="manager"
@@ -659,6 +661,11 @@ export default function SupervisionDetailPage({
           </div>
         </div>
       </div>
+      <CareEventsPanel
+        title="Recent Care Events"
+        days={28}
+        defaultCollapsed
+      />
     </PageShell>
   );
 }

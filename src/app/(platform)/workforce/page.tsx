@@ -14,6 +14,7 @@ import { cn } from "@/lib/utils";
 import { SmartUploadButton } from "@/components/documents/smart-upload-button";
 import { PrintButton } from "@/components/common/print-button";
 import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 import {
   Network, Sparkles, Users, TrendingUp, GitBranch, Milestone,
   BarChart2, UserCheck, ShieldCheck, Award, Microscope, Briefcase,
@@ -31,6 +32,7 @@ import {
   COMPETENCY_DOMAIN_LABELS,
   type PathwayStage,
 } from "@/types/extended";
+import { CareEventsPanel } from "@/components/care-events/care-events-panel";
 
 const STAGE_COLOURS: Record<PathwayStage, string> = {
   inductee:           "bg-slate-100 text-slate-700 border-slate-200",
@@ -99,6 +101,7 @@ export default function WorkforceHubPage() {
     <PageShell
       title="Workforce Intelligence"
       subtitle="Staff development, competency & succession — powered by ARIA"
+      ariaContext={{ pageTitle: "Workforce Intelligence", sourceType: "staff" }}
       showQuickCreate={false}
       actions={
         <div className="flex items-center gap-2">
@@ -112,6 +115,7 @@ export default function WorkforceHubPage() {
             <Sparkles className="h-3.5 w-3.5" />
             ARIA Workforce Analysis
           </Button>
+          <AriaStudioQuickActionButton context={{ record_type: "staff_training", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -312,6 +316,12 @@ export default function WorkforceHubPage() {
         Reg 33 (induction), Reg 34 (supervision). ILACS Framework — Quality of Care theme: workforce capabilities
         and succession. Reg 44/45 — evidence of staff development activity.
       </div>
+      <CareEventsPanel
+        title="Care Events — General"
+        category="general"
+        days={28}
+        defaultCollapsed
+      />
     </PageShell>
   );
 }

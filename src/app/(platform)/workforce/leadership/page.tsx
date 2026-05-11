@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 import {
   Telescope, Sparkles, ChevronRight, ArrowUpRight,
   CheckCircle2, AlertTriangle, Clock, Search,
@@ -107,6 +108,7 @@ export default function LeadershipReadinessPage() {
     <PageShell
       title="Leadership Readiness Panel"
       subtitle="ARIA gap analysis for Team Leader → RM → RI succession track"
+      ariaContext={{ pageTitle: "Leadership Readiness Panel", sourceType: "staff" }}
       showQuickCreate={false}
       actions={
         <div className="flex items-center gap-2">
@@ -129,6 +131,7 @@ export default function LeadershipReadinessPage() {
           <Link href="/workforce/succession">
             <Button variant="outline" size="sm">Succession Board</Button>
           </Link>
+          <AriaStudioQuickActionButton context={{ record_type: "staff_training", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >

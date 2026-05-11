@@ -18,6 +18,7 @@ import { APP_ROLE_LABELS, type AppRole } from "@/lib/permissions";
 import { useStaff } from "@/hooks/use-staff";
 import type { StaffEnriched } from "@/hooks/use-staff";
 import { Badge } from "@/components/ui/badge";
+import { AriaStatusBadge } from "@/components/aria/aria-health-panel";
 import { OnDutyBar } from "@/components/layout/on-duty-bar";
 import {
   ChevronDown, ChevronRight, ChevronUp,
@@ -178,6 +179,7 @@ export function Sidebar() {
   });
   const { canAccess } = usePermissions();
   const counts = useSidebarCounts();
+  const { currentRole, currentUser } = useAuthContext();
 
   // Determine active top-level group from pathname
   function getActiveGroup(): string | null {
@@ -363,6 +365,14 @@ export function Sidebar() {
 
       {/* ── On-Duty Status Bar ───────────────────────────────────────────── */}
       <OnDutyBar collapsed={collapsed} />
+
+      {/* ── ARIA Status Badge (managers only) ────────────────────────────── */}
+      {!collapsed && (
+        <AriaStatusBadge
+          userRole={currentRole ?? ""}
+          userId={currentUser?.id ?? "current_user"}
+        />
+      )}
 
       {/* ── User / Role Switcher ─────────────────────────────────────────── */}
       <RoleSwitcher collapsed={collapsed} />

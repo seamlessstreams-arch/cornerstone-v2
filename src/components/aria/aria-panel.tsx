@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { cn } from "@/lib/utils";
-import { useAria } from "@/hooks/use-aria";
+import { useAriaStream } from "@/hooks/use-aria";
 import type { AriaMode, AriaStyle } from "@/types/extended";
 import {
   Sparkles, ChevronDown, Copy, CheckCircle2, RefreshCw,
@@ -85,27 +85,26 @@ export function AriaPanel({
 
   const isDocumentMode = mode === "document_classify" || mode === "document_to_form";
 
-  const { mutate: askAria, isPending } = useAria();
+  const { stream, isStreaming, abort } = useAriaStream();
 
   const handleAsk = () => {
-    askAria(
+    setResponse("");
+    const currentPrompt = prompt;
+    setPrompt("");
+    stream(
       {
         mode,
         style,
         page_context: pageContext,
         record_type: recordType,
-        source_content: sourceContent || prompt,
+        source_content: sourceContent || currentPrompt,
         linked_records: linkedRecords,
         user_role: userRole,
-        question: prompt || undefined,
+        question: currentPrompt || undefined,
         document_text: isDocumentMode && documentText ? documentText : undefined,
       },
-      {
-        onSuccess: (res) => {
-          setResponse(res.data.response);
-          setPrompt("");
-        },
-      }
+      (text) => { setResponse(text); },
+      (error) => { setResponse(`Error: ${error.message}. Please try again.`); },
     );
   };
 
@@ -248,44 +247,55 @@ export function AriaPanel({
           {/* Ask button */}
           <Button
             onClick={handleAsk}
-            disabled={isPending || (!prompt && !sourceContent && (!isDocumentMode || !documentText))}
+            disabled={isStreaming || (!prompt && !sourceContent && (!isDocumentMode || !documentText))}
             className="w-full bg-violet-600 hover:bg-violet-700 text-white"
             size="sm"
           >
-            {isPending ? (
-              <><RefreshCw className="h-3.5 w-3.5 mr-2 animate-spin" />Aria is thinking...</>
+            {isStreaming ? (
+              <><RefreshCw className="h-3.5 w-3.5 mr-2 animate-spin" />Aria is writing...</>
             ) : (
               <><Sparkles className="h-3.5 w-3.5 mr-2" />Ask Aria</>
             )}
           </Button>
 
           {/* Response */}
-          {response && (
+          {(response !== null && response !== "") && (
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Aria&apos;s response</div>
                 <div className="flex items-center gap-1.5">
+                  {isStreaming && (
+                    <button
+                      onClick={abort}
+                      className="flex items-center gap-1 rounded-lg px-2 py-1 text-[10px] font-medium text-red-500 hover:bg-red-50 transition-colors"
+                    >
+                      <X className="h-3 w-3" />Stop
+                    </button>
+                  )}
                   <button
                     onClick={handleCopy}
-                    className="flex items-center gap-1 rounded-lg px-2 py-1 text-[10px] font-medium text-slate-500 hover:bg-slate-100 transition-colors"
+                    disabled={isStreaming}
+                    className="flex items-center gap-1 rounded-lg px-2 py-1 text-[10px] font-medium text-slate-500 hover:bg-slate-100 transition-colors disabled:opacity-40"
                   >
                     {copied ? <><CheckCircle2 className="h-3 w-3 text-emerald-500" />Copied</> : <><Copy className="h-3 w-3" />Copy</>}
                   </button>
                   {onInsert && (
                     <button
-                      onClick={() => onInsert(response)}
-                      className="flex items-center gap-1 rounded-lg px-2 py-1 text-[10px] font-medium bg-violet-600 text-white hover:bg-violet-700 transition-colors"
+                      onClick={() => response && onInsert(response)}
+                      disabled={isStreaming || !response}
+                      className="flex items-center gap-1 rounded-lg px-2 py-1 text-[10px] font-medium bg-violet-600 text-white hover:bg-violet-700 transition-colors disabled:opacity-40"
                     >
                       <ExternalLink className="h-3 w-3" />Insert
                     </button>
                   )}
-                  <button onClick={() => setResponse(null)} className="text-slate-400 hover:text-slate-600">
+                  <button onClick={() => { abort(); setResponse(null); }} className="text-slate-400 hover:text-slate-600">
                     <X className="h-3.5 w-3.5" />
                   </button>
                 </div>
               </div>
               <div className="rounded-xl bg-violet-50 border border-violet-100 p-3 text-xs text-slate-700 whitespace-pre-wrap leading-relaxed max-h-64 overflow-y-auto">
                 {response}
+                {isStreaming && <span className="inline-block w-1.5 h-3.5 bg-violet-500 ml-0.5 animate-pulse rounded-sm" />}
               </div>
               <div className="flex items-start gap-1.5 text-[10px] text-slate-400">
                 <AlertTriangle className="h-3 w-3 shrink-0 mt-0.5" />

@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Avatar } from "@/components/ui/avatar";
 import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 import { useMedication, useAdminister } from "@/hooks/use-medication";
 import { useAuthContext } from "@/contexts/auth-context";
 import { getYPName, getStaffName } from "@/lib/seed-data";
@@ -729,7 +730,7 @@ function TodayScheduleTab({
                           <div className="mt-3">
                             <AriaPanel
                               mode="write"
-                              pageContext="Medication administration"
+                              pageContext="Medication Administration — record a medication administration, prescribed dose, time given, staff signature, child response, any errors or near-misses"
                               recordType="medication_note"
                               sourceContent={`${med.name} ${med.dosage} — ${admin.status} at ${formatTime(admin.actual_time ?? admin.scheduled_time)} for ${getYPName(med.child_id)}. ${admin.notes ?? ""} ${admin.reason_not_given ? "Reason: " + admin.reason_not_given : ""}`}
                               defaultStyle="professional_formal"
@@ -1383,7 +1384,7 @@ function StockOversightTab({
           {showAria && (
             <AriaPanel
               mode="oversee"
-              pageContext="Medication oversight"
+              pageContext="Medication Oversight — MAR chart review, administration accuracy, missed doses, controlled drugs, medication errors, storage checks, prescriptions, GP liaison"
               recordType="medication_exception_oversight"
               sourceContent={exceptionContext}
               linkedRecords="medication_exceptions, MAR, incidents"
@@ -1458,6 +1459,7 @@ export default function MedicationPage() {
     <PageShell
       title="Medication"
       subtitle={`${medications.length} active medications · ${ypCount} young people`}
+      ariaContext={{ pageTitle: "Care Events — Medication", sourceType: "medication" }}
       quickCreateContext={{ module: "medication", defaultTaskCategory: "medication" }}
       actions={
         <div className="flex gap-2">
@@ -1482,6 +1484,7 @@ export default function MedicationPage() {
           >
             <Plus className="h-3.5 w-3.5" />Add Medication
           </Button>
+          <AriaStudioQuickActionButton context={{ record_type: "medication", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >

@@ -17,10 +17,12 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 import { SmartUploadButton } from "@/components/documents/smart-upload-button";
 import { PrintButton } from "@/components/common/print-button";
 import { ExportButton, type ExportColumn } from "@/components/common/export-button";
 import { EmptyState } from "@/components/ui/empty-state";
+import { CareEventsPanel } from "@/components/care-events/care-events-panel";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -337,6 +339,7 @@ export default function StaffDevelopmentPage() {
           <ExportButton data={filtered} columns={STAFF_DEV_EXPORT_COLS} filename="staff-development" />
           <PrintButton title="Staff Development" subtitle="Oak House — Development & CPD" targetId="staff-dev-content" />
           <SmartUploadButton variant="inline" label="Upload Document" uploadContext="Staff Development — training certificate or appraisal upload" />
+          <AriaStudioQuickActionButton context={{ record_type: "staff_training", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -511,6 +514,12 @@ export default function StaffDevelopmentPage() {
         </div>
       </div>
       </div>
+      <CareEventsPanel
+        title="Care Events — General"
+        category="general"
+        days={28}
+        defaultCollapsed
+      />
     </PageShell>
   );
 }

@@ -16,6 +16,7 @@ import { PrintButton } from "@/components/common/print-button";
 import { SmartUploadButton } from "@/components/documents/smart-upload-button";
 import { ExportButton, type ExportColumn } from "@/components/common/export-button";
 import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 import { cn } from "@/lib/utils";
 import {
   GitBranch, Sparkles, CheckCircle2, Clock, AlertTriangle,
@@ -206,6 +207,7 @@ export default function SuccessionBoardPage() {
     <PageShell
       title="Succession Planning Board"
       subtitle="Role coverage, internal readiness & ARIA gap analysis"
+      ariaContext={{ pageTitle: "Succession Planning Board", sourceType: "staff" }}
       showQuickCreate={false}
       actions={
         <div className="flex items-center gap-2">
@@ -228,6 +230,7 @@ export default function SuccessionBoardPage() {
           <Link href="/workforce">
             <Button variant="outline" size="sm">Workforce Hub</Button>
           </Link>
+          <AriaStudioQuickActionButton context={{ record_type: "staff_training", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >

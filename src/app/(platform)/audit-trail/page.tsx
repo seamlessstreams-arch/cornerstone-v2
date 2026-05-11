@@ -26,6 +26,9 @@ import {
 import { useCareEventAuditLog, type AuditLogEntryEnriched } from "@/hooks/use-daily-summaries";
 import type { AuditAction } from "@/types/care-events";
 import { formatDate } from "@/lib/utils";
+import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 // ── Action metadata ───────────────────────────────────────────────────────────
 
@@ -141,6 +144,8 @@ export default function AuditTrailPage() {
     <PageShell
       title="Audit Trail"
       subtitle="Tamper-evident log of all Care Event actions — complete chronological record"
+      ariaContext={{ pageTitle: "Audit Trail", sourceType: "general" }}
+      actions={<AriaStudioQuickActionButton context={{ record_type: "ofsted_evidence", record_id: "home_oak", home_id: "home_oak" }} />}
     >
       {/* Stats bar */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
@@ -236,6 +241,18 @@ export default function AuditTrailPage() {
           </CardContent>
         </Card>
       )}
+      <CareEventsPanel
+        title="Care Events — Audit"
+        category={["general", "behaviour", "safeguarding"]}
+        days={90}
+        defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Audit Trail — tamper-evident log of all Care Event actions, verification, amendments, locks, and staff actions for inspection readiness"
+        recordType="ofsted_evidence"
+        className="mt-6"
+      />
     </PageShell>
   );
 }

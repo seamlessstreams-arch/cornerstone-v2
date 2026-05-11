@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import { PageShell } from "@/components/ui/page-shell";
+import { PageShell } from "@/components/layout/page-shell";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,11 +13,14 @@ import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
 import { cn, formatDate, todayStr } from "@/lib/utils";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 import { PrintButton } from "@/components/ui/print-button";
 import { ExportButton, type ExportColumn } from "@/components/ui/export-button";
-import { getStaffName, getYPName } from "@/lib/seed-data";
+import { getStaffName, getYPName, YOUNG_PEOPLE, STAFF } from "@/lib/seed-data";
+import { toast } from "sonner";
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
-import { useRiskRegisterEntries } from "@/hooks/use-risk-register-entries";
+import { useRiskRegisterEntries, useCreateRiskRegisterEntry } from "@/hooks/use-risk-register-entries";
 import type { RiskRegisterEntry, RiskRegisterCategory, RiskRegisterStatus, RiskRegisterLevel } from "@/types/extended";
 import { RISK_REGISTER_CATEGORY_LABEL, RISK_REGISTER_STATUS_LABEL, RISK_REGISTER_LEVEL_LABEL } from "@/types/extended";
 import {
@@ -26,6 +29,7 @@ import {
   CheckCircle2, Clock, User, Calendar, Target, Activity,
   Loader2, TrendingUp, TrendingDown, Eye, Zap,
 } from "lucide-react";
+import { CareEventsPanel } from "@/components/care-events/care-events-panel";
 
 /* ── local config ────────────────────────────────────────────────────── */
 
@@ -203,7 +207,54 @@ function RiskCard({ risk }: { risk: RiskRegisterEntry }) {
 
 export default function RiskRegisterPage() {
   const { data: risks = [], isLoading } = useRiskRegisterEntries();
+  const createRisk = useCreateRiskRegisterEntry();
   const [showNew, setShowNew] = useState(false);
+
+  const [newForm, setNewForm] = useState({
+    title: "",
+    category: "" as RiskRegisterCategory | "",
+    child_id: "none",
+    likelihood: "3",
+    impact: "3",
+    description: "",
+    mitigations: "",
+    owner_id: "staff_darren",
+    review_date: "",
+  });
+  const setNF = (k: keyof typeof newForm, v: string) => setNewForm((p) => ({ ...p, [k]: v }));
+
+  const handleCreateRisk = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newForm.category || !newForm.title.trim() || !newForm.description.trim()) {
+      toast.error("Title, category and description are required.");
+      return;
+    }
+    const likelihood = parseInt(newForm.likelihood) || 3;
+    const impact = parseInt(newForm.impact) || 3;
+    const score = likelihood * impact;
+    await createRisk.mutateAsync({
+      title: newForm.title.trim(),
+      category: newForm.category as RiskRegisterCategory,
+      child_id: newForm.child_id === "none" ? null : newForm.child_id,
+      likelihood,
+      impact,
+      risk_score: score,
+      risk_level: computeLevel(score),
+      status: "active",
+      description: newForm.description.trim(),
+      mitigations: newForm.mitigations.split("\n").map((m) => m.trim()).filter(Boolean),
+      owner_id: newForm.owner_id,
+      review_date: newForm.review_date || new Date(Date.now() + 30 * 86400000).toISOString().slice(0, 10),
+      last_reviewed: null,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+      escalated_to: null,
+      notes: null,
+    });
+    toast.success("Risk added to register.");
+    setNewForm({ title: "", category: "", child_id: "none", likelihood: "3", impact: "3", description: "", mitigations: "", owner_id: "staff_darren", review_date: "" });
+    setShowNew(false);
+  };
 
   const [tab, setTab] = useState<RiskRegisterStatus | "all" | "overdue">("all");
   const [search, setSearch] = useState("");
@@ -319,6 +370,7 @@ export default function RiskRegisterPage() {
     <PageShell
       title="Risk Register"
       subtitle="Live risk tracking — young people, staff, and environment"
+      ariaContext={{ pageTitle: "Risk Register", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={filtered} columns={RISK_EXPORT_COLS} filename="risk-register" />
@@ -327,9 +379,11 @@ export default function RiskRegisterPage() {
             <Plus className="h-3.5 w-3.5" />
             New Risk
           </Button>
+          <AriaStudioQuickActionButton context={{ record_type: "risk_assessment", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
+      <AriaPanel mode="oversee" pageContext="Risk Register — live risk tracking for young people, staff, and environment, risk levels, review dates, control measures" recordType="risk_register" userRole="registered_manager" className="mb-6" />
       <div className="grid grid-cols-2 sm:grid-cols-6 gap-3 mb-6">
         {[
           { label: "Total Risks",   value: stats.total,     color: "text-slate-700",   bg: "bg-slate-50",   border: "border-slate-200"   },
@@ -473,16 +527,22 @@ export default function RiskRegisterPage() {
               New Risk Entry
             </DialogTitle>
           </DialogHeader>
-          <div className="space-y-3 py-2">
+          <form onSubmit={handleCreateRisk} className="space-y-3 py-2">
             <div>
               <label className="text-[11px] font-medium text-slate-600 mb-1 block">Risk Title *</label>
-              <Input placeholder="Brief title for this risk" className="h-8 text-xs" />
+              <Input
+                placeholder="Brief title for this risk"
+                className="h-8 text-xs"
+                value={newForm.title}
+                onChange={(e) => setNF("title", e.target.value)}
+                required
+              />
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="text-[11px] font-medium text-slate-600 mb-1 block">Category</label>
-                <Select>
-                  <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
+                <label className="text-[11px] font-medium text-slate-600 mb-1 block">Category *</label>
+                <Select value={newForm.category} onValueChange={(v) => setNF("category", v)}>
+                  <SelectTrigger className="h-8 text-xs"><SelectValue placeholder="Select…" /></SelectTrigger>
                   <SelectContent>
                     {(Object.keys(CATEGORY_CONFIG) as RiskRegisterCategory[]).map((c) => (
                       <SelectItem key={c} value={c}>{CATEGORY_CONFIG[c].label}</SelectItem>
@@ -492,32 +552,89 @@ export default function RiskRegisterPage() {
               </div>
               <div>
                 <label className="text-[11px] font-medium text-slate-600 mb-1 block">Young Person</label>
-                <Select>
+                <Select value={newForm.child_id} onValueChange={(v) => setNF("child_id", v)}>
                   <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
                   <SelectContent>
                     <SelectItem value="none">Home-wide</SelectItem>
-                    <SelectItem value="yp_alex">{getYPName("yp_alex")}</SelectItem>
-                    <SelectItem value="yp_casey">{getYPName("yp_casey")}</SelectItem>
-                    <SelectItem value="yp_jordan">{getYPName("yp_jordan")}</SelectItem>
+                    {YOUNG_PEOPLE.filter((y) => y.status === "current").map((y) => (
+                      <SelectItem key={y.id} value={y.id}>{y.first_name} {y.last_name}</SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
             </div>
+            <div className="grid grid-cols-3 gap-3">
+              <div>
+                <label className="text-[11px] font-medium text-slate-600 mb-1 block">Likelihood (1–5)</label>
+                <Select value={newForm.likelihood} onValueChange={(v) => setNF("likelihood", v)}>
+                  <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
+                  <SelectContent>{["1","2","3","4","5"].map((v) => (<SelectItem key={v} value={v}>{v}</SelectItem>))}</SelectContent>
+                </Select>
+              </div>
+              <div>
+                <label className="text-[11px] font-medium text-slate-600 mb-1 block">Impact (1–5)</label>
+                <Select value={newForm.impact} onValueChange={(v) => setNF("impact", v)}>
+                  <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
+                  <SelectContent>{["1","2","3","4","5"].map((v) => (<SelectItem key={v} value={v}>{v}</SelectItem>))}</SelectContent>
+                </Select>
+              </div>
+              <div className="flex flex-col justify-end">
+                <label className="text-[11px] font-medium text-slate-600 mb-1 block">Risk Score</label>
+                <div className={cn("h-8 rounded-md border px-2 flex items-center text-xs font-bold",
+                  computeLevel(parseInt(newForm.likelihood) * parseInt(newForm.impact)) === "critical" ? "bg-red-50 text-red-700 border-red-300" :
+                  computeLevel(parseInt(newForm.likelihood) * parseInt(newForm.impact)) === "high" ? "bg-orange-50 text-orange-700 border-orange-300" :
+                  computeLevel(parseInt(newForm.likelihood) * parseInt(newForm.impact)) === "medium" ? "bg-amber-50 text-amber-700 border-amber-200" :
+                  "bg-blue-50 text-blue-700 border-blue-200"
+                )}>
+                  {parseInt(newForm.likelihood) * parseInt(newForm.impact)} — {LEVEL_CONFIG[computeLevel(parseInt(newForm.likelihood) * parseInt(newForm.impact))].label}
+                </div>
+              </div>
+            </div>
+            <div>
+              <label className="text-[11px] font-medium text-slate-600 mb-1 block">Owner</label>
+              <Select value={newForm.owner_id} onValueChange={(v) => setNF("owner_id", v)}>
+                <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
+                <SelectContent>{STAFF.filter((s) => s.employment_status === "active").map((s) => (<SelectItem key={s.id} value={s.id} className="text-xs">{s.full_name}</SelectItem>))}</SelectContent>
+              </Select>
+            </div>
+            <div>
+              <label className="text-[11px] font-medium text-slate-600 mb-1 block">Review Date</label>
+              <Input type="date" className="h-8 text-xs" value={newForm.review_date} onChange={(e) => setNF("review_date", e.target.value)} />
+            </div>
             <div>
               <label className="text-[11px] font-medium text-slate-600 mb-1 block">Description *</label>
-              <Textarea placeholder="Describe the risk, context, and potential impact…" className="text-xs min-h-[80px]" />
+              <Textarea
+                placeholder="Describe the risk, context, and potential impact…"
+                className="text-xs min-h-[80px]"
+                value={newForm.description}
+                onChange={(e) => setNF("description", e.target.value)}
+                required
+              />
             </div>
             <div>
               <label className="text-[11px] font-medium text-slate-600 mb-1 block">Mitigations (one per line)</label>
-              <Textarea placeholder="Enter each mitigation on a new line…" className="text-xs min-h-[60px]" />
+              <Textarea
+                placeholder="Enter each mitigation on a new line…"
+                className="text-xs min-h-[60px]"
+                value={newForm.mitigations}
+                onChange={(e) => setNF("mitigations", e.target.value)}
+              />
             </div>
-          </div>
-          <DialogFooter>
-            <Button variant="outline" size="sm" className="text-xs" onClick={() => setShowNew(false)}>Cancel</Button>
-            <Button size="sm" className="text-xs" onClick={() => setShowNew(false)}>Add Risk</Button>
-          </DialogFooter>
+            <DialogFooter>
+              <Button type="button" variant="outline" size="sm" className="text-xs" onClick={() => setShowNew(false)}>Cancel</Button>
+              <Button type="submit" size="sm" className="text-xs" disabled={createRisk.isPending}>
+                {createRisk.isPending ? <><Loader2 className="h-3 w-3 mr-1 animate-spin" />Adding…</> : "Add Risk"}
+              </Button>
+            </DialogFooter>
+          </form>
         </DialogContent>
       </Dialog>
+      <CareEventsPanel
+        title="Care Events — Behaviour & Risk"
+        category={["behaviour", "safeguarding"]}
+        days={28}
+        defaultCollapsed
+      />
     </PageShell>
   );
 }

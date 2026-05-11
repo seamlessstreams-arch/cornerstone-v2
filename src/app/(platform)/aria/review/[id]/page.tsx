@@ -13,7 +13,7 @@
 // Every action is audit-logged. Rejection requires a reason.
 // ══════════════════════════════════════════════════════════════════════════════
 
-import React, { useState, use } from "react";
+import React, { useState, useEffect, use } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { PageShell } from "@/components/layout/page-shell";
@@ -21,6 +21,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { useAriaSuggestion, useUpdateAriaSuggestion } from "@/hooks/use-intelligence-layer";
 import { cn } from "@/lib/utils";
 import {
   Sparkles,
@@ -89,9 +90,7 @@ interface SuggestionDetail {
   audit_timeline: AuditEntry[];
 }
 
-// ─── Demo data ──────────────────────────────────────────────────────────────
-
-const DEMO_SUGGESTION: SuggestionDetail = {
+const DEMO_SUGGESTION_FALLBACK: SuggestionDetail = {
   id: "as_001",
   title: "Management oversight required — physical intervention incident",
   summary: "A physical intervention was recorded. The Registered Manager should review the response, consider whether the intervention was proportionate, check that the child's voice has been captured, and record oversight.",
@@ -249,7 +248,9 @@ export default function AriaSuggestionDetailPage({
 }) {
   const { id } = use(params);
   const router = useRouter();
-  const suggestion = DEMO_SUGGESTION;
+  const { data: apiData } = useAriaSuggestion(id);
+  const updateMutation = useUpdateAriaSuggestion();
+  const suggestion = ((apiData?.item as SuggestionDetail | null) ?? DEMO_SUGGESTION_FALLBACK);
 
   const [isEditing, setIsEditing] = useState(false);
   const [editedText, setEditedText] = useState(suggestion.draft_text);
@@ -257,26 +258,37 @@ export default function AriaSuggestionDetailPage({
   const [showRejectForm, setShowRejectForm] = useState(false);
   const [actionTaken, setActionTaken] = useState<string | null>(null);
 
+  useEffect(() => {
+    if (apiData?.item) {
+      setEditedText((apiData.item as SuggestionDetail).draft_text);
+    }
+  }, [apiData]);
+
   const risk = RISK_CONFIG[suggestion.risk_level] ?? RISK_CONFIG.medium;
   const confidence = CONFIDENCE_CONFIG[suggestion.confidence_level] ?? CONFIDENCE_CONFIG.medium;
 
   function handleApprove() {
     const isAmended = editedText !== suggestion.draft_text;
-    setActionTaken(isAmended ? "amended_and_approved" : "approved");
+    const status = isAmended ? "amended_and_approved" : "approved";
+    setActionTaken(status);
+    updateMutation.mutate({ id, status, finalText: isAmended ? editedText : undefined });
   }
 
   function handleReject() {
     if (!rejectionReason.trim()) return;
     setActionTaken("rejected");
     setShowRejectForm(false);
+    updateMutation.mutate({ id, status: "rejected", rejectionReason });
   }
 
   function handleNoAction() {
     setActionTaken("no_action_required");
+    updateMutation.mutate({ id, status: "no_action_required" });
   }
 
   function handleCommit() {
     setActionTaken("committed");
+    updateMutation.mutate({ id, status: "committed" });
   }
 
   const isReviewed = actionTaken !== null || suggestion.status !== "awaiting_review";

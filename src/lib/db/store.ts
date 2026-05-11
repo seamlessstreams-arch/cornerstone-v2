@@ -372,11 +372,37 @@ import type {
   Reg45EvidenceItem, AnnexAEvidenceItem, ChildDailySummary,
   FilingCabinetItem, SavedTimeMetric,
 } from "@/types/care-events";
+import type { InspectionRecord } from "@/types/extended";
+import type {
+  WakeUpRoutine,
+  OutcomeMeasure,
+  WelfareProtocol,
+  YoungCarerRecord,
+  YpJob,
+  TransportRA,
+  UtilityBill,
+  TimelineEvent,
+  WelcomeTour,
+  TransAffirmingPlan,
+  VehiclePreUseCheck,
+  VehiclePreUseCheckItem,
+  CivicRecord,
+  WarmWelcomePack,
+  WarmWelcomePackItem,
+  TherapeuticStaffTraining,
+  TherapeuticChildImpact,
+  HomeEmergencyContact,
+  RiGovernanceReport,
+} from "@/types/extended";
 import {
   SEED_CARE_EVENTS, SEED_CARE_EVENT_ROUTES, SEED_CARE_EVENT_AUDIT,
   SEED_REG45_EVIDENCE, SEED_ANNEX_A_EVIDENCE, SEED_CHILD_DAILY_SUMMARIES,
   SEED_FILING_CABINET, SEED_SAVED_TIME_METRICS,
 } from "@/lib/seed-care-events";
+import type {
+  AriaArtifact, AriaSource, AriaArtifactVersion, AriaArtifactReview,
+  AriaArtifactAction, AriaQualityCheck, AriaGap, AriaStudioAuditLog,
+} from "@/types/aria-studio";
 
 // ── Mutable collections ───────────────────────────────────────────────────────
 
@@ -444,6 +470,66 @@ const store = {
       entity_type: "care_event",
       entity_id: "ce_demo_03",
       created_at: new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString(),
+    },
+    {
+      id: "notif_demo_04",
+      home_id: "home_oak",
+      recipient_id: "staff_ryan",
+      title: "Care entry needs manager review",
+      body: "Alex's entry \"Physical altercation with peer — restraint required\" requires your review and verification. This event has been routed to Management Oversight and Regulation 40 triage.",
+      type: "incident",
+      priority: "urgent",
+      read: false,
+      read_at: null,
+      action_url: "/care-events/ce_001",
+      entity_type: "care_event",
+      entity_id: "ce_001",
+      created_at: new Date(Date.now() - 30 * 60 * 1000).toISOString(),
+    },
+    {
+      id: "notif_demo_05",
+      home_id: "home_oak",
+      recipient_id: "staff_ryan",
+      title: "Regulation 45 evidence suggested",
+      body: "A new Regulation 45 evidence item has been suggested from Casey's missing episode record. Please review and approve or reject.",
+      type: "system",
+      priority: "high",
+      read: false,
+      read_at: null,
+      action_url: "/regulation-45",
+      entity_type: "care_event",
+      entity_id: "ce_003",
+      created_at: new Date(Date.now() - 90 * 60 * 1000).toISOString(),
+    },
+    {
+      id: "notif_demo_06",
+      home_id: "home_oak",
+      recipient_id: "staff_chervelle",
+      title: "Care entry verified",
+      body: "Your entry \"Casey: PEP meeting — spring term targets agreed\" has been verified. Evidence has been added to the Annex A readiness dashboard.",
+      type: "system",
+      priority: "normal",
+      read: true,
+      read_at: new Date(Date.now() - 60 * 60 * 1000).toISOString(),
+      action_url: "/care-events/ce_029",
+      entity_type: "care_event",
+      entity_id: "ce_029",
+      created_at: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
+    },
+    {
+      id: "notif_demo_07",
+      home_id: "home_oak",
+      recipient_id: "staff_mirela",
+      title: "Safeguarding entry returned — action required",
+      body: "Your safeguarding entry for Alex has been returned by the manager. Reason: \"Please add LADO contact details and confirm referral number.\" Please update and resubmit.",
+      type: "safeguarding",
+      priority: "urgent",
+      read: false,
+      read_at: null,
+      action_url: "/care-events/ce_004",
+      entity_type: "care_event",
+      entity_id: "ce_004",
+      created_at: new Date(Date.now() - 15 * 60 * 1000).toISOString(),
     },
   ] as Notification[],
   timeSaved: [] as TimeSavedEntry[],
@@ -659,6 +745,23 @@ const store = {
   agencyFeedback: [] as AgencyFeedback[],
   bedroomProfiles: [] as BedroomProfile[],
   bedtimeRoutines: [] as BedtimeRoutine[],
+  wakeUpRoutines: [] as WakeUpRoutine[],
+  outcomeMeasures: [] as OutcomeMeasure[],
+  welfareProtocols: [] as WelfareProtocol[],
+  youngCarerRecords: [] as YoungCarerRecord[],
+  ypJobs: [] as YpJob[],
+  transportRAs: [] as TransportRA[],
+  utilityBills: [] as UtilityBill[],
+  timelineEvents: [] as TimelineEvent[],
+  welcomeTours: [] as WelcomeTour[],
+  transAffirmingPlans: [] as TransAffirmingPlan[],
+  vehiclePreUseChecks: [] as VehiclePreUseCheck[],
+  civicRecords: [] as CivicRecord[],
+  warmWelcomePacks: [] as WarmWelcomePack[],
+  therapeuticStaffTraining: [] as TherapeuticStaffTraining[],
+  therapeuticChildImpact: [] as TherapeuticChildImpact[],
+  homeEmergencyContacts: [] as HomeEmergencyContact[],
+  riGovernanceReports: [] as RiGovernanceReport[],
   cardRecords: [] as CardRecord[],
   boardReports: [] as BoardReport[],
   asbestosRecords: [] as AsbestosRecord[],
@@ -746,6 +849,56 @@ const store = {
   ofstedActionItems: [] as OfstedActionItem[],
   ofstedEngagementRecords: [] as OfstedEngagementRecord[],
   selfEvaluationAreas: [] as SelfEvaluationArea[],
+  inspectionHistory: [
+    {
+      id: "insp_001",
+      home_id: "home_oak",
+      inspection_date: "2025-10-15",
+      inspection_type: "Full inspection",
+      grade: "Good",
+      inspector_name: "Jane Whitfield",
+      report_reference: "REP-2025-10-OAK",
+      report_url: null,
+      actions_required: 2,
+      actions_completed: 2,
+      summary: "Overall the home provides good care and outcomes for children. Leadership and management are effective.",
+      published_at: "2025-11-01",
+      created_at: "2025-10-15T09:00:00Z",
+      updated_at: "2025-11-01T09:00:00Z",
+    },
+    {
+      id: "insp_002",
+      home_id: "home_oak",
+      inspection_date: "2024-04-22",
+      inspection_type: "Full inspection",
+      grade: "Good",
+      inspector_name: "Mark Tanner",
+      report_reference: "REP-2024-04-OAK",
+      report_url: null,
+      actions_required: 1,
+      actions_completed: 1,
+      summary: "The home continues to provide a good standard of care. Relationships between staff and children are warm and supportive.",
+      published_at: "2024-05-10",
+      created_at: "2024-04-22T09:00:00Z",
+      updated_at: "2024-05-10T09:00:00Z",
+    },
+    {
+      id: "insp_003",
+      home_id: "home_oak",
+      inspection_date: "2023-11-08",
+      inspection_type: "Short notice",
+      grade: "Requires improvement",
+      inspector_name: "Susan Blake",
+      report_reference: "REP-2023-11-OAK",
+      report_url: null,
+      actions_required: 5,
+      actions_completed: 5,
+      summary: "Some aspects of care require improvement. Record keeping and supervision arrangements need strengthening.",
+      published_at: "2023-11-30",
+      created_at: "2023-11-08T09:00:00Z",
+      updated_at: "2023-11-30T09:00:00Z",
+    },
+  ] as InspectionRecord[],
   onCallShifts: [] as OnCallShift[],
   onlineGamingRecords: [] as OnlineGamingRecord[],
   onlineSafetyIncidents: [] as OnlineSafetyIncident[],
@@ -879,6 +1032,207 @@ const store = {
   childDailySummaries: [...SEED_CHILD_DAILY_SUMMARIES] as ChildDailySummary[],
   filingCabinet: [...SEED_FILING_CABINET] as FilingCabinetItem[],
   savedTimeMetrics: [...SEED_SAVED_TIME_METRICS] as SavedTimeMetric[],
+
+  // ── Branding ─────────────────────────────────────────────────────────────
+  systemBranding: {
+    id: "cornerstone_system" as const,
+    logo_url: null as string | null,
+    icon_url: null as string | null,
+    wordmark_url: null as string | null,
+    primary_colour: "#1e3a5f",
+    secondary_colour: "#2dd4bf",
+    accent_colour: "#3b82f6",
+    background_colour: "#f8fafc",
+    default_footer_text: "Generated securely through Cornerstone",
+    support_email: "support@cornerstone.care",
+    created_at: "2026-01-01T00:00:00Z",
+    updated_at: "2026-01-01T00:00:00Z",
+  },
+  organisationBrandings: [
+    {
+      id: "obr_default",
+      organisation_id: "org_oak",
+      company_name: "Seamless Streams Care Ltd",
+      trading_name: "Oak House Residential Care",
+      registered_provider_name: "Seamless Streams Care Ltd",
+      company_registration_number: "12345678",
+      ofsted_provider_reference: "SC123456",
+      logo_url: null as string | null,
+      document_logo_url: null as string | null,
+      email_logo_url: null as string | null,
+      primary_colour: "#1e3a5f",
+      secondary_colour: "#2dd4bf",
+      accent_colour: null as string | null,
+      address: "1 Care Lane, Oak Town, OA1 2BC",
+      phone: "01234 567890",
+      email: "admin@oakhouse.care",
+      website: "www.oakhouse.care",
+      responsible_individual_name: "Eleanor Hartley",
+      default_footer_text:
+        "Generated securely through Cornerstone on behalf of Seamless Streams Care Ltd",
+      confidentiality_notice:
+        "This document is confidential. It contains sensitive information about children in care and must not be shared without authorisation from the Registered Manager or Responsible Individual.",
+      created_at: "2026-01-01T00:00:00Z",
+      updated_at: "2026-01-01T00:00:00Z",
+    },
+  ] as Array<Record<string, unknown>>,
+  homeBrandings: [
+    {
+      id: "hbr_oak",
+      home_id: "home_oak",
+      organisation_id: "org_oak",
+      home_name: "Oak House",
+      home_address: "1 Care Lane, Oak Town, OA1 2BC",
+      ofsted_urn: "SC123456",
+      registered_manager_name: "Darren Cartwright",
+      responsible_individual_name: "Eleanor Hartley",
+      emergency_contact: "01234 567891",
+      safeguarding_contact: "01234 567892",
+      lado_contact: "Oak Town LA LADO: 01234 999001",
+      local_authority_contact: "Oak Town Children's Services: 01234 900100",
+      police_contact: "Oak Town Police: 101",
+      logo_override_url: null as string | null,
+      created_at: "2026-01-01T00:00:00Z",
+      updated_at: "2026-01-01T00:00:00Z",
+    },
+  ] as Array<Record<string, unknown>>,
+  documentBrandingSnapshots: [] as Array<Record<string, unknown>>,
+  brandingAuditLog: [] as Array<Record<string, unknown>>,
+
+  // ── ARIA Studio ──────────────────────────────────────────────────────────────
+  ariaArtifacts: [
+    {
+      id: "art_demo_001",
+      artifact_type: "keywork_session",
+      title: "Keywork session — managing school transitions (Alex)",
+      status: "approved",
+      child_id: "yp_alex",
+      home_id: "home_oak",
+      staff_id: null,
+      incident_id: null,
+      linked_record_id: null,
+      linked_record_type: null,
+      framework: "pace",
+      tone: "warm",
+      creative_mode: "therapeutic",
+      generated_content: `## Keywork Session Plan\n\n**Child:** Alex | **Framework:** PACE\n\n### Purpose\nTo explore Alex's feelings about the upcoming school transition and build a shared plan for managing the change.\n\n### Evidence used\nThree recent daily log entries note Alex becoming withdrawn before school days. A risk assessment flags education engagement as a current concern.\n\n### Child voice currently known\nAlex has said: "I don't want to go to a new school." This was recorded during the last keywork session.\n\n### Therapeutic rationale\nUsing PACE, we aim to hold Alex's anxiety with curiosity rather than reassurance, helping him feel understood before problem-solving begins.\n\n### Suggested opening\n"I know school changes can feel really big. I'm wondering what the hardest bit feels like for you?"\n\n### Scaling question\n"If 10 is feeling totally ready and 1 is feeling really scared, where are you today?"\n\n### Follow-up actions\n- Arrange a visit to the new school with a familiar staff member\n- Update care plan section on education\n- Review with manager\n\n**This is an ARIA draft. A human must review and approve before use.**`,
+      structured_content: null,
+      plain_text_content: null,
+      quality_score: 88,
+      evidence_confidence_score: 75,
+      safeguarding_level: "none",
+      regulation_relevance: [],
+      source_ids: [],
+      created_by: "staff_darren",
+      reviewed_by: "staff_manager",
+      approved_by: "staff_manager",
+      committed_by: null,
+      rejected_by: null,
+      created_at: new Date(Date.now() - 3 * 86400000).toISOString(),
+      submitted_for_review_at: new Date(Date.now() - 2 * 86400000).toISOString(),
+      reviewed_at: new Date(Date.now() - 86400000).toISOString(),
+      approved_at: new Date(Date.now() - 86400000).toISOString(),
+      committed_at: null,
+      rejected_at: null,
+      archived_at: null,
+      version_number: 1,
+      filing_cabinet_path: null,
+      official_record_id: null,
+      child_voice_present: true,
+      quality_checks_passed: true,
+      amendment_reason: null,
+    },
+    {
+      id: "art_demo_002",
+      artifact_type: "management_oversight",
+      title: "Management oversight — peer conflict pattern (October–November)",
+      status: "committed",
+      child_id: null,
+      home_id: "home_oak",
+      staff_id: null,
+      incident_id: null,
+      linked_record_id: null,
+      linked_record_type: null,
+      framework: "safeguarding_led",
+      tone: "professional",
+      creative_mode: "inspection_ready",
+      generated_content: `## Management Oversight Note\n\n**Period:** October–November 2026 | **Framework:** Safeguarding-led\n\n### Evidence reviewed\nSeven incident records, two risk assessment reviews, and the monthly home dynamics summary were used to prepare this oversight.\n\n### Child impact analysis\nThree children have been involved in peer conflicts this period. Incidents cluster around unsettled evenings and shifts with reduced familiar staffing.\n\n### Risk analysis\nRisk of escalation is assessed as medium. There are no current safeguarding referrals but patterns warrant monitoring.\n\n### Regulatory relevance\nTwo incidents may require consideration for Regulation 40. Reg 45 evidence has been updated.\n\n### Management decisions and actions\n1. Staffing consistency review — Action: HR lead — Due: 2 weeks\n2. Peer support plan review for all affected young people — Due: 10 days\n3. Risk assessments to be updated — Due: 7 days\n\n**Approved by registered manager. Committed to official record.**`,
+      structured_content: null,
+      plain_text_content: null,
+      quality_score: 95,
+      evidence_confidence_score: 88,
+      safeguarding_level: "low",
+      regulation_relevance: ["reg40", "reg45"],
+      source_ids: [],
+      created_by: "staff_manager",
+      reviewed_by: "staff_manager",
+      approved_by: "staff_manager",
+      committed_by: "staff_manager",
+      rejected_by: null,
+      created_at: new Date(Date.now() - 10 * 86400000).toISOString(),
+      submitted_for_review_at: new Date(Date.now() - 9 * 86400000).toISOString(),
+      reviewed_at: new Date(Date.now() - 8 * 86400000).toISOString(),
+      approved_at: new Date(Date.now() - 8 * 86400000).toISOString(),
+      committed_at: new Date(Date.now() - 7 * 86400000).toISOString(),
+      rejected_at: null,
+      archived_at: null,
+      version_number: 1,
+      filing_cabinet_path: "Home/Management Oversight/2026/November/management_oversight",
+      official_record_id: null,
+      child_voice_present: false,
+      quality_checks_passed: true,
+      amendment_reason: null,
+    },
+    {
+      id: "art_demo_003",
+      artifact_type: "risk_review",
+      title: "Risk review — missing from care indicators (Maya)",
+      status: "draft",
+      child_id: "yp_maya",
+      home_id: "home_oak",
+      staff_id: null,
+      incident_id: null,
+      linked_record_id: null,
+      linked_record_type: null,
+      framework: "safeguarding_led",
+      tone: "professional",
+      creative_mode: "conservative",
+      generated_content: `## Risk Review — Missing From Care\n\n**Child:** Maya\n\n**ARIA draft — requires human review before any action is taken.**\n\n### Current risk summary\nMaya has had two missing episodes in the past four weeks. Both returns were within three hours. Return home conversations were completed.\n\n### Recent indicators\n- Increased secrecy around phone use (noted in 4 daily logs)\n- Reluctance to attend education (3 days missed this week)\n- Emotional presentation described as "flat" by night staff\n\n### Protective factors\n- Strong relationship with key worker\n- Consistent engagement with therapeutic sessions\n- Supportive family contact\n\n### Possible escalation signs to watch\n- Overnight missing episodes\n- New adults appearing in contact\n- Unexplained money or gifts\n- Withdrawal from trusted adults\n\n### Recommended actions (for manager review)\n1. Update risk assessment — required within 5 days\n2. CSE screening review — consider request\n3. Next return home conversation to include exploitation screening questions\n4. Update key worker plan\n\n**This is an ARIA-generated draft. A manager must review and approve all content before any action is taken.**`,
+      structured_content: null,
+      plain_text_content: null,
+      quality_score: null,
+      evidence_confidence_score: 55,
+      safeguarding_level: "high",
+      regulation_relevance: ["reg45", "annex_a"],
+      source_ids: [],
+      created_by: "staff_anna",
+      reviewed_by: null,
+      approved_by: null,
+      committed_by: null,
+      rejected_by: null,
+      created_at: new Date(Date.now() - 1 * 86400000).toISOString(),
+      submitted_for_review_at: null,
+      reviewed_at: null,
+      approved_at: null,
+      committed_at: null,
+      rejected_at: null,
+      archived_at: null,
+      version_number: 1,
+      filing_cabinet_path: null,
+      official_record_id: null,
+      child_voice_present: false,
+      quality_checks_passed: false,
+      amendment_reason: null,
+    },
+  ] as AriaArtifact[],
+  ariaSources: [] as AriaSource[],
+  ariaArtifactVersions: [] as AriaArtifactVersion[],
+  ariaArtifactReviews: [] as AriaArtifactReview[],
+  ariaArtifactActions: [] as AriaArtifactAction[],
+  ariaQualityChecks: [] as AriaQualityCheck[],
+  ariaGaps: [] as AriaGap[],
+  ariaStudioAuditLog: [] as AriaStudioAuditLog[],
+
   // Shift Swap Requests
   shiftSwaps: [
     {
@@ -991,6 +1345,50 @@ store.keyWorkingSessions = [
     actions_agreed: ["Watch cooking show together on Wednesdays", "Consider cooking activity linked to family memories"],
     mood_before: 3, mood_after: 4, follow_up: "", follow_up_date: "", follow_up_completed: false,
     linked_goals: [], confidential: false, home_id: "home_oak", created_at: daysFromNow(-12),
+  },
+];
+
+// Seed keyworker (1:1) sessions
+store.keyworkerSessions = [
+  {
+    id: "kws_001",
+    child_id: "yp_casey",
+    staff_id: "staff_chervelle",
+    session_date: daysFromNow(-5),
+    duration_minutes: 45,
+    format: "one_to_one_at_home" as const,
+    child_chose_format: true,
+    themes_covered: ["identity", "education"],
+    child_went_in_with: "3",
+    child_walked_out_with: "4",
+    what_child_brought_up: "Casey shared feelings about school friendships and identity",
+    what_staff_brought_up: "Upcoming education review and creative writing project",
+    agreed_actions_staff: ["Arrange creative writing resources", "Follow up on school peer relationships"],
+    agreed_actions_child: ["Continue writing journal", "Speak to form tutor about friendships"],
+    child_satisfaction: 4,
+    follow_up_date: daysFromNow(9),
+    flags_raised: [],
+    created_at: daysFromNow(-5),
+  },
+  {
+    id: "kws_002",
+    child_id: "yp_jordan",
+    staff_id: "staff_anna",
+    session_date: daysFromNow(-3),
+    duration_minutes: 30,
+    format: "one_to_one_walk" as const,
+    child_chose_format: true,
+    themes_covered: ["transition", "wellbeing"],
+    child_went_in_with: "2",
+    child_walked_out_with: "3",
+    what_child_brought_up: "Jordan spoke about transition planning and anxiety about leaving care",
+    what_staff_brought_up: "Pathway plan review and housing options",
+    agreed_actions_staff: ["Book transition planning meeting", "Arrange supported accommodation visit"],
+    agreed_actions_child: ["Think about three things important in a home", "Bring questions to next session"],
+    child_satisfaction: 3,
+    follow_up_date: daysFromNow(11),
+    flags_raised: [],
+    created_at: daysFromNow(-3),
   },
 ];
 
@@ -8230,6 +8628,49 @@ export const db = {
     },
   },
 
+  inspectionHistory: {
+    findAll: (): InspectionRecord[] =>
+      [...store.inspectionHistory].sort((a, b) =>
+        b.inspection_date.localeCompare(a.inspection_date)
+      ),
+    findById: (id: string): InspectionRecord | undefined =>
+      store.inspectionHistory.find((r) => r.id === id),
+    latest: (): InspectionRecord | undefined =>
+      store.inspectionHistory.reduce<InspectionRecord | undefined>((best, r) =>
+        !best || r.inspection_date > best.inspection_date ? r : best, undefined),
+    create: (data: Partial<InspectionRecord>): InspectionRecord => {
+      const now = new Date().toISOString();
+      const record: InspectionRecord = {
+        id: generateId("insp"),
+        home_id: "home_oak",
+        inspection_date: data.inspection_date ?? now.slice(0, 10),
+        inspection_type: data.inspection_type ?? "Full inspection",
+        grade: data.grade ?? "Good",
+        inspector_name: data.inspector_name ?? "",
+        report_reference: data.report_reference ?? null,
+        report_url: data.report_url ?? null,
+        actions_required: data.actions_required ?? 0,
+        actions_completed: data.actions_completed ?? 0,
+        summary: data.summary ?? null,
+        published_at: data.published_at ?? null,
+        created_at: now,
+        updated_at: now,
+      };
+      store.inspectionHistory.push(record);
+      return record;
+    },
+    update: (id: string, data: Partial<InspectionRecord>): InspectionRecord | null => {
+      const idx = store.inspectionHistory.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.inspectionHistory[idx] = {
+        ...store.inspectionHistory[idx],
+        ...data,
+        updated_at: new Date().toISOString(),
+      };
+      return store.inspectionHistory[idx];
+    },
+  },
+
   onCallShifts: {
     findAll: (): OnCallShift[] => store.onCallShifts,
     findById: (id: string): OnCallShift | undefined => store.onCallShifts.find((r) => r.id === id),
@@ -10367,6 +10808,135 @@ export const db = {
     },
   },
 
+  // ── Branding ─────────────────────────────────────────────────────────────────
+  branding: {
+    getSystem: () => store.systemBranding,
+    updateSystem: (data: Partial<typeof store.systemBranding>) => {
+      store.systemBranding = { ...store.systemBranding, ...data, updated_at: new Date().toISOString() };
+      return store.systemBranding;
+    },
+    getOrganisation: (orgId: string) =>
+      store.organisationBrandings.find((b) => b.organisation_id === orgId) ?? null,
+    upsertOrganisation: (orgId: string, data: Record<string, unknown>) => {
+      const now = new Date().toISOString();
+      const idx = store.organisationBrandings.findIndex((b) => b.organisation_id === orgId);
+      if (idx !== -1) {
+        store.organisationBrandings[idx] = { ...store.organisationBrandings[idx], ...data, updated_at: now };
+        return store.organisationBrandings[idx];
+      }
+      const record = {
+        id: generateId("obr"),
+        organisation_id: orgId,
+        company_name: (data.company_name as string) ?? "Unknown Organisation",
+        trading_name: null,
+        registered_provider_name: null,
+        company_registration_number: null,
+        ofsted_provider_reference: null,
+        logo_url: null,
+        document_logo_url: null,
+        email_logo_url: null,
+        primary_colour: null,
+        secondary_colour: null,
+        accent_colour: null,
+        address: null,
+        phone: null,
+        email: null,
+        website: null,
+        responsible_individual_name: null,
+        default_footer_text: null,
+        confidentiality_notice:
+          "This document is confidential. It contains sensitive information about children in care and must not be shared without authorisation.",
+        created_at: now,
+        updated_at: now,
+        ...data,
+      };
+      store.organisationBrandings.push(record);
+      return record;
+    },
+    getHome: (homeId: string) =>
+      store.homeBrandings.find((b) => b.home_id === homeId) ?? null,
+    upsertHome: (homeId: string, orgId: string, data: Record<string, unknown>) => {
+      const now = new Date().toISOString();
+      const idx = store.homeBrandings.findIndex((b) => b.home_id === homeId);
+      if (idx !== -1) {
+        store.homeBrandings[idx] = { ...store.homeBrandings[idx], ...data, updated_at: now };
+        return store.homeBrandings[idx];
+      }
+      const record = {
+        id: generateId("hbr"),
+        home_id: homeId,
+        organisation_id: orgId,
+        home_name: (data.home_name as string) ?? "Unknown Home",
+        home_address: null,
+        ofsted_urn: null,
+        registered_manager_name: null,
+        responsible_individual_name: null,
+        emergency_contact: null,
+        safeguarding_contact: null,
+        lado_contact: null,
+        local_authority_contact: null,
+        police_contact: null,
+        logo_override_url: null,
+        created_at: now,
+        updated_at: now,
+        ...data,
+      };
+      store.homeBrandings.push(record);
+      return record;
+    },
+    // Document branding snapshots
+    createSnapshot: (data: {
+      document_id: string;
+      document_type: string;
+      organisation_id?: string;
+      home_id?: string;
+      branding_json: object;
+      generated_by?: string;
+    }) => {
+      const snapshot = {
+        id: generateId("dbs"),
+        organisation_id: data.organisation_id ?? null,
+        home_id: data.home_id ?? null,
+        generated_by: data.generated_by ?? null,
+        created_at: new Date().toISOString(),
+        ...data,
+      };
+      store.documentBrandingSnapshots.push(snapshot);
+      return snapshot;
+    },
+    getSnapshot: (documentId: string) =>
+      store.documentBrandingSnapshots.find((s) => s.document_id === documentId) ?? null,
+    // Branding audit log
+    addAuditEntry: (entry: {
+      changed_by: string;
+      changed_by_name?: string;
+      target_type: "system" | "organisation" | "home";
+      target_id: string;
+      field_name: string;
+      previous_value?: string | null;
+      new_value?: string | null;
+      session_info?: string;
+    }) => {
+      const record = {
+        id: generateId("bal"),
+        changed_by_name: null,
+        previous_value: null,
+        new_value: null,
+        session_info: null,
+        created_at: new Date().toISOString(),
+        ...entry,
+      };
+      store.brandingAuditLog.push(record);
+      return record;
+    },
+    getAuditLog: (targetType?: string, targetId?: string) => {
+      let log = store.brandingAuditLog;
+      if (targetType) log = log.filter((e) => e.target_type === targetType);
+      if (targetId) log = log.filter((e) => e.target_id === targetId);
+      return log.sort((a, b) => String(b.created_at).localeCompare(String(a.created_at)));
+    },
+  },
+
   // ── Saved Time Metrics ───────────────────────────────────────────────────────
   savedTimeMetrics: {
     findAll: () => store.savedTimeMetrics,
@@ -10387,6 +10957,430 @@ export const db = {
       const metric: SavedTimeMetric = { ...data, id: generateId("stm"), created_at: now };
       store.savedTimeMetrics.push(metric);
       return metric;
+    },
+  },
+
+  // ── ARIA Studio ───────────────────────────────────────────────────────────────
+  ariaArtifacts: {
+    findAll: (homeId?: string) =>
+      homeId ? store.ariaArtifacts.filter((a) => a.home_id === homeId) : store.ariaArtifacts,
+    findById: (id: string) => store.ariaArtifacts.find((a) => a.id === id) ?? null,
+    findByChild: (childId: string) => store.ariaArtifacts.filter((a) => a.child_id === childId),
+    findByStatus: (status: string, homeId?: string) => {
+      let items = store.ariaArtifacts.filter((a) => a.status === status);
+      if (homeId) items = items.filter((a) => a.home_id === homeId);
+      return items;
+    },
+    findByType: (type: string, homeId?: string) => {
+      let items = store.ariaArtifacts.filter((a) => a.artifact_type === type);
+      if (homeId) items = items.filter((a) => a.home_id === homeId);
+      return items;
+    },
+    create: (data: Omit<AriaArtifact, "id" | "created_at">): AriaArtifact => {
+      const now = new Date().toISOString();
+      const artifact: AriaArtifact = {
+        ...data,
+        id: generateId("art"),
+        created_at: now,
+      };
+      store.ariaArtifacts.push(artifact);
+      return artifact;
+    },
+    patch: (id: string, data: Partial<AriaArtifact>): AriaArtifact | null => {
+      const idx = store.ariaArtifacts.findIndex((a) => a.id === id);
+      if (idx === -1) return null;
+      store.ariaArtifacts[idx] = { ...store.ariaArtifacts[idx], ...data };
+      return store.ariaArtifacts[idx];
+    },
+    stats: (homeId: string) => {
+      const items = store.ariaArtifacts.filter((a) => a.home_id === homeId);
+      return {
+        total: items.length,
+        draft: items.filter((a) => a.status === "draft").length,
+        in_review: items.filter((a) => a.status === "in_review").length,
+        approved: items.filter((a) => a.status === "approved").length,
+        committed: items.filter((a) => a.status === "committed").length,
+      };
+    },
+  },
+  ariaSources: {
+    findAll: (homeId?: string) =>
+      homeId ? store.ariaSources.filter((s) => s.home_id === homeId) : store.ariaSources,
+    findById: (id: string) => store.ariaSources.find((s) => s.id === id) ?? null,
+    findByChild: (childId: string) => store.ariaSources.filter((s) => s.child_id === childId),
+    findByIds: (ids: string[]) => store.ariaSources.filter((s) => ids.includes(s.id)),
+    create: (data: Omit<AriaSource, "id" | "created_at" | "updated_at">): AriaSource => {
+      const now = new Date().toISOString();
+      const source: AriaSource = { ...data, id: generateId("src"), created_at: now, updated_at: now };
+      store.ariaSources.push(source);
+      return source;
+    },
+    patch: (id: string, data: Partial<AriaSource>): AriaSource | null => {
+      const idx = store.ariaSources.findIndex((s) => s.id === id);
+      if (idx === -1) return null;
+      store.ariaSources[idx] = { ...store.ariaSources[idx], ...data, updated_at: new Date().toISOString() };
+      return store.ariaSources[idx];
+    },
+  },
+  ariaArtifactVersions: {
+    findByArtifact: (artifactId: string) =>
+      store.ariaArtifactVersions.filter((v) => v.artifact_id === artifactId)
+        .sort((a, b) => b.version_number - a.version_number),
+    create: (data: Omit<AriaArtifactVersion, "id">): AriaArtifactVersion => {
+      const version: AriaArtifactVersion = { ...data, id: generateId("av") };
+      store.ariaArtifactVersions.push(version);
+      return version;
+    },
+  },
+  ariaArtifactReviews: {
+    findByArtifact: (artifactId: string) =>
+      store.ariaArtifactReviews.filter((r) => r.artifact_id === artifactId),
+    create: (data: Omit<AriaArtifactReview, "id" | "created_at">): AriaArtifactReview => {
+      const review: AriaArtifactReview = { ...data, id: generateId("rev"), created_at: new Date().toISOString() };
+      store.ariaArtifactReviews.push(review);
+      return review;
+    },
+  },
+  ariaArtifactActions: {
+    findByArtifact: (artifactId: string) =>
+      store.ariaArtifactActions.filter((a) => a.artifact_id === artifactId),
+    create: (data: Omit<AriaArtifactAction, "id" | "created_at">): AriaArtifactAction => {
+      const action: AriaArtifactAction = { ...data, id: generateId("aac"), created_at: new Date().toISOString() };
+      store.ariaArtifactActions.push(action);
+      return action;
+    },
+    patch: (id: string, data: Partial<AriaArtifactAction>): AriaArtifactAction | null => {
+      const idx = store.ariaArtifactActions.findIndex((a) => a.id === id);
+      if (idx === -1) return null;
+      store.ariaArtifactActions[idx] = { ...store.ariaArtifactActions[idx], ...data };
+      return store.ariaArtifactActions[idx];
+    },
+  },
+  ariaQualityChecks: {
+    findByArtifact: (artifactId: string) =>
+      store.ariaQualityChecks.filter((q) => q.artifact_id === artifactId),
+    findLatestByArtifact: (artifactId: string) =>
+      store.ariaQualityChecks.filter((q) => q.artifact_id === artifactId)
+        .sort((a, b) => b.created_at.localeCompare(a.created_at))[0] ?? null,
+    create: (data: Omit<AriaQualityCheck, "id" | "created_at">): AriaQualityCheck => {
+      const check: AriaQualityCheck = { ...data, id: generateId("qc"), created_at: new Date().toISOString() };
+      store.ariaQualityChecks.push(check);
+      return check;
+    },
+  },
+  ariaGaps: {
+    findAll: (homeId?: string) =>
+      homeId ? store.ariaGaps.filter((g) => g.home_id === homeId) : store.ariaGaps,
+    findByChild: (childId: string) => store.ariaGaps.filter((g) => g.child_id === childId),
+    findOpen: (homeId: string) =>
+      store.ariaGaps.filter((g) => g.home_id === homeId && g.status === "open"),
+    create: (data: Omit<AriaGap, "id" | "created_at">): AriaGap => {
+      const gap: AriaGap = { ...data, id: generateId("gap"), created_at: new Date().toISOString() };
+      store.ariaGaps.push(gap);
+      return gap;
+    },
+    patch: (id: string, data: Partial<AriaGap>): AriaGap | null => {
+      const idx = store.ariaGaps.findIndex((g) => g.id === id);
+      if (idx === -1) return null;
+      store.ariaGaps[idx] = { ...store.ariaGaps[idx], ...data };
+      return store.ariaGaps[idx];
+    },
+  },
+  ariaStudioAuditLog: {
+    findAll: (homeId?: string) =>
+      homeId ? store.ariaStudioAuditLog.filter((l) => l.home_id === homeId) : store.ariaStudioAuditLog,
+    findByArtifact: (artifactId: string) =>
+      store.ariaStudioAuditLog.filter((l) => l.artifact_id === artifactId),
+    create: (data: Omit<AriaStudioAuditLog, "id" | "created_at">): AriaStudioAuditLog => {
+      const entry: AriaStudioAuditLog = { ...data, id: generateId("aal"), created_at: new Date().toISOString() };
+      store.ariaStudioAuditLog.push(entry);
+      return entry;
+    },
+  },
+  wakeUpRoutines: {
+    findAll: () => store.wakeUpRoutines,
+    findByChild: (childId: string) => store.wakeUpRoutines.filter((r) => r.child_id === childId),
+    findByHome: (homeId: string) => store.wakeUpRoutines.filter((r) => r.home_id === homeId),
+    findById: (id: string) => store.wakeUpRoutines.find((r) => r.id === id),
+    create: (data: Omit<WakeUpRoutine, "id" | "created_at">): WakeUpRoutine => {
+      const record: WakeUpRoutine = { ...data, id: generateId("wur"), created_at: new Date().toISOString() };
+      store.wakeUpRoutines.push(record);
+      return record;
+    },
+    patch: (id: string, data: Partial<WakeUpRoutine>): WakeUpRoutine | null => {
+      const idx = store.wakeUpRoutines.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.wakeUpRoutines[idx] = { ...store.wakeUpRoutines[idx], ...data };
+      return store.wakeUpRoutines[idx];
+    },
+  },
+  outcomeMeasures: {
+    findAll: () => store.outcomeMeasures,
+    findByChild: (childId: string) => store.outcomeMeasures.filter((r) => r.child_id === childId),
+    findByHome: (homeId: string) => store.outcomeMeasures.filter((r) => r.home_id === homeId),
+    findById: (id: string) => store.outcomeMeasures.find((r) => r.id === id),
+    create: (data: Omit<OutcomeMeasure, "id" | "created_at">): OutcomeMeasure => {
+      const record: OutcomeMeasure = { ...data, id: generateId("om"), created_at: new Date().toISOString() };
+      store.outcomeMeasures.push(record);
+      return record;
+    },
+    patch: (id: string, data: Partial<OutcomeMeasure>): OutcomeMeasure | null => {
+      const idx = store.outcomeMeasures.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.outcomeMeasures[idx] = { ...store.outcomeMeasures[idx], ...data };
+      return store.outcomeMeasures[idx];
+    },
+  },
+  welfareProtocols: {
+    findAll: () => store.welfareProtocols,
+    findByChild: (childId: string) => store.welfareProtocols.filter((r) => r.child_id === childId),
+    findByHome: (homeId: string) => store.welfareProtocols.filter((r) => r.home_id === homeId),
+    findById: (id: string) => store.welfareProtocols.find((r) => r.id === id),
+    create: (data: Omit<WelfareProtocol, "id" | "created_at">): WelfareProtocol => {
+      const record: WelfareProtocol = { ...data, id: generateId("wcp"), created_at: new Date().toISOString() };
+      store.welfareProtocols.push(record);
+      return record;
+    },
+    patch: (id: string, data: Partial<WelfareProtocol>): WelfareProtocol | null => {
+      const idx = store.welfareProtocols.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.welfareProtocols[idx] = { ...store.welfareProtocols[idx], ...data };
+      return store.welfareProtocols[idx];
+    },
+  },
+  youngCarerRecords: {
+    findAll: () => store.youngCarerRecords,
+    findByChild: (childId: string) => store.youngCarerRecords.filter((r) => r.child_id === childId),
+    findByHome: (homeId: string) => store.youngCarerRecords.filter((r) => r.home_id === homeId),
+    findById: (id: string) => store.youngCarerRecords.find((r) => r.id === id),
+    create: (data: Omit<YoungCarerRecord, "id" | "created_at">): YoungCarerRecord => {
+      const record: YoungCarerRecord = { ...data, id: generateId("yc"), created_at: new Date().toISOString() };
+      store.youngCarerRecords.push(record);
+      return record;
+    },
+    patch: (id: string, data: Partial<YoungCarerRecord>): YoungCarerRecord | null => {
+      const idx = store.youngCarerRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.youngCarerRecords[idx] = { ...store.youngCarerRecords[idx], ...data };
+      return store.youngCarerRecords[idx];
+    },
+  },
+  ypJobs: {
+    findAll: () => store.ypJobs,
+    findByChild: (childId: string) => store.ypJobs.filter((r) => r.child_id === childId),
+    findByHome: (homeId: string) => store.ypJobs.filter((r) => r.home_id === homeId),
+    findById: (id: string) => store.ypJobs.find((r) => r.id === id),
+    create: (data: Omit<YpJob, "id" | "created_at">): YpJob => {
+      const record: YpJob = { ...data, id: generateId("ypj"), created_at: new Date().toISOString() };
+      store.ypJobs.push(record);
+      return record;
+    },
+    patch: (id: string, data: Partial<YpJob>): YpJob | null => {
+      const idx = store.ypJobs.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.ypJobs[idx] = { ...store.ypJobs[idx], ...data };
+      return store.ypJobs[idx];
+    },
+  },
+  transportRAs: {
+    findAll: () => store.transportRAs,
+    findByChild: (childId: string) => store.transportRAs.filter((r) => r.child_id === childId),
+    findByHome: (homeId: string) => store.transportRAs.filter((r) => r.home_id === homeId),
+    findById: (id: string) => store.transportRAs.find((r) => r.id === id),
+    create: (data: Omit<TransportRA, "id" | "created_at">): TransportRA => {
+      const record: TransportRA = { ...data, id: generateId("tra"), created_at: new Date().toISOString() };
+      store.transportRAs.push(record);
+      return record;
+    },
+    patch: (id: string, data: Partial<TransportRA>): TransportRA | null => {
+      const idx = store.transportRAs.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.transportRAs[idx] = { ...store.transportRAs[idx], ...data };
+      return store.transportRAs[idx];
+    },
+  },
+  utilityBills: {
+    findAll: () => store.utilityBills,
+    findByHome: (homeId: string) => store.utilityBills.filter((r) => r.home_id === homeId),
+    findById: (id: string) => store.utilityBills.find((r) => r.id === id),
+    create: (data: Omit<UtilityBill, "id" | "created_at">): UtilityBill => {
+      const record: UtilityBill = { ...data, id: generateId("ub"), created_at: new Date().toISOString() };
+      store.utilityBills.push(record);
+      return record;
+    },
+    patch: (id: string, data: Partial<UtilityBill>): UtilityBill | null => {
+      const idx = store.utilityBills.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.utilityBills[idx] = { ...store.utilityBills[idx], ...data };
+      return store.utilityBills[idx];
+    },
+  },
+  timelineEvents: {
+    findAll: () => store.timelineEvents,
+    findByChild: (childId: string) => store.timelineEvents.filter((r) => r.child_id === childId),
+    findByHome: (homeId: string) => store.timelineEvents.filter((r) => r.home_id === homeId),
+    findById: (id: string) => store.timelineEvents.find((r) => r.id === id),
+    create: (data: Omit<TimelineEvent, "id" | "created_at">): TimelineEvent => {
+      const record: TimelineEvent = { ...data, id: generateId("tte"), created_at: new Date().toISOString() };
+      store.timelineEvents.push(record);
+      return record;
+    },
+    patch: (id: string, data: Partial<TimelineEvent>): TimelineEvent | null => {
+      const idx = store.timelineEvents.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.timelineEvents[idx] = { ...store.timelineEvents[idx], ...data };
+      return store.timelineEvents[idx];
+    },
+  },
+  welcomeTours: {
+    findAll: () => store.welcomeTours,
+    findByChild: (childId: string) => store.welcomeTours.filter((r) => r.child_id === childId),
+    findByHome: (homeId: string) => store.welcomeTours.filter((r) => r.home_id === homeId),
+    findById: (id: string) => store.welcomeTours.find((r) => r.id === id),
+    create: (data: Omit<WelcomeTour, "id" | "created_at">): WelcomeTour => {
+      const record: WelcomeTour = { ...data, id: generateId("wt"), created_at: new Date().toISOString() };
+      store.welcomeTours.push(record);
+      return record;
+    },
+    patch: (id: string, data: Partial<WelcomeTour>): WelcomeTour | null => {
+      const idx = store.welcomeTours.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.welcomeTours[idx] = { ...store.welcomeTours[idx], ...data };
+      return store.welcomeTours[idx];
+    },
+  },
+  transAffirmingPlans: {
+    findAll: () => store.transAffirmingPlans,
+    findByChild: (childId: string) => store.transAffirmingPlans.filter((r) => r.child_id === childId),
+    findByHome: (homeId: string) => store.transAffirmingPlans.filter((r) => r.home_id === homeId),
+    findById: (id: string) => store.transAffirmingPlans.find((r) => r.id === id),
+    create: (data: Omit<TransAffirmingPlan, "id" | "created_at">): TransAffirmingPlan => {
+      const record: TransAffirmingPlan = { ...data, id: generateId("tap"), created_at: new Date().toISOString() };
+      store.transAffirmingPlans.push(record);
+      return record;
+    },
+    patch: (id: string, data: Partial<TransAffirmingPlan>): TransAffirmingPlan | null => {
+      const idx = store.transAffirmingPlans.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.transAffirmingPlans[idx] = { ...store.transAffirmingPlans[idx], ...data };
+      return store.transAffirmingPlans[idx];
+    },
+  },
+  vehiclePreUseChecks: {
+    findAll: () => store.vehiclePreUseChecks,
+    findByHome: (homeId: string) => store.vehiclePreUseChecks.filter((r) => r.home_id === homeId),
+    findById: (id: string) => store.vehiclePreUseChecks.find((r) => r.id === id),
+    create: (data: Omit<VehiclePreUseCheck, "id" | "created_at">): VehiclePreUseCheck => {
+      const record: VehiclePreUseCheck = { ...data, id: generateId("vpc"), created_at: new Date().toISOString() };
+      store.vehiclePreUseChecks.push(record);
+      return record;
+    },
+    patch: (id: string, data: Partial<VehiclePreUseCheck>): VehiclePreUseCheck | null => {
+      const idx = store.vehiclePreUseChecks.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.vehiclePreUseChecks[idx] = { ...store.vehiclePreUseChecks[idx], ...data };
+      return store.vehiclePreUseChecks[idx];
+    },
+  },
+  civicRecords: {
+    findAll: () => store.civicRecords,
+    findByChild: (childId: string) => store.civicRecords.filter((r) => r.child_id === childId),
+    findByHome: (homeId: string) => store.civicRecords.filter((r) => r.home_id === homeId),
+    findById: (id: string) => store.civicRecords.find((r) => r.id === id),
+    create: (data: Omit<CivicRecord, "id" | "created_at">): CivicRecord => {
+      const record: CivicRecord = { ...data, id: generateId("civ"), created_at: new Date().toISOString() };
+      store.civicRecords.push(record);
+      return record;
+    },
+    patch: (id: string, data: Partial<CivicRecord>): CivicRecord | null => {
+      const idx = store.civicRecords.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.civicRecords[idx] = { ...store.civicRecords[idx], ...data };
+      return store.civicRecords[idx];
+    },
+  },
+  warmWelcomePacks: {
+    findAll: () => store.warmWelcomePacks,
+    findByChild: (childId: string) => store.warmWelcomePacks.filter((r) => r.child_id === childId),
+    findByHome: (homeId: string) => store.warmWelcomePacks.filter((r) => r.home_id === homeId),
+    findById: (id: string) => store.warmWelcomePacks.find((r) => r.id === id),
+    create: (data: Omit<WarmWelcomePack, "id" | "created_at">): WarmWelcomePack => {
+      const record: WarmWelcomePack = { ...data, id: generateId("wwp"), created_at: new Date().toISOString() };
+      store.warmWelcomePacks.push(record);
+      return record;
+    },
+    patch: (id: string, data: Partial<WarmWelcomePack>): WarmWelcomePack | null => {
+      const idx = store.warmWelcomePacks.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.warmWelcomePacks[idx] = { ...store.warmWelcomePacks[idx], ...data };
+      return store.warmWelcomePacks[idx];
+    },
+  },
+  therapeuticStaffTraining: {
+    findAll: () => store.therapeuticStaffTraining,
+    findByHome: (homeId: string) => store.therapeuticStaffTraining.filter((r) => r.home_id === homeId),
+    findById: (id: string) => store.therapeuticStaffTraining.find((r) => r.id === id),
+    create: (data: Omit<TherapeuticStaffTraining, "id" | "created_at">): TherapeuticStaffTraining => {
+      const record: TherapeuticStaffTraining = { ...data, id: generateId("tst"), created_at: new Date().toISOString() };
+      store.therapeuticStaffTraining.push(record);
+      return record;
+    },
+    patch: (id: string, data: Partial<TherapeuticStaffTraining>): TherapeuticStaffTraining | null => {
+      const idx = store.therapeuticStaffTraining.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.therapeuticStaffTraining[idx] = { ...store.therapeuticStaffTraining[idx], ...data };
+      return store.therapeuticStaffTraining[idx];
+    },
+  },
+  therapeuticChildImpact: {
+    findAll: () => store.therapeuticChildImpact,
+    findByChild: (childId: string) => store.therapeuticChildImpact.filter((r) => r.child_id === childId),
+    findByHome: (homeId: string) => store.therapeuticChildImpact.filter((r) => r.home_id === homeId),
+    findById: (id: string) => store.therapeuticChildImpact.find((r) => r.id === id),
+    create: (data: Omit<TherapeuticChildImpact, "id" | "created_at">): TherapeuticChildImpact => {
+      const record: TherapeuticChildImpact = { ...data, id: generateId("tci"), created_at: new Date().toISOString() };
+      store.therapeuticChildImpact.push(record);
+      return record;
+    },
+    patch: (id: string, data: Partial<TherapeuticChildImpact>): TherapeuticChildImpact | null => {
+      const idx = store.therapeuticChildImpact.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.therapeuticChildImpact[idx] = { ...store.therapeuticChildImpact[idx], ...data };
+      return store.therapeuticChildImpact[idx];
+    },
+  },
+  homeEmergencyContacts: {
+    findAll: () => store.homeEmergencyContacts,
+    findByHome: (homeId: string) => store.homeEmergencyContacts.filter((r) => r.home_id === homeId),
+    findById: (id: string) => store.homeEmergencyContacts.find((r) => r.id === id),
+    create: (data: Omit<HomeEmergencyContact, "id" | "created_at">): HomeEmergencyContact => {
+      const record: HomeEmergencyContact = { ...data, id: generateId("hec"), created_at: new Date().toISOString() };
+      store.homeEmergencyContacts.push(record);
+      return record;
+    },
+    patch: (id: string, data: Partial<HomeEmergencyContact>): HomeEmergencyContact | null => {
+      const idx = store.homeEmergencyContacts.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.homeEmergencyContacts[idx] = { ...store.homeEmergencyContacts[idx], ...data };
+      return store.homeEmergencyContacts[idx];
+    },
+  },
+
+  riGovernanceReports: {
+    findAll: () => store.riGovernanceReports,
+    findByHome: (homeId: string) => store.riGovernanceReports.filter((r) => r.home_id === homeId),
+    findById: (id: string) => store.riGovernanceReports.find((r) => r.id === id),
+    create: (data: Partial<RiGovernanceReport>): RiGovernanceReport => {
+      const now = new Date().toISOString();
+      const record = { ...data, id: generateId("rigr"), created_at: now, updated_at: now } as RiGovernanceReport;
+      store.riGovernanceReports.push(record);
+      return record;
+    },
+    patch: (id: string, data: Partial<RiGovernanceReport>): RiGovernanceReport | null => {
+      const idx = store.riGovernanceReports.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.riGovernanceReports[idx] = { ...store.riGovernanceReports[idx], ...data, updated_at: new Date().toISOString() };
+      return store.riGovernanceReports[idx];
     },
   },
 };

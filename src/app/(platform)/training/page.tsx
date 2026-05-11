@@ -30,6 +30,8 @@ import type { TrainingRecord } from "@/types";
 import { useCreateTrainingNeed } from "@/hooks/use-ri-learning";
 import { useStaff } from "@/hooks/use-staff";
 import { cn, formatDate } from "@/lib/utils";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 import { api } from "@/hooks/use-api";
 import { TRAINING_CATEGORIES } from "@/lib/constants";
 import type { TrainingCategory } from "@/lib/constants";
@@ -38,6 +40,7 @@ import { useAuthContext } from "@/contexts/auth-context";
 import { SmartUploadButton } from "@/components/documents/smart-upload-button";
 import { PrintButton } from "@/components/common/print-button";
 import { ExportButton, type ExportColumn } from "@/components/common/export-button";
+import { CareEventsPanel } from "@/components/care-events/care-events-panel";
 
 const STATUS_STYLES: Record<string, { color: string; icon: React.ElementType; label: string }> = {
   compliant:     { color: "bg-emerald-100 text-emerald-700", icon: CheckCircle2,  label: "Compliant"     },
@@ -442,6 +445,7 @@ export default function TrainingPage() {
           ? `${meta.rate}% overall compliance · ${meta.expired} expired · ${meta.expiring} expiring`
           : "Loading…"
       }
+      ariaContext={{ pageTitle: "Training & Compliance", sourceType: "staff" }}
       showQuickCreate={false}
       actions={
         <div className="flex gap-2">
@@ -452,10 +456,14 @@ export default function TrainingPage() {
             <Plus className="h-3.5 w-3.5" />
             Add Record
           </Button>
+          <AriaStudioQuickActionButton context={{ record_type: "staff_training", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
       <div id="training-content" className="space-y-5 animate-fade-in">
+
+        {/* ARIA panel */}
+        <AriaPanel mode="assist" pageContext="Training & Compliance — staff training records, mandatory training matrix, certificate uploads, compliance tracking" recordType="training_record" userRole="registered_manager" className="mb-2" />
 
         {/* Summary stats */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
@@ -782,6 +790,12 @@ export default function TrainingPage() {
       </div>
 
       {showAdd && <AddRecordDialog open onClose={() => setShowAdd(false)} />}
+      <CareEventsPanel
+        title="Care Events — General"
+        category="general"
+        days={28}
+        defaultCollapsed
+      />
     </PageShell>
   );
 }

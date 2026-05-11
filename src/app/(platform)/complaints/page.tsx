@@ -24,6 +24,8 @@ import { SmartUploadButton } from "@/components/documents/smart-upload-button";
 import { PrintButton } from "@/components/common/print-button";
 import { ExportButton, type ExportColumn } from "@/components/common/export-button";
 import { useComplaints, useCreateComplaint, useUpdateComplaint } from "@/hooks/use-complaints";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 import { getYPName } from "@/lib/seed-data";
 import type {
   Complaint, ComplaintStatus, ComplaintOutcome, ComplaintCategory, ComplainantType,
@@ -35,6 +37,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { api } from "@/hooks/use-api";
+import { CareEventsPanel } from "@/components/care-events/care-events-panel";
 
 // ── Constants ──────────────────────────────────────────────────────────────────
 
@@ -625,6 +628,7 @@ ${complaint.lessons_learned ? `Learning: ${complaint.lessons_learned}` : ""}`;
     <PageShell
       title="Complaints & Representations"
       subtitle="Formal complaints register — statutory timelines, outcomes and learning"
+      ariaContext={{ pageTitle: "Complaints & Representations", sourceType: "general" }}
       showQuickCreate={false}
       actions={
         <div className="flex items-center gap-2">
@@ -643,10 +647,18 @@ ${complaint.lessons_learned ? `Learning: ${complaint.lessons_learned}` : ""}`;
             <Plus className="h-3.5 w-3.5" />
             Log Complaint
           </Button>
+          <AriaStudioQuickActionButton context={{ record_type: "complaint", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
       <div id="complaints-content" className="space-y-5">
+        <AriaPanel
+          mode="assist"
+          pageContext="Complaints & Representations — statutory complaints register, timelines and learning"
+          recordType="complaint"
+          userRole="registered_manager"
+          className="mb-2"
+        />
       {/* ── Summary stats ── */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {[
@@ -831,6 +843,12 @@ ${complaint.lessons_learned ? `Learning: ${complaint.lessons_learned}` : ""}`;
         open={showNew}
         onClose={() => setShowNew(false)}
         onSave={handleCreate}
+      />
+      <CareEventsPanel
+        title="Care Events — Complaints"
+        category="complaint"
+        days={90}
+        defaultCollapsed
       />
     </PageShell>
   );

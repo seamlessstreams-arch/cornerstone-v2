@@ -9,6 +9,7 @@ import React, { useState, use, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { PageShell } from "@/components/layout/page-shell";
+import { AriaPanel } from "@/components/aria/aria-panel";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Avatar } from "@/components/ui/avatar";
@@ -25,6 +26,7 @@ import { useYoungPerson } from "@/hooks/use-young-people";
 import { useCreateTrainingNeed } from "@/hooks/use-ri-learning";
 import { PrintButton } from "@/components/common/print-button";
 import { SmartUploadButton } from "@/components/documents/smart-upload-button";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 import { useDocumentIntelligence } from "@/hooks/use-doc-intelligence";
 import { api } from "@/hooks/use-api";
 import { useAuthContext } from "@/contexts/auth-context";
@@ -40,6 +42,7 @@ import type {
 } from "@/types/extended";
 import { useKeyWorkSessions, useCreateKeyWorkSession } from "@/hooks/use-intelligence";
 import { EmptyState } from "@/components/ui/empty-state";
+import { CareEventsPanel } from "@/components/care-events/care-events-panel";
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
@@ -393,6 +396,7 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
         <div className="flex items-center gap-2">
           <PrintButton title={`${displayName} ${yp.last_name}`} subtitle="Oak House — Young Person Profile" targetId="yp-detail-content" />
           <SmartUploadButton variant="icon" linkedChildId={id} uploadContext={`Young person profile — ${yp.first_name} ${yp.last_name}`} />
+          <AriaStudioQuickActionButton context={{ record_type: "keywork", record_id: id, child_id: id, home_id: "home_oak" }} />
           <Button variant="outline" size="sm" onClick={() => router.push("/young-people")}>
             <ArrowLeft className="h-3.5 w-3.5 mr-1" />All Young People
           </Button>
@@ -400,6 +404,15 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
       }
     >
       <div id="yp-detail-content" className="space-y-4 animate-fade-in">
+
+        <AriaPanel
+          mode="assist"
+          pageContext={`Young Person Profile — ${displayName} ${yp.last_name}`}
+          recordType="child_record"
+          sourceContent={`Name: ${displayName} ${yp.last_name}. Age: ${yp.age}. Legal status: ${yp.legal_status}. Local authority: ${yp.local_authority}.`}
+          userRole="registered_manager"
+          className="mb-4"
+        />
 
         {/* ── Profile header ─────────────────────────────────────────────────── */}
         <div className={cn(
@@ -1447,6 +1460,13 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
           </div>
         )}
 
+      <CareEventsPanel
+        title={`${displayName}'s Care Events`}
+        childId={id}
+        days={90}
+        defaultCollapsed={false}
+        className="mt-6"
+      />
       </div>
     </PageShell>
   );

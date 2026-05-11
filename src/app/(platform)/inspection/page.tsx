@@ -13,19 +13,19 @@ import {
 import { HOME, getStaffName } from "@/lib/seed-data";
 import { useHealthCheck } from "@/hooks/use-dashboard";
 import { usePatternAlerts, useActionOutcomes, useHomeClimate, useUpdateActionOutcome } from "@/hooks/use-intelligence";
+import { useAnnexAReadiness, useReg45Evidence } from "@/hooks/use-compliance-evidence";
+import { useManagementOversight, useReg40Triage } from "@/hooks/use-oversight-queues";
+import { useInspectionHistory } from "@/hooks/use-inspection-history";
 import type { ActionOutcome } from "@/types/extended";
 import { cn, formatDate, daysFromNow, todayStr } from "@/lib/utils";
 import { SmartUploadButton } from "@/components/documents/smart-upload-button";
 import { PrintButton } from "@/components/common/print-button";
 import { ExportButton, type ExportColumn } from "@/components/common/export-button";
+import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 // ── Static data ───────────────────────────────────────────────────────────────
-
-const INSPECTION_HISTORY = [
-  { date: "2025-10-15", type: "Full inspection", grade: "Good", inspector: "Jane Whitfield", reportUrl: "#", actions: 2, actionsComplete: 2 },
-  { date: "2024-04-22", type: "Full inspection", grade: "Good", inspector: "Mark Tanner", reportUrl: "#", actions: 1, actionsComplete: 1 },
-  { date: "2023-11-08", type: "Short notice", grade: "Requires improvement", inspector: "Susan Blake", reportUrl: "#", actions: 5, actionsComplete: 5 },
-];
 
 const GRADE_COLORS: Record<string, string> = {
   "Outstanding": "bg-emerald-100 text-emerald-700 border-emerald-200",
@@ -781,6 +781,22 @@ export default function InspectionPage() {
   const hcQuery = useHealthCheck();
   const hc = hcQuery.data?.data;
 
+  // Live compliance data
+  const annexAQuery = useAnnexAReadiness();
+  const reg45Query = useReg45Evidence({ decision: "pending" });
+  const oversightQuery = useManagementOversight({ status: "pending" });
+  const reg40Query = useReg40Triage({ status: "active" });
+
+  const annexAScore = annexAQuery.data?.meta?.readiness_score ?? null;
+  const annexAGaps = annexAQuery.data?.meta?.gaps?.length ?? 0;
+  const reg45Pending = reg45Query.data?.meta?.counts?.pending ?? 0;
+  const oversightPending = oversightQuery.data?.meta?.total ?? 0;
+  const reg40Active = reg40Query.data?.meta?.active ?? 0;
+
+  // Live inspection history
+  const inspHistoryQuery = useInspectionHistory();
+  const inspectionRecords = inspHistoryQuery.data?.data ?? [];
+
   const readinessAreas = hc
     ? [
         { area: "Outcomes for young people",           score: hc.overall,        status: hc.overall >= 85 ? "good" : "warn" },
@@ -802,6 +818,7 @@ export default function InspectionPage() {
     <PageShell
       title="Inspection Readiness"
       subtitle="Ofsted inspection tracker, readiness scoring, and evidence preparation"
+      ariaContext={{ pageTitle: "Inspection Readiness", sourceType: "general" }}
       quickCreateContext={{ module: "inspection", defaultTaskCategory: "inspection", defaultFormType: "review_meeting_notes" }}
       actions={
         <div className="flex gap-2">
@@ -822,6 +839,7 @@ export default function InspectionPage() {
           >
             Prepare for Inspection
           </Button>
+          <AriaStudioQuickActionButton context={{ record_type: "ofsted_evidence", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -873,9 +891,53 @@ export default function InspectionPage() {
             <div className="text-xs text-slate-400 mt-0.5">±3 months (rolling)</div>
           </div>
           <div className="rounded-2xl border border-slate-200 bg-white p-5">
-            <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Reg 44 Visits</div>
-            <div className="mt-1 text-3xl font-bold text-violet-600">3</div>
-            <div className="text-xs text-slate-400 mt-0.5">This year</div>
+            <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Annex A Score</div>
+            {annexAQuery.isLoading ? (
+              <Loader2 className="h-5 w-5 animate-spin text-slate-300 mt-2" />
+            ) : annexAScore !== null ? (
+              <>
+                <div className={cn("mt-1 text-3xl font-bold", annexAScore >= 85 ? "text-emerald-600" : annexAScore >= 70 ? "text-amber-600" : "text-red-600")}>
+                  {annexAScore}%
+                </div>
+                <div className="text-xs text-slate-400 mt-0.5">
+                  {annexAGaps > 0 ? `${annexAGaps} gap${annexAGaps !== 1 ? "s" : ""} to resolve` : "Inspection-ready"}
+                </div>
+              </>
+            ) : (
+              <div className="mt-1 text-3xl font-bold text-slate-300">--</div>
+            )}
+          </div>
+        </div>
+
+        {/* ── Live Compliance Status ───────────────────────────────────── */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+          <div className={cn("rounded-2xl border p-4", reg45Pending > 0 ? "bg-amber-50 border-amber-200" : "bg-emerald-50 border-emerald-200")}>
+            <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Reg 45 Evidence</div>
+            <div className={cn("text-2xl font-bold mt-1", reg45Pending > 0 ? "text-amber-700" : "text-emerald-700")}>
+              {reg45Query.isLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : reg45Pending}
+            </div>
+            <div className="text-xs text-slate-500 mt-0.5">awaiting decision</div>
+          </div>
+          <div className={cn("rounded-2xl border p-4", oversightPending > 0 ? "bg-amber-50 border-amber-200" : "bg-emerald-50 border-emerald-200")}>
+            <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Management Oversight</div>
+            <div className={cn("text-2xl font-bold mt-1", oversightPending > 0 ? "text-amber-700" : "text-emerald-700")}>
+              {oversightQuery.isLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : oversightPending}
+            </div>
+            <div className="text-xs text-slate-500 mt-0.5">tasks pending</div>
+          </div>
+          <div className={cn("rounded-2xl border p-4", reg40Active > 0 ? "bg-red-50 border-red-200" : "bg-emerald-50 border-emerald-200")}>
+            <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Reg 40 Triage</div>
+            <div className={cn("text-2xl font-bold mt-1", reg40Active > 0 ? "text-red-700" : "text-emerald-700")}>
+              {reg40Query.isLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : reg40Active}
+            </div>
+            <div className="text-xs text-slate-500 mt-0.5">active notifications</div>
+          </div>
+          <div className={cn("rounded-2xl border p-4", annexAGaps > 0 ? "bg-amber-50 border-amber-200" : "bg-emerald-50 border-emerald-200")}>
+            <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Annex A Gaps</div>
+            <div className={cn("text-2xl font-bold mt-1", annexAGaps > 0 ? "text-amber-700" : "text-emerald-700")}>
+              {annexAQuery.isLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : annexAGaps}
+            </div>
+            <div className="text-xs text-slate-500 mt-0.5">sections incomplete</div>
           </div>
         </div>
 
@@ -926,27 +988,42 @@ export default function InspectionPage() {
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
-                {INSPECTION_HISTORY.map((insp) => (
-                  <div key={insp.date} className="rounded-xl border border-slate-200 p-3 space-y-2">
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm font-semibold text-slate-900">{insp.type}</span>
-                      <Badge className={cn("text-[9px] rounded-full border", GRADE_COLORS[insp.grade] || "bg-slate-100")}>
-                        {insp.grade}
-                      </Badge>
-                    </div>
-                    <div className="text-xs text-slate-500">{formatDate(insp.date)} · {insp.inspector}</div>
-                    <div className="text-xs text-slate-600">{insp.actionsComplete}/{insp.actions} actions completed</div>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="h-7 text-xs"
-                      disabled
-                      title="Inspection reports are stored in the Documents section."
-                    >
-                      <FileText className="h-3 w-3 mr-1" />View report
-                    </Button>
+                {inspHistoryQuery.isLoading ? (
+                  <div className="flex items-center gap-2 text-slate-400 py-4">
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    <span className="text-sm">Loading inspection history…</span>
                   </div>
-                ))}
+                ) : inspectionRecords.length === 0 ? (
+                  <p className="text-sm text-slate-400 py-2">No inspection records found.</p>
+                ) : (
+                  inspectionRecords.map((insp) => (
+                    <div key={insp.id} className="rounded-xl border border-slate-200 p-3 space-y-2">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-semibold text-slate-900">{insp.inspection_type}</span>
+                        <Badge className={cn("text-[9px] rounded-full border", GRADE_COLORS[insp.grade] || "bg-slate-100")}>
+                          {insp.grade}
+                        </Badge>
+                      </div>
+                      <div className="text-xs text-slate-500">{formatDate(insp.inspection_date)} · {insp.inspector_name}</div>
+                      {insp.report_reference && (
+                        <div className="text-xs text-slate-400">Ref: {insp.report_reference}</div>
+                      )}
+                      <div className="text-xs text-slate-600">{insp.actions_completed}/{insp.actions_required} actions completed</div>
+                      {insp.summary && (
+                        <p className="text-xs text-slate-600 border-t border-slate-100 pt-2">{insp.summary}</p>
+                      )}
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="h-7 text-xs"
+                        disabled={!insp.report_url}
+                        title={insp.report_url ? "View inspection report" : "Inspection reports are stored in the Documents section."}
+                      >
+                        <FileText className="h-3 w-3 mr-1" />View report
+                      </Button>
+                    </div>
+                  ))
+                )}
               </div>
             </CardContent>
           </Card>
@@ -956,6 +1033,18 @@ export default function InspectionPage() {
 
         {activeTab === "actions" && <ActionPlanPanel />}
       </div>
+      <CareEventsPanel
+        title="Care Events — Compliance Evidence"
+        category="general"
+        days={90}
+        defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Inspection Readiness — Ofsted ILACS preparation, Annex A, Reg 45, management oversight, grade judgements, quality of care, evidence bundles, outstanding practice, areas for development"
+        recordType="ofsted_evidence"
+        className="mt-6"
+      />
     </PageShell>
   );
 }

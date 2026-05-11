@@ -15,13 +15,13 @@ import { useQueryClient } from "@tanstack/react-query";
 import { createClient } from "@supabase/supabase-js";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+const supabasePublishableKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 
 const isRealtimeEnabled =
   typeof supabaseUrl === "string" &&
   supabaseUrl.length > 0 &&
-  typeof supabaseAnonKey === "string" &&
-  supabaseAnonKey.length > 0;
+  typeof supabasePublishableKey === "string" &&
+  supabasePublishableKey.length > 0;
 
 /**
  * Subscribe to live care event changes.
@@ -39,7 +39,7 @@ export function useCareEventsRealtime(homeId?: string) {
   useEffect(() => {
     if (!isRealtimeEnabled) return;
 
-    const client = createClient(supabaseUrl!, supabaseAnonKey!);
+    const client = createClient(supabaseUrl!, supabasePublishableKey!);
 
     const filter = homeId
       ? `home_id=eq.${homeId}`
@@ -83,6 +83,92 @@ export function useCareEventsRealtime(homeId?: string) {
         () => {
           queryClient.invalidateQueries({ queryKey: ["reg45"] });
           queryClient.invalidateQueries({ queryKey: ["annex-a"] });
+        }
+      )
+      .on(
+        "postgres_changes",
+        {
+          event: "INSERT",
+          schema: "public",
+          table: "notifications",
+          ...(filter ? { filter } : {}),
+        },
+        () => {
+          queryClient.invalidateQueries({ queryKey: ["notifications"] });
+        }
+      )
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "oversight_tasks",
+          ...(filter ? { filter } : {}),
+        },
+        () => {
+          queryClient.invalidateQueries({ queryKey: ["management-oversight"] });
+        }
+      )
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "annex_a_evidence_queue",
+          ...(filter ? { filter } : {}),
+        },
+        () => {
+          queryClient.invalidateQueries({ queryKey: ["annex-a"] });
+        }
+      )
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "child_daily_summaries",
+          ...(filter ? { filter } : {}),
+        },
+        () => {
+          queryClient.invalidateQueries({ queryKey: ["child-daily-summaries"] });
+        }
+      )
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "filing_cabinet_items",
+          ...(filter ? { filter } : {}),
+        },
+        () => {
+          queryClient.invalidateQueries({ queryKey: ["filing-cabinet"] });
+        }
+      )
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "ofsted_inspections",
+          ...(filter ? { filter } : {}),
+        },
+        () => {
+          queryClient.invalidateQueries({ queryKey: ["inspection-history"] });
+        }
+      )
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "care_event_jobs",
+          ...(filter ? { filter } : {}),
+        },
+        () => {
+          queryClient.invalidateQueries({ queryKey: ["care-event-jobs"] });
+          // Jobs affect care event status display
+          queryClient.invalidateQueries({ queryKey: ["care-events"] });
         }
       )
       .subscribe();

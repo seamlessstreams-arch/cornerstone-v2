@@ -3,6 +3,8 @@
 import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import { PageShell } from "@/components/layout/page-shell";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -576,9 +578,18 @@ export default function DailyLogPage() {
             <Plus className="h-3.5 w-3.5 mr-1" />
             {showForm ? "Cancel" : "New Entry"}
           </Button>
+          <AriaStudioQuickActionButton context={{ record_type: "daily_log", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
+      ariaContext={{ pageTitle: "Daily Log", sourceType: "general" }}
     >
+      <AriaPanel
+        mode="write"
+        pageContext="Daily Log — shift observations, significant events, behaviour, welfare, activities, mood, sleep, food, child voice, continuity of care recording"
+        recordType="daily_log"
+        userRole="registered_manager"
+        className="mb-5"
+      />
       <div id="daily-log-content" className="space-y-5">
         {/* Stats row */}
         {!isLoading && entries.length > 0 && (
@@ -783,6 +794,7 @@ export default function DailyLogPage() {
         {/* Care Events pipeline — records routed to the daily log */}
         <CareEventsPanel
           title="Care Events — Daily Log"
+          category="general"
           days={14}
           defaultCollapsed
           className="mt-2"

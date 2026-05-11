@@ -28,6 +28,9 @@ import { useAuthContext } from "@/contexts/auth-context";
 import { formatDate } from "@/lib/utils";
 import { FILING_CATEGORY_LABEL, type FilingCategory } from "@/types/care-events";
 import { toast } from "sonner";
+import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 // ── Category filter tabs ──────────────────────────────────────────────────────
 
@@ -191,6 +194,8 @@ export default function FilingCabinetPage() {
     <PageShell
       title="Filing Cabinet"
       subtitle="Auto-filed records from Care Events — searchable archive with source links"
+      ariaContext={{ pageTitle: "Filing Cabinet", sourceType: "document" }}
+      actions={<AriaStudioQuickActionButton context={{ record_type: "uploaded_document", record_id: "home_oak", home_id: "home_oak" }} />}
     >
       {/* Stats bar */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
@@ -312,6 +317,18 @@ export default function FilingCabinetPage() {
           ))}
         </div>
       )}
+      <CareEventsPanel
+        title="Care Events — General"
+        category="general"
+        days={28}
+        defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Filing Cabinet — auto-filed records from Care Events, searchable archive, source links, document categories, Regulation 45 evidence, Annex A evidence, inspection readiness"
+        recordType="uploaded_document"
+        className="mt-6"
+      />
     </PageShell>
   );
 }

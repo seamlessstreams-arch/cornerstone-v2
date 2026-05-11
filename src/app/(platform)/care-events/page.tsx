@@ -32,6 +32,9 @@ import {
 import type {
   CareEvent, CareEventCategory, EvidencePrompt,
 } from "@/types/care-events";
+import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 // ── Status colours ─────────────────────────────────────────────────────────
 
@@ -434,7 +437,7 @@ function CreateEventDialog({
                     <SelectValue placeholder="Select…" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">— Not specific to a child —</SelectItem>
+                    <SelectItem value="none">— Not specific to a child —</SelectItem>
                     {yp.map((y: { id: string; first_name: string; last_name: string }) => (
                       <SelectItem key={y.id} value={y.id}>{y.first_name} {y.last_name}</SelectItem>
                     ))}
@@ -766,6 +769,7 @@ export default function CareEventsPage() {
     <PageShell
       title="Care Events"
       subtitle="Record, route and track care events across the home"
+      ariaContext={{ pageTitle: "Care Events", sourceType: "incident" }}
       actions={
         <div className="flex gap-2">
           <Button variant="outline" size="sm" onClick={() => refetch()}>
@@ -774,9 +778,11 @@ export default function CareEventsPage() {
           <Button size="sm" onClick={() => setCreateOpen(true)}>
             <Plus className="w-4 h-4 mr-2" /> New event
           </Button>
+          <AriaStudioQuickActionButton context={{ record_type: "daily_log", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
+      <AriaPanel mode="assist" pageContext="Care Events — record, classify and route care events; Regulation 40 triage, management oversight, evidence generation" recordType="care_event" userRole="registered_manager" className="mb-2" />
       {/* Stats bar */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
         {[
@@ -878,6 +884,12 @@ export default function CareEventsPage() {
         action={actionDialog?.action ?? ""}
         event={actionDialog?.event ?? null}
         onClose={() => setActionDialog(null)}
+      />
+      <CareEventsPanel
+        title="Recent Care Events"
+        category="general"
+        days={14}
+        defaultCollapsed
       />
     </PageShell>
   );

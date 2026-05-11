@@ -24,6 +24,7 @@ import { useYoungPeople } from "@/hooks/use-young-people";
 import { useCreateTrainingNeed } from "@/hooks/use-ri-learning";
 import { SmartUploadButton } from "@/components/documents/smart-upload-button";
 import { PrintButton } from "@/components/common/print-button";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 import { ExportButton, type ExportColumn } from "@/components/common/export-button";
 import { getStaffName, getYPName, getYPById } from "@/lib/seed-data";
 import { INCIDENT_TYPE_LABELS, INCIDENT_TYPES, INCIDENT_SEVERITIES } from "@/lib/constants";
@@ -566,7 +567,7 @@ function AllIncidentsTab() {
               {/* Aria write help */}
               <AriaPanel
                 mode="oversee"
-                pageContext="Incidents — Oversight Queue"
+                pageContext="Incidents — oversight queue, management review, safeguarding triage, Regulation 40 notifications, behaviour and physical intervention monitoring"
                 recordType="incident_oversight"
                 sourceContent={`${oversightTarget.description}\n\nImmediate action: ${oversightTarget.immediate_action}`}
                 onInsert={(text) => setOversightNote(text)}
@@ -769,7 +770,7 @@ function OversightQueueTab() {
                   <div className="mt-3">
                     <AriaPanel
                       mode="oversee"
-                      pageContext="Incidents — Oversight Queue"
+                      pageContext="Incidents — oversight queue, management review, safeguarding triage, Regulation 40 notifications, behaviour and physical intervention monitoring"
                       recordType="incident_oversight"
                       sourceContent={`Description: ${inc.description}\n\nImmediate action: ${inc.immediate_action}\n\nSeverity: ${inc.severity}\nType: ${INCIDENT_TYPE_LABELS[inc.type]}\nYoung person: ${getYPName(inc.child_id)}`}
                       onInsert={(text) => setNotesById((prev) => ({ ...prev, [inc.id]: text }))}
@@ -1029,7 +1030,7 @@ function LogIncidentTab({ onSuccess }: { onSuccess?: () => void }) {
         {ariaOpen && (
           <AriaPanel
             mode="write"
-            pageContext="Log New Incident"
+            pageContext="Log New Incident — describe what happened, who was involved, immediate actions taken, injuries, witnesses, safeguarding indicators, Regulation 40 triggers"
             recordType="incident"
             sourceContent={form.type ? `Incident type: ${INCIDENT_TYPE_LABELS[form.type as keyof typeof INCIDENT_TYPE_LABELS] || form.type}, severity: ${form.severity}, child: ${getYPName(form.child_id)}` : undefined}
             onInsert={(text) => setForm((p) => ({ ...p, description: text }))}
@@ -1199,11 +1200,13 @@ export default function IncidentsPage() {
     <PageShell
       title="Incidents"
       subtitle="Log, review, and oversee all incident records"
+      ariaContext={{ pageTitle: "Care Events — Behaviour &amp; Safeguarding", sourceType: "incident" }}
       quickCreateContext={{ module: "incidents", defaultTaskCategory: "safeguarding", defaultFormType: "safeguarding_referral" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Incident Report" subtitle="Oak House — Incident Records" targetId="incidents-content" />
           <SmartUploadButton variant="inline" label="Upload Document" uploadContext="Incidents — evidence upload" />
+          <AriaStudioQuickActionButton context={{ record_type: "incident", record_id: "home_oak", home_id: "home_oak" }} />
           <Button
             size="sm"
             className="bg-rose-600 hover:bg-rose-700"

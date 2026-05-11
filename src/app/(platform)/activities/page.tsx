@@ -34,6 +34,9 @@ import {
   Mountain, Bike, Camera, UtensilsCrossed, Trophy, Target, Calendar,
   User, CheckCircle2, Clock, Loader2, Sparkles,
 } from "lucide-react";
+import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 // ── Constants ────────────────────────────────────────────────────────────────
 
@@ -431,12 +434,14 @@ export default function ActivitiesPage() {
     <PageShell
       title="Activities & Enrichment"
       subtitle="Meaningful activities, hobbies, and new experiences for young people"
+      ariaContext={{ pageTitle: "Activities & Enrichment", sourceType: "child_record" }}
       quickCreateContext={{ module: "young-people", defaultTaskCategory: "young_person_plans" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={filtered} columns={ACTIVITY_EXPORT_COLS} filename="activities" />
           <PrintButton title="Activities & Enrichment" subtitle="Oak House — Activity Log" targetId="activities-content" />
           <SmartUploadButton variant="inline" label="Upload" uploadContext="Activities — activity photos or evidence upload" />
+          <AriaStudioQuickActionButton context={{ record_type: "direct_work", record_id: "home_oak", home_id: "home_oak" }} />
           <Button size="sm" onClick={() => setShowNew(true)} className="bg-violet-600 hover:bg-violet-700 text-white gap-1.5 h-8 text-xs">
             <Plus className="h-3.5 w-3.5" />Log Activity
           </Button>
@@ -565,6 +570,18 @@ export default function ActivitiesPage() {
         open={showNew}
         onClose={() => setShowNew(false)}
         onSave={handleAddActivity}
+      />
+      <CareEventsPanel
+        title="Related Care Events"
+        category="activity"
+        days={28}
+        defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Activities & Enrichment — sports, arts, leisure, trips, holidays, clubs, cultural activities, LAC entitlement, children's participation, wellbeing, Reg 45 positive outcomes"
+        recordType="direct_work"
+        className="mt-6"
       />
     </PageShell>
   );

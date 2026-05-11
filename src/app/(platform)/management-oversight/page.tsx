@@ -7,6 +7,7 @@
 
 import React, { useState } from "react";
 import { PageShell } from "@/components/layout/page-shell";
+import { AriaPanel } from "@/components/aria/aria-panel";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -42,6 +43,8 @@ import {
 import { useAuthContext } from "@/contexts/auth-context";
 import { toast } from "sonner";
 import Link from "next/link";
+import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 // ── Status / priority colours ─────────────────────────────────────────────────
 
@@ -322,7 +325,18 @@ export default function ManagementOversightPage() {
     <PageShell
       title="Management Oversight Queue"
       subtitle="Care events and tasks requiring manager review, verification or sign-off"
+      ariaContext={{ pageTitle: "Management Oversight Queue", sourceType: "general" }}
+      actions={
+        <AriaStudioQuickActionButton context={{ record_type: "management_oversight", record_id: "home_oak", home_id: "home_oak" }} />
+      }
     >
+      <AriaPanel
+        mode="oversee"
+        pageContext="Management Oversight Queue"
+        recordType="management_oversight"
+        userRole="registered_manager"
+        className="mb-6"
+      />
       {/* Stats bar */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
         {[
@@ -415,6 +429,12 @@ export default function ManagementOversightPage() {
       {completingTask && (
         <CompleteDialog task={completingTask} onClose={() => setCompletingTask(null)} />
       )}
+      <CareEventsPanel
+        title="Care Events Awaiting Review"
+        status="manager_review_required"
+        days={28}
+        defaultCollapsed
+      />
     </PageShell>
   );
 }

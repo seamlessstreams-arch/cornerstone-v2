@@ -31,8 +31,10 @@ import { cn, formatDate, todayStr } from "@/lib/utils";
 import { getStaffName, getYPName } from "@/lib/seed-data";
 import { api } from "@/hooks/use-api";
 import { SmartUploadButton } from "@/components/documents/smart-upload-button";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 import { PrintButton } from "@/components/common/print-button";
 import { EmptyState } from "@/components/ui/empty-state";
+import { AriaPanel } from "@/components/aria/aria-panel";
 import {
   MapPin, AlertTriangle, CheckCircle2, Clock, Shield, ChevronDown,
   ChevronUp, Plus, Sparkles, Phone, User, Calendar,
@@ -857,15 +859,25 @@ export default function MissingFromCarePage() {
     <PageShell
       title="Missing from Care"
       subtitle="Track missing episodes, return home interviews, and contextual safeguarding risks"
+      ariaContext={{ pageTitle: "Missing from Care", sourceType: "incident" }}
       showQuickCreate={false}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Missing from Care Log" subtitle="Oak House — Missing Episodes & Return Interviews" targetId="mfc-content" />
           <SmartUploadButton variant="inline" label="Upload Document" uploadContext="Missing From Care — return interview or episode upload" />
+          <AriaStudioQuickActionButton context={{ record_type: "missing_from_care", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
       <div id="mfc-content" className="space-y-6 animate-fade-in max-w-5xl">
+
+        <AriaPanel
+          mode="assist"
+          pageContext="Missing from Care — episode tracking, return home interviews, contextual safeguarding"
+          recordType="missing_episode"
+          userRole="registered_manager"
+          className="mb-2"
+        />
 
         {/* Active alert banner */}
         {activeEpisodes.length > 0 && (

@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 import {
   Sparkles, CheckCircle2, Clock, ChevronRight,
   Plus, GitMerge, ArrowRight,
@@ -48,6 +49,7 @@ export default function AriaDevPlannerPage() {
     <PageShell
       title="ARIA Development Planner"
       subtitle="ARIA-generated personalised development plans for every staff member"
+      ariaContext={{ pageTitle: "ARIA Development Planner", sourceType: "staff" }}
       showQuickCreate={false}
       actions={
         <div className="flex items-center gap-2">
@@ -65,6 +67,7 @@ export default function AriaDevPlannerPage() {
             <Plus className="h-3.5 w-3.5" />
             Manual Plan
           </Button>
+          <AriaStudioQuickActionButton context={{ record_type: "staff_training", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >

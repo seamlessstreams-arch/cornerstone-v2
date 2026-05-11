@@ -9,6 +9,8 @@
 
 import React, { useState } from "react";
 import { PageShell } from "@/components/layout/page-shell";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -55,6 +57,7 @@ import { useAuthContext } from "@/contexts/auth-context";
 import { toast } from "sonner";
 import Link from "next/link";
 import type { ManagerDecision } from "@/types/care-events";
+import { CareEventsPanel } from "@/components/care-events/care-events-panel";
 
 // ── Decision colours ──────────────────────────────────────────────────────────
 
@@ -1004,7 +1007,16 @@ export default function Regulation45EvidencePage() {
     <PageShell
       title="Regulation 45 Evidence Bank"
       subtitle="AI-suggested evidence from Care Events — review, approve and draft your report"
+      ariaContext={{ pageTitle: "Regulation 45 Evidence Bank", sourceType: "reg45" }}
+      actions={<AriaStudioQuickActionButton context={{ record_type: "reg45", record_id: "home_oak", home_id: "home_oak" }} />}
     >
+      <AriaPanel
+        mode="assist"
+        pageContext="Regulation 45 Evidence Bank — statutory quality of care reports, evidence bank, suggested updates, approved evidence, RI briefings, inspection readiness, Children's Homes Regulations 2015"
+        recordType="regulation_45"
+        userRole="registered_manager"
+        className="mb-6"
+      />
       {/* Stats bar */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
         {[
@@ -1149,6 +1161,12 @@ export default function Regulation45EvidencePage() {
       {reviewingItem && (
         <ReviewDialog item={reviewingItem} onClose={() => setReviewingItem(null)} />
       )}
+      <CareEventsPanel
+        title="Care Events — Regulation 45 Evidence"
+        category={["safeguarding", "behaviour", "health", "education", "complaint"]}
+        days={90}
+        defaultCollapsed
+      />
     </PageShell>
   );
 }

@@ -2,6 +2,8 @@
 
 import React, { useState, useMemo } from "react";
 import { AriaQuickActions } from "@/components/intelligence/aria-quick-actions";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 import { PageShell } from "@/components/layout/page-shell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -28,6 +30,7 @@ import { ExportButton, type ExportColumn } from "@/components/common/export-butt
 import { ShiftSummaryCard } from "@/components/dashboard/shift-summary-card";
 import { AriaHandoverBuilder } from "@/components/handover/aria-handover-builder";
 import { HandoverPrintContext } from "@/components/handover/handover-print-context";
+import { CareEventsPanel } from "@/components/care-events/care-events-panel";
 
 const HANDOVER_EXPORT_COLS: ExportColumn<HandoverEntry>[] = [
   { header: "Shift Date", accessor: (h) => h.shift_date },
@@ -828,6 +831,7 @@ export default function HandoverPage() {
     <PageShell
       title="Handover"
       subtitle="Shift-to-shift communication, live notes, and evidence-ready records"
+      ariaContext={{ pageTitle: "Handover", sourceType: "general" }}
       quickCreateContext={{ module: "handover", defaultTaskCategory: "admin" }}
       actions={
         <div className="flex items-center gap-2">
@@ -838,6 +842,7 @@ export default function HandoverPage() {
             <Plus className="h-3.5 w-3.5 mr-1" />
             {showForm ? "Cancel" : "Write Handover"}
           </Button>
+          <AriaStudioQuickActionButton context={{ record_type: "handover", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -1180,6 +1185,12 @@ export default function HandoverPage() {
         <HandoverPrintContext incomingStaffIds={latest.incoming_staff} />
       )}
       </div>{/* close #handover-content */}
+      <CareEventsPanel
+        title="Care Events — Daily Log"
+        category="general"
+        days={14}
+        defaultCollapsed
+      />
     </PageShell>
   );
 }

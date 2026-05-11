@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 import {
   Building2, AlertTriangle, CheckCircle2, Clock, XCircle,
   Plus, Search, Shield, Flame, Zap, Droplets, Thermometer,
@@ -22,6 +23,7 @@ import { PrintButton } from "@/components/common/print-button";
 import { ExportButton, type ExportColumn } from "@/components/common/export-button";
 import { useMaintenance } from "@/hooks/use-maintenance";
 import type { MaintenanceItem } from "@/types/extended";
+import { CareEventsPanel } from "@/components/care-events/care-events-panel";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -974,7 +976,7 @@ function HazardsTab({ data }: { data: BuildingsData }) {
       {/* Aria for contractor comms */}
       <AriaPanel
         mode="write"
-        pageContext="buildings_hazards"
+        pageContext="Buildings & Premises — property maintenance, hazards, COSHH, asbestos, pest control, fire safety, Reg 44 evidence, health and safety compliance"
         recordType="contractor_communication"
         sourceContent={ariaSrc || "No open hazards to communicate."}
         linkedRecords={`${hazards.length} open hazard(s) — Oak House`}
@@ -1052,6 +1054,7 @@ export default function BuildingsPage() {
     <PageShell
       title="Building & H&S Compliance"
       subtitle="Oak House — safety checks, certificates, and hazard management"
+      ariaContext={{ pageTitle: "Building & H&S Compliance", sourceType: "home_check" }}
       quickCreateContext={{ module: "buildings", defaultTaskCategory: "health_and_safety", defaultFormType: "health_safety_check" }}
       actions={
         <div className="flex items-center gap-2">
@@ -1066,6 +1069,7 @@ export default function BuildingsPage() {
           <Button size="sm" onClick={() => setShowAddCheck(true)}>
             <Plus className="h-3.5 w-3.5 mr-1" />Record Check
           </Button>
+          <AriaStudioQuickActionButton context={{ record_type: "management_oversight", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -1125,6 +1129,12 @@ export default function BuildingsPage() {
           onSubmit={(data) => addCheck.mutate(data)}
         />
       )}
+      <CareEventsPanel
+        title="Care Events — Health & Safety"
+        category="general"
+        days={28}
+        defaultCollapsed
+      />
     </PageShell>
   );
 }

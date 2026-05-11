@@ -1,7 +1,9 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { PageShell } from "@/components/ui/page-shell";
+import { PageShell } from "@/components/layout/page-shell";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 import { PrintButton } from "@/components/ui/print-button";
 import { ExportButton, type ExportColumn } from "@/components/ui/export-button";
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
@@ -93,10 +95,12 @@ export default function MissingReturnInterviewsPage() {
     <PageShell
       title="Missing — Return Home Interviews"
       subtitle="Statutory interviews within 72 hours of return from missing episodes"
+      ariaContext={{ pageTitle: "Missing Return Home Interviews", sourceType: "incident" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={interviews} columns={exportCols} filename="return-interviews" />
           <PrintButton title="Missing — Return Home Interviews" />
+          <AriaStudioQuickActionButton context={{ record_type: "missing_from_care", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >

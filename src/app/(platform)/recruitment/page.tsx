@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 import {
   UserPlus, Search, Plus, Filter, AlertTriangle, AlertCircle,
   Users, Clock, Zap, TrendingUp, Briefcase, Shield, FileCheck,
@@ -22,6 +23,7 @@ import { SmartUploadButton } from "@/components/documents/smart-upload-button";
 import { PrintButton } from "@/components/common/print-button";
 import { ExportButton, type ExportColumn } from "@/components/common/export-button";
 import type { CandidateDetail, CheckStatus, CheckType, ComplianceAlert, Vacancy } from "@/hooks/use-recruitment";
+import { CareEventsPanel } from "@/components/care-events/care-events-panel";
 
 const CANDIDATE_EXPORT_COLS: ExportColumn<CandidateDetail>[] = [
   { header: "Name", accessor: (c) => `${c.first_name} ${c.last_name}` },
@@ -774,6 +776,7 @@ export default function RecruitmentPage() {
     <PageShell
       title="Recruitment"
       subtitle="Safer recruitment command centre — applicants, compliance checks, and SCR"
+      ariaContext={{ pageTitle: "Recruitment", sourceType: "staff" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={candidates} columns={CANDIDATE_EXPORT_COLS} filename="recruitment" />
@@ -785,6 +788,7 @@ export default function RecruitmentPage() {
           <Button size="sm" onClick={() => setShowAddCandidate(true)}>
             <UserPlus className="h-3.5 w-3.5 mr-1" />Add Candidate
           </Button>
+          <AriaStudioQuickActionButton context={{ record_type: "staff_training", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -842,6 +846,12 @@ export default function RecruitmentPage() {
           </div>
         </div>
       </div>
+      <CareEventsPanel
+        title="Care Events — General"
+        category="general"
+        days={28}
+        defaultCollapsed
+      />
     </PageShell>
 
     {/* ── Add Candidate Modal ────────────────────────────────────────────────── */}

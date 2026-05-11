@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo } from "react";
 import Link from "next/link";
-import { PageShell } from "@/components/ui/page-shell";
+import { PageShell } from "@/components/layout/page-shell";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,6 +15,7 @@ import { ExportButton, type ExportColumn } from "@/components/ui/export-button";
 import { getStaffName, getYPName } from "@/lib/seed-data";
 import { useAlertNotifications } from "@/hooks/use-alert-notifications";
 import { useNotifications, useMarkNotificationRead } from "@/hooks/use-notifications";
+import { useAuthContext } from "@/contexts/auth-context";
 import type {
   AlertNotification,
   AlertNotificationType,
@@ -33,6 +34,9 @@ import {
   GraduationCap, Heart, Eye, Loader2, Zap,
   ExternalLink,
 } from "lucide-react";
+import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 
 // ── Config ────────────────────────────────────────────────────────────────────
 
@@ -61,8 +65,9 @@ const SEVERITY_CONFIG: Record<AlertSeverity, { label: string; colour: string }> 
 // ── Component ─────────────────────────────────────────────────────────────────
 
 export default function NotificationsPage() {
+  const { currentUser } = useAuthContext();
   const { data: records = [], isLoading } = useAlertNotifications();
-  const { data: careEventNotifs = [] } = useNotifications();
+  const { data: careEventNotifs = [] } = useNotifications({ recipientId: currentUser?.id });
   const markRead = useMarkNotificationRead();
 
   const PRIORITY_COLOUR: Record<Notification["priority"], string> = {
@@ -151,10 +156,12 @@ export default function NotificationsPage() {
     <PageShell
       title="Notifications & Alerts"
       subtitle="System alerts, deadlines, and action items"
+      ariaContext={{ pageTitle: "Notifications", sourceType: "general" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Notifications" />
           <ExportButton data={filtered} columns={exportCols} filename="notifications" />
+          <AriaStudioQuickActionButton context={{ record_type: "task", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -370,6 +377,18 @@ export default function NotificationsPage() {
           </div>
         </div>
       </div>
+      <CareEventsPanel
+        title="Care Events — General"
+        category="general"
+        days={14}
+        defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Notifications — system alerts, task reminders, review deadlines, incident alerts, management notifications, regulatory deadlines, in-app notifications, action required"
+        recordType="task"
+        className="mt-6"
+      />
     </PageShell>
   );
 }

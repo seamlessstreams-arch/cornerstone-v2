@@ -22,7 +22,6 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import {
-  Award,
   CheckCircle2,
   XCircle,
   AlertTriangle,
@@ -31,9 +30,19 @@ import {
   ChevronUp,
   Loader2,
   FileText,
-  Pencil,
   Camera,
   BarChart3,
+  Users,
+  UserCheck,
+  ShieldAlert,
+  Activity,
+  MessageSquareWarning,
+  MapPin,
+  Siren,
+  ClipboardCheck,
+  ScrollText,
+  RefreshCw,
+  TrendingUp,
 } from "lucide-react";
 import { cn, formatDate } from "@/lib/utils";
 import {
@@ -42,8 +51,83 @@ import {
   type AnnexAEvidenceEnriched,
 } from "@/hooks/use-compliance-evidence";
 import { useAuthContext } from "@/contexts/auth-context";
+import { useIncidents } from "@/hooks/use-incidents";
+import { useMissingEpisodes } from "@/hooks/use-missing-episodes";
+import { useRestraints } from "@/hooks/use-restraints";
+import { useComplaints } from "@/hooks/use-complaints";
+import { useReg44Visits } from "@/hooks/use-reg44";
+import { useYoungPeople } from "@/hooks/use-young-people";
+import { useStaff } from "@/hooks/use-staff";
+import { useReg45Evidence } from "@/hooks/use-compliance-evidence";
 import { toast } from "sonner";
 import type { ManagerDecision } from "@/types/care-events";
+import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
+
+// ── Period activity stat tile ─────────────────────────────────────────────────
+
+function PeriodStat({
+  icon: Icon,
+  label,
+  value,
+  status,
+  href,
+}: {
+  icon: React.ElementType;
+  label: string;
+  value: number | string;
+  status: "ok" | "warn" | "gap";
+  href?: string;
+}) {
+  const colours = {
+    ok: "border-emerald-100 bg-emerald-50/50",
+    warn: "border-amber-100 bg-amber-50/50",
+    gap: "border-red-100 bg-red-50/50",
+  };
+  const iconColours = {
+    ok: "text-emerald-500",
+    warn: "text-amber-500",
+    gap: "text-red-500",
+  };
+  const content = (
+    <div className={cn("rounded-xl border p-3 flex items-center gap-3 h-full", colours[status])}>
+      <Icon className={cn("h-5 w-5 shrink-0", iconColours[status])} />
+      <div className="min-w-0">
+        <p className="text-lg font-bold text-slate-900 leading-none">{value}</p>
+        <p className="text-[11px] text-slate-500 mt-0.5 leading-tight">{label}</p>
+      </div>
+    </div>
+  );
+  if (href) return <Link href={href} className="block hover:opacity-80 transition-opacity">{content}</Link>;
+  return content;
+}
+
+// ── Export readiness check ─────────────────────────────────────────────────────
+
+function ReadinessCheck({
+  label,
+  ok,
+  detail,
+}: {
+  label: string;
+  ok: boolean;
+  detail?: string;
+}) {
+  return (
+    <div className="flex items-start gap-2.5 py-1.5 border-b border-slate-100 last:border-0">
+      {ok ? (
+        <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0 mt-0.5" />
+      ) : (
+        <AlertTriangle className="h-4 w-4 text-amber-500 shrink-0 mt-0.5" />
+      )}
+      <div className="flex-1 min-w-0">
+        <p className={cn("text-xs font-medium", ok ? "text-slate-700" : "text-amber-800")}>{label}</p>
+        {detail && <p className="text-[11px] text-slate-400 mt-0.5">{detail}</p>}
+      </div>
+    </div>
+  );
+}
 
 // ── Readiness score ring ──────────────────────────────────────────────────────
 
@@ -360,28 +444,85 @@ function ReviewDialog({
 // ── Main page ─────────────────────────────────────────────────────────────────
 
 export default function AnnexAReadinessPage() {
+  const { currentUser } = useAuthContext();
+  const homeId = currentUser?.home_id ?? "home_oak";
+
   const [selectedSection, setSelectedSection] = useState<string | null>(null);
   const [reviewingItem, setReviewingItem] = useState<AnnexAEvidenceEnriched | null>(null);
   const [snapshotOpen, setSnapshotOpen] = useState(false);
   const snapshotDate = new Date().toISOString();
 
-  const { data, isLoading } = useAnnexAReadiness({
-    section: selectedSection ?? undefined,
-  });
-
+  // Evidence data
+  const { data, isLoading } = useAnnexAReadiness({ section: selectedSection ?? undefined });
   const items = data?.data ?? [];
   const meta = data?.meta;
   const sections = meta?.sections ?? [];
+
+  // Period activity data (for Annex A required counts)
+  const incidentsQ = useIncidents();
+  const missingQ = useMissingEpisodes({ homeId });
+  const restraintsQ = useRestraints();
+  const complaintsQ = useComplaints({ homeId });
+  const reg44Q = useReg44Visits();
+  const youngPeopleQ = useYoungPeople("current");
+  const staffQ = useStaff({ status: "active" });
+  const reg45Q = useReg45Evidence();
+
+  const incidents = incidentsQ.data?.data ?? [];
+  const missingEpisodes = missingQ.data?.data ?? [];
+  const restraints = restraintsQ.data?.data ?? [];
+  const complaints = complaintsQ.data?.data ?? [];
+  const reg44Visits = reg44Q.data?.data ?? [];
+  const youngPeople = youngPeopleQ.data?.data ?? [];
+  const staff = staffQ.data?.data ?? [];
+  const reg45Items = reg45Q.data?.data ?? [];
+
+  // Calculate period stats (current year for Annex A period)
+  const periodStart = new Date(new Date().getFullYear(), 0, 1).toISOString();
+  const incidentsThisYear = incidents.filter((i) => i.date >= periodStart);
+  const missingThisYear = missingEpisodes.filter((m) => m.date_missing >= periodStart);
+  const restraintsThisYear = restraints.filter((r) => r.date >= periodStart);
+  const complaintsThisYear = complaints.filter((c) => c.date_received >= periodStart);
+  const reg44ThisYear = reg44Visits.filter((v) => v.visit_date >= periodStart);
+  const approvedReg45 = reg45Items.filter((r) => r.manager_decision === "approved" || r.manager_decision === "accepted");
+
+  // Export readiness checks
+  const hasChildren = youngPeople.length > 0;
+  const hasStaff = staff.length > 0;
+  const hasSectionCoverage = sections.filter((s) => s.approved_count > 0).length >= 6;
+  const noPendingEvidence = (meta?.pending_decisions ?? 0) === 0;
+  const noSectionGaps = (meta?.gaps?.length ?? 0) === 0;
+  const hasReg44 = reg44ThisYear.length > 0;
+  const hasReg45 = approvedReg45.length > 0;
+  const noStaleEvidence = (meta?.stale_count ?? 0) === 0;
+
+  const readinessChecks = [
+    { label: "Children currently placed", ok: hasChildren, detail: hasChildren ? `${youngPeople.length} young ${youngPeople.length === 1 ? "person" : "people"} on roll` : "No young people found — check admissions" },
+    { label: "Active staff records", ok: hasStaff, detail: hasStaff ? `${staff.length} active staff member${staff.length !== 1 ? "s" : ""}` : "No active staff found — check staffing records" },
+    { label: "Evidence across 6+ sections", ok: hasSectionCoverage, detail: hasSectionCoverage ? `${sections.filter((s) => s.approved_count > 0).length}/${sections.length} sections covered` : `Only ${sections.filter((s) => s.approved_count > 0).length} sections have approved evidence` },
+    { label: "All sections have evidence", ok: noSectionGaps, detail: noSectionGaps ? "No gaps found" : `${meta?.gaps?.length} section${(meta?.gaps?.length ?? 0) !== 1 ? "s" : ""} still empty` },
+    { label: "No pending evidence decisions", ok: noPendingEvidence, detail: noPendingEvidence ? "All evidence reviewed" : `${meta?.pending_decisions} item${(meta?.pending_decisions ?? 0) !== 1 ? "s" : ""} awaiting manager review` },
+    { label: "No stale evidence (90+ days)", ok: noStaleEvidence, detail: noStaleEvidence ? "All evidence is current" : `${meta?.stale_count} item${(meta?.stale_count ?? 0) !== 1 ? "s" : ""} older than 90 days` },
+    { label: "Regulation 44 visits in period", ok: hasReg44, detail: hasReg44 ? `${reg44ThisYear.length} visit${reg44ThisYear.length !== 1 ? "s" : ""} this year` : "No Regulation 44 visits recorded this year" },
+    { label: "Regulation 45 approved evidence", ok: hasReg45, detail: hasReg45 ? `${approvedReg45.length} approved evidence item${approvedReg45.length !== 1 ? "s" : ""}` : "No approved Regulation 45 evidence" },
+  ];
+
+  const readyCount = readinessChecks.filter((c) => c.ok).length;
+  const exportReady = readyCount === readinessChecks.length;
 
   return (
     <PageShell
       title="Annex A Readiness Dashboard"
       subtitle="Continuously inspection-ready — evidence from verified Care Events builds Annex A automatically"
+      ariaContext={{ pageTitle: "Annex A Readiness Dashboard", sourceType: "reg45" }}
       actions={
-        <Button size="sm" variant="outline" onClick={() => setSnapshotOpen(true)}>
-          <Camera className="h-3.5 w-3.5 mr-1.5" />
-          Generate snapshot
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button size="sm" variant="outline" onClick={() => setSnapshotOpen(true)}>
+            <Camera className="h-3.5 w-3.5 mr-1.5" />
+            Generate snapshot
+          </Button>
+          <AriaStudioQuickActionButton context={{ record_type: "annex_a", record_id: "home_oak", home_id: "home_oak" }} />
+        </div>
       }
     >
       {isLoading ? (
@@ -391,7 +532,8 @@ export default function AnnexAReadinessPage() {
         </div>
       ) : (
         <div className="space-y-6">
-          {/* Top stats row */}
+
+          {/* ── Top score + export readiness ────────────────────────────── */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* Readiness score */}
             <Card className="border-slate-200 flex items-center justify-center p-4">
@@ -406,63 +548,135 @@ export default function AnnexAReadinessPage() {
             {/* Evidence stats */}
             <Card className="border-slate-200">
               <CardHeader className="pb-2">
-                <CardTitle className="text-sm text-slate-600">Evidence Overview</CardTitle>
+                <CardTitle className="text-sm text-slate-600 flex items-center gap-1.5">
+                  <FileText className="h-3.5 w-3.5" />
+                  Evidence Overview
+                </CardTitle>
               </CardHeader>
               <CardContent className="space-y-2">
                 {[
                   { label: "Total evidence items", value: meta?.total_evidence ?? 0, icon: <FileText className="h-3.5 w-3.5 text-slate-500" /> },
-                  { label: "Pending manager review", value: meta?.pending_decisions ?? 0, icon: <Clock className="h-3.5 w-3.5 text-amber-500" /> },
+                  { label: "Pending manager review", value: meta?.pending_decisions ?? 0, icon: <Clock className="h-3.5 w-3.5 text-amber-500" />, warn: (meta?.pending_decisions ?? 0) > 0 },
                   { label: "Approved items", value: meta?.approved_count ?? 0, icon: <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500" /> },
-                  { label: "Stale items (90+ days)", value: meta?.stale_count ?? 0, icon: <AlertTriangle className="h-3.5 w-3.5 text-orange-500" /> },
+                  { label: "Stale items (90+ days)", value: meta?.stale_count ?? 0, icon: <RefreshCw className="h-3.5 w-3.5 text-orange-500" />, warn: (meta?.stale_count ?? 0) > 0 },
                 ].map((stat) => (
-                  <div key={stat.label} className="flex items-center justify-between">
+                  <div key={stat.label} className={cn("flex items-center justify-between rounded px-2 py-1", stat.warn ? "bg-amber-50/50" : "")}>
                     <span className="flex items-center gap-1.5 text-xs text-slate-600">
                       {stat.icon}
                       {stat.label}
                     </span>
-                    <span className="text-sm font-semibold text-slate-900">{stat.value}</span>
+                    <span className={cn("text-sm font-semibold", stat.warn ? "text-amber-700" : "text-slate-900")}>{stat.value}</span>
                   </div>
                 ))}
               </CardContent>
             </Card>
 
-            {/* Gaps */}
-            <Card className="border-slate-200">
+            {/* Export readiness */}
+            <Card className={cn("border", exportReady ? "border-emerald-200 bg-emerald-50/30" : "border-amber-200 bg-amber-50/20")}>
               <CardHeader className="pb-2">
-                <CardTitle className="text-sm text-slate-600">Gaps & Alerts</CardTitle>
+                <CardTitle className="text-sm flex items-center gap-1.5">
+                  {exportReady ? (
+                    <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500" />
+                  ) : (
+                    <AlertTriangle className="h-3.5 w-3.5 text-amber-500" />
+                  )}
+                  Export Readiness
+                  <Badge className={cn("ml-auto text-xs", exportReady ? "bg-emerald-100 text-emerald-700" : "bg-amber-100 text-amber-700")}>
+                    {readyCount}/{readinessChecks.length}
+                  </Badge>
+                </CardTitle>
               </CardHeader>
-              <CardContent>
-                {(meta?.gaps?.length ?? 0) === 0 ? (
-                  <div className="flex flex-col items-center gap-2 py-2">
-                    <CheckCircle2 className="h-8 w-8 text-emerald-400" />
-                    <p className="text-sm text-emerald-700 font-medium">No section gaps</p>
-                    <p className="text-xs text-slate-400 text-center">All sections have evidence</p>
-                  </div>
-                ) : (
-                  <div className="space-y-1.5">
-                    <p className="text-xs text-slate-500 font-medium mb-2">
-                      {meta?.gaps?.length} section{(meta?.gaps?.length ?? 0) !== 1 ? "s" : ""} without evidence:
-                    </p>
-                    {meta?.gaps?.slice(0, 4).map((gap) => {
+              <CardContent className="divide-y divide-slate-100">
+                {readinessChecks.map((check) => (
+                  <ReadinessCheck key={check.label} label={check.label} ok={check.ok} detail={check.detail} />
+                ))}
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* ── Period activity (Annex A required counts) ────────────────── */}
+          <div>
+            <h2 className="text-sm font-semibold text-slate-700 mb-3 flex items-center gap-1.5">
+              <TrendingUp className="h-4 w-4 text-slate-500" />
+              Activity in Period ({new Date().getFullYear()})
+              <span className="text-xs font-normal text-slate-400 ml-1">— required for Annex A completion</span>
+            </h2>
+            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
+              <PeriodStat icon={Users} label="Children on roll" value={youngPeople.length} status={youngPeople.length > 0 ? "ok" : "gap"} href="/young-people" />
+              <PeriodStat icon={UserCheck} label="Active staff" value={staff.length} status={staff.length > 0 ? "ok" : "gap"} href="/staff" />
+              <PeriodStat icon={ShieldAlert} label="Incidents" value={incidentsThisYear.length} status={incidentsThisYear.length > 0 ? "warn" : "ok"} href="/incidents" />
+              <PeriodStat icon={MessageSquareWarning} label="Complaints" value={complaintsThisYear.length} status={complaintsThisYear.length > 0 ? "warn" : "ok"} href="/complaints" />
+              <PeriodStat icon={MapPin} label="Missing eps." value={missingThisYear.length} status={missingThisYear.length > 0 ? "warn" : "ok"} href="/missing-episodes" />
+              <PeriodStat icon={Activity} label="Restraints" value={restraintsThisYear.length} status={restraintsThisYear.length > 0 ? "warn" : "ok"} href="/restraints" />
+              <PeriodStat icon={ClipboardCheck} label="Reg 44 visits" value={reg44ThisYear.length} status={reg44ThisYear.length > 0 ? "ok" : "gap"} href="/regulation-44" />
+              <PeriodStat icon={ScrollText} label="Reg 45 evidence" value={approvedReg45.length} status={approvedReg45.length > 0 ? "ok" : "gap"} href="/regulation-45" />
+            </div>
+          </div>
+
+          {/* ── Gaps & stale warnings ────────────────────────────────────── */}
+          {((meta?.gaps?.length ?? 0) > 0 || (meta?.stale_count ?? 0) > 0) && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {(meta?.gaps?.length ?? 0) > 0 && (
+                <Card className="border-red-200 bg-red-50/20">
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-sm flex items-center gap-1.5 text-red-800">
+                      <Siren className="h-3.5 w-3.5" />
+                      Missing Evidence — {meta?.gaps?.length} section{(meta?.gaps?.length ?? 0) !== 1 ? "s" : ""}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-1.5">
+                    {meta?.gaps?.map((gap) => {
                       const section = sections.find((s) => s.key === gap);
                       return (
                         <button
                           key={gap}
                           onClick={() => setSelectedSection(gap)}
-                          className="w-full text-left flex items-center gap-2 text-xs text-red-700 bg-red-50 border border-red-100 rounded p-1.5 hover:bg-red-100 transition-colors"
+                          className="w-full text-left flex items-center gap-2 text-xs text-red-700 bg-red-50 border border-red-100 rounded p-2 hover:bg-red-100 transition-colors"
                         >
                           <AlertTriangle className="h-3 w-3 shrink-0" />
                           {section?.label ?? gap}
+                          <span className="ml-auto text-red-400">→ View</span>
                         </button>
                       );
                     })}
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          </div>
+                  </CardContent>
+                </Card>
+              )}
 
-          {/* Section breakdown */}
+              {(meta?.stale_count ?? 0) > 0 && (
+                <Card className="border-amber-200 bg-amber-50/20">
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-sm flex items-center gap-1.5 text-amber-800">
+                      <RefreshCw className="h-3.5 w-3.5" />
+                      Stale Evidence — {meta?.stale_count} item{(meta?.stale_count ?? 0) !== 1 ? "s" : ""} (90+ days old)
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-1.5">
+                      {sections
+                        .filter((s) => s.stale_count > 0)
+                        .map((s) => (
+                          <button
+                            key={s.key}
+                            onClick={() => setSelectedSection(s.key)}
+                            className="w-full text-left flex items-center gap-2 text-xs text-amber-700 bg-amber-50 border border-amber-100 rounded p-2 hover:bg-amber-100 transition-colors"
+                          >
+                            <Clock className="h-3 w-3 shrink-0" />
+                            {s.label}
+                            <span className="ml-auto font-semibold">{s.stale_count} stale</span>
+                          </button>
+                        ))}
+                    </div>
+                    <p className="text-[11px] text-amber-600 mt-2">
+                      Renew evidence by submitting new verified Care Events for these sections.
+                    </p>
+                  </CardContent>
+                </Card>
+              )}
+            </div>
+          )}
+
+          {/* ── Section breakdown ────────────────────────────────────────── */}
           <Card className="border-slate-200">
             <CardHeader className="pb-3">
               <div className="flex items-center justify-between">
@@ -505,7 +719,7 @@ export default function AnnexAReadinessPage() {
             </CardContent>
           </Card>
 
-          {/* Evidence items */}
+          {/* ── Evidence items ───────────────────────────────────────────── */}
           <div>
             <div className="flex items-center justify-between mb-3">
               <h2 className="text-sm font-semibold text-slate-800">
@@ -543,7 +757,7 @@ export default function AnnexAReadinessPage() {
         <ReviewDialog item={reviewingItem} onClose={() => setReviewingItem(null)} />
       )}
 
-      {/* ── Inspection Snapshot Dialog ─────────────────────────────────── */}
+      {/* ── Inspection Snapshot Dialog ───────────────────────────────────── */}
       <Dialog open={snapshotOpen} onOpenChange={setSnapshotOpen}>
         <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
           <DialogHeader>
@@ -572,6 +786,45 @@ export default function AnnexAReadinessPage() {
                     {meta?.gaps?.length} section{(meta?.gaps?.length ?? 0) !== 1 ? "s" : ""} without evidence
                   </p>
                 )}
+              </div>
+            </div>
+
+            {/* Export readiness summary */}
+            <div className={cn("rounded-lg border p-3", exportReady ? "border-emerald-200 bg-emerald-50" : "border-amber-200 bg-amber-50")}>
+              <p className={cn("text-xs font-semibold mb-2", exportReady ? "text-emerald-800" : "text-amber-800")}>
+                {exportReady ? "✓ Ready for export / inspection" : `${readyCount}/${readinessChecks.length} readiness checks passed`}
+              </p>
+              {!exportReady && (
+                <ul className="space-y-1">
+                  {readinessChecks.filter((c) => !c.ok).map((c) => (
+                    <li key={c.label} className="text-xs text-amber-700 flex items-center gap-1.5">
+                      <AlertTriangle className="h-3 w-3 shrink-0" />
+                      {c.label}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+
+            {/* Period activity */}
+            <div>
+              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">Period activity ({new Date().getFullYear()})</p>
+              <div className="grid grid-cols-4 gap-2">
+                {[
+                  { label: "Incidents", value: incidentsThisYear.length },
+                  { label: "Missing eps.", value: missingThisYear.length },
+                  { label: "Restraints", value: restraintsThisYear.length },
+                  { label: "Complaints", value: complaintsThisYear.length },
+                  { label: "Children", value: youngPeople.length },
+                  { label: "Staff", value: staff.length },
+                  { label: "Reg 44 visits", value: reg44ThisYear.length },
+                  { label: "Reg 45 evidence", value: approvedReg45.length },
+                ].map((s) => (
+                  <div key={s.label} className="rounded border p-2 text-center">
+                    <p className="text-xs text-slate-500">{s.label}</p>
+                    <p className="text-lg font-bold text-slate-900">{s.value}</p>
+                  </div>
+                ))}
               </div>
             </div>
 
@@ -623,7 +876,7 @@ export default function AnnexAReadinessPage() {
             </div>
 
             <p className="text-[10px] text-slate-400 border-t pt-3">
-              Cornerstone \u00b7 Annex A Snapshot \u00b7 Generated {new Date(snapshotDate).toLocaleString("en-GB")} \u00b7 Home: Oak House
+              Cornerstone · Annex A Snapshot · Generated {new Date(snapshotDate).toLocaleString("en-GB")} · Home: Oak House
             </p>
           </div>
 
@@ -636,6 +889,18 @@ export default function AnnexAReadinessPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+      <CareEventsPanel
+        title="Care Events — Annex A Evidence"
+        category={["safeguarding", "behaviour", "health", "education", "complaint"]}
+        days={90}
+        defaultCollapsed
+      />
+      <AriaPanel
+        mode="assist"
+        pageContext="Annex A Readiness Dashboard — inspection readiness, children and staff information, incidents, restraints, complaints, missing episodes, Ofsted evidence, SCCIF"
+        recordType="annex_a"
+        className="mt-6"
+      />
     </PageShell>
   );
 }
