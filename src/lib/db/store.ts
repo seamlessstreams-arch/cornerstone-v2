@@ -405,6 +405,7 @@ import type {
   AriaHomeDynamicsSnapshot,
   AriaSafeguardingPattern, AriaEarlyWarning,
   AriaCareGraphNode, AriaCareGraphEdge,
+  AriaFormulation, AriaDecisionRecommendation,
 } from "@/types/aria-studio";
 
 // ── Mutable collections ───────────────────────────────────────────────────────
@@ -1240,6 +1241,8 @@ const store = {
   ariaEarlyWarnings: [] as AriaEarlyWarning[],
   ariaCareGraphNodes: [] as AriaCareGraphNode[],
   ariaCareGraphEdges: [] as AriaCareGraphEdge[],
+  ariaFormulations: [] as AriaFormulation[],
+  ariaDecisionRecommendations: [] as AriaDecisionRecommendation[],
 
   // Shift Swap Requests
   shiftSwaps: [
@@ -11230,6 +11233,65 @@ export const db = {
       store.ariaCareGraphEdges = store.ariaCareGraphEdges.filter(
         (e) => !nodeIds.has(e.from_node_id) && !nodeIds.has(e.to_node_id),
       );
+    },
+  },
+  ariaFormulations: {
+    findAll: (homeId?: string) =>
+      homeId
+        ? store.ariaFormulations.filter((f) => f.home_id === homeId)
+        : store.ariaFormulations,
+    findById: (id: string) => store.ariaFormulations.find((f) => f.id === id),
+    findByChild: (homeId: string, childId: string) =>
+      store.ariaFormulations.filter(
+        (f) => f.home_id === homeId && f.child_id === childId,
+      ),
+    findActiveForChild: (homeId: string, childId: string) =>
+      store.ariaFormulations.find(
+        (f) =>
+          f.home_id === homeId &&
+          f.child_id === childId &&
+          (f.status === "ai_draft" || f.status === "in_review" || f.status === "approved"),
+      ),
+    create: (data: Omit<AriaFormulation, "id">): AriaFormulation => {
+      const rec: AriaFormulation = { ...data, id: generateId("frm") };
+      store.ariaFormulations.push(rec);
+      return rec;
+    },
+    patch: (id: string, data: Partial<AriaFormulation>): AriaFormulation | null => {
+      const idx = store.ariaFormulations.findIndex((f) => f.id === id);
+      if (idx === -1) return null;
+      store.ariaFormulations[idx] = { ...store.ariaFormulations[idx], ...data };
+      return store.ariaFormulations[idx];
+    },
+  },
+  ariaDecisionRecommendations: {
+    findAll: (homeId?: string) =>
+      homeId
+        ? store.ariaDecisionRecommendations.filter((r) => r.home_id === homeId)
+        : store.ariaDecisionRecommendations,
+    findById: (id: string) => store.ariaDecisionRecommendations.find((r) => r.id === id),
+    findOpen: (homeId: string) =>
+      store.ariaDecisionRecommendations.filter(
+        (r) =>
+          r.home_id === homeId &&
+          (r.status === "ai_draft" || r.status === "modified" || r.status === "deferred"),
+      ),
+    create: (data: Omit<AriaDecisionRecommendation, "id">): AriaDecisionRecommendation => {
+      const rec: AriaDecisionRecommendation = { ...data, id: generateId("rec") };
+      store.ariaDecisionRecommendations.push(rec);
+      return rec;
+    },
+    patch: (
+      id: string,
+      data: Partial<AriaDecisionRecommendation>,
+    ): AriaDecisionRecommendation | null => {
+      const idx = store.ariaDecisionRecommendations.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.ariaDecisionRecommendations[idx] = {
+        ...store.ariaDecisionRecommendations[idx],
+        ...data,
+      };
+      return store.ariaDecisionRecommendations[idx];
     },
   },
   wakeUpRoutines: {

@@ -622,6 +622,115 @@ export interface AriaCareGraphSnapshot {
   };
 }
 
+// ── Formulations & Decision Support ───────────────────────────────────────────
+
+export type AriaFormulationFactorType =
+  | "predisposing"
+  | "precipitating"
+  | "perpetuating"
+  | "protective";
+
+export interface AriaFormulationFactor {
+  factor_type: AriaFormulationFactorType;
+  label: string;
+  detail: string;
+  evidence_refs: AriaSafeguardingEvidenceRef[];
+  confidence: number; // 0..1
+}
+
+export type AriaFormulationStatus =
+  | "ai_draft"
+  | "in_review"
+  | "approved"
+  | "superseded"
+  | "rejected";
+
+export interface AriaFormulation {
+  id: string;
+  home_id: string;
+  child_id: string;
+  title: string;
+  narrative: string;
+  factors: AriaFormulationFactor[];
+  hypotheses: string[];
+  recommended_focus: string[];
+  source_pattern_ids: string[];
+  source_warning_ids: string[];
+  source_risk_ids: string[];
+  status: AriaFormulationStatus;
+  is_ai_draft: boolean;
+  generated_at: string;
+  approved_by: string | null;
+  approved_at: string | null;
+  reviewer_note: string | null;
+  superseded_by: string | null;
+}
+
+export type AriaDecisionPriority = "p1" | "p2" | "p3" | "p4";
+export type AriaDecisionStatus =
+  | "ai_draft"
+  | "accepted"
+  | "modified"
+  | "deferred"
+  | "rejected"
+  | "completed";
+
+export type AriaDecisionAction =
+  | "convene_strategy_meeting"
+  | "trigger_reg40_notification"
+  | "request_la_review"
+  | "review_risk_assessment"
+  | "review_behaviour_plan"
+  | "schedule_keywork_session"
+  | "increase_supervision"
+  | "request_clinical_input"
+  | "convene_team_around_child"
+  | "review_placement_plan"
+  | "audit_oversight_gap"
+  | "trigger_lessons_learned"
+  | "schedule_management_oversight"
+  | "request_advocate"
+  | "review_contextual_safeguarding";
+
+export interface AriaDecisionRecommendation {
+  id: string;
+  home_id: string;
+  child_id: string | null;
+  formulation_id: string | null;
+  source_pattern_ids: string[];
+  source_warning_ids: string[];
+  action: AriaDecisionAction;
+  title: string;
+  rationale: string;
+  expected_impact: string;
+  priority: AriaDecisionPriority;
+  confidence: number;
+  status: AriaDecisionStatus;
+  is_ai_draft: boolean;
+  generated_at: string;
+  decided_by: string | null;
+  decided_at: string | null;
+  decision_note: string | null;
+  due_date: string | null;
+}
+
+export interface AriaDecisionSupportSnapshot {
+  home_id: string;
+  child_id: string | null;
+  generated_at: string;
+  formulations: AriaFormulation[];
+  recommendations: AriaDecisionRecommendation[];
+  summary: {
+    formulations: number;
+    recommendations: number;
+    p1: number;
+    p2: number;
+    p3: number;
+    p4: number;
+    high_confidence: number;
+  };
+}
+
 // ── Home Dynamics ─────────────────────────────────────────────────────────────
 
 export type AriaIndicatorStatus = "green" | "amber" | "red";
