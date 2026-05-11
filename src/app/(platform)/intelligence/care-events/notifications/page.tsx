@@ -46,6 +46,7 @@ const SOURCE_LABEL: Record<NotificationSource, string> = {
   reg40_triage_pending:    "Reg 40 triage",
   manager_review_required: "Manager review",
   routing_failure:         "Routing failure",
+  sensitive_export:        "Sensitive export",
 };
 
 const AUDIENCE_LABEL: Record<NotificationAudience, string> = {

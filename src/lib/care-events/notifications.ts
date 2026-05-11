@@ -33,7 +33,8 @@ export type NotificationSource =
   | "sensitive_amendment"
   | "reg40_triage_pending"
   | "manager_review_required"
-  | "routing_failure";
+  | "routing_failure"
+  | "sensitive_export";
 
 export interface NotificationItem {
   id: string;                     // source:source_id
@@ -189,6 +190,37 @@ export function loadNotifications(homeId: string): NotificationStream {
             `${ce.failed_jobs.length} job${ce.failed_jobs.length === 1 ? "" : "s"} need attention.`,
       created_at: ce.care_event_date,
       link_href: `/intelligence/care-events/routing-health`,
+    });
+  }
+
+  // ── Sensitive exports (last 7 days) ─────────────────────────────────────────
+  //
+  // M39: every safeguarding-sensitive export of a persisted artifact (Reg 44
+  // pack, safeguarding-category filing index, etc.) lands in managers'
+  // notification stream so they see at a glance that sensitive content has
+  // left the home, who took it and why.
+  const exportCutoff = Date.now() - 7 * 24 * 60 * 60 * 1000;
+  for (const ex of db.exportHistory.findAll(homeId)) {
+    if (!ex.is_safeguarding_sensitive) continue;
+    if (new Date(ex.exported_at).getTime() < exportCutoff) continue;
+    const kindLabel = ex.kind === "reg44_pack"
+      ? "Reg 44 pack"
+      : ex.kind === "inspection_snapshot"
+        ? "Inspection snapshot"
+        : "Filing cabinet";
+    built.push({
+      id: `sensitive_export:${ex.id}`,
+      source: "sensitive_export",
+      source_id: ex.id,
+      home_id: ex.home_id,
+      child_id: null,
+      audience: "manager",
+      target_staff_id: null,
+      severity: "critical",
+      title: `Sensitive export: ${kindLabel}`,
+      body: `Exported by ${ex.exported_by} (${ex.exported_by_role}) · ${ex.byte_size.toLocaleString()} bytes${ex.reason ? ` · ${ex.reason.slice(0, 120)}` : ""}`,
+      created_at: ex.exported_at,
+      link_href: `/intelligence/care-events/exports`,
     });
   }
 
