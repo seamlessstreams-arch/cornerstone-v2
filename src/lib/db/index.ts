@@ -1,27 +1,31 @@
 /**
  * Unified data layer entry point
  *
- * Exports `db` — the same interface whether Supabase is enabled or not.
+ * Exports two interfaces:
  *
- * When NEXT_PUBLIC_SUPABASE_ENABLED=true and real credentials are set,
- * all reads/writes go to Supabase.
+ * 1. `db` (sync) — direct in-memory store access. Used by existing routes
+ *    that haven't been migrated to async Supabase-ready pattern yet.
  *
- * Otherwise, the in-memory store is used (development / demo mode).
+ * 2. `dal` (async) — dual-mode Data Access Layer. When Supabase is
+ *    enabled and credentials are configured, reads/writes go to Supabase
+ *    Cloud. Otherwise falls back to the in-memory store.
  *
- * API routes should:
- *   import { db } from "@/lib/db"
- *   (not @/lib/db/store directly)
+ * Migration path for API routes:
+ *   OLD:  import { db } from "@/lib/db/store"     // sync, in-memory only
+ *   NEW:  import { dal } from "@/lib/db"           // async, Supabase-ready
+ *         const staff = await dal.staff.findAll()
  */
 
+// Sync in-memory store (legacy — gradually replace with `dal`)
 export { db } from "./store";
 
+// Async dual-mode DAL (Supabase-ready)
+export { dal, genericTable } from "./dal";
+
 /**
- * Returns the home_id to use for all operations.
- *
- * In production this will be resolved from the authenticated session.
+ * Returns the home_id string for in-memory store operations.
+ * In production, resolved from the authenticated session.
  * During in-memory mode, returns the seed home_id.
- *
- * TODO: Replace with auth session lookup once Supabase Auth is wired.
  */
 export function getHomeId(): string {
   return process.env.SEED_HOME_ID ?? "home_oak";

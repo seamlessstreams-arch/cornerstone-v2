@@ -746,3 +746,38 @@ export async function createActionOutcome(sb: SB, data: Record<string, unknown>)
 export async function updateActionOutcome(sb: SB, id: string, data: Record<string, unknown>) {
   return unwrap(await sb.from("action_outcomes").update(data as never).eq("id", id).select().single());
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// GENERIC RECORDS (catch-all for extended record types)
+// ─────────────────────────────────────────────────────────────────────────────
+
+export async function getGenericRecords(sb: SB, homeId: string, recordType: string, filters?: {
+  child_id?: string;
+  staff_id?: string;
+}) {
+  let query = sb.from("generic_records").select("*")
+    .eq("home_id", homeId)
+    .eq("record_type", recordType);
+  if (filters?.child_id) query = query.eq("child_id", filters.child_id);
+  if (filters?.staff_id) query = query.eq("staff_id", filters.staff_id);
+  return unwrap(await query.order("created_at", { ascending: false }));
+}
+
+export async function getGenericRecordById(sb: SB, id: string) {
+  return unwrap(await sb.from("generic_records").select("*").eq("id", id).single());
+}
+
+export async function createGenericRecord(sb: SB, data: {
+  home_id: string;
+  record_type: string;
+  data: Record<string, unknown>;
+  child_id?: string;
+  staff_id?: string;
+  created_by?: string;
+}) {
+  return unwrap(await sb.from("generic_records").insert(data).select().single());
+}
+
+export async function updateGenericRecord(sb: SB, id: string, data: Record<string, unknown>) {
+  return unwrap(await sb.from("generic_records").update(data).eq("id", id).select().single());
+}

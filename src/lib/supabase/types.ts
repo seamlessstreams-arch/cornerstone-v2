@@ -869,6 +869,23 @@ export interface Database {
         Insert: Omit<Database["public"]["Tables"]["candidate_references"]["Row"], "created_at" | "updated_at"> & { id?: string };
         Update: Partial<Database["public"]["Tables"]["candidate_references"]["Insert"]>;
       };
+
+      generic_records: {
+        Row: {
+          id: string;
+          home_id: string;
+          record_type: string;
+          data: Json;
+          child_id: string | null;
+          staff_id: string | null;
+          created_by: string | null;
+          updated_by: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: Omit<Database["public"]["Tables"]["generic_records"]["Row"], "id" | "created_at" | "updated_at"> & { id?: string };
+        Update: Partial<Database["public"]["Tables"]["generic_records"]["Insert"]>;
+      };
     };
     Views: {
       [key: string]: never;
