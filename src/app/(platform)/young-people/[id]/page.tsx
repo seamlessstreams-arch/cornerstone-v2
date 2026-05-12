@@ -25,6 +25,7 @@ import { AriaUsageBadge } from "@/components/aria/aria-usage-badge";
 import { AriaSmartSummary } from "@/components/aria/aria-smart-summary";
 import { AriaPlacementTimeline } from "@/components/aria/aria-placement-timeline";
 import { AriaKeyWorkPlanner } from "@/components/aria/aria-key-work-planner";
+import { AriaWriteToChild } from "@/components/aria/aria-write-to-child";
 import { StudioQuickActions } from "@/components/aria-studio/studio-quick-actions";
 import { useYoungPerson } from "@/hooks/use-young-people";
 import { useCreateTrainingNeed } from "@/hooks/use-ri-learning";
@@ -682,6 +683,16 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
                 ))}
               </div>
             )}
+
+            {/* Write to Child — weekly summary */}
+            <AriaWriteToChild
+              source="weekly_summary"
+              sourceText={related?.recent_log?.map((e: DailyLogEntry) => e.content).join(" ") || ""}
+              childName={displayName}
+              childAge={yp.age}
+              mode="post_save"
+              className="mt-4"
+            />
           </div>
         )}
 
@@ -1062,6 +1073,16 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
               </div>
             )}
 
+            {/* Write to Child — key work session */}
+            <AriaWriteToChild
+              source="key_work_session"
+              sourceText={keyWorkSessions?.[0]?.child_voice || keyWorkSessions?.[0]?.staff_reflection || keyWorkSessions?.[0]?.reason || ""}
+              sourceRecordId={keyWorkSessions?.[0]?.id}
+              childName={displayName}
+              childAge={yp.age}
+              mode="post_save"
+            />
+
             <div className="rounded-xl border border-[var(--cs-border)] bg-slate-50 p-4 flex items-start gap-2.5">
               <Shield className="h-3.5 w-3.5 text-[var(--cs-text-muted)] mt-0.5 shrink-0" />
               <div>
@@ -1245,6 +1266,19 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
                   </div>
                 ))}
               </>
+            )}
+
+            {/* Write to Child — missing from care */}
+            {missingEpisodes.length > 0 && (
+              <AriaWriteToChild
+                source="missing_from_care"
+                sourceText={missingEpisodes[0]?.return_interview_notes || missingEpisodes[0]?.pattern_notes || ""}
+                sourceRecordId={missingEpisodes[0]?.id}
+                childName={displayName}
+                childAge={yp.age}
+                mode="post_save"
+                className="mt-4"
+              />
             )}
           </div>
         )}

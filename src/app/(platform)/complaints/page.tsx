@@ -25,6 +25,7 @@ import { PrintButton } from "@/components/common/print-button";
 import { ExportButton, type ExportColumn } from "@/components/common/export-button";
 import { useComplaints, useCreateComplaint, useUpdateComplaint } from "@/hooks/use-complaints";
 import { getYPName } from "@/lib/seed-data";
+import { AriaWriteToChild } from "@/components/aria/aria-write-to-child";
 import type {
   Complaint, ComplaintStatus, ComplaintOutcome, ComplaintCategory, ComplainantType,
 } from "@/types/extended";
@@ -324,6 +325,17 @@ function ComplaintCard({
                 ? <><Sparkles className="h-3.5 w-3.5 animate-spin" />ARIA analysing…</>
                 : <><Sparkles className="h-3.5 w-3.5" />Generate ARIA analysis</>}
             </button>
+          )}
+
+          {/* Write to Child — complaint */}
+          {complaint.child_id && (
+            <AriaWriteToChild
+              source="complaint"
+              sourceText={complaint.outcome_detail || complaint.summary}
+              sourceRecordId={complaint.id}
+              childName={ypName || "Young Person"}
+              mode="post_save"
+            />
           )}
         </div>
       )}

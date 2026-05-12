@@ -29,6 +29,7 @@ import { cn, formatDate, formatRelative } from "@/lib/utils";
 import { AriaPanel } from "@/components/aria/aria-panel";
 import { AriaUsageBadge } from "@/components/aria/aria-usage-badge";
 import { AriaContextLinker } from "@/components/aria/aria-context-linker";
+import { AriaWriteToChild } from "@/components/aria/aria-write-to-child";
 import { PrintButton } from "@/components/common/print-button";
 import { SmartUploadButton } from "@/components/documents/smart-upload-button";
 import { useDocumentIntelligence } from "@/hooks/use-doc-intelligence";
@@ -271,6 +272,17 @@ export default function SafeguardingConcernPage({ params }: { params: Promise<{ 
 
         {/* ── ARIA Context Links ─────────────────────────────────────────── */}
         <AriaContextLinker sourceTable="safeguarding_concerns" recordId={concern.id} className="mb-4" />
+
+        {/* ── Write to Child — safeguarding ────────────────────────────────── */}
+        <AriaWriteToChild
+          source="incident"
+          sourceText={concern.oversight_note || concern.description}
+          sourceRecordId={concern.id}
+          childName={ypName}
+          childAge={yp?.date_of_birth ? Math.floor((Date.now() - new Date(yp.date_of_birth).getTime()) / (365.25 * 24 * 60 * 60 * 1000)) : undefined}
+          mode="post_save"
+          className="mb-4"
+        />
 
         {/* ── Severity banner ───────────────────────────────────────────────── */}
         <div className={cn(

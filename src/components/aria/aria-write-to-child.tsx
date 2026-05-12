@@ -70,7 +70,7 @@ interface WriteToChildProps {
   /** The raw text from the source record */
   sourceText: string;
   /** The source record ID for audit linking */
-  sourceRecordId: string;
+  sourceRecordId?: string;
   /** Child name for personalisation */
   childName: string;
   /** Child age for age-appropriate language */
