@@ -20,6 +20,7 @@ import { useAuthContext } from "@/contexts/auth-context";
 import { useYoungPeople } from "@/hooks/use-young-people";
 import { useCreateTrainingNeed } from "@/hooks/use-ri-learning";
 import { AriaQuickActions } from "@/components/intelligence/aria-quick-actions";
+import { AriaUsageBadge } from "@/components/aria/aria-usage-badge";
 import { StudioQuickActions } from "@/components/aria-studio/studio-quick-actions";
 import { AriaCompose } from "@/components/aria/aria-compose";
 import { appRoleToAriaRole } from "@/lib/aria/aria-permissions";
@@ -288,6 +289,14 @@ function LogEntryCard({ entry }: { entry: DailyLogEntry }) {
                 <Badge className="text-[9px] rounded-full bg-amber-100 text-amber-700">
                   <Star className="h-2.5 w-2.5 mr-0.5" />Significant
                 </Badge>
+              )}
+              {entry.aria_assist_used && (
+                <AriaUsageBadge
+                  ariaAssisted
+                  sourceTable="daily_log_entries"
+                  recordId={entry.id}
+                  size="sm"
+                />
               )}
               {entry.mood_score !== null && (
                 <span className={cn("inline-flex items-center gap-1 text-[10px] font-medium rounded-full px-2 py-0.5", moodColor(entry.mood_score))}>

@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Avatar } from "@/components/ui/avatar";
 import { AriaPanel } from "@/components/aria/aria-panel";
 import { AriaCompose } from "@/components/aria/aria-compose";
+import { AriaUsageBadge } from "@/components/aria/aria-usage-badge";
 import { appRoleToAriaRole } from "@/lib/aria/aria-permissions";
 import {
   AlertTriangle, Shield, Eye, Clock, CheckCircle2, FileText,
@@ -165,6 +166,14 @@ function IncidentCard({
               <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-medium text-[var(--cs-text-secondary)]">
                 {INCIDENT_TYPE_LABELS[inc.type] || inc.type}
               </span>
+              {inc.aria_oversight_used && (
+                <AriaUsageBadge
+                  ariaAssisted
+                  sourceTable="incidents"
+                  recordId={inc.id}
+                  size="sm"
+                />
+              )}
             </div>
           </div>
 

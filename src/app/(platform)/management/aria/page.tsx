@@ -18,6 +18,7 @@ import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { AGENT_ID_LABELS } from "@/types/aria-reports";
 import type { AgentId, RiskTier } from "@/types/aria-reports";
+import { AriaActivityCard } from "@/components/aria/aria-activity-card";
 import {
   Shield,
   Save,
@@ -158,6 +159,11 @@ export default function AriaGovernancePage() {
           Settings saved successfully.
         </div>
       )}
+
+      {/* ARIA Activity Overview */}
+      <div className="mb-6">
+        <AriaActivityCard days={30} />
+      </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
         {/* Report Controls */}

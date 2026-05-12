@@ -32,6 +32,9 @@ function formatCommandId(id: string): string {
     .replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
+// Expose pure helpers for unit testing
+export const _testing = { formatCommandId };
+
 export function AriaActivityCard({
   homeId,
   days = 30,

@@ -14,6 +14,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Avatar } from "@/components/ui/avatar";
 import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaUsageBadge } from "@/components/aria/aria-usage-badge";
 import {
   useSupervision, useUpdateSupervision,
 } from "@/hooks/use-supervision";
@@ -315,6 +316,14 @@ export default function SupervisionDetailPage({
                       <Badge className={cn("rounded-full text-[10px]", STATUS_COLOURS[sup.status] ?? "bg-slate-100 text-[var(--cs-text-secondary)]")}>
                         {sup.status.charAt(0).toUpperCase() + sup.status.slice(1)}
                       </Badge>
+                      {sup.aria_assist_used && (
+                        <AriaUsageBadge
+                          ariaAssisted
+                          sourceTable="supervisions"
+                          recordId={sup.id}
+                          size="sm"
+                        />
+                      )}
                     </div>
                     <div className="flex items-center gap-1.5 text-xs text-[var(--cs-text-muted)] flex-wrap">
                       <User className="h-3.5 w-3.5 shrink-0" />

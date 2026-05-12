@@ -27,6 +27,7 @@ import { INCIDENT_TYPE_LABELS } from "@/lib/constants";
 import { getStaffName, getYPName, getYPById } from "@/lib/seed-data";
 import { cn, formatDate, formatRelative } from "@/lib/utils";
 import { AriaQuickActions } from "@/components/intelligence/aria-quick-actions";
+import { AriaUsageBadge } from "@/components/aria/aria-usage-badge";
 import { StudioQuickActions } from "@/components/aria-studio/studio-quick-actions";
 import { PrintButton } from "@/components/common/print-button";
 import { SmartUploadButton } from "@/components/documents/smart-upload-button";
@@ -283,6 +284,14 @@ export default function IncidentDetailPage({ params }: { params: Promise<{ id: s
                 <Badge className={cn("text-[10px] rounded-full border", stat.bg, stat.color)}>
                   {stat.label}
                 </Badge>
+                {incident.aria_oversight_used && (
+                  <AriaUsageBadge
+                    ariaAssisted
+                    sourceTable="incidents"
+                    recordId={incident.id}
+                    size="sm"
+                  />
+                )}
               </div>
               <div className="text-xs text-[var(--cs-text-secondary)] mt-0.5">
                 {INCIDENT_TYPE_LABELS[incident.type]} · {formatDate(incident.date)} at {incident.time}

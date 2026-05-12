@@ -14,7 +14,7 @@ function loose(client: ReturnType<typeof createServerClient>): LooseSupabase {
   return client as unknown as LooseSupabase;
 }
 
-interface ActivityStats {
+export interface ActivityStats {
   totalRequests: number;
   totalOutputs: number;
   approvedOutputs: number;
@@ -27,6 +27,43 @@ interface ActivityStats {
   topUsers: Array<{ userId: string; count: number }>;
   approvalRate: number;
   avgConfidence: string;
+}
+
+// ── Pure computation helpers (extracted for testing) ────────────────────────
+
+export function computeTopEntries<T extends Record<string, string>>(
+  items: T[],
+  key: keyof T,
+  limit = 10,
+): Array<{ id: string; count: number }> {
+  const counts = new Map<string, number>();
+  for (const item of items) {
+    const val = item[key] as string;
+    counts.set(val, (counts.get(val) ?? 0) + 1);
+  }
+  return [...counts.entries()]
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, limit)
+    .map(([id, count]) => ({ id, count }));
+}
+
+export function computeApprovalRate(approved: number, rejected: number): number {
+  const decided = approved + rejected;
+  return decided > 0 ? Math.round((approved / decided) * 100) : 0;
+}
+
+export function computeAvgConfidence(
+  outputs: Array<{ confidence: string }>,
+): string {
+  const confMap: Record<string, number> = { low: 1, medium: 2, high: 3 };
+  const confValues = outputs
+    .map((o) => confMap[o.confidence])
+    .filter(Boolean);
+  const avgConf =
+    confValues.length > 0
+      ? confValues.reduce((a, b) => a + b, 0) / confValues.length
+      : 0;
+  return avgConf >= 2.5 ? "high" : avgConf >= 1.5 ? "medium" : "low";
 }
 
 export async function GET(req: NextRequest) {
@@ -155,7 +192,7 @@ export async function GET(req: NextRequest) {
   return NextResponse.json({ data: stats });
 }
 
-function getDemoStats(): ActivityStats {
+export function getDemoStats(): ActivityStats {
   return {
     totalRequests: 47,
     totalOutputs: 42,

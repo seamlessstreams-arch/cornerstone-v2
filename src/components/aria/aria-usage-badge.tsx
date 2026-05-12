@@ -166,3 +166,6 @@ export function AriaUsageBadge({
     </div>
   );
 }
+
+// Expose pure helpers for unit testing
+export const _testing = { formatCommandId, formatTimestamp, STATUS_LABELS };

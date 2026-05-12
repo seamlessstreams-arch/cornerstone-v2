@@ -20,6 +20,9 @@ import {
   REPORT_TYPE_LABELS,
   REPORT_STATUS_LABELS,
 } from "@/types/aria-reports";
+import { AriaActivityCard } from "@/components/aria/aria-activity-card";
+import { AriaPendingBanner } from "@/components/aria/aria-pending-banner";
+import { AriaHistoryTimeline } from "@/components/aria/aria-history-timeline";
 import {
   Sparkles,
   FileText,
@@ -133,6 +136,14 @@ export default function AriaDashboardPage() {
         </div>
       </div>
 
+      {/* ── Pending outputs banner ─────────────────────────────────────── */}
+      <AriaPendingBanner
+        actorUserId="staff_darren"
+        actorRole="registered_manager"
+        homeId={DEFAULT_HOME_ID}
+        className="mb-6"
+      />
+
       {/* ── Stats grid ───────────────────────────────────────────────────── */}
       {dashboard ? (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
@@ -227,6 +238,22 @@ export default function AriaDashboardPage() {
           ))}
         </div>
       )}
+
+      {/* ── ARIA Command Activity ─────────────────────────────────────────── */}
+      <div className="mb-8">
+        <h2 className="text-base font-semibold text-[var(--cs-navy)] mb-4">
+          Command Activity
+        </h2>
+        <AriaActivityCard homeId={DEFAULT_HOME_ID} days={30} />
+      </div>
+
+      {/* ── My ARIA History ──────────────────────────────────────────────── */}
+      <div className="mb-8">
+        <h2 className="text-base font-semibold text-[var(--cs-navy)] mb-4">
+          My Recent History
+        </h2>
+        <AriaHistoryTimeline userId="staff_darren" days={30} limit={8} />
+      </div>
 
       {/* ── Recent Reports ───────────────────────────────────────────────── */}
       <div className="mb-8">
