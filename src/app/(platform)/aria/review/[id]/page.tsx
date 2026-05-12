@@ -45,6 +45,9 @@ import {
   Link as LinkIcon,
   ChevronRight,
 } from "lucide-react";
+import { AriaChallengeModePanel } from "@/components/aria/aria-challenge-mode";
+import { AriaFeedbackWidget } from "@/components/aria/aria-feedback-widget";
+import { AriaContextLinker } from "@/components/aria/aria-context-linker";
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 
@@ -256,27 +259,37 @@ export default function AriaSuggestionDetailPage({
   const [rejectionReason, setRejectionReason] = useState("");
   const [showRejectForm, setShowRejectForm] = useState(false);
   const [actionTaken, setActionTaken] = useState<string | null>(null);
+  const [challengeAction, setChallengeAction] = useState<"approve" | "reject" | "dismiss" | "amend_and_approve" | "no_action_required" | null>(null);
 
   const risk = RISK_CONFIG[suggestion.risk_level] ?? RISK_CONFIG.medium;
   const confidence = CONFIDENCE_CONFIG[suggestion.confidence_level] ?? CONFIDENCE_CONFIG.medium;
 
   function handleApprove() {
     const isAmended = editedText !== suggestion.draft_text;
-    setActionTaken(isAmended ? "amended_and_approved" : "approved");
+    setChallengeAction(isAmended ? "amend_and_approve" : "approve");
   }
 
   function handleReject() {
     if (!rejectionReason.trim()) return;
-    setActionTaken("rejected");
+    setChallengeAction("reject");
     setShowRejectForm(false);
   }
 
   function handleNoAction() {
-    setActionTaken("no_action_required");
+    setChallengeAction("no_action_required");
   }
 
   function handleCommit() {
     setActionTaken("committed");
+  }
+
+  function handleChallengeComplete(justification: string) {
+    setActionTaken(challengeAction);
+    setChallengeAction(null);
+  }
+
+  function handleChallengeCancel() {
+    setChallengeAction(null);
   }
 
   const isReviewed = actionTaken !== null || suggestion.status !== "awaiting_review";
@@ -468,6 +481,31 @@ export default function AriaSuggestionDetailPage({
                 )}
               </CardContent>
             </Card>
+          )}
+
+          {/* Challenge mode panel */}
+          {challengeAction && (
+            <AriaChallengeModePanel
+              action={challengeAction}
+              outputId={suggestion.id}
+              outputSummary={suggestion.draft_text?.slice(0, 200)}
+              onComplete={handleChallengeComplete}
+              onCancel={handleChallengeCancel}
+            />
+          )}
+
+          {/* ARIA Context Links */}
+          <AriaContextLinker
+            sourceTable={suggestion.related_record_type + "s"}
+            recordId={suggestion.related_record_id}
+          />
+
+          {/* Feedback widget */}
+          {suggestion.draft_text && (
+            <AriaFeedbackWidget
+              outputId={suggestion.id}
+              commandId={suggestion.suggestion_type}
+            />
           )}
 
           {/* Commit action (post-approval) */}

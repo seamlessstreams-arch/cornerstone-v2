@@ -35,3 +35,4 @@ export { AriaNotificationPrefs } from "./aria-notification-prefs";
 export { AriaChallengeModePanel } from "./aria-challenge-mode";
 export { AriaSmartSummary } from "./aria-smart-summary";
 export { AriaWeeklyDigest } from "./aria-weekly-digest";
+export { AriaReg45Evidence } from "./aria-reg45-evidence";

@@ -28,6 +28,7 @@ import { AriaModuleCoverage } from "@/components/aria/aria-module-coverage";
 import { AriaProviderStatus } from "@/components/aria/aria-provider-status";
 import { AriaOnboardingCard } from "@/components/aria/aria-onboarding-card";
 import { AriaInsightCard } from "@/components/aria/aria-insight-card";
+import { AriaReg45Evidence } from "@/components/aria/aria-reg45-evidence";
 import {
   Sparkles,
   FileText,
@@ -356,6 +357,11 @@ export default function AriaDashboardPage() {
             ))}
           </div>
         )}
+      </div>
+
+      {/* ── Reg 45 Evidence ────────────────────────────────────────────── */}
+      <div className="mb-8">
+        <AriaReg45Evidence homeId={DEFAULT_HOME_ID} />
       </div>
 
       {/* ── Quick Actions ────────────────────────────────────────────────── */}
