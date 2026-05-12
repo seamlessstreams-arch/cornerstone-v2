@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { ChildExperienceTab } from "@/components/intelligence/child-experience-tab";
 import { AriaQuickActions } from "@/components/intelligence/aria-quick-actions";
+import { StudioQuickActions } from "@/components/aria-studio/studio-quick-actions";
 import { useYoungPerson } from "@/hooks/use-young-people";
 import { useCreateTrainingNeed } from "@/hooks/use-ri-learning";
 import { PrintButton } from "@/components/common/print-button";
@@ -1410,6 +1411,7 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
         {tab === "aria" && (
           <div className="space-y-5">
             <AriaQuickActions childId={yp.id} sourceType="young_person_profile" sourceId={yp.id} defaultOpen />
+            <StudioQuickActions childId={yp.id} childName={displayName} sourceType="young_person" defaultOpen />
             <ChildVoiceSummarySection childId={yp.id} childName={displayName} />
             <WhatChangedSection
               childName={displayName}

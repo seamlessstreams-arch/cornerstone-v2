@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo } from "react";
 import { AriaQuickActions } from "@/components/intelligence/aria-quick-actions";
+import { StudioQuickActions } from "@/components/aria-studio/studio-quick-actions";
 import { PageShell } from "@/components/layout/page-shell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -114,11 +115,17 @@ function HandoverChildCard({ cu }: { cu: HandoverChildUpdate }) {
         </div>
       )}
       {showAria && (
-        <AriaQuickActions
-          childId={cu.child_id}
-          sourceType="daily_log"
-          defaultOpen
-        />
+        <div className="space-y-2">
+          <AriaQuickActions
+            childId={cu.child_id}
+            sourceType="daily_log"
+            defaultOpen
+          />
+          <StudioQuickActions
+            childId={cu.child_id}
+            sourceType="handover"
+          />
+        </div>
       )}
     </div>
   );

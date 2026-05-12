@@ -20,6 +20,7 @@ import { useAuthContext } from "@/contexts/auth-context";
 import { useYoungPeople } from "@/hooks/use-young-people";
 import { useCreateTrainingNeed } from "@/hooks/use-ri-learning";
 import { AriaQuickActions } from "@/components/intelligence/aria-quick-actions";
+import { StudioQuickActions } from "@/components/aria-studio/studio-quick-actions";
 import { AriaCompose } from "@/components/aria/aria-compose";
 import { appRoleToAriaRole } from "@/lib/aria/aria-permissions";
 import { api } from "@/hooks/use-api";
@@ -311,12 +312,17 @@ function LogEntryCard({ entry }: { entry: DailyLogEntry }) {
 
             {/* Inline ARIA actions */}
             {showAria && (
-              <div className="mt-3">
+              <div className="mt-3 space-y-2">
                 <AriaQuickActions
                   childId={entry.child_id}
                   sourceType={entry.entry_type === "behaviour" ? "behaviour" : "daily_log"}
                   sourceId={entry.id}
                   defaultOpen
+                />
+                <StudioQuickActions
+                  childId={entry.child_id}
+                  sourceType="daily_log"
+                  sourceId={entry.id}
                 />
               </div>
             )}

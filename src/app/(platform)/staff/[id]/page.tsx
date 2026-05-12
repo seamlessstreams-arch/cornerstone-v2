@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Avatar } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AriaPanel } from "@/components/aria/aria-panel";
+import { StudioQuickActions } from "@/components/aria-studio/studio-quick-actions";
 import { useStaffMember } from "@/hooks/use-staff";
 import { useTrainingNeeds } from "@/hooks/use-ri-learning";
 import { useAuthContext } from "@/contexts/auth-context";
@@ -191,14 +192,17 @@ export default function StaffProfilePage({ params }: { params: Promise<{ id: str
 
         {/* ARIA Development Summary Panel */}
         {showAria && (
-          <AriaPanel
-            mode="staff_development_summary"
-            pageContext="Staff development profile"
-            recordType="staff_development"
-            sourceContent={ariaContext}
-            userRole="registered_manager"
-            defaultStyle="concise_manager"
-          />
+          <>
+            <AriaPanel
+              mode="staff_development_summary"
+              pageContext="Staff development profile"
+              recordType="staff_development"
+              sourceContent={ariaContext}
+              userRole="registered_manager"
+              defaultStyle="concise_manager"
+            />
+            <StudioQuickActions sourceType="staff" />
+          </>
         )}
 
         {/* Profile header */}

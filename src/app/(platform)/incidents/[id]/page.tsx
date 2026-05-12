@@ -27,6 +27,7 @@ import { INCIDENT_TYPE_LABELS } from "@/lib/constants";
 import { getStaffName, getYPName, getYPById } from "@/lib/seed-data";
 import { cn, formatDate, formatRelative } from "@/lib/utils";
 import { AriaQuickActions } from "@/components/intelligence/aria-quick-actions";
+import { StudioQuickActions } from "@/components/aria-studio/studio-quick-actions";
 import { PrintButton } from "@/components/common/print-button";
 import { SmartUploadButton } from "@/components/documents/smart-upload-button";
 import { useDocumentIntelligence } from "@/hooks/use-doc-intelligence";
@@ -612,6 +613,11 @@ export default function IncidentDetailPage({ params }: { params: Promise<{ id: s
 
         {/* ── ARIA Quick Actions ────────────────────────────────────────────── */}
         <AriaQuickActions
+          childId={incident.child_id}
+          sourceType="incident"
+          sourceId={incident.id}
+        />
+        <StudioQuickActions
           childId={incident.child_id}
           sourceType="incident"
           sourceId={incident.id}
