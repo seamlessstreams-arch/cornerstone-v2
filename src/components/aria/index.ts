@@ -47,3 +47,4 @@ export { AriaRegulationChecker } from "./aria-regulation-checker";
 export { AriaKeyWorkPlanner } from "./aria-key-work-planner";
 export { AriaDocumentIntelligence } from "./aria-document-intelligence";
 export { AriaWriteToChild } from "./aria-write-to-child";
+export { AriaOversightQuality } from "./aria-oversight-quality";

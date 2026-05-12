@@ -16,6 +16,7 @@ import { Avatar } from "@/components/ui/avatar";
 import { AriaPanel } from "@/components/aria/aria-panel";
 import { AriaUsageBadge } from "@/components/aria/aria-usage-badge";
 import { AriaContextLinker } from "@/components/aria/aria-context-linker";
+import { AriaOversightQuality } from "@/components/aria/aria-oversight-quality";
 import {
   useSupervision, useUpdateSupervision,
 } from "@/hooks/use-supervision";
@@ -387,6 +388,16 @@ export default function SupervisionDetailPage({
                   <div className="rounded-xl bg-slate-50 border border-[var(--cs-border-subtle)] p-4 text-sm text-[var(--cs-text-muted)] italic">
                     No discussion points recorded for this supervision.
                   </div>
+                )}
+
+                {/* ARIA Oversight Quality Check */}
+                {sup.discussion_points && (
+                  <AriaOversightQuality
+                    oversightText={sup.discussion_points}
+                    recordType="general"
+                    recordReference={`Supervision — ${formatDate(sup.actual_date ?? sup.scheduled_date)}`}
+                    className="mt-3"
+                  />
                 )}
               </CardContent>
             </Card>

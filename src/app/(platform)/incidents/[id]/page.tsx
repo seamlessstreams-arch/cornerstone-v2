@@ -30,6 +30,7 @@ import { AriaQuickActions } from "@/components/intelligence/aria-quick-actions";
 import { AriaUsageBadge } from "@/components/aria/aria-usage-badge";
 import { AriaContextLinker } from "@/components/aria/aria-context-linker";
 import { AriaWriteToChild } from "@/components/aria/aria-write-to-child";
+import { AriaOversightQuality } from "@/components/aria/aria-oversight-quality";
 import { StudioQuickActions } from "@/components/aria-studio/studio-quick-actions";
 import { PrintButton } from "@/components/common/print-button";
 import { SmartUploadButton } from "@/components/documents/smart-upload-button";
@@ -475,6 +476,16 @@ export default function IncidentDetailPage({ params }: { params: Promise<{ id: s
               {incident.oversight_at && <span className="ml-1">· {formatRelative(incident.oversight_at.slice(0, 10))}</span>}
             </div>
             <p className="text-sm text-[var(--cs-text-secondary)] leading-relaxed whitespace-pre-line">{incident.oversight_note}</p>
+
+            {/* ARIA Oversight Quality Check */}
+            {incident.oversight_note && (
+              <AriaOversightQuality
+                oversightText={incident.oversight_note}
+                recordType="incident"
+                recordReference={incident.reference}
+                className="mt-3"
+              />
+            )}
           </div>
         )}
 

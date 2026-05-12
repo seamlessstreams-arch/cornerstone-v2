@@ -30,6 +30,7 @@ import { AriaPanel } from "@/components/aria/aria-panel";
 import { AriaUsageBadge } from "@/components/aria/aria-usage-badge";
 import { AriaContextLinker } from "@/components/aria/aria-context-linker";
 import { AriaWriteToChild } from "@/components/aria/aria-write-to-child";
+import { AriaOversightQuality } from "@/components/aria/aria-oversight-quality";
 import { PrintButton } from "@/components/common/print-button";
 import { SmartUploadButton } from "@/components/documents/smart-upload-button";
 import { useDocumentIntelligence } from "@/hooks/use-doc-intelligence";
@@ -454,6 +455,16 @@ export default function SafeguardingConcernPage({ params }: { params: Promise<{ 
               {concern.oversight_at && <span className="ml-1">· {formatRelative(concern.oversight_at.slice(0, 10))}</span>}
             </div>
             <p className="text-sm text-[var(--cs-text-secondary)] leading-relaxed whitespace-pre-line">{concern.oversight_note}</p>
+
+            {/* ARIA Oversight Quality Check */}
+            {concern.oversight_note && (
+              <AriaOversightQuality
+                oversightText={concern.oversight_note}
+                recordType="safeguarding"
+                recordReference={concern.reference}
+                className="mt-3"
+              />
+            )}
           </div>
         )}
 
