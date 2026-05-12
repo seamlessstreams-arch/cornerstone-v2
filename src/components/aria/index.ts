@@ -28,3 +28,5 @@ export { AriaCompose } from "./aria-compose";
 export { AriaDrawer } from "./aria-drawer";
 export { AriaOnboardingCard } from "./aria-onboarding-card";
 export { AriaFeedbackWidget } from "./aria-feedback-widget";
+export { AriaInsightCard } from "./aria-insight-card";
+export { AriaFeedbackStats } from "./aria-feedback-stats";

@@ -27,6 +27,7 @@ import { AriaConfidenceBreakdown } from "@/components/aria/aria-confidence-break
 import { AriaModuleCoverage } from "@/components/aria/aria-module-coverage";
 import { AriaProviderStatus } from "@/components/aria/aria-provider-status";
 import { AriaOnboardingCard } from "@/components/aria/aria-onboarding-card";
+import { AriaInsightCard } from "@/components/aria/aria-insight-card";
 import {
   Sparkles,
   FileText,
@@ -255,6 +256,14 @@ export default function AriaDashboardPage() {
           Command Activity
         </h2>
         <AriaActivityCard homeId={DEFAULT_HOME_ID} days={30} />
+      </div>
+
+      {/* ── ARIA Proactive Insights ──────────────────────────────────────── */}
+      <div className="mb-8">
+        <h2 className="text-base font-semibold text-[var(--cs-navy)] mb-4">
+          Proactive Insights
+        </h2>
+        <AriaInsightCard homeId={DEFAULT_HOME_ID} limit={5} />
       </div>
 
       {/* ── Confidence & Module Coverage ─────────────────────────────────── */}
