@@ -41,6 +41,25 @@ import {
   Search,
 } from "lucide-react";
 import { AriaGuardrailBanner } from "./aria-guardrail-banner";
+import { AriaTaskCreator } from "./aria-task-creator";
+
+// Commands that can create tasks — shown the task creator on result
+const TASK_CREATING_COMMANDS = new Set<string>([
+  "extract_actions",
+  "create_task_list",
+  "suggest_incident_follow_up_tasks",
+  "create_management_action_plan",
+  "create_service_improvement_plan",
+  "create_onboarding_tasks",
+  "create_audit_action_plan",
+  "create_delegated_audit_tasks",
+  "create_task_from_text",
+  "create_task_from_incident",
+  "create_task_from_audit",
+  "create_task_from_oversight",
+  "create_calendar_follow_up_tasks",
+  "extract_document_actions",
+]);
 
 // ── Command metadata for the UI ────────────────────────────────────────────
 
@@ -451,6 +470,16 @@ export function AriaCommandPanel({
                   <AlertTriangle className="h-3 w-3" />
                   AI provider not configured. Showing template output.
                 </div>
+              )}
+
+              {/* Task creator for task-generating commands */}
+              {selectedCommand && TASK_CREATING_COMMANDS.has(selectedCommand) && aria.result.generatedText && (
+                <AriaTaskCreator
+                  generatedText={aria.result.generatedText}
+                  outputId={aria.result.outputId}
+                  homeId={homeId}
+                  linkedChildId={childId}
+                />
               )}
             </div>
           ) : (
