@@ -1,0 +1,618 @@
+"use client";
+
+// ══════════════════════════════════════════════════════════════════════════════
+// OPERATIONS DASHBOARD — Manager+ governance command centre
+// Unified view: task overview, workflow status, oversight gaps, evidence
+// coverage, ARIA recommendations, and inspection readiness.
+// ══════════════════════════════════════════════════════════════════════════════
+
+import React, { useState } from "react";
+import { PageShell } from "@/components/layout/page-shell";
+import {
+  Sparkles, ClipboardList, GitBranch, Shield, FileCheck2,
+  Eye, BarChart3, AlertTriangle, CheckCircle2, Clock,
+  ArrowRight, ChevronRight, TrendingUp, Activity,
+  BookOpen, Layers, Target, Zap,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
+import {
+  AriaPatternAlert,
+  AriaDailyIntelligence,
+} from "@/components/aria";
+
+// ── Types ───────────────────────────────────────────────────────────────────
+
+type TabId = "overview" | "tasks" | "workflows" | "evidence" | "oversight" | "readiness";
+
+const TABS: { id: TabId; label: string; icon: React.ElementType }[] = [
+  { id: "overview", label: "Overview", icon: BarChart3 },
+  { id: "tasks", label: "Tasks", icon: ClipboardList },
+  { id: "workflows", label: "Workflows", icon: GitBranch },
+  { id: "evidence", label: "Evidence", icon: FileCheck2 },
+  { id: "oversight", label: "Oversight", icon: Eye },
+  { id: "readiness", label: "Inspection Readiness", icon: Shield },
+];
+
+// ── Demo stats ──────────────────────────────────────────────────────────────
+
+const DEMO_TASK_STATS = {
+  total: 47,
+  overdue: 5,
+  due_today: 8,
+  in_progress: 12,
+  awaiting_sign_off: 3,
+  completed_this_week: 18,
+  unassigned: 2,
+  critical: 1,
+};
+
+const DEMO_WORKFLOW_STATS = {
+  active: 4,
+  completed_this_month: 7,
+  blocked: 1,
+  templates: [
+    { code: "new_placement", title: "New Placement Admission", active: 1, progress: 62 },
+    { code: "incident_response", title: "Incident Response", active: 2, progress: 83 },
+    { code: "reg44_report", title: "Reg 44 Monthly Visit", active: 1, progress: 33 },
+    { code: "staff_onboarding", title: "Staff Onboarding", active: 0, progress: 0 },
+  ],
+};
+
+const DEMO_OVERSIGHT_STATS = {
+  total_this_month: 24,
+  avg_quality_score: 7.2,
+  needing_oversight: 6,
+  by_type: [
+    { type: "incident", count: 8, needing: 2 },
+    { type: "safeguarding", count: 4, needing: 1 },
+    { type: "missing_episode", count: 3, needing: 1 },
+    { type: "complaint", count: 2, needing: 0 },
+    { type: "restraint", count: 3, needing: 1 },
+    { type: "daily_log", count: 4, needing: 1 },
+  ],
+};
+
+const DEMO_READINESS = {
+  overall: 72,
+  grade: "Good" as string,
+  modules: [
+    { label: "Safeguarding", score: 85, colour: "bg-emerald-500" },
+    { label: "Daily Recording", score: 78, colour: "bg-blue-500" },
+    { label: "Management Oversight", score: 68, colour: "bg-amber-500" },
+    { label: "Young People Outcomes", score: 74, colour: "bg-sky-500" },
+    { label: "Staffing & Training", score: 82, colour: "bg-violet-500" },
+    { label: "Medication", score: 90, colour: "bg-emerald-500" },
+    { label: "Compliance", score: 55, colour: "bg-orange-500" },
+    { label: "Contact & Family", score: 65, colour: "bg-amber-500" },
+  ],
+};
+
+// ── Stat card ───────────────────────────────────────────────────────────────
+
+function StatCard({ label, value, icon: Icon, colour, sub }: {
+  label: string; value: number | string; icon: React.ElementType;
+  colour: string; sub?: string;
+}) {
+  return (
+    <div className="rounded-xl border border-[var(--cs-border)] bg-white p-4 flex items-start gap-3">
+      <div className={cn("flex items-center justify-center w-9 h-9 rounded-lg shrink-0", colour)}>
+        <Icon className="h-4.5 w-4.5 text-white" />
+      </div>
+      <div>
+        <p className="text-2xl font-bold text-[var(--cs-navy)]">{value}</p>
+        <p className="text-xs text-[var(--cs-text-muted)]">{label}</p>
+        {sub && <p className="text-[10px] text-[var(--cs-text-muted)] mt-0.5">{sub}</p>}
+      </div>
+    </div>
+  );
+}
+
+// ── Overview tab ────────────────────────────────────────────────────────────
+
+function OverviewTab() {
+  return (
+    <div className="space-y-6">
+      {/* ARIA Intelligence */}
+      <AriaDailyIntelligence />
+
+      {/* Key Stats Grid */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <StatCard label="Active Tasks" value={DEMO_TASK_STATS.total} icon={ClipboardList} colour="bg-blue-500" sub={`${DEMO_TASK_STATS.overdue} overdue`} />
+        <StatCard label="Due Today" value={DEMO_TASK_STATS.due_today} icon={Clock} colour="bg-amber-500" />
+        <StatCard label="Active Workflows" value={DEMO_WORKFLOW_STATS.active} icon={GitBranch} colour="bg-purple-500" sub={`${DEMO_WORKFLOW_STATS.blocked} blocked`} />
+        <StatCard label="Needing Oversight" value={DEMO_OVERSIGHT_STATS.needing_oversight} icon={Eye} colour="bg-red-500" />
+      </div>
+
+      {/* ARIA Pattern Intelligence */}
+      <AriaPatternAlert scope="home" className="mt-2" />
+
+      {/* Quick Workflow Status */}
+      <div className="rounded-xl border border-[var(--cs-border)] bg-white overflow-hidden">
+        <div className="px-4 py-3 border-b border-[var(--cs-border-subtle)] flex items-center gap-2">
+          <GitBranch className="h-4 w-4 text-purple-500" />
+          <h3 className="text-sm font-semibold text-[var(--cs-navy)]">Active Workflows</h3>
+        </div>
+        <div className="divide-y divide-[var(--cs-border-subtle)]">
+          {DEMO_WORKFLOW_STATS.templates.filter((t) => t.active > 0).map((t) => (
+            <div key={t.code} className="px-4 py-3 flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-[var(--cs-navy)]">{t.title}</p>
+                <p className="text-xs text-[var(--cs-text-muted)]">{t.active} active</p>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-24 h-2 rounded-full bg-slate-100 overflow-hidden">
+                  <div
+                    className="h-full rounded-full bg-purple-500 transition-all"
+                    style={{ width: `${t.progress}%` }}
+                  />
+                </div>
+                <span className="text-xs text-[var(--cs-text-muted)] w-8 text-right">{t.progress}%</span>
+                <ChevronRight className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Inspection Readiness Summary */}
+      <div className="rounded-xl border border-[var(--cs-border)] bg-white overflow-hidden">
+        <div className="px-4 py-3 border-b border-[var(--cs-border-subtle)] flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Shield className="h-4 w-4 text-emerald-600" />
+            <h3 className="text-sm font-semibold text-[var(--cs-navy)]">Inspection Readiness</h3>
+          </div>
+          <span className={cn(
+            "text-xs font-semibold px-2 py-0.5 rounded-full",
+            DEMO_READINESS.grade === "Outstanding" ? "bg-emerald-100 text-emerald-700" :
+            DEMO_READINESS.grade === "Good" ? "bg-blue-100 text-blue-700" :
+            "bg-amber-100 text-amber-700"
+          )}>
+            {DEMO_READINESS.grade} — {DEMO_READINESS.overall}%
+          </span>
+        </div>
+        <div className="px-4 py-3 space-y-2">
+          {DEMO_READINESS.modules.map((m) => (
+            <div key={m.label} className="flex items-center gap-3">
+              <span className="text-xs text-[var(--cs-text-secondary)] w-36 shrink-0">{m.label}</span>
+              <div className="flex-1 h-2 rounded-full bg-slate-100 overflow-hidden">
+                <div
+                  className={cn("h-full rounded-full transition-all", m.colour)}
+                  style={{ width: `${m.score}%` }}
+                />
+              </div>
+              <span className="text-xs text-[var(--cs-text-muted)] w-8 text-right">{m.score}%</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Tasks tab ───────────────────────────────────────────────────────────────
+
+function TasksTab() {
+  const PRIORITY_COLOURS: Record<string, string> = {
+    critical: "bg-red-100 text-red-700 border-red-200",
+    urgent: "bg-red-50 text-red-600 border-red-200",
+    high: "bg-orange-50 text-orange-600 border-orange-200",
+    medium: "bg-blue-50 text-blue-600 border-blue-200",
+    low: "bg-slate-50 text-slate-600 border-slate-200",
+  };
+
+  const DEMO_TASKS = [
+    { ref: "SFG-A1K001", title: "Review safeguarding concern — Alex W", category: "safeguarding", priority: "urgent", status: "in_progress", due: "Today", assigned: "Sarah M", riskScore: 72 },
+    { ref: "CMP-B2L002", title: "Update Reg 45 evidence folder", category: "compliance", priority: "high", status: "not_started", due: "Tomorrow", assigned: "Darren L", riskScore: 55 },
+    { ref: "MED-C3M003", title: "Medication stock check — monthly", category: "medication", priority: "medium", status: "awaiting_sign_off", due: "14 May", assigned: "James H", riskScore: 30 },
+    { ref: "TRN-D4N004", title: "Book restraint refresher training", category: "training", priority: "high", status: "overdue", due: "10 May", assigned: "Unassigned", riskScore: 68 },
+    { ref: "ARA-E5O005", title: "ARIA: Pattern detected — weekend incident increase", category: "aria_generated", priority: "high", status: "not_started", due: "15 May", assigned: "Darren L", riskScore: 61 },
+  ];
+
+  return (
+    <div className="space-y-4">
+      {/* Task Stats Bar */}
+      <div className="grid grid-cols-3 md:grid-cols-7 gap-2">
+        {[
+          { label: "Total", value: DEMO_TASK_STATS.total, colour: "text-[var(--cs-navy)]" },
+          { label: "Overdue", value: DEMO_TASK_STATS.overdue, colour: "text-red-600" },
+          { label: "Due Today", value: DEMO_TASK_STATS.due_today, colour: "text-amber-600" },
+          { label: "In Progress", value: DEMO_TASK_STATS.in_progress, colour: "text-blue-600" },
+          { label: "Sign Off", value: DEMO_TASK_STATS.awaiting_sign_off, colour: "text-purple-600" },
+          { label: "Done (7d)", value: DEMO_TASK_STATS.completed_this_week, colour: "text-emerald-600" },
+          { label: "Unassigned", value: DEMO_TASK_STATS.unassigned, colour: "text-orange-600" },
+        ].map((s) => (
+          <div key={s.label} className="text-center px-2 py-2 rounded-lg bg-white border border-[var(--cs-border)]">
+            <p className={cn("text-lg font-bold", s.colour)}>{s.value}</p>
+            <p className="text-[10px] text-[var(--cs-text-muted)]">{s.label}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Task List */}
+      <div className="rounded-xl border border-[var(--cs-border)] bg-white overflow-hidden">
+        <div className="px-4 py-3 border-b border-[var(--cs-border-subtle)] flex items-center justify-between">
+          <h3 className="text-sm font-semibold text-[var(--cs-navy)]">Task Explorer</h3>
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] text-[var(--cs-text-muted)] bg-slate-100 px-2 py-0.5 rounded-full">
+              Sorted by ARIA risk score
+            </span>
+          </div>
+        </div>
+        <div className="divide-y divide-[var(--cs-border-subtle)]">
+          {DEMO_TASKS.map((task) => (
+            <div key={task.ref} className="px-4 py-3 hover:bg-slate-50/50 transition-colors">
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="text-[10px] font-mono text-[var(--cs-text-muted)]">{task.ref}</span>
+                    <span className={cn("text-[10px] font-semibold px-1.5 py-0.5 rounded-full border", PRIORITY_COLOURS[task.priority])}>
+                      {task.priority}
+                    </span>
+                    {task.category === "aria_generated" && (
+                      <span className="flex items-center gap-0.5 text-[10px] text-[var(--cs-aria-gold)]">
+                        <Sparkles className="h-2.5 w-2.5" /> ARIA
+                      </span>
+                    )}
+                    {task.status === "overdue" && (
+                      <span className="flex items-center gap-0.5 text-[10px] text-red-600 font-semibold">
+                        <AlertTriangle className="h-2.5 w-2.5" /> Overdue
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-sm font-medium text-[var(--cs-navy)] mt-0.5">{task.title}</p>
+                  <div className="flex items-center gap-3 mt-1">
+                    <span className="text-[10px] text-[var(--cs-text-muted)]">Due: {task.due}</span>
+                    <span className="text-[10px] text-[var(--cs-text-muted)]">{task.assigned}</span>
+                  </div>
+                </div>
+                {/* ARIA Risk Score */}
+                <div className="flex flex-col items-center shrink-0">
+                  <div className={cn(
+                    "w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold border-2",
+                    task.riskScore >= 70 ? "border-red-300 bg-red-50 text-red-700" :
+                    task.riskScore >= 50 ? "border-orange-300 bg-orange-50 text-orange-700" :
+                    task.riskScore >= 25 ? "border-amber-300 bg-amber-50 text-amber-700" :
+                    "border-emerald-300 bg-emerald-50 text-emerald-700"
+                  )}>
+                    {task.riskScore}
+                  </div>
+                  <span className="text-[8px] text-[var(--cs-text-muted)] mt-0.5">Risk</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Workflows tab ───────────────────────────────────────────────────────────
+
+function WorkflowsTab() {
+  const DEMO_ACTIVE = [
+    {
+      id: "w1", template: "New Placement Admission", child: "Alex W",
+      status: "in_progress", step: 5, totalSteps: 8, progress: 62,
+      currentStep: "Staff Briefing", initiatedBy: "Darren L", date: "8 May 2026",
+    },
+    {
+      id: "w2", template: "Incident Response", child: "Jordan M",
+      status: "in_progress", step: 4, totalSteps: 6, progress: 67,
+      currentStep: "Management Oversight", initiatedBy: "Sarah M", date: "11 May 2026",
+    },
+    {
+      id: "w3", template: "Incident Response", child: "Casey T",
+      status: "in_progress", step: 6, totalSteps: 6, progress: 100,
+      currentStep: "Review & Learning", initiatedBy: "Darren L", date: "9 May 2026",
+    },
+    {
+      id: "w4", template: "Reg 44 Monthly Visit", child: null,
+      status: "in_progress", step: 2, totalSteps: 6, progress: 33,
+      currentStep: "Young People Consultation", initiatedBy: "Darren L", date: "1 May 2026",
+    },
+  ];
+
+  return (
+    <div className="space-y-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <StatCard label="Active Workflows" value={4} icon={GitBranch} colour="bg-purple-500" />
+        <StatCard label="Completed (30d)" value={7} icon={CheckCircle2} colour="bg-emerald-500" />
+        <StatCard label="Blocked" value={1} icon={AlertTriangle} colour="bg-red-500" />
+        <StatCard label="Templates" value={7} icon={BookOpen} colour="bg-sky-500" />
+      </div>
+
+      <div className="rounded-xl border border-[var(--cs-border)] bg-white overflow-hidden">
+        <div className="px-4 py-3 border-b border-[var(--cs-border-subtle)]">
+          <h3 className="text-sm font-semibold text-[var(--cs-navy)]">Active Workflows</h3>
+        </div>
+        <div className="divide-y divide-[var(--cs-border-subtle)]">
+          {DEMO_ACTIVE.map((w) => (
+            <div key={w.id} className="px-4 py-3">
+              <div className="flex items-start justify-between">
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-medium text-[var(--cs-navy)]">{w.template}</span>
+                    {w.child && (
+                      <span className="text-xs text-[var(--cs-text-muted)] bg-slate-100 px-1.5 py-0.5 rounded-full">
+                        {w.child}
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-xs text-[var(--cs-text-muted)] mt-0.5">
+                    Step {w.step}/{w.totalSteps}: {w.currentStep}
+                  </p>
+                  <p className="text-[10px] text-[var(--cs-text-muted)] mt-0.5">
+                    Started {w.date} by {w.initiatedBy}
+                  </p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-20 h-2 rounded-full bg-slate-100 overflow-hidden">
+                    <div
+                      className={cn(
+                        "h-full rounded-full transition-all",
+                        w.progress >= 100 ? "bg-emerald-500" :
+                        w.progress >= 50 ? "bg-purple-500" : "bg-amber-500"
+                      )}
+                      style={{ width: `${Math.min(w.progress, 100)}%` }}
+                    />
+                  </div>
+                  <span className="text-xs font-medium text-[var(--cs-text-muted)] w-8 text-right">{w.progress}%</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Available Templates */}
+      <div className="rounded-xl border border-[var(--cs-border)] bg-white overflow-hidden">
+        <div className="px-4 py-3 border-b border-[var(--cs-border-subtle)]">
+          <h3 className="text-sm font-semibold text-[var(--cs-navy)]">Workflow Templates</h3>
+          <p className="text-[10px] text-[var(--cs-text-muted)]">Pre-built regulated care processes</p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-[var(--cs-border-subtle)]">
+          {[
+            { code: "new_placement", label: "New Placement", steps: 8, icon: Target, colour: "text-purple-500" },
+            { code: "incident_response", label: "Incident Response", steps: 6, icon: AlertTriangle, colour: "text-red-500" },
+            { code: "missing_episode", label: "Missing Episode", steps: 7, icon: Activity, colour: "text-orange-500" },
+            { code: "reg44_report", label: "Reg 44 Visit", steps: 6, icon: BookOpen, colour: "text-sky-500" },
+            { code: "reg45_review", label: "Reg 45 Review", steps: 7, icon: FileCheck2, colour: "text-emerald-500" },
+            { code: "staff_onboarding", label: "Staff Onboarding", steps: 7, icon: Layers, colour: "text-violet-500" },
+            { code: "placement_ending", label: "Placement Ending", steps: 5, icon: ArrowRight, colour: "text-amber-500" },
+          ].map((t) => (
+            <div key={t.code} className="px-4 py-3 flex items-center gap-3 hover:bg-slate-50/50 transition-colors cursor-pointer">
+              <t.icon className={cn("h-4 w-4 shrink-0", t.colour)} />
+              <div className="flex-1">
+                <p className="text-sm font-medium text-[var(--cs-navy)]">{t.label}</p>
+                <p className="text-[10px] text-[var(--cs-text-muted)]">{t.steps} steps</p>
+              </div>
+              <Zap className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Evidence tab ────────────────────────────────────────────────────────────
+
+function EvidenceTab() {
+  const EVIDENCE_TYPES = [
+    { type: "incident_report", count: 42, colour: "bg-red-500" },
+    { type: "daily_log", count: 180, colour: "bg-blue-500" },
+    { type: "form_submission", count: 67, colour: "bg-purple-500" },
+    { type: "meeting_minutes", count: 23, colour: "bg-sky-500" },
+    { type: "training_certificate", count: 34, colour: "bg-emerald-500" },
+    { type: "policy", count: 18, colour: "bg-amber-500" },
+    { type: "risk_assessment", count: 15, colour: "bg-orange-500" },
+    { type: "care_plan", count: 8, colour: "bg-violet-500" },
+    { type: "correspondence", count: 56, colour: "bg-slate-500" },
+  ];
+
+  return (
+    <div className="space-y-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <StatCard label="Total Evidence" value={443} icon={FileCheck2} colour="bg-sky-500" />
+        <StatCard label="Verified" value={312} icon={CheckCircle2} colour="bg-emerald-500" />
+        <StatCard label="Unverified" value={131} icon={Clock} colour="bg-amber-500" />
+        <StatCard label="Linked" value={289} icon={TrendingUp} colour="bg-purple-500" />
+      </div>
+
+      {/* Evidence by Type */}
+      <div className="rounded-xl border border-[var(--cs-border)] bg-white overflow-hidden">
+        <div className="px-4 py-3 border-b border-[var(--cs-border-subtle)]">
+          <h3 className="text-sm font-semibold text-[var(--cs-navy)]">Evidence by Type</h3>
+        </div>
+        <div className="px-4 py-3 space-y-2">
+          {EVIDENCE_TYPES.map((e) => (
+            <div key={e.type} className="flex items-center gap-3">
+              <span className="text-xs text-[var(--cs-text-secondary)] w-36 shrink-0 capitalize">
+                {e.type.replace(/_/g, " ")}
+              </span>
+              <div className="flex-1 h-2 rounded-full bg-slate-100 overflow-hidden">
+                <div
+                  className={cn("h-full rounded-full transition-all", e.colour)}
+                  style={{ width: `${Math.min((e.count / 200) * 100, 100)}%` }}
+                />
+              </div>
+              <span className="text-xs font-medium text-[var(--cs-text-muted)] w-8 text-right">{e.count}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Oversight tab ───────────────────────────────────────────────────────────
+
+function OversightTab() {
+  return (
+    <div className="space-y-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <StatCard label="This Month" value={DEMO_OVERSIGHT_STATS.total_this_month} icon={Eye} colour="bg-purple-500" />
+        <StatCard label="Avg Quality" value={`${DEMO_OVERSIGHT_STATS.avg_quality_score}/10`} icon={TrendingUp} colour="bg-emerald-500" />
+        <StatCard label="Needing Oversight" value={DEMO_OVERSIGHT_STATS.needing_oversight} icon={AlertTriangle} colour="bg-red-500" />
+        <StatCard label="ARIA Assisted" value="67%" icon={Sparkles} colour="bg-[var(--cs-aria-gold)]" />
+      </div>
+
+      {/* Oversight by record type */}
+      <div className="rounded-xl border border-[var(--cs-border)] bg-white overflow-hidden">
+        <div className="px-4 py-3 border-b border-[var(--cs-border-subtle)]">
+          <h3 className="text-sm font-semibold text-[var(--cs-navy)]">Oversight Coverage by Record Type</h3>
+        </div>
+        <div className="divide-y divide-[var(--cs-border-subtle)]">
+          {DEMO_OVERSIGHT_STATS.by_type.map((r) => (
+            <div key={r.type} className="px-4 py-3 flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-[var(--cs-navy)] capitalize">{r.type.replace(/_/g, " ")}</p>
+                <p className="text-xs text-[var(--cs-text-muted)]">{r.count} oversight notes this month</p>
+              </div>
+              <div className="flex items-center gap-2">
+                {r.needing > 0 ? (
+                  <span className="flex items-center gap-1 text-xs text-red-600 font-semibold bg-red-50 px-2 py-0.5 rounded-full">
+                    <AlertTriangle className="h-3 w-3" /> {r.needing} needing
+                  </span>
+                ) : (
+                  <span className="flex items-center gap-1 text-xs text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">
+                    <CheckCircle2 className="h-3 w-3" /> All covered
+                  </span>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Readiness tab ───────────────────────────────────────────────────────────
+
+function ReadinessTab() {
+  return (
+    <div className="space-y-4">
+      {/* Overall Score */}
+      <div className="rounded-xl border border-[var(--cs-border)] bg-white p-6 text-center">
+        <div className="inline-flex items-center justify-center w-24 h-24 rounded-full border-4 border-blue-200 bg-blue-50 mb-3">
+          <span className="text-3xl font-bold text-blue-700">{DEMO_READINESS.overall}%</span>
+        </div>
+        <p className="text-lg font-semibold text-[var(--cs-navy)]">Inspection Readiness: {DEMO_READINESS.grade}</p>
+        <p className="text-xs text-[var(--cs-text-muted)] mt-1">
+          Based on evidence coverage, oversight quality, compliance status, and documentation completeness
+        </p>
+      </div>
+
+      {/* Module Breakdown */}
+      <div className="rounded-xl border border-[var(--cs-border)] bg-white overflow-hidden">
+        <div className="px-4 py-3 border-b border-[var(--cs-border-subtle)]">
+          <h3 className="text-sm font-semibold text-[var(--cs-navy)]">Module Readiness</h3>
+        </div>
+        <div className="px-4 py-3 space-y-3">
+          {DEMO_READINESS.modules.map((m) => (
+            <div key={m.label}>
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-xs font-medium text-[var(--cs-text-secondary)]">{m.label}</span>
+                <span className={cn(
+                  "text-xs font-semibold",
+                  m.score >= 80 ? "text-emerald-600" :
+                  m.score >= 60 ? "text-amber-600" : "text-red-600"
+                )}>
+                  {m.score}%
+                </span>
+              </div>
+              <div className="w-full h-3 rounded-full bg-slate-100 overflow-hidden">
+                <div
+                  className={cn("h-full rounded-full transition-all", m.colour)}
+                  style={{ width: `${m.score}%` }}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Regulation Coverage */}
+      <div className="rounded-xl border border-[var(--cs-border)] bg-white overflow-hidden">
+        <div className="px-4 py-3 border-b border-[var(--cs-border-subtle)]">
+          <h3 className="text-sm font-semibold text-[var(--cs-navy)]">Regulatory Framework Coverage</h3>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 p-4">
+          {[
+            { framework: "CHR 2015", coverage: 78, total: 12 },
+            { framework: "SCCIF", coverage: 72, total: 3 },
+            { framework: "Reg 44", coverage: 85, total: 1 },
+            { framework: "Reg 45", coverage: 60, total: 1 },
+            { framework: "Annex A", coverage: 45, total: 8 },
+            { framework: "KCSIE", coverage: 70, total: 5 },
+          ].map((f) => (
+            <div key={f.framework} className="rounded-lg border border-[var(--cs-border)] p-3 text-center">
+              <p className="text-xs font-semibold text-[var(--cs-navy)]">{f.framework}</p>
+              <p className={cn(
+                "text-2xl font-bold mt-1",
+                f.coverage >= 80 ? "text-emerald-600" :
+                f.coverage >= 60 ? "text-amber-600" : "text-red-600"
+              )}>
+                {f.coverage}%
+              </p>
+              <p className="text-[10px] text-[var(--cs-text-muted)]">{f.total} requirements</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ARIA note */}
+      <div className="rounded-xl border border-[var(--cs-border)] bg-[var(--cs-aria-gold-bg)] p-3 flex items-start gap-2">
+        <Sparkles className="h-4 w-4 text-[var(--cs-aria-gold)] shrink-0 mt-0.5" />
+        <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed">
+          ARIA analyses your evidence coverage against each regulation and generates gap recommendations. Run a full scan to identify exactly which evidence is missing for each requirement.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+// ── Main page ───────────────────────────────────────────────────────────────
+
+export default function OperationsPage() {
+  const [activeTab, setActiveTab] = useState<TabId>("overview");
+
+  return (
+    <PageShell
+      title="Operations Centre"
+      subtitle="Manager+ governance, compliance, and operational intelligence"
+    >
+      {/* Tab bar */}
+      <div className="flex gap-1 overflow-x-auto pb-1 mb-4 border-b border-[var(--cs-border-subtle)]">
+        {TABS.map((tab) => {
+          const Icon = tab.icon;
+          return (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={cn(
+                "flex items-center gap-1.5 px-3 py-2 text-xs font-medium rounded-t-lg whitespace-nowrap transition-colors",
+                activeTab === tab.id
+                  ? "text-[var(--cs-navy)] bg-white border border-b-0 border-[var(--cs-border)] -mb-px"
+                  : "text-[var(--cs-text-muted)] hover:text-[var(--cs-navy)] hover:bg-slate-50"
+              )}
+            >
+              <Icon className="h-3.5 w-3.5" />
+              {tab.label}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Tab content */}
+      {activeTab === "overview" && <OverviewTab />}
+      {activeTab === "tasks" && <TasksTab />}
+      {activeTab === "workflows" && <WorkflowsTab />}
+      {activeTab === "evidence" && <EvidenceTab />}
+      {activeTab === "oversight" && <OversightTab />}
+      {activeTab === "readiness" && <ReadinessTab />}
+    </PageShell>
+  );
+}
