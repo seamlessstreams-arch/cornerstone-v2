@@ -32,6 +32,7 @@ import { AriaReg45Evidence } from "@/components/aria/aria-reg45-evidence";
 import { AriaRiskMatrix } from "@/components/aria/aria-risk-matrix";
 import { AriaComplianceCalendar } from "@/components/aria/aria-compliance-calendar";
 import { AriaRegulationChecker } from "@/components/aria/aria-regulation-checker";
+import { AriaPatternAlert } from "@/components/aria/aria-pattern-alert";
 import { AriaDocumentIntelligence } from "@/components/aria/aria-document-intelligence";
 import {
   Sparkles,
@@ -366,6 +367,11 @@ export default function AriaDashboardPage() {
       {/* ── Reg 45 Evidence ────────────────────────────────────────────── */}
       <div className="mb-8">
         <AriaReg45Evidence homeId={DEFAULT_HOME_ID} />
+      </div>
+
+      {/* ── Pattern Intelligence ─────────────────────────────────────────── */}
+      <div className="mb-8">
+        <AriaPatternAlert scope="home" />
       </div>
 
       {/* ── Risk Matrix ──────────────────────────────────────────────────── */}

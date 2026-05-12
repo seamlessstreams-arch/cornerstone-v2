@@ -49,3 +49,4 @@ export { AriaDocumentIntelligence } from "./aria-document-intelligence";
 export { AriaWriteToChild } from "./aria-write-to-child";
 export { AriaOversightQuality } from "./aria-oversight-quality";
 export { AriaDailyIntelligence } from "./aria-daily-intelligence";
+export { AriaPatternAlert } from "./aria-pattern-alert";

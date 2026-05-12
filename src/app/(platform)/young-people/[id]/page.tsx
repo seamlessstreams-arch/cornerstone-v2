@@ -26,6 +26,7 @@ import { AriaSmartSummary } from "@/components/aria/aria-smart-summary";
 import { AriaPlacementTimeline } from "@/components/aria/aria-placement-timeline";
 import { AriaKeyWorkPlanner } from "@/components/aria/aria-key-work-planner";
 import { AriaWriteToChild } from "@/components/aria/aria-write-to-child";
+import { AriaPatternAlert } from "@/components/aria/aria-pattern-alert";
 import { StudioQuickActions } from "@/components/aria-studio/studio-quick-actions";
 import { useYoungPerson } from "@/hooks/use-young-people";
 import { useCreateTrainingNeed } from "@/hooks/use-ri-learning";
@@ -524,6 +525,7 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
         {/* ── Overview ─────────────────────────────────────────────────────── */}
         {tab === "overview" && (
           <>
+          <AriaPatternAlert scope="child" childId={yp.id} childName={displayName} className="mb-4" />
           <AriaSmartSummary childId={yp.id} days={14} className="mb-4" />
           <div className="mb-4">
             <AriaPlacementTimeline />
