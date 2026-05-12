@@ -106,6 +106,16 @@
   --cs-shadow-elevated: 0 4px 16px rgba(15, 30, 54, 0.06), 0 20px 48px rgba(15, 30, 54, 0.08);
   --cs-shadow-glow-gold:0 0 20px rgba(200, 155, 60, 0.15), 0 0 40px rgba(200, 155, 60, 0.08);
 
+  /* Motion — calm, deliberate transitions */
+  --cs-ease-default:    cubic-bezier(0.16, 1, 0.3, 1);
+  --cs-ease-in:         cubic-bezier(0.55, 0, 1, 0.45);
+  --cs-ease-out:        cubic-bezier(0, 0.55, 0.45, 1);
+  --cs-ease-spring:     cubic-bezier(0.34, 1.56, 0.64, 1);
+  --cs-duration-fast:   120ms;
+  --cs-duration-normal: 200ms;
+  --cs-duration-slow:   350ms;
+  --cs-duration-aria:   500ms;
+
   /* Spacing scale */
   --cs-space-xs:        0.25rem;
   --cs-space-sm:        0.5rem;
@@ -357,7 +367,8 @@ body {
   border: 1px solid var(--cs-border);
   border-radius: var(--cs-radius-xl);
   box-shadow: var(--cs-shadow-soft);
-  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  transition: box-shadow var(--cs-duration-normal) var(--cs-ease-default),
+              border-color var(--cs-duration-normal) var(--cs-ease-default);
 }
 .cs-card:hover {
   box-shadow: var(--cs-shadow-card);
@@ -400,6 +411,57 @@ body {
 .cs-focus-ring {
   outline: 2px solid var(--cs-aria-gold);
   outline-offset: 2px;
+}
+
+/* Calm transition utilities */
+.cs-transition {
+  transition-property: background-color, border-color, color, box-shadow, opacity, transform;
+  transition-duration: var(--cs-duration-normal);
+  transition-timing-function: var(--cs-ease-default);
+}
+.cs-transition-fast {
+  transition-property: background-color, border-color, color, box-shadow, opacity, transform;
+  transition-duration: var(--cs-duration-fast);
+  transition-timing-function: var(--cs-ease-default);
+}
+.cs-transition-slow {
+  transition-property: background-color, border-color, color, box-shadow, opacity, transform;
+  transition-duration: var(--cs-duration-slow);
+  transition-timing-function: var(--cs-ease-default);
+}
+
+/* ARIA magic entrance — used when ARIA content appears */
+@keyframes ariaMagicIn {
+  0%   { opacity: 0; transform: translateY(6px) scale(0.98); filter: blur(2px); }
+  60%  { opacity: 1; filter: blur(0); }
+  100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+.aria-magic-in {
+  animation: ariaMagicIn var(--cs-duration-aria) var(--cs-ease-default);
+}
+
+/* ARIA score reveal — staggered for Child Lens score bars */
+@keyframes ariaScoreReveal {
+  from { width: 0; opacity: 0; }
+  to   { opacity: 1; }
+}
+.aria-score-reveal {
+  animation: ariaScoreReveal 0.6s var(--cs-ease-out) forwards;
+}
+
+/* Reduced motion — respect user preferences */
+@media (prefers-reduced-motion: reduce) {
+  .aria-magic-in,
+  .aria-score-reveal,
+  .aria-shimmer,
+  .aria-glow,
+  .aria-pulse,
+  .animate-gentle-fade-up {
+    animation: none !important;
+  }
+  .cs-transition, .cs-transition-fast, .cs-transition-slow {
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* ARIA badge — gold intelligence indicator */
