@@ -464,6 +464,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: "Policies",             href: "/policies",             icon: "FileText",      module: "ri"         },
       { label: "Audits",              href: "/audits",               icon: "ClipboardCheck",module: "audits"     },
       { label: "Inspection",          href: "/inspection",           icon: "Award",         module: "inspection" },
+      { label: "Inspection Readiness",href: "/inspection-readiness", icon: "ShieldCheck",   module: "inspection" },
       { label: "RI Alerts",           href: "/ri/alerts",            icon: "AlertTriangle", module: "ri"         },
       { label: "Governance Reports", href: "/ri/governance",        icon: "ScrollText",    module: "ri"         },
       { label: "Quality of Care",  href: "/quality-of-care",      icon: "Star",          module: "ri"         },
