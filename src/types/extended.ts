@@ -241,6 +241,7 @@ export interface HandoverEntry {
   general_notes: string;
   flags: string[];
   linked_incident_ids: string[];
+  aria_assist_used?: boolean;
   created_at: string;
 }
 
@@ -727,6 +728,7 @@ export interface KeyWorkSession {
   created_by: string;
   completed_by?: string;
   reviewed_by?: string;
+  aria_assist_used?: boolean;
   created_at: string;
   completed_at?: string;
   reviewed_at?: string;

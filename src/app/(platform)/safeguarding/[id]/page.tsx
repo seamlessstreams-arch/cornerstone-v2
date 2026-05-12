@@ -27,6 +27,7 @@ import { INCIDENT_TYPE_LABELS } from "@/lib/constants";
 import { getStaffName, getYPName, getYPById } from "@/lib/seed-data";
 import { cn, formatDate, formatRelative } from "@/lib/utils";
 import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaUsageBadge } from "@/components/aria/aria-usage-badge";
 import { PrintButton } from "@/components/common/print-button";
 import { SmartUploadButton } from "@/components/documents/smart-upload-button";
 import { useDocumentIntelligence } from "@/hooks/use-doc-intelligence";
@@ -291,6 +292,9 @@ export default function SafeguardingConcernPage({ params }: { params: Promise<{ 
                   )}>
                     {concern.status.replace("_", " ")}
                   </Badge>
+                )}
+                {concern.aria_oversight_used && (
+                  <AriaUsageBadge ariaAssisted sourceTable="incidents" recordId={concern.id} size="sm" />
                 )}
               </div>
               <div className="text-xs text-[var(--cs-text-secondary)] mt-0.5">

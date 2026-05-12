@@ -26,6 +26,7 @@ import { AriaHistoryTimeline } from "@/components/aria/aria-history-timeline";
 import { AriaConfidenceBreakdown } from "@/components/aria/aria-confidence-breakdown";
 import { AriaModuleCoverage } from "@/components/aria/aria-module-coverage";
 import { AriaProviderStatus } from "@/components/aria/aria-provider-status";
+import { AriaOnboardingCard } from "@/components/aria/aria-onboarding-card";
 import {
   Sparkles,
   FileText,
@@ -141,6 +142,9 @@ export default function AriaDashboardPage() {
           </div>
         </div>
       </div>
+
+      {/* ── Onboarding (first-time users) ─────────────────────────────── */}
+      <AriaOnboardingCard className="mb-6" />
 
       {/* ── Pending outputs banner ─────────────────────────────────────── */}
       <AriaPendingBanner

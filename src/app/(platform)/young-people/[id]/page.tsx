@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { ChildExperienceTab } from "@/components/intelligence/child-experience-tab";
 import { AriaQuickActions } from "@/components/intelligence/aria-quick-actions";
+import { AriaUsageBadge } from "@/components/aria/aria-usage-badge";
 import { StudioQuickActions } from "@/components/aria-studio/studio-quick-actions";
 import { useYoungPerson } from "@/hooks/use-young-people";
 import { useCreateTrainingNeed } from "@/hooks/use-ri-learning";
@@ -656,6 +657,9 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
                         )}
                         {entry.is_significant && (
                           <Badge variant="warning" className="text-[9px] rounded-full">Significant</Badge>
+                        )}
+                        {entry.aria_assist_used && (
+                          <AriaUsageBadge ariaAssisted sourceTable="daily_log_entries" recordId={entry.id} size="sm" />
                         )}
                         <span className="ml-auto text-[10px] text-[var(--cs-text-muted)]">{formatDate(entry.date)} {entry.time}</span>
                       </div>
