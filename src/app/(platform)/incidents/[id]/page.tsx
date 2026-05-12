@@ -29,6 +29,7 @@ import { cn, formatDate, formatRelative } from "@/lib/utils";
 import { AriaQuickActions } from "@/components/intelligence/aria-quick-actions";
 import { AriaUsageBadge } from "@/components/aria/aria-usage-badge";
 import { AriaContextLinker } from "@/components/aria/aria-context-linker";
+import { AriaWriteToChild } from "@/components/aria/aria-write-to-child";
 import { StudioQuickActions } from "@/components/aria-studio/studio-quick-actions";
 import { PrintButton } from "@/components/common/print-button";
 import { SmartUploadButton } from "@/components/documents/smart-upload-button";
@@ -620,6 +621,15 @@ export default function IncidentDetailPage({ params }: { params: Promise<{ id: s
             </div>
           )}
         </div>
+
+        {/* ── Writing to the Child ──────────────────────────────────────── */}
+        <AriaWriteToChild
+          source="incident"
+          sourceText={incident.oversight_note || incident.description}
+          sourceRecordId={incident.id}
+          childName={getYPName(incident.child_id)}
+          mode="post_save"
+        />
 
         {/* ── ARIA Context Links ─────────────────────────────────────────── */}
         <AriaContextLinker

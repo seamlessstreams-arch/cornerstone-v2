@@ -116,7 +116,17 @@ export type AriaCommandId =
   | "create_calendar_follow_up_tasks"
   | "identify_upcoming_compliance_dates"
   | "equality_diversity_calendar_prompt"
-  | "trigger_related_document_update";
+  | "trigger_related_document_update"
+  // Writing to the Child
+  | "write_to_child_incident"
+  | "write_to_child_complaint"
+  | "write_to_child_missing_from_care"
+  | "write_to_child_weekly_summary"
+  | "write_to_child_direct_work"
+  | "write_to_child_oversight"
+  | "write_to_child_key_work"
+  | "child_lens_check"
+  | "improve_child_friendly_text";
 
 export interface AriaCommandSpec {
   id: AriaCommandId;

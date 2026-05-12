@@ -1322,6 +1322,134 @@ export const ARIA_COMMANDS: Record<AriaCommandId, AriaCommandSpec> = {
     systemPromptFragment:
       "Identify documents, plans, or records that may need updating following the change described in the source. For each: document type, why it may need updating, and suggested action. Stay grounded in the source.",
   },
+
+  // ── Writing to the Child ────────────────────────────────────────────────
+  write_to_child_incident: {
+    id: "write_to_child_incident",
+    label: "Write to child — incident",
+    description:
+      "Generate a child-friendly version of an incident record using trauma-informed language.",
+    modules: ["incidents"],
+    requiredPermission: "aria.rewrite",
+    approvalRequired: true,
+    canCreateTasks: false,
+    canCommit: true,
+    riskLevel: "high",
+    systemPromptFragment:
+      "Translate this incident record into a letter a child can understand. Use PACE (Playfulness, Acceptance, Curiosity, Empathy) and ARC (Attachment, Regulation, Competency) frameworks. Avoid all professional jargon. Never blame the child. Explain adult concern with dignity. Offer clear support. Adjust reading level to the child's age.",
+  },
+  write_to_child_complaint: {
+    id: "write_to_child_complaint",
+    label: "Write to child — complaint",
+    description:
+      "Generate a child-friendly version of a complaint response using trauma-informed language.",
+    modules: ["complaints"],
+    requiredPermission: "aria.rewrite",
+    approvalRequired: true,
+    canCreateTasks: false,
+    canCommit: true,
+    riskLevel: "high",
+    systemPromptFragment:
+      "Translate this complaint response into a letter the child can understand. Validate the child's voice. Explain what was looked into and what happens next. Use PACE and ARC. Avoid jargon and blame. Age-appropriate language.",
+  },
+  write_to_child_missing_from_care: {
+    id: "write_to_child_missing_from_care",
+    label: "Write to child — missing from care",
+    description:
+      "Generate a child-friendly version of a missing-from-care return discussion.",
+    modules: ["missing_from_care"],
+    requiredPermission: "aria.rewrite",
+    approvalRequired: true,
+    canCreateTasks: false,
+    canCommit: true,
+    riskLevel: "high",
+    systemPromptFragment:
+      "Translate this missing-from-care return record into a letter the child can understand. Express genuine worry without blame. Explain why adults were concerned. Use PACE and ARC frameworks. Focus on safety and support. Age-appropriate language.",
+  },
+  write_to_child_weekly_summary: {
+    id: "write_to_child_weekly_summary",
+    label: "Write to child — weekly summary",
+    description:
+      "Generate a child-friendly version of the weekly summary highlighting positives and next steps.",
+    modules: ["daily_logs"],
+    requiredPermission: "aria.rewrite",
+    approvalRequired: true,
+    canCreateTasks: false,
+    canCommit: true,
+    riskLevel: "medium",
+    systemPromptFragment:
+      "Translate this weekly summary into a letter the child can read. Celebrate positives. Gently mention any challenges with empathy. Explain what is planned next week. Use PACE and ARC. Avoid jargon. Age-appropriate language.",
+  },
+  write_to_child_direct_work: {
+    id: "write_to_child_direct_work",
+    label: "Write to child — direct work",
+    description:
+      "Generate a child-friendly summary of a direct work or key work session.",
+    modules: ["key_work"],
+    requiredPermission: "aria.rewrite",
+    approvalRequired: true,
+    canCreateTasks: false,
+    canCommit: true,
+    riskLevel: "medium",
+    systemPromptFragment:
+      "Translate this direct work / key work session record into a letter the child can understand. Reflect what was discussed and what the child shared. Validate their feelings. Explain any plans or goals. Use PACE and ARC. Age-appropriate language.",
+  },
+  write_to_child_oversight: {
+    id: "write_to_child_oversight",
+    label: "Write to child — management oversight",
+    description:
+      "Generate a child-friendly version of management oversight notes.",
+    modules: ["management_oversight"],
+    requiredPermission: "aria.rewrite",
+    approvalRequired: true,
+    canCreateTasks: false,
+    canCommit: true,
+    riskLevel: "high",
+    systemPromptFragment:
+      "Translate this management oversight note into a letter the child can understand. Explain adult decisions in plain language. Show the child their voice was heard. Use PACE and ARC. Never use statutory or professional jargon. Age-appropriate language.",
+  },
+  write_to_child_key_work: {
+    id: "write_to_child_key_work",
+    label: "Write to child — key work session",
+    description:
+      "Generate a child-friendly summary of a key work session.",
+    modules: ["key_work"],
+    requiredPermission: "aria.rewrite",
+    approvalRequired: true,
+    canCreateTasks: false,
+    canCommit: true,
+    riskLevel: "medium",
+    systemPromptFragment:
+      "Translate this key work session record into a letter the child can understand. Reflect the session warmly. Validate the child's participation. Note any goals or next steps in child-friendly terms. Use PACE and ARC. Age-appropriate language.",
+  },
+  child_lens_check: {
+    id: "child_lens_check",
+    label: "Child Lens Check",
+    description:
+      "Score any text against the Child Lens: clarity, dignity, jargon risk, blame risk, explanation of concern, and support offered.",
+    modules: [],
+    requiredPermission: "aria.summarise",
+    approvalRequired: false,
+    canCreateTasks: false,
+    canCommit: false,
+    riskLevel: "low",
+    systemPromptFragment:
+      "Analyse the text through the Child Lens. Score 0-100 on: clarity (sentence simplicity), dignity (absence of blame/labelling), jargon risk (presence of professional terms), blame risk (presence of blaming language), explanation of concern (how well adult worry is explained), support offered (how clearly help is described). Return overall weighted score and per-dimension breakdowns.",
+  },
+  improve_child_friendly_text: {
+    id: "improve_child_friendly_text",
+    label: "Improve child-friendly text",
+    description:
+      "Improve existing child-facing text to raise its Child Lens score.",
+    modules: [],
+    requiredPermission: "aria.rewrite",
+    approvalRequired: true,
+    canCreateTasks: false,
+    canCommit: true,
+    riskLevel: "medium",
+    systemPromptFragment:
+      "Improve the child-facing text to raise the Child Lens score. Replace any jargon with plain words. Remove any blaming language. Shorten sentences for clarity. Add supportive phrases. Ensure adult concern is explained with dignity. Use PACE and ARC frameworks. Maintain the original meaning. Age-appropriate language.",
+  },
 };
 
 // ─── Public service entry points ────────────────────────────────────────────
