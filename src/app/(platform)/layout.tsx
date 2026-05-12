@@ -8,6 +8,7 @@ import { SidebarProvider, useSidebar } from "@/contexts/sidebar-context";
 import { KeyboardShortcuts } from "@/components/layout/keyboard-shortcuts";
 import { AriaGlobalFab } from "@/components/aria/aria-global-fab";
 import { AriaCommandPalette } from "@/components/aria/aria-command-palette";
+import { AriaShortcutsGuide } from "@/components/aria/aria-shortcuts-guide";
 
 function PlatformContent({ children }: { children: React.ReactNode }) {
   const { collapsed, isMobile } = useSidebar();
@@ -36,6 +37,7 @@ export default function PlatformLayout({
           <KeyboardShortcuts />
           <AriaGlobalFab />
           <AriaCommandPalette />
+          <AriaShortcutsGuide />
         </div>
       </SidebarProvider>
     </AuthProvider>

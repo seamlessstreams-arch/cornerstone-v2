@@ -22,3 +22,5 @@ export { AriaModuleCoverage } from "./aria-module-coverage";
 export { AriaQuickStats } from "./aria-quick-stats";
 export { AriaProviderStatus } from "./aria-provider-status";
 export { AriaCommandPalette } from "./aria-command-palette";
+export { AriaDiffViewer } from "./aria-diff-viewer";
+export { AriaShortcutsGuide } from "./aria-shortcuts-guide";
