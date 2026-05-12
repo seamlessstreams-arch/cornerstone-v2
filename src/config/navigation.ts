@@ -94,6 +94,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: "Significant Events",href: "/significant-events",      icon: "Flag",           module: "young-people"  },
       { label: "LAC Reviews",    href: "/lac-reviews",              icon: "Gavel",          module: "young-people"  },
       { label: "Admissions",     href: "/admissions",               icon: "UserPlus",       module: "young-people"  },
+      { label: "Admission Workflow", href: "/admissions/workflow",  icon: "GitBranch",      module: "young-people"  },
       { label: "Risk Assessments",href: "/risk-assessments",         icon: "ShieldAlert",    module: "safeguarding"  },
       { label: "Consultations", href: "/professional-consultations",icon: "Stethoscope",   module: "young-people"  },
       { label: "Debriefs",      href: "/debriefs",                  icon: "RefreshCw",     module: "young-people"  },
