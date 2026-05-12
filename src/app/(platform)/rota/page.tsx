@@ -17,6 +17,7 @@ import { useStaff } from "@/hooks/use-staff";
 import { useShiftSwaps, useCreateSwapRequest } from "@/hooks/use-shift-swaps";
 import { cn, todayStr, formatDate } from "@/lib/utils";
 import { SHIFT_TYPES, SHIFT_TYPE_LABELS } from "@/lib/constants";
+import { AriaRotaIntelligence } from "@/components/aria";
 import { SmartUploadButton } from "@/components/documents/smart-upload-button";
 import { PrintButton } from "@/components/common/print-button";
 import { ExportButton } from "@/components/common/export-button";
@@ -433,6 +434,9 @@ export default function RotaPage() {
             </div>
           </div>
         )}
+
+        {/* ARIA Rota Intelligence */}
+        <AriaRotaIntelligence />
 
         {/* Week Navigation + Search */}
         <div className="flex items-center justify-between gap-3 flex-wrap">

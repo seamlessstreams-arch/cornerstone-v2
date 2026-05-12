@@ -36,3 +36,5 @@ export { AriaChallengeModePanel } from "./aria-challenge-mode";
 export { AriaSmartSummary } from "./aria-smart-summary";
 export { AriaWeeklyDigest } from "./aria-weekly-digest";
 export { AriaReg45Evidence } from "./aria-reg45-evidence";
+export { AriaRotaIntelligence } from "./aria-rota-intelligence";
+export { AriaHandoverQuality } from "./aria-handover-quality";

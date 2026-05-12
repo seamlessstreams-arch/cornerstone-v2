@@ -28,6 +28,7 @@ import { PrintButton } from "@/components/common/print-button";
 import { ExportButton, type ExportColumn } from "@/components/common/export-button";
 import { ShiftSummaryCard } from "@/components/dashboard/shift-summary-card";
 import { AriaHandoverBuilder } from "@/components/handover/aria-handover-builder";
+import { AriaHandoverQuality } from "@/components/aria";
 import { HandoverPrintContext } from "@/components/handover/handover-print-context";
 
 const HANDOVER_EXPORT_COLS: ExportColumn<HandoverEntry>[] = [
@@ -931,6 +932,13 @@ export default function HandoverPage() {
                     .filter(Boolean)
             }
           />
+        </div>
+      )}
+
+      {/* ARIA Handover Quality Check */}
+      {!isLoading && (
+        <div className="mb-6">
+          <AriaHandoverQuality />
         </div>
       )}
 
