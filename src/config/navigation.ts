@@ -34,6 +34,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: "Command Centre",  href: "/dashboard",       icon: "LayoutDashboard", module: "dashboard"  },
       { label: "Manager Control Centre", href: "/dashboard/manager-control-centre", icon: "ShieldCheck", module: "dashboard" },
       { label: "Operations Centre",      href: "/operations",                       icon: "Layers",      module: "dashboard" },
+      { label: "Communications",         href: "/communications",                   icon: "MessageSquare", module: "dashboard" },
       { label: "Provider Oversight",     href: "/dashboard/provider-oversight",     icon: "Building2",   module: "ri"        },
       { label: "My Day",          href: "/dashboard/my-day",icon: "Target",          module: "my-day"     },
       { label: "Staff Dashboard", href: "/dashboard/staff", icon: "User",            module: "dashboard"  },
