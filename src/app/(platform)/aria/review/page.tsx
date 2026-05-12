@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import { useAriaPending } from "@/hooks/use-aria-pending";
 import {
   Sparkles,
   Search,
@@ -45,6 +46,7 @@ import {
   Bell,
   ArrowUpDown,
   BarChart3,
+  Loader2,
 } from "lucide-react";
 
 // ─── Types ──────────────────────────────────────────────────────────────────
@@ -260,6 +262,15 @@ export default function AriaReviewQueuePage() {
   const [typeFilter, setTypeFilter] = useState<SuggestionType | "all">("all");
   const [searchQuery, setSearchQuery] = useState("");
 
+  // Live pending ARIA text outputs (from the API)
+  const { data: pendingOutputs, isLoading: pendingLoading } = useAriaPending({
+    actorUserId: "staff_darren",
+    actorRole: "registered_manager",
+    homeId: "demo-home",
+  });
+  const pendingCount = pendingOutputs?.length ?? 0;
+  const flaggedCount = pendingOutputs?.filter((o) => o.guardrailFlagged).length ?? 0;
+
   const filtered = useMemo(() => {
     let items = DEMO_ITEMS;
     if (statusFilter !== "all") items = items.filter((i) => i.status === statusFilter);
@@ -301,6 +312,49 @@ export default function AriaReviewQueuePage() {
         <StatCard label="Rejected" value={counts.rejected} colour="text-red-700" bg="bg-red-50" icon={XCircle} />
         <StatCard label="Committed" value={counts.committed} colour="text-blue-700" bg="bg-blue-50" icon={ClipboardCheck} />
       </div>
+
+      {/* Live pending text outputs */}
+      {pendingLoading ? (
+        <div className="flex items-center gap-2 rounded-xl border border-[var(--cs-border)] bg-slate-50 px-4 py-3 mb-6">
+          <Loader2 className="h-4 w-4 text-[var(--cs-text-muted)] animate-spin" />
+          <span className="text-xs text-[var(--cs-text-muted)]">Loading pending ARIA outputs…</span>
+        </div>
+      ) : pendingCount > 0 ? (
+        <div className={cn(
+          "rounded-xl border px-4 py-3 mb-6 flex items-center justify-between gap-3",
+          flaggedCount > 0
+            ? "border-amber-300 bg-amber-50"
+            : "border-[var(--cs-aria-gold-soft)] bg-[var(--cs-aria-gold-bg)]",
+        )}>
+          <div className="flex items-center gap-2">
+            <Sparkles className={cn("h-4 w-4", flaggedCount > 0 ? "text-amber-600" : "text-[var(--cs-aria-gold)]")} />
+            <span className="text-xs font-medium text-[var(--cs-navy)]">
+              {pendingCount} pending text output{pendingCount !== 1 ? "s" : ""} awaiting review
+              {flaggedCount > 0 && (
+                <span className="text-amber-700 ml-1">
+                  ({flaggedCount} flagged by guardrails)
+                </span>
+              )}
+            </span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            {pendingOutputs?.slice(0, 3).map((o) => (
+              <span
+                key={o.id}
+                className={cn(
+                  "text-[9px] rounded-full px-2 py-0.5 font-medium",
+                  o.guardrailFlagged ? "bg-amber-200 text-amber-800" : "bg-white text-[var(--cs-text-secondary)]",
+                )}
+              >
+                {o.commandId.replace(/_/g, " ").slice(0, 20)}
+              </span>
+            ))}
+            {pendingCount > 3 && (
+              <span className="text-[9px] text-[var(--cs-text-muted)]">+{pendingCount - 3} more</span>
+            )}
+          </div>
+        </div>
+      ) : null}
 
       {/* Filters */}
       <div className="flex flex-wrap items-center gap-3 mb-6">

@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaUsageBadge } from "@/components/aria/aria-usage-badge";
 import {
   AlertTriangle, Shield, Eye, CheckCircle2, Clock, FileText,
   Plus, Users, MapPin, Calendar, Phone, Bell, TrendingUp,
@@ -214,6 +215,7 @@ function ConcernCard({
             <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-medium text-[var(--cs-text-secondary)]">
               {INCIDENT_TYPE_LABELS[inc.type] || inc.type}
             </span>
+            <AriaUsageBadge ariaAssisted={(inc as any).aria_oversight_used} sourceTable="incidents" recordId={inc.id} />
           </div>
           <div className="mt-0.5 flex items-center gap-2 text-[11px] text-[var(--cs-text-muted)]">
             <span className="font-semibold text-[var(--cs-aria-gold)]">{getYPName(inc.child_id)}</span>

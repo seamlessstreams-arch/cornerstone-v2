@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaUsageBadge } from "@/components/aria/aria-usage-badge";
 import { SmartUploadButton } from "@/components/documents/smart-upload-button";
 import { PrintButton } from "@/components/common/print-button";
 import {
@@ -185,6 +186,7 @@ export default function StaffCompetencyProfilePage({ params }: { params: Promise
                   {PATHWAY_STAGE_LABELS[profile.current_stage]}
                 </Badge>
               )}
+              <AriaUsageBadge ariaAssisted={(profile as any)?.aria_assist_used} sourceTable="workforce_profiles" recordId={profile?.staff_id} />
               {profile?.target_stage && (
                 <div className="flex items-center gap-1 text-xs text-[var(--cs-text-muted)]">
                   <ArrowUpRight className="h-3.5 w-3.5" />

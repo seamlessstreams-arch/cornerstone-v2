@@ -9,6 +9,7 @@ import { SmartUploadButton } from "@/components/documents/smart-upload-button";
 import { PrintButton } from "@/components/common/print-button";
 import { ExportButton, type ExportColumn } from "@/components/common/export-button";
 import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaUsageBadge } from "@/components/aria/aria-usage-badge";
 import {
   Microscope, Sparkles, CheckCircle2, Star, Clock, Plus,
   ThumbsUp, AlertTriangle, ChevronRight, Search, Users, Eye, ArrowUpDown,
@@ -321,6 +322,7 @@ export default function PracticeObservationsPage() {
                         <OutcomeIcon className="h-2.5 w-2.5 mr-1" />
                         {outcomeCfg.label}
                       </Badge>
+                      <AriaUsageBadge ariaAssisted={(obs as any).aria_assist_used} sourceTable="practice_observations" recordId={obs.id} />
                     </div>
                     <p className="text-xs text-[var(--cs-text-muted)]">
                       {obs.observation_date} · {obs.context} · Observer: {getStaffName(obs.observer_id)}

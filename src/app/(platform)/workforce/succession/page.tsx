@@ -16,6 +16,7 @@ import { PrintButton } from "@/components/common/print-button";
 import { SmartUploadButton } from "@/components/documents/smart-upload-button";
 import { ExportButton, type ExportColumn } from "@/components/common/export-button";
 import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaUsageBadge } from "@/components/aria/aria-usage-badge";
 import { cn } from "@/lib/utils";
 import {
   GitBranch, Sparkles, CheckCircle2, Clock, AlertTriangle,
@@ -335,6 +336,7 @@ export default function SuccessionBoardPage() {
                           <Badge variant="outline" className={cn("text-[10px] border", urgency.colour)}>
                             {urgency.label}
                           </Badge>
+                          <AriaUsageBadge ariaAssisted={(plan as any).aria_assist_used} sourceTable="succession_plans" recordId={plan.id} />
                         </div>
                         <p className="text-[11px] text-[var(--cs-text-muted)] mt-0.5">
                           {PATHWAY_STAGE_LABELS[plan.target_stage]} · {plan.candidates.length} candidate{plan.candidates.length !== 1 ? "s" : ""}

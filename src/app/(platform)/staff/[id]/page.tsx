@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Avatar } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaUsageBadge } from "@/components/aria/aria-usage-badge";
 import { StudioQuickActions } from "@/components/aria-studio/studio-quick-actions";
 import { useStaffMember } from "@/hooks/use-staff";
 import { useTrainingNeeds } from "@/hooks/use-ri-learning";
@@ -225,6 +226,7 @@ export default function StaffProfilePage({ params }: { params: Promise<{ id: str
                   <Badge variant="outline" className="text-[10px] rounded-full capitalize">
                     {staff.employment_type}
                   </Badge>
+                  <AriaUsageBadge ariaAssisted={(staff as any).aria_assist_used} sourceTable="staff" recordId={staff.id} />
                   {staff.supervision_overdue && (
                     <Badge variant="destructive" className="text-[10px] rounded-full">
                       Supervision Overdue

@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaUsageBadge } from "@/components/aria/aria-usage-badge";
 import {
   Mail, FileText, Search, Copy, ExternalLink, Tag, Clock, Sparkles,
   Shield, Users, AlertTriangle, CheckCircle2, X, ChevronDown, ChevronUp,
@@ -532,7 +533,10 @@ function TemplateModal({ template, onClose }: { template: Template; onClose: () 
         {/* Header */}
         <div className="flex items-start justify-between p-6 border-b border-[var(--cs-border-subtle)]">
           <div className="space-y-1">
-            <CategoryBadge category={template.category} />
+            <div className="flex items-center gap-2">
+              <CategoryBadge category={template.category} />
+              <AriaUsageBadge ariaAssisted={(template as any).aria_assist_used} sourceTable="recruitment_templates" recordId={template.id} />
+            </div>
             <h2 className="text-lg font-semibold text-[var(--cs-navy)] mt-1">{template.name}</h2>
             <p className="text-sm text-[var(--cs-text-muted)]">{template.purpose}</p>
             {template.regulation_ref && (

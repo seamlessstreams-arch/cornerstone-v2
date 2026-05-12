@@ -16,6 +16,7 @@ import { cn, formatDate } from "@/lib/utils";
 import { useAudit, useUpdateAudit, type AuditFinding } from "@/hooks/use-audits";
 import { useCreateTrainingNeed } from "@/hooks/use-ri-learning";
 import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaUsageBadge } from "@/components/aria/aria-usage-badge";
 import { PrintButton } from "@/components/common/print-button";
 import { SmartUploadButton } from "@/components/documents/smart-upload-button";
 
@@ -114,6 +115,7 @@ function FindingCard({
         <div className="flex items-center gap-1.5 shrink-0">
           <Badge className={cn("text-[10px] rounded-full border", sc.colour)}>{sc.label}</Badge>
           <Badge className={cn("text-[10px] rounded-full border", fc.colour)}>{fc.label}</Badge>
+          <AriaUsageBadge ariaAssisted={(finding as any).aria_assist_used} sourceTable="audit_findings" recordId={finding.id} />
         </div>
       </div>
 

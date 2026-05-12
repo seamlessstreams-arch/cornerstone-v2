@@ -16,6 +16,7 @@ import { cn, formatDate, daysFromNow } from "@/lib/utils";
 import { useStaff } from "@/hooks/use-staff";
 import { useRota } from "@/hooks/use-rota";
 import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaUsageBadge } from "@/components/aria/aria-usage-badge";
 import type { Shift } from "@/types";
 import { SmartUploadButton } from "@/components/documents/smart-upload-button";
 import { PrintButton } from "@/components/common/print-button";
@@ -121,6 +122,7 @@ function ShiftRow({ shift }: { shift: Shift }) {
       <Badge className={cn("text-[10px] rounded-full border ml-auto shrink-0", sc.colour)}>
         {sc.label}
       </Badge>
+      <AriaUsageBadge ariaAssisted={(shift as any).aria_assist_used} sourceTable="timesheets" recordId={shift.id} />
 
       {/* Notes */}
       {shift.notes && (

@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaUsageBadge } from "@/components/aria/aria-usage-badge";
 import {
   Sparkles, CheckCircle2, Clock, ChevronRight,
   Plus, GitMerge, ArrowRight,
@@ -173,6 +174,7 @@ export default function AriaDevPlannerPage() {
                   <Badge variant="outline" className={cn("text-[10px] border shrink-0", statusCfg.colour)}>
                     {statusCfg.label}
                   </Badge>
+                  <AriaUsageBadge ariaAssisted={(plan as any).aria_assist_used} sourceTable="learning_plans" recordId={plan.id} />
                 </div>
 
                 <div className="p-4 space-y-3">

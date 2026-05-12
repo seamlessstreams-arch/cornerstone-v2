@@ -43,6 +43,7 @@ import {
 import { AriaGuardrailBanner } from "./aria-guardrail-banner";
 import { AriaTaskCreator } from "./aria-task-creator";
 import { AriaDiffViewer } from "./aria-diff-viewer";
+import { AriaFeedbackWidget } from "./aria-feedback-widget";
 
 // Commands that improve/rewrite text — show the diff viewer
 const TEXT_IMPROVEMENT_COMMANDS = new Set<string>([
@@ -509,6 +510,16 @@ export function AriaCommandPanel({
                   homeId={homeId}
                   linkedChildId={childId}
                 />
+              )}
+
+              {/* Feedback widget — always shown after generation */}
+              {aria.result.outputId && selectedCommand && (
+                <div className="mt-3 pt-3 border-t border-[var(--cs-border-subtle)]">
+                  <AriaFeedbackWidget
+                    outputId={aria.result.outputId}
+                    commandId={selectedCommand}
+                  />
+                </div>
               )}
             </div>
           ) : (

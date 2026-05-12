@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaUsageBadge } from "@/components/aria/aria-usage-badge";
 import {
   UserPlus, Search, Plus, Filter, AlertTriangle, AlertCircle,
   Users, Clock, Zap, TrendingUp, Briefcase, Shield, FileCheck,
@@ -223,6 +224,7 @@ function KanbanCard({ candidate }: { candidate: CandidateDetail }) {
         </div>
         <div className="flex items-center gap-1.5 flex-wrap">
           <RiskBadge level={candidate.risk_level} />
+          <AriaUsageBadge ariaAssisted={(candidate as any).aria_assist_used} sourceTable="recruitment_candidates" recordId={candidate.id} />
           <span className="text-[9px] text-[var(--cs-text-muted)] flex items-center gap-0.5">
             <Clock className="h-2.5 w-2.5" />{candidate.days_in_stage}d
           </span>

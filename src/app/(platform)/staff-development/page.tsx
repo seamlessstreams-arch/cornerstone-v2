@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaUsageBadge } from "@/components/aria/aria-usage-badge";
 import { SmartUploadButton } from "@/components/documents/smart-upload-button";
 import { PrintButton } from "@/components/common/print-button";
 import { ExportButton, type ExportColumn } from "@/components/common/export-button";
@@ -172,6 +173,7 @@ function StaffCard({
           <Badge className={cn("text-[10px] rounded-full border shrink-0", sc.colour)}>
             {sc.label}
           </Badge>
+          <AriaUsageBadge ariaAssisted={(profile as any).aria_assist_used} sourceTable="staff_development_records" recordId={profile.staff_id} />
         </div>
 
         {/* Training compliance */}

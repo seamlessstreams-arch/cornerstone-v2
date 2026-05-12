@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Avatar } from "@/components/ui/avatar";
 import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaUsageBadge } from "@/components/aria/aria-usage-badge";
 import { useMedication, useAdminister } from "@/hooks/use-medication";
 import { useAuthContext } from "@/contexts/auth-context";
 import { getYPName, getStaffName } from "@/lib/seed-data";
@@ -610,6 +611,7 @@ function TodayScheduleTab({
                               {(STATUS_CONFIG as unknown as Record<string, typeof STATUS_CONFIG.given>)[status]?.label ?? status}
                             </Badge>
                           )}
+                          <AriaUsageBadge ariaAssisted={(med as any).aria_assist_used} sourceTable="medications" recordId={med.id} />
                         </div>
 
                         <div className="flex items-center gap-4 mt-1 text-xs text-[var(--cs-text-muted)]">

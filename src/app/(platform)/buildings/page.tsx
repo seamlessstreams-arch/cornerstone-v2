@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaUsageBadge } from "@/components/aria/aria-usage-badge";
 import {
   Building2, AlertTriangle, CheckCircle2, Clock, XCircle,
   Plus, Search, Shield, Flame, Zap, Droplets, Thermometer,
@@ -705,6 +706,7 @@ function CheckHistoryTab({ data, onAddCheck }: { data: BuildingsData; onAddCheck
                         {check.risk_level} risk
                       </Badge>
                     )}
+                    <AriaUsageBadge ariaAssisted={(check as any).aria_assist_used} sourceTable="building_checks" recordId={check.id} />
                   </div>
                   <div className="text-xs text-[var(--cs-text-muted)] mt-0.5 flex items-center gap-3 flex-wrap">
                     <span>{formatDate(check.check_date)}</span>

@@ -14,6 +14,7 @@ import { cn } from "@/lib/utils";
 import { SmartUploadButton } from "@/components/documents/smart-upload-button";
 import { PrintButton } from "@/components/common/print-button";
 import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaUsageBadge } from "@/components/aria/aria-usage-badge";
 import {
   Network, Sparkles, Users, TrendingUp, GitBranch, Milestone,
   BarChart2, UserCheck, ShieldCheck, Award, Microscope, Briefcase,
@@ -199,6 +200,7 @@ export default function WorkforceHubPage() {
                   <Badge variant="outline" className={cn("text-[10px] px-1.5 py-0 border", STAGE_COLOURS[profile.current_stage])}>
                     {PATHWAY_STAGE_LABELS[profile.current_stage]}
                   </Badge>
+                  <AriaUsageBadge ariaAssisted={(profile as any).aria_assist_used} sourceTable="workforce_profiles" recordId={profile.staff_id} />
                 </div>
                 <div className="flex items-center gap-3 shrink-0">
                   <div className="w-24">

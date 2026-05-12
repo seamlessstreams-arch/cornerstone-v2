@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaUsageBadge } from "@/components/aria/aria-usage-badge";
 import {
   Telescope, Sparkles, ChevronRight, ArrowUpRight,
   CheckCircle2, AlertTriangle, Clock, Search,
@@ -217,6 +218,7 @@ export default function LeadershipReadinessPage() {
                               <CheckCircle2 className="h-2.5 w-2.5 mr-1" />
                               Role holder
                             </Badge>
+                            <AriaUsageBadge ariaAssisted={(profile as any).aria_assist_used} sourceTable="workforce_profiles" recordId={profile.staff_id} />
                           </div>
                           <div className="flex items-center gap-2 mb-2">
                             <div className="w-32 h-2 rounded-full bg-slate-100 overflow-hidden">

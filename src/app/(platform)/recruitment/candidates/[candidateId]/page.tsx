@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { AriaPanel } from "@/components/aria/aria-panel";
+import { AriaUsageBadge } from "@/components/aria/aria-usage-badge";
 import {
   ChevronLeft, AlertTriangle, CheckCircle2, Clock, Shield,
   FileCheck, User, Users, Globe, GraduationCap, Briefcase, Heart,
@@ -309,6 +310,7 @@ export default function CandidateDetailPage() {
                   {candidate.blocker_summary.length} blocker{candidate.blocker_summary.length !== 1 ? "s" : ""}
                 </span>
               )}
+              <AriaUsageBadge ariaAssisted={(candidate as any).aria_assist_used} sourceTable="recruitment_candidates" recordId={candidate.id} />
             </div>
             <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">{candidate.role_applied} · {candidate.email}</div>
           </div>
