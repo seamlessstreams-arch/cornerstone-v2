@@ -8,6 +8,7 @@ import {
   ARIA_WRITING_STYLE_PROMPT,
 } from "@/lib/aria/writingStyleRules";
 import type { AriaStudioFramework, AriaStudioTone, AriaStudioArtifactType } from "@/types/aria-studio";
+import type { PracticeIntelligenceFramework } from "@/types/practice-intelligence";
 
 // ── Base system prompt ───────────────────────────────────────────────────────
 
@@ -114,6 +115,55 @@ export const FRAMEWORK_PROMPTS: Record<AriaStudioFramework, string> = {
 - Recognise that challenging behaviour often stems from attachment insecurity
 - Support the development of secure secondary attachments with carers
 - Be aware of how staff attachment histories affect their responses`,
+};
+
+// ── Extended framework prompts (Practice Intelligence) ──────────────────────
+
+export const EXTENDED_FRAMEWORK_PROMPTS: Record<string, string> = {
+  ...FRAMEWORK_PROMPTS,
+
+  social_pedagogy: `Apply social pedagogy principles.
+- The 'head, heart, hands' model — integrate thinking, feeling, and doing
+- Every interaction is a learning opportunity
+- The relationship between educator and child is the foundation
+- Prioritise the 'common third' — shared activities that build connection
+- Support the child's 'zone of proximal development' — stretch but don't overwhelm
+- The home is a 'life space' — everyday moments are therapeutic`,
+
+  mentalisation: `Apply mentalisation-based practice.
+- Help the child understand their own thoughts and feelings
+- Support staff to 'mentalise' the child — what might they be thinking and feeling?
+- When mentalisation breaks down, slow down and get curious
+- Avoid 'psychic equivalence' — the assumption that how it feels is how it is
+- Use 'marked mirroring' — reflect back emotions with slight exaggeration to aid recognition
+- Recognise that trauma impairs mentalisation — expect breaks and support recovery`,
+
+  neurodiversity_informed: `Apply neurodiversity-informed practice.
+- Recognise neurodivergence as a natural variation, not a deficit
+- Adapt the environment to the child, not the child to the environment
+- Consider sensory needs, processing differences, and executive function
+- Use clear, concrete, literal language — avoid ambiguity and sarcasm
+- Provide visual supports, advance warning, and transition support
+- Respect stimming, special interests, and preferred communication styles
+- Be aware that 'masking' is exhausting and may lead to shutdown or meltdown`,
+
+  anti_oppressive: `Apply anti-oppressive practice.
+- Actively challenge discrimination, inequality, and oppression
+- Consider the child's intersecting identities: race, culture, gender, sexuality, disability, faith
+- Reflect on power dynamics within the care setting
+- Centre the child's cultural identity and lived experience
+- Ensure language, resources, and activities are inclusive and representative
+- Be aware of institutional racism and other systemic barriers
+- Support the child to develop a positive sense of identity`,
+
+  developmental_trauma: `Apply the developmental trauma framework.
+- Recognise that early, repeated trauma affects brain development and attachment
+- Understand behaviour through the lens of survival adaptations
+- The child's 'age' of emotional development may differ from chronological age
+- Prioritise felt safety before expecting engagement or learning
+- Use sensory and body-based approaches alongside talking therapies
+- Support staff to regulate themselves first — co-regulation before self-regulation
+- Expect progress to be non-linear — regression is part of recovery`,
 };
 
 // ── Tone prompts ─────────────────────────────────────────────────────────────

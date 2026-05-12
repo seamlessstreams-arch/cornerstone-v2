@@ -161,6 +161,14 @@ export interface AriaActorPayload {
   staffSelfId?: string;
 }
 
+export interface AriaGuardrailFlag {
+  id: string;
+  severity: "critical" | "warning" | "info";
+  category: string;
+  message: string;
+  matchedSnippet?: string;
+}
+
 export interface AriaGenerationResult {
   requestId: string;
   outputId?: string;
@@ -175,6 +183,13 @@ export interface AriaGenerationResult {
   modelId?: string;
   approvalRequired: boolean;
   persisted: boolean;
+  /** Safeguarding guardrail scan results */
+  guardrails?: {
+    flagged: boolean;
+    mandatoryReview: boolean;
+    flags: AriaGuardrailFlag[];
+    summary: string;
+  };
 }
 
 export interface AriaTranscriptionInput {

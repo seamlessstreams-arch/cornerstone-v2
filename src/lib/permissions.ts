@@ -136,6 +136,20 @@ export const PERMISSIONS = {
   ARIA_STUDIO_APPROVE: "aria_studio_approve",
   ARIA_STUDIO_COMMIT: "aria_studio_commit",
   ARIA_STUDIO_ADMIN: "aria_studio_admin",
+  // ARIA Reports & Review Intelligence
+  ARIA_REPORTS_VIEW: "aria:view",
+  ARIA_REPORTS_GENERATE: "aria:generate",
+  ARIA_REPORTS_REVIEW: "aria:review",
+  ARIA_REPORTS_APPROVE: "aria:approve",
+  ARIA_REPORTS_LOCK: "aria:lock",
+  ARIA_REPORTS_CONFIGURE: "aria:configure",
+  ARIA_REPORTS_HIGH_RISK: "aria:highRiskAnalysis",
+  REPORTS_VIEW: "reports:view",
+  REPORTS_CREATE: "reports:create",
+  REPORTS_REVIEW: "reports:review",
+  REPORTS_APPROVE: "reports:approve",
+  REPORTS_LOCK: "reports:lock",
+  REG45_EVIDENCE_CREATE: "reg45:evidence:create",
 } as const;
 
 export type Permission = (typeof PERMISSIONS)[keyof typeof PERMISSIONS];
@@ -283,6 +297,20 @@ export const ROLE_PERMISSIONS: Record<AppRole, Permission[]> = {
     PERMISSIONS.MANAGE_LEARNING_STUDIO,
     PERMISSIONS.VIEW_TRAINING_NEEDS,
     PERMISSIONS.MANAGE_TRAINING_NEEDS,
+    // ARIA Reports & Review Intelligence (full access for RI)
+    PERMISSIONS.ARIA_REPORTS_VIEW,
+    PERMISSIONS.ARIA_REPORTS_GENERATE,
+    PERMISSIONS.ARIA_REPORTS_REVIEW,
+    PERMISSIONS.ARIA_REPORTS_APPROVE,
+    PERMISSIONS.ARIA_REPORTS_LOCK,
+    PERMISSIONS.ARIA_REPORTS_CONFIGURE,
+    PERMISSIONS.ARIA_REPORTS_HIGH_RISK,
+    PERMISSIONS.REPORTS_VIEW,
+    PERMISSIONS.REPORTS_CREATE,
+    PERMISSIONS.REPORTS_REVIEW,
+    PERMISSIONS.REPORTS_APPROVE,
+    PERMISSIONS.REPORTS_LOCK,
+    PERMISSIONS.REG45_EVIDENCE_CREATE,
   ],
 
   // ── Registered Manager ───────────────────────────────────────────────────────
@@ -353,6 +381,20 @@ export const ROLE_PERMISSIONS: Record<AppRole, Permission[]> = {
     PERMISSIONS.ARIA_STUDIO_APPROVE,
     PERMISSIONS.ARIA_STUDIO_COMMIT,
     PERMISSIONS.ARIA_STUDIO_ADMIN,
+    // ARIA Reports & Review Intelligence (full access for RM)
+    PERMISSIONS.ARIA_REPORTS_VIEW,
+    PERMISSIONS.ARIA_REPORTS_GENERATE,
+    PERMISSIONS.ARIA_REPORTS_REVIEW,
+    PERMISSIONS.ARIA_REPORTS_APPROVE,
+    PERMISSIONS.ARIA_REPORTS_LOCK,
+    PERMISSIONS.ARIA_REPORTS_CONFIGURE,
+    PERMISSIONS.ARIA_REPORTS_HIGH_RISK,
+    PERMISSIONS.REPORTS_VIEW,
+    PERMISSIONS.REPORTS_CREATE,
+    PERMISSIONS.REPORTS_REVIEW,
+    PERMISSIONS.REPORTS_APPROVE,
+    PERMISSIONS.REPORTS_LOCK,
+    PERMISSIONS.REG45_EVIDENCE_CREATE,
   ],
 
   // ── Deputy Manager ───────────────────────────────────────────────────────────
@@ -410,6 +452,14 @@ export const ROLE_PERMISSIONS: Record<AppRole, Permission[]> = {
     PERMISSIONS.ARIA_STUDIO_EDIT,
     PERMISSIONS.ARIA_STUDIO_REVIEW,
     PERMISSIONS.ARIA_STUDIO_APPROVE,
+    // ARIA Reports (review + generate, no lock/configure)
+    PERMISSIONS.ARIA_REPORTS_VIEW,
+    PERMISSIONS.ARIA_REPORTS_GENERATE,
+    PERMISSIONS.ARIA_REPORTS_REVIEW,
+    PERMISSIONS.REPORTS_VIEW,
+    PERMISSIONS.REPORTS_CREATE,
+    PERMISSIONS.REPORTS_REVIEW,
+    PERMISSIONS.REG45_EVIDENCE_CREATE,
   ],
 
   // ── Team Leader ──────────────────────────────────────────────────────────────
@@ -454,6 +504,12 @@ export const ROLE_PERMISSIONS: Record<AppRole, Permission[]> = {
     PERMISSIONS.ARIA_STUDIO_CREATE,
     PERMISSIONS.ARIA_STUDIO_EDIT,
     PERMISSIONS.ARIA_STUDIO_REVIEW,
+    // ARIA Reports (view + generate)
+    PERMISSIONS.ARIA_REPORTS_VIEW,
+    PERMISSIONS.ARIA_REPORTS_GENERATE,
+    PERMISSIONS.REPORTS_VIEW,
+    PERMISSIONS.REPORTS_CREATE,
+    PERMISSIONS.REG45_EVIDENCE_CREATE,
   ],
 
   // ── Residential Care Worker ───────────────────────────────────────────────────
@@ -472,6 +528,9 @@ export const ROLE_PERMISSIONS: Record<AppRole, Permission[]> = {
     PERMISSIONS.ARIA_STUDIO_VIEW,
     PERMISSIONS.ARIA_STUDIO_CREATE,
     PERMISSIONS.ARIA_STUDIO_EDIT,
+    // ARIA Reports (view only)
+    PERMISSIONS.ARIA_REPORTS_VIEW,
+    PERMISSIONS.REPORTS_VIEW,
   ],
 
   // ── Bank Staff ───────────────────────────────────────────────────────────────
@@ -730,6 +789,9 @@ export function canAccessModule(role: AppRole, module: string): boolean {
     ri: PERMISSIONS.VIEW_RI_COMMAND_CENTRE,
     // Learning Studio
     learning: PERMISSIONS.VIEW_LEARNING_STUDIO,
+    // ARIA Reports
+    "aria-reports": PERMISSIONS.ARIA_REPORTS_VIEW,
+    "aria-dashboard": PERMISSIONS.ARIA_REPORTS_VIEW,
   };
   const required = map[module];
   if (!required) return true; // unknown module defaults to accessible

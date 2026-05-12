@@ -36,6 +36,9 @@ import type {
   AriaGenerationResult,
   AriaInvocationInput,
 } from "@/lib/aria/aria-types";
+import { buildAriaContext } from "@/lib/aria/aria-context-builder";
+import { scanForSafeguardingFlags } from "@/lib/aria/aria-safeguarding-guardrails";
+import { linkCommittedOutput } from "@/lib/aria/aria-smart-linking";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type LooseSupabase = SupabaseClient<any, "public", any>;
@@ -1375,9 +1378,20 @@ export async function invokeAriaCommand(
     };
   }
 
-  // Build the prompts
+  // Build safe context from Cornerstone records (Phase 9)
+  const context = await buildAriaContext({
+    actor: args.actor,
+    homeId: args.homeId,
+    childId: args.childId,
+    staffId: args.staffId,
+    sourceModule: args.sourceModule,
+    sourceRecordId: args.sourceRecordId,
+    sourceRecordType: args.sourceRecordType,
+  });
+
+  // Build the prompts (context injected into user prompt)
   const systemPrompt = buildSystemPrompt(command);
-  const userPrompt = buildUserPrompt(args);
+  const userPrompt = buildUserPrompt(args, context.contextSnippet);
 
   // Persist the request (best effort — if Supabase is not configured, we
   // still call the provider and return the draft, but with persisted=false).
@@ -1416,6 +1430,7 @@ export async function invokeAriaCommand(
 
   const cleanedText = applyAriaPostprocessor(generation.text);
   const confidence = inferConfidence(command, cleanedText);
+  const guardrails = scanForSafeguardingFlags(cleanedText, command.riskLevel);
   const outputId = `aria_out_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
 
   if (supabase) {
@@ -1435,8 +1450,13 @@ export async function invokeAriaCommand(
       approval_required: command.approvalRequired,
       status: "draft",
       confidence,
-      redacted_context_summary: redactedContextSummaryFor(args),
-      context_record_ids: contextRecordIdsFor(args),
+      redacted_context_summary: context.fetched
+        ? `${redactedContextSummaryFor(args)}; ${context.redactedSummary}`
+        : redactedContextSummaryFor(args),
+      context_record_ids: [
+        ...contextRecordIdsFor(args),
+        ...context.records.map((r) => r.sourceRecordId),
+      ],
     });
 
     await writeAuditEvent({
@@ -1462,14 +1482,20 @@ export async function invokeAriaCommand(
       generatedText: cleanedText,
       structuredOutput: {},
       confidence,
-      redactedContextSummary: redactedContextSummaryFor(args),
-      contextRecordIds: contextRecordIdsFor(args),
+      redactedContextSummary: context.fetched
+        ? `${redactedContextSummaryFor(args)}; ${context.redactedSummary}`
+        : redactedContextSummaryFor(args),
+      contextRecordIds: [
+        ...contextRecordIdsFor(args),
+        ...context.records.map((r) => r.sourceRecordId),
+      ],
       ariaLabel: "Aria suggested draft",
       llmUsed: generation.llmUsed,
       providerId: generation.providerId,
       modelId: generation.modelId,
-      approvalRequired: command.approvalRequired,
+      approvalRequired: guardrails.mandatoryReview || command.approvalRequired,
       persisted: !!supabase,
+      guardrails: guardrails.flagged ? guardrails : undefined,
     },
     status: 200,
     providerConfig,
@@ -1617,6 +1643,19 @@ export async function applyApprovalDecision(args: ApplyApprovalArgs): Promise<{
     eventDetail: { decisionText: args.decisionText },
   });
 
+  // Smart linking — when committing, write the bidirectional link
+  if (
+    args.decision === "commit" &&
+    args.committedRecordType &&
+    args.committedRecordId
+  ) {
+    await linkCommittedOutput(
+      args.outputId,
+      args.committedRecordType,
+      args.committedRecordId,
+    );
+  }
+
   return { ok: true, status: 200 };
 }
 
@@ -1640,7 +1679,7 @@ function buildSystemPrompt(command: AriaCommandSpec): string {
   ].join("\n");
 }
 
-function buildUserPrompt(args: AriaInvokeArgs): string {
+function buildUserPrompt(args: AriaInvokeArgs, contextSnippet?: string): string {
   const lines: string[] = [];
   lines.push(`COMMAND: ${args.commandId}`);
   if (args.homeId) lines.push(`HOME: ${args.homeId}`);
@@ -1654,6 +1693,10 @@ function buildUserPrompt(args: AriaInvokeArgs): string {
     lines.push("");
     lines.push("ADDITIONAL CONTEXT (metadata, do not invent beyond this):");
     lines.push(JSON.stringify(args.inputMetadata, null, 2));
+  }
+  if (contextSnippet) {
+    lines.push("");
+    lines.push(contextSnippet);
   }
   return lines.join("\n");
 }
