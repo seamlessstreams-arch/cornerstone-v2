@@ -33,3 +33,5 @@ export { AriaFeedbackStats } from "./aria-feedback-stats";
 export { AriaContextLinker } from "./aria-context-linker";
 export { AriaNotificationPrefs } from "./aria-notification-prefs";
 export { AriaChallengeModePanel } from "./aria-challenge-mode";
+export { AriaSmartSummary } from "./aria-smart-summary";
+export { AriaWeeklyDigest } from "./aria-weekly-digest";
