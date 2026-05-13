@@ -25,6 +25,10 @@ import { RiskIntelligenceCard } from "@/components/dashboard/risk-intelligence-c
 import { IncidentAnalyticsCard } from "@/components/dashboard/incident-analytics-card";
 import { RecordingQualityCard } from "@/components/dashboard/recording-quality-card";
 import { SafeguardingIntelligenceCard } from "@/components/dashboard/safeguarding-intelligence-card";
+import { MedicationIntelligenceCard } from "@/components/dashboard/medication-intelligence-card";
+import { ContactEngagementCard } from "@/components/dashboard/contact-engagement-card";
+import { EducationIntelligenceCard } from "@/components/dashboard/education-intelligence-card";
+import { HealthWellbeingCard } from "@/components/dashboard/health-wellbeing-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -904,6 +908,10 @@ export default function ManagerControlCentrePage() {
         <IncidentAnalyticsCard />
         <RecordingQualityCard />
         <SafeguardingIntelligenceCard />
+        <MedicationIntelligenceCard />
+        <ContactEngagementCard />
+        <EducationIntelligenceCard />
+        <HealthWellbeingCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
