@@ -120,6 +120,12 @@ import { IndividualRiskAssessmentCard } from "@/components/dashboard/individual-
 import { ParentalResponsibilityCard } from "@/components/dashboard/parental-responsibility-card";
 import { ChildrensWishesFeelingsCard } from "@/components/dashboard/childrens-wishes-feelings-card";
 import { DailyRoutineCard } from "@/components/dashboard/daily-routine-card";
+import { ChildExploitationScreeningCard } from "@/components/dashboard/child-exploitation-screening-card";
+import { TraumaInformedCareCard } from "@/components/dashboard/trauma-informed-care-card";
+import { RespiteShortBreaksCard } from "@/components/dashboard/respite-short-breaks-card";
+import { MedicationAdministrationCard } from "@/components/dashboard/medication-administration-card";
+import { StaffSupervisionSessionsCard } from "@/components/dashboard/staff-supervision-sessions-card";
+import { FireSafetyCard } from "@/components/dashboard/fire-safety-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1094,6 +1100,12 @@ export default function ManagerControlCentrePage() {
         <ParentalResponsibilityCard />
         <ChildrensWishesFeelingsCard />
         <DailyRoutineCard />
+        <ChildExploitationScreeningCard />
+        <TraumaInformedCareCard />
+        <RespiteShortBreaksCard />
+        <MedicationAdministrationCard />
+        <StaffSupervisionSessionsCard />
+        <FireSafetyCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
