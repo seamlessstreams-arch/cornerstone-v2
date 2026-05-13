@@ -63,6 +63,10 @@ import { NightMonitoringCard } from "@/components/dashboard/night-monitoring-car
 import { CulturalIdentityCard } from "@/components/dashboard/cultural-identity-card";
 import { SubstanceMisuseCard } from "@/components/dashboard/substance-misuse-card";
 import { IndependentVisitorsCard } from "@/components/dashboard/independent-visitors-card";
+import { BusinessContinuityCard } from "@/components/dashboard/business-continuity-card";
+import { StatementOfPurposeCard } from "@/components/dashboard/statement-of-purpose-card";
+import { Reg45ReportsCard } from "@/components/dashboard/reg45-reports-card";
+import { ChildrensGuideCard } from "@/components/dashboard/childrens-guide-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -980,6 +984,10 @@ export default function ManagerControlCentrePage() {
         <CulturalIdentityCard />
         <SubstanceMisuseCard />
         <IndependentVisitorsCard />
+        <BusinessContinuityCard />
+        <StatementOfPurposeCard />
+        <Reg45ReportsCard />
+        <ChildrensGuideCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
