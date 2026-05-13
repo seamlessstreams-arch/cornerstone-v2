@@ -37,6 +37,8 @@ import { RotaIntelligenceCard } from "@/components/dashboard/rota-intelligence-c
 import { PremisesIntelligenceCard } from "@/components/dashboard/premises-intelligence-card";
 import { TrainingIntelligenceCard } from "@/components/dashboard/training-intelligence-card";
 import { FinanceIntelligenceCard } from "@/components/dashboard/finance-intelligence-card";
+import { LifeSkillsCard } from "@/components/dashboard/life-skills-card";
+import { NotifiableEventsCard } from "@/components/dashboard/notifiable-events-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -928,6 +930,8 @@ export default function ManagerControlCentrePage() {
         <PremisesIntelligenceCard />
         <TrainingIntelligenceCard />
         <FinanceIntelligenceCard />
+        <LifeSkillsCard />
+        <NotifiableEventsCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
