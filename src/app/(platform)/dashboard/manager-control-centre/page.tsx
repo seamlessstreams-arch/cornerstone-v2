@@ -117,6 +117,9 @@ import { RiskRegisterCard } from "@/components/dashboard/risk-register-card";
 import { DelegatedAuthorityCard } from "@/components/dashboard/delegated-authority-card";
 import { LanguageCommunicationCard } from "@/components/dashboard/language-communication-card";
 import { IndividualRiskAssessmentCard } from "@/components/dashboard/individual-risk-assessment-card";
+import { ParentalResponsibilityCard } from "@/components/dashboard/parental-responsibility-card";
+import { ChildrensWishesFeelingsCard } from "@/components/dashboard/childrens-wishes-feelings-card";
+import { DailyRoutineCard } from "@/components/dashboard/daily-routine-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1088,6 +1091,9 @@ export default function ManagerControlCentrePage() {
         <DelegatedAuthorityCard />
         <LanguageCommunicationCard />
         <IndividualRiskAssessmentCard />
+        <ParentalResponsibilityCard />
+        <ChildrensWishesFeelingsCard />
+        <DailyRoutineCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
