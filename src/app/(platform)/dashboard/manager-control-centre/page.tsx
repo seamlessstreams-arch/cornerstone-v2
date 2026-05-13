@@ -21,6 +21,8 @@ import { cn } from "@/lib/utils";
 import { AriaDailyIntelligence } from "@/components/aria/aria-daily-intelligence";
 import { SupervisionIntelligenceCard } from "@/components/dashboard/supervision-intelligence-card";
 import { RegulatoryReportingCard } from "@/components/dashboard/regulatory-reporting-card";
+import { RiskIntelligenceCard } from "@/components/dashboard/risk-intelligence-card";
+import { IncidentAnalyticsCard } from "@/components/dashboard/incident-analytics-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -892,10 +894,12 @@ export default function ManagerControlCentrePage() {
         </div>
       )}
 
-      {/* ── supervision & regulatory reporting intelligence ─────────────── */}
+      {/* ── operational intelligence cards ──────────────────────────────── */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
         <SupervisionIntelligenceCard />
         <RegulatoryReportingCard />
+        <RiskIntelligenceCard />
+        <IncidentAnalyticsCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
