@@ -67,6 +67,8 @@ import { BusinessContinuityCard } from "@/components/dashboard/business-continui
 import { StatementOfPurposeCard } from "@/components/dashboard/statement-of-purpose-card";
 import { Reg45ReportsCard } from "@/components/dashboard/reg45-reports-card";
 import { ChildrensGuideCard } from "@/components/dashboard/childrens-guide-card";
+import { TransitionPlanningCard } from "@/components/dashboard/transition-planning-card";
+import { ChildrensParticipationCard } from "@/components/dashboard/childrens-participation-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -988,6 +990,8 @@ export default function ManagerControlCentrePage() {
         <StatementOfPurposeCard />
         <Reg45ReportsCard />
         <ChildrensGuideCard />
+        <TransitionPlanningCard />
+        <ChildrensParticipationCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
