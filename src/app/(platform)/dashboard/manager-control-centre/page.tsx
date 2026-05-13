@@ -129,6 +129,15 @@ import { FireSafetyCard } from "@/components/dashboard/fire-safety-card";
 import { SecureStorageCard } from "@/components/dashboard/secure-storage-card";
 import { ComplaintsInvestigationCard } from "@/components/dashboard/complaints-investigation-card";
 import { WorkforceDiversityCard } from "@/components/dashboard/workforce-diversity-card";
+import { VisitorManagementCard } from "@/components/dashboard/visitor-management-card";
+import { EmergencyAdmissionsCard } from "@/components/dashboard/emergency-admissions-card";
+import { StaffGrievanceCard } from "@/components/dashboard/staff-grievance-card";
+import { EqualityHumanRightsCard } from "@/components/dashboard/equality-human-rights-card";
+import { ChildrensFundManagementCard } from "@/components/dashboard/childrens-fund-management-card";
+import { StaffAttendanceCard } from "@/components/dashboard/staff-attendance-card";
+import { AllegationManagementCard } from "@/components/dashboard/allegation-management-card";
+import { TransportSafetyCard } from "@/components/dashboard/transport-safety-card";
+import { StaffTeamMeetingsCard } from "@/components/dashboard/staff-team-meetings-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1112,6 +1121,15 @@ export default function ManagerControlCentrePage() {
         <SecureStorageCard />
         <ComplaintsInvestigationCard />
         <WorkforceDiversityCard />
+        <VisitorManagementCard />
+        <EmergencyAdmissionsCard />
+        <StaffGrievanceCard />
+        <EqualityHumanRightsCard />
+        <ChildrensFundManagementCard />
+        <StaffAttendanceCard />
+        <AllegationManagementCard />
+        <TransportSafetyCard />
+        <StaffTeamMeetingsCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
