@@ -73,6 +73,10 @@ import { FoodNutritionCard } from "@/components/dashboard/food-nutrition-card";
 import { PocketMoneyCard } from "@/components/dashboard/pocket-money-card";
 import { EnvironmentalSafetyCard } from "@/components/dashboard/environmental-safety-card";
 import { RecordsManagementCard } from "@/components/dashboard/records-management-card";
+import { SleepPatternsCard } from "@/components/dashboard/sleep-patterns-card";
+import { StakeholderEngagementCard } from "@/components/dashboard/stakeholder-engagement-card";
+import { ImpactRiskAssessmentCard } from "@/components/dashboard/impact-risk-assessment-card";
+import { StaffWellbeingCard } from "@/components/dashboard/staff-wellbeing-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1000,6 +1004,10 @@ export default function ManagerControlCentrePage() {
         <PocketMoneyCard />
         <EnvironmentalSafetyCard />
         <RecordsManagementCard />
+        <SleepPatternsCard />
+        <StakeholderEngagementCard />
+        <ImpactRiskAssessmentCard />
+        <StaffWellbeingCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
