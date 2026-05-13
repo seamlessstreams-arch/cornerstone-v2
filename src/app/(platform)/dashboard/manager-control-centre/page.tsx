@@ -102,6 +102,12 @@ import { PlacementStabilityCard } from "@/components/dashboard/placement-stabili
 import { ProviderVisitsCard } from "@/components/dashboard/provider-visits-card";
 import { MatchingReferralCard } from "@/components/dashboard/matching-referral-card";
 import { IndependencePreparationCard } from "@/components/dashboard/independence-preparation-card";
+import { SensoryProfileCard } from "@/components/dashboard/sensory-profile-card";
+import { PeerMentoringCard } from "@/components/dashboard/peer-mentoring-card";
+import { ContactMonitoringCard } from "@/components/dashboard/contact-monitoring-card";
+import { AttachmentRelationshipsCard } from "@/components/dashboard/attachment-relationships-card";
+import { DiversityInclusionCard } from "@/components/dashboard/diversity-inclusion-card";
+import { EmergencyPlacementCard } from "@/components/dashboard/emergency-placement-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1058,6 +1064,12 @@ export default function ManagerControlCentrePage() {
         <ProviderVisitsCard />
         <MatchingReferralCard />
         <IndependencePreparationCard />
+        <SensoryProfileCard />
+        <PeerMentoringCard />
+        <ContactMonitoringCard />
+        <AttachmentRelationshipsCard />
+        <DiversityInclusionCard />
+        <EmergencyPlacementCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
