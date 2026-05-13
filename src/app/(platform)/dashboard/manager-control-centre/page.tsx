@@ -77,6 +77,11 @@ import { SleepPatternsCard } from "@/components/dashboard/sleep-patterns-card";
 import { StakeholderEngagementCard } from "@/components/dashboard/stakeholder-engagement-card";
 import { ImpactRiskAssessmentCard } from "@/components/dashboard/impact-risk-assessment-card";
 import { StaffWellbeingCard } from "@/components/dashboard/staff-wellbeing-card";
+import { KpiTrackingCard } from "@/components/dashboard/kpi-tracking-card";
+import { ProfessionalDevelopmentCard } from "@/components/dashboard/professional-development-card";
+import { TherapeuticInterventionsCard } from "@/components/dashboard/therapeutic-interventions-card";
+import { WorkforcePlanningCard } from "@/components/dashboard/workforce-planning-card";
+import { CarePlanningCard } from "@/components/dashboard/care-planning-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1008,6 +1013,11 @@ export default function ManagerControlCentrePage() {
         <StakeholderEngagementCard />
         <ImpactRiskAssessmentCard />
         <StaffWellbeingCard />
+        <KpiTrackingCard />
+        <ProfessionalDevelopmentCard />
+        <TherapeuticInterventionsCard />
+        <WorkforcePlanningCard />
+        <CarePlanningCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
