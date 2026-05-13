@@ -43,6 +43,8 @@ import { SCCIFEvaluationCard } from "@/components/dashboard/sccif-evaluation-car
 import { VisitorsCard } from "@/components/dashboard/visitors-card";
 import { OutcomesCard } from "@/components/dashboard/outcomes-card";
 import { HandoverCard } from "@/components/dashboard/handover-card";
+import { AppraisalsCard } from "@/components/dashboard/appraisals-card";
+import { MeetingsCard } from "@/components/dashboard/meetings-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -940,6 +942,8 @@ export default function ManagerControlCentrePage() {
         <VisitorsCard />
         <OutcomesCard />
         <HandoverCard />
+        <AppraisalsCard />
+        <MeetingsCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
