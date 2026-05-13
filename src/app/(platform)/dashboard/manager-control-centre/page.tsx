@@ -82,6 +82,9 @@ import { ProfessionalDevelopmentCard } from "@/components/dashboard/professional
 import { TherapeuticInterventionsCard } from "@/components/dashboard/therapeutic-interventions-card";
 import { WorkforcePlanningCard } from "@/components/dashboard/workforce-planning-card";
 import { CarePlanningCard } from "@/components/dashboard/care-planning-card";
+import { FamilyEngagementCard } from "@/components/dashboard/family-engagement-card";
+import { CommissioningReferralsCard } from "@/components/dashboard/commissioning-referrals-card";
+import { ChildrensRightsCard } from "@/components/dashboard/childrens-rights-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1018,6 +1021,9 @@ export default function ManagerControlCentrePage() {
         <TherapeuticInterventionsCard />
         <WorkforcePlanningCard />
         <CarePlanningCard />
+        <FamilyEngagementCard />
+        <CommissioningReferralsCard />
+        <ChildrensRightsCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
