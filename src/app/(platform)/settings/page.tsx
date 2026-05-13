@@ -17,7 +17,7 @@ import { useStaff } from "@/hooks/use-staff";
 import { useAuthContext } from "@/contexts/auth-context";
 import { cn } from "@/lib/utils";
 
-type SettingsTab = "profile" | "home" | "notifications" | "security" | "roles" | "integrations";
+type SettingsTab = "profile" | "home" | "notifications" | "security" | "roles" | "integrations" | "operations";
 
 const NOTIFICATION_DEFS = [
   { label: "Task assigned to you",           key: "task_assigned",    enabled: true  },
@@ -44,6 +44,7 @@ const TABS_CFG: { id: SettingsTab; label: string; icon: React.ElementType }[] = 
   { id: "security",      label: "Security",      icon: Shield   },
   { id: "roles",         label: "Roles",         icon: Users    },
   { id: "integrations",  label: "Integrations",  icon: Globe    },
+  { id: "operations",    label: "Operations",    icon: Zap      },
 ];
 
 function SavedBanner({ show }: { show: boolean }) {
@@ -337,8 +338,120 @@ export default function SettingsPage() {
 
           {tab === "integrations" && <IntegrationsTab />}
 
+          {tab === "operations" && <OperationsSettingsTab />}
+
         </div>
       </div>
     </PageShell>
+  );
+}
+
+// ── Operations Settings Tab ────────────────────────────────────────────────
+
+function OperationsSettingsTab() {
+  const SETTINGS_GROUPS = [
+    {
+      title: "ARIA Intelligence",
+      icon: Zap,
+      settings: [
+        { key: "aria.enabled", label: "ARIA Intelligence", desc: "Enable or disable ARIA AI intelligence features", type: "toggle" as const, value: true },
+        { key: "aria.auto_scan_interval_hours", label: "Auto-Scan Interval (hours)", desc: "How often ARIA scans for patterns", type: "number" as const, value: 24 },
+        { key: "aria.recommendation_expiry_days", label: "Recommendation Expiry (days)", desc: "Days before unacted recommendations expire", type: "number" as const, value: 7 },
+        { key: "aria.minimum_confidence", label: "Minimum Confidence (0-1)", desc: "Minimum confidence threshold", type: "number" as const, value: 0.7 },
+        { key: "aria.show_positive_patterns", label: "Show Positive Patterns", desc: "Include positive recognition recommendations", type: "toggle" as const, value: true },
+        { key: "aria.oversight_prompts_enabled", label: "Oversight Quality Prompts", desc: "Show ARIA prompts when writing oversight", type: "toggle" as const, value: true },
+      ],
+    },
+    {
+      title: "Compliance Thresholds",
+      icon: Shield,
+      settings: [
+        { key: "compliance.supervision_interval_weeks", label: "Supervision Interval (weeks)", desc: "Maximum weeks between supervisions", type: "number" as const, value: 6 },
+        { key: "compliance.max_consecutive_shifts", label: "Max Consecutive Shifts", desc: "Days before wellbeing alert", type: "number" as const, value: 6 },
+        { key: "compliance.missing_protocol_hours", label: "Missing Protocol (hours)", desc: "Hours before police escalation", type: "number" as const, value: 1 },
+        { key: "compliance.medication_audit_interval_days", label: "Medication Audit Interval (days)", desc: "Days between stock audits", type: "number" as const, value: 7 },
+      ],
+    },
+    {
+      title: "Operational Defaults",
+      icon: Building,
+      settings: [
+        { key: "ops.home_capacity", label: "Home Capacity", desc: "Maximum registered places", type: "number" as const, value: 5 },
+        { key: "ops.daily_log_min_length", label: "Daily Log Min Length", desc: "Minimum characters for daily logs", type: "number" as const, value: 50 },
+        { key: "ops.incident_sign_off_required", label: "Incident Sign-Off Required", desc: "Manager sign-off on all incidents", type: "toggle" as const, value: true },
+        { key: "ops.handover_yp_updates_required", label: "Handover YP Updates Required", desc: "Per-child updates in handover notes", type: "toggle" as const, value: true },
+      ],
+    },
+    {
+      title: "Notification Timing",
+      icon: Bell,
+      settings: [
+        { key: "notify.task_overdue_hours", label: "Task Overdue Alert (hours)", desc: "Hours after due date before flagging", type: "number" as const, value: 2 },
+        { key: "notify.oversight_reminder_hours", label: "Oversight Reminder (hours)", desc: "Hours before oversight reminder", type: "number" as const, value: 48 },
+        { key: "notify.training_expiry_days", label: "Training Expiry Warning (days)", desc: "Days before training expiry warning", type: "number" as const, value: 30 },
+        { key: "notify.shift_unfilled_days", label: "Shift Unfilled Warning (days)", desc: "Days in advance to flag", type: "number" as const, value: 7 },
+      ],
+    },
+  ];
+
+  const [values, setValues] = React.useState<Record<string, unknown>>(() => {
+    const initial: Record<string, unknown> = {};
+    for (const group of SETTINGS_GROUPS) {
+      for (const s of group.settings) {
+        initial[s.key] = s.value;
+      }
+    }
+    return initial;
+  });
+
+  return (
+    <div className="space-y-6">
+      {SETTINGS_GROUPS.map((group) => {
+        const Icon = group.icon;
+        return (
+          <Card key={group.title}>
+            <CardHeader className="pb-3">
+              <CardTitle className="flex items-center gap-2 text-sm">
+                <Icon className="h-4 w-4 text-[var(--cs-text-muted)]" /> {group.title}
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {group.settings.map((setting) => (
+                <div key={setting.key} className="flex items-center justify-between gap-4">
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-[var(--cs-navy)]">{setting.label}</p>
+                    <p className="text-xs text-[var(--cs-text-muted)]">{setting.desc}</p>
+                  </div>
+                  {setting.type === "toggle" ? (
+                    <button
+                      onClick={() => setValues((prev) => ({ ...prev, [setting.key]: !prev[setting.key] }))}
+                      className={cn(
+                        "h-6 w-11 rounded-full relative transition-colors shrink-0",
+                        values[setting.key] ? "bg-emerald-500" : "bg-gray-300",
+                      )}
+                    >
+                      <div className={cn(
+                        "h-5 w-5 bg-white rounded-full absolute top-0.5 transition-all shadow",
+                        values[setting.key] ? "left-[22px]" : "left-0.5",
+                      )} />
+                    </button>
+                  ) : (
+                    <Input
+                      type="number"
+                      value={String(values[setting.key] ?? "")}
+                      onChange={(e) => setValues((prev) => ({ ...prev, [setting.key]: parseFloat(e.target.value) || 0 }))}
+                      className="w-24 text-right text-sm shrink-0"
+                    />
+                  )}
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+        );
+      })}
+      <Button className="gap-2">
+        <Save className="h-4 w-4" /> Save Operations Settings
+      </Button>
+    </div>
   );
 }
