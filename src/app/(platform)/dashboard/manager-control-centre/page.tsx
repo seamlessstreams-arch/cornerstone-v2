@@ -55,6 +55,10 @@ import { StaffDisciplinaryCard } from "@/components/dashboard/staff-disciplinary
 import { SanctionsRewardsCard } from "@/components/dashboard/sanctions-rewards-card";
 import { ContextualSafeguardingCard } from "@/components/dashboard/contextual-safeguarding-card";
 import { DeprivationOfLibertyCard } from "@/components/dashboard/deprivation-of-liberty-card";
+import { WhistleblowingCard } from "@/components/dashboard/whistleblowing-card";
+import { PoliciesRegisterCard } from "@/components/dashboard/policies-register-card";
+import { AdvocacyCard } from "@/components/dashboard/advocacy-card";
+import { MultiAgencyCard } from "@/components/dashboard/multi-agency-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -964,6 +968,10 @@ export default function ManagerControlCentrePage() {
         <SanctionsRewardsCard />
         <ContextualSafeguardingCard />
         <DeprivationOfLibertyCard />
+        <WhistleblowingCard />
+        <PoliciesRegisterCard />
+        <AdvocacyCard />
+        <MultiAgencyCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}

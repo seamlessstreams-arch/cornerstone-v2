@@ -1487,7 +1487,7 @@ describe("listDoLOrders", () => {
     expect(result.ok).toBe(true);
     if (result.ok) {
       expect(result.data).toEqual([]);
-      expect((result as { persisted: boolean }).persisted).toBe(false);
+      expect((result as unknown as { persisted: boolean }).persisted).toBe(false);
     }
   });
 
@@ -1557,7 +1557,7 @@ describe("listRestrictions", () => {
     expect(result.ok).toBe(true);
     if (result.ok) {
       expect(result.data).toEqual([]);
-      expect((result as { persisted: boolean }).persisted).toBe(false);
+      expect((result as unknown as { persisted: boolean }).persisted).toBe(false);
     }
   });
 
