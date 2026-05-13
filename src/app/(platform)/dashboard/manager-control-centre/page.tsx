@@ -147,6 +147,15 @@ import { MaintenanceRepairsCard } from "@/components/dashboard/maintenance-repai
 import { GiftsHospitalityCard } from "@/components/dashboard/gifts-hospitality-card";
 import { BedroomAuditCard } from "@/components/dashboard/bedroom-audit-card";
 import { LaundryClothingCard } from "@/components/dashboard/laundry-clothing-card";
+import { EmergencyDrillCard } from "@/components/dashboard/emergency-drill-card";
+import { HealthAppointmentsCard } from "@/components/dashboard/health-appointments-card";
+import { CommunalAreaAuditCard } from "@/components/dashboard/communal-area-audit-card";
+import { NotificationsRegisterCard } from "@/components/dashboard/notifications-register-card";
+import { StaffExitInterviewsCard } from "@/components/dashboard/staff-exit-interviews-card";
+import { ChildrensMeetingsCard } from "@/components/dashboard/childrens-meetings-card";
+import { HolidayTripsCard } from "@/components/dashboard/holiday-trips-card";
+import { DataProtectionCard } from "@/components/dashboard/data-protection-card";
+import { PanelDecisionsCard } from "@/components/dashboard/panel-decisions-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1148,6 +1157,15 @@ export default function ManagerControlCentrePage() {
         <GiftsHospitalityCard />
         <BedroomAuditCard />
         <LaundryClothingCard />
+        <EmergencyDrillCard />
+        <HealthAppointmentsCard />
+        <CommunalAreaAuditCard />
+        <NotificationsRegisterCard />
+        <StaffExitInterviewsCard />
+        <ChildrensMeetingsCard />
+        <HolidayTripsCard />
+        <DataProtectionCard />
+        <PanelDecisionsCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
