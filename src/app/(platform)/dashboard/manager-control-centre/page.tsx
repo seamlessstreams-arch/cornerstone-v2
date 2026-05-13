@@ -138,6 +138,15 @@ import { StaffAttendanceCard } from "@/components/dashboard/staff-attendance-car
 import { AllegationManagementCard } from "@/components/dashboard/allegation-management-card";
 import { TransportSafetyCard } from "@/components/dashboard/transport-safety-card";
 import { StaffTeamMeetingsCard } from "@/components/dashboard/staff-team-meetings-card";
+import { CctvSurveillanceCard } from "@/components/dashboard/cctv-surveillance-card";
+import { MealtimesNutritionCard } from "@/components/dashboard/mealtimes-nutrition-card";
+import { BuildingSecurityCard } from "@/components/dashboard/building-security-card";
+import { WaterSafetyCard } from "@/components/dashboard/water-safety-card";
+import { InfectionControlCard } from "@/components/dashboard/infection-control-card";
+import { MaintenanceRepairsCard } from "@/components/dashboard/maintenance-repairs-card";
+import { GiftsHospitalityCard } from "@/components/dashboard/gifts-hospitality-card";
+import { BedroomAuditCard } from "@/components/dashboard/bedroom-audit-card";
+import { LaundryClothingCard } from "@/components/dashboard/laundry-clothing-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1130,6 +1139,15 @@ export default function ManagerControlCentrePage() {
         <AllegationManagementCard />
         <TransportSafetyCard />
         <StaffTeamMeetingsCard />
+        <CctvSurveillanceCard />
+        <MealtimesNutritionCard />
+        <BuildingSecurityCard />
+        <WaterSafetyCard />
+        <InfectionControlCard />
+        <MaintenanceRepairsCard />
+        <GiftsHospitalityCard />
+        <BedroomAuditCard />
+        <LaundryClothingCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
