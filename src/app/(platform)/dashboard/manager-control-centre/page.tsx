@@ -111,6 +111,12 @@ import { EmergencyPlacementCard } from "@/components/dashboard/emergency-placeme
 import { CourtProceedingsCard } from "@/components/dashboard/court-proceedings-card";
 import { BehaviourSupportPlansCard } from "@/components/dashboard/behaviour-support-plans-card";
 import { DischargeTransitionCard } from "@/components/dashboard/discharge-transition-card";
+import { MedicationErrorsCard } from "@/components/dashboard/medication-errors-card";
+import { ChildrensAchievementsCard } from "@/components/dashboard/childrens-achievements-card";
+import { RiskRegisterCard } from "@/components/dashboard/risk-register-card";
+import { DelegatedAuthorityCard } from "@/components/dashboard/delegated-authority-card";
+import { LanguageCommunicationCard } from "@/components/dashboard/language-communication-card";
+import { IndividualRiskAssessmentCard } from "@/components/dashboard/individual-risk-assessment-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1076,6 +1082,12 @@ export default function ManagerControlCentrePage() {
         <CourtProceedingsCard />
         <BehaviourSupportPlansCard />
         <DischargeTransitionCard />
+        <MedicationErrorsCard />
+        <ChildrensAchievementsCard />
+        <RiskRegisterCard />
+        <DelegatedAuthorityCard />
+        <LanguageCommunicationCard />
+        <IndividualRiskAssessmentCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
