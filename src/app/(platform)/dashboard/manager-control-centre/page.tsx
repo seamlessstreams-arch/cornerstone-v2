@@ -183,6 +183,9 @@ import { ChildrensProgressTrackingCard } from "@/components/dashboard/childrens-
 import { KeyworkerSessionsCard } from "@/components/dashboard/keyworker-sessions-card";
 import { RestraintDebriefCard } from "@/components/dashboard/restraint-debrief-card";
 import { StaffReflectivePracticeCard } from "@/components/dashboard/staff-reflective-practice-card";
+import { StaffHandoverNotesCard } from "@/components/dashboard/staff-handover-notes-card";
+import { ChildRiskAssessmentReviewCard } from "@/components/dashboard/child-risk-assessment-review-card";
+import { HomeDecorationPersonalisationCard } from "@/components/dashboard/home-decoration-personalisation-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1220,6 +1223,9 @@ export default function ManagerControlCentrePage() {
         <KeyworkerSessionsCard />
         <RestraintDebriefCard />
         <StaffReflectivePracticeCard />
+        <StaffHandoverNotesCard />
+        <ChildRiskAssessmentReviewCard />
+        <HomeDecorationPersonalisationCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
