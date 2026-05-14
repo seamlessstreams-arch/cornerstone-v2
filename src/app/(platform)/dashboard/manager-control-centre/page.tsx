@@ -156,6 +156,15 @@ import { ChildrensMeetingsCard } from "@/components/dashboard/childrens-meetings
 import { HolidayTripsCard } from "@/components/dashboard/holiday-trips-card";
 import { DataProtectionCard } from "@/components/dashboard/data-protection-card";
 import { PanelDecisionsCard } from "@/components/dashboard/panel-decisions-card";
+import { VehicleManagementCard } from "@/components/dashboard/vehicle-management-card";
+import { PestControlCard } from "@/components/dashboard/pest-control-card";
+import { ChildrensFeedbackCard } from "@/components/dashboard/childrens-feedback-card";
+import { UtilityManagementCard } from "@/components/dashboard/utility-management-card";
+import { VolunteerManagementCard } from "@/components/dashboard/volunteer-management-card";
+import { RoomTemperatureCard } from "@/components/dashboard/room-temperature-card";
+import { MedicationAuditCard } from "@/components/dashboard/medication-audit-card";
+import { ChildrensAbsenceCard } from "@/components/dashboard/childrens-absence-card";
+import { HomeImprovementCard } from "@/components/dashboard/home-improvement-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1166,6 +1175,15 @@ export default function ManagerControlCentrePage() {
         <HolidayTripsCard />
         <DataProtectionCard />
         <PanelDecisionsCard />
+        <VehicleManagementCard />
+        <PestControlCard />
+        <ChildrensFeedbackCard />
+        <UtilityManagementCard />
+        <VolunteerManagementCard />
+        <RoomTemperatureCard />
+        <MedicationAuditCard />
+        <ChildrensAbsenceCard />
+        <HomeImprovementCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
