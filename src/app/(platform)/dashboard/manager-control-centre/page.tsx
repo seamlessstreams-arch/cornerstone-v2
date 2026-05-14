@@ -225,6 +225,9 @@ import { PrivacyDignityMonitoringCard } from "@/components/dashboard/privacy-dig
 import { ChildrensAspirationsGoalsCard } from "@/components/dashboard/childrens-aspirations-goals-card";
 import { CreativeEnrichmentActivitiesCard } from "@/components/dashboard/creative-enrichment-activities-card";
 import { MedicationEffectivenessReviewCard } from "@/components/dashboard/medication-effectiveness-review-card";
+import { HealthScreeningImmunisationCard } from "@/components/dashboard/health-screening-immunisation-card";
+import { SocialSkillsDevelopmentCard } from "@/components/dashboard/social-skills-development-card";
+import { RestorativeJusticePracticeCard } from "@/components/dashboard/restorative-justice-practice-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1304,6 +1307,9 @@ export default function ManagerControlCentrePage() {
         <ChildrensAspirationsGoalsCard />
         <CreativeEnrichmentActivitiesCard />
         <MedicationEffectivenessReviewCard />
+        <HealthScreeningImmunisationCard />
+        <SocialSkillsDevelopmentCard />
+        <RestorativeJusticePracticeCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
