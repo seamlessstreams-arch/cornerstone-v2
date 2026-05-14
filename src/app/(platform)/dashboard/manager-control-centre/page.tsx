@@ -204,6 +204,9 @@ import { EducationAttendanceTrackingCard } from "@/components/dashboard/educatio
 import { ContactSupervisionCard } from "@/components/dashboard/contact-supervision-card";
 import { SelfHarmRiskMonitoringCard } from "@/components/dashboard/self-harm-risk-monitoring-card";
 import { RoomSharingAssessmentCard } from "@/components/dashboard/room-sharing-assessment-card";
+import { MedicationSideEffectsCard } from "@/components/dashboard/medication-side-effects-card";
+import { PeerRelationshipAssessmentCard } from "@/components/dashboard/peer-relationship-assessment-card";
+import { HomeEnvironmentInspectionCard } from "@/components/dashboard/home-environment-inspection-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1262,6 +1265,9 @@ export default function ManagerControlCentrePage() {
         <ContactSupervisionCard />
         <SelfHarmRiskMonitoringCard />
         <RoomSharingAssessmentCard />
+        <MedicationSideEffectsCard />
+        <PeerRelationshipAssessmentCard />
+        <HomeEnvironmentInspectionCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
