@@ -219,6 +219,9 @@ import { KeyWorkerAllocationCard } from "@/components/dashboard/key-worker-alloc
 import { ConsentCapacityMonitoringCard } from "@/components/dashboard/consent-capacity-monitoring-card";
 import { BehaviourPatternAnalysisCard } from "@/components/dashboard/behaviour-pattern-analysis-card";
 import { PhysicalActivityTrackingCard } from "@/components/dashboard/physical-activity-tracking-card";
+import { ReligiousCulturalObservanceCard } from "@/components/dashboard/religious-cultural-observance-card";
+import { SiblingContactQualityCard } from "@/components/dashboard/sibling-contact-quality-card";
+import { PrivacyDignityMonitoringCard } from "@/components/dashboard/privacy-dignity-monitoring-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1292,6 +1295,9 @@ export default function ManagerControlCentrePage() {
         <ConsentCapacityMonitoringCard />
         <BehaviourPatternAnalysisCard />
         <PhysicalActivityTrackingCard />
+        <ReligiousCulturalObservanceCard />
+        <SiblingContactQualityCard />
+        <PrivacyDignityMonitoringCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
