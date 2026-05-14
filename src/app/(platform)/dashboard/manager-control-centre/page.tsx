@@ -180,6 +180,9 @@ import { LifeStoryWorkCard } from "@/components/dashboard/life-story-work-card";
 import { PositiveHandlingCard } from "@/components/dashboard/positive-handling-card";
 import { ShiftHandoverQualityCard } from "@/components/dashboard/shift-handover-quality-card";
 import { ChildrensProgressTrackingCard } from "@/components/dashboard/childrens-progress-tracking-card";
+import { KeyworkerSessionsCard } from "@/components/dashboard/keyworker-sessions-card";
+import { RestraintDebriefCard } from "@/components/dashboard/restraint-debrief-card";
+import { StaffReflectivePracticeCard } from "@/components/dashboard/staff-reflective-practice-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1214,6 +1217,9 @@ export default function ManagerControlCentrePage() {
         <PositiveHandlingCard />
         <ShiftHandoverQualityCard />
         <ChildrensProgressTrackingCard />
+        <KeyworkerSessionsCard />
+        <RestraintDebriefCard />
+        <StaffReflectivePracticeCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}

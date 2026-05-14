@@ -1,0 +1,46 @@
+import { NextRequest, NextResponse } from "next/server";
+import { isSupabaseEnabled } from "@/lib/supabase/server";
+import {
+  listRecords, createRecord, updateRecord,
+  SESSION_FOCUSES, SESSION_QUALITIES, CHILD_MOODS, SESSION_LOCATIONS,
+} from "@/lib/services/keyworker-sessions-service";
+import type { SessionFocus, SessionQuality, ChildMood, SessionLocation } from "@/lib/services/keyworker-sessions-service";
+
+export async function GET(request: NextRequest) {
+  const { searchParams } = new URL(request.url);
+  const homeId = searchParams.get("homeId");
+  const type = searchParams.get("type");
+  if (!homeId) return NextResponse.json({ error: "homeId required" }, { status: 400 });
+  if (type === "session_focuses") return NextResponse.json({ ok: true, data: SESSION_FOCUSES });
+  if (type === "session_qualities") return NextResponse.json({ ok: true, data: SESSION_QUALITIES });
+  if (type === "child_moods") return NextResponse.json({ ok: true, data: CHILD_MOODS });
+  if (type === "session_locations") return NextResponse.json({ ok: true, data: SESSION_LOCATIONS });
+  if (!isSupabaseEnabled()) return NextResponse.json({ ok: true, data: [], persisted: false });
+  const result = await listRecords(homeId, {
+    sessionFocus: (searchParams.get("sessionFocus") ?? undefined) as SessionFocus | undefined,
+    sessionQuality: (searchParams.get("sessionQuality") ?? undefined) as SessionQuality | undefined,
+    childMood: (searchParams.get("childMood") ?? undefined) as ChildMood | undefined,
+    sessionLocation: (searchParams.get("sessionLocation") ?? undefined) as SessionLocation | undefined,
+    limit: searchParams.get("limit") ? parseInt(searchParams.get("limit")!) : undefined,
+  });
+  if (!result.ok) return NextResponse.json({ error: result.error }, { status: 500 });
+  return NextResponse.json({ ok: true, data: result.data });
+}
+
+export async function POST(request: NextRequest) {
+  const body = await request.json();
+  const { action, ...payload } = body;
+  if (action === "create_record") {
+    const result = await createRecord(payload);
+    if (!result.ok) return NextResponse.json({ error: result.error }, { status: 500 });
+    return NextResponse.json({ ok: true, data: result.data }, { status: 201 });
+  }
+  if (action === "update_record") {
+    const { id, ...updates } = payload;
+    if (!id) return NextResponse.json({ error: "id required" }, { status: 400 });
+    const result = await updateRecord(id, updates);
+    if (!result.ok) return NextResponse.json({ error: result.error }, { status: 500 });
+    return NextResponse.json({ ok: true, data: result.data });
+  }
+  return NextResponse.json({ error: "Unknown action" }, { status: 400 });
+}
