@@ -198,6 +198,9 @@ import { InternetUsageMonitoringCard } from "@/components/dashboard/internet-usa
 import { SleepQualityAssessmentCard } from "@/components/dashboard/sleep-quality-assessment-card";
 import { CulturalIdentitySupportCard } from "@/components/dashboard/cultural-identity-support-card";
 import { PocketMoneyManagementCard } from "@/components/dashboard/pocket-money-management-card";
+import { ChildWellbeingCheckinCard } from "@/components/dashboard/child-wellbeing-checkin-card";
+import { StaffDebriefSupportCard } from "@/components/dashboard/staff-debrief-support-card";
+import { EducationAttendanceTrackingCard } from "@/components/dashboard/education-attendance-tracking-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1250,6 +1253,9 @@ export default function ManagerControlCentrePage() {
         <SleepQualityAssessmentCard />
         <CulturalIdentitySupportCard />
         <PocketMoneyManagementCard />
+        <ChildWellbeingCheckinCard />
+        <StaffDebriefSupportCard />
+        <EducationAttendanceTrackingCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
