@@ -246,6 +246,9 @@ import { RelationshipEducationSafetyCard } from "@/components/dashboard/relation
 import { PetCareResponsibilityCard } from "@/components/dashboard/pet-care-responsibility-card";
 import { GardenHorticultureActivitiesCard } from "@/components/dashboard/garden-horticulture-activities-card";
 import { FaithSpiritualObservanceCard } from "@/components/dashboard/faith-spiritual-observance-card";
+import { StaffPatternIntelligenceCard } from "@/components/dashboard/staff-pattern-intelligence-card";
+import { StaffPerformanceDipCard } from "@/components/dashboard/staff-performance-dip-card";
+import { StaffBurnoutIndicatorCard } from "@/components/dashboard/staff-burnout-indicator-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1346,6 +1349,9 @@ export default function ManagerControlCentrePage() {
         <PetCareResponsibilityCard />
         <GardenHorticultureActivitiesCard />
         <FaithSpiritualObservanceCard />
+        <StaffPatternIntelligenceCard />
+        <StaffPerformanceDipCard />
+        <StaffBurnoutIndicatorCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
