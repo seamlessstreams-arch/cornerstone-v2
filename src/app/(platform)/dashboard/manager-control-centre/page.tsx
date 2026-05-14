@@ -228,6 +228,9 @@ import { MedicationEffectivenessReviewCard } from "@/components/dashboard/medica
 import { HealthScreeningImmunisationCard } from "@/components/dashboard/health-screening-immunisation-card";
 import { SocialSkillsDevelopmentCard } from "@/components/dashboard/social-skills-development-card";
 import { RestorativeJusticePracticeCard } from "@/components/dashboard/restorative-justice-practice-card";
+import { LeisureRecreationActivitiesCard } from "@/components/dashboard/leisure-recreation-activities-card";
+import { HomeworkAcademicSupportCard } from "@/components/dashboard/homework-academic-support-card";
+import { AdvocacyRepresentationCard } from "@/components/dashboard/advocacy-representation-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1310,6 +1313,9 @@ export default function ManagerControlCentrePage() {
         <HealthScreeningImmunisationCard />
         <SocialSkillsDevelopmentCard />
         <RestorativeJusticePracticeCard />
+        <LeisureRecreationActivitiesCard />
+        <HomeworkAcademicSupportCard />
+        <AdvocacyRepresentationCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
