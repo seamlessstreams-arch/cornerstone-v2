@@ -201,6 +201,9 @@ import { PocketMoneyManagementCard } from "@/components/dashboard/pocket-money-m
 import { ChildWellbeingCheckinCard } from "@/components/dashboard/child-wellbeing-checkin-card";
 import { StaffDebriefSupportCard } from "@/components/dashboard/staff-debrief-support-card";
 import { EducationAttendanceTrackingCard } from "@/components/dashboard/education-attendance-tracking-card";
+import { ContactSupervisionCard } from "@/components/dashboard/contact-supervision-card";
+import { SelfHarmRiskMonitoringCard } from "@/components/dashboard/self-harm-risk-monitoring-card";
+import { RoomSharingAssessmentCard } from "@/components/dashboard/room-sharing-assessment-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1256,6 +1259,9 @@ export default function ManagerControlCentrePage() {
         <ChildWellbeingCheckinCard />
         <StaffDebriefSupportCard />
         <EducationAttendanceTrackingCard />
+        <ContactSupervisionCard />
+        <SelfHarmRiskMonitoringCard />
+        <RoomSharingAssessmentCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
