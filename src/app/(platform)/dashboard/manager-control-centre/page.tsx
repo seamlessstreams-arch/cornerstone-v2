@@ -234,6 +234,9 @@ import { AdvocacyRepresentationCard } from "@/components/dashboard/advocacy-repr
 import { CelebrationMilestonesCard } from "@/components/dashboard/celebration-milestones-card";
 import { WorkExperienceEmploymentCard } from "@/components/dashboard/work-experience-employment-card";
 import { DeviceScreenTimeMonitoringCard } from "@/components/dashboard/device-screen-time-monitoring-card";
+import { FinancialLiteracySavingsCard } from "@/components/dashboard/financial-literacy-savings-card";
+import { FirstAidMedicalEmergencyCard } from "@/components/dashboard/first-aid-medical-emergency-card";
+import { OutdoorSpacesPlayAreasCard } from "@/components/dashboard/outdoor-spaces-play-areas-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1322,6 +1325,9 @@ export default function ManagerControlCentrePage() {
         <CelebrationMilestonesCard />
         <WorkExperienceEmploymentCard />
         <DeviceScreenTimeMonitoringCard />
+        <FinancialLiteracySavingsCard />
+        <FirstAidMedicalEmergencyCard />
+        <OutdoorSpacesPlayAreasCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}

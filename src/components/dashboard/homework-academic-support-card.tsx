@@ -9,12 +9,12 @@ import { cn } from "@/lib/utils";
 const DEMO_METRICS = { total_sessions: 16, disengaged_count: 1, refused_count: 1, no_progress_count: 1, regression_count: 1, homework_completed_rate: 81.3, school_liaison_rate: 68.8, pep_updated_rate: 62.5, learning_needs_rate: 87.5, unique_children: 6 };
 
 const DEMO_RECORDS: { child: string; subject: string; engagement: string; progress: string }[] = [
-  { child: "Child A", type: "English", subject: "English", engagement: "Engaged", progress: "Met Exp." },
-  { child: "Child B", type: "Maths", subject: "Maths", engagement: "Highly Eng.", progress: "Exceeded" },
-  { child: "Child C", type: "Science", subject: "Science", engagement: "Disengaged", progress: "No Progress" },
-  { child: "Child D", type: "Humanities", subject: "Humanities", engagement: "Engaged", progress: "Some Prog." },
-  { child: "Child E", type: "Languages", subject: "Languages", engagement: "Refused", progress: "Regression" },
-  { child: "Child F", type: "Technology", subject: "Technology", engagement: "Partial", progress: "Some Prog." },
+  { child: "Child A", subject: "English", engagement: "Engaged", progress: "Met Exp." },
+  { child: "Child B", subject: "Maths", engagement: "Highly Eng.", progress: "Exceeded" },
+  { child: "Child C", subject: "Science", engagement: "Disengaged", progress: "No Progress" },
+  { child: "Child D", subject: "Humanities", engagement: "Engaged", progress: "Some Prog." },
+  { child: "Child E", subject: "Languages", engagement: "Refused", progress: "Regression" },
+  { child: "Child F", subject: "Technology", engagement: "Partial", progress: "Some Prog." },
 ];
 
 const DEMO_ALERTS: { type: string; severity: "critical" | "high" | "medium"; message: string }[] = [
