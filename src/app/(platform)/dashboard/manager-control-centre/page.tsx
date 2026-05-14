@@ -210,6 +210,9 @@ import { HomeEnvironmentInspectionCard } from "@/components/dashboard/home-envir
 import { ComplaintResolutionTrackingCard } from "@/components/dashboard/complaint-resolution-tracking-card";
 import { StaffSupervisionComplianceCard } from "@/components/dashboard/staff-supervision-compliance-card";
 import { ChildDevelopmentMilestoneCard } from "@/components/dashboard/child-development-milestone-card";
+import { VisitorFeedbackCollectionCard } from "@/components/dashboard/visitor-feedback-collection-card";
+import { StaffShiftPatternMonitoringCard } from "@/components/dashboard/staff-shift-pattern-monitoring-card";
+import { ChildDigitalWellbeingCard } from "@/components/dashboard/child-digital-wellbeing-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1274,6 +1277,9 @@ export default function ManagerControlCentrePage() {
         <ComplaintResolutionTrackingCard />
         <StaffSupervisionComplianceCard />
         <ChildDevelopmentMilestoneCard />
+        <VisitorFeedbackCollectionCard />
+        <StaffShiftPatternMonitoringCard />
+        <ChildDigitalWellbeingCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
