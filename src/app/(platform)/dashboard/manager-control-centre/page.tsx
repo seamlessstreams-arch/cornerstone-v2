@@ -174,6 +174,9 @@ import { MedicationStorageCard } from "@/components/dashboard/medication-storage
 import { AdmissionAssessmentCard } from "@/components/dashboard/admission-assessment-card";
 import { StaffCompetencyAssessmentCard } from "@/components/dashboard/staff-competency-assessment-card";
 import { EnvironmentalAuditCard } from "@/components/dashboard/environmental-audit-card";
+import { ProfessionalConsultationCard } from "@/components/dashboard/professional-consultation-card";
+import { OfstedActionPlanCard } from "@/components/dashboard/ofsted-action-plan-card";
+import { LifeStoryWorkCard } from "@/components/dashboard/life-story-work-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1202,6 +1205,9 @@ export default function ManagerControlCentrePage() {
         <AdmissionAssessmentCard />
         <StaffCompetencyAssessmentCard />
         <EnvironmentalAuditCard />
+        <ProfessionalConsultationCard />
+        <OfstedActionPlanCard />
+        <LifeStoryWorkCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
