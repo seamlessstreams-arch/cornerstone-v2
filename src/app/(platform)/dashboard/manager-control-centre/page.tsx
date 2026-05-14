@@ -222,6 +222,9 @@ import { PhysicalActivityTrackingCard } from "@/components/dashboard/physical-ac
 import { ReligiousCulturalObservanceCard } from "@/components/dashboard/religious-cultural-observance-card";
 import { SiblingContactQualityCard } from "@/components/dashboard/sibling-contact-quality-card";
 import { PrivacyDignityMonitoringCard } from "@/components/dashboard/privacy-dignity-monitoring-card";
+import { ChildrensAspirationsGoalsCard } from "@/components/dashboard/childrens-aspirations-goals-card";
+import { CreativeEnrichmentActivitiesCard } from "@/components/dashboard/creative-enrichment-activities-card";
+import { MedicationEffectivenessReviewCard } from "@/components/dashboard/medication-effectiveness-review-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1298,6 +1301,9 @@ export default function ManagerControlCentrePage() {
         <ReligiousCulturalObservanceCard />
         <SiblingContactQualityCard />
         <PrivacyDignityMonitoringCard />
+        <ChildrensAspirationsGoalsCard />
+        <CreativeEnrichmentActivitiesCard />
+        <MedicationEffectivenessReviewCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
