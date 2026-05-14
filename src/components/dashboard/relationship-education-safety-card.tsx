@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ShieldHeart, ChevronRight, AlertTriangle, Brain, Clock, HeartHandshake } from "lucide-react";
+import { ShieldCheck, ChevronRight, AlertTriangle, Brain, Clock, HeartHandshake } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const DEMO_METRICS = { total_sessions: 13, not_understood_count: 1, disengaged_count: 2, not_appropriate_count: 1, harmful_count: 1, safe_space_rate: 76.9, child_consented_rate: 84.6, trigger_warnings_rate: 69.2, confidentiality_rate: 84.6, unique_children: 6 };
@@ -43,7 +43,7 @@ export function RelationshipEducationSafetyCard() {
     <Card className="overflow-hidden">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-sm flex items-center gap-2"><ShieldHeart className="h-4 w-4 text-brand" />Relationship Ed.</CardTitle>
+          <CardTitle className="text-sm flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-brand" />Relationship Ed.</CardTitle>
           <Link href="/relationship-education-safety" className="text-xs text-brand hover:underline flex items-center gap-1">Sessions <ChevronRight className="h-3 w-3" /></Link>
         </div>
       </CardHeader>

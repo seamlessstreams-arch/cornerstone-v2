@@ -243,6 +243,9 @@ import { SelfEsteemConfidenceBuildingCard } from "@/components/dashboard/self-es
 import { ArrivalSettlingExperienceCard } from "@/components/dashboard/arrival-settling-experience-card";
 import { HealthyEatingCookingSkillsCard } from "@/components/dashboard/healthy-eating-cooking-skills-card";
 import { RelationshipEducationSafetyCard } from "@/components/dashboard/relationship-education-safety-card";
+import { PetCareResponsibilityCard } from "@/components/dashboard/pet-care-responsibility-card";
+import { GardenHorticultureActivitiesCard } from "@/components/dashboard/garden-horticulture-activities-card";
+import { FaithSpiritualObservanceCard } from "@/components/dashboard/faith-spiritual-observance-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1340,6 +1343,9 @@ export default function ManagerControlCentrePage() {
         <ArrivalSettlingExperienceCard />
         <HealthyEatingCookingSkillsCard />
         <RelationshipEducationSafetyCard />
+        <PetCareResponsibilityCard />
+        <GardenHorticultureActivitiesCard />
+        <FaithSpiritualObservanceCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
