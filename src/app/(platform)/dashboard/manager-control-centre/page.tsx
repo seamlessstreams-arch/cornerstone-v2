@@ -240,6 +240,9 @@ import { OutdoorSpacesPlayAreasCard } from "@/components/dashboard/outdoor-space
 import { PositiveBehaviourReinforcementCard } from "@/components/dashboard/positive-behaviour-reinforcement-card";
 import { DentalOpticalHealthCard } from "@/components/dashboard/dental-optical-health-card";
 import { SelfEsteemConfidenceBuildingCard } from "@/components/dashboard/self-esteem-confidence-building-card";
+import { ArrivalSettlingExperienceCard } from "@/components/dashboard/arrival-settling-experience-card";
+import { HealthyEatingCookingSkillsCard } from "@/components/dashboard/healthy-eating-cooking-skills-card";
+import { RelationshipEducationSafetyCard } from "@/components/dashboard/relationship-education-safety-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1334,6 +1337,9 @@ export default function ManagerControlCentrePage() {
         <PositiveBehaviourReinforcementCard />
         <DentalOpticalHealthCard />
         <SelfEsteemConfidenceBuildingCard />
+        <ArrivalSettlingExperienceCard />
+        <HealthyEatingCookingSkillsCard />
+        <RelationshipEducationSafetyCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
