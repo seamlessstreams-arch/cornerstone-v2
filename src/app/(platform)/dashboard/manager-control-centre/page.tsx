@@ -177,6 +177,9 @@ import { EnvironmentalAuditCard } from "@/components/dashboard/environmental-aud
 import { ProfessionalConsultationCard } from "@/components/dashboard/professional-consultation-card";
 import { OfstedActionPlanCard } from "@/components/dashboard/ofsted-action-plan-card";
 import { LifeStoryWorkCard } from "@/components/dashboard/life-story-work-card";
+import { PositiveHandlingCard } from "@/components/dashboard/positive-handling-card";
+import { ShiftHandoverQualityCard } from "@/components/dashboard/shift-handover-quality-card";
+import { ChildrensProgressTrackingCard } from "@/components/dashboard/childrens-progress-tracking-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1208,6 +1211,9 @@ export default function ManagerControlCentrePage() {
         <ProfessionalConsultationCard />
         <OfstedActionPlanCard />
         <LifeStoryWorkCard />
+        <PositiveHandlingCard />
+        <ShiftHandoverQualityCard />
+        <ChildrensProgressTrackingCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
