@@ -237,6 +237,9 @@ import { DeviceScreenTimeMonitoringCard } from "@/components/dashboard/device-sc
 import { FinancialLiteracySavingsCard } from "@/components/dashboard/financial-literacy-savings-card";
 import { FirstAidMedicalEmergencyCard } from "@/components/dashboard/first-aid-medical-emergency-card";
 import { OutdoorSpacesPlayAreasCard } from "@/components/dashboard/outdoor-spaces-play-areas-card";
+import { PositiveBehaviourReinforcementCard } from "@/components/dashboard/positive-behaviour-reinforcement-card";
+import { DentalOpticalHealthCard } from "@/components/dashboard/dental-optical-health-card";
+import { SelfEsteemConfidenceBuildingCard } from "@/components/dashboard/self-esteem-confidence-building-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1328,6 +1331,9 @@ export default function ManagerControlCentrePage() {
         <FinancialLiteracySavingsCard />
         <FirstAidMedicalEmergencyCard />
         <OutdoorSpacesPlayAreasCard />
+        <PositiveBehaviourReinforcementCard />
+        <DentalOpticalHealthCard />
+        <SelfEsteemConfidenceBuildingCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
