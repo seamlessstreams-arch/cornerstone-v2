@@ -195,6 +195,9 @@ import { StaffMedicationCompetencyCard } from "@/components/dashboard/staff-medi
 import { BoundaryManagementCard } from "@/components/dashboard/boundary-management-card";
 import { EmotionalRegulationSupportCard } from "@/components/dashboard/emotional-regulation-support-card";
 import { InternetUsageMonitoringCard } from "@/components/dashboard/internet-usage-monitoring-card";
+import { SleepQualityAssessmentCard } from "@/components/dashboard/sleep-quality-assessment-card";
+import { CulturalIdentitySupportCard } from "@/components/dashboard/cultural-identity-support-card";
+import { PocketMoneyManagementCard } from "@/components/dashboard/pocket-money-management-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1244,6 +1247,9 @@ export default function ManagerControlCentrePage() {
         <BoundaryManagementCard />
         <EmotionalRegulationSupportCard />
         <InternetUsageMonitoringCard />
+        <SleepQualityAssessmentCard />
+        <CulturalIdentitySupportCard />
+        <PocketMoneyManagementCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
