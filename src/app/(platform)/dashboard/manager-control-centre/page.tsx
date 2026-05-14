@@ -189,6 +189,9 @@ import { HomeDecorationPersonalisationCard } from "@/components/dashboard/home-d
 import { MedicationConsentCard } from "@/components/dashboard/medication-consent-card";
 import { StaffLoneWorkingCard } from "@/components/dashboard/staff-lone-working-card";
 import { ChildrensTherapySessionsCard } from "@/components/dashboard/childrens-therapy-sessions-card";
+import { NightWakingMonitoringCard } from "@/components/dashboard/night-waking-monitoring-card";
+import { CommunityLinksIntegrationCard } from "@/components/dashboard/community-links-integration-card";
+import { StaffMedicationCompetencyCard } from "@/components/dashboard/staff-medication-competency-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1232,6 +1235,9 @@ export default function ManagerControlCentrePage() {
         <MedicationConsentCard />
         <StaffLoneWorkingCard />
         <ChildrensTherapySessionsCard />
+        <NightWakingMonitoringCard />
+        <CommunityLinksIntegrationCard />
+        <StaffMedicationCompetencyCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
