@@ -192,6 +192,9 @@ import { ChildrensTherapySessionsCard } from "@/components/dashboard/childrens-t
 import { NightWakingMonitoringCard } from "@/components/dashboard/night-waking-monitoring-card";
 import { CommunityLinksIntegrationCard } from "@/components/dashboard/community-links-integration-card";
 import { StaffMedicationCompetencyCard } from "@/components/dashboard/staff-medication-competency-card";
+import { BoundaryManagementCard } from "@/components/dashboard/boundary-management-card";
+import { EmotionalRegulationSupportCard } from "@/components/dashboard/emotional-regulation-support-card";
+import { InternetUsageMonitoringCard } from "@/components/dashboard/internet-usage-monitoring-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1238,6 +1241,9 @@ export default function ManagerControlCentrePage() {
         <NightWakingMonitoringCard />
         <CommunityLinksIntegrationCard />
         <StaffMedicationCompetencyCard />
+        <BoundaryManagementCard />
+        <EmotionalRegulationSupportCard />
+        <InternetUsageMonitoringCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
