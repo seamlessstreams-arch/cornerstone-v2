@@ -319,6 +319,9 @@ import { HomeWaterHygieneManagementCard } from "@/components/dashboard/home-wate
 import { ChildRadicalisationRiskCard } from "@/components/dashboard/child-radicalisation-risk-card";
 import { StaffWhistleblowingManagementCard } from "@/components/dashboard/staff-whistleblowing-management-card";
 import { HomePestControlManagementCard } from "@/components/dashboard/home-pest-control-management-card";
+import { ChildTraffickingRiskCard } from "@/components/dashboard/child-trafficking-risk-card";
+import { StaffOvertimeManagementCard } from "@/components/dashboard/staff-overtime-management-card";
+import { HomeCctvComplianceCard } from "@/components/dashboard/home-cctv-compliance-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1492,6 +1495,9 @@ export default function ManagerControlCentrePage() {
         <ChildRadicalisationRiskCard />
         <StaffWhistleblowingManagementCard />
         <HomePestControlManagementCard />
+        <ChildTraffickingRiskCard />
+        <StaffOvertimeManagementCard />
+        <HomeCctvComplianceCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
