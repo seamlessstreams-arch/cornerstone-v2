@@ -265,6 +265,9 @@ import { PlacementMatchingAssessmentCard } from "@/components/dashboard/placemen
 import { Reg44IndependentVisitorCard } from "@/components/dashboard/reg44-independent-visitor-card";
 import { EmotionalWellbeingOutcomeCard } from "@/components/dashboard/emotional-wellbeing-outcome-card";
 import { ComplianceCertificateCard } from "@/components/dashboard/compliance-certificate-card";
+import { HomeClosurePlanningCard } from "@/components/dashboard/home-closure-planning-card";
+import { ParentalContactArrangementCard } from "@/components/dashboard/parental-contact-arrangement-card";
+import { SafeguardingPartnershipCard } from "@/components/dashboard/safeguarding-partnership-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1384,6 +1387,9 @@ export default function ManagerControlCentrePage() {
         <Reg44IndependentVisitorCard />
         <EmotionalWellbeingOutcomeCard />
         <ComplianceCertificateCard />
+        <HomeClosurePlanningCard />
+        <ParentalContactArrangementCard />
+        <SafeguardingPartnershipCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
