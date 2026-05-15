@@ -283,6 +283,9 @@ import { OfstedInspectionReadinessCard } from "@/components/dashboard/ofsted-ins
 import { YoungPersonEmploymentSupportCard } from "@/components/dashboard/young-person-employment-support-card";
 import { SleepDisturbanceInterventionCard } from "@/components/dashboard/sleep-disturbance-intervention-card";
 import { StaffProfessionalBoundaryReviewCard } from "@/components/dashboard/staff-professional-boundary-review-card";
+import { ChildCriminalExploitationRiskCard } from "@/components/dashboard/child-criminal-exploitation-risk-card";
+import { StaffSicknessManagementCard } from "@/components/dashboard/staff-sickness-management-card";
+import { HomeInsuranceComplianceCard } from "@/components/dashboard/home-insurance-compliance-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1420,6 +1423,9 @@ export default function ManagerControlCentrePage() {
         <YoungPersonEmploymentSupportCard />
         <SleepDisturbanceInterventionCard />
         <StaffProfessionalBoundaryReviewCard />
+        <ChildCriminalExploitationRiskCard />
+        <StaffSicknessManagementCard />
+        <HomeInsuranceComplianceCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
