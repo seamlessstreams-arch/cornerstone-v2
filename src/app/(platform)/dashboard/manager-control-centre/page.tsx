@@ -252,6 +252,10 @@ import { StaffBurnoutIndicatorCard } from "@/components/dashboard/staff-burnout-
 import { StaffDevelopmentPlanCard } from "@/components/dashboard/staff-development-plan-card";
 import { StaffSupportPlanCard } from "@/components/dashboard/staff-support-plan-card";
 import { StaffPracticeRiskAssessmentCard } from "@/components/dashboard/staff-practice-risk-assessment-card";
+import { StaffTriggerMapCard } from "@/components/dashboard/staff-trigger-map-card";
+import { StaffSupportActionCard } from "@/components/dashboard/staff-support-action-card";
+import { StaffReviewOutcomeCard } from "@/components/dashboard/staff-review-outcome-card";
+import { StaffConfidenceIndicatorCard } from "@/components/dashboard/staff-confidence-indicator-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1358,6 +1362,10 @@ export default function ManagerControlCentrePage() {
         <StaffDevelopmentPlanCard />
         <StaffSupportPlanCard />
         <StaffPracticeRiskAssessmentCard />
+        <StaffTriggerMapCard />
+        <StaffSupportActionCard />
+        <StaffReviewOutcomeCard />
+        <StaffConfidenceIndicatorCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
