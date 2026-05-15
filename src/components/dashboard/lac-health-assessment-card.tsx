@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Stethoscope, ChevronRight, AlertTriangle, Brain, Clock, Heartbeat } from "lucide-react";
+import { Stethoscope, ChevronRight, AlertTriangle, Brain, Clock, HeartPulse } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const DEMO_METRICS = { total_assessments: 8, overdue_count: 2, urgent_concern_count: 1, not_completed_count: 1, referral_required_count: 2, child_attended_rate: 75.0, child_views_rate: 62.5, action_plan_rate: 75.0, actions_completed_rate: 50.0, shared_with_sw_rate: 62.5, unique_children: 4 };

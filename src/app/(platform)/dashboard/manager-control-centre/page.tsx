@@ -274,6 +274,9 @@ import { HomeAtmosphereAssessmentCard } from "@/components/dashboard/home-atmosp
 import { QualityOfCareReviewCard } from "@/components/dashboard/quality-of-care-review-card";
 import { MedicationIncidentReportingCard } from "@/components/dashboard/medication-incident-reporting-card";
 import { StaffAnnualLeaveCard } from "@/components/dashboard/staff-annual-leave-card";
+import { ChildrensPocketMoneyAuditCard } from "@/components/dashboard/childrens-pocket-money-audit-card";
+import { StaffConflictOfInterestCard } from "@/components/dashboard/staff-conflict-of-interest-card";
+import { EnvironmentalImpactAssessmentCard } from "@/components/dashboard/environmental-impact-assessment-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1402,6 +1405,9 @@ export default function ManagerControlCentrePage() {
         <QualityOfCareReviewCard />
         <MedicationIncidentReportingCard />
         <StaffAnnualLeaveCard />
+        <ChildrensPocketMoneyAuditCard />
+        <StaffConflictOfInterestCard />
+        <EnvironmentalImpactAssessmentCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
