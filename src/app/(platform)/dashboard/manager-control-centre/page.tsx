@@ -310,6 +310,9 @@ import { HomeElectricalSafetyCard } from "@/components/dashboard/home-electrical
 import { ChildForcedMarriageRiskCard } from "@/components/dashboard/child-forced-marriage-risk-card";
 import { StaffSecondmentManagementCard } from "@/components/dashboard/staff-secondment-management-card";
 import { HomeGasSafetyCard } from "@/components/dashboard/home-gas-safety-card";
+import { ChildModernSlaveryRiskCard } from "@/components/dashboard/child-modern-slavery-risk-card";
+import { StaffPayrollComplianceCard } from "@/components/dashboard/staff-payroll-compliance-card";
+import { HomeLiftEquipmentSafetyCard } from "@/components/dashboard/home-lift-equipment-safety-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1474,6 +1477,9 @@ export default function ManagerControlCentrePage() {
         <ChildForcedMarriageRiskCard />
         <StaffSecondmentManagementCard />
         <HomeGasSafetyCard />
+        <ChildModernSlaveryRiskCard />
+        <StaffPayrollComplianceCard />
+        <HomeLiftEquipmentSafetyCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
