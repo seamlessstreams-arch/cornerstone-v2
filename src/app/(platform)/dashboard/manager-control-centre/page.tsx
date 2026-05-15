@@ -271,6 +271,9 @@ import { SafeguardingPartnershipCard } from "@/components/dashboard/safeguarding
 import { LacHealthAssessmentCard } from "@/components/dashboard/lac-health-assessment-card";
 import { StaffWhistleblowingInvestigationCard } from "@/components/dashboard/staff-whistleblowing-investigation-card";
 import { HomeAtmosphereAssessmentCard } from "@/components/dashboard/home-atmosphere-assessment-card";
+import { QualityOfCareReviewCard } from "@/components/dashboard/quality-of-care-review-card";
+import { MedicationIncidentReportingCard } from "@/components/dashboard/medication-incident-reporting-card";
+import { StaffAnnualLeaveCard } from "@/components/dashboard/staff-annual-leave-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1396,6 +1399,9 @@ export default function ManagerControlCentrePage() {
         <LacHealthAssessmentCard />
         <StaffWhistleblowingInvestigationCard />
         <HomeAtmosphereAssessmentCard />
+        <QualityOfCareReviewCard />
+        <MedicationIncidentReportingCard />
+        <StaffAnnualLeaveCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
