@@ -256,6 +256,9 @@ import { StaffTriggerMapCard } from "@/components/dashboard/staff-trigger-map-ca
 import { StaffSupportActionCard } from "@/components/dashboard/staff-support-action-card";
 import { StaffReviewOutcomeCard } from "@/components/dashboard/staff-review-outcome-card";
 import { StaffConfidenceIndicatorCard } from "@/components/dashboard/staff-confidence-indicator-card";
+import { StaffMandatoryTrainingCard } from "@/components/dashboard/staff-mandatory-training-card";
+import { YoungPersonDailyDiaryCard } from "@/components/dashboard/young-person-daily-diary-card";
+import { ProfessionalNetworkDirectoryCard } from "@/components/dashboard/professional-network-directory-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1366,6 +1369,9 @@ export default function ManagerControlCentrePage() {
         <StaffSupportActionCard />
         <StaffReviewOutcomeCard />
         <StaffConfidenceIndicatorCard />
+        <StaffMandatoryTrainingCard />
+        <YoungPersonDailyDiaryCard />
+        <ProfessionalNetworkDirectoryCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
