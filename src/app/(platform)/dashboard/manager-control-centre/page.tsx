@@ -322,6 +322,9 @@ import { HomePestControlManagementCard } from "@/components/dashboard/home-pest-
 import { ChildTraffickingRiskCard } from "@/components/dashboard/child-trafficking-risk-card";
 import { StaffOvertimeManagementCard } from "@/components/dashboard/staff-overtime-management-card";
 import { HomeCctvComplianceCard } from "@/components/dashboard/home-cctv-compliance-card";
+import { ChildOnlineSafetyMonitoringCard } from "@/components/dashboard/child-online-safety-monitoring-card";
+import { StaffLoneWorkingRiskCard } from "@/components/dashboard/staff-lone-working-risk-card";
+import { HomeEmergencyLightingCard } from "@/components/dashboard/home-emergency-lighting-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1498,6 +1501,9 @@ export default function ManagerControlCentrePage() {
         <ChildTraffickingRiskCard />
         <StaffOvertimeManagementCard />
         <HomeCctvComplianceCard />
+        <ChildOnlineSafetyMonitoringCard />
+        <StaffLoneWorkingRiskCard />
+        <HomeEmergencyLightingCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
