@@ -259,6 +259,9 @@ import { StaffConfidenceIndicatorCard } from "@/components/dashboard/staff-confi
 import { StaffMandatoryTrainingCard } from "@/components/dashboard/staff-mandatory-training-card";
 import { YoungPersonDailyDiaryCard } from "@/components/dashboard/young-person-daily-diary-card";
 import { ProfessionalNetworkDirectoryCard } from "@/components/dashboard/professional-network-directory-card";
+import { MenuPlanningDietaryCard } from "@/components/dashboard/menu-planning-dietary-card";
+import { EhcpSendMonitoringCard } from "@/components/dashboard/ehcp-send-monitoring-card";
+import { PlacementMatchingAssessmentCard } from "@/components/dashboard/placement-matching-assessment-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1372,6 +1375,9 @@ export default function ManagerControlCentrePage() {
         <StaffMandatoryTrainingCard />
         <YoungPersonDailyDiaryCard />
         <ProfessionalNetworkDirectoryCard />
+        <MenuPlanningDietaryCard />
+        <EhcpSendMonitoringCard />
+        <PlacementMatchingAssessmentCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
