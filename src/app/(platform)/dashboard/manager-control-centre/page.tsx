@@ -249,6 +249,9 @@ import { FaithSpiritualObservanceCard } from "@/components/dashboard/faith-spiri
 import { StaffPatternIntelligenceCard } from "@/components/dashboard/staff-pattern-intelligence-card";
 import { StaffPerformanceDipCard } from "@/components/dashboard/staff-performance-dip-card";
 import { StaffBurnoutIndicatorCard } from "@/components/dashboard/staff-burnout-indicator-card";
+import { StaffDevelopmentPlanCard } from "@/components/dashboard/staff-development-plan-card";
+import { StaffSupportPlanCard } from "@/components/dashboard/staff-support-plan-card";
+import { StaffPracticeRiskAssessmentCard } from "@/components/dashboard/staff-practice-risk-assessment-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1352,6 +1355,9 @@ export default function ManagerControlCentrePage() {
         <StaffPatternIntelligenceCard />
         <StaffPerformanceDipCard />
         <StaffBurnoutIndicatorCard />
+        <StaffDevelopmentPlanCard />
+        <StaffSupportPlanCard />
+        <StaffPracticeRiskAssessmentCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
