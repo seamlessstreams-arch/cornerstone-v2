@@ -286,6 +286,9 @@ import { StaffProfessionalBoundaryReviewCard } from "@/components/dashboard/staf
 import { ChildCriminalExploitationRiskCard } from "@/components/dashboard/child-criminal-exploitation-risk-card";
 import { StaffSicknessManagementCard } from "@/components/dashboard/staff-sickness-management-card";
 import { HomeInsuranceComplianceCard } from "@/components/dashboard/home-insurance-compliance-card";
+import { ChildVoiceParticipationTrackingCard } from "@/components/dashboard/child-voice-participation-tracking-card";
+import { StaffCodeOfConductComplianceCard } from "@/components/dashboard/staff-code-of-conduct-compliance-card";
+import { HomeEnergyEfficiencyCard } from "@/components/dashboard/home-energy-efficiency-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1426,6 +1429,9 @@ export default function ManagerControlCentrePage() {
         <ChildCriminalExploitationRiskCard />
         <StaffSicknessManagementCard />
         <HomeInsuranceComplianceCard />
+        <ChildVoiceParticipationTrackingCard />
+        <StaffCodeOfConductComplianceCard />
+        <HomeEnergyEfficiencyCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
