@@ -268,6 +268,9 @@ import { ComplianceCertificateCard } from "@/components/dashboard/compliance-cer
 import { HomeClosurePlanningCard } from "@/components/dashboard/home-closure-planning-card";
 import { ParentalContactArrangementCard } from "@/components/dashboard/parental-contact-arrangement-card";
 import { SafeguardingPartnershipCard } from "@/components/dashboard/safeguarding-partnership-card";
+import { LacHealthAssessmentCard } from "@/components/dashboard/lac-health-assessment-card";
+import { StaffWhistleblowingInvestigationCard } from "@/components/dashboard/staff-whistleblowing-investigation-card";
+import { HomeAtmosphereAssessmentCard } from "@/components/dashboard/home-atmosphere-assessment-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1390,6 +1393,9 @@ export default function ManagerControlCentrePage() {
         <HomeClosurePlanningCard />
         <ParentalContactArrangementCard />
         <SafeguardingPartnershipCard />
+        <LacHealthAssessmentCard />
+        <StaffWhistleblowingInvestigationCard />
+        <HomeAtmosphereAssessmentCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
