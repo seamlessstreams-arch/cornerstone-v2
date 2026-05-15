@@ -280,6 +280,9 @@ import { EnvironmentalImpactAssessmentCard } from "@/components/dashboard/enviro
 import { StaffRetentionExitAnalysisCard } from "@/components/dashboard/staff-retention-exit-analysis-card";
 import { ChildSexualExploitationRiskCard } from "@/components/dashboard/child-sexual-exploitation-risk-card";
 import { OfstedInspectionReadinessCard } from "@/components/dashboard/ofsted-inspection-readiness-card";
+import { YoungPersonEmploymentSupportCard } from "@/components/dashboard/young-person-employment-support-card";
+import { SleepDisturbanceInterventionCard } from "@/components/dashboard/sleep-disturbance-intervention-card";
+import { StaffProfessionalBoundaryReviewCard } from "@/components/dashboard/staff-professional-boundary-review-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1414,6 +1417,9 @@ export default function ManagerControlCentrePage() {
         <StaffRetentionExitAnalysisCard />
         <ChildSexualExploitationRiskCard />
         <OfstedInspectionReadinessCard />
+        <YoungPersonEmploymentSupportCard />
+        <SleepDisturbanceInterventionCard />
+        <StaffProfessionalBoundaryReviewCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
