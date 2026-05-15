@@ -277,6 +277,9 @@ import { StaffAnnualLeaveCard } from "@/components/dashboard/staff-annual-leave-
 import { ChildrensPocketMoneyAuditCard } from "@/components/dashboard/childrens-pocket-money-audit-card";
 import { StaffConflictOfInterestCard } from "@/components/dashboard/staff-conflict-of-interest-card";
 import { EnvironmentalImpactAssessmentCard } from "@/components/dashboard/environmental-impact-assessment-card";
+import { StaffRetentionExitAnalysisCard } from "@/components/dashboard/staff-retention-exit-analysis-card";
+import { ChildSexualExploitationRiskCard } from "@/components/dashboard/child-sexual-exploitation-risk-card";
+import { OfstedInspectionReadinessCard } from "@/components/dashboard/ofsted-inspection-readiness-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1408,6 +1411,9 @@ export default function ManagerControlCentrePage() {
         <ChildrensPocketMoneyAuditCard />
         <StaffConflictOfInterestCard />
         <EnvironmentalImpactAssessmentCard />
+        <StaffRetentionExitAnalysisCard />
+        <ChildSexualExploitationRiskCard />
+        <OfstedInspectionReadinessCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}
