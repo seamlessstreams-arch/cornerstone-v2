@@ -292,6 +292,9 @@ import { HomeEnergyEfficiencyCard } from "@/components/dashboard/home-energy-eff
 import { ChildRadicalisationPreventionCard } from "@/components/dashboard/child-radicalisation-prevention-card";
 import { StaffNvqQualificationTrackingCard } from "@/components/dashboard/staff-nvq-qualification-tracking-card";
 import { HomeAccessibilityAssessmentCard } from "@/components/dashboard/home-accessibility-assessment-card";
+import { ChildNutritionWeightMonitoringCard } from "@/components/dashboard/child-nutrition-weight-monitoring-card";
+import { StaffDbsRenewalTrackingCard } from "@/components/dashboard/staff-dbs-renewal-tracking-card";
+import { HomeFireRiskAssessmentCard } from "@/components/dashboard/home-fire-risk-assessment-card";
 import {
   useAttentionItems,
   useUpdateAttentionItem,
@@ -1438,6 +1441,9 @@ export default function ManagerControlCentrePage() {
         <ChildRadicalisationPreventionCard />
         <StaffNvqQualificationTrackingCard />
         <HomeAccessibilityAssessmentCard />
+        <ChildNutritionWeightMonitoringCard />
+        <StaffDbsRenewalTrackingCard />
+        <HomeFireRiskAssessmentCard />
       </div>
 
       {/* ── regulatory note ────────────────────────────────────────────────── */}

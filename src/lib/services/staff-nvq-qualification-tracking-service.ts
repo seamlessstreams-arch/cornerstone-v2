@@ -20,7 +20,7 @@
 
 import { createServerClient, isSupabaseEnabled } from "@/lib/supabase/server";
 
-type SB = ReturnType<typeof createServerClient> extends Promise<infer R> ? R : never;
+type SB = any;
 
 export type ServiceResult<T> = { ok: boolean; data?: T; error?: string };
 

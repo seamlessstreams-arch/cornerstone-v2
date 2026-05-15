@@ -1,0 +1,18 @@
+import { NextResponse } from "next/server";
+import {
+  listHomeFireRiskAssessments,
+  createHomeFireRiskAssessment,
+} from "@/lib/services/home-fire-risk-assessment-service";
+
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const homeId = searchParams.get("homeId") ?? "";
+  const result = await listHomeFireRiskAssessments(homeId);
+  return NextResponse.json(result);
+}
+
+export async function POST(request: Request) {
+  const body = await request.json();
+  const result = await createHomeFireRiskAssessment(body);
+  return NextResponse.json(result, { status: result.ok ? 201 : 400 });
+}
