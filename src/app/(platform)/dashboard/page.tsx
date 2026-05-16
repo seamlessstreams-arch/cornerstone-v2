@@ -17,6 +17,7 @@ import { AriaRegulatoryPulse } from "@/components/aria/aria-regulatory-pulse";
 import { AriaRecordingQuality } from "@/components/aria/aria-recording-quality";
 import { AriaShiftSafety } from "@/components/aria/aria-shift-safety";
 import { AriaSupervisionIntelligence } from "@/components/aria/aria-supervision-intelligence";
+import AriaMedicationIntelligence from "@/components/aria/aria-medication-intelligence";
 import { ActivityFeed } from "@/components/dashboard/activity-feed";
 import { YoungPeopleStrip } from "@/components/dashboard/young-people-strip";
 import { QuickActionsDial } from "@/components/dashboard/quick-actions-dial";
@@ -1134,6 +1135,7 @@ export default function DashboardPage() {
                     <AriaRegulatoryPulse />
                     <AriaRecordingQuality />
                     <AriaSupervisionIntelligence />
+                    <AriaMedicationIntelligence />
                     <AriaDailyIntelligence />
                     <AriaDashboardPanel />
                     <IntelligenceBriefWidget />
