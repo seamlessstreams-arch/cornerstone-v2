@@ -371,7 +371,7 @@ export default function AriaDashboardPage() {
 
       {/* ── Pattern Intelligence ─────────────────────────────────────────── */}
       <div className="mb-8">
-        <AriaPatternAlert scope="home" />
+        <AriaPatternAlert homeId="home_oak" />
       </div>
 
       {/* ── Risk Matrix ──────────────────────────────────────────────────── */}

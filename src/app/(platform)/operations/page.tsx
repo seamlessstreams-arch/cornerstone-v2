@@ -126,7 +126,7 @@ function OverviewTab() {
       </div>
 
       {/* ARIA Pattern Intelligence */}
-      <AriaPatternAlert scope="home" className="mt-2" />
+      <AriaPatternAlert homeId="home_oak" />
 
       {/* Quick Workflow Status */}
       <div className="rounded-xl border border-[var(--cs-border)] bg-white overflow-hidden">

@@ -525,7 +525,7 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
         {/* ── Overview ─────────────────────────────────────────────────────── */}
         {tab === "overview" && (
           <>
-          <AriaPatternAlert scope="child" childId={yp.id} childName={displayName} className="mb-4" />
+          <AriaPatternAlert childId={yp.id} homeId="home_oak" />
           <AriaSmartSummary childId={yp.id} days={14} className="mb-4" />
           <div className="mb-4">
             <AriaPlacementTimeline />

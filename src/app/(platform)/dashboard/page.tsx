@@ -14,6 +14,7 @@ import { AriaDashboardPanel } from "@/components/dashboard/aria-dashboard-panel"
 import { AriaDailyIntelligence } from "@/components/aria/aria-daily-intelligence";
 import { AriaTodayBriefing } from "@/components/aria/aria-today-briefing";
 import { AriaRegulatoryPulse } from "@/components/aria/aria-regulatory-pulse";
+import { AriaRecordingQuality } from "@/components/aria/aria-recording-quality";
 import { ActivityFeed } from "@/components/dashboard/activity-feed";
 import { YoungPeopleStrip } from "@/components/dashboard/young-people-strip";
 import { QuickActionsDial } from "@/components/dashboard/quick-actions-dial";
@@ -1128,6 +1129,7 @@ export default function DashboardPage() {
                   <>
                     <AriaTodayBriefing />
                     <AriaRegulatoryPulse />
+                    <AriaRecordingQuality />
                     <AriaDailyIntelligence />
                     <AriaDashboardPanel />
                     <IntelligenceBriefWidget />
