@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db/store";
 import { processIncidentCreated } from "@/lib/db/linked-updates";
 import { todayStr, generateId } from "@/lib/utils";
+import { runPostSaveIntelligence } from "@/lib/aria/post-save-intelligence";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
@@ -46,6 +47,19 @@ export async function POST(req: NextRequest) {
 
   // Trigger all linked updates (chronology, task, handover, notification, daily log)
   processIncidentCreated(incident, incident.reported_by || "staff_darren");
+
+  // Fire-and-forget ARIA intelligence hook (golden thread + child voice detection)
+  runPostSaveIntelligence({
+    homeId: incident.home_id,
+    childId: incident.child_id ?? null,
+    sourceTable: "cs_incidents",
+    sourceId: incident.id,
+    title: `Incident: ${incident.type ?? "General"} — ${incident.reference}`,
+    summary: incident.description ?? "",
+    eventType: "incident",
+    createdBy: incident.created_by ?? "staff_darren",
+    eventDate: incident.date,
+  }).catch(() => {});
 
   return NextResponse.json({ data: incident, linked_updates: ["chronology", "task", "handover", "daily_log", "notification"] }, { status: 201 });
 }

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { intelligenceDb } from "@/lib/intelligence/store";
+import { runPostSaveIntelligence } from "@/lib/aria/post-save-intelligence";
 import type { AriaOversight, AriaOversightStyle, AriaOversightStatus } from "@/types/extended";
 
 export async function GET(req: NextRequest) {
@@ -47,6 +48,18 @@ export async function POST(req: NextRequest) {
     source_table: "aria_oversight",
     source_id:    record.id,
   });
+
+  // Fire-and-forget ARIA intelligence hook (golden thread)
+  runPostSaveIntelligence({
+    homeId: record.home_id ?? "home_oak",
+    childId: record.child_id ?? null,
+    sourceTable: "cs_management_oversight",
+    sourceId: record.id,
+    title: `Management Oversight: ${record.record_type}`,
+    summary: record.ai_draft?.slice(0, 500) ?? "",
+    eventType: "management_oversight",
+    createdBy: body.manager_id ?? "staff_darren",
+  }).catch(() => {});
 
   return NextResponse.json({ data: record }, { status: 201 });
 }

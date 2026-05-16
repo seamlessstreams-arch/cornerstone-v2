@@ -8,6 +8,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db/store";
+import { runPostSaveIntelligence } from "@/lib/aria/post-save-intelligence";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
@@ -67,6 +68,25 @@ export async function POST(req: NextRequest) {
     confidential:       body.confidential ?? false,
     home_id:            body.home_id || "home_oak",
   });
+
+  // Fire-and-forget ARIA intelligence hook (golden thread + child voice detection)
+  const combinedSummary = [
+    session.child_voice,
+    session.worker_observations,
+    session.follow_up,
+  ].filter(Boolean).join(" | ");
+
+  runPostSaveIntelligence({
+    homeId: session.home_id,
+    childId: session.child_id ?? null,
+    sourceTable: "cs_key_work_sessions",
+    sourceId: session.id,
+    title: `Key Work: ${session.type}`,
+    summary: combinedSummary,
+    eventType: "key_work_session",
+    createdBy: session.staff_id ?? "staff_darren",
+    eventDate: session.date,
+  }).catch(() => {});
 
   return NextResponse.json({ data: session }, { status: 201 });
 }

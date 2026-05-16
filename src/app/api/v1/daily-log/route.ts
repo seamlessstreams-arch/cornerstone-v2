@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db/store";
 import { generateId, todayStr } from "@/lib/utils";
+import { runPostSaveIntelligence } from "@/lib/aria/post-save-intelligence";
 import type { DailyLogEntry } from "@/types";
 
 // GET /api/v1/daily-log
@@ -94,6 +95,19 @@ export async function POST(req: NextRequest) {
   };
 
   const created = db.dailyLog.create(newEntry);
+
+  // Fire-and-forget ARIA intelligence hook (golden thread + child voice detection)
+  runPostSaveIntelligence({
+    homeId: created.home_id,
+    childId: created.child_id ?? null,
+    sourceTable: "cs_daily_logs",
+    sourceId: created.id,
+    title: `Daily Log: ${created.entry_type}`,
+    summary: created.content ?? "",
+    eventType: "daily_log",
+    createdBy: created.created_by ?? "staff_darren",
+    eventDate: created.date,
+  }).catch(() => {});
 
   return NextResponse.json({ data: created }, { status: 201 });
 }

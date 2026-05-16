@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { intelligenceDb } from "@/lib/intelligence/store";
 import { generateId } from "@/lib/utils";
+import { runPostSaveIntelligence } from "@/lib/aria/post-save-intelligence";
 
 // Working-day calculator
 function addWorkingDays(dateStr: string, days: number): string {
@@ -74,5 +75,19 @@ export async function POST(req: NextRequest) {
     aria_summary:              null,
     created_by:                body.created_by ?? "staff_darren",
   });
+
+  // Fire-and-forget ARIA intelligence hook (golden thread + child voice detection)
+  runPostSaveIntelligence({
+    homeId: record.home_id ?? "home_oak",
+    childId: record.child_id ?? null,
+    sourceTable: "cs_complaints",
+    sourceId: record.id,
+    title: `Complaint: ${record.category} — ${record.reference}`,
+    summary: record.summary ?? "",
+    eventType: "complaint",
+    createdBy: record.created_by ?? "staff_darren",
+    eventDate: record.date_received,
+  }).catch(() => {});
+
   return NextResponse.json({ data: record }, { status: 201 });
 }

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db/store";
 import { todayStr } from "@/lib/utils";
+import { runPostSaveIntelligence } from "@/lib/aria/post-save-intelligence";
 
 // ── POST /api/v1/safeguarding  (chronology entry) ────────────────────────────
 
@@ -24,6 +25,19 @@ export async function POST(req: NextRequest) {
     linked_incident_id: body.linked_incident_id ?? null,
     home_id: "home_oak",
   });
+
+  // Fire-and-forget ARIA intelligence hook (golden thread + child voice detection)
+  runPostSaveIntelligence({
+    homeId: entry.home_id ?? "home_oak",
+    childId: entry.child_id ?? null,
+    sourceTable: "cs_safeguarding_chronology",
+    sourceId: entry.id,
+    title: `Safeguarding: ${category} — ${title.trim()}`,
+    summary: description?.trim() ?? title.trim(),
+    eventType: "safeguarding",
+    createdBy: entry.recorded_by ?? "staff_darren",
+    eventDate: todayStr(),
+  }).catch(() => {});
 
   return NextResponse.json({ data: entry }, { status: 201 });
 }

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db/store";
 import { todayStr } from "@/lib/utils";
+import { runPostSaveIntelligence } from "@/lib/aria/post-save-intelligence";
 
 // ── POST /api/v1/missing-episodes ────────────────────────────────────────────
 
@@ -37,6 +38,19 @@ export async function POST(req: NextRequest) {
     home_id: "home_oak",
     created_by: body.created_by ?? "staff_darren",
   });
+
+  // Fire-and-forget ARIA intelligence hook (golden thread + child voice detection)
+  runPostSaveIntelligence({
+    homeId: episode.home_id,
+    childId: episode.child_id ?? null,
+    sourceTable: "cs_missing_episodes",
+    sourceId: episode.id,
+    title: `Missing Episode: ${risk_level} risk`,
+    summary: `Missing from ${date_missing}${time_missing ? ` at ${time_missing}` : ""}. Last seen: ${location_last_seen ?? "unknown"}`,
+    eventType: "missing_episode",
+    createdBy: episode.created_by ?? "staff_darren",
+    eventDate: date_missing,
+  }).catch(() => {});
 
   return NextResponse.json({ data: episode }, { status: 201 });
 }
