@@ -64,7 +64,7 @@ export async function generateStudioContent(
   // ── OpenAI ──────────────────────────────────────────────────────────────
   if (config.configured && config.provider === "openai") {
     try {
-      const { default: OpenAI } = await import("openai" as string) as { default: new (opts: { apiKey: string | undefined }) => any };
+      const moduleName = "openai"; const { default: OpenAI } = await import(/* webpackIgnore: true */ moduleName) as { default: new (opts: { apiKey: string | undefined }) => any };
       const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
       const response = await client.chat.completions.create({
         model: config.model,

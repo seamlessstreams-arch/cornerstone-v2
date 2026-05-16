@@ -6,7 +6,7 @@
 // ARIA drafts. Humans decide. Only authorised humans approve and commit.
 // ══════════════════════════════════════════════════════════════════════════════
 
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { PageShell } from "@/components/ui/page-shell";
 import { Button } from "@/components/ui/button";
@@ -122,6 +122,14 @@ const STATUS_STYLES: Record<string, string> = {
 // ══════════════════════════════════════════════════════════════════════════════
 
 export default function AriaStudioPage() {
+  return (
+    <Suspense fallback={<div className="flex items-center justify-center min-h-[60vh]"><Loader2 className="h-8 w-8 animate-spin text-muted-foreground" /></div>}>
+      <AriaStudioContent />
+    </Suspense>
+  );
+}
+
+function AriaStudioContent() {
   const { currentUser, currentRole } = useAuthContext();
   const staffQuery = useStaff();
   const allStaff = staffQuery.data?.data ?? [];
