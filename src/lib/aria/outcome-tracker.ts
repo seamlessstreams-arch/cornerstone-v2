@@ -183,7 +183,7 @@ export function trackOutcomes(
     // Celebrations
     if (obj.currentStatus === "achieved") {
       celebrations.push(`${obj.title} — achieved!`);
-    } else if (progressPercent >= 80 && obj.currentStatus !== "achieved") {
+    } else if (progressPercent >= 80) {
       celebrations.push(`${obj.title} — nearly there (${progressPercent}%)`);
     }
 
