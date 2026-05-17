@@ -5,6 +5,9 @@
 export { checkAccess, canAccess, getAllowedActions } from "./access-decision-service";
 export type { AccessCheckRequest } from "./access-decision-service";
 
+export { withPermission, getUserContext } from "./middleware";
+export type { PermissionContext, ProtectedHandler, PermissionOptions } from "./middleware";
+
 export {
   ROLE_HIERARCHY,
   isAtLeast,
