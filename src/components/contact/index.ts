@@ -1,0 +1,1 @@
+export { ContactDashboardWidget } from "./ContactDashboardWidget";

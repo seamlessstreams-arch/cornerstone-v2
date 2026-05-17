@@ -1,0 +1,1 @@
+export { SaferRecruitmentDashboardWidget } from "./SaferRecruitmentDashboardWidget";
