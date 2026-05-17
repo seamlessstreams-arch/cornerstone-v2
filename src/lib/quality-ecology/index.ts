@@ -29,3 +29,48 @@ export type {
   QASample,
   TransitionRule,
 } from "./types";
+
+export {
+  checkLockStatus,
+  createAmendment,
+  approveAmendment,
+  rejectAmendment,
+  validateRecordIntegrity,
+  getAmendmentTimeline,
+  canModifyRecord,
+  AMENDMENT_TYPE_LABELS,
+} from "./record-locking";
+
+export type {
+  LockedRecord,
+  Amendment,
+  AmendmentRequest,
+  AmendmentType,
+  AmendmentStatus,
+  LockCheckResult,
+  AmendmentResult,
+  AmendmentApprovalResult,
+  IntegrityCheckResult,
+  AmendmentTimelineEntry,
+} from "./record-locking";
+
+export {
+  buildAuditEvent,
+  filterAuditEvents,
+  summarizeAuditEvents,
+  getEscalationEvents,
+  getAccessDenials,
+  getBreakGlassEvents,
+  getAmendmentEvents,
+  AUDIT_EVENT_LABELS,
+} from "./audit-trail";
+
+export type {
+  AuditEvent,
+  AuditEventType,
+  AuditSeverity,
+  AuditEventDetails,
+  AuditEventInput,
+  AuditFilter,
+  AuditSummary,
+} from "./audit-trail";
