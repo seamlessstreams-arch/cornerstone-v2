@@ -1,0 +1,1 @@
+export { IncidentsDashboardWidget } from "./IncidentsDashboardWidget";
