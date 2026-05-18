@@ -1,0 +1,30 @@
+export {
+  evaluateReviewTimeliness,
+  evaluateChildParticipation,
+  evaluateRecommendationTracking,
+  evaluateIROEffectiveness,
+  buildChildReviewProfiles,
+  generateLACReviewIntelligence,
+  getReviewTypeLabel,
+  getParticipationMethodLabel,
+  getRecommendationPriorityLabel,
+  getRecommendationStatusLabel,
+} from "./lac-review-engine";
+
+export type {
+  ReviewType,
+  ReviewOutcome,
+  ParticipationMethod,
+  RecommendationPriority,
+  RecommendationStatus,
+  Rating,
+  LACReview,
+  ReviewRecommendation,
+  IROActivity,
+  ChildReviewProfile,
+  ReviewTimelinessResult,
+  ChildParticipationResult,
+  RecommendationTrackingResult,
+  IROEffectivenessResult,
+  LACReviewIntelligence,
+} from "./lac-review-engine";
