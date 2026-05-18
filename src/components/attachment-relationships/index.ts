@@ -1,0 +1,1 @@
+export { AttachmentRelationshipsDashboardWidget } from "./AttachmentRelationshipsDashboardWidget";

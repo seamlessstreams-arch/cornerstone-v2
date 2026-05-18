@@ -1,0 +1,33 @@
+export {
+  evaluateAttachmentAssessments,
+  evaluateRelationshipQuality,
+  evaluateInteractionQuality,
+  evaluateStability,
+  evaluatePeerRelationships,
+  buildChildAttachmentProfiles,
+  generateAttachmentRelationshipsIntelligence,
+  getAttachmentStyleLabel,
+  getRelationshipTypeLabel,
+  getRelationshipQualityLabel,
+  getInteractionContextLabel,
+} from "./attachment-relationships-engine";
+
+export type {
+  AttachmentStyle,
+  RelationshipType,
+  RelationshipQuality,
+  RelationshipTrend,
+  InteractionContext,
+  AttachmentAssessment,
+  RelationshipRecord,
+  RelationshipInteraction,
+  StabilityIndicator,
+  PeerRelationship,
+  AttachmentAssessmentResult,
+  RelationshipQualityResult,
+  InteractionQualityResult,
+  StabilityResult,
+  PeerRelationshipResult,
+  ChildAttachmentProfile,
+  AttachmentRelationshipsIntelligence,
+} from "./attachment-relationships-engine";
