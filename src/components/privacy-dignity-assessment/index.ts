@@ -1,0 +1,1 @@
+export { PrivacyDignityAssessmentDashboardWidget } from "./PrivacyDignityAssessmentDashboardWidget";
