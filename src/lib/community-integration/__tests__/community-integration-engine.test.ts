@@ -1,923 +1,1421 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Community Integration Intelligence Engine — Tests
+// Cornerstone Community Integration Intelligence — Engine Tests
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";
 import {
-  evaluateConnectionBreadth,
-  evaluateEngagement,
-  evaluateBarriers,
-  evaluateGoalProgress,
-  buildChildProfiles,
+  evaluateActivityParticipation,
+  evaluateSocialNetworks,
+  evaluateBarrierManagement,
+  evaluateInclusionOutcomes,
+  buildChildCommunityProfiles,
   generateCommunityIntegrationIntelligence,
-  getConnectionTypeLabel,
-  getBarrierLabel,
-  getEngagementLabel,
-  getAllConnectionTypes,
+  getRating,
+  getActivityCategoryLabel,
+  getParticipationLevelLabel,
+  getFriendshipQualityLabel,
+  getCommunityBarrierLabel,
+  getSocialMediaSafetyLabel,
+  getRatingLabel,
 } from "../community-integration-engine";
 import type {
-  CommunityConnection,
-  IntegrationGoal,
-  ChildProfile,
+  CommunityActivity,
+  SocialNetwork,
+  CommunityBarrierRecord,
+  InclusionAssessment,
+  ActivityCategory,
+  ParticipationLevel,
+  FriendshipQuality,
+  CommunityBarrier,
+  SocialMediaSafety,
+  Rating,
 } from "../community-integration-engine";
 
-// ── Test Constants ───────────────────────────────────────────────────────────
+// ── Constants ────────────────────────────────────────────────────────────────
 
-const PERIOD_START = "2025-01-01";
-const PERIOD_END = "2025-12-31";
-const REFERENCE_DATE = "2025-06-15";
+const PERIOD_START = "2026-01-01";
+const PERIOD_END = "2026-05-18";
+
+// ── Factories ────────────────────────────────────────────────────────────────
+
+function makeActivity(overrides: Partial<CommunityActivity> = {}): CommunityActivity {
+  return {
+    id: "act-001",
+    childId: "child-alex",
+    childName: "Alex",
+    activityCategory: "sport",
+    activityName: "Football Club",
+    participationLevel: "regular",
+    frequency: "weekly",
+    startDate: "2026-01-15",
+    childEnjoys: true,
+    staffSupported: false,
+    independentAttendance: true,
+    communityBased: true,
+    ...overrides,
+  };
+}
+
+function makeNetwork(overrides: Partial<SocialNetwork> = {}): SocialNetwork {
+  return {
+    id: "net-001",
+    childId: "child-alex",
+    childName: "Alex",
+    friendshipQuality: "strong",
+    numberOfFriends: 4,
+    friendsOutsideCare: true,
+    socialMediaSafety: "safe_and_supported",
+    communityMentor: true,
+    regularSocialActivities: 3,
+    ...overrides,
+  };
+}
+
+function makeBarrier(overrides: Partial<CommunityBarrierRecord> = {}): CommunityBarrierRecord {
+  return {
+    id: "bar-001",
+    childId: "child-jordan",
+    childName: "Jordan",
+    barrier: "transport",
+    barrierDescription: "No direct bus route to activity venue",
+    actionTaken: true,
+    resolved: false,
+    ...overrides,
+  };
+}
+
+function makeAssessment(overrides: Partial<InclusionAssessment> = {}): InclusionAssessment {
+  return {
+    id: "inc-001",
+    childId: "child-alex",
+    childName: "Alex",
+    feelsPartOfCommunity: true,
+    accessToLocalAmenities: true,
+    positiveLocalRelationships: true,
+    stigmaExperienced: false,
+    independentTravelSkills: true,
+    assessedDate: "2026-04-01",
+    assessedBy: "Sarah Johnson",
+    ...overrides,
+  };
+}
 
 // ── Oak House Demo Data ──────────────────────────────────────────────────────
-// Children: Alex (14, placed 2024-06-01), Jordan (13, placed 2024-09-15), Morgan (15, placed 2024-03-01)
+// Alex: active in football club + youth group
+// Jordan: limited engagement (transport barrier)
+// Morgan: art class + volunteering + drama group
 
-const demoChildren: ChildProfile[] = [
-  { childId: "child-alex", childName: "Alex", age: 14, placementStartDate: "2024-06-01" },
-  { childId: "child-jordan", childName: "Jordan", age: 13, placementStartDate: "2024-09-15" },
-  { childId: "child-morgan", childName: "Morgan", age: 15, placementStartDate: "2024-03-01" },
+const DEMO_ACTIVITIES: CommunityActivity[] = [
+  // Alex — football club (regular) + youth group (regular)
+  makeActivity({ id: "act-a01", childId: "child-alex", childName: "Alex", activityCategory: "sport", activityName: "Oakwood Football Club", participationLevel: "regular", frequency: "weekly", childEnjoys: true, independentAttendance: true, communityBased: true }),
+  makeActivity({ id: "act-a02", childId: "child-alex", childName: "Alex", activityCategory: "youth_group", activityName: "Friday Youth Group", participationLevel: "regular", frequency: "weekly", childEnjoys: true, independentAttendance: false, communityBased: true, staffSupported: true }),
+
+  // Jordan — limited engagement, tried once at swimming
+  makeActivity({ id: "act-j01", childId: "child-jordan", childName: "Jordan", activityCategory: "sport", activityName: "Swimming", participationLevel: "tried_once", frequency: "ad_hoc", childEnjoys: false, independentAttendance: false, communityBased: true, staffSupported: true }),
+
+  // Morgan — art class + volunteering + drama group (all regular)
+  makeActivity({ id: "act-m01", childId: "child-morgan", childName: "Morgan", activityCategory: "arts_culture", activityName: "Community Art Class", participationLevel: "regular", frequency: "weekly", childEnjoys: true, independentAttendance: true, communityBased: true }),
+  makeActivity({ id: "act-m02", childId: "child-morgan", childName: "Morgan", activityCategory: "volunteering", activityName: "Charity Shop Volunteer", participationLevel: "regular", frequency: "fortnightly", childEnjoys: true, independentAttendance: true, communityBased: true }),
+  makeActivity({ id: "act-m03", childId: "child-morgan", childName: "Morgan", activityCategory: "arts_culture", activityName: "Drama Group", participationLevel: "regular", frequency: "weekly", childEnjoys: true, independentAttendance: false, communityBased: true, staffSupported: true }),
 ];
 
-const demoConnections: CommunityConnection[] = [
-  // ── Alex — 3 active, 1 ended ──────────────────────────────────────────
-  {
-    id: "conn-a01", childId: "child-alex", childName: "Alex",
-    connectionType: "club_sport", connectionName: "Oakwood Football Club",
-    status: "active", engagementLevel: "high",
-    startDate: "2024-09-01", frequencyPerWeek: 2,
-    staffFacilitated: false, isChildLed: true, barriers: [],
-  },
-  {
-    id: "conn-a02", childId: "child-alex", childName: "Alex",
-    connectionType: "education", connectionName: "Year 10 at Meadow School",
-    status: "active", engagementLevel: "moderate",
-    startDate: "2024-09-05", frequencyPerWeek: 5,
-    staffFacilitated: false, isChildLed: false, barriers: [],
-  },
-  {
-    id: "conn-a03", childId: "child-alex", childName: "Alex",
-    connectionType: "hobby_activity", connectionName: "Art Club at Community Centre",
-    status: "active", engagementLevel: "moderate",
-    startDate: "2025-01-15", frequencyPerWeek: 1,
-    staffFacilitated: true, isChildLed: true, barriers: [],
-  },
-  {
-    id: "conn-a04", childId: "child-alex", childName: "Alex",
-    connectionType: "club_sport", connectionName: "Swimming Lessons",
-    status: "ended", engagementLevel: "low",
-    startDate: "2024-07-01", endDate: "2024-11-30", frequencyPerWeek: 1,
-    staffFacilitated: true, isChildLed: false, barriers: ["anxiety"],
-    notes: "Alex became anxious in group swimming sessions — ended by mutual agreement",
-  },
-
-  // ── Jordan — 2 active, 1 planned ──────────────────────────────────────
-  {
-    id: "conn-j01", childId: "child-jordan", childName: "Jordan",
-    connectionType: "education", connectionName: "Year 9 at Riverside Academy",
-    status: "active", engagementLevel: "low",
-    startDate: "2024-09-15", frequencyPerWeek: 5,
-    staffFacilitated: false, isChildLed: false, barriers: ["peer_conflict"],
-  },
-  {
-    id: "conn-j02", childId: "child-jordan", childName: "Jordan",
-    connectionType: "hobby_activity", connectionName: "Gaming Club",
-    status: "active", engagementLevel: "high",
-    startDate: "2025-02-01", frequencyPerWeek: 1,
-    staffFacilitated: true, isChildLed: true, barriers: [],
-  },
-  {
-    id: "conn-j03", childId: "child-jordan", childName: "Jordan",
-    connectionType: "faith_community", connectionName: "Local Youth Group",
-    status: "planned", engagementLevel: "moderate",
-    startDate: "2025-07-01", frequencyPerWeek: 1,
-    staffFacilitated: true, isChildLed: false, barriers: ["anxiety"],
-    notes: "Jordan expressed interest but anxious about attending alone — staff to accompany initially",
-  },
-
-  // ── Morgan — 4 active, 1 paused ───────────────────────────────────────
-  {
-    id: "conn-m01", childId: "child-morgan", childName: "Morgan",
-    connectionType: "education", connectionName: "Year 11 at Meadow School",
-    status: "active", engagementLevel: "high",
-    startDate: "2024-09-05", frequencyPerWeek: 5,
-    staffFacilitated: false, isChildLed: false, barriers: [],
-  },
-  {
-    id: "conn-m02", childId: "child-morgan", childName: "Morgan",
-    connectionType: "hobby_activity", connectionName: "Drama Club",
-    status: "active", engagementLevel: "high",
-    startDate: "2024-10-01", frequencyPerWeek: 2,
-    staffFacilitated: false, isChildLed: true, barriers: [],
-  },
-  {
-    id: "conn-m03", childId: "child-morgan", childName: "Morgan",
-    connectionType: "volunteering", connectionName: "Charity Shop Volunteer",
-    status: "active", engagementLevel: "moderate",
-    startDate: "2025-03-01", frequencyPerWeek: 0.5,
-    staffFacilitated: true, isChildLed: true, barriers: [],
-  },
-  {
-    id: "conn-m04", childId: "child-morgan", childName: "Morgan",
-    connectionType: "therapy", connectionName: "Weekly Therapy Sessions",
-    status: "active", engagementLevel: "high",
-    startDate: "2024-04-01", frequencyPerWeek: 1,
-    staffFacilitated: true, isChildLed: false, barriers: [],
-  },
-  {
-    id: "conn-m05", childId: "child-morgan", childName: "Morgan",
-    connectionType: "friendship", connectionName: "Friendship with Sam (school friend)",
-    status: "paused", engagementLevel: "moderate",
-    startDate: "2024-05-01", frequencyPerWeek: 0,
-    staffFacilitated: false, isChildLed: true, barriers: ["placement_instability"],
-    notes: "Contact reduced after Sam's family moved — exploring video call catch-ups",
-  },
+const DEMO_NETWORKS: SocialNetwork[] = [
+  makeNetwork({ id: "net-a01", childId: "child-alex", childName: "Alex", friendshipQuality: "strong", numberOfFriends: 5, friendsOutsideCare: true, socialMediaSafety: "safe_and_supported", communityMentor: true, regularSocialActivities: 3 }),
+  makeNetwork({ id: "net-j01", childId: "child-jordan", childName: "Jordan", friendshipQuality: "limited", numberOfFriends: 1, friendsOutsideCare: false, socialMediaSafety: "some_concerns", communityMentor: false, regularSocialActivities: 0 }),
+  makeNetwork({ id: "net-m01", childId: "child-morgan", childName: "Morgan", friendshipQuality: "developing", numberOfFriends: 3, friendsOutsideCare: true, socialMediaSafety: "safe_and_supported", communityMentor: true, regularSocialActivities: 3 }),
 ];
 
-const demoGoals: IntegrationGoal[] = [
-  {
-    id: "goal-a01", childId: "child-alex", childName: "Alex",
-    goalDescription: "Join a second community activity",
-    targetConnectionType: "hobby_activity",
-    targetDate: "2025-03-01", status: "in_progress",
-  },
-  {
-    id: "goal-j01", childId: "child-jordan", childName: "Jordan",
-    goalDescription: "Improve school engagement",
-    targetConnectionType: "education",
-    targetDate: "2025-04-01", status: "in_progress",
-  },
-  {
-    id: "goal-j02", childId: "child-jordan", childName: "Jordan",
-    goalDescription: "Join a physical activity",
-    targetConnectionType: "club_sport",
-    targetDate: "2025-06-01", status: "not_started",
-  },
-  {
-    id: "goal-m01", childId: "child-morgan", childName: "Morgan",
-    goalDescription: "Maintain volunteering commitment",
-    targetConnectionType: "volunteering",
-    targetDate: "2025-01-15", status: "achieved",
-    achievedDate: "2025-01-10",
-  },
+const DEMO_BARRIERS: CommunityBarrierRecord[] = [
+  makeBarrier({ id: "bar-j01", childId: "child-jordan", childName: "Jordan", barrier: "transport", barrierDescription: "No direct bus route to activity venues in the area", actionTaken: true, resolved: false }),
+  makeBarrier({ id: "bar-j02", childId: "child-jordan", childName: "Jordan", barrier: "behaviour", barrierDescription: "Risk assessment limits unsupervised community access", actionTaken: true, resolved: false }),
+];
+
+const DEMO_ASSESSMENTS: InclusionAssessment[] = [
+  makeAssessment({ id: "inc-a01", childId: "child-alex", childName: "Alex", feelsPartOfCommunity: true, accessToLocalAmenities: true, positiveLocalRelationships: true, stigmaExperienced: false, independentTravelSkills: true, assessedBy: "Sarah Johnson" }),
+  makeAssessment({ id: "inc-j01", childId: "child-jordan", childName: "Jordan", feelsPartOfCommunity: false, accessToLocalAmenities: false, positiveLocalRelationships: false, stigmaExperienced: true, independentTravelSkills: false, assessedBy: "Sarah Johnson" }),
+  makeAssessment({ id: "inc-m01", childId: "child-morgan", childName: "Morgan", feelsPartOfCommunity: true, accessToLocalAmenities: true, positiveLocalRelationships: true, stigmaExperienced: false, independentTravelSkills: true, assessedBy: "Sarah Johnson" }),
 ];
 
 // ══════════════════════════════════════════════════════════════════════════════
-// TESTS
+// getRating
 // ══════════════════════════════════════════════════════════════════════════════
 
-describe("Community Integration — evaluateConnectionBreadth", () => {
-  it("counts all 3 children", () => {
-    const result = evaluateConnectionBreadth(demoConnections, demoChildren, REFERENCE_DATE);
-    expect(result.totalChildren).toBe(3);
+describe("getRating", () => {
+  it("returns outstanding for score >= 80", () => {
+    expect(getRating(80)).toBe("outstanding");
+    expect(getRating(100)).toBe("outstanding");
+    expect(getRating(95)).toBe("outstanding");
   });
 
-  it("counts active connections only", () => {
-    const result = evaluateConnectionBreadth(demoConnections, demoChildren, REFERENCE_DATE);
-    // Alex: 3 active, Jordan: 2 active, Morgan: 4 active = 9
-    // conn-a04 ended, conn-j03 planned (startDate 2025-07-01 > ref 2025-06-15), conn-m05 paused
-    expect(result.totalActiveConnections).toBe(9);
+  it("returns good for score >= 60 and < 80", () => {
+    expect(getRating(60)).toBe("good");
+    expect(getRating(79)).toBe("good");
+    expect(getRating(70)).toBe("good");
   });
 
-  it("calculates avg connections per child", () => {
-    const result = evaluateConnectionBreadth(demoConnections, demoChildren, REFERENCE_DATE);
-    // 9 active / 3 children = 3.0
-    expect(result.avgConnectionsPerChild).toBe(3);
+  it("returns requires_improvement for score >= 40 and < 60", () => {
+    expect(getRating(40)).toBe("requires_improvement");
+    expect(getRating(59)).toBe("requires_improvement");
+    expect(getRating(50)).toBe("requires_improvement");
   });
 
-  it("reports 0 children with zero connections", () => {
-    const result = evaluateConnectionBreadth(demoConnections, demoChildren, REFERENCE_DATE);
-    expect(result.childrenWithZeroConnections).toBe(0);
-  });
-
-  it("reports 0 children with exactly one connection", () => {
-    const result = evaluateConnectionBreadth(demoConnections, demoChildren, REFERENCE_DATE);
-    expect(result.childrenWithOneConnection).toBe(0);
-  });
-
-  it("builds connection type distribution", () => {
-    const result = evaluateConnectionBreadth(demoConnections, demoChildren, REFERENCE_DATE);
-    expect(result.connectionTypeDistribution["education"]).toBe(3);
-    expect(result.connectionTypeDistribution["hobby_activity"]).toBe(3);
-    expect(result.connectionTypeDistribution["club_sport"]).toBe(1);
-    expect(result.connectionTypeDistribution["volunteering"]).toBe(1);
-    expect(result.connectionTypeDistribution["therapy"]).toBe(1);
-  });
-
-  it("calculates diversity score", () => {
-    const result = evaluateConnectionBreadth(demoConnections, demoChildren, REFERENCE_DATE);
-    // Alex: 3 types (club_sport, education, hobby_activity)
-    // Jordan: 2 types (education, hobby_activity)
-    // Morgan: 4 types (education, hobby_activity, volunteering, therapy)
-    // Average unique types = (3+2+4)/3 = 3.0 → 3.0 * 25 = 75
-    expect(result.diversityScore).toBe(75);
-  });
-
-  it("detects children with zero connections", () => {
-    const noConnections: CommunityConnection[] = [];
-    const result = evaluateConnectionBreadth(noConnections, demoChildren, REFERENCE_DATE);
-    expect(result.childrenWithZeroConnections).toBe(3);
-    expect(result.avgConnectionsPerChild).toBe(0);
-  });
-
-  it("detects child with exactly one connection", () => {
-    const singleConn: CommunityConnection[] = [
-      {
-        id: "test-1", childId: "child-alex", childName: "Alex",
-        connectionType: "education", connectionName: "School",
-        status: "active", engagementLevel: "moderate",
-        startDate: "2024-01-01", frequencyPerWeek: 5,
-        staffFacilitated: false, isChildLed: false, barriers: [],
-      },
-    ];
-    const result = evaluateConnectionBreadth(singleConn, demoChildren, REFERENCE_DATE);
-    expect(result.childrenWithOneConnection).toBe(1);
-    expect(result.childrenWithZeroConnections).toBe(2);
-  });
-
-  it("handles empty children list", () => {
-    const result = evaluateConnectionBreadth(demoConnections, [], REFERENCE_DATE);
-    expect(result.totalChildren).toBe(0);
-    expect(result.avgConnectionsPerChild).toBe(0);
-    expect(result.diversityScore).toBe(0);
-  });
-
-  it("handles empty connections list", () => {
-    const result = evaluateConnectionBreadth([], demoChildren, REFERENCE_DATE);
-    expect(result.totalActiveConnections).toBe(0);
-    expect(result.avgConnectionsPerChild).toBe(0);
-  });
-
-  it("excludes planned connections with future start dates", () => {
-    const futureConn: CommunityConnection[] = [
-      {
-        id: "future-1", childId: "child-alex", childName: "Alex",
-        connectionType: "club_sport", connectionName: "Future Club",
-        status: "active", engagementLevel: "high",
-        startDate: "2026-01-01", frequencyPerWeek: 1,
-        staffFacilitated: false, isChildLed: true, barriers: [],
-      },
-    ];
-    const result = evaluateConnectionBreadth(futureConn, demoChildren, REFERENCE_DATE);
-    expect(result.totalActiveConnections).toBe(0);
-  });
-
-  it("diversity score caps at 100", () => {
-    // Child with 5 different types
-    const manyTypes: CommunityConnection[] = [
-      { id: "t1", childId: "child-alex", childName: "Alex", connectionType: "education", connectionName: "A", status: "active", engagementLevel: "high", startDate: "2024-01-01", frequencyPerWeek: 1, staffFacilitated: false, isChildLed: true, barriers: [] },
-      { id: "t2", childId: "child-alex", childName: "Alex", connectionType: "club_sport", connectionName: "B", status: "active", engagementLevel: "high", startDate: "2024-01-01", frequencyPerWeek: 1, staffFacilitated: false, isChildLed: true, barriers: [] },
-      { id: "t3", childId: "child-alex", childName: "Alex", connectionType: "hobby_activity", connectionName: "C", status: "active", engagementLevel: "high", startDate: "2024-01-01", frequencyPerWeek: 1, staffFacilitated: false, isChildLed: true, barriers: [] },
-      { id: "t4", childId: "child-alex", childName: "Alex", connectionType: "volunteering", connectionName: "D", status: "active", engagementLevel: "high", startDate: "2024-01-01", frequencyPerWeek: 1, staffFacilitated: false, isChildLed: true, barriers: [] },
-      { id: "t5", childId: "child-alex", childName: "Alex", connectionType: "therapy", connectionName: "E", status: "active", engagementLevel: "high", startDate: "2024-01-01", frequencyPerWeek: 1, staffFacilitated: false, isChildLed: true, barriers: [] },
-    ];
-    const oneChild: ChildProfile[] = [demoChildren[0]];
-    const result = evaluateConnectionBreadth(manyTypes, oneChild, REFERENCE_DATE);
-    expect(result.diversityScore).toBe(100);
+  it("returns inadequate for score < 40", () => {
+    expect(getRating(0)).toBe("inadequate");
+    expect(getRating(39)).toBe("inadequate");
+    expect(getRating(20)).toBe("inadequate");
   });
 });
 
-describe("Community Integration — evaluateEngagement", () => {
-  it("counts total active connections", () => {
-    const result = evaluateEngagement(demoConnections, REFERENCE_DATE);
-    expect(result.totalActive).toBe(9);
+// ══════════════════════════════════════════════════════════════════════════════
+// Label Functions
+// ══════════════════════════════════════════════════════════════════════════════
+
+describe("Label functions", () => {
+  describe("getActivityCategoryLabel", () => {
+    it("returns correct label for each category", () => {
+      const expected: Record<ActivityCategory, string> = {
+        sport: "Sport",
+        arts_culture: "Arts & Culture",
+        music: "Music",
+        faith: "Faith",
+        volunteering: "Volunteering",
+        youth_group: "Youth Group",
+        social_club: "Social Club",
+        employment: "Employment",
+        training: "Training",
+        community_event: "Community Event",
+      };
+      for (const [key, label] of Object.entries(expected)) {
+        expect(getActivityCategoryLabel(key as ActivityCategory)).toBe(label);
+      }
+    });
   });
 
-  it("counts high engagement connections", () => {
-    const result = evaluateEngagement(demoConnections, REFERENCE_DATE);
-    // Alex: football(high), Morgan: school(high), drama(high), therapy(high) = 4
-    // Jordan: gaming(high) = 1 → total 5
-    expect(result.highEngagement).toBe(5);
+  describe("getParticipationLevelLabel", () => {
+    it("returns correct label for each level", () => {
+      const expected: Record<ParticipationLevel, string> = {
+        regular: "Regular",
+        occasional: "Occasional",
+        tried_once: "Tried Once",
+        refused: "Refused",
+        not_offered: "Not Offered",
+      };
+      for (const [key, label] of Object.entries(expected)) {
+        expect(getParticipationLevelLabel(key as ParticipationLevel)).toBe(label);
+      }
+    });
   });
 
-  it("counts moderate engagement connections", () => {
-    const result = evaluateEngagement(demoConnections, REFERENCE_DATE);
-    // Alex: school(moderate), art(moderate), Morgan: volunteering(moderate) = 3
-    expect(result.moderateEngagement).toBe(3);
+  describe("getFriendshipQualityLabel", () => {
+    it("returns correct label for each quality", () => {
+      const expected: Record<FriendshipQuality, string> = {
+        strong: "Strong",
+        developing: "Developing",
+        limited: "Limited",
+        isolated: "Isolated",
+        not_assessed: "Not Assessed",
+      };
+      for (const [key, label] of Object.entries(expected)) {
+        expect(getFriendshipQualityLabel(key as FriendshipQuality)).toBe(label);
+      }
+    });
   });
 
-  it("counts low engagement connections", () => {
-    const result = evaluateEngagement(demoConnections, REFERENCE_DATE);
-    // Jordan: school(low) = 1
-    expect(result.lowEngagement).toBe(1);
+  describe("getCommunityBarrierLabel", () => {
+    it("returns correct label for each barrier", () => {
+      const expected: Record<CommunityBarrier, string> = {
+        transport: "Transport",
+        cost: "Cost",
+        stigma: "Stigma",
+        behaviour: "Behaviour",
+        risk_assessment: "Risk Assessment",
+        staffing: "Staffing",
+        location: "Location",
+        none: "None",
+      };
+      for (const [key, label] of Object.entries(expected)) {
+        expect(getCommunityBarrierLabel(key as CommunityBarrier)).toBe(label);
+      }
+    });
   });
 
-  it("counts disengaged connections", () => {
-    const result = evaluateEngagement(demoConnections, REFERENCE_DATE);
-    expect(result.disengaged).toBe(0);
+  describe("getSocialMediaSafetyLabel", () => {
+    it("returns correct label for each safety level", () => {
+      const expected: Record<SocialMediaSafety, string> = {
+        safe_and_supported: "Safe and Supported",
+        some_concerns: "Some Concerns",
+        significant_risk: "Significant Risk",
+        not_applicable: "Not Applicable",
+      };
+      for (const [key, label] of Object.entries(expected)) {
+        expect(getSocialMediaSafetyLabel(key as SocialMediaSafety)).toBe(label);
+      }
+    });
   });
 
-  it("calculates overall engagement rate", () => {
-    const result = evaluateEngagement(demoConnections, REFERENCE_DATE);
-    // (5 high + 3 moderate) / 9 total = 8/9 = 89%
-    expect(result.overallEngagementRate).toBe(89);
-  });
-
-  it("calculates child-led rate", () => {
-    const result = evaluateEngagement(demoConnections, REFERENCE_DATE);
-    // Child-led active: Alex football(Y), Alex art(Y), Jordan gaming(Y), Morgan drama(Y), Morgan volunteering(Y) = 5
-    // Not child-led: Alex school(N), Jordan school(N), Morgan school(N), Morgan therapy(N) = 4
-    // 5/9 = 56%
-    expect(result.childLedRate).toBe(56);
-  });
-
-  it("calculates staff-facilitated rate", () => {
-    const result = evaluateEngagement(demoConnections, REFERENCE_DATE);
-    // Staff-facilitated active: Alex art(Y), Jordan school? No. Jordan gaming(Y), Morgan volunteering(Y), Morgan therapy(Y) = 4
-    // 4/9 = 44%
-    expect(result.staffFacilitatedRate).toBe(44);
-  });
-
-  it("handles empty connections", () => {
-    const result = evaluateEngagement([], REFERENCE_DATE);
-    expect(result.totalActive).toBe(0);
-    expect(result.overallEngagementRate).toBe(0);
-    expect(result.childLedRate).toBe(0);
-    expect(result.staffFacilitatedRate).toBe(0);
-  });
-
-  it("handles all disengaged", () => {
-    const disengagedConns: CommunityConnection[] = [
-      {
-        id: "d1", childId: "child-alex", childName: "Alex",
-        connectionType: "education", connectionName: "School",
-        status: "active", engagementLevel: "disengaged",
-        startDate: "2024-01-01", frequencyPerWeek: 5,
-        staffFacilitated: false, isChildLed: false, barriers: [],
-      },
-    ];
-    const result = evaluateEngagement(disengagedConns, REFERENCE_DATE);
-    expect(result.overallEngagementRate).toBe(0);
-    expect(result.disengaged).toBe(1);
-  });
-
-  it("excludes non-active connections from engagement", () => {
-    const mixedStatus: CommunityConnection[] = [
-      {
-        id: "m1", childId: "child-alex", childName: "Alex",
-        connectionType: "education", connectionName: "School",
-        status: "active", engagementLevel: "high",
-        startDate: "2024-01-01", frequencyPerWeek: 5,
-        staffFacilitated: false, isChildLed: true, barriers: [],
-      },
-      {
-        id: "m2", childId: "child-alex", childName: "Alex",
-        connectionType: "club_sport", connectionName: "Ended Club",
-        status: "ended", engagementLevel: "low",
-        startDate: "2024-01-01", frequencyPerWeek: 1,
-        staffFacilitated: false, isChildLed: false, barriers: [],
-      },
-    ];
-    const result = evaluateEngagement(mixedStatus, REFERENCE_DATE);
-    expect(result.totalActive).toBe(1);
-    expect(result.highEngagement).toBe(1);
+  describe("getRatingLabel", () => {
+    it("returns correct label for each rating", () => {
+      const expected: Record<Rating, string> = {
+        outstanding: "Outstanding",
+        good: "Good",
+        requires_improvement: "Requires Improvement",
+        inadequate: "Inadequate",
+      };
+      for (const [key, label] of Object.entries(expected)) {
+        expect(getRatingLabel(key as Rating)).toBe(label);
+      }
+    });
   });
 });
 
-describe("Community Integration — evaluateBarriers", () => {
-  it("counts total barriers across all connections", () => {
-    const result = evaluateBarriers(demoConnections, REFERENCE_DATE);
-    // conn-a04: anxiety, conn-j01: peer_conflict, conn-j03: anxiety (start 2025-07-01 > ref? No, startDate check is <=)
-    // Wait: conn-j03 startDate is 2025-07-01 which is > 2025-06-15, so it's excluded
-    // conn-m05: placement_instability
-    // Total: anxiety + peer_conflict + placement_instability = 3
-    expect(result.totalBarriers).toBe(3);
+// ══════════════════════════════════════════════════════════════════════════════
+// evaluateActivityParticipation
+// ══════════════════════════════════════════════════════════════════════════════
+
+describe("evaluateActivityParticipation", () => {
+  it("returns zero scores for empty activities", () => {
+    const result = evaluateActivityParticipation([]);
+    expect(result.overallScore).toBe(0);
+    expect(result.totalActivities).toBe(0);
+    expect(result.regularParticipationRate).toBe(0);
+    expect(result.activityVariety).toBe(0);
+    expect(result.communityBasedRate).toBe(0);
+    expect(result.enjoymentRate).toBe(0);
+    expect(result.independentAttendanceRate).toBe(0);
   });
 
-  it("builds barrier distribution", () => {
-    const result = evaluateBarriers(demoConnections, REFERENCE_DATE);
-    expect(result.barrierDistribution["anxiety"]).toBe(1);
-    expect(result.barrierDistribution["peer_conflict"]).toBe(1);
-    expect(result.barrierDistribution["placement_instability"]).toBe(1);
-  });
-
-  it("counts children with barriers", () => {
-    const result = evaluateBarriers(demoConnections, REFERENCE_DATE);
-    // Alex (anxiety from swimming), Jordan (peer_conflict), Morgan (placement_instability)
-    expect(result.childrenWithBarriers).toBe(3);
-  });
-
-  it("identifies most common barrier", () => {
-    const result = evaluateBarriers(demoConnections, REFERENCE_DATE);
-    // All tied at 1 — first alphabetically encountered wins based on iteration order
-    expect(result.mostCommonBarrier).not.toBeNull();
-  });
-
-  it("calculates barriers per child average", () => {
-    const result = evaluateBarriers(demoConnections, REFERENCE_DATE);
-    // 3 barriers across 3 unique children in relevant connections = 1.0
-    expect(result.barriersPerChildAvg).toBe(1);
-  });
-
-  it("handles connections with no barriers", () => {
-    const noBarriers: CommunityConnection[] = [
-      {
-        id: "nb1", childId: "child-alex", childName: "Alex",
-        connectionType: "education", connectionName: "School",
-        status: "active", engagementLevel: "high",
-        startDate: "2024-01-01", frequencyPerWeek: 5,
-        staffFacilitated: false, isChildLed: false, barriers: [],
-      },
+  it("scores high for all-regular, diverse, community-based, enjoyed, independent activities", () => {
+    const activities = [
+      makeActivity({ id: "a1", activityCategory: "sport", participationLevel: "regular", communityBased: true, childEnjoys: true, independentAttendance: true }),
+      makeActivity({ id: "a2", activityCategory: "arts_culture", participationLevel: "regular", communityBased: true, childEnjoys: true, independentAttendance: true }),
+      makeActivity({ id: "a3", activityCategory: "music", participationLevel: "regular", communityBased: true, childEnjoys: true, independentAttendance: true }),
+      makeActivity({ id: "a4", activityCategory: "volunteering", participationLevel: "regular", communityBased: true, childEnjoys: true, independentAttendance: true }),
+      makeActivity({ id: "a5", activityCategory: "youth_group", participationLevel: "regular", communityBased: true, childEnjoys: true, independentAttendance: true }),
     ];
-    const result = evaluateBarriers(noBarriers, REFERENCE_DATE);
+    const result = evaluateActivityParticipation(activities);
+    expect(result.overallScore).toBe(25);
+    expect(result.totalActivities).toBe(5);
+    expect(result.regularParticipationRate).toBe(100);
+    expect(result.activityVariety).toBe(5);
+    expect(result.communityBasedRate).toBe(100);
+    expect(result.enjoymentRate).toBe(100);
+    expect(result.independentAttendanceRate).toBe(100);
+  });
+
+  it("calculates regular participation rate correctly", () => {
+    const activities = [
+      makeActivity({ id: "a1", participationLevel: "regular" }),
+      makeActivity({ id: "a2", participationLevel: "regular" }),
+      makeActivity({ id: "a3", participationLevel: "occasional" }),
+      makeActivity({ id: "a4", participationLevel: "tried_once" }),
+      makeActivity({ id: "a5", participationLevel: "refused" }),
+    ];
+    const result = evaluateActivityParticipation(activities);
+    expect(result.regularParticipationRate).toBe(40);
+  });
+
+  it("awards 7 points for regular participation >= 80%", () => {
+    const activities = [
+      makeActivity({ id: "a1", participationLevel: "regular", activityCategory: "sport", communityBased: false, childEnjoys: false, independentAttendance: false }),
+      makeActivity({ id: "a2", participationLevel: "regular", activityCategory: "sport", communityBased: false, childEnjoys: false, independentAttendance: false }),
+      makeActivity({ id: "a3", participationLevel: "regular", activityCategory: "sport", communityBased: false, childEnjoys: false, independentAttendance: false }),
+      makeActivity({ id: "a4", participationLevel: "regular", activityCategory: "sport", communityBased: false, childEnjoys: false, independentAttendance: false }),
+      makeActivity({ id: "a5", participationLevel: "occasional", activityCategory: "sport", communityBased: false, childEnjoys: false, independentAttendance: false }),
+    ];
+    const result = evaluateActivityParticipation(activities);
+    // 80% regular => 7 points, 1 category => 1 point, 0% community => 0, 0% enjoy => 0, 0% independent => 0
+    expect(result.overallScore).toBe(8);
+  });
+
+  it("awards 5 points for regular participation >= 60% but < 80%", () => {
+    const activities = [
+      makeActivity({ id: "a1", participationLevel: "regular", activityCategory: "sport", communityBased: false, childEnjoys: false, independentAttendance: false }),
+      makeActivity({ id: "a2", participationLevel: "regular", activityCategory: "sport", communityBased: false, childEnjoys: false, independentAttendance: false }),
+      makeActivity({ id: "a3", participationLevel: "regular", activityCategory: "sport", communityBased: false, childEnjoys: false, independentAttendance: false }),
+      makeActivity({ id: "a4", participationLevel: "occasional", activityCategory: "sport", communityBased: false, childEnjoys: false, independentAttendance: false }),
+      makeActivity({ id: "a5", participationLevel: "occasional", activityCategory: "sport", communityBased: false, childEnjoys: false, independentAttendance: false }),
+    ];
+    const result = evaluateActivityParticipation(activities);
+    // 60% regular => 5 points, 1 category => 1 point
+    expect(result.overallScore).toBe(6);
+  });
+
+  it("awards 3 points for regular participation >= 40% but < 60%", () => {
+    const activities = [
+      makeActivity({ id: "a1", participationLevel: "regular", activityCategory: "sport", communityBased: false, childEnjoys: false, independentAttendance: false }),
+      makeActivity({ id: "a2", participationLevel: "regular", activityCategory: "sport", communityBased: false, childEnjoys: false, independentAttendance: false }),
+      makeActivity({ id: "a3", participationLevel: "occasional", activityCategory: "sport", communityBased: false, childEnjoys: false, independentAttendance: false }),
+      makeActivity({ id: "a4", participationLevel: "occasional", activityCategory: "sport", communityBased: false, childEnjoys: false, independentAttendance: false }),
+      makeActivity({ id: "a5", participationLevel: "occasional", activityCategory: "sport", communityBased: false, childEnjoys: false, independentAttendance: false }),
+    ];
+    const result = evaluateActivityParticipation(activities);
+    // 40% regular => 3 points, 1 category => 1 point
+    expect(result.overallScore).toBe(4);
+  });
+
+  it("counts activity variety correctly", () => {
+    const activities = [
+      makeActivity({ id: "a1", activityCategory: "sport" }),
+      makeActivity({ id: "a2", activityCategory: "arts_culture" }),
+      makeActivity({ id: "a3", activityCategory: "music" }),
+      makeActivity({ id: "a4", activityCategory: "sport" }), // duplicate
+    ];
+    const result = evaluateActivityParticipation(activities);
+    expect(result.activityVariety).toBe(3);
+  });
+
+  it("awards 5 points for activity variety >= 5", () => {
+    const activities = [
+      makeActivity({ id: "a1", activityCategory: "sport", participationLevel: "occasional", communityBased: false, childEnjoys: false, independentAttendance: false }),
+      makeActivity({ id: "a2", activityCategory: "arts_culture", participationLevel: "occasional", communityBased: false, childEnjoys: false, independentAttendance: false }),
+      makeActivity({ id: "a3", activityCategory: "music", participationLevel: "occasional", communityBased: false, childEnjoys: false, independentAttendance: false }),
+      makeActivity({ id: "a4", activityCategory: "volunteering", participationLevel: "occasional", communityBased: false, childEnjoys: false, independentAttendance: false }),
+      makeActivity({ id: "a5", activityCategory: "youth_group", participationLevel: "occasional", communityBased: false, childEnjoys: false, independentAttendance: false }),
+    ];
+    const result = evaluateActivityParticipation(activities);
+    // 0% regular => 0 pts, 5 categories => 5 pts
+    expect(result.activityVariety).toBe(5);
+  });
+
+  it("calculates community-based rate correctly", () => {
+    const activities = [
+      makeActivity({ id: "a1", communityBased: true }),
+      makeActivity({ id: "a2", communityBased: true }),
+      makeActivity({ id: "a3", communityBased: false }),
+    ];
+    const result = evaluateActivityParticipation(activities);
+    expect(result.communityBasedRate).toBe(67);
+  });
+
+  it("calculates enjoyment rate correctly", () => {
+    const activities = [
+      makeActivity({ id: "a1", childEnjoys: true }),
+      makeActivity({ id: "a2", childEnjoys: true }),
+      makeActivity({ id: "a3", childEnjoys: false }),
+      makeActivity({ id: "a4", childEnjoys: false }),
+    ];
+    const result = evaluateActivityParticipation(activities);
+    expect(result.enjoymentRate).toBe(50);
+  });
+
+  it("calculates independent attendance rate correctly", () => {
+    const activities = [
+      makeActivity({ id: "a1", independentAttendance: true }),
+      makeActivity({ id: "a2", independentAttendance: false }),
+      makeActivity({ id: "a3", independentAttendance: false }),
+      makeActivity({ id: "a4", independentAttendance: false }),
+    ];
+    const result = evaluateActivityParticipation(activities);
+    expect(result.independentAttendanceRate).toBe(25);
+  });
+
+  it("caps score at 25", () => {
+    // Create perfect conditions that might exceed 25
+    const activities = Array.from({ length: 10 }, (_, i) =>
+      makeActivity({
+        id: `a${i}`,
+        activityCategory: ["sport", "arts_culture", "music", "volunteering", "youth_group", "social_club", "employment", "training", "community_event", "faith"][i] as ActivityCategory,
+        participationLevel: "regular",
+        communityBased: true,
+        childEnjoys: true,
+        independentAttendance: true,
+      }),
+    );
+    const result = evaluateActivityParticipation(activities);
+    expect(result.overallScore).toBeLessThanOrEqual(25);
+  });
+
+  it("handles single activity correctly", () => {
+    const result = evaluateActivityParticipation([
+      makeActivity({ participationLevel: "regular", communityBased: true, childEnjoys: true, independentAttendance: true }),
+    ]);
+    expect(result.totalActivities).toBe(1);
+    expect(result.regularParticipationRate).toBe(100);
+    expect(result.activityVariety).toBe(1);
+  });
+
+  it("gives zero regular participation points when all refused", () => {
+    const activities = [
+      makeActivity({ id: "a1", participationLevel: "refused", communityBased: false, childEnjoys: false, independentAttendance: false, activityCategory: "sport" }),
+      makeActivity({ id: "a2", participationLevel: "refused", communityBased: false, childEnjoys: false, independentAttendance: false, activityCategory: "sport" }),
+    ];
+    const result = evaluateActivityParticipation(activities);
+    expect(result.regularParticipationRate).toBe(0);
+  });
+
+  it("scores demo data (Oak House) appropriately", () => {
+    const result = evaluateActivityParticipation(DEMO_ACTIVITIES);
+    expect(result.totalActivities).toBe(6);
+    // 5 out of 6 are regular => 83%
+    expect(result.regularParticipationRate).toBe(83);
+    // Categories: sport, youth_group, arts_culture, volunteering => 4
+    expect(result.activityVariety).toBe(4);
+    // All are community-based
+    expect(result.communityBasedRate).toBe(100);
+    // 5/6 enjoy
+    expect(result.enjoymentRate).toBe(83);
+    expect(result.overallScore).toBeGreaterThan(0);
+    expect(result.overallScore).toBeLessThanOrEqual(25);
+  });
+});
+
+// ══════════════════════════════════════════════════════════════════════════════
+// evaluateSocialNetworks
+// ══════════════════════════════════════════════════════════════════════════════
+
+describe("evaluateSocialNetworks", () => {
+  it("returns zero scores for empty networks", () => {
+    const result = evaluateSocialNetworks([]);
+    expect(result.overallScore).toBe(0);
+    expect(result.totalNetworks).toBe(0);
+    expect(result.friendshipQualityRate).toBe(0);
+    expect(result.friendsOutsideCareRate).toBe(0);
+    expect(result.mentorRate).toBe(0);
+    expect(result.socialMediaSafetyRate).toBe(0);
+  });
+
+  it("scores high for excellent social networks", () => {
+    const networks = [
+      makeNetwork({ id: "n1", friendshipQuality: "strong", friendsOutsideCare: true, communityMentor: true, socialMediaSafety: "safe_and_supported" }),
+      makeNetwork({ id: "n2", friendshipQuality: "strong", friendsOutsideCare: true, communityMentor: true, socialMediaSafety: "safe_and_supported" }),
+      makeNetwork({ id: "n3", friendshipQuality: "developing", friendsOutsideCare: true, communityMentor: false, socialMediaSafety: "safe_and_supported" }),
+    ];
+    const result = evaluateSocialNetworks(networks);
+    expect(result.overallScore).toBe(25);
+    expect(result.friendshipQualityRate).toBe(100);
+    expect(result.friendsOutsideCareRate).toBe(100);
+  });
+
+  it("calculates friendship quality rate correctly (strong + developing)", () => {
+    const networks = [
+      makeNetwork({ id: "n1", friendshipQuality: "strong" }),
+      makeNetwork({ id: "n2", friendshipQuality: "developing" }),
+      makeNetwork({ id: "n3", friendshipQuality: "limited" }),
+      makeNetwork({ id: "n4", friendshipQuality: "isolated" }),
+    ];
+    const result = evaluateSocialNetworks(networks);
+    expect(result.friendshipQualityRate).toBe(50);
+  });
+
+  it("awards 8 points for friendship quality >= 80%", () => {
+    const networks = [
+      makeNetwork({ id: "n1", friendshipQuality: "strong", friendsOutsideCare: false, communityMentor: false, socialMediaSafety: "some_concerns" }),
+      makeNetwork({ id: "n2", friendshipQuality: "strong", friendsOutsideCare: false, communityMentor: false, socialMediaSafety: "some_concerns" }),
+      makeNetwork({ id: "n3", friendshipQuality: "strong", friendsOutsideCare: false, communityMentor: false, socialMediaSafety: "some_concerns" }),
+      makeNetwork({ id: "n4", friendshipQuality: "strong", friendsOutsideCare: false, communityMentor: false, socialMediaSafety: "some_concerns" }),
+      makeNetwork({ id: "n5", friendshipQuality: "developing", friendsOutsideCare: false, communityMentor: false, socialMediaSafety: "some_concerns" }),
+    ];
+    const result = evaluateSocialNetworks(networks);
+    // 100% friendship quality => 8 pts, 0% outside care => 0, 0% mentor => 0, 0% safe social => 0
+    expect(result.friendshipQualityRate).toBe(100);
+  });
+
+  it("awards 5 points for friendship quality >= 60% but < 80%", () => {
+    const networks = [
+      makeNetwork({ id: "n1", friendshipQuality: "strong", friendsOutsideCare: false, communityMentor: false, socialMediaSafety: "significant_risk" }),
+      makeNetwork({ id: "n2", friendshipQuality: "developing", friendsOutsideCare: false, communityMentor: false, socialMediaSafety: "significant_risk" }),
+      makeNetwork({ id: "n3", friendshipQuality: "limited", friendsOutsideCare: false, communityMentor: false, socialMediaSafety: "significant_risk" }),
+    ];
+    const result = evaluateSocialNetworks(networks);
+    expect(result.friendshipQualityRate).toBe(67);
+  });
+
+  it("calculates friends outside care rate correctly", () => {
+    const networks = [
+      makeNetwork({ id: "n1", friendsOutsideCare: true }),
+      makeNetwork({ id: "n2", friendsOutsideCare: true }),
+      makeNetwork({ id: "n3", friendsOutsideCare: false }),
+    ];
+    const result = evaluateSocialNetworks(networks);
+    expect(result.friendsOutsideCareRate).toBe(67);
+  });
+
+  it("awards 6 points for friends outside care >= 70%", () => {
+    const networks = [
+      makeNetwork({ id: "n1", friendshipQuality: "limited", friendsOutsideCare: true, communityMentor: false, socialMediaSafety: "significant_risk" }),
+      makeNetwork({ id: "n2", friendshipQuality: "limited", friendsOutsideCare: true, communityMentor: false, socialMediaSafety: "significant_risk" }),
+      makeNetwork({ id: "n3", friendshipQuality: "limited", friendsOutsideCare: true, communityMentor: false, socialMediaSafety: "significant_risk" }),
+    ];
+    const result = evaluateSocialNetworks(networks);
+    expect(result.friendsOutsideCareRate).toBe(100);
+  });
+
+  it("calculates mentor rate correctly", () => {
+    const networks = [
+      makeNetwork({ id: "n1", communityMentor: true }),
+      makeNetwork({ id: "n2", communityMentor: false }),
+      makeNetwork({ id: "n3", communityMentor: true }),
+      makeNetwork({ id: "n4", communityMentor: false }),
+    ];
+    const result = evaluateSocialNetworks(networks);
+    expect(result.mentorRate).toBe(50);
+  });
+
+  it("calculates social media safety rate correctly (safe + not_applicable)", () => {
+    const networks = [
+      makeNetwork({ id: "n1", socialMediaSafety: "safe_and_supported" }),
+      makeNetwork({ id: "n2", socialMediaSafety: "not_applicable" }),
+      makeNetwork({ id: "n3", socialMediaSafety: "some_concerns" }),
+      makeNetwork({ id: "n4", socialMediaSafety: "significant_risk" }),
+    ];
+    const result = evaluateSocialNetworks(networks);
+    expect(result.socialMediaSafetyRate).toBe(50);
+  });
+
+  it("caps score at 25", () => {
+    const networks = Array.from({ length: 5 }, (_, i) =>
+      makeNetwork({
+        id: `n${i}`,
+        friendshipQuality: "strong",
+        friendsOutsideCare: true,
+        communityMentor: true,
+        socialMediaSafety: "safe_and_supported",
+      }),
+    );
+    const result = evaluateSocialNetworks(networks);
+    expect(result.overallScore).toBeLessThanOrEqual(25);
+  });
+
+  it("handles single network correctly", () => {
+    const result = evaluateSocialNetworks([
+      makeNetwork({ friendshipQuality: "strong", friendsOutsideCare: true, communityMentor: true, socialMediaSafety: "safe_and_supported" }),
+    ]);
+    expect(result.totalNetworks).toBe(1);
+    expect(result.friendshipQualityRate).toBe(100);
+  });
+
+  it("scores poorly for all isolated children", () => {
+    const networks = [
+      makeNetwork({ id: "n1", friendshipQuality: "isolated", friendsOutsideCare: false, communityMentor: false, socialMediaSafety: "significant_risk" }),
+      makeNetwork({ id: "n2", friendshipQuality: "isolated", friendsOutsideCare: false, communityMentor: false, socialMediaSafety: "significant_risk" }),
+    ];
+    const result = evaluateSocialNetworks(networks);
+    expect(result.friendshipQualityRate).toBe(0);
+    expect(result.overallScore).toBe(0);
+  });
+
+  it("scores demo data (Oak House) appropriately", () => {
+    const result = evaluateSocialNetworks(DEMO_NETWORKS);
+    expect(result.totalNetworks).toBe(3);
+    // 2 out of 3 are strong/developing
+    expect(result.friendshipQualityRate).toBe(67);
+    // 2 out of 3 have friends outside care
+    expect(result.friendsOutsideCareRate).toBe(67);
+    // 2 out of 3 have community mentors
+    expect(result.mentorRate).toBe(67);
+    expect(result.overallScore).toBeGreaterThan(0);
+  });
+});
+
+// ══════════════════════════════════════════════════════════════════════════════
+// evaluateBarrierManagement
+// ══════════════════════════════════════════════════════════════════════════════
+
+describe("evaluateBarrierManagement", () => {
+  it("returns score 25 for empty barriers (no barriers = excellent)", () => {
+    const result = evaluateBarrierManagement([]);
+    expect(result.overallScore).toBe(25);
     expect(result.totalBarriers).toBe(0);
-    expect(result.childrenWithBarriers).toBe(0);
-    expect(result.mostCommonBarrier).toBeNull();
-    expect(result.barriersPerChildAvg).toBe(0);
+    expect(result.resolutionRate).toBe(0);
+    expect(result.actionTakenRate).toBe(0);
   });
 
-  it("handles empty connections", () => {
-    const result = evaluateBarriers([], REFERENCE_DATE);
+  it("returns score 25 for barriers with only 'none' type", () => {
+    const barriers = [
+      makeBarrier({ id: "b1", barrier: "none", actionTaken: false, resolved: false }),
+    ];
+    const result = evaluateBarrierManagement(barriers);
+    expect(result.overallScore).toBe(25);
     expect(result.totalBarriers).toBe(0);
-    expect(result.barriersPerChildAvg).toBe(0);
   });
 
-  it("counts multiple barriers on single connection", () => {
-    const multiBarrier: CommunityConnection[] = [
-      {
-        id: "mb1", childId: "child-alex", childName: "Alex",
-        connectionType: "club_sport", connectionName: "Club",
-        status: "active", engagementLevel: "low",
-        startDate: "2024-01-01", frequencyPerWeek: 1,
-        staffFacilitated: true, isChildLed: false,
-        barriers: ["transport", "funding", "anxiety"],
-      },
+  it("scores high for all barriers resolved with action taken", () => {
+    const barriers = [
+      makeBarrier({ id: "b1", barrier: "transport", actionTaken: true, resolved: true }),
+      makeBarrier({ id: "b2", barrier: "cost", actionTaken: true, resolved: true }),
+      makeBarrier({ id: "b3", barrier: "stigma", actionTaken: true, resolved: true }),
     ];
-    const result = evaluateBarriers(multiBarrier, REFERENCE_DATE);
-    expect(result.totalBarriers).toBe(3);
-    expect(result.barrierDistribution["transport"]).toBe(1);
-    expect(result.barrierDistribution["funding"]).toBe(1);
-    expect(result.barrierDistribution["anxiety"]).toBe(1);
+    const result = evaluateBarrierManagement(barriers);
+    expect(result.resolutionRate).toBe(100);
+    expect(result.actionTakenRate).toBe(100);
+    expect(result.overallScore).toBe(25);
   });
 
-  it("identifies most common barrier when one dominates", () => {
-    const conns: CommunityConnection[] = [
-      { id: "b1", childId: "c1", childName: "C1", connectionType: "education", connectionName: "S", status: "active", engagementLevel: "low", startDate: "2024-01-01", frequencyPerWeek: 5, staffFacilitated: false, isChildLed: false, barriers: ["transport"] },
-      { id: "b2", childId: "c2", childName: "C2", connectionType: "club_sport", connectionName: "C", status: "active", engagementLevel: "low", startDate: "2024-01-01", frequencyPerWeek: 1, staffFacilitated: true, isChildLed: false, barriers: ["transport", "funding"] },
-      { id: "b3", childId: "c3", childName: "C3", connectionType: "hobby_activity", connectionName: "H", status: "active", engagementLevel: "low", startDate: "2024-01-01", frequencyPerWeek: 1, staffFacilitated: true, isChildLed: false, barriers: ["transport"] },
+  it("calculates resolution rate correctly", () => {
+    const barriers = [
+      makeBarrier({ id: "b1", barrier: "transport", resolved: true }),
+      makeBarrier({ id: "b2", barrier: "cost", resolved: false }),
+      makeBarrier({ id: "b3", barrier: "stigma", resolved: true }),
     ];
-    const result = evaluateBarriers(conns, REFERENCE_DATE);
-    expect(result.mostCommonBarrier).toBe("transport");
+    const result = evaluateBarrierManagement(barriers);
+    expect(result.resolutionRate).toBe(67);
+  });
+
+  it("calculates action taken rate correctly", () => {
+    const barriers = [
+      makeBarrier({ id: "b1", barrier: "transport", actionTaken: true }),
+      makeBarrier({ id: "b2", barrier: "cost", actionTaken: true }),
+      makeBarrier({ id: "b3", barrier: "stigma", actionTaken: false }),
+      makeBarrier({ id: "b4", barrier: "behaviour", actionTaken: false }),
+    ];
+    const result = evaluateBarrierManagement(barriers);
+    expect(result.actionTakenRate).toBe(50);
+  });
+
+  it("awards 10 points for resolution rate >= 80%", () => {
+    const barriers = [
+      makeBarrier({ id: "b1", barrier: "transport", actionTaken: false, resolved: true }),
+      makeBarrier({ id: "b2", barrier: "cost", actionTaken: false, resolved: true }),
+      makeBarrier({ id: "b3", barrier: "stigma", actionTaken: false, resolved: true }),
+      makeBarrier({ id: "b4", barrier: "behaviour", actionTaken: false, resolved: true }),
+      makeBarrier({ id: "b5", barrier: "staffing", actionTaken: false, resolved: false }),
+    ];
+    const result = evaluateBarrierManagement(barriers);
+    expect(result.resolutionRate).toBe(80);
+  });
+
+  it("awards 7 points for resolution rate >= 60% but < 80%", () => {
+    const barriers = [
+      makeBarrier({ id: "b1", barrier: "transport", actionTaken: false, resolved: true }),
+      makeBarrier({ id: "b2", barrier: "cost", actionTaken: false, resolved: true }),
+      makeBarrier({ id: "b3", barrier: "stigma", actionTaken: false, resolved: false }),
+    ];
+    const result = evaluateBarrierManagement(barriers);
+    expect(result.resolutionRate).toBe(67);
+  });
+
+  it("scores zero for no action taken and no resolution", () => {
+    const barriers = [
+      makeBarrier({ id: "b1", barrier: "transport", actionTaken: false, resolved: false }),
+      makeBarrier({ id: "b2", barrier: "cost", actionTaken: false, resolved: false }),
+    ];
+    const result = evaluateBarrierManagement(barriers);
+    expect(result.overallScore).toBe(0);
+    expect(result.resolutionRate).toBe(0);
+    expect(result.actionTakenRate).toBe(0);
+  });
+
+  it("handles single barrier correctly", () => {
+    const result = evaluateBarrierManagement([
+      makeBarrier({ barrier: "transport", actionTaken: true, resolved: true }),
+    ]);
+    expect(result.totalBarriers).toBe(1);
+    expect(result.resolutionRate).toBe(100);
+    expect(result.actionTakenRate).toBe(100);
+  });
+
+  it("caps score at 25", () => {
+    const barriers = Array.from({ length: 10 }, (_, i) =>
+      makeBarrier({
+        id: `b${i}`,
+        barrier: "transport",
+        actionTaken: true,
+        resolved: true,
+      }),
+    );
+    const result = evaluateBarrierManagement(barriers);
+    expect(result.overallScore).toBeLessThanOrEqual(25);
+  });
+
+  it("scores demo data (Oak House) appropriately", () => {
+    const result = evaluateBarrierManagement(DEMO_BARRIERS);
+    expect(result.totalBarriers).toBe(2);
+    // Both have action taken, neither resolved
+    expect(result.actionTakenRate).toBe(100);
+    expect(result.resolutionRate).toBe(0);
+    expect(result.overallScore).toBeGreaterThan(0);
+  });
+
+  it("filters out 'none' barriers from scoring", () => {
+    const barriers = [
+      makeBarrier({ id: "b1", barrier: "none" }),
+      makeBarrier({ id: "b2", barrier: "transport", actionTaken: true, resolved: true }),
+    ];
+    const result = evaluateBarrierManagement(barriers);
+    expect(result.totalBarriers).toBe(1);
+  });
+
+  it("gives bonus for proactive management", () => {
+    const withAction = evaluateBarrierManagement([
+      makeBarrier({ id: "b1", barrier: "transport", actionTaken: true, resolved: false }),
+      makeBarrier({ id: "b2", barrier: "cost", actionTaken: true, resolved: false }),
+      makeBarrier({ id: "b3", barrier: "stigma", actionTaken: true, resolved: false }),
+    ]);
+    const withoutAction = evaluateBarrierManagement([
+      makeBarrier({ id: "b1", barrier: "transport", actionTaken: false, resolved: false }),
+      makeBarrier({ id: "b2", barrier: "cost", actionTaken: false, resolved: false }),
+      makeBarrier({ id: "b3", barrier: "stigma", actionTaken: false, resolved: false }),
+    ]);
+    expect(withAction.overallScore).toBeGreaterThan(withoutAction.overallScore);
   });
 });
 
-describe("Community Integration — evaluateGoalProgress", () => {
-  it("counts total goals", () => {
-    const result = evaluateGoalProgress(demoGoals, REFERENCE_DATE);
-    expect(result.totalGoals).toBe(4);
+// ══════════════════════════════════════════════════════════════════════════════
+// evaluateInclusionOutcomes
+// ══════════════════════════════════════════════════════════════════════════════
+
+describe("evaluateInclusionOutcomes", () => {
+  it("returns zero scores for empty assessments", () => {
+    const result = evaluateInclusionOutcomes([]);
+    expect(result.overallScore).toBe(0);
+    expect(result.totalAssessments).toBe(0);
+    expect(result.communityBelongingRate).toBe(0);
+    expect(result.amenityAccessRate).toBe(0);
+    expect(result.positiveRelationshipsRate).toBe(0);
+    expect(result.independentTravelRate).toBe(0);
   });
 
-  it("counts achieved goals", () => {
-    const result = evaluateGoalProgress(demoGoals, REFERENCE_DATE);
-    // Morgan's volunteering goal achieved
-    expect(result.achieved).toBe(1);
-  });
-
-  it("counts in-progress goals", () => {
-    const result = evaluateGoalProgress(demoGoals, REFERENCE_DATE);
-    // Alex's community activity, Jordan's school engagement
-    expect(result.inProgress).toBe(2);
-  });
-
-  it("counts not-started goals", () => {
-    const result = evaluateGoalProgress(demoGoals, REFERENCE_DATE);
-    // Jordan's physical activity
-    expect(result.notStarted).toBe(1);
-  });
-
-  it("calculates achievement rate", () => {
-    const result = evaluateGoalProgress(demoGoals, REFERENCE_DATE);
-    // 1/4 = 25%
-    expect(result.achievementRate).toBe(25);
-  });
-
-  it("counts overdue goals", () => {
-    const result = evaluateGoalProgress(demoGoals, REFERENCE_DATE);
-    // Alex goal: target 2025-03-01 < ref 2025-06-15, status in_progress → overdue
-    // Jordan school: target 2025-04-01 < ref 2025-06-15, status in_progress → overdue
-    // Jordan physical: target 2025-06-01 < ref 2025-06-15, status not_started → overdue
-    // Morgan: achieved → not overdue
-    expect(result.overdueGoals).toBe(3);
-  });
-
-  it("does not count achieved goals as overdue", () => {
-    const achievedGoal: IntegrationGoal[] = [
-      {
-        id: "g1", childId: "c1", childName: "C1",
-        goalDescription: "Test", targetConnectionType: "education",
-        targetDate: "2024-01-01", status: "achieved", achievedDate: "2024-01-01",
-      },
+  it("scores high for all-positive assessments", () => {
+    const assessments = [
+      makeAssessment({ id: "i1", feelsPartOfCommunity: true, accessToLocalAmenities: true, positiveLocalRelationships: true, independentTravelSkills: true }),
+      makeAssessment({ id: "i2", feelsPartOfCommunity: true, accessToLocalAmenities: true, positiveLocalRelationships: true, independentTravelSkills: true }),
+      makeAssessment({ id: "i3", feelsPartOfCommunity: true, accessToLocalAmenities: true, positiveLocalRelationships: true, independentTravelSkills: true }),
     ];
-    const result = evaluateGoalProgress(achievedGoal, REFERENCE_DATE);
-    expect(result.overdueGoals).toBe(0);
+    const result = evaluateInclusionOutcomes(assessments);
+    expect(result.overallScore).toBe(25);
+    expect(result.communityBelongingRate).toBe(100);
+    expect(result.amenityAccessRate).toBe(100);
+    expect(result.positiveRelationshipsRate).toBe(100);
+    expect(result.independentTravelRate).toBe(100);
   });
 
-  it("does not count discontinued goals as overdue", () => {
-    const discontinuedGoal: IntegrationGoal[] = [
-      {
-        id: "g1", childId: "c1", childName: "C1",
-        goalDescription: "Test", targetConnectionType: "education",
-        targetDate: "2024-01-01", status: "discontinued",
-      },
+  it("calculates community belonging rate correctly", () => {
+    const assessments = [
+      makeAssessment({ id: "i1", feelsPartOfCommunity: true }),
+      makeAssessment({ id: "i2", feelsPartOfCommunity: true }),
+      makeAssessment({ id: "i3", feelsPartOfCommunity: false }),
     ];
-    const result = evaluateGoalProgress(discontinuedGoal, REFERENCE_DATE);
-    expect(result.overdueGoals).toBe(0);
+    const result = evaluateInclusionOutcomes(assessments);
+    expect(result.communityBelongingRate).toBe(67);
   });
 
-  it("handles empty goals list", () => {
-    const result = evaluateGoalProgress([], REFERENCE_DATE);
-    expect(result.totalGoals).toBe(0);
-    expect(result.achievementRate).toBe(0);
-    expect(result.overdueGoals).toBe(0);
-  });
-
-  it("counts revised and discontinued goals", () => {
-    const mixedGoals: IntegrationGoal[] = [
-      { id: "g1", childId: "c1", childName: "C1", goalDescription: "A", targetConnectionType: "education", targetDate: "2025-12-01", status: "revised" },
-      { id: "g2", childId: "c1", childName: "C1", goalDescription: "B", targetConnectionType: "club_sport", targetDate: "2025-12-01", status: "discontinued" },
-      { id: "g3", childId: "c1", childName: "C1", goalDescription: "C", targetConnectionType: "hobby_activity", targetDate: "2025-12-01", status: "achieved", achievedDate: "2025-06-01" },
+  it("awards 7 points for community belonging >= 80%", () => {
+    const assessments = [
+      makeAssessment({ id: "i1", feelsPartOfCommunity: true, accessToLocalAmenities: false, positiveLocalRelationships: false, independentTravelSkills: false }),
+      makeAssessment({ id: "i2", feelsPartOfCommunity: true, accessToLocalAmenities: false, positiveLocalRelationships: false, independentTravelSkills: false }),
+      makeAssessment({ id: "i3", feelsPartOfCommunity: true, accessToLocalAmenities: false, positiveLocalRelationships: false, independentTravelSkills: false }),
+      makeAssessment({ id: "i4", feelsPartOfCommunity: true, accessToLocalAmenities: false, positiveLocalRelationships: false, independentTravelSkills: false }),
     ];
-    const result = evaluateGoalProgress(mixedGoals, REFERENCE_DATE);
-    expect(result.revised).toBe(1);
-    expect(result.discontinued).toBe(1);
-    expect(result.achieved).toBe(1);
-    expect(result.achievementRate).toBe(33);
+    const result = evaluateInclusionOutcomes(assessments);
+    expect(result.communityBelongingRate).toBe(100);
+    // Exactly 7 for belonging + 0 for rest
+    expect(result.overallScore).toBe(7);
   });
 
-  it("100% achievement rate with all achieved", () => {
-    const allAchieved: IntegrationGoal[] = [
-      { id: "g1", childId: "c1", childName: "C1", goalDescription: "A", targetConnectionType: "education", targetDate: "2025-01-01", status: "achieved", achievedDate: "2025-01-01" },
-      { id: "g2", childId: "c1", childName: "C1", goalDescription: "B", targetConnectionType: "club_sport", targetDate: "2025-02-01", status: "achieved", achievedDate: "2025-02-01" },
+  it("awards 5 points for community belonging >= 60% but < 80%", () => {
+    const assessments = [
+      makeAssessment({ id: "i1", feelsPartOfCommunity: true, accessToLocalAmenities: false, positiveLocalRelationships: false, independentTravelSkills: false }),
+      makeAssessment({ id: "i2", feelsPartOfCommunity: true, accessToLocalAmenities: false, positiveLocalRelationships: false, independentTravelSkills: false }),
+      makeAssessment({ id: "i3", feelsPartOfCommunity: false, accessToLocalAmenities: false, positiveLocalRelationships: false, independentTravelSkills: false }),
     ];
-    const result = evaluateGoalProgress(allAchieved, REFERENCE_DATE);
-    expect(result.achievementRate).toBe(100);
-    expect(result.overdueGoals).toBe(0);
+    const result = evaluateInclusionOutcomes(assessments);
+    expect(result.communityBelongingRate).toBe(67);
+    expect(result.overallScore).toBe(5);
+  });
+
+  it("calculates amenity access rate correctly", () => {
+    const assessments = [
+      makeAssessment({ id: "i1", accessToLocalAmenities: true }),
+      makeAssessment({ id: "i2", accessToLocalAmenities: false }),
+    ];
+    const result = evaluateInclusionOutcomes(assessments);
+    expect(result.amenityAccessRate).toBe(50);
+  });
+
+  it("calculates positive relationships rate correctly", () => {
+    const assessments = [
+      makeAssessment({ id: "i1", positiveLocalRelationships: true }),
+      makeAssessment({ id: "i2", positiveLocalRelationships: true }),
+      makeAssessment({ id: "i3", positiveLocalRelationships: false }),
+      makeAssessment({ id: "i4", positiveLocalRelationships: false }),
+    ];
+    const result = evaluateInclusionOutcomes(assessments);
+    expect(result.positiveRelationshipsRate).toBe(50);
+  });
+
+  it("calculates independent travel rate correctly", () => {
+    const assessments = [
+      makeAssessment({ id: "i1", independentTravelSkills: true }),
+      makeAssessment({ id: "i2", independentTravelSkills: true }),
+      makeAssessment({ id: "i3", independentTravelSkills: true }),
+      makeAssessment({ id: "i4", independentTravelSkills: false }),
+    ];
+    const result = evaluateInclusionOutcomes(assessments);
+    expect(result.independentTravelRate).toBe(75);
+  });
+
+  it("scores zero for all-negative assessments", () => {
+    const assessments = [
+      makeAssessment({ id: "i1", feelsPartOfCommunity: false, accessToLocalAmenities: false, positiveLocalRelationships: false, independentTravelSkills: false }),
+      makeAssessment({ id: "i2", feelsPartOfCommunity: false, accessToLocalAmenities: false, positiveLocalRelationships: false, independentTravelSkills: false }),
+    ];
+    const result = evaluateInclusionOutcomes(assessments);
+    expect(result.overallScore).toBe(0);
+  });
+
+  it("caps score at 25", () => {
+    const assessments = Array.from({ length: 10 }, (_, i) =>
+      makeAssessment({
+        id: `i${i}`,
+        feelsPartOfCommunity: true,
+        accessToLocalAmenities: true,
+        positiveLocalRelationships: true,
+        independentTravelSkills: true,
+      }),
+    );
+    const result = evaluateInclusionOutcomes(assessments);
+    expect(result.overallScore).toBeLessThanOrEqual(25);
+  });
+
+  it("handles single assessment correctly", () => {
+    const result = evaluateInclusionOutcomes([
+      makeAssessment({ feelsPartOfCommunity: true, accessToLocalAmenities: true, positiveLocalRelationships: true, independentTravelSkills: true }),
+    ]);
+    expect(result.totalAssessments).toBe(1);
+    expect(result.communityBelongingRate).toBe(100);
+  });
+
+  it("scores demo data (Oak House) appropriately", () => {
+    const result = evaluateInclusionOutcomes(DEMO_ASSESSMENTS);
+    expect(result.totalAssessments).toBe(3);
+    // 2 out of 3 feel part of community
+    expect(result.communityBelongingRate).toBe(67);
+    // 2 out of 3 have access to amenities
+    expect(result.amenityAccessRate).toBe(67);
+    // 2 out of 3 have positive relationships
+    expect(result.positiveRelationshipsRate).toBe(67);
+    // 2 out of 3 have independent travel skills
+    expect(result.independentTravelRate).toBe(67);
+    expect(result.overallScore).toBeGreaterThan(0);
   });
 });
 
-describe("Community Integration — buildChildProfiles", () => {
-  const profiles = buildChildProfiles(demoConnections, demoGoals, demoChildren, REFERENCE_DATE);
+// ══════════════════════════════════════════════════════════════════════════════
+// buildChildCommunityProfiles
+// ══════════════════════════════════════════════════════════════════════════════
 
-  it("builds 3 child profiles", () => {
-    expect(profiles.length).toBe(3);
+describe("buildChildCommunityProfiles", () => {
+  it("returns empty array when no data", () => {
+    const profiles = buildChildCommunityProfiles([], [], [], []);
+    expect(profiles).toHaveLength(0);
   });
 
-  it("Alex has 3 active connections", () => {
-    const alex = profiles.find((p) => p.childId === "child-alex");
-    expect(alex!.activeConnections).toBe(3);
-  });
-
-  it("Alex has 3 connection types", () => {
-    const alex = profiles.find((p) => p.childId === "child-alex");
-    expect(alex!.connectionTypes.length).toBe(3);
-    expect(alex!.connectionTypes).toContain("club_sport");
-    expect(alex!.connectionTypes).toContain("education");
-    expect(alex!.connectionTypes).toContain("hobby_activity");
-  });
-
-  it("Jordan has 2 active connections", () => {
-    const jordan = profiles.find((p) => p.childId === "child-jordan");
-    expect(jordan!.activeConnections).toBe(2);
-  });
-
-  it("Morgan has 4 active connections", () => {
-    const morgan = profiles.find((p) => p.childId === "child-morgan");
-    expect(morgan!.activeConnections).toBe(4);
-  });
-
-  it("calculates Alex engagement score", () => {
-    const alex = profiles.find((p) => p.childId === "child-alex");
-    // football high(100) + school moderate(66) + art moderate(66) = 232/3 = 77.3 → 77
-    expect(alex!.engagementScore).toBe(77);
-  });
-
-  it("calculates Jordan engagement score", () => {
-    const jordan = profiles.find((p) => p.childId === "child-jordan");
-    // school low(33) + gaming high(100) = 133/2 = 66.5 → 67
-    expect(jordan!.engagementScore).toBe(67);
-  });
-
-  it("calculates Morgan engagement score", () => {
-    const morgan = profiles.find((p) => p.childId === "child-morgan");
-    // school high(100) + drama high(100) + volunteering moderate(66) + therapy high(100) = 366/4 = 91.5 → 92
-    expect(morgan!.engagementScore).toBe(92);
-  });
-
-  it("collects Alex barriers (from ended connection too)", () => {
-    const alex = profiles.find((p) => p.childId === "child-alex");
-    expect(alex!.barriers).toContain("anxiety");
-  });
-
-  it("collects Morgan barriers", () => {
-    const morgan = profiles.find((p) => p.childId === "child-morgan");
-    expect(morgan!.barriers).toContain("placement_instability");
-  });
-
-  it("Alex has 1 goal total", () => {
-    const alex = profiles.find((p) => p.childId === "child-alex");
-    expect(alex!.goalsTotal).toBe(1);
-    expect(alex!.goalsInProgress).toBe(1);
-  });
-
-  it("Jordan has 2 goals, 0 achieved", () => {
-    const jordan = profiles.find((p) => p.childId === "child-jordan");
-    expect(jordan!.goalsTotal).toBe(2);
-    expect(jordan!.goalsAchieved).toBe(0);
-  });
-
-  it("Morgan has 1 goal, 1 achieved", () => {
-    const morgan = profiles.find((p) => p.childId === "child-morgan");
-    expect(morgan!.goalsTotal).toBe(1);
-    expect(morgan!.goalsAchieved).toBe(1);
-  });
-
-  it("Alex has overdue goals", () => {
-    const alex = profiles.find((p) => p.childId === "child-alex");
-    // Target 2025-03-01 < ref 2025-06-15, status in_progress → overdue
-    expect(alex!.goalsOverdue).toBe(1);
-  });
-
-  it("Morgan rated excellent", () => {
-    const morgan = profiles.find((p) => p.childId === "child-morgan");
-    // 4 active connections, engagementScore 92, 4 connection types
-    expect(morgan!.integrationRating).toBe("excellent");
-  });
-
-  it("Alex rated excellent", () => {
-    const alex = profiles.find((p) => p.childId === "child-alex");
-    // 3 active connections, engagementScore 77, 3 connection types
-    expect(alex!.integrationRating).toBe("excellent");
-  });
-
-  it("Jordan rated good", () => {
-    const jordan = profiles.find((p) => p.childId === "child-jordan");
-    // 2 active connections, engagementScore 67, 2 types → good
-    expect(jordan!.integrationRating).toBe("good");
-  });
-
-  it("child with 0 connections rated isolated", () => {
-    const noConns: CommunityConnection[] = [];
-    const result = buildChildProfiles(noConns, [], demoChildren, REFERENCE_DATE);
-    for (const profile of result) {
-      expect(profile.integrationRating).toBe("isolated");
-      expect(profile.engagementScore).toBe(0);
-    }
-  });
-
-  it("handles empty inputs", () => {
-    const result = buildChildProfiles([], [], [], REFERENCE_DATE);
-    expect(result.length).toBe(0);
-  });
-
-  it("includes child age", () => {
-    const alex = profiles.find((p) => p.childId === "child-alex");
-    expect(alex!.age).toBe(14);
-  });
-
-  it("child with 1 low-engagement connection rated attention_needed", () => {
-    const singleLow: CommunityConnection[] = [
-      {
-        id: "sl1", childId: "child-alex", childName: "Alex",
-        connectionType: "education", connectionName: "School",
-        status: "active", engagementLevel: "low",
-        startDate: "2024-01-01", frequencyPerWeek: 5,
-        staffFacilitated: false, isChildLed: false, barriers: [],
-      },
+  it("builds profiles from activities alone", () => {
+    const activities = [
+      makeActivity({ id: "a1", childId: "child-alex", childName: "Alex", participationLevel: "regular" }),
+      makeActivity({ id: "a2", childId: "child-alex", childName: "Alex", participationLevel: "regular" }),
     ];
-    const oneChild: ChildProfile[] = [demoChildren[0]];
-    const result = buildChildProfiles(singleLow, [], oneChild, REFERENCE_DATE);
-    expect(result[0].integrationRating).toBe("attention_needed");
+    const profiles = buildChildCommunityProfiles(activities, [], [], []);
+    expect(profiles).toHaveLength(1);
+    expect(profiles[0].childId).toBe("child-alex");
+    expect(profiles[0].activityCount).toBe(2);
+    expect(profiles[0].regularActivityCount).toBe(2);
+    expect(profiles[0].friendshipQuality).toBe("no_data");
+  });
+
+  it("builds profiles from networks alone", () => {
+    const networks = [
+      makeNetwork({ id: "n1", childId: "child-alex", childName: "Alex", friendshipQuality: "strong" }),
+    ];
+    const profiles = buildChildCommunityProfiles([], networks, [], []);
+    expect(profiles).toHaveLength(1);
+    expect(profiles[0].friendshipQuality).toBe("strong");
+    expect(profiles[0].activityCount).toBe(0);
+  });
+
+  it("builds profiles from barriers alone", () => {
+    const barriers = [
+      makeBarrier({ id: "b1", childId: "child-jordan", childName: "Jordan", barrier: "transport" }),
+    ];
+    const profiles = buildChildCommunityProfiles([], [], barriers, []);
+    expect(profiles).toHaveLength(1);
+    expect(profiles[0].barriersCount).toBe(1);
+  });
+
+  it("builds profiles from assessments alone", () => {
+    const assessments = [
+      makeAssessment({ id: "i1", childId: "child-alex", childName: "Alex", feelsPartOfCommunity: true }),
+    ];
+    const profiles = buildChildCommunityProfiles([], [], [], assessments);
+    expect(profiles).toHaveLength(1);
+    expect(profiles[0].feelsPartOfCommunity).toBe(true);
+  });
+
+  it("merges data from all sources for the same child", () => {
+    const activities = [makeActivity({ childId: "child-alex", childName: "Alex", participationLevel: "regular" })];
+    const networks = [makeNetwork({ childId: "child-alex", childName: "Alex", friendshipQuality: "strong", friendsOutsideCare: true })];
+    const barriers = [makeBarrier({ childId: "child-alex", childName: "Alex", barrier: "transport", resolved: true })];
+    const assessments = [makeAssessment({ childId: "child-alex", childName: "Alex", feelsPartOfCommunity: true })];
+
+    const profiles = buildChildCommunityProfiles(activities, networks, barriers, assessments);
+    expect(profiles).toHaveLength(1);
+    expect(profiles[0].activityCount).toBe(1);
+    expect(profiles[0].friendshipQuality).toBe("strong");
+    expect(profiles[0].barriersCount).toBe(1);
+    expect(profiles[0].feelsPartOfCommunity).toBe(true);
+  });
+
+  it("creates separate profiles for different children", () => {
+    const activities = [
+      makeActivity({ id: "a1", childId: "child-alex", childName: "Alex" }),
+      makeActivity({ id: "a2", childId: "child-jordan", childName: "Jordan" }),
+    ];
+    const profiles = buildChildCommunityProfiles(activities, [], [], []);
+    expect(profiles).toHaveLength(2);
+    const alexProfile = profiles.find((p) => p.childId === "child-alex");
+    const jordanProfile = profiles.find((p) => p.childId === "child-jordan");
+    expect(alexProfile).toBeDefined();
+    expect(jordanProfile).toBeDefined();
+  });
+
+  it("calculates profile score correctly for well-integrated child", () => {
+    const activities = [
+      makeActivity({ id: "a1", childId: "child-alex", childName: "Alex", participationLevel: "regular" }),
+      makeActivity({ id: "a2", childId: "child-alex", childName: "Alex", participationLevel: "regular" }),
+      makeActivity({ id: "a3", childId: "child-alex", childName: "Alex", participationLevel: "regular" }),
+    ];
+    const networks = [makeNetwork({ childId: "child-alex", childName: "Alex", friendshipQuality: "strong", friendsOutsideCare: true })];
+    const assessments = [makeAssessment({ childId: "child-alex", childName: "Alex", feelsPartOfCommunity: true })];
+    const profiles = buildChildCommunityProfiles(activities, networks, [], assessments);
+    // 3 regular => 3 pts, strong friendship => 2 pts, no barriers => 2 pts, community belonging => 2 pts, outside friends => 1 pt = 10
+    expect(profiles[0].overallScore).toBe(10);
+  });
+
+  it("calculates profile score correctly for isolated child", () => {
+    const networks = [makeNetwork({ childId: "child-jordan", childName: "Jordan", friendshipQuality: "isolated", friendsOutsideCare: false })];
+    const barriers = [makeBarrier({ childId: "child-jordan", childName: "Jordan", barrier: "transport", resolved: false, actionTaken: false })];
+    const assessments = [makeAssessment({ childId: "child-jordan", childName: "Jordan", feelsPartOfCommunity: false })];
+    const profiles = buildChildCommunityProfiles([], networks, barriers, assessments);
+    // 0 activities => 0, isolated => 0, 1 unresolved barrier => 0, no belonging => 0, no outside friends => 0
+    expect(profiles[0].overallScore).toBe(0);
+  });
+
+  it("caps profile score at 10", () => {
+    const activities = Array.from({ length: 5 }, (_, i) =>
+      makeActivity({ id: `a${i}`, childId: "child-alex", childName: "Alex", participationLevel: "regular" }),
+    );
+    const networks = [makeNetwork({ childId: "child-alex", childName: "Alex", friendshipQuality: "strong", friendsOutsideCare: true, communityMentor: true })];
+    const assessments = [makeAssessment({ childId: "child-alex", childName: "Alex", feelsPartOfCommunity: true })];
+    const profiles = buildChildCommunityProfiles(activities, networks, [], assessments);
+    expect(profiles[0].overallScore).toBeLessThanOrEqual(10);
+  });
+
+  it("filters out 'none' barriers from barrier count", () => {
+    const barriers = [
+      makeBarrier({ id: "b1", childId: "child-alex", childName: "Alex", barrier: "none" }),
+      makeBarrier({ id: "b2", childId: "child-alex", childName: "Alex", barrier: "transport" }),
+    ];
+    const profiles = buildChildCommunityProfiles([], [], barriers, []);
+    expect(profiles[0].barriersCount).toBe(1);
+  });
+
+  it("correctly counts barriers resolved", () => {
+    const barriers = [
+      makeBarrier({ id: "b1", childId: "child-alex", childName: "Alex", barrier: "transport", resolved: true }),
+      makeBarrier({ id: "b2", childId: "child-alex", childName: "Alex", barrier: "cost", resolved: false }),
+      makeBarrier({ id: "b3", childId: "child-alex", childName: "Alex", barrier: "stigma", resolved: true }),
+    ];
+    const profiles = buildChildCommunityProfiles([], [], barriers, []);
+    expect(profiles[0].barriersCount).toBe(3);
+    expect(profiles[0].barriersResolvedCount).toBe(2);
+  });
+
+  it("uses latest assessment for community belonging", () => {
+    const assessments = [
+      makeAssessment({ id: "i1", childId: "child-alex", childName: "Alex", feelsPartOfCommunity: false, assessedDate: "2026-01-01" }),
+      makeAssessment({ id: "i2", childId: "child-alex", childName: "Alex", feelsPartOfCommunity: true, assessedDate: "2026-04-01" }),
+    ];
+    const profiles = buildChildCommunityProfiles([], [], [], assessments);
+    expect(profiles[0].feelsPartOfCommunity).toBe(true);
+  });
+
+  it("returns null for feelsPartOfCommunity when no assessments", () => {
+    const activities = [makeActivity({ childId: "child-alex", childName: "Alex" })];
+    const profiles = buildChildCommunityProfiles(activities, [], [], []);
+    expect(profiles[0].feelsPartOfCommunity).toBeNull();
+  });
+
+  it("scores demo data (Oak House) profiles correctly", () => {
+    const profiles = buildChildCommunityProfiles(DEMO_ACTIVITIES, DEMO_NETWORKS, DEMO_BARRIERS, DEMO_ASSESSMENTS);
+    expect(profiles).toHaveLength(3);
+
+    const alex = profiles.find((p) => p.childId === "child-alex");
+    expect(alex).toBeDefined();
+    expect(alex!.activityCount).toBe(2);
+    expect(alex!.regularActivityCount).toBe(2);
+    expect(alex!.friendshipQuality).toBe("strong");
+    expect(alex!.feelsPartOfCommunity).toBe(true);
+    expect(alex!.overallScore).toBeGreaterThanOrEqual(7);
+
+    const jordan = profiles.find((p) => p.childId === "child-jordan");
+    expect(jordan).toBeDefined();
+    expect(jordan!.activityCount).toBe(1);
+    expect(jordan!.regularActivityCount).toBe(0);
+    expect(jordan!.friendshipQuality).toBe("limited");
+    expect(jordan!.barriersCount).toBe(2);
+    expect(jordan!.feelsPartOfCommunity).toBe(false);
+    expect(jordan!.overallScore).toBeLessThanOrEqual(3);
+
+    const morgan = profiles.find((p) => p.childId === "child-morgan");
+    expect(morgan).toBeDefined();
+    expect(morgan!.activityCount).toBe(3);
+    expect(morgan!.regularActivityCount).toBe(3);
+    expect(morgan!.friendshipQuality).toBe("developing");
+    expect(morgan!.feelsPartOfCommunity).toBe(true);
+    expect(morgan!.overallScore).toBeGreaterThanOrEqual(6);
   });
 });
 
-describe("Community Integration — generateCommunityIntegrationIntelligence (integration)", () => {
-  const result = generateCommunityIntegrationIntelligence(
-    demoConnections, demoGoals, demoChildren,
-    "oak-house", PERIOD_START, PERIOD_END, REFERENCE_DATE,
-  );
+// ══════════════════════════════════════════════════════════════════════════════
+// generateCommunityIntegrationIntelligence
+// ══════════════════════════════════════════════════════════════════════════════
 
-  it("returns complete structure", () => {
-    expect(result).toHaveProperty("homeId", "oak-house");
-    expect(result).toHaveProperty("periodStart", PERIOD_START);
-    expect(result).toHaveProperty("periodEnd", PERIOD_END);
-    expect(result).toHaveProperty("referenceDate", REFERENCE_DATE);
-    expect(result).toHaveProperty("overallScore");
-    expect(result).toHaveProperty("rating");
-    expect(result).toHaveProperty("breadth");
-    expect(result).toHaveProperty("engagement");
-    expect(result).toHaveProperty("barriers");
-    expect(result).toHaveProperty("goalProgress");
-    expect(result).toHaveProperty("childProfiles");
-    expect(result).toHaveProperty("strengths");
-    expect(result).toHaveProperty("areasForImprovement");
-    expect(result).toHaveProperty("actions");
-    expect(result).toHaveProperty("regulatoryLinks");
-  });
-
-  it("scores > 40", () => {
-    // breadth 25 (avg 3 + diversity 75) + engagement 30 (89% > 80) + barriers 10 (1.0 avg < 2) + goal 3 (25% < 30% → 5, minus 3 overdue * 2 = 6 → max(0,-1)=0)
-    // Actually let's recalculate:
-    // Breadth: avg 3.0 and diversity 75 >= 50 → 25
-    // Engagement: 89% > 80 → 30
-    // Barriers: avg 1.0 < 2 → 10
-    // Goals: 25% ≤ 30% → 5, minus min(10, 3*2=6) = 5-6 = 0 → max(0,-1)=0
-    // Total: 25 + 30 + 10 + 0 = 65
-    expect(result.overallScore).toBeGreaterThan(40);
-  });
-
-  it("achieves good rating with demo data", () => {
-    expect(["good", "outstanding"]).toContain(result.rating);
-  });
-
-  it("includes breadth data", () => {
-    expect(result.breadth.totalChildren).toBe(3);
-    expect(result.breadth.totalActiveConnections).toBe(9);
-  });
-
-  it("includes engagement data", () => {
-    expect(result.engagement.totalActive).toBe(9);
-  });
-
-  it("includes barrier data", () => {
-    expect(result.barriers.totalBarriers).toBe(3);
-  });
-
-  it("includes goal progress data", () => {
-    expect(result.goalProgress.totalGoals).toBe(4);
-  });
-
-  it("includes 3 child profiles", () => {
-    expect(result.childProfiles.length).toBe(3);
-  });
-
-  it("produces inadequate with no data", () => {
-    const empty = generateCommunityIntegrationIntelligence([], [], [], "oak-house", PERIOD_START, PERIOD_END, REFERENCE_DATE);
-    expect(empty.rating).toBe("inadequate");
-    expect(empty.overallScore).toBe(0);
-  });
-
-  it("links to Reg 9", () => {
-    expect(result.regulatoryLinks.some((l) => l.includes("Reg 9"))).toBe(true);
-  });
-
-  it("links to Reg 7", () => {
-    expect(result.regulatoryLinks.some((l) => l.includes("Reg 7"))).toBe(true);
-  });
-
-  it("links to UNCRC Article 31", () => {
-    expect(result.regulatoryLinks.some((l) => l.includes("UNCRC Article 31"))).toBe(true);
-  });
-
-  it("links to SCCIF", () => {
-    expect(result.regulatoryLinks.some((l) => l.includes("SCCIF"))).toBe(true);
-  });
-
-  it("identifies strength for good breadth", () => {
-    expect(result.strengths.some((s) => s.includes("community connections"))).toBe(true);
-  });
-
-  it("identifies strength for no isolated children", () => {
-    expect(result.strengths.some((s) => s.toLowerCase().includes("isolated"))).toBe(true);
-  });
-
-  it("identifies strength for child-led rate", () => {
-    expect(result.strengths.some((s) => s.toLowerCase().includes("child-led"))).toBe(true);
-  });
-
-  it("identifies strength for high engagement", () => {
-    expect(result.strengths.some((s) => s.toLowerCase().includes("engagement"))).toBe(true);
-  });
-
-  it("identifies area for overdue goals", () => {
-    expect(result.areasForImprovement.some((a) => a.toLowerCase().includes("overdue"))).toBe(true);
-  });
-
-  it("generates action for overdue goals", () => {
-    expect(result.actions.some((a) => a.includes("overdue"))).toBe(true);
-  });
-
-  it("generates action for most common barrier", () => {
-    expect(result.actions.some((a) => a.toLowerCase().includes("barrier"))).toBe(true);
-  });
-
-  it("generates urgent action for isolated children", () => {
-    const isolatedData = generateCommunityIntegrationIntelligence(
-      [], [], demoChildren,
-      "oak-house", PERIOD_START, PERIOD_END, REFERENCE_DATE,
+describe("generateCommunityIntegrationIntelligence", () => {
+  it("returns complete intelligence for empty inputs", () => {
+    const result = generateCommunityIntegrationIntelligence(
+      [], [], [], [],
+      "oak-house", PERIOD_START, PERIOD_END,
     );
-    expect(isolatedData.actions.some((a) => a.includes("URGENT"))).toBe(true);
+    expect(result.homeId).toBe("oak-house");
+    expect(result.periodStart).toBe(PERIOD_START);
+    expect(result.periodEnd).toBe(PERIOD_END);
+    // Activity=0, Social=0, Barrier=25 (no barriers), Inclusion=0 = 25
+    expect(result.overallScore).toBe(25);
+    expect(result.rating).toBe("inadequate");
+    expect(result.activityParticipation.overallScore).toBe(0);
+    expect(result.socialNetworks.overallScore).toBe(0);
+    expect(result.barrierManagement.overallScore).toBe(25);
+    expect(result.inclusionOutcomes.overallScore).toBe(0);
+    expect(result.childProfiles).toHaveLength(0);
+    expect(result.regulatoryLinks.length).toBeGreaterThan(0);
   });
 
-  it("generates action for disengaged connections", () => {
-    const disengagedConns: CommunityConnection[] = [
-      {
-        id: "d1", childId: "child-alex", childName: "Alex",
-        connectionType: "education", connectionName: "School",
-        status: "active", engagementLevel: "disengaged",
-        startDate: "2024-01-01", frequencyPerWeek: 5,
-        staffFacilitated: false, isChildLed: false, barriers: [],
-      },
+  it("generates correct intelligence for Oak House demo data", () => {
+    const result = generateCommunityIntegrationIntelligence(
+      DEMO_ACTIVITIES, DEMO_NETWORKS, DEMO_BARRIERS, DEMO_ASSESSMENTS,
+      "oak-house", PERIOD_START, PERIOD_END,
+    );
+
+    expect(result.homeId).toBe("oak-house");
+    expect(result.overallScore).toBeGreaterThan(0);
+    expect(result.overallScore).toBeLessThanOrEqual(100);
+    expect(["outstanding", "good", "requires_improvement", "inadequate"]).toContain(result.rating);
+
+    // Sub-scores
+    expect(result.activityParticipation.overallScore).toBeGreaterThan(0);
+    expect(result.activityParticipation.totalActivities).toBe(6);
+    expect(result.socialNetworks.overallScore).toBeGreaterThan(0);
+    expect(result.socialNetworks.totalNetworks).toBe(3);
+    expect(result.barrierManagement.totalBarriers).toBe(2);
+    expect(result.inclusionOutcomes.totalAssessments).toBe(3);
+
+    // Child profiles
+    expect(result.childProfiles).toHaveLength(3);
+
+    // Strengths, areas, actions
+    expect(result.strengths.length).toBeGreaterThanOrEqual(0);
+    expect(result.areasForImprovement.length).toBeGreaterThanOrEqual(0);
+    expect(result.actions.length).toBeGreaterThanOrEqual(0);
+  });
+
+  it("caps overall score at 100", () => {
+    // Create data that maximises each subscale
+    const activities = Array.from({ length: 10 }, (_, i) =>
+      makeActivity({
+        id: `a${i}`,
+        activityCategory: ["sport", "arts_culture", "music", "volunteering", "youth_group", "social_club", "employment", "training", "community_event", "faith"][i] as ActivityCategory,
+        participationLevel: "regular",
+        communityBased: true,
+        childEnjoys: true,
+        independentAttendance: true,
+      }),
+    );
+    const networks = Array.from({ length: 5 }, (_, i) =>
+      makeNetwork({
+        id: `n${i}`,
+        friendshipQuality: "strong",
+        friendsOutsideCare: true,
+        communityMentor: true,
+        socialMediaSafety: "safe_and_supported",
+      }),
+    );
+    const assessments = Array.from({ length: 5 }, (_, i) =>
+      makeAssessment({
+        id: `inc${i}`,
+        feelsPartOfCommunity: true,
+        accessToLocalAmenities: true,
+        positiveLocalRelationships: true,
+        independentTravelSkills: true,
+      }),
+    );
+    const result = generateCommunityIntegrationIntelligence(
+      activities, networks, [], assessments,
+      "oak-house", PERIOD_START, PERIOD_END,
+    );
+    expect(result.overallScore).toBeLessThanOrEqual(100);
+  });
+
+  it("includes regulatory links", () => {
+    const result = generateCommunityIntegrationIntelligence(
+      [], [], [], [],
+      "oak-house", PERIOD_START, PERIOD_END,
+    );
+    expect(result.regulatoryLinks).toContain("CHR 2015 Reg 6 — quality of care standard including community participation");
+    expect(result.regulatoryLinks).toContain("CHR 2015 Reg 7 — children's views, wishes, and feelings about their community");
+    expect(result.regulatoryLinks).toContain("UNCRC Article 31 — right to rest, leisure, play, and participation in cultural life");
+    expect(result.regulatoryLinks).toContain("Equality Act 2010 — access to community activities without discrimination");
+  });
+
+  it("includes SCCIF and NMS references", () => {
+    const result = generateCommunityIntegrationIntelligence(
+      [], [], [], [],
+      "oak-house", PERIOD_START, PERIOD_END,
+    );
+    const sccif = result.regulatoryLinks.find((r) => r.includes("SCCIF"));
+    expect(sccif).toBeDefined();
+    const nms7 = result.regulatoryLinks.find((r) => r.includes("NMS 7"));
+    expect(nms7).toBeDefined();
+    const nms10 = result.regulatoryLinks.find((r) => r.includes("NMS 10"));
+    expect(nms10).toBeDefined();
+  });
+
+  it("generates strengths when performance is high", () => {
+    const activities = Array.from({ length: 5 }, (_, i) =>
+      makeActivity({
+        id: `a${i}`,
+        activityCategory: ["sport", "arts_culture", "music", "volunteering", "youth_group"][i] as ActivityCategory,
+        participationLevel: "regular",
+        communityBased: true,
+        childEnjoys: true,
+        independentAttendance: true,
+      }),
+    );
+    const networks = [
+      makeNetwork({ id: "n1", friendshipQuality: "strong", friendsOutsideCare: true, communityMentor: true, socialMediaSafety: "safe_and_supported" }),
     ];
-    const r = generateCommunityIntegrationIntelligence(
-      disengagedConns, [], demoChildren,
-      "oak-house", PERIOD_START, PERIOD_END, REFERENCE_DATE,
-    );
-    expect(r.actions.some((a) => a.includes("disengagement"))).toBe(true);
-  });
-
-  it("no actions needed when everything is perfect", () => {
-    const perfectConns: CommunityConnection[] = [
-      { id: "p1", childId: "child-alex", childName: "Alex", connectionType: "education", connectionName: "School", status: "active", engagementLevel: "high", startDate: "2024-01-01", frequencyPerWeek: 5, staffFacilitated: false, isChildLed: true, barriers: [] },
-      { id: "p2", childId: "child-alex", childName: "Alex", connectionType: "club_sport", connectionName: "Football", status: "active", engagementLevel: "high", startDate: "2024-01-01", frequencyPerWeek: 2, staffFacilitated: false, isChildLed: true, barriers: [] },
-      { id: "p3", childId: "child-alex", childName: "Alex", connectionType: "hobby_activity", connectionName: "Art", status: "active", engagementLevel: "high", startDate: "2024-01-01", frequencyPerWeek: 1, staffFacilitated: false, isChildLed: true, barriers: [] },
+    const assessments = [
+      makeAssessment({ feelsPartOfCommunity: true, accessToLocalAmenities: true, positiveLocalRelationships: true, independentTravelSkills: true }),
     ];
-    const perfectGoals: IntegrationGoal[] = [
-      { id: "pg1", childId: "child-alex", childName: "Alex", goalDescription: "Done", targetConnectionType: "club_sport", targetDate: "2025-01-01", status: "achieved", achievedDate: "2025-01-01" },
+    const result = generateCommunityIntegrationIntelligence(
+      activities, networks, [], assessments,
+      "oak-house", PERIOD_START, PERIOD_END,
+    );
+    expect(result.strengths.length).toBeGreaterThan(0);
+    expect(result.strengths.some((s) => s.includes("regular participation"))).toBe(true);
+    expect(result.strengths.some((s) => s.includes("variety"))).toBe(true);
+  });
+
+  it("generates areas for improvement when data is missing", () => {
+    const result = generateCommunityIntegrationIntelligence(
+      [], [], [], [],
+      "oak-house", PERIOD_START, PERIOD_END,
+    );
+    expect(result.areasForImprovement.length).toBeGreaterThan(0);
+  });
+
+  it("generates urgent actions when no activities recorded", () => {
+    const result = generateCommunityIntegrationIntelligence(
+      [], [], [], [],
+      "oak-house", PERIOD_START, PERIOD_END,
+    );
+    expect(result.actions.some((a) => a.includes("URGENT"))).toBe(true);
+    expect(result.actions.some((a) => a.includes("community activity programme"))).toBe(true);
+  });
+
+  it("generates urgent actions when no social networks recorded", () => {
+    const result = generateCommunityIntegrationIntelligence(
+      [makeActivity()], [], [], [],
+      "oak-house", PERIOD_START, PERIOD_END,
+    );
+    expect(result.actions.some((a) => a.includes("social networks"))).toBe(true);
+  });
+
+  it("generates urgent actions when no inclusion assessments recorded", () => {
+    const result = generateCommunityIntegrationIntelligence(
+      [makeActivity()], [makeNetwork()], [], [],
+      "oak-house", PERIOD_START, PERIOD_END,
+    );
+    expect(result.actions.some((a) => a.includes("inclusion assessments"))).toBe(true);
+  });
+
+  it("sums all four sub-scores for overall score", () => {
+    const result = generateCommunityIntegrationIntelligence(
+      DEMO_ACTIVITIES, DEMO_NETWORKS, DEMO_BARRIERS, DEMO_ASSESSMENTS,
+      "oak-house", PERIOD_START, PERIOD_END,
+    );
+    const expectedSum =
+      result.activityParticipation.overallScore +
+      result.socialNetworks.overallScore +
+      result.barrierManagement.overallScore +
+      result.inclusionOutcomes.overallScore;
+    expect(result.overallScore).toBe(Math.min(expectedSum, 100));
+  });
+
+  it("rating matches overall score", () => {
+    // Outstanding
+    const highActivities = Array.from({ length: 10 }, (_, i) =>
+      makeActivity({
+        id: `a${i}`,
+        activityCategory: ["sport", "arts_culture", "music", "volunteering", "youth_group", "social_club", "employment", "training", "community_event", "faith"][i] as ActivityCategory,
+        participationLevel: "regular",
+        communityBased: true,
+        childEnjoys: true,
+        independentAttendance: true,
+      }),
+    );
+    const highNetworks = Array.from({ length: 3 }, (_, i) =>
+      makeNetwork({ id: `n${i}`, friendshipQuality: "strong", friendsOutsideCare: true, communityMentor: true, socialMediaSafety: "safe_and_supported" }),
+    );
+    const highAssessments = Array.from({ length: 3 }, (_, i) =>
+      makeAssessment({ id: `i${i}`, feelsPartOfCommunity: true, accessToLocalAmenities: true, positiveLocalRelationships: true, independentTravelSkills: true }),
+    );
+    const highResult = generateCommunityIntegrationIntelligence(
+      highActivities, highNetworks, [], highAssessments,
+      "oak-house", PERIOD_START, PERIOD_END,
+    );
+    expect(highResult.rating).toBe("outstanding");
+  });
+
+  it("produces inadequate rating for very low scores", () => {
+    const activities = [
+      makeActivity({ participationLevel: "refused", communityBased: false, childEnjoys: false, independentAttendance: false }),
     ];
-    const oneChild: ChildProfile[] = [demoChildren[0]];
-    const r = generateCommunityIntegrationIntelligence(
-      perfectConns, perfectGoals, oneChild,
-      "oak-house", PERIOD_START, PERIOD_END, REFERENCE_DATE,
+    const networks = [
+      makeNetwork({ friendshipQuality: "isolated", friendsOutsideCare: false, communityMentor: false, socialMediaSafety: "significant_risk" }),
+    ];
+    const barriers = [
+      makeBarrier({ barrier: "transport", actionTaken: false, resolved: false }),
+      makeBarrier({ barrier: "cost", actionTaken: false, resolved: false }),
+      makeBarrier({ barrier: "stigma", actionTaken: false, resolved: false }),
+    ];
+    const assessments = [
+      makeAssessment({ feelsPartOfCommunity: false, accessToLocalAmenities: false, positiveLocalRelationships: false, independentTravelSkills: false }),
+    ];
+    const result = generateCommunityIntegrationIntelligence(
+      activities, networks, barriers, assessments,
+      "oak-house", PERIOD_START, PERIOD_END,
     );
-    expect(r.actions.some((a) => a.includes("No immediate actions"))).toBe(true);
-    expect(r.rating).toBe("outstanding");
+    expect(result.rating).toBe("inadequate");
   });
 
-  it("scoring: breadth gives 25 for 3+ avg with diversity >= 50", () => {
-    const r = generateCommunityIntegrationIntelligence(
-      demoConnections, demoGoals, demoChildren,
-      "oak-house", PERIOD_START, PERIOD_END, REFERENCE_DATE,
+  it("handles activities-only data correctly", () => {
+    const result = generateCommunityIntegrationIntelligence(
+      DEMO_ACTIVITIES, [], [], [],
+      "oak-house", PERIOD_START, PERIOD_END,
     );
-    // Just verify overall is reasonable — can't inspect sub-scores directly
-    expect(r.overallScore).toBeGreaterThanOrEqual(60);
+    expect(result.activityParticipation.totalActivities).toBe(6);
+    expect(result.socialNetworks.totalNetworks).toBe(0);
+    expect(result.barrierManagement.totalBarriers).toBe(0);
+    expect(result.inclusionOutcomes.totalAssessments).toBe(0);
   });
 
-  it("scoring: engagement gives 30 for > 80% engagement", () => {
-    // Already covered via full score, engagement is 89%
-    expect(result.engagement.overallEngagementRate).toBeGreaterThan(80);
+  it("handles networks-only data correctly", () => {
+    const result = generateCommunityIntegrationIntelligence(
+      [], DEMO_NETWORKS, [], [],
+      "oak-house", PERIOD_START, PERIOD_END,
+    );
+    expect(result.activityParticipation.totalActivities).toBe(0);
+    expect(result.socialNetworks.totalNetworks).toBe(3);
   });
 
-  it("handles children with no goals gracefully", () => {
-    const r = generateCommunityIntegrationIntelligence(
-      demoConnections, [], demoChildren,
-      "oak-house", PERIOD_START, PERIOD_END, REFERENCE_DATE,
+  it("preserves homeId and period in result", () => {
+    const result = generateCommunityIntegrationIntelligence(
+      [], [], [], [],
+      "maple-lodge", "2026-03-01", "2026-04-30",
     );
-    expect(r.goalProgress.totalGoals).toBe(0);
-    expect(r.goalProgress.achievementRate).toBe(0);
+    expect(result.homeId).toBe("maple-lodge");
+    expect(result.periodStart).toBe("2026-03-01");
+    expect(result.periodEnd).toBe("2026-04-30");
   });
 });
 
-describe("Community Integration — Labels", () => {
-  it("returns Education label", () => {
-    expect(getConnectionTypeLabel("education")).toBe("Education");
+// ══════════════════════════════════════════════════════════════════════════════
+// Edge Cases and Boundary Tests
+// ══════════════════════════════════════════════════════════════════════════════
+
+describe("Edge cases", () => {
+  it("handles many activities for a single child", () => {
+    const activities = Array.from({ length: 50 }, (_, i) =>
+      makeActivity({ id: `a${i}`, participationLevel: i % 2 === 0 ? "regular" : "occasional" }),
+    );
+    const result = evaluateActivityParticipation(activities);
+    expect(result.totalActivities).toBe(50);
+    expect(result.regularParticipationRate).toBe(50);
   });
 
-  it("returns Club / Sport label", () => {
-    expect(getConnectionTypeLabel("club_sport")).toBe("Club / Sport");
+  it("handles many networks", () => {
+    const networks = Array.from({ length: 20 }, (_, i) =>
+      makeNetwork({ id: `n${i}`, friendshipQuality: i % 3 === 0 ? "strong" : "limited" }),
+    );
+    const result = evaluateSocialNetworks(networks);
+    expect(result.totalNetworks).toBe(20);
   });
 
-  it("returns Hobby / Activity label", () => {
-    expect(getConnectionTypeLabel("hobby_activity")).toBe("Hobby / Activity");
+  it("handles many barriers", () => {
+    const barriers = Array.from({ length: 30 }, (_, i) =>
+      makeBarrier({ id: `b${i}`, barrier: "transport", actionTaken: i % 2 === 0, resolved: i % 3 === 0 }),
+    );
+    const result = evaluateBarrierManagement(barriers);
+    expect(result.totalBarriers).toBe(30);
   });
 
-  it("returns Friendship label", () => {
-    expect(getConnectionTypeLabel("friendship")).toBe("Friendship");
+  it("handles all participation levels in activities", () => {
+    const levels: ParticipationLevel[] = ["regular", "occasional", "tried_once", "refused", "not_offered"];
+    const activities = levels.map((level, i) =>
+      makeActivity({ id: `a${i}`, participationLevel: level }),
+    );
+    const result = evaluateActivityParticipation(activities);
+    expect(result.totalActivities).toBe(5);
+    expect(result.regularParticipationRate).toBe(20);
   });
 
-  it("returns Mentoring label", () => {
-    expect(getConnectionTypeLabel("mentoring")).toBe("Mentoring");
+  it("handles all friendship qualities in networks", () => {
+    const qualities: FriendshipQuality[] = ["strong", "developing", "limited", "isolated", "not_assessed"];
+    const networks = qualities.map((quality, i) =>
+      makeNetwork({ id: `n${i}`, friendshipQuality: quality }),
+    );
+    const result = evaluateSocialNetworks(networks);
+    expect(result.totalNetworks).toBe(5);
+    expect(result.friendshipQualityRate).toBe(40);
   });
 
-  it("returns Volunteering label", () => {
-    expect(getConnectionTypeLabel("volunteering")).toBe("Volunteering");
+  it("handles all barrier types", () => {
+    const barrierTypes: CommunityBarrier[] = ["transport", "cost", "stigma", "behaviour", "risk_assessment", "staffing", "location"];
+    const barriers = barrierTypes.map((barrier, i) =>
+      makeBarrier({ id: `b${i}`, barrier, actionTaken: true, resolved: true }),
+    );
+    const result = evaluateBarrierManagement(barriers);
+    expect(result.totalBarriers).toBe(7);
+    expect(result.resolutionRate).toBe(100);
+    expect(result.actionTakenRate).toBe(100);
   });
 
-  it("returns Therapy label", () => {
-    expect(getConnectionTypeLabel("therapy")).toBe("Therapy");
+  it("handles all activity categories", () => {
+    const categories: ActivityCategory[] = ["sport", "arts_culture", "music", "faith", "volunteering", "youth_group", "social_club", "employment", "training", "community_event"];
+    const activities = categories.map((cat, i) =>
+      makeActivity({ id: `a${i}`, activityCategory: cat }),
+    );
+    const result = evaluateActivityParticipation(activities);
+    expect(result.activityVariety).toBe(10);
   });
 
-  it("returns Transport barrier label", () => {
-    expect(getBarrierLabel("transport")).toBe("Transport");
+  it("handles all social media safety levels", () => {
+    const levels: SocialMediaSafety[] = ["safe_and_supported", "some_concerns", "significant_risk", "not_applicable"];
+    const networks = levels.map((safety, i) =>
+      makeNetwork({ id: `n${i}`, socialMediaSafety: safety }),
+    );
+    const result = evaluateSocialNetworks(networks);
+    expect(result.socialMediaSafetyRate).toBe(50); // safe_and_supported + not_applicable = 2/4 = 50%
   });
 
-  it("returns Anxiety barrier label", () => {
-    expect(getBarrierLabel("anxiety")).toBe("Anxiety");
-  });
-
-  it("returns Placement Instability barrier label", () => {
-    expect(getBarrierLabel("placement_instability")).toBe("Placement Instability");
-  });
-
-  it("returns High engagement label", () => {
-    expect(getEngagementLabel("high")).toBe("High");
-  });
-
-  it("returns Disengaged engagement label", () => {
-    expect(getEngagementLabel("disengaged")).toBe("Disengaged");
-  });
-
-  it("returns all 12 connection types", () => {
-    const types = getAllConnectionTypes();
-    expect(types.length).toBe(12);
-    expect(types).toContain("education");
-    expect(types).toContain("club_sport");
-    expect(types).toContain("advocacy");
+  it("handles mixed barrier 'none' and real barriers", () => {
+    const barriers = [
+      makeBarrier({ id: "b1", barrier: "none" }),
+      makeBarrier({ id: "b2", barrier: "none" }),
+      makeBarrier({ id: "b3", barrier: "transport", actionTaken: true, resolved: true }),
+    ];
+    const result = evaluateBarrierManagement(barriers);
+    expect(result.totalBarriers).toBe(1);
+    expect(result.resolutionRate).toBe(100);
   });
 });

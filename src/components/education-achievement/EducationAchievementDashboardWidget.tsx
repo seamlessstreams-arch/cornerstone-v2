@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import type { CommunityIntegrationIntelligence } from "@/lib/community-integration";
+import type { EducationAchievementIntelligence } from "@/lib/education-achievement";
 
 const ratingColors: Record<string, string> = {
   outstanding: "bg-green-100 text-green-800 border-green-300",
@@ -44,13 +44,19 @@ function Section({ title, defaultOpen = false, children }: { title: string; defa
   );
 }
 
-export function CommunityIntegrationDashboardWidget() {
-  const [data, setData] = useState<CommunityIntegrationIntelligence | null>(null);
+function attendanceColor(rate: number): string {
+  if (rate >= 95) return "text-green-600";
+  if (rate >= 90) return "text-amber-600";
+  return "text-red-600";
+}
+
+export function EducationAchievementDashboardWidget() {
+  const [data, setData] = useState<EducationAchievementIntelligence | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch("/api/community-integration")
+    fetch("/api/education-achievement")
       .then((res) => { if (!res.ok) throw new Error(`HTTP ${res.status}`); return res.json(); })
       .then((json) => setData(json.data))
       .catch((err) => setError(err.message))
@@ -72,7 +78,7 @@ export function CommunityIntegrationDashboardWidget() {
   if (error) {
     return (
       <div className="bg-white rounded-xl shadow-sm border border-red-200 p-6">
-        <h3 className="text-lg font-semibold text-red-800">Community Integration</h3>
+        <h3 className="text-lg font-semibold text-red-800">Education Achievement</h3>
         <p className="text-red-600 mt-2">Failed to load: {error}</p>
       </div>
     );
@@ -84,7 +90,7 @@ export function CommunityIntegrationDashboardWidget() {
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 space-y-6">
       <div className="flex items-start justify-between">
         <div>
-          <h3 className="text-lg font-semibold text-gray-900">Community Integration</h3>
+          <h3 className="text-lg font-semibold text-gray-900">Education Achievement</h3>
           <p className="text-sm text-gray-500 mt-1">{data.periodStart} to {data.periodEnd}</p>
         </div>
         <div className="text-right">
@@ -95,52 +101,48 @@ export function CommunityIntegrationDashboardWidget() {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className="bg-gray-50 rounded-lg p-3 text-center">
-          <div className="text-2xl font-bold text-gray-900">{data.activityParticipation.totalActivities}</div>
-          <div className="text-xs text-gray-500 mt-1">Total Activities</div>
+          <div className={`text-2xl font-bold ${attendanceColor(data.attendance.attendanceRate)}`}>{data.attendance.attendanceRate}%</div>
+          <div className="text-xs text-gray-500 mt-1">Attendance</div>
         </div>
         <div className="bg-gray-50 rounded-lg p-3 text-center">
-          <div className="text-2xl font-bold text-gray-900">{data.activityParticipation.regularParticipationRate}%</div>
-          <div className="text-xs text-gray-500 mt-1">Regular Participation</div>
+          <div className={`text-2xl font-bold ${data.pepQuality.currentRate >= 100 ? "text-green-600" : "text-amber-600"}`}>{data.pepQuality.currentRate}%</div>
+          <div className="text-xs text-gray-500 mt-1">PEPs Current</div>
         </div>
         <div className="bg-gray-50 rounded-lg p-3 text-center">
-          <div className="text-2xl font-bold text-gray-900">{data.socialNetworks.friendshipQualityRate}%</div>
-          <div className="text-xs text-gray-500 mt-1">Good Friendships</div>
+          <div className="text-2xl font-bold text-blue-600">{data.academicProgress.exceedingExpectedRate}%</div>
+          <div className="text-xs text-gray-500 mt-1">On Track</div>
         </div>
         <div className="bg-gray-50 rounded-lg p-3 text-center">
-          <div className="text-2xl font-bold text-gray-900">{data.barrierManagement.totalBarriers}</div>
-          <div className="text-xs text-gray-500 mt-1">Barriers</div>
-        </div>
-        <div className="bg-gray-50 rounded-lg p-3 text-center">
-          <div className="text-2xl font-bold text-gray-900">{data.inclusionOutcomes.communityBelongingRate}%</div>
-          <div className="text-xs text-gray-500 mt-1">Feel Belonging</div>
+          <div className={`text-2xl font-bold ${data.schoolStability.notInEducationCount === 0 ? "text-green-600" : "text-red-600"}`}>{data.schoolStability.notInEducationCount}</div>
+          <div className="text-xs text-gray-500 mt-1">NEET</div>
         </div>
       </div>
 
       <div className="space-y-2">
-        <ScoreBar score={data.activityParticipation.overallScore} label="Activity Participation" maxScore={25} />
-        <ScoreBar score={data.socialNetworks.overallScore} label="Social Networks" maxScore={25} />
-        <ScoreBar score={data.barrierManagement.overallScore} label="Barrier Management" maxScore={25} />
-        <ScoreBar score={data.inclusionOutcomes.overallScore} label="Inclusion Outcomes" maxScore={25} />
+        <ScoreBar score={data.attendance.overallScore} label="Attendance" maxScore={25} />
+        <ScoreBar score={data.pepQuality.overallScore} label="PEP Quality" maxScore={25} />
+        <ScoreBar score={data.academicProgress.overallScore} label="Academic Progress" maxScore={25} />
+        <ScoreBar score={data.schoolStability.overallScore} label="School Stability" maxScore={25} />
       </div>
 
       <div className="space-y-3">
         {data.childProfiles.length > 0 && (
-          <Section title="Child Community Profiles" defaultOpen>
+          <Section title="Child Education Profiles" defaultOpen>
             <div className="space-y-3">
               {data.childProfiles.map((child) => (
                 <div key={child.childId} className="border border-gray-100 rounded-lg p-3">
                   <div className="flex items-center justify-between mb-2">
                     <span className="font-medium text-gray-900">{child.childName}</span>
-                    <span className="text-sm text-gray-500">{child.overallScore}/10</span>
+                    <span className={`text-sm font-medium ${attendanceColor(child.attendanceRate)}`}>{child.attendanceRate}%</span>
                   </div>
                   <div className="grid grid-cols-2 gap-2 text-xs text-gray-600">
-                    <div>Activities: <span className="font-medium">{child.activityCount}</span></div>
-                    <div>Regular: <span className="font-medium">{child.regularActivityCount}</span></div>
-                    <div>Friendships: <span className="font-medium">{String(child.friendshipQuality).replace(/_/g, " ")}</span></div>
-                    <div>Barriers: <span className={`font-medium ${child.barriersCount > 0 ? "text-amber-600" : "text-green-600"}`}>{child.barriersCount} ({child.barriersResolvedCount} resolved)</span></div>
-                    <div>Community: <span className={`font-medium ${child.feelsPartOfCommunity ? "text-green-600" : child.feelsPartOfCommunity === false ? "text-red-600" : "text-gray-400"}`}>{child.feelsPartOfCommunity === true ? "Belongs" : child.feelsPartOfCommunity === false ? "Isolated" : "N/A"}</span></div>
+                    <div>Type: <span className="font-medium">{String(child.schoolType).replace(/_/g, " ")}</span></div>
+                    <div>PEP: <span className={`font-medium ${child.pepStatus === "current" || child.pepStatus === "completed" ? "text-green-600" : child.pepStatus === "overdue" ? "text-red-600" : "text-amber-600"}`}>{String(child.pepStatus).replace(/_/g, " ")}</span></div>
+                    <div>Progress: <span className={`font-medium ${child.academicProgress === "exceeding" ? "text-green-600" : child.academicProgress === "expected" ? "text-blue-600" : child.academicProgress === "below_expected" ? "text-amber-600" : "text-red-600"}`}>{String(child.academicProgress).replace(/_/g, " ")}</span></div>
+                    {child.exclusionCount > 0 && <div>Exclusions: <span className="font-medium text-red-600">{child.exclusionCount}</span></div>}
+                    {child.daysOutOfEducation > 0 && <div>Days out: <span className="font-medium text-amber-600">{child.daysOutOfEducation}</span></div>}
                   </div>
                 </div>
               ))}
@@ -148,42 +150,43 @@ export function CommunityIntegrationDashboardWidget() {
           </Section>
         )}
 
-        <Section title="Activity Participation">
+        <Section title="Attendance">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
-            <div><span className="text-gray-500">Total:</span> <span className="font-medium">{data.activityParticipation.totalActivities}</span></div>
-            <div><span className="text-gray-500">Regular:</span> <span className="font-medium">{data.activityParticipation.regularParticipationRate}%</span></div>
-            <div><span className="text-gray-500">Variety:</span> <span className="font-medium">{data.activityParticipation.activityVariety} types</span></div>
-            <div><span className="text-gray-500">Community:</span> <span className="font-medium">{data.activityParticipation.communityBasedRate}%</span></div>
-            <div><span className="text-gray-500">Enjoyment:</span> <span className="font-medium">{data.activityParticipation.enjoymentRate}%</span></div>
-            <div><span className="text-gray-500">Independent:</span> <span className="font-medium">{data.activityParticipation.independentAttendanceRate}%</span></div>
+            <div><span className="text-gray-500">Rate:</span> <span className="font-medium">{data.attendance.attendanceRate}%</span></div>
+            <div><span className="text-gray-500">Records:</span> <span className="font-medium">{data.attendance.totalRecords}</span></div>
+            <div><span className="text-gray-500">Unauthorised:</span> <span className="font-medium">{data.attendance.unauthorisedAbsenceRate}%</span></div>
+            <div><span className="text-gray-500">Persistent Absent:</span> <span className="font-medium">{data.attendance.persistentAbsenceChildren}</span></div>
+            <div><span className="text-gray-500">Late:</span> <span className="font-medium">{data.attendance.lateRate}%</span></div>
+            <div><span className="text-gray-500">Exclusion Days:</span> <span className="font-medium">{data.attendance.exclusionDays}</span></div>
           </div>
         </Section>
 
-        <Section title="Social Networks">
+        <Section title="PEP Quality">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
-            <div><span className="text-gray-500">Networks:</span> <span className="font-medium">{data.socialNetworks.totalNetworks}</span></div>
-            <div><span className="text-gray-500">Quality:</span> <span className="font-medium">{data.socialNetworks.friendshipQualityRate}%</span></div>
-            <div><span className="text-gray-500">Outside Care:</span> <span className="font-medium">{data.socialNetworks.friendsOutsideCareRate}%</span></div>
-            <div><span className="text-gray-500">Mentors:</span> <span className="font-medium">{data.socialNetworks.mentorRate}%</span></div>
-            <div><span className="text-gray-500">Social Media:</span> <span className="font-medium">{data.socialNetworks.socialMediaSafetyRate}%</span></div>
+            <div><span className="text-gray-500">Total:</span> <span className="font-medium">{data.pepQuality.totalPEPs}</span></div>
+            <div><span className="text-gray-500">Current:</span> <span className="font-medium">{data.pepQuality.currentRate}%</span></div>
+            <div><span className="text-gray-500">Child Views:</span> <span className="font-medium">{data.pepQuality.childViewsRate}%</span></div>
+            <div><span className="text-gray-500">SMART Targets:</span> <span className="font-medium">{data.pepQuality.smartTargetsRate}%</span></div>
+            <div><span className="text-gray-500">VS Involved:</span> <span className="font-medium">{data.pepQuality.virtualSchoolInvolvedRate}%</span></div>
+            <div><span className="text-gray-500">PP Funding:</span> <span className="font-medium">{data.pepQuality.ppFundingUsedRate}%</span></div>
           </div>
         </Section>
 
-        <Section title="Barrier Management">
+        <Section title="Academic Progress">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
-            <div><span className="text-gray-500">Total:</span> <span className="font-medium">{data.barrierManagement.totalBarriers}</span></div>
-            <div><span className="text-gray-500">Action Taken:</span> <span className="font-medium">{data.barrierManagement.actionTakenRate}%</span></div>
-            <div><span className="text-gray-500">Resolved:</span> <span className="font-medium">{data.barrierManagement.resolutionRate}%</span></div>
+            <div><span className="text-gray-500">Assessments:</span> <span className="font-medium">{data.academicProgress.totalOutcomes}</span></div>
+            <div><span className="text-gray-500">Exceeding+Expected:</span> <span className="font-medium">{data.academicProgress.exceedingExpectedRate}%</span></div>
+            <div><span className="text-gray-500">Below Expected:</span> <span className="font-medium">{data.academicProgress.belowExpectedRate}%</span></div>
+            <div><span className="text-gray-500">Subjects:</span> <span className="font-medium">{data.academicProgress.subjectCoverage}</span></div>
           </div>
         </Section>
 
-        <Section title="Inclusion Outcomes">
+        <Section title="School Stability">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
-            <div><span className="text-gray-500">Assessed:</span> <span className="font-medium">{data.inclusionOutcomes.totalAssessments}</span></div>
-            <div><span className="text-gray-500">Belonging:</span> <span className="font-medium">{data.inclusionOutcomes.communityBelongingRate}%</span></div>
-            <div><span className="text-gray-500">Amenities:</span> <span className="font-medium">{data.inclusionOutcomes.amenityAccessRate}%</span></div>
-            <div><span className="text-gray-500">Relationships:</span> <span className="font-medium">{data.inclusionOutcomes.positiveRelationshipsRate}%</span></div>
-            <div><span className="text-gray-500">Travel Skills:</span> <span className="font-medium">{data.inclusionOutcomes.independentTravelRate}%</span></div>
+            <div><span className="text-gray-500">Children:</span> <span className="font-medium">{data.schoolStability.totalChildren}</span></div>
+            <div><span className="text-gray-500">Changes:</span> <span className="font-medium">{data.schoolStability.totalSchoolChanges}</span></div>
+            <div><span className="text-gray-500">Days Out:</span> <span className="font-medium">{data.schoolStability.totalDaysOutOfEducation}</span></div>
+            <div><span className="text-gray-500">NEET:</span> <span className={`font-medium ${data.schoolStability.notInEducationCount > 0 ? "text-red-600" : "text-green-600"}`}>{data.schoolStability.notInEducationCount}</span></div>
           </div>
         </Section>
 
