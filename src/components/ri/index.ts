@@ -1,0 +1,1 @@
+export { RiGovernanceDashboardWidget } from "./RiGovernanceDashboardWidget";
