@@ -1,0 +1,1 @@
+export { ParentalContactManagementDashboardWidget } from "./ParentalContactManagementDashboardWidget";
