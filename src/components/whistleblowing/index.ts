@@ -1,0 +1,1 @@
+export { WhistleblowingDashboardWidget } from "./WhistleblowingDashboardWidget";
