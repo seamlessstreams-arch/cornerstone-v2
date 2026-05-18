@@ -1,0 +1,1 @@
+export { AllergenDietaryManagementDashboardWidget } from "./AllergenDietaryManagementDashboardWidget";
