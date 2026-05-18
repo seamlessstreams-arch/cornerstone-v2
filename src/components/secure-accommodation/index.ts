@@ -1,0 +1,1 @@
+export { SecureAccommodationDashboardWidget } from "./SecureAccommodationDashboardWidget";
