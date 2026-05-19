@@ -10,176 +10,153 @@
 import { NextResponse } from "next/server";
 import {
   generateTherapeuticCrisisInterventionIntelligence,
-  getCrisisLevelLabel,
   getInterventionTypeLabel,
-  getDeEscalationOutcomeLabel,
-  getDebriefStatusLabel,
-  getRecoveryPlanStatusLabel,
+  getIncidentSeverityLabel,
+  getDeescalationOutcomeLabel,
   getRatingLabel,
 } from "@/lib/therapeutic-crisis-intervention";
 import type {
-  CrisisEpisode,
-  CrisisPreventionPlan,
+  CrisisIncident,
+  CrisisPolicy,
   StaffCrisisTraining,
-  PostCrisisReview,
 } from "@/lib/therapeutic-crisis-intervention";
 
 // -- Demo Data: Oak House -------------------------------------------------------
 
-const DEMO_EPISODES: CrisisEpisode[] = [
-  // Alex — 1 low-level crisis, verbal de-escalation, fully resolved, debriefed
+const DEMO_INCIDENTS: CrisisIncident[] = [
+  // Alex — 1 low-level crisis, verbal de-escalation, successful, debriefed
   {
-    id: "ep-alex-1",
+    id: "inc-alex-1",
     childId: "child-alex",
     childName: "Alex",
-    date: "2026-04-10",
-    time: "15:30",
-    crisisLevel: "low",
-    trigger: "Frustration with homework task",
+    incidentDate: "2026-04-10",
     interventionType: "verbal_de_escalation",
-    deEscalationAttempted: true,
-    deEscalationOutcome: "fully_resolved",
-    duration: 15,
-    staffInvolved: ["Sarah Johnson"],
+    severity: "low",
+    deescalationAttempted: true,
+    deescalationOutcome: "successful",
     physicalInterventionUsed: false,
-    debriefStatus: "completed_within_24h",
-    childViewSought: true,
-    childViewRecorded: true,
-    recoveryPlanStatus: "in_place",
+    physicalInterventionJustified: false,
+    physicalInterventionDuration: null,
+    childDebrief: true,
+    staffDebrief: true,
+    bodyMapCompleted: false,
+    parentNotified: true,
+    regulatorNotified: false,
+    lessonsLearned: true,
+    recordedTimely: true,
   },
-  // Jordan — crisis 1: medium verbal de-escalation, partially resolved
+  // Jordan — crisis 1: medium verbal de-escalation, partially successful
   {
-    id: "ep-jordan-1",
+    id: "inc-jordan-1",
     childId: "child-jordan",
     childName: "Jordan",
-    date: "2026-03-22",
-    time: "18:45",
-    crisisLevel: "medium",
-    trigger: "Conflict with peer over shared space",
+    incidentDate: "2026-03-22",
     interventionType: "verbal_de_escalation",
-    deEscalationAttempted: true,
-    deEscalationOutcome: "partially_resolved",
-    duration: 30,
-    staffInvolved: ["Tom Richards", "Lisa Williams"],
+    severity: "medium",
+    deescalationAttempted: true,
+    deescalationOutcome: "partially_successful",
     physicalInterventionUsed: false,
-    debriefStatus: "completed_within_24h",
-    childViewSought: true,
-    childViewRecorded: true,
-    recoveryPlanStatus: "in_place",
+    physicalInterventionJustified: false,
+    physicalInterventionDuration: null,
+    childDebrief: true,
+    staffDebrief: true,
+    bodyMapCompleted: false,
+    parentNotified: true,
+    regulatorNotified: false,
+    lessonsLearned: true,
+    recordedTimely: true,
   },
-  // Jordan — crisis 2: high with therapeutic hold, debriefed
+  // Jordan — crisis 2: medium with guided physical, de-escalation attempted first
   {
-    id: "ep-jordan-2",
+    id: "inc-jordan-2",
     childId: "child-jordan",
     childName: "Jordan",
-    date: "2026-04-28",
-    time: "20:10",
-    crisisLevel: "high",
-    trigger: "Distressing phone call with family member",
-    interventionType: "therapeutic_hold",
-    deEscalationAttempted: true,
-    deEscalationOutcome: "partially_resolved",
-    duration: 45,
-    staffInvolved: ["Darren Laville", "Sarah Johnson"],
-    physicalInterventionUsed: false,
-    debriefStatus: "completed_within_24h",
-    childViewSought: true,
-    childViewRecorded: true,
-    recoveryPlanStatus: "in_place",
+    incidentDate: "2026-04-28",
+    interventionType: "guided_physical",
+    severity: "medium",
+    deescalationAttempted: true,
+    deescalationOutcome: "physical_intervention_required",
+    physicalInterventionUsed: true,
+    physicalInterventionJustified: true,
+    physicalInterventionDuration: 8,
+    childDebrief: true,
+    staffDebrief: true,
+    bodyMapCompleted: true,
+    parentNotified: true,
+    regulatorNotified: true,
+    lessonsLearned: true,
+    recordedTimely: true,
   },
-];
-
-const DEMO_PLANS: CrisisPreventionPlan[] = [
+  // Morgan — 1 low-level crisis, distraction technique, successful
   {
-    id: "plan-alex",
-    childId: "child-alex",
-    childName: "Alex",
-    planDate: "2026-01-15",
-    triggersIdentified: true,
-    earlyWarningSignsDocumented: true,
-    preferredCopingStrategies: ["Deep breathing", "Drawing", "Quiet time in bedroom"],
-    staffAwareOfPlan: true,
-    lastReviewDate: "2026-04-15",
-    reviewCurrent: true,
-  },
-  {
-    id: "plan-jordan",
-    childId: "child-jordan",
-    childName: "Jordan",
-    planDate: "2026-01-20",
-    triggersIdentified: true,
-    earlyWarningSignsDocumented: true,
-    preferredCopingStrategies: ["Physical exercise", "Talking to key worker", "Music"],
-    staffAwareOfPlan: true,
-    lastReviewDate: "2026-05-01",
-    reviewCurrent: true,
-  },
-  {
-    id: "plan-morgan",
+    id: "inc-morgan-1",
     childId: "child-morgan",
     childName: "Morgan",
-    planDate: "2026-02-01",
-    triggersIdentified: true,
-    earlyWarningSignsDocumented: true,
-    preferredCopingStrategies: ["Journaling", "Walking", "Fidget tools"],
-    staffAwareOfPlan: true,
-    lastReviewDate: "2026-04-20",
-    reviewCurrent: true,
+    incidentDate: "2026-05-05",
+    interventionType: "distraction",
+    severity: "low",
+    deescalationAttempted: true,
+    deescalationOutcome: "successful",
+    physicalInterventionUsed: false,
+    physicalInterventionJustified: false,
+    physicalInterventionDuration: null,
+    childDebrief: true,
+    staffDebrief: true,
+    bodyMapCompleted: false,
+    parentNotified: true,
+    regulatorNotified: false,
+    lessonsLearned: true,
+    recordedTimely: true,
   },
 ];
 
-const DEMO_TRAINING: StaffCrisisTraining[] = [
-  { id: "tr-1", staffId: "staff-sarah", staffName: "Sarah Johnson", deEscalationTrained: true, therapeuticCrisisTrained: true, physicalInterventionCertified: true, traumaInformedTrained: true, postCrisisDebriefTrained: true },
-  { id: "tr-2", staffId: "staff-tom", staffName: "Tom Richards", deEscalationTrained: true, therapeuticCrisisTrained: true, physicalInterventionCertified: true, traumaInformedTrained: true, postCrisisDebriefTrained: true },
-  { id: "tr-3", staffId: "staff-lisa", staffName: "Lisa Williams", deEscalationTrained: true, therapeuticCrisisTrained: true, physicalInterventionCertified: true, traumaInformedTrained: true, postCrisisDebriefTrained: true },
-  { id: "tr-4", staffId: "staff-darren", staffName: "Darren Laville", deEscalationTrained: true, therapeuticCrisisTrained: true, physicalInterventionCertified: true, traumaInformedTrained: true, postCrisisDebriefTrained: true },
-];
+const DEMO_POLICY: CrisisPolicy = {
+  id: "policy-oak-house",
+  therapeuticApproachDocumented: true,
+  deescalationProtocol: true,
+  physicalInterventionPolicy: true,
+  postIncidentProcess: true,
+  bodyMapRequirement: true,
+  notificationProtocol: true,
+  reviewSchedule: true,
+};
 
-const DEMO_REVIEWS: PostCrisisReview[] = [
-  { id: "rev-1", episodeId: "ep-alex-1", childId: "child-alex", childName: "Alex", reviewDate: "2026-04-11", lessonsIdentified: true, planUpdated: true, childParticipated: true, parentCarerNotified: true, managementInformed: true },
-  { id: "rev-2", episodeId: "ep-jordan-1", childId: "child-jordan", childName: "Jordan", reviewDate: "2026-03-23", lessonsIdentified: true, planUpdated: true, childParticipated: true, parentCarerNotified: true, managementInformed: true },
+const DEMO_TRAINING: StaffCrisisTraining[] = [
+  { id: "tr-1", staffId: "staff-sarah", staffName: "Sarah Johnson", therapeuticApproach: true, deescalation: true, physicalIntervention: true, postIncidentSupport: true, recordKeeping: true, bodyMapping: true },
+  { id: "tr-2", staffId: "staff-tom", staffName: "Tom Richards", therapeuticApproach: true, deescalation: true, physicalIntervention: true, postIncidentSupport: true, recordKeeping: true, bodyMapping: true },
+  { id: "tr-3", staffId: "staff-lisa", staffName: "Lisa Williams", therapeuticApproach: true, deescalation: true, physicalIntervention: true, postIncidentSupport: true, recordKeeping: true, bodyMapping: true },
+  { id: "tr-4", staffId: "staff-darren", staffName: "Darren Laville", therapeuticApproach: true, deescalation: true, physicalIntervention: true, postIncidentSupport: true, recordKeeping: true, bodyMapping: true },
 ];
 
 // -- GET ------------------------------------------------------------------------
 
 export async function GET() {
   const result = generateTherapeuticCrisisInterventionIntelligence(
-    DEMO_EPISODES,
-    DEMO_PLANS,
+    DEMO_INCIDENTS,
+    DEMO_POLICY,
     DEMO_TRAINING,
-    DEMO_REVIEWS,
     "oak-house",
     "2026-01-01",
-    "2026-05-18",
+    "2026-05-19",
   );
 
   return NextResponse.json({
     data: {
       ...result,
       meta: {
-        crisisLevelLabels: Object.fromEntries(
-          (["low", "medium", "high", "critical"] as const).map(
-            (v) => [v, getCrisisLevelLabel(v)],
-          ),
-        ),
         interventionTypeLabels: Object.fromEntries(
-          (["verbal_de_escalation", "distraction", "environmental_change", "therapeutic_hold", "physical_intervention", "medical_emergency", "police_called"] as const).map(
+          (["verbal_de_escalation", "distraction", "planned_ignoring", "time_away", "guided_physical", "restrictive_physical", "mechanical_restraint", "medical_intervention"] as const).map(
             (v) => [v, getInterventionTypeLabel(v)],
           ),
         ),
-        deEscalationOutcomeLabels: Object.fromEntries(
-          (["fully_resolved", "partially_resolved", "escalated", "required_restraint"] as const).map(
-            (v) => [v, getDeEscalationOutcomeLabel(v)],
+        incidentSeverityLabels: Object.fromEntries(
+          (["low", "medium", "high", "critical"] as const).map(
+            (v) => [v, getIncidentSeverityLabel(v)],
           ),
         ),
-        debriefStatusLabels: Object.fromEntries(
-          (["completed_within_24h", "completed_late", "not_completed"] as const).map(
-            (v) => [v, getDebriefStatusLabel(v)],
-          ),
-        ),
-        recoveryPlanStatusLabels: Object.fromEntries(
-          (["in_place", "in_progress", "not_started", "not_applicable"] as const).map(
-            (v) => [v, getRecoveryPlanStatusLabel(v)],
+        deescalationOutcomeLabels: Object.fromEntries(
+          (["successful", "partially_successful", "escalated", "physical_intervention_required"] as const).map(
+            (v) => [v, getDeescalationOutcomeLabel(v)],
           ),
         ),
         ratingLabels: Object.fromEntries(
@@ -202,11 +179,10 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
   }
 
-  const { episodes, plans, training, reviews, homeId, periodStart, periodEnd } = body as {
-    episodes?: CrisisEpisode[];
-    plans?: CrisisPreventionPlan[];
+  const { incidents, policy, training, homeId, periodStart, periodEnd } = body as {
+    incidents?: CrisisIncident[];
+    policy?: CrisisPolicy | null;
     training?: StaffCrisisTraining[];
-    reviews?: PostCrisisReview[];
     homeId?: string;
     periodStart?: string;
     periodEnd?: string;
@@ -217,10 +193,9 @@ export async function POST(req: Request) {
   }
 
   const result = generateTherapeuticCrisisInterventionIntelligence(
-    episodes ?? [],
-    plans ?? [],
+    incidents ?? [],
+    policy ?? null,
     training ?? [],
-    reviews ?? [],
     homeId ?? "unknown",
     periodStart,
     periodEnd,

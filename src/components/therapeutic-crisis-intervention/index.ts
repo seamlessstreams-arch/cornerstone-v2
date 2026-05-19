@@ -1,1 +1,1 @@
-export { TherapeuticCrisisInterventionDashboardWidget } from "./TherapeuticCrisisInterventionDashboardWidget";
+export { default as TherapeuticCrisisInterventionDashboardWidget } from "./TherapeuticCrisisInterventionDashboardWidget";

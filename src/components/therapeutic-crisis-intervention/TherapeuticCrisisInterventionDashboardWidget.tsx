@@ -18,15 +18,15 @@ const ratingLabels: Record<string, string> = {
 };
 
 function ScoreBar({ score, label, maxScore = 100 }: { score: number; label: string; maxScore?: number }) {
-  const pct = (score / maxScore) * 100;
-  const color = pct >= 80 ? "bg-green-500" : pct >= 60 ? "bg-blue-500" : pct >= 40 ? "bg-amber-500" : "bg-red-500";
+  const pctVal = (score / maxScore) * 100;
+  const color = pctVal >= 80 ? "bg-green-500" : pctVal >= 60 ? "bg-blue-500" : pctVal >= 40 ? "bg-amber-500" : "bg-red-500";
   return (
     <div className="flex items-center gap-3">
-      <span className="text-sm text-gray-600 w-44 shrink-0">{label}</span>
+      <span className="text-sm text-gray-600 w-48 shrink-0">{label}</span>
       <div className="flex-1 bg-gray-100 rounded-full h-2.5">
-        <div className={`h-2.5 rounded-full ${color}`} style={{ width: `${Math.min(pct, 100)}%` }} />
+        <div className={`h-2.5 rounded-full ${color}`} style={{ width: `${Math.min(pctVal, 100)}%` }} />
       </div>
-      <span className="text-sm font-medium w-12 text-right">{score}</span>
+      <span className="text-sm font-medium w-12 text-right">{score}/{maxScore}</span>
     </div>
   );
 }
@@ -40,6 +40,15 @@ function Section({ title, defaultOpen = false, children }: { title: string; defa
         <span className="text-gray-400">{open ? "▲" : "▼"}</span>
       </button>
       {open && <div className="p-4 space-y-3">{children}</div>}
+    </div>
+  );
+}
+
+function Stat({ label, value, warn }: { label: string; value: string | number; warn?: boolean }) {
+  return (
+    <div>
+      <span className="text-gray-500">{label}:</span>{" "}
+      <span className={`font-medium ${warn ? "text-red-600" : ""}`}>{value}</span>
     </div>
   );
 }
@@ -97,32 +106,32 @@ export function TherapeuticCrisisInterventionDashboardWidget() {
 
       <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
         <div className="bg-gray-50 rounded-lg p-3 text-center">
-          <div className="text-2xl font-bold text-gray-900">{data.deEscalationEffectiveness.totalEpisodes}</div>
-          <div className="text-xs text-gray-500 mt-1">Episodes</div>
+          <div className="text-2xl font-bold text-gray-900">{data.childProfiles.reduce((s, c) => s + c.totalIncidents, 0)}</div>
+          <div className="text-xs text-gray-500 mt-1">Incidents</div>
         </div>
         <div className="bg-gray-50 rounded-lg p-3 text-center">
-          <div className="text-2xl font-bold text-gray-900">{data.deEscalationEffectiveness.deEscalationAttemptedRate}%</div>
+          <div className="text-2xl font-bold text-gray-900">{data.deescalationEffectiveness.deescalationAttemptRate}%</div>
           <div className="text-xs text-gray-500 mt-1">De-escalated</div>
         </div>
         <div className="bg-gray-50 rounded-lg p-3 text-center">
-          <div className="text-2xl font-bold text-gray-900">{data.deEscalationEffectiveness.fullyResolvedRate}%</div>
+          <div className="text-2xl font-bold text-gray-900">{data.deescalationEffectiveness.deescalationSuccessRate}%</div>
           <div className="text-xs text-gray-500 mt-1">Resolved</div>
         </div>
         <div className="bg-gray-50 rounded-lg p-3 text-center">
-          <div className="text-2xl font-bold text-gray-900">{data.postCrisisResponse.debriefWithin24hRate}%</div>
+          <div className="text-2xl font-bold text-gray-900">{data.postIncidentPractice.childDebriefRate}%</div>
           <div className="text-xs text-gray-500 mt-1">Debriefed</div>
         </div>
         <div className="bg-gray-50 rounded-lg p-3 text-center">
-          <div className="text-2xl font-bold text-gray-900">{data.crisisPlanning.totalPlans}</div>
-          <div className="text-xs text-gray-500 mt-1">Plans</div>
+          <div className="text-2xl font-bold text-gray-900">{data.staffCrisisReadiness.totalStaff}</div>
+          <div className="text-xs text-gray-500 mt-1">Trained Staff</div>
         </div>
       </div>
 
       <div className="space-y-2">
-        <ScoreBar score={data.deEscalationEffectiveness.overallScore} label="De-escalation" maxScore={25} />
-        <ScoreBar score={data.crisisPlanning.overallScore} label="Crisis Planning" maxScore={25} />
-        <ScoreBar score={data.postCrisisResponse.overallScore} label="Post-Crisis Response" maxScore={25} />
-        <ScoreBar score={data.staffPreparedness.overallScore} label="Staff Preparedness" maxScore={25} />
+        <ScoreBar score={data.deescalationEffectiveness.overallScore} label="De-escalation Effectiveness" maxScore={25} />
+        <ScoreBar score={data.postIncidentPractice.overallScore} label="Post-Incident Practice" maxScore={25} />
+        <ScoreBar score={data.crisisPolicy.overallScore} label="Crisis Policy" maxScore={25} />
+        <ScoreBar score={data.staffCrisisReadiness.overallScore} label="Staff Crisis Readiness" maxScore={25} />
       </div>
 
       <div className="space-y-3">
@@ -136,10 +145,10 @@ export function TherapeuticCrisisInterventionDashboardWidget() {
                     <span className="text-sm font-medium text-gray-600">{child.overallScore}/10</span>
                   </div>
                   <div className="grid grid-cols-2 gap-2 text-xs text-gray-600">
-                    <div>Episodes: <span className="font-medium">{child.episodeCount}</span></div>
-                    <div>De-escalation: <span className="font-medium">{child.deEscalationSuccessRate}%</span></div>
-                    <div>Debriefed: <span className="font-medium">{child.debriefCompletionRate}%</span></div>
-                    <div>Plan: <span className={`font-medium ${child.hasPlan ? "text-green-600" : "text-amber-600"}`}>{child.hasPlan ? "Yes" : "No"}</span></div>
+                    <div>Incidents: <span className="font-medium">{child.totalIncidents}</span></div>
+                    <div>Physical: <span className={`font-medium ${child.physicalInterventions > 0 ? "text-red-600" : "text-green-600"}`}>{child.physicalInterventions}</span></div>
+                    <div>De-escalation: <span className="font-medium">{child.deescalationSuccessRate}%</span></div>
+                    <div>Debriefed: <span className="font-medium">{child.debriefRate}%</span></div>
                   </div>
                 </div>
               ))}
@@ -149,42 +158,47 @@ export function TherapeuticCrisisInterventionDashboardWidget() {
 
         <Section title="De-escalation Effectiveness">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
-            <div><span className="text-gray-500">Episodes:</span> <span className="font-medium">{data.deEscalationEffectiveness.totalEpisodes}</span></div>
-            <div><span className="text-gray-500">Attempted:</span> <span className="font-medium">{data.deEscalationEffectiveness.deEscalationAttemptedRate}%</span></div>
-            <div><span className="text-gray-500">Resolved:</span> <span className="font-medium">{data.deEscalationEffectiveness.fullyResolvedRate}%</span></div>
-            <div><span className="text-gray-500">Physical:</span> <span className={`font-medium ${data.deEscalationEffectiveness.physicalInterventionRate > 0 ? "text-red-600" : "text-green-600"}`}>{data.deEscalationEffectiveness.physicalInterventionRate}%</span></div>
-            <div><span className="text-gray-500">Avg Duration:</span> <span className="font-medium">{data.deEscalationEffectiveness.averageDuration} min</span></div>
+            <Stat label="Attempt Rate" value={`${data.deescalationEffectiveness.deescalationAttemptRate}%`} />
+            <Stat label="Success Rate" value={`${data.deescalationEffectiveness.deescalationSuccessRate}%`} />
+            <Stat label="Physical Rate" value={`${data.deescalationEffectiveness.physicalInterventionRate}%`} warn={data.deescalationEffectiveness.physicalInterventionRate > 0} />
+            <Stat label="Low Severity" value={data.deescalationEffectiveness.severityDistribution.low} />
+            <Stat label="Medium Severity" value={data.deescalationEffectiveness.severityDistribution.medium} />
+            <Stat label="High Severity" value={data.deescalationEffectiveness.severityDistribution.high} warn={data.deescalationEffectiveness.severityDistribution.high > 0} />
+            <Stat label="Critical Severity" value={data.deescalationEffectiveness.severityDistribution.critical} warn={data.deescalationEffectiveness.severityDistribution.critical > 0} />
           </div>
         </Section>
 
-        <Section title="Crisis Planning">
+        <Section title="Post-Incident Practice">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
-            <div><span className="text-gray-500">Plans:</span> <span className="font-medium">{data.crisisPlanning.totalPlans}</span></div>
-            <div><span className="text-gray-500">Coverage:</span> <span className="font-medium">{data.crisisPlanning.plansPerChildRate}%</span></div>
-            <div><span className="text-gray-500">Triggers:</span> <span className="font-medium">{data.crisisPlanning.triggersIdentifiedRate}%</span></div>
-            <div><span className="text-gray-500">Current:</span> <span className="font-medium">{data.crisisPlanning.reviewCurrentRate}%</span></div>
-            <div><span className="text-gray-500">Staff Aware:</span> <span className="font-medium">{data.crisisPlanning.staffAwarenessRate}%</span></div>
+            <Stat label="Child Debrief" value={`${data.postIncidentPractice.childDebriefRate}%`} />
+            <Stat label="Staff Debrief" value={`${data.postIncidentPractice.staffDebriefRate}%`} />
+            <Stat label="Body Maps" value={`${data.postIncidentPractice.bodyMapCompletionRate}%`} />
+            <Stat label="Timely Recording" value={`${data.postIncidentPractice.timelyRecordingRate}%`} />
+            <Stat label="Lessons Learned" value={`${data.postIncidentPractice.lessonsLearnedRate}%`} />
           </div>
         </Section>
 
-        <Section title="Post-Crisis Response">
+        <Section title="Crisis Policy">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
-            <div><span className="text-gray-500">Episodes:</span> <span className="font-medium">{data.postCrisisResponse.totalEpisodes}</span></div>
-            <div><span className="text-gray-500">Debrief 24h:</span> <span className="font-medium">{data.postCrisisResponse.debriefWithin24hRate}%</span></div>
-            <div><span className="text-gray-500">Child View:</span> <span className="font-medium">{data.postCrisisResponse.childViewSoughtRate}%</span></div>
-            <div><span className="text-gray-500">Recovery Plan:</span> <span className="font-medium">{data.postCrisisResponse.recoveryPlanRate}%</span></div>
-            <div><span className="text-gray-500">Lessons:</span> <span className="font-medium">{data.postCrisisResponse.lessonsIdentifiedRate}%</span></div>
+            <Stat label="Therapeutic Approach" value={data.crisisPolicy.therapeuticApproachDocumented ? "Yes" : "No"} warn={!data.crisisPolicy.therapeuticApproachDocumented} />
+            <Stat label="De-escalation Protocol" value={data.crisisPolicy.deescalationProtocol ? "Yes" : "No"} warn={!data.crisisPolicy.deescalationProtocol} />
+            <Stat label="Physical Intervention" value={data.crisisPolicy.physicalInterventionPolicy ? "Yes" : "No"} warn={!data.crisisPolicy.physicalInterventionPolicy} />
+            <Stat label="Post-Incident Process" value={data.crisisPolicy.postIncidentProcess ? "Yes" : "No"} warn={!data.crisisPolicy.postIncidentProcess} />
+            <Stat label="Body Map Requirement" value={data.crisisPolicy.bodyMapRequirement ? "Yes" : "No"} warn={!data.crisisPolicy.bodyMapRequirement} />
+            <Stat label="Notification Protocol" value={data.crisisPolicy.notificationProtocol ? "Yes" : "No"} warn={!data.crisisPolicy.notificationProtocol} />
+            <Stat label="Review Schedule" value={data.crisisPolicy.reviewSchedule ? "Yes" : "No"} warn={!data.crisisPolicy.reviewSchedule} />
           </div>
         </Section>
 
-        <Section title="Staff Preparedness">
+        <Section title="Staff Crisis Readiness">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
-            <div><span className="text-gray-500">Staff:</span> <span className="font-medium">{data.staffPreparedness.totalStaff}</span></div>
-            <div><span className="text-gray-500">De-escalation:</span> <span className="font-medium">{data.staffPreparedness.deEscalationTrainedRate}%</span></div>
-            <div><span className="text-gray-500">Therapeutic:</span> <span className="font-medium">{data.staffPreparedness.therapeuticCrisisTrainedRate}%</span></div>
-            <div><span className="text-gray-500">Physical Cert:</span> <span className="font-medium">{data.staffPreparedness.physicalInterventionCertifiedRate}%</span></div>
-            <div><span className="text-gray-500">Trauma:</span> <span className="font-medium">{data.staffPreparedness.traumaInformedTrainedRate}%</span></div>
-            <div><span className="text-gray-500">Debrief:</span> <span className="font-medium">{data.staffPreparedness.postCrisisDebriefTrainedRate}%</span></div>
+            <Stat label="Staff Trained" value={data.staffCrisisReadiness.totalStaff} />
+            <Stat label="Therapeutic" value={`${data.staffCrisisReadiness.therapeuticApproachRate}%`} />
+            <Stat label="De-escalation" value={`${data.staffCrisisReadiness.deescalationRate}%`} />
+            <Stat label="Physical Intervention" value={`${data.staffCrisisReadiness.physicalInterventionRate}%`} />
+            <Stat label="Post-Incident" value={`${data.staffCrisisReadiness.postIncidentSupportRate}%`} />
+            <Stat label="Record Keeping" value={`${data.staffCrisisReadiness.recordKeepingRate}%`} />
+            <Stat label="Body Mapping" value={`${data.staffCrisisReadiness.bodyMappingRate}%`} />
           </div>
         </Section>
 
@@ -233,3 +247,5 @@ export function TherapeuticCrisisInterventionDashboardWidget() {
     </div>
   );
 }
+
+export default TherapeuticCrisisInterventionDashboardWidget;
