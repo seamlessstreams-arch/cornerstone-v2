@@ -1,51 +1,42 @@
 // ==============================================================================
 // THERAPEUTIC CRISIS INTERVENTION INTELLIGENCE ENGINE
 //
-// Pure deterministic engine for assessing the quality of crisis intervention
-// within a children's residential home. Covers de-escalation effectiveness,
-// crisis prevention planning, post-crisis response, and staff preparedness.
+// Pure deterministic engine for evaluating how well a children's residential
+// home manages crisis situations using therapeutic approaches, including
+// de-escalation, physical interventions (restraints), and post-incident
+// learning.
 //
 // Regulatory basis:
-//   - CHR 2015, Reg 12 — The protection of children standard
-//   - CHR 2015, Reg 19 — Behaviour management policies and records
-//   - CHR 2015, Reg 20 — Restraint and deprivation of liberty
+//   - CHR 2015 Reg 12 — The protection of children standard
+//   - CHR 2015 Reg 19 — Behaviour management policies and records
+//   - CHR 2015 Reg 20 — Restraint and deprivation of liberty
 //   - SCCIF — Overall experiences and progress of children
-//   - Reducing the Need for Restraint and Restrictive Intervention (DfE)
-//   - UNCRC Article 19 — Protection from violence and maltreatment
-//   - UNCRC Article 37 — Protection from torture and deprivation of liberty
+//   - Children Act 1989 — Welfare of the child
+//   - Reducing the Need for Restraint and Restrictive Intervention (2019)
+//   - NMS 12 — Promoting positive behaviour and relationships
 //
-// No AI. No external calls. Pure input -> output.
+// No AI. No external calls. No randomness. No Date.now(). Pure input -> output.
 // ==============================================================================
 
-// -- Types --------------------------------------------------------------------
-
-export type CrisisLevel = "low" | "medium" | "high" | "critical";
+// -- Type Unions ---------------------------------------------------------------
 
 export type InterventionType =
   | "verbal_de_escalation"
   | "distraction"
-  | "environmental_change"
-  | "therapeutic_hold"
-  | "physical_intervention"
-  | "medical_emergency"
-  | "police_called";
+  | "planned_ignoring"
+  | "time_away"
+  | "guided_physical"
+  | "restrictive_physical"
+  | "mechanical_restraint"
+  | "medical_intervention";
 
-export type DeEscalationOutcome =
-  | "fully_resolved"
-  | "partially_resolved"
+export type IncidentSeverity = "low" | "medium" | "high" | "critical";
+
+export type DeescalationOutcome =
+  | "successful"
+  | "partially_successful"
   | "escalated"
-  | "required_restraint";
-
-export type DebriefStatus =
-  | "completed_within_24h"
-  | "completed_late"
-  | "not_completed";
-
-export type RecoveryPlanStatus =
-  | "in_place"
-  | "in_progress"
-  | "not_started"
-  | "not_applicable";
+  | "physical_intervention_required";
 
 export type Rating =
   | "outstanding"
@@ -53,111 +44,152 @@ export type Rating =
   | "requires_improvement"
   | "inadequate";
 
-// -- Input Interfaces ---------------------------------------------------------
+// -- Label Maps ----------------------------------------------------------------
 
-export interface CrisisEpisode {
-  id: string;
-  childId: string;
-  childName: string;
-  date: string;
-  time: string;
-  crisisLevel: CrisisLevel;
-  trigger: string;
-  interventionType: InterventionType;
-  deEscalationAttempted: boolean;
-  deEscalationOutcome: DeEscalationOutcome;
-  duration: number;
-  staffInvolved: string[];
-  physicalInterventionUsed: boolean;
-  debriefStatus: DebriefStatus;
-  childViewSought: boolean;
-  childViewRecorded: boolean;
-  recoveryPlanStatus: RecoveryPlanStatus;
+const INTERVENTION_TYPE_LABELS: Record<InterventionType, string> = {
+  verbal_de_escalation: "Verbal De-escalation",
+  distraction: "Distraction",
+  planned_ignoring: "Planned Ignoring",
+  time_away: "Time Away",
+  guided_physical: "Guided Physical",
+  restrictive_physical: "Restrictive Physical",
+  mechanical_restraint: "Mechanical Restraint",
+  medical_intervention: "Medical Intervention",
+};
+
+const INCIDENT_SEVERITY_LABELS: Record<IncidentSeverity, string> = {
+  low: "Low",
+  medium: "Medium",
+  high: "High",
+  critical: "Critical",
+};
+
+const DEESCALATION_OUTCOME_LABELS: Record<DeescalationOutcome, string> = {
+  successful: "Successful",
+  partially_successful: "Partially Successful",
+  escalated: "Escalated",
+  physical_intervention_required: "Physical Intervention Required",
+};
+
+const RATING_LABELS: Record<Rating, string> = {
+  outstanding: "Outstanding",
+  good: "Good",
+  requires_improvement: "Requires Improvement",
+  inadequate: "Inadequate",
+};
+
+// -- Label Getters -------------------------------------------------------------
+
+export function getInterventionTypeLabel(v: InterventionType): string {
+  return INTERVENTION_TYPE_LABELS[v];
 }
 
-export interface CrisisPreventionPlan {
+export function getIncidentSeverityLabel(v: IncidentSeverity): string {
+  return INCIDENT_SEVERITY_LABELS[v];
+}
+
+export function getDeescalationOutcomeLabel(v: DeescalationOutcome): string {
+  return DEESCALATION_OUTCOME_LABELS[v];
+}
+
+export function getRatingLabel(v: Rating): string {
+  return RATING_LABELS[v];
+}
+
+// -- Input Interfaces ----------------------------------------------------------
+
+export interface CrisisIncident {
   id: string;
   childId: string;
   childName: string;
-  planDate: string;
-  triggersIdentified: boolean;
-  earlyWarningSignsDocumented: boolean;
-  preferredCopingStrategies: string[];
-  staffAwareOfPlan: boolean;
-  lastReviewDate: string;
-  reviewCurrent: boolean;
+  incidentDate: string;
+  interventionType: InterventionType;
+  severity: IncidentSeverity;
+  deescalationAttempted: boolean;
+  deescalationOutcome: DeescalationOutcome;
+  physicalInterventionUsed: boolean;
+  physicalInterventionJustified: boolean;
+  physicalInterventionDuration: number | null;
+  childDebrief: boolean;
+  staffDebrief: boolean;
+  bodyMapCompleted: boolean;
+  parentNotified: boolean;
+  regulatorNotified: boolean;
+  lessonsLearned: boolean;
+  recordedTimely: boolean;
+}
+
+export interface CrisisPolicy {
+  id: string;
+  therapeuticApproachDocumented: boolean;
+  deescalationProtocol: boolean;
+  physicalInterventionPolicy: boolean;
+  postIncidentProcess: boolean;
+  bodyMapRequirement: boolean;
+  notificationProtocol: boolean;
+  reviewSchedule: boolean;
 }
 
 export interface StaffCrisisTraining {
   id: string;
   staffId: string;
   staffName: string;
-  deEscalationTrained: boolean;
-  therapeuticCrisisTrained: boolean;
-  physicalInterventionCertified: boolean;
-  traumaInformedTrained: boolean;
-  postCrisisDebriefTrained: boolean;
+  therapeuticApproach: boolean;
+  deescalation: boolean;
+  physicalIntervention: boolean;
+  postIncidentSupport: boolean;
+  recordKeeping: boolean;
+  bodyMapping: boolean;
 }
 
-export interface PostCrisisReview {
-  id: string;
-  episodeId: string;
-  childId: string;
-  childName: string;
-  reviewDate: string;
-  lessonsIdentified: boolean;
-  planUpdated: boolean;
-  childParticipated: boolean;
-  parentCarerNotified: boolean;
-  managementInformed: boolean;
-}
+// -- Result Interfaces ---------------------------------------------------------
 
-// -- Result Interfaces --------------------------------------------------------
-
-export interface DeEscalationEffectivenessResult {
+export interface DeescalationEffectivenessResult {
   overallScore: number;
-  totalEpisodes: number;
-  deEscalationAttemptedRate: number;
-  fullyResolvedRate: number;
+  deescalationAttemptRate: number;
+  deescalationSuccessRate: number;
   physicalInterventionRate: number;
-  averageDuration: number;
+  severityDistribution: Record<IncidentSeverity, number>;
 }
 
-export interface CrisisPlanningResult {
+export interface PostIncidentPracticeResult {
   overallScore: number;
-  totalPlans: number;
-  plansPerChildRate: number;
-  triggersIdentifiedRate: number;
-  reviewCurrentRate: number;
-  staffAwarenessRate: number;
+  childDebriefRate: number;
+  staffDebriefRate: number;
+  bodyMapCompletionRate: number;
+  timelyRecordingRate: number;
+  lessonsLearnedRate: number;
 }
 
-export interface PostCrisisResponseResult {
+export interface CrisisPolicyResult {
   overallScore: number;
-  totalEpisodes: number;
-  debriefWithin24hRate: number;
-  childViewSoughtRate: number;
-  recoveryPlanRate: number;
-  lessonsIdentifiedRate: number;
+  therapeuticApproachDocumented: boolean;
+  deescalationProtocol: boolean;
+  physicalInterventionPolicy: boolean;
+  postIncidentProcess: boolean;
+  bodyMapRequirement: boolean;
+  notificationProtocol: boolean;
+  reviewSchedule: boolean;
 }
 
-export interface StaffPreparednessResult {
+export interface StaffCrisisReadinessResult {
   overallScore: number;
   totalStaff: number;
-  deEscalationTrainedRate: number;
-  therapeuticCrisisTrainedRate: number;
-  physicalInterventionCertifiedRate: number;
-  traumaInformedTrainedRate: number;
-  postCrisisDebriefTrainedRate: number;
+  therapeuticApproachRate: number;
+  deescalationRate: number;
+  physicalInterventionRate: number;
+  postIncidentSupportRate: number;
+  recordKeepingRate: number;
+  bodyMappingRate: number;
 }
 
 export interface ChildCrisisProfile {
   childId: string;
   childName: string;
-  episodeCount: number;
-  deEscalationSuccessRate: number;
-  debriefCompletionRate: number;
-  hasPlan: boolean;
+  totalIncidents: number;
+  physicalInterventions: number;
+  deescalationSuccessRate: number;
+  debriefRate: number;
   overallScore: number;
 }
 
@@ -167,10 +199,10 @@ export interface TherapeuticCrisisInterventionIntelligence {
   periodEnd: string;
   overallScore: number;
   rating: Rating;
-  deEscalationEffectiveness: DeEscalationEffectivenessResult;
-  crisisPlanning: CrisisPlanningResult;
-  postCrisisResponse: PostCrisisResponseResult;
-  staffPreparedness: StaffPreparednessResult;
+  deescalationEffectiveness: DeescalationEffectivenessResult;
+  postIncidentPractice: PostIncidentPracticeResult;
+  crisisPolicy: CrisisPolicyResult;
+  staffCrisisReadiness: StaffCrisisReadinessResult;
   childProfiles: ChildCrisisProfile[];
   strengths: string[];
   areasForImprovement: string[];
@@ -178,7 +210,7 @@ export interface TherapeuticCrisisInterventionIntelligence {
   regulatoryLinks: string[];
 }
 
-// -- Helpers ------------------------------------------------------------------
+// -- Helpers -------------------------------------------------------------------
 
 export function pct(num: number, den: number): number {
   if (den === 0) return 0;
@@ -192,474 +224,620 @@ export function getRating(score: number): Rating {
   return "inadequate";
 }
 
-// -- Label Maps & Getters -----------------------------------------------------
-
-const CRISIS_LEVEL_LABELS: Record<CrisisLevel, string> = {
-  low: "Low",
-  medium: "Medium",
-  high: "High",
-  critical: "Critical",
-};
-
-const INTERVENTION_TYPE_LABELS: Record<InterventionType, string> = {
-  verbal_de_escalation: "Verbal De-escalation",
-  distraction: "Distraction",
-  environmental_change: "Environmental Change",
-  therapeutic_hold: "Therapeutic Hold",
-  physical_intervention: "Physical Intervention",
-  medical_emergency: "Medical Emergency",
-  police_called: "Police Called",
-};
-
-const DE_ESCALATION_OUTCOME_LABELS: Record<DeEscalationOutcome, string> = {
-  fully_resolved: "Fully Resolved",
-  partially_resolved: "Partially Resolved",
-  escalated: "Escalated",
-  required_restraint: "Required Restraint",
-};
-
-const DEBRIEF_STATUS_LABELS: Record<DebriefStatus, string> = {
-  completed_within_24h: "Completed Within 24h",
-  completed_late: "Completed Late",
-  not_completed: "Not Completed",
-};
-
-const RECOVERY_PLAN_STATUS_LABELS: Record<RecoveryPlanStatus, string> = {
-  in_place: "In Place",
-  in_progress: "In Progress",
-  not_started: "Not Started",
-  not_applicable: "Not Applicable",
-};
-
-const RATING_LABELS: Record<Rating, string> = {
-  outstanding: "Outstanding",
-  good: "Good",
-  requires_improvement: "Requires Improvement",
-  inadequate: "Inadequate",
-};
-
-export function getCrisisLevelLabel(v: CrisisLevel): string { return CRISIS_LEVEL_LABELS[v]; }
-export function getInterventionTypeLabel(v: InterventionType): string { return INTERVENTION_TYPE_LABELS[v]; }
-export function getDeEscalationOutcomeLabel(v: DeEscalationOutcome): string { return DE_ESCALATION_OUTCOME_LABELS[v]; }
-export function getDebriefStatusLabel(v: DebriefStatus): string { return DEBRIEF_STATUS_LABELS[v]; }
-export function getRecoveryPlanStatusLabel(v: RecoveryPlanStatus): string { return RECOVERY_PLAN_STATUS_LABELS[v]; }
-export function getRatingLabel(v: Rating): string { return RATING_LABELS[v]; }
-
-// -- Evaluators ---------------------------------------------------------------
+// -- Evaluators ----------------------------------------------------------------
 
 /**
- * Evaluates de-escalation effectiveness across crisis episodes.
- * Empty (no episodes) = 25 — no crises is excellent.
+ * Evaluates de-escalation effectiveness across crisis incidents.
+ * Empty (no incidents) = 25 — no incidents is ideal, measuring ABSENCE of crises.
+ *
+ * - De-escalation attempt rate -> 0-7
+ * - Successful/partially_successful de-escalation rate -> 0-6
+ * - Low physical intervention usage rate -> 0-6
+ * - Severity distribution (lower is better) -> 0-6
  */
-export function evaluateDeEscalationEffectiveness(
-  episodes: CrisisEpisode[],
-): DeEscalationEffectivenessResult {
-  if (episodes.length === 0) {
+export function evaluateDeescalationEffectiveness(
+  incidents: CrisisIncident[],
+): DeescalationEffectivenessResult {
+  if (incidents.length === 0) {
     return {
       overallScore: 25,
-      totalEpisodes: 0,
-      deEscalationAttemptedRate: 0,
-      fullyResolvedRate: 0,
+      deescalationAttemptRate: 0,
+      deescalationSuccessRate: 0,
       physicalInterventionRate: 0,
-      averageDuration: 0,
+      severityDistribution: { low: 0, medium: 0, high: 0, critical: 0 },
     };
   }
 
-  let deEscalationAttempted = 0;
-  let fullyResolved = 0;
-  let physicalIntervention = 0;
-  let totalDuration = 0;
+  let deescAttempted = 0;
+  let deescSuccessful = 0;
+  let physicalUsed = 0;
+  const sevCounts: Record<IncidentSeverity, number> = { low: 0, medium: 0, high: 0, critical: 0 };
 
-  for (const ep of episodes) {
-    if (ep.deEscalationAttempted) deEscalationAttempted++;
-    if (ep.deEscalationOutcome === "fully_resolved") fullyResolved++;
-    if (ep.physicalInterventionUsed) physicalIntervention++;
-    totalDuration += ep.duration;
+  for (const inc of incidents) {
+    if (inc.deescalationAttempted) deescAttempted++;
+    if (
+      inc.deescalationOutcome === "successful" ||
+      inc.deescalationOutcome === "partially_successful"
+    ) {
+      deescSuccessful++;
+    }
+    if (inc.physicalInterventionUsed) physicalUsed++;
+    sevCounts[inc.severity]++;
   }
 
-  const deEscalationAttemptedRate = pct(deEscalationAttempted, episodes.length);
-  const fullyResolvedRate = pct(fullyResolved, episodes.length);
-  const physicalInterventionRate = pct(physicalIntervention, episodes.length);
-  const averageDuration = Math.round(totalDuration / episodes.length);
+  const deescalationAttemptRate = pct(deescAttempted, incidents.length);
+  const deescalationSuccessRate = pct(deescSuccessful, incidents.length);
+  const physicalInterventionRate = pct(physicalUsed, incidents.length);
 
-  // Scoring: de-escalation attempted rate (0-7), fully resolved rate (0-7),
-  // low physical intervention rate bonus (0-6), average duration trend (0-5)
+  // De-escalation attempt rate -> 0-7
   let score = 0;
-  score += Math.round((deEscalationAttemptedRate / 100) * 7);
-  score += Math.round((fullyResolvedRate / 100) * 7);
+  score += Math.round((deescalationAttemptRate / 100) * 7);
 
-  // Low physical intervention bonus
+  // Successful/partially_successful de-escalation rate -> 0-6
+  score += Math.round((deescalationSuccessRate / 100) * 6);
+
+  // Low physical intervention usage rate -> 0-6
   if (physicalInterventionRate === 0) score += 6;
-  else if (physicalInterventionRate <= 20) score += 4;
+  else if (physicalInterventionRate <= 15) score += 5;
+  else if (physicalInterventionRate <= 30) score += 4;
   else if (physicalInterventionRate <= 50) score += 2;
+  else if (physicalInterventionRate <= 75) score += 1;
 
-  // Duration scoring — shorter is better (under 30 min = excellent)
-  if (averageDuration <= 15) score += 5;
-  else if (averageDuration <= 30) score += 4;
-  else if (averageDuration <= 60) score += 2;
-  else if (averageDuration <= 120) score += 1;
+  // Severity distribution (lower is better) -> 0-6
+  const total = incidents.length;
+  const lowMedRate = pct(sevCounts.low + sevCounts.medium, total);
+  if (lowMedRate >= 90) score += 6;
+  else if (lowMedRate >= 75) score += 5;
+  else if (lowMedRate >= 60) score += 4;
+  else if (lowMedRate >= 40) score += 2;
+  else if (lowMedRate >= 20) score += 1;
 
   return {
     overallScore: Math.min(25, Math.max(0, score)),
-    totalEpisodes: episodes.length,
-    deEscalationAttemptedRate,
-    fullyResolvedRate,
+    deescalationAttemptRate,
+    deescalationSuccessRate,
     physicalInterventionRate,
-    averageDuration,
+    severityDistribution: sevCounts,
   };
 }
 
 /**
- * Evaluates crisis prevention planning quality.
- * Empty (no plans) = 0 — absence of plans is non-compliant.
+ * Evaluates post-incident practice quality.
+ * Empty (no incidents) = 25 — no incidents to review is ideal.
+ *
+ * - Child debrief completion rate -> 0-7
+ * - Staff debrief completion rate -> 0-6
+ * - Body map completion (when physical intervention used) -> 0-6
+ * - Timely recording + lessons learned -> 0-6
  */
-export function evaluateCrisisPlanning(
-  plans: CrisisPreventionPlan[],
-  childIds: string[],
-): CrisisPlanningResult {
-  if (plans.length === 0) {
+export function evaluatePostIncidentPractice(
+  incidents: CrisisIncident[],
+): PostIncidentPracticeResult {
+  if (incidents.length === 0) {
+    return {
+      overallScore: 25,
+      childDebriefRate: 0,
+      staffDebriefRate: 0,
+      bodyMapCompletionRate: 0,
+      timelyRecordingRate: 0,
+      lessonsLearnedRate: 0,
+    };
+  }
+
+  let childDebriefs = 0;
+  let staffDebriefs = 0;
+  let timelyRecords = 0;
+  let lessonsLearned = 0;
+
+  const physicalIncidents: CrisisIncident[] = [];
+  let bodyMapsCompleted = 0;
+
+  for (const inc of incidents) {
+    if (inc.childDebrief) childDebriefs++;
+    if (inc.staffDebrief) staffDebriefs++;
+    if (inc.recordedTimely) timelyRecords++;
+    if (inc.lessonsLearned) lessonsLearned++;
+    if (inc.physicalInterventionUsed) {
+      physicalIncidents.push(inc);
+      if (inc.bodyMapCompleted) bodyMapsCompleted++;
+    }
+  }
+
+  const childDebriefRate = pct(childDebriefs, incidents.length);
+  const staffDebriefRate = pct(staffDebriefs, incidents.length);
+  const bodyMapCompletionRate = pct(bodyMapsCompleted, physicalIncidents.length);
+  const timelyRecordingRate = pct(timelyRecords, incidents.length);
+  const lessonsLearnedRate = pct(lessonsLearned, incidents.length);
+
+  // Child debrief completion rate -> 0-7
+  let score = 0;
+  score += Math.round((childDebriefRate / 100) * 7);
+
+  // Staff debrief completion rate -> 0-6
+  score += Math.round((staffDebriefRate / 100) * 6);
+
+  // Body map completion (when physical intervention used) -> 0-6
+  if (physicalIncidents.length === 0) {
+    score += 6; // No physical interventions = best case
+  } else {
+    score += Math.round((bodyMapCompletionRate / 100) * 6);
+  }
+
+  // Timely recording + lessons learned -> 0-6
+  const combinedRate = Math.round((timelyRecordingRate + lessonsLearnedRate) / 2);
+  score += Math.round((combinedRate / 100) * 6);
+
+  return {
+    overallScore: Math.min(25, Math.max(0, score)),
+    childDebriefRate,
+    staffDebriefRate,
+    bodyMapCompletionRate,
+    timelyRecordingRate,
+    lessonsLearnedRate,
+  };
+}
+
+/**
+ * Evaluates crisis policy completeness.
+ * Null = 0 — no policy is non-compliant.
+ *
+ * 7 boolean fields scored at different weights totalling 25:
+ * - therapeuticApproachDocumented: 5
+ * - deescalationProtocol: 4
+ * - physicalInterventionPolicy: 4
+ * - postIncidentProcess: 4
+ * - bodyMapRequirement: 3
+ * - notificationProtocol: 3
+ * - reviewSchedule: 2
+ */
+export function evaluateCrisisPolicy(
+  policy: CrisisPolicy | null,
+): CrisisPolicyResult {
+  if (policy === null) {
     return {
       overallScore: 0,
-      totalPlans: 0,
-      plansPerChildRate: 0,
-      triggersIdentifiedRate: 0,
-      reviewCurrentRate: 0,
-      staffAwarenessRate: 0,
+      therapeuticApproachDocumented: false,
+      deescalationProtocol: false,
+      physicalInterventionPolicy: false,
+      postIncidentProcess: false,
+      bodyMapRequirement: false,
+      notificationProtocol: false,
+      reviewSchedule: false,
     };
   }
 
-  const childrenWithPlans = new Set(plans.map((p) => p.childId));
-  const uniqueChildren = new Set(childIds);
-  const plansPerChildRate = pct(childrenWithPlans.size, Math.max(uniqueChildren.size, childrenWithPlans.size));
-
-  let triggersIdentified = 0;
-  let reviewCurrent = 0;
-  let staffAware = 0;
-
-  for (const p of plans) {
-    if (p.triggersIdentified) triggersIdentified++;
-    if (p.reviewCurrent) reviewCurrent++;
-    if (p.staffAwareOfPlan) staffAware++;
-  }
-
-  const triggersIdentifiedRate = pct(triggersIdentified, plans.length);
-  const reviewCurrentRate = pct(reviewCurrent, plans.length);
-  const staffAwarenessRate = pct(staffAware, plans.length);
-
-  // Scoring: plans exist per child (0-7), triggers identified (0-6),
-  // review current (0-6), staff awareness (0-6)
   let score = 0;
-  score += Math.round((plansPerChildRate / 100) * 7);
-  score += Math.round((triggersIdentifiedRate / 100) * 6);
-  score += Math.round((reviewCurrentRate / 100) * 6);
-  score += Math.round((staffAwarenessRate / 100) * 6);
+  if (policy.therapeuticApproachDocumented) score += 5;
+  if (policy.deescalationProtocol) score += 4;
+  if (policy.physicalInterventionPolicy) score += 4;
+  if (policy.postIncidentProcess) score += 4;
+  if (policy.bodyMapRequirement) score += 3;
+  if (policy.notificationProtocol) score += 3;
+  if (policy.reviewSchedule) score += 2;
 
   return {
     overallScore: Math.min(25, Math.max(0, score)),
-    totalPlans: plans.length,
-    plansPerChildRate,
-    triggersIdentifiedRate,
-    reviewCurrentRate,
-    staffAwarenessRate,
+    therapeuticApproachDocumented: policy.therapeuticApproachDocumented,
+    deescalationProtocol: policy.deescalationProtocol,
+    physicalInterventionPolicy: policy.physicalInterventionPolicy,
+    postIncidentProcess: policy.postIncidentProcess,
+    bodyMapRequirement: policy.bodyMapRequirement,
+    notificationProtocol: policy.notificationProtocol,
+    reviewSchedule: policy.reviewSchedule,
   };
 }
 
 /**
- * Evaluates post-crisis response quality.
- * Empty (no episodes) = 25 — no crises needing response is excellent.
+ * Evaluates staff crisis readiness from training records.
+ * Empty = 0 — no trained staff is non-compliant.
+ *
+ * 6 boolean training fields scored at different weights totalling 25:
+ * - therapeuticApproach: 5
+ * - deescalation: 5
+ * - physicalIntervention: 5
+ * - postIncidentSupport: 4
+ * - recordKeeping: 3
+ * - bodyMapping: 3
  */
-export function evaluatePostCrisisResponse(
-  episodes: CrisisEpisode[],
-  reviews: PostCrisisReview[],
-): PostCrisisResponseResult {
-  if (episodes.length === 0) {
-    return {
-      overallScore: 25,
-      totalEpisodes: 0,
-      debriefWithin24hRate: 0,
-      childViewSoughtRate: 0,
-      recoveryPlanRate: 0,
-      lessonsIdentifiedRate: 0,
-    };
-  }
-
-  let debriefWithin24h = 0;
-  let childViewSought = 0;
-  let recoveryPlan = 0;
-
-  for (const ep of episodes) {
-    if (ep.debriefStatus === "completed_within_24h") debriefWithin24h++;
-    if (ep.childViewSought) childViewSought++;
-    if (ep.recoveryPlanStatus === "in_place" || ep.recoveryPlanStatus === "in_progress") recoveryPlan++;
-  }
-
-  let lessonsIdentified = 0;
-  for (const r of reviews) {
-    if (r.lessonsIdentified) lessonsIdentified++;
-  }
-
-  const debriefWithin24hRate = pct(debriefWithin24h, episodes.length);
-  const childViewSoughtRate = pct(childViewSought, episodes.length);
-  const recoveryPlanRate = pct(recoveryPlan, episodes.length);
-  const lessonsIdentifiedRate = pct(lessonsIdentified, reviews.length);
-
-  // Scoring: debrief within 24h rate (0-8), child view sought rate (0-6),
-  // recovery plan rate (0-6), lessons identified rate (0-5)
-  let score = 0;
-  score += Math.round((debriefWithin24hRate / 100) * 8);
-  score += Math.round((childViewSoughtRate / 100) * 6);
-  score += Math.round((recoveryPlanRate / 100) * 6);
-  score += Math.round((lessonsIdentifiedRate / 100) * 5);
-
-  return {
-    overallScore: Math.min(25, Math.max(0, score)),
-    totalEpisodes: episodes.length,
-    debriefWithin24hRate,
-    childViewSoughtRate,
-    recoveryPlanRate,
-    lessonsIdentifiedRate,
-  };
-}
-
-/**
- * Evaluates staff preparedness for crisis intervention.
- * Empty (no training) = 0 — no trained staff is non-compliant.
- */
-export function evaluateStaffPreparedness(
+export function evaluateStaffCrisisReadiness(
   training: StaffCrisisTraining[],
-): StaffPreparednessResult {
+): StaffCrisisReadinessResult {
   if (training.length === 0) {
     return {
       overallScore: 0,
       totalStaff: 0,
-      deEscalationTrainedRate: 0,
-      therapeuticCrisisTrainedRate: 0,
-      physicalInterventionCertifiedRate: 0,
-      traumaInformedTrainedRate: 0,
-      postCrisisDebriefTrainedRate: 0,
+      therapeuticApproachRate: 0,
+      deescalationRate: 0,
+      physicalInterventionRate: 0,
+      postIncidentSupportRate: 0,
+      recordKeepingRate: 0,
+      bodyMappingRate: 0,
     };
   }
 
-  let deEscalation = 0;
-  let therapeuticCrisis = 0;
-  let physicalIntervention = 0;
-  let traumaInformed = 0;
-  let postCrisisDebrief = 0;
+  let therapeutic = 0;
+  let deescalation = 0;
+  let physical = 0;
+  let postIncident = 0;
+  let recordKeeping = 0;
+  let bodyMapping = 0;
 
   for (const t of training) {
-    if (t.deEscalationTrained) deEscalation++;
-    if (t.therapeuticCrisisTrained) therapeuticCrisis++;
-    if (t.physicalInterventionCertified) physicalIntervention++;
-    if (t.traumaInformedTrained) traumaInformed++;
-    if (t.postCrisisDebriefTrained) postCrisisDebrief++;
+    if (t.therapeuticApproach) therapeutic++;
+    if (t.deescalation) deescalation++;
+    if (t.physicalIntervention) physical++;
+    if (t.postIncidentSupport) postIncident++;
+    if (t.recordKeeping) recordKeeping++;
+    if (t.bodyMapping) bodyMapping++;
   }
 
-  const deEscalationTrainedRate = pct(deEscalation, training.length);
-  const therapeuticCrisisTrainedRate = pct(therapeuticCrisis, training.length);
-  const physicalInterventionCertifiedRate = pct(physicalIntervention, training.length);
-  const traumaInformedTrainedRate = pct(traumaInformed, training.length);
-  const postCrisisDebriefTrainedRate = pct(postCrisisDebrief, training.length);
+  const therapeuticApproachRate = pct(therapeutic, training.length);
+  const deescalationRate = pct(deescalation, training.length);
+  const physicalInterventionRate = pct(physical, training.length);
+  const postIncidentSupportRate = pct(postIncident, training.length);
+  const recordKeepingRate = pct(recordKeeping, training.length);
+  const bodyMappingRate = pct(bodyMapping, training.length);
 
-  // Scoring: de-escalation trained (0-6), therapeutic crisis (0-6),
-  // physical intervention certified (0-5), trauma informed (0-4),
-  // post-crisis debrief (0-4)
   let score = 0;
-  score += Math.round((deEscalationTrainedRate / 100) * 6);
-  score += Math.round((therapeuticCrisisTrainedRate / 100) * 6);
-  score += Math.round((physicalInterventionCertifiedRate / 100) * 5);
-  score += Math.round((traumaInformedTrainedRate / 100) * 4);
-  score += Math.round((postCrisisDebriefTrainedRate / 100) * 4);
+  score += Math.round((therapeuticApproachRate / 100) * 5);
+  score += Math.round((deescalationRate / 100) * 5);
+  score += Math.round((physicalInterventionRate / 100) * 5);
+  score += Math.round((postIncidentSupportRate / 100) * 4);
+  score += Math.round((recordKeepingRate / 100) * 3);
+  score += Math.round((bodyMappingRate / 100) * 3);
 
   return {
     overallScore: Math.min(25, Math.max(0, score)),
     totalStaff: training.length,
-    deEscalationTrainedRate,
-    therapeuticCrisisTrainedRate,
-    physicalInterventionCertifiedRate,
-    traumaInformedTrainedRate,
-    postCrisisDebriefTrainedRate,
+    therapeuticApproachRate,
+    deescalationRate,
+    physicalInterventionRate,
+    postIncidentSupportRate,
+    recordKeepingRate,
+    bodyMappingRate,
   };
 }
 
-// -- Child Profiles -----------------------------------------------------------
+// -- Child Crisis Profiles -----------------------------------------------------
 
+/**
+ * Builds per-child crisis profiles from incident data.
+ * Each child: childId, childName, totalIncidents, physicalInterventions,
+ * deescalationSuccessRate, debriefRate, overallScore (0-10).
+ */
 export function buildChildCrisisProfiles(
-  episodes: CrisisEpisode[],
-  plans: CrisisPreventionPlan[],
+  incidents: CrisisIncident[],
 ): ChildCrisisProfile[] {
-  const childIds = new Set<string>();
-  const childNames = new Map<string, string>();
+  const childMap = new Map<
+    string,
+    { childName: string; incidents: CrisisIncident[] }
+  >();
 
-  for (const ep of episodes) {
-    childIds.add(ep.childId);
-    childNames.set(ep.childId, ep.childName);
+  for (const inc of incidents) {
+    const existing = childMap.get(inc.childId);
+    if (existing) {
+      existing.incidents.push(inc);
+    } else {
+      childMap.set(inc.childId, { childName: inc.childName, incidents: [inc] });
+    }
   }
-  for (const p of plans) {
-    childIds.add(p.childId);
-    childNames.set(p.childId, p.childName);
-  }
 
-  return Array.from(childIds).map((childId) => {
-    const childEpisodes = episodes.filter((ep) => ep.childId === childId);
-    const childPlans = plans.filter((p) => p.childId === childId);
-    const hasPlan = childPlans.length > 0;
+  return Array.from(childMap.entries()).map(([childId, data]) => {
+    const childIncidents = data.incidents;
+    const totalIncidents = childIncidents.length;
 
-    const fullyResolved = childEpisodes.filter(
-      (ep) => ep.deEscalationOutcome === "fully_resolved",
+    const physicalInterventions = childIncidents.filter(
+      (i) => i.physicalInterventionUsed,
     ).length;
-    const deEscalationSuccessRate = pct(fullyResolved, childEpisodes.length);
 
-    const debriefed = childEpisodes.filter(
-      (ep) => ep.debriefStatus === "completed_within_24h" || ep.debriefStatus === "completed_late",
+    const deescSuccessful = childIncidents.filter(
+      (i) =>
+        i.deescalationOutcome === "successful" ||
+        i.deescalationOutcome === "partially_successful",
     ).length;
-    const debriefCompletionRate = pct(debriefed, childEpisodes.length);
+    const deescalationSuccessRate = pct(deescSuccessful, totalIncidents);
+
+    const debriefed = childIncidents.filter(
+      (i) => i.childDebrief,
+    ).length;
+    const debriefRate = pct(debriefed, totalIncidents);
 
     // Score 0-10
     let score = 0;
 
-    // Episode count — fewer crises is better (0-3)
-    if (childEpisodes.length === 0) score += 3;
-    else if (childEpisodes.length <= 1) score += 2;
-    else if (childEpisodes.length <= 3) score += 1;
+    // Fewer incidents is better (0-3)
+    if (totalIncidents === 0) score += 3;
+    else if (totalIncidents <= 1) score += 3;
+    else if (totalIncidents <= 3) score += 2;
+    else if (totalIncidents <= 5) score += 1;
 
-    // De-escalation success (0-3)
-    if (childEpisodes.length === 0) score += 3;
-    else score += Math.round((deEscalationSuccessRate / 100) * 3);
+    // Low physical intervention rate (0-2)
+    const physRate = pct(physicalInterventions, totalIncidents);
+    if (physRate === 0) score += 2;
+    else if (physRate <= 25) score += 1;
 
-    // Debrief quality (0-2)
-    if (childEpisodes.length === 0) score += 2;
-    else score += Math.round((debriefCompletionRate / 100) * 2);
+    // De-escalation success rate (0-3)
+    score += Math.round((deescalationSuccessRate / 100) * 3);
 
-    // Plan status (0-2)
-    if (hasPlan) {
-      score += 1;
-      if (childPlans.some((p) => p.reviewCurrent)) score += 1;
-    }
+    // Debrief rate (0-2)
+    score += Math.round((debriefRate / 100) * 2);
 
     return {
       childId,
-      childName: childNames.get(childId) || "Unknown",
-      episodeCount: childEpisodes.length,
-      deEscalationSuccessRate,
-      debriefCompletionRate,
-      hasPlan,
-      overallScore: Math.min(10, score),
+      childName: data.childName,
+      totalIncidents,
+      physicalInterventions,
+      deescalationSuccessRate,
+      debriefRate,
+      overallScore: Math.min(10, Math.max(0, score)),
     };
   });
 }
 
-// -- Main Function ------------------------------------------------------------
+// -- Main Orchestrator ---------------------------------------------------------
 
 export function generateTherapeuticCrisisInterventionIntelligence(
-  episodes: CrisisEpisode[],
-  plans: CrisisPreventionPlan[],
+  incidents: CrisisIncident[],
+  policy: CrisisPolicy | null,
   training: StaffCrisisTraining[],
-  reviews: PostCrisisReview[],
   homeId: string,
   periodStart: string,
   periodEnd: string,
 ): TherapeuticCrisisInterventionIntelligence {
-  // Collect unique child IDs from episodes and plans
-  const allChildIds: string[] = [];
-  for (const ep of episodes) allChildIds.push(ep.childId);
-  for (const p of plans) allChildIds.push(p.childId);
-  const uniqueChildIds = Array.from(new Set(allChildIds));
-
-  const deEscalationEffectiveness = evaluateDeEscalationEffectiveness(episodes);
-  const crisisPlanning = evaluateCrisisPlanning(plans, uniqueChildIds);
-  const postCrisisResponse = evaluatePostCrisisResponse(episodes, reviews);
-  const staffPreparedness = evaluateStaffPreparedness(training);
+  const deescalationEffectiveness = evaluateDeescalationEffectiveness(incidents);
+  const postIncidentPractice = evaluatePostIncidentPractice(incidents);
+  const crisisPolicy = evaluateCrisisPolicy(policy);
+  const staffCrisisReadiness = evaluateStaffCrisisReadiness(training);
 
   const rawScore =
-    deEscalationEffectiveness.overallScore +
-    crisisPlanning.overallScore +
-    postCrisisResponse.overallScore +
-    staffPreparedness.overallScore;
+    deescalationEffectiveness.overallScore +
+    postIncidentPractice.overallScore +
+    crisisPolicy.overallScore +
+    staffCrisisReadiness.overallScore;
 
   const overallScore = Math.min(100, Math.max(0, rawScore));
   const rating = getRating(overallScore);
 
-  const childProfiles = buildChildCrisisProfiles(episodes, plans);
+  const childProfiles = buildChildCrisisProfiles(incidents);
 
   // -- Strengths --
   const strengths: string[] = [];
-  if (episodes.length === 0)
-    strengths.push("No crisis episodes recorded in period — excellent preventative practice");
-  if (episodes.length > 0 && deEscalationEffectiveness.deEscalationAttemptedRate === 100)
-    strengths.push("De-escalation attempted in 100% of crisis episodes");
-  if (episodes.length > 0 && deEscalationEffectiveness.fullyResolvedRate >= 75)
-    strengths.push("High de-escalation success — " + deEscalationEffectiveness.fullyResolvedRate + "% of episodes fully resolved");
-  if (episodes.length > 0 && deEscalationEffectiveness.physicalInterventionRate === 0)
-    strengths.push("No physical interventions used — therapeutic approaches consistently applied");
-  if (plans.length > 0 && crisisPlanning.plansPerChildRate === 100)
-    strengths.push("Crisis prevention plans in place for all children");
-  if (plans.length > 0 && crisisPlanning.triggersIdentifiedRate === 100)
-    strengths.push("Triggers identified in all crisis prevention plans");
-  if (plans.length > 0 && crisisPlanning.reviewCurrentRate === 100)
-    strengths.push("All crisis prevention plans are current and reviewed");
-  if (episodes.length > 0 && postCrisisResponse.debriefWithin24hRate === 100)
-    strengths.push("Post-crisis debriefs completed within 24 hours for all episodes");
-  if (episodes.length > 0 && postCrisisResponse.childViewSoughtRate === 100)
-    strengths.push("Child's views sought after every crisis episode");
-  if (training.length > 0 && staffPreparedness.deEscalationTrainedRate === 100)
-    strengths.push("All staff trained in de-escalation techniques");
-  if (training.length > 0 && staffPreparedness.traumaInformedTrainedRate === 100)
-    strengths.push("All staff trained in trauma-informed care");
+  if (incidents.length === 0) {
+    strengths.push(
+      "No crisis incidents recorded in period — excellent preventative practice",
+    );
+  }
+  if (
+    incidents.length > 0 &&
+    deescalationEffectiveness.deescalationAttemptRate === 100
+  ) {
+    strengths.push(
+      "De-escalation attempted in 100% of crisis incidents",
+    );
+  }
+  if (
+    incidents.length > 0 &&
+    deescalationEffectiveness.deescalationSuccessRate >= 75
+  ) {
+    strengths.push(
+      "High de-escalation success rate — " +
+        deescalationEffectiveness.deescalationSuccessRate +
+        "% resolved without escalation",
+    );
+  }
+  if (
+    incidents.length > 0 &&
+    deescalationEffectiveness.physicalInterventionRate === 0
+  ) {
+    strengths.push(
+      "No physical interventions used — therapeutic approaches consistently applied",
+    );
+  }
+  if (incidents.length > 0 && postIncidentPractice.childDebriefRate === 100) {
+    strengths.push(
+      "Child debrief completed after every incident",
+    );
+  }
+  if (incidents.length > 0 && postIncidentPractice.staffDebriefRate === 100) {
+    strengths.push(
+      "Staff debrief completed after every incident",
+    );
+  }
+  if (incidents.length > 0 && postIncidentPractice.timelyRecordingRate === 100) {
+    strengths.push(
+      "All incidents recorded in a timely manner",
+    );
+  }
+  if (policy !== null && crisisPolicy.overallScore === 25) {
+    strengths.push(
+      "Comprehensive crisis policy in place covering all required areas",
+    );
+  }
+  if (training.length > 0 && staffCrisisReadiness.deescalationRate === 100) {
+    strengths.push(
+      "All staff trained in de-escalation techniques",
+    );
+  }
+  if (
+    training.length > 0 &&
+    staffCrisisReadiness.therapeuticApproachRate === 100
+  ) {
+    strengths.push(
+      "All staff trained in therapeutic approaches",
+    );
+  }
 
   // -- Areas for Improvement --
   const areasForImprovement: string[] = [];
-  if (episodes.length > 0 && deEscalationEffectiveness.deEscalationAttemptedRate < 100)
-    areasForImprovement.push("De-escalation not attempted in " + (100 - deEscalationEffectiveness.deEscalationAttemptedRate) + "% of episodes — must be first response");
-  if (episodes.length > 0 && deEscalationEffectiveness.physicalInterventionRate > 30)
-    areasForImprovement.push("Physical intervention rate at " + deEscalationEffectiveness.physicalInterventionRate + "% — review therapeutic alternatives");
-  if (plans.length === 0)
-    areasForImprovement.push("No crisis prevention plans in place — all children should have individualised plans");
-  if (plans.length > 0 && crisisPlanning.plansPerChildRate < 100)
-    areasForImprovement.push("Crisis prevention plans missing for " + (100 - crisisPlanning.plansPerChildRate) + "% of children");
-  if (plans.length > 0 && crisisPlanning.reviewCurrentRate < 80)
-    areasForImprovement.push("Only " + crisisPlanning.reviewCurrentRate + "% of crisis prevention plans are current — reviews needed");
-  if (episodes.length > 0 && postCrisisResponse.debriefWithin24hRate < 80)
-    areasForImprovement.push("Debrief within 24 hours achieved in only " + postCrisisResponse.debriefWithin24hRate + "% of episodes — target 100%");
-  if (episodes.length > 0 && postCrisisResponse.childViewSoughtRate < 80)
-    areasForImprovement.push("Child views sought in only " + postCrisisResponse.childViewSoughtRate + "% of episodes — target 100%");
-  if (training.length === 0)
-    areasForImprovement.push("No staff crisis training records — all staff must be trained");
-  if (training.length > 0 && staffPreparedness.deEscalationTrainedRate < 100)
-    areasForImprovement.push("Only " + staffPreparedness.deEscalationTrainedRate + "% of staff trained in de-escalation — all staff require this training");
-  if (training.length > 0 && staffPreparedness.traumaInformedTrainedRate < 75)
-    areasForImprovement.push("Trauma-informed training completed by only " + staffPreparedness.traumaInformedTrainedRate + "% of staff");
+  if (
+    incidents.length > 0 &&
+    deescalationEffectiveness.deescalationAttemptRate < 100
+  ) {
+    areasForImprovement.push(
+      "De-escalation not attempted in " +
+        (100 - deescalationEffectiveness.deescalationAttemptRate) +
+        "% of incidents — must be first response",
+    );
+  }
+  if (
+    incidents.length > 0 &&
+    deescalationEffectiveness.physicalInterventionRate > 30
+  ) {
+    areasForImprovement.push(
+      "Physical intervention rate at " +
+        deescalationEffectiveness.physicalInterventionRate +
+        "% — review therapeutic alternatives",
+    );
+  }
+  if (policy === null) {
+    areasForImprovement.push(
+      "No crisis intervention policy in place — statutory requirement",
+    );
+  }
+  if (
+    policy !== null &&
+    !policy.therapeuticApproachDocumented
+  ) {
+    areasForImprovement.push(
+      "Therapeutic approach not documented in crisis policy",
+    );
+  }
+  if (
+    policy !== null &&
+    !policy.deescalationProtocol
+  ) {
+    areasForImprovement.push(
+      "De-escalation protocol missing from crisis policy",
+    );
+  }
+  if (incidents.length > 0 && postIncidentPractice.childDebriefRate < 80) {
+    areasForImprovement.push(
+      "Child debrief rate at " +
+        postIncidentPractice.childDebriefRate +
+        "% — target 100%",
+    );
+  }
+  if (incidents.length > 0 && postIncidentPractice.staffDebriefRate < 80) {
+    areasForImprovement.push(
+      "Staff debrief rate at " +
+        postIncidentPractice.staffDebriefRate +
+        "% — target 100%",
+    );
+  }
+  if (training.length === 0) {
+    areasForImprovement.push(
+      "No staff crisis training records — all staff must be trained",
+    );
+  }
+  if (training.length > 0 && staffCrisisReadiness.deescalationRate < 100) {
+    areasForImprovement.push(
+      "Only " +
+        staffCrisisReadiness.deescalationRate +
+        "% of staff trained in de-escalation — all staff require this training",
+    );
+  }
+  if (
+    training.length > 0 &&
+    staffCrisisReadiness.therapeuticApproachRate < 75
+  ) {
+    areasForImprovement.push(
+      "Therapeutic approach training completed by only " +
+        staffCrisisReadiness.therapeuticApproachRate +
+        "% of staff",
+    );
+  }
 
   // -- Actions --
   const actions: string[] = [];
-  const physicalEpisodes = episodes.filter((ep) => ep.physicalInterventionUsed);
-  const notDebriefed = episodes.filter((ep) => ep.debriefStatus === "not_completed");
-  const criticalEpisodes = episodes.filter((ep) => ep.crisisLevel === "critical");
+  const criticalIncidents = incidents.filter(
+    (i) => i.severity === "critical",
+  );
+  const physicalIncidents = incidents.filter(
+    (i) => i.physicalInterventionUsed,
+  );
+  const unjustifiedPhysical = physicalIncidents.filter(
+    (i) => !i.physicalInterventionJustified,
+  );
+  const noChildDebrief = incidents.filter((i) => !i.childDebrief);
 
-  if (criticalEpisodes.length > 0)
-    actions.push("URGENT: " + criticalEpisodes.length + " critical-level crisis episode(s) recorded — immediate management review required");
-  if (notDebriefed.length > 0)
-    actions.push("URGENT: " + notDebriefed.length + " crisis episode(s) without debrief — complete within 24 hours as per regulation");
-  if (physicalEpisodes.length > 0 && deEscalationEffectiveness.physicalInterventionRate > 50)
-    actions.push("URGENT: Physical intervention used in " + deEscalationEffectiveness.physicalInterventionRate + "% of episodes — review restraint reduction strategy");
-  if (plans.length === 0 && uniqueChildIds.length > 0)
-    actions.push("Create crisis prevention plans for all children — statutory requirement under CHR 2015 Reg 12");
-  if (plans.length > 0 && crisisPlanning.staffAwarenessRate < 100)
-    actions.push("Ensure all staff are aware of crisis prevention plans — currently " + crisisPlanning.staffAwarenessRate + "% awareness");
-  if (training.length === 0)
-    actions.push("URGENT: Arrange crisis intervention training for all staff immediately");
-  if (training.length > 0 && staffPreparedness.physicalInterventionCertifiedRate < 100)
-    actions.push("Ensure all staff are certified in physical intervention techniques — currently " + staffPreparedness.physicalInterventionCertifiedRate + "%");
-  if (episodes.length > 0 && postCrisisResponse.recoveryPlanRate < 80)
-    actions.push("Review recovery plan status — only " + postCrisisResponse.recoveryPlanRate + "% of episodes have recovery plans in place or in progress");
+  if (criticalIncidents.length > 0) {
+    actions.push(
+      "URGENT: " +
+        criticalIncidents.length +
+        " critical-severity incident(s) recorded — immediate management review required",
+    );
+  }
+  if (unjustifiedPhysical.length > 0) {
+    actions.push(
+      "URGENT: " +
+        unjustifiedPhysical.length +
+        " physical intervention(s) not justified — safeguarding review needed",
+    );
+  }
+  if (noChildDebrief.length > 0) {
+    actions.push(
+      "URGENT: " +
+        noChildDebrief.length +
+        " incident(s) without child debrief — complete as per post-incident protocol",
+    );
+  }
+  if (
+    physicalIncidents.length > 0 &&
+    deescalationEffectiveness.physicalInterventionRate > 50
+  ) {
+    actions.push(
+      "URGENT: Physical intervention used in " +
+        deescalationEffectiveness.physicalInterventionRate +
+        "% of incidents — review restraint reduction strategy",
+    );
+  }
+  if (policy === null) {
+    actions.push(
+      "Create crisis intervention policy — statutory requirement under CHR 2015 Reg 19",
+    );
+  }
+  if (
+    policy !== null &&
+    !policy.reviewSchedule
+  ) {
+    actions.push(
+      "Establish regular review schedule for crisis intervention policy",
+    );
+  }
+  if (training.length === 0) {
+    actions.push(
+      "URGENT: Arrange crisis intervention training for all staff immediately",
+    );
+  }
+  if (
+    training.length > 0 &&
+    staffCrisisReadiness.physicalInterventionRate < 100
+  ) {
+    actions.push(
+      "Ensure all staff are trained in physical intervention techniques — currently " +
+        staffCrisisReadiness.physicalInterventionRate +
+        "%",
+    );
+  }
+  if (
+    training.length > 0 &&
+    staffCrisisReadiness.bodyMappingRate < 100
+  ) {
+    actions.push(
+      "Ensure all staff are trained in body mapping — currently " +
+        staffCrisisReadiness.bodyMappingRate +
+        "%",
+    );
+  }
 
   const regulatoryLinks: string[] = [
-    "CHR 2015, Reg 12 — The protection of children standard",
-    "CHR 2015, Reg 19 — Behaviour management policies and records",
-    "CHR 2015, Reg 20 — Restraint and deprivation of liberty",
+    "CHR 2015 Reg 12 — The protection of children standard",
+    "CHR 2015 Reg 19 — Behaviour management policies and records",
+    "CHR 2015 Reg 20 — Restraint and deprivation of liberty",
     "SCCIF — Overall experiences and progress of children and young people",
-    "Reducing the Need for Restraint and Restrictive Intervention (DfE) — Guidance on minimising use of force",
-    "UNCRC Article 19 — Protection from all forms of violence and maltreatment",
-    "UNCRC Article 37 — Protection from torture, cruel treatment and deprivation of liberty",
+    "Children Act 1989 — Welfare of the child",
+    "Reducing the Need for Restraint and Restrictive Intervention (2019)",
+    "NMS 12 — Promoting positive behaviour and relationships",
   ];
 
   return {
@@ -668,10 +846,10 @@ export function generateTherapeuticCrisisInterventionIntelligence(
     periodEnd,
     overallScore,
     rating,
-    deEscalationEffectiveness,
-    crisisPlanning,
-    postCrisisResponse,
-    staffPreparedness,
+    deescalationEffectiveness,
+    postIncidentPractice,
+    crisisPolicy,
+    staffCrisisReadiness,
     childProfiles,
     strengths,
     areasForImprovement,

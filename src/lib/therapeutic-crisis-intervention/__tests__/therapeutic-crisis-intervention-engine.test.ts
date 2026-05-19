@@ -1,94 +1,75 @@
 import { describe, it, expect } from "vitest";
 import {
   generateTherapeuticCrisisInterventionIntelligence,
-  evaluateDeEscalationEffectiveness,
-  evaluateCrisisPlanning,
-  evaluatePostCrisisResponse,
-  evaluateStaffPreparedness,
+  evaluateDeescalationEffectiveness,
+  evaluatePostIncidentPractice,
+  evaluateCrisisPolicy,
+  evaluateStaffCrisisReadiness,
   buildChildCrisisProfiles,
   pct,
   getRating,
-  getCrisisLevelLabel,
   getInterventionTypeLabel,
-  getDeEscalationOutcomeLabel,
-  getDebriefStatusLabel,
-  getRecoveryPlanStatusLabel,
+  getIncidentSeverityLabel,
+  getDeescalationOutcomeLabel,
   getRatingLabel,
 } from "../therapeutic-crisis-intervention-engine";
 import type {
-  CrisisEpisode,
-  CrisisPreventionPlan,
+  CrisisIncident,
+  CrisisPolicy,
   StaffCrisisTraining,
-  PostCrisisReview,
 } from "../therapeutic-crisis-intervention-engine";
 
-// -- Test Helpers -------------------------------------------------------------
+// -- Factory Functions --------------------------------------------------------
 
-function mkEpisode(overrides: Partial<CrisisEpisode> = {}): CrisisEpisode {
+function makeIncident(overrides: Partial<CrisisIncident> = {}): CrisisIncident {
   return {
-    id: "ep-1",
+    id: "inc-1",
     childId: "child-1",
     childName: "Alex",
-    date: "2026-04-15",
-    time: "14:30",
-    crisisLevel: "low",
-    trigger: "Frustration with homework",
+    incidentDate: "2026-04-15",
     interventionType: "verbal_de_escalation",
-    deEscalationAttempted: true,
-    deEscalationOutcome: "fully_resolved",
-    duration: 15,
-    staffInvolved: ["Sarah Johnson"],
+    severity: "low",
+    deescalationAttempted: true,
+    deescalationOutcome: "successful",
     physicalInterventionUsed: false,
-    debriefStatus: "completed_within_24h",
-    childViewSought: true,
-    childViewRecorded: true,
-    recoveryPlanStatus: "in_place",
+    physicalInterventionJustified: false,
+    physicalInterventionDuration: null,
+    childDebrief: true,
+    staffDebrief: true,
+    bodyMapCompleted: false,
+    parentNotified: true,
+    regulatorNotified: false,
+    lessonsLearned: true,
+    recordedTimely: true,
     ...overrides,
   };
 }
 
-function mkPlan(overrides: Partial<CrisisPreventionPlan> = {}): CrisisPreventionPlan {
+function makePolicy(overrides: Partial<CrisisPolicy> = {}): CrisisPolicy {
   return {
-    id: "plan-1",
-    childId: "child-1",
-    childName: "Alex",
-    planDate: "2026-01-15",
-    triggersIdentified: true,
-    earlyWarningSignsDocumented: true,
-    preferredCopingStrategies: ["Deep breathing", "Quiet space"],
-    staffAwareOfPlan: true,
-    lastReviewDate: "2026-04-01",
-    reviewCurrent: true,
+    id: "policy-1",
+    therapeuticApproachDocumented: true,
+    deescalationProtocol: true,
+    physicalInterventionPolicy: true,
+    postIncidentProcess: true,
+    bodyMapRequirement: true,
+    notificationProtocol: true,
+    reviewSchedule: true,
     ...overrides,
   };
 }
 
-function mkTraining(overrides: Partial<StaffCrisisTraining> = {}): StaffCrisisTraining {
+function makeTraining(overrides: Partial<StaffCrisisTraining> = {}): StaffCrisisTraining {
   return {
     id: "tr-1",
     staffId: "staff-1",
     staffName: "Sarah Johnson",
-    deEscalationTrained: true,
-    therapeuticCrisisTrained: true,
-    physicalInterventionCertified: true,
-    traumaInformedTrained: true,
-    postCrisisDebriefTrained: true,
-    ...overrides,
-  };
-}
-
-function mkReview(overrides: Partial<PostCrisisReview> = {}): PostCrisisReview {
-  return {
-    id: "rev-1",
-    episodeId: "ep-1",
-    childId: "child-1",
-    childName: "Alex",
-    reviewDate: "2026-04-16",
-    lessonsIdentified: true,
-    planUpdated: true,
-    childParticipated: true,
-    parentCarerNotified: true,
-    managementInformed: true,
+    therapeuticApproach: true,
+    deescalation: true,
+    physicalIntervention: true,
+    postIncidentSupport: true,
+    recordKeeping: true,
+    bodyMapping: true,
     ...overrides,
   };
 }
@@ -98,530 +79,692 @@ function mkReview(overrides: Partial<PostCrisisReview> = {}): PostCrisisReview {
 describe("pct", () => {
   it("returns 0 for 0/0", () => expect(pct(0, 0)).toBe(0));
   it("calculates correctly", () => expect(pct(3, 4)).toBe(75));
-  it("rounds", () => expect(pct(1, 3)).toBe(33));
-  it("full", () => expect(pct(5, 5)).toBe(100));
-  it("handles 0 numerator", () => expect(pct(0, 10)).toBe(0));
+  it("rounds to nearest integer", () => expect(pct(1, 3)).toBe(33));
+  it("returns 100 for equal values", () => expect(pct(5, 5)).toBe(100));
+  it("returns 0 for 0 numerator", () => expect(pct(0, 10)).toBe(0));
+  it("handles large numbers", () => expect(pct(999, 1000)).toBe(100));
+  it("rounds 50.5 up", () => expect(pct(1, 2)).toBe(50));
 });
 
 // -- getRating ----------------------------------------------------------------
 
 describe("getRating", () => {
-  it("outstanding >= 80", () => expect(getRating(80)).toBe("outstanding"));
+  it("outstanding at exactly 80", () => expect(getRating(80)).toBe("outstanding"));
   it("outstanding at 100", () => expect(getRating(100)).toBe("outstanding"));
-  it("good >= 60", () => expect(getRating(60)).toBe("good"));
+  it("outstanding at 95", () => expect(getRating(95)).toBe("outstanding"));
+  it("good at exactly 60", () => expect(getRating(60)).toBe("good"));
   it("good at 79", () => expect(getRating(79)).toBe("good"));
-  it("requires_improvement >= 40", () => expect(getRating(40)).toBe("requires_improvement"));
+  it("requires_improvement at exactly 40", () => expect(getRating(40)).toBe("requires_improvement"));
   it("requires_improvement at 59", () => expect(getRating(59)).toBe("requires_improvement"));
-  it("inadequate < 40", () => expect(getRating(39)).toBe("inadequate"));
+  it("inadequate at 39", () => expect(getRating(39)).toBe("inadequate"));
   it("inadequate at 0", () => expect(getRating(0)).toBe("inadequate"));
 });
 
 // -- Label functions ----------------------------------------------------------
 
-describe("label functions", () => {
-  it("crisis level labels", () => {
-    expect(getCrisisLevelLabel("low")).toBe("Low");
-    expect(getCrisisLevelLabel("medium")).toBe("Medium");
-    expect(getCrisisLevelLabel("high")).toBe("High");
-    expect(getCrisisLevelLabel("critical")).toBe("Critical");
-  });
-  it("intervention type labels", () => {
-    expect(getInterventionTypeLabel("verbal_de_escalation")).toBe("Verbal De-escalation");
-    expect(getInterventionTypeLabel("therapeutic_hold")).toBe("Therapeutic Hold");
-    expect(getInterventionTypeLabel("police_called")).toBe("Police Called");
-    expect(getInterventionTypeLabel("distraction")).toBe("Distraction");
-    expect(getInterventionTypeLabel("environmental_change")).toBe("Environmental Change");
-    expect(getInterventionTypeLabel("physical_intervention")).toBe("Physical Intervention");
-    expect(getInterventionTypeLabel("medical_emergency")).toBe("Medical Emergency");
-  });
-  it("de-escalation outcome labels", () => {
-    expect(getDeEscalationOutcomeLabel("fully_resolved")).toBe("Fully Resolved");
-    expect(getDeEscalationOutcomeLabel("partially_resolved")).toBe("Partially Resolved");
-    expect(getDeEscalationOutcomeLabel("escalated")).toBe("Escalated");
-    expect(getDeEscalationOutcomeLabel("required_restraint")).toBe("Required Restraint");
-  });
-  it("debrief status labels", () => {
-    expect(getDebriefStatusLabel("completed_within_24h")).toBe("Completed Within 24h");
-    expect(getDebriefStatusLabel("completed_late")).toBe("Completed Late");
-    expect(getDebriefStatusLabel("not_completed")).toBe("Not Completed");
-  });
-  it("recovery plan status labels", () => {
-    expect(getRecoveryPlanStatusLabel("in_place")).toBe("In Place");
-    expect(getRecoveryPlanStatusLabel("in_progress")).toBe("In Progress");
-    expect(getRecoveryPlanStatusLabel("not_started")).toBe("Not Started");
-    expect(getRecoveryPlanStatusLabel("not_applicable")).toBe("Not Applicable");
-  });
-  it("rating labels", () => {
-    expect(getRatingLabel("outstanding")).toBe("Outstanding");
-    expect(getRatingLabel("good")).toBe("Good");
-    expect(getRatingLabel("requires_improvement")).toBe("Requires Improvement");
-    expect(getRatingLabel("inadequate")).toBe("Inadequate");
-  });
+describe("getInterventionTypeLabel", () => {
+  it("verbal_de_escalation", () => expect(getInterventionTypeLabel("verbal_de_escalation")).toBe("Verbal De-escalation"));
+  it("distraction", () => expect(getInterventionTypeLabel("distraction")).toBe("Distraction"));
+  it("planned_ignoring", () => expect(getInterventionTypeLabel("planned_ignoring")).toBe("Planned Ignoring"));
+  it("time_away", () => expect(getInterventionTypeLabel("time_away")).toBe("Time Away"));
+  it("guided_physical", () => expect(getInterventionTypeLabel("guided_physical")).toBe("Guided Physical"));
+  it("restrictive_physical", () => expect(getInterventionTypeLabel("restrictive_physical")).toBe("Restrictive Physical"));
+  it("mechanical_restraint", () => expect(getInterventionTypeLabel("mechanical_restraint")).toBe("Mechanical Restraint"));
+  it("medical_intervention", () => expect(getInterventionTypeLabel("medical_intervention")).toBe("Medical Intervention"));
 });
 
-// -- evaluateDeEscalationEffectiveness ----------------------------------------
+describe("getIncidentSeverityLabel", () => {
+  it("low", () => expect(getIncidentSeverityLabel("low")).toBe("Low"));
+  it("medium", () => expect(getIncidentSeverityLabel("medium")).toBe("Medium"));
+  it("high", () => expect(getIncidentSeverityLabel("high")).toBe("High"));
+  it("critical", () => expect(getIncidentSeverityLabel("critical")).toBe("Critical"));
+});
 
-describe("evaluateDeEscalationEffectiveness", () => {
-  it("returns 25 for empty episodes (no crises = excellent)", () => {
-    const result = evaluateDeEscalationEffectiveness([]);
+describe("getDeescalationOutcomeLabel", () => {
+  it("successful", () => expect(getDeescalationOutcomeLabel("successful")).toBe("Successful"));
+  it("partially_successful", () => expect(getDeescalationOutcomeLabel("partially_successful")).toBe("Partially Successful"));
+  it("escalated", () => expect(getDeescalationOutcomeLabel("escalated")).toBe("Escalated"));
+  it("physical_intervention_required", () => expect(getDeescalationOutcomeLabel("physical_intervention_required")).toBe("Physical Intervention Required"));
+});
+
+describe("getRatingLabel", () => {
+  it("outstanding", () => expect(getRatingLabel("outstanding")).toBe("Outstanding"));
+  it("good", () => expect(getRatingLabel("good")).toBe("Good"));
+  it("requires_improvement", () => expect(getRatingLabel("requires_improvement")).toBe("Requires Improvement"));
+  it("inadequate", () => expect(getRatingLabel("inadequate")).toBe("Inadequate"));
+});
+
+// -- evaluateDeescalationEffectiveness ----------------------------------------
+
+describe("evaluateDeescalationEffectiveness", () => {
+  it("returns 25 for empty incidents (no crises = ideal)", () => {
+    const result = evaluateDeescalationEffectiveness([]);
     expect(result.overallScore).toBe(25);
-    expect(result.totalEpisodes).toBe(0);
+    expect(result.deescalationAttemptRate).toBe(0);
+    expect(result.deescalationSuccessRate).toBe(0);
+    expect(result.physicalInterventionRate).toBe(0);
   });
 
-  it("scores high for fully resolved short episodes", () => {
-    const eps = [mkEpisode(), mkEpisode({ id: "ep-2" })];
-    const result = evaluateDeEscalationEffectiveness(eps);
+  it("returns zero severity distribution counts for empty incidents", () => {
+    const result = evaluateDeescalationEffectiveness([]);
+    expect(result.severityDistribution).toEqual({ low: 0, medium: 0, high: 0, critical: 0 });
+  });
+
+  it("scores high for fully de-escalated low-severity incidents", () => {
+    const incidents = [makeIncident(), makeIncident({ id: "inc-2" })];
+    const result = evaluateDeescalationEffectiveness(incidents);
     expect(result.overallScore).toBeGreaterThanOrEqual(20);
-    expect(result.deEscalationAttemptedRate).toBe(100);
-    expect(result.fullyResolvedRate).toBe(100);
+    expect(result.deescalationAttemptRate).toBe(100);
+    expect(result.deescalationSuccessRate).toBe(100);
   });
 
-  it("scores low for physical interventions without de-escalation", () => {
-    const eps = [
-      mkEpisode({
-        deEscalationAttempted: false,
-        deEscalationOutcome: "required_restraint",
+  it("scores low for no de-escalation with physical intervention", () => {
+    const result = evaluateDeescalationEffectiveness([
+      makeIncident({
+        deescalationAttempted: false,
+        deescalationOutcome: "physical_intervention_required",
         physicalInterventionUsed: true,
-        duration: 120,
+        severity: "high",
       }),
-    ];
-    const result = evaluateDeEscalationEffectiveness(eps);
+    ]);
     expect(result.overallScore).toBeLessThan(10);
   });
 
-  it("calculates de-escalation attempted rate", () => {
-    const eps = [
-      mkEpisode({ id: "ep-1", deEscalationAttempted: true }),
-      mkEpisode({ id: "ep-2", deEscalationAttempted: false }),
-    ];
-    const result = evaluateDeEscalationEffectiveness(eps);
-    expect(result.deEscalationAttemptedRate).toBe(50);
+  it("calculates de-escalation attempt rate", () => {
+    const result = evaluateDeescalationEffectiveness([
+      makeIncident({ id: "inc-1", deescalationAttempted: true }),
+      makeIncident({ id: "inc-2", deescalationAttempted: false }),
+    ]);
+    expect(result.deescalationAttemptRate).toBe(50);
   });
 
-  it("calculates fully resolved rate", () => {
-    const eps = [
-      mkEpisode({ id: "ep-1", deEscalationOutcome: "fully_resolved" }),
-      mkEpisode({ id: "ep-2", deEscalationOutcome: "partially_resolved" }),
-      mkEpisode({ id: "ep-3", deEscalationOutcome: "escalated" }),
-    ];
-    const result = evaluateDeEscalationEffectiveness(eps);
-    expect(result.fullyResolvedRate).toBe(33);
+  it("calculates de-escalation success rate including partially_successful", () => {
+    const result = evaluateDeescalationEffectiveness([
+      makeIncident({ id: "inc-1", deescalationOutcome: "successful" }),
+      makeIncident({ id: "inc-2", deescalationOutcome: "partially_successful" }),
+      makeIncident({ id: "inc-3", deescalationOutcome: "escalated" }),
+    ]);
+    expect(result.deescalationSuccessRate).toBe(67);
   });
 
   it("calculates physical intervention rate", () => {
-    const eps = [
-      mkEpisode({ id: "ep-1", physicalInterventionUsed: true }),
-      mkEpisode({ id: "ep-2", physicalInterventionUsed: false }),
-    ];
-    const result = evaluateDeEscalationEffectiveness(eps);
+    const result = evaluateDeescalationEffectiveness([
+      makeIncident({ id: "inc-1", physicalInterventionUsed: true }),
+      makeIncident({ id: "inc-2", physicalInterventionUsed: false }),
+    ]);
     expect(result.physicalInterventionRate).toBe(50);
   });
 
   it("gives bonus for zero physical interventions", () => {
-    const noPhysical = evaluateDeEscalationEffectiveness([mkEpisode({ physicalInterventionUsed: false })]);
-    const withPhysical = evaluateDeEscalationEffectiveness([mkEpisode({ physicalInterventionUsed: true })]);
+    const noPhysical = evaluateDeescalationEffectiveness([
+      makeIncident({ physicalInterventionUsed: false }),
+    ]);
+    const withPhysical = evaluateDeescalationEffectiveness([
+      makeIncident({ physicalInterventionUsed: true }),
+    ]);
     expect(noPhysical.overallScore).toBeGreaterThan(withPhysical.overallScore);
   });
 
-  it("calculates average duration", () => {
-    const eps = [
-      mkEpisode({ id: "ep-1", duration: 20 }),
-      mkEpisode({ id: "ep-2", duration: 40 }),
-    ];
-    const result = evaluateDeEscalationEffectiveness(eps);
-    expect(result.averageDuration).toBe(30);
+  it("calculates severity distribution", () => {
+    const result = evaluateDeescalationEffectiveness([
+      makeIncident({ id: "inc-1", severity: "low" }),
+      makeIncident({ id: "inc-2", severity: "medium" }),
+      makeIncident({ id: "inc-3", severity: "high" }),
+      makeIncident({ id: "inc-4", severity: "critical" }),
+    ]);
+    expect(result.severityDistribution).toEqual({ low: 1, medium: 1, high: 1, critical: 1 });
   });
 
-  it("gives higher score for shorter durations", () => {
-    const short = evaluateDeEscalationEffectiveness([mkEpisode({ duration: 10 })]);
-    const long = evaluateDeEscalationEffectiveness([mkEpisode({ duration: 180 })]);
-    expect(short.overallScore).toBeGreaterThan(long.overallScore);
+  it("gives higher severity score for mostly low/medium incidents", () => {
+    const lowSev = evaluateDeescalationEffectiveness([
+      makeIncident({ id: "inc-1", severity: "low" }),
+      makeIncident({ id: "inc-2", severity: "low" }),
+    ]);
+    const highSev = evaluateDeescalationEffectiveness([
+      makeIncident({ id: "inc-1", severity: "critical" }),
+      makeIncident({ id: "inc-2", severity: "critical" }),
+    ]);
+    expect(lowSev.overallScore).toBeGreaterThan(highSev.overallScore);
   });
 
-  it("score capped at 25", () => {
-    const result = evaluateDeEscalationEffectiveness([mkEpisode()]);
+  it("caps score at 25", () => {
+    const result = evaluateDeescalationEffectiveness([makeIncident()]);
     expect(result.overallScore).toBeLessThanOrEqual(25);
   });
 
   it("score minimum is 0", () => {
-    const result = evaluateDeEscalationEffectiveness([
-      mkEpisode({
-        deEscalationAttempted: false,
-        deEscalationOutcome: "required_restraint",
+    const result = evaluateDeescalationEffectiveness([
+      makeIncident({
+        deescalationAttempted: false,
+        deescalationOutcome: "physical_intervention_required",
         physicalInterventionUsed: true,
-        duration: 300,
+        severity: "critical",
       }),
     ]);
     expect(result.overallScore).toBeGreaterThanOrEqual(0);
   });
 
-  it("handles partial physical intervention rate for bonus tiers", () => {
-    const low = evaluateDeEscalationEffectiveness([
-      mkEpisode({ id: "ep-1", physicalInterventionUsed: false }),
-      mkEpisode({ id: "ep-2", physicalInterventionUsed: false }),
-      mkEpisode({ id: "ep-3", physicalInterventionUsed: false }),
-      mkEpisode({ id: "ep-4", physicalInterventionUsed: false }),
-      mkEpisode({ id: "ep-5", physicalInterventionUsed: true }),
+  it("handles all incidents being escalated", () => {
+    const result = evaluateDeescalationEffectiveness([
+      makeIncident({ id: "inc-1", deescalationOutcome: "escalated" }),
+      makeIncident({ id: "inc-2", deescalationOutcome: "escalated" }),
     ]);
-    expect(low.physicalInterventionRate).toBe(20);
+    expect(result.deescalationSuccessRate).toBe(0);
+  });
+
+  it("handles 100% physical intervention rate", () => {
+    const result = evaluateDeescalationEffectiveness([
+      makeIncident({ id: "inc-1", physicalInterventionUsed: true }),
+      makeIncident({ id: "inc-2", physicalInterventionUsed: true }),
+    ]);
+    expect(result.physicalInterventionRate).toBe(100);
   });
 });
 
-// -- evaluateCrisisPlanning ---------------------------------------------------
+// -- evaluatePostIncidentPractice ---------------------------------------------
 
-describe("evaluateCrisisPlanning", () => {
-  it("returns 0 for empty plans (no plans = bad)", () => {
-    const result = evaluateCrisisPlanning([], []);
-    expect(result.overallScore).toBe(0);
-    expect(result.totalPlans).toBe(0);
+describe("evaluatePostIncidentPractice", () => {
+  it("returns 25 for empty incidents (no incidents to review)", () => {
+    const result = evaluatePostIncidentPractice([]);
+    expect(result.overallScore).toBe(25);
+    expect(result.childDebriefRate).toBe(0);
+    expect(result.staffDebriefRate).toBe(0);
+    expect(result.bodyMapCompletionRate).toBe(0);
+    expect(result.timelyRecordingRate).toBe(0);
+    expect(result.lessonsLearnedRate).toBe(0);
   });
 
-  it("scores high for complete plans for all children", () => {
-    const plans = [
-      mkPlan({ childId: "child-1" }),
-      mkPlan({ id: "plan-2", childId: "child-2", childName: "Jordan" }),
-    ];
-    const result = evaluateCrisisPlanning(plans, ["child-1", "child-2"]);
+  it("scores high for exemplary post-incident handling", () => {
+    const result = evaluatePostIncidentPractice([
+      makeIncident(),
+      makeIncident({ id: "inc-2" }),
+    ]);
     expect(result.overallScore).toBeGreaterThanOrEqual(20);
-    expect(result.plansPerChildRate).toBe(100);
   });
 
-  it("calculates plans per child rate", () => {
-    const plans = [mkPlan({ childId: "child-1" })];
-    const result = evaluateCrisisPlanning(plans, ["child-1", "child-2", "child-3"]);
-    expect(result.plansPerChildRate).toBe(33);
+  it("calculates child debrief rate", () => {
+    const result = evaluatePostIncidentPractice([
+      makeIncident({ id: "inc-1", childDebrief: true }),
+      makeIncident({ id: "inc-2", childDebrief: false }),
+    ]);
+    expect(result.childDebriefRate).toBe(50);
   });
 
-  it("calculates triggers identified rate", () => {
-    const plans = [
-      mkPlan({ id: "plan-1", triggersIdentified: true }),
-      mkPlan({ id: "plan-2", childId: "child-2", triggersIdentified: false }),
-    ];
-    const result = evaluateCrisisPlanning(plans, ["child-1", "child-2"]);
-    expect(result.triggersIdentifiedRate).toBe(50);
+  it("calculates staff debrief rate", () => {
+    const result = evaluatePostIncidentPractice([
+      makeIncident({ id: "inc-1", staffDebrief: true }),
+      makeIncident({ id: "inc-2", staffDebrief: false }),
+    ]);
+    expect(result.staffDebriefRate).toBe(50);
   });
 
-  it("calculates review current rate", () => {
-    const plans = [
-      mkPlan({ id: "plan-1", reviewCurrent: true }),
-      mkPlan({ id: "plan-2", childId: "child-2", reviewCurrent: false }),
-    ];
-    const result = evaluateCrisisPlanning(plans, ["child-1", "child-2"]);
-    expect(result.reviewCurrentRate).toBe(50);
+  it("calculates body map rate only for physical intervention incidents", () => {
+    const result = evaluatePostIncidentPractice([
+      makeIncident({ id: "inc-1", physicalInterventionUsed: true, bodyMapCompleted: true }),
+      makeIncident({ id: "inc-2", physicalInterventionUsed: true, bodyMapCompleted: false }),
+      makeIncident({ id: "inc-3", physicalInterventionUsed: false, bodyMapCompleted: false }),
+    ]);
+    expect(result.bodyMapCompletionRate).toBe(50);
   });
 
-  it("calculates staff awareness rate", () => {
-    const plans = [
-      mkPlan({ id: "plan-1", staffAwareOfPlan: true }),
-      mkPlan({ id: "plan-2", childId: "child-2", staffAwareOfPlan: false }),
-    ];
-    const result = evaluateCrisisPlanning(plans, ["child-1", "child-2"]);
-    expect(result.staffAwarenessRate).toBe(50);
+  it("returns 0 body map rate when no physical incidents but ignoring non-physical", () => {
+    const result = evaluatePostIncidentPractice([
+      makeIncident({ physicalInterventionUsed: false, bodyMapCompleted: false }),
+    ]);
+    expect(result.bodyMapCompletionRate).toBe(0);
   });
 
-  it("scores low when nothing is identified or reviewed", () => {
-    const plans = [
-      mkPlan({
-        triggersIdentified: false,
-        reviewCurrent: false,
-        staffAwareOfPlan: false,
+  it("gives body map bonus when no physical interventions exist", () => {
+    const noPhysical = evaluatePostIncidentPractice([
+      makeIncident({ physicalInterventionUsed: false }),
+    ]);
+    const withFailedBodyMap = evaluatePostIncidentPractice([
+      makeIncident({ physicalInterventionUsed: true, bodyMapCompleted: false }),
+    ]);
+    expect(noPhysical.overallScore).toBeGreaterThan(withFailedBodyMap.overallScore);
+  });
+
+  it("calculates timely recording rate", () => {
+    const result = evaluatePostIncidentPractice([
+      makeIncident({ id: "inc-1", recordedTimely: true }),
+      makeIncident({ id: "inc-2", recordedTimely: false }),
+      makeIncident({ id: "inc-3", recordedTimely: true }),
+    ]);
+    expect(result.timelyRecordingRate).toBe(67);
+  });
+
+  it("calculates lessons learned rate", () => {
+    const result = evaluatePostIncidentPractice([
+      makeIncident({ id: "inc-1", lessonsLearned: true }),
+      makeIncident({ id: "inc-2", lessonsLearned: false }),
+    ]);
+    expect(result.lessonsLearnedRate).toBe(50);
+  });
+
+  it("scores low when nothing is completed", () => {
+    const result = evaluatePostIncidentPractice([
+      makeIncident({
+        childDebrief: false,
+        staffDebrief: false,
+        recordedTimely: false,
+        lessonsLearned: false,
       }),
-    ];
-    const result = evaluateCrisisPlanning(plans, ["child-1"]);
+    ]);
     expect(result.overallScore).toBeLessThan(10);
   });
 
-  it("score capped at 25", () => {
-    const result = evaluateCrisisPlanning([mkPlan()], ["child-1"]);
+  it("caps score at 25", () => {
+    const result = evaluatePostIncidentPractice([makeIncident()]);
     expect(result.overallScore).toBeLessThanOrEqual(25);
   });
 
-  it("handles more children in childIds than have plans", () => {
-    const plans = [mkPlan({ childId: "child-1" })];
-    const result = evaluateCrisisPlanning(plans, ["child-1", "child-2", "child-3"]);
-    expect(result.plansPerChildRate).toBe(33);
-    expect(result.overallScore).toBeLessThan(25);
-  });
-});
-
-// -- evaluatePostCrisisResponse -----------------------------------------------
-
-describe("evaluatePostCrisisResponse", () => {
-  it("returns 25 for empty episodes (no crises = excellent)", () => {
-    const result = evaluatePostCrisisResponse([], []);
-    expect(result.overallScore).toBe(25);
-    expect(result.totalEpisodes).toBe(0);
-  });
-
-  it("scores high for exemplary post-crisis handling", () => {
-    const eps = [mkEpisode(), mkEpisode({ id: "ep-2" })];
-    const revs = [mkReview(), mkReview({ id: "rev-2", episodeId: "ep-2" })];
-    const result = evaluatePostCrisisResponse(eps, revs);
-    expect(result.overallScore).toBeGreaterThanOrEqual(20);
-  });
-
-  it("calculates debrief within 24h rate", () => {
-    const eps = [
-      mkEpisode({ id: "ep-1", debriefStatus: "completed_within_24h" }),
-      mkEpisode({ id: "ep-2", debriefStatus: "completed_late" }),
-      mkEpisode({ id: "ep-3", debriefStatus: "not_completed" }),
-    ];
-    const result = evaluatePostCrisisResponse(eps, []);
-    expect(result.debriefWithin24hRate).toBe(33);
-  });
-
-  it("calculates child view sought rate", () => {
-    const eps = [
-      mkEpisode({ id: "ep-1", childViewSought: true }),
-      mkEpisode({ id: "ep-2", childViewSought: false }),
-    ];
-    const result = evaluatePostCrisisResponse(eps, []);
-    expect(result.childViewSoughtRate).toBe(50);
-  });
-
-  it("calculates recovery plan rate", () => {
-    const eps = [
-      mkEpisode({ id: "ep-1", recoveryPlanStatus: "in_place" }),
-      mkEpisode({ id: "ep-2", recoveryPlanStatus: "in_progress" }),
-      mkEpisode({ id: "ep-3", recoveryPlanStatus: "not_started" }),
-    ];
-    const result = evaluatePostCrisisResponse(eps, []);
-    expect(result.recoveryPlanRate).toBe(67);
-  });
-
-  it("calculates lessons identified rate from reviews", () => {
-    const eps = [mkEpisode()];
-    const revs = [
-      mkReview({ id: "rev-1", lessonsIdentified: true }),
-      mkReview({ id: "rev-2", lessonsIdentified: false }),
-    ];
-    const result = evaluatePostCrisisResponse(eps, revs);
-    expect(result.lessonsIdentifiedRate).toBe(50);
-  });
-
-  it("scores low for no debriefs and no child views", () => {
-    const eps = [
-      mkEpisode({
-        debriefStatus: "not_completed",
-        childViewSought: false,
-        recoveryPlanStatus: "not_started",
+  it("minimum score is 0", () => {
+    const result = evaluatePostIncidentPractice([
+      makeIncident({
+        childDebrief: false,
+        staffDebrief: false,
+        physicalInterventionUsed: true,
+        bodyMapCompleted: false,
+        recordedTimely: false,
+        lessonsLearned: false,
       }),
-    ];
-    const result = evaluatePostCrisisResponse(eps, []);
-    expect(result.overallScore).toBeLessThan(5);
-  });
-
-  it("score capped at 25", () => {
-    const result = evaluatePostCrisisResponse([mkEpisode()], [mkReview()]);
-    expect(result.overallScore).toBeLessThanOrEqual(25);
-  });
-
-  it("handles episodes with no reviews", () => {
-    const eps = [mkEpisode()];
-    const result = evaluatePostCrisisResponse(eps, []);
-    expect(result.lessonsIdentifiedRate).toBe(0);
+    ]);
+    expect(result.overallScore).toBeGreaterThanOrEqual(0);
   });
 });
 
-// -- evaluateStaffPreparedness ------------------------------------------------
+// -- evaluateCrisisPolicy -----------------------------------------------------
 
-describe("evaluateStaffPreparedness", () => {
-  it("returns 0 for empty training (no training = bad)", () => {
-    const result = evaluateStaffPreparedness([]);
+describe("evaluateCrisisPolicy", () => {
+  it("returns 0 for null policy", () => {
+    const result = evaluateCrisisPolicy(null);
+    expect(result.overallScore).toBe(0);
+    expect(result.therapeuticApproachDocumented).toBe(false);
+    expect(result.deescalationProtocol).toBe(false);
+    expect(result.physicalInterventionPolicy).toBe(false);
+    expect(result.postIncidentProcess).toBe(false);
+    expect(result.bodyMapRequirement).toBe(false);
+    expect(result.notificationProtocol).toBe(false);
+    expect(result.reviewSchedule).toBe(false);
+  });
+
+  it("returns 25 for fully complete policy", () => {
+    const result = evaluateCrisisPolicy(makePolicy());
+    expect(result.overallScore).toBe(25);
+  });
+
+  it("scores therapeuticApproachDocumented at 5", () => {
+    const result = evaluateCrisisPolicy(makePolicy({
+      therapeuticApproachDocumented: true,
+      deescalationProtocol: false,
+      physicalInterventionPolicy: false,
+      postIncidentProcess: false,
+      bodyMapRequirement: false,
+      notificationProtocol: false,
+      reviewSchedule: false,
+    }));
+    expect(result.overallScore).toBe(5);
+  });
+
+  it("scores deescalationProtocol at 4", () => {
+    const result = evaluateCrisisPolicy(makePolicy({
+      therapeuticApproachDocumented: false,
+      deescalationProtocol: true,
+      physicalInterventionPolicy: false,
+      postIncidentProcess: false,
+      bodyMapRequirement: false,
+      notificationProtocol: false,
+      reviewSchedule: false,
+    }));
+    expect(result.overallScore).toBe(4);
+  });
+
+  it("scores physicalInterventionPolicy at 4", () => {
+    const result = evaluateCrisisPolicy(makePolicy({
+      therapeuticApproachDocumented: false,
+      deescalationProtocol: false,
+      physicalInterventionPolicy: true,
+      postIncidentProcess: false,
+      bodyMapRequirement: false,
+      notificationProtocol: false,
+      reviewSchedule: false,
+    }));
+    expect(result.overallScore).toBe(4);
+  });
+
+  it("scores postIncidentProcess at 4", () => {
+    const result = evaluateCrisisPolicy(makePolicy({
+      therapeuticApproachDocumented: false,
+      deescalationProtocol: false,
+      physicalInterventionPolicy: false,
+      postIncidentProcess: true,
+      bodyMapRequirement: false,
+      notificationProtocol: false,
+      reviewSchedule: false,
+    }));
+    expect(result.overallScore).toBe(4);
+  });
+
+  it("scores bodyMapRequirement at 3", () => {
+    const result = evaluateCrisisPolicy(makePolicy({
+      therapeuticApproachDocumented: false,
+      deescalationProtocol: false,
+      physicalInterventionPolicy: false,
+      postIncidentProcess: false,
+      bodyMapRequirement: true,
+      notificationProtocol: false,
+      reviewSchedule: false,
+    }));
+    expect(result.overallScore).toBe(3);
+  });
+
+  it("scores notificationProtocol at 3", () => {
+    const result = evaluateCrisisPolicy(makePolicy({
+      therapeuticApproachDocumented: false,
+      deescalationProtocol: false,
+      physicalInterventionPolicy: false,
+      postIncidentProcess: false,
+      bodyMapRequirement: false,
+      notificationProtocol: true,
+      reviewSchedule: false,
+    }));
+    expect(result.overallScore).toBe(3);
+  });
+
+  it("scores reviewSchedule at 2", () => {
+    const result = evaluateCrisisPolicy(makePolicy({
+      therapeuticApproachDocumented: false,
+      deescalationProtocol: false,
+      physicalInterventionPolicy: false,
+      postIncidentProcess: false,
+      bodyMapRequirement: false,
+      notificationProtocol: false,
+      reviewSchedule: true,
+    }));
+    expect(result.overallScore).toBe(2);
+  });
+
+  it("adds up to correct total: 5+4+4+4+3+3+2 = 25", () => {
+    const result = evaluateCrisisPolicy(makePolicy());
+    expect(result.overallScore).toBe(5 + 4 + 4 + 4 + 3 + 3 + 2);
+  });
+
+  it("returns 0 when all fields are false", () => {
+    const result = evaluateCrisisPolicy(makePolicy({
+      therapeuticApproachDocumented: false,
+      deescalationProtocol: false,
+      physicalInterventionPolicy: false,
+      postIncidentProcess: false,
+      bodyMapRequirement: false,
+      notificationProtocol: false,
+      reviewSchedule: false,
+    }));
+    expect(result.overallScore).toBe(0);
+  });
+
+  it("passes through boolean values correctly", () => {
+    const result = evaluateCrisisPolicy(makePolicy({
+      therapeuticApproachDocumented: true,
+      deescalationProtocol: false,
+    }));
+    expect(result.therapeuticApproachDocumented).toBe(true);
+    expect(result.deescalationProtocol).toBe(false);
+  });
+
+  it("caps score at 25", () => {
+    const result = evaluateCrisisPolicy(makePolicy());
+    expect(result.overallScore).toBeLessThanOrEqual(25);
+  });
+});
+
+// -- evaluateStaffCrisisReadiness ---------------------------------------------
+
+describe("evaluateStaffCrisisReadiness", () => {
+  it("returns 0 for empty training", () => {
+    const result = evaluateStaffCrisisReadiness([]);
     expect(result.overallScore).toBe(0);
     expect(result.totalStaff).toBe(0);
+    expect(result.therapeuticApproachRate).toBe(0);
+    expect(result.deescalationRate).toBe(0);
+    expect(result.physicalInterventionRate).toBe(0);
+    expect(result.postIncidentSupportRate).toBe(0);
+    expect(result.recordKeepingRate).toBe(0);
+    expect(result.bodyMappingRate).toBe(0);
   });
 
   it("scores high for fully trained staff", () => {
-    const training = [mkTraining(), mkTraining({ id: "tr-2", staffId: "staff-2" })];
-    const result = evaluateStaffPreparedness(training);
+    const result = evaluateStaffCrisisReadiness([
+      makeTraining(),
+      makeTraining({ id: "tr-2", staffId: "staff-2" }),
+    ]);
     expect(result.overallScore).toBeGreaterThanOrEqual(20);
-    expect(result.deEscalationTrainedRate).toBe(100);
+    expect(result.deescalationRate).toBe(100);
   });
 
-  it("scores low for untrained staff", () => {
-    const training = [
-      mkTraining({
-        deEscalationTrained: false,
-        therapeuticCrisisTrained: false,
-        physicalInterventionCertified: false,
-        traumaInformedTrained: false,
-        postCrisisDebriefTrained: false,
+  it("scores 0 for completely untrained staff", () => {
+    const result = evaluateStaffCrisisReadiness([
+      makeTraining({
+        therapeuticApproach: false,
+        deescalation: false,
+        physicalIntervention: false,
+        postIncidentSupport: false,
+        recordKeeping: false,
+        bodyMapping: false,
       }),
-    ];
-    const result = evaluateStaffPreparedness(training);
+    ]);
     expect(result.overallScore).toBe(0);
   });
 
-  it("calculates de-escalation trained rate", () => {
-    const training = [
-      mkTraining({ id: "tr-1", deEscalationTrained: true }),
-      mkTraining({ id: "tr-2", staffId: "staff-2", deEscalationTrained: false }),
-    ];
-    const result = evaluateStaffPreparedness(training);
-    expect(result.deEscalationTrainedRate).toBe(50);
+  it("calculates therapeutic approach rate", () => {
+    const result = evaluateStaffCrisisReadiness([
+      makeTraining({ id: "tr-1", therapeuticApproach: true }),
+      makeTraining({ id: "tr-2", staffId: "staff-2", therapeuticApproach: false }),
+    ]);
+    expect(result.therapeuticApproachRate).toBe(50);
   });
 
-  it("calculates therapeutic crisis trained rate", () => {
-    const training = [
-      mkTraining({ id: "tr-1", therapeuticCrisisTrained: true }),
-      mkTraining({ id: "tr-2", staffId: "staff-2", therapeuticCrisisTrained: false }),
-    ];
-    const result = evaluateStaffPreparedness(training);
-    expect(result.therapeuticCrisisTrainedRate).toBe(50);
+  it("calculates deescalation rate", () => {
+    const result = evaluateStaffCrisisReadiness([
+      makeTraining({ id: "tr-1", deescalation: true }),
+      makeTraining({ id: "tr-2", staffId: "staff-2", deescalation: false }),
+    ]);
+    expect(result.deescalationRate).toBe(50);
   });
 
-  it("calculates physical intervention certified rate", () => {
-    const training = [
-      mkTraining({ id: "tr-1", physicalInterventionCertified: true }),
-      mkTraining({ id: "tr-2", staffId: "staff-2", physicalInterventionCertified: false }),
-    ];
-    const result = evaluateStaffPreparedness(training);
-    expect(result.physicalInterventionCertifiedRate).toBe(50);
+  it("calculates physical intervention rate", () => {
+    const result = evaluateStaffCrisisReadiness([
+      makeTraining({ id: "tr-1", physicalIntervention: true }),
+      makeTraining({ id: "tr-2", staffId: "staff-2", physicalIntervention: false }),
+    ]);
+    expect(result.physicalInterventionRate).toBe(50);
   });
 
-  it("calculates trauma informed trained rate", () => {
-    const training = [
-      mkTraining({ id: "tr-1", traumaInformedTrained: true }),
-      mkTraining({ id: "tr-2", staffId: "staff-2", traumaInformedTrained: false }),
-    ];
-    const result = evaluateStaffPreparedness(training);
-    expect(result.traumaInformedTrainedRate).toBe(50);
+  it("calculates post-incident support rate", () => {
+    const result = evaluateStaffCrisisReadiness([
+      makeTraining({ id: "tr-1", postIncidentSupport: true }),
+      makeTraining({ id: "tr-2", staffId: "staff-2", postIncidentSupport: false }),
+    ]);
+    expect(result.postIncidentSupportRate).toBe(50);
   });
 
-  it("calculates post-crisis debrief trained rate", () => {
-    const training = [
-      mkTraining({ id: "tr-1", postCrisisDebriefTrained: true }),
-      mkTraining({ id: "tr-2", staffId: "staff-2", postCrisisDebriefTrained: false }),
-    ];
-    const result = evaluateStaffPreparedness(training);
-    expect(result.postCrisisDebriefTrainedRate).toBe(50);
+  it("calculates record keeping rate", () => {
+    const result = evaluateStaffCrisisReadiness([
+      makeTraining({ id: "tr-1", recordKeeping: true }),
+      makeTraining({ id: "tr-2", staffId: "staff-2", recordKeeping: false }),
+    ]);
+    expect(result.recordKeepingRate).toBe(50);
   });
 
-  it("score capped at 25", () => {
-    const result = evaluateStaffPreparedness([mkTraining()]);
+  it("calculates body mapping rate", () => {
+    const result = evaluateStaffCrisisReadiness([
+      makeTraining({ id: "tr-1", bodyMapping: true }),
+      makeTraining({ id: "tr-2", staffId: "staff-2", bodyMapping: false }),
+    ]);
+    expect(result.bodyMappingRate).toBe(50);
+  });
+
+  it("returns correct total staff count", () => {
+    const result = evaluateStaffCrisisReadiness([
+      makeTraining({ id: "tr-1" }),
+      makeTraining({ id: "tr-2", staffId: "staff-2" }),
+      makeTraining({ id: "tr-3", staffId: "staff-3" }),
+    ]);
+    expect(result.totalStaff).toBe(3);
+  });
+
+  it("caps score at 25", () => {
+    const result = evaluateStaffCrisisReadiness([makeTraining()]);
     expect(result.overallScore).toBeLessThanOrEqual(25);
   });
 
   it("handles partial training mix", () => {
-    const training = [
-      mkTraining({ id: "tr-1", staffId: "s1" }),
-      mkTraining({
+    const result = evaluateStaffCrisisReadiness([
+      makeTraining({ id: "tr-1", staffId: "s1" }),
+      makeTraining({
         id: "tr-2",
         staffId: "s2",
-        deEscalationTrained: true,
-        therapeuticCrisisTrained: false,
-        physicalInterventionCertified: false,
-        traumaInformedTrained: true,
-        postCrisisDebriefTrained: false,
+        therapeuticApproach: true,
+        deescalation: false,
+        physicalIntervention: false,
+        postIncidentSupport: true,
+        recordKeeping: false,
+        bodyMapping: true,
       }),
-    ];
-    const result = evaluateStaffPreparedness(training);
-    expect(result.deEscalationTrainedRate).toBe(100);
-    expect(result.therapeuticCrisisTrainedRate).toBe(50);
-    expect(result.physicalInterventionCertifiedRate).toBe(50);
-    expect(result.traumaInformedTrainedRate).toBe(100);
-    expect(result.postCrisisDebriefTrainedRate).toBe(50);
+    ]);
+    expect(result.therapeuticApproachRate).toBe(100);
+    expect(result.deescalationRate).toBe(50);
+    expect(result.physicalInterventionRate).toBe(50);
+    expect(result.postIncidentSupportRate).toBe(100);
+    expect(result.recordKeepingRate).toBe(50);
+    expect(result.bodyMappingRate).toBe(100);
   });
 });
 
 // -- buildChildCrisisProfiles -------------------------------------------------
 
 describe("buildChildCrisisProfiles", () => {
-  it("returns empty for no episodes and no plans", () => {
-    expect(buildChildCrisisProfiles([], [])).toEqual([]);
+  it("returns empty for no incidents", () => {
+    expect(buildChildCrisisProfiles([])).toEqual([]);
   });
 
-  it("groups by child from episodes", () => {
-    const eps = [
-      mkEpisode({ id: "ep-1", childId: "child-1", childName: "Alex" }),
-      mkEpisode({ id: "ep-2", childId: "child-1", childName: "Alex" }),
-      mkEpisode({ id: "ep-3", childId: "child-2", childName: "Jordan" }),
-    ];
-    const profiles = buildChildCrisisProfiles(eps, []);
+  it("groups by child", () => {
+    const profiles = buildChildCrisisProfiles([
+      makeIncident({ id: "inc-1", childId: "child-1", childName: "Alex" }),
+      makeIncident({ id: "inc-2", childId: "child-1", childName: "Alex" }),
+      makeIncident({ id: "inc-3", childId: "child-2", childName: "Jordan" }),
+    ]);
     expect(profiles).toHaveLength(2);
     const alex = profiles.find((p) => p.childId === "child-1");
-    expect(alex!.episodeCount).toBe(2);
+    expect(alex!.totalIncidents).toBe(2);
   });
 
-  it("includes children from plans even without episodes", () => {
-    const plans = [mkPlan({ childId: "child-3", childName: "Morgan" })];
-    const profiles = buildChildCrisisProfiles([], plans);
-    expect(profiles).toHaveLength(1);
-    expect(profiles[0].childName).toBe("Morgan");
-    expect(profiles[0].episodeCount).toBe(0);
+  it("counts physical interventions", () => {
+    const profiles = buildChildCrisisProfiles([
+      makeIncident({ id: "inc-1", physicalInterventionUsed: true }),
+      makeIncident({ id: "inc-2", physicalInterventionUsed: false }),
+    ]);
+    expect(profiles[0].physicalInterventions).toBe(1);
   });
 
   it("calculates de-escalation success rate", () => {
-    const eps = [
-      mkEpisode({ id: "ep-1", deEscalationOutcome: "fully_resolved" }),
-      mkEpisode({ id: "ep-2", deEscalationOutcome: "partially_resolved" }),
-    ];
-    const profiles = buildChildCrisisProfiles(eps, []);
-    expect(profiles[0].deEscalationSuccessRate).toBe(50);
+    const profiles = buildChildCrisisProfiles([
+      makeIncident({ id: "inc-1", deescalationOutcome: "successful" }),
+      makeIncident({ id: "inc-2", deescalationOutcome: "escalated" }),
+    ]);
+    expect(profiles[0].deescalationSuccessRate).toBe(50);
   });
 
-  it("calculates debrief completion rate", () => {
-    const eps = [
-      mkEpisode({ id: "ep-1", debriefStatus: "completed_within_24h" }),
-      mkEpisode({ id: "ep-2", debriefStatus: "not_completed" }),
-    ];
-    const profiles = buildChildCrisisProfiles(eps, []);
-    expect(profiles[0].debriefCompletionRate).toBe(50);
+  it("includes partially_successful in success rate", () => {
+    const profiles = buildChildCrisisProfiles([
+      makeIncident({ id: "inc-1", deescalationOutcome: "partially_successful" }),
+    ]);
+    expect(profiles[0].deescalationSuccessRate).toBe(100);
   });
 
-  it("includes completed_late in debrief rate", () => {
-    const eps = [
-      mkEpisode({ id: "ep-1", debriefStatus: "completed_late" }),
-    ];
-    const profiles = buildChildCrisisProfiles(eps, []);
-    expect(profiles[0].debriefCompletionRate).toBe(100);
+  it("calculates debrief rate", () => {
+    const profiles = buildChildCrisisProfiles([
+      makeIncident({ id: "inc-1", childDebrief: true }),
+      makeIncident({ id: "inc-2", childDebrief: false }),
+    ]);
+    expect(profiles[0].debriefRate).toBe(50);
   });
 
-  it("detects plan presence", () => {
-    const eps = [mkEpisode({ childId: "child-1" })];
-    const plans = [mkPlan({ childId: "child-1" })];
-    const profiles = buildChildCrisisProfiles(eps, plans);
-    expect(profiles[0].hasPlan).toBe(true);
+  it("gives higher score for fewer incidents", () => {
+    const singleIncident = buildChildCrisisProfiles([
+      makeIncident({ id: "inc-1", childId: "child-1" }),
+    ]);
+    const manyIncidents = buildChildCrisisProfiles([
+      makeIncident({ id: "inc-1", childId: "child-1" }),
+      makeIncident({ id: "inc-2", childId: "child-1" }),
+      makeIncident({ id: "inc-3", childId: "child-1" }),
+      makeIncident({ id: "inc-4", childId: "child-1" }),
+      makeIncident({ id: "inc-5", childId: "child-1" }),
+      makeIncident({ id: "inc-6", childId: "child-1" }),
+    ]);
+    expect(singleIncident[0].overallScore).toBeGreaterThan(manyIncidents[0].overallScore);
   });
 
-  it("detects plan absence", () => {
-    const eps = [mkEpisode({ childId: "child-1" })];
-    const profiles = buildChildCrisisProfiles(eps, []);
-    expect(profiles[0].hasPlan).toBe(false);
-  });
-
-  it("gives higher score for no episodes", () => {
-    const plans = [mkPlan({ childId: "child-1" })];
-    const noEpisodeProfiles = buildChildCrisisProfiles([], plans);
-    const withEpisodeProfiles = buildChildCrisisProfiles(
-      [mkEpisode({ childId: "child-1", deEscalationOutcome: "escalated", debriefStatus: "not_completed" })],
-      plans,
-    );
-    expect(noEpisodeProfiles[0].overallScore).toBeGreaterThan(withEpisodeProfiles[0].overallScore);
-  });
-
-  it("gives bonus for current review plan", () => {
-    const plans = [mkPlan({ childId: "child-1", reviewCurrent: true })];
-    const currentProfiles = buildChildCrisisProfiles([], plans);
-    const staleProfiles = buildChildCrisisProfiles([], [mkPlan({ childId: "child-1", reviewCurrent: false })]);
-    expect(currentProfiles[0].overallScore).toBeGreaterThan(staleProfiles[0].overallScore);
+  it("gives higher score for no physical interventions", () => {
+    const noPhys = buildChildCrisisProfiles([
+      makeIncident({ physicalInterventionUsed: false }),
+    ]);
+    const withPhys = buildChildCrisisProfiles([
+      makeIncident({ physicalInterventionUsed: true }),
+    ]);
+    expect(noPhys[0].overallScore).toBeGreaterThan(withPhys[0].overallScore);
   });
 
   it("score capped at 10", () => {
-    const plans = [mkPlan({ childId: "child-1", reviewCurrent: true })];
-    const profiles = buildChildCrisisProfiles([], plans);
+    const profiles = buildChildCrisisProfiles([makeIncident()]);
     expect(profiles[0].overallScore).toBeLessThanOrEqual(10);
   });
 
-  it("merges children from both episodes and plans", () => {
-    const eps = [mkEpisode({ childId: "child-1", childName: "Alex" })];
-    const plans = [
-      mkPlan({ childId: "child-1", childName: "Alex" }),
-      mkPlan({ id: "plan-2", childId: "child-2", childName: "Jordan" }),
-    ];
-    const profiles = buildChildCrisisProfiles(eps, plans);
-    expect(profiles).toHaveLength(2);
+  it("score minimum is 0", () => {
+    const profiles = buildChildCrisisProfiles([
+      makeIncident({
+        deescalationOutcome: "escalated",
+        childDebrief: false,
+        physicalInterventionUsed: true,
+      }),
+      makeIncident({
+        id: "inc-2",
+        deescalationOutcome: "escalated",
+        childDebrief: false,
+        physicalInterventionUsed: true,
+      }),
+      makeIncident({
+        id: "inc-3",
+        deescalationOutcome: "escalated",
+        childDebrief: false,
+        physicalInterventionUsed: true,
+      }),
+      makeIncident({
+        id: "inc-4",
+        deescalationOutcome: "escalated",
+        childDebrief: false,
+        physicalInterventionUsed: true,
+      }),
+      makeIncident({
+        id: "inc-5",
+        deescalationOutcome: "escalated",
+        childDebrief: false,
+        physicalInterventionUsed: true,
+      }),
+      makeIncident({
+        id: "inc-6",
+        deescalationOutcome: "escalated",
+        childDebrief: false,
+        physicalInterventionUsed: true,
+      }),
+    ]);
+    expect(profiles[0].overallScore).toBeGreaterThanOrEqual(0);
+  });
+
+  it("preserves child name", () => {
+    const profiles = buildChildCrisisProfiles([
+      makeIncident({ childId: "child-1", childName: "Alex" }),
+    ]);
+    expect(profiles[0].childName).toBe("Alex");
   });
 });
 
@@ -630,52 +773,50 @@ describe("buildChildCrisisProfiles", () => {
 describe("generateTherapeuticCrisisInterventionIntelligence", () => {
   it("assembles all four evaluator scores", () => {
     const result = generateTherapeuticCrisisInterventionIntelligence(
-      [mkEpisode()], [mkPlan()], [mkTraining()], [mkReview()],
-      "oak-house", "2026-01-01", "2026-05-18",
+      [makeIncident()], makePolicy(), [makeTraining()],
+      "oak-house", "2026-01-01", "2026-05-19",
     );
     expect(result.overallScore).toBe(
-      result.deEscalationEffectiveness.overallScore +
-      result.crisisPlanning.overallScore +
-      result.postCrisisResponse.overallScore +
-      result.staffPreparedness.overallScore,
+      result.deescalationEffectiveness.overallScore +
+      result.postIncidentPractice.overallScore +
+      result.crisisPolicy.overallScore +
+      result.staffCrisisReadiness.overallScore,
     );
   });
 
-  it("returns correct rating for zero episodes with plans and training", () => {
+  it("returns outstanding for zero incidents with policy and training", () => {
     const result = generateTherapeuticCrisisInterventionIntelligence(
-      [], [mkPlan()], [mkTraining()], [],
-      "oak-house", "2026-01-01", "2026-05-18",
+      [], makePolicy(), [makeTraining()],
+      "oak-house", "2026-01-01", "2026-05-19",
     );
-    // 25 (no episodes) + plan score + 25 (no episodes) + training score
     expect(result.overallScore).toBeGreaterThanOrEqual(80);
     expect(result.rating).toBe("outstanding");
   });
 
-  it("returns inadequate with no data at all", () => {
+  it("returns requires_improvement with no data except empty incidents", () => {
     const result = generateTherapeuticCrisisInterventionIntelligence(
-      [], [], [], [], "test", "2026-01-01", "2026-06-01",
+      [], null, [],
+      "test", "2026-01-01", "2026-06-01",
     );
-    // 25 (de-esc empty) + 0 (no plans) + 25 (post-crisis empty) + 0 (no training)
+    // 25 (de-esc empty) + 25 (post-incident empty) + 0 (no policy) + 0 (no training) = 50
     expect(result.overallScore).toBe(50);
     expect(result.rating).toBe("requires_improvement");
   });
 
   it("returns outstanding for fully compliant home", () => {
-    const eps = [mkEpisode()];
-    const plans = [mkPlan(), mkPlan({ id: "plan-2", childId: "child-2", childName: "Jordan" })];
-    const training = [mkTraining(), mkTraining({ id: "tr-2", staffId: "staff-2" })];
-    const reviews = [mkReview()];
     const result = generateTherapeuticCrisisInterventionIntelligence(
-      eps, plans, training, reviews,
-      "oak-house", "2026-01-01", "2026-05-18",
+      [makeIncident()],
+      makePolicy(),
+      [makeTraining(), makeTraining({ id: "tr-2", staffId: "staff-2" })],
+      "oak-house", "2026-01-01", "2026-05-19",
     );
     expect(result.overallScore).toBeGreaterThanOrEqual(80);
     expect(result.rating).toBe("outstanding");
   });
 
-  it("score capped at 100", () => {
+  it("caps score at 100", () => {
     const result = generateTherapeuticCrisisInterventionIntelligence(
-      [mkEpisode()], [mkPlan()], [mkTraining()], [mkReview()],
+      [makeIncident()], makePolicy(), [makeTraining()],
       "test", "2026-01-01", "2026-06-01",
     );
     expect(result.overallScore).toBeLessThanOrEqual(100);
@@ -683,18 +824,20 @@ describe("generateTherapeuticCrisisInterventionIntelligence", () => {
 
   it("populates homeId and period", () => {
     const result = generateTherapeuticCrisisInterventionIntelligence(
-      [], [], [], [], "oak-house", "2026-01-01", "2026-05-18",
+      [], null, [], "oak-house", "2026-01-01", "2026-05-19",
     );
     expect(result.homeId).toBe("oak-house");
     expect(result.periodStart).toBe("2026-01-01");
-    expect(result.periodEnd).toBe("2026-05-18");
+    expect(result.periodEnd).toBe("2026-05-19");
   });
 
   it("includes child profiles", () => {
     const result = generateTherapeuticCrisisInterventionIntelligence(
-      [mkEpisode({ childId: "child-1" })],
-      [mkPlan({ childId: "child-1" }), mkPlan({ id: "p2", childId: "child-2", childName: "Jordan" })],
-      [], [],
+      [
+        makeIncident({ id: "inc-1", childId: "child-1" }),
+        makeIncident({ id: "inc-2", childId: "child-2", childName: "Jordan" }),
+      ],
+      null, [],
       "test", "2026-01-01", "2026-06-01",
     );
     expect(result.childProfiles).toHaveLength(2);
@@ -702,268 +845,270 @@ describe("generateTherapeuticCrisisInterventionIntelligence", () => {
 
   // -- Strengths --
 
-  it("adds strength for no crisis episodes", () => {
+  it("adds strength for no crisis incidents", () => {
     const result = generateTherapeuticCrisisInterventionIntelligence(
-      [], [mkPlan()], [mkTraining()], [],
+      [], makePolicy(), [makeTraining()],
       "test", "2026-01-01", "2026-06-01",
     );
-    expect(result.strengths.some((s) => s.includes("No crisis episodes"))).toBe(true);
+    expect(result.strengths.some((s) => s.includes("No crisis incidents"))).toBe(true);
   });
 
   it("adds strength for 100% de-escalation attempted", () => {
-    const eps = [mkEpisode({ deEscalationAttempted: true }), mkEpisode({ id: "ep-2", deEscalationAttempted: true })];
     const result = generateTherapeuticCrisisInterventionIntelligence(
-      eps, [], [], [],
+      [makeIncident({ deescalationAttempted: true }), makeIncident({ id: "inc-2", deescalationAttempted: true })],
+      null, [],
       "test", "2026-01-01", "2026-06-01",
     );
     expect(result.strengths.some((s) => s.includes("De-escalation attempted in 100%"))).toBe(true);
   });
 
   it("adds strength for high de-escalation success", () => {
-    const eps = [
-      mkEpisode({ id: "ep-1", deEscalationOutcome: "fully_resolved" }),
-      mkEpisode({ id: "ep-2", deEscalationOutcome: "fully_resolved" }),
-      mkEpisode({ id: "ep-3", deEscalationOutcome: "fully_resolved" }),
-      mkEpisode({ id: "ep-4", deEscalationOutcome: "partially_resolved" }),
-    ];
     const result = generateTherapeuticCrisisInterventionIntelligence(
-      eps, [], [], [],
+      [
+        makeIncident({ id: "inc-1", deescalationOutcome: "successful" }),
+        makeIncident({ id: "inc-2", deescalationOutcome: "successful" }),
+        makeIncident({ id: "inc-3", deescalationOutcome: "successful" }),
+        makeIncident({ id: "inc-4", deescalationOutcome: "escalated" }),
+      ],
+      null, [],
       "test", "2026-01-01", "2026-06-01",
     );
     expect(result.strengths.some((s) => s.includes("High de-escalation success"))).toBe(true);
   });
 
   it("adds strength for no physical interventions", () => {
-    const eps = [mkEpisode({ physicalInterventionUsed: false })];
     const result = generateTherapeuticCrisisInterventionIntelligence(
-      eps, [], [], [],
+      [makeIncident({ physicalInterventionUsed: false })],
+      null, [],
       "test", "2026-01-01", "2026-06-01",
     );
     expect(result.strengths.some((s) => s.includes("No physical interventions"))).toBe(true);
   });
 
-  it("adds strength for all plans in place", () => {
-    const plans = [mkPlan({ childId: "child-1" })];
+  it("adds strength for child debrief at 100%", () => {
     const result = generateTherapeuticCrisisInterventionIntelligence(
-      [], plans, [], [],
+      [makeIncident({ childDebrief: true })],
+      null, [],
       "test", "2026-01-01", "2026-06-01",
     );
-    expect(result.strengths.some((s) => s.includes("Crisis prevention plans in place for all children"))).toBe(true);
+    expect(result.strengths.some((s) => s.includes("Child debrief completed after every incident"))).toBe(true);
+  });
+
+  it("adds strength for comprehensive policy", () => {
+    const result = generateTherapeuticCrisisInterventionIntelligence(
+      [], makePolicy(), [],
+      "test", "2026-01-01", "2026-06-01",
+    );
+    expect(result.strengths.some((s) => s.includes("Comprehensive crisis policy"))).toBe(true);
   });
 
   it("adds strength for all staff trained in de-escalation", () => {
-    const training = [mkTraining({ deEscalationTrained: true })];
     const result = generateTherapeuticCrisisInterventionIntelligence(
-      [], [], training, [],
+      [], null, [makeTraining({ deescalation: true })],
       "test", "2026-01-01", "2026-06-01",
     );
     expect(result.strengths.some((s) => s.includes("All staff trained in de-escalation"))).toBe(true);
   });
 
-  it("adds strength for all debriefs within 24h", () => {
-    const eps = [mkEpisode({ debriefStatus: "completed_within_24h" })];
+  it("adds strength for all staff trained in therapeutic approaches", () => {
     const result = generateTherapeuticCrisisInterventionIntelligence(
-      eps, [], [], [],
+      [], null, [makeTraining({ therapeuticApproach: true })],
       "test", "2026-01-01", "2026-06-01",
     );
-    expect(result.strengths.some((s) => s.includes("debriefs completed within 24 hours"))).toBe(true);
-  });
-
-  it("adds strength for child views always sought", () => {
-    const eps = [mkEpisode({ childViewSought: true }), mkEpisode({ id: "ep-2", childViewSought: true })];
-    const result = generateTherapeuticCrisisInterventionIntelligence(
-      eps, [], [], [],
-      "test", "2026-01-01", "2026-06-01",
-    );
-    expect(result.strengths.some((s) => s.includes("Child's views sought after every crisis"))).toBe(true);
+    expect(result.strengths.some((s) => s.includes("All staff trained in therapeutic approaches"))).toBe(true);
   });
 
   // -- Areas for Improvement --
 
-  it("adds area for no plans", () => {
+  it("adds area for no policy", () => {
     const result = generateTherapeuticCrisisInterventionIntelligence(
-      [], [], [], [],
+      [], null, [],
       "test", "2026-01-01", "2026-06-01",
     );
-    expect(result.areasForImprovement.some((a) => a.includes("No crisis prevention plans"))).toBe(true);
+    expect(result.areasForImprovement.some((a) => a.includes("No crisis intervention policy"))).toBe(true);
   });
 
-  it("adds area for no training", () => {
+  it("adds area for no training records", () => {
     const result = generateTherapeuticCrisisInterventionIntelligence(
-      [], [], [], [],
+      [], null, [],
       "test", "2026-01-01", "2026-06-01",
     );
     expect(result.areasForImprovement.some((a) => a.includes("No staff crisis training"))).toBe(true);
   });
 
   it("adds area for low de-escalation attempt rate", () => {
-    const eps = [mkEpisode({ deEscalationAttempted: false })];
     const result = generateTherapeuticCrisisInterventionIntelligence(
-      eps, [], [], [],
+      [makeIncident({ deescalationAttempted: false })],
+      null, [],
       "test", "2026-01-01", "2026-06-01",
     );
     expect(result.areasForImprovement.some((a) => a.includes("De-escalation not attempted"))).toBe(true);
   });
 
   it("adds area for high physical intervention rate", () => {
-    const eps = [
-      mkEpisode({ id: "ep-1", physicalInterventionUsed: true }),
-      mkEpisode({ id: "ep-2", physicalInterventionUsed: true }),
-    ];
     const result = generateTherapeuticCrisisInterventionIntelligence(
-      eps, [], [], [],
+      [
+        makeIncident({ id: "inc-1", physicalInterventionUsed: true }),
+        makeIncident({ id: "inc-2", physicalInterventionUsed: true }),
+      ],
+      null, [],
       "test", "2026-01-01", "2026-06-01",
     );
     expect(result.areasForImprovement.some((a) => a.includes("Physical intervention rate"))).toBe(true);
   });
 
-  it("adds area for low debrief rate", () => {
-    const eps = [mkEpisode({ debriefStatus: "not_completed" })];
+  it("adds area for missing therapeutic approach in policy", () => {
     const result = generateTherapeuticCrisisInterventionIntelligence(
-      eps, [], [], [],
+      [],
+      makePolicy({ therapeuticApproachDocumented: false }),
+      [],
       "test", "2026-01-01", "2026-06-01",
     );
-    expect(result.areasForImprovement.some((a) => a.includes("Debrief within 24 hours"))).toBe(true);
+    expect(result.areasForImprovement.some((a) => a.includes("Therapeutic approach not documented"))).toBe(true);
+  });
+
+  it("adds area for low child debrief rate", () => {
+    const result = generateTherapeuticCrisisInterventionIntelligence(
+      [makeIncident({ childDebrief: false })],
+      null, [],
+      "test", "2026-01-01", "2026-06-01",
+    );
+    expect(result.areasForImprovement.some((a) => a.includes("Child debrief rate"))).toBe(true);
   });
 
   // -- Actions --
 
-  it("adds URGENT for critical episodes", () => {
-    const eps = [mkEpisode({ crisisLevel: "critical" })];
+  it("adds URGENT for critical incidents", () => {
     const result = generateTherapeuticCrisisInterventionIntelligence(
-      eps, [], [], [],
+      [makeIncident({ severity: "critical" })],
+      null, [],
       "test", "2026-01-01", "2026-06-01",
     );
-    expect(result.actions.some((a) => a.startsWith("URGENT") && a.includes("critical-level"))).toBe(true);
+    expect(result.actions.some((a) => a.startsWith("URGENT") && a.includes("critical-severity"))).toBe(true);
   });
 
-  it("adds URGENT for episodes without debrief", () => {
-    const eps = [mkEpisode({ debriefStatus: "not_completed" })];
+  it("adds URGENT for unjustified physical interventions", () => {
     const result = generateTherapeuticCrisisInterventionIntelligence(
-      eps, [], [], [],
+      [makeIncident({ physicalInterventionUsed: true, physicalInterventionJustified: false })],
+      null, [],
       "test", "2026-01-01", "2026-06-01",
     );
-    expect(result.actions.some((a) => a.startsWith("URGENT") && a.includes("without debrief"))).toBe(true);
+    expect(result.actions.some((a) => a.startsWith("URGENT") && a.includes("not justified"))).toBe(true);
+  });
+
+  it("adds URGENT for incidents without child debrief", () => {
+    const result = generateTherapeuticCrisisInterventionIntelligence(
+      [makeIncident({ childDebrief: false })],
+      null, [],
+      "test", "2026-01-01", "2026-06-01",
+    );
+    expect(result.actions.some((a) => a.startsWith("URGENT") && a.includes("without child debrief"))).toBe(true);
   });
 
   it("adds URGENT for no staff training", () => {
     const result = generateTherapeuticCrisisInterventionIntelligence(
-      [mkEpisode()], [], [], [],
+      [makeIncident()], null, [],
       "test", "2026-01-01", "2026-06-01",
     );
     expect(result.actions.some((a) => a.startsWith("URGENT") && a.includes("training for all staff"))).toBe(true);
   });
 
-  it("adds URGENT for high physical intervention rate", () => {
-    const eps = [
-      mkEpisode({ id: "ep-1", physicalInterventionUsed: true }),
-      mkEpisode({ id: "ep-2", physicalInterventionUsed: true }),
-    ];
+  it("adds action to create policy when none exists", () => {
     const result = generateTherapeuticCrisisInterventionIntelligence(
-      eps, [], [], [],
+      [], null, [],
       "test", "2026-01-01", "2026-06-01",
     );
-    expect(result.actions.some((a) => a.startsWith("URGENT") && a.includes("Physical intervention used"))).toBe(true);
+    expect(result.actions.some((a) => a.includes("Create crisis intervention policy"))).toBe(true);
   });
 
-  it("adds action for creating plans when none exist", () => {
-    const eps = [mkEpisode()];
+  it("adds action for missing review schedule in policy", () => {
     const result = generateTherapeuticCrisisInterventionIntelligence(
-      eps, [], [], [],
+      [], makePolicy({ reviewSchedule: false }), [],
       "test", "2026-01-01", "2026-06-01",
     );
-    expect(result.actions.some((a) => a.includes("Create crisis prevention plans"))).toBe(true);
+    expect(result.actions.some((a) => a.includes("review schedule"))).toBe(true);
   });
 
-  it("adds action for low staff awareness of plans", () => {
-    const plans = [mkPlan({ staffAwareOfPlan: false })];
+  it("adds action for low physical intervention training rate", () => {
     const result = generateTherapeuticCrisisInterventionIntelligence(
-      [], plans, [], [],
+      [], null, [makeTraining({ physicalIntervention: false })],
       "test", "2026-01-01", "2026-06-01",
     );
-    expect(result.actions.some((a) => a.includes("Ensure all staff are aware"))).toBe(true);
+    expect(result.actions.some((a) => a.includes("trained in physical intervention"))).toBe(true);
   });
 
-  it("adds action for low physical intervention certification", () => {
-    const training = [mkTraining({ physicalInterventionCertified: false })];
+  it("adds action for low body mapping training rate", () => {
     const result = generateTherapeuticCrisisInterventionIntelligence(
-      [], [], training, [],
+      [], null, [makeTraining({ bodyMapping: false })],
       "test", "2026-01-01", "2026-06-01",
     );
-    expect(result.actions.some((a) => a.includes("certified in physical intervention"))).toBe(true);
+    expect(result.actions.some((a) => a.includes("trained in body mapping"))).toBe(true);
   });
 
   // -- Regulatory links --
 
   it("includes all 7 regulatory links", () => {
     const result = generateTherapeuticCrisisInterventionIntelligence(
-      [], [], [], [], "test", "2026-01-01", "2026-06-01",
+      [], null, [], "test", "2026-01-01", "2026-06-01",
     );
     expect(result.regulatoryLinks).toHaveLength(7);
-    expect(result.regulatoryLinks.some((l) => l.includes("CHR 2015, Reg 12"))).toBe(true);
-    expect(result.regulatoryLinks.some((l) => l.includes("CHR 2015, Reg 19"))).toBe(true);
-    expect(result.regulatoryLinks.some((l) => l.includes("CHR 2015, Reg 20"))).toBe(true);
+    expect(result.regulatoryLinks.some((l) => l.includes("CHR 2015 Reg 12"))).toBe(true);
+    expect(result.regulatoryLinks.some((l) => l.includes("CHR 2015 Reg 19"))).toBe(true);
+    expect(result.regulatoryLinks.some((l) => l.includes("CHR 2015 Reg 20"))).toBe(true);
     expect(result.regulatoryLinks.some((l) => l.includes("SCCIF"))).toBe(true);
+    expect(result.regulatoryLinks.some((l) => l.includes("Children Act 1989"))).toBe(true);
     expect(result.regulatoryLinks.some((l) => l.includes("Reducing the Need for Restraint"))).toBe(true);
-    expect(result.regulatoryLinks.some((l) => l.includes("UNCRC Article 19"))).toBe(true);
-    expect(result.regulatoryLinks.some((l) => l.includes("UNCRC Article 37"))).toBe(true);
+    expect(result.regulatoryLinks.some((l) => l.includes("NMS 12"))).toBe(true);
   });
 
   // -- Integration --
 
   it("handles realistic Oak House scenario", () => {
-    const episodes: CrisisEpisode[] = [
-      mkEpisode({
-        id: "ep-alex-1",
+    const incidents: CrisisIncident[] = [
+      makeIncident({
+        id: "inc-alex-1",
         childId: "child-alex",
         childName: "Alex",
-        crisisLevel: "low",
+        severity: "low",
         interventionType: "verbal_de_escalation",
-        deEscalationOutcome: "fully_resolved",
-        duration: 15,
-        debriefStatus: "completed_within_24h",
+        deescalationOutcome: "successful",
       }),
-      mkEpisode({
-        id: "ep-jordan-1",
+      makeIncident({
+        id: "inc-jordan-1",
         childId: "child-jordan",
         childName: "Jordan",
-        crisisLevel: "medium",
+        severity: "medium",
         interventionType: "verbal_de_escalation",
-        deEscalationOutcome: "partially_resolved",
-        duration: 30,
-        debriefStatus: "completed_within_24h",
+        deescalationOutcome: "partially_successful",
       }),
-      mkEpisode({
-        id: "ep-jordan-2",
+      makeIncident({
+        id: "inc-jordan-2",
         childId: "child-jordan",
         childName: "Jordan",
-        crisisLevel: "high",
-        interventionType: "therapeutic_hold",
-        deEscalationOutcome: "partially_resolved",
-        physicalInterventionUsed: false,
-        duration: 45,
-        debriefStatus: "completed_within_24h",
+        severity: "medium",
+        interventionType: "distraction",
+        deescalationOutcome: "successful",
+      }),
+      makeIncident({
+        id: "inc-morgan-1",
+        childId: "child-morgan",
+        childName: "Morgan",
+        severity: "low",
+        interventionType: "planned_ignoring",
+        deescalationOutcome: "successful",
       }),
     ];
-    const plans: CrisisPreventionPlan[] = [
-      mkPlan({ id: "plan-alex", childId: "child-alex", childName: "Alex", reviewCurrent: true }),
-      mkPlan({ id: "plan-jordan", childId: "child-jordan", childName: "Jordan", reviewCurrent: true }),
-      mkPlan({ id: "plan-morgan", childId: "child-morgan", childName: "Morgan", reviewCurrent: true }),
-    ];
-    const training: StaffCrisisTraining[] = [
-      mkTraining({ id: "tr-1", staffId: "staff-sarah", staffName: "Sarah Johnson" }),
-      mkTraining({ id: "tr-2", staffId: "staff-tom", staffName: "Tom Richards" }),
-      mkTraining({ id: "tr-3", staffId: "staff-lisa", staffName: "Lisa Williams" }),
-      mkTraining({ id: "tr-4", staffId: "staff-darren", staffName: "Darren Laville" }),
-    ];
-    const reviews: PostCrisisReview[] = [
-      mkReview({ id: "rev-1", episodeId: "ep-alex-1", childId: "child-alex", childName: "Alex" }),
-      mkReview({ id: "rev-2", episodeId: "ep-jordan-1", childId: "child-jordan", childName: "Jordan" }),
+    const policy = makePolicy();
+    const training = [
+      makeTraining({ id: "tr-1", staffId: "staff-sarah", staffName: "Sarah Johnson" }),
+      makeTraining({ id: "tr-2", staffId: "staff-tom", staffName: "Tom Richards" }),
+      makeTraining({ id: "tr-3", staffId: "staff-lisa", staffName: "Lisa Williams" }),
+      makeTraining({ id: "tr-4", staffId: "staff-darren", staffName: "Darren Laville" }),
     ];
 
     const result = generateTherapeuticCrisisInterventionIntelligence(
-      episodes, plans, training, reviews,
-      "oak-house", "2026-01-01", "2026-05-18",
+      incidents, policy, training,
+      "oak-house", "2026-01-01", "2026-05-19",
     );
 
     expect(result.rating).toBeDefined();
@@ -976,12 +1121,30 @@ describe("generateTherapeuticCrisisInterventionIntelligence", () => {
 
   it("handles all-empty data with correct empty-data semantics", () => {
     const result = generateTherapeuticCrisisInterventionIntelligence(
-      [], [], [], [], "test", "2026-01-01", "2026-06-01",
+      [], null, [], "test", "2026-01-01", "2026-06-01",
     );
-    expect(result.deEscalationEffectiveness.overallScore).toBe(25);
-    expect(result.crisisPlanning.overallScore).toBe(0);
-    expect(result.postCrisisResponse.overallScore).toBe(25);
-    expect(result.staffPreparedness.overallScore).toBe(0);
+    expect(result.deescalationEffectiveness.overallScore).toBe(25);
+    expect(result.postIncidentPractice.overallScore).toBe(25);
+    expect(result.crisisPolicy.overallScore).toBe(0);
+    expect(result.staffCrisisReadiness.overallScore).toBe(0);
     expect(result.overallScore).toBe(50);
+  });
+
+  it("handles single incident with all defaults", () => {
+    const result = generateTherapeuticCrisisInterventionIntelligence(
+      [makeIncident()], null, [],
+      "test", "2026-01-01", "2026-06-01",
+    );
+    expect(result.overallScore).toBeGreaterThan(0);
+    expect(result.childProfiles).toHaveLength(1);
+  });
+
+  it("returns correct rating string for each threshold", () => {
+    // We can test via getRating but also verify integration
+    const result = generateTherapeuticCrisisInterventionIntelligence(
+      [], makePolicy(), [makeTraining()],
+      "test", "2026-01-01", "2026-06-01",
+    );
+    expect(["outstanding", "good", "requires_improvement", "inadequate"]).toContain(result.rating);
   });
 });
