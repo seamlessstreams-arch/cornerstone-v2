@@ -1,0 +1,33 @@
+export {
+  generatePetTherapyAnimalInteractionIntelligence,
+  evaluateSessionQuality,
+  evaluateAnimalWelfare,
+  evaluateRiskManagement,
+  evaluateStaffAnimalReadiness,
+  buildChildAnimalProfiles,
+  pct,
+  getRating,
+  getAnimalTypeLabel,
+  getSessionTypeLabel,
+  getTherapeuticBenefitLabel,
+  getWelfareStatusLabel,
+  getRatingLabel,
+} from "./pet-therapy-animal-interaction-engine";
+
+export type {
+  AnimalType,
+  SessionType,
+  TherapeuticBenefit,
+  WelfareStatus,
+  Rating,
+  AnimalSession,
+  AnimalWelfareCheck,
+  AnimalRiskAssessment,
+  StaffAnimalTraining,
+  SessionQualityResult,
+  AnimalWelfareResult,
+  RiskManagementResult,
+  StaffAnimalReadinessResult,
+  ChildAnimalProfile,
+  PetTherapyAnimalInteractionIntelligence,
+} from "./pet-therapy-animal-interaction-engine";

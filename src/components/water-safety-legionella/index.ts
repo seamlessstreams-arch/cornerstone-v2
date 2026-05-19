@@ -1,0 +1,1 @@
+export { WaterSafetyLegionellaDashboardWidget } from "./WaterSafetyLegionellaDashboardWidget";
