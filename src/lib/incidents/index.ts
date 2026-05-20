@@ -1,9 +1,10 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Incidents & Restraint — Public API
+// Cornerstone Incidents — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
+// ── Legacy engine (v1) ───────────────────────────────────────────────────
 export {
-  evaluateIncidentCompliance,
+  evaluateIncidentCompliance as evaluateIncidentComplianceLegacy,
   analyzeRestraints,
   calculateIncidentMetrics,
   getSeverityLabel,
@@ -12,7 +13,7 @@ export {
 } from "./incident-engine";
 
 export type {
-  IncidentCategory,
+  IncidentCategory as IncidentCategoryLegacy,
   IncidentSeverity,
   RestraintType,
   DeEscalationTechnique,
@@ -21,7 +22,37 @@ export type {
   RestraintRecord,
   InjuryRecord,
   NotificationRecord,
-  IncidentComplianceResult,
+  IncidentComplianceResult as IncidentComplianceResultLegacy,
   RestraintAnalysis,
   IncidentMetrics,
 } from "./incident-engine";
+
+// ── New standardised engine (v2) ─────────────────────────────────────────
+export {
+  generateIncidentIntelligence,
+  evaluateIncidentQuality,
+  evaluateIncidentCompliance,
+  evaluateIncidentPolicy,
+  evaluateStaffIncidentReadiness,
+  buildChildIncidentProfiles,
+  pct,
+  getRating,
+  getIncidentCategoryLabel,
+  getIncidentOutcomeLabel,
+  getRatingLabel,
+} from "./incidents-engine";
+
+export type {
+  IncidentCategory,
+  IncidentOutcome,
+  Rating,
+  IncidentRecord,
+  IncidentPolicy,
+  StaffIncidentTraining,
+  IncidentQualityResult,
+  IncidentComplianceResult,
+  IncidentPolicyResult,
+  StaffIncidentReadinessResult,
+  ChildIncidentProfile,
+  IncidentIntelligence,
+} from "./incidents-engine";

@@ -1,205 +1,139 @@
-// ══════════��═══════════════════════════════════════════════════════════════════
-// SaferRecruitmentDashboardWidget — Recruitment pipeline & compliance card
-// ══════════════════════════════════════════════════════════════════════════════
-
 "use client";
 
 import { useEffect, useState } from "react";
 
-interface PipelineData {
-  totalCandidates: number;
-  byStage: Record<string, number>;
-  averageTimeToHire: number;
-  blockedCount: number;
-  clearanceRate: number;
-  overdueChecks: number;
-  expiringChecks: number;
+interface StaffRecruitmentProfile { staffId: string; staffName: string; totalRecords: number; dbsCheckCompletedRate: number; referencesVerifiedRate: number; categoriesCovered: string[]; overallScore: number; }
+
+interface SaferRecruitmentData {
+  homeId: string; periodStart: string; periodEnd: string; overallScore: number; rating: string;
+  saferRecruitmentQuality: { overallScore: number; totalRecords: number; dbsCheckCompletedRate: number; referencesVerifiedRate: number; interviewConductedRate: number; identityConfirmedRate: number; };
+  saferRecruitmentCompliance: { overallScore: number; documentationRate: number; timelyRecordingRate: number; dbsCheckCompletedRate: number; categoryDiversityRatio: number; };
+  saferRecruitmentPolicy: { overallScore: number; saferRecruitmentPolicy: boolean; dbsRenewalPolicy: boolean; referenceCheckProcedure: boolean; interviewProtocol: boolean; disqualificationByAssociationPolicy: boolean; inductionPolicy: boolean; ongoingVigilancePolicy: boolean; };
+  staffReadiness: { overallScore: number; totalStaff: number; safeguardingRecruitmentRate: number; dbsProcessKnowledgeRate: number; interviewTechniquesRate: number; referenceVerificationRate: number; disqualificationAwarenessRate: number; whistleblowingAwarenessRate: number; };
+  staffProfiles: StaffRecruitmentProfile[]; strengths: string[]; areasForImprovement: string[]; actions: string[]; regulatoryLinks: string[];
 }
 
-interface CandidateRow {
-  candidateId: string;
-  candidateName: string;
-  role: string;
-  stage: string;
-  completionPercentage: number;
-  isCompliant: boolean;
-  canStart: boolean;
-  issues: { message: string; severity: string }[];
+function ratingColour(r: string) {
+  if (r === "outstanding") return "text-green-700 bg-green-50 border-green-200";
+  if (r === "good") return "text-blue-700 bg-blue-50 border-blue-200";
+  if (r === "requires_improvement") return "text-amber-700 bg-amber-50 border-amber-200";
+  return "text-red-700 bg-red-50 border-red-200";
+}
+function ratingLabel(r: string) { return r.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()); }
+function boolBadge(v: boolean) { return v ? "text-green-700 bg-green-50 border-green-200" : "text-red-700 bg-red-50 border-red-200"; }
+
+function ScoreBar({ label, score, max = 25 }: { label: string; score: number; max?: number }) {
+  const pct = max > 0 ? Math.round((score / max) * 100) : 0;
+  const fill = pct >= 80 ? "bg-green-500" : pct >= 60 ? "bg-blue-500" : pct >= 40 ? "bg-amber-500" : "bg-red-500";
+  return (<div className="mb-3"><div className="flex justify-between text-sm mb-1"><span className="font-medium text-gray-700">{label}</span><span className="text-gray-500">{score}/{max}</span></div><div className="h-2 rounded-full bg-gray-100 overflow-hidden"><div className={`h-full rounded-full ${fill}`} style={{ width: `${pct}%` }} /></div></div>);
 }
 
-interface DashboardData {
-  pipeline: PipelineData;
-  candidates: CandidateRow[];
-  dbsRenewals: { candidateName: string; expiryDate: string; daysUntilExpiry: number }[];
+function Section({ title, defaultOpen = false, children }: { title: string; defaultOpen?: boolean; children: React.ReactNode }) {
+  const [open, setOpen] = useState(defaultOpen);
+  return (<div className="border border-gray-200 rounded-lg overflow-hidden mb-4"><button onClick={() => setOpen(!open)} className="w-full text-left px-4 py-3 bg-gray-50 hover:bg-gray-100 flex justify-between items-center"><span className="font-semibold text-gray-800">{title}</span><span className="text-gray-400 text-lg">{open ? "−" : "+"}</span></button>{open && <div className="px-4 py-3">{children}</div>}</div>);
 }
 
-interface Props {
-  homeId?: string;
+function Stat({ label, value }: { label: string; value: string | number }) {
+  return (<div className="bg-gray-50 rounded-lg px-3 py-2 text-center"><div className="text-lg font-bold text-gray-800">{value}</div><div className="text-xs text-gray-500">{label}</div></div>);
 }
 
-const STAGE_LABELS: Record<string, string> = {
-  vacancy_posted: "Vacancy",
-  application_received: "Applied",
-  shortlisted: "Shortlisted",
-  interview_scheduled: "Interview",
-  interview_completed: "Interviewed",
-  conditional_offer: "Offer",
-  pre_start_checks: "Pre-start",
-  final_clearance: "Clearance",
-  onboarding: "Onboarding",
-  appointed: "Appointed",
-  withdrawn: "Withdrawn",
-  rejected: "Rejected",
-};
-
-export function SaferRecruitmentDashboardWidget({ homeId = "home-oak" }: Props) {
-  const [data, setData] = useState<DashboardData | null>(null);
+export default function SaferRecruitmentDashboardWidget() {
+  const [data, setData] = useState<SaferRecruitmentData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchData();
-  }, [homeId]);
+    fetch("/api/safer-recruitment")
+      .then((r) => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
+      .then((json) => setData(json.data))
+      .catch((e) => setError(e.message))
+      .finally(() => setLoading(false));
+  }, []);
 
-  async function fetchData() {
-    try {
-      const res = await fetch(`/api/safer-recruitment?view=overview${homeId ? `&homeId=${homeId}` : ""}`);
-      const json = await res.json();
-      setData(json);
-    } catch {
-      // noop
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  if (loading) {
-    return (
-      <div className="rounded-lg border border-border bg-card p-6 animate-pulse">
-        <div className="h-4 w-36 bg-muted rounded mb-4" />
-        <div className="space-y-2">
-          <div className="h-3 w-full bg-muted rounded" />
-          <div className="h-3 w-3/4 bg-muted rounded" />
-        </div>
-      </div>
-    );
-  }
-
+  if (loading) return (<div className="rounded-2xl border border-gray-200 bg-white p-6 animate-pulse"><div className="h-6 bg-gray-200 rounded w-3/4 mb-4" /><div className="h-4 bg-gray-100 rounded w-1/2 mb-3" /><div className="h-4 bg-gray-100 rounded w-2/3 mb-3" /><div className="h-4 bg-gray-100 rounded w-1/3" /></div>);
+  if (error) return (<div className="rounded-2xl border border-red-200 bg-red-50 p-6"><h2 className="text-lg font-bold text-red-800 mb-2">Safer Recruitment</h2><p className="text-red-600 text-sm">Failed to load data: {error}</p></div>);
   if (!data) return null;
 
-  const { pipeline, candidates, dbsRenewals } = data;
-  const activeCandidates = candidates.filter(c =>
-    c.stage !== "appointed" && c.stage !== "withdrawn" && c.stage !== "rejected"
-  );
-  const blockers = candidates.filter(c => c.issues.some(i => i.severity === "blocker"));
+  const rc = ratingColour(data.rating);
 
   return (
-    <div className="rounded-lg border border-border bg-card">
-      {/* Header */}
-      <div className="p-4 border-b border-border">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-600 to-indigo-800 flex items-center justify-center">
-              <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-              </svg>
-            </div>
-            <div>
-              <h3 className="text-sm font-semibold">Safer Recruitment</h3>
-              <p className="text-xs text-muted-foreground">Reg 34 / Schedule 2</p>
-            </div>
-          </div>
-          <div className="text-right">
-            <p className="text-lg font-bold">{activeCandidates.length}</p>
-            <p className="text-[10px] text-muted-foreground">in pipeline</p>
-          </div>
-        </div>
+    <div className="rounded-2xl border border-gray-200 bg-white p-6">
+      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-6">
+        <div><h2 className="text-lg font-bold text-gray-900">Safer Recruitment</h2><p className="text-sm text-gray-500 mt-0.5">{data.periodStart} — {data.periodEnd}</p></div>
+        <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-sm font-semibold ${rc}`}><span className="text-xl font-bold">{data.overallScore}</span><span>/100</span><span className="ml-1">{ratingLabel(data.rating)}</span></div>
       </div>
 
-      {/* Alerts */}
-      {(pipeline.blockedCount > 0 || pipeline.overdueChecks > 0) && (
-        <div className="px-4 py-2.5 border-b border-border bg-red-50/50 dark:bg-red-900/10">
-          {pipeline.blockedCount > 0 && (
-            <div className="flex items-center gap-1.5 mb-1">
-              <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-              <span className="text-xs font-medium text-red-700 dark:text-red-400">
-                {pipeline.blockedCount} blocked candidate{pipeline.blockedCount > 1 ? "s" : ""}
-              </span>
-            </div>
-          )}
-          {pipeline.overdueChecks > 0 && (
-            <p className="text-[10px] text-red-600 dark:text-red-400">
-              {pipeline.overdueChecks} overdue check{pipeline.overdueChecks > 1 ? "s" : ""}
-            </p>
-          )}
-        </div>
-      )}
-
-      {/* Key metrics */}
-      <div className="grid grid-cols-3 divide-x divide-border border-b border-border">
-        <div className="p-3 text-center">
-          <p className="text-lg font-bold">{pipeline.clearanceRate}%</p>
-          <p className="text-[10px] text-muted-foreground">Clearance</p>
-        </div>
-        <div className="p-3 text-center">
-          <p className="text-lg font-bold">{pipeline.averageTimeToHire}d</p>
-          <p className="text-[10px] text-muted-foreground">Avg hire</p>
-        </div>
-        <div className="p-3 text-center">
-          <p className={`text-lg font-bold ${pipeline.expiringChecks > 0 ? "text-amber-600 dark:text-amber-400" : "text-emerald-600 dark:text-emerald-400"}`}>
-            {pipeline.expiringChecks}
-          </p>
-          <p className="text-[10px] text-muted-foreground">Expiring</p>
-        </div>
+      <div className="mb-6">
+        <ScoreBar label="Recruitment Quality" score={data.saferRecruitmentQuality.overallScore} />
+        <ScoreBar label="Recruitment Compliance" score={data.saferRecruitmentCompliance.overallScore} />
+        <ScoreBar label="Policy Framework" score={data.saferRecruitmentPolicy.overallScore} />
+        <ScoreBar label="Staff Readiness" score={data.staffReadiness.overallScore} />
       </div>
 
-      {/* Active candidates */}
-      {activeCandidates.length > 0 && (
-        <div className="border-b border-border">
-          <div className="px-4 py-2 bg-muted/30">
-            <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-wide">Active Pipeline</p>
-          </div>
-          <div className="divide-y divide-border">
-            {activeCandidates.slice(0, 4).map(c => (
-              <div key={c.candidateId} className="px-4 py-2">
-                <div className="flex items-center justify-between mb-1">
-                  <p className="text-xs font-medium truncate">{c.candidateName}</p>
-                  <span className="text-[10px] text-muted-foreground">{STAGE_LABELS[c.stage] ?? c.stage}</span>
-                </div>
-                <div className="h-1.5 bg-muted rounded-full overflow-hidden">
-                  <div
-                    className={`h-full rounded-full ${c.completionPercentage >= 90 ? "bg-emerald-500" : c.completionPercentage >= 60 ? "bg-blue-500" : "bg-amber-500"}`}
-                    style={{ width: `${c.completionPercentage}%` }}
-                  />
-                </div>
-                {c.issues.length > 0 && (
-                  <p className="text-[9px] text-red-600 dark:text-red-400 mt-0.5">
-                    {c.issues[0].message}
-                  </p>
-                )}
+      <Section title="Recruitment Quality" defaultOpen>
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          <Stat label="Total Records" value={data.saferRecruitmentQuality.totalRecords} />
+          <Stat label="DBS Checks" value={`${data.saferRecruitmentQuality.dbsCheckCompletedRate}%`} />
+          <Stat label="References" value={`${data.saferRecruitmentQuality.referencesVerifiedRate}%`} />
+          <Stat label="Interviews" value={`${data.saferRecruitmentQuality.interviewConductedRate}%`} />
+          <Stat label="Identity" value={`${data.saferRecruitmentQuality.identityConfirmedRate}%`} />
+        </div>
+      </Section>
+
+      <Section title="Recruitment Compliance">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          <Stat label="Documentation" value={`${data.saferRecruitmentCompliance.documentationRate}%`} />
+          <Stat label="Timely Recording" value={`${data.saferRecruitmentCompliance.timelyRecordingRate}%`} />
+          <Stat label="DBS Checks" value={`${data.saferRecruitmentCompliance.dbsCheckCompletedRate}%`} />
+          <Stat label="Category Coverage" value={`${data.saferRecruitmentCompliance.categoryDiversityRatio}%`} />
+        </div>
+      </Section>
+
+      <Section title="Policy Framework">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          {([
+            ["Safer Recruitment", data.saferRecruitmentPolicy.saferRecruitmentPolicy],
+            ["DBS Renewal", data.saferRecruitmentPolicy.dbsRenewalPolicy],
+            ["Reference Check", data.saferRecruitmentPolicy.referenceCheckProcedure],
+            ["Interview Protocol", data.saferRecruitmentPolicy.interviewProtocol],
+            ["Disqualification", data.saferRecruitmentPolicy.disqualificationByAssociationPolicy],
+            ["Induction", data.saferRecruitmentPolicy.inductionPolicy],
+            ["Ongoing Vigilance", data.saferRecruitmentPolicy.ongoingVigilancePolicy],
+          ] as [string, boolean][]).map(([label, val]) => (
+            <div key={label} className={`rounded-lg px-3 py-2 text-center border ${boolBadge(val)}`}><div className="text-sm font-semibold">{val ? "Yes" : "No"}</div><div className="text-xs">{label}</div></div>
+          ))}
+        </div>
+      </Section>
+
+      <Section title="Staff Readiness">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          <Stat label="Total Staff" value={data.staffReadiness.totalStaff} />
+          <Stat label="Safeguarding" value={`${data.staffReadiness.safeguardingRecruitmentRate}%`} />
+          <Stat label="DBS Process" value={`${data.staffReadiness.dbsProcessKnowledgeRate}%`} />
+          <Stat label="Interview Skills" value={`${data.staffReadiness.interviewTechniquesRate}%`} />
+          <Stat label="Reference Verification" value={`${data.staffReadiness.referenceVerificationRate}%`} />
+          <Stat label="Disqualification" value={`${data.staffReadiness.disqualificationAwarenessRate}%`} />
+          <Stat label="Whistleblowing" value={`${data.staffReadiness.whistleblowingAwarenessRate}%`} />
+        </div>
+      </Section>
+
+      {data.staffProfiles.length > 0 && (
+        <Section title="Staff Recruitment Profiles">
+          <div className="space-y-3">
+            {data.staffProfiles.map((sp) => (
+              <div key={sp.staffId} className="border border-gray-100 rounded-lg p-3">
+                <div className="flex justify-between items-start mb-2"><span className="font-semibold text-gray-800">{sp.staffName}</span><span className="text-sm font-semibold text-gray-600">{sp.overallScore}/10</span></div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs text-gray-600"><span>Records: {sp.totalRecords}</span><span>DBS: {sp.dbsCheckCompletedRate}%</span><span>References: {sp.referencesVerifiedRate}%</span></div>
               </div>
             ))}
           </div>
-        </div>
+        </Section>
       )}
 
-      {/* DBS Renewals */}
-      {dbsRenewals && dbsRenewals.length > 0 && (
-        <div className="px-4 py-2.5 border-b border-border bg-amber-50/30 dark:bg-amber-900/5">
-          <p className="text-[10px] font-medium text-amber-700 dark:text-amber-400 mb-1">DBS renewals due:</p>
-          {dbsRenewals.slice(0, 2).map((r, i) => (
-            <p key={i} className="text-[10px] text-amber-600 dark:text-amber-400">
-              {r.candidateName} — {r.daysUntilExpiry}d
-            </p>
-          ))}
-        </div>
-      )}
-
-      {/* Footer */}
-      <div className="p-3 text-center">
-        <a href="/safer-recruitment" className="text-xs text-primary font-medium hover:underline">
-          View recruitment pipeline ���
-        </a>
-      </div>
+      {data.strengths.length > 0 && (<Section title="Strengths"><ul className="space-y-1">{data.strengths.map((s, i) => (<li key={i} className="text-sm text-green-800 flex gap-2"><span className="shrink-0 mt-1 h-1.5 w-1.5 rounded-full bg-green-500" />{s}</li>))}</ul></Section>)}
+      {data.areasForImprovement.length > 0 && (<Section title="Areas for Improvement"><ul className="space-y-1">{data.areasForImprovement.map((a, i) => (<li key={i} className="text-sm text-amber-800 flex gap-2"><span className="shrink-0 mt-1 h-1.5 w-1.5 rounded-full bg-amber-500" />{a}</li>))}</ul></Section>)}
+      {data.actions.length > 0 && (<Section title="Actions" defaultOpen><ul className="space-y-1">{data.actions.map((a, i) => (<li key={i} className={`text-sm flex gap-2 ${a.startsWith("URGENT") ? "text-red-800 font-semibold" : "text-gray-700"}`}><span className={`shrink-0 mt-1 h-1.5 w-1.5 rounded-full ${a.startsWith("URGENT") ? "bg-red-500" : "bg-gray-400"}`} />{a}</li>))}</ul></Section>)}
+      <Section title="Regulatory Links"><ul className="space-y-1">{data.regulatoryLinks.map((l, i) => (<li key={i} className="text-sm text-gray-600 flex gap-2"><span className="shrink-0 mt-1 h-1.5 w-1.5 rounded-full bg-gray-400" />{l}</li>))}</ul></Section>
     </div>
   );
 }

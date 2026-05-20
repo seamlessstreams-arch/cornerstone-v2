@@ -1,7 +1,33 @@
-// ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Reg 44/45 Independent Visits — Public API
-// ══════════════════════════════════════════════════════════════════════════════
+export {
+  generateReg44VisitIntelligence,
+  evaluateReg44VisitQuality,
+  evaluateReg44VisitCompliance,
+  evaluateReg44VisitPolicy,
+  evaluateStaffReg44VisitReadiness,
+  buildChildReg44VisitProfiles,
+  pct,
+  getRating,
+  getReg44VisitCategoryLabel,
+  getReg44VisitOutcomeLabel,
+  getRatingLabel,
+} from "./reg44-visits-engine";
 
+export type {
+  Reg44VisitCategory,
+  Reg44VisitOutcome,
+  Rating,
+  Reg44VisitRecord,
+  Reg44VisitPolicy,
+  StaffReg44VisitTraining,
+  Reg44VisitQualityResult,
+  Reg44VisitComplianceResult,
+  Reg44VisitPolicyResult,
+  StaffReg44VisitReadinessResult,
+  ChildReg44VisitProfile,
+  Reg44VisitIntelligence,
+} from "./reg44-visits-engine";
+
+// Legacy re-exports from reg44-engine
 export {
   evaluateVisitCompliance,
   calculateHomeReg44Metrics,

@@ -1,21 +1,32 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Children's Privacy & Confidentiality — Public API
+// Cornerstone Children's Privacy Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {
-  evaluateChildPrivacyCompliance,
-  calculateHomePrivacyMetrics,
-  getPrivacyDomainLabel,
-  getIncidentTypeLabel,
+  pct,
+  getRating,
+  getPrivacyCategoryLabel,
+  getPrivacyOutcomeLabel,
+  getRatingLabel,
+  evaluatePrivacyQuality,
+  evaluatePrivacyCompliance,
+  evaluatePrivacyPolicy,
+  evaluateStaffPrivacyReadiness,
+  buildChildPrivacyProfiles,
+  generatePrivacyIntelligence,
 } from "./privacy-engine";
 
 export type {
-  PrivacyDomain,
-  ComplianceLevel,
-  IncidentType,
-  PrivacyAssessment,
-  PrivacyIncident,
-  ChildPrivacyProfile,
+  PrivacyCategory,
+  PrivacyOutcome,
+  Rating,
+  PrivacyRecord,
+  PrivacyPolicy,
+  StaffPrivacyTraining,
+  PrivacyQualityResult,
   PrivacyComplianceResult,
-  HomePrivacyMetrics,
+  PrivacyPolicyResult,
+  StaffPrivacyReadinessResult,
+  ChildPrivacyProfile,
+  PrivacyIntelligence,
 } from "./privacy-engine";

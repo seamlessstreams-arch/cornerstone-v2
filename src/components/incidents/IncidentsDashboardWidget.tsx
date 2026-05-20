@@ -1,183 +1,139 @@
-// ══════════════════════════════════════════════════════════════════════════════
-// IncidentsDashboardWidget — Live incident & restraint overview
-// ══════════════════════════════════════════════════════════════════════════════
-
 "use client";
 
 import { useEffect, useState } from "react";
 
-interface IncidentMetrics {
-  totalIncidents: number;
-  incidentsThisMonth: number;
-  incidentsThisQuarter: number;
-  complianceRate: number;
-  averageResponseMinutes: number;
-  childrenInvolved: number;
-  requiresOfstedNotification: number;
-  bySeverity: { severity: number; count: number }[];
-  byCategory: { category: string; count: number }[];
-  repeatPatterns: { childId: string; childName: string; count: number }[];
-  restraintMetrics: {
-    totalRestraints: number;
-    restraintsThisMonth: number;
-    averageDurationMinutes: number;
-    approvedTechniqueRate: number;
-    deEscalationAttemptedRate: number;
-    childDebriefRate: number;
-    staffDebriefRate: number;
-    trend: "increasing" | "stable" | "decreasing";
-    byChild: { childId: string; childName: string; count: number }[];
-  };
+interface ChildIncidentProfile { childId: string; childName: string; totalRecords: number; deEscalationAttemptedRate: number; childViewRecordedRate: number; categoriesCovered: string[]; overallScore: number; }
+
+interface IncidentData {
+  homeId: string; periodStart: string; periodEnd: string; overallScore: number; rating: string;
+  incidentQuality: { overallScore: number; totalRecords: number; deEscalationAttemptedRate: number; childViewRecordedRate: number; debriefConductedRate: number; lessonsIdentifiedRate: number; };
+  incidentCompliance: { overallScore: number; totalRecords: number; documentationRate: number; timelyRecordingRate: number; deEscalationAttemptedRate: number; categoryDiversityRatio: number; uniqueCategories: number; };
+  incidentPolicy: { overallScore: number; incidentManagementPolicy: boolean; deEscalationGuidance: boolean; restraintPolicy: boolean; postIncidentDebriefPolicy: boolean; childViewInIncidentPolicy: boolean; notificationProcedure: boolean; lessonsLearnedFramework: boolean; };
+  staffReadiness: { overallScore: number; totalStaff: number; deEscalationSkillsRate: number; incidentRecordingRate: number; restraintCertificationRate: number; postIncidentSupportRate: number; childProtectionAwarenessRate: number; conflictResolutionRate: number; };
+  childProfiles: ChildIncidentProfile[]; strengths: string[]; areasForImprovement: string[]; actions: string[]; regulatoryLinks: string[];
 }
 
-interface Props {
-  homeId?: string;
+function ratingColour(r: string) {
+  if (r === "outstanding") return "text-green-700 bg-green-50 border-green-200";
+  if (r === "good") return "text-blue-700 bg-blue-50 border-blue-200";
+  if (r === "requires_improvement") return "text-amber-700 bg-amber-50 border-amber-200";
+  return "text-red-700 bg-red-50 border-red-200";
+}
+function ratingLabel(r: string) { return r.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()); }
+function boolBadge(v: boolean) { return v ? "text-green-700 bg-green-50 border-green-200" : "text-red-700 bg-red-50 border-red-200"; }
+
+function ScoreBar({ label, score, max = 25 }: { label: string; score: number; max?: number }) {
+  const pct = max > 0 ? Math.round((score / max) * 100) : 0;
+  const fill = pct >= 80 ? "bg-green-500" : pct >= 60 ? "bg-blue-500" : pct >= 40 ? "bg-amber-500" : "bg-red-500";
+  return (<div className="mb-3"><div className="flex justify-between text-sm mb-1"><span className="font-medium text-gray-700">{label}</span><span className="text-gray-500">{score}/{max}</span></div><div className="h-2 rounded-full bg-gray-100 overflow-hidden"><div className={`h-full rounded-full ${fill}`} style={{ width: `${pct}%` }} /></div></div>);
 }
 
-const SEVERITY_COLORS = ["", "bg-blue-500", "bg-amber-500", "bg-orange-500", "bg-red-500", "bg-red-700"];
-const TREND_LABELS: Record<string, string> = { increasing: "↑ Rising", stable: "→ Stable", decreasing: "↓ Reducing" };
-const TREND_STYLES: Record<string, string> = {
-  increasing: "text-red-600 dark:text-red-400",
-  stable: "text-gray-600 dark:text-gray-400",
-  decreasing: "text-emerald-600 dark:text-emerald-400",
-};
+function Section({ title, defaultOpen = false, children }: { title: string; defaultOpen?: boolean; children: React.ReactNode }) {
+  const [open, setOpen] = useState(defaultOpen);
+  return (<div className="border border-gray-200 rounded-lg overflow-hidden mb-4"><button onClick={() => setOpen(!open)} className="w-full text-left px-4 py-3 bg-gray-50 hover:bg-gray-100 flex justify-between items-center"><span className="font-semibold text-gray-800">{title}</span><span className="text-gray-400 text-lg">{open ? "−" : "+"}</span></button>{open && <div className="px-4 py-3">{children}</div>}</div>);
+}
 
-export function IncidentsDashboardWidget({ homeId = "home-oak" }: Props) {
-  const [data, setData] = useState<IncidentMetrics | null>(null);
+function Stat({ label, value }: { label: string; value: string | number }) {
+  return (<div className="bg-gray-50 rounded-lg px-3 py-2 text-center"><div className="text-lg font-bold text-gray-800">{value}</div><div className="text-xs text-gray-500">{label}</div></div>);
+}
+
+export default function IncidentsDashboardWidget() {
+  const [data, setData] = useState<IncidentData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchData();
-  }, [homeId]);
+    fetch("/api/incidents")
+      .then((r) => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
+      .then((json) => setData(json.data))
+      .catch((e) => setError(e.message))
+      .finally(() => setLoading(false));
+  }, []);
 
-  async function fetchData() {
-    try {
-      const res = await fetch(`/api/incidents?homeId=${homeId}&view=overview`);
-      const json = await res.json();
-      setData(json);
-    } catch {
-      // noop
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  if (loading) {
-    return (
-      <div className="rounded-lg border border-border bg-card p-6 animate-pulse">
-        <div className="h-4 w-32 bg-muted rounded mb-4" />
-        <div className="space-y-2">
-          <div className="h-3 w-full bg-muted rounded" />
-          <div className="h-3 w-3/4 bg-muted rounded" />
-        </div>
-      </div>
-    );
-  }
-
+  if (loading) return (<div className="rounded-2xl border border-gray-200 bg-white p-6 animate-pulse"><div className="h-6 bg-gray-200 rounded w-3/4 mb-4" /><div className="h-4 bg-gray-100 rounded w-1/2 mb-3" /><div className="h-4 bg-gray-100 rounded w-2/3 mb-3" /><div className="h-4 bg-gray-100 rounded w-1/3" /></div>);
+  if (error) return (<div className="rounded-2xl border border-red-200 bg-red-50 p-6"><h2 className="text-lg font-bold text-red-800 mb-2">Incidents</h2><p className="text-red-600 text-sm">Failed to load data: {error}</p></div>);
   if (!data) return null;
 
-  const { restraintMetrics } = data;
+  const rc = ratingColour(data.rating);
 
   return (
-    <div className="rounded-lg border border-border bg-card">
-      {/* Header */}
-      <div className="p-4 border-b border-border">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center">
-              <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z" />
-              </svg>
-            </div>
-            <div>
-              <h3 className="text-sm font-semibold">Incidents & Restraint</h3>
-              <p className="text-xs text-muted-foreground">
-                {data.incidentsThisMonth} this month
-              </p>
-            </div>
+    <div className="rounded-2xl border border-gray-200 bg-white p-6">
+      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-6">
+        <div><h2 className="text-lg font-bold text-gray-900">Incidents</h2><p className="text-sm text-gray-500 mt-0.5">{data.periodStart} — {data.periodEnd}</p></div>
+        <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-sm font-semibold ${rc}`}><span className="text-xl font-bold">{data.overallScore}</span><span>/100</span><span className="ml-1">{ratingLabel(data.rating)}</span></div>
+      </div>
+
+      <div className="mb-6">
+        <ScoreBar label="Incident Quality" score={data.incidentQuality.overallScore} />
+        <ScoreBar label="Incident Compliance" score={data.incidentCompliance.overallScore} />
+        <ScoreBar label="Policy & Procedures" score={data.incidentPolicy.overallScore} />
+        <ScoreBar label="Staff Readiness" score={data.staffReadiness.overallScore} />
+      </div>
+
+      <Section title="Incident Quality" defaultOpen>
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          <Stat label="Total Records" value={data.incidentQuality.totalRecords} />
+          <Stat label="De-Escalation" value={`${data.incidentQuality.deEscalationAttemptedRate}%`} />
+          <Stat label="Child View" value={`${data.incidentQuality.childViewRecordedRate}%`} />
+          <Stat label="Debrief" value={`${data.incidentQuality.debriefConductedRate}%`} />
+          <Stat label="Lessons" value={`${data.incidentQuality.lessonsIdentifiedRate}%`} />
+        </div>
+      </Section>
+
+      <Section title="Incident Compliance">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          <Stat label="Documentation" value={`${data.incidentCompliance.documentationRate}%`} />
+          <Stat label="Timely Recording" value={`${data.incidentCompliance.timelyRecordingRate}%`} />
+          <Stat label="De-Escalation" value={`${data.incidentCompliance.deEscalationAttemptedRate}%`} />
+          <Stat label="Category Coverage" value={`${Math.round(data.incidentCompliance.categoryDiversityRatio * 100)}%`} />
+        </div>
+      </Section>
+
+      <Section title="Policy & Procedures">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          {([
+            ["Incident Management", data.incidentPolicy.incidentManagementPolicy],
+            ["De-Escalation", data.incidentPolicy.deEscalationGuidance],
+            ["Restraint", data.incidentPolicy.restraintPolicy],
+            ["Post-Incident Debrief", data.incidentPolicy.postIncidentDebriefPolicy],
+            ["Child View", data.incidentPolicy.childViewInIncidentPolicy],
+            ["Notification", data.incidentPolicy.notificationProcedure],
+            ["Lessons Learned", data.incidentPolicy.lessonsLearnedFramework],
+          ] as [string, boolean][]).map(([label, val]) => (
+            <div key={label} className={`rounded-lg px-3 py-2 text-center border ${boolBadge(val)}`}><div className="text-sm font-semibold">{val ? "Yes" : "No"}</div><div className="text-xs">{label}</div></div>
+          ))}
+        </div>
+      </Section>
+
+      <Section title="Staff Readiness">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          <Stat label="Total Staff" value={data.staffReadiness.totalStaff} />
+          <Stat label="De-Escalation" value={`${data.staffReadiness.deEscalationSkillsRate}%`} />
+          <Stat label="Incident Recording" value={`${data.staffReadiness.incidentRecordingRate}%`} />
+          <Stat label="Restraint Cert" value={`${data.staffReadiness.restraintCertificationRate}%`} />
+          <Stat label="Post-Incident" value={`${data.staffReadiness.postIncidentSupportRate}%`} />
+          <Stat label="Child Protection" value={`${data.staffReadiness.childProtectionAwarenessRate}%`} />
+          <Stat label="Conflict Resolution" value={`${data.staffReadiness.conflictResolutionRate}%`} />
+        </div>
+      </Section>
+
+      {data.childProfiles.length > 0 && (
+        <Section title="Child Incident Profiles">
+          <div className="space-y-3">
+            {data.childProfiles.map((cp) => (
+              <div key={cp.childId} className="border border-gray-100 rounded-lg p-3">
+                <div className="flex justify-between items-start mb-2"><span className="font-semibold text-gray-800">{cp.childName}</span><span className="text-sm font-semibold text-gray-600">{cp.overallScore}/10</span></div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs text-gray-600"><span>Records: {cp.totalRecords}</span><span>De-Esc: {cp.deEscalationAttemptedRate}%</span><span>Child View: {cp.childViewRecordedRate}%</span></div>
+              </div>
+            ))}
           </div>
-          <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${
-            data.complianceRate >= 90 ? "bg-emerald-100 text-emerald-800" :
-            data.complianceRate >= 70 ? "bg-amber-100 text-amber-800" :
-            "bg-red-100 text-red-800"
-          }`}>
-            {data.complianceRate}% compliant
-          </span>
-        </div>
-      </div>
-
-      {/* Key Stats */}
-      <div className="grid grid-cols-4 gap-px bg-border">
-        <Stat label="Month" value={String(data.incidentsThisMonth)} />
-        <Stat label="Restraints" value={String(restraintMetrics.restraintsThisMonth)} />
-        <Stat label="De-esc %" value={`${restraintMetrics.deEscalationAttemptedRate}%`} />
-        <Stat label="Debrief" value={`${restraintMetrics.childDebriefRate}%`} />
-      </div>
-
-      {/* Severity bar */}
-      <div className="px-4 py-3 border-t border-border">
-        <p className="text-xs text-muted-foreground mb-1.5">Severity distribution</p>
-        <div className="h-2 bg-muted rounded-full overflow-hidden flex">
-          {data.bySeverity.map(s => (
-            <div
-              key={s.severity}
-              className={`${SEVERITY_COLORS[s.severity]} h-full`}
-              style={{ width: `${(s.count / data.totalIncidents) * 100}%` }}
-            />
-          ))}
-        </div>
-        <div className="flex justify-between mt-1">
-          <span className="text-[10px] text-muted-foreground">Low</span>
-          <span className="text-[10px] text-muted-foreground">Critical</span>
-        </div>
-      </div>
-
-      {/* Restraint trend */}
-      <div className="px-4 py-2.5 border-t border-border flex items-center justify-between">
-        <span className="text-xs text-muted-foreground">Restraint trend</span>
-        <span className={`text-xs font-medium ${TREND_STYLES[restraintMetrics.trend]}`}>
-          {TREND_LABELS[restraintMetrics.trend]}
-        </span>
-      </div>
-
-      {/* Repeat patterns */}
-      {data.repeatPatterns.length > 0 && (
-        <div className="divide-y divide-border border-t border-border">
-          {data.repeatPatterns.slice(0, 3).map(child => (
-            <div key={child.childId} className="px-4 py-2 flex items-center justify-between">
-              <p className="text-xs font-medium">{child.childName}</p>
-              <span className="text-xs text-amber-600 dark:text-amber-400 font-medium">
-                {child.count} incidents
-              </span>
-            </div>
-          ))}
-        </div>
+        </Section>
       )}
 
-      {/* Ofsted notification warning */}
-      {data.requiresOfstedNotification > 0 && (
-        <div className="border-t border-border bg-red-50/50 dark:bg-red-900/10 p-3">
-          <p className="text-xs font-medium text-red-700 dark:text-red-400">
-            {data.requiresOfstedNotification} incident{data.requiresOfstedNotification !== 1 ? "s" : ""} requiring Ofsted notification
-          </p>
-        </div>
-      )}
-
-      {/* Footer */}
-      <div className="p-3 border-t border-border text-center">
-        <a href="/incidents" className="text-xs text-primary font-medium hover:underline">
-          View incident log →
-        </a>
-      </div>
-    </div>
-  );
-}
-
-function Stat({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="bg-card p-3 text-center">
-      <p className="text-lg font-bold">{value}</p>
-      <p className="text-xs text-muted-foreground">{label}</p>
+      {data.strengths.length > 0 && (<Section title="Strengths"><ul className="space-y-1">{data.strengths.map((s, i) => (<li key={i} className="text-sm text-green-800 flex gap-2"><span className="shrink-0 mt-1 h-1.5 w-1.5 rounded-full bg-green-500" />{s}</li>))}</ul></Section>)}
+      {data.areasForImprovement.length > 0 && (<Section title="Areas for Improvement"><ul className="space-y-1">{data.areasForImprovement.map((a, i) => (<li key={i} className="text-sm text-amber-800 flex gap-2"><span className="shrink-0 mt-1 h-1.5 w-1.5 rounded-full bg-amber-500" />{a}</li>))}</ul></Section>)}
+      {data.actions.length > 0 && (<Section title="Actions" defaultOpen><ul className="space-y-1">{data.actions.map((a, i) => (<li key={i} className={`text-sm flex gap-2 ${a.startsWith("URGENT") ? "text-red-800 font-semibold" : "text-gray-700"}`}><span className={`shrink-0 mt-1 h-1.5 w-1.5 rounded-full ${a.startsWith("URGENT") ? "bg-red-500" : "bg-gray-400"}`} />{a}</li>))}</ul></Section>)}
+      <Section title="Regulatory Links"><ul className="space-y-1">{data.regulatoryLinks.map((l, i) => (<li key={i} className="text-sm text-gray-600 flex gap-2"><span className="shrink-0 mt-1 h-1.5 w-1.5 rounded-full bg-gray-400" />{l}</li>))}</ul></Section>
     </div>
   );
 }
