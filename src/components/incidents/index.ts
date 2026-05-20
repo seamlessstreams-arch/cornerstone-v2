@@ -1,1 +1,1 @@
-export { IncidentsDashboardWidget } from "./IncidentsDashboardWidget";
+export { default as IncidentsDashboardWidget } from "./IncidentsDashboardWidget";

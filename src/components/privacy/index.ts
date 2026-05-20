@@ -1,1 +1,1 @@
-export { PrivacyDashboardWidget } from "./PrivacyDashboardWidget";
+export { default as PrivacyDashboardWidget } from "./PrivacyDashboardWidget";

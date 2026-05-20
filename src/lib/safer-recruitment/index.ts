@@ -1,7 +1,34 @@
-// ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Safer Recruitment — Public API
-// ══════════════════════════════════════════════════════════════════════════════
+export {
+  generateSaferRecruitmentIntelligence,
+  evaluateSaferRecruitmentQuality,
+  evaluateSaferRecruitmentCompliance,
+  evaluateSaferRecruitmentPolicy,
+  evaluateStaffSaferRecruitmentReadiness,
+  buildStaffRecruitmentProfiles,
+  pct,
+  getRating,
+  getSaferRecruitmentCategoryLabel,
+  getSaferRecruitmentOutcomeLabel,
+  getRatingLabel,
+} from "./safer-recruitment-engine";
 
+export type {
+  SaferRecruitmentCategory,
+  SaferRecruitmentOutcome,
+  Rating,
+  SaferRecruitmentRecord,
+  SaferRecruitmentPolicy,
+  StaffSaferRecruitmentTraining,
+  SaferRecruitmentQualityResult,
+  SaferRecruitmentComplianceResult,
+  SaferRecruitmentPolicyResult,
+  StaffSaferRecruitmentReadinessResult,
+  StaffRecruitmentProfile,
+  SaferRecruitmentIntelligence,
+  GenerateSaferRecruitmentIntelligenceInput,
+} from "./safer-recruitment-engine";
+
+// Legacy re-exports from compliance-engine
 export {
   evaluateCompliance,
   checkStartReadiness,
