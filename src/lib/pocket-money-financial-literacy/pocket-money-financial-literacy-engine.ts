@@ -1,225 +1,46 @@
-// ==============================================================================
-// Cornerstone -- Pocket Money & Financial Literacy Intelligence Engine
-//
-// Pure deterministic engine -- no AI, no external calls, no randomness.
-// Evaluates pocket money management, savings encouragement, financial
-// education, and budgeting support for children in residential care.
-//
-// Aligned to:
-//   - CHR 2015 Reg 10 -- Health and well-being (personal development)
-//   - CHR 2015 Reg 14 -- Care planning (individual financial planning)
-//   - SCCIF -- Social Care Common Inspection Framework
-//   - NMS 3 -- Placement plan: covering pocket money arrangements
-//   - UNCRC Article 27 -- Right to adequate standard of living
-//   - Children Act 1989 -- Welfare and maintenance duties
-//   - NMS 10 -- Enjoying and achieving (life skills development)
-//
-// Key requirements:
-//   - Pocket money paid regularly at agreed frequency
-//   - Receipts recorded for all expenditure
-//   - Children sign off on pocket money received
-//   - Savings encouraged with goals and accessible accounts
-//   - Financial education sessions delivered across core topics
-//   - Staff trained in pocket money policy, education, safeguarding
-//   - Budgeting support provided to develop independence
-//
-// No AI. No external calls. Pure input -> output.
-// ==============================================================================
+// Pocket Money Financial Literacy Intelligence Engine
+// Pure deterministic — no AI, no external calls, no randomness, no Date.now()
 
-// -- Types --------------------------------------------------------------------
+// ── Type unions ──────────────────────────────────────────────────────────────
 
-export type PaymentFrequency = "weekly" | "fortnightly" | "monthly";
-
-export type SpendingCategory =
-  | "savings"
-  | "personal_items"
-  | "activities"
-  | "food_treats"
-  | "gifts"
-  | "clothing"
-  | "technology"
-  | "other";
-
-export type EducationTopic =
+export type FinancialSkillType =
   | "budgeting"
   | "saving"
-  | "banking"
-  | "value_of_money"
+  | "spending_decisions"
+  | "banking_basics"
   | "comparison_shopping"
-  | "online_safety"
-  | "debt_awareness";
+  | "earning_income"
+  | "charity_giving"
+  | "financial_planning";
 
-export type SessionEngagement = "high" | "medium" | "low";
+export type CompetencyLevel =
+  | "independent"
+  | "confident"
+  | "developing"
+  | "emerging"
+  | "not_started";
 
-export type Rating =
-  | "outstanding"
-  | "good"
-  | "requires_improvement"
-  | "inadequate";
+export type Rating = "outstanding" | "good" | "requires_improvement" | "inadequate";
 
-// -- Input Interfaces ---------------------------------------------------------
+// ── Label maps ───────────────────────────────────────────────────────────────
 
-export interface PocketMoneyRecord {
-  id: string;
-  childId: string;
-  childName: string;
-  weekStarting: string;
-  amountGiven: number;
-  amountSaved: number;
-  spendingCategories: SpendingCategory[];
-  receiptRecorded: boolean;
-  childSignedOff: boolean;
-}
-
-export interface SavingsAccount {
-  id: string;
-  childId: string;
-  childName: string;
-  accountType: "savings" | "current" | "junior_isa";
-  balance: number;
-  monthlyDeposits: number;
-  savingsGoalSet: boolean;
-  savingsGoalDescription?: string;
-}
-
-export interface FinancialEducationSession {
-  id: string;
-  date: string;
-  facilitatedBy: string;
-  topic: EducationTopic;
-  childrenAttended: string[];
-  engagement: SessionEngagement;
-  resourcesProvided: boolean;
-}
-
-export interface StaffFinancialTraining {
-  id: string;
-  staffId: string;
-  staffName: string;
-  pocketMoneyPolicyTrained: boolean;
-  financialEducationTrained: boolean;
-  budgetingSupportTrained: boolean;
-  safeguardingFinancialAbuse: boolean;
-  recordKeepingTrained: boolean;
-}
-
-// -- Result Interfaces --------------------------------------------------------
-
-export interface PocketMoneyManagementResult {
-  overallScore: number; // 0-25
-  totalRecords: number;
-  receiptRecordingRate: number; // %
-  childSignOffRate: number; // %
-  savingsParticipationRate: number; // %
-  consistentPayments: boolean;
-}
-
-export interface SavingsEngagementResult {
-  overallScore: number; // 0-25
-  totalAccounts: number;
-  accountsPerChild: number;
-  savingsGoalRate: number; // %
-  monthlyDepositRegularity: number; // %
-  balanceDiversity: boolean;
-}
-
-export interface FinancialEducationResult {
-  overallScore: number; // 0-25
-  totalSessions: number;
-  topicVariety: number; // % of topics covered
-  engagementRate: number; // %
-  resourcesProvidedRate: number; // %
-  childrenReachedRate: number; // %
-}
-
-export interface StaffFinancialReadinessResult {
-  overallScore: number; // 0-25
-  totalStaff: number;
-  policyTrainedRate: number; // %
-  educationTrainedRate: number; // %
-  budgetingSupportRate: number; // %
-  safeguardingFinancialAbuseRate: number; // %
-  recordKeepingRate: number; // %
-}
-
-export interface ChildFinancialSummary {
-  childId: string;
-  childName: string;
-  totalPocketMoney: number;
-  totalSaved: number;
-  savingsRate: number; // %
-  receiptRate: number; // %
-  signOffRate: number; // %
-  hasSavingsAccount: boolean;
-  overallScore: number; // 0-10
-}
-
-export interface PocketMoneyFinancialLiteracyIntelligence {
-  homeId: string;
-  periodStart: string;
-  periodEnd: string;
-  overallScore: number; // 0-100
-  rating: Rating;
-  pocketMoneyManagement: PocketMoneyManagementResult;
-  savingsEngagement: SavingsEngagementResult;
-  financialEducation: FinancialEducationResult;
-  staffFinancialReadiness: StaffFinancialReadinessResult;
-  childFinancialSummaries: ChildFinancialSummary[];
-  strengths: string[];
-  areasForImprovement: string[];
-  actions: string[];
-  regulatoryLinks: string[];
-}
-
-// -- Helpers ------------------------------------------------------------------
-
-/** Calculate percentage, returning 0 if denominator is 0. */
-export function pct(numerator: number, denominator: number): number {
-  if (denominator === 0) return 0;
-  return Math.round((numerator / denominator) * 100);
-}
-
-/** Map overall score (0-100) to Ofsted-style rating. */
-export function getRating(score: number): Rating {
-  if (score >= 80) return "outstanding";
-  if (score >= 60) return "good";
-  if (score >= 40) return "requires_improvement";
-  return "inadequate";
-}
-
-// -- Label Maps & Getters -----------------------------------------------------
-
-const PAYMENT_FREQUENCY_LABELS: Record<PaymentFrequency, string> = {
-  weekly: "Weekly",
-  fortnightly: "Fortnightly",
-  monthly: "Monthly",
-};
-
-const SPENDING_CATEGORY_LABELS: Record<SpendingCategory, string> = {
-  savings: "Savings",
-  personal_items: "Personal Items",
-  activities: "Activities",
-  food_treats: "Food & Treats",
-  gifts: "Gifts",
-  clothing: "Clothing",
-  technology: "Technology",
-  other: "Other",
-};
-
-const EDUCATION_TOPIC_LABELS: Record<EducationTopic, string> = {
+const FINANCIAL_SKILL_TYPE_LABELS: Record<FinancialSkillType, string> = {
   budgeting: "Budgeting",
   saving: "Saving",
-  banking: "Banking",
-  value_of_money: "Value of Money",
+  spending_decisions: "Spending Decisions",
+  banking_basics: "Banking Basics",
   comparison_shopping: "Comparison Shopping",
-  online_safety: "Online Safety",
-  debt_awareness: "Debt Awareness",
+  earning_income: "Earning Income",
+  charity_giving: "Charity Giving",
+  financial_planning: "Financial Planning",
 };
 
-const SESSION_ENGAGEMENT_LABELS: Record<SessionEngagement, string> = {
-  high: "High",
-  medium: "Medium",
-  low: "Low",
+const COMPETENCY_LEVEL_LABELS: Record<CompetencyLevel, string> = {
+  independent: "Independent",
+  confident: "Confident",
+  developing: "Developing",
+  emerging: "Emerging",
+  not_started: "Not Started",
 };
 
 const RATING_LABELS: Record<Rating, string> = {
@@ -229,692 +50,389 @@ const RATING_LABELS: Record<Rating, string> = {
   inadequate: "Inadequate",
 };
 
-export function getPaymentFrequencyLabel(freq: PaymentFrequency): string {
-  return PAYMENT_FREQUENCY_LABELS[freq] || freq;
+export function getFinancialSkillTypeLabel(v: FinancialSkillType): string { return FINANCIAL_SKILL_TYPE_LABELS[v]; }
+export function getCompetencyLevelLabel(v: CompetencyLevel): string { return COMPETENCY_LEVEL_LABELS[v]; }
+export function getRatingLabel(v: Rating): string { return RATING_LABELS[v]; }
+
+// ── Input interfaces ─────────────────────────────────────────────────────────
+
+export interface FinancialSession {
+  id: string;
+  childId: string;
+  childName: string;
+  sessionDate: string;
+  skillType: FinancialSkillType;
+  competencyLevel: CompetencyLevel;
+  childEngaged: boolean;
+  practicalApplication: boolean;
+  progressDemonstrated: boolean;
+  documentedInPlan: boolean;
+  staffSupported: boolean;
+  feedbackGiven: boolean;
 }
 
-export function getSpendingCategoryLabel(cat: SpendingCategory): string {
-  return SPENDING_CATEGORY_LABELS[cat] || cat;
+export interface FinancialLiteracyPolicy {
+  id: string;
+  pocketMoneyFramework: boolean;
+  savingsSchemePolicy: boolean;
+  financialEducationPlan: boolean;
+  ageAppropriateBudgeting: boolean;
+  independencePreparation: boolean;
+  safeguardingFinancialExploitation: boolean;
+  regularReview: boolean;
 }
 
-export function getEducationTopicLabel(topic: EducationTopic): string {
-  return EDUCATION_TOPIC_LABELS[topic] || topic;
+export interface StaffFinancialLiteracyTraining {
+  id: string;
+  staffId: string;
+  staffName: string;
+  financialEducationSkills: boolean;
+  budgetingSupport: boolean;
+  ageAppropriateTeaching: boolean;
+  safeguardingFinancialAbuse: boolean;
+  independencePromotionSkills: boolean;
+  recordKeeping: boolean;
 }
 
-export function getSessionEngagementLabel(eng: SessionEngagement): string {
-  return SESSION_ENGAGEMENT_LABELS[eng] || eng;
+// ── Result interfaces ────────────────────────────────────────────────────────
+
+export interface FinancialQualityResult {
+  overallScore: number;
+  totalSessions: number;
+  competencyRate: number;
+  engagementRate: number;
+  practicalApplicationRate: number;
+  progressRate: number;
 }
 
-export function getRatingLabel(rating: Rating): string {
-  return RATING_LABELS[rating] || rating;
+export interface FinancialComplianceResult {
+  overallScore: number;
+  documentedRate: number;
+  staffSupportedRate: number;
+  feedbackRate: number;
+  skillTypeDiversityRatio: number;
 }
 
-// -- All topics constant (for coverage calculation) ---------------------------
+export interface FinancialPolicyResult {
+  overallScore: number;
+  pocketMoneyFramework: boolean;
+  savingsSchemePolicy: boolean;
+  financialEducationPlan: boolean;
+  ageAppropriateBudgeting: boolean;
+  independencePreparation: boolean;
+  safeguardingFinancialExploitation: boolean;
+  regularReview: boolean;
+}
 
-const ALL_EDUCATION_TOPICS: EducationTopic[] = [
-  "budgeting",
-  "saving",
-  "banking",
-  "value_of_money",
-  "comparison_shopping",
-  "online_safety",
-  "debt_awareness",
-];
+export interface StaffFinancialReadinessResult {
+  overallScore: number;
+  totalStaff: number;
+  financialEducationSkillsRate: number;
+  budgetingSupportRate: number;
+  ageAppropriateTeachingRate: number;
+  safeguardingFinancialAbuseRate: number;
+  independencePromotionSkillsRate: number;
+  recordKeepingRate: number;
+}
 
-// -- Evaluators ---------------------------------------------------------------
+export interface ChildFinancialProfile {
+  childId: string;
+  childName: string;
+  totalSessions: number;
+  competencyRate: number;
+  engagementRate: number;
+  overallScore: number;
+}
+
+export interface PocketMoneyFinancialLiteracyIntelligence {
+  homeId: string;
+  periodStart: string;
+  periodEnd: string;
+  overallScore: number;
+  rating: Rating;
+  financialQuality: FinancialQualityResult;
+  financialCompliance: FinancialComplianceResult;
+  financialPolicy: FinancialPolicyResult;
+  staffFinancialReadiness: StaffFinancialReadinessResult;
+  childProfiles: ChildFinancialProfile[];
+  strengths: string[];
+  areasForImprovement: string[];
+  actions: string[];
+  regulatoryLinks: string[];
+}
+
+// ── Helpers ──────────────────────────────────────────────────────────────────
+
+export function pct(num: number, den: number): number {
+  if (den === 0) return 0;
+  return Math.round((num / den) * 100);
+}
+
+export function getRating(score: number): Rating {
+  if (score >= 80) return "outstanding";
+  if (score >= 60) return "good";
+  if (score >= 40) return "requires_improvement";
+  return "inadequate";
+}
+
+// ── Evaluators ───────────────────────────────────────────────────────────────
 
 /**
- * Evaluate pocket money management quality (0-25).
+ * Evaluate financial quality (0-25).
  *
- * Scoring:
- *   receipt recording rate      -> 0-7
- *   child sign-off rate         -> 0-7
- *   savings participation rate  -> 0-6
- *   consistent payments         -> 0-5
- *
- * Empty data = 0.
+ * Competent = independent + confident.
+ * competencyRate, engagementRate, practicalApplicationRate, progressRate.
+ * Weighted: competency 0-7, engagement 0-6, practical 0-6, progress 0-6.
  */
-export function evaluatePocketMoneyManagement(
-  records: PocketMoneyRecord[],
-): PocketMoneyManagementResult {
-  if (records.length === 0) {
-    return {
-      overallScore: 0,
-      totalRecords: 0,
-      receiptRecordingRate: 0,
-      childSignOffRate: 0,
-      savingsParticipationRate: 0,
-      consistentPayments: false,
-    };
-  }
-
-  const withReceipt = records.filter((r) => r.receiptRecorded);
-  const withSignOff = records.filter((r) => r.childSignedOff);
-  const withSavings = records.filter((r) => r.amountSaved > 0);
-
-  const receiptRecordingRate = pct(withReceipt.length, records.length);
-  const childSignOffRate = pct(withSignOff.length, records.length);
-  const savingsParticipationRate = pct(withSavings.length, records.length);
-
-  // Consistent payments: check that all children with records have multiple entries
-  const childRecordCounts = new Map<string, number>();
-  for (const r of records) {
-    childRecordCounts.set(r.childId, (childRecordCounts.get(r.childId) || 0) + 1);
-  }
-  const consistentPayments = Array.from(childRecordCounts.values()).every(
-    (count) => count >= 2,
-  );
-
-  // Scoring
-  const receiptScore = Math.round((receiptRecordingRate / 100) * 7);
-  const signOffScore = Math.round((childSignOffRate / 100) * 7);
-  const savingsScore = Math.round((savingsParticipationRate / 100) * 6);
-  const consistencyScore = consistentPayments ? 5 : 2;
-
-  const overallScore = Math.min(
-    25,
-    Math.max(0, receiptScore + signOffScore + savingsScore + consistencyScore),
-  );
-
-  return {
-    overallScore,
-    totalRecords: records.length,
-    receiptRecordingRate,
-    childSignOffRate,
-    savingsParticipationRate,
-    consistentPayments,
-  };
-}
-
-/**
- * Evaluate savings engagement (0-25).
- *
- * Scoring:
- *   accounts per child (>= 1 = good)  -> 0-6
- *   savings goal rate                  -> 0-7
- *   monthly deposit regularity         -> 0-7
- *   balance diversity                  -> 0-5
- *
- * Empty data = 0.
- */
-export function evaluateSavingsEngagement(
-  accounts: SavingsAccount[],
-): SavingsEngagementResult {
-  if (accounts.length === 0) {
-    return {
-      overallScore: 0,
-      totalAccounts: 0,
-      accountsPerChild: 0,
-      savingsGoalRate: 0,
-      monthlyDepositRegularity: 0,
-      balanceDiversity: false,
-    };
-  }
-
-  // Unique children
-  const uniqueChildren = new Set(accounts.map((a) => a.childId));
-  const accountsPerChild =
-    Math.round((accounts.length / uniqueChildren.size) * 100) / 100;
-
-  const withGoal = accounts.filter((a) => a.savingsGoalSet);
-  const withDeposits = accounts.filter((a) => a.monthlyDeposits > 0);
-
-  const savingsGoalRate = pct(withGoal.length, accounts.length);
-  const monthlyDepositRegularity = pct(withDeposits.length, accounts.length);
-
-  // Balance diversity: check that balances are not all zero and at least 2 different balances
-  const balances = new Set(accounts.map((a) => a.balance));
-  const balanceDiversity = balances.size >= 2 && !accounts.every((a) => a.balance === 0);
-
-  // Scoring
-  const accountScore = accountsPerChild >= 1 ? 6 : Math.round(accountsPerChild * 6);
-  const goalScore = Math.round((savingsGoalRate / 100) * 7);
-  const depositScore = Math.round((monthlyDepositRegularity / 100) * 7);
-  const diversityScore = balanceDiversity ? 5 : 0;
-
-  const overallScore = Math.min(
-    25,
-    Math.max(0, accountScore + goalScore + depositScore + diversityScore),
-  );
-
-  return {
-    overallScore,
-    totalAccounts: accounts.length,
-    accountsPerChild,
-    savingsGoalRate,
-    monthlyDepositRegularity,
-    balanceDiversity,
-  };
-}
-
-/**
- * Evaluate financial education provision (0-25).
- *
- * Scoring:
- *   topic variety               -> 0-7
- *   engagement rate (high)      -> 0-6
- *   resources provided rate     -> 0-6
- *   children reached rate       -> 0-6
- *
- * Empty data = 0.
- */
-export function evaluateFinancialEducation(
-  sessions: FinancialEducationSession[],
-  totalChildren: number,
-): FinancialEducationResult {
+export function evaluateFinancialQuality(sessions: FinancialSession[]): FinancialQualityResult {
   if (sessions.length === 0) {
+    return { overallScore: 0, totalSessions: 0, competencyRate: 0, engagementRate: 0, practicalApplicationRate: 0, progressRate: 0 };
+  }
+
+  const total = sessions.length;
+  const competentCount = sessions.filter((s) => s.competencyLevel === "independent" || s.competencyLevel === "confident").length;
+  const engagedCount = sessions.filter((s) => s.childEngaged).length;
+  const practicalCount = sessions.filter((s) => s.practicalApplication).length;
+  const progressCount = sessions.filter((s) => s.progressDemonstrated).length;
+
+  const competencyRate = pct(competentCount, total);
+  const engagementRate = pct(engagedCount, total);
+  const practicalApplicationRate = pct(practicalCount, total);
+  const progressRate = pct(progressCount, total);
+
+  const compScore = Math.round((competencyRate / 100) * 7);
+  const engScore = Math.round((engagementRate / 100) * 6);
+  const practScore = Math.round((practicalApplicationRate / 100) * 6);
+  const progScore = Math.round((progressRate / 100) * 6);
+
+  const overallScore = Math.min(25, compScore + engScore + practScore + progScore);
+
+  return { overallScore, totalSessions: total, competencyRate, engagementRate, practicalApplicationRate, progressRate };
+}
+
+/**
+ * Evaluate financial compliance (0-25).
+ *
+ * documentedRate, staffSupportedRate, feedbackRate.
+ * Diversity: unique skillTypes / 8.
+ * Weighted: documented 0-8, staffSupported 0-7, feedback 0-5, diversity 0-5.
+ */
+export function evaluateFinancialCompliance(sessions: FinancialSession[]): FinancialComplianceResult {
+  if (sessions.length === 0) {
+    return { overallScore: 0, documentedRate: 0, staffSupportedRate: 0, feedbackRate: 0, skillTypeDiversityRatio: 0 };
+  }
+
+  const total = sessions.length;
+  const documentedCount = sessions.filter((s) => s.documentedInPlan).length;
+  const staffCount = sessions.filter((s) => s.staffSupported).length;
+  const feedbackCount = sessions.filter((s) => s.feedbackGiven).length;
+  const uniqueTypes = new Set(sessions.map((s) => s.skillType)).size;
+  const diversityRatio = pct(uniqueTypes, 8);
+
+  const documentedRate = pct(documentedCount, total);
+  const staffSupportedRate = pct(staffCount, total);
+  const feedbackRate = pct(feedbackCount, total);
+
+  const docScore = Math.round((documentedRate / 100) * 8);
+  const staffScore = Math.round((staffSupportedRate / 100) * 7);
+  const fbScore = Math.round((feedbackRate / 100) * 5);
+  const divScore = Math.round((diversityRatio / 100) * 5);
+
+  const overallScore = Math.min(25, docScore + staffScore + fbScore + divScore);
+
+  return { overallScore, documentedRate, staffSupportedRate, feedbackRate, skillTypeDiversityRatio: diversityRatio };
+}
+
+/**
+ * Evaluate financial policy (0-25).
+ *
+ * Weights: 4+4+4+4+3+3+3 = 25.
+ */
+export function evaluateFinancialPolicy(policy: FinancialLiteracyPolicy | null): FinancialPolicyResult {
+  if (!policy) {
     return {
       overallScore: 0,
-      totalSessions: 0,
-      topicVariety: 0,
-      engagementRate: 0,
-      resourcesProvidedRate: 0,
-      childrenReachedRate: 0,
+      pocketMoneyFramework: false,
+      savingsSchemePolicy: false,
+      financialEducationPlan: false,
+      ageAppropriateBudgeting: false,
+      independencePreparation: false,
+      safeguardingFinancialExploitation: false,
+      regularReview: false,
     };
   }
 
-  // Topic variety
-  const topicsCovered = new Set(sessions.map((s) => s.topic));
-  const topicVariety = pct(topicsCovered.size, ALL_EDUCATION_TOPICS.length);
-
-  // Engagement rate: sessions with high engagement
-  const highEngagement = sessions.filter((s) => s.engagement === "high");
-  const engagementRate = pct(highEngagement.length, sessions.length);
-
-  // Resources provided rate
-  const withResources = sessions.filter((s) => s.resourcesProvided);
-  const resourcesProvidedRate = pct(withResources.length, sessions.length);
-
-  // Children reached rate: unique children who attended at least one session
-  const childrenReached = new Set<string>();
-  for (const s of sessions) {
-    for (const c of s.childrenAttended) {
-      childrenReached.add(c);
-    }
-  }
-  const childrenReachedRate =
-    totalChildren > 0 ? pct(childrenReached.size, totalChildren) : 0;
-
-  // Scoring
-  const topicScore = Math.round((topicVariety / 100) * 7);
-  const engagementScore = Math.round((engagementRate / 100) * 6);
-  const resourcesScore = Math.round((resourcesProvidedRate / 100) * 6);
-  const reachedScore = Math.round((childrenReachedRate / 100) * 6);
-
-  const overallScore = Math.min(
-    25,
-    Math.max(0, topicScore + engagementScore + resourcesScore + reachedScore),
-  );
+  let score = 0;
+  if (policy.pocketMoneyFramework) score += 4;
+  if (policy.savingsSchemePolicy) score += 4;
+  if (policy.financialEducationPlan) score += 4;
+  if (policy.ageAppropriateBudgeting) score += 4;
+  if (policy.independencePreparation) score += 3;
+  if (policy.safeguardingFinancialExploitation) score += 3;
+  if (policy.regularReview) score += 3;
 
   return {
-    overallScore,
-    totalSessions: sessions.length,
-    topicVariety,
-    engagementRate,
-    resourcesProvidedRate,
-    childrenReachedRate,
+    overallScore: Math.min(25, score),
+    pocketMoneyFramework: policy.pocketMoneyFramework,
+    savingsSchemePolicy: policy.savingsSchemePolicy,
+    financialEducationPlan: policy.financialEducationPlan,
+    ageAppropriateBudgeting: policy.ageAppropriateBudgeting,
+    independencePreparation: policy.independencePreparation,
+    safeguardingFinancialExploitation: policy.safeguardingFinancialExploitation,
+    regularReview: policy.regularReview,
   };
 }
 
 /**
  * Evaluate staff financial readiness (0-25).
  *
- * Scoring:
- *   policy trained rate                   -> 0-5
- *   financial education trained rate      -> 0-5
- *   budgeting support trained rate        -> 0-5
- *   safeguarding financial abuse rate     -> 0-5
- *   record keeping trained rate           -> 0-5
- *
- * Empty data = 0.
+ * 6 skills. Weighted: 6+5+5+4+3+2 = 25.
  */
-export function evaluateStaffFinancialReadiness(
-  training: StaffFinancialTraining[],
-): StaffFinancialReadinessResult {
+export function evaluateStaffFinancialReadiness(training: StaffFinancialLiteracyTraining[]): StaffFinancialReadinessResult {
   if (training.length === 0) {
-    return {
-      overallScore: 0,
-      totalStaff: 0,
-      policyTrainedRate: 0,
-      educationTrainedRate: 0,
-      budgetingSupportRate: 0,
-      safeguardingFinancialAbuseRate: 0,
-      recordKeepingRate: 0,
-    };
+    return { overallScore: 0, totalStaff: 0, financialEducationSkillsRate: 0, budgetingSupportRate: 0, ageAppropriateTeachingRate: 0, safeguardingFinancialAbuseRate: 0, independencePromotionSkillsRate: 0, recordKeepingRate: 0 };
   }
 
-  const policyTrained = training.filter((t) => t.pocketMoneyPolicyTrained);
-  const educationTrained = training.filter((t) => t.financialEducationTrained);
-  const budgetingTrained = training.filter((t) => t.budgetingSupportTrained);
-  const safeguardingTrained = training.filter(
-    (t) => t.safeguardingFinancialAbuse,
-  );
-  const recordKeepingTrained = training.filter((t) => t.recordKeepingTrained);
+  const total = training.length;
+  const feCount = training.filter((t) => t.financialEducationSkills).length;
+  const bsCount = training.filter((t) => t.budgetingSupport).length;
+  const atCount = training.filter((t) => t.ageAppropriateTeaching).length;
+  const sfCount = training.filter((t) => t.safeguardingFinancialAbuse).length;
+  const ipCount = training.filter((t) => t.independencePromotionSkills).length;
+  const rkCount = training.filter((t) => t.recordKeeping).length;
 
-  const policyTrainedRate = pct(policyTrained.length, training.length);
-  const educationTrainedRate = pct(educationTrained.length, training.length);
-  const budgetingSupportRate = pct(budgetingTrained.length, training.length);
-  const safeguardingFinancialAbuseRate = pct(
-    safeguardingTrained.length,
-    training.length,
-  );
-  const recordKeepingRate = pct(recordKeepingTrained.length, training.length);
+  const financialEducationSkillsRate = pct(feCount, total);
+  const budgetingSupportRate = pct(bsCount, total);
+  const ageAppropriateTeachingRate = pct(atCount, total);
+  const safeguardingFinancialAbuseRate = pct(sfCount, total);
+  const independencePromotionSkillsRate = pct(ipCount, total);
+  const recordKeepingRate = pct(rkCount, total);
 
-  // Scoring
-  const policyScore = Math.round((policyTrainedRate / 100) * 5);
-  const educationScore = Math.round((educationTrainedRate / 100) * 5);
-  const budgetingScore = Math.round((budgetingSupportRate / 100) * 5);
-  const safeguardingScore = Math.round(
-    (safeguardingFinancialAbuseRate / 100) * 5,
-  );
-  const recordKeepingScore = Math.round((recordKeepingRate / 100) * 5);
+  const s1 = Math.round((financialEducationSkillsRate / 100) * 6);
+  const s2 = Math.round((budgetingSupportRate / 100) * 5);
+  const s3 = Math.round((ageAppropriateTeachingRate / 100) * 5);
+  const s4 = Math.round((safeguardingFinancialAbuseRate / 100) * 4);
+  const s5 = Math.round((independencePromotionSkillsRate / 100) * 3);
+  const s6 = Math.round((recordKeepingRate / 100) * 2);
 
-  const overallScore = Math.min(
-    25,
-    Math.max(
-      0,
-      policyScore +
-        educationScore +
-        budgetingScore +
-        safeguardingScore +
-        recordKeepingScore,
-    ),
-  );
+  const overallScore = Math.min(25, s1 + s2 + s3 + s4 + s5 + s6);
 
-  return {
-    overallScore,
-    totalStaff: training.length,
-    policyTrainedRate,
-    educationTrainedRate,
-    budgetingSupportRate,
-    safeguardingFinancialAbuseRate,
-    recordKeepingRate,
-  };
+  return { overallScore, totalStaff: total, financialEducationSkillsRate, budgetingSupportRate, ageAppropriateTeachingRate, safeguardingFinancialAbuseRate, independencePromotionSkillsRate, recordKeepingRate };
 }
 
-// -- Build Child Financial Summaries ------------------------------------------
+// ── Child profiles ───────────────────────────────────────────────────────────
 
-export function buildChildFinancialSummaries(
-  records: PocketMoneyRecord[],
-  accounts: SavingsAccount[],
-): ChildFinancialSummary[] {
-  // Get unique children from records
-  const childIds = [...new Set(records.map((r) => r.childId))];
+export function buildChildFinancialProfiles(sessions: FinancialSession[]): ChildFinancialProfile[] {
+  if (sessions.length === 0) return [];
 
-  return childIds.map((childId) => {
-    const childRecords = records.filter((r) => r.childId === childId);
-    const childAccounts = accounts.filter((a) => a.childId === childId);
+  const grouped = new Map<string, FinancialSession[]>();
+  for (const s of sessions) {
+    if (!grouped.has(s.childId)) grouped.set(s.childId, []);
+    grouped.get(s.childId)!.push(s);
+  }
 
-    const childName = childRecords[0]?.childName ?? "Unknown";
-    const totalPocketMoney = childRecords.reduce(
-      (sum, r) => sum + r.amountGiven,
-      0,
-    );
-    const totalSaved = childRecords.reduce(
-      (sum, r) => sum + r.amountSaved,
-      0,
-    );
+  const profiles: ChildFinancialProfile[] = [];
 
-    const savingsRate = pct(totalSaved, totalPocketMoney);
+  for (const [childId, sess] of grouped) {
+    const childName = sess[0].childName;
+    const total = sess.length;
+    const competentCount = sess.filter((s) => s.competencyLevel === "independent" || s.competencyLevel === "confident").length;
+    const engagedCount = sess.filter((s) => s.childEngaged).length;
 
-    const withReceipt = childRecords.filter((r) => r.receiptRecorded);
-    const receiptRate = pct(withReceipt.length, childRecords.length);
+    const competencyRate = pct(competentCount, total);
+    const engagementRate = pct(engagedCount, total);
 
-    const withSignOff = childRecords.filter((r) => r.childSignedOff);
-    const signOffRate = pct(withSignOff.length, childRecords.length);
+    // Score 0-10: frequency + competency + engagement + diversity
+    let freqScore = 0;
+    if (total >= 10) freqScore = 2;
+    else if (total >= 5) freqScore = 1;
 
-    const hasSavingsAccount = childAccounts.length > 0;
+    let compScore = 0;
+    if (competencyRate >= 80) compScore = 3;
+    else if (competencyRate >= 60) compScore = 2;
+    else if (competencyRate >= 40) compScore = 1;
 
-    // Score (0-10):
-    //   savings rate contribution  -> 0-3
-    //   receipt rate contribution  -> 0-2
-    //   sign-off rate contribution -> 0-2
-    //   has savings account        -> 2
-    //   has savings goal           -> 1
-    let score = 0;
-    score += Math.round((savingsRate / 100) * 3);
-    score += Math.round((receiptRate / 100) * 2);
-    score += Math.round((signOffRate / 100) * 2);
-    if (hasSavingsAccount) score += 2;
-    if (childAccounts.some((a) => a.savingsGoalSet)) score += 1;
+    let engScore = 0;
+    if (engagementRate >= 80) engScore = 3;
+    else if (engagementRate >= 60) engScore = 2;
+    else if (engagementRate >= 40) engScore = 1;
 
-    return {
-      childId,
-      childName,
-      totalPocketMoney: Math.round(totalPocketMoney * 100) / 100,
-      totalSaved: Math.round(totalSaved * 100) / 100,
-      savingsRate,
-      receiptRate,
-      signOffRate,
-      hasSavingsAccount,
-      overallScore: Math.min(10, Math.max(0, score)),
-    };
-  });
+    const uniqueTypes = new Set(sess.map((s) => s.skillType)).size;
+    let divScore = 0;
+    if (uniqueTypes >= 4) divScore = 2;
+    else if (uniqueTypes >= 2) divScore = 1;
+
+    const overallScore = Math.min(10, freqScore + compScore + engScore + divScore);
+
+    profiles.push({ childId, childName, totalSessions: total, competencyRate, engagementRate, overallScore });
+  }
+
+  return profiles;
 }
 
-// -- Main Intelligence Function -----------------------------------------------
+// ── Orchestrator ─────────────────────────────────────────────────────────────
 
 export function generatePocketMoneyFinancialLiteracyIntelligence(
-  records: PocketMoneyRecord[],
-  accounts: SavingsAccount[],
-  sessions: FinancialEducationSession[],
-  training: StaffFinancialTraining[],
+  sessions: FinancialSession[],
+  policy: FinancialLiteracyPolicy | null,
+  training: StaffFinancialLiteracyTraining[],
   homeId: string,
   periodStart: string,
   periodEnd: string,
 ): PocketMoneyFinancialLiteracyIntelligence {
-  // Derive total unique children from records + accounts
-  const allChildIds = new Set([
-    ...records.map((r) => r.childId),
-    ...accounts.map((a) => a.childId),
-  ]);
-  const totalChildren = allChildIds.size;
-
-  const pocketMoneyManagement = evaluatePocketMoneyManagement(records);
-  const savingsEngagement = evaluateSavingsEngagement(accounts);
-  const financialEducation = evaluateFinancialEducation(sessions, totalChildren);
+  const financialQuality = evaluateFinancialQuality(sessions);
+  const financialCompliance = evaluateFinancialCompliance(sessions);
+  const financialPolicy = evaluateFinancialPolicy(policy);
   const staffFinancialReadiness = evaluateStaffFinancialReadiness(training);
 
-  const childFinancialSummaries = buildChildFinancialSummaries(
-    records,
-    accounts,
-  );
-
-  // Overall score: sum of 4 evaluators (each 0-25) = 0-100
-  const overallScore = Math.min(
-    100,
-    Math.max(
-      0,
-      pocketMoneyManagement.overallScore +
-        savingsEngagement.overallScore +
-        financialEducation.overallScore +
-        staffFinancialReadiness.overallScore,
-    ),
-  );
-
+  const overallScore = Math.min(100, financialQuality.overallScore + financialCompliance.overallScore + financialPolicy.overallScore + staffFinancialReadiness.overallScore);
   const rating = getRating(overallScore);
 
-  // -- Strengths --
+  const childProfiles = buildChildFinancialProfiles(sessions);
+
   const strengths: string[] = [];
-
-  if (records.length === 0 && accounts.length === 0 && sessions.length === 0 && training.length === 0) {
-    // No strengths when everything is empty
-  } else {
-    if (pocketMoneyManagement.overallScore >= 20) {
-      strengths.push(
-        "Pocket money management is excellent with strong receipt recording, child sign-off and savings participation",
-      );
-    }
-    if (savingsEngagement.overallScore >= 20) {
-      strengths.push(
-        "Savings engagement is strong with active accounts, clear goals and regular deposits across all children",
-      );
-    }
-    if (financialEducation.overallScore >= 20) {
-      strengths.push(
-        "Financial education programme is comprehensive with broad topic coverage and high engagement",
-      );
-    }
-    if (staffFinancialReadiness.overallScore >= 20) {
-      strengths.push(
-        "Staff are well-trained across all financial competencies including safeguarding and record keeping",
-      );
-    }
-    if (pocketMoneyManagement.receiptRecordingRate >= 95 && records.length > 0) {
-      strengths.push(
-        "Receipt recording is excellent, providing clear audit trails for all pocket money transactions",
-      );
-    }
-    if (pocketMoneyManagement.childSignOffRate >= 95 && records.length > 0) {
-      strengths.push(
-        "Children consistently sign off on pocket money received, demonstrating informed participation",
-      );
-    }
-    if (pocketMoneyManagement.savingsParticipationRate >= 80 && records.length > 0) {
-      strengths.push(
-        "High proportion of children actively save from their pocket money, building positive financial habits",
-      );
-    }
-    if (pocketMoneyManagement.consistentPayments && records.length > 0) {
-      strengths.push(
-        "Pocket money payments are consistent across all children, providing reliability and security",
-      );
-    }
-    if (savingsEngagement.savingsGoalRate >= 80 && accounts.length > 0) {
-      strengths.push(
-        "Most children have savings goals set, encouraging purposeful saving and financial planning",
-      );
-    }
-    if (savingsEngagement.monthlyDepositRegularity >= 80 && accounts.length > 0) {
-      strengths.push(
-        "Regular monthly deposits demonstrate sustained saving habits across the home",
-      );
-    }
-    if (financialEducation.topicVariety >= 75 && sessions.length > 0) {
-      strengths.push(
-        "Financial education covers a wide range of topics preparing children for independent living",
-      );
-    }
-    if (financialEducation.resourcesProvidedRate >= 90 && sessions.length > 0) {
-      strengths.push(
-        "Educational resources are consistently provided to support children's financial learning",
-      );
-    }
-    if (financialEducation.childrenReachedRate === 100 && sessions.length > 0) {
-      strengths.push(
-        "All children in the home have participated in financial education sessions",
-      );
-    }
-    if (staffFinancialReadiness.safeguardingFinancialAbuseRate === 100 && training.length > 0) {
-      strengths.push(
-        "All staff are trained in safeguarding against financial abuse, protecting children's financial wellbeing",
-      );
-    }
-    if (staffFinancialReadiness.recordKeepingRate === 100 && training.length > 0) {
-      strengths.push(
-        "All staff are trained in financial record keeping, supporting accurate and transparent accounting",
-      );
-    }
-  }
-
-  // -- Areas for Improvement --
   const areasForImprovement: string[] = [];
-
-  if (records.length === 0) {
-    areasForImprovement.push(
-      "URGENT: No pocket money records found -- pocket money must be recorded and tracked for all children",
-    );
-  }
-  if (accounts.length === 0) {
-    areasForImprovement.push(
-      "URGENT: No savings accounts found -- each child should have access to a savings account",
-    );
-  }
-  if (sessions.length === 0) {
-    areasForImprovement.push(
-      "URGENT: No financial education sessions recorded -- children must receive regular financial literacy education",
-    );
-  }
-  if (training.length === 0) {
-    areasForImprovement.push(
-      "URGENT: No staff financial training records -- all staff must be trained in pocket money policy and financial education",
-    );
-  }
-  if (pocketMoneyManagement.receiptRecordingRate < 90 && records.length > 0) {
-    areasForImprovement.push(
-      `Receipt recording at ${pocketMoneyManagement.receiptRecordingRate}% -- all pocket money transactions must have receipts recorded`,
-    );
-  }
-  if (pocketMoneyManagement.childSignOffRate < 90 && records.length > 0) {
-    areasForImprovement.push(
-      `Child sign-off rate at ${pocketMoneyManagement.childSignOffRate}% -- children must sign off on all pocket money received`,
-    );
-  }
-  if (pocketMoneyManagement.savingsParticipationRate < 60 && records.length > 0) {
-    areasForImprovement.push(
-      `Only ${pocketMoneyManagement.savingsParticipationRate}% of pocket money records include savings -- children should be encouraged to save regularly`,
-    );
-  }
-  if (!pocketMoneyManagement.consistentPayments && records.length > 0) {
-    areasForImprovement.push(
-      "Pocket money payments are not consistent for all children -- regular payments must be maintained",
-    );
-  }
-  if (savingsEngagement.savingsGoalRate < 70 && accounts.length > 0) {
-    areasForImprovement.push(
-      `Only ${savingsEngagement.savingsGoalRate}% of savings accounts have goals set -- all children should have savings goals`,
-    );
-  }
-  if (savingsEngagement.monthlyDepositRegularity < 70 && accounts.length > 0) {
-    areasForImprovement.push(
-      `Monthly deposit regularity at ${savingsEngagement.monthlyDepositRegularity}% -- regular deposits should be encouraged for all accounts`,
-    );
-  }
-  if (financialEducation.topicVariety < 50 && sessions.length > 0) {
-    areasForImprovement.push(
-      `Only ${financialEducation.topicVariety}% of financial education topics covered -- broader curriculum needed`,
-    );
-  }
-  if (financialEducation.engagementRate < 70 && sessions.length > 0) {
-    areasForImprovement.push(
-      `High engagement rate at only ${financialEducation.engagementRate}% -- sessions should be more interactive and engaging`,
-    );
-  }
-  if (financialEducation.resourcesProvidedRate < 80 && sessions.length > 0) {
-    areasForImprovement.push(
-      `Resources provided in only ${financialEducation.resourcesProvidedRate}% of sessions -- educational materials should be provided consistently`,
-    );
-  }
-  if (financialEducation.childrenReachedRate < 80 && sessions.length > 0) {
-    areasForImprovement.push(
-      `Only ${financialEducation.childrenReachedRate}% of children have attended financial education sessions -- all children must be included`,
-    );
-  }
-  if (staffFinancialReadiness.policyTrainedRate < 100 && training.length > 0) {
-    areasForImprovement.push(
-      `Only ${staffFinancialReadiness.policyTrainedRate}% of staff trained in pocket money policy -- all staff must complete this training`,
-    );
-  }
-  if (staffFinancialReadiness.safeguardingFinancialAbuseRate < 100 && training.length > 0) {
-    areasForImprovement.push(
-      `Only ${staffFinancialReadiness.safeguardingFinancialAbuseRate}% of staff trained in safeguarding against financial abuse -- this is a critical safeguarding requirement`,
-    );
-  }
-  if (staffFinancialReadiness.recordKeepingRate < 100 && training.length > 0) {
-    areasForImprovement.push(
-      `Only ${staffFinancialReadiness.recordKeepingRate}% of staff trained in financial record keeping -- accurate records are essential for accountability`,
-    );
-  }
-
-  // -- Actions --
   const actions: string[] = [];
 
-  if (records.length === 0) {
-    actions.push(
-      "URGENT: Implement pocket money recording system immediately -- all payments must be documented with receipts and child sign-off",
-    );
-  }
-  if (accounts.length === 0) {
-    actions.push(
-      "URGENT: Open savings accounts for all children and set up savings goals with each child as part of their care plan",
-    );
-  }
-  if (sessions.length === 0) {
-    actions.push(
-      "URGENT: Develop and deliver a financial education programme covering budgeting, saving, banking and money management",
-    );
-  }
-  if (training.length === 0) {
-    actions.push(
-      "URGENT: Arrange financial training for all staff covering pocket money policy, education delivery, safeguarding and record keeping",
-    );
-  }
-  if (pocketMoneyManagement.receiptRecordingRate < 90 && records.length > 0) {
-    actions.push(
-      "Implement a receipt recording protocol requiring staff to document all pocket money transactions at point of payment",
-    );
-  }
-  if (pocketMoneyManagement.childSignOffRate < 90 && records.length > 0) {
-    actions.push(
-      "Establish a child sign-off procedure ensuring children acknowledge receipt of pocket money each payment period",
-    );
-  }
-  if (pocketMoneyManagement.savingsParticipationRate < 60 && records.length > 0) {
-    actions.push(
-      "Work with each child to develop a savings plan as part of their key-work sessions, encouraging regular saving",
-    );
-  }
-  if (!pocketMoneyManagement.consistentPayments && records.length > 0) {
-    actions.push(
-      "Review pocket money payment schedules and ensure all children receive consistent payments at agreed frequency",
-    );
-  }
-  if (savingsEngagement.savingsGoalRate < 70 && accounts.length > 0) {
-    actions.push(
-      "Support each child to set a meaningful savings goal and review progress in key-work sessions",
-    );
-  }
-  if (savingsEngagement.monthlyDepositRegularity < 70 && accounts.length > 0) {
-    actions.push(
-      "Encourage regular monthly deposits by integrating saving discussions into key-work sessions and pocket money conversations",
-    );
-  }
-  if (financialEducation.topicVariety < 50 && sessions.length > 0) {
-    actions.push(
-      "Expand financial education curriculum to include all core topics: budgeting, saving, banking, value of money, comparison shopping, online safety and debt awareness",
-    );
-  }
-  if (financialEducation.engagementRate < 70 && sessions.length > 0) {
-    actions.push(
-      "Review financial education delivery to increase engagement through interactive activities, real-world scenarios and age-appropriate resources",
-    );
-  }
-  if (financialEducation.childrenReachedRate < 80 && sessions.length > 0) {
-    actions.push(
-      "Ensure all children are included in financial education sessions, with individualised support where needed",
-    );
-  }
-  if (staffFinancialReadiness.policyTrainedRate < 100 && training.length > 0) {
-    actions.push(
-      "Schedule pocket money policy training for all untrained staff within the next 30 days",
-    );
-  }
-  if (staffFinancialReadiness.safeguardingFinancialAbuseRate < 100 && training.length > 0) {
-    actions.push(
-      "Prioritise safeguarding financial abuse training for all untrained staff -- this is a critical safeguarding requirement",
-    );
-  }
-  if (staffFinancialReadiness.recordKeepingRate < 100 && training.length > 0) {
-    actions.push(
-      "Deliver record keeping training to all untrained staff to ensure accurate and transparent financial documentation",
-    );
-  }
+  // -- Strengths --
+  if (financialQuality.competencyRate >= 80) strengths.push("Strong financial competency — children are demonstrating independent and confident financial skills");
+  if (financialQuality.engagementRate >= 80) strengths.push("High engagement in financial literacy sessions — children are actively participating in learning");
+  if (financialQuality.practicalApplicationRate >= 80) strengths.push("Practical application is consistently evidenced — children are applying financial skills in real situations");
+  if (financialQuality.progressRate >= 80) strengths.push("Progress is consistently demonstrated across financial literacy sessions");
+  if (financialCompliance.documentedRate >= 80) strengths.push("Excellent documentation of financial literacy in care plans");
+  if (financialCompliance.staffSupportedRate >= 80) strengths.push("Staff consistently support children's financial literacy development");
+  if (financialCompliance.feedbackRate >= 80) strengths.push("Feedback is regularly provided to children on their financial skills progress");
+  if (financialCompliance.skillTypeDiversityRatio >= 75) strengths.push("Financial literacy sessions cover a broad range of skill areas, preparing children for financial independence");
 
-  // -- Regulatory Links --
-  const regulatoryLinks = [
-    "CHR 2015 Reg 10 -- Health and well-being: supporting children's personal development including financial capability",
-    "CHR 2015 Reg 14 -- Care planning: individual plans must include financial arrangements and pocket money",
-    "SCCIF -- Social Care Common Inspection Framework: children's experiences, progress and development",
-    "NMS 3 -- Placement plan: pocket money arrangements and savings encouragement",
-    "UNCRC Article 27 -- Right to an adequate standard of living for physical, mental and social development",
-    "Children Act 1989 -- Welfare and maintenance duties for looked-after children",
-    "NMS 10 -- Enjoying and achieving: developing life skills including financial literacy",
+  // -- Areas for Improvement --
+  if (sessions.length > 0 && financialQuality.competencyRate < 60) areasForImprovement.push("Financial competency rates need improvement — review teaching methods and support levels");
+  if (sessions.length > 0 && financialQuality.engagementRate < 60) areasForImprovement.push("Child engagement in financial literacy is low — sessions should be more interactive and age-appropriate");
+  if (sessions.length > 0 && financialQuality.practicalApplicationRate < 60) areasForImprovement.push("Practical application of financial skills is insufficient — embed real-world opportunities");
+  if (sessions.length > 0 && financialQuality.progressRate < 60) areasForImprovement.push("Progress demonstration is inconsistent — strengthen assessment and tracking");
+  if (sessions.length > 0 && financialCompliance.documentedRate < 60) areasForImprovement.push("Documentation of financial literacy in care plans needs improvement");
+  if (sessions.length > 0 && financialCompliance.feedbackRate < 60) areasForImprovement.push("Feedback on financial progress not consistently provided to children");
+  if (sessions.length > 0 && financialCompliance.skillTypeDiversityRatio < 50) areasForImprovement.push("Limited range of financial skill types covered — broaden the curriculum");
+
+  // -- Actions --
+  if (sessions.length === 0) actions.push("No financial literacy session records found — develop and implement a pocket money financial literacy programme");
+  if (!policy) actions.push("URGENT: No financial literacy policy in place — develop and implement immediately");
+  if (training.length === 0) actions.push("URGENT: No staff financial literacy training recorded — arrange training for all staff");
+  if (sessions.length > 0 && financialCompliance.staffSupportedRate < 60) actions.push("Improve staff support for children's financial literacy sessions");
+  if (sessions.length > 0 && financialQuality.practicalApplicationRate < 60) actions.push("Increase practical financial activities such as budgeting exercises, shopping trips and savings challenges");
+
+  const regulatoryLinks: string[] = [
+    "CHR 2015 Regulation 6 — Health and well-being (financial capability)",
+    "CHR 2015 Regulation 9 — Quality of care (preparation for independence)",
+    "SCCIF — Experiences and progress of children (independence skills)",
+    "NMS 13 — Preparing for adulthood (financial literacy)",
+    "Children Act 1989 — Welfare of the child",
+    "UNCRC Article 27 — Adequate standard of living",
+    "Children (Leaving Care) Act 2000 — Financial support and education",
   ];
 
   return {
-    homeId,
-    periodStart,
-    periodEnd,
-    overallScore,
-    rating,
-    pocketMoneyManagement,
-    savingsEngagement,
-    financialEducation,
-    staffFinancialReadiness,
-    childFinancialSummaries,
-    strengths,
-    areasForImprovement,
-    actions,
-    regulatoryLinks,
+    homeId, periodStart, periodEnd, overallScore, rating,
+    financialQuality, financialCompliance, financialPolicy, staffFinancialReadiness,
+    childProfiles, strengths, areasForImprovement, actions, regulatoryLinks,
   };
 }
