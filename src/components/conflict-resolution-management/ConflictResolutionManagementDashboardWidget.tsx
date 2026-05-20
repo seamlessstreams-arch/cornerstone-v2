@@ -2,15 +2,15 @@
 
 import { useEffect, useState } from "react";
 
-interface ChildFinancialProfile { childId: string; childName: string; totalSessions: number; competencyRate: number; engagementRate: number; overallScore: number; }
+interface ChildConflictProfile { childId: string; childName: string; totalIncidents: number; resolutionRate: number; childVoiceRate: number; overallScore: number; }
 
-interface PMFLData {
+interface CRMData {
   homeId: string; periodStart: string; periodEnd: string; overallScore: number; rating: string;
-  financialQuality: { overallScore: number; totalSessions: number; competencyRate: number; engagementRate: number; practicalApplicationRate: number; progressRate: number; };
-  financialCompliance: { overallScore: number; documentedRate: number; staffSupportedRate: number; feedbackRate: number; skillTypeDiversityRatio: number; };
-  financialPolicy: { overallScore: number; pocketMoneyFramework: boolean; savingsSchemePolicy: boolean; financialEducationPlan: boolean; ageAppropriateBudgeting: boolean; independencePreparation: boolean; safeguardingFinancialExploitation: boolean; regularReview: boolean; };
-  staffFinancialReadiness: { overallScore: number; totalStaff: number; financialEducationSkillsRate: number; budgetingSupportRate: number; ageAppropriateTeachingRate: number; safeguardingFinancialAbuseRate: number; independencePromotionSkillsRate: number; recordKeepingRate: number; };
-  childProfiles: ChildFinancialProfile[]; strengths: string[]; areasForImprovement: string[]; actions: string[]; regulatoryLinks: string[];
+  conflictQuality: { overallScore: number; totalIncidents: number; resolutionRate: number; deEscalationRate: number; childVoiceRate: number; restorativeRate: number; };
+  conflictCompliance: { overallScore: number; documentedRate: number; staffSupportedRate: number; feedbackRate: number; conflictTypeDiversityRatio: number; };
+  conflictPolicy: { overallScore: number; behaviourManagementStrategy: boolean; deEscalationProtocol: boolean; restorativePracticeFramework: boolean; antibullyingPolicy: boolean; physicalInterventionGuidance: boolean; childParticipationInResolution: boolean; regularReview: boolean; };
+  staffConflictReadiness: { overallScore: number; totalStaff: number; deEscalationTechniquesRate: number; restorativePracticeRate: number; conflictMediationRate: number; traumaInformedResponseRate: number; physicalInterventionCertifiedRate: number; reflectiveDebriefRate: number; };
+  childProfiles: ChildConflictProfile[]; strengths: string[]; areasForImprovement: string[]; actions: string[]; regulatoryLinks: string[];
 }
 
 function ratingColour(r: string) {
@@ -49,13 +49,13 @@ function Stat({ label, value }: { label: string; value: string | number }) {
   return (<div className="bg-gray-50 rounded-lg px-3 py-2 text-center"><div className="text-lg font-bold text-gray-800">{value}</div><div className="text-xs text-gray-500">{label}</div></div>);
 }
 
-export default function PocketMoneyFinancialLiteracyDashboardWidget() {
-  const [data, setData] = useState<PMFLData | null>(null);
+export default function ConflictResolutionManagementDashboardWidget() {
+  const [data, setData] = useState<CRMData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch("/api/pocket-money-financial-literacy")
+    fetch("/api/conflict-resolution-management")
       .then((r) => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
       .then((json) => setData(json.data))
       .catch((e) => setError(e.message))
@@ -63,7 +63,7 @@ export default function PocketMoneyFinancialLiteracyDashboardWidget() {
   }, []);
 
   if (loading) return (<div className="rounded-2xl border border-gray-200 bg-white p-6 animate-pulse"><div className="h-6 bg-gray-200 rounded w-3/4 mb-4" /><div className="h-4 bg-gray-100 rounded w-1/2 mb-3" /><div className="h-4 bg-gray-100 rounded w-2/3 mb-3" /><div className="h-4 bg-gray-100 rounded w-1/3" /></div>);
-  if (error) return (<div className="rounded-2xl border border-red-200 bg-red-50 p-6"><h2 className="text-lg font-bold text-red-800 mb-2">Pocket Money Financial Literacy</h2><p className="text-red-600 text-sm">Failed to load data: {error}</p></div>);
+  if (error) return (<div className="rounded-2xl border border-red-200 bg-red-50 p-6"><h2 className="text-lg font-bold text-red-800 mb-2">Conflict Resolution Management</h2><p className="text-red-600 text-sm">Failed to load data: {error}</p></div>);
   if (!data) return null;
 
   const rc = ratingColour(data.rating);
@@ -71,46 +71,46 @@ export default function PocketMoneyFinancialLiteracyDashboardWidget() {
   return (
     <div className="rounded-2xl border border-gray-200 bg-white p-6">
       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-6">
-        <div><h2 className="text-lg font-bold text-gray-900">Pocket Money Financial Literacy</h2><p className="text-sm text-gray-500 mt-0.5">{data.periodStart} — {data.periodEnd}</p></div>
+        <div><h2 className="text-lg font-bold text-gray-900">Conflict Resolution Management</h2><p className="text-sm text-gray-500 mt-0.5">{data.periodStart} — {data.periodEnd}</p></div>
         <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-sm font-semibold ${rc}`}><span className="text-xl font-bold">{data.overallScore}</span><span>/100</span><span className="ml-1">{ratingLabel(data.rating)}</span></div>
       </div>
 
       <div className="mb-6">
-        <ScoreBar label="Financial Quality" score={data.financialQuality.overallScore} />
-        <ScoreBar label="Financial Compliance" score={data.financialCompliance.overallScore} />
-        <ScoreBar label="Policy & Governance" score={data.financialPolicy.overallScore} />
-        <ScoreBar label="Staff Readiness" score={data.staffFinancialReadiness.overallScore} />
+        <ScoreBar label="Conflict Quality" score={data.conflictQuality.overallScore} />
+        <ScoreBar label="Conflict Compliance" score={data.conflictCompliance.overallScore} />
+        <ScoreBar label="Policy & Governance" score={data.conflictPolicy.overallScore} />
+        <ScoreBar label="Staff Readiness" score={data.staffConflictReadiness.overallScore} />
       </div>
 
-      <Section title="Financial Quality" defaultOpen>
+      <Section title="Conflict Quality" defaultOpen>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-          <Stat label="Total Sessions" value={data.financialQuality.totalSessions} />
-          <Stat label="Competency" value={`${data.financialQuality.competencyRate}%`} />
-          <Stat label="Engagement" value={`${data.financialQuality.engagementRate}%`} />
-          <Stat label="Practical Application" value={`${data.financialQuality.practicalApplicationRate}%`} />
-          <Stat label="Progress" value={`${data.financialQuality.progressRate}%`} />
+          <Stat label="Total Incidents" value={data.conflictQuality.totalIncidents} />
+          <Stat label="Resolution" value={`${data.conflictQuality.resolutionRate}%`} />
+          <Stat label="De-escalation" value={`${data.conflictQuality.deEscalationRate}%`} />
+          <Stat label="Child Voice" value={`${data.conflictQuality.childVoiceRate}%`} />
+          <Stat label="Restorative" value={`${data.conflictQuality.restorativeRate}%`} />
         </div>
       </Section>
 
-      <Section title="Financial Compliance">
+      <Section title="Conflict Compliance">
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-          <Stat label="Documented" value={`${data.financialCompliance.documentedRate}%`} />
-          <Stat label="Staff Supported" value={`${data.financialCompliance.staffSupportedRate}%`} />
-          <Stat label="Feedback" value={`${data.financialCompliance.feedbackRate}%`} />
-          <Stat label="Skill Diversity" value={`${data.financialCompliance.skillTypeDiversityRatio}%`} />
+          <Stat label="Documented" value={`${data.conflictCompliance.documentedRate}%`} />
+          <Stat label="Staff Supported" value={`${data.conflictCompliance.staffSupportedRate}%`} />
+          <Stat label="Feedback" value={`${data.conflictCompliance.feedbackRate}%`} />
+          <Stat label="Type Diversity" value={`${data.conflictCompliance.conflictTypeDiversityRatio}%`} />
         </div>
       </Section>
 
       <Section title="Policy & Governance">
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
           {([
-            ["Pocket Money Framework", data.financialPolicy.pocketMoneyFramework],
-            ["Savings Scheme", data.financialPolicy.savingsSchemePolicy],
-            ["Education Plan", data.financialPolicy.financialEducationPlan],
-            ["Age-Appropriate Budgeting", data.financialPolicy.ageAppropriateBudgeting],
-            ["Independence Preparation", data.financialPolicy.independencePreparation],
-            ["Safeguarding Financial Exploitation", data.financialPolicy.safeguardingFinancialExploitation],
-            ["Regular Review", data.financialPolicy.regularReview],
+            ["Behaviour Mgmt Strategy", data.conflictPolicy.behaviourManagementStrategy],
+            ["De-escalation Protocol", data.conflictPolicy.deEscalationProtocol],
+            ["Restorative Practice", data.conflictPolicy.restorativePracticeFramework],
+            ["Anti-Bullying Policy", data.conflictPolicy.antibullyingPolicy],
+            ["Physical Intervention", data.conflictPolicy.physicalInterventionGuidance],
+            ["Child Participation", data.conflictPolicy.childParticipationInResolution],
+            ["Review Schedule", data.conflictPolicy.regularReview],
           ] as [string, boolean][]).map(([label, val]) => (
             <div key={label} className={`rounded-lg px-3 py-2 text-center border ${boolBadge(val)}`}><div className="text-sm font-semibold">{val ? "Yes" : "No"}</div><div className="text-xs">{label}</div></div>
           ))}
@@ -119,23 +119,23 @@ export default function PocketMoneyFinancialLiteracyDashboardWidget() {
 
       <Section title="Staff Readiness">
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-          <Stat label="Total Staff" value={data.staffFinancialReadiness.totalStaff} />
-          <Stat label="Financial Education" value={`${data.staffFinancialReadiness.financialEducationSkillsRate}%`} />
-          <Stat label="Budgeting Support" value={`${data.staffFinancialReadiness.budgetingSupportRate}%`} />
-          <Stat label="Age-Appropriate Teaching" value={`${data.staffFinancialReadiness.ageAppropriateTeachingRate}%`} />
-          <Stat label="Safeguarding" value={`${data.staffFinancialReadiness.safeguardingFinancialAbuseRate}%`} />
-          <Stat label="Independence Promotion" value={`${data.staffFinancialReadiness.independencePromotionSkillsRate}%`} />
-          <Stat label="Record Keeping" value={`${data.staffFinancialReadiness.recordKeepingRate}%`} />
+          <Stat label="Total Staff" value={data.staffConflictReadiness.totalStaff} />
+          <Stat label="De-escalation" value={`${data.staffConflictReadiness.deEscalationTechniquesRate}%`} />
+          <Stat label="Restorative" value={`${data.staffConflictReadiness.restorativePracticeRate}%`} />
+          <Stat label="Mediation" value={`${data.staffConflictReadiness.conflictMediationRate}%`} />
+          <Stat label="Trauma-Informed" value={`${data.staffConflictReadiness.traumaInformedResponseRate}%`} />
+          <Stat label="Physical Intervention" value={`${data.staffConflictReadiness.physicalInterventionCertifiedRate}%`} />
+          <Stat label="Reflective Debrief" value={`${data.staffConflictReadiness.reflectiveDebriefRate}%`} />
         </div>
       </Section>
 
       {data.childProfiles.length > 0 && (
-        <Section title="Child Financial Profiles">
+        <Section title="Child Conflict Profiles">
           <div className="space-y-3">
             {data.childProfiles.map((cp) => (
               <div key={cp.childId} className="border border-gray-100 rounded-lg p-3">
                 <div className="flex justify-between items-start mb-2"><span className="font-semibold text-gray-800">{cp.childName}</span><span className="text-sm font-semibold text-gray-600">{cp.overallScore}/10</span></div>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs text-gray-600"><span>Sessions: {cp.totalSessions}</span><span>Competency: {cp.competencyRate}%</span><span>Engagement: {cp.engagementRate}%</span></div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs text-gray-600"><span>Incidents: {cp.totalIncidents}</span><span>Resolution: {cp.resolutionRate}%</span><span>Child Voice: {cp.childVoiceRate}%</span></div>
               </div>
             ))}
           </div>
