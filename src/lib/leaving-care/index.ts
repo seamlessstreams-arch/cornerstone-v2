@@ -42,3 +42,33 @@ export type {
   ChildLeavingProfile,
   LeavingCareIntelligenceResult,
 } from "./leaving-care-engine";
+
+// Intelligence engine exports
+export {
+  generateLeavingCareIntelligence as generateLeavingCareIntelligenceReport,
+  evaluateLeavingCareQuality,
+  evaluateLeavingCareCompliance,
+  evaluateLeavingCarePolicy,
+  evaluateStaffLeavingCareReadiness,
+  buildChildLeavingCareProfiles,
+  pct as leavingCarePct,
+  getRatingIntel,
+  getLeavingCareCategoryLabel,
+  getLeavingCareOutcomeLabel,
+  getLeavingCareRatingLabel,
+} from "./leaving-care-intelligence-engine";
+
+export type {
+  LeavingCareCategory,
+  LeavingCareOutcome,
+  LeavingCareRecord,
+  LeavingCarePolicy as LeavingCarePolicyInput,
+  StaffLeavingCareTraining,
+  LeavingCareQualityResult,
+  LeavingCareComplianceResult,
+  LeavingCarePolicyResult,
+  StaffLeavingCareReadinessResult,
+  ChildLeavingCareProfile,
+  LeavingCareIntelligence,
+  GenerateLeavingCareIntelligenceInput,
+} from "./leaving-care-intelligence-engine";

@@ -1,4 +1,35 @@
 export {
+  generatePremisesIntelligenceReport,
+  evaluatePremisesQuality,
+  evaluatePremisesCompliance,
+  evaluatePremisesPolicy,
+  evaluateStaffPremisesReadiness,
+  buildAreaProfiles,
+  pct,
+  getRating,
+  getPremisesIntelligenceCategoryLabel,
+  getPremisesIntelligenceOutcomeLabel,
+  getRatingLabel,
+} from "./premises-intelligence-engine";
+
+export type {
+  PremisesIntelligenceCategory,
+  PremisesIntelligenceOutcome,
+  PremisesIntelligenceRating,
+  PremisesIntelligenceRecord,
+  PremisesIntelligencePolicy,
+  StaffPremisesTraining,
+  PremisesIntelligenceQualityResult,
+  PremisesIntelligenceComplianceResult,
+  PremisesIntelligencePolicyResult,
+  StaffPremisesReadinessResult,
+  AreaProfile,
+  PremisesIntelligenceResult,
+  GeneratePremisesIntelligenceInput,
+} from "./premises-intelligence-engine";
+
+// Legacy re-exports from premises-engine
+export {
   evaluateComplianceChecks,
   evaluateMaintenance,
   evaluateFireDrills,
@@ -21,5 +52,5 @@ export type {
   FireDrillResult,
   EnvironmentalRiskResult,
   PremisesRating,
-  PremisesIntelligenceResult,
+  PremisesIntelligenceResult as LegacyPremisesIntelligenceResult,
 } from "./premises-engine";
