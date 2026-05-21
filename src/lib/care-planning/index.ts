@@ -27,3 +27,34 @@ export type {
   ChildPlanningProfile,
   CarePlanningIntelligenceResult,
 } from "./care-planning-engine";
+
+// Intelligence engine exports
+export {
+  generateCarePlanningIntelligenceReport,
+  evaluateCarePlanningQuality,
+  evaluateCarePlanningCompliance,
+  evaluateCarePlanningPolicyCompliance,
+  evaluateStaffCarePlanningCompetency,
+  buildChildCarePlanningProfiles,
+  pct as carePlanningPct,
+  getRating as getCarePlanningIntelRating,
+  getCarePlanningCategoryLabel,
+  getCarePlanningOutcomeLabel,
+  getCarePlanningRatingLabel,
+} from "./care-planning-intelligence-engine";
+
+export type {
+  CarePlanningCategory,
+  CarePlanningOutcome,
+  CarePlanningRating,
+  CarePlanningRecord,
+  CarePlanningPolicy,
+  StaffCarePlanningCompetency,
+  CarePlanningQualityResult,
+  CarePlanningComplianceResult,
+  CarePlanningPolicyResult,
+  StaffCarePlanningCompetencyResult,
+  ChildCarePlanningProfile,
+  CarePlanningIntelligence,
+  GenerateCarePlanningIntelligenceInput,
+} from "./care-planning-intelligence-engine";

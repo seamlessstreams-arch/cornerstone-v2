@@ -27,5 +27,37 @@ export type {
   BullyingPattern,
   ChildGroupProfile,
   MatchingComplianceResult,
-  PeerDynamicsIntelligenceResult,
+  PeerDynamicsIntelligenceResult as LegacyPeerDynamicsIntelligenceResult,
 } from "./peer-dynamics-engine";
+
+// ── Peer Dynamics Intelligence Engine ─────────────────────────────────────
+
+export {
+  generatePeerDynamicsIntelligenceResult,
+  evaluatePeerDynamicsQuality,
+  evaluatePeerDynamicsCompliance,
+  evaluatePeerDynamicsPolicy,
+  evaluateStaffPeerDynamicsReadiness,
+  buildChildPeerDynamicsProfiles,
+  pct,
+  getRating,
+  getPeerDynamicsIntelligenceCategoryLabel,
+  getPeerDynamicsIntelligenceOutcomeLabel,
+  getPeerDynamicsRatingLabel,
+} from "./peer-dynamics-intelligence-engine";
+
+export type {
+  PeerDynamicsIntelligenceCategory,
+  PeerDynamicsIntelligenceOutcome,
+  PeerDynamicsRating,
+  PeerDynamicsIntelligenceRecord,
+  PeerDynamicsIntelligencePolicy,
+  StaffPeerDynamicsTraining,
+  PeerDynamicsQualityResult,
+  PeerDynamicsComplianceResult,
+  PeerDynamicsPolicyResult,
+  StaffPeerDynamicsReadinessResult,
+  ChildPeerDynamicsProfile,
+  PeerDynamicsIntelligenceResult,
+  GeneratePeerDynamicsIntelligenceInput,
+} from "./peer-dynamics-intelligence-engine";
