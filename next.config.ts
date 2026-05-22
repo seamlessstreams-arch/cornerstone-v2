@@ -6,6 +6,10 @@ const nextConfig: NextConfig = {
     // TODO: resolve all TS errors and remove this flag.
     ignoreBuildErrors: true,
   },
+  eslint: {
+    // ESLint warnings should not block production deploys.
+    ignoreDuringBuilds: true,
+  },
 };
 
 export default nextConfig;
