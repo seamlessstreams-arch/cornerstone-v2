@@ -206,7 +206,7 @@ const SLUG_MAP: Record<string, string> = {
   "insurance-policies": "insurancePolicies",
   "inventory-items": "inventoryItems",
   "iro-correspondences": "iroCorrespondences",
-  "key-dates": "youngPeople",
+  // "key-dates": "youngPeople",  // ← dedicated route: /api/v1/key-dates/route.ts
   "key-records": "keyRecords",
   "key-working": "keyWorkingSessions",
   "keywork-sessions": "keyworkerSessions",
