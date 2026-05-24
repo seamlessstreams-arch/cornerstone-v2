@@ -2,8 +2,9 @@
 
 // ══════════════════════════════════════════════════════════════════════════════
 // CORNERSTONE — SAFEGUARDING INTELLIGENCE CARD
-// Dashboard card for safeguarding referral tracking, multi-agency compliance,
-// Ofsted notification status, and ARIA safeguarding intelligence.
+// Dashboard card for incident tracking, restraint analysis, missing episodes,
+// risk assessment overview, Reg 40 notification compliance, and ARIA insights.
+// Powered by the Safeguarding Intelligence Engine — live data.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import Link from "next/link";
@@ -11,80 +12,61 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
   Shield, ChevronRight, AlertTriangle, CheckCircle2,
-  Clock, Brain, Bell, ExternalLink,
+  Brain, Bell, Loader2, ShieldAlert, MapPin, TrendingDown, TrendingUp, Minus,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useSafeguardingIntelligence } from "@/hooks/use-safeguarding-intelligence";
 
-// ── Demo data ────────────────────────────────────────────────────────────────
+// ── Styling maps ────────────────────────────────────────────────────────────
 
-const DEMO_COMPLIANCE = {
-  totalReferrals: 8,
-  pending: 1,
-  overdueAcknowledgement: 0,
-  ofstedNotificationsRequired: 5,
-  ofstedNotificationsSent: 4,
-  notificationCompliancePct: 80,
-  averageResolutionDays: 12,
-  byType: {
-    mash: 3,
-    lado: 1,
-    strategy_meeting: 2,
-    professional_consultation: 2,
-  },
+const INSIGHT_STYLES: Record<string, string> = {
+  critical: "border-red-200 bg-red-50 text-red-800",
+  warning: "border-amber-200 bg-amber-50 text-amber-800",
+  positive: "border-green-200 bg-green-50 text-green-800",
 };
 
-const ACTIVE_REFERRALS = [
-  {
-    id: "sr_1",
-    child: "Alex W",
-    type: "MASH Referral",
-    urgency: "within_24h",
-    status: "investigating",
-    daysOpen: 8,
-    multiAgency: ["MASH", "Police", "Social Worker"],
-  },
-  {
-    id: "sr_2",
-    child: "Tyler R",
-    type: "Strategy Meeting",
-    urgency: "within_72h",
-    status: "submitted",
-    daysOpen: 3,
-    multiAgency: ["Social Worker", "School"],
-  },
-];
-
-const CHILDREN_ON_CP = [
-  { name: "Alex W", planType: "Child Protection Plan", since: "2026-03-15" },
-];
-
-const ARIA_INSIGHTS = [
-  "1 outstanding Ofsted notification for the MASH referral on Alex W (submitted 8 days ago). Reg 40 requires notification without delay.",
-  "Tyler R's strategy meeting outcome is due within 72 hours. Ensure all multi-agency documentation is prepared and filed.",
-  "Positive pattern: All safeguarding referrals in the past quarter have been submitted within required timeframes. This evidences strong safeguarding practice.",
-];
-
-// ── Helpers ──────────────────────────────────────────────────────────────────
-
-const URGENCY_COLOURS: Record<string, string> = {
-  immediate: "bg-red-100 text-red-700",
-  within_24h: "bg-amber-100 text-amber-700",
-  within_72h: "bg-blue-100 text-blue-700",
-  routine: "bg-gray-100 text-gray-600",
+const RISK_LEVEL_STYLES: Record<string, string> = {
+  very_high: "bg-red-100 text-red-700",
+  high: "bg-orange-100 text-orange-700",
+  medium: "bg-amber-100 text-amber-700",
+  low: "bg-green-100 text-green-700",
 };
 
-const STATUS_COLOURS: Record<string, string> = {
-  pending: "bg-amber-100 text-amber-700",
-  submitted: "bg-blue-100 text-blue-700",
-  investigating: "bg-purple-100 text-purple-700",
-  outcome_received: "bg-green-100 text-green-700",
-  closed: "bg-gray-100 text-gray-600",
+const TREND_ICONS: Record<string, React.ReactNode> = {
+  increasing: <TrendingUp className="h-3 w-3 text-red-500" />,
+  decreasing: <TrendingDown className="h-3 w-3 text-green-500" />,
+  stable: <Minus className="h-3 w-3 text-gray-400" />,
 };
 
 // ── Component ────────────────────────────────────────────────────────────────
 
 export function SafeguardingIntelligenceCard() {
-  const c = DEMO_COMPLIANCE;
+  const { data, isLoading } = useSafeguardingIntelligence();
+  const intel = data?.data;
+
+  if (isLoading || !intel) {
+    return (
+      <Card>
+        <CardHeader className="pb-3">
+          <CardTitle className="text-sm flex items-center gap-2">
+            <Shield className="h-4 w-4 text-brand" />
+            Safeguarding Intelligence
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center justify-center py-8">
+            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  const p = intel.profile;
+  const r = intel.restraints;
+  const m = intel.missing;
+  const ne = intel.notifiable_events;
+  const ra = intel.risk_assessments;
 
   return (
     <Card className="overflow-hidden">
@@ -105,40 +87,52 @@ export function SafeguardingIntelligenceCard() {
 
         <div className="grid grid-cols-4 gap-2">
           <div className="text-center rounded-lg bg-gray-50 p-2">
-            <p className="text-lg font-bold tabular-nums">{c.totalReferrals}</p>
-            <p className="text-[10px] text-muted-foreground">Referrals</p>
+            <div className="flex items-center justify-center gap-1">
+              <p className="text-lg font-bold tabular-nums">{p.total_incidents_90d}</p>
+              {TREND_ICONS[p.incident_trend]}
+            </div>
+            <p className="text-[10px] text-muted-foreground">Incidents</p>
           </div>
-          <div className={cn("text-center rounded-lg p-2", c.pending > 0 ? "bg-amber-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", c.pending > 0 ? "text-amber-600" : "text-green-600")}>{c.pending}</p>
-            <p className="text-[10px] text-muted-foreground">Pending</p>
-          </div>
-          <div className="text-center rounded-lg bg-gray-50 p-2">
-            <p className="text-lg font-bold tabular-nums">{c.averageResolutionDays}d</p>
-            <p className="text-[10px] text-muted-foreground">Avg Resolve</p>
-          </div>
-          <div className="text-center rounded-lg p-2" style={{ background: c.notificationCompliancePct >= 100 ? "hsl(var(--chart-2) / 0.1)" : "hsl(var(--destructive) / 0.08)" }}>
-            <p className={cn("text-lg font-bold tabular-nums", c.notificationCompliancePct >= 100 ? "text-green-600" : "text-amber-600")}>
-              {c.notificationCompliancePct}%
+          <div className={cn("text-center rounded-lg p-2", p.open_incidents > 0 ? "bg-amber-50" : "bg-green-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", p.open_incidents > 0 ? "text-amber-600" : "text-green-600")}>
+              {p.open_incidents}
             </p>
-            <p className="text-[10px] text-muted-foreground">Notified</p>
+            <p className="text-[10px] text-muted-foreground">Open</p>
+          </div>
+          <div className={cn("text-center rounded-lg p-2", r.total_restraints_30d > 0 ? "bg-orange-50" : "bg-green-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", r.total_restraints_30d > 0 ? "text-orange-600" : "text-green-600")}>
+              {r.total_restraints_90d}
+            </p>
+            <p className="text-[10px] text-muted-foreground">Restraints</p>
+          </div>
+          <div className="text-center rounded-lg p-2" style={{ background: ne.compliance_rate >= 100 ? "hsl(var(--chart-2) / 0.1)" : "hsl(var(--destructive) / 0.08)" }}>
+            <p className={cn("text-lg font-bold tabular-nums", ne.compliance_rate >= 100 ? "text-green-600" : "text-amber-600")}>
+              {ne.compliance_rate}%
+            </p>
+            <p className="text-[10px] text-muted-foreground">Reg 40</p>
           </div>
         </div>
 
-        {/* ── Ofsted notification bar ──────────────────────────────────── */}
+        {/* ── Reg 40 notification status ──────────────────────────────── */}
 
         <div className="flex items-center justify-between rounded-lg border p-3">
           <div className="flex items-center gap-2">
-            <Bell className={cn("h-4 w-4", c.ofstedNotificationsSent < c.ofstedNotificationsRequired ? "text-amber-500" : "text-green-500")} />
+            <Bell className={cn("h-4 w-4", ne.pending_notification > 0 ? "text-red-500" : ne.notified_late > 0 ? "text-amber-500" : "text-green-500")} />
             <div>
-              <p className="text-xs font-medium">Reg 40 Notifications</p>
+              <p className="text-xs font-medium">Ofsted Notifications</p>
               <p className="text-[10px] text-muted-foreground">
-                {c.ofstedNotificationsSent}/{c.ofstedNotificationsRequired} sent to Ofsted
+                {ne.notified_on_time} on time · {ne.notified_late} late · {ne.pending_notification} pending
               </p>
             </div>
           </div>
-          {c.ofstedNotificationsSent < c.ofstedNotificationsRequired ? (
+          {ne.pending_notification > 0 ? (
+            <Badge className="text-[10px] bg-red-100 text-red-700">
+              <AlertTriangle className="h-2.5 w-2.5 mr-0.5" />
+              {ne.pending_notification} pending
+            </Badge>
+          ) : ne.notified_late > 0 ? (
             <Badge className="text-[10px] bg-amber-100 text-amber-700">
-              {c.ofstedNotificationsRequired - c.ofstedNotificationsSent} outstanding
+              {ne.notified_late} late
             </Badge>
           ) : (
             <Badge className="text-[10px] bg-green-100 text-green-700">
@@ -148,76 +142,121 @@ export function SafeguardingIntelligenceCard() {
           )}
         </div>
 
-        {/* ── Active referrals ─────────────────────────────────────────── */}
+        {/* ── Restraint overview ──────────────────────────────────────── */}
 
-        {ACTIVE_REFERRALS.length > 0 && (
-          <div className="space-y-1.5">
-            <p className="text-xs font-semibold text-muted-foreground">Active Referrals</p>
-            {ACTIVE_REFERRALS.map((ref) => (
-              <div key={ref.id} className="rounded-lg border p-3 space-y-1.5 text-xs">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="font-medium">{ref.child}</span>
-                    <Badge className={cn("text-[10px]", URGENCY_COLOURS[ref.urgency] ?? "")}>
-                      {ref.urgency.replace("_", " ")}
-                    </Badge>
-                  </div>
-                  <Badge className={cn("text-[10px]", STATUS_COLOURS[ref.status] ?? "")}>
-                    {ref.status.replace("_", " ")}
-                  </Badge>
-                </div>
-                <p className="text-muted-foreground">{ref.type} · Open {ref.daysOpen} days</p>
-                <div className="flex items-center gap-1 flex-wrap">
-                  <ExternalLink className="h-3 w-3 text-muted-foreground" />
-                  {ref.multiAgency.map((agency) => (
-                    <span key={agency} className="rounded bg-gray-100 px-1.5 py-0.5 text-[10px] text-muted-foreground">
-                      {agency}
-                    </span>
-                  ))}
-                </div>
+        {r.total_restraints_90d > 0 && (
+          <div className="flex items-center justify-between rounded-lg border p-3">
+            <div className="flex items-center gap-2">
+              <ShieldAlert className={cn("h-4 w-4", r.injuries_during_restraint > 0 ? "text-red-500" : "text-amber-500")} />
+              <div>
+                <p className="text-xs font-medium">Physical Interventions</p>
+                <p className="text-[10px] text-muted-foreground">
+                  {r.total_restraints_90d} in 90d · Avg {r.average_duration_minutes}min · {r.debrief_completion_rate}% debriefed
+                </p>
               </div>
-            ))}
-          </div>
-        )}
-
-        {/* ── Children on CP plans ─────────────────────────────────────── */}
-
-        {CHILDREN_ON_CP.length > 0 && (
-          <div className="rounded-lg border border-red-200 bg-red-50 p-3 space-y-1">
-            <p className="text-xs font-semibold text-red-800 flex items-center gap-1">
-              <AlertTriangle className="h-3 w-3" />
-              Children on Protection Plans
-            </p>
-            {CHILDREN_ON_CP.map((child, i) => (
-              <div key={i} className="flex items-center justify-between text-xs text-red-700">
-                <span className="font-medium">{child.name}</span>
-                <span>{child.planType} (since {child.since})</span>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {/* ── ARIA insights ────────────────────────────────────────────── */}
-
-        <div className="space-y-1.5">
-          <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
-            <Brain className="h-3 w-3" />
-            ARIA Safeguarding Intelligence
-          </p>
-          {ARIA_INSIGHTS.map((insight, i) => (
-            <div
-              key={i}
-              className={cn(
-                "rounded border p-2.5 text-xs leading-relaxed",
-                i === 0 ? "border-amber-200 bg-amber-50 text-amber-800"
-                  : i === 1 ? "border-blue-200 bg-blue-50 text-blue-800"
-                  : "border-green-200 bg-green-50 text-green-800",
-              )}
-            >
-              {insight}
             </div>
-          ))}
+            {r.injuries_during_restraint > 0 ? (
+              <Badge className="text-[10px] bg-red-100 text-red-700">
+                {r.injuries_during_restraint} injury
+              </Badge>
+            ) : (
+              <Badge className="text-[10px] bg-green-100 text-green-700">
+                No injuries
+              </Badge>
+            )}
+          </div>
+        )}
+
+        {/* ── Missing from care overview ──────────────────────────────── */}
+
+        {m.total_episodes_90d > 0 && (
+          <div className="flex items-center justify-between rounded-lg border p-3">
+            <div className="flex items-center gap-2">
+              <MapPin className={cn("h-4 w-4", m.repeat_missing_children > 0 ? "text-red-500" : "text-amber-500")} />
+              <div>
+                <p className="text-xs font-medium">Missing from Care</p>
+                <p className="text-[10px] text-muted-foreground">
+                  {m.total_episodes_90d} episodes · {m.children_with_episodes} child(ren) · {m.return_interview_rate}% return interviews
+                </p>
+              </div>
+            </div>
+            {m.repeat_missing_children > 0 ? (
+              <Badge className="text-[10px] bg-red-100 text-red-700">
+                {m.repeat_missing_children} repeat
+              </Badge>
+            ) : m.contextual_safeguarding_flagged > 0 ? (
+              <Badge className="text-[10px] bg-amber-100 text-amber-700">
+                {m.contextual_safeguarding_flagged} CS risk
+              </Badge>
+            ) : (
+              <Badge className="text-[10px] bg-green-100 text-green-700">
+                <CheckCircle2 className="h-3 w-3 mr-1" />
+                Managed
+              </Badge>
+            )}
+          </div>
+        )}
+
+        {/* ── Risk assessment summary ────────────────────────────────── */}
+
+        <div className="flex items-center justify-between rounded-lg border p-3">
+          <div className="flex items-center gap-2">
+            <AlertTriangle className={cn("h-4 w-4", ra.overdue_reviews > 0 ? "text-amber-500" : ra.high_or_very_high > 0 ? "text-orange-500" : "text-green-500")} />
+            <div>
+              <p className="text-xs font-medium">Risk Assessments</p>
+              <p className="text-[10px] text-muted-foreground">
+                {ra.total_current} current · {ra.high_or_very_high} high/very high · {ra.improving_trend} improving
+              </p>
+            </div>
+          </div>
+          {ra.overdue_reviews > 0 ? (
+            <Badge className="text-[10px] bg-amber-100 text-amber-700">
+              {ra.overdue_reviews} overdue
+            </Badge>
+          ) : (
+            <Badge className="text-[10px] bg-green-100 text-green-700">
+              <CheckCircle2 className="h-3 w-3 mr-1" />
+              Current
+            </Badge>
+          )}
         </div>
+
+        {/* ── Risk domains (top 3) ───────────────────────────────────── */}
+
+        {ra.by_domain.length > 0 && (
+          <div className="flex flex-wrap gap-1.5">
+            {ra.by_domain.slice(0, 4).map((d) => (
+              <Badge
+                key={d.domain}
+                className={cn("text-[10px]", RISK_LEVEL_STYLES[d.highest_level] ?? "bg-gray-100 text-gray-600")}
+              >
+                {d.domain.replace(/_/g, " ")} ({d.highest_level.replace(/_/g, " ")})
+              </Badge>
+            ))}
+          </div>
+        )}
+
+        {/* ── ARIA insights ───────────────────────────────────────────── */}
+
+        {intel.insights.length > 0 && (
+          <div className="space-y-1.5">
+            <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
+              <Brain className="h-3 w-3" />
+              ARIA Safeguarding Intelligence
+            </p>
+            {intel.insights.map((insight, i) => (
+              <div
+                key={i}
+                className={cn(
+                  "rounded border p-2.5 text-xs leading-relaxed",
+                  INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.positive,
+                )}
+              >
+                {insight.text}
+              </div>
+            ))}
+          </div>
+        )}
       </CardContent>
     </Card>
   );
