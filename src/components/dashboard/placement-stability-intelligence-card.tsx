@@ -1,234 +1,176 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// DASHBOARD WIDGET — Placement Stability Intelligence
-//
-// Shows at a glance:
-//   - Overall score + rating
-//   - Current placement duration
-//   - Disruption risk level
-//   - Total placements + breakdown count
-//   - Sub-scores (stability, disruption risk, belonging, planning)
-//   - Active indicators
-//   - Concerns + regulatory status
+// CORNERSTONE — PLACEMENT STABILITY INTELLIGENCE CARD
+// Dashboard card powered by the Placement Stability Intelligence Engine.
+// CHR 2015 Reg 5/11/36. SCCIF: Overall Experiences — Stability & belonging.
 // ══════════════════════════════════════════════════════════════════════════════
 
-import React, { useEffect, useState } from "react";
+import Link from "next/link";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
 import {
-  Home, AlertTriangle, CheckCircle2, Shield,
-  TrendingUp, TrendingDown,
+  Home, ChevronRight, AlertTriangle, Brain,
+  Users, TrendingUp, TrendingDown, Minus, Loader2,
 } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { usePlacementStability } from "@/hooks/use-placement-stability";
 
-interface PlacementData {
-  childName: string;
-  overallScore: number;
-  overallRating: string;
-  stabilityScore: number;
-  disruptionRiskScore: number;
-  belongingScore: number;
-  planningScore: number;
-  currentPlacementDays: number;
-  totalPlacements: number;
-  breakdownCount: number;
-  averagePlacementDays: number;
-  disruptionRiskLevel: string;
-  activeIndicators: string[];
-  concerns: Array<{ severity: string; category: string; description: string }>;
-  strengths: Array<{ category: string; description: string }>;
-  regulatoryFlags: Array<{ regulation: string; area: string; status: string; detail: string }>;
-  recommendations: string[];
-  summary: string;
-}
+// ── Styling ─────────────────────────────────────────────────────────────────
 
-interface PlacementStabilityIntelligenceCardProps {
-  childId: string;
-}
-
-const RATING_STYLES: Record<string, { bg: string; text: string; border: string }> = {
-  excellent: { bg: "bg-emerald-50", text: "text-emerald-700", border: "border-emerald-200" },
-  good: { bg: "bg-green-50", text: "text-green-700", border: "border-green-200" },
-  adequate: { bg: "bg-amber-50", text: "text-amber-700", border: "border-amber-200" },
-  requires_improvement: { bg: "bg-orange-50", text: "text-orange-700", border: "border-orange-200" },
-  inadequate: { bg: "bg-red-50", text: "text-red-700", border: "border-red-200" },
+const INSIGHT_STYLES: Record<string, string> = {
+  critical: "border-red-200 bg-red-50 text-red-800",
+  warning:  "border-amber-200 bg-amber-50 text-amber-800",
+  positive: "border-green-200 bg-green-50 text-green-800",
 };
 
-const RISK_STYLES: Record<string, { bg: string; text: string }> = {
-  low: { bg: "bg-emerald-100", text: "text-emerald-700" },
-  medium: { bg: "bg-amber-100", text: "text-amber-700" },
-  high: { bg: "bg-orange-100", text: "text-orange-700" },
-  very_high: { bg: "bg-red-100", text: "text-red-700" },
+const STABILITY_STYLES: Record<string, string> = {
+  excellent: "bg-green-100 text-green-700",
+  good:      "bg-blue-100 text-blue-700",
+  moderate:  "bg-amber-100 text-amber-700",
+  poor:      "bg-red-100 text-red-700",
 };
 
-function formatDuration(days: number): string {
-  if (days >= 365) return `${Math.round(days / 365 * 10) / 10}yr`;
-  if (days >= 30) return `${Math.round(days / 30)}mo`;
-  return `${days}d`;
-}
+const MOOD_ICON = { improving: TrendingUp, stable: Minus, declining: TrendingDown };
+const MOOD_COLOUR = { improving: "text-green-600", stable: "text-blue-600", declining: "text-red-600" };
 
-export function PlacementStabilityIntelligenceCard({ childId }: PlacementStabilityIntelligenceCardProps) {
-  const [data, setData] = useState<PlacementData | null>(null);
-  const [loading, setLoading] = useState(true);
+// ── Component ───────────────────────────────────────────────────────────────
 
-  useEffect(() => {
-    async function load() {
-      try {
-        const res = await fetch(`/api/aria/placement-stability?childId=${childId}`);
-        const json = await res.json();
-        if (json.success) setData(json.data);
-      } catch (err) {
-        console.error("Failed to fetch placement stability intelligence:", err);
-      } finally {
-        setLoading(false);
-      }
-    }
-    load();
-  }, [childId]);
+export function PlacementStabilityIntelligenceCard() {
+  const { data, isLoading } = usePlacementStability();
+  const intel = data?.data;
 
-  if (loading) {
+  if (isLoading || !intel) {
     return (
-      <div className="rounded-xl border border-[var(--cs-border)] bg-white p-5 animate-pulse">
-        <div className="h-5 bg-gray-200 rounded w-48 mb-4" />
-        <div className="h-20 bg-gray-100 rounded" />
-      </div>
+      <Card>
+        <CardHeader className="pb-3">
+          <CardTitle className="text-sm flex items-center gap-2">
+            <Home className="h-4 w-4 text-brand" />
+            Placement Stability
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center justify-center py-8">
+            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
+          </div>
+        </CardContent>
+      </Card>
     );
   }
 
-  if (!data) {
-    return (
-      <div className="rounded-xl border border-[var(--cs-border)] bg-white p-5">
-        <p className="text-sm text-[var(--cs-text-muted)]">Unable to load placement stability intelligence.</p>
-      </div>
-    );
-  }
-
-  const ratingStyle = RATING_STYLES[data.overallRating] ?? RATING_STYLES.adequate;
-  const riskStyle = RISK_STYLES[data.disruptionRiskLevel] ?? RISK_STYLES.medium;
+  const hm = intel.home_metrics;
 
   return (
-    <div className="rounded-xl border border-[var(--cs-border)] bg-white overflow-hidden">
-      {/* Header */}
-      <div className="flex items-center justify-between border-b border-[var(--cs-border)] px-5 py-3 bg-[var(--cs-surface)]">
-        <div className="flex items-center gap-2">
-          <Home className="h-4 w-4 text-teal-500" />
-          <h3 className="text-sm font-semibold text-[var(--cs-navy)]">Placement Stability</h3>
+    <Card className="overflow-hidden">
+      <CardHeader className="pb-3">
+        <div className="flex items-center justify-between">
+          <CardTitle className="text-sm flex items-center gap-2">
+            <Home className="h-4 w-4 text-brand" />
+            Placement Stability
+          </CardTitle>
+          <Link href="/placements" className="text-xs text-brand hover:underline flex items-center gap-1">
+            Placements <ChevronRight className="h-3 w-3" />
+          </Link>
         </div>
-        <Badge className={cn("text-[10px]", ratingStyle.bg, ratingStyle.text, ratingStyle.border)}>
-          {data.overallRating.replace(/_/g, " ")} ({data.overallScore}%)
-        </Badge>
-      </div>
+      </CardHeader>
+      <CardContent className="space-y-4">
 
-      <div className="p-5 space-y-4">
-        {/* Stats row */}
-        <div className="grid grid-cols-4 gap-2 text-center">
-          <div className="rounded-lg bg-gray-50 p-2">
-            <span className="text-xs font-bold text-[var(--cs-navy)]">
-              {formatDuration(data.currentPlacementDays)}
-            </span>
-            <p className="text-[9px] text-[var(--cs-text-muted)]">Current</p>
-          </div>
-          <div className="rounded-lg p-2" style={{ backgroundColor: "var(--cs-surface)" }}>
-            <span className={cn("text-xs font-bold", riskStyle.text)}>
-              {data.disruptionRiskLevel.replace(/_/g, " ")}
-            </span>
-            <p className="text-[9px] text-[var(--cs-text-muted)]">Risk</p>
-          </div>
-          <div className="rounded-lg bg-gray-50 p-2">
-            <span className="text-xs font-bold text-[var(--cs-navy)]">{data.totalPlacements}</span>
-            <p className="text-[9px] text-[var(--cs-text-muted)]">Total</p>
-          </div>
-          <div className="rounded-lg bg-gray-50 p-2">
-            <span className={cn("text-xs font-bold", data.breakdownCount > 0 ? "text-red-600" : "text-emerald-600")}>
-              {data.breakdownCount}
-            </span>
-            <p className="text-[9px] text-[var(--cs-text-muted)]">Breakdowns</p>
-          </div>
-        </div>
+        {/* ── Summary strip ────────────────────────────────────────────── */}
 
-        {/* Sub-scores */}
         <div className="grid grid-cols-4 gap-2">
-          <MiniScore label="Stability" score={data.stabilityScore} />
-          <MiniScore label="Risk" score={data.disruptionRiskScore} />
-          <MiniScore label="Belonging" score={data.belongingScore} />
-          <MiniScore label="Planning" score={data.planningScore} />
+          <div className={cn("text-center rounded-lg p-2.5", hm.average_stability_score >= 70 ? "bg-green-50" : "bg-amber-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", hm.average_stability_score >= 70 ? "text-green-600" : "text-amber-600")}>{hm.average_stability_score}</p>
+            <p className="text-[10px] text-muted-foreground">Stability</p>
+          </div>
+          <div className="text-center rounded-lg bg-blue-50 p-2.5">
+            <p className="text-lg font-bold tabular-nums text-blue-600">{hm.total_children}</p>
+            <p className="text-[10px] text-muted-foreground">Children</p>
+          </div>
+          <div className={cn("text-center rounded-lg p-2.5", hm.avg_mood_home >= 7 ? "bg-green-50" : hm.avg_mood_home >= 5 ? "bg-amber-50" : "bg-red-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", hm.avg_mood_home >= 7 ? "text-green-600" : hm.avg_mood_home >= 5 ? "text-amber-600" : "text-red-600")}>{hm.avg_mood_home}</p>
+            <p className="text-[10px] text-muted-foreground">Avg Mood</p>
+          </div>
+          <div className={cn("text-center rounded-lg p-2.5", hm.children_at_risk === 0 ? "bg-green-50" : "bg-red-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", hm.children_at_risk === 0 ? "text-green-600" : "text-red-600")}>{hm.children_at_risk}</p>
+            <p className="text-[10px] text-muted-foreground">At Risk</p>
+          </div>
         </div>
 
-        {/* Active disruption indicators */}
-        {data.activeIndicators.length > 0 && (
-          <div className="flex flex-wrap gap-1.5">
-            {data.activeIndicators.slice(0, 4).map((ind, i) => (
-              <Badge key={i} className="text-[9px] bg-red-100 text-red-700 border-red-200">
-                {ind.replace(/_/g, " ")}
-              </Badge>
-            ))}
-          </div>
-        )}
+        {/* ── Child stability profiles ────────────────────────────────── */}
 
-        {/* Top concerns */}
-        {data.concerns.length > 0 && (
+        {intel.children.length > 0 && (
           <div className="space-y-1.5">
-            {data.concerns.slice(0, 2).map((concern, i) => {
-              const isHigh = concern.severity === "critical" || concern.severity === "significant";
+            <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
+              <Users className="h-3 w-3" />
+              Child Stability
+            </p>
+            {intel.children.map((child) => {
+              const MoodIcon = MOOD_ICON[child.mood_trend as keyof typeof MOOD_ICON] ?? Minus;
               return (
-                <div key={i} className={cn(
-                  "flex items-start gap-2 rounded-lg p-2 text-xs",
-                  isHigh ? "bg-red-50" : "bg-amber-50",
-                )}>
-                  <AlertTriangle className={cn(
-                    "h-3.5 w-3.5 shrink-0 mt-0.5",
-                    isHigh ? "text-red-600" : "text-amber-600",
-                  )} />
-                  <span className={isHigh ? "text-red-700" : "text-amber-700"}>
-                    {concern.description}
-                  </span>
+                <div key={child.child_id} className="rounded border p-2.5 text-xs space-y-1">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <span className="font-medium">{child.child_name}</span>
+                      <MoodIcon className={cn("h-3 w-3", MOOD_COLOUR[child.mood_trend as keyof typeof MOOD_COLOUR] ?? "text-gray-400")} />
+                    </div>
+                    <Badge className={cn("text-[10px]", STABILITY_STYLES[child.stability_level] ?? STABILITY_STYLES.moderate)}>
+                      {child.stability_score}/100
+                    </Badge>
+                  </div>
+                  <div className="flex items-center justify-between text-muted-foreground">
+                    <span>{child.placement_days}d placed · Mood {child.avg_mood_recent}/10</span>
+                    <span>{child.incident_count_30d} incidents/30d</span>
+                  </div>
                 </div>
               );
             })}
           </div>
         )}
 
-        {/* Regulatory flags */}
-        {data.regulatoryFlags.some(f => f.status !== "met") && (
-          <div className="flex flex-wrap gap-1.5">
-            {data.regulatoryFlags.filter(f => f.status !== "met").slice(0, 3).map((flag, i) => (
-              <Badge
+        {/* ── Disruption indicators ──────────────────────────────────── */}
+
+        {intel.disruption_indicators.length > 0 && (
+          <div className="space-y-1.5">
+            <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
+              <AlertTriangle className="h-3 w-3" />
+              Disruption Indicators
+            </p>
+            {intel.disruption_indicators.map((di, i) => (
+              <div
                 key={i}
                 className={cn(
-                  "text-[9px]",
-                  flag.status === "not_met" ? "bg-red-100 text-red-700 border-red-200" :
-                  "bg-amber-100 text-amber-700 border-amber-200",
+                  "rounded border p-2.5 text-xs leading-relaxed",
+                  di.severity === "high" || di.severity === "critical" ? "border-red-200 bg-red-50 text-red-800" : "border-amber-200 bg-amber-50 text-amber-800",
                 )}
-                title={flag.detail}
               >
-                {flag.area}
-              </Badge>
+                <span className="font-medium">{di.child_name}:</span> {di.detail}
+              </div>
             ))}
           </div>
         )}
 
-        {/* All clear */}
-        {data.concerns.length === 0 && (
-          <div className="flex items-center gap-2 rounded-lg bg-emerald-50 p-2.5">
-            <CheckCircle2 className="h-4 w-4 text-emerald-600" />
-            <span className="text-xs text-emerald-700">
-              Placement stable. Child settled with sense of belonging.
-            </span>
+        {/* ── ARIA Stability Intelligence ─────────────────────────────── */}
+
+        {intel.insights.length > 0 && (
+          <div className="space-y-1.5">
+            <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
+              <Brain className="h-3 w-3" />
+              ARIA Stability Intelligence
+            </p>
+            {intel.insights.slice(0, 3).map((insight, i) => (
+              <div
+                key={i}
+                className={cn(
+                  "rounded border p-2.5 text-xs leading-relaxed",
+                  INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.positive,
+                )}
+              >
+                {insight.text}
+              </div>
+            ))}
           </div>
         )}
-      </div>
-    </div>
-  );
-}
-
-// ── Sub-component ───────────────────────────────────────────────────────────
-
-function MiniScore({ label, score }: { label: string; score: number }) {
-  const color = score >= 75 ? "text-emerald-600" : score >= 50 ? "text-amber-600" : "text-red-600";
-  return (
-    <div className="text-center">
-      <span className={cn("text-sm font-bold", color)}>{score}</span>
-      <p className="text-[9px] text-[var(--cs-text-muted)] mt-0.5">{label}</p>
-    </div>
+      </CardContent>
+    </Card>
   );
 }
