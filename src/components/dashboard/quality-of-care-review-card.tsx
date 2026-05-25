@@ -1,67 +1,219 @@
 "use client";
 
+// ══════════════════════════════════════════════════════════════════════════════
+// CORNERSTONE — QUALITY OF CARE REVIEW CARD
+// Dashboard card powered by the Quality Assurance Intelligence Engine.
+// Reg 45 (quality of care review), SCCIF Leadership & Management.
+// ══════════════════════════════════════════════════════════════════════════════
+
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Award, ChevronRight, AlertTriangle, Brain, Clock, Star } from "lucide-react";
+import {
+  Award, ChevronRight, AlertTriangle, Brain,
+  Star, Target, TrendingUp, FileSearch, Loader2,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useQualityAssuranceIntelligence } from "@/hooks/use-quality-assurance-intelligence";
 
-const DEMO_METRICS = { total_reviews: 8, inadequate_count: 1, requires_improvement_count: 2, immediate_priority_count: 1, actions_not_assigned_count: 2, children_consulted_rate: 62.5, staff_consulted_rate: 75.0, external_feedback_rate: 37.5, reg44_reviewed_rate: 50.0, shared_with_ofsted_rate: 37.5, unique_reviewers: 2 };
+// ── Styling ─────────────────────────────────────────────────────────────────
 
-const DEMO_RECORDS: { reviewer: string; domain: string; rating: string; priority: string }[] = [
-  { reviewer: "D. Laville", domain: "Overall Exp.", rating: "Good", priority: "Medium" },
-  { reviewer: "D. Laville", domain: "Protection", rating: "Inadequate", priority: "Immediate" },
-  { reviewer: "J. Hughes", domain: "Education", rating: "Req. Improv.", priority: "High" },
-  { reviewer: "D. Laville", domain: "Health", rating: "Good", priority: "Low" },
-  { reviewer: "J. Hughes", domain: "Leadership", rating: "Req. Improv.", priority: "High" },
-  { reviewer: "D. Laville", domain: "Relationships", rating: "Outstanding", priority: "Completed" },
-];
-
-const DEMO_ALERTS: { type: string; severity: "critical" | "high" | "medium"; message: string }[] = [
-  { type: "inadequate_immediate", severity: "critical", message: "Protection domain rated inadequate with immediate priority — urgent action required." },
-  { type: "req_improvement_unassigned", severity: "high", message: "2 domains require improvement but actions not assigned." },
-  { type: "children_not_consulted", severity: "high", message: "3 reviews have children not consulted." },
-];
-
-const ARIA_INSIGHTS = [
-  "8 domain reviews across 2 reviewers. Inadequate: 1. Requires improvement: 2. Immediate priority: 1.",
-  "Priority: 1 inadequate with immediate action. Children consulted 62.5%. Shared with Ofsted 37.5%.",
-  "Quality of care defines outcomes. Are children shaping the review? Are actions driving real improvement?",
-];
-
-const RATING_BADGES: Record<string, { label: string; color: string }> = {
-  "Outstanding": { label: "Outst.", color: "text-green-700 bg-green-50 border-green-200" },
-  "Good": { label: "Good", color: "text-blue-700 bg-blue-50 border-blue-200" },
-  "Req. Improv.": { label: "Req. Imp.", color: "text-amber-700 bg-amber-50 border-amber-200" },
-  "Inadequate": { label: "Inadeq.", color: "text-red-700 bg-red-50 border-red-200" },
-  "Not Assessed": { label: "N/A", color: "text-gray-700 bg-gray-50 border-gray-200" },
+const ALERT_STYLES: Record<string, string> = {
+  critical: "border-red-200 bg-red-50 text-red-800",
+  high:     "border-red-200 bg-red-50 text-red-800",
+  medium:   "border-amber-200 bg-amber-50 text-amber-800",
+  low:      "border-blue-200 bg-blue-50 text-blue-800",
 };
 
+const INSIGHT_STYLES: Record<string, string> = {
+  critical: "border-red-200 bg-red-50 text-red-800",
+  warning:  "border-amber-200 bg-amber-50 text-amber-800",
+  positive: "border-green-200 bg-green-50 text-green-800",
+};
+
+const RATING_COLOURS: Record<string, string> = {
+  Excellent: "bg-green-100 text-green-700",
+  Good: "bg-blue-100 text-blue-700",
+  "Requires Improvement": "bg-amber-100 text-amber-700",
+  Inadequate: "bg-red-100 text-red-700",
+};
+
+// ── Component ───────────────────────────────────────────────────────────────
+
 export function QualityOfCareReviewCard() {
-  const m = DEMO_METRICS;
+  const { data, isLoading } = useQualityAssuranceIntelligence();
+  const intel = data?.data;
+
+  if (isLoading || !intel) {
+    return (
+      <Card className="border-yellow-200">
+        <CardHeader className="pb-3 bg-yellow-50/50">
+          <CardTitle className="text-sm flex items-center gap-2">
+            <Award className="h-4 w-4 text-yellow-600" />
+            <span className="text-yellow-900">Quality of Care</span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center justify-center py-8">
+            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  const o = intel.overview;
+
   return (
     <Card className="overflow-hidden border-yellow-200">
       <CardHeader className="pb-3 bg-yellow-50/50">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-sm flex items-center gap-2"><Award className="h-4 w-4 text-yellow-600" /><span className="text-yellow-900">Quality of Care</span></CardTitle>
-          <Link href="/quality-of-care-review" className="text-xs text-yellow-600 hover:underline flex items-center gap-1">Reviews <ChevronRight className="h-3 w-3" /></Link>
+          <CardTitle className="text-sm flex items-center gap-2">
+            <Award className="h-4 w-4 text-yellow-600" />
+            <span className="text-yellow-900">Quality of Care</span>
+          </CardTitle>
+          <Link href="/quality-assurance" className="text-xs text-yellow-600 hover:underline flex items-center gap-1">
+            Reviews <ChevronRight className="h-3 w-3" />
+          </Link>
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
+
+        {/* ── Summary strip ────────────────────────────────────────────── */}
+
         <div className="grid grid-cols-4 gap-2">
-          <div className={cn("text-center rounded-lg p-2", m.inadequate_count === 0 ? "bg-green-50" : "bg-red-50")}><p className={cn("text-lg font-bold tabular-nums", m.inadequate_count === 0 ? "text-green-600" : "text-red-600")}>{m.inadequate_count}</p><p className="text-[10px] text-muted-foreground">Inadeq.</p></div>
-          <div className={cn("text-center rounded-lg p-2", m.requires_improvement_count === 0 ? "bg-green-50" : "bg-amber-50")}><p className={cn("text-lg font-bold tabular-nums", m.requires_improvement_count === 0 ? "text-green-600" : "text-amber-600")}>{m.requires_improvement_count}</p><p className="text-[10px] text-muted-foreground">Req. Imp.</p></div>
-          <div className={cn("text-center rounded-lg p-2", m.immediate_priority_count === 0 ? "bg-green-50" : "bg-red-50")}><p className={cn("text-lg font-bold tabular-nums", m.immediate_priority_count === 0 ? "text-green-600" : "text-red-600")}>{m.immediate_priority_count}</p><p className="text-[10px] text-muted-foreground">Immediate</p></div>
-          <div className="text-center rounded-lg p-2 bg-yellow-50"><p className="text-lg font-bold tabular-nums text-yellow-600">{m.total_reviews}</p><p className="text-[10px] text-muted-foreground">Total</p></div>
-        </div>
-        <div className="space-y-1.5">
-          <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1"><Clock className="h-3 w-3" />Recent Reviews</p>
-          <div className="space-y-1">
-            {DEMO_RECORDS.map((r, i) => { const badge = RATING_BADGES[r.rating] ?? RATING_BADGES["Not Assessed"]; return (<div key={i} className="flex items-center justify-between rounded border p-2 text-xs"><div className="flex items-center gap-2 flex-1 min-w-0"><Star className="h-3 w-3 text-yellow-500 shrink-0" /><span className="font-medium">{r.reviewer}</span><span className="text-muted-foreground truncate">{r.domain} · {r.priority}</span></div><Badge variant="outline" className={cn("text-[10px] shrink-0", badge.color)}>{badge.label}</Badge></div>); })}
+          <div className={cn(
+            "text-center rounded-lg p-2.5",
+            o.avg_rating_score >= 3 ? "bg-green-50" : o.avg_rating_score >= 2 ? "bg-amber-50" : "bg-red-50",
+          )}>
+            <p className={cn(
+              "text-lg font-bold tabular-nums",
+              o.avg_rating_score >= 3 ? "text-green-600" : o.avg_rating_score >= 2 ? "text-amber-600" : "text-red-600",
+            )}>
+              {o.avg_rating_label}
+            </p>
+            <p className="text-[10px] text-muted-foreground">Avg Rating</p>
+          </div>
+          <div className="text-center rounded-lg bg-yellow-50 p-2.5">
+            <p className="text-lg font-bold tabular-nums text-yellow-600">
+              {o.total_audits}
+            </p>
+            <p className="text-[10px] text-muted-foreground">Audits</p>
+          </div>
+          <div className={cn(
+            "text-center rounded-lg p-2.5",
+            o.actions_overdue === 0 ? "bg-green-50" : "bg-red-50",
+          )}>
+            <p className={cn(
+              "text-lg font-bold tabular-nums",
+              o.actions_overdue === 0 ? "text-green-600" : "text-red-600",
+            )}>
+              {o.actions_overdue}
+            </p>
+            <p className="text-[10px] text-muted-foreground">Overdue</p>
+          </div>
+          <div className={cn(
+            "text-center rounded-lg p-2.5",
+            o.improvement_rate >= 80 ? "bg-green-50" : o.improvement_rate >= 60 ? "bg-amber-50" : "bg-red-50",
+          )}>
+            <p className={cn(
+              "text-lg font-bold tabular-nums",
+              o.improvement_rate >= 80 ? "text-green-600" : o.improvement_rate >= 60 ? "text-amber-600" : "text-red-600",
+            )}>
+              {o.improvement_rate}%
+            </p>
+            <p className="text-[10px] text-muted-foreground">Improved</p>
           </div>
         </div>
-        {DEMO_ALERTS.length > 0 && (<div className="space-y-1.5"><p className="text-xs font-semibold text-muted-foreground flex items-center gap-1"><AlertTriangle className="h-3 w-3" />Quality Alerts</p>{DEMO_ALERTS.map((a, i) => (<div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", a.severity === "critical" || a.severity === "high" ? "border-red-200 bg-red-50 text-red-800" : "border-amber-200 bg-amber-50 text-amber-800")}>{a.message}</div>))}</div>)}
-        <div className="space-y-1.5"><p className="text-xs font-semibold flex items-center gap-1 text-yellow-700"><Brain className="h-3 w-3" />ARIA Quality Intelligence</p>{ARIA_INSIGHTS.map((insight, i) => (<div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", i === 0 ? "border-yellow-200 bg-yellow-50 text-yellow-800" : i === 1 ? "border-amber-200 bg-amber-50 text-amber-800" : "border-green-200 bg-green-50 text-green-800")}>{insight}</div>))}</div>
+
+        {/* ── Audit areas ─────────────────────────────────────────────── */}
+
+        {intel.audit_areas.length > 0 && (
+          <div className="space-y-1.5">
+            <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
+              <FileSearch className="h-3 w-3" />
+              Audit Areas
+            </p>
+            {intel.audit_areas.slice(0, 6).map((a) => (
+              <div key={a.scope} className="flex items-center justify-between rounded border p-2 text-xs">
+                <span className="truncate flex-1 capitalize">{a.scope.replace(/_/g, " ")}</span>
+                <div className="flex items-center gap-1.5 ml-2">
+                  <Badge variant="outline" className="text-[10px] tabular-nums">{a.audit_count}</Badge>
+                  <Badge className={cn("text-[10px]", RATING_COLOURS[a.avg_rating] ?? "bg-gray-100 text-gray-600")}>
+                    <Star className="h-2.5 w-2.5 mr-0.5" />
+                    {a.avg_rating}
+                  </Badge>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* ── Overdue actions ─────────────────────────────────────────── */}
+
+        {intel.overdue_actions.length > 0 && (
+          <div className="space-y-1.5">
+            <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
+              <Target className="h-3 w-3" />
+              Overdue Actions
+            </p>
+            {intel.overdue_actions.slice(0, 3).map((a, i) => (
+              <div key={i} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs">
+                <div className="flex items-center justify-between">
+                  <span className="font-medium text-red-800 truncate flex-1">{a.action}</span>
+                  <Badge className="text-[10px] bg-red-100 text-red-700 ml-1">{a.days_overdue}d</Badge>
+                </div>
+                <p className="text-red-700 text-[10px] mt-0.5">
+                  {a.audit_title} · Owner: {a.owner}
+                </p>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* ── Alerts ──────────────────────────────────────────────────── */}
+
+        {intel.alerts.length > 0 && (
+          <div className="space-y-1.5">
+            <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
+              <AlertTriangle className="h-3 w-3" />
+              Quality Alerts
+            </p>
+            {intel.alerts.slice(0, 3).map((alert, i) => (
+              <div
+                key={i}
+                className={cn(
+                  "rounded border p-2.5 text-xs leading-relaxed",
+                  ALERT_STYLES[alert.severity] ?? ALERT_STYLES.medium,
+                )}
+              >
+                {alert.message}
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* ── ARIA Quality Intelligence ───────────────────────────────── */}
+
+        {intel.insights.length > 0 && (
+          <div className="space-y-1.5">
+            <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
+              <Brain className="h-3 w-3" />
+              ARIA Quality Intelligence
+            </p>
+            {intel.insights.slice(0, 3).map((insight, i) => (
+              <div
+                key={i}
+                className={cn(
+                  "rounded border p-2.5 text-xs leading-relaxed",
+                  INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.positive,
+                )}
+              >
+                {insight.text}
+              </div>
+            ))}
+          </div>
+        )}
       </CardContent>
     </Card>
   );

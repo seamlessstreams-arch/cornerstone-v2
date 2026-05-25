@@ -1,64 +1,56 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF INDUCTION INTELLIGENCE CARD
-// Dashboard card for induction progress, probation tracking, pre-employment checks.
-// CHR 2015 Reg 33/34, Schedule 2. SCCIF: Well-Led.
+// CORNERSTONE — STAFF INDUCTION & COMPLIANCE INTELLIGENCE CARD
+// Dashboard card for DBS compliance, training categories, and expiring items.
+// Powered by the Workforce Intelligence Engine — live data.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
-  UserPlus, ChevronRight, AlertTriangle, Brain,
-  CheckCircle2, Shield, Clock, AlertCircle,
+  UserPlus, ChevronRight, Brain, Loader2,
+  Shield, BookOpen, CheckCircle2, AlertTriangle,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useWorkforceIntelligence } from "@/hooks/use-workforce-intelligence";
 
-// ── Demo data ────────────────────────────────────────────────────────────────
+// ── Insight styling ──────────────────────────────────────────────────────────
 
-const DEMO_METRICS = {
-  total_records: 3,
-  in_probation: 2,
-  probation_passed: 1,
-  completion_rate: 68.5,
-  dbs_verified_rate: 100,
-  references_verified_rate: 100,
-  can_work_unsupervised_count: 1,
-  tasks_overdue: 2,
+const INSIGHT_STYLES: Record<string, string> = {
+  critical: "border-red-200 bg-red-50 text-red-800",
+  warning: "border-amber-200 bg-amber-50 text-amber-800",
+  positive: "border-green-200 bg-green-50 text-green-800",
 };
-
-const DEMO_INDUCTEES: {
-  name: string;
-  role: string;
-  startDate: string;
-  probation: string;
-  tasksComplete: string;
-  dbsOk: boolean;
-  refsOk: boolean;
-  unsupervised: boolean;
-}[] = [
-  { name: "Emma Wilson", role: "RSW", startDate: "2026-04-14", probation: "In Probation", tasksComplete: "12/18", dbsOk: true, refsOk: true, unsupervised: true },
-  { name: "Amir Hassan", role: "Night RSW", startDate: "2026-05-01", probation: "In Probation", tasksComplete: "5/18", dbsOk: true, refsOk: true, unsupervised: false },
-  { name: "Lucy Brown", role: "RSW", startDate: "2025-11-03", probation: "Passed", tasksComplete: "18/18", dbsOk: true, refsOk: true, unsupervised: true },
-];
-
-const DEMO_ALERTS: { type: string; severity: "critical" | "high" | "medium"; message: string }[] = [
-  { type: "task_overdue", severity: "high", message: "Amir Hassan: Medication administration training overdue since 08/05 — must complete before administering medication." },
-  { type: "task_overdue", severity: "high", message: "Amir Hassan: Restraint training overdue since 10/05 — must complete before working unsupervised." },
-  { type: "probation_ending", severity: "medium", message: "Emma Wilson probation review due in 10 days — schedule month 1 review meeting." },
-];
-
-const ARIA_INSIGHTS = [
-  "3 induction records: 2 in probation, 1 passed. 68.5% overall task completion. 100% DBS and reference checks verified. 2 overdue tasks (both Amir Hassan — medication and restraint).",
-  "Amir Hassan (Night RSW, started 01/05) has critical safety training gaps — cannot work unsupervised until medication and restraint training completed. Recommend prioritising these within next 48 hours.",
-  "Emma Wilson progressing well (12/18 tasks, 67%). On track for month 1 review. Lucy Brown completed all 18 tasks and passed probation — induction quality benchmark for new starters.",
-];
 
 // ── Component ────────────────────────────────────────────────────────────────
 
 export function StaffInductionCard() {
-  const m = DEMO_METRICS;
+  const { data, isLoading } = useWorkforceIntelligence();
+  const intel = data?.data;
+
+  if (isLoading || !intel) {
+    return (
+      <Card>
+        <CardHeader className="pb-3">
+          <CardTitle className="text-sm flex items-center gap-2">
+            <UserPlus className="h-4 w-4 text-brand" />
+            Staff Induction
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center justify-center py-8">
+            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  const dbs = intel.dbs;
+  const totalCompliant = intel.training.reduce((sum, t) => sum + t.compliant, 0);
+  const totalExpiring = intel.training.reduce((sum, t) => sum + t.expiring_soon, 0);
 
   return (
     <Card className="overflow-hidden">
@@ -68,8 +60,8 @@ export function StaffInductionCard() {
             <UserPlus className="h-4 w-4 text-brand" />
             Staff Induction
           </CardTitle>
-          <Link href="/staff-induction" className="text-xs text-brand hover:underline flex items-center gap-1">
-            Induction <ChevronRight className="h-3 w-3" />
+          <Link href="/workforce" className="text-xs text-brand hover:underline flex items-center gap-1">
+            Workforce <ChevronRight className="h-3 w-3" />
           </Link>
         </div>
       </CardHeader>
@@ -78,107 +70,102 @@ export function StaffInductionCard() {
         {/* ── Summary strip ────────────────────────────────────────────── */}
 
         <div className="grid grid-cols-4 gap-2">
-          <div className="text-center rounded-lg bg-blue-50 p-2">
-            <p className="text-lg font-bold tabular-nums text-blue-600">{m.in_probation}</p>
-            <p className="text-[10px] text-muted-foreground">Probation</p>
-          </div>
-          <div className={cn("text-center rounded-lg p-2", m.completion_rate >= 80 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", m.completion_rate >= 80 ? "text-green-600" : "text-amber-600")}>
-              {m.completion_rate}%
-            </p>
-            <p className="text-[10px] text-muted-foreground">Complete</p>
-          </div>
-          <div className={cn("text-center rounded-lg p-2", m.dbs_verified_rate >= 100 ? "bg-green-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", m.dbs_verified_rate >= 100 ? "text-green-600" : "text-red-600")}>
-              {m.dbs_verified_rate}%
+          <div className={cn("text-center rounded-lg p-2", dbs.compliance_rate >= 90 ? "bg-green-50" : "bg-red-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", dbs.compliance_rate >= 90 ? "text-green-600" : "text-red-600")}>
+              {dbs.compliance_rate}%
             </p>
             <p className="text-[10px] text-muted-foreground">DBS</p>
           </div>
-          <div className={cn("text-center rounded-lg p-2", m.tasks_overdue === 0 ? "bg-green-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", m.tasks_overdue === 0 ? "text-green-600" : "text-red-600")}>
-              {m.tasks_overdue}
+          <div className={cn("text-center rounded-lg p-2", dbs.expired_or_missing === 0 ? "bg-green-50" : "bg-red-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", dbs.expired_or_missing === 0 ? "text-green-600" : "text-red-600")}>
+              {dbs.expired_or_missing}
             </p>
-            <p className="text-[10px] text-muted-foreground">Overdue</p>
+            <p className="text-[10px] text-muted-foreground">Expired/Missing</p>
+          </div>
+          <div className="text-center rounded-lg bg-green-50 p-2">
+            <p className="text-lg font-bold tabular-nums text-green-600">{totalCompliant}</p>
+            <p className="text-[10px] text-muted-foreground">Compliant</p>
+          </div>
+          <div className={cn("text-center rounded-lg p-2", totalExpiring === 0 ? "bg-green-50" : "bg-amber-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", totalExpiring === 0 ? "text-green-600" : "text-amber-600")}>
+              {totalExpiring}
+            </p>
+            <p className="text-[10px] text-muted-foreground">Expiring</p>
           </div>
         </div>
 
-        {/* ── Inductees ───────────────────────────────────────────────── */}
+        {/* ── Training compliance bars by category ────────────────────── */}
 
-        <div className="space-y-1.5">
-          <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
-            <Shield className="h-3 w-3" />
-            Induction Progress
-          </p>
+        {intel.training.length > 0 && (
           <div className="space-y-1">
-            {DEMO_INDUCTEES.map((ind) => (
-              <div key={ind.name} className="flex items-center justify-between rounded border p-2 text-xs">
-                <div className="flex items-center gap-2 flex-1 min-w-0">
-                  <span className="font-medium">{ind.name}</span>
-                  {ind.dbsOk && <CheckCircle2 className="h-3 w-3 text-green-500 shrink-0" />}
-                  {ind.unsupervised && <Shield className="h-3 w-3 text-blue-500 shrink-0" />}
-                  {!ind.unsupervised && <AlertCircle className="h-3 w-3 text-amber-500 shrink-0" />}
+            <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
+              <BookOpen className="h-3 w-3" />
+              Training Compliance
+            </p>
+            <div className="space-y-1">
+              {intel.training.map((t) => (
+                <div key={t.category} className="flex items-center gap-2 text-xs">
+                  <span className="w-28 text-muted-foreground capitalize">{t.category.replace(/_/g, " ")}</span>
+                  <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden flex">
+                    <div className="h-full bg-green-400" style={{ width: `${(t.compliant / Math.max(t.total_required, 1)) * 100}%` }} />
+                    <div className="h-full bg-amber-400" style={{ width: `${(t.expiring_soon / Math.max(t.total_required, 1)) * 100}%` }} />
+                    <div className="h-full bg-red-400" style={{ width: `${(t.expired / Math.max(t.total_required, 1)) * 100}%` }} />
+                  </div>
+                  <span className="w-12 text-right tabular-nums font-medium text-[10px]">
+                    {t.compliance_rate}%
+                  </span>
                 </div>
-                <div className="flex items-center gap-1.5 shrink-0">
-                  <span className="text-muted-foreground">{ind.tasksComplete}</span>
-                  <Badge variant="outline" className={cn(
-                    "text-[10px]",
-                    ind.probation === "Passed"
-                      ? "text-green-700 bg-green-50 border-green-200"
-                      : "text-blue-700 bg-blue-50 border-blue-200",
-                  )}>
-                    {ind.probation}
-                  </Badge>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
+        )}
+
+        {/* ── DBS section ─────────────────────────────────────────────── */}
+
+        <div className="flex items-center justify-between rounded-lg border p-3">
+          <div className="flex items-center gap-2">
+            <Shield className={cn("h-4 w-4", dbs.expired_or_missing > 0 ? "text-red-500" : "text-green-500")} />
+            <div>
+              <p className="text-xs font-medium">DBS Status</p>
+              <p className="text-[10px] text-muted-foreground">
+                {dbs.valid_dbs} valid · {dbs.update_service_enrolled} update service · {dbs.expired_or_missing} needing action
+              </p>
+            </div>
+          </div>
+          {dbs.expired_or_missing > 0 ? (
+            <Badge className="text-[10px] bg-red-100 text-red-700">
+              <AlertTriangle className="h-2.5 w-2.5 mr-0.5" />
+              {dbs.expired_or_missing} action
+            </Badge>
+          ) : (
+            <Badge className="text-[10px] bg-green-100 text-green-700">
+              <CheckCircle2 className="h-3 w-3 mr-1" />
+              All clear
+            </Badge>
+          )}
         </div>
 
-        {/* ── Alerts ──────────────────────────────────────────────────── */}
+        {/* ── ARIA insights ───────────────────────────────────────────── */}
 
-        {DEMO_ALERTS.length > 0 && (
+        {intel.insights.length > 0 && (
           <div className="space-y-1.5">
-            <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
-              <AlertTriangle className="h-3 w-3" />
-              Induction Alerts
+            <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
+              <Brain className="h-3 w-3" />
+              ARIA Induction Intelligence
             </p>
-            {DEMO_ALERTS.map((alert, i) => (
+            {intel.insights.map((insight, i) => (
               <div
                 key={i}
                 className={cn(
                   "rounded border p-2.5 text-xs leading-relaxed",
-                  alert.severity === "critical" || alert.severity === "high"
-                    ? "border-red-200 bg-red-50 text-red-800"
-                    : "border-amber-200 bg-amber-50 text-amber-800",
+                  INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.positive,
                 )}
               >
-                {alert.message}
+                {insight.text}
               </div>
             ))}
           </div>
         )}
-
-        {/* ── ARIA insights ───────────────────────────────────────────── */}
-
-        <div className="space-y-1.5">
-          <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
-            <Brain className="h-3 w-3" />
-            ARIA Induction Intelligence
-          </p>
-          {ARIA_INSIGHTS.map((insight, i) => (
-            <div
-              key={i}
-              className={cn(
-                "rounded border p-2.5 text-xs leading-relaxed",
-                i === 0 ? "border-blue-200 bg-blue-50 text-blue-800"
-                  : i === 1 ? "border-amber-200 bg-amber-50 text-amber-800"
-                  : "border-green-200 bg-green-50 text-green-800",
-              )}
-            >
-              {insight}
-            </div>
-          ))}
-        </div>
       </CardContent>
     </Card>
   );

@@ -1,67 +1,205 @@
 "use client";
 
+// ══════════════════════════════════════════════════════════════════════════════
+// CORNERSTONE — STAFF SUPERVISION COMPLIANCE INTELLIGENCE CARD
+// Dashboard widget for supervision compliance rates, training status,
+// overdue staff, and ARIA intelligence insights.
+// Powered by the Supervision Intelligence Engine — live data (Reg 33/16).
+// ══════════════════════════════════════════════════════════════════════════════
+
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ClipboardCheck, ChevronRight, AlertTriangle, Brain, Clock, UserCog } from "lucide-react";
+import {
+  ClipboardCheck, ChevronRight, AlertTriangle, Brain,
+  Users, Loader2, BookOpen, UserCog,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useSupervisionIntelligence } from "@/hooks/use-supervision-intelligence";
 
-const DEMO_METRICS = { total_supervisions: 15, overdue_count: 1, missed_count: 1, poor_quality_count: 1, not_started_count: 1, safeguarding_discussed_rate: 80.0, wellbeing_discussed_rate: 86.7, training_needs_rate: 66.7, average_duration: 52.3, unique_staff: 6 };
+// ── Styling ──────────────────────────────────────────────────────────────────
 
-const DEMO_RECORDS: { staff: string; type: string; compliance: string; quality: string }[] = [
-  { staff: "Staff A", type: "Formal 1-to-1", compliance: "On Schedule", quality: "Good" },
-  { staff: "Staff B", type: "Group", compliance: "Slightly Over", quality: "Satisfactory" },
-  { staff: "Staff C", type: "Reflective", compliance: "On Schedule", quality: "Excellent" },
-  { staff: "Staff D", type: "Management", compliance: "Sig. Overdue", quality: "Poor" },
-  { staff: "Staff E", type: "Formal 1-to-1", compliance: "Missed", quality: "N/A" },
-  { staff: "Staff F", type: "Clinical", compliance: "Ahead", quality: "Good" },
-];
-
-const DEMO_ALERTS: { type: string; severity: "critical" | "high" | "medium"; message: string }[] = [
-  { type: "supervision_overdue", severity: "high", message: "2 supervisions are significantly overdue or missed." },
-  { type: "safeguarding_not_discussed", severity: "high", message: "3 supervisions have safeguarding not discussed." },
-  { type: "training_not_reviewed", severity: "medium", message: "5 supervisions without training needs reviewed." },
-];
-
-const ARIA_INSIGHTS = [
-  "15 supervisions. 6 staff. Overdue: 1. Missed: 1. Safeguarding: 80%. Training: 66.7%. Avg: 52 min.",
-  "Priority: 2 overdue/missed. 3 no safeguarding. 5 no training review. Strengthen supervision compliance.",
-  "Positive: Most supervisions on schedule. Wellbeing routinely discussed. Manager oversight consistent.",
-];
-
-const COMPLIANCE_BADGES: Record<string, { label: string; color: string }> = {
-  "On Schedule": { label: "On Time", color: "text-green-700 bg-green-50 border-green-200" },
-  "Slightly Over": { label: "Slight", color: "text-blue-700 bg-blue-50 border-blue-200" },
-  "Ahead": { label: "Ahead", color: "text-green-700 bg-green-50 border-green-200" },
-  "Sig. Overdue": { label: "Overdue", color: "text-amber-700 bg-amber-50 border-amber-200" },
-  "Missed": { label: "Missed", color: "text-red-700 bg-red-50 border-red-200" },
+const ALERT_STYLES: Record<string, string> = {
+  critical: "border-red-200 bg-red-50 text-red-800",
+  high: "border-red-200 bg-red-50 text-red-800",
+  medium: "border-amber-200 bg-amber-50 text-amber-800",
+  low: "border-blue-200 bg-blue-50 text-blue-800",
 };
 
+const INSIGHT_STYLES: Record<string, string> = {
+  critical: "border-red-200 bg-red-50 text-red-800",
+  warning: "border-amber-200 bg-amber-50 text-amber-800",
+  positive: "border-green-200 bg-green-50 text-green-800",
+};
+
+// ── Component ────────────────────────────────────────────────────────────────
+
 export function StaffSupervisionComplianceCard() {
-  const m = DEMO_METRICS;
+  const { data, isLoading } = useSupervisionIntelligence();
+  const intel = data?.data;
+
+  if (isLoading || !intel) {
+    return (
+      <Card>
+        <CardHeader className="pb-3">
+          <CardTitle className="text-sm flex items-center gap-2">
+            <ClipboardCheck className="h-4 w-4 text-brand" />
+            Supervision Compliance
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center justify-center py-8">
+            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  const o = intel.overview;
+  const tc = intel.training_compliance;
+  const completionRate = o.total_staff > 0
+    ? Math.round((o.supervisions_completed_90d / (o.total_staff * 3)) * 100)
+    : 0;
+  const overdueStaff = intel.staff_profiles.filter((p) => p.compliance_status === "overdue");
+
   return (
     <Card className="overflow-hidden">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-sm flex items-center gap-2"><ClipboardCheck className="h-4 w-4 text-brand" />Supervision</CardTitle>
-          <Link href="/staff-supervision-compliance" className="text-xs text-brand hover:underline flex items-center gap-1">Compliance <ChevronRight className="h-3 w-3" /></Link>
+          <CardTitle className="text-sm flex items-center gap-2">
+            <ClipboardCheck className="h-4 w-4 text-brand" />
+            Supervision Compliance
+          </CardTitle>
+          <Link href="/supervision" className="text-xs text-brand hover:underline flex items-center gap-1">
+            Compliance <ChevronRight className="h-3 w-3" />
+          </Link>
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
+
+        {/* ── Summary strip ────────────────────────────────────────────── */}
+
         <div className="grid grid-cols-4 gap-2">
-          <div className={cn("text-center rounded-lg p-2", m.missed_count === 0 ? "bg-green-50" : "bg-red-50")}><p className={cn("text-lg font-bold tabular-nums", m.missed_count === 0 ? "text-green-600" : "text-red-600")}>{m.missed_count}</p><p className="text-[10px] text-muted-foreground">Missed</p></div>
-          <div className={cn("text-center rounded-lg p-2", m.overdue_count === 0 ? "bg-green-50" : "bg-amber-50")}><p className={cn("text-lg font-bold tabular-nums", m.overdue_count === 0 ? "text-green-600" : "text-amber-600")}>{m.overdue_count}</p><p className="text-[10px] text-muted-foreground">Overdue</p></div>
-          <div className={cn("text-center rounded-lg p-2", m.poor_quality_count === 0 ? "bg-green-50" : "bg-amber-50")}><p className={cn("text-lg font-bold tabular-nums", m.poor_quality_count === 0 ? "text-green-600" : "text-amber-600")}>{m.poor_quality_count}</p><p className="text-[10px] text-muted-foreground">Poor</p></div>
-          <div className="text-center rounded-lg p-2 bg-blue-50"><p className="text-lg font-bold tabular-nums text-blue-600">{m.unique_staff}</p><p className="text-[10px] text-muted-foreground">Staff</p></div>
-        </div>
-        <div className="space-y-1.5">
-          <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1"><Clock className="h-3 w-3" />Recent Supervisions</p>
-          <div className="space-y-1">
-            {DEMO_RECORDS.map((r, i) => { const badge = COMPLIANCE_BADGES[r.compliance] ?? COMPLIANCE_BADGES["On Schedule"]; return (<div key={i} className="flex items-center justify-between rounded border p-2 text-xs"><div className="flex items-center gap-2 flex-1 min-w-0"><UserCog className="h-3 w-3 text-sky-500 shrink-0" /><span className="font-medium">{r.staff}</span><span className="text-muted-foreground truncate">{r.type} · {r.quality}</span></div><Badge variant="outline" className={cn("text-[10px] shrink-0", badge.color)}>{badge.label}</Badge></div>); })}
+          <div className={cn("text-center rounded-lg p-2.5", completionRate >= 90 ? "bg-green-50" : "bg-amber-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", completionRate >= 90 ? "text-green-600" : "text-amber-600")}>
+              {completionRate}%
+            </p>
+            <p className="text-[10px] text-muted-foreground">Completion</p>
+          </div>
+          <div className={cn("text-center rounded-lg p-2.5", o.supervisions_overdue === 0 ? "bg-green-50" : "bg-red-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", o.supervisions_overdue === 0 ? "text-green-600" : "text-red-600")}>
+              {o.supervisions_overdue}
+            </p>
+            <p className="text-[10px] text-muted-foreground">Overdue</p>
+          </div>
+          <div className="text-center rounded-lg bg-blue-50 p-2.5">
+            <p className="text-lg font-bold tabular-nums text-blue-600">{o.supervisions_completed_90d}</p>
+            <p className="text-[10px] text-muted-foreground">Done (90d)</p>
+          </div>
+          <div className={cn("text-center rounded-lg p-2.5", o.avg_wellbeing_score >= 7 ? "bg-green-50" : "bg-amber-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", o.avg_wellbeing_score >= 7 ? "text-green-600" : "text-amber-600")}>
+              {o.avg_wellbeing_score}/10
+            </p>
+            <p className="text-[10px] text-muted-foreground">Wellbeing</p>
           </div>
         </div>
-        {DEMO_ALERTS.length > 0 && (<div className="space-y-1.5"><p className="text-xs font-semibold text-muted-foreground flex items-center gap-1"><AlertTriangle className="h-3 w-3" />Supervision Alerts</p>{DEMO_ALERTS.map((a, i) => (<div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", a.severity === "critical" || a.severity === "high" ? "border-red-200 bg-red-50 text-red-800" : "border-amber-200 bg-amber-50 text-amber-800")}>{a.message}</div>))}</div>)}
-        <div className="space-y-1.5"><p className="text-xs font-semibold flex items-center gap-1 text-purple-700"><Brain className="h-3 w-3" />ARIA Supervision Intelligence</p>{ARIA_INSIGHTS.map((insight, i) => (<div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", i === 0 ? "border-blue-200 bg-blue-50 text-blue-800" : i === 1 ? "border-amber-200 bg-amber-50 text-amber-800" : "border-green-200 bg-green-50 text-green-800")}>{insight}</div>))}</div>
+
+        {/* ── Training compliance ──────────────────────────────────────── */}
+
+        <div className="space-y-1.5">
+          <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
+            <BookOpen className="h-3 w-3" />
+            Training Compliance
+          </p>
+          <div className="grid grid-cols-3 gap-2">
+            <div className="text-center rounded-lg bg-green-50 p-2">
+              <p className="text-sm font-bold tabular-nums text-green-600">{tc.compliant}</p>
+              <p className="text-[10px] text-muted-foreground">Compliant</p>
+            </div>
+            <div className={cn("text-center rounded-lg p-2", tc.expiring_soon > 0 ? "bg-amber-50" : "bg-green-50")}>
+              <p className={cn("text-sm font-bold tabular-nums", tc.expiring_soon > 0 ? "text-amber-600" : "text-green-600")}>
+                {tc.expiring_soon}
+              </p>
+              <p className="text-[10px] text-muted-foreground">Expiring</p>
+            </div>
+            <div className={cn("text-center rounded-lg p-2", tc.expired > 0 ? "bg-red-50" : "bg-green-50")}>
+              <p className={cn("text-sm font-bold tabular-nums", tc.expired > 0 ? "text-red-600" : "text-green-600")}>
+                {tc.expired}
+              </p>
+              <p className="text-[10px] text-muted-foreground">Expired</p>
+            </div>
+          </div>
+        </div>
+
+        {/* ── Overdue staff ─────────────────────────────────────────────── */}
+
+        {overdueStaff.length > 0 && (
+          <div className="space-y-1.5">
+            <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
+              <UserCog className="h-3 w-3" />
+              Overdue Staff
+            </p>
+            <div className="space-y-1">
+              {overdueStaff.slice(0, 5).map((profile) => (
+                <div key={profile.staff_id} className="flex items-center justify-between rounded border p-2 text-xs">
+                  <div className="flex items-center gap-2 flex-1 min-w-0">
+                    <Users className="h-3 w-3 text-red-500 shrink-0" />
+                    <span className="font-medium">{profile.staff_name}</span>
+                    <span className="text-muted-foreground truncate">{profile.role}</span>
+                  </div>
+                  <Badge variant="outline" className="text-[10px] shrink-0 text-red-700 bg-red-50 border-red-200">
+                    {profile.last_supervision_days_ago}d overdue
+                  </Badge>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* ── Alerts ──────────────────────────────────────────────────── */}
+
+        {intel.alerts.length > 0 && (
+          <div className="space-y-1.5">
+            <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
+              <AlertTriangle className="h-3 w-3" />
+              Supervision Alerts
+            </p>
+            {intel.alerts.slice(0, 3).map((alert, i) => (
+              <div
+                key={i}
+                className={cn(
+                  "rounded border p-2.5 text-xs leading-relaxed",
+                  ALERT_STYLES[alert.severity] ?? ALERT_STYLES.medium,
+                )}
+              >
+                {alert.message}
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* ── ARIA Supervision Intelligence ────────────────────────────── */}
+
+        {intel.insights.length > 0 && (
+          <div className="space-y-1.5">
+            <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
+              <Brain className="h-3 w-3" />
+              ARIA Supervision Intelligence
+            </p>
+            {intel.insights.slice(0, 3).map((insight, i) => (
+              <div
+                key={i}
+                className={cn(
+                  "rounded border p-2.5 text-xs leading-relaxed",
+                  INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.positive,
+                )}
+              >
+                {insight.text}
+              </div>
+            ))}
+          </div>
+        )}
       </CardContent>
     </Card>
   );

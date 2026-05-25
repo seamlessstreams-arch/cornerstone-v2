@@ -2,39 +2,52 @@
 
 // ══════════════════════════════════════════════════════════════════════════════
 // CORNERSTONE — MEDICATION STATUS CARD
-// Dashboard widget showing today's medication administration status.
-// Shows which medications have been given, missed, or refused with a
-// real-time progress tracker. Critical for Ofsted under Standard 3
-// (Health & Wellbeing) and Reg 23 (Health of Children).
+// Dashboard widget showing medication administration status.
+// Powered by the Medication Intelligence Engine — live data (Reg 23/12).
 // ══════════════════════════════════════════════════════════════════════════════
 
-import React from "react";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { useDashboard } from "@/hooks/use-dashboard";
-import { cn } from "@/lib/utils";
 import {
-  Pill, CheckCircle2, AlertTriangle, Clock,
-  ChevronRight, Loader2, XCircle,
+  Pill, ChevronRight, CheckCircle2, AlertTriangle,
+  Brain, Loader2,
 } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { useMedicationIntelligence } from "@/hooks/use-medication-intelligence";
+
+// ── Styling ─────────────────────────────────────────────────────────────────
+
+const INSIGHT_STYLES: Record<string, string> = {
+  critical: "border-red-200 bg-red-50 text-red-800",
+  warning:  "border-amber-200 bg-amber-50 text-amber-800",
+  positive: "border-green-200 bg-green-50 text-green-800",
+};
+
+const COMPLIANCE_STYLES: Record<string, string> = {
+  excellent: "bg-green-100 text-green-700",
+  good:      "bg-blue-100 text-blue-700",
+  concerns:  "bg-amber-100 text-amber-700",
+  critical:  "bg-red-100 text-red-700",
+};
+
+// ── Component ───────────────────────────────────────────────────────────────
 
 export function MedicationStatusCard() {
-  const { data, isLoading } = useDashboard();
-  const med = data?.data?.medication;
+  const { data, isLoading } = useMedicationIntelligence();
+  const intel = data?.data;
 
-  if (isLoading) {
+  if (isLoading || !intel) {
     return (
       <Card>
-        <CardHeader className="pb-2">
-          <CardTitle className="flex items-center gap-2 text-[13px]">
-            <Pill className="h-4 w-4 text-[var(--cs-aria-gold)]" />
-            Medication Today
+        <CardHeader className="pb-3">
+          <CardTitle className="text-sm flex items-center gap-2">
+            <Pill className="h-4 w-4 text-brand" />
+            Medication Status
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="flex items-center justify-center py-6">
+          <div className="flex items-center justify-center py-8">
             <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
           </div>
         </CardContent>
@@ -42,112 +55,121 @@ export function MedicationStatusCard() {
     );
   }
 
-  if (!med) return null;
-
-  const scheduled = med.scheduled_today ?? 0;
-  const missed = med.missed_today ?? 0;
-  const given = Math.max(0, scheduled - missed);
-  const exceptions = med.exceptions_this_week ?? 0;
-  const oversight = med.oversight_needed ?? 0;
-  const stockAlerts = med.stock_alerts ?? 0;
-  const pct = scheduled > 0 ? Math.round((given / scheduled) * 100) : 100;
-  const hasConcern = missed > 0 || oversight > 0;
+  const o = intel.overview;
+  const hasConcern = o.missed_rate > 0 || o.refusal_rate > 0;
 
   return (
-    <Card className={cn(
-      missed > 0 && "border-red-200",
-      oversight > 0 && !missed && "border-amber-200",
-    )}>
-      <CardHeader className="pb-2">
+    <Card className="overflow-hidden">
+      <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
-          <CardTitle className="flex items-center gap-2 text-[13px]">
-            <Pill className={cn(
-              "h-4 w-4",
-              hasConcern ? "text-red-500" : "text-[var(--cs-aria-gold)]",
-            )} />
-            Medication Today
+          <CardTitle className="text-sm flex items-center gap-2">
+            <Pill className={cn("h-4 w-4", hasConcern ? "text-red-500" : "text-brand")} />
+            Medication Status
           </CardTitle>
-          <div className="flex items-center gap-2">
-            {missed > 0 && (
-              <Badge className="bg-red-100 text-red-700 border-0 text-[10px] rounded-full flex items-center gap-0.5">
-                <XCircle className="h-2.5 w-2.5" />{missed} missed
-              </Badge>
-            )}
-            {oversight > 0 && (
-              <Badge className="bg-amber-100 text-amber-700 border-0 text-[10px] rounded-full">
-                {oversight} need oversight
-              </Badge>
-            )}
-            <Link href="/medication" className="text-[11px] text-blue-600 hover:underline">
-              MAR →
-            </Link>
-          </div>
+          <Link href="/medication" className="text-xs text-brand hover:underline flex items-center gap-1">
+            MAR <ChevronRight className="h-3 w-3" />
+          </Link>
         </div>
       </CardHeader>
-      <CardContent className="pt-0 space-y-3">
-        {/* Progress bar */}
-        <div>
-          <div className="flex items-center justify-between mb-1.5">
-            <span className="text-[11px] font-medium text-[var(--cs-text-muted)]">Administration Progress</span>
-            <span className={cn(
-              "text-sm font-bold tabular-nums",
-              pct === 100 ? "text-emerald-600" :
-              pct >= 70 ? "text-blue-600" : "text-amber-600",
-            )}>
-              {given}/{scheduled}
-            </span>
-          </div>
-          <Progress
-            value={pct}
-            className="h-2"
-            color={pct === 100 ? "bg-emerald-500" : hasConcern ? "bg-red-500" : "bg-[var(--cs-aria-gold-bg)]0"}
-          />
-        </div>
+      <CardContent className="space-y-4">
 
-        {/* Status breakdown */}
+        {/* ── Summary strip ────────────────────────────────────────────── */}
+
         <div className="grid grid-cols-4 gap-2">
-          <div className="rounded-lg bg-emerald-50 border border-emerald-100 p-2 text-center">
-            <div className="text-lg font-bold text-emerald-600 tabular-nums">{given}</div>
-            <div className="text-[9px] text-emerald-500 font-medium">Given</div>
+          <div className={cn("text-center rounded-lg p-2.5", o.adherence_rate >= 95 ? "bg-green-50" : o.adherence_rate >= 80 ? "bg-amber-50" : "bg-red-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", o.adherence_rate >= 95 ? "text-green-600" : o.adherence_rate >= 80 ? "text-amber-600" : "text-red-600")}>{o.adherence_rate}%</p>
+            <p className="text-[10px] text-muted-foreground">Given</p>
           </div>
-          <div className={cn(
-            "rounded-lg border p-2 text-center",
-            missed > 0 ? "bg-red-50 border-red-100" : "bg-[var(--cs-surface)] border-[var(--cs-border-subtle)]",
-          )}>
-            <div className={cn("text-lg font-bold tabular-nums", missed > 0 ? "text-red-600" : "text-[var(--cs-text-gentle)]")}>{missed}</div>
-            <div className={cn("text-[9px] font-medium", missed > 0 ? "text-red-500" : "text-[var(--cs-text-muted)]")}>Missed</div>
+          <div className={cn("text-center rounded-lg p-2.5", o.missed_rate === 0 ? "bg-green-50" : "bg-red-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", o.missed_rate === 0 ? "text-green-600" : "text-red-600")}>{o.missed_rate}%</p>
+            <p className="text-[10px] text-muted-foreground">Missed</p>
           </div>
-          <div className={cn(
-            "rounded-lg border p-2 text-center",
-            exceptions > 0 ? "bg-orange-50 border-orange-100" : "bg-[var(--cs-surface)] border-[var(--cs-border-subtle)]",
-          )}>
-            <div className={cn("text-lg font-bold tabular-nums", exceptions > 0 ? "text-orange-600" : "text-[var(--cs-text-gentle)]")}>{exceptions}</div>
-            <div className={cn("text-[9px] font-medium", exceptions > 0 ? "text-orange-500" : "text-[var(--cs-text-muted)]")}>Exceptions</div>
+          <div className={cn("text-center rounded-lg p-2.5", o.refusal_rate === 0 ? "bg-green-50" : "bg-amber-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", o.refusal_rate === 0 ? "text-green-600" : "text-amber-600")}>{o.refusal_rate}%</p>
+            <p className="text-[10px] text-muted-foreground">Refused</p>
           </div>
-          <div className={cn(
-            "rounded-lg border p-2 text-center",
-            stockAlerts > 0 ? "bg-amber-50 border-amber-100" : "bg-[var(--cs-surface)] border-[var(--cs-border-subtle)]",
-          )}>
-            <div className={cn("text-lg font-bold tabular-nums", stockAlerts > 0 ? "text-amber-600" : "text-[var(--cs-text-gentle)]")}>{stockAlerts}</div>
-            <div className={cn("text-[9px] font-medium", stockAlerts > 0 ? "text-amber-500" : "text-[var(--cs-text-muted)]")}>Stock</div>
+          <div className="text-center rounded-lg bg-blue-50 p-2.5">
+            <p className="text-lg font-bold tabular-nums text-blue-600">{o.total_administrations_30d}</p>
+            <p className="text-[10px] text-muted-foreground">Doses/30d</p>
           </div>
         </div>
 
-        {/* Alert for missed medications */}
-        {missed > 0 && (
-          <div className="rounded-xl bg-red-50 border border-red-200 p-2.5 flex items-center gap-2">
-            <AlertTriangle className="h-3.5 w-3.5 text-red-600 shrink-0" />
-            <p className="text-[11px] text-red-700 font-medium">
-              Missed medications require a body map check and incident log — Reg 23 compliance.
-            </p>
+        {/* ── Child compliance overview ────────────────────────────────── */}
+
+        {intel.child_profiles.length > 0 && (
+          <div className="space-y-1.5">
+            {intel.child_profiles.map((cp) => (
+              <div key={cp.child_id} className="flex items-center justify-between rounded border p-2.5 text-xs">
+                <div className="flex items-center gap-2">
+                  <span className="font-medium">{cp.child_name}</span>
+                  <span className="text-[10px] text-muted-foreground">{cp.active_medications} med{cp.active_medications !== 1 ? "s" : ""}</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  {cp.missed_count_30d > 0 && (
+                    <Badge className="text-[9px] bg-red-100 text-red-700">{cp.missed_count_30d} missed</Badge>
+                  )}
+                  {cp.refusal_count_30d > 0 && (
+                    <Badge className="text-[9px] bg-amber-100 text-amber-700">{cp.refusal_count_30d} refused</Badge>
+                  )}
+                  <Badge className={cn("text-[10px]", COMPLIANCE_STYLES[cp.compliance_status] ?? COMPLIANCE_STYLES.concerns)}>
+                    {cp.adherence_rate}%
+                  </Badge>
+                </div>
+              </div>
+            ))}
           </div>
         )}
 
-        {/* All done state */}
-        {pct === 100 && !hasConcern && (
-          <div className="rounded-xl bg-emerald-50 border border-emerald-200 p-2.5 text-center">
-            <CheckCircle2 className="h-4 w-4 text-emerald-500 mx-auto mb-0.5" />
-            <p className="text-[10px] font-medium text-emerald-700">All medications administered</p>
+        {/* ── All clear ───────────────────────────────────────────────── */}
+
+        {!hasConcern && o.adherence_rate >= 95 && (
+          <div className="flex items-center gap-2 rounded-lg bg-green-50 border border-green-200 p-3">
+            <CheckCircle2 className="h-4 w-4 text-green-600" />
+            <span className="text-xs text-green-700">All medications administered on schedule. Full adherence.</span>
+          </div>
+        )}
+
+        {/* ── Alerts ──────────────────────────────────────────────────── */}
+
+        {hasConcern && intel.alerts.length > 0 && (
+          <div className="space-y-1.5">
+            <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
+              <AlertTriangle className="h-3 w-3" />
+              Medication Alerts
+            </p>
+            {intel.alerts.slice(0, 2).map((alert, i) => (
+              <div
+                key={i}
+                className={cn(
+                  "rounded border p-2.5 text-xs leading-relaxed",
+                  alert.severity === "critical" || alert.severity === "high" ? "border-red-200 bg-red-50 text-red-800" : "border-amber-200 bg-amber-50 text-amber-800",
+                )}
+              >
+                {alert.message}
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* ── ARIA Intelligence ───────────────────────────────────────── */}
+
+        {intel.insights.length > 0 && (
+          <div className="space-y-1.5">
+            <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
+              <Brain className="h-3 w-3" />
+              ARIA Medication Status
+            </p>
+            {intel.insights.slice(0, 2).map((insight, i) => (
+              <div
+                key={i}
+                className={cn(
+                  "rounded border p-2.5 text-xs leading-relaxed",
+                  INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.positive,
+                )}
+              >
+                {insight.text}
+              </div>
+            ))}
           </div>
         )}
       </CardContent>
