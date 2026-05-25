@@ -1,40 +1,66 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — FORM COMPLIANCE CARD
-// Dashboard widget showing care form completion and approval pipeline.
-// Regulatory requirement: all care forms must be completed, reviewed,
-// and approved in a timely manner.
+// CORNERSTONE — CARE FORM INTELLIGENCE CARD
+// Dashboard card powered by the Care Form Intelligence Engine — live data.
+// Reg 35 (policies/procedures documentation), Reg 37 (notifications),
+// Schedule 1, SCCIF: "Are records accurate, up to date, and support
+// effective planning?"
 // ══════════════════════════════════════════════════════════════════════════════
 
-import React from "react";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { useForms } from "@/hooks/use-forms";
-import { cn } from "@/lib/utils";
 import {
-  FileText, Loader2, AlertTriangle, CheckCircle2,
-  Clock, FilePen, FileCheck2, AlertCircle,
+  FileText, ChevronRight, AlertTriangle, Brain, Loader2,
+  Clock, FileWarning, FileCheck2, BarChart3, Users,
 } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { useCareFormIntelligence } from "@/hooks/use-care-form-intelligence";
+
+// ── Styling ─────────────────────────────────────────────────────────────────
+
+const ALERT_STYLES: Record<string, string> = {
+  critical: "border-red-200 bg-red-50 text-red-800",
+  high: "border-red-200 bg-red-50 text-red-800",
+  medium: "border-amber-200 bg-amber-50 text-amber-800",
+  low: "border-blue-200 bg-blue-50 text-blue-800",
+};
+
+const INSIGHT_STYLES: Record<string, string> = {
+  critical: "border-red-200 bg-red-50 text-red-800",
+  warning: "border-amber-200 bg-amber-50 text-amber-800",
+  positive: "border-green-200 bg-green-50 text-green-800",
+};
+
+const PRIORITY_STYLES: Record<string, string> = {
+  urgent: "bg-red-100 text-red-700",
+  high: "bg-amber-100 text-amber-700",
+  medium: "bg-blue-100 text-blue-700",
+  low: "bg-slate-100 text-slate-700",
+};
+
+function formatFormType(ft: string): string {
+  return ft.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+}
 
 // ── Component ───────────────────────────────────────────────────────────────
 
 export function FormComplianceCard() {
-  const { data, isPending } = useForms();
-  const meta = data?.meta;
+  const { data, isLoading } = useCareFormIntelligence();
+  const intel = data?.data;
 
-  if (isPending) {
+  if (isLoading || !intel) {
     return (
       <Card>
-        <CardHeader className="pb-2">
-          <CardTitle className="flex items-center gap-2 text-[13px]">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-sm flex items-center gap-2">
             <FileText className="h-4 w-4 text-sky-500" />
             Care Forms
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="flex items-center justify-center py-6">
+          <div className="flex items-center justify-center py-8">
             <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
           </div>
         </CardContent>
@@ -42,110 +68,210 @@ export function FormComplianceCard() {
     );
   }
 
-  if (!meta) return null;
-
-  const hasAlert = meta.overdue > 0 || meta.urgent > 0;
+  const o = intel.overview;
 
   return (
-    <Card className={cn(hasAlert && "border-sky-200")}>
-      <CardHeader className="pb-2">
+    <Card className="overflow-hidden">
+      <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
-          <CardTitle className="flex items-center gap-2 text-[13px]">
+          <CardTitle className="text-sm flex items-center gap-2">
             <FileText className="h-4 w-4 text-sky-500" />
             Care Forms
           </CardTitle>
-          <Link href="/forms">
-            <Badge className="text-[9px] bg-sky-100 text-sky-700 border-0 rounded-full hover:bg-sky-200 cursor-pointer">
-              View all
-            </Badge>
+          <Link href="/forms" className="text-xs text-brand hover:underline flex items-center gap-1">
+            All Forms <ChevronRight className="h-3 w-3" />
           </Link>
         </div>
       </CardHeader>
-      <CardContent className="pt-0 space-y-2.5">
-        {/* KPI strip */}
-        <div className="grid grid-cols-3 gap-2">
-          <div className="rounded-xl bg-emerald-50 p-2 text-center">
-            <FileCheck2 className="h-3 w-3 text-emerald-500 mx-auto mb-0.5" />
-            <div className="text-sm font-bold text-emerald-700 tabular-nums">{meta.approved}</div>
-            <div className="text-[9px] text-emerald-500">Approved</div>
-          </div>
-          <div className={cn("rounded-xl p-2 text-center", meta.pending_review > 0 ? "bg-amber-50" : "bg-[var(--cs-surface)]")}>
-            <Clock className={cn("h-3 w-3 mx-auto mb-0.5", meta.pending_review > 0 ? "text-amber-500" : "text-[var(--cs-text-muted)]")} />
-            <div className={cn("text-sm font-bold tabular-nums", meta.pending_review > 0 ? "text-amber-700" : "text-[var(--cs-text-muted)]")}>
-              {meta.pending_review}
-            </div>
-            <div className={cn("text-[9px]", meta.pending_review > 0 ? "text-amber-500" : "text-[var(--cs-text-muted)]")}>Pending</div>
-          </div>
-          <div className={cn("rounded-xl p-2 text-center", meta.draft > 0 ? "bg-blue-50" : "bg-[var(--cs-surface)]")}>
-            <FilePen className={cn("h-3 w-3 mx-auto mb-0.5", meta.draft > 0 ? "text-blue-500" : "text-[var(--cs-text-muted)]")} />
-            <div className={cn("text-sm font-bold tabular-nums", meta.draft > 0 ? "text-blue-700" : "text-[var(--cs-text-muted)]")}>
-              {meta.draft}
-            </div>
-            <div className={cn("text-[9px]", meta.draft > 0 ? "text-blue-500" : "text-[var(--cs-text-muted)]")}>Draft</div>
-          </div>
-        </div>
+      <CardContent className="space-y-4">
 
-        {/* Total */}
-        <div className="flex items-center justify-between text-[10px] px-1">
-          <span className="text-[var(--cs-text-muted)]">Total forms</span>
-          <span className="font-bold text-[var(--cs-text-secondary)] tabular-nums">{meta.total}</span>
-        </div>
+        {/* ── Summary strip ────────────────────────────────────────────── */}
 
-        {/* Completion rate */}
-        {meta.total > 0 && (
-          <div className="flex items-center justify-between text-[10px] px-1">
-            <span className="text-[var(--cs-text-muted)]">Completion rate</span>
-            <div className="flex items-center gap-1.5">
-              <div className="h-1.5 w-16 rounded-full bg-[var(--cs-surface)] overflow-hidden">
-                <div
-                  className={cn(
-                    "h-full rounded-full transition-all",
-                    Math.round((meta.approved / meta.total) * 100) >= 80 ? "bg-emerald-500"
-                    : Math.round((meta.approved / meta.total) * 100) >= 50 ? "bg-amber-500"
-                    : "bg-red-500"
-                  )}
-                  style={{ width: `${Math.round((meta.approved / meta.total) * 100)}%` }}
-                />
-              </div>
-              <span className="font-bold text-[var(--cs-text-secondary)] tabular-nums">
-                {Math.round((meta.approved / meta.total) * 100)}%
-              </span>
-            </div>
-          </div>
-        )}
-
-        {/* Overdue alert */}
-        {meta.overdue > 0 && (
-          <div className="rounded-lg bg-red-50 border border-red-100 p-2 flex items-start gap-2">
-            <AlertCircle className="h-3 w-3 text-red-500 shrink-0 mt-0.5" />
-            <div>
-              <p className="text-[10px] font-semibold text-red-700">
-                {meta.overdue} form{meta.overdue !== 1 ? "s" : ""} overdue
-              </p>
-              <p className="text-[10px] text-red-600">
-                Immediate completion required for regulatory compliance
-              </p>
-            </div>
-          </div>
-        )}
-
-        {/* Urgent alert */}
-        {meta.urgent > 0 && meta.overdue === 0 && (
-          <div className="rounded-lg bg-amber-50 border border-amber-100 p-2 flex items-start gap-2">
-            <AlertTriangle className="h-3 w-3 text-amber-500 shrink-0 mt-0.5" />
-            <p className="text-[10px] font-semibold text-amber-700">
-              {meta.urgent} urgent form{meta.urgent !== 1 ? "s" : ""} require attention
+        <div className="grid grid-cols-4 gap-2">
+          <div className={cn(
+            "text-center rounded-lg p-2.5",
+            o.completion_rate >= 80 ? "bg-green-50" : o.completion_rate >= 50 ? "bg-amber-50" : "bg-red-50",
+          )}>
+            <p className={cn(
+              "text-lg font-bold tabular-nums",
+              o.completion_rate >= 80 ? "text-green-600" : o.completion_rate >= 50 ? "text-amber-600" : "text-red-600",
+            )}>
+              {o.completion_rate}%
             </p>
+            <p className="text-[10px] text-muted-foreground">Complete</p>
+          </div>
+          <div className={cn(
+            "text-center rounded-lg p-2.5",
+            o.overdue_count === 0 ? "bg-green-50" : "bg-red-50",
+          )}>
+            <p className={cn(
+              "text-lg font-bold tabular-nums",
+              o.overdue_count === 0 ? "text-green-600" : "text-red-600",
+            )}>
+              {o.overdue_count}
+            </p>
+            <p className="text-[10px] text-muted-foreground">Overdue</p>
+          </div>
+          <div className={cn(
+            "text-center rounded-lg p-2.5",
+            o.pending_review_count === 0 ? "bg-green-50" : "bg-amber-50",
+          )}>
+            <p className={cn(
+              "text-lg font-bold tabular-nums",
+              o.pending_review_count === 0 ? "text-green-600" : "text-amber-600",
+            )}>
+              {o.pending_review_count + o.submitted_count}
+            </p>
+            <p className="text-[10px] text-muted-foreground">Pending</p>
+          </div>
+          <div className="text-center rounded-lg bg-blue-50 p-2.5">
+            <p className="text-lg font-bold tabular-nums text-blue-600">{o.total_forms}</p>
+            <p className="text-[10px] text-muted-foreground">Total</p>
+          </div>
+        </div>
+
+        {/* ── Key metrics bar ──────────────────────────────────────────── */}
+
+        <div className="grid grid-cols-3 gap-2 text-center text-xs">
+          <div>
+            <p className={cn(
+              "font-bold tabular-nums",
+              o.avg_review_days <= 2 ? "text-green-600" : o.avg_review_days <= 5 ? "text-amber-600" : "text-red-600",
+            )}>
+              {o.avg_review_days}d
+            </p>
+            <p className="text-[10px] text-muted-foreground">Avg Review</p>
+          </div>
+          <div>
+            <p className="font-bold text-slate-700 tabular-nums">{o.child_linked_count}</p>
+            <p className="text-[10px] text-muted-foreground">Child-linked</p>
+          </div>
+          <div>
+            <p className="font-bold text-slate-700 tabular-nums">{o.form_types_used}</p>
+            <p className="text-[10px] text-muted-foreground">Form Types</p>
+          </div>
+        </div>
+
+        {/* ── Form type breakdown ──────────────────────────────────────── */}
+
+        {intel.form_type_analysis.length > 0 && (
+          <div className="space-y-1.5">
+            <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
+              <BarChart3 className="h-3 w-3" />
+              By Form Type
+            </p>
+            {intel.form_type_analysis.slice(0, 5).map((ft) => (
+              <div key={ft.form_type} className="flex items-center justify-between text-xs rounded-lg border px-3 py-2">
+                <span className="font-medium truncate flex-1">{formatFormType(ft.form_type)}</span>
+                <div className="flex items-center gap-1.5">
+                  {ft.approved_count > 0 && (
+                    <Badge className="text-[9px] bg-green-100 text-green-700">
+                      <FileCheck2 className="h-2.5 w-2.5 mr-0.5" />{ft.approved_count}
+                    </Badge>
+                  )}
+                  {ft.pending_count > 0 && (
+                    <Badge className="text-[9px] bg-amber-100 text-amber-700">
+                      <Clock className="h-2.5 w-2.5 mr-0.5" />{ft.pending_count}
+                    </Badge>
+                  )}
+                  {ft.overdue_count > 0 && (
+                    <Badge className="text-[9px] bg-red-100 text-red-700">
+                      <FileWarning className="h-2.5 w-2.5 mr-0.5" />{ft.overdue_count} overdue
+                    </Badge>
+                  )}
+                </div>
+              </div>
+            ))}
           </div>
         )}
 
-        {/* All clear */}
-        {meta.overdue === 0 && meta.urgent === 0 && meta.pending_review === 0 && (
-          <div className="flex items-center gap-2 rounded-lg bg-emerald-50 px-3 py-2">
-            <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500" />
-            <span className="text-[11px] font-medium text-emerald-700">
-              All forms up to date
-            </span>
+        {/* ── Form profiles (at-risk) ────────────────────────────────── */}
+
+        {intel.form_profiles.filter((fp) => fp.risk_flags.length > 0).length > 0 && (
+          <div className="space-y-1.5">
+            <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
+              <FileWarning className="h-3 w-3" />
+              At-Risk Forms
+            </p>
+            {intel.form_profiles
+              .filter((fp) => fp.risk_flags.length > 0)
+              .sort((a, b) => b.risk_flags.length - a.risk_flags.length)
+              .slice(0, 4)
+              .map((fp) => (
+                <div key={fp.form_id} className="rounded-lg border p-3 text-xs">
+                  <div className="flex items-center justify-between">
+                    <span className="font-medium truncate flex-1">{fp.title}</span>
+                    <Badge className={cn("text-[9px]", PRIORITY_STYLES[fp.priority] ?? PRIORITY_STYLES.medium)}>
+                      {fp.priority}
+                    </Badge>
+                  </div>
+                  <div className="flex items-center gap-3 mt-1 text-muted-foreground">
+                    {fp.submitted_by_name && (
+                      <span className="text-[10px]">By {fp.submitted_by_name}</span>
+                    )}
+                    {fp.is_overdue && (
+                      <span className="text-[10px] text-red-600">{fp.days_overdue}d overdue</span>
+                    )}
+                    {fp.days_since_submitted !== null && !fp.is_overdue && (
+                      <span className="text-[10px]">{fp.days_since_submitted}d since submitted</span>
+                    )}
+                  </div>
+                  {fp.risk_flags.length > 0 && (
+                    <div className="flex flex-wrap gap-1 mt-1.5">
+                      {fp.risk_flags.slice(0, 3).map((flag, i) => (
+                        <Badge key={i} className="text-[9px] bg-red-100 text-red-700">
+                          <FileWarning className="h-2.5 w-2.5 mr-0.5" />
+                          {flag.replace(/_/g, " ")}
+                        </Badge>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+          </div>
+        )}
+
+        {/* ── Alerts ──────────────────────────────────────────────────── */}
+
+        {intel.alerts.length > 0 && (
+          <div className="space-y-1.5">
+            <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
+              <AlertTriangle className="h-3 w-3" />
+              Form Alerts
+            </p>
+            {intel.alerts.slice(0, 3).map((alert, i) => (
+              <div
+                key={i}
+                className={cn(
+                  "rounded border p-2.5 text-xs leading-relaxed",
+                  ALERT_STYLES[alert.severity] ?? ALERT_STYLES.medium,
+                )}
+              >
+                {alert.message}
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* ── ARIA Care Form Intelligence ─────────────────────────────── */}
+
+        {intel.insights.length > 0 && (
+          <div className="space-y-1.5">
+            <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
+              <Brain className="h-3 w-3" />
+              ARIA Form Intelligence
+            </p>
+            {intel.insights.slice(0, 3).map((insight, i) => (
+              <div
+                key={i}
+                className={cn(
+                  "rounded border p-2.5 text-xs leading-relaxed",
+                  INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.positive,
+                )}
+              >
+                {insight.text}
+              </div>
+            ))}
           </div>
         )}
       </CardContent>
