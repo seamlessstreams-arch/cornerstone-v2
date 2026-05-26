@@ -121,6 +121,7 @@ const HomeHandoverContinuityIntelligenceCard = dynamic(() => import("@/component
 const HomeDocumentGovernanceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-document-governance-intelligence-card").then(m => m.HomeDocumentGovernanceIntelligenceCard ? { default: m.HomeDocumentGovernanceIntelligenceCard } : m), { ssr: false });
 const HomeRecordingQualityIntelligenceCard = dynamic(() => import("@/components/dashboard/home-recording-quality-intelligence-card").then(m => m.HomeRecordingQualityIntelligenceCard ? { default: m.HomeRecordingQualityIntelligenceCard } : m), { ssr: false });
 const HomeSaferRecruitmentIntelligenceCard = dynamic(() => import("@/components/dashboard/home-safer-recruitment-intelligence-card").then(m => m.HomeSaferRecruitmentIntelligenceCard ? { default: m.HomeSaferRecruitmentIntelligenceCard } : m), { ssr: false });
+const HomeWorkforcePlanningIntelligenceCard = dynamic(() => import("@/components/dashboard/home-workforce-planning-intelligence-card").then(m => m.HomeWorkforcePlanningIntelligenceCard ? { default: m.HomeWorkforcePlanningIntelligenceCard } : m), { ssr: false });
 
 // ─── Greeting ─────────────────────────────────────────────────────────────────
 
@@ -1287,6 +1288,7 @@ export default function DashboardPage() {
                     <HomeDocumentGovernanceIntelligenceCard />
                     <HomeRecordingQualityIntelligenceCard />
                     <HomeSaferRecruitmentIntelligenceCard />
+                    <HomeWorkforcePlanningIntelligenceCard />
                     <IntelligenceBriefWidget />
                   </>
                 )}
