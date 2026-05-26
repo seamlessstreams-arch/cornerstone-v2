@@ -87,6 +87,7 @@ const ExpensesSummaryCard = dynamic(() => import("@/components/dashboard/expense
 const FormComplianceCard = dynamic(() => import("@/components/dashboard/form-compliance-card").then(m => m.FormComplianceCard ? { default: m.FormComplianceCard } : m), { ssr: false });
 const CareEventsPanel = dynamic(() => import("@/components/care-events/care-events-panel").then(m => m.CareEventsPanel ? { default: m.CareEventsPanel } : m), { ssr: false });
 const ChildVoiceParticipationCard = dynamic(() => import("@/components/dashboard/child-voice-participation-card").then(m => m.ChildVoiceParticipationCard ? { default: m.ChildVoiceParticipationCard } : m), { ssr: false });
+const HomeWellbeingIntelligenceCard = dynamic(() => import("@/components/dashboard/home-wellbeing-intelligence-card").then(m => m.HomeWellbeingIntelligenceCard ? { default: m.HomeWellbeingIntelligenceCard } : m), { ssr: false });
 
 // ─── Greeting ─────────────────────────────────────────────────────────────────
 
@@ -1219,6 +1220,7 @@ export default function DashboardPage() {
                     <AriaDailyIntelligence />
                     <AriaDashboardPanel />
                     <ChildVoiceParticipationCard />
+                    <HomeWellbeingIntelligenceCard />
                     <IntelligenceBriefWidget />
                   </>
                 )}
