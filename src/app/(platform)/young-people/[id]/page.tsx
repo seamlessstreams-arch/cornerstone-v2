@@ -45,6 +45,7 @@ import { EmptyState } from "@/components/ui/empty-state";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
 import { Child360IntelligenceCard } from "@/components/intelligence/child-360-intelligence-card";
 import { TherapeuticProgressCard } from "@/components/intelligence/therapeutic-progress-card";
+import { FamilyRelationshipsCard } from "@/components/intelligence/family-relationships-card";
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
@@ -622,6 +623,11 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
             {/* Therapeutic Progress Intelligence */}
             <div className="sm:col-span-2">
               <TherapeuticProgressCard childId={id} />
+            </div>
+
+            {/* Family & Relationships Intelligence */}
+            <div className="sm:col-span-2">
+              <FamilyRelationshipsCard childId={id} />
             </div>
           </div>
         )}
