@@ -1,67 +1,122 @@
 "use client";
 
+// ══════════════════════════════════════════════════════════════════════════════
+// CORNERSTONE — STAFF PERFORMANCE DIP CARD
+// Live data from useWorkforceIntelligence() — training, supervision, profile.
+// ══════════════════════════════════════════════════════════════════════════════
+
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { TrendingDown, ChevronRight, AlertTriangle, Brain, Clock, Lightbulb } from "lucide-react";
+import {
+  TrendingDown, ChevronRight, Brain, Loader2,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useWorkforceIntelligence } from "@/hooks/use-workforce-intelligence";
 
-const DEMO_METRICS = { total_dips: 9, manager_review_count: 2, support_recommended_count: 3, unresolved_count: 6, escalated_count: 1, staff_informed_rate: 55.6, support_offered_rate: 44.4, triggers_explored_rate: 33.3, wellbeing_assessed_rate: 44.4, unique_staff: 6 };
-
-const DEMO_RECORDS: { staff: string; category: string; severity: string; status: string }[] = [
-  { staff: "Staff A", category: "Recording", severity: "Possible Dip", status: "Identified" },
-  { staff: "Staff B", category: "Timeliness", severity: "Pattern Emerg.", status: "Exploring" },
-  { staff: "Staff C", category: "Safeguarding", severity: "Mgr Review", status: "Supporting" },
-  { staff: "Staff D", category: "Communication", severity: "Support Rec.", status: "Exploring" },
-  { staff: "Staff E", category: "Child Rel.", severity: "Needs Expl.", status: "Identified" },
-  { staff: "Staff F", category: "Team Collab.", severity: "Possible Dip", status: "Resolved" },
-];
-
-const DEMO_ALERTS: { type: string; severity: "critical" | "high" | "medium"; message: string }[] = [
-  { type: "unreviewed_serious", severity: "critical", message: "Staff C has an unreviewed performance concern requiring manager review — manager action needed." },
-  { type: "staff_not_informed", severity: "high", message: "4 dips have staff not yet informed." },
-  { type: "no_support_offered", severity: "high", message: "5 dips have no support offered." },
-];
-
-const ARIA_INSIGHTS = [
-  "9 dips across 6 staff. Manager review: 2. Support recommended: 3. Unresolved: 6. Escalated: 1.",
-  "Priority: 4 staff not yet informed. Support offered only 44.4%. Triggers explored only 33.3%.",
-  "Key question: Is this a skill, confidence, wellbeing, training, or workload issue? Explore before acting.",
-];
-
-const SEVERITY_BADGES: Record<string, { label: string; color: string }> = {
-  "Possible Dip": { label: "Poss.", color: "text-blue-700 bg-blue-50 border-blue-200" },
-  "Pattern Emerg.": { label: "Patt.", color: "text-amber-700 bg-amber-50 border-amber-200" },
-  "Needs Expl.": { label: "Expl.", color: "text-amber-700 bg-amber-50 border-amber-200" },
-  "Support Rec.": { label: "Supp.", color: "text-orange-700 bg-orange-50 border-orange-200" },
-  "Mgr Review": { label: "Mgr.", color: "text-red-700 bg-red-50 border-red-200" },
+const INSIGHT_STYLES: Record<string, string> = {
+  critical: "border-red-200 bg-red-50 text-red-800",
+  warning: "border-amber-200 bg-amber-50 text-amber-800",
+  positive: "border-green-200 bg-green-50 text-green-800",
 };
 
 export function StaffPerformanceDipCard() {
-  const m = DEMO_METRICS;
+  const { data, isLoading } = useWorkforceIntelligence();
+  const intel = data?.data;
+
+  if (isLoading || !intel) {
+    return (
+      <Card>
+        <CardHeader className="pb-3">
+          <CardTitle className="text-sm flex items-center gap-2">
+            <TrendingDown className="h-4 w-4 text-brand" />
+            Performance Indicators
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center justify-center py-8">
+            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  const { training, supervision, profile, sickness } = intel;
+  const expiredTraining = training.reduce((s, t) => s + t.expired, 0);
+  const supervisionRate = supervision.total_staff_requiring > 0
+    ? Math.round((supervision.up_to_date / supervision.total_staff_requiring) * 100)
+    : 100;
+
   return (
-    <Card className="overflow-hidden border-purple-200">
-      <CardHeader className="pb-3 bg-purple-50/50">
+    <Card className="overflow-hidden">
+      <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-sm flex items-center gap-2"><TrendingDown className="h-4 w-4 text-purple-600" /><span className="text-purple-900">Performance Dips</span></CardTitle>
-          <Link href="/staff-performance-dip" className="text-xs text-purple-600 hover:underline flex items-center gap-1">Dips <ChevronRight className="h-3 w-3" /></Link>
+          <CardTitle className="text-sm flex items-center gap-2">
+            <TrendingDown className="h-4 w-4 text-brand" />
+            Performance Indicators
+          </CardTitle>
+          <Link href="/workforce" className="text-xs text-brand hover:underline flex items-center gap-1">
+            Workforce <ChevronRight className="h-3 w-3" />
+          </Link>
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
+
         <div className="grid grid-cols-4 gap-2">
-          <div className={cn("text-center rounded-lg p-2", m.manager_review_count === 0 ? "bg-green-50" : "bg-red-50")}><p className={cn("text-lg font-bold tabular-nums", m.manager_review_count === 0 ? "text-green-600" : "text-red-600")}>{m.manager_review_count}</p><p className="text-[10px] text-muted-foreground">Mgr Review</p></div>
-          <div className={cn("text-center rounded-lg p-2", m.unresolved_count === 0 ? "bg-green-50" : "bg-amber-50")}><p className={cn("text-lg font-bold tabular-nums", m.unresolved_count === 0 ? "text-green-600" : "text-amber-600")}>{m.unresolved_count}</p><p className="text-[10px] text-muted-foreground">Unresolved</p></div>
-          <div className={cn("text-center rounded-lg p-2", m.escalated_count === 0 ? "bg-green-50" : "bg-red-50")}><p className={cn("text-lg font-bold tabular-nums", m.escalated_count === 0 ? "text-green-600" : "text-red-600")}>{m.escalated_count}</p><p className="text-[10px] text-muted-foreground">Escalated</p></div>
-          <div className="text-center rounded-lg p-2 bg-purple-50"><p className="text-lg font-bold tabular-nums text-purple-600">{m.total_dips}</p><p className="text-[10px] text-muted-foreground">Total</p></div>
-        </div>
-        <div className="space-y-1.5">
-          <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1"><Clock className="h-3 w-3" />Recent Dips</p>
-          <div className="space-y-1">
-            {DEMO_RECORDS.map((r, i) => { const badge = SEVERITY_BADGES[r.severity] ?? SEVERITY_BADGES["Possible Dip"]; return (<div key={i} className="flex items-center justify-between rounded border p-2 text-xs"><div className="flex items-center gap-2 flex-1 min-w-0"><Lightbulb className="h-3 w-3 text-amber-500 shrink-0" /><span className="font-medium">{r.staff}</span><span className="text-muted-foreground truncate">{r.category} · {r.status}</span></div><Badge variant="outline" className={cn("text-[10px] shrink-0", badge.color)}>{badge.label}</Badge></div>); })}
+          <div className={cn("text-center rounded-lg p-2.5", profile.training_compliance_rate >= 90 ? "bg-green-50" : "bg-amber-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", profile.training_compliance_rate >= 90 ? "text-green-600" : "text-amber-600")}>{profile.training_compliance_rate}%</p>
+            <p className="text-[10px] text-muted-foreground">Training</p>
+          </div>
+          <div className={cn("text-center rounded-lg p-2.5", supervisionRate >= 90 ? "bg-green-50" : "bg-amber-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", supervisionRate >= 90 ? "text-green-600" : "text-amber-600")}>{supervisionRate}%</p>
+            <p className="text-[10px] text-muted-foreground">Supervision</p>
+          </div>
+          <div className={cn("text-center rounded-lg p-2.5", expiredTraining === 0 ? "bg-green-50" : "bg-red-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", expiredTraining === 0 ? "text-green-600" : "text-red-600")}>{expiredTraining}</p>
+            <p className="text-[10px] text-muted-foreground">Expired</p>
+          </div>
+          <div className={cn("text-center rounded-lg p-2.5", supervision.overdue === 0 ? "bg-green-50" : "bg-red-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", supervision.overdue === 0 ? "text-green-600" : "text-red-600")}>{supervision.overdue}</p>
+            <p className="text-[10px] text-muted-foreground">Overdue</p>
           </div>
         </div>
-        {DEMO_ALERTS.length > 0 && (<div className="space-y-1.5"><p className="text-xs font-semibold text-muted-foreground flex items-center gap-1"><AlertTriangle className="h-3 w-3" />Performance Dip Alerts</p>{DEMO_ALERTS.map((a, i) => (<div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", a.severity === "critical" || a.severity === "high" ? "border-red-200 bg-red-50 text-red-800" : "border-amber-200 bg-amber-50 text-amber-800")}>{a.message}</div>))}</div>)}
-        <div className="space-y-1.5"><p className="text-xs font-semibold flex items-center gap-1 text-purple-700"><Brain className="h-3 w-3" />ARIA Critical Friend</p>{ARIA_INSIGHTS.map((insight, i) => (<div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", i === 0 ? "border-purple-200 bg-purple-50 text-purple-800" : i === 1 ? "border-amber-200 bg-amber-50 text-amber-800" : "border-green-200 bg-green-50 text-green-800")}>{insight}</div>))}</div>
+
+        {/* ── Supervision overdue detail ──────────────────────────────── */}
+
+        {supervision.staff_overdue.length > 0 && (
+          <div className="space-y-1.5">
+            <p className="text-xs font-semibold text-muted-foreground">Performance Concerns</p>
+            {supervision.staff_overdue.slice(0, 3).map((s) => (
+              <div key={s.staff_id} className="flex items-center justify-between rounded border p-2.5 text-xs">
+                <span className="font-medium">{s.staff_name}</span>
+                <Badge className="text-[9px] bg-red-100 text-red-700">supervision {s.days_overdue}d late</Badge>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* ── ARIA insights ───────────────────────────────────────────── */}
+
+        {intel.insights.length > 0 && (
+          <div className="space-y-1.5">
+            <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
+              <Brain className="h-3 w-3" />
+              ARIA Performance Intelligence
+            </p>
+            {intel.insights.slice(0, 2).map((insight, i) => (
+              <div
+                key={i}
+                className={cn(
+                  "rounded border p-2.5 text-xs leading-relaxed",
+                  INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.positive,
+                )}
+              >
+                {insight.text}
+              </div>
+            ))}
+          </div>
+        )}
       </CardContent>
     </Card>
   );
