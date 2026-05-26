@@ -43,6 +43,7 @@ import type {
 import { useKeyWorkSessions, useCreateKeyWorkSession } from "@/hooks/use-intelligence";
 import { EmptyState } from "@/components/ui/empty-state";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { Child360IntelligenceCard } from "@/components/intelligence/child-360-intelligence-card";
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
@@ -611,6 +612,11 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
                 </div>
               </div>
             )}
+
+            {/* Child 360 Intelligence Profile */}
+            <div className="sm:col-span-2">
+              <Child360IntelligenceCard childId={id} />
+            </div>
           </div>
         )}
 
