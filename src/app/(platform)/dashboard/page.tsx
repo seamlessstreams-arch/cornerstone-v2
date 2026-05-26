@@ -125,6 +125,7 @@ const HomeWorkforcePlanningIntelligenceCard = dynamic(() => import("@/components
 const HomeChronologyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-chronology-intelligence-card").then(m => m.HomeChronologyIntelligenceCard ? { default: m.HomeChronologyIntelligenceCard } : m), { ssr: false });
 const HomeMeetingGovernanceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-meeting-governance-intelligence-card").then(m => m.HomeMeetingGovernanceIntelligenceCard ? { default: m.HomeMeetingGovernanceIntelligenceCard } : m), { ssr: false });
 const HomeKeyworkerIntelligenceCard = dynamic(() => import("@/components/dashboard/home-keyworker-intelligence-card").then(m => m.HomeKeyworkerIntelligenceCard ? { default: m.HomeKeyworkerIntelligenceCard } : m), { ssr: false });
+const HomePlacementStabilityIntelligenceCard = dynamic(() => import("@/components/dashboard/home-placement-stability-intelligence-card").then(m => m.HomePlacementStabilityIntelligenceCard ? { default: m.HomePlacementStabilityIntelligenceCard } : m), { ssr: false });
 
 // ─── Greeting ─────────────────────────────────────────────────────────────────
 
@@ -1295,6 +1296,7 @@ export default function DashboardPage() {
                     <HomeChronologyIntelligenceCard />
                     <HomeMeetingGovernanceIntelligenceCard />
                     <HomeKeyworkerIntelligenceCard />
+                    <HomePlacementStabilityIntelligenceCard />
                     <IntelligenceBriefWidget />
                   </>
                 )}
