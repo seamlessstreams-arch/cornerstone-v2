@@ -98,6 +98,7 @@ const HomeKeyWorkingIntelligenceCard = dynamic(() => import("@/components/dashbo
 const HomeEducationAchievementIntelligenceCard = dynamic(() => import("@/components/dashboard/home-education-achievement-intelligence-card").then(m => m.HomeEducationAchievementIntelligenceCard ? { default: m.HomeEducationAchievementIntelligenceCard } : m), { ssr: false });
 const HomeMissingEpisodesIntelligenceCard = dynamic(() => import("@/components/dashboard/home-missing-episodes-intelligence-card").then(m => m.HomeMissingEpisodesIntelligenceCard ? { default: m.HomeMissingEpisodesIntelligenceCard } : m), { ssr: false });
 const HomeHealthWellbeingIntelligenceCard = dynamic(() => import("@/components/dashboard/home-health-wellbeing-intelligence-card").then(m => m.HomeHealthWellbeingIntelligenceCard ? { default: m.HomeHealthWellbeingIntelligenceCard } : m), { ssr: false });
+const HomeLACReviewIntelligenceCard = dynamic(() => import("@/components/dashboard/home-lac-review-intelligence-card").then(m => m.HomeLACReviewIntelligenceCard ? { default: m.HomeLACReviewIntelligenceCard } : m), { ssr: false });
 
 // ─── Greeting ─────────────────────────────────────────────────────────────────
 
@@ -1241,6 +1242,7 @@ export default function DashboardPage() {
                     <HomeEducationAchievementIntelligenceCard />
                     <HomeMissingEpisodesIntelligenceCard />
                     <HomeHealthWellbeingIntelligenceCard />
+                    <HomeLACReviewIntelligenceCard />
                     <IntelligenceBriefWidget />
                   </>
                 )}
