@@ -89,6 +89,7 @@ const CareEventsPanel = dynamic(() => import("@/components/care-events/care-even
 const ChildVoiceParticipationCard = dynamic(() => import("@/components/dashboard/child-voice-participation-card").then(m => m.ChildVoiceParticipationCard ? { default: m.ChildVoiceParticipationCard } : m), { ssr: false });
 const HomeWellbeingIntelligenceCard = dynamic(() => import("@/components/dashboard/home-wellbeing-intelligence-card").then(m => m.HomeWellbeingIntelligenceCard ? { default: m.HomeWellbeingIntelligenceCard } : m), { ssr: false });
 const HomeActivityEnrichmentIntelligenceCard = dynamic(() => import("@/components/dashboard/home-activity-enrichment-intelligence-card").then(m => m.HomeActivityEnrichmentIntelligenceCard ? { default: m.HomeActivityEnrichmentIntelligenceCard } : m), { ssr: false });
+const HomeNightSafetyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-night-safety-intelligence-card").then(m => m.HomeNightSafetyIntelligenceCard ? { default: m.HomeNightSafetyIntelligenceCard } : m), { ssr: false });
 
 // ─── Greeting ─────────────────────────────────────────────────────────────────
 
@@ -1223,6 +1224,7 @@ export default function DashboardPage() {
                     <ChildVoiceParticipationCard />
                     <HomeWellbeingIntelligenceCard />
                     <HomeActivityEnrichmentIntelligenceCard />
+                    <HomeNightSafetyIntelligenceCard />
                     <IntelligenceBriefWidget />
                   </>
                 )}
