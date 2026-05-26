@@ -9,7 +9,7 @@
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-  AlertTriangle, Brain, ChevronRight, Link, Loader2,
+  AlertTriangle, Brain, ChevronRight, Link2, Loader2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useContactEngagement } from "@/hooks/use-contact-engagement";
@@ -49,7 +49,7 @@ export function CommunityLinksIntegrationCard() {
       <CardHeader className="pb-3 bg-slate-50/50">
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm flex items-center gap-2">
-            <Link className="h-4 w-4 text-slate-600" />
+            <Link2 className="h-4 w-4 text-slate-600" />
             <span className="text-slate-900">Community Links</span>
           </CardTitle>
           <Link href="/contact" className="text-xs text-slate-600 hover:underline flex items-center gap-1">
