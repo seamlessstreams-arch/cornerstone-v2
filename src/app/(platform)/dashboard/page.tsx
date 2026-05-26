@@ -102,6 +102,7 @@ const HomeLACReviewIntelligenceCard = dynamic(() => import("@/components/dashboa
 const HomeRiskAssessmentIntelligenceCard = dynamic(() => import("@/components/dashboard/home-risk-assessment-intelligence-card").then(m => m.HomeRiskAssessmentIntelligenceCard ? { default: m.HomeRiskAssessmentIntelligenceCard } : m), { ssr: false });
 const HomeIndependenceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-independence-intelligence-card").then(m => m.HomeIndependenceIntelligenceCard ? { default: m.HomeIndependenceIntelligenceCard } : m), { ssr: false });
 const HomeParticipationIntelligenceCard = dynamic(() => import("@/components/dashboard/home-participation-intelligence-card").then(m => m.HomeParticipationIntelligenceCard ? { default: m.HomeParticipationIntelligenceCard } : m), { ssr: false });
+const HomeNotifiableEventsIntelligenceCard = dynamic(() => import("@/components/dashboard/home-notifiable-events-intelligence-card").then(m => m.HomeNotifiableEventsIntelligenceCard ? { default: m.HomeNotifiableEventsIntelligenceCard } : m), { ssr: false });
 
 // ─── Greeting ─────────────────────────────────────────────────────────────────
 
@@ -1249,6 +1250,7 @@ export default function DashboardPage() {
                     <HomeRiskAssessmentIntelligenceCard />
                     <HomeIndependenceIntelligenceCard />
                     <HomeParticipationIntelligenceCard />
+                    <HomeNotifiableEventsIntelligenceCard />
                     <IntelligenceBriefWidget />
                   </>
                 )}
