@@ -57,6 +57,7 @@ import { ChildLACReviewIntelligenceCard } from "@/components/intelligence/child-
 import { ChildOutcomeIntelligenceCard } from "@/components/intelligence/child-outcome-intelligence-card";
 import { ChildKeyworkingIntelligenceCard } from "@/components/intelligence/child-keyworking-intelligence-card";
 import { ChildRiskProfileIntelligenceCard } from "@/components/intelligence/child-risk-profile-intelligence-card";
+import { ChildDailyLifeIntelligenceCard } from "@/components/intelligence/child-daily-life-intelligence-card";
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
@@ -694,6 +695,11 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
             {/* Risk Profile Intelligence */}
             <div className="sm:col-span-2">
               <ChildRiskProfileIntelligenceCard childId={id} />
+            </div>
+
+            {/* Daily Life Intelligence */}
+            <div className="sm:col-span-2">
+              <ChildDailyLifeIntelligenceCard childId={id} />
             </div>
           </div>
         )}
