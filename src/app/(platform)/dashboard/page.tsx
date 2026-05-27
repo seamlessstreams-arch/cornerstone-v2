@@ -241,6 +241,12 @@ const HomeSubstanceMisuseScreeningIntelligenceCard = dynamic(() => import("@/com
 const HomeAnnualHealthAssessmentIntelligenceCard = dynamic(() => import("@/components/dashboard/home-annual-health-assessment-intelligence-card").then(m => m.HomeAnnualHealthAssessmentIntelligenceCard ? { default: m.HomeAnnualHealthAssessmentIntelligenceCard } : m), { ssr: false });
 const HomePepEducationQualityIntelligenceCard = dynamic(() => import("@/components/dashboard/home-pep-education-quality-intelligence-card").then(m => m.HomePepEducationQualityIntelligenceCard ? { default: m.HomePepEducationQualityIntelligenceCard } : m), { ssr: false });
 
+// Batch 21 — Sibling Contact, Placement Impact, Multi-Disciplinary Formulation, Social Worker Contact
+const HomeSiblingContactProtocolIntelligenceCard = dynamic(() => import("@/components/dashboard/home-sibling-contact-protocol-intelligence-card").then(m => m.HomeSiblingContactProtocolIntelligenceCard ? { default: m.HomeSiblingContactProtocolIntelligenceCard } : m), { ssr: false });
+const HomePlacementImpactAssessmentIntelligenceCard = dynamic(() => import("@/components/dashboard/home-placement-impact-assessment-intelligence-card").then(m => m.HomePlacementImpactAssessmentIntelligenceCard ? { default: m.HomePlacementImpactAssessmentIntelligenceCard } : m), { ssr: false });
+const HomeMultidisciplinaryFormulationIntelligenceCard = dynamic(() => import("@/components/dashboard/home-multidisciplinary-formulation-intelligence-card").then(m => m.HomeMultidisciplinaryFormulationIntelligenceCard ? { default: m.HomeMultidisciplinaryFormulationIntelligenceCard } : m), { ssr: false });
+const HomeSocialWorkerContactIntelligenceCard = dynamic(() => import("@/components/dashboard/home-social-worker-contact-intelligence-card").then(m => m.HomeSocialWorkerContactIntelligenceCard ? { default: m.HomeSocialWorkerContactIntelligenceCard } : m), { ssr: false });
+
 // ─── Greeting ─────────────────────────────────────────────────────────────────
 
 function getGreeting(): string {
@@ -1513,6 +1519,10 @@ export default function DashboardPage() {
                     <HomeSubstanceMisuseScreeningIntelligenceCard />
                     <HomeAnnualHealthAssessmentIntelligenceCard />
                     <HomePepEducationQualityIntelligenceCard />
+                    <HomeSiblingContactProtocolIntelligenceCard />
+                    <HomePlacementImpactAssessmentIntelligenceCard />
+                    <HomeMultidisciplinaryFormulationIntelligenceCard />
+                    <HomeSocialWorkerContactIntelligenceCard />
                     <IntelligenceBriefWidget />
                   </>
                 )}
