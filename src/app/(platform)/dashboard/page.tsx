@@ -168,6 +168,12 @@ const HomeEnrichmentAchievementIntelligenceCard = dynamic(() => import("@/compon
 const HomeLivingEnvironmentIntelligenceCard = dynamic(() => import("@/components/dashboard/home-living-environment-intelligence-card").then(m => m.HomeLivingEnvironmentIntelligenceCard ? { default: m.HomeLivingEnvironmentIntelligenceCard } : m), { ssr: false });
 const HomeCommunityAccessIntelligenceCard = dynamic(() => import("@/components/dashboard/home-community-access-intelligence-card").then(m => m.HomeCommunityAccessIntelligenceCard ? { default: m.HomeCommunityAccessIntelligenceCard } : m), { ssr: false });
 const HomeNightCareSafetyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-night-care-safety-intelligence-card").then(m => m.HomeNightCareSafetyIntelligenceCard ? { default: m.HomeNightCareSafetyIntelligenceCard } : m), { ssr: false });
+const HomeSafeguardingDepthIntelligenceCard = dynamic(() => import("@/components/dashboard/home-safeguarding-depth-intelligence-card").then(m => m.HomeSafeguardingDepthIntelligenceCard ? { default: m.HomeSafeguardingDepthIntelligenceCard } : m), { ssr: false });
+const HomeReg4445EvidenceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-reg4445-evidence-intelligence-card").then(m => m.HomeReg4445EvidenceIntelligenceCard ? { default: m.HomeReg4445EvidenceIntelligenceCard } : m), { ssr: false });
+const HomePlacementJourneyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-placement-journey-intelligence-card").then(m => m.HomePlacementJourneyIntelligenceCard ? { default: m.HomePlacementJourneyIntelligenceCard } : m), { ssr: false });
+const HomeLifeStoryIdentityIntelligenceCard = dynamic(() => import("@/components/dashboard/home-life-story-identity-intelligence-card").then(m => m.HomeLifeStoryIdentityIntelligenceCard ? { default: m.HomeLifeStoryIdentityIntelligenceCard } : m), { ssr: false });
+const HomeStrategicRiskIntelligenceCard = dynamic(() => import("@/components/dashboard/home-strategic-risk-intelligence-card").then(m => m.HomeStrategicRiskIntelligenceCard ? { default: m.HomeStrategicRiskIntelligenceCard } : m), { ssr: false });
+const HomeBuildingOpsSafetyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-building-ops-safety-intelligence-card").then(m => m.HomeBuildingOpsSafetyIntelligenceCard ? { default: m.HomeBuildingOpsSafetyIntelligenceCard } : m), { ssr: false });
 
 // ─── Greeting ─────────────────────────────────────────────────────────────────
 
@@ -1381,6 +1387,12 @@ export default function DashboardPage() {
                     <HomeLivingEnvironmentIntelligenceCard />
                     <HomeCommunityAccessIntelligenceCard />
                     <HomeNightCareSafetyIntelligenceCard />
+                    <HomeSafeguardingDepthIntelligenceCard />
+                    <HomeReg4445EvidenceIntelligenceCard />
+                    <HomePlacementJourneyIntelligenceCard />
+                    <HomeLifeStoryIdentityIntelligenceCard />
+                    <HomeStrategicRiskIntelligenceCard />
+                    <HomeBuildingOpsSafetyIntelligenceCard />
                     <IntelligenceBriefWidget />
                   </>
                 )}
