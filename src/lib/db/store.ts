@@ -5472,6 +5472,75 @@ store.staffWellbeingRecords = [
   },
 ] as StaffWellbeingRecord[];
 
+// ── Peer Dynamics ───────────────────────────────────────────────────────────
+store.peerDynamics = [
+  {
+    id: "pd_001", child_id_1: "yp_alex", child_id_2: "yp_jordan",
+    quality: "developing" as const, risk_level: "low" as const,
+    strengths: ["Share interest in football", "Can co-regulate during activities"],
+    concerns: ["Alex can dominate conversations", "Jordan withdraws when Alex escalates"],
+    strategies: ["Staff to facilitate turn-taking during shared activities", "Separate debrief after any tension"],
+    entries: [
+      { id: "pe_001", date: daysFromNow(-5), type: "positive_interaction" as const, description: "Alex and Jordan played FIFA together for an hour. Took turns, no conflict.", staff_witness: "staff_lackson", intervention_used: "", outcome: "Positive evening. Both in good mood." },
+      { id: "pe_002", date: daysFromNow(-12), type: "observation" as const, description: "Jordan seemed quiet during dinner with Alex present. Alex talking loudly about missing episode.", staff_witness: "staff_anna", intervention_used: "Staff redirected conversation to neutral topic.", outcome: "Jordan relaxed after topic changed." },
+      { id: "pe_003", date: daysFromNow(-20), type: "mediation" as const, description: "Disagreement over TV remote. Alex refused to share. Jordan became upset.", staff_witness: "staff_chervelle", intervention_used: "Mediation — agreed on a rota for TV time.", outcome: "Both accepted rota. No further issues." },
+    ],
+    last_review_date: daysFromNow(-7), reviewed_by: "staff_darren",
+    next_review_due: daysFromNow(23), notes: "Developing relationship. Positive when structured, risky when unstructured.",
+    created_at: daysFromNow(-60) + "T10:00:00Z",
+  },
+  {
+    id: "pd_002", child_id_1: "yp_alex", child_id_2: "yp_casey",
+    quality: "strained" as const, risk_level: "medium" as const,
+    strengths: ["Can coexist in communal areas with staff present"],
+    concerns: ["Alex's behaviour escalation triggers Casey's anxiety", "Casey avoids communal areas when Alex is dysregulated", "Power imbalance — Alex older and more physically imposing"],
+    strategies: ["Never leave unsupervised together", "Proactive separation during Alex's escalation", "Casey given safe space signal"],
+    entries: [
+      { id: "pe_004", date: daysFromNow(-3), type: "incident" as const, description: "Alex slammed door during argument with staff. Casey had panic attack in her room.", staff_witness: "staff_chervelle", intervention_used: "Chervelle supported Casey with grounding techniques. Edward de-escalated Alex separately.", outcome: "Casey settled after 20 mins. Alex apologised later." },
+      { id: "pe_005", date: daysFromNow(-15), type: "observation" as const, description: "Casey chose to eat in dining room with Alex present. Conversation was polite. Positive step.", staff_witness: "staff_diane", intervention_used: "", outcome: "Successful shared mealtime. Staff praised both." },
+      { id: "pe_006", date: daysFromNow(-25), type: "review" as const, description: "Formal review of Alex-Casey dynamic. Risk assessment updated. Strategies reinforced.", staff_witness: "staff_darren", intervention_used: "Risk assessment reviewed with team.", outcome: "Strategies updated. Team briefed." },
+    ],
+    last_review_date: daysFromNow(-3), reviewed_by: "staff_darren",
+    next_review_due: daysFromNow(11), notes: "Strained relationship requiring active management. Casey's wellbeing is priority.",
+    created_at: daysFromNow(-45) + "T10:00:00Z",
+  },
+  {
+    id: "pd_003", child_id_1: "yp_jordan", child_id_2: "yp_casey",
+    quality: "positive" as const, risk_level: "none" as const,
+    strengths: ["Naturally supportive of each other", "Casey helps Jordan with homework", "Jordan includes Casey in activities"],
+    concerns: [],
+    strategies: ["Continue to facilitate positive interactions", "Use this relationship as a model for group dynamics"],
+    entries: [
+      { id: "pe_007", date: daysFromNow(-2), type: "positive_interaction" as const, description: "Jordan and Casey baked cookies together. Casey taught Jordan her recipe. Both laughing and engaged.", staff_witness: "staff_mirela", intervention_used: "", outcome: "Excellent engagement. Both proud of result." },
+      { id: "pe_008", date: daysFromNow(-8), type: "positive_interaction" as const, description: "Casey helped Jordan with maths homework. Jordan was grateful and said 'thank you' without prompting.", staff_witness: "staff_anna", intervention_used: "", outcome: "Positive peer support. Both benefited." },
+    ],
+    last_review_date: daysFromNow(-10), reviewed_by: "staff_ryan",
+    next_review_due: daysFromNow(20), notes: "Healthy, supportive relationship. A genuine strength of the home.",
+    created_at: daysFromNow(-40) + "T10:00:00Z",
+  },
+] as PeerDynamic[];
+
+store.peerGroupDynamics = [
+  {
+    id: "pgd_001", assessment_date: daysFromNow(-4), assessed_by: "staff_darren",
+    overall_atmosphere: "mixed" as const,
+    group_strengths: ["Jordan-Casey friendship stabilises the home", "Shared activities generally well-received", "Young people can eat together most evenings"],
+    group_concerns: ["Alex's escalations impact the whole group", "Casey's anxiety increases during Alex's difficult periods", "Power dynamic imbalance between oldest and youngest"],
+    current_dynamics: "The home has a mixed atmosphere. Jordan and Casey have a stabilising positive relationship, but Alex's behaviour can destabilise the group quickly. When Alex is regulated, the group functions well. Staff presence is critical for maintaining equilibrium.",
+    recommendations: ["Increase structured group activities during stable periods", "Review Alex's BSP with focus on group impact", "Consider therapeutic group session facilitated by external therapist"],
+    created_at: daysFromNow(-4) + "T14:00:00Z",
+  },
+  {
+    id: "pgd_002", assessment_date: daysFromNow(-35), assessed_by: "staff_ryan",
+    overall_atmosphere: "calm" as const,
+    group_strengths: ["All three young people engaged in house meeting", "No peer conflicts this week", "Positive feedback from school about all three"],
+    group_concerns: ["Need to monitor whether calm is genuine or suppressed"],
+    current_dynamics: "A particularly calm and productive period. All three engaged well in house meeting and expressed their views. Alex more settled this week following positive school report.",
+    recommendations: ["Maintain current approach", "Plan a group outing to reinforce positive dynamics"],
+    created_at: daysFromNow(-35) + "T11:00:00Z",
+  },
+] as PeerGroupDynamic[];
+
 // ── CRUD helpers ──────────────────────────────────────────────────────────────
 
 export function getStore() { return store; }

@@ -135,6 +135,7 @@ const HomeExpenseGovernanceIntelligenceCard = dynamic(() => import("@/components
 const HomeShiftPatternIntelligenceCard = dynamic(() => import("@/components/dashboard/home-shift-pattern-intelligence-card").then(m => m.HomeShiftPatternIntelligenceCard ? { default: m.HomeShiftPatternIntelligenceCard } : m), { ssr: false });
 const HomeLeaveAbsenceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-leave-absence-intelligence-card").then(m => m.HomeLeaveAbsenceIntelligenceCard ? { default: m.HomeLeaveAbsenceIntelligenceCard } : m), { ssr: false });
 const HomeStaffWellbeingIntelligenceCard = dynamic(() => import("@/components/dashboard/home-staff-wellbeing-intelligence-card").then(m => m.HomeStaffWellbeingIntelligenceCard ? { default: m.HomeStaffWellbeingIntelligenceCard } : m), { ssr: false });
+const HomePeerDynamicsIntelligenceCard = dynamic(() => import("@/components/dashboard/home-peer-dynamics-intelligence-card").then(m => m.HomePeerDynamicsIntelligenceCard ? { default: m.HomePeerDynamicsIntelligenceCard } : m), { ssr: false });
 
 // ─── Greeting ─────────────────────────────────────────────────────────────────
 
@@ -1315,6 +1316,7 @@ export default function DashboardPage() {
                     <HomeShiftPatternIntelligenceCard />
                     <HomeLeaveAbsenceIntelligenceCard />
                     <HomeStaffWellbeingIntelligenceCard />
+                    <HomePeerDynamicsIntelligenceCard />
                     <IntelligenceBriefWidget />
                   </>
                 )}
