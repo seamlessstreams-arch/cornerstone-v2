@@ -5738,6 +5738,78 @@ store.delegatedAuthority = [
   },
 ] as DelegatedAuthority[];
 
+// ── Fire Drills (Reg 25) ────────────────────────────────────────────────────
+store.fireDrills = [
+  {
+    id: "fd_001", date: daysFromNow(-10), time: "14:30",
+    drill_type: "fire_drill" as const, evacuation_time_seconds: 95,
+    result: "satisfactory" as const, all_present: true,
+    children_present: ["yp_alex", "yp_jordan", "yp_casey"],
+    staff_present: ["staff_darren", "staff_anna", "staff_edward"],
+    issues: "", actions_taken: "All accounted for within target time.",
+    next_drill_due: daysFromNow(20), conducted_by: "staff_darren",
+    notes: "Daytime drill — smooth evacuation via front entrance.",
+    created_at: daysFromNow(-10) + "T14:30:00Z",
+  },
+  {
+    id: "fd_002", date: daysFromNow(-40), time: "22:15",
+    drill_type: "fire_drill" as const, evacuation_time_seconds: 145,
+    result: "issues_identified" as const, all_present: true,
+    children_present: ["yp_alex", "yp_jordan", "yp_casey"],
+    staff_present: ["staff_anna", "staff_lackson"],
+    issues: "Casey took longer to respond from bedroom — needed prompting. Evacuation time exceeded 2 min target.",
+    actions_taken: "Reviewed fire safety with Casey. Updated PEEP for Casey's bedroom.",
+    next_drill_due: daysFromNow(-10), conducted_by: "staff_anna",
+    notes: "Night drill — important learning points. Casey's PEEP updated same week.",
+    created_at: daysFromNow(-40) + "T22:15:00Z",
+  },
+  {
+    id: "fd_003", date: daysFromNow(-70), time: "10:00",
+    drill_type: "fire_drill" as const, evacuation_time_seconds: 88,
+    result: "satisfactory" as const, all_present: false,
+    children_present: ["yp_alex", "yp_jordan"],
+    staff_present: ["staff_darren", "staff_chervelle"],
+    issues: "Casey at school — not present.", actions_taken: "Drill recorded. Casey briefed on return.",
+    next_drill_due: daysFromNow(-40), conducted_by: "staff_darren",
+    notes: "Morning drill during school time. Casey absent — noted in log.",
+    created_at: daysFromNow(-70) + "T10:00:00Z",
+  },
+  {
+    id: "fd_004", date: daysFromNow(-15), time: "09:00",
+    drill_type: "equipment_check" as const, evacuation_time_seconds: null,
+    result: "satisfactory" as const, all_present: false,
+    children_present: [],
+    staff_present: ["staff_darren"],
+    issues: "", actions_taken: "All fire extinguishers in date. Smoke detectors tested — all operational. Emergency lighting checked.",
+    next_drill_due: daysFromNow(15), conducted_by: "staff_darren",
+    notes: "Monthly fire equipment check. All items passed.",
+    created_at: daysFromNow(-15) + "T09:00:00Z",
+  },
+  {
+    id: "fd_005", date: daysFromNow(-45), time: "09:30",
+    drill_type: "equipment_check" as const, evacuation_time_seconds: null,
+    result: "issues_identified" as const, all_present: false,
+    children_present: [],
+    staff_present: ["staff_ryan"],
+    issues: "Fire extinguisher in kitchen due for service next month. Emergency exit sign light dim in hallway.",
+    actions_taken: "Booked extinguisher service. Replaced hallway exit sign bulb same day.",
+    next_drill_due: daysFromNow(-15), conducted_by: "staff_ryan",
+    notes: "Monthly equipment check. Two items flagged — both actioned promptly.",
+    created_at: daysFromNow(-45) + "T09:30:00Z",
+  },
+  {
+    id: "fd_006", date: daysFromNow(-100), time: "11:00",
+    drill_type: "evacuation" as const, evacuation_time_seconds: 110,
+    result: "satisfactory" as const, all_present: true,
+    children_present: ["yp_alex", "yp_jordan", "yp_casey"],
+    staff_present: ["staff_darren", "staff_anna", "staff_mirela"],
+    issues: "", actions_taken: "Full evacuation — all mustered at assembly point within target.",
+    next_drill_due: daysFromNow(-70), conducted_by: "staff_darren",
+    notes: "Quarterly full building evacuation. Good practice.",
+    created_at: daysFromNow(-100) + "T11:00:00Z",
+  },
+] as FireDrill[];
+
 // ── CRUD helpers ──────────────────────────────────────────────────────────────
 
 export function getStore() { return store; }
