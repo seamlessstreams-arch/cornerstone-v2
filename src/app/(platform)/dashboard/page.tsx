@@ -223,6 +223,11 @@ const HomeManagementWalkroundOversightIntelligenceCard = dynamic(() => import("@
 const HomePracticeObservationCompetencyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-practice-observation-competency-intelligence-card").then(m => m.HomePracticeObservationCompetencyIntelligenceCard ? { default: m.HomePracticeObservationCompetencyIntelligenceCard } : m), { ssr: false });
 const HomeHouseMeetingGovernanceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-house-meeting-governance-intelligence-card").then(m => m.HomeHouseMeetingGovernanceIntelligenceCard ? { default: m.HomeHouseMeetingGovernanceIntelligenceCard } : m), { ssr: false });
 const HomeStaffRecognitionMoraleIntelligenceCard = dynamic(() => import("@/components/dashboard/home-staff-recognition-morale-intelligence-card").then(m => m.HomeStaffRecognitionMoraleIntelligenceCard ? { default: m.HomeStaffRecognitionMoraleIntelligenceCard } : m), { ssr: false });
+// Batch 18 — Cooking Life Skills, Self-Evaluation, Night Handover, Contextual Safeguarding
+const HomeCookingLifeSkillsIntelligenceCard = dynamic(() => import("@/components/dashboard/home-cooking-life-skills-intelligence-card").then(m => m.HomeCookingLifeSkillsIntelligenceCard ? { default: m.HomeCookingLifeSkillsIntelligenceCard } : m), { ssr: false });
+const HomeSelfEvaluationImprovementIntelligenceCard = dynamic(() => import("@/components/dashboard/home-self-evaluation-improvement-intelligence-card").then(m => m.HomeSelfEvaluationImprovementIntelligenceCard ? { default: m.HomeSelfEvaluationImprovementIntelligenceCard } : m), { ssr: false });
+const HomeNightHandoverQualityIntelligenceCard = dynamic(() => import("@/components/dashboard/home-night-handover-quality-intelligence-card").then(m => m.HomeNightHandoverQualityIntelligenceCard ? { default: m.HomeNightHandoverQualityIntelligenceCard } : m), { ssr: false });
+const HomeContextualSafeguardingIntelligenceCard = dynamic(() => import("@/components/dashboard/home-contextual-safeguarding-intelligence-card").then(m => m.HomeContextualSafeguardingIntelligenceCard ? { default: m.HomeContextualSafeguardingIntelligenceCard } : m), { ssr: false });
 
 // ─── Greeting ─────────────────────────────────────────────────────────────────
 
@@ -1484,6 +1489,10 @@ export default function DashboardPage() {
                     <HomePracticeObservationCompetencyIntelligenceCard />
                     <HomeHouseMeetingGovernanceIntelligenceCard />
                     <HomeStaffRecognitionMoraleIntelligenceCard />
+                    <HomeCookingLifeSkillsIntelligenceCard />
+                    <HomeSelfEvaluationImprovementIntelligenceCard />
+                    <HomeNightHandoverQualityIntelligenceCard />
+                    <HomeContextualSafeguardingIntelligenceCard />
                     <IntelligenceBriefWidget />
                   </>
                 )}
