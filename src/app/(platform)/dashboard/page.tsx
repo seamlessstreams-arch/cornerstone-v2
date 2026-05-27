@@ -146,7 +146,10 @@ const HomeExploitationScreeningIntelligenceCard = dynamic(() => import("@/compon
 const HomeDailyLogIntelligenceCard = dynamic(() => import("@/components/dashboard/home-daily-log-intelligence-card").then(m => m.HomeDailyLogIntelligenceCard ? { default: m.HomeDailyLogIntelligenceCard } : m), { ssr: false });
 const HomeDigitalSafetyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-digital-safety-intelligence-card").then(m => m.HomeDigitalSafetyIntelligenceCard ? { default: m.HomeDigitalSafetyIntelligenceCard } : m), { ssr: false });
 const HomeMentalHealthIntelligenceCard = dynamic(() => import("@/components/dashboard/home-mental-health-intelligence-card").then(m => m.HomeMentalHealthIntelligenceCard ? { default: m.HomeMentalHealthIntelligenceCard } : m), { ssr: false });
+const HomeStaffSafetyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-staff-safety-intelligence-card").then(m => m.HomeStaffSafetyIntelligenceCard ? { default: m.HomeStaffSafetyIntelligenceCard } : m), { ssr: false });
 const HomeOrganizationalLearningIntelligenceCard = dynamic(() => import("@/components/dashboard/home-organizational-learning-intelligence-card").then(m => m.HomeOrganizationalLearningIntelligenceCard ? { default: m.HomeOrganizationalLearningIntelligenceCard } : m), { ssr: false });
+const HomeMultiAgencyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-multi-agency-intelligence-card").then(m => m.HomeMultiAgencyIntelligenceCard ? { default: m.HomeMultiAgencyIntelligenceCard } : m), { ssr: false });
+const HomeDataGovernanceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-data-governance-intelligence-card").then(m => m.HomeDataGovernanceIntelligenceCard ? { default: m.HomeDataGovernanceIntelligenceCard } : m), { ssr: false });
 
 // ─── Greeting ─────────────────────────────────────────────────────────────────
 
@@ -1339,6 +1342,9 @@ export default function DashboardPage() {
                     <HomeDigitalSafetyIntelligenceCard />
                     <HomeMentalHealthIntelligenceCard />
                     <HomeOrganizationalLearningIntelligenceCard />
+                    <HomeStaffSafetyIntelligenceCard />
+                    <HomeMultiAgencyIntelligenceCard />
+                    <HomeDataGovernanceIntelligenceCard />
                     <IntelligenceBriefWidget />
                   </>
                 )}
