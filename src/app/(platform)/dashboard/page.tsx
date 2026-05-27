@@ -144,6 +144,8 @@ const HomeSleepQualityIntelligenceCard = dynamic(() => import("@/components/dash
 const HomeMedicationManagementIntelligenceCard = dynamic(() => import("@/components/dashboard/home-medication-management-intelligence-card").then(m => m.HomeMedicationManagementIntelligenceCard ? { default: m.HomeMedicationManagementIntelligenceCard } : m), { ssr: false });
 const HomeExploitationScreeningIntelligenceCard = dynamic(() => import("@/components/dashboard/home-exploitation-screening-intelligence-card").then(m => m.HomeExploitationScreeningIntelligenceCard ? { default: m.HomeExploitationScreeningIntelligenceCard } : m), { ssr: false });
 const HomeDailyLogIntelligenceCard = dynamic(() => import("@/components/dashboard/home-daily-log-intelligence-card").then(m => m.HomeDailyLogIntelligenceCard ? { default: m.HomeDailyLogIntelligenceCard } : m), { ssr: false });
+const HomeDigitalSafetyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-digital-safety-intelligence-card").then(m => m.HomeDigitalSafetyIntelligenceCard ? { default: m.HomeDigitalSafetyIntelligenceCard } : m), { ssr: false });
+const HomeMentalHealthIntelligenceCard = dynamic(() => import("@/components/dashboard/home-mental-health-intelligence-card").then(m => m.HomeMentalHealthIntelligenceCard ? { default: m.HomeMentalHealthIntelligenceCard } : m), { ssr: false });
 
 // ─── Greeting ─────────────────────────────────────────────────────────────────
 
@@ -1333,6 +1335,8 @@ export default function DashboardPage() {
                     <HomeMedicationManagementIntelligenceCard />
                     <HomeExploitationScreeningIntelligenceCard />
                     <HomeDailyLogIntelligenceCard />
+                    <HomeDigitalSafetyIntelligenceCard />
+                    <HomeMentalHealthIntelligenceCard />
                     <IntelligenceBriefWidget />
                   </>
                 )}
