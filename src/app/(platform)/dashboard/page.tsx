@@ -218,6 +218,11 @@ const HomeAgencyStaffManagementIntelligenceCard = dynamic(() => import("@/compon
 const HomeHolidayEnrichingExperiencesIntelligenceCard = dynamic(() => import("@/components/dashboard/home-holiday-enriching-experiences-intelligence-card").then(m => m.HomeHolidayEnrichingExperiencesIntelligenceCard ? { default: m.HomeHolidayEnrichingExperiencesIntelligenceCard } : m), { ssr: false });
 const HomeQualityOfCareReviewIntelligenceCard = dynamic(() => import("@/components/dashboard/home-quality-of-care-review-intelligence-card").then(m => m.HomeQualityOfCareReviewIntelligenceCard ? { default: m.HomeQualityOfCareReviewIntelligenceCard } : m), { ssr: false });
 const HomeTransportJourneySafetyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-transport-journey-safety-intelligence-card").then(m => m.HomeTransportJourneySafetyIntelligenceCard ? { default: m.HomeTransportJourneySafetyIntelligenceCard } : m), { ssr: false });
+// Batch 17 — Management Walkrounds, Practice Observations, House Meetings, Staff Recognition
+const HomeManagementWalkroundOversightIntelligenceCard = dynamic(() => import("@/components/dashboard/home-management-walkround-oversight-intelligence-card").then(m => m.HomeManagementWalkroundOversightIntelligenceCard ? { default: m.HomeManagementWalkroundOversightIntelligenceCard } : m), { ssr: false });
+const HomePracticeObservationCompetencyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-practice-observation-competency-intelligence-card").then(m => m.HomePracticeObservationCompetencyIntelligenceCard ? { default: m.HomePracticeObservationCompetencyIntelligenceCard } : m), { ssr: false });
+const HomeHouseMeetingGovernanceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-house-meeting-governance-intelligence-card").then(m => m.HomeHouseMeetingGovernanceIntelligenceCard ? { default: m.HomeHouseMeetingGovernanceIntelligenceCard } : m), { ssr: false });
+const HomeStaffRecognitionMoraleIntelligenceCard = dynamic(() => import("@/components/dashboard/home-staff-recognition-morale-intelligence-card").then(m => m.HomeStaffRecognitionMoraleIntelligenceCard ? { default: m.HomeStaffRecognitionMoraleIntelligenceCard } : m), { ssr: false });
 
 // ─── Greeting ─────────────────────────────────────────────────────────────────
 
@@ -1475,6 +1480,10 @@ export default function DashboardPage() {
                     <HomeHolidayEnrichingExperiencesIntelligenceCard />
                     <HomeQualityOfCareReviewIntelligenceCard />
                     <HomeTransportJourneySafetyIntelligenceCard />
+                    <HomeManagementWalkroundOversightIntelligenceCard />
+                    <HomePracticeObservationCompetencyIntelligenceCard />
+                    <HomeHouseMeetingGovernanceIntelligenceCard />
+                    <HomeStaffRecognitionMoraleIntelligenceCard />
                     <IntelligenceBriefWidget />
                   </>
                 )}
