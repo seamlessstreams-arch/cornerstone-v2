@@ -156,6 +156,9 @@ const HomeMedicationGovernanceIntelligenceCard = dynamic(() => import("@/compone
 const HomeSpecializedHealthPlansIntelligenceCard = dynamic(() => import("@/components/dashboard/home-specialized-health-plans-intelligence-card").then(m => m.HomeSpecializedHealthPlansIntelligenceCard ? { default: m.HomeSpecializedHealthPlansIntelligenceCard } : m), { ssr: false });
 const HomeEducationEngagementIntelligenceCard = dynamic(() => import("@/components/dashboard/home-education-engagement-intelligence-card").then(m => m.HomeEducationEngagementIntelligenceCard ? { default: m.HomeEducationEngagementIntelligenceCard } : m), { ssr: false });
 const HomeSafeguardingPreventionIntelligenceCard = dynamic(() => import("@/components/dashboard/home-safeguarding-prevention-intelligence-card").then(m => m.HomeSafeguardingPreventionIntelligenceCard ? { default: m.HomeSafeguardingPreventionIntelligenceCard } : m), { ssr: false });
+const HomeCommunicationContactIntelligenceCard = dynamic(() => import("@/components/dashboard/home-communication-contact-intelligence-card").then(m => m.HomeCommunicationContactIntelligenceCard ? { default: m.HomeCommunicationContactIntelligenceCard } : m), { ssr: false });
+const HomeStaffLifecycleIntelligenceCard = dynamic(() => import("@/components/dashboard/home-staff-lifecycle-intelligence-card").then(m => m.HomeStaffLifecycleIntelligenceCard ? { default: m.HomeStaffLifecycleIntelligenceCard } : m), { ssr: false });
+const HomeFacilitiesComplianceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-facilities-compliance-intelligence-card").then(m => m.HomeFacilitiesComplianceIntelligenceCard ? { default: m.HomeFacilitiesComplianceIntelligenceCard } : m), { ssr: false });
 
 // ─── Greeting ─────────────────────────────────────────────────────────────────
 
@@ -1357,6 +1360,9 @@ export default function DashboardPage() {
                     <HomeSpecializedHealthPlansIntelligenceCard />
                     <HomeEducationEngagementIntelligenceCard />
                     <HomeSafeguardingPreventionIntelligenceCard />
+                    <HomeCommunicationContactIntelligenceCard />
+                    <HomeStaffLifecycleIntelligenceCard />
+                    <HomeFacilitiesComplianceIntelligenceCard />
                     <IntelligenceBriefWidget />
                   </>
                 )}
