@@ -180,6 +180,10 @@ const HomeWorkforceResilienceCompositeCard = dynamic(() => import("@/components/
 const HomeSafeguardingOversightCompositeCard = dynamic(() => import("@/components/dashboard/home-safeguarding-oversight-composite-card").then(m => m.HomeSafeguardingOversightCompositeCard ? { default: m.HomeSafeguardingOversightCompositeCard } : m), { ssr: false });
 const HomeRegulatoryComplianceCompositeCard = dynamic(() => import("@/components/dashboard/home-regulatory-compliance-composite-card").then(m => m.HomeRegulatoryComplianceCompositeCard ? { default: m.HomeRegulatoryComplianceCompositeCard } : m), { ssr: false });
 const HomeQualityOfCareCompositeCard = dynamic(() => import("@/components/dashboard/home-quality-of-care-composite-card").then(m => m.HomeQualityOfCareCompositeCard ? { default: m.HomeQualityOfCareCompositeCard } : m), { ssr: false });
+const HomeAccidentInjurySurveillanceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-accident-injury-surveillance-intelligence-card").then(m => m.HomeAccidentInjurySurveillanceIntelligenceCard ? { default: m.HomeAccidentInjurySurveillanceIntelligenceCard } : m), { ssr: false });
+const HomeStatutoryVisitComplianceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-statutory-visit-compliance-intelligence-card").then(m => m.HomeStatutoryVisitComplianceIntelligenceCard ? { default: m.HomeStatutoryVisitComplianceIntelligenceCard } : m), { ssr: false });
+const HomeBelongingPersonalPropertyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-belonging-personal-property-intelligence-card").then(m => m.HomeBelongingPersonalPropertyIntelligenceCard ? { default: m.HomeBelongingPersonalPropertyIntelligenceCard } : m), { ssr: false });
+const HomeCamhsSpecialistReferralIntelligenceCard = dynamic(() => import("@/components/dashboard/home-camhs-specialist-referral-intelligence-card").then(m => m.HomeCamhsSpecialistReferralIntelligenceCard ? { default: m.HomeCamhsSpecialistReferralIntelligenceCard } : m), { ssr: false });
 
 // ─── Greeting ─────────────────────────────────────────────────────────────────
 
@@ -1405,6 +1409,10 @@ export default function DashboardPage() {
                     <HomeLifeStoryIdentityIntelligenceCard />
                     <HomeStrategicRiskIntelligenceCard />
                     <HomeBuildingOpsSafetyIntelligenceCard />
+                    <HomeAccidentInjurySurveillanceIntelligenceCard />
+                    <HomeStatutoryVisitComplianceIntelligenceCard />
+                    <HomeBelongingPersonalPropertyIntelligenceCard />
+                    <HomeCamhsSpecialistReferralIntelligenceCard />
                     <IntelligenceBriefWidget />
                   </>
                 )}
