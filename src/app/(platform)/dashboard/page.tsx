@@ -159,6 +159,9 @@ const HomeSafeguardingPreventionIntelligenceCard = dynamic(() => import("@/compo
 const HomeCommunicationContactIntelligenceCard = dynamic(() => import("@/components/dashboard/home-communication-contact-intelligence-card").then(m => m.HomeCommunicationContactIntelligenceCard ? { default: m.HomeCommunicationContactIntelligenceCard } : m), { ssr: false });
 const HomeStaffLifecycleIntelligenceCard = dynamic(() => import("@/components/dashboard/home-staff-lifecycle-intelligence-card").then(m => m.HomeStaffLifecycleIntelligenceCard ? { default: m.HomeStaffLifecycleIntelligenceCard } : m), { ssr: false });
 const HomeFacilitiesComplianceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-facilities-compliance-intelligence-card").then(m => m.HomeFacilitiesComplianceIntelligenceCard ? { default: m.HomeFacilitiesComplianceIntelligenceCard } : m), { ssr: false });
+const HomeTherapeuticProgressIntelligenceCard = dynamic(() => import("@/components/dashboard/home-therapeutic-progress-intelligence-card").then(m => m.HomeTherapeuticProgressIntelligenceCard ? { default: m.HomeTherapeuticProgressIntelligenceCard } : m), { ssr: false });
+const HomeChildrensRightsParticipationIntelligenceCard = dynamic(() => import("@/components/dashboard/home-childrens-rights-participation-intelligence-card").then(m => m.HomeChildrensRightsParticipationIntelligenceCard ? { default: m.HomeChildrensRightsParticipationIntelligenceCard } : m), { ssr: false });
+const HomePlacementStabilityDepthIntelligenceCard = dynamic(() => import("@/components/dashboard/home-placement-stability-depth-intelligence-card").then(m => m.HomePlacementStabilityDepthIntelligenceCard ? { default: m.HomePlacementStabilityDepthIntelligenceCard } : m), { ssr: false });
 
 // ─── Greeting ─────────────────────────────────────────────────────────────────
 
@@ -1363,6 +1366,9 @@ export default function DashboardPage() {
                     <HomeCommunicationContactIntelligenceCard />
                     <HomeStaffLifecycleIntelligenceCard />
                     <HomeFacilitiesComplianceIntelligenceCard />
+                    <HomeTherapeuticProgressIntelligenceCard />
+                    <HomeChildrensRightsParticipationIntelligenceCard />
+                    <HomePlacementStabilityDepthIntelligenceCard />
                     <IntelligenceBriefWidget />
                   </>
                 )}
