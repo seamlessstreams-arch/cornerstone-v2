@@ -27,7 +27,7 @@ export async function GET() {
   const staffList: StaffMemberInput[] = ((store.staff ?? []) as any[])
     .map((s: any) => ({
       id: s.id,
-      name: s.name ?? `${s.first_name ?? ""} ${s.last_name ?? ""}`.trim() || s.id,
+      name: (s.name ?? `${s.first_name ?? ""} ${s.last_name ?? ""}`.trim()) || s.id,
       role: s.role ?? "unknown",
     }));
 

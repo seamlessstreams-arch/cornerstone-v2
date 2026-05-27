@@ -53,7 +53,7 @@ export async function GET() {
   // ── Children ────────────────────────────────────────────────────────────
   const children: ChildRef[] = (store.youngPeople ?? []).map((yp: any) => ({
     id: yp.id,
-    name: yp.name ?? `${yp.first_name ?? ""} ${yp.last_name ?? ""}`.trim() || yp.id,
+    name: (yp.name ?? `${yp.first_name ?? ""} ${yp.last_name ?? ""}`.trim()) || yp.id,
   }));
 
   const childIds = new Set(children.map((c) => c.id));

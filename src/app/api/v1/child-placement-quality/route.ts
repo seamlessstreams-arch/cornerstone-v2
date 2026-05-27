@@ -35,7 +35,7 @@ export async function GET(request: Request) {
   if (!child) {
     return NextResponse.json({ error: "Child not found" }, { status: 404 });
   }
-  const childName = child.name ?? `${child.first_name ?? ""} ${child.last_name ?? ""}`.trim() || childId;
+  const childName = (child.name ?? `${child.first_name ?? ""} ${child.last_name ?? ""}`.trim()) || childId;
   const childAge = child.age ?? 15;
   const placementStart = typeof child.placement_start === "string" ? child.placement_start.slice(0, 10) : today;
   const keyWorkerId = child.key_worker_id ?? "";

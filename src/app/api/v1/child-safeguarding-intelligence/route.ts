@@ -33,7 +33,7 @@ export async function GET(request: Request) {
 
   // ── Child info ─────────────────────────────────────────────────────────
   const child = (store.youngPeople ?? []).find((yp: any) => yp.id === childId) as any;
-  const childName = child?.name ?? `${child?.first_name ?? ""} ${child?.last_name ?? ""}`.trim() || childId;
+  const childName = (child?.name ?? `${child?.first_name ?? ""} ${child?.last_name ?? ""}`.trim()) || childId;
   const childAge = child?.age ?? 15;
 
   const today = new Date().toISOString().slice(0, 10);

@@ -32,7 +32,7 @@ export async function GET(request: Request) {
   if (!child) {
     return NextResponse.json({ error: "Child not found" }, { status: 404 });
   }
-  const childName = child.name ?? `${child.first_name ?? ""} ${child.last_name ?? ""}`.trim() || childId;
+  const childName = (child.name ?? `${child.first_name ?? ""} ${child.last_name ?? ""}`.trim()) || childId;
 
   // ── Medications ────────────────────────────────────────────────────────
   const medications: MedicationInput[] = ((store.medications ?? []) as any[])

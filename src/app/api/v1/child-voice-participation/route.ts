@@ -42,7 +42,7 @@ export async function GET() {
     .filter((yp: any) => yp.status === "current")
     .map((yp: any) => ({
       id: yp.id,
-      name: yp.name ?? `${yp.first_name ?? ""} ${yp.last_name ?? ""}`.trim() || yp.id,
+      name: (yp.name ?? `${yp.first_name ?? ""} ${yp.last_name ?? ""}`.trim()) || yp.id,
     }));
 
   // ── LAC Reviews ────────────────────────────────────────────────────────
