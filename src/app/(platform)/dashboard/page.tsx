@@ -162,6 +162,7 @@ const HomeFacilitiesComplianceIntelligenceCard = dynamic(() => import("@/compone
 const HomeTherapeuticProgressIntelligenceCard = dynamic(() => import("@/components/dashboard/home-therapeutic-progress-intelligence-card").then(m => m.HomeTherapeuticProgressIntelligenceCard ? { default: m.HomeTherapeuticProgressIntelligenceCard } : m), { ssr: false });
 const HomeChildrensRightsParticipationIntelligenceCard = dynamic(() => import("@/components/dashboard/home-childrens-rights-participation-intelligence-card").then(m => m.HomeChildrensRightsParticipationIntelligenceCard ? { default: m.HomeChildrensRightsParticipationIntelligenceCard } : m), { ssr: false });
 const HomePlacementStabilityDepthIntelligenceCard = dynamic(() => import("@/components/dashboard/home-placement-stability-depth-intelligence-card").then(m => m.HomePlacementStabilityDepthIntelligenceCard ? { default: m.HomePlacementStabilityDepthIntelligenceCard } : m), { ssr: false });
+const HomeCulturalIdentityIntelligenceCard = dynamic(() => import("@/components/dashboard/home-cultural-identity-intelligence-card").then(m => m.HomeCulturalIdentityIntelligenceCard ? { default: m.HomeCulturalIdentityIntelligenceCard } : m), { ssr: false });
 
 // ─── Greeting ─────────────────────────────────────────────────────────────────
 
@@ -1369,6 +1370,7 @@ export default function DashboardPage() {
                     <HomeTherapeuticProgressIntelligenceCard />
                     <HomeChildrensRightsParticipationIntelligenceCard />
                     <HomePlacementStabilityDepthIntelligenceCard />
+                    <HomeCulturalIdentityIntelligenceCard />
                     <IntelligenceBriefWidget />
                   </>
                 )}
