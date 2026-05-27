@@ -176,6 +176,10 @@ const HomeStrategicRiskIntelligenceCard = dynamic(() => import("@/components/das
 const HomeBuildingOpsSafetyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-building-ops-safety-intelligence-card").then(m => m.HomeBuildingOpsSafetyIntelligenceCard ? { default: m.HomeBuildingOpsSafetyIntelligenceCard } : m), { ssr: false });
 const HomeOfstedReadinessCompositeCard = dynamic(() => import("@/components/dashboard/home-ofsted-readiness-composite-card").then(m => m.HomeOfstedReadinessCompositeCard ? { default: m.HomeOfstedReadinessCompositeCard } : m), { ssr: false });
 const HomeChildWellbeingCompositeCard = dynamic(() => import("@/components/dashboard/home-child-wellbeing-composite-card").then(m => m.HomeChildWellbeingCompositeCard ? { default: m.HomeChildWellbeingCompositeCard } : m), { ssr: false });
+const HomeWorkforceResilienceCompositeCard = dynamic(() => import("@/components/dashboard/home-workforce-resilience-composite-card").then(m => m.HomeWorkforceResilienceCompositeCard ? { default: m.HomeWorkforceResilienceCompositeCard } : m), { ssr: false });
+const HomeSafeguardingOversightCompositeCard = dynamic(() => import("@/components/dashboard/home-safeguarding-oversight-composite-card").then(m => m.HomeSafeguardingOversightCompositeCard ? { default: m.HomeSafeguardingOversightCompositeCard } : m), { ssr: false });
+const HomeRegulatoryComplianceCompositeCard = dynamic(() => import("@/components/dashboard/home-regulatory-compliance-composite-card").then(m => m.HomeRegulatoryComplianceCompositeCard ? { default: m.HomeRegulatoryComplianceCompositeCard } : m), { ssr: false });
+const HomeQualityOfCareCompositeCard = dynamic(() => import("@/components/dashboard/home-quality-of-care-composite-card").then(m => m.HomeQualityOfCareCompositeCard ? { default: m.HomeQualityOfCareCompositeCard } : m), { ssr: false });
 
 // ─── Greeting ─────────────────────────────────────────────────────────────────
 
@@ -1309,6 +1313,10 @@ export default function DashboardPage() {
                     <AriaDashboardPanel />
                     <HomeOfstedReadinessCompositeCard />
                     <HomeChildWellbeingCompositeCard />
+                    <HomeWorkforceResilienceCompositeCard />
+                    <HomeSafeguardingOversightCompositeCard />
+                    <HomeRegulatoryComplianceCompositeCard />
+                    <HomeQualityOfCareCompositeCard />
                     <ChildVoiceParticipationCard />
                     <HomeWellbeingIntelligenceCard />
                     <HomeActivityEnrichmentIntelligenceCard />
