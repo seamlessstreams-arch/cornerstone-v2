@@ -5899,6 +5899,42 @@ store.sleepLog = [
   },
 ] as SleepLogEntry[];
 
+// ── Additional Daily Log entries (Reg 36 — Recording quality) ───────────────
+const dlBase = { home_id: "home_oak", created_at: new Date().toISOString(), updated_at: new Date().toISOString(), created_by: "staff_darren", updated_by: "staff_darren", aria_assist_used: false };
+const additionalDailyLogs: DailyLogEntry[] = [
+  // Day -2
+  { ...dlBase, id: "log_101", child_id: "yp_alex", date: daysFromNow(-2), time: "08:45", entry_type: "general" as const, content: "Alex had a relaxed morning. Good engagement at breakfast. Discussed plans for the day — wants to practice guitar.", mood_score: 7, staff_id: "staff_ryan", linked_incident_id: null, is_significant: false },
+  { ...dlBase, id: "log_102", child_id: "yp_jordan", date: daysFromNow(-2), time: "09:00", entry_type: "education" as const, content: "Jordan completed maths revision. Good focus for 40 minutes. Positive interaction with tutor.", mood_score: 7, staff_id: "staff_anna", linked_incident_id: null, is_significant: false },
+  { ...dlBase, id: "log_103", child_id: "yp_casey", date: daysFromNow(-2), time: "14:00", entry_type: "health" as const, content: "Casey attended CAMHS appointment. Positive session — discussed coping strategies for anxiety.", mood_score: 6, staff_id: "staff_chervelle", linked_incident_id: null, is_significant: true },
+  // Day -3
+  { ...dlBase, id: "log_104", child_id: "yp_alex", date: daysFromNow(-3), time: "10:30", entry_type: "activity" as const, content: "Alex went swimming with Edward. Completed 20 lengths — personal best. Very proud.", mood_score: 9, staff_id: "staff_edward", linked_incident_id: null, is_significant: true },
+  { ...dlBase, id: "log_105", child_id: "yp_jordan", date: daysFromNow(-3), time: "16:00", entry_type: "contact" as const, content: "Jordan had scheduled phone call with mum. Call was positive — discussed plans for half-term.", mood_score: 8, staff_id: "staff_lackson", linked_incident_id: null, is_significant: false },
+  { ...dlBase, id: "log_106", child_id: "yp_casey", date: daysFromNow(-3), time: "20:00", entry_type: "mood" as const, content: "Casey reported feeling anxious before bed. Used breathing exercises from CAMHS. Settled after 15 minutes.", mood_score: 4, staff_id: "staff_anna", linked_incident_id: null, is_significant: false },
+  // Day -4
+  { ...dlBase, id: "log_107", child_id: "yp_alex", date: daysFromNow(-4), time: "09:00", entry_type: "general" as const, content: "Good morning routine. Alex prepared own breakfast independently.", mood_score: 7, staff_id: "staff_darren", linked_incident_id: null, is_significant: false },
+  { ...dlBase, id: "log_108", child_id: "yp_jordan", date: daysFromNow(-4), time: "13:00", entry_type: "food" as const, content: "Jordan helped prepare lunch — halal chicken wraps. Good engagement with cooking skills.", mood_score: 8, staff_id: "staff_edward", linked_incident_id: null, is_significant: false },
+  { ...dlBase, id: "log_109", child_id: "yp_casey", date: daysFromNow(-4), time: "15:30", entry_type: "behaviour" as const, content: "Casey had a difficult afternoon. Refused to attend online tutoring. Key worker discussion — underlying worry about exam.", mood_score: 3, staff_id: "staff_chervelle", linked_incident_id: null, is_significant: true },
+  // Day -5
+  { ...dlBase, id: "log_110", child_id: "yp_alex", date: daysFromNow(-5), time: "11:00", entry_type: "education" as const, content: "Alex attended Derby AP — positive report from school. Good behaviour throughout.", mood_score: 7, staff_id: "staff_ryan", linked_incident_id: null, is_significant: false },
+  { ...dlBase, id: "log_111", child_id: "yp_jordan", date: daysFromNow(-5), time: "14:30", entry_type: "activity" as const, content: "Jordan went to youth club. Engaged well with peers. No concerns.", mood_score: 8, staff_id: "staff_lackson", linked_incident_id: null, is_significant: false },
+  { ...dlBase, id: "log_112", child_id: "yp_casey", date: daysFromNow(-5), time: "09:30", entry_type: "health" as const, content: "Medication administered on time. No side effects reported.", mood_score: 6, staff_id: "staff_anna", linked_incident_id: null, is_significant: false },
+  // Day -6
+  { ...dlBase, id: "log_113", child_id: "yp_alex", date: daysFromNow(-6), time: "10:00", entry_type: "general" as const, content: "Alex spent the morning reading. Calm and settled. Positive mood.", mood_score: 7, staff_id: "staff_darren", linked_incident_id: null, is_significant: false },
+  { ...dlBase, id: "log_114", child_id: "yp_jordan", date: daysFromNow(-6), time: "16:00", entry_type: "mood" as const, content: "Jordan appeared withdrawn this afternoon. 1:1 check-in — missing friends from previous placement. Reassured and spent time together.", mood_score: 4, staff_id: "staff_anna", linked_incident_id: null, is_significant: true },
+  // Day -7
+  { ...dlBase, id: "log_115", child_id: "yp_alex", date: daysFromNow(-7), time: "08:30", entry_type: "general" as const, content: "Good start to the week. Alex up early and helped with breakfast preparation.", mood_score: 8, staff_id: "staff_ryan", linked_incident_id: null, is_significant: false },
+  { ...dlBase, id: "log_116", child_id: "yp_jordan", date: daysFromNow(-7), time: "14:00", entry_type: "activity" as const, content: "Jordan attended football training. Scored two goals. Very positive mood on return.", mood_score: 9, staff_id: "staff_lackson", linked_incident_id: null, is_significant: true },
+  { ...dlBase, id: "log_117", child_id: "yp_casey", date: daysFromNow(-7), time: "10:00", entry_type: "education" as const, content: "Casey completed English homework independently. Good concentration.", mood_score: 6, staff_id: "staff_chervelle", linked_incident_id: null, is_significant: false },
+  // Days -8 to -10 (fewer entries to show trailing off)
+  { ...dlBase, id: "log_118", child_id: "yp_alex", date: daysFromNow(-8), time: "09:00", entry_type: "general" as const, content: "Routine morning. Alex ate breakfast and completed personal care independently.", mood_score: 7, staff_id: "staff_edward", linked_incident_id: null, is_significant: false },
+  { ...dlBase, id: "log_119", child_id: "yp_jordan", date: daysFromNow(-9), time: "11:00", entry_type: "education" as const, content: "Jordan attended tuition session. Some difficulty with concentration today.", mood_score: 5, staff_id: "staff_ryan", linked_incident_id: null, is_significant: false },
+  { ...dlBase, id: "log_120", child_id: "yp_casey", date: daysFromNow(-10), time: "15:00", entry_type: "contact" as const, content: "Casey had video call with social worker. Discussed placement review.", mood_score: 6, staff_id: "staff_darren", linked_incident_id: null, is_significant: false },
+  { ...dlBase, id: "log_121", child_id: "yp_alex", date: daysFromNow(-11), time: "14:00", entry_type: "activity" as const, content: "Alex went to climbing wall with Lackson. Great engagement and confidence building.", mood_score: 9, staff_id: "staff_lackson", linked_incident_id: null, is_significant: true },
+  { ...dlBase, id: "log_122", child_id: "yp_jordan", date: daysFromNow(-12), time: "09:00", entry_type: "general" as const, content: "Jordan had a good morning. Calm and engaged.", mood_score: 7, staff_id: "staff_anna", linked_incident_id: null, is_significant: false },
+  { ...dlBase, id: "log_123", child_id: "yp_casey", date: daysFromNow(-13), time: "10:30", entry_type: "health" as const, content: "Casey attended GP appointment. Routine check — no concerns.", mood_score: 6, staff_id: "staff_chervelle", linked_incident_id: null, is_significant: false },
+];
+store.dailyLog.push(...additionalDailyLogs);
+
 // ── CRUD helpers ──────────────────────────────────────────────────────────────
 
 export function getStore() { return store; }

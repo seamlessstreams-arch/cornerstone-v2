@@ -143,6 +143,7 @@ const HomeFireSafetyIntelligenceCard = dynamic(() => import("@/components/dashbo
 const HomeSleepQualityIntelligenceCard = dynamic(() => import("@/components/dashboard/home-sleep-quality-intelligence-card").then(m => m.HomeSleepQualityIntelligenceCard ? { default: m.HomeSleepQualityIntelligenceCard } : m), { ssr: false });
 const HomeMedicationManagementIntelligenceCard = dynamic(() => import("@/components/dashboard/home-medication-management-intelligence-card").then(m => m.HomeMedicationManagementIntelligenceCard ? { default: m.HomeMedicationManagementIntelligenceCard } : m), { ssr: false });
 const HomeExploitationScreeningIntelligenceCard = dynamic(() => import("@/components/dashboard/home-exploitation-screening-intelligence-card").then(m => m.HomeExploitationScreeningIntelligenceCard ? { default: m.HomeExploitationScreeningIntelligenceCard } : m), { ssr: false });
+const HomeDailyLogIntelligenceCard = dynamic(() => import("@/components/dashboard/home-daily-log-intelligence-card").then(m => m.HomeDailyLogIntelligenceCard ? { default: m.HomeDailyLogIntelligenceCard } : m), { ssr: false });
 
 // ─── Greeting ─────────────────────────────────────────────────────────────────
 
@@ -1331,6 +1332,7 @@ export default function DashboardPage() {
                     <HomeSleepQualityIntelligenceCard />
                     <HomeMedicationManagementIntelligenceCard />
                     <HomeExploitationScreeningIntelligenceCard />
+                    <HomeDailyLogIntelligenceCard />
                     <IntelligenceBriefWidget />
                   </>
                 )}
