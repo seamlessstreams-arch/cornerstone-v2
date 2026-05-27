@@ -174,6 +174,8 @@ const HomePlacementJourneyIntelligenceCard = dynamic(() => import("@/components/
 const HomeLifeStoryIdentityIntelligenceCard = dynamic(() => import("@/components/dashboard/home-life-story-identity-intelligence-card").then(m => m.HomeLifeStoryIdentityIntelligenceCard ? { default: m.HomeLifeStoryIdentityIntelligenceCard } : m), { ssr: false });
 const HomeStrategicRiskIntelligenceCard = dynamic(() => import("@/components/dashboard/home-strategic-risk-intelligence-card").then(m => m.HomeStrategicRiskIntelligenceCard ? { default: m.HomeStrategicRiskIntelligenceCard } : m), { ssr: false });
 const HomeBuildingOpsSafetyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-building-ops-safety-intelligence-card").then(m => m.HomeBuildingOpsSafetyIntelligenceCard ? { default: m.HomeBuildingOpsSafetyIntelligenceCard } : m), { ssr: false });
+const HomeOfstedReadinessCompositeCard = dynamic(() => import("@/components/dashboard/home-ofsted-readiness-composite-card").then(m => m.HomeOfstedReadinessCompositeCard ? { default: m.HomeOfstedReadinessCompositeCard } : m), { ssr: false });
+const HomeChildWellbeingCompositeCard = dynamic(() => import("@/components/dashboard/home-child-wellbeing-composite-card").then(m => m.HomeChildWellbeingCompositeCard ? { default: m.HomeChildWellbeingCompositeCard } : m), { ssr: false });
 
 // ─── Greeting ─────────────────────────────────────────────────────────────────
 
@@ -1305,6 +1307,8 @@ export default function DashboardPage() {
                     <AriaIncidentAnalysis />
                     <AriaDailyIntelligence />
                     <AriaDashboardPanel />
+                    <HomeOfstedReadinessCompositeCard />
+                    <HomeChildWellbeingCompositeCard />
                     <ChildVoiceParticipationCard />
                     <HomeWellbeingIntelligenceCard />
                     <HomeActivityEnrichmentIntelligenceCard />
