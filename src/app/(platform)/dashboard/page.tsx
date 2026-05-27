@@ -193,6 +193,11 @@ const HomeOutcomeStarNeedsIntelligenceCard = dynamic(() => import("@/components/
 const HomeInfectionControlHealthSafetyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-infection-control-health-safety-intelligence-card").then(m => m.HomeInfectionControlHealthSafetyIntelligenceCard ? { default: m.HomeInfectionControlHealthSafetyIntelligenceCard } : m), { ssr: false });
 const HomeCaseFileAuditQualityIntelligenceCard = dynamic(() => import("@/components/dashboard/home-case-file-audit-quality-intelligence-card").then(m => m.HomeCaseFileAuditQualityIntelligenceCard ? { default: m.HomeCaseFileAuditQualityIntelligenceCard } : m), { ssr: false });
 const HomeStakeholderEngagementFeedbackIntelligenceCard = dynamic(() => import("@/components/dashboard/home-stakeholder-engagement-feedback-intelligence-card").then(m => m.HomeStakeholderEngagementFeedbackIntelligenceCard ? { default: m.HomeStakeholderEngagementFeedbackIntelligenceCard } : m), { ssr: false });
+// Batch 12 — Financial Literacy, Safer Recruitment, Leaving Care, Governance
+const HomeFinancialLiteracyMoneyManagementIntelligenceCard = dynamic(() => import("@/components/dashboard/home-financial-literacy-money-management-intelligence-card").then(m => m.HomeFinancialLiteracyMoneyManagementIntelligenceCard ? { default: m.HomeFinancialLiteracyMoneyManagementIntelligenceCard } : m), { ssr: false });
+const HomeSaferRecruitmentVettingIntelligenceCard = dynamic(() => import("@/components/dashboard/home-safer-recruitment-vetting-intelligence-card").then(m => m.HomeSaferRecruitmentVettingIntelligenceCard ? { default: m.HomeSaferRecruitmentVettingIntelligenceCard } : m), { ssr: false });
+const HomeLeavingCareTransitionIntelligenceCard = dynamic(() => import("@/components/dashboard/home-leaving-care-transition-intelligence-card").then(m => m.HomeLeavingCareTransitionIntelligenceCard ? { default: m.HomeLeavingCareTransitionIntelligenceCard } : m), { ssr: false });
+const HomeGovernanceManagementOversightIntelligenceCard = dynamic(() => import("@/components/dashboard/home-governance-management-oversight-intelligence-card").then(m => m.HomeGovernanceManagementOversightIntelligenceCard ? { default: m.HomeGovernanceManagementOversightIntelligenceCard } : m), { ssr: false });
 
 // ─── Greeting ─────────────────────────────────────────────────────────────────
 
@@ -1430,6 +1435,10 @@ export default function DashboardPage() {
                     <HomeInfectionControlHealthSafetyIntelligenceCard />
                     <HomeCaseFileAuditQualityIntelligenceCard />
                     <HomeStakeholderEngagementFeedbackIntelligenceCard />
+                    <HomeFinancialLiteracyMoneyManagementIntelligenceCard />
+                    <HomeSaferRecruitmentVettingIntelligenceCard />
+                    <HomeLeavingCareTransitionIntelligenceCard />
+                    <HomeGovernanceManagementOversightIntelligenceCard />
                     <IntelligenceBriefWidget />
                   </>
                 )}
