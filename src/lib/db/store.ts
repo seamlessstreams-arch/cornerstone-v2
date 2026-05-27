@@ -5541,6 +5541,81 @@ store.peerGroupDynamics = [
   },
 ] as PeerGroupDynamic[];
 
+// ── On-Call Shifts ──────────────────────────────────────────────────────────
+store.onCallShifts = [
+  {
+    id: "oc_001", date_from: daysFromNow(-1) + "T17:00:00Z", date_to: today + "T08:00:00Z",
+    role: "first_line_rm" as const, on_call_staff: "staff_darren", backup_staff: "staff_ryan",
+    contact_number: "07700 000001", shift_pattern: "weekday_evenings" as const,
+    calls_received: [
+      { datetime: daysFromNow(-1) + "T22:30:00Z", from_contact: "staff_anna", call_type: "routine", duration_mins: 8, outcome: "Advised on medication timing query. No further action.", escalated: false },
+    ],
+    critical_incidents_handled: 0, routine_calls_handled: 1, advisory_calls_handled: 0,
+    staff_wellbeing_during_on_call: "Fine — one call only.",
+    feedback_on_arrangements: "Clear and well-documented handover from shift staff.",
+    review_notes: "", created_at: daysFromNow(-1) + "T17:00:00Z",
+  },
+  {
+    id: "oc_002", date_from: daysFromNow(-3) + "T17:00:00Z", date_to: daysFromNow(-2) + "T08:00:00Z",
+    role: "first_line_rm" as const, on_call_staff: "staff_darren", backup_staff: "staff_ryan",
+    contact_number: "07700 000001", shift_pattern: "weekday_evenings" as const,
+    calls_received: [
+      { datetime: daysFromNow(-3) + "T19:20:00Z", from_contact: "staff_edward", call_type: "critical", duration_mins: 35, outcome: "Alex safeguarding disclosure. RM attended home. Social worker and police notified.", escalated: true },
+      { datetime: daysFromNow(-3) + "T21:00:00Z", from_contact: "staff_edward", call_type: "advisory", duration_mins: 12, outcome: "Follow-up re: Alex settling. Advice on bedtime supervision.", escalated: false },
+    ],
+    critical_incidents_handled: 1, routine_calls_handled: 0, advisory_calls_handled: 1,
+    staff_wellbeing_during_on_call: "Stressful evening due to safeguarding disclosure. Darren debriefed with RI next morning.",
+    feedback_on_arrangements: "System worked well. Escalation was appropriate. RM attended within 25 minutes.",
+    review_notes: "Consider adding specific safeguarding on-call protocol.", created_at: daysFromNow(-3) + "T17:00:00Z",
+  },
+  {
+    id: "oc_003", date_from: daysFromNow(-7) + "T17:00:00Z", date_to: daysFromNow(-5) + "T08:00:00Z",
+    role: "first_line_rm" as const, on_call_staff: "staff_darren", backup_staff: "staff_ryan",
+    contact_number: "07700 000001", shift_pattern: "weekend_full" as const,
+    calls_received: [
+      { datetime: daysFromNow(-7) + "T20:00:00Z", from_contact: "staff_chervelle", call_type: "routine", duration_mins: 5, outcome: "Query about visitor protocol. Advised.", escalated: false },
+      { datetime: daysFromNow(-6) + "T14:30:00Z", from_contact: "staff_lackson", call_type: "routine", duration_mins: 10, outcome: "Jordan's father called unexpectedly. Advised on contact plan.", escalated: false },
+      { datetime: daysFromNow(-6) + "T23:15:00Z", from_contact: "staff_anna", call_type: "advisory", duration_mins: 15, outcome: "Casey not settling at bedtime. Discussed strategies. Resolved.", escalated: false },
+    ],
+    critical_incidents_handled: 0, routine_calls_handled: 2, advisory_calls_handled: 1,
+    staff_wellbeing_during_on_call: "Weekend was manageable. Good sleep between calls.",
+    feedback_on_arrangements: "Weekend rota works well. Backup was aware and available.",
+    review_notes: "", created_at: daysFromNow(-7) + "T17:00:00Z",
+  },
+  {
+    id: "oc_004", date_from: daysFromNow(-8) + "T17:00:00Z", date_to: daysFromNow(-7) + "T08:00:00Z",
+    role: "second_line_deputy" as const, on_call_staff: "staff_ryan", backup_staff: "staff_darren",
+    contact_number: "07700 000002", shift_pattern: "weekday_evenings" as const,
+    calls_received: [],
+    critical_incidents_handled: 0, routine_calls_handled: 0, advisory_calls_handled: 0,
+    staff_wellbeing_during_on_call: "Quiet night. No calls received.",
+    feedback_on_arrangements: "Good to have second-line cover. RM was first-line same evening.",
+    review_notes: "", created_at: daysFromNow(-8) + "T17:00:00Z",
+  },
+  {
+    id: "oc_005", date_from: daysFromNow(-14) + "T17:00:00Z", date_to: daysFromNow(-12) + "T08:00:00Z",
+    role: "first_line_rm" as const, on_call_staff: "staff_darren", backup_staff: "staff_ryan",
+    contact_number: "07700 000001", shift_pattern: "weekend_full" as const,
+    calls_received: [
+      { datetime: daysFromNow(-14) + "T18:45:00Z", from_contact: "staff_mirela", call_type: "advisory", duration_mins: 20, outcome: "Mirela unsure about recording process. Guided through template.", escalated: false },
+    ],
+    critical_incidents_handled: 0, routine_calls_handled: 0, advisory_calls_handled: 1,
+    staff_wellbeing_during_on_call: "Fine. Quiet weekend apart from one advisory call.",
+    feedback_on_arrangements: "Consider making recording templates more accessible for newer staff.",
+    review_notes: "New staff may need more support — add recording guidance to on-call pack.", created_at: daysFromNow(-14) + "T17:00:00Z",
+  },
+  {
+    id: "oc_006", date_from: today + "T17:00:00Z", date_to: daysFromNow(1) + "T08:00:00Z",
+    role: "first_line_rm" as const, on_call_staff: "staff_darren", backup_staff: "staff_ryan",
+    contact_number: "07700 000001", shift_pattern: "weekday_evenings" as const,
+    calls_received: [],
+    critical_incidents_handled: 0, routine_calls_handled: 0, advisory_calls_handled: 0,
+    staff_wellbeing_during_on_call: "",
+    feedback_on_arrangements: "",
+    review_notes: "", created_at: today + "T08:00:00Z",
+  },
+] as OnCallShift[];
+
 // ── CRUD helpers ──────────────────────────────────────────────────────────────
 
 export function getStore() { return store; }
