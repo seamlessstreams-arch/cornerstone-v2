@@ -203,6 +203,11 @@ const HomeStaffCompetencyTrainingIntelligenceCard = dynamic(() => import("@/comp
 const HomeChildrensVoiceParticipationIntelligenceCard = dynamic(() => import("@/components/dashboard/home-childrens-voice-participation-intelligence-card").then(m => m.HomeChildrensVoiceParticipationIntelligenceCard ? { default: m.HomeChildrensVoiceParticipationIntelligenceCard } : m), { ssr: false });
 const HomeDigitalLiteracyOnlineSafetyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-digital-literacy-online-safety-intelligence-card").then(m => m.HomeDigitalLiteracyOnlineSafetyIntelligenceCard ? { default: m.HomeDigitalLiteracyOnlineSafetyIntelligenceCard } : m), { ssr: false });
 const HomeTherapeuticWellbeingImpactIntelligenceCard = dynamic(() => import("@/components/dashboard/home-therapeutic-wellbeing-impact-intelligence-card").then(m => m.HomeTherapeuticWellbeingImpactIntelligenceCard ? { default: m.HomeTherapeuticWellbeingImpactIntelligenceCard } : m), { ssr: false });
+// Batch 14 — LADO Allegations, Disruption Prevention, Lessons Learned, Diversity & Inclusion
+const HomeLadoAllegationManagementIntelligenceCard = dynamic(() => import("@/components/dashboard/home-lado-allegation-management-intelligence-card").then(m => m.HomeLadoAllegationManagementIntelligenceCard ? { default: m.HomeLadoAllegationManagementIntelligenceCard } : m), { ssr: false });
+const HomePlacementDisruptionPreventionIntelligenceCard = dynamic(() => import("@/components/dashboard/home-placement-disruption-prevention-intelligence-card").then(m => m.HomePlacementDisruptionPreventionIntelligenceCard ? { default: m.HomePlacementDisruptionPreventionIntelligenceCard } : m), { ssr: false });
+const HomeLessonsLearnedImprovementIntelligenceCard = dynamic(() => import("@/components/dashboard/home-lessons-learned-improvement-intelligence-card").then(m => m.HomeLessonsLearnedImprovementIntelligenceCard ? { default: m.HomeLessonsLearnedImprovementIntelligenceCard } : m), { ssr: false });
+const HomeDiversityInclusionEqualityIntelligenceCard = dynamic(() => import("@/components/dashboard/home-diversity-inclusion-equality-intelligence-card").then(m => m.HomeDiversityInclusionEqualityIntelligenceCard ? { default: m.HomeDiversityInclusionEqualityIntelligenceCard } : m), { ssr: false });
 
 // ─── Greeting ─────────────────────────────────────────────────────────────────
 
@@ -1448,6 +1453,10 @@ export default function DashboardPage() {
                     <HomeChildrensVoiceParticipationIntelligenceCard />
                     <HomeDigitalLiteracyOnlineSafetyIntelligenceCard />
                     <HomeTherapeuticWellbeingImpactIntelligenceCard />
+                    <HomeLadoAllegationManagementIntelligenceCard />
+                    <HomePlacementDisruptionPreventionIntelligenceCard />
+                    <HomeLessonsLearnedImprovementIntelligenceCard />
+                    <HomeDiversityInclusionEqualityIntelligenceCard />
                     <IntelligenceBriefWidget />
                   </>
                 )}
