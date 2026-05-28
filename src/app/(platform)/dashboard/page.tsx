@@ -265,6 +265,12 @@ const HomeMissingEpisodeIntelligenceCard = dynamic(() => import("@/components/da
 const HomeSleepNightCareIntelligenceCard = dynamic(() => import("@/components/dashboard/home-sleep-night-care-intelligence-card").then(m => m.HomeSleepNightCareIntelligenceCard ? { default: m.HomeSleepNightCareIntelligenceCard } : m), { ssr: false });
 const HomeMedicationAdministrationIntelligenceCard = dynamic(() => import("@/components/dashboard/home-medication-administration-intelligence-card").then(m => m.HomeMedicationAdministrationIntelligenceCard ? { default: m.HomeMedicationAdministrationIntelligenceCard } : m), { ssr: false });
 
+// Batch 25 — Welfare Check Compliance, Deprivation of Liberty, Sanction & Reward Balance, Staff Disciplinary & Conduct
+const HomeWelfareCheckComplianceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-welfare-check-compliance-intelligence-card").then(m => m.HomeWelfareCheckComplianceIntelligenceCard ? { default: m.HomeWelfareCheckComplianceIntelligenceCard } : m), { ssr: false });
+const HomeDeprivationOfLibertyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-deprivation-of-liberty-intelligence-card").then(m => m.HomeDeprivationOfLibertyIntelligenceCard ? { default: m.HomeDeprivationOfLibertyIntelligenceCard } : m), { ssr: false });
+const HomeSanctionRewardBalanceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-sanction-reward-balance-intelligence-card").then(m => m.HomeSanctionRewardBalanceIntelligenceCard ? { default: m.HomeSanctionRewardBalanceIntelligenceCard } : m), { ssr: false });
+const HomeStaffDisciplinaryConductIntelligenceCard = dynamic(() => import("@/components/dashboard/home-staff-disciplinary-conduct-intelligence-card").then(m => m.HomeStaffDisciplinaryConductIntelligenceCard ? { default: m.HomeStaffDisciplinaryConductIntelligenceCard } : m), { ssr: false });
+
 // ─── Greeting ─────────────────────────────────────────────────────────────────
 
 function getGreeting(): string {
@@ -1553,6 +1559,10 @@ export default function DashboardPage() {
                     <HomeMissingEpisodeIntelligenceCard />
                     <HomeSleepNightCareIntelligenceCard />
                     <HomeMedicationAdministrationIntelligenceCard />
+                    <HomeWelfareCheckComplianceIntelligenceCard />
+                    <HomeDeprivationOfLibertyIntelligenceCard />
+                    <HomeSanctionRewardBalanceIntelligenceCard />
+                    <HomeStaffDisciplinaryConductIntelligenceCard />
                     <IntelligenceBriefWidget />
                   </>
                 )}
