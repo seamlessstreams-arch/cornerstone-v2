@@ -289,6 +289,12 @@ const HomeFilingEvidenceGovernanceIntelligenceCard = dynamic(() => import("@/com
 const HomeIndependenceSkillsReadinessIntelligenceCard = dynamic(() => import("@/components/dashboard/home-independence-skills-readiness-intelligence-card").then(m => m.HomeIndependenceSkillsReadinessIntelligenceCard ? { default: m.HomeIndependenceSkillsReadinessIntelligenceCard } : m), { ssr: false });
 const HomeAriaContentQualityIntelligenceCard = dynamic(() => import("@/components/dashboard/home-aria-content-quality-intelligence-card").then(m => m.HomeAriaContentQualityIntelligenceCard ? { default: m.HomeAriaContentQualityIntelligenceCard } : m), { ssr: false });
 
+// Batch 29 — Notification Responsiveness, Holistic Child Progress, Information Flow Quality, Regulatory Evidence Completeness
+const HomeNotificationResponsivenessIntelligenceCard = dynamic(() => import("@/components/dashboard/home-notification-responsiveness-intelligence-card").then(m => m.HomeNotificationResponsivenessIntelligenceCard ? { default: m.HomeNotificationResponsivenessIntelligenceCard } : m), { ssr: false });
+const HomeHolisticChildProgressIntelligenceCard = dynamic(() => import("@/components/dashboard/home-holistic-child-progress-intelligence-card").then(m => m.HomeHolisticChildProgressIntelligenceCard ? { default: m.HomeHolisticChildProgressIntelligenceCard } : m), { ssr: false });
+const HomeInformationFlowQualityIntelligenceCard = dynamic(() => import("@/components/dashboard/home-information-flow-quality-intelligence-card").then(m => m.HomeInformationFlowQualityIntelligenceCard ? { default: m.HomeInformationFlowQualityIntelligenceCard } : m), { ssr: false });
+const HomeRegulatoryEvidenceCompletenessIntelligenceCard = dynamic(() => import("@/components/dashboard/home-regulatory-evidence-completeness-intelligence-card").then(m => m.HomeRegulatoryEvidenceCompletenessIntelligenceCard ? { default: m.HomeRegulatoryEvidenceCompletenessIntelligenceCard } : m), { ssr: false });
+
 // ─── Greeting ─────────────────────────────────────────────────────────────────
 
 function getGreeting(): string {
@@ -1593,6 +1599,10 @@ export default function DashboardPage() {
                     <HomeFilingEvidenceGovernanceIntelligenceCard />
                     <HomeIndependenceSkillsReadinessIntelligenceCard />
                     <HomeAriaContentQualityIntelligenceCard />
+                    <HomeNotificationResponsivenessIntelligenceCard />
+                    <HomeHolisticChildProgressIntelligenceCard />
+                    <HomeInformationFlowQualityIntelligenceCard />
+                    <HomeRegulatoryEvidenceCompletenessIntelligenceCard />
                     <IntelligenceBriefWidget />
                   </>
                 )}
