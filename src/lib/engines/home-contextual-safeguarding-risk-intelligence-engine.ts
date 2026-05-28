@@ -1,0 +1,315 @@
+// ══════════════════════════════════════════════════════════════════════════════
+// CORNERSTONE — HOME CONTEXTUAL SAFEGUARDING RISK INTELLIGENCE ENGINE
+// Pure deterministic engine: risk identification coverage, context diversity,
+// multi-agency response, protective action completeness, review compliance,
+// community mapping, and risk level distribution.
+// CHR 2015 Reg 12 (Protection) / Reg 34 (Safeguarding).
+// SCCIF: Helped and protected; Leadership and management.
+// ══════════════════════════════════════════════════════════════════════════════
+
+// ── Input Types ─────────────────────────────────────────────────────────────
+
+export interface ContextualSafeguardingRecordInput {
+  id: string;
+  date_identified: string; // ISO date
+  last_reviewed: string; // ISO date
+  context_type: string; // "location"|"peer_group"|"online_space"|"transport_route"|"school"|"community_facility"
+  risk_level: string; // "low"|"medium"|"high"|"very_high"
+  status: string; // "active"|"monitoring"|"resolved"|"escalated"
+  children_affected_count: number;
+  risk_factor_count: number;
+  protective_action_count: number;
+  multi_agency_action_count: number;
+  has_police_intelligence: boolean;
+  has_community_mapping: boolean;
+  has_review_date: boolean;
+  review_date: string; // ISO date
+}
+
+export interface ContextualSafeguardingInput {
+  today: string;
+  total_children: number;
+  risks: ContextualSafeguardingRecordInput[];
+}
+
+// ── Output Types ────────────────────────────────────────────────────────────
+
+export type ContextualSafeguardingRating =
+  | "outstanding"
+  | "good"
+  | "adequate"
+  | "inadequate"
+  | "insufficient_data";
+
+export interface ContextualSafeguardingResult {
+  safeguarding_rating: ContextualSafeguardingRating;
+  safeguarding_score: number;
+  headline: string;
+  total_risks: number;
+  active_risk_count: number;
+  high_risk_count: number;
+  context_diversity: number;
+  protective_action_rate: number;
+  multi_agency_rate: number;
+  community_mapping_rate: number;
+  review_compliance_rate: number;
+  strengths: string[];
+  concerns: string[];
+  recommendations: {
+    rank: number;
+    recommendation: string;
+    urgency: "immediate" | "soon" | "planned";
+    regulatory_ref: string;
+  }[];
+  insights: { text: string; severity: "critical" | "warning" | "positive" }[];
+}
+
+// ── Helpers ─────────────────────────────────────────────────────────────────
+
+function pct(n: number, d: number): number {
+  return d === 0 ? 0 : Math.round((n / d) * 100);
+}
+
+function clamp(v: number, lo: number, hi: number): number {
+  return Math.max(lo, Math.min(hi, v));
+}
+
+function toRating(score: number): ContextualSafeguardingRating {
+  if (score >= 80) return "outstanding";
+  if (score >= 65) return "good";
+  if (score >= 45) return "adequate";
+  return "inadequate";
+}
+
+// ── Engine ──────────────────────────────────────────────────────────────────
+
+export function computeContextualSafeguarding(
+  input: ContextualSafeguardingInput,
+): ContextualSafeguardingResult {
+  const { risks, total_children, today } = input;
+
+  // Insufficient data guard
+  if (total_children === 0) {
+    return {
+      safeguarding_rating: "insufficient_data",
+      safeguarding_score: 0,
+      headline: "No data available for contextual safeguarding intelligence analysis",
+      total_risks: 0,
+      active_risk_count: 0,
+      high_risk_count: 0,
+      context_diversity: 0,
+      protective_action_rate: 0,
+      multi_agency_rate: 0,
+      community_mapping_rate: 0,
+      review_compliance_rate: 0,
+      strengths: [],
+      concerns: [],
+      recommendations: [],
+      insights: [],
+    };
+  }
+
+  // ── Metrics ────────────────────────────────────────────────────────────
+  const total = risks.length;
+
+  const activeRisks = risks.filter(r => r.status === "active" || r.status === "escalated");
+  const monitoringRisks = risks.filter(r => r.status === "monitoring");
+  const resolvedRisks = risks.filter(r => r.status === "resolved");
+  const highRisks = risks.filter(r => r.risk_level === "high" || r.risk_level === "very_high");
+
+  // Context diversity
+  const uniqueContextTypes = new Set(risks.map(r => r.context_type)).size;
+
+  // Protective actions
+  const withProtectiveActions = risks.filter(r => r.protective_action_count > 0).length;
+  const protectiveActionRate = pct(withProtectiveActions, total);
+
+  // Multi-agency response
+  const withMultiAgency = risks.filter(r => r.multi_agency_action_count > 0).length;
+  const multiAgencyRate = pct(withMultiAgency, total);
+
+  // Community mapping
+  const withCommunityMapping = risks.filter(r => r.has_community_mapping).length;
+  const communityMappingRate = pct(withCommunityMapping, total);
+
+  // Review compliance
+  const todayMs = new Date(today).getTime();
+  const withCurrentReview = risks.filter(r => {
+    if (!r.has_review_date || !r.review_date) return false;
+    const reviewMs = new Date(r.review_date).getTime();
+    return reviewMs >= todayMs;
+  }).length;
+  const reviewComplianceRate = pct(withCurrentReview, total);
+
+  // Police intelligence
+  const withPoliceIntelligence = risks.filter(r => r.has_police_intelligence).length;
+
+  // High-risk with protective actions
+  const highRiskWithProtection = highRisks.filter(r => r.protective_action_count > 0).length;
+
+  // High-risk with multi-agency
+  const highRiskWithMultiAgency = highRisks.filter(r => r.multi_agency_action_count > 0).length;
+
+  // ── Scoring ────────────────────────────────────────────────────────────
+  let score = 52;
+
+  // Modifier 1: Protective action coverage
+  if (total === 0) {
+    score -= 3;
+  } else {
+    if (protectiveActionRate >= 85) score += 6;
+    else if (protectiveActionRate >= 60) score += 2;
+    else if (protectiveActionRate < 35) score -= 5;
+  }
+
+  // Modifier 2: Multi-agency response
+  if (total === 0) {
+    score -= 1;
+  } else {
+    if (multiAgencyRate >= 75) score += 5;
+    else if (multiAgencyRate >= 45) score += 2;
+    else if (multiAgencyRate < 20) score -= 5;
+  }
+
+  // Modifier 3: Review compliance
+  if (total === 0) {
+    score -= 1;
+  } else {
+    if (reviewComplianceRate >= 80) score += 5;
+    else if (reviewComplianceRate >= 50) score += 2;
+    else if (reviewComplianceRate < 25) score -= 4;
+  }
+
+  // Modifier 4: Context diversity and community mapping
+  if (total === 0) {
+    // no adjustment
+  } else {
+    if (uniqueContextTypes >= 4 && communityMappingRate >= 60) score += 5;
+    else if (uniqueContextTypes >= 2 || communityMappingRate >= 40) score += 2;
+    else if (uniqueContextTypes < 2 && communityMappingRate < 20) score -= 4;
+  }
+
+  // Modifier 5: High-risk management
+  if (total === 0) {
+    score -= 1;
+  } else {
+    if (highRisks.length === 0) score += 2; // no high risks is positive
+    else {
+      const highProtectionRate = pct(highRiskWithProtection, highRisks.length);
+      if (highProtectionRate >= 100) score += 4;
+      else if (highProtectionRate >= 75) score += 1;
+      else if (highProtectionRate < 50) score -= 4;
+    }
+  }
+
+  // Modifier 6: Resolution and escalation governance
+  if (total === 0) {
+    score -= 2;
+  } else {
+    const resolutionRate = pct(resolvedRisks.length, total);
+    const escalatedCount = risks.filter(r => r.status === "escalated").length;
+    if (resolutionRate >= 40 && escalatedCount === 0) score += 5;
+    else if (resolutionRate >= 20) score += 2;
+    else if (resolutionRate < 10 && total > 3) score -= 3;
+  }
+
+  score = clamp(score, 0, 100);
+
+  const safeguarding_rating = total === 0 && risks.length === 0
+    ? "insufficient_data"
+    : toRating(score);
+
+  // ── Strengths ──────────────────────────────────────────────────────────
+  const strengths: string[] = [];
+  if (protectiveActionRate >= 85 && total > 0)
+    strengths.push("Protective actions are in place for virtually all identified contextual risks — children are actively safeguarded");
+  if (multiAgencyRate >= 75 && total > 0)
+    strengths.push("Multi-agency responses are consistently engaged — safeguarding is a shared responsibility with partners");
+  if (reviewComplianceRate >= 80 && total > 0)
+    strengths.push("Risk reviews are current — the home maintains up-to-date awareness of contextual threats");
+  if (uniqueContextTypes >= 4 && total > 0)
+    strengths.push("Risks are identified across diverse contexts — the home takes a comprehensive view of children's external environments");
+  if (communityMappingRate >= 60 && total > 0)
+    strengths.push("Community mapping informs risk understanding — the home actively maps the landscape of contextual threats");
+  if (resolvedRisks.length > 0 && pct(resolvedRisks.length, total) >= 40)
+    strengths.push("Significant proportion of risks have been resolved — the home demonstrates effective risk reduction over time");
+
+  // ── Concerns ───────────────────────────────────────────────────────────
+  const concerns: string[] = [];
+  if (total === 0 && total_children > 0)
+    concerns.push("No contextual safeguarding risks identified — the home may not be assessing children's external vulnerability");
+  if (protectiveActionRate < 35 && total > 0)
+    concerns.push("Protective actions are absent for many identified risks — children may be exposed to unmitigated contextual threats");
+  if (multiAgencyRate < 20 && total > 0)
+    concerns.push("Multi-agency responses are rarely engaged — contextual risks require partnership working to manage effectively");
+  if (reviewComplianceRate < 25 && total > 0)
+    concerns.push("Risk reviews are overdue — the home may be working with outdated risk information");
+  if (highRisks.length > 0 && highRiskWithProtection < highRisks.length)
+    concerns.push("High-risk contextual threats exist without full protective action coverage — urgent mitigation is needed");
+  if (communityMappingRate < 20 && total > 0)
+    concerns.push("Community mapping is largely absent — the home lacks contextual intelligence about children's environments");
+
+  // ── Recommendations ────────────────────────────────────────────────────
+  const recommendations: ContextualSafeguardingResult["recommendations"] = [];
+  let rank = 0;
+
+  if (total === 0 && total_children > 0)
+    recommendations.push({ rank: ++rank, recommendation: "Conduct contextual safeguarding assessments covering all environments where children spend time", urgency: "immediate", regulatory_ref: "CHR 2015 Reg 12" });
+  if (protectiveActionRate < 60 && total > 0)
+    recommendations.push({ rank: ++rank, recommendation: "Implement protective actions for all identified contextual risks — prioritise high and very-high risk items", urgency: "immediate", regulatory_ref: "CHR 2015 Reg 34" });
+  if (multiAgencyRate < 45 && total > 0)
+    recommendations.push({ rank: ++rank, recommendation: "Engage multi-agency partners in contextual safeguarding — police, schools and community services should inform risk responses", urgency: "soon", regulatory_ref: "SCCIF Helped & Protected" });
+  if (reviewComplianceRate < 50 && total > 0)
+    recommendations.push({ rank: ++rank, recommendation: "Review all overdue contextual risk assessments and update protective actions accordingly", urgency: "soon", regulatory_ref: "CHR 2015 Reg 12" });
+  if (communityMappingRate < 40 && total > 0)
+    recommendations.push({ rank: ++rank, recommendation: "Develop community mapping for all risk contexts to build intelligence about environmental threats", urgency: "planned", regulatory_ref: "SCCIF Leaders" });
+  if (uniqueContextTypes < 3 && total > 0)
+    recommendations.push({ rank: ++rank, recommendation: "Broaden contextual assessment to cover online spaces, peer groups and transport routes alongside physical locations", urgency: "planned", regulatory_ref: "CHR 2015 Reg 34" });
+
+  // ── Insights ───────────────────────────────────────────────────────────
+  const insights: ContextualSafeguardingResult["insights"] = [];
+  if (total === 0 && total_children > 0)
+    insights.push({ text: "No contextual safeguarding data means Ofsted cannot verify the home assesses external risks to children", severity: "critical" });
+  if (total > 0 && protectiveActionRate >= 85 && multiAgencyRate >= 75)
+    insights.push({ text: "Strong protective actions combined with multi-agency engagement demonstrate robust contextual safeguarding practice", severity: "positive" });
+  if (highRisks.length > 3)
+    insights.push({ text: "Multiple high or very-high risk contexts require intensive monitoring and urgent protective action", severity: "warning" });
+  if (pct(withPoliceIntelligence, total) >= 50 && total > 0)
+    insights.push({ text: "Police intelligence informs contextual risk assessment — information-sharing with law enforcement is well-established", severity: "positive" });
+  if (uniqueContextTypes >= 4 && total > 0)
+    insights.push({ text: "Diverse context types show the home looks beyond physical location to assess peer, online and community risks", severity: "positive" });
+  if (risks.filter(r => r.status === "escalated").length > 2)
+    insights.push({ text: "Multiple escalated risks suggest contextual threats are intensifying — review strategic safeguarding response", severity: "warning" });
+
+  // ── Headline ───────────────────────────────────────────────────────────
+  let headline = "";
+  if (safeguarding_rating === "insufficient_data") {
+    headline = "No data available for contextual safeguarding intelligence analysis";
+  } else if (safeguarding_rating === "outstanding") {
+    headline = "Outstanding contextual safeguarding — risks are identified, assessed, mitigated and reviewed through multi-agency working";
+  } else if (safeguarding_rating === "good") {
+    headline = "Good contextual safeguarding with protective actions and multi-agency engagement";
+  } else if (safeguarding_rating === "adequate") {
+    headline = "Contextual risks are identified but protective actions, reviews or multi-agency working needs strengthening";
+  } else {
+    headline = "Inadequate contextual safeguarding — children's external vulnerability is not being systematically assessed or mitigated";
+  }
+
+  return {
+    safeguarding_rating,
+    safeguarding_score: score,
+    headline,
+    total_risks: total,
+    active_risk_count: activeRisks.length,
+    high_risk_count: highRisks.length,
+    context_diversity: uniqueContextTypes,
+    protective_action_rate: protectiveActionRate,
+    multi_agency_rate: multiAgencyRate,
+    community_mapping_rate: communityMappingRate,
+    review_compliance_rate: reviewComplianceRate,
+    strengths,
+    concerns,
+    recommendations,
+    insights,
+  };
+}

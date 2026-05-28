@@ -253,6 +253,12 @@ const HomeAttachmentProfileIntelligenceCard = dynamic(() => import("@/components
 const HomeSelfHarmSafetyPlanIntelligenceCard = dynamic(() => import("@/components/dashboard/home-self-harm-safety-plan-intelligence-card").then(m => m.HomeSelfHarmSafetyPlanIntelligenceCard ? { default: m.HomeSelfHarmSafetyPlanIntelligenceCard } : m), { ssr: false });
 const HomePostIncidentChildDebriefIntelligenceCard = dynamic(() => import("@/components/dashboard/home-post-incident-child-debrief-intelligence-card").then(m => m.HomePostIncidentChildDebriefIntelligenceCard ? { default: m.HomePostIncidentChildDebriefIntelligenceCard } : m), { ssr: false });
 
+// Batch 23 — Outcome Star, Behaviour Support Plan, Contextual Safeguarding, Risk Management Plan
+const HomeOutcomeStarAssessmentIntelligenceCard = dynamic(() => import("@/components/dashboard/home-outcome-star-assessment-intelligence-card").then(m => m.HomeOutcomeStarAssessmentIntelligenceCard ? { default: m.HomeOutcomeStarAssessmentIntelligenceCard } : m), { ssr: false });
+const HomeBehaviourSupportPlanIntelligenceCard = dynamic(() => import("@/components/dashboard/home-behaviour-support-plan-intelligence-card").then(m => m.HomeBehaviourSupportPlanIntelligenceCard ? { default: m.HomeBehaviourSupportPlanIntelligenceCard } : m), { ssr: false });
+const HomeContextualSafeguardingRiskIntelligenceCard = dynamic(() => import("@/components/dashboard/home-contextual-safeguarding-risk-intelligence-card").then(m => m.HomeContextualSafeguardingRiskIntelligenceCard ? { default: m.HomeContextualSafeguardingRiskIntelligenceCard } : m), { ssr: false });
+const HomeRiskManagementPlanIntelligenceCard = dynamic(() => import("@/components/dashboard/home-risk-management-plan-intelligence-card").then(m => m.HomeRiskManagementPlanIntelligenceCard ? { default: m.HomeRiskManagementPlanIntelligenceCard } : m), { ssr: false });
+
 // ─── Greeting ─────────────────────────────────────────────────────────────────
 
 function getGreeting(): string {
@@ -1533,6 +1539,10 @@ export default function DashboardPage() {
                     <HomeAttachmentProfileIntelligenceCard />
                     <HomeSelfHarmSafetyPlanIntelligenceCard />
                     <HomePostIncidentChildDebriefIntelligenceCard />
+                    <HomeOutcomeStarAssessmentIntelligenceCard />
+                    <HomeBehaviourSupportPlanIntelligenceCard />
+                    <HomeContextualSafeguardingRiskIntelligenceCard />
+                    <HomeRiskManagementPlanIntelligenceCard />
                     <IntelligenceBriefWidget />
                   </>
                 )}
