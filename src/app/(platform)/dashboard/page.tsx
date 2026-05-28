@@ -259,6 +259,12 @@ const HomeBehaviourSupportPlanIntelligenceCard = dynamic(() => import("@/compone
 const HomeContextualSafeguardingRiskIntelligenceCard = dynamic(() => import("@/components/dashboard/home-contextual-safeguarding-risk-intelligence-card").then(m => m.HomeContextualSafeguardingRiskIntelligenceCard ? { default: m.HomeContextualSafeguardingRiskIntelligenceCard } : m), { ssr: false });
 const HomeRiskManagementPlanIntelligenceCard = dynamic(() => import("@/components/dashboard/home-risk-management-plan-intelligence-card").then(m => m.HomeRiskManagementPlanIntelligenceCard ? { default: m.HomeRiskManagementPlanIntelligenceCard } : m), { ssr: false });
 
+// Batch 24 — Restraint/Physical Intervention, Missing Episodes, Sleep & Night Care, Medication Administration
+const HomeRestraintPhysicalInterventionIntelligenceCard = dynamic(() => import("@/components/dashboard/home-restraint-physical-intervention-intelligence-card").then(m => m.HomeRestraintPhysicalInterventionIntelligenceCard ? { default: m.HomeRestraintPhysicalInterventionIntelligenceCard } : m), { ssr: false });
+const HomeMissingEpisodeIntelligenceCard = dynamic(() => import("@/components/dashboard/home-missing-episode-intelligence-card").then(m => m.HomeMissingEpisodeIntelligenceCard ? { default: m.HomeMissingEpisodeIntelligenceCard } : m), { ssr: false });
+const HomeSleepNightCareIntelligenceCard = dynamic(() => import("@/components/dashboard/home-sleep-night-care-intelligence-card").then(m => m.HomeSleepNightCareIntelligenceCard ? { default: m.HomeSleepNightCareIntelligenceCard } : m), { ssr: false });
+const HomeMedicationAdministrationIntelligenceCard = dynamic(() => import("@/components/dashboard/home-medication-administration-intelligence-card").then(m => m.HomeMedicationAdministrationIntelligenceCard ? { default: m.HomeMedicationAdministrationIntelligenceCard } : m), { ssr: false });
+
 // ─── Greeting ─────────────────────────────────────────────────────────────────
 
 function getGreeting(): string {
@@ -1543,6 +1549,10 @@ export default function DashboardPage() {
                     <HomeBehaviourSupportPlanIntelligenceCard />
                     <HomeContextualSafeguardingRiskIntelligenceCard />
                     <HomeRiskManagementPlanIntelligenceCard />
+                    <HomeRestraintPhysicalInterventionIntelligenceCard />
+                    <HomeMissingEpisodeIntelligenceCard />
+                    <HomeSleepNightCareIntelligenceCard />
+                    <HomeMedicationAdministrationIntelligenceCard />
                     <IntelligenceBriefWidget />
                   </>
                 )}
