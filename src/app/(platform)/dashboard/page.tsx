@@ -421,6 +421,12 @@ const HomeCctvSurveillanceGovernanceIntelligenceCard = dynamic(() => import("@/c
 const HomePocketMoneyAuditReconciliationIntelligenceCard = dynamic(() => import("@/components/dashboard/home-pocket-money-audit-reconciliation-intelligence-card").then(m => m.HomePocketMoneyAuditReconciliationIntelligenceCard ? { default: m.HomePocketMoneyAuditReconciliationIntelligenceCard } : m), { ssr: false });
 const HomeImmunisationVaccinationComplianceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-immunisation-vaccination-compliance-intelligence-card").then(m => m.HomeImmunisationVaccinationComplianceIntelligenceCard ? { default: m.HomeImmunisationVaccinationComplianceIntelligenceCard } : m), { ssr: false });
 
+// ── Batch 51 ──
+const HomeFurnitureRoomPersonalisationIntelligenceCard = dynamic(() => import("@/components/dashboard/home-furniture-room-personalisation-intelligence-card").then(m => m.HomeFurnitureRoomPersonalisationIntelligenceCard ? { default: m.HomeFurnitureRoomPersonalisationIntelligenceCard } : m), { ssr: false });
+const HomeCookingKitchenSkillsIntelligenceCard = dynamic(() => import("@/components/dashboard/home-cooking-kitchen-skills-intelligence-card").then(m => m.HomeCookingKitchenSkillsIntelligenceCard ? { default: m.HomeCookingKitchenSkillsIntelligenceCard } : m), { ssr: false });
+const HomeBedwettingEnuresisSupportIntelligenceCard = dynamic(() => import("@/components/dashboard/home-bedwetting-enuresis-support-intelligence-card").then(m => m.HomeBedwettingEnuresisSupportIntelligenceCard ? { default: m.HomeBedwettingEnuresisSupportIntelligenceCard } : m), { ssr: false });
+const HomeStaffLoneWorkingSafetyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-staff-lone-working-safety-intelligence-card").then(m => m.HomeStaffLoneWorkingSafetyIntelligenceCard ? { default: m.HomeStaffLoneWorkingSafetyIntelligenceCard } : m), { ssr: false });
+
 // ─── Greeting ─────────────────────────────────────────────────────────────────
 
 function getGreeting(): string {
@@ -1813,6 +1819,10 @@ export default function DashboardPage() {
                     <HomeCctvSurveillanceGovernanceIntelligenceCard />
                     <HomePocketMoneyAuditReconciliationIntelligenceCard />
                     <HomeImmunisationVaccinationComplianceIntelligenceCard />
+                    <HomeFurnitureRoomPersonalisationIntelligenceCard />
+                    <HomeCookingKitchenSkillsIntelligenceCard />
+                    <HomeBedwettingEnuresisSupportIntelligenceCard />
+                    <HomeStaffLoneWorkingSafetyIntelligenceCard />
                     <IntelligenceBriefWidget />
                   </>
                 )}

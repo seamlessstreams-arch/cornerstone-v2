@@ -1,0 +1,1503 @@
+// ══════════════════════════════════════════════════════════════════════════════
+// CORNERSTONE — HOME FURNITURE & ROOM PERSONALISATION INTELLIGENCE ENGINE
+// Monitors bedroom and room personalisation quality — furniture adequacy,
+// child choice in decor, personalisation completion, comfort assessment,
+// and dignity of personal space. Ensures every child has a bedroom they
+// can call their own, furnished to a standard that respects their identity,
+// choices, and comfort needs.
+// Measures furniture adequacy, personalisation rate, child choice rate,
+// comfort rate, dignity rate, and child satisfaction rate.
+// Pure deterministic engine — no imports, no LLM, no external deps.
+// CHR 2015 Reg 25 (Premises), Reg 5 (Statement of purpose), Reg 7
+// (Protection of children from harm). SCCIF experiences and progress.
+// Store keys: furnitureAdequacyRecords, roomPersonalisationRecords,
+//             childChoiceRecords, comfortAssessmentRecords,
+//             dignitySpaceRecords
+// HOME-LEVEL engine.
+// ══════════════════════════════════════════════════════════════════════════════
+
+// ── Input Types ─────────────────────────────────────────────────────────────
+
+export interface FurnitureAdequacyInput {
+  id: string;
+  child_id: string;
+  room_id: string;
+  assessment_date: string;
+  assessor_name: string;
+  bed_adequate: boolean;
+  wardrobe_adequate: boolean;
+  desk_adequate: boolean;
+  shelving_adequate: boolean;
+  seating_adequate: boolean;
+  storage_adequate: boolean;
+  lighting_adequate: boolean;
+  curtains_blinds_adequate: boolean;
+  floor_covering_adequate: boolean;
+  furniture_condition: "excellent" | "good" | "fair" | "poor";
+  age_appropriate: boolean;
+  size_appropriate: boolean;
+  replacement_needed: boolean;
+  replacement_actioned: boolean;
+  child_consulted: boolean;
+  last_inspection_date: string | null;
+  inspection_overdue: boolean;
+  created_at: string;
+}
+
+export interface RoomPersonalisationInput {
+  id: string;
+  child_id: string;
+  room_id: string;
+  assessment_date: string;
+  has_personal_photos: boolean;
+  has_chosen_bedding: boolean;
+  has_chosen_wall_decor: boolean;
+  has_personal_belongings_displayed: boolean;
+  has_chosen_colour_scheme: boolean;
+  has_name_on_door: boolean;
+  has_lockable_storage: boolean;
+  has_notice_board: boolean;
+  personalisation_items_count: number;
+  personalisation_budget_provided: boolean;
+  budget_amount_approved: number;
+  budget_amount_spent: number;
+  room_reflects_identity: boolean;
+  child_satisfied_with_room: boolean;
+  review_date: string | null;
+  review_overdue: boolean;
+  created_at: string;
+}
+
+export interface ChildChoiceInput {
+  id: string;
+  child_id: string;
+  choice_type: "furniture" | "decor" | "colour" | "bedding" | "layout" | "lighting" | "accessories" | "storage";
+  description: string;
+  date_requested: string;
+  date_fulfilled: string | null;
+  fulfilled: boolean;
+  child_involved_in_selection: boolean;
+  child_satisfied_with_outcome: boolean;
+  cost_approved: boolean;
+  reason_not_fulfilled: string | null;
+  staff_supported: boolean;
+  created_at: string;
+}
+
+export interface ComfortAssessmentInput {
+  id: string;
+  child_id: string;
+  room_id: string;
+  assessment_date: string;
+  temperature_comfortable: boolean;
+  noise_level_acceptable: boolean;
+  privacy_adequate: boolean;
+  natural_light_adequate: boolean;
+  ventilation_adequate: boolean;
+  mattress_comfortable: boolean;
+  room_clean: boolean;
+  room_tidy: boolean;
+  feels_safe_in_room: boolean;
+  overall_comfort_rating: number; // 1-5
+  child_reported: boolean;
+  issues_identified: number;
+  issues_resolved: number;
+  created_at: string;
+}
+
+export interface DignitySpaceInput {
+  id: string;
+  child_id: string;
+  room_id: string;
+  assessment_date: string;
+  has_working_lock: boolean;
+  knock_before_entry_observed: boolean;
+  personal_space_respected: boolean;
+  belongings_not_searched_without_consent: boolean;
+  room_not_used_as_punishment: boolean;
+  can_spend_time_alone: boolean;
+  has_adequate_privacy: boolean;
+  dignity_maintained_during_checks: boolean;
+  child_feels_room_is_theirs: boolean;
+  staff_awareness_of_dignity: boolean;
+  dignity_concern_raised: boolean;
+  dignity_concern_resolved: boolean;
+  created_at: string;
+}
+
+export interface FurnitureRoomInput {
+  today: string;
+  total_children: number;
+  furniture_adequacy_records: FurnitureAdequacyInput[];
+  room_personalisation_records: RoomPersonalisationInput[];
+  child_choice_records: ChildChoiceInput[];
+  comfort_assessment_records: ComfortAssessmentInput[];
+  dignity_space_records: DignitySpaceInput[];
+}
+
+// ── Output Types ────────────────────────────────────────────────────────────
+
+export type FurnitureRoomRating =
+  | "outstanding"
+  | "good"
+  | "adequate"
+  | "inadequate"
+  | "insufficient_data";
+
+export interface FurnitureRoomInsight {
+  text: string;
+  severity: "critical" | "warning" | "positive";
+}
+
+export interface FurnitureRoomRecommendation {
+  rank: number;
+  recommendation: string;
+  urgency: "immediate" | "soon" | "planned";
+  regulatory_ref: string;
+}
+
+export interface FurnitureRoomResult {
+  room_rating: FurnitureRoomRating;
+  room_score: number;
+  headline: string;
+  total_furniture_assessments: number;
+  total_personalisation_assessments: number;
+  total_choice_records: number;
+  total_comfort_assessments: number;
+  total_dignity_assessments: number;
+  furniture_adequacy_rate: number;
+  personalisation_rate: number;
+  child_choice_rate: number;
+  comfort_rate: number;
+  dignity_rate: number;
+  child_satisfaction_rate: number;
+  furniture_condition_avg: number;
+  comfort_rating_avg: number;
+  personalisation_budget_utilisation_rate: number;
+  choice_fulfilment_rate: number;
+  strengths: string[];
+  concerns: string[];
+  recommendations: FurnitureRoomRecommendation[];
+  insights: FurnitureRoomInsight[];
+}
+
+// ── Helpers ─────────────────────────────────────────────────────────────────
+
+function pct(n: number, d: number): number {
+  return d === 0 ? 0 : Math.round((n / d) * 100);
+}
+
+function clamp(v: number, lo: number, hi: number): number {
+  return Math.max(lo, Math.min(hi, v));
+}
+
+function toRating(score: number): FurnitureRoomRating {
+  if (score >= 80) return "outstanding";
+  if (score >= 65) return "good";
+  if (score >= 45) return "adequate";
+  return "inadequate";
+}
+
+// ── Empty Result Factory ────────────────────────────────────────────────────
+
+function emptyResult(
+  rating: FurnitureRoomRating,
+  score: number,
+  headline: string,
+): FurnitureRoomResult {
+  return {
+    room_rating: rating,
+    room_score: score,
+    headline,
+    total_furniture_assessments: 0,
+    total_personalisation_assessments: 0,
+    total_choice_records: 0,
+    total_comfort_assessments: 0,
+    total_dignity_assessments: 0,
+    furniture_adequacy_rate: 0,
+    personalisation_rate: 0,
+    child_choice_rate: 0,
+    comfort_rate: 0,
+    dignity_rate: 0,
+    child_satisfaction_rate: 0,
+    furniture_condition_avg: 0,
+    comfort_rating_avg: 0,
+    personalisation_budget_utilisation_rate: 0,
+    choice_fulfilment_rate: 0,
+    strengths: [],
+    concerns: [],
+    recommendations: [],
+    insights: [],
+  };
+}
+
+// ── Main Compute ────────────────────────────────────────────────────────────
+
+export function computeFurnitureRoomPersonalisation(
+  input: FurnitureRoomInput,
+): FurnitureRoomResult {
+  const {
+    total_children,
+    furniture_adequacy_records,
+    room_personalisation_records,
+    child_choice_records,
+    comfort_assessment_records,
+    dignity_space_records,
+  } = input;
+
+  // ── Special case: all empty + 0 children -> insufficient_data ──────────
+  const allEmpty =
+    furniture_adequacy_records.length === 0 &&
+    room_personalisation_records.length === 0 &&
+    child_choice_records.length === 0 &&
+    comfort_assessment_records.length === 0 &&
+    dignity_space_records.length === 0;
+
+  if (allEmpty && total_children === 0) {
+    return emptyResult(
+      "insufficient_data",
+      0,
+      "No children on placement — insufficient data to assess furniture and room personalisation quality.",
+    );
+  }
+
+  // ── Special case: all empty + children > 0 -> inadequate ───────────────
+  if (allEmpty && total_children > 0) {
+    return {
+      ...emptyResult(
+        "inadequate",
+        15,
+        "No furniture adequacy, room personalisation, child choice, comfort, or dignity data recorded despite children on placement — bedroom quality and personalisation require urgent attention.",
+      ),
+      concerns: [
+        "No furniture adequacy assessments, room personalisation records, child choice logs, comfort assessments, or dignity assessments exist despite children being on placement — the home cannot evidence that children's bedrooms meet basic standards or reflect their individuality.",
+      ],
+      recommendations: [
+        {
+          rank: 1,
+          recommendation:
+            "Implement structured furniture adequacy assessments for every child's bedroom to evidence that furnishings meet the standard required under Reg 25 and are appropriate for each child's age and needs.",
+          urgency: "immediate",
+          regulatory_ref: "CHR 2015 Reg 25 — Premises",
+        },
+        {
+          rank: 2,
+          recommendation:
+            "Establish a room personalisation programme giving every child choice and agency over how their bedroom looks, feels, and reflects their identity — this is fundamental to children experiencing dignity, belonging, and a sense of home.",
+          urgency: "immediate",
+          regulatory_ref: "CHR 2015 Reg 5 — Statement of purpose; SCCIF experiences and progress",
+        },
+      ],
+      insights: [
+        {
+          text: "The complete absence of furniture and room personalisation records means the home cannot demonstrate that children's bedrooms are adequate, comfortable, personalised, or dignified. Ofsted expects bedrooms to be more than functional — they should reflect children's choices, identity, and sense of belonging. The absence of any records in these areas represents a fundamental gap in evidencing quality of care.",
+          severity: "critical",
+        },
+      ],
+    };
+  }
+
+  // ── Compute core metrics ──────────────────────────────────────────────
+
+  // --- Furniture adequacy ---
+  const totalFurnitureAssessments = furniture_adequacy_records.length;
+  const uniqueChildrenWithFurnitureAssessment = new Set(
+    furniture_adequacy_records.map((f) => f.child_id),
+  ).size;
+  const furnitureCoverageRate =
+    total_children > 0 ? pct(uniqueChildrenWithFurnitureAssessment, total_children) : 0;
+
+  // Count items adequate across all assessments
+  const furnitureItemChecks = furniture_adequacy_records.map((f) => {
+    const items = [
+      f.bed_adequate,
+      f.wardrobe_adequate,
+      f.desk_adequate,
+      f.shelving_adequate,
+      f.seating_adequate,
+      f.storage_adequate,
+      f.lighting_adequate,
+      f.curtains_blinds_adequate,
+      f.floor_covering_adequate,
+    ];
+    const adequate = items.filter(Boolean).length;
+    return { adequate, total: items.length };
+  });
+  const totalFurnitureItems = furnitureItemChecks.reduce((s, c) => s + c.total, 0);
+  const totalFurnitureAdequate = furnitureItemChecks.reduce((s, c) => s + c.adequate, 0);
+  const furnitureAdequacyRate = pct(totalFurnitureAdequate, totalFurnitureItems);
+
+  const ageAppropriateCount = furniture_adequacy_records.filter(
+    (f) => f.age_appropriate,
+  ).length;
+  const ageAppropriateRate = pct(ageAppropriateCount, totalFurnitureAssessments);
+
+  const sizeAppropriateCount = furniture_adequacy_records.filter(
+    (f) => f.size_appropriate,
+  ).length;
+  const sizeAppropriateRate = pct(sizeAppropriateCount, totalFurnitureAssessments);
+
+  const conditionScoreMap: Record<string, number> = {
+    excellent: 4,
+    good: 3,
+    fair: 2,
+    poor: 1,
+  };
+  const furnitureConditionSum = furniture_adequacy_records.reduce(
+    (sum, f) => sum + (conditionScoreMap[f.furniture_condition] ?? 2),
+    0,
+  );
+  const furnitureConditionAvg =
+    totalFurnitureAssessments > 0
+      ? Math.round((furnitureConditionSum / totalFurnitureAssessments) * 100) / 100
+      : 0;
+
+  const replacementNeeded = furniture_adequacy_records.filter(
+    (f) => f.replacement_needed,
+  ).length;
+  const replacementActioned = furniture_adequacy_records.filter(
+    (f) => f.replacement_needed && f.replacement_actioned,
+  ).length;
+  const replacementActionRate = pct(replacementActioned, replacementNeeded);
+
+  const furnitureChildConsulted = furniture_adequacy_records.filter(
+    (f) => f.child_consulted,
+  ).length;
+  const furnitureConsultationRate = pct(furnitureChildConsulted, totalFurnitureAssessments);
+
+  const inspectionOverdue = furniture_adequacy_records.filter(
+    (f) => f.inspection_overdue,
+  ).length;
+
+  const poorConditionRooms = furniture_adequacy_records.filter(
+    (f) => f.furniture_condition === "poor",
+  ).length;
+
+  // --- Room personalisation ---
+  const totalPersonalisationAssessments = room_personalisation_records.length;
+  const uniqueChildrenWithPersonalisation = new Set(
+    room_personalisation_records.map((r) => r.child_id),
+  ).size;
+  const personalisationCoverageRate =
+    total_children > 0 ? pct(uniqueChildrenWithPersonalisation, total_children) : 0;
+
+  const personalisationItemChecks = room_personalisation_records.map((r) => {
+    const items = [
+      r.has_personal_photos,
+      r.has_chosen_bedding,
+      r.has_chosen_wall_decor,
+      r.has_personal_belongings_displayed,
+      r.has_chosen_colour_scheme,
+      r.has_name_on_door,
+      r.has_lockable_storage,
+      r.has_notice_board,
+    ];
+    const done = items.filter(Boolean).length;
+    return { done, total: items.length };
+  });
+  const totalPersonalisationItems = personalisationItemChecks.reduce(
+    (s, c) => s + c.total,
+    0,
+  );
+  const totalPersonalisationDone = personalisationItemChecks.reduce(
+    (s, c) => s + c.done,
+    0,
+  );
+  const personalisationRate = pct(totalPersonalisationDone, totalPersonalisationItems);
+
+  const roomReflectsIdentityCount = room_personalisation_records.filter(
+    (r) => r.room_reflects_identity,
+  ).length;
+  const identityReflectionRate = pct(roomReflectsIdentityCount, totalPersonalisationAssessments);
+
+  const childSatisfiedWithRoomCount = room_personalisation_records.filter(
+    (r) => r.child_satisfied_with_room,
+  ).length;
+  const roomSatisfactionRate = pct(childSatisfiedWithRoomCount, totalPersonalisationAssessments);
+
+  const budgetProvidedCount = room_personalisation_records.filter(
+    (r) => r.personalisation_budget_provided,
+  ).length;
+  const budgetProvisionRate = pct(budgetProvidedCount, totalPersonalisationAssessments);
+
+  const totalBudgetApproved = room_personalisation_records.reduce(
+    (s, r) => s + (r.budget_amount_approved ?? 0),
+    0,
+  );
+  const totalBudgetSpent = room_personalisation_records.reduce(
+    (s, r) => s + (r.budget_amount_spent ?? 0),
+    0,
+  );
+  const budgetUtilisationRate = pct(totalBudgetSpent, totalBudgetApproved);
+
+  const lockableStorageCount = room_personalisation_records.filter(
+    (r) => r.has_lockable_storage,
+  ).length;
+  const lockableStorageRate = pct(lockableStorageCount, totalPersonalisationAssessments);
+
+  const personalisationReviewOverdue = room_personalisation_records.filter(
+    (r) => r.review_overdue,
+  ).length;
+
+  // --- Child choice ---
+  const totalChoiceRecords = child_choice_records.length;
+  const uniqueChildrenWithChoices = new Set(
+    child_choice_records.map((c) => c.child_id),
+  ).size;
+  const choiceCoverageRate =
+    total_children > 0 ? pct(uniqueChildrenWithChoices, total_children) : 0;
+
+  const fulfilledChoices = child_choice_records.filter((c) => c.fulfilled).length;
+  const choiceFulfilmentRate = pct(fulfilledChoices, totalChoiceRecords);
+
+  const childInvolvedInSelection = child_choice_records.filter(
+    (c) => c.child_involved_in_selection,
+  ).length;
+  const childInvolvementRate = pct(childInvolvedInSelection, totalChoiceRecords);
+
+  const childSatisfiedWithChoice = child_choice_records.filter(
+    (c) => c.fulfilled && c.child_satisfied_with_outcome,
+  ).length;
+  const choiceSatisfactionRate = pct(childSatisfiedWithChoice, fulfilledChoices);
+
+  const staffSupportedChoices = child_choice_records.filter(
+    (c) => c.staff_supported,
+  ).length;
+  const staffSupportRate = pct(staffSupportedChoices, totalChoiceRecords);
+
+  // Child choice rate = children who have made at least one fulfilled choice
+  const childrenWithFulfilledChoice = new Set(
+    child_choice_records.filter((c) => c.fulfilled).map((c) => c.child_id),
+  ).size;
+  const childChoiceRate =
+    total_children > 0 ? pct(childrenWithFulfilledChoice, total_children) : 0;
+
+  // Choice type distribution
+  const choiceTypeCounts: Record<string, number> = {};
+  for (const c of child_choice_records) {
+    choiceTypeCounts[c.choice_type] = (choiceTypeCounts[c.choice_type] ?? 0) + 1;
+  }
+
+  // --- Comfort assessment ---
+  const totalComfortAssessments = comfort_assessment_records.length;
+  const uniqueChildrenWithComfort = new Set(
+    comfort_assessment_records.map((c) => c.child_id),
+  ).size;
+  const comfortCoverageRate =
+    total_children > 0 ? pct(uniqueChildrenWithComfort, total_children) : 0;
+
+  const comfortItemChecks = comfort_assessment_records.map((c) => {
+    const items = [
+      c.temperature_comfortable,
+      c.noise_level_acceptable,
+      c.privacy_adequate,
+      c.natural_light_adequate,
+      c.ventilation_adequate,
+      c.mattress_comfortable,
+      c.room_clean,
+      c.room_tidy,
+      c.feels_safe_in_room,
+    ];
+    const ok = items.filter(Boolean).length;
+    return { ok, total: items.length };
+  });
+  const totalComfortItems = comfortItemChecks.reduce((s, c) => s + c.total, 0);
+  const totalComfortOk = comfortItemChecks.reduce((s, c) => s + c.ok, 0);
+  const comfortRate = pct(totalComfortOk, totalComfortItems);
+
+  const comfortRatingSum = comfort_assessment_records.reduce(
+    (sum, c) => sum + c.overall_comfort_rating,
+    0,
+  );
+  const comfortRatingAvg =
+    totalComfortAssessments > 0
+      ? Math.round((comfortRatingSum / totalComfortAssessments) * 100) / 100
+      : 0;
+
+  const childReportedComfort = comfort_assessment_records.filter(
+    (c) => c.child_reported,
+  ).length;
+  const childReportedComfortRate = pct(childReportedComfort, totalComfortAssessments);
+
+  const feelsSafeCount = comfort_assessment_records.filter(
+    (c) => c.feels_safe_in_room,
+  ).length;
+  const feelsSafeRate = pct(feelsSafeCount, totalComfortAssessments);
+
+  const privacyAdequateCount = comfort_assessment_records.filter(
+    (c) => c.privacy_adequate,
+  ).length;
+  const privacyRate = pct(privacyAdequateCount, totalComfortAssessments);
+
+  const totalComfortIssues = comfort_assessment_records.reduce(
+    (s, c) => s + c.issues_identified,
+    0,
+  );
+  const totalComfortIssuesResolved = comfort_assessment_records.reduce(
+    (s, c) => s + c.issues_resolved,
+    0,
+  );
+  const comfortIssueResolutionRate = pct(totalComfortIssuesResolved, totalComfortIssues);
+
+  const mattressComfortableCount = comfort_assessment_records.filter(
+    (c) => c.mattress_comfortable,
+  ).length;
+  const mattressRate = pct(mattressComfortableCount, totalComfortAssessments);
+
+  // --- Dignity of personal space ---
+  const totalDignityAssessments = dignity_space_records.length;
+  const uniqueChildrenWithDignity = new Set(
+    dignity_space_records.map((d) => d.child_id),
+  ).size;
+  const dignityCoverageRate =
+    total_children > 0 ? pct(uniqueChildrenWithDignity, total_children) : 0;
+
+  const dignityItemChecks = dignity_space_records.map((d) => {
+    const items = [
+      d.has_working_lock,
+      d.knock_before_entry_observed,
+      d.personal_space_respected,
+      d.belongings_not_searched_without_consent,
+      d.room_not_used_as_punishment,
+      d.can_spend_time_alone,
+      d.has_adequate_privacy,
+      d.dignity_maintained_during_checks,
+      d.child_feels_room_is_theirs,
+      d.staff_awareness_of_dignity,
+    ];
+    const met = items.filter(Boolean).length;
+    return { met, total: items.length };
+  });
+  const totalDignityItems = dignityItemChecks.reduce((s, c) => s + c.total, 0);
+  const totalDignityMet = dignityItemChecks.reduce((s, c) => s + c.met, 0);
+  const dignityRate = pct(totalDignityMet, totalDignityItems);
+
+  const workingLockCount = dignity_space_records.filter(
+    (d) => d.has_working_lock,
+  ).length;
+  const workingLockRate = pct(workingLockCount, totalDignityAssessments);
+
+  const knockBeforeEntryCount = dignity_space_records.filter(
+    (d) => d.knock_before_entry_observed,
+  ).length;
+  const knockBeforeEntryRate = pct(knockBeforeEntryCount, totalDignityAssessments);
+
+  const childFeelsRoomIsTheirsCount = dignity_space_records.filter(
+    (d) => d.child_feels_room_is_theirs,
+  ).length;
+  const ownershipFeelingRate = pct(childFeelsRoomIsTheirsCount, totalDignityAssessments);
+
+  const roomNotPunishmentCount = dignity_space_records.filter(
+    (d) => d.room_not_used_as_punishment,
+  ).length;
+  const notUsedAsPunishmentRate = pct(roomNotPunishmentCount, totalDignityAssessments);
+
+  const dignityConterns = dignity_space_records.filter(
+    (d) => d.dignity_concern_raised,
+  ).length;
+  const dignityResolved = dignity_space_records.filter(
+    (d) => d.dignity_concern_raised && d.dignity_concern_resolved,
+  ).length;
+  const dignityConcernResolutionRate = pct(dignityResolved, dignityConterns);
+
+  const spaceRespectedCount = dignity_space_records.filter(
+    (d) => d.personal_space_respected,
+  ).length;
+  const spaceRespectedRate = pct(spaceRespectedCount, totalDignityAssessments);
+
+  const canSpendTimeAloneCount = dignity_space_records.filter(
+    (d) => d.can_spend_time_alone,
+  ).length;
+  const canSpendTimeAloneRate = pct(canSpendTimeAloneCount, totalDignityAssessments);
+
+  // --- Child satisfaction rate (composite across personalisation, choice, comfort) ---
+  const satisfactionOpportunities =
+    totalPersonalisationAssessments + fulfilledChoices + totalComfortAssessments;
+  const satisfactionPositive =
+    childSatisfiedWithRoomCount + childSatisfiedWithChoice + childReportedComfort;
+  const childSatisfactionRate = pct(satisfactionPositive, satisfactionOpportunities);
+
+  // ── Scoring: base 52, max bonuses +28, 4 penalties ────────────────────
+
+  let score = 52;
+
+  // --- Bonus 1: furnitureAdequacyRate (>=95: +5, >=80: +3) ---
+  if (furnitureAdequacyRate >= 95) score += 5;
+  else if (furnitureAdequacyRate >= 80) score += 3;
+
+  // --- Bonus 2: personalisationRate (>=90: +5, >=70: +3) ---
+  if (personalisationRate >= 90) score += 5;
+  else if (personalisationRate >= 70) score += 3;
+
+  // --- Bonus 3: childChoiceRate (>=90: +4, >=70: +2) ---
+  if (childChoiceRate >= 90) score += 4;
+  else if (childChoiceRate >= 70) score += 2;
+
+  // --- Bonus 4: comfortRate (>=95: +4, >=80: +2) ---
+  if (comfortRate >= 95) score += 4;
+  else if (comfortRate >= 80) score += 2;
+
+  // --- Bonus 5: dignityRate (>=95: +5, >=80: +3) ---
+  if (dignityRate >= 95) score += 5;
+  else if (dignityRate >= 80) score += 3;
+
+  // --- Bonus 6: childSatisfactionRate (>=90: +3, >=70: +1) ---
+  if (childSatisfactionRate >= 90) score += 3;
+  else if (childSatisfactionRate >= 70) score += 1;
+
+  // --- Bonus 7: furnitureConditionAvg (>=3.5: +2, >=2.5: +1) ---
+  if (furnitureConditionAvg >= 3.5) score += 2;
+  else if (furnitureConditionAvg >= 2.5) score += 1;
+
+  // ── Penalties (guarded by array.length > 0) ───────────────────────────
+
+  // Penalty 1: furnitureAdequacyRate < 50
+  if (furnitureAdequacyRate < 50 && furniture_adequacy_records.length > 0) score -= 6;
+
+  // Penalty 2: personalisationRate < 40
+  if (personalisationRate < 40 && room_personalisation_records.length > 0) score -= 5;
+
+  // Penalty 3: dignityRate < 50
+  if (dignityRate < 50 && dignity_space_records.length > 0) score -= 6;
+
+  // Penalty 4: comfortRate < 50
+  if (comfortRate < 50 && comfort_assessment_records.length > 0) score -= 5;
+
+  score = clamp(score, 0, 100);
+
+  const room_rating = toRating(score);
+
+  // ── Strengths ─────────────────────────────────────────────────────────
+
+  const strengths: string[] = [];
+
+  if (furnitureAdequacyRate >= 95 && totalFurnitureAssessments > 0) {
+    strengths.push(
+      `${furnitureAdequacyRate}% of furniture items meet adequacy standards — children's bedrooms are comprehensively furnished to a high standard, ensuring comfort and functionality.`,
+    );
+  } else if (furnitureAdequacyRate >= 80 && totalFurnitureAssessments > 0) {
+    strengths.push(
+      `${furnitureAdequacyRate}% furniture adequacy — the majority of bedroom furnishings meet the required standard across all assessed items.`,
+    );
+  }
+
+  if (personalisationRate >= 90 && totalPersonalisationAssessments > 0) {
+    strengths.push(
+      `${personalisationRate}% room personalisation completion — children's bedrooms strongly reflect their individual identity, preferences, and sense of belonging.`,
+    );
+  } else if (personalisationRate >= 70 && totalPersonalisationAssessments > 0) {
+    strengths.push(
+      `${personalisationRate}% personalisation completion — good levels of personal touches, chosen decor, and identity expression in children's bedrooms.`,
+    );
+  }
+
+  if (childChoiceRate >= 90 && total_children > 0) {
+    strengths.push(
+      `${childChoiceRate}% of children have exercised meaningful choice over their room — the home actively empowers children to shape their personal space.`,
+    );
+  } else if (childChoiceRate >= 70 && total_children > 0) {
+    strengths.push(
+      `${childChoiceRate}% of children have had room choices fulfilled — the home generally supports children's agency over their bedroom environment.`,
+    );
+  }
+
+  if (comfortRate >= 95 && totalComfortAssessments > 0) {
+    strengths.push(
+      `${comfortRate}% comfort assessment compliance — bedrooms consistently meet comfort standards including temperature, noise, privacy, lighting, and cleanliness.`,
+    );
+  } else if (comfortRate >= 80 && totalComfortAssessments > 0) {
+    strengths.push(
+      `${comfortRate}% comfort compliance — the majority of comfort factors in children's bedrooms meet the expected standard.`,
+    );
+  }
+
+  if (dignityRate >= 95 && totalDignityAssessments > 0) {
+    strengths.push(
+      `${dignityRate}% dignity standards met — children's personal space, privacy, and dignity are consistently respected to an exemplary standard.`,
+    );
+  } else if (dignityRate >= 80 && totalDignityAssessments > 0) {
+    strengths.push(
+      `${dignityRate}% dignity compliance — the home demonstrates strong practice in respecting children's personal space and privacy.`,
+    );
+  }
+
+  if (childSatisfactionRate >= 90 && satisfactionOpportunities > 0) {
+    strengths.push(
+      `${childSatisfactionRate}% child satisfaction with their rooms — children overwhelmingly report being happy with their bedrooms, indicating personalisation efforts genuinely resonate with them.`,
+    );
+  } else if (childSatisfactionRate >= 70 && satisfactionOpportunities > 0) {
+    strengths.push(
+      `${childSatisfactionRate}% child satisfaction — the majority of children report positive feelings about their rooms and personalisation choices.`,
+    );
+  }
+
+  if (furnitureConditionAvg >= 3.5 && totalFurnitureAssessments > 0) {
+    strengths.push(
+      `Average furniture condition rating of ${furnitureConditionAvg}/4 — furnishings are maintained in good to excellent condition throughout the home.`,
+    );
+  } else if (furnitureConditionAvg >= 2.5 && totalFurnitureAssessments > 0) {
+    strengths.push(
+      `Average furniture condition rating of ${furnitureConditionAvg}/4 — furnishings are generally maintained to a reasonable standard.`,
+    );
+  }
+
+  if (choiceFulfilmentRate >= 90 && totalChoiceRecords > 0) {
+    strengths.push(
+      `${choiceFulfilmentRate}% of children's room choices have been fulfilled — the home demonstrates excellent responsiveness to children's preferences and requests.`,
+    );
+  } else if (choiceFulfilmentRate >= 70 && totalChoiceRecords > 0) {
+    strengths.push(
+      `${choiceFulfilmentRate}% choice fulfilment rate — the home generally delivers on children's personalisation requests.`,
+    );
+  }
+
+  if (knockBeforeEntryRate >= 95 && totalDignityAssessments > 0) {
+    strengths.push(
+      "Staff consistently knock before entering children's rooms — a fundamental dignity practice embedded in the home's culture.",
+    );
+  }
+
+  if (workingLockRate >= 100 && totalDignityAssessments > 0) {
+    strengths.push(
+      "Every child's room has a working lock — children can secure their personal space, reinforcing ownership and security.",
+    );
+  }
+
+  if (feelsSafeRate >= 95 && totalComfortAssessments > 0) {
+    strengths.push(
+      `${feelsSafeRate}% of children feel safe in their room — bedrooms function as genuine safe spaces.`,
+    );
+  }
+
+  if (ownershipFeelingRate >= 90 && totalDignityAssessments > 0) {
+    strengths.push(
+      `${ownershipFeelingRate}% of children feel their room is truly theirs — the home succeeds in creating personal spaces where children belong.`,
+    );
+  }
+
+  if (replacementActionRate >= 100 && replacementNeeded > 0) {
+    strengths.push(
+      "All identified furniture replacements have been actioned — the home responds promptly when furnishings fall below standard.",
+    );
+  }
+
+  if (identityReflectionRate >= 90 && totalPersonalisationAssessments > 0) {
+    strengths.push(
+      `${identityReflectionRate}% of rooms assessed as reflecting the child's identity — bedrooms serve as meaningful expressions of who each child is.`,
+    );
+  }
+
+  if (notUsedAsPunishmentRate >= 100 && totalDignityAssessments > 0) {
+    strengths.push(
+      "No evidence of rooms being used as punishment — the home maintains a clear boundary between personal space and behavioural management.",
+    );
+  }
+
+  // ── Concerns ──────────────────────────────────────────────────────────
+
+  const concerns: string[] = [];
+
+  if (furnitureAdequacyRate < 50 && totalFurnitureAssessments > 0) {
+    concerns.push(
+      `Only ${furnitureAdequacyRate}% of furniture items meet adequacy standards — the majority of children's bedroom furnishings do not meet the basic standard required, undermining children's comfort and the home's compliance with Reg 25.`,
+    );
+  } else if (furnitureAdequacyRate < 80 && furnitureAdequacyRate >= 50 && totalFurnitureAssessments > 0) {
+    concerns.push(
+      `Furniture adequacy at ${furnitureAdequacyRate}% — some bedroom furnishings do not meet the required standard, meaning some children's rooms may lack essential items or have items in poor condition.`,
+    );
+  }
+
+  if (personalisationRate < 40 && totalPersonalisationAssessments > 0) {
+    concerns.push(
+      `Only ${personalisationRate}% personalisation completion — the majority of children's rooms lack personal touches, chosen decor, and expressions of identity, suggesting children have not been enabled to make their room their own.`,
+    );
+  } else if (personalisationRate < 70 && personalisationRate >= 40 && totalPersonalisationAssessments > 0) {
+    concerns.push(
+      `Personalisation at ${personalisationRate}% — many children's rooms still lack key personalisation elements such as chosen bedding, wall decor, or personal photos.`,
+    );
+  }
+
+  if (childChoiceRate < 50 && total_children > 0 && totalChoiceRecords > 0) {
+    concerns.push(
+      `Only ${childChoiceRate}% of children have had room choices fulfilled — the majority of children have not been given meaningful agency over their bedroom environment.`,
+    );
+  } else if (childChoiceRate < 70 && childChoiceRate >= 50 && total_children > 0 && totalChoiceRecords > 0) {
+    concerns.push(
+      `Child choice rate at ${childChoiceRate}% — not all children have had the opportunity to make and see fulfilled choices about their room.`,
+    );
+  }
+
+  if (comfortRate < 50 && totalComfortAssessments > 0) {
+    concerns.push(
+      `Only ${comfortRate}% comfort compliance — the majority of comfort factors in children's bedrooms do not meet the expected standard, indicating systemic issues with bedroom environment quality.`,
+    );
+  } else if (comfortRate < 80 && comfortRate >= 50 && totalComfortAssessments > 0) {
+    concerns.push(
+      `Comfort rate at ${comfortRate}% — some comfort factors such as temperature, noise, privacy, or cleanliness are not consistently meeting standard across all children's bedrooms.`,
+    );
+  }
+
+  if (dignityRate < 50 && totalDignityAssessments > 0) {
+    concerns.push(
+      `Only ${dignityRate}% dignity standards met — the majority of dignity indicators are not being met, raising serious concerns about whether children's personal space, privacy, and autonomy are being respected.`,
+    );
+  } else if (dignityRate < 80 && dignityRate >= 50 && totalDignityAssessments > 0) {
+    concerns.push(
+      `Dignity rate at ${dignityRate}% — some dignity standards are not consistently met, which may affect children's sense of ownership, privacy, and respect in their personal space.`,
+    );
+  }
+
+  if (childSatisfactionRate < 50 && satisfactionOpportunities > 0) {
+    concerns.push(
+      `Only ${childSatisfactionRate}% child satisfaction with rooms — most children are not satisfied with their bedroom environment, raising questions about whether the home is meeting children's needs and wishes regarding personal space.`,
+    );
+  } else if (childSatisfactionRate < 70 && childSatisfactionRate >= 50 && satisfactionOpportunities > 0) {
+    concerns.push(
+      `Child satisfaction at ${childSatisfactionRate}% — a significant proportion of children are not satisfied with their room, indicating personalisation or comfort efforts may not align with children's actual preferences.`,
+    );
+  }
+
+  if (poorConditionRooms > 0 && totalFurnitureAssessments > 0) {
+    concerns.push(
+      `${poorConditionRooms} bedroom${poorConditionRooms !== 1 ? "s have" : " has"} furniture in poor condition — children should not be living with substandard furnishings that undermine their comfort and dignity.`,
+    );
+  }
+
+  if (inspectionOverdue > 0 && totalFurnitureAssessments > 0) {
+    concerns.push(
+      `${inspectionOverdue} furniture inspection${inspectionOverdue !== 1 ? "s are" : " is"} overdue — regular inspections are needed to identify and address deterioration.`,
+    );
+  }
+
+  if (personalisationReviewOverdue > 0 && totalPersonalisationAssessments > 0) {
+    concerns.push(
+      `${personalisationReviewOverdue} personalisation review${personalisationReviewOverdue !== 1 ? "s are" : " is"} overdue — personalisation should be reviewed as children's identities evolve.`,
+    );
+  }
+
+  if (choiceFulfilmentRate < 50 && totalChoiceRecords > 0) {
+    concerns.push(
+      `Only ${choiceFulfilmentRate}% of children's room choices fulfilled — the majority of expressed preferences have not been actioned, undermining agency and belonging.`,
+    );
+  }
+
+  if (workingLockRate < 80 && totalDignityAssessments > 0) {
+    concerns.push(
+      `Only ${workingLockRate}% of rooms have a working lock — children without functioning locks cannot secure their personal space.`,
+    );
+  }
+
+  if (knockBeforeEntryRate < 80 && totalDignityAssessments > 0) {
+    concerns.push(
+      `Knock-before-entry observed in only ${knockBeforeEntryRate}% of assessments — inconsistent practice undermines children's trust and sense of personal space.`,
+    );
+  }
+
+  if (feelsSafeRate < 80 && totalComfortAssessments > 0) {
+    concerns.push(
+      `Only ${feelsSafeRate}% of children feel safe in their room — low safety feelings indicate a significant issue requiring immediate exploration.`,
+    );
+  }
+
+  if (replacementNeeded > 0 && replacementActionRate < 50) {
+    concerns.push(
+      `Only ${replacementActionRate}% of needed furniture replacements actioned — children are waiting for furnishings already identified as below standard.`,
+    );
+  }
+
+  if (notUsedAsPunishmentRate < 100 && totalDignityAssessments > 0) {
+    concerns.push(
+      `Evidence suggests rooms may be used as punishment in ${100 - notUsedAsPunishmentRate}% of assessments — a child's bedroom must never be used punitively.`,
+    );
+  }
+
+  if (mattressRate < 80 && totalComfortAssessments > 0) {
+    concerns.push(
+      `Only ${mattressRate}% of mattresses assessed as comfortable — inadequate mattresses directly impact children's health and wellbeing.`,
+    );
+  }
+
+  if (lockableStorageRate < 70 && totalPersonalisationAssessments > 0) {
+    concerns.push(
+      `Only ${lockableStorageRate}% of children have lockable storage — without secure storage, children cannot protect personal belongings.`,
+    );
+  }
+
+  if (comfortIssueResolutionRate < 50 && totalComfortIssues > 0) {
+    concerns.push(
+      `Only ${comfortIssueResolutionRate}% of identified comfort issues resolved — the home is not acting on known bedroom environment problems.`,
+    );
+  }
+
+  // ── Recommendations ───────────────────────────────────────────────────
+
+  const recommendations: FurnitureRoomRecommendation[] = [];
+  let rank = 0;
+
+  if (furnitureAdequacyRate < 50 && totalFurnitureAssessments > 0) {
+    recommendations.push({
+      rank: ++rank,
+      recommendation:
+        "Urgently address furniture inadequacies across children's bedrooms — every child must have a bed, wardrobe, desk, adequate storage, proper lighting, and appropriate floor covering as a minimum standard. Conduct a full audit and create a replacement programme.",
+      urgency: "immediate",
+      regulatory_ref: "CHR 2015 Reg 25 — Premises",
+    });
+  }
+
+  if (dignityRate < 50 && totalDignityAssessments > 0) {
+    recommendations.push({
+      rank: ++rank,
+      recommendation:
+        "Urgently improve dignity standards in children's personal spaces — ensure all rooms have working locks, staff consistently knock before entry, personal space is respected, and rooms are never used as punishment. Implement dignity-focused staff training.",
+      urgency: "immediate",
+      regulatory_ref: "CHR 2015 Reg 7 — Protection from harm; SCCIF dignity and respect",
+    });
+  }
+
+  if (comfortRate < 50 && totalComfortAssessments > 0) {
+    recommendations.push({
+      rank: ++rank,
+      recommendation:
+        "Urgently improve bedroom comfort standards — address temperature control, noise levels, mattress quality, cleanliness, and privacy across all children's rooms. Children's sleep and wellbeing depend on a comfortable environment.",
+      urgency: "immediate",
+      regulatory_ref: "CHR 2015 Reg 25 — Premises",
+    });
+  }
+
+  if (personalisationRate < 40 && totalPersonalisationAssessments > 0) {
+    recommendations.push({
+      rank: ++rank,
+      recommendation:
+        "Urgently implement a room personalisation programme — provide every child with a budget, supported shopping trips, and staff encouragement to personalise their room with photos, chosen bedding, wall art, and personal items that reflect their identity.",
+      urgency: "immediate",
+      regulatory_ref: "CHR 2015 Reg 5 — Statement of purpose; SCCIF experiences and progress",
+    });
+  }
+
+  if (feelsSafeRate < 80 && totalComfortAssessments > 0) {
+    recommendations.push({
+      rank: ++rank,
+      recommendation:
+        "Investigate why some children do not feel safe in their rooms and take immediate action — a child who does not feel safe in their bedroom requires individual exploration of their concerns, which may include fear of intrusion, peer dynamics, or environmental factors.",
+      urgency: "immediate",
+      regulatory_ref: "CHR 2015 Reg 7 — Protection from harm",
+    });
+  }
+
+  if (notUsedAsPunishmentRate < 100 && totalDignityAssessments > 0) {
+    recommendations.push({
+      rank: ++rank,
+      recommendation:
+        "Immediately cease any practice of using bedrooms as a form of punishment or sanction — a child's bedroom must be a place of safety and comfort, never associated with negative consequences. Review behaviour management practices to ensure bedrooms are protected spaces.",
+      urgency: "immediate",
+      regulatory_ref: "CHR 2015 Reg 7 — Protection from harm",
+    });
+  }
+
+  if (poorConditionRooms > 0 && totalFurnitureAssessments > 0) {
+    recommendations.push({
+      rank: ++rank,
+      recommendation:
+        "Replace furniture in poor condition as a matter of urgency — children living with visibly deteriorated furnishings receive a message that their comfort and environment are not valued.",
+      urgency: "immediate",
+      regulatory_ref: "CHR 2015 Reg 25 — Premises",
+    });
+  }
+
+  if (workingLockRate < 80 && totalDignityAssessments > 0) {
+    recommendations.push({
+      rank: ++rank,
+      recommendation:
+        "Ensure all children's bedroom doors have working locks — the ability to secure their own space is fundamental to children's sense of privacy, safety, and ownership. Locks should only be absent where a documented risk assessment justifies it.",
+      urgency: "immediate",
+      regulatory_ref: "CHR 2015 Reg 25 — Premises; SCCIF privacy and dignity",
+    });
+  }
+
+  if (knockBeforeEntryRate < 80 && totalDignityAssessments > 0) {
+    recommendations.push({
+      rank: ++rank,
+      recommendation:
+        "Reinforce the expectation that staff always knock and wait before entering a child's room — implement practice observation, supervision discussion, and visual reminders to embed this fundamental dignity standard.",
+      urgency: "soon",
+      regulatory_ref: "SCCIF — Privacy and dignity",
+    });
+  }
+
+  if (
+    furnitureAdequacyRate >= 50 &&
+    furnitureAdequacyRate < 80 &&
+    totalFurnitureAssessments > 0
+  ) {
+    recommendations.push({
+      rank: ++rank,
+      recommendation:
+        "Improve furniture adequacy to at least 80% across all bedrooms — identify and address specific gaps in desk provision, storage, lighting, or floor coverings to ensure every bedroom is fully and appropriately furnished.",
+      urgency: "soon",
+      regulatory_ref: "CHR 2015 Reg 25 — Premises",
+    });
+  }
+
+  if (
+    personalisationRate >= 40 &&
+    personalisationRate < 70 &&
+    totalPersonalisationAssessments > 0
+  ) {
+    recommendations.push({
+      rank: ++rank,
+      recommendation:
+        "Increase room personalisation completion — support each child to add personal photos, choose their bedding and wall decor, display personal belongings, and express their identity through their room. Review whether budgets, time, and staff support are adequate.",
+      urgency: "soon",
+      regulatory_ref: "SCCIF — Experiences and progress; sense of belonging",
+    });
+  }
+
+  if (
+    childChoiceRate >= 50 &&
+    childChoiceRate < 70 &&
+    total_children > 0 &&
+    totalChoiceRecords > 0
+  ) {
+    recommendations.push({
+      rank: ++rank,
+      recommendation:
+        "Extend meaningful choice opportunities to all children — ensure every child has the chance to select furniture, decor, colour schemes, and layout preferences for their room, with staff actively facilitating and following through on choices.",
+      urgency: "soon",
+      regulatory_ref: "SCCIF — Experiences and progress",
+    });
+  }
+
+  if (choiceFulfilmentRate < 70 && choiceFulfilmentRate >= 50 && totalChoiceRecords > 0) {
+    recommendations.push({
+      rank: ++rank,
+      recommendation:
+        "Improve the rate at which children's room choices are fulfilled — when children express preferences and they are not actioned, it undermines their trust and sense of being heard. Review procurement processes and barriers to fulfilment.",
+      urgency: "soon",
+      regulatory_ref: "SCCIF — Voice of the child",
+    });
+  }
+
+  if (mattressRate < 80 && totalComfortAssessments > 0) {
+    recommendations.push({
+      rank: ++rank,
+      recommendation:
+        "Replace uncomfortable mattresses — quality sleep is essential for children's health, emotional regulation, and educational engagement. Invest in mattresses that are comfortable and appropriate for each child.",
+      urgency: "soon",
+      regulatory_ref: "CHR 2015 Reg 25 — Premises",
+    });
+  }
+
+  if (lockableStorageRate < 70 && totalPersonalisationAssessments > 0) {
+    recommendations.push({
+      rank: ++rank,
+      recommendation:
+        "Provide lockable storage for every child — secure storage for personal belongings is a fundamental requirement for privacy and dignity. Children need to know their belongings are safe.",
+      urgency: "soon",
+      regulatory_ref: "CHR 2015 Reg 25 — Premises; SCCIF privacy and dignity",
+    });
+  }
+
+  if (inspectionOverdue > 0 && totalFurnitureAssessments > 0) {
+    recommendations.push({
+      rank: ++rank,
+      recommendation:
+        "Complete overdue furniture inspections to ensure bedroom furnishings remain safe, adequate, and in good condition — establish a regular inspection schedule with documented outcomes.",
+      urgency: "soon",
+      regulatory_ref: "CHR 2015 Reg 25 — Premises",
+    });
+  }
+
+  if (personalisationReviewOverdue > 0 && totalPersonalisationAssessments > 0) {
+    recommendations.push({
+      rank: ++rank,
+      recommendation:
+        "Complete overdue personalisation reviews — children's tastes, interests, and identities change over time. Regular reviews ensure rooms continue to reflect who each child is and what matters to them.",
+      urgency: "soon",
+      regulatory_ref: "SCCIF — Experiences and progress",
+    });
+  }
+
+  if (comfortIssueResolutionRate < 50 && totalComfortIssues > 0) {
+    recommendations.push({
+      rank: ++rank,
+      recommendation:
+        "Address and resolve outstanding comfort issues in children's bedrooms — when problems are identified but not fixed, it sends a message that children's comfort is not a priority.",
+      urgency: "soon",
+      regulatory_ref: "CHR 2015 Reg 25 — Premises",
+    });
+  }
+
+  if (
+    dignityRate >= 50 &&
+    dignityRate < 80 &&
+    totalDignityAssessments > 0
+  ) {
+    recommendations.push({
+      rank: ++rank,
+      recommendation:
+        "Strengthen dignity practices around children's personal spaces — review and improve practice on locks, knock-before-entry, respect for belongings, privacy during checks, and children's ownership feelings through targeted training and supervision.",
+      urgency: "planned",
+      regulatory_ref: "SCCIF — Privacy and dignity",
+    });
+  }
+
+  if (
+    comfortRate >= 50 &&
+    comfortRate < 80 &&
+    totalComfortAssessments > 0
+  ) {
+    recommendations.push({
+      rank: ++rank,
+      recommendation:
+        "Improve bedroom comfort standards to at least 80% — conduct a systematic review of temperature, noise, lighting, ventilation, cleanliness, and privacy across all bedrooms and create an improvement plan.",
+      urgency: "planned",
+      regulatory_ref: "CHR 2015 Reg 25 — Premises",
+    });
+  }
+
+  if (
+    childSatisfactionRate >= 50 &&
+    childSatisfactionRate < 70 &&
+    satisfactionOpportunities > 0
+  ) {
+    recommendations.push({
+      rank: ++rank,
+      recommendation:
+        "Explore what would improve children's satisfaction with their rooms through direct conversation — use children's feedback to guide future personalisation, furniture choices, and comfort improvements.",
+      urgency: "planned",
+      regulatory_ref: "SCCIF — Voice of the child",
+    });
+  }
+
+  if (budgetProvisionRate < 80 && totalPersonalisationAssessments > 0) {
+    recommendations.push({
+      rank: ++rank,
+      recommendation:
+        "Ensure every child receives a personalisation budget for their room — a dedicated budget demonstrates the home's commitment to enabling children to shape their environment and express their identity.",
+      urgency: "planned",
+      regulatory_ref: "SCCIF — Experiences and progress; sense of belonging",
+    });
+  }
+
+  if (furnitureConsultationRate < 70 && totalFurnitureAssessments > 0) {
+    recommendations.push({
+      rank: ++rank,
+      recommendation:
+        "Increase child consultation when furniture decisions are made — children should be involved in choosing furniture for their bedroom, not just receiving what is provided. This strengthens their sense of agency and belonging.",
+      urgency: "planned",
+      regulatory_ref: "SCCIF — Voice of the child",
+    });
+  }
+
+  if (childReportedComfortRate < 70 && totalComfortAssessments > 0) {
+    recommendations.push({
+      rank: ++rank,
+      recommendation:
+        "Increase child-reported comfort assessments — ensure comfort assessments include the child's own perspective, not just staff observation. Children's subjective experience of their room is the most important measure.",
+      urgency: "planned",
+      regulatory_ref: "SCCIF — Voice of the child",
+    });
+  }
+
+  if (replacementNeeded > 0 && replacementActionRate < 80 && replacementActionRate >= 50) {
+    recommendations.push({
+      rank: ++rank,
+      recommendation:
+        "Accelerate actioning of identified furniture replacements — where furniture has been assessed as needing replacement, prompt action demonstrates the home values children's living environment.",
+      urgency: "planned",
+      regulatory_ref: "CHR 2015 Reg 25 — Premises",
+    });
+  }
+
+  // ── Insights ──────────────────────────────────────────────────────────
+
+  const insights: FurnitureRoomInsight[] = [];
+
+  // -- Critical insights --
+
+  if (furnitureAdequacyRate < 50 && totalFurnitureAssessments > 0) {
+    insights.push({
+      text: `Only ${furnitureAdequacyRate}% of bedroom furniture items meet adequacy standards. When the majority of furnishings are inadequate, children are living in rooms that do not meet the basic expectations of Reg 25. Ofsted inspectors will look at the physical environment of bedrooms as a direct indicator of care quality — inadequate furniture signals that children's comfort and dignity are not being prioritised.`,
+      severity: "critical",
+    });
+  }
+
+  if (personalisationRate < 40 && totalPersonalisationAssessments > 0) {
+    insights.push({
+      text: `Only ${personalisationRate}% personalisation completion across children's bedrooms. Rooms that lack personal touches, chosen decor, and expressions of identity feel institutional rather than homely. Ofsted explicitly considers whether children's bedrooms reflect their individual identity and choices — low personalisation suggests children have not been empowered or supported to make their room their own.`,
+      severity: "critical",
+    });
+  }
+
+  if (dignityRate < 50 && totalDignityAssessments > 0) {
+    insights.push({
+      text: `Only ${dignityRate}% of dignity standards met in children's personal spaces. When privacy, personal space, and dignity are not consistently respected, children experience their bedroom not as a safe personal space but as a controlled environment. This directly contradicts the SCCIF expectation that children experience dignity and respect in their daily lives.`,
+      severity: "critical",
+    });
+  }
+
+  if (comfortRate < 50 && totalComfortAssessments > 0) {
+    insights.push({
+      text: `Only ${comfortRate}% comfort compliance across children's bedrooms. Uncomfortable bedrooms — whether due to temperature, noise, poor mattresses, or lack of privacy — affect children's sleep quality, emotional regulation, and overall wellbeing. The physical environment of a child's bedroom is a foundational element of quality care.`,
+      severity: "critical",
+    });
+  }
+
+  if (notUsedAsPunishmentRate < 100 && totalDignityAssessments > 0) {
+    insights.push({
+      text: `Evidence that bedrooms may be used as punishment or sanction in some cases. Using a child's personal space punitively is harmful — it transforms their bedroom from a place of safety and comfort into a place associated with control and negative consequences. This practice must cease immediately and is likely to be viewed seriously by Ofsted.`,
+      severity: "critical",
+    });
+  }
+
+  if (feelsSafeRate < 70 && totalComfortAssessments > 0) {
+    insights.push({
+      text: `Only ${feelsSafeRate}% of children feel safe in their bedroom. A child who does not feel safe in their own room is unlikely to sleep well, relax, or use their bedroom as the personal retreat it should be. This may indicate concerns about peer dynamics, staff intrusion, environmental factors, or unresolved anxieties that require individual exploration.`,
+      severity: "critical",
+    });
+  }
+
+  // -- Warning insights --
+
+  if (
+    furnitureAdequacyRate >= 50 &&
+    furnitureAdequacyRate < 80 &&
+    totalFurnitureAssessments > 0
+  ) {
+    insights.push({
+      text: `Furniture adequacy at ${furnitureAdequacyRate}% — improving but some bedrooms still have gaps in essential furnishings. Each missing or inadequate item affects a child's ability to study, store belongings, or feel comfortable in their own space.`,
+      severity: "warning",
+    });
+  }
+
+  if (
+    personalisationRate >= 40 &&
+    personalisationRate < 70 &&
+    totalPersonalisationAssessments > 0
+  ) {
+    insights.push({
+      text: `Personalisation at ${personalisationRate}% — some children's rooms are beginning to reflect their identity, but many still lack key personal touches. Consider whether barriers exist (budget, staff time, child engagement) and address them to enable fuller personalisation.`,
+      severity: "warning",
+    });
+  }
+
+  if (
+    dignityRate >= 50 &&
+    dignityRate < 80 &&
+    totalDignityAssessments > 0
+  ) {
+    insights.push({
+      text: `Dignity rate at ${dignityRate}% — while some dignity standards are met, inconsistencies in areas like knocking before entry, lock provision, or respect for personal space undermine the overall quality of children's experience of their personal environment.`,
+      severity: "warning",
+    });
+  }
+
+  if (
+    comfortRate >= 50 &&
+    comfortRate < 80 &&
+    totalComfortAssessments > 0
+  ) {
+    insights.push({
+      text: `Comfort rate at ${comfortRate}% — some bedrooms have areas of concern around temperature, noise, privacy, or cleanliness. Even one persistent comfort issue can significantly affect a child's quality of life and sleep.`,
+      severity: "warning",
+    });
+  }
+
+  if (
+    childSatisfactionRate >= 50 &&
+    childSatisfactionRate < 70 &&
+    satisfactionOpportunities > 0
+  ) {
+    insights.push({
+      text: `Child satisfaction at ${childSatisfactionRate}% — a notable proportion of children are not fully satisfied with their room. Since children's subjective experience is the most important indicator, it is worth exploring what specific changes would make their rooms feel more like their own.`,
+      severity: "warning",
+    });
+  }
+
+  if (
+    choiceFulfilmentRate >= 50 &&
+    choiceFulfilmentRate < 70 &&
+    totalChoiceRecords > 0
+  ) {
+    insights.push({
+      text: `Choice fulfilment at ${choiceFulfilmentRate}% — some children's room preferences remain unfulfilled. When children express a choice and it is not delivered, it can feel dismissive. Review what is preventing fulfilment and communicate transparently with children about timelines.`,
+      severity: "warning",
+    });
+  }
+
+  if (
+    furnitureConditionAvg > 0 &&
+    furnitureConditionAvg < 2.5 &&
+    totalFurnitureAssessments > 0
+  ) {
+    insights.push({
+      text: `Average furniture condition rating of ${furnitureConditionAvg}/4 — furniture quality is below acceptable levels. Children living with deteriorating furniture receive a message about their worth.`,
+      severity: "warning",
+    });
+  }
+
+  // Choice type analysis
+  const topChoiceTypes = Object.entries(choiceTypeCounts)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 3);
+  if (topChoiceTypes.length > 0 && totalChoiceRecords >= 5) {
+    const typeStr = topChoiceTypes
+      .map(([t, c]) => `${t} (${c})`)
+      .join(", ");
+    insights.push({
+      text: `Most common room choice types: ${typeStr}. Consider whether children are being offered the full range of choice opportunities — furniture, decor, colour, bedding, layout, lighting, and accessories — or whether choices are concentrated in a narrow range.`,
+      severity: "warning",
+    });
+  }
+
+  if (
+    budgetUtilisationRate > 0 &&
+    budgetUtilisationRate < 50 &&
+    totalBudgetApproved > 0
+  ) {
+    insights.push({
+      text: `Personalisation budget utilisation at only ${budgetUtilisationRate}% — budgets have been approved but are not being fully used. This may indicate that children need more support, time, or encouragement to spend their personalisation budget, or that the budget process has barriers.`,
+      severity: "warning",
+    });
+  }
+
+  // -- Positive insights --
+
+  if (room_rating === "outstanding") {
+    insights.push({
+      text: "The home demonstrates outstanding bedroom and room personalisation quality — furniture is adequate and well-maintained, rooms are personalised to reflect each child's identity, children exercise genuine choice, bedrooms are comfortable, and dignity is consistently respected. This is strong evidence of a home environment where children feel they truly belong.",
+      severity: "positive",
+    });
+  }
+
+  if (
+    furnitureAdequacyRate >= 95 &&
+    furnitureConditionAvg >= 3.5 &&
+    totalFurnitureAssessments > 0
+  ) {
+    insights.push({
+      text: `${furnitureAdequacyRate}% furniture adequacy with average condition ${furnitureConditionAvg}/4 — children's bedrooms are comprehensively and well-furnished. The home invests in maintaining furnishings to a high standard, creating a comfortable and functional environment for each child.`,
+      severity: "positive",
+    });
+  }
+
+  if (
+    personalisationRate >= 90 &&
+    identityReflectionRate >= 90 &&
+    totalPersonalisationAssessments > 0
+  ) {
+    insights.push({
+      text: `${personalisationRate}% personalisation with ${identityReflectionRate}% of rooms assessed as reflecting the child's identity — bedrooms are not just decorated but genuinely express who each child is. This is a powerful indicator that children feel they belong and that their individuality is celebrated.`,
+      severity: "positive",
+    });
+  }
+
+  if (
+    childChoiceRate >= 90 &&
+    choiceSatisfactionRate >= 90 &&
+    total_children > 0 &&
+    fulfilledChoices > 0
+  ) {
+    insights.push({
+      text: `${childChoiceRate}% of children exercising room choice with ${choiceSatisfactionRate}% satisfaction with outcomes — children are not just offered choice but are satisfied with how their preferences are implemented. This demonstrates genuine child-centred practice in creating personal spaces.`,
+      severity: "positive",
+    });
+  }
+
+  if (
+    comfortRate >= 95 &&
+    comfortRatingAvg >= 4.0 &&
+    totalComfortAssessments > 0
+  ) {
+    insights.push({
+      text: `${comfortRate}% comfort compliance with average rating ${comfortRatingAvg}/5 — bedrooms consistently provide a comfortable, well-maintained environment where children can sleep well, relax, and feel at ease in their personal space.`,
+      severity: "positive",
+    });
+  }
+
+  if (
+    dignityRate >= 95 &&
+    ownershipFeelingRate >= 90 &&
+    totalDignityAssessments > 0
+  ) {
+    insights.push({
+      text: `${dignityRate}% dignity standards met with ${ownershipFeelingRate}% of children feeling their room is truly theirs — the home exemplifies respect for children's personal space, privacy, and autonomy. Children's rooms function as genuine personal domains where they feel ownership and security.`,
+      severity: "positive",
+    });
+  }
+
+  if (
+    childSatisfactionRate >= 90 &&
+    satisfactionOpportunities > 0
+  ) {
+    insights.push({
+      text: `${childSatisfactionRate}% child satisfaction with rooms — children overwhelmingly feel positive about their bedroom environment. This child-reported evidence is the strongest indicator that the home's approach to furniture, personalisation, and room management is genuinely meeting children's needs and wishes.`,
+      severity: "positive",
+    });
+  }
+
+  if (
+    knockBeforeEntryRate >= 95 &&
+    workingLockRate >= 100 &&
+    spaceRespectedRate >= 95 &&
+    totalDignityAssessments > 0
+  ) {
+    insights.push({
+      text: "Exemplary privacy and dignity practice — staff consistently knock before entry, every room has a working lock, and personal space is consistently respected.",
+      severity: "positive",
+    });
+  }
+
+  if (
+    budgetProvisionRate >= 90 &&
+    budgetUtilisationRate >= 70 &&
+    totalPersonalisationAssessments > 0
+  ) {
+    insights.push({
+      text: `${budgetProvisionRate}% budget provision with ${budgetUtilisationRate}% utilisation — the home allocates and supports personalisation budgets, enabling children to make their room their own.`,
+      severity: "positive",
+    });
+  }
+
+  // ── Headline ──────────────────────────────────────────────────────────
+
+  let headline: string;
+
+  if (room_rating === "outstanding") {
+    headline =
+      "Outstanding furniture and room personalisation — children's bedrooms are well-furnished, personalised to reflect their identity, comfortable, and dignified.";
+  } else if (room_rating === "good") {
+    headline = `Good furniture and room personalisation — ${strengths.length} strength${strengths.length !== 1 ? "s" : ""} identified${concerns.length > 0 ? `, ${concerns.length} area${concerns.length !== 1 ? "s" : ""} for improvement` : ""}.`;
+  } else if (room_rating === "adequate") {
+    headline = `Adequate furniture and room personalisation — ${concerns.length} concern${concerns.length !== 1 ? "s" : ""} identified requiring improvement to ensure children's bedrooms meet the expected standard.`;
+  } else {
+    headline = `Furniture and room personalisation is inadequate — ${concerns.length} significant concern${concerns.length !== 1 ? "s" : ""} requiring urgent action to ensure children's bedrooms are adequate, personalised, comfortable, and dignified.`;
+  }
+
+  // ── Return ────────────────────────────────────────────────────────────
+
+  return {
+    room_rating,
+    room_score: score,
+    headline,
+    total_furniture_assessments: totalFurnitureAssessments,
+    total_personalisation_assessments: totalPersonalisationAssessments,
+    total_choice_records: totalChoiceRecords,
+    total_comfort_assessments: totalComfortAssessments,
+    total_dignity_assessments: totalDignityAssessments,
+    furniture_adequacy_rate: furnitureAdequacyRate,
+    personalisation_rate: personalisationRate,
+    child_choice_rate: childChoiceRate,
+    comfort_rate: comfortRate,
+    dignity_rate: dignityRate,
+    child_satisfaction_rate: childSatisfactionRate,
+    furniture_condition_avg: furnitureConditionAvg,
+    comfort_rating_avg: comfortRatingAvg,
+    personalisation_budget_utilisation_rate: budgetUtilisationRate,
+    choice_fulfilment_rate: choiceFulfilmentRate,
+    strengths,
+    concerns,
+    recommendations,
+    insights,
+  };
+}
