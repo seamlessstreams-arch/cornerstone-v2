@@ -367,6 +367,12 @@ const HomeWaterSafetyHydrationIntelligenceCard = dynamic(() => import("@/compone
 const HomeDentalOralHealthIntelligenceCard = dynamic(() => import("@/components/dashboard/home-dental-oral-health-intelligence-card").then(m => m.HomeDentalOralHealthIntelligenceCard ? { default: m.HomeDentalOralHealthIntelligenceCard } : m), { ssr: false });
 const HomeTechnologyDigitalInclusionIntelligenceCard = dynamic(() => import("@/components/dashboard/home-technology-digital-inclusion-intelligence-card").then(m => m.HomeTechnologyDigitalInclusionIntelligenceCard ? { default: m.HomeTechnologyDigitalInclusionIntelligenceCard } : m), { ssr: false });
 
+// ── Batch 42 ──
+const HomeGriefBereavementSupportIntelligenceCard = dynamic(() => import("@/components/dashboard/home-grief-bereavement-support-intelligence-card").then(m => m.HomeGriefBereavementSupportIntelligenceCard ? { default: m.HomeGriefBereavementSupportIntelligenceCard } : m), { ssr: false });
+const HomeSubstanceMisusePreventionIntelligenceCard = dynamic(() => import("@/components/dashboard/home-substance-misuse-prevention-intelligence-card").then(m => m.HomeSubstanceMisusePreventionIntelligenceCard ? { default: m.HomeSubstanceMisusePreventionIntelligenceCard } : m), { ssr: false });
+const HomeYouthJusticeOffendingIntelligenceCard = dynamic(() => import("@/components/dashboard/home-youth-justice-offending-intelligence-card").then(m => m.HomeYouthJusticeOffendingIntelligenceCard ? { default: m.HomeYouthJusticeOffendingIntelligenceCard } : m), { ssr: false });
+const HomePositiveIdentitySelfEsteemIntelligenceCard = dynamic(() => import("@/components/dashboard/home-positive-identity-self-esteem-intelligence-card").then(m => m.HomePositiveIdentitySelfEsteemIntelligenceCard ? { default: m.HomePositiveIdentitySelfEsteemIntelligenceCard } : m), { ssr: false });
+
 // ─── Greeting ─────────────────────────────────────────────────────────────────
 
 function getGreeting(): string {
@@ -1723,6 +1729,10 @@ export default function DashboardPage() {
                     <HomeWaterSafetyHydrationIntelligenceCard />
                     <HomeDentalOralHealthIntelligenceCard />
                     <HomeTechnologyDigitalInclusionIntelligenceCard />
+                    <HomeGriefBereavementSupportIntelligenceCard />
+                    <HomeSubstanceMisusePreventionIntelligenceCard />
+                    <HomeYouthJusticeOffendingIntelligenceCard />
+                    <HomePositiveIdentitySelfEsteemIntelligenceCard />
                     <IntelligenceBriefWidget />
                   </>
                 )}
