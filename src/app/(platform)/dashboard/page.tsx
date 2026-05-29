@@ -373,6 +373,12 @@ const HomeSubstanceMisusePreventionIntelligenceCard = dynamic(() => import("@/co
 const HomeYouthJusticeOffendingIntelligenceCard = dynamic(() => import("@/components/dashboard/home-youth-justice-offending-intelligence-card").then(m => m.HomeYouthJusticeOffendingIntelligenceCard ? { default: m.HomeYouthJusticeOffendingIntelligenceCard } : m), { ssr: false });
 const HomePositiveIdentitySelfEsteemIntelligenceCard = dynamic(() => import("@/components/dashboard/home-positive-identity-self-esteem-intelligence-card").then(m => m.HomePositiveIdentitySelfEsteemIntelligenceCard ? { default: m.HomePositiveIdentitySelfEsteemIntelligenceCard } : m), { ssr: false });
 
+// ── Batch 43 ──
+const HomePetAnimalTherapyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-pet-animal-therapy-intelligence-card").then(m => m.HomePetAnimalTherapyIntelligenceCard ? { default: m.HomePetAnimalTherapyIntelligenceCard } : m), { ssr: false });
+const HomeSiblingContactRelationshipsIntelligenceCard = dynamic(() => import("@/components/dashboard/home-sibling-contact-relationships-intelligence-card").then(m => m.HomeSiblingContactRelationshipsIntelligenceCard ? { default: m.HomeSiblingContactRelationshipsIntelligenceCard } : m), { ssr: false });
+const HomeStaffRotaAdequateStaffingIntelligenceCard = dynamic(() => import("@/components/dashboard/home-staff-rota-adequate-staffing-intelligence-card").then(m => m.HomeStaffRotaAdequateStaffingIntelligenceCard ? { default: m.HomeStaffRotaAdequateStaffingIntelligenceCard } : m), { ssr: false });
+const HomeWhistleblowingSafeguardingCultureIntelligenceCard = dynamic(() => import("@/components/dashboard/home-whistleblowing-safeguarding-culture-intelligence-card").then(m => m.HomeWhistleblowingSafeguardingCultureIntelligenceCard ? { default: m.HomeWhistleblowingSafeguardingCultureIntelligenceCard } : m), { ssr: false });
+
 // ─── Greeting ─────────────────────────────────────────────────────────────────
 
 function getGreeting(): string {
@@ -1733,6 +1739,10 @@ export default function DashboardPage() {
                     <HomeSubstanceMisusePreventionIntelligenceCard />
                     <HomeYouthJusticeOffendingIntelligenceCard />
                     <HomePositiveIdentitySelfEsteemIntelligenceCard />
+                    <HomePetAnimalTherapyIntelligenceCard />
+                    <HomeSiblingContactRelationshipsIntelligenceCard />
+                    <HomeStaffRotaAdequateStaffingIntelligenceCard />
+                    <HomeWhistleblowingSafeguardingCultureIntelligenceCard />
                     <IntelligenceBriefWidget />
                   </>
                 )}
