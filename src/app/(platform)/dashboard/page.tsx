@@ -361,6 +361,12 @@ const HomeAdmissionsMatchingAssessmentIntelligenceCard = dynamic(() => import("@
 const HomeDailyRoutineStructureIntelligenceCard = dynamic(() => import("@/components/dashboard/home-daily-routine-structure-intelligence-card").then(m => m.HomeDailyRoutineStructureIntelligenceCard ? { default: m.HomeDailyRoutineStructureIntelligenceCard } : m), { ssr: false });
 const HomeOutdoorNatureEngagementIntelligenceCard = dynamic(() => import("@/components/dashboard/home-outdoor-nature-engagement-intelligence-card").then(m => m.HomeOutdoorNatureEngagementIntelligenceCard ? { default: m.HomeOutdoorNatureEngagementIntelligenceCard } : m), { ssr: false });
 
+// ── Batch 41 ──
+const HomeCulturalEventsCelebrationsIntelligenceCard = dynamic(() => import("@/components/dashboard/home-cultural-events-celebrations-intelligence-card").then(m => m.HomeCulturalEventsCelebrationsIntelligenceCard ? { default: m.HomeCulturalEventsCelebrationsIntelligenceCard } : m), { ssr: false });
+const HomeWaterSafetyHydrationIntelligenceCard = dynamic(() => import("@/components/dashboard/home-water-safety-hydration-intelligence-card").then(m => m.HomeWaterSafetyHydrationIntelligenceCard ? { default: m.HomeWaterSafetyHydrationIntelligenceCard } : m), { ssr: false });
+const HomeDentalOralHealthIntelligenceCard = dynamic(() => import("@/components/dashboard/home-dental-oral-health-intelligence-card").then(m => m.HomeDentalOralHealthIntelligenceCard ? { default: m.HomeDentalOralHealthIntelligenceCard } : m), { ssr: false });
+const HomeTechnologyDigitalInclusionIntelligenceCard = dynamic(() => import("@/components/dashboard/home-technology-digital-inclusion-intelligence-card").then(m => m.HomeTechnologyDigitalInclusionIntelligenceCard ? { default: m.HomeTechnologyDigitalInclusionIntelligenceCard } : m), { ssr: false });
+
 // ─── Greeting ─────────────────────────────────────────────────────────────────
 
 function getGreeting(): string {
@@ -1713,6 +1719,10 @@ export default function DashboardPage() {
                     <HomeAdmissionsMatchingAssessmentIntelligenceCard />
                     <HomeDailyRoutineStructureIntelligenceCard />
                     <HomeOutdoorNatureEngagementIntelligenceCard />
+                    <HomeCulturalEventsCelebrationsIntelligenceCard />
+                    <HomeWaterSafetyHydrationIntelligenceCard />
+                    <HomeDentalOralHealthIntelligenceCard />
+                    <HomeTechnologyDigitalInclusionIntelligenceCard />
                     <IntelligenceBriefWidget />
                   </>
                 )}
