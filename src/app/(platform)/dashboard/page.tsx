@@ -397,6 +397,12 @@ const HomeEthnicHairSkincareIntelligenceCard = dynamic(() => import("@/component
 const HomeHolidayTripPlanningIntelligenceCard = dynamic(() => import("@/components/dashboard/home-holiday-trip-planning-intelligence-card").then(m => m.HomeHolidayTripPlanningIntelligenceCard ? { default: m.HomeHolidayTripPlanningIntelligenceCard } : m), { ssr: false });
 const HomeRestorativePracticeConflictResolutionIntelligenceCard = dynamic(() => import("@/components/dashboard/home-restorative-practice-conflict-resolution-intelligence-card").then(m => m.HomeRestorativePracticeConflictResolutionIntelligenceCard ? { default: m.HomeRestorativePracticeConflictResolutionIntelligenceCard } : m), { ssr: false });
 
+// ── Batch 47 ──
+const HomeSexualHealthRseEducationIntelligenceCard = dynamic(() => import("@/components/dashboard/home-sexual-health-rse-education-intelligence-card").then(m => m.HomeSexualHealthRseEducationIntelligenceCard ? { default: m.HomeSexualHealthRseEducationIntelligenceCard } : m), { ssr: false });
+const HomeNoiseSoundManagementIntelligenceCard = dynamic(() => import("@/components/dashboard/home-noise-sound-management-intelligence-card").then(m => m.HomeNoiseSoundManagementIntelligenceCard ? { default: m.HomeNoiseSoundManagementIntelligenceCard } : m), { ssr: false });
+const HomeStaffPerformanceAppraisalIntelligenceCard = dynamic(() => import("@/components/dashboard/home-staff-performance-appraisal-intelligence-card").then(m => m.HomeStaffPerformanceAppraisalIntelligenceCard ? { default: m.HomeStaffPerformanceAppraisalIntelligenceCard } : m), { ssr: false });
+const HomeAdvocacyIndependentVisitorIntelligenceCard = dynamic(() => import("@/components/dashboard/home-advocacy-independent-visitor-intelligence-card").then(m => m.HomeAdvocacyIndependentVisitorIntelligenceCard ? { default: m.HomeAdvocacyIndependentVisitorIntelligenceCard } : m), { ssr: false });
+
 // ─── Greeting ─────────────────────────────────────────────────────────────────
 
 function getGreeting(): string {
@@ -1773,6 +1779,10 @@ export default function DashboardPage() {
                     <HomeEthnicHairSkincareIntelligenceCard />
                     <HomeHolidayTripPlanningIntelligenceCard />
                     <HomeRestorativePracticeConflictResolutionIntelligenceCard />
+                    <HomeSexualHealthRseEducationIntelligenceCard />
+                    <HomeNoiseSoundManagementIntelligenceCard />
+                    <HomeStaffPerformanceAppraisalIntelligenceCard />
+                    <HomeAdvocacyIndependentVisitorIntelligenceCard />
                     <IntelligenceBriefWidget />
                   </>
                 )}
