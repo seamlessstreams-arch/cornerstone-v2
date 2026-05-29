@@ -409,6 +409,12 @@ const HomeSavingsBankingSkillsIntelligenceCard = dynamic(() => import("@/compone
 const HomeHazardNearMissReportingIntelligenceCard = dynamic(() => import("@/components/dashboard/home-hazard-near-miss-reporting-intelligence-card").then(m => m.HomeHazardNearMissReportingIntelligenceCard ? { default: m.HomeHazardNearMissReportingIntelligenceCard } : m), { ssr: false });
 const HomeMenstruationPubertySupportIntelligenceCard = dynamic(() => import("@/components/dashboard/home-menstruation-puberty-support-intelligence-card").then(m => m.HomeMenstruationPubertySupportIntelligenceCard ? { default: m.HomeMenstruationPubertySupportIntelligenceCard } : m), { ssr: false });
 
+// ── Batch 49 ──
+const HomeEyeHealthVisionCareIntelligenceCard = dynamic(() => import("@/components/dashboard/home-eye-health-vision-care-intelligence-card").then(m => m.HomeEyeHealthVisionCareIntelligenceCard ? { default: m.HomeEyeHealthVisionCareIntelligenceCard } : m), { ssr: false });
+const HomeAsthmaRespiratoryManagementIntelligenceCard = dynamic(() => import("@/components/dashboard/home-asthma-respiratory-management-intelligence-card").then(m => m.HomeAsthmaRespiratoryManagementIntelligenceCard ? { default: m.HomeAsthmaRespiratoryManagementIntelligenceCard } : m), { ssr: false });
+const HomeLaundryLinenManagementIntelligenceCard = dynamic(() => import("@/components/dashboard/home-laundry-linen-management-intelligence-card").then(m => m.HomeLaundryLinenManagementIntelligenceCard ? { default: m.HomeLaundryLinenManagementIntelligenceCard } : m), { ssr: false });
+const HomeBirthdaySpecialOccasionCelebrationIntelligenceCard = dynamic(() => import("@/components/dashboard/home-birthday-special-occasion-celebration-intelligence-card").then(m => m.HomeBirthdaySpecialOccasionCelebrationIntelligenceCard ? { default: m.HomeBirthdaySpecialOccasionCelebrationIntelligenceCard } : m), { ssr: false });
+
 // ─── Greeting ─────────────────────────────────────────────────────────────────
 
 function getGreeting(): string {
@@ -1793,6 +1799,10 @@ export default function DashboardPage() {
                     <HomeSavingsBankingSkillsIntelligenceCard />
                     <HomeHazardNearMissReportingIntelligenceCard />
                     <HomeMenstruationPubertySupportIntelligenceCard />
+                    <HomeEyeHealthVisionCareIntelligenceCard />
+                    <HomeAsthmaRespiratoryManagementIntelligenceCard />
+                    <HomeLaundryLinenManagementIntelligenceCard />
+                    <HomeBirthdaySpecialOccasionCelebrationIntelligenceCard />
                     <IntelligenceBriefWidget />
                   </>
                 )}
