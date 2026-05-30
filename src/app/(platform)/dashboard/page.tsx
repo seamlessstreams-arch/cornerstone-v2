@@ -439,6 +439,12 @@ const HomeChildVoiceParticipationIntelligenceCard = dynamic(() => import("@/comp
 const HomeAromatherapyWellbeingTherapiesIntelligenceCard = dynamic(() => import("@/components/dashboard/home-aromatherapy-wellbeing-therapies-intelligence-card").then(m => m.HomeAromatherapyWellbeingTherapiesIntelligenceCard ? { default: m.HomeAromatherapyWellbeingTherapiesIntelligenceCard } : m), { ssr: false });
 const HomePestControlHygieneComplianceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-pest-control-hygiene-compliance-intelligence-card").then(m => m.HomePestControlHygieneComplianceIntelligenceCard ? { default: m.HomePestControlHygieneComplianceIntelligenceCard } : m), { ssr: false });
 
+// ── Batch 54 ──
+const HomeMissingPersonAbsentAuthorityIntelligenceCard = dynamic(() => import("@/components/dashboard/home-missing-person-absent-authority-intelligence-card").then(m => m.HomeMissingPersonAbsentAuthorityIntelligenceCard ? { default: m.HomeMissingPersonAbsentAuthorityIntelligenceCard } : m), { ssr: false });
+const HomeBedroomTemperatureVentilationIntelligenceCard = dynamic(() => import("@/components/dashboard/home-bedroom-temperature-ventilation-intelligence-card").then(m => m.HomeBedroomTemperatureVentilationIntelligenceCard ? { default: m.HomeBedroomTemperatureVentilationIntelligenceCard } : m), { ssr: false });
+const HomeHomeworkEnvironmentStudySpaceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-homework-environment-study-space-intelligence-card").then(m => m.HomeHomeworkEnvironmentStudySpaceIntelligenceCard ? { default: m.HomeHomeworkEnvironmentStudySpaceIntelligenceCard } : m), { ssr: false });
+const HomeWeightManagementHealthyEatingIntelligenceCard = dynamic(() => import("@/components/dashboard/home-weight-management-healthy-eating-intelligence-card").then(m => m.HomeWeightManagementHealthyEatingIntelligenceCard ? { default: m.HomeWeightManagementHealthyEatingIntelligenceCard } : m), { ssr: false });
+
 // ─── Greeting ─────────────────────────────────────────────────────────────────
 
 function getGreeting(): string {
@@ -1843,6 +1849,10 @@ export default function DashboardPage() {
                     <HomeChildVoiceParticipationIntelligenceCard />
                     <HomeAromatherapyWellbeingTherapiesIntelligenceCard />
                     <HomePestControlHygieneComplianceIntelligenceCard />
+                    <HomeMissingPersonAbsentAuthorityIntelligenceCard />
+                    <HomeBedroomTemperatureVentilationIntelligenceCard />
+                    <HomeHomeworkEnvironmentStudySpaceIntelligenceCard />
+                    <HomeWeightManagementHealthyEatingIntelligenceCard />
                     <IntelligenceBriefWidget />
                   </>
                 )}
