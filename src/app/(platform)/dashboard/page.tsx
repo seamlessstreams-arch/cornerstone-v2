@@ -451,6 +451,12 @@ const HomeKeyholdingAccessControlIntelligenceCard = dynamic(() => import("@/comp
 const HomeHandoverCommunicationQualityIntelligenceCard = dynamic(() => import("@/components/dashboard/home-handover-communication-quality-intelligence-card").then(m => m.HomeHandoverCommunicationQualityIntelligenceCard ? { default: m.HomeHandoverCommunicationQualityIntelligenceCard } : m), { ssr: false });
 const HomeClothingLabellingStorageIntelligenceCard = dynamic(() => import("@/components/dashboard/home-clothing-labelling-storage-intelligence-card").then(m => m.HomeClothingLabellingStorageIntelligenceCard ? { default: m.HomeClothingLabellingStorageIntelligenceCard } : m), { ssr: false });
 
+// ── Batch 56 ──
+const HomeElectricityGasSafetyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-electricity-gas-safety-intelligence-card").then(m => m.HomeElectricityGasSafetyIntelligenceCard ? { default: m.HomeElectricityGasSafetyIntelligenceCard } : m), { ssr: false });
+const HomeBathroomShowerFacilitiesIntelligenceCard = dynamic(() => import("@/components/dashboard/home-bathroom-shower-facilities-intelligence-card").then(m => m.HomeBathroomShowerFacilitiesIntelligenceCard ? { default: m.HomeBathroomShowerFacilitiesIntelligenceCard } : m), { ssr: false });
+const HomeMobilePhoneScreenTimeIntelligenceCard = dynamic(() => import("@/components/dashboard/home-mobile-phone-screen-time-intelligence-card").then(m => m.HomeMobilePhoneScreenTimeIntelligenceCard ? { default: m.HomeMobilePhoneScreenTimeIntelligenceCard } : m), { ssr: false });
+const HomePocketMoneyDistributionEquityIntelligenceCard = dynamic(() => import("@/components/dashboard/home-pocket-money-distribution-equity-intelligence-card").then(m => m.HomePocketMoneyDistributionEquityIntelligenceCard ? { default: m.HomePocketMoneyDistributionEquityIntelligenceCard } : m), { ssr: false });
+
 // ─── Greeting ─────────────────────────────────────────────────────────────────
 
 function getGreeting(): string {
@@ -1863,6 +1869,10 @@ export default function DashboardPage() {
                     <HomeKeyholdingAccessControlIntelligenceCard />
                     <HomeHandoverCommunicationQualityIntelligenceCard />
                     <HomeClothingLabellingStorageIntelligenceCard />
+                    <HomeElectricityGasSafetyIntelligenceCard />
+                    <HomeBathroomShowerFacilitiesIntelligenceCard />
+                    <HomeMobilePhoneScreenTimeIntelligenceCard />
+                    <HomePocketMoneyDistributionEquityIntelligenceCard />
                     <IntelligenceBriefWidget />
                   </>
                 )}
