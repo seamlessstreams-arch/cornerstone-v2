@@ -9,6 +9,7 @@ import { KeyboardShortcuts } from "@/components/layout/keyboard-shortcuts";
 import { useCareEventsRealtime } from "@/hooks/use-care-events-realtime";
 import { useAuthContext } from "@/contexts/auth-context";
 import { AriaGlobalButton } from "@/components/aria/aria-global-button";
+import { QuickCreateFab } from "@/components/common/quick-create-fab";
 
 function RealtimeSubscriptions() {
   const { currentUser } = useAuthContext();
@@ -43,6 +44,7 @@ export default function PlatformLayout({
           <KeyboardShortcuts />
           <RealtimeSubscriptions />
           <AriaGlobalButton />
+          <QuickCreateFab />
         </div>
       </SidebarProvider>
     </AuthProvider>

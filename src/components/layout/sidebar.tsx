@@ -2,14 +2,16 @@
 
 // ══════════════════════════════════════════════════════════════════════════════
 // CORNERSTONE — SIDEBAR (redesigned)
-// 8-section grouped navigation. Calm, premium, role-aware.
+// 3-domain grouped navigation. Calm, premium, role-aware.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { NAV_GROUPS } from "@/config/navigation";
+import { NAV_GROUPS, DOMAIN_NAV } from "@/config/navigation";
+import type { FormDomain } from "@/config/form-registry";
+import { DomainCreateMenu } from "@/components/common/domain-create-menu";
 import { usePermissions } from "@/hooks/use-permissions";
 import { useSidebarCounts } from "@/hooks/use-sidebar-counts";
 import { useAuthContext } from "@/contexts/auth-context";
@@ -42,6 +44,8 @@ import {
   Wand2,
   // Other
   Target, ArrowRightLeft, CheckSquare, User, Moon, Share2, FolderArchive, GitCompare, LineChart,
+  // Domain nav icons
+  Zap,
 } from "lucide-react";
 
 // ── Icon lookup ───────────────────────────────────────────────────────────────
@@ -58,19 +62,31 @@ const ICON_MAP: Record<string, React.ElementType> = {
   Brain, Radar, ListChecks, Layers, Puzzle, PlayCircle, Lightbulb, Activity,
   Wand2,
   Target, ArrowRightLeft, CheckSquare, User, Moon, Share2, FolderArchive, GitCompare, LineChart,
+  Zap,
 };
 
 // ── Primary section icons ─────────────────────────────────────────────────────
 
 const PRIMARY_ICONS: Record<string, React.ElementType> = {
-  today:      LayoutDashboard,
-  children:   HeartHandshake,
-  team:       Users,
-  home:       Building2,
-  compliance: ShieldCheck,
-  reports:    BarChart3,
-  aria:       Sparkles,
-  settings:   Settings,
+  today:        LayoutDashboard,
+  children:     HeartHandshake,
+  team:         Users,
+  home:         Building2,
+  compliance:   ShieldCheck,
+  reports:      BarChart3,
+  aria:         Sparkles,
+  settings:     Settings,
+  // Domain nav IDs
+  young_person: HeartHandshake,
+  employee:     Users,
+};
+
+// ── Map domain nav group IDs to FormDomain for Create menus ───────────────────
+
+const DOMAIN_NAV_TO_FORM_DOMAIN: Record<string, FormDomain> = {
+  young_person: "young_person",
+  employee:     "employee",
+  home:         "home",
 };
 
 // ── Role Switcher ─────────────────────────────────────────────────────────────
@@ -181,9 +197,9 @@ export function Sidebar() {
   const counts = useSidebarCounts();
   const { currentRole, currentUser } = useAuthContext();
 
-  // Determine active top-level group from pathname
+  // Determine active top-level group from pathname (uses DOMAIN_NAV)
   function getActiveGroup(): string | null {
-    for (const group of NAV_GROUPS) {
+    for (const group of DOMAIN_NAV) {
       if (group.children.some((c) => pathname === c.href || pathname.startsWith(c.href + "/"))) {
         return group.id;
       }
@@ -250,10 +266,11 @@ export function Sidebar() {
         </button>
       )}
 
-      {/* ── Navigation ──────────────────────────────────────────────────── */}
+      {/* ── Domain Navigation ───────────────────────────────────────────── */}
       <nav className="flex-1 overflow-y-auto py-3 space-y-0.5">
-        {NAV_GROUPS.map((group) => {
+        {DOMAIN_NAV.map((group) => {
           const PrimaryIcon = PRIMARY_ICONS[group.id] ?? LayoutDashboard;
+          const formDomain = DOMAIN_NAV_TO_FORM_DOMAIN[group.id];
 
           // Filter children by permission
           const visibleChildren = group.children.filter(
@@ -294,26 +311,36 @@ export function Sidebar() {
           // ── Expanded ─────────────────────────────────────────────────
           return (
             <div key={group.id} className="px-3">
-              {/* Primary button */}
-              <button
-                onClick={() => toggleGroup(group.id)}
-                className={cn(
-                  "w-full flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all",
-                  childActive
-                    ? "bg-[#eef2ff] text-[#1e3a8a]"
-                    : "text-[#374151] hover:bg-[#f9fafb] hover:text-slate-900",
+              {/* Primary button row with Create menu */}
+              <div className="flex items-center gap-1">
+                <button
+                  onClick={() => toggleGroup(group.id)}
+                  className={cn(
+                    "flex-1 flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all",
+                    childActive
+                      ? "bg-[#eef2ff] text-[#1e3a8a]"
+                      : "text-[#374151] hover:bg-[#f9fafb] hover:text-slate-900",
+                  )}
+                >
+                  <PrimaryIcon className={cn(
+                    "h-[18px] w-[18px] shrink-0 transition-colors",
+                    childActive ? "text-[#1e3a8a]" : "text-[#9ca3af]",
+                  )} />
+                  <span className="flex-1 text-left truncate">{group.label}</span>
+                  {isOpen
+                    ? <ChevronDown className="h-3.5 w-3.5 text-slate-400 shrink-0" />
+                    : <ChevronRight className="h-3.5 w-3.5 text-slate-400 shrink-0" />
+                  }
+                </button>
+
+                {/* Domain Create button */}
+                {formDomain && (
+                  <DomainCreateMenu
+                    domain={formDomain}
+                    className="shrink-0"
+                  />
                 )}
-              >
-                <PrimaryIcon className={cn(
-                  "h-[18px] w-[18px] shrink-0 transition-colors",
-                  childActive ? "text-[#1e3a8a]" : "text-[#9ca3af]",
-                )} />
-                <span className="flex-1 text-left truncate">{group.label}</span>
-                {isOpen
-                  ? <ChevronDown className="h-3.5 w-3.5 text-slate-400 shrink-0" />
-                  : <ChevronRight className="h-3.5 w-3.5 text-slate-400 shrink-0" />
-                }
-              </button>
+              </div>
 
               {/* Children */}
               {isOpen && visibleChildren.length > 0 && (
@@ -361,6 +388,40 @@ export function Sidebar() {
             </div>
           );
         })}
+
+        {/* ── Settings (standalone link) ───────────────────────────────── */}
+        <div className={cn("px-3", collapsed && "px-2")}>
+          {collapsed ? (
+            <Link
+              href="/settings"
+              title="Settings"
+              className={cn(
+                "flex h-10 w-10 mx-auto items-center justify-center rounded-xl transition-all",
+                pathname.startsWith("/settings")
+                  ? "bg-[#eef2ff] text-[#1e3a8a]"
+                  : "text-[#6b7280] hover:bg-slate-100 hover:text-slate-800",
+              )}
+            >
+              <Settings className="h-5 w-5" />
+            </Link>
+          ) : (
+            <Link
+              href="/settings"
+              className={cn(
+                "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all",
+                pathname.startsWith("/settings")
+                  ? "bg-[#eef2ff] text-[#1e3a8a]"
+                  : "text-[#374151] hover:bg-[#f9fafb] hover:text-slate-900",
+              )}
+            >
+              <Settings className={cn(
+                "h-[18px] w-[18px] shrink-0 transition-colors",
+                pathname.startsWith("/settings") ? "text-[#1e3a8a]" : "text-[#9ca3af]",
+              )} />
+              <span className="flex-1 text-left truncate">Settings</span>
+            </Link>
+          )}
+        </div>
       </nav>
 
       {/* ── On-Duty Status Bar ───────────────────────────────────────────── */}
