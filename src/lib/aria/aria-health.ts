@@ -323,7 +323,7 @@ export async function checkAriaHealth(
   const anthropicConfigured = isKeyConfigured("ANTHROPIC_API_KEY");
 
   const openaiModel = process.env.ARIA_TEXT_MODEL ?? "gpt-4o-mini";
-  const anthropicModel = "claude-sonnet-4-6";
+  const anthropicModel = process.env.ARIA_MODEL ?? process.env.ARIA_TEXT_MODEL ?? "claude-sonnet-4-20250514";
 
   let openaiTestStatus: ProviderTestStatus = "skipped";
   let openaiLatency: number | undefined;

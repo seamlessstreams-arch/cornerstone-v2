@@ -165,8 +165,9 @@ export async function generateText(
       };
     } catch (err) {
       console.warn("[aria-provider] generateText (anthropic) failed:", err);
+      const errMsg = err instanceof Error ? err.message : String(err);
       return {
-        text: ariaNotConfiguredFallback(input.expectJson === true),
+        text: ariaProviderErrorFallback(errMsg, "anthropic", input.expectJson === true),
         llmUsed: false,
         providerId: "anthropic",
         modelId: config.textModel,
@@ -315,9 +316,34 @@ export async function transcribeAudio(
 
 function ariaNotConfiguredFallback(expectJson: boolean): string {
   const message =
-    "Aria is not configured in this environment. The provider key has not been set, so the universal Aria layer cannot generate text. Add ANTHROPIC_API_KEY or OPENAI_API_KEY to your server environment to enable it. Domain engines that talk to Anthropic directly (oversight, voice of child, HR Process Guardian) continue to work with their own configuration.";
+    "Aria is not configured in this environment. The provider key has not been set, so the universal Aria layer cannot generate text. Add ANTHROPIC_API_KEY or OPENAI_API_KEY to your server environment to enable it.";
   if (expectJson) {
     return JSON.stringify({ ariaNotConfigured: true, message });
   }
   return `Aria suggested draft. ${message}`;
+}
+
+function ariaProviderErrorFallback(errorDetail: string, provider: string, expectJson: boolean): string {
+  // Parse common provider errors into admin-friendly messages
+  let userMessage: string;
+  const lower = errorDetail.toLowerCase();
+
+  if (lower.includes("credit balance") || lower.includes("billing") || lower.includes("purchase credits")) {
+    userMessage = `Aria's AI provider (${provider}) requires account credits to be topped up. Please visit your ${provider === "anthropic" ? "Anthropic" : "OpenAI"} dashboard to add credits, then Aria will work automatically.`;
+  } else if (lower.includes("authentication") || lower.includes("401") || lower.includes("invalid.*key")) {
+    userMessage = `Aria's API key for ${provider} is invalid or expired. Please update it in the server environment variables.`;
+  } else if (lower.includes("rate limit") || lower.includes("429")) {
+    userMessage = `Aria's AI provider (${provider}) is temporarily rate-limited. Please try again in a moment.`;
+  } else if (lower.includes("503") || lower.includes("529") || lower.includes("overloaded") || lower.includes("unavailable")) {
+    userMessage = `Aria's AI provider (${provider}) is temporarily unavailable. This usually resolves within minutes.`;
+  } else if (lower.includes("timeout") || lower.includes("abort")) {
+    userMessage = `Aria's AI provider (${provider}) took too long to respond. Please try again.`;
+  } else {
+    userMessage = `Aria encountered an issue connecting to ${provider}. The AI provider returned an error. Please check your configuration or try again later.`;
+  }
+
+  if (expectJson) {
+    return JSON.stringify({ ariaError: true, message: userMessage, provider });
+  }
+  return `Aria notice: ${userMessage}`;
 }

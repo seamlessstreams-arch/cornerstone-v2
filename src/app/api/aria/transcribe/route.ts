@@ -141,14 +141,17 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  if (!providerConfig.configured) {
-    // Fail safely without dropping the user's recording silently. The UI
-    // surfaces this as a configuration message and offers retry.
+  if (!providerConfig.configured || providerConfig.providerId === "anthropic") {
+    // Transcription requires OpenAI Whisper — Anthropic does not support audio.
+    // Fail safely. The UI falls back to browser-based speech recognition.
+    const reason = providerConfig.providerId === "anthropic"
+      ? "Voice transcription requires OpenAI (Whisper). Your AI provider (Anthropic) does not support audio transcription. Browser speech recognition will be used instead."
+      : "Transcription is not configured. Set up an AI provider server-side to enable Aria voice dictation.";
     return NextResponse.json(
       {
-        error:
-          "Transcription is not configured in this environment. Add OPENAI_API_KEY server-side to enable Aria voice dictation. The recording has not been stored.",
-        providerConfigured: false,
+        error: reason,
+        providerConfigured: providerConfig.configured,
+        transcriptionAvailable: false,
       },
       { status: 503 },
     );
