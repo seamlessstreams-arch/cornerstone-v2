@@ -457,6 +457,12 @@ const HomeBathroomShowerFacilitiesIntelligenceCard = dynamic(() => import("@/com
 const HomeMobilePhoneScreenTimeIntelligenceCard = dynamic(() => import("@/components/dashboard/home-mobile-phone-screen-time-intelligence-card").then(m => m.HomeMobilePhoneScreenTimeIntelligenceCard ? { default: m.HomeMobilePhoneScreenTimeIntelligenceCard } : m), { ssr: false });
 const HomePocketMoneyDistributionEquityIntelligenceCard = dynamic(() => import("@/components/dashboard/home-pocket-money-distribution-equity-intelligence-card").then(m => m.HomePocketMoneyDistributionEquityIntelligenceCard ? { default: m.HomePocketMoneyDistributionEquityIntelligenceCard } : m), { ssr: false });
 
+// ── Batch 57 ──
+const HomeAllergyManagementFoodSafetyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-allergy-management-food-safety-intelligence-card").then(m => m.HomeAllergyManagementFoodSafetyIntelligenceCard ? { default: m.HomeAllergyManagementFoodSafetyIntelligenceCard } : m), { ssr: false });
+const HomeBathroomAccessibilityAdaptationsIntelligenceCard = dynamic(() => import("@/components/dashboard/home-bathroom-accessibility-adaptations-intelligence-card").then(m => m.HomeBathroomAccessibilityAdaptationsIntelligenceCard ? { default: m.HomeBathroomAccessibilityAdaptationsIntelligenceCard } : m), { ssr: false });
+const HomeUtilityBillsCostManagementIntelligenceCard = dynamic(() => import("@/components/dashboard/home-utility-bills-cost-management-intelligence-card").then(m => m.HomeUtilityBillsCostManagementIntelligenceCard ? { default: m.HomeUtilityBillsCostManagementIntelligenceCard } : m), { ssr: false });
+const HomeNeighbourhoodSafetyRiskAssessmentIntelligenceCard = dynamic(() => import("@/components/dashboard/home-neighbourhood-safety-risk-assessment-intelligence-card").then(m => m.HomeNeighbourhoodSafetyRiskAssessmentIntelligenceCard ? { default: m.HomeNeighbourhoodSafetyRiskAssessmentIntelligenceCard } : m), { ssr: false });
+
 // ─── Greeting ─────────────────────────────────────────────────────────────────
 
 function getGreeting(): string {
@@ -1873,6 +1879,10 @@ export default function DashboardPage() {
                     <HomeBathroomShowerFacilitiesIntelligenceCard />
                     <HomeMobilePhoneScreenTimeIntelligenceCard />
                     <HomePocketMoneyDistributionEquityIntelligenceCard />
+                    <HomeAllergyManagementFoodSafetyIntelligenceCard />
+                    <HomeBathroomAccessibilityAdaptationsIntelligenceCard />
+                    <HomeUtilityBillsCostManagementIntelligenceCard />
+                    <HomeNeighbourhoodSafetyRiskAssessmentIntelligenceCard />
                     <IntelligenceBriefWidget />
                   </>
                 )}
