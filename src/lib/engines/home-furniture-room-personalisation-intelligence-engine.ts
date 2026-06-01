@@ -1173,7 +1173,7 @@ export function computeFurnitureRoomPersonalisation(
     recommendations.push({
       rank: ++rank,
       recommendation:
-        "Ensure every child receives a personalisation budget for their room — a dedicated budget demonstrates the home's commitment to enabling children to shape their environment and express their identity.",
+        "Ensure every child receives a personalisation budget — a dedicated budget demonstrates commitment to enabling children to shape their environment.",
       urgency: "planned",
       regulatory_ref: "SCCIF — Experiences and progress; sense of belonging",
     });
@@ -1183,29 +1183,9 @@ export function computeFurnitureRoomPersonalisation(
     recommendations.push({
       rank: ++rank,
       recommendation:
-        "Increase child consultation when furniture decisions are made — children should be involved in choosing furniture for their bedroom, not just receiving what is provided. This strengthens their sense of agency and belonging.",
+        "Increase child consultation in furniture decisions — children should be involved in choosing bedroom furniture, strengthening agency and belonging.",
       urgency: "planned",
       regulatory_ref: "SCCIF — Voice of the child",
-    });
-  }
-
-  if (childReportedComfortRate < 70 && totalComfortAssessments > 0) {
-    recommendations.push({
-      rank: ++rank,
-      recommendation:
-        "Increase child-reported comfort assessments — ensure comfort assessments include the child's own perspective, not just staff observation. Children's subjective experience of their room is the most important measure.",
-      urgency: "planned",
-      regulatory_ref: "SCCIF — Voice of the child",
-    });
-  }
-
-  if (replacementNeeded > 0 && replacementActionRate < 80 && replacementActionRate >= 50) {
-    recommendations.push({
-      rank: ++rank,
-      recommendation:
-        "Accelerate actioning of identified furniture replacements — where furniture has been assessed as needing replacement, prompt action demonstrates the home values children's living environment.",
-      urgency: "planned",
-      regulatory_ref: "CHR 2015 Reg 25 — Premises",
     });
   }
 
@@ -1217,42 +1197,42 @@ export function computeFurnitureRoomPersonalisation(
 
   if (furnitureAdequacyRate < 50 && totalFurnitureAssessments > 0) {
     insights.push({
-      text: `Only ${furnitureAdequacyRate}% of bedroom furniture items meet adequacy standards. When the majority of furnishings are inadequate, children are living in rooms that do not meet the basic expectations of Reg 25. Ofsted inspectors will look at the physical environment of bedrooms as a direct indicator of care quality — inadequate furniture signals that children's comfort and dignity are not being prioritised.`,
+      text: `Only ${furnitureAdequacyRate}% of bedroom furniture meets adequacy standards. Ofsted inspectors assess the physical environment of bedrooms as a direct indicator of care quality — inadequate furniture signals children's comfort and dignity are not prioritised.`,
       severity: "critical",
     });
   }
 
   if (personalisationRate < 40 && totalPersonalisationAssessments > 0) {
     insights.push({
-      text: `Only ${personalisationRate}% personalisation completion across children's bedrooms. Rooms that lack personal touches, chosen decor, and expressions of identity feel institutional rather than homely. Ofsted explicitly considers whether children's bedrooms reflect their individual identity and choices — low personalisation suggests children have not been empowered or supported to make their room their own.`,
+      text: `Only ${personalisationRate}% personalisation completion. Rooms lacking personal touches and chosen decor feel institutional rather than homely. Ofsted expects bedrooms to reflect children's individual identity and choices.`,
       severity: "critical",
     });
   }
 
   if (dignityRate < 50 && totalDignityAssessments > 0) {
     insights.push({
-      text: `Only ${dignityRate}% of dignity standards met in children's personal spaces. When privacy, personal space, and dignity are not consistently respected, children experience their bedroom not as a safe personal space but as a controlled environment. This directly contradicts the SCCIF expectation that children experience dignity and respect in their daily lives.`,
+      text: `Only ${dignityRate}% of dignity standards met. When privacy and dignity are not consistently respected, children experience their bedroom as a controlled environment rather than a safe personal space, contradicting SCCIF expectations.`,
       severity: "critical",
     });
   }
 
   if (comfortRate < 50 && totalComfortAssessments > 0) {
     insights.push({
-      text: `Only ${comfortRate}% comfort compliance across children's bedrooms. Uncomfortable bedrooms — whether due to temperature, noise, poor mattresses, or lack of privacy — affect children's sleep quality, emotional regulation, and overall wellbeing. The physical environment of a child's bedroom is a foundational element of quality care.`,
+      text: `Only ${comfortRate}% comfort compliance. Uncomfortable bedrooms affect children's sleep quality, emotional regulation, and overall wellbeing. The physical environment is a foundational element of quality care.`,
       severity: "critical",
     });
   }
 
   if (notUsedAsPunishmentRate < 100 && totalDignityAssessments > 0) {
     insights.push({
-      text: `Evidence that bedrooms may be used as punishment or sanction in some cases. Using a child's personal space punitively is harmful — it transforms their bedroom from a place of safety and comfort into a place associated with control and negative consequences. This practice must cease immediately and is likely to be viewed seriously by Ofsted.`,
+      text: "Evidence that bedrooms may be used as punishment in some cases. Using a child's personal space punitively transforms it from a place of safety into one associated with control. This must cease immediately.",
       severity: "critical",
     });
   }
 
   if (feelsSafeRate < 70 && totalComfortAssessments > 0) {
     insights.push({
-      text: `Only ${feelsSafeRate}% of children feel safe in their bedroom. A child who does not feel safe in their own room is unlikely to sleep well, relax, or use their bedroom as the personal retreat it should be. This may indicate concerns about peer dynamics, staff intrusion, environmental factors, or unresolved anxieties that require individual exploration.`,
+      text: `Only ${feelsSafeRate}% of children feel safe in their bedroom. This may indicate concerns about peer dynamics, staff intrusion, or environmental factors requiring individual exploration.`,
       severity: "critical",
     });
   }
@@ -1315,17 +1295,6 @@ export function computeFurnitureRoomPersonalisation(
   }
 
   if (
-    choiceFulfilmentRate >= 50 &&
-    choiceFulfilmentRate < 70 &&
-    totalChoiceRecords > 0
-  ) {
-    insights.push({
-      text: `Choice fulfilment at ${choiceFulfilmentRate}% — some children's room preferences remain unfulfilled. When children express a choice and it is not delivered, it can feel dismissive. Review what is preventing fulfilment and communicate transparently with children about timelines.`,
-      severity: "warning",
-    });
-  }
-
-  if (
     furnitureConditionAvg > 0 &&
     furnitureConditionAvg < 2.5 &&
     totalFurnitureAssessments > 0
@@ -1341,22 +1310,16 @@ export function computeFurnitureRoomPersonalisation(
     .sort((a, b) => b[1] - a[1])
     .slice(0, 3);
   if (topChoiceTypes.length > 0 && totalChoiceRecords >= 5) {
-    const typeStr = topChoiceTypes
-      .map(([t, c]) => `${t} (${c})`)
-      .join(", ");
+    const typeStr = topChoiceTypes.map(([t, c]) => `${t} (${c})`).join(", ");
     insights.push({
-      text: `Most common room choice types: ${typeStr}. Consider whether children are being offered the full range of choice opportunities — furniture, decor, colour, bedding, layout, lighting, and accessories — or whether choices are concentrated in a narrow range.`,
+      text: `Most common room choice types: ${typeStr}. Consider whether children are offered the full range of choice opportunities across furniture, decor, colour, bedding, layout, and accessories.`,
       severity: "warning",
     });
   }
 
-  if (
-    budgetUtilisationRate > 0 &&
-    budgetUtilisationRate < 50 &&
-    totalBudgetApproved > 0
-  ) {
+  if (budgetUtilisationRate > 0 && budgetUtilisationRate < 50 && totalBudgetApproved > 0) {
     insights.push({
-      text: `Personalisation budget utilisation at only ${budgetUtilisationRate}% — budgets have been approved but are not being fully used. This may indicate that children need more support, time, or encouragement to spend their personalisation budget, or that the budget process has barriers.`,
+      text: `Personalisation budget utilisation at only ${budgetUtilisationRate}% — budgets approved but not fully used. Children may need more support or encouragement to spend their personalisation budget.`,
       severity: "warning",
     });
   }
@@ -1370,91 +1333,51 @@ export function computeFurnitureRoomPersonalisation(
     });
   }
 
-  if (
-    furnitureAdequacyRate >= 95 &&
-    furnitureConditionAvg >= 3.5 &&
-    totalFurnitureAssessments > 0
-  ) {
+  if (furnitureAdequacyRate >= 95 && furnitureConditionAvg >= 3.5 && totalFurnitureAssessments > 0) {
     insights.push({
-      text: `${furnitureAdequacyRate}% furniture adequacy with average condition ${furnitureConditionAvg}/4 — children's bedrooms are comprehensively and well-furnished. The home invests in maintaining furnishings to a high standard, creating a comfortable and functional environment for each child.`,
+      text: `${furnitureAdequacyRate}% furniture adequacy with condition ${furnitureConditionAvg}/4 — bedrooms are comprehensively and well-furnished to a high standard.`,
       severity: "positive",
     });
   }
 
-  if (
-    personalisationRate >= 90 &&
-    identityReflectionRate >= 90 &&
-    totalPersonalisationAssessments > 0
-  ) {
+  if (personalisationRate >= 90 && identityReflectionRate >= 90 && totalPersonalisationAssessments > 0) {
     insights.push({
-      text: `${personalisationRate}% personalisation with ${identityReflectionRate}% of rooms assessed as reflecting the child's identity — bedrooms are not just decorated but genuinely express who each child is. This is a powerful indicator that children feel they belong and that their individuality is celebrated.`,
+      text: `${personalisationRate}% personalisation with ${identityReflectionRate}% identity reflection — bedrooms genuinely express who each child is, a powerful indicator of belonging.`,
       severity: "positive",
     });
   }
 
-  if (
-    childChoiceRate >= 90 &&
-    choiceSatisfactionRate >= 90 &&
-    total_children > 0 &&
-    fulfilledChoices > 0
-  ) {
+  if (childChoiceRate >= 90 && choiceSatisfactionRate >= 90 && total_children > 0 && fulfilledChoices > 0) {
     insights.push({
-      text: `${childChoiceRate}% of children exercising room choice with ${choiceSatisfactionRate}% satisfaction with outcomes — children are not just offered choice but are satisfied with how their preferences are implemented. This demonstrates genuine child-centred practice in creating personal spaces.`,
+      text: `${childChoiceRate}% choice rate with ${choiceSatisfactionRate}% satisfaction — children are not just offered choice but satisfied with how preferences are implemented.`,
       severity: "positive",
     });
   }
 
-  if (
-    comfortRate >= 95 &&
-    comfortRatingAvg >= 4.0 &&
-    totalComfortAssessments > 0
-  ) {
+  if (comfortRate >= 95 && comfortRatingAvg >= 4.0 && totalComfortAssessments > 0) {
     insights.push({
-      text: `${comfortRate}% comfort compliance with average rating ${comfortRatingAvg}/5 — bedrooms consistently provide a comfortable, well-maintained environment where children can sleep well, relax, and feel at ease in their personal space.`,
+      text: `${comfortRate}% comfort compliance with rating ${comfortRatingAvg}/5 — bedrooms consistently provide a comfortable environment for sleep and relaxation.`,
       severity: "positive",
     });
   }
 
-  if (
-    dignityRate >= 95 &&
-    ownershipFeelingRate >= 90 &&
-    totalDignityAssessments > 0
-  ) {
+  if (dignityRate >= 95 && ownershipFeelingRate >= 90 && totalDignityAssessments > 0) {
     insights.push({
-      text: `${dignityRate}% dignity standards met with ${ownershipFeelingRate}% of children feeling their room is truly theirs — the home exemplifies respect for children's personal space, privacy, and autonomy. Children's rooms function as genuine personal domains where they feel ownership and security.`,
+      text: `${dignityRate}% dignity with ${ownershipFeelingRate}% ownership feeling — the home exemplifies respect for children's personal space, privacy, and autonomy.`,
       severity: "positive",
     });
   }
 
-  if (
-    childSatisfactionRate >= 90 &&
-    satisfactionOpportunities > 0
-  ) {
+  if (childSatisfactionRate >= 90 && satisfactionOpportunities > 0) {
     insights.push({
-      text: `${childSatisfactionRate}% child satisfaction with rooms — children overwhelmingly feel positive about their bedroom environment. This child-reported evidence is the strongest indicator that the home's approach to furniture, personalisation, and room management is genuinely meeting children's needs and wishes.`,
+      text: `${childSatisfactionRate}% child satisfaction — children feel positive about their bedroom environment, the strongest indicator the home's approach genuinely meets their needs.`,
       severity: "positive",
     });
   }
 
-  if (
-    knockBeforeEntryRate >= 95 &&
-    workingLockRate >= 100 &&
-    spaceRespectedRate >= 95 &&
-    totalDignityAssessments > 0
-  ) {
+  if (knockBeforeEntryRate >= 95 && workingLockRate >= 100 && spaceRespectedRate >= 95 && totalDignityAssessments > 0) {
     insights.push({
-      text: "Exemplary privacy and dignity practice — staff consistently knock before entry, every room has a working lock, and personal space is consistently respected.",
-      severity: "positive",
-    });
-  }
-
-  if (
-    budgetProvisionRate >= 90 &&
-    budgetUtilisationRate >= 70 &&
-    totalPersonalisationAssessments > 0
-  ) {
-    insights.push({
-      text: `${budgetProvisionRate}% budget provision with ${budgetUtilisationRate}% utilisation — the home allocates and supports personalisation budgets, enabling children to make their room their own.`,
+      text: "Exemplary privacy practice — staff consistently knock before entry, every room has a working lock, and personal space is respected.",
       severity: "positive",
     });
   }
