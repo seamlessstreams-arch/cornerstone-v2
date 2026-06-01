@@ -2,27 +2,31 @@ import type { Metadata, Viewport } from "next";
 import { QueryProvider } from "@/providers/query-provider";
 import { Toaster } from "@/components/ui/toaster";
 import "./globals.css";
-import { Geist } from "next/font/google";
-import { cn } from "@/lib/utils";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+// ── Cornerstone uses Avenir Next LT Pro (declared in globals.css via @font-face)
+// with a graceful fallback chain. No Google Fonts dependency.
+// This gives Cornerstone a distinctive, warm, professional identity
+// that doesn't look like a generic template.
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
   viewportFit: "cover",
-  themeColor: "#1e293b",
+  themeColor: "#0f1e36", // Cornerstone navy
 };
 
 export const metadata: Metadata = {
-  title: "Cornerstone | The Operating System for Children's Homes",
+  title: "Cornerstone | Care OS for Children's Homes",
   description:
-    "Regulated care operations platform for children's residential homes. Safeguarding, compliance, delegation, and oversight in one intelligent workflow.",
+    "The operating system for children's residential care. Safeguarding, compliance, intelligence, and oversight — calm, clear, and always Ofsted-ready.",
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
     title: "Cornerstone",
+  },
+  other: {
+    "apple-mobile-web-app-capable": "yes",
   },
 };
 
@@ -30,8 +34,8 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={cn("h-full antialiased", "font-sans", geist.variable)}>
-      <body className="min-h-full bg-[#f7f8fa] font-sans">
+    <html lang="en" className="h-full antialiased" style={{ fontFamily: "var(--font-sans)" }}>
+      <body className="min-h-full bg-[var(--cs-bg)] text-[var(--cs-text)] selection:bg-[var(--cs-aria-gold-soft)] selection:text-[var(--cs-navy)]">
         <QueryProvider>{children}</QueryProvider>
         <Toaster />
       </body>

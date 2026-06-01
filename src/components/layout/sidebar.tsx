@@ -219,8 +219,8 @@ export function Sidebar() {
   return (
     <aside
       className={cn(
-        "fixed left-0 top-0 z-40 hidden md:flex h-screen flex-col bg-white transition-all duration-300 ease-in-out",
-        "border-r border-[#e5e7eb]",
+        "fixed left-0 top-0 z-40 hidden md:flex h-screen flex-col cs-sidebar-gradient transition-all duration-300 ease-in-out",
+        "border-r border-white/10",
         collapsed ? "w-[64px]" : "w-[256px]",
       )}
     >
