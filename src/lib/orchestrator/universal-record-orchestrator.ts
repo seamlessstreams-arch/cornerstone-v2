@@ -72,6 +72,8 @@ const RECORD_PREFIX_MAP: Record<string, string> = {
   vehicle_check: "VCK",
   observation: "OBS",
   training_record: "TRN",
+  wellbeing_check: "WBC",
+  performance_support: "PSP",
 };
 
 /** Maps record_type to the timeline event_type string. */
@@ -95,6 +97,8 @@ const TIMELINE_EVENT_TYPE_MAP: Record<string, string> = {
   vehicle_check: "vehicle_check_completed",
   observation: "observation_recorded",
   training_record: "staff_training_completed",
+  wellbeing_check: "staff_wellbeing_check",
+  performance_support: "staff_performance_support",
 };
 
 /** Record types that are inherently high-risk by default. */
@@ -132,6 +136,8 @@ const STORE_COLLECTION_MAP: Record<string, string> = {
   vehicle_check: "vehicleChecks",
   observation: "observations",
   training_record: "trainingRecords",
+  wellbeing_check: "staffWellbeingChecks",
+  performance_support: "performanceSupportPlans",
 };
 
 // ─── Reference Number Generator ─────────────────────────────────────────────

@@ -41,6 +41,8 @@ const VALID_RECORD_TYPES = new Set([
   "vehicle_check",
   "observation",
   "training_record",
+  "wellbeing_check",
+  "performance_support",
 ]);
 
 // ── POST Handler ────────────────────────────────────────────────────────────
