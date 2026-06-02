@@ -28,6 +28,7 @@ import { useAuthContext } from "@/contexts/auth-context";
 import { usePermissions } from "@/hooks/use-permissions";
 import type { AppRole } from "@/lib/permissions";
 import { SmartUploadButton } from "@/components/documents/smart-upload-button";
+import { TaskSlaCard } from "@/components/dashboard/task-sla-card";
 
 // ── Dynamic imports — loaded on demand to prevent browser memory crash ────────
 
@@ -1255,6 +1256,11 @@ export default function DashboardPage() {
 
         <section aria-label="What Needs Attention">
           <ZoneHeader label={config.zoneALabel} description={config.zoneADescription} />
+
+          {/* Action SLA breaches — overdue deadline-bound tasks from recorded events */}
+          <div className="mt-3">
+            <TaskSlaCard />
+          </div>
 
           {/* Read-only access banner */}
           {config.showReadOnlyBanner && (
