@@ -1918,6 +1918,1707 @@ If this task relates to a child's safety, welfare, or a regulatory requirement, 
         "Aria audit risk prioritisation — address critical and high items first. Create corrective action plans for each category.");
     return { ...risks, output };
   },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // TEMPLATE HANDLERS (20) — Structured template generation from input text
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  draft_daily_log: (input, ctx) => {
+    const today = ctx?.date || new Date().toISOString().slice(0, 10);
+    const childRef = ctx?.childName || "[Child's name]";
+    let sectionsFilled = 0;
+
+    // Try to extract mood from input
+    const moodMatch = input.match(/(?:mood|feeling|seemed|appeared|was)\s+(\w+)/i);
+    const mood = moodMatch ? moodMatch[1] : "[Describe mood]";
+    if (moodMatch) sectionsFilled++;
+
+    // Try to extract events
+    const hasEvents = input.trim().length > 20;
+    if (hasEvents) sectionsFilled++;
+
+    const output = `**Daily Log — ${today}**
+
+**Child:** ${childRef}
+**Recorded By:** [Staff name]
+**Mood on Waking:** ${mood}
+
+---
+
+**Morning:**
+${hasEvents ? input : "[Record morning activities, interactions, and observations]"}
+
+**Afternoon:**
+[Record afternoon activities, interactions, and observations]
+
+**Evening:**
+[Record evening activities, interactions, and observations]
+
+---
+
+**Key Events:**
+[Summarise any significant events from the day]
+
+**Concerns:**
+[Note any concerns — or record "No concerns"]
+
+**Follow-Up Required:**
+[List any actions needed for tomorrow or beyond]
+
+---
+*Aria template — complete all sections before end of shift. Write to the child — they may read this one day.*`;
+
+    return { output, confidence: "high", method: "template", metadata: { sections_filled: sectionsFilled } };
+  },
+
+  draft_incident_record: (input, ctx) => {
+    const today = ctx?.date || new Date().toISOString().slice(0, 10);
+    const childRef = ctx?.childName || "[Child's name]";
+    let sectionsFilled = 0;
+
+    // Try to extract incident type
+    let incidentType = "[Type of incident]";
+    if (/restrain|physical\s+intervention/i.test(input)) { incidentType = "Physical intervention / restraint"; sectionsFilled++; }
+    else if (/missing|abscond/i.test(input)) { incidentType = "Missing from care"; sectionsFilled++; }
+    else if (/self[\s-]?harm/i.test(input)) { incidentType = "Self-harm"; sectionsFilled++; }
+    else if (/damage|property/i.test(input)) { incidentType = "Property damage"; sectionsFilled++; }
+    else if (/aggressive|violen|assault/i.test(input)) { incidentType = "Aggression / violence"; sectionsFilled++; }
+    else if (/safeguard|disclosure/i.test(input)) { incidentType = "Safeguarding concern / disclosure"; sectionsFilled++; }
+
+    const hasNarrative = input.trim().length > 20;
+    if (hasNarrative) sectionsFilled++;
+
+    const output = `**Incident Record**
+
+**Date:** ${today}
+**Time:** [HH:MM]
+**Child:** ${childRef}
+**Type:** ${incidentType}
+**Location:** [Where the incident occurred]
+**Staff Present:** [List all staff present]
+
+---
+
+**A — Antecedent (What happened before):**
+[What was happening before the incident? What triggered it?]
+
+**B — Behaviour (What happened):**
+${hasNarrative ? input : "[Describe the incident factually — what did the child do/say?]"}
+
+**C — Consequence (What happened after):**
+[What actions were taken? How did the child respond?]
+
+---
+
+**Immediate Actions Taken:**
+[List all actions taken at the time]
+
+**Notifications:**
+- [ ] Manager informed — [Name, time]
+- [ ] Social worker informed — [Name, time]
+- [ ] Parent/carer informed — [Name, time]
+- [ ] Ofsted (Reg 40) — [If applicable]
+- [ ] Police — [If applicable]
+
+**Body Map Required:** [ ] Yes  [ ] No
+**Physical Intervention Used:** [ ] Yes  [ ] No
+
+**Child's Views:**
+[Record the child's own words about what happened]
+
+---
+*Aria template — complete all sections. High-severity incidents require manager oversight within 24 hours.*`;
+
+    return { output, confidence: "high", method: "template", metadata: { sections_filled: sectionsFilled } };
+  },
+
+  draft_keywork_session: (input, ctx) => {
+    const today = ctx?.date || new Date().toISOString().slice(0, 10);
+    const childRef = ctx?.childName || "[Child's name]";
+    let sectionsFilled = 0;
+
+    const hasThemes = input.trim().length > 20;
+    if (hasThemes) sectionsFilled++;
+
+    const output = `**Key Work Session Record**
+
+**Date:** ${today}
+**Child:** ${childRef}
+**Key Worker:** [Staff name]
+**Duration:** [Start time] — [End time]
+**Location:** [Where the session took place]
+
+---
+
+**Themes Discussed:**
+${hasThemes ? input : "[What topics were covered in the session?]"}
+
+**Child's Views:**
+[Record what the child said in their own words as much as possible]
+
+**Agreed Actions:**
+1. [ ] [Action — who will do what, by when]
+2. [ ] [Action — who will do what, by when]
+3. [ ] [Action — who will do what, by when]
+
+**Key Worker Observations:**
+[How did the child engage? Any notable responses or changes?]
+
+**Next Session:**
+**Date:** [Planned date]
+**Focus:** [What will be covered next time]
+
+---
+*Aria template — complete after each key work session. The child's voice should be central to this record.*`;
+
+    return { output, confidence: "high", method: "template", metadata: { sections_filled: sectionsFilled } };
+  },
+
+  draft_supervision_notes: (input, ctx) => {
+    const today = ctx?.date || new Date().toISOString().slice(0, 10);
+    const staffRef = ctx?.staffName || "[Supervisee name]";
+    let sectionsFilled = 0;
+
+    const hasContent = input.trim().length > 20;
+    if (hasContent) sectionsFilled++;
+
+    const output = `**Supervision Record**
+
+**Date:** ${today}
+**Supervisee:** ${staffRef}
+**Supervisor:** [Supervisor name]
+**Type:** [ ] Formal  [ ] Informal  [ ] Ad-hoc
+**Duration:** [Start time] — [End time]
+
+---
+
+**1. Wellbeing Check:**
+[How is the supervisee? Any personal or professional stressors?]
+
+**2. Review of Previous Actions:**
+[Check progress on actions from last supervision]
+
+**3. Caseload Review (Key Children):**
+${hasContent ? input : "[Discuss each key child — progress, concerns, plans]"}
+
+**4. Practice Discussion:**
+[Reflect on recent practice — what went well, what could improve]
+
+**5. Safeguarding:**
+[Any safeguarding updates, concerns, or refresher needed?]
+
+**6. Training & Development:**
+[Training completed, upcoming, or needed]
+
+**7. Any Other Matters:**
+[Anything else the supervisee wishes to raise]
+
+---
+
+**Agreed Actions:**
+| # | Action | Owner | Due Date |
+|---|--------|-------|----------|
+| 1 | [Action] | [Name] | [Date] |
+| 2 | [Action] | [Name] | [Date] |
+
+**Next Supervision Date:** [Date]
+
+---
+*Aria template — both parties should sign. Supervision should occur at least monthly per Reg 33.*`;
+
+    return { output, confidence: "high", method: "template", metadata: { sections_filled: sectionsFilled } };
+  },
+
+  draft_contact_summary: (input, ctx) => {
+    const today = ctx?.date || new Date().toISOString().slice(0, 10);
+    let sectionsFilled = 0;
+
+    const hasContent = input.trim().length > 20;
+    if (hasContent) sectionsFilled++;
+
+    // Try to extract contact method
+    let method = "[Phone / Email / In person / Video call]";
+    if (/phone|call|rang/i.test(input)) { method = "Phone call"; sectionsFilled++; }
+    else if (/email|emailed/i.test(input)) { method = "Email"; sectionsFilled++; }
+    else if (/visit|met|meeting|in\s+person|face[\s-]?to[\s-]?face/i.test(input)) { method = "In person"; sectionsFilled++; }
+    else if (/video|zoom|teams/i.test(input)) { method = "Video call"; sectionsFilled++; }
+
+    const output = `**Contact Summary**
+
+**Date:** ${today}
+**Contact With:** [Name and role/relationship]
+**Method:** ${method}
+**Purpose:** [Reason for contact]
+**Staff Member:** [Who made/received the contact]
+
+---
+
+**Key Points Discussed:**
+${hasContent ? input : "[Summarise the main points of the conversation]"}
+
+**Outcome:**
+[What was agreed or decided]
+
+**Follow-Up Required:**
+1. [ ] [Action — who, by when]
+2. [ ] [Action — who, by when]
+
+---
+*Aria template — record all external contacts. Link to the relevant child or staff record.*`;
+
+    return { output, confidence: "high", method: "template", metadata: { sections_filled: sectionsFilled } };
+  },
+
+  draft_education_summary: (input, ctx) => {
+    const childRef = ctx?.childName || "[Child's name]";
+    let sectionsFilled = 0;
+
+    const hasContent = input.trim().length > 20;
+    if (hasContent) sectionsFilled++;
+
+    const output = `**Education Summary**
+
+**Child:** ${childRef}
+**School:** [School name]
+**Year Group:** [Year]
+**Date of Summary:** ${ctx?.date || new Date().toISOString().slice(0, 10)}
+
+---
+
+**Attendance:** [XX%]
+**Exclusions This Term:** [Number, if any]
+
+**Current Progress:**
+${hasContent ? input : "[Summarise academic progress across subjects]"}
+
+**Concerns:**
+[Any concerns raised by school or home — behaviour, engagement, SEN]
+
+**PEP Status:**
+- Last PEP Date: [Date]
+- Next PEP Due: [Date]
+- Pupil Premium Plus: [ ] Applied for  [ ] Received
+
+**Actions:**
+1. [ ] [Action — who, by when]
+2. [ ] [Action — who, by when]
+
+---
+*Aria template — update termly or when circumstances change. Ensure PEP is current.*`;
+
+    return { output, confidence: "high", method: "template", metadata: { sections_filled: sectionsFilled } };
+  },
+
+  draft_health_summary: (input, ctx) => {
+    const childRef = ctx?.childName || "[Child's name]";
+    let sectionsFilled = 0;
+
+    const hasContent = input.trim().length > 20;
+    if (hasContent) sectionsFilled++;
+
+    const output = `**Health Summary**
+
+**Child:** ${childRef}
+**Date of Summary:** ${ctx?.date || new Date().toISOString().slice(0, 10)}
+
+---
+
+**GP:** [Name and surgery]
+**Dentist:** [Name and practice]
+**Optician:** [Name and practice]
+
+**Current Medications:**
+| Medication | Dose | Frequency | Prescriber |
+|------------|------|-----------|------------|
+| [Name] | [Dose] | [Frequency] | [GP/Consultant] |
+
+**Allergies/Sensitivities:** [List or "None known"]
+
+**Recent Appointments:**
+${hasContent ? input : "[List recent health appointments and outcomes]"}
+
+**Upcoming Appointments:**
+[List any booked appointments]
+
+**Concerns:**
+[Any current health concerns — physical, emotional, dental]
+
+**Actions:**
+1. [ ] [Action — who, by when]
+2. [ ] [Action — who, by when]
+
+---
+*Aria template — review at each health appointment. Ensure annual health assessment is current.*`;
+
+    return { output, confidence: "high", method: "template", metadata: { sections_filled: sectionsFilled } };
+  },
+
+  draft_independence_summary: (input, ctx) => {
+    const childRef = ctx?.childName || "[Child's name]";
+    let sectionsFilled = 0;
+
+    const hasContent = input.trim().length > 20;
+    if (hasContent) sectionsFilled++;
+
+    const output = `**Independence Skills Summary**
+
+**Child:** ${childRef}
+**Date of Assessment:** ${ctx?.date || new Date().toISOString().slice(0, 10)}
+**Assessed By:** [Staff name]
+
+---
+
+**Skills Assessed:**
+
+| Skill Area | Level | Notes |
+|------------|-------|-------|
+| Cooking/Meal prep | [ ] Independent  [ ] Supported  [ ] Not started | [Notes] |
+| Laundry | [ ] Independent  [ ] Supported  [ ] Not started | [Notes] |
+| Budgeting/Money | [ ] Independent  [ ] Supported  [ ] Not started | [Notes] |
+| Personal hygiene | [ ] Independent  [ ] Supported  [ ] Not started | [Notes] |
+| Using public transport | [ ] Independent  [ ] Supported  [ ] Not started | [Notes] |
+| Making appointments | [ ] Independent  [ ] Supported  [ ] Not started | [Notes] |
+| Online safety | [ ] Independent  [ ] Supported  [ ] Not started | [Notes] |
+
+**Progress Areas:**
+${hasContent ? input : "[Where has the young person made progress?]"}
+
+**Goals:**
+1. [Short-term goal — within 1 month]
+2. [Medium-term goal — within 3 months]
+3. [Long-term goal — within 6 months]
+
+**Support Needed:**
+[What support does the young person need to achieve these goals?]
+
+---
+*Aria template — review monthly. Align with pathway plan if aged 16+.*`;
+
+    return { output, confidence: "high", method: "template", metadata: { sections_filled: sectionsFilled } };
+  },
+
+  draft_team_meeting_minutes: (input, ctx) => {
+    const today = ctx?.date || new Date().toISOString().slice(0, 10);
+    let sectionsFilled = 0;
+
+    const hasContent = input.trim().length > 20;
+    if (hasContent) sectionsFilled++;
+
+    const output = `**Team Meeting Minutes — ${today}**
+
+**Date:** ${today}
+**Time:** [Start] — [End]
+**Chair:** [Name]
+**Minutes By:** [Name]
+**Attendees:** [List all]
+**Apologies:** [List any]
+
+---
+
+**1. Minutes of Last Meeting:**
+[Accuracy agreed / amendments noted]
+
+**2. Matters Arising / Action Tracker:**
+[Review outstanding actions from previous meeting]
+
+**3. Children's Updates:**
+${hasContent ? input : "[Update for each child — key events, progress, concerns]"}
+
+**4. Incidents Since Last Meeting:**
+[Summary of incidents and any patterns]
+
+**5. Staffing:**
+[Rota, leave, sickness, vacancies]
+
+**6. Training:**
+[Upcoming, completed, outstanding mandatory]
+
+**7. Health & Safety:**
+[Any H&S issues, fire drill, maintenance]
+
+**8. AOB:**
+[Any other business]
+
+---
+
+**Actions:**
+| # | Action | Owner | Due Date |
+|---|--------|-------|----------|
+| 1 | [Action] | [Name] | [Date] |
+
+**Next Meeting:** [Date and time]
+
+---
+*Aria template — circulate to all staff within 48 hours. File in team meeting records.*`;
+
+    return { output, confidence: "high", method: "template", metadata: { sections_filled: sectionsFilled } };
+  },
+
+  draft_return_to_work_note: (input, ctx) => {
+    const today = ctx?.date || new Date().toISOString().slice(0, 10);
+    const staffRef = ctx?.staffName || "[Staff member name]";
+    let sectionsFilled = 0;
+
+    const hasContent = input.trim().length > 20;
+    if (hasContent) sectionsFilled++;
+
+    const output = `**Return to Work Record**
+
+**Staff Member:** ${staffRef}
+**Date of Meeting:** ${today}
+**Conducted By:** [Manager name]
+
+---
+
+**Absence Details:**
+**First Day of Absence:** [Date]
+**Last Day of Absence:** [Date]
+**Total Days Absent:** [Number]
+**Reason for Absence:** ${hasContent ? input : "[Record reason given]"}
+
+**Fit Note Provided:** [ ] Yes  [ ] No  [ ] N/A (under 7 days)
+
+---
+
+**Return to Work Discussion:**
+
+**Are you fit to return to full duties?** [ ] Yes  [ ] No
+
+**Support Offered:**
+[What support was discussed or offered?]
+
+**Phased Return:** [ ] Yes  [ ] No
+[If yes, detail the phased return plan]
+
+**Occupational Health Referral:** [ ] Yes  [ ] No
+
+**Any Adjustments Needed:**
+[Reasonable adjustments or temporary changes]
+
+---
+
+**Follow-Up:**
+**Next check-in date:** [Date]
+**Any triggers under absence management policy?** [ ] Yes  [ ] No
+
+**Staff Signature:** _______________  **Date:** ${today}
+**Manager Signature:** _______________  **Date:** ${today}
+
+---
+*Aria template — file in personnel record. Handle sensitively and confidentially.*`;
+
+    return { output, confidence: "high", method: "template", metadata: { sections_filled: sectionsFilled } };
+  },
+
+  draft_training_need_summary: (input, ctx) => {
+    const today = ctx?.date || new Date().toISOString().slice(0, 10);
+    let sectionsFilled = 0;
+
+    const hasContent = input.trim().length > 20;
+    if (hasContent) sectionsFilled++;
+
+    const output = `**Training Need Summary**
+
+**Date:** ${today}
+**Staff/Team:** ${ctx?.staffName || "[Individual or whole team]"}
+**Identified By:** [Name and role]
+
+---
+
+**Mandatory Training Status:**
+| Training | Status | Expiry | Priority |
+|----------|--------|--------|----------|
+| Safeguarding L3 | [ ] Current  [ ] Due  [ ] Overdue | [Date] | High |
+| First Aid | [ ] Current  [ ] Due  [ ] Overdue | [Date] | High |
+| TCI / Physical Intervention | [ ] Current  [ ] Due  [ ] Overdue | [Date] | High |
+| Fire Safety | [ ] Current  [ ] Due  [ ] Overdue | [Date] | High |
+| Medication Administration | [ ] Current  [ ] Due  [ ] Overdue | [Date] | Medium |
+| GDPR/Data Protection | [ ] Current  [ ] Due  [ ] Overdue | [Date] | Medium |
+
+**Gaps Identified:**
+${hasContent ? input : "[List specific training gaps and how they were identified]"}
+
+**Priority:** [ ] Urgent  [ ] High  [ ] Medium  [ ] Low
+
+**Budget Implications:**
+[Estimated cost and funding source]
+
+**Timeline:**
+[When should training be completed by?]
+
+**Actions:**
+1. [ ] [Action — who, by when]
+2. [ ] [Action — who, by when]
+
+---
+*Aria template — update training matrix once training is booked/completed.*`;
+
+    return { output, confidence: "high", method: "template", metadata: { sections_filled: sectionsFilled } };
+  },
+
+  draft_reference_request: (input, ctx) => {
+    const today = ctx?.date || new Date().toISOString().slice(0, 10);
+    let sectionsFilled = 0;
+
+    const hasContent = input.trim().length > 10;
+    if (hasContent) sectionsFilled++;
+
+    const output = `**Reference Request Letter**
+
+[Your Organisation Name]
+[Address]
+[Date: ${today}]
+
+**To:** [Referee name and address]
+
+**Re:** Reference for ${hasContent ? input : "[Candidate name]"}
+**Position Applied For:** [Job title]
+
+---
+
+Dear [Referee name],
+
+The above-named individual has applied for the position of [job title] with [organisation name]. They have given your name as a referee. As this role involves working with children, we would be grateful if you could provide a reference at your earliest convenience.
+
+Please respond to the following:
+
+1. **Dates of employment:** From _____ to _____
+2. **Job title and responsibilities:** _____
+3. **Reason for leaving:** _____
+4. **Attendance/sickness record:** _____
+5. **Any disciplinary action taken:** [ ] Yes  [ ] No  If yes, details: _____
+6. **Any safeguarding concerns raised:** [ ] Yes  [ ] No  If yes, details: _____
+7. **Would you re-employ this person?** [ ] Yes  [ ] No
+8. **Any other information relevant to working with children:** _____
+
+**Referee Declaration:**
+I confirm this information is accurate to the best of my knowledge.
+
+**Name:** _____  **Position:** _____
+**Signature:** _____  **Date:** _____
+
+---
+
+Please return this reference to [email/address] by [date — 10 working days from today].
+
+Yours sincerely,
+
+[Your name]
+[Your title]
+
+---
+*Aria template — send promptly. Chase if not received within 10 working days.*`;
+
+    return { output, confidence: "high", method: "template", metadata: { sections_filled: sectionsFilled } };
+  },
+
+  draft_reference_chaser: (input, ctx) => {
+    const today = ctx?.date || new Date().toISOString().slice(0, 10);
+    let sectionsFilled = 0;
+
+    const hasContent = input.trim().length > 10;
+    if (hasContent) sectionsFilled++;
+
+    const output = `**Reference Chaser Letter**
+
+[Your Organisation Name]
+[Address]
+[Date: ${today}]
+
+**To:** [Original referee name and address]
+
+---
+
+Dear [Referee name],
+
+**Reference Request — REMINDER**
+
+**Original Date Sent:** [Date of original request]
+**Reference For:** ${hasContent ? input : "[Candidate name]"}
+**Position:** [Job title]
+
+We wrote to you on [original date] requesting a reference for the above-named individual. As we have not yet received a response, we would be grateful if you could provide this at your earliest convenience.
+
+This reference is required as part of our safer recruitment process, and we are unable to confirm the candidate's employment without it.
+
+**Urgency:** ${/urgent/i.test(input) ? "HIGH — This reference is now overdue and is delaying a recruitment decision." : "We would appreciate a response within 5 working days of this letter."}
+
+If you are unable to provide a reference, please let us know so that we can make alternative arrangements.
+
+Please return to: [email/address]
+
+Yours sincerely,
+
+[Your name]
+[Your title]
+
+---
+*Aria template — if no response after second chase, explore alternative referees and document in recruitment file.*`;
+
+    return { output, confidence: "high", method: "template", metadata: { sections_filled: sectionsFilled } };
+  },
+
+  draft_conditional_offer: (input, ctx) => {
+    const today = ctx?.date || new Date().toISOString().slice(0, 10);
+    let sectionsFilled = 0;
+
+    const hasContent = input.trim().length > 10;
+    if (hasContent) sectionsFilled++;
+
+    const output = `**Conditional Offer Letter**
+
+[Your Organisation Name]
+[Address]
+[Date: ${today}]
+
+**PRIVATE & CONFIDENTIAL**
+
+**To:** ${hasContent ? input : "[Candidate name and address]"}
+
+---
+
+Dear [Candidate name],
+
+**Conditional Offer of Employment**
+
+**Role:** [Job title]
+**Salary:** [Amount / pay scale]
+**Hours:** [Full-time / Part-time — hours per week]
+**Location:** [Home name]
+**Proposed Start Date:** [Date]
+
+Following your successful interview on [date], I am pleased to offer you the above position, subject to the satisfactory completion of the following pre-employment checks:
+
+**Conditions:**
+1. [ ] Enhanced DBS check with Children's Barred List
+2. [ ] Two satisfactory references (including most recent employer)
+3. [ ] Health declaration / occupational health clearance
+4. [ ] Verification of qualifications
+5. [ ] Right to work in the UK documentation
+6. [ ] Full employment history with all gaps explored
+7. [ ] Self-declaration of convictions/cautions
+8. [ ] [Any additional conditions]
+
+This offer is conditional and will be withdrawn if any of the above checks are unsatisfactory. You must not commence work or have unsupervised access to children until all checks are cleared.
+
+Please confirm your acceptance by signing and returning a copy of this letter by [date — 5 working days].
+
+Yours sincerely,
+
+[Your name]
+[Your title]
+
+**Acceptance:**
+I accept this conditional offer of employment.
+
+**Signed:** _____  **Date:** _____
+
+---
+*Aria template — do not allow the candidate to start until ALL conditions are satisfied. Safer recruitment is non-negotiable.*`;
+
+    return { output, confidence: "high", method: "template", metadata: { sections_filled: sectionsFilled } };
+  },
+
+  draft_recruitment_decision_record: (input, ctx) => {
+    const today = ctx?.date || new Date().toISOString().slice(0, 10);
+    let sectionsFilled = 0;
+
+    const hasContent = input.trim().length > 10;
+    if (hasContent) sectionsFilled++;
+
+    const output = `**Recruitment Decision Record**
+
+**Date:** ${today}
+**Position:** [Job title]
+**Candidate:** ${hasContent ? input : "[Candidate name]"}
+
+---
+
+**Interview Panel:**
+| Name | Role |
+|------|------|
+| [Name] | [Role — e.g. Registered Manager] |
+| [Name] | [Role — e.g. Deputy Manager] |
+| [Name] | [Role — e.g. Responsible Individual] |
+
+**Interview Date:** [Date]
+
+---
+
+**Assessment Scores:**
+| Criteria | Score (1-5) | Notes |
+|----------|-------------|-------|
+| Experience with children | [Score] | [Notes] |
+| Safeguarding knowledge | [Score] | [Notes] |
+| Values and attitude | [Score] | [Notes] |
+| Scenario-based response | [Score] | [Notes] |
+| Communication skills | [Score] | [Notes] |
+| Qualifications/training | [Score] | [Notes] |
+| **Total** | **[Total]** | |
+
+---
+
+**Outcome:** [ ] Appointed  [ ] Not appointed  [ ] Reserve
+
+**Rationale:**
+[Why was this decision made? What made this candidate suitable/unsuitable?]
+
+**Safer Recruitment Checklist:**
+- [ ] At least two panel members present
+- [ ] Safeguarding questions included
+- [ ] Values-based questions included
+- [ ] Identity verified at interview
+- [ ] Gaps in employment explored
+- [ ] Motivation to work with children explored
+
+**Panel Signatures:**
+_______________  _______________  _______________
+
+---
+*Aria template — retain in recruitment file for a minimum of 6 months (12 months for unsuccessful candidates). Ensure GDPR compliance.*`;
+
+    return { output, confidence: "high", method: "template", metadata: { sections_filled: sectionsFilled } };
+  },
+
+  draft_missing_episode_report: (input, ctx) => {
+    const today = ctx?.date || new Date().toISOString().slice(0, 10);
+    const childRef = ctx?.childName || "[Child's name]";
+    let sectionsFilled = 0;
+
+    const hasContent = input.trim().length > 20;
+    if (hasContent) sectionsFilled++;
+
+    // Try to extract duration
+    const durationMatch = input.match(/(\d+)\s*(?:hour|hr|minute|min)/i);
+    if (durationMatch) sectionsFilled++;
+
+    const output = `**Missing Episode Report**
+
+**Child:** ${childRef}
+**Date of Episode:** ${today}
+**Time Reported Missing:** [HH:MM]
+**Time Found/Returned:** [HH:MM]
+**Duration:** ${durationMatch ? durationMatch[0] : "[Total duration]"}
+
+---
+
+**Circumstances:**
+${hasContent ? input : "[What happened? What were the events leading up to the child going missing?]"}
+
+**Last Seen:**
+**Where:** [Location]
+**When:** [Time]
+**By Whom:** [Staff name]
+**What was the child wearing:** [Description]
+
+---
+
+**Actions Taken:**
+1. [ ] Home searched — [Time]
+2. [ ] Local area searched — [Time]
+3. [ ] Police contacted — [Time, log number: _____]
+4. [ ] Social worker informed — [Time]
+5. [ ] Manager informed — [Time]
+6. [ ] Parent/carer informed — [Time]
+7. [ ] Ofsted notified (Reg 40) — [Time]
+8. [ ] [Other actions]
+
+**Return Details:**
+**How was the child found/returned?** [Details]
+**Condition on return:** [Physical and emotional state]
+**Immediate response:** [What did staff do when the child returned?]
+
+---
+
+**Return Interview:**
+**Completed:** [ ] Yes  [ ] No
+**Date:** [Within 72 hours]
+**Conducted By:** [Independent person]
+
+**Risk Review:**
+**Missing from care risk assessment updated:** [ ] Yes  [ ] No
+**Patterns identified:** [Is this part of a pattern?]
+
+**Learning:**
+[What can be learned from this episode? Are any changes needed?]
+
+---
+*Aria template — complete fully. Share with social worker and include in next LAC review. Update the child's missing risk assessment.*`;
+
+    return { output, confidence: "high", method: "template", metadata: { sections_filled: sectionsFilled } };
+  },
+
+  missing_episode_return_interview_notes: (input, ctx) => {
+    const today = ctx?.date || new Date().toISOString().slice(0, 10);
+    const childRef = ctx?.childName || "[Child's name]";
+    let sectionsFilled = 0;
+
+    const hasContent = input.trim().length > 20;
+    if (hasContent) sectionsFilled++;
+
+    const output = `**Missing Episode — Return Interview**
+
+**Child:** ${childRef}
+**Date of Interview:** ${today}
+**Date of Missing Episode:** [Date]
+**Interviewer:** [Name — should be independent/trusted adult]
+**Location:** [Where the interview took place]
+
+---
+
+**Standard Questions:**
+
+**1. Where did you go?**
+${hasContent ? input : "[Record the child's response]"}
+
+**2. Who were you with?**
+[Record the child's response]
+
+**3. Were you safe? Did anything happen that worried you?**
+[Record the child's response]
+
+**4. Did anyone hurt you or ask you to do anything you did not want to do?**
+[Record the child's response — note any safeguarding concerns]
+
+**5. What would help to stop this happening again?**
+[Record the child's response]
+
+**6. Is there anything else you want to tell us?**
+[Record the child's response]
+
+---
+
+**Interviewer Observations:**
+[How did the child present? Were they open, reluctant, distressed?]
+
+**Safeguarding Concerns Identified:** [ ] Yes  [ ] No
+[If yes, detail and confirm referral made]
+
+**Exploitation Indicators:** [ ] Yes  [ ] No
+[If yes, detail — e.g. new possessions, phone numbers, injuries]
+
+**Actions Arising:**
+1. [ ] [Action — who, by when]
+2. [ ] [Action — who, by when]
+
+**Interview shared with:** [ ] Social worker  [ ] Manager  [ ] Police (if applicable)
+
+---
+*Aria template — complete within 72 hours. The child should choose the interviewer where possible. Record their exact words.*`;
+
+    return { output, confidence: "high", method: "template", metadata: { sections_filled: sectionsFilled } };
+  },
+
+  equality_diversity_calendar_prompt: (input, ctx) => {
+    const now = new Date();
+    const months: string[] = [];
+    for (let i = 0; i < 3; i++) {
+      const d = new Date(now.getFullYear(), now.getMonth() + i, 1);
+      months.push(d.toLocaleDateString("en-GB", { month: "long", year: "numeric" }));
+    }
+
+    // A representative set of key dates — not exhaustive
+    const calendarDates: Record<string, { dates: string; notes: string }[]> = {
+      January: [
+        { dates: "1 Jan", notes: "New Year's Day — celebrate diverse New Year traditions (Chinese, Hindu, Jewish calendars differ)" },
+        { dates: "25 Jan", notes: "Burns Night — Scottish culture and heritage" },
+        { dates: "27 Jan", notes: "Holocaust Memorial Day — remembrance and education" },
+      ],
+      February: [
+        { dates: "1-28 Feb", notes: "LGBT+ History Month (UK) — visibility, role models, acceptance" },
+        { dates: "1 Feb", notes: "Start of Black History Month (US) — consider year-round inclusion" },
+        { dates: "Varies", notes: "Shrove Tuesday / Pancake Day — Christian tradition" },
+      ],
+      March: [
+        { dates: "Varies", notes: "Ramadan begins (Islamic) — fasting, prayer, community. Be mindful of mealtimes and energy" },
+        { dates: "1 Mar", notes: "St David's Day — Welsh culture" },
+        { dates: "8 Mar", notes: "International Women's Day" },
+        { dates: "17 Mar", notes: "St Patrick's Day — Irish culture" },
+        { dates: "Varies", notes: "Holi (Hindu) — festival of colour and spring" },
+      ],
+      April: [
+        { dates: "Varies", notes: "Easter (Christian) — Good Friday, Easter Sunday" },
+        { dates: "Varies", notes: "Passover (Jewish) — dietary requirements, significance" },
+        { dates: "Varies", notes: "Eid al-Fitr (Islamic) — end of Ramadan. Celebration, gifts, food" },
+        { dates: "14 Apr", notes: "Vaisakhi (Sikh) — New Year celebration" },
+        { dates: "23 Apr", notes: "St George's Day — English culture" },
+      ],
+      May: [
+        { dates: "Varies", notes: "Vesak/Buddha Day (Buddhist)" },
+        { dates: "17 May", notes: "IDAHOBIT — International Day Against Homophobia, Biphobia, Transphobia" },
+      ],
+      June: [
+        { dates: "1-30 Jun", notes: "Pride Month — LGBTQ+ celebration and rights" },
+        { dates: "Varies", notes: "Eid al-Adha (Islamic) — festival of sacrifice" },
+        { dates: "19 Jun", notes: "Juneteenth — freedom and Black history" },
+        { dates: "20 Jun", notes: "World Refugee Day — relevant to unaccompanied asylum-seeking children" },
+      ],
+      July: [
+        { dates: "Varies", notes: "Islamic New Year" },
+        { dates: "11 Jul", notes: "World Population Day — global diversity" },
+      ],
+      August: [
+        { dates: "Varies", notes: "Janmashtami (Hindu) — birth of Krishna" },
+      ],
+      September: [
+        { dates: "Varies", notes: "Rosh Hashanah (Jewish New Year)" },
+        { dates: "Varies", notes: "Yom Kippur (Jewish Day of Atonement)" },
+      ],
+      October: [
+        { dates: "1-31 Oct", notes: "Black History Month (UK) — celebrate Black heritage, culture, and achievement" },
+        { dates: "Varies", notes: "Diwali (Hindu, Sikh, Jain) — festival of lights. Fireworks may affect some children" },
+        { dates: "10 Oct", notes: "World Mental Health Day" },
+      ],
+      November: [
+        { dates: "Varies", notes: "Guru Nanak's Birthday (Sikh)" },
+        { dates: "13 Nov", notes: "World Kindness Day" },
+        { dates: "14 Nov", notes: "Anti-Bullying Week (starts)" },
+        { dates: "20 Nov", notes: "Universal Children's Day / UNCRC" },
+        { dates: "25 Nov", notes: "International Day for the Elimination of Violence Against Women" },
+      ],
+      December: [
+        { dates: "Varies", notes: "Hanukkah (Jewish) — festival of lights" },
+        { dates: "25 Dec", notes: "Christmas Day (Christian) — be mindful that not all children celebrate Christmas" },
+        { dates: "26 Dec – 1 Jan", notes: "Kwanzaa — African heritage celebration" },
+      ],
+    };
+
+    let output = `**Equality & Diversity Calendar — Next 3 Months**\n\n`;
+    for (const month of months) {
+      const monthName = month.split(" ")[0];
+      const entries = calendarDates[monthName] || [];
+      output += `**${month}:**\n`;
+      if (entries.length > 0) {
+        for (const entry of entries) {
+          output += `- **${entry.dates}:** ${entry.notes}\n`;
+        }
+      } else {
+        output += `- [No pre-loaded dates for this month — research key dates]\n`;
+      }
+      output += "\n";
+    }
+
+    output += `**Care-Relevant Notes:**
+- Always check individual children's cultural and religious backgrounds
+- Dietary requirements may change during religious observances
+- Some festivals involve fireworks/loud noises — be aware of sensory needs and triggers
+- Use these dates as conversation starters — avoid tokenism
+- Celebrate diversity year-round, not just on specific dates
+
+*Aria calendar — dates vary by year for lunar calendar events. Verify exact dates for the current year.*`;
+
+    const sectionsFilled = months.length;
+    return { output, confidence: "high", method: "template", metadata: { sections_filled: sectionsFilled } };
+  },
+
+  convert_to_email: (input) => {
+    let sectionsFilled = 0;
+    if (input.trim().length < 10) {
+      return { output: "**Email Conversion:** Please provide the text you want converted into email format.\n\n*Aria template — paste or type the content to restructure.*", confidence: "low", method: "template", metadata: { sections_filled: 0 } };
+    }
+
+    sectionsFilled++;
+
+    // Try to extract a name/recipient from the text
+    const toMatch = input.match(/(?:to|for|attention\s+of)\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)/i);
+    const toField = toMatch ? toMatch[1] : "[Recipient name]";
+    if (toMatch) sectionsFilled++;
+
+    // Try to infer subject from first sentence
+    const firstSentence = input.split(/[.!?\n]/)[0]?.trim() || "";
+    const subject = firstSentence.length > 10 && firstSentence.length < 80 ? firstSentence : "[Subject line]";
+    if (firstSentence.length > 10 && firstSentence.length < 80) sectionsFilled++;
+
+    const output = `**To:** ${toField}
+**CC:** [CC recipients]
+**Subject:** ${subject}
+
+---
+
+Dear ${toMatch ? toMatch[1].split(" ")[0] : "[Name]"},
+
+${input}
+
+Please do not hesitate to contact me if you require any further information.
+
+Kind regards,
+
+[Your name]
+[Your title]
+[Your organisation]
+[Contact details]
+
+---
+*Aria conversion — review subject line and sign-off before sending. Ensure tone is appropriate for the recipient.*`;
+
+    return { output, confidence: "high", method: "template", metadata: { sections_filled: sectionsFilled } };
+  },
+
+  convert_to_letter: (input) => {
+    let sectionsFilled = 0;
+    if (input.trim().length < 10) {
+      return { output: "**Letter Conversion:** Please provide the text you want converted into letter format.\n\n*Aria template — paste or type the content to restructure.*", confidence: "low", method: "template", metadata: { sections_filled: 0 } };
+    }
+
+    sectionsFilled++;
+    const today = new Date().toISOString().slice(0, 10);
+
+    // Try to extract a name from text
+    const nameMatch = input.match(/(?:to|for|dear|attention\s+of)\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)/i);
+    const recipient = nameMatch ? nameMatch[1] : "[Recipient name]";
+    if (nameMatch) sectionsFilled++;
+
+    const output = `[Your Organisation Name]
+[Address Line 1]
+[Address Line 2]
+[Town/City, Postcode]
+
+${today}
+
+${recipient}
+[Recipient address line 1]
+[Recipient address line 2]
+[Town/City, Postcode]
+
+**Reference:** [Your reference / their reference]
+
+Dear ${nameMatch ? nameMatch[1].split(" ")[0] : "[Name]"},
+
+${input}
+
+Should you require any further information, please do not hesitate to contact me.
+
+Yours sincerely,
+
+[Your name]
+[Your title]
+[Your organisation]
+
+---
+*Aria conversion — review formatting and tone. Print on headed paper if sending by post.*`;
+
+    return { output, confidence: "high", method: "template", metadata: { sections_filled: sectionsFilled } };
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // ANALYSIS HANDLERS (12) — Pattern matching, scoring, and categorisation
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  analyse_audit_findings: (input) => {
+    const findings: { severity: string; text: string }[] = [];
+
+    const sentences = input.split(/[.!?\n]+/).filter((s) => s.trim().length > 10);
+    for (const sentence of sentences) {
+      const s = sentence.trim();
+      if (/breach|non[\s-]?complian|fail(?:ure|ed)|unsafe|immediate\s+risk|serious|critical/i.test(s)) {
+        findings.push({ severity: "critical", text: s });
+      } else if (/inadequate|not\s+met|deficien|significant\s+(?:gap|concern|weakness)/i.test(s)) {
+        findings.push({ severity: "major", text: s });
+      } else if (/minor|inconsisten|partially|could\s+improve|small\s+gap|some\s+gaps/i.test(s)) {
+        findings.push({ severity: "minor", text: s });
+      } else if (/recommend|suggest|consider|note(?:d)?|observ/i.test(s)) {
+        findings.push({ severity: "observation", text: s });
+      }
+    }
+
+    // Extract themes
+    const themes: Record<string, number> = {};
+    const themePatterns: [string, RegExp][] = [
+      ["Safeguarding", /safeguard|child\s+protection|dbs|barred/gi],
+      ["Documentation", /document|record|evidence|filing|paperwork/gi],
+      ["Training", /training|competenc|qualification|induction/gi],
+      ["Policy", /policy|procedure|protocol|guidance/gi],
+      ["Staffing", /staff|rota|supervision|recruitment/gi],
+      ["Health & Safety", /health\s+and\s+safety|fire|risk\s+assessment|h\s*&\s*s/gi],
+      ["Medication", /medication|prescri|drug|dose/gi],
+      ["Care Planning", /care\s+plan|placement\s+plan|pathway/gi],
+    ];
+    for (const [theme, pattern] of themePatterns) {
+      pattern.lastIndex = 0;
+      const matches = input.match(pattern);
+      if (matches && matches.length > 0) {
+        themes[theme] = matches.length;
+      }
+    }
+
+    const severityCounts = {
+      critical: findings.filter((f) => f.severity === "critical").length,
+      major: findings.filter((f) => f.severity === "major").length,
+      minor: findings.filter((f) => f.severity === "minor").length,
+      observation: findings.filter((f) => f.severity === "observation").length,
+    };
+
+    let output = `**Audit Findings Analysis**\n\n`;
+    output += `**Severity Breakdown:**\n`;
+    output += `- Critical: ${severityCounts.critical}\n`;
+    output += `- Major: ${severityCounts.major}\n`;
+    output += `- Minor: ${severityCounts.minor}\n`;
+    output += `- Observation: ${severityCounts.observation}\n\n`;
+
+    if (findings.length > 0) {
+      output += `**Findings by Severity:**\n\n`;
+      for (const sev of ["critical", "major", "minor", "observation"]) {
+        const items = findings.filter((f) => f.severity === sev);
+        if (items.length > 0) {
+          output += `**${sev.charAt(0).toUpperCase() + sev.slice(1)}:**\n`;
+          for (const item of items) {
+            output += `- ${item.text}\n`;
+          }
+          output += "\n";
+        }
+      }
+    }
+
+    if (Object.keys(themes).length > 0) {
+      output += `**Themes Identified:**\n`;
+      const sortedThemes = Object.entries(themes).sort((a, b) => b[1] - a[1]);
+      for (const [theme, count] of sortedThemes) {
+        output += `- ${theme}: ${count} reference${count === 1 ? "" : "s"}\n`;
+      }
+      output += "\n";
+    }
+
+    output += `*Aria audit analysis — pattern-based categorisation. Verify severity ratings with professional judgement.*`;
+
+    return { output, confidence: "high", method: "pattern", metadata: { sections_filled: findings.length, ...severityCounts, themes_found: Object.keys(themes).length } };
+  },
+
+  check_care_plan_progress: (input) => {
+    const progressKeywords: Record<string, { pattern: RegExp; count: number }> = {
+      "Achieved": { pattern: /\bachieved|completed|met|accomplished|attained|reached|mastered\b/gi, count: 0 },
+      "Progressing": { pattern: /\bprogress|improving|developing|working\s+towards|getting\s+better|moving\s+forward\b/gi, count: 0 },
+      "Not Started": { pattern: /\bnot\s+(?:yet\s+)?started|not\s+begun|pending|awaiting|to\s+be\s+commenced\b/gi, count: 0 },
+      "Declined": { pattern: /\bdeclin|deteriorat|worse|regress|setback|step\s+back|gone\s+backwards\b/gi, count: 0 },
+      "Reviewed": { pattern: /\breview|assessed|evaluated|monitored|checked|updated\b/gi, count: 0 },
+    };
+
+    for (const key of Object.keys(progressKeywords)) {
+      const kw = progressKeywords[key];
+      kw.pattern.lastIndex = 0;
+      const matches = input.match(kw.pattern);
+      kw.count = matches ? matches.length : 0;
+    }
+
+    const totalRefs = Object.values(progressKeywords).reduce((sum, kw) => sum + kw.count, 0);
+
+    let output = `**Care Plan Progress Scoring**\n\n`;
+    output += `| Status | Count | Indicator |\n`;
+    output += `|--------|-------|-----------|\n`;
+    for (const [label, kw] of Object.entries(progressKeywords)) {
+      const bar = kw.count > 0 ? "█".repeat(Math.min(kw.count, 10)) : "—";
+      output += `| ${label} | ${kw.count} | ${bar} |\n`;
+    }
+
+    output += `\n**Total Progress References:** ${totalRefs}\n\n`;
+
+    if (progressKeywords["Declined"].count > 0) {
+      output += `**Warning:** Decline indicators detected — review care plan urgently and consider multi-agency discussion.\n\n`;
+    }
+    if (progressKeywords["Not Started"].count > progressKeywords["Progressing"].count) {
+      output += `**Note:** More "not started" than "progressing" items — check whether targets are realistic and support is in place.\n\n`;
+    }
+
+    output += `*Aria progress check — keyword-based scoring. Verify against actual care plan targets and child's lived experience.*`;
+
+    return { output, confidence: "high", method: "pattern", metadata: { sections_filled: totalRefs } };
+  },
+
+  identify_care_plan_gaps: (input) => {
+    const standardSections: { name: string; pattern: RegExp }[] = [
+      { name: "Health", pattern: /\bhealth|medical|gp|dentist|medication|physical|mental\s+health|camhs|therap\b/gi },
+      { name: "Education", pattern: /\beducation|school|learning|college|training|pep|attendance|academic\b/gi },
+      { name: "Emotional & Behavioural", pattern: /\bemotional|behaviour|feelings|mental\s+health|wellbeing|anxiety|attachment|therap\b/gi },
+      { name: "Identity", pattern: /\bidentity|culture|heritage|faith|religion|ethnicity|gender|sexuality|diversity\b/gi },
+      { name: "Family & Social Relationships", pattern: /\bfamily|parent|contact|sibling|friend|relationship|social|peer\b/gi },
+      { name: "Social Presentation", pattern: /\bsocial\s+(?:skill|presentation)|appearance|hygiene|self[\s-]?care|independence|life\s+skill\b/gi },
+      { name: "Self-Care Skills", pattern: /\bself[\s-]?care|independence|cooking|laundry|budget|transport|daily\s+living\b/gi },
+      { name: "Placement Stability", pattern: /\bplacement|stability|settled|match|move|transition|disruption|permanence\b/gi },
+    ];
+
+    const covered: string[] = [];
+    const gaps: string[] = [];
+
+    for (const section of standardSections) {
+      section.pattern.lastIndex = 0;
+      if (section.pattern.test(input)) {
+        covered.push(section.name);
+      } else {
+        gaps.push(section.name);
+      }
+    }
+
+    const coverage = Math.round((covered.length / standardSections.length) * 100);
+
+    let output = `**Care Plan Coverage: ${coverage}%**\n\n`;
+    output += `**Covered (${covered.length}/${standardSections.length}):**\n`;
+    output += covered.map((c) => `- [x] ${c}`).join("\n");
+    output += `\n\n**Gaps (${gaps.length}/${standardSections.length}):**\n`;
+    output += gaps.map((g) => `- [ ] ${g}`).join("\n");
+    output += `\n\n`;
+
+    if (gaps.length > 3) {
+      output += `**Warning:** More than half the standard care plan sections are not evidenced in this text. A comprehensive care plan should address all 8 dimensions.\n\n`;
+    }
+
+    output += `*Aria care plan gap analysis — checked against the 8 standard dimensions of a child's needs. Add content for each gap area.*`;
+
+    return { output, confidence: "high", method: "rules", metadata: { sections_filled: covered.length, coverage, gaps_count: gaps.length } };
+  },
+
+  identify_home_wide_themes: (input) => {
+    const themes: [string, RegExp][] = [
+      ["Safeguarding", /safeguard|child\s+protection|disclosure|abuse|neglect|exploitation|allegation/gi],
+      ["Behaviour", /behaviour|incident|restrain|aggression|damage|conflict|de[\s-]?escalat/gi],
+      ["Health", /health|medication|gp|dentist|hospital|camhs|mental\s+health|wellbeing/gi],
+      ["Education", /education|school|attendance|exclusion|pep|learning|college/gi],
+      ["Family", /family|parent|contact|sibling|visit|phone\s+call/gi],
+      ["Staffing", /staff|rota|supervision|sickness|absence|vacancy|agency|recruit/gi],
+      ["Compliance", /compliance|audit|ofsted|regulation|reg\s+\d+|policy|procedure|notification/gi],
+    ];
+
+    const themeCounts: { theme: string; count: number }[] = [];
+    for (const [theme, pattern] of themes) {
+      pattern.lastIndex = 0;
+      const matches = input.match(pattern);
+      themeCounts.push({ theme, count: matches ? matches.length : 0 });
+    }
+
+    themeCounts.sort((a, b) => b.count - a.count);
+    const totalMentions = themeCounts.reduce((sum, t) => sum + t.count, 0);
+
+    let output = `**Home-Wide Theme Analysis**\n\n`;
+    output += `| Theme | Mentions | Weight |\n`;
+    output += `|-------|----------|--------|\n`;
+    for (const t of themeCounts) {
+      const pct = totalMentions > 0 ? Math.round((t.count / totalMentions) * 100) : 0;
+      const bar = t.count > 0 ? "█".repeat(Math.min(Math.ceil(pct / 5), 20)) : "—";
+      output += `| ${t.theme} | ${t.count} | ${bar} ${pct}% |\n`;
+    }
+
+    output += `\n**Total Mentions:** ${totalMentions}\n`;
+    const topTheme = themeCounts[0];
+    if (topTheme && topTheme.count > 0) {
+      output += `**Dominant Theme:** ${topTheme.theme} (${topTheme.count} mentions)\n`;
+    }
+    output += `\n*Aria theme analysis — keyword frequency across the text. Use to identify areas requiring management attention.*`;
+
+    return { output, confidence: "high", method: "pattern", metadata: { sections_filled: themeCounts.filter((t) => t.count > 0).length, total_mentions: totalMentions } };
+  },
+
+  identify_repeated_shortfalls: (input) => {
+    // Tokenise into meaningful phrases (2-4 word ngrams)
+    const words = input.toLowerCase().replace(/[^a-z\s-]/g, " ").split(/\s+/).filter((w) => w.length > 3);
+    const bigramCounts: Record<string, number> = {};
+
+    for (let i = 0; i < words.length - 1; i++) {
+      const bigram = `${words[i]} ${words[i + 1]}`;
+      bigramCounts[bigram] = (bigramCounts[bigram] || 0) + 1;
+    }
+
+    // Also count significant single keywords
+    const keywordCounts: Record<string, number> = {};
+    const significantWords = /(?:missing|overdue|incomplete|outstanding|concern|risk|breach|failure|gap|shortfall|delay|not\s+completed|not\s+met|inadequate|repeated|recurring|pattern|again|persistent|ongoing)/gi;
+    let kwMatch: RegExpExecArray | null;
+    significantWords.lastIndex = 0;
+    while ((kwMatch = significantWords.exec(input)) !== null) {
+      const word = kwMatch[0].toLowerCase();
+      keywordCounts[word] = (keywordCounts[word] || 0) + 1;
+    }
+
+    const repeatedPhrases = Object.entries(bigramCounts)
+      .filter(([, count]) => count >= 3)
+      .sort((a, b) => b[1] - a[1]);
+
+    const repeatedKeywords = Object.entries(keywordCounts)
+      .filter(([, count]) => count >= 3)
+      .sort((a, b) => b[1] - a[1]);
+
+    let output = `**Repeated Shortfall Analysis**\n\n`;
+
+    if (repeatedKeywords.length > 0) {
+      output += `**Repeated Concern Keywords (3+ occurrences):**\n`;
+      for (const [word, count] of repeatedKeywords) {
+        output += `- "${word}" — ${count} times\n`;
+      }
+      output += "\n";
+    }
+
+    if (repeatedPhrases.length > 0) {
+      output += `**Repeated Phrases (3+ occurrences):**\n`;
+      for (const [phrase, count] of repeatedPhrases) {
+        output += `- "${phrase}" — ${count} times\n`;
+      }
+      output += "\n";
+    }
+
+    if (repeatedKeywords.length === 0 && repeatedPhrases.length === 0) {
+      output += `No keywords or phrases appear 3 or more times. This may mean shortfalls are not repeated, or the text is too short to detect patterns.\n\n`;
+    } else {
+      output += `**Pattern Detected:** Repeated language suggests a recurring issue. Investigate root cause and consider systemic corrective action.\n\n`;
+    }
+
+    output += `*Aria shortfall scan — frequency-based detection. Cross-reference with incident logs and audit findings for confirmation.*`;
+
+    return { output, confidence: repeatedKeywords.length > 0 ? "high" : "medium", method: "pattern", metadata: { sections_filled: repeatedKeywords.length + repeatedPhrases.length } };
+  },
+
+  review_management_oversight_quality: (input, ctx) => {
+    // Combine the three existing oversight checks into one quality score
+    const reflectionHandler = RULE_HANDLERS["check_oversight_reflection"];
+    const challengeHandler = RULE_HANDLERS["check_oversight_challenge"];
+    const childFocusHandler = RULE_HANDLERS["check_oversight_child_focus"];
+
+    const reflectionResult = reflectionHandler ? reflectionHandler(input, ctx) : null;
+    const challengeResult = challengeHandler ? challengeHandler(input, ctx) : null;
+    const childFocusResult = childFocusHandler ? childFocusHandler(input, ctx) : null;
+
+    const reflectionScore = (reflectionResult?.metadata as Record<string, unknown>)?.reflection_score as number || 0;
+    const challengeScore = (challengeResult?.metadata as Record<string, unknown>)?.challenge_score as number || 0;
+    const childFocusScore = (childFocusResult?.metadata as Record<string, unknown>)?.child_focus_score as number || 0;
+
+    const overallScore = Math.round((reflectionScore + challengeScore + childFocusScore) / 3);
+
+    let rating = "Inadequate";
+    if (overallScore >= 75) rating = "Outstanding";
+    else if (overallScore >= 50) rating = "Good";
+    else if (overallScore >= 25) rating = "Requires Improvement";
+
+    let output = `**Management Oversight Quality: ${overallScore}% — ${rating}**\n\n`;
+    output += `| Dimension | Score |\n`;
+    output += `|-----------|-------|\n`;
+    output += `| Reflection | ${reflectionScore}% |\n`;
+    output += `| Professional Challenge | ${challengeScore}% |\n`;
+    output += `| Child Focus | ${childFocusScore}% |\n`;
+    output += `| **Overall** | **${overallScore}%** |\n\n`;
+
+    if (overallScore < 50) {
+      output += `**Improvement Needed:** This oversight note scores below 50%. Effective oversight should demonstrate reflective practice, professional curiosity, and always return to the child's experience.\n\n`;
+    }
+
+    output += `*Aria quality review — combined score across three oversight dimensions. Aim for 75%+ on all three.*`;
+
+    return { output, confidence: "high", method: "rules", metadata: { sections_filled: 3, overall_score: overallScore, reflection_score: reflectionScore, challenge_score: challengeScore, child_focus_score: childFocusScore } };
+  },
+
+  improve_management_oversight: (input, ctx) => {
+    // Run oversight quality check first
+    const qualityHandler = RULE_HANDLERS["review_management_oversight_quality"];
+    const qualityResult = qualityHandler ? qualityHandler(input, ctx) : null;
+    const qualityMeta = qualityResult?.metadata as Record<string, unknown> || {};
+
+    const reflectionScore = (qualityMeta.reflection_score as number) || 0;
+    const challengeScore = (qualityMeta.challenge_score as number) || 0;
+    const childFocusScore = (qualityMeta.child_focus_score as number) || 0;
+
+    const suggestions: string[] = [];
+
+    if (reflectionScore < 50) {
+      suggestions.push("Add first-person reflection — e.g. 'I have considered...', 'On reflection...'");
+      suggestions.push("Include strengths-based observations — what went well, not just concerns");
+      suggestions.push("Add forward-looking statements — 'Going forward...', 'Next time...'");
+    }
+    if (challengeScore < 50) {
+      suggestions.push("Include direct questions — 'Why was this approach taken?', 'What evidence supports this?'");
+      suggestions.push("Set clear expectations — 'I expect this to be completed by...'");
+      suggestions.push("Hold to account — reference deadlines and follow up on previous actions");
+    }
+    if (childFocusScore < 50) {
+      suggestions.push("Centre the child — 'What difference has this made for [child]?'");
+      suggestions.push("Include the child's voice — record their views and wishes");
+      suggestions.push("Reference the child's identity, culture, and individual needs");
+    }
+
+    if (suggestions.length === 0) {
+      suggestions.push("Oversight quality is strong across all dimensions — maintain this standard");
+      suggestions.push("Consider sharing as an example of good practice with the team");
+    }
+
+    let output = qualityResult ? qualityResult.output.replace(/\n---\n\*Processed by Aria Rules Engine.*$/, "") + "\n\n" : "";
+    output += `**Improvement Suggestions (${suggestions.length}):**\n\n`;
+    output += suggestions.map((s, i) => `${i + 1}. ${s}`).join("\n");
+    output += `\n\n*Aria oversight improvement — apply these suggestions and re-check. Good oversight is a skill that improves with practice.*`;
+
+    return { output, confidence: "high", method: "rules", metadata: { sections_filled: suggestions.length, overall_score: qualityMeta.overall_score } };
+  },
+
+  missing_episode_risk_analysis: (input) => {
+    const riskIndicators: { indicator: string; score: number; detail: string }[] = [];
+
+    // Duration risk
+    const durationMatch = input.match(/(\d+)\s*(?:hour|hr)/i);
+    if (durationMatch) {
+      const hours = parseInt(durationMatch[1], 10);
+      if (hours >= 12) riskIndicators.push({ indicator: "Duration", score: 5, detail: `${hours} hours — extended absence` });
+      else if (hours >= 4) riskIndicators.push({ indicator: "Duration", score: 3, detail: `${hours} hours — significant duration` });
+      else riskIndicators.push({ indicator: "Duration", score: 1, detail: `${hours} hours — brief absence` });
+    }
+
+    // Time of day
+    if (/night|overnight|after\s+dark|late\s+evening|22|23|0[0-5]/i.test(input)) {
+      riskIndicators.push({ indicator: "Time of day", score: 4, detail: "Night-time / after dark — increased vulnerability" });
+    }
+
+    // Who with
+    if (/unknown|stranger|adult|man|men|older/i.test(input)) {
+      riskIndicators.push({ indicator: "Associates", score: 5, detail: "Unknown or older associates — exploitation risk" });
+    } else if (/friend|peer|other\s+young/i.test(input)) {
+      riskIndicators.push({ indicator: "Associates", score: 2, detail: "Known peers" });
+    }
+
+    // Exploitation indicators
+    if (/exploit|groom|county\s+lines|drug|traffick|cse|cce|gang/i.test(input)) {
+      riskIndicators.push({ indicator: "Exploitation", score: 5, detail: "Exploitation indicators present — immediate referral needed" });
+    }
+    if (/new\s+(?:phone|clothes|possessions|money|items)|unexplained\s+(?:money|gift|item)/i.test(input)) {
+      riskIndicators.push({ indicator: "Unexplained items", score: 4, detail: "New unexplained possessions — possible exploitation indicator" });
+    }
+
+    // Previous episodes
+    if (/previous|again|repeat|pattern|third|fourth|fifth|multiple|regular|frequent/i.test(input)) {
+      riskIndicators.push({ indicator: "Pattern", score: 4, detail: "Repeat episodes — escalating risk pattern" });
+    }
+
+    // Substance use
+    if (/alcohol|drunk|drug|substance|intoxicat|smell|cannabis|weed/i.test(input)) {
+      riskIndicators.push({ indicator: "Substance use", score: 4, detail: "Substance use indicators — vulnerability increased" });
+    }
+
+    // Injuries
+    if (/injur|hurt|bruise|mark|blood|assault/i.test(input)) {
+      riskIndicators.push({ indicator: "Injury on return", score: 5, detail: "Injuries noted — safeguarding referral may be needed" });
+    }
+
+    const totalScore = riskIndicators.reduce((sum, r) => sum + r.score, 0);
+    const maxPossible = 40;
+    const riskPct = Math.min(Math.round((totalScore / maxPossible) * 100), 100);
+
+    let riskLevel = "Low";
+    if (riskPct >= 60) riskLevel = "Critical";
+    else if (riskPct >= 40) riskLevel = "High";
+    else if (riskPct >= 20) riskLevel = "Medium";
+
+    let output = `**Missing Episode Risk Analysis: ${riskLevel} (${riskPct}%)**\n\n`;
+    if (riskIndicators.length > 0) {
+      output += `| Indicator | Score | Detail |\n`;
+      output += `|-----------|-------|--------|\n`;
+      for (const r of riskIndicators.sort((a, b) => b.score - a.score)) {
+        output += `| ${r.indicator} | ${r.score}/5 | ${r.detail} |\n`;
+      }
+      output += `\n**Total Risk Score:** ${totalScore}/${maxPossible}\n\n`;
+    } else {
+      output += `No specific risk indicators extracted from the text. Provide more detail about the episode for a fuller analysis.\n\n`;
+    }
+
+    if (riskLevel === "Critical" || riskLevel === "High") {
+      output += `**Immediate Actions Required:**\n`;
+      output += `- Convene strategy discussion with social worker\n`;
+      output += `- Update missing from care risk assessment\n`;
+      output += `- Consider NRM referral if exploitation suspected\n`;
+      output += `- Ensure return interview conducted by independent person\n\n`;
+    }
+
+    output += `*Aria risk analysis — indicator-based scoring. Always apply professional judgement and consult your missing from care protocol.*`;
+
+    return { output, confidence: riskIndicators.length >= 3 ? "high" : "medium", method: "pattern", metadata: { sections_filled: riskIndicators.length, risk_score: totalScore, risk_level: riskLevel } };
+  },
+
+  monthly_quality_summary: (input, ctx) => {
+    const today = ctx?.date || new Date().toISOString().slice(0, 10);
+    const month = new Date().toLocaleDateString("en-GB", { month: "long", year: "numeric" });
+    let sectionsFilled = 0;
+
+    const hasContent = input.trim().length > 20;
+    if (hasContent) sectionsFilled++;
+
+    const output = `**Monthly Quality Summary — ${month}**
+
+**Home:** [Home name]
+**Registered Manager:** [Name]
+**Period:** ${today}
+
+---
+
+**1. Children's Outcomes:**
+${hasContent ? input : "[Summary of outcomes for each child this month]"}
+
+**2. Safeguarding:**
+- Incidents this month: [Number]
+- Reg 40 notifications: [Number]
+- Safeguarding referrals: [Number]
+- Key themes: [Summary]
+
+**3. Education:**
+- Average attendance: [%]
+- Exclusions: [Number]
+- PEPs current: [Y/N]
+
+**4. Health:**
+- Health assessments current: [Y/N]
+- Dental checks up to date: [Y/N]
+- Medication incidents: [Number]
+
+**5. Staffing:**
+- Vacancies: [Number]
+- Agency usage: [Hours/shifts]
+- Supervisions completed: [X of Y]
+- Sickness rate: [%]
+
+**6. Training:**
+- Mandatory training compliance: [%]
+- Training completed this month: [List]
+
+**7. Compliance:**
+- Reg 44 visit completed: [Y/N]
+- Reg 45 report submitted: [Y/N]
+- Audit actions outstanding: [Number]
+
+**8. Quality Improvements:**
+- What went well: [Summary]
+- Areas for improvement: [Summary]
+- Actions for next month: [List]
+
+---
+*Aria template — complete for the Responsible Individual and use in Reg 45 reporting.*`;
+
+    return { output, confidence: "high", method: "template", metadata: { sections_filled: sectionsFilled } };
+  },
+
+  responsible_individual_qa_summary: (input, ctx) => {
+    const today = ctx?.date || new Date().toISOString().slice(0, 10);
+    let sectionsFilled = 0;
+
+    const hasContent = input.trim().length > 20;
+    if (hasContent) sectionsFilled++;
+
+    const output = `**Responsible Individual — Quality Assurance Summary**
+
+**RI:** [Name]
+**Date:** ${today}
+**Reporting Period:** [Start date] — [End date]
+
+---
+
+**Homes Overview:**
+
+| Home | Manager | Reg 44 | Reg 45 | Compliance Score | Key Issue |
+|------|---------|--------|--------|-----------------|-----------|
+| [Home 1] | [Name] | [Y/N] | [Y/N] | [%] | [Summary] |
+| [Home 2] | [Name] | [Y/N] | [Y/N] | [%] | [Summary] |
+
+---
+
+**Cross-Home Themes:**
+${hasContent ? input : "[What themes are emerging across all homes?]"}
+
+**Compliance Summary:**
+- Homes meeting all regulatory requirements: [Number]
+- Homes with outstanding actions: [Number]
+- Overdue Reg 40 notifications: [Number]
+
+**Escalations:**
+[Any matters requiring RI intervention or board-level escalation]
+
+**Actions:**
+| # | Action | Home | Owner | Due Date |
+|---|--------|------|-------|----------|
+| 1 | [Action] | [Home] | [Name] | [Date] |
+
+**RI Visit Schedule:**
+[Next planned visits]
+
+---
+*Aria template — the RI must maintain oversight of all homes. File as evidence of governance and quality assurance.*`;
+
+    return { output, confidence: "high", method: "template", metadata: { sections_filled: sectionsFilled } };
+  },
+
+  prepare_ofsted_readiness_summary: (input, ctx) => {
+    const sccifSections: { section: string; pattern: RegExp }[] = [
+      { section: "Overall experiences and progress of children", pattern: /experience|progress|outcome|voice|wish|feeling|aspiration|achievement/gi },
+      { section: "How well children are helped and protected", pattern: /safeguard|protect|risk|safe|harm|missing|exploit|restrain|incident|medication/gi },
+      { section: "The effectiveness of leaders and managers", pattern: /leadership|management|oversight|supervision|training|quality|improvement|compliance|monitor|develop/gi },
+    ];
+
+    const readiness: { section: string; evidence: boolean; keywords: number }[] = [];
+    for (const s of sccifSections) {
+      s.pattern.lastIndex = 0;
+      const matches = input.match(s.pattern);
+      readiness.push({ section: s.section, evidence: !!matches, keywords: matches ? matches.length : 0 });
+    }
+
+    const evidencedCount = readiness.filter((r) => r.evidence).length;
+
+    let output = `**Ofsted Readiness Summary (SCCIF Framework)**\n\n`;
+    output += `**Evidence Coverage: ${evidencedCount}/${sccifSections.length} sections**\n\n`;
+
+    for (const r of readiness) {
+      output += `**${r.section}:**\n`;
+      output += `- Evidence in text: ${r.evidence ? `Yes (${r.keywords} keywords)` : "No"}\n`;
+      output += `- Ready: ${r.evidence ? "[ ] Review evidence quality" : "[ ] Gather evidence for this area"}\n\n`;
+    }
+
+    output += `**Readiness Checklist:**\n`;
+    output += `- [ ] Statement of Purpose current and accurate\n`;
+    output += `- [ ] Children's Guide available and age-appropriate\n`;
+    output += `- [ ] All Reg 44 and Reg 45 reports up to date\n`;
+    output += `- [ ] Single Central Record complete and current\n`;
+    output += `- [ ] All staff supervisions and appraisals current\n`;
+    output += `- [ ] Training matrix — all mandatory training in date\n`;
+    output += `- [ ] Care plans, risk assessments, and placement plans current for all children\n`;
+    output += `- [ ] Incident records complete with management oversight\n`;
+    output += `- [ ] Quality of care review / Reg 45 report available\n`;
+    output += `- [ ] Development plan / service improvement plan current\n`;
+    output += `- [ ] Complaints log and outcomes available\n`;
+    output += `- [ ] Fire safety, H&S, and premises checks current\n\n`;
+
+    output += `*Aria readiness check — matched against SCCIF (Social Care Common Inspection Framework). This is not a full inspection — prepare evidence files for each section.*`;
+
+    return { output, confidence: "high", method: "rules", metadata: { sections_filled: evidencedCount } };
+  },
+
+  audit_evidence_summary: (input) => {
+    const ofstedSections: { section: string; pattern: RegExp }[] = [
+      { section: "Children's experiences & progress", pattern: /child|young\s+person|voice|wish|progress|outcome|achieve|experience|view|feeling|aspiration/gi },
+      { section: "Education", pattern: /education|school|attendance|pep|learning|college|exclusion|academic/gi },
+      { section: "Health", pattern: /health|gp|dentist|medication|camhs|mental\s+health|physical|emotional|wellbeing/gi },
+      { section: "Safety & safeguarding", pattern: /safe|safeguard|protect|risk|incident|restrain|missing|exploit|harm|abuse/gi },
+      { section: "Care planning", pattern: /care\s+plan|placement\s+plan|pathway|risk\s+assessment|behaviour\s+support|target|goal/gi },
+      { section: "Leadership & management", pattern: /manager|leadership|oversight|supervision|quality|improvement|development|compliance|monitoring/gi },
+      { section: "Staffing & workforce", pattern: /staff|recruit|training|qualification|dbs|reference|rota|supervision|appraisal|induction/gi },
+      { section: "Premises & environment", pattern: /premises|environment|bedroom|communal|maintenance|fire|health\s+and\s+safety|h\s*&\s*s|homely|clean|safe\s+space/gi },
+    ];
+
+    const results: { section: string; count: number; examples: string[] }[] = [];
+    for (const s of ofstedSections) {
+      s.pattern.lastIndex = 0;
+      const matches = input.match(s.pattern) || [];
+      const uniqueExamples = [...new Set(matches.map((m) => m.toLowerCase()))].slice(0, 3);
+      results.push({ section: s.section, count: matches.length, examples: uniqueExamples });
+    }
+
+    results.sort((a, b) => b.count - a.count);
+    const totalEvidence = results.reduce((sum, r) => sum + r.count, 0);
+
+    let output = `**Audit Evidence Summary (by Ofsted Inspection Section)**\n\n`;
+    output += `| Section | Evidence Items | Examples |\n`;
+    output += `|---------|---------------|----------|\n`;
+    for (const r of results) {
+      output += `| ${r.section} | ${r.count} | ${r.examples.length > 0 ? r.examples.join(", ") : "—"} |\n`;
+    }
+    output += `\n**Total Evidence References:** ${totalEvidence}\n`;
+
+    const weakSections = results.filter((r) => r.count === 0);
+    if (weakSections.length > 0) {
+      output += `\n**Sections with No Evidence:**\n`;
+      for (const w of weakSections) {
+        output += `- ${w.section} — gather evidence for this area\n`;
+      }
+    }
+
+    output += `\n*Aria evidence count — keyword-based categorisation per Ofsted inspection section. Build evidence files for each section.*`;
+
+    return { output, confidence: "high", method: "pattern", metadata: { sections_filled: results.filter((r) => r.count > 0).length, total_evidence: totalEvidence } };
+  },
 };
 
 // ─── Public API ──────────────────────────────────────────────────────────────

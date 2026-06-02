@@ -24,7 +24,6 @@ describe("ARIA Rules Engine", () => {
 
     it("returns false for LLM-only commands", () => {
       expect(hasRuleHandler("improve_writing")).toBe(false);
-      expect(hasRuleHandler("draft_daily_log")).toBe(false);
       expect(hasRuleHandler("professionalise_record")).toBe(false);
     });
 
@@ -268,7 +267,6 @@ describe("ARIA Rules Engine", () => {
   describe("LLM fall-through", () => {
     it("returns null for commands without rules", () => {
       expect(tryRulesFirst("improve_writing", "Some text")).toBeNull();
-      expect(tryRulesFirst("draft_daily_log", "Some text")).toBeNull();
       expect(tryRulesFirst("professionalise_record", "Some text")).toBeNull();
       expect(tryRulesFirst("summarise_text", "Some text")).toBeNull();
     });
