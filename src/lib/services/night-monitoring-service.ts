@@ -136,6 +136,7 @@ export const MINIMUM_CHECK_FREQUENCY_HOURS: number = 2;
 export function computeNightMonitoringMetrics(
   checks: NightCheck[],
   logs: NightLog[],
+  now: Date = new Date(),
 ): {
   total_checks_last_7d: number;
   avg_checks_per_night: number;
@@ -148,7 +149,6 @@ export function computeNightMonitoringMetrics(
   handover_completion_rate: number;
   unreviewed_logs_count: number;
 } {
-  const now = new Date();
   const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
 
   // Checks in last 7 days

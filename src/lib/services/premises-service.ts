@@ -88,7 +88,7 @@ export const MAINTENANCE_CATEGORIES: string[] = [
  * Compute premises compliance metrics from a set of checks.
  * Evaluates pass rates, overdue statutory checks, and pending follow-ups.
  */
-export function computePremisesCompliance(checks: PremisesCheck[]): {
+export function computePremisesCompliance(checks: PremisesCheck[], now: Date = new Date()): {
   total_checks: number;
   pass_rate: number;
   fail_count: number;
@@ -97,7 +97,6 @@ export function computePremisesCompliance(checks: PremisesCheck[]): {
   follow_ups_pending: number;
   issues_found_count: number;
 } {
-  const now = new Date();
 
   // Pass rate: pass / (pass + fail + partial) * 100, ignore not_applicable
   let passCount = 0;
@@ -186,7 +185,7 @@ export function computePremisesCompliance(checks: PremisesCheck[]): {
 /**
  * Compute maintenance request summary statistics.
  */
-export function computeMaintenanceSummary(requests: MaintenanceRequest[]): {
+export function computeMaintenanceSummary(requests: MaintenanceRequest[], now: Date = new Date()): {
   total_requests: number;
   open: number;
   in_progress: number;
@@ -198,7 +197,6 @@ export function computeMaintenanceSummary(requests: MaintenanceRequest[]): {
   total_cost: number;
   overdue_urgent: number;
 } {
-  const now = new Date();
   const sevenDaysMs = 7 * 24 * 60 * 60 * 1000;
 
   let openCount = 0;
@@ -381,7 +379,7 @@ export function identifyPremisesAlerts(
  * Compute upcoming check schedule from completed checks.
  * Returns all check types sorted by next due date (most urgent first).
  */
-export function computeCheckSchedule(checks: PremisesCheck[]): {
+export function computeCheckSchedule(checks: PremisesCheck[], now: Date = new Date()): {
   check_type: string;
   label: string;
   last_done: string | null;
@@ -389,7 +387,6 @@ export function computeCheckSchedule(checks: PremisesCheck[]): {
   days_until: number;
   overdue: boolean;
 }[] {
-  const now = new Date();
   const schedule: {
     check_type: string;
     label: string;
