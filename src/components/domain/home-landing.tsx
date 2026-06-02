@@ -7,6 +7,7 @@
 "use client";
 
 import React, { useMemo } from "react";
+import Link from "next/link";
 import {
   Home,
   Users,
@@ -188,7 +189,16 @@ export function HomeLanding() {
             </p>
           </div>
         </div>
-        <DomainCreateMenu domain="home" />
+        <div className="flex items-center gap-2">
+          <Link
+            href="/record-home"
+            className="inline-flex items-center gap-1.5 rounded-xl bg-[var(--cs-navy)] text-white px-3.5 py-2 text-xs font-semibold hover:opacity-95 transition-opacity"
+          >
+            <Sparkles className="h-3.5 w-3.5 text-[var(--cs-aria-gold)]" />
+            Record anything
+          </Link>
+          <DomainCreateMenu domain="home" />
+        </div>
       </div>
 
       {/* ── Today's Priorities ──────────────────────────────────────────── */}
