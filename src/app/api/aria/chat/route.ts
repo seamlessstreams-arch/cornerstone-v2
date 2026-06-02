@@ -255,3 +255,14 @@ export async function POST(req: NextRequest) {
     );
   }
 }
+
+// ── GET: Health/usage info ──────────────────────────────────────────────────
+
+export async function GET() {
+  return NextResponse.json({
+    endpoint: "/api/aria/chat",
+    method: "POST",
+    description: "Aria conversational chat endpoint. Send { message } to get a response.",
+    status: "ready",
+  });
+}

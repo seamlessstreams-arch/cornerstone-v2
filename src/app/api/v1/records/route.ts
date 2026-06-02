@@ -9,6 +9,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { NextRequest, NextResponse } from "next/server";
+import { getStore } from "@/lib/db/store";
 import {
   createRecord,
   type CreateRecordInput,
@@ -113,5 +114,21 @@ export async function POST(req: NextRequest) {
       { error: "Internal error creating record" },
       { status: 500 },
     );
+  }
+}
+
+// ── GET: List recently created records ──────────────────────────────────────
+
+export async function GET() {
+  try {
+    const store = getStore();
+    const records = (store as Record<string, unknown>).records as Record<string, unknown>[] | undefined;
+    return NextResponse.json({
+      data: records ?? [],
+      meta: { total: records?.length ?? 0 },
+      usage: "POST to this endpoint with { record_type, staff_id, title, description } to create a record.",
+    });
+  } catch {
+    return NextResponse.json({ data: [], meta: { total: 0 } });
   }
 }
