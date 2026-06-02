@@ -104,7 +104,11 @@ describe("runReg45EvidenceBuild", () => {
     const snap = runReg45EvidenceBuild(HOME_ID);
     const complaints = snap.themes.complaints_voice;
     expect(complaints.length).toBeGreaterThan(0);
-    const chip = complaints.find((e) => e.source_table === "complaint_outcome_records");
+    // Target the complaint we seeded (for CHILD_ID) — demo home-level complaints
+    // are null-child, so matching on child_id isolates the seeded record.
+    const chip = complaints.find(
+      (e) => e.source_table === "complaint_outcome_records" && e.child_id === CHILD_ID,
+    );
     expect(chip).toBeDefined();
     expect(chip!.sentiment).toBe("positive"); // complainant_satisfied=true
   });

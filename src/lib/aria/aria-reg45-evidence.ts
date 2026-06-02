@@ -233,7 +233,11 @@ function collectComplaints(homeId: string, start: string, end: string): DraftIte
     .findAll()
     .filter(
       (c) =>
-        (c.child_id === null || childrenForHome.has(c.child_id)) &&
+        // Child-specific complaints scope to the child's home. Home-level
+        // complaints (no child_id) only belong to a populated home — they must
+        // not leak into an unknown/empty home with no children.
+        ((c.child_id === null && childrenForHome.size > 0) ||
+          (c.child_id !== null && childrenForHome.has(c.child_id))) &&
         inPeriod(c.complaint_date, start, end),
     )
     .map<DraftItem>((c) => ({

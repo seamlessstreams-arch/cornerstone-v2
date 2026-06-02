@@ -250,12 +250,15 @@ describe("checkAriaHealth — env var checks (no Supabase or provider calls)", (
     expect(health.lastCheckedAt).toMatch(/^\d{4}-\d{2}-\d{2}T/);
   });
 
-  it("returns partial when one provider is configured but Supabase is not", async () => {
+  it("returns full_capacity when one provider is configured (Supabase is optional)", async () => {
+    // Intentional design: a single configured AI provider is sufficient for
+    // full capacity. Supabase persistence is optional — its absence downgrades
+    // individual capabilities, not the overall operational status.
     process.env.OPENAI_API_KEY = "sk-testkey_xxxxxxxxxxxxxxxxxxxxxxxx";
     const { checkAriaHealth } = await import("../aria-health");
     const health = await checkAriaHealth({ deepTest: false });
 
-    expect(health.overallStatus).toBe("partial");
+    expect(health.overallStatus).toBe("full_capacity");
   });
 
   it("uses commandStats passed in for command registry health", async () => {

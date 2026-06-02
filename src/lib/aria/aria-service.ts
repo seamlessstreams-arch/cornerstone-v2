@@ -1520,7 +1520,11 @@ export async function invokeAriaCommand(
       modelId: "deterministic",
     };
     cleanedText = ruleResult.output;
-    confidence = ruleResult.confidence;
+    // Safety safeguard: high-risk commands are always surfaced as "low"
+    // confidence so a human reviews them — regardless of whether the output
+    // came from deterministic rules or the LLM. This preserves the regulated-
+    // care principle that high-risk outputs must be human-verified.
+    confidence = command.riskLevel === "high" ? "low" : ruleResult.confidence;
   } else {
     // Rules couldn't handle it — fall through to LLM provider
     generation = await generateText({
