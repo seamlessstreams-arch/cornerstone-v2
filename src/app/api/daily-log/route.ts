@@ -1,4 +1,7 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { createDailyLog, type CreateDailyLogInput } from "@/lib/daily-log/daily-log-orchestrator";
+
+export const dynamic = "force-dynamic";
 import {
   generateDailyLogIntelligence,
 } from "@/lib/daily-log";
@@ -80,4 +83,45 @@ export async function GET() {
       },
     },
   });
+}
+
+// ── POST: Create a daily log — Enter Once, Use Everywhere ───────────────────
+
+export async function POST(req: NextRequest) {
+  let body: Record<string, unknown>;
+  try {
+    body = await req.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
+  }
+
+  const required = ["child_id", "date", "mood", "key_events"];
+  const missing = required.filter((f) => !body[f]);
+  if (missing.length > 0) {
+    return NextResponse.json({ error: `Missing: ${missing.join(", ")}`, fields: missing }, { status: 400 });
+  }
+
+  const input: CreateDailyLogInput = {
+    child_id: body.child_id as string,
+    date: body.date as string,
+    staff_id: (body.staff_id as string) || "staff_darren",
+    mood: body.mood as CreateDailyLogInput["mood"],
+    engagement: Number(body.engagement) || 3,
+    key_events: (body.key_events as string).trim(),
+    concerns: ((body.concerns as string) || "").trim(),
+    follow_up_needed: body.follow_up_needed === true,
+    home_id: (body.home_id as string) || "home_oak",
+    shift: body.shift as CreateDailyLogInput["shift"],
+  };
+
+  try {
+    const result = createDailyLog(input);
+    return NextResponse.json({
+      data: result.log,
+      linked_updates: result.linked_updates,
+      alerts: result.alerts,
+    }, { status: 201 });
+  } catch (err) {
+    return NextResponse.json({ error: "Failed to create daily log", detail: err instanceof Error ? err.message : String(err) }, { status: 500 });
+  }
 }

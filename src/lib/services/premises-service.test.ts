@@ -94,7 +94,7 @@ describe("computePremisesCompliance", () => {
       makeCheck({ id: "2", follow_up_required: true, follow_up_date: null }),
       makeCheck({ id: "3", follow_up_required: false }),
     ];
-    const m = computePremisesCompliance(checks);
+    const m = computePremisesCompliance(checks, NOW);
     expect(m.follow_ups_pending).toBe(2);
   });
 });
@@ -171,7 +171,7 @@ describe("computeMaintenanceSummary", () => {
       makeRequest({ id: "1", priority: "urgent", status: "open", reported_date: "2026-05-01" }), // > 7 days
       makeRequest({ id: "2", priority: "urgent", status: "open", reported_date: "2026-05-20" }), // < 7 days
     ];
-    const m = computeMaintenanceSummary(requests);
+    const m = computeMaintenanceSummary(requests, NOW);
     expect(m.overdue_urgent).toBe(1);
   });
 });
@@ -252,7 +252,7 @@ describe("computeCheckSchedule", () => {
     const checks = [
       makeCheck({ check_type: "fire_alarm_test", check_date: "2026-05-20" }),
     ];
-    const schedule = computeCheckSchedule(checks);
+    const schedule = computeCheckSchedule(checks, NOW);
     const fireAlarm = schedule.find((s) => s.check_type === "fire_alarm_test");
     expect(fireAlarm).toBeDefined();
     expect(fireAlarm!.last_done).toBe("2026-05-20");

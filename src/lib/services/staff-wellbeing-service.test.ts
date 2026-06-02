@@ -142,7 +142,7 @@ describe("computeWellbeingMetrics", () => {
     const debriefs = [
       makeDebrief({ id: "d1", follow_up_required: true, follow_up_date: "2026-05-01", follow_up_completed: false }),
     ];
-    const r = computeWellbeingMetrics(checks, debriefs, 10);
+    const r = computeWellbeingMetrics(checks, debriefs, 10, NOW);
     expect(r.overdue_follow_ups).toBe(2); // 1 check + 1 debrief
   });
 

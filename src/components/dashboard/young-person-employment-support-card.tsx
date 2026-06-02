@@ -1,67 +1,109 @@
 "use client";
 
+// ══════════════════════════════════════════════════════════════════════════════
+// CORNERSTONE — YOUNG PERSON EMPLOYMENT SUPPORT CARD
+// Live data from education intelligence engine.
+// CHR 2015 Reg 12, Reg 34. SCCIF: Helped & Protected.
+// ══════════════════════════════════════════════════════════════════════════════
+
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Briefcase, ChevronRight, AlertTriangle, Brain, Clock, GraduationCap } from "lucide-react";
+import {
+  AlertTriangle, Brain, Briefcase, ChevronRight, Loader2,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useEducationIntelligence } from "@/hooks/use-education-intelligence";
 
-const DEMO_METRICS = { total_records: 8, not_in_employment_count: 2, employed_count: 3, apprenticeship_count: 1, not_ready_count: 1, cv_completed_rate: 75.0, interview_practice_rate: 62.5, work_experience_rate: 50.0, employer_engaged_rate: 37.5, child_motivated_rate: 87.5, financial_literacy_rate: 50.0, travel_training_rate: 37.5, workplace_rights_rate: 50.0, unique_children: 4 };
+const ALERT_STYLES: Record<string, string> = {
+  critical: "border-red-200 bg-red-50 text-red-800",
+  high: "border-red-200 bg-red-50 text-red-800",
+  medium: "border-amber-200 bg-amber-50 text-amber-800",
+  low: "border-blue-200 bg-blue-50 text-blue-800",
+};
 
-const DEMO_RECORDS: { child: string; type: string; status: string; readiness: string }[] = [
-  { child: "Child A", type: "CV Prep", status: "Employed PT", readiness: "Employed" },
-  { child: "Child B", type: "Apprenticeship", status: "Active", readiness: "Sustained" },
-  { child: "Child C", type: "Interview Skills", status: "Searching", readiness: "Work Ready" },
-  { child: "Child A", type: "Work Experience", status: "Completed", readiness: "Employed" },
-  { child: "Child D", type: "Career Guidance", status: "Not Employed", readiness: "Developing" },
-  { child: "Child C", type: "Job Search", status: "Interview", readiness: "Work Ready" },
-];
-
-const DEMO_ALERTS: { type: string; severity: "critical" | "high" | "medium"; message: string }[] = [
-  { type: "not_ready_no_support", severity: "critical", message: "1 young person not in employment, not work-ready, and no support in progress — immediate action required." },
-  { type: "work_ready_not_employed", severity: "high", message: "1 young person work-ready but not yet in employment or interview stage." },
-  { type: "no_financial_literacy", severity: "medium", message: "4 employed young people have not had financial literacy covered." },
-];
-
-const ARIA_INSIGHTS = [
-  "8 records across 4 young people. Employed: 3. Apprenticeship: 1. Not in employment: 2.",
-  "Priority: 1 not ready without support. CV completed 75.0%. Financial literacy 50.0%.",
-  "Employment prepares young people for independence. Is support personalised? Are employers engaged? Is every young person progressing?",
-];
-
-const READINESS_BADGES: Record<string, { label: string; color: string }> = {
-  "Not Ready": { label: "Not Ready", color: "text-red-700 bg-red-50 border-red-200" },
-  "Developing": { label: "Develop.", color: "text-amber-700 bg-amber-50 border-amber-200" },
-  "Work Ready": { label: "Ready", color: "text-blue-700 bg-blue-50 border-blue-200" },
-  "Employed": { label: "Employed", color: "text-green-700 bg-green-50 border-green-200" },
-  "Sustained": { label: "Sustained", color: "text-emerald-700 bg-emerald-50 border-emerald-200" },
+const INSIGHT_STYLES: Record<string, string> = {
+  critical: "border-red-200 bg-red-50 text-red-800",
+  warning: "border-amber-200 bg-amber-50 text-amber-800",
+  positive: "border-green-200 bg-green-50 text-green-800",
 };
 
 export function YoungPersonEmploymentSupportCard() {
-  const m = DEMO_METRICS;
+  const { data, isLoading } = useEducationIntelligence();
+
+  if (isLoading) {
+    return (
+      <Card className="overflow-hidden border-slate-200">
+        <CardContent className="flex items-center justify-center py-12">
+          <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
+        </CardContent>
+      </Card>
+    );
+  }
+
+  const d = data?.data;
+  const insights = d?.insights ?? [];
+  const alerts = d?.alerts ?? [];
+
   return (
-    <Card className="overflow-hidden border-lime-200">
-      <CardHeader className="pb-3 bg-lime-50/50">
+    <Card className="overflow-hidden border-slate-200">
+      <CardHeader className="pb-3 bg-slate-50/50">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-sm flex items-center gap-2"><Briefcase className="h-4 w-4 text-lime-600" /><span className="text-lime-900">Employment Support</span></CardTitle>
-          <Link href="/young-person-employment-support" className="text-xs text-lime-600 hover:underline flex items-center gap-1">Support <ChevronRight className="h-3 w-3" /></Link>
+          <CardTitle className="text-sm flex items-center gap-2">
+            <Briefcase className="h-4 w-4 text-slate-600" />
+            <span className="text-slate-900">Employment Support</span>
+          </CardTitle>
+          <Link href="/education" className="text-xs text-slate-600 hover:underline flex items-center gap-1">
+            View <ChevronRight className="h-3 w-3" />
+          </Link>
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="grid grid-cols-4 gap-2">
-          <div className={cn("text-center rounded-lg p-2", m.not_ready_count === 0 ? "bg-green-50" : "bg-red-50")}><p className={cn("text-lg font-bold tabular-nums", m.not_ready_count === 0 ? "text-green-600" : "text-red-600")}>{m.not_ready_count}</p><p className="text-[10px] text-muted-foreground">Not Ready</p></div>
-          <div className={cn("text-center rounded-lg p-2", m.not_in_employment_count === 0 ? "bg-green-50" : "bg-amber-50")}><p className={cn("text-lg font-bold tabular-nums", m.not_in_employment_count === 0 ? "text-green-600" : "text-amber-600")}>{m.not_in_employment_count}</p><p className="text-[10px] text-muted-foreground">No Work</p></div>
-          <div className="text-center rounded-lg p-2 bg-green-50"><p className="text-lg font-bold tabular-nums text-green-600">{m.employed_count}</p><p className="text-[10px] text-muted-foreground">Employed</p></div>
-          <div className="text-center rounded-lg p-2 bg-lime-50"><p className="text-lg font-bold tabular-nums text-lime-600">{m.total_records}</p><p className="text-[10px] text-muted-foreground">Total</p></div>
-        </div>
-        <div className="space-y-1.5">
-          <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1"><Clock className="h-3 w-3" />Recent Support</p>
-          <div className="space-y-1">
-            {DEMO_RECORDS.map((r, i) => { const badge = READINESS_BADGES[r.readiness] ?? READINESS_BADGES["Developing"]; return (<div key={i} className="flex items-center justify-between rounded border p-2 text-xs"><div className="flex items-center gap-2 flex-1 min-w-0"><GraduationCap className="h-3 w-3 text-lime-500 shrink-0" /><span className="font-medium">{r.child}</span><span className="text-muted-foreground truncate">{r.type} · {r.status}</span></div><Badge variant="outline" className={cn("text-[10px] shrink-0", badge.color)}>{badge.label}</Badge></div>); })}
+          <div className="text-center rounded-lg bg-slate-50 p-2">
+            <p className="text-lg font-bold tabular-nums text-slate-600">{d?.overview?.total_children ?? 0}</p>
+            <p className="text-[10px] text-muted-foreground">Children</p>
+          </div>
+          <div className={cn("text-center rounded-lg p-2", (d?.overview?.neet_count ?? 0) > 0 ? "bg-red-50" : "bg-green-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", (d?.overview?.neet_count ?? 0) > 0 ? "text-red-600" : "text-green-600")}>{d?.overview?.neet_count ?? 0}</p>
+            <p className="text-[10px] text-muted-foreground">NEET</p>
+          </div>
+          <div className="text-center rounded-lg bg-green-50 p-2">
+            <p className="text-lg font-bold tabular-nums text-green-600">{Math.round(d?.overview?.school_placement_rate ?? 0)}%</p>
+            <p className="text-[10px] text-muted-foreground">Placed %</p>
+          </div>
+          <div className={cn("text-center rounded-lg p-2", (d?.overview?.exclusion_risk_count ?? 0) > 0 ? "bg-red-50" : "bg-green-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", (d?.overview?.exclusion_risk_count ?? 0) > 0 ? "text-red-600" : "text-green-600")}>{d?.overview?.exclusion_risk_count ?? 0}</p>
+            <p className="text-[10px] text-muted-foreground">Exclusion</p>
           </div>
         </div>
-        {DEMO_ALERTS.length > 0 && (<div className="space-y-1.5"><p className="text-xs font-semibold text-muted-foreground flex items-center gap-1"><AlertTriangle className="h-3 w-3" />Employment Alerts</p>{DEMO_ALERTS.map((a, i) => (<div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", a.severity === "critical" || a.severity === "high" ? "border-red-200 bg-red-50 text-red-800" : "border-amber-200 bg-amber-50 text-amber-800")}>{a.message}</div>))}</div>)}
-        <div className="space-y-1.5"><p className="text-xs font-semibold flex items-center gap-1 text-lime-700"><Brain className="h-3 w-3" />ARIA Employment Intelligence</p>{ARIA_INSIGHTS.map((insight, i) => (<div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", i === 0 ? "border-lime-200 bg-lime-50 text-lime-800" : i === 1 ? "border-amber-200 bg-amber-50 text-amber-800" : "border-green-200 bg-green-50 text-green-800")}>{insight}</div>))}</div>
+
+        {alerts.length > 0 && (
+          <div className="space-y-1.5">
+            <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
+              <AlertTriangle className="h-3 w-3" />
+              Alerts
+            </p>
+            {alerts.slice(0, 3).map((a, i) => (
+              <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", ALERT_STYLES[a.severity] ?? ALERT_STYLES.medium)}>
+                {a.message}
+              </div>
+            ))}
+          </div>
+        )}
+
+        {insights.length > 0 && (
+          <div className="space-y-1.5">
+            <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
+              <Brain className="h-3 w-3" />
+              ARIA Employment Support Intelligence
+            </p>
+            {insights.slice(0, 2).map((insight, i) => (
+              <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>
+                {insight.text}
+              </div>
+            ))}
+          </div>
+        )}
       </CardContent>
     </Card>
   );

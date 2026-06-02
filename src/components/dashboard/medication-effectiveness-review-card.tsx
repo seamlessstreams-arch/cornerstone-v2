@@ -1,67 +1,211 @@
 "use client";
 
+// ══════════════════════════════════════════════════════════════════════════════
+// CORNERSTONE — MEDICATION EFFECTIVENESS REVIEW CARD
+// Dashboard widget for PRN analysis, per-medication adherence, and review.
+// Powered by the Medication Intelligence Engine — live data (Reg 23/12).
+// ══════════════════════════════════════════════════════════════════════════════
+
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Pill, ChevronRight, AlertTriangle, Brain, Clock, Stethoscope } from "lucide-react";
+import {
+  Pill, ChevronRight, AlertTriangle, Brain,
+  Loader2, Stethoscope,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useMedicationIntelligence } from "@/hooks/use-medication-intelligence";
 
-const DEMO_METRICS = { total_reviews: 10, ineffective_count: 1, adverse_effects_count: 1, non_adherent_count: 1, overdue_review_count: 1, side_effects_rate: 80.0, prescriber_rate: 70.0, consent_rate: 90.0, storage_rate: 80.0, unique_children: 6 };
+// ── Styling ─────────────────────────────────────────────────────────────────
 
-const DEMO_RECORDS: { child: string; category: string; effectiveness: string; adherence: string }[] = [
-  { child: "Child A", category: "Stimulant", effectiveness: "Effective", adherence: "Full" },
-  { child: "Child B", category: "Antidepressant", effectiveness: "Effective", adherence: "Mostly" },
-  { child: "Child C", category: "Antipsychotic", effectiveness: "Adverse", adherence: "Variable" },
-  { child: "Child D", category: "Inhaler", effectiveness: "Highly Effective", adherence: "Full" },
-  { child: "Child E", category: "Anxiolytic", effectiveness: "Ineffective", adherence: "Non-Adh." },
-  { child: "Child F", category: "Anticonvulsant", effectiveness: "Partially", adherence: "Mostly" },
-];
-
-const DEMO_ALERTS: { type: string; severity: "critical" | "high" | "medium"; message: string }[] = [
-  { type: "adverse_no_prescriber", severity: "critical", message: "Child C's antipsychotic showing adverse effects without prescriber consultation." },
-  { type: "side_effects_not_monitored", severity: "high", message: "2 reviews have side effects not monitored." },
-  { type: "storage_not_compliant", severity: "medium", message: "2 reviews with non-compliant medication storage." },
-];
-
-const ARIA_INSIGHTS = [
-  "10 reviews. Ineffective: 1. Adverse: 1. Non-adherent: 1. Overdue: 1. Side effects: 80%. Prescriber: 70%.",
-  "Priority: 1 adverse without prescriber. 2 side effects unmonitored. 2 storage issues. Strengthen medication oversight.",
-  "Positive: Consent current for most. Dosage appropriate. Administration correct in majority of cases.",
-];
-
-const EFFECTIVENESS_BADGES: Record<string, { label: string; color: string }> = {
-  "Highly Effective": { label: "High", color: "text-green-700 bg-green-50 border-green-200" },
-  "Effective": { label: "Effect.", color: "text-blue-700 bg-blue-50 border-blue-200" },
-  "Partially": { label: "Partial", color: "text-amber-700 bg-amber-50 border-amber-200" },
-  "Ineffective": { label: "Ineff.", color: "text-orange-700 bg-orange-50 border-orange-200" },
-  "Adverse": { label: "Adverse", color: "text-red-700 bg-red-50 border-red-200" },
+const ALERT_STYLES: Record<string, string> = {
+  critical: "border-red-200 bg-red-50 text-red-800",
+  high: "border-red-200 bg-red-50 text-red-800",
+  medium: "border-amber-200 bg-amber-50 text-amber-800",
+  low: "border-blue-200 bg-blue-50 text-blue-800",
 };
 
+const INSIGHT_STYLES: Record<string, string> = {
+  critical: "border-red-200 bg-red-50 text-red-800",
+  warning: "border-amber-200 bg-amber-50 text-amber-800",
+  positive: "border-green-200 bg-green-50 text-green-800",
+};
+
+// ── Adherence bar sub-component ─────────────────────────────────────────────
+
+function AdherenceBar({ value }: { value: number }) {
+  return (
+    <div className="flex items-center gap-1.5">
+      <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+        <div
+          className={cn(
+            "h-full rounded-full",
+            value >= 95 ? "bg-green-400" : value >= 80 ? "bg-amber-400" : "bg-red-400",
+          )}
+          style={{ width: `${value}%` }}
+        />
+      </div>
+      <span className={cn(
+        "text-[10px] tabular-nums font-medium w-7 text-right",
+        value >= 95 ? "text-green-600" : value >= 80 ? "text-amber-600" : "text-red-600",
+      )}>
+        {value}%
+      </span>
+    </div>
+  );
+}
+
+// ── Component ────────────────────────────────────────────────────────────────
+
 export function MedicationEffectivenessReviewCard() {
-  const m = DEMO_METRICS;
+  const { data, isLoading } = useMedicationIntelligence();
+  const intel = data?.data;
+
+  if (isLoading || !intel) {
+    return (
+      <Card>
+        <CardHeader className="pb-3">
+          <CardTitle className="text-sm flex items-center gap-2">
+            <Pill className="h-4 w-4 text-brand" />
+            Medication Review
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center justify-center py-8">
+            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  const o = intel.overview;
+  const prn = intel.prn_analysis;
+
   return (
     <Card className="overflow-hidden">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-sm flex items-center gap-2"><Pill className="h-4 w-4 text-brand" />Medication Review</CardTitle>
-          <Link href="/medication-effectiveness-review" className="text-xs text-brand hover:underline flex items-center gap-1">Reviews <ChevronRight className="h-3 w-3" /></Link>
+          <CardTitle className="text-sm flex items-center gap-2">
+            <Pill className="h-4 w-4 text-brand" />
+            Medication Review
+          </CardTitle>
+          <Link href="/medication" className="text-xs text-brand hover:underline flex items-center gap-1">
+            Reviews <ChevronRight className="h-3 w-3" />
+          </Link>
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
+
+        {/* ── Summary strip ────────────────────────────────────────────── */}
+
         <div className="grid grid-cols-4 gap-2">
-          <div className={cn("text-center rounded-lg p-2", m.adverse_effects_count === 0 ? "bg-green-50" : "bg-red-50")}><p className={cn("text-lg font-bold tabular-nums", m.adverse_effects_count === 0 ? "text-green-600" : "text-red-600")}>{m.adverse_effects_count}</p><p className="text-[10px] text-muted-foreground">Adverse</p></div>
-          <div className={cn("text-center rounded-lg p-2", m.ineffective_count === 0 ? "bg-green-50" : "bg-amber-50")}><p className={cn("text-lg font-bold tabular-nums", m.ineffective_count === 0 ? "text-green-600" : "text-amber-600")}>{m.ineffective_count}</p><p className="text-[10px] text-muted-foreground">Ineff.</p></div>
-          <div className={cn("text-center rounded-lg p-2", m.non_adherent_count === 0 ? "bg-green-50" : "bg-amber-50")}><p className={cn("text-lg font-bold tabular-nums", m.non_adherent_count === 0 ? "text-green-600" : "text-amber-600")}>{m.non_adherent_count}</p><p className="text-[10px] text-muted-foreground">Non-Adh.</p></div>
-          <div className="text-center rounded-lg p-2 bg-blue-50"><p className="text-lg font-bold tabular-nums text-blue-600">{m.total_reviews}</p><p className="text-[10px] text-muted-foreground">Total</p></div>
-        </div>
-        <div className="space-y-1.5">
-          <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1"><Clock className="h-3 w-3" />Recent Reviews</p>
-          <div className="space-y-1">
-            {DEMO_RECORDS.map((r, i) => { const badge = EFFECTIVENESS_BADGES[r.effectiveness] ?? EFFECTIVENESS_BADGES["Effective"]; return (<div key={i} className="flex items-center justify-between rounded border p-2 text-xs"><div className="flex items-center gap-2 flex-1 min-w-0"><Stethoscope className="h-3 w-3 text-indigo-500 shrink-0" /><span className="font-medium">{r.child}</span><span className="text-muted-foreground truncate">{r.category} · {r.adherence}</span></div><Badge variant="outline" className={cn("text-[10px] shrink-0", badge.color)}>{badge.label}</Badge></div>); })}
+          <div className="text-center rounded-lg bg-blue-50 p-2.5">
+            <p className="text-lg font-bold tabular-nums text-blue-600">{prn.total_prn_30d}</p>
+            <p className="text-[10px] text-muted-foreground">PRN (30d)</p>
+          </div>
+          <div className={cn("text-center rounded-lg p-2.5", prn.effectiveness_rate >= 80 ? "bg-green-50" : "bg-amber-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", prn.effectiveness_rate >= 80 ? "text-green-600" : "text-amber-600")}>
+              {prn.effectiveness_rate}%
+            </p>
+            <p className="text-[10px] text-muted-foreground">Effect.</p>
+          </div>
+          <div className={cn("text-center rounded-lg p-2.5", o.adherence_rate >= 95 ? "bg-green-50" : o.adherence_rate >= 80 ? "bg-amber-50" : "bg-red-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", o.adherence_rate >= 95 ? "text-green-600" : o.adherence_rate >= 80 ? "text-amber-600" : "text-red-600")}>
+              {o.adherence_rate}%
+            </p>
+            <p className="text-[10px] text-muted-foreground">Adherence</p>
+          </div>
+          <div className={cn("text-center rounded-lg p-2.5", o.refusal_rate === 0 ? "bg-green-50" : "bg-amber-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", o.refusal_rate === 0 ? "text-green-600" : "text-amber-600")}>
+              {o.refusal_rate}%
+            </p>
+            <p className="text-[10px] text-muted-foreground">Refused</p>
           </div>
         </div>
-        {DEMO_ALERTS.length > 0 && (<div className="space-y-1.5"><p className="text-xs font-semibold text-muted-foreground flex items-center gap-1"><AlertTriangle className="h-3 w-3" />Medication Alerts</p>{DEMO_ALERTS.map((a, i) => (<div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", a.severity === "critical" || a.severity === "high" ? "border-red-200 bg-red-50 text-red-800" : "border-amber-200 bg-amber-50 text-amber-800")}>{a.message}</div>))}</div>)}
-        <div className="space-y-1.5"><p className="text-xs font-semibold flex items-center gap-1 text-purple-700"><Brain className="h-3 w-3" />ARIA Medication Intelligence</p>{ARIA_INSIGHTS.map((insight, i) => (<div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", i === 0 ? "border-blue-200 bg-blue-50 text-blue-800" : i === 1 ? "border-amber-200 bg-amber-50 text-amber-800" : "border-green-200 bg-green-50 text-green-800")}>{insight}</div>))}</div>
+
+        {/* ── Medication details with adherence bars ───────────────────── */}
+
+        {intel.medication_details.length > 0 && (
+          <div className="space-y-1.5">
+            <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
+              <Stethoscope className="h-3 w-3" />
+              Medication Adherence
+            </p>
+            {intel.medication_details.slice(0, 5).map((med) => (
+              <div key={med.medication_id} className="rounded-lg border p-3 text-xs space-y-1">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <span className="font-medium truncate">{med.medication_name}</span>
+                    <span className="text-[10px] text-muted-foreground truncate">{med.child_name}</span>
+                  </div>
+                  <Badge variant="outline" className="text-[10px] shrink-0">
+                    {med.type}
+                  </Badge>
+                </div>
+                <AdherenceBar value={med.adherence_rate} />
+                {(med.refusal_count_30d > 0 || med.missed_count_30d > 0) && (
+                  <div className="flex items-center gap-2 mt-0.5">
+                    {med.refusal_count_30d > 0 && (
+                      <Badge className="text-[9px] bg-amber-100 text-amber-700">
+                        {med.refusal_count_30d} refused
+                      </Badge>
+                    )}
+                    {med.missed_count_30d > 0 && (
+                      <Badge className="text-[9px] bg-red-100 text-red-700">
+                        {med.missed_count_30d} missed
+                      </Badge>
+                    )}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* ── Alerts ──────────────────────────────────────────────────── */}
+
+        {intel.alerts.length > 0 && (
+          <div className="space-y-1.5">
+            <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
+              <AlertTriangle className="h-3 w-3" />
+              Medication Alerts
+            </p>
+            {intel.alerts.slice(0, 3).map((alert, i) => (
+              <div
+                key={i}
+                className={cn(
+                  "rounded border p-2.5 text-xs leading-relaxed",
+                  ALERT_STYLES[alert.severity] ?? ALERT_STYLES.medium,
+                )}
+              >
+                {alert.message}
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* ── ARIA Insights ───────────────────────────────────────────── */}
+
+        {intel.insights.length > 0 && (
+          <div className="space-y-1.5">
+            <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
+              <Brain className="h-3 w-3" />
+              ARIA Medication Intelligence
+            </p>
+            {intel.insights.slice(0, 3).map((insight, i) => (
+              <div
+                key={i}
+                className={cn(
+                  "rounded border p-2.5 text-xs leading-relaxed",
+                  INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.positive,
+                )}
+              >
+                {insight.text}
+              </div>
+            ))}
+          </div>
+        )}
       </CardContent>
     </Card>
   );

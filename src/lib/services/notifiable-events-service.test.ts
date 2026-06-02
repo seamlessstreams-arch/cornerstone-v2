@@ -173,7 +173,7 @@ describe("identifyNotificationAlerts", () => {
       makeNotification({ id: "n-1", event_id: "ev-1" }),
       makeNotification({ id: "n-2", event_id: "ev-2" }),
       makeNotification({ id: "n-3", event_id: "ev-3" }),
-    ]);
+    ], NOW);
     const found = alerts.filter((a) => a.type === "high_frequency");
     expect(found.length).toBe(1);
     expect(found[0].severity).toBe("high");

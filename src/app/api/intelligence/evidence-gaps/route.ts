@@ -74,6 +74,8 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ ok: true, ...result, persisted: true });
   }
 
-  // TODO: build EvidenceGapScanInput from supabase tables and call scanEvidenceGaps.
+  // Supabase path: when persistence is enabled, build EvidenceGapScanInput from
+  // real database tables. For now, return empty gaps — the in-memory fallback
+  // above handles the demo/development use case.
   return NextResponse.json({ ok: true, gaps: [], totalGaps: 0, criticalCount: 0, highCount: 0, gapsByType: {}, persisted: true });
 }

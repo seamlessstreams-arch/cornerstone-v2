@@ -2,104 +2,93 @@
 
 // ══════════════════════════════════════════════════════════════════════════════
 // CORNERSTONE — MEDICATION INTELLIGENCE CARD
-// Dashboard card for MAR compliance, controlled drug audit status,
-// medication error tracking, and ARIA medication intelligence.
+// Dashboard widget for medication adherence, refusals, witnessing compliance,
+// PRN usage, stock management, and ARIA medication intelligence.
+// Powered by the Medication Intelligence Engine — live data (Reg 23/12).
 // ══════════════════════════════════════════════════════════════════════════════
 
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
-  Pill, ChevronRight, AlertTriangle, CheckCircle2,
-  Clock, Brain, ShieldAlert, Lock,
+  Pill, ChevronRight, AlertTriangle, Brain,
+  CheckCircle2, Loader2, Users, Activity,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useMedicationIntelligence } from "@/hooks/use-medication-intelligence";
 
-// ── Demo data ────────────────────────────────────────────────────────────────
+// ── Styling ─────────────────────────────────────────────────────────────────
 
-const DEMO_COMPLIANCE = {
-  totalScheduled: 42,
-  totalGiven: 38,
-  totalRefused: 2,
-  totalWithheld: 1,
-  totalMissed: 1,
-  complianceRate: 92.9,
-  refusalRate: 4.8,
+const ALERT_STYLES: Record<string, string> = {
+  critical: "border-red-200 bg-red-50 text-red-800",
+  high: "border-red-200 bg-red-50 text-red-800",
+  medium: "border-amber-200 bg-amber-50 text-amber-800",
+  low: "border-blue-200 bg-blue-50 text-blue-800",
 };
 
-const DEMO_CONTROLLED = {
-  totalControlled: 2,
-  stockDiscrepancies: 0,
-  witnessComplianceRate: 100,
-  overdueStockChecks: 1,
+const INSIGHT_STYLES: Record<string, string> = {
+  critical: "border-red-200 bg-red-50 text-red-800",
+  warning: "border-amber-200 bg-amber-50 text-amber-800",
+  positive: "border-green-200 bg-green-50 text-green-800",
 };
 
-const DEMO_ERRORS = {
-  totalErrors: 1,
-  errorRate: 2.4,
-  bySeverity: { critical: 0, high: 0, medium: 1, low: 0 },
-  notificationsRequired: 0,
-  notificationsSent: 0,
+const COMPLIANCE_STYLES: Record<string, { bg: string; text: string }> = {
+  excellent: { bg: "bg-green-100", text: "text-green-700" },
+  good: { bg: "bg-blue-100", text: "text-blue-700" },
+  concerns: { bg: "bg-amber-100", text: "text-amber-700" },
+  critical: { bg: "bg-red-100", text: "text-red-700" },
 };
 
-const ACTIVE_PRESCRIPTIONS = [
-  {
-    id: "rx_1",
-    child: "Alex W",
-    medication: "Methylphenidate 10mg",
-    type: "controlled",
-    frequency: "Twice daily",
-    stockCount: 14,
-    lastStockCheck: "2026-05-11",
-  },
-  {
-    id: "rx_2",
-    child: "Tyler R",
-    medication: "Melatonin 3mg",
-    type: "regular",
-    frequency: "At bedtime",
-    stockCount: 22,
-    lastStockCheck: "2026-05-10",
-  },
-  {
-    id: "rx_3",
-    child: "Alex W",
-    medication: "Ibuprofen 200mg",
-    type: "prn",
-    frequency: "As needed (max 3/day)",
-    stockCount: 8,
-    lastStockCheck: null,
-  },
-];
+// ── Compliance bar sub-component ────────────────────────────────────────────
 
-const DEMO_ALERTS: { type: string; severity: "critical" | "high" | "medium" | "low"; message: string; child: string }[] = [
-  { type: "overdue_stock_check", severity: "medium", message: "Ibuprofen 200mg (PRN) — no stock check recorded. Conduct stock reconciliation.", child: "Alex W" },
-  { type: "refusal_pattern", severity: "high", message: "Tyler R refused Melatonin twice this week. Review with prescriber if pattern continues.", child: "Tyler R" },
-];
-
-const ARIA_INSIGHTS = [
-  "Methylphenidate stock check was 3 days ago — next controlled drug audit due in 4 days. Dual-signature witnessed on all controlled administrations this period.",
-  "1 medication error (wrong time) recorded this period. Low severity, no Ofsted notification required. Documentation corrective action completed.",
-  "Positive: 92.9% MAR compliance rate exceeds the 90% target. All PRN administrations include documented rationale. Reg 23 health care standards are well evidenced.",
-];
-
-// ── Helpers ──────────────────────────────────────────────────────────────────
-
-const TYPE_COLOURS: Record<string, string> = {
-  controlled: "bg-red-100 text-red-700",
-  regular: "bg-blue-100 text-blue-700",
-  prn: "bg-amber-100 text-amber-700",
-  otc: "bg-gray-100 text-gray-600",
-  topical: "bg-green-100 text-green-700",
-  homely_remedy: "bg-purple-100 text-purple-700",
-};
+function ComplianceBar({ label, value }: { label: string; value: number }) {
+  return (
+    <div className="flex items-center gap-2 text-xs">
+      <span className="w-24 truncate">{label}</span>
+      <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
+        <div
+          className={cn(
+            "h-full rounded-full",
+            value >= 95 ? "bg-green-400" : value >= 80 ? "bg-amber-400" : "bg-red-400",
+          )}
+          style={{ width: `${value}%` }}
+        />
+      </div>
+      <span className={cn(
+        "w-8 text-right tabular-nums font-medium",
+        value >= 95 ? "text-green-600" : value >= 80 ? "text-amber-600" : "text-red-600",
+      )}>
+        {value}%
+      </span>
+    </div>
+  );
+}
 
 // ── Component ────────────────────────────────────────────────────────────────
 
 export function MedicationIntelligenceCard() {
-  const c = DEMO_COMPLIANCE;
-  const ctrl = DEMO_CONTROLLED;
-  const err = DEMO_ERRORS;
+  const { data, isLoading } = useMedicationIntelligence();
+  const intel = data?.data;
+
+  if (isLoading || !intel) {
+    return (
+      <Card>
+        <CardHeader className="pb-3">
+          <CardTitle className="text-sm flex items-center gap-2">
+            <Pill className="h-4 w-4 text-brand" />
+            Medication Intelligence
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center justify-center py-8">
+            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  const o = intel.overview;
 
   return (
     <Card className="overflow-hidden">
@@ -110,7 +99,7 @@ export function MedicationIntelligenceCard() {
             Medication Intelligence
           </CardTitle>
           <Link href="/medication" className="text-xs text-brand hover:underline flex items-center gap-1">
-            Medication <ChevronRight className="h-3 w-3" />
+            MAR <ChevronRight className="h-3 w-3" />
           </Link>
         </div>
       </CardHeader>
@@ -119,126 +108,153 @@ export function MedicationIntelligenceCard() {
         {/* ── Summary strip ────────────────────────────────────────────── */}
 
         <div className="grid grid-cols-4 gap-2">
-          <div className="text-center rounded-lg p-2" style={{ background: c.complianceRate >= 90 ? "hsl(var(--chart-2) / 0.1)" : "hsl(var(--destructive) / 0.08)" }}>
-            <p className={cn("text-lg font-bold tabular-nums", c.complianceRate >= 90 ? "text-green-600" : "text-amber-600")}>
-              {c.complianceRate}%
+          <div className={cn("text-center rounded-lg p-2.5", o.adherence_rate >= 95 ? "bg-green-50" : o.adherence_rate >= 80 ? "bg-amber-50" : "bg-red-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", o.adherence_rate >= 95 ? "text-green-600" : o.adherence_rate >= 80 ? "text-amber-600" : "text-red-600")}>
+              {o.adherence_rate}%
             </p>
-            <p className="text-[10px] text-muted-foreground">MAR Compliance</p>
+            <p className="text-[10px] text-muted-foreground">Adherence</p>
           </div>
-          <div className={cn("text-center rounded-lg p-2", c.refusalRate > 5 ? "bg-amber-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", c.refusalRate > 5 ? "text-amber-600" : "text-green-600")}>
-              {c.refusalRate}%
-            </p>
-            <p className="text-[10px] text-muted-foreground">Refusal Rate</p>
+          <div className="text-center rounded-lg bg-blue-50 p-2.5">
+            <p className="text-lg font-bold tabular-nums text-blue-600">{o.total_administrations_30d}</p>
+            <p className="text-[10px] text-muted-foreground">Doses (30d)</p>
           </div>
-          <div className={cn("text-center rounded-lg p-2", ctrl.witnessComplianceRate >= 100 ? "bg-green-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", ctrl.witnessComplianceRate >= 100 ? "text-green-600" : "text-red-600")}>
-              {ctrl.witnessComplianceRate}%
+          <div className={cn("text-center rounded-lg p-2.5", o.refusal_rate === 0 ? "bg-green-50" : "bg-amber-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", o.refusal_rate === 0 ? "text-green-600" : "text-amber-600")}>
+              {o.refusal_rate}%
             </p>
-            <p className="text-[10px] text-muted-foreground">CD Witnessed</p>
+            <p className="text-[10px] text-muted-foreground">Refused</p>
           </div>
-          <div className={cn("text-center rounded-lg p-2", err.totalErrors === 0 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", err.totalErrors === 0 ? "text-green-600" : "text-amber-600")}>
-              {err.totalErrors}
+          <div className={cn("text-center rounded-lg p-2.5", o.missed_rate === 0 ? "bg-green-50" : "bg-red-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", o.missed_rate === 0 ? "text-green-600" : "text-red-600")}>
+              {o.missed_rate}%
             </p>
-            <p className="text-[10px] text-muted-foreground">Errors</p>
+            <p className="text-[10px] text-muted-foreground">Missed</p>
           </div>
         </div>
 
-        {/* ── Controlled drug audit status ─────────────────────────────── */}
+        {/* ── Compliance bars ─────────────────────────────────────────── */}
 
-        <div className="flex items-center justify-between rounded-lg border p-3">
-          <div className="flex items-center gap-2">
-            <Lock className={cn("h-4 w-4", ctrl.overdueStockChecks > 0 ? "text-amber-500" : "text-green-500")} />
-            <div>
-              <p className="text-xs font-medium">Controlled Drug Audit</p>
-              <p className="text-[10px] text-muted-foreground">
-                {ctrl.totalControlled} controlled {ctrl.totalControlled === 1 ? "prescription" : "prescriptions"} · {ctrl.stockDiscrepancies} discrepancies
-              </p>
+        <div className="space-y-1.5">
+          <ComplianceBar label="Witnessing" value={o.witnessing_rate} />
+          <ComplianceBar label="Stock checks" value={o.stock_check_compliance} />
+          {o.controlled_drug_count > 0 && (
+            <div className="flex items-center gap-2 text-xs">
+              <span className="w-24 text-muted-foreground">Controlled</span>
+              <Badge className="text-[10px] bg-purple-100 text-purple-700">
+                {o.controlled_drug_count} active
+              </Badge>
             </div>
-          </div>
-          {ctrl.overdueStockChecks > 0 ? (
-            <Badge className="text-[10px] bg-amber-100 text-amber-700">
-              {ctrl.overdueStockChecks} check{ctrl.overdueStockChecks !== 1 ? "s" : ""} overdue
-            </Badge>
-          ) : (
-            <Badge className="text-[10px] bg-green-100 text-green-700">
-              <CheckCircle2 className="h-3 w-3 mr-1" />
-              Up to date
-            </Badge>
           )}
         </div>
 
-        {/* ── Active prescriptions ────────────────────────────────────── */}
+        {/* ── Per-child profiles ───────────────────────────────────────── */}
 
-        <div className="space-y-1.5">
-          <p className="text-xs font-semibold text-muted-foreground">Active Prescriptions</p>
-          {ACTIVE_PRESCRIPTIONS.map((rx) => (
-            <div key={rx.id} className="rounded-lg border p-3 space-y-1 text-xs">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="font-medium">{rx.child}</span>
-                  <Badge className={cn("text-[10px]", TYPE_COLOURS[rx.type] ?? "bg-gray-100 text-gray-600")}>
-                    {rx.type}
-                  </Badge>
+        {intel.child_profiles.length > 0 && (
+          <div className="space-y-1.5">
+            <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
+              <Users className="h-3 w-3" />
+              By Young Person
+            </p>
+            {intel.child_profiles.slice(0, 4).map((profile) => {
+              const cStyle = COMPLIANCE_STYLES[profile.compliance_status];
+              return (
+                <div key={profile.child_id} className="rounded-lg border p-3 text-xs">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <span className="font-medium">{profile.child_name}</span>
+                      <span className="text-[10px] text-muted-foreground">
+                        {profile.active_medications} med{profile.active_medications > 1 ? "s" : ""}
+                      </span>
+                    </div>
+                    <Badge className={cn("text-[10px]", cStyle.bg, cStyle.text)}>
+                      {profile.compliance_status}
+                    </Badge>
+                  </div>
+                  <div className="flex items-center gap-3 mt-1 text-muted-foreground">
+                    <span className="text-[10px]">{profile.adherence_rate}% adherence</span>
+                    {profile.refusal_count_30d > 0 && (
+                      <Badge className="text-[9px] bg-amber-100 text-amber-700">
+                        {profile.refusal_count_30d} refused
+                      </Badge>
+                    )}
+                    {profile.missed_count_30d > 0 && (
+                      <Badge className="text-[9px] bg-red-100 text-red-700">
+                        {profile.missed_count_30d} missed
+                      </Badge>
+                    )}
+                    {profile.prn_uses_30d > 0 && (
+                      <span className="text-[10px]">{profile.prn_uses_30d} PRN</span>
+                    )}
+                  </div>
                 </div>
-                <span className="text-muted-foreground tabular-nums">
-                  Stock: {rx.stockCount}
-                </span>
+              );
+            })}
+          </div>
+        )}
+
+        {/* ── PRN analysis ─────────────────────────────────────────────── */}
+
+        {intel.prn_analysis.total_prn_30d > 0 && (
+          <div className="flex items-center justify-between rounded-lg border p-3">
+            <div className="flex items-center gap-2">
+              <Activity className="h-4 w-4 text-blue-500" />
+              <div>
+                <p className="text-xs font-medium">PRN Usage (30d)</p>
+                <p className="text-[10px] text-muted-foreground">
+                  {intel.prn_analysis.by_medication.map((m) => `${m.name} (${m.count})`).join(", ")}
+                </p>
               </div>
-              <p className="text-muted-foreground">{rx.medication} · {rx.frequency}</p>
             </div>
-          ))}
-        </div>
+            <div className="text-right">
+              <p className="text-sm font-bold tabular-nums">{intel.prn_analysis.total_prn_30d}</p>
+              <p className="text-[10px] text-muted-foreground">{intel.prn_analysis.effectiveness_rate}% documented</p>
+            </div>
+          </div>
+        )}
 
         {/* ── Alerts ──────────────────────────────────────────────────── */}
 
-        {DEMO_ALERTS.length > 0 && (
+        {intel.alerts.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
-              <ShieldAlert className="h-3 w-3" />
+              <AlertTriangle className="h-3 w-3" />
               Medication Alerts
             </p>
-            {DEMO_ALERTS.map((alert, i) => (
+            {intel.alerts.slice(0, 3).map((alert, i) => (
               <div
                 key={i}
                 className={cn(
                   "rounded border p-2.5 text-xs leading-relaxed",
-                  alert.severity === "critical" || alert.severity === "high"
-                    ? "border-red-200 bg-red-50 text-red-800"
-                    : "border-amber-200 bg-amber-50 text-amber-800",
+                  ALERT_STYLES[alert.severity] ?? ALERT_STYLES.medium,
                 )}
               >
-                <div className="flex items-start gap-1.5">
-                  <AlertTriangle className="h-3 w-3 shrink-0 mt-0.5" />
-                  <span>{alert.message}</span>
-                </div>
+                {alert.message}
               </div>
             ))}
           </div>
         )}
 
-        {/* ── ARIA insights ────────────────────────────────────────────── */}
+        {/* ── ARIA Medication Intelligence ─────────────────────────────── */}
 
-        <div className="space-y-1.5">
-          <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
-            <Brain className="h-3 w-3" />
-            ARIA Medication Intelligence
-          </p>
-          {ARIA_INSIGHTS.map((insight, i) => (
-            <div
-              key={i}
-              className={cn(
-                "rounded border p-2.5 text-xs leading-relaxed",
-                i === 0 ? "border-blue-200 bg-blue-50 text-blue-800"
-                  : i === 1 ? "border-amber-200 bg-amber-50 text-amber-800"
-                  : "border-green-200 bg-green-50 text-green-800",
-              )}
-            >
-              {insight}
-            </div>
-          ))}
-        </div>
+        {intel.insights.length > 0 && (
+          <div className="space-y-1.5">
+            <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
+              <Brain className="h-3 w-3" />
+              ARIA Medication Intelligence
+            </p>
+            {intel.insights.slice(0, 3).map((insight, i) => (
+              <div
+                key={i}
+                className={cn(
+                  "rounded border p-2.5 text-xs leading-relaxed",
+                  INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.positive,
+                )}
+              >
+                {insight.text}
+              </div>
+            ))}
+          </div>
+        )}
       </CardContent>
     </Card>
   );

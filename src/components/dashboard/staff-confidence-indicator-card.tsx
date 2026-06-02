@@ -1,67 +1,187 @@
 "use client";
 
+// ══════════════════════════════════════════════════════════════════════════════
+// CORNERSTONE — STAFF CONFIDENCE INDICATOR CARD
+// Live data from useSupervisionIntelligence() — wellbeing, threshold, trends.
+// ══════════════════════════════════════════════════════════════════════════════
+
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Gauge, ChevronRight, AlertTriangle, Brain, Clock, TrendingUp } from "lucide-react";
+import {
+  Gauge, ChevronRight, Brain, Loader2,
+  AlertTriangle, Users, TrendingUp, TrendingDown, Minus,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useSupervisionIntelligence } from "@/hooks/use-supervision-intelligence";
 
-const DEMO_METRICS = { total_indicators: 10, low_confidence_count: 3, declining_count: 2, no_confidence_count: 1, improving_count: 3, self_assessed_rate: 60.0, strengths_discussed_rate: 50.0, mentoring_offered_rate: 30.0, wellbeing_considered_rate: 40.0, unique_staff: 6 };
+// ── Styling ──────────────────────────────────────────────────────────────────
 
-const DEMO_RECORDS: { staff: string; area: string; confidence: string; trend: string }[] = [
-  { staff: "Staff A", area: "De-Escalation", confidence: "Confident", trend: "Improving" },
-  { staff: "Staff B", area: "Safeguarding", confidence: "Low Confidence", trend: "Declining" },
-  { staff: "Staff C", area: "Medication", confidence: "No Confidence", trend: "Declining" },
-  { staff: "Staff D", area: "Recording", confidence: "Developing", trend: "Improving" },
-  { staff: "Staff E", area: "Communication", confidence: "Very Confident", trend: "Stable" },
-  { staff: "Staff F", area: "Lone Working", confidence: "Low Confidence", trend: "Fluctuating" },
-];
-
-const DEMO_ALERTS: { type: string; severity: "critical" | "high" | "medium"; message: string }[] = [
-  { type: "no_confidence_declining", severity: "critical", message: "Staff C has no confidence and declining trend in medication — immediate support needed." },
-  { type: "low_confidence_no_support", severity: "high", message: "2 indicators have low/no confidence without a linked development plan." },
-  { type: "no_strengths_discussed", severity: "high", message: "5 indicators have no strengths discussed." },
-];
-
-const ARIA_INSIGHTS = [
-  "10 indicators across 6 staff. Low/no confidence: 3. Declining: 2. Improving: 3.",
-  "Priority: 1 no-confidence declining. Mentoring offered only 30.0%. Wellbeing considered 40.0%.",
-  "Confidence grows with support, not pressure. Name what's working. Build from strengths.",
-];
-
-const CONFIDENCE_BADGES: Record<string, { label: string; color: string }> = {
-  "Very Confident": { label: "V.Conf", color: "text-green-700 bg-green-50 border-green-200" },
-  "Confident": { label: "Conf.", color: "text-blue-700 bg-blue-50 border-blue-200" },
-  "Developing": { label: "Dev.", color: "text-amber-700 bg-amber-50 border-amber-200" },
-  "Low Confidence": { label: "Low", color: "text-orange-700 bg-orange-50 border-orange-200" },
-  "No Confidence": { label: "None", color: "text-red-700 bg-red-50 border-red-200" },
+const ALERT_STYLES: Record<string, string> = {
+  critical: "border-red-200 bg-red-50 text-red-800",
+  high: "border-red-200 bg-red-50 text-red-800",
+  medium: "border-amber-200 bg-amber-50 text-amber-800",
+  low: "border-blue-200 bg-blue-50 text-blue-800",
 };
 
+const INSIGHT_STYLES: Record<string, string> = {
+  critical: "border-red-200 bg-red-50 text-red-800",
+  warning: "border-amber-200 bg-amber-50 text-amber-800",
+  positive: "border-green-200 bg-green-50 text-green-800",
+};
+
+const TREND_CONFIG = {
+  improving: { icon: TrendingUp, color: "text-green-600", label: "Improving" },
+  stable: { icon: Minus, color: "text-blue-600", label: "Stable" },
+  declining: { icon: TrendingDown, color: "text-red-600", label: "Declining" },
+  insufficient_data: { icon: Minus, color: "text-slate-600", label: "N/A" },
+};
+
+// ── Component ────────────────────────────────────────────────────────────────
+
 export function StaffConfidenceIndicatorCard() {
-  const m = DEMO_METRICS;
+  const { data, isLoading } = useSupervisionIntelligence();
+  const intel = data?.data;
+
+  if (isLoading || !intel) {
+    return (
+      <Card>
+        <CardHeader className="pb-3">
+          <CardTitle className="text-sm flex items-center gap-2">
+            <Gauge className="h-4 w-4 text-brand" />
+            Confidence Indicators
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center justify-center py-8">
+            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  const { wellbeing, overview, staff_profiles } = intel;
+  const trend = TREND_CONFIG[wellbeing.trend];
+  const TrendIcon = trend.icon;
+  const completionRate = overview.action_completion_rate;
+
   return (
-    <Card className="overflow-hidden border-purple-200">
-      <CardHeader className="pb-3 bg-purple-50/50">
+    <Card className="overflow-hidden">
+      <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-sm flex items-center gap-2"><Gauge className="h-4 w-4 text-purple-600" /><span className="text-purple-900">Confidence Indicators</span></CardTitle>
-          <Link href="/staff-confidence-indicator" className="text-xs text-purple-600 hover:underline flex items-center gap-1">Indicators <ChevronRight className="h-3 w-3" /></Link>
+          <CardTitle className="text-sm flex items-center gap-2">
+            <Gauge className="h-4 w-4 text-brand" />
+            Confidence Indicators
+          </CardTitle>
+          <Link href="/supervision" className="text-xs text-brand hover:underline flex items-center gap-1">
+            Supervision <ChevronRight className="h-3 w-3" />
+          </Link>
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
+
+        {/* ── Summary strip ────────────────────────────────────────────── */}
+
         <div className="grid grid-cols-4 gap-2">
-          <div className={cn("text-center rounded-lg p-2", m.low_confidence_count === 0 ? "bg-green-50" : "bg-red-50")}><p className={cn("text-lg font-bold tabular-nums", m.low_confidence_count === 0 ? "text-green-600" : "text-red-600")}>{m.low_confidence_count}</p><p className="text-[10px] text-muted-foreground">Low/None</p></div>
-          <div className={cn("text-center rounded-lg p-2", m.declining_count === 0 ? "bg-green-50" : "bg-amber-50")}><p className={cn("text-lg font-bold tabular-nums", m.declining_count === 0 ? "text-green-600" : "text-amber-600")}>{m.declining_count}</p><p className="text-[10px] text-muted-foreground">Declining</p></div>
-          <div className="text-center rounded-lg p-2 bg-green-50"><p className="text-lg font-bold tabular-nums text-green-600">{m.improving_count}</p><p className="text-[10px] text-muted-foreground">Improving</p></div>
-          <div className="text-center rounded-lg p-2 bg-purple-50"><p className="text-lg font-bold tabular-nums text-purple-600">{m.total_indicators}</p><p className="text-[10px] text-muted-foreground">Total</p></div>
-        </div>
-        <div className="space-y-1.5">
-          <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1"><Clock className="h-3 w-3" />Recent Confidence Indicators</p>
-          <div className="space-y-1">
-            {DEMO_RECORDS.map((r, i) => { const badge = CONFIDENCE_BADGES[r.confidence] ?? CONFIDENCE_BADGES["Developing"]; return (<div key={i} className="flex items-center justify-between rounded border p-2 text-xs"><div className="flex items-center gap-2 flex-1 min-w-0"><TrendingUp className="h-3 w-3 text-purple-500 shrink-0" /><span className="font-medium">{r.staff}</span><span className="text-muted-foreground truncate">{r.area} · {r.trend}</span></div><Badge variant="outline" className={cn("text-[10px] shrink-0", badge.color)}>{badge.label}</Badge></div>); })}
+          <div className={cn("text-center rounded-lg p-2", wellbeing.avg_score >= 7 ? "bg-green-50" : "bg-amber-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", wellbeing.avg_score >= 7 ? "text-green-600" : "text-amber-600")}>
+              {wellbeing.avg_score}/10
+            </p>
+            <p className="text-[10px] text-muted-foreground">Wellbeing</p>
+          </div>
+          <div className={cn("text-center rounded-lg p-2", wellbeing.staff_below_threshold === 0 ? "bg-green-50" : "bg-red-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", wellbeing.staff_below_threshold === 0 ? "text-green-600" : "text-red-600")}>
+              {wellbeing.staff_below_threshold}
+            </p>
+            <p className="text-[10px] text-muted-foreground">Below Thr.</p>
+          </div>
+          <div className={cn("text-center rounded-lg p-2", completionRate >= 90 ? "bg-green-50" : "bg-amber-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", completionRate >= 90 ? "text-green-600" : "text-amber-600")}>
+              {completionRate}%
+            </p>
+            <p className="text-[10px] text-muted-foreground">Completion</p>
+          </div>
+          <div className="text-center rounded-lg p-2 bg-purple-50">
+            <p className={cn("text-lg font-bold tabular-nums flex items-center justify-center gap-1", trend.color)}>
+              <TrendIcon className="h-3.5 w-3.5" />
+            </p>
+            <p className="text-[10px] text-muted-foreground">{trend.label}</p>
           </div>
         </div>
-        {DEMO_ALERTS.length > 0 && (<div className="space-y-1.5"><p className="text-xs font-semibold text-muted-foreground flex items-center gap-1"><AlertTriangle className="h-3 w-3" />Confidence Alerts</p>{DEMO_ALERTS.map((a, i) => (<div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", a.severity === "critical" || a.severity === "high" ? "border-red-200 bg-red-50 text-red-800" : "border-amber-200 bg-amber-50 text-amber-800")}>{a.message}</div>))}</div>)}
-        <div className="space-y-1.5"><p className="text-xs font-semibold flex items-center gap-1 text-purple-700"><Brain className="h-3 w-3" />ARIA Confidence Intelligence</p>{ARIA_INSIGHTS.map((insight, i) => (<div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", i === 0 ? "border-purple-200 bg-purple-50 text-purple-800" : i === 1 ? "border-amber-200 bg-amber-50 text-amber-800" : "border-green-200 bg-green-50 text-green-800")}>{insight}</div>))}</div>
+
+        {/* ── Staff wellbeing profiles ────────────────────────────────── */}
+
+        {staff_profiles.length > 0 && (
+          <div className="space-y-1.5">
+            <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
+              <Users className="h-3 w-3" />
+              Staff Wellbeing
+            </p>
+            <div className="space-y-1">
+              {staff_profiles
+                .filter((p) => p.avg_wellbeing > 0)
+                .sort((a, b) => a.avg_wellbeing - b.avg_wellbeing)
+                .slice(0, 5)
+                .map((profile) => (
+                  <div key={profile.staff_id} className="flex items-center justify-between rounded border p-2 text-xs">
+                    <div className="flex items-center gap-2 flex-1 min-w-0">
+                      <Gauge className="h-3 w-3 text-purple-500 shrink-0" />
+                      <span className="font-medium">{profile.staff_name}</span>
+                      <span className="text-muted-foreground truncate">{profile.role}</span>
+                    </div>
+                    <Badge variant="outline" className={cn("text-[10px] shrink-0", profile.avg_wellbeing >= 7 ? "text-green-700 bg-green-50 border-green-200" : profile.avg_wellbeing >= 5 ? "text-amber-700 bg-amber-50 border-amber-200" : "text-red-700 bg-red-50 border-red-200")}>
+                      {profile.avg_wellbeing}/10
+                    </Badge>
+                  </div>
+                ))}
+            </div>
+          </div>
+        )}
+
+        {/* ── Alerts ──────────────────────────────────────────────────── */}
+
+        {intel.alerts.length > 0 && (
+          <div className="space-y-1.5">
+            <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
+              <AlertTriangle className="h-3 w-3" />
+              Confidence Alerts
+            </p>
+            {intel.alerts.slice(0, 3).map((alert, i) => (
+              <div
+                key={i}
+                className={cn(
+                  "rounded border p-2.5 text-xs leading-relaxed",
+                  ALERT_STYLES[alert.severity] ?? ALERT_STYLES.medium,
+                )}
+              >
+                {alert.message}
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* ── ARIA insights ───────────────────────────────────────────── */}
+
+        {intel.insights.length > 0 && (
+          <div className="space-y-1.5">
+            <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
+              <Brain className="h-3 w-3" />
+              ARIA Confidence Intelligence
+            </p>
+            {intel.insights.slice(0, 3).map((insight, i) => (
+              <div
+                key={i}
+                className={cn(
+                  "rounded border p-2.5 text-xs leading-relaxed",
+                  INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.positive,
+                )}
+              >
+                {insight.text}
+              </div>
+            ))}
+          </div>
+        )}
       </CardContent>
     </Card>
   );

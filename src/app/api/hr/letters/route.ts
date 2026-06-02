@@ -247,11 +247,11 @@ export async function POST(req: NextRequest) {
 
 export async function GET(req: NextRequest) {
   if (!isSupabaseEnabled()) {
-    return NextResponse.json({ error: "Persistence not configured" }, { status: 501 });
+    return NextResponse.json({ error: "Database persistence is not configured. Enable Supabase to use this feature, or use the in-memory demo mode.", configured: false, supabaseRequired: true }, { status: 503 });
   }
   const supabaseRaw = createServerClient();
   if (!supabaseRaw) {
-    return NextResponse.json({ error: "Persistence not configured" }, { status: 501 });
+    return NextResponse.json({ error: "Database persistence is not configured. Enable Supabase to use this feature, or use the in-memory demo mode.", configured: false, supabaseRequired: true }, { status: 503 });
   }
   const supabase = loose(supabaseRaw);
 
@@ -288,11 +288,11 @@ type LetterDecision = (typeof VALID_LETTER_DECISIONS)[number];
 
 export async function PATCH(req: NextRequest) {
   if (!isSupabaseEnabled()) {
-    return NextResponse.json({ error: "Persistence not configured" }, { status: 501 });
+    return NextResponse.json({ error: "Database persistence is not configured. Enable Supabase to use this feature, or use the in-memory demo mode.", configured: false, supabaseRequired: true }, { status: 503 });
   }
   const supabaseRaw = createServerClient();
   if (!supabaseRaw) {
-    return NextResponse.json({ error: "Persistence not configured" }, { status: 501 });
+    return NextResponse.json({ error: "Database persistence is not configured. Enable Supabase to use this feature, or use the in-memory demo mode.", configured: false, supabaseRequired: true }, { status: 503 });
   }
   const supabase = loose(supabaseRaw);
 

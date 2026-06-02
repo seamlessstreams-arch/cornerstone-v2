@@ -2,232 +2,106 @@
 
 // ══════════════════════════════════════════════════════════════════════════════
 // CORNERSTONE — SHIFT CHECKLIST
-// End-of-shift completion checklist ensuring all critical tasks are done
-// before handover. Tracks medication rounds, welfare checks, daily logs,
-// and handover notes completion.
+// Live data from supervision intelligence engine.
+// CHR 2015 Reg 12, Reg 34. SCCIF: Helped & Protected.
 // ══════════════════════════════════════════════════════════════════════════════
 
-import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { useDashboard } from "@/hooks/use-dashboard";
-import { useDailyLog } from "@/hooks/use-daily-log";
-import { useWelfareChecks } from "@/hooks/use-welfare-checks";
-import { useAuthContext } from "@/contexts/auth-context";
-import { cn, todayStr } from "@/lib/utils";
 import {
-  ClipboardCheck, CheckCircle2, Circle, Loader2,
-  Pill, BookOpen, Moon, ArrowRightLeft, Shield,
-  AlertTriangle, ChevronRight,
+  AlertTriangle, Brain, ChevronRight, ListChecks, Loader2,
 } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { useSupervisionIntelligence } from "@/hooks/use-supervision-intelligence";
 
-interface ChecklistItem {
-  id: string;
-  label: string;
-  description: string;
-  icon: React.ElementType;
-  href: string;
-  completed: boolean;
-  critical: boolean;
-}
+const ALERT_STYLES: Record<string, string> = {
+  critical: "border-red-200 bg-red-50 text-red-800",
+  high: "border-red-200 bg-red-50 text-red-800",
+  medium: "border-amber-200 bg-amber-50 text-amber-800",
+  low: "border-blue-200 bg-blue-50 text-blue-800",
+};
+
+const INSIGHT_STYLES: Record<string, string> = {
+  critical: "border-red-200 bg-red-50 text-red-800",
+  warning: "border-amber-200 bg-amber-50 text-amber-800",
+  positive: "border-green-200 bg-green-50 text-green-800",
+};
 
 export function ShiftChecklist() {
-  const { currentUser } = useAuthContext();
-  const { data: dashData, isLoading: dashLoading } = useDashboard();
-  const { data: logData, isLoading: logLoading } = useDailyLog({ days: 1 });
-  const { data: wcData, isLoading: wcLoading } = useWelfareChecks();
-
-  const isLoading = dashLoading || logLoading || wcLoading;
-  const today = todayStr();
-
-  const dashboard = dashData?.data;
-  const dailyLogs = logData?.data ?? [];
-  const welfareRounds = wcData?.data ?? [];
-
-  // Determine shift context
-  const todayShifts = dashboard?.staffing?.today_shifts ?? [];
-  const myShift = todayShifts[0];
-  const isNightShift = myShift?.shift_type === "sleep_in" || myShift?.shift_type === "waking_night";
-
-  // Build checklist items
-  const items = useMemo<ChecklistItem[]>(() => {
-    const todayLogs = dailyLogs.filter((l) => l.date === today);
-    const todayWelfare = welfareRounds.filter((r) => r.round_date === today);
-
-    const list: ChecklistItem[] = [
-      {
-        id: "daily_log",
-        label: "Daily log entries",
-        description: "At least one log entry per child today",
-        icon: BookOpen,
-        href: "/daily-log",
-        completed: todayLogs.length >= 3, // 3 children = 3 logs minimum
-        critical: true,
-      },
-      {
-        id: "medication",
-        label: "Medication round",
-        description: "All scheduled medications administered",
-        icon: Pill,
-        href: "/medication",
-        completed: (dashboard?.medication?.missed_today ?? 0) === 0,
-        critical: true,
-      },
-      {
-        id: "handover",
-        label: "Handover notes",
-        description: "Complete handover for the next shift",
-        icon: ArrowRightLeft,
-        href: "/handover",
-        completed: false, // Check handover submissions
-        critical: true,
-      },
-    ];
-
-    // Night-specific checks
-    if (isNightShift) {
-      list.push({
-        id: "welfare_22",
-        label: "22:00 welfare check",
-        description: "All children checked at lights out",
-        icon: Moon,
-        href: "/welfare-checks",
-        completed: todayWelfare.some((r) => r.round_time === "22:00"),
-        critical: true,
-      });
-      list.push({
-        id: "building_secure",
-        label: "Building security",
-        description: "All doors locked, alarm set, fire exits clear",
-        icon: Shield,
-        href: "/welfare-checks",
-        completed: todayWelfare.some((r) => r.building_secure && r.external_doors_locked),
-        critical: true,
-      });
-    }
-
-    // Always-present checks
-    list.push({
-      id: "incidents",
-      label: "Incident reports",
-      description: "All incidents logged and awaiting oversight",
-      icon: AlertTriangle,
-      href: "/incidents",
-      completed: (dashboard?.incidents?.open ?? 0) === 0,
-      critical: false,
-    });
-
-    return list;
-  }, [dashboard, dailyLogs, welfareRounds, today, isNightShift]);
-
-  const completedCount = items.filter((i) => i.completed).length;
-  const totalCount = items.length;
-  const pct = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
-  const allDone = completedCount === totalCount;
-  const criticalMissing = items.filter((i) => i.critical && !i.completed);
+  const { data, isLoading } = useSupervisionIntelligence();
 
   if (isLoading) {
     return (
-      <Card>
-        <CardHeader className="pb-2">
-          <CardTitle className="flex items-center gap-2 text-[13px]">
-            <ClipboardCheck className="h-4 w-4 text-blue-500" />
-            Shift Checklist
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="flex items-center justify-center py-6">
-            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
-          </div>
+      <Card className="overflow-hidden border-slate-200">
+        <CardContent className="flex items-center justify-center py-12">
+          <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
         </CardContent>
       </Card>
     );
   }
 
-  // Don't show if not on shift
-  if (!myShift) return null;
+  const d = data?.data;
+  const insights = d?.insights ?? [];
+  const alerts = d?.alerts ?? [];
 
   return (
-    <Card className={cn(
-      criticalMissing.length > 0 && "border-amber-200",
-      allDone && "border-emerald-200",
-    )}>
-      <CardHeader className="pb-2">
+    <Card className="overflow-hidden border-slate-200">
+      <CardHeader className="pb-3 bg-slate-50/50">
         <div className="flex items-center justify-between">
-          <CardTitle className="flex items-center gap-2 text-[13px]">
-            <ClipboardCheck className={cn(
-              "h-4 w-4",
-              allDone ? "text-emerald-500" : "text-blue-500",
-            )} />
-            Shift Checklist
+          <CardTitle className="text-sm flex items-center gap-2">
+            <ListChecks className="h-4 w-4 text-slate-600" />
+            <span className="text-slate-900">Shift Checklist</span>
           </CardTitle>
-          <Badge className={cn(
-            "text-[10px] rounded-full border-0",
-            allDone
-              ? "bg-emerald-100 text-emerald-700"
-              : criticalMissing.length > 0
-              ? "bg-amber-100 text-amber-700"
-              : "bg-blue-100 text-blue-700",
-          )}>
-            {completedCount}/{totalCount}
-          </Badge>
+          <Link href="/supervision" className="text-xs text-slate-600 hover:underline flex items-center gap-1">
+            View <ChevronRight className="h-3 w-3" />
+          </Link>
         </div>
       </CardHeader>
-      <CardContent className="pt-0">
-        {/* Progress bar */}
-        <div className="mb-3">
-          <Progress value={pct} className="h-1.5" />
+      <CardContent className="space-y-4">
+        <div className="grid grid-cols-4 gap-2">
+          <div className="text-center rounded-lg bg-slate-50 p-2">
+            <p className="text-lg font-bold tabular-nums text-slate-600">{d?.overview?.total_staff ?? 0}</p>
+            <p className="text-[10px] text-muted-foreground">Staff</p>
+          </div>
+          <div className="text-center rounded-lg bg-green-50 p-2">
+            <p className="text-lg font-bold tabular-nums text-green-600">{d?.overview?.supervisions_completed_90d ?? 0}</p>
+            <p className="text-[10px] text-muted-foreground">Done 90d</p>
+          </div>
+          <div className={cn("text-center rounded-lg p-2", (d?.overview?.supervisions_overdue ?? 0) > 0 ? "bg-amber-50" : "bg-green-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", (d?.overview?.supervisions_overdue ?? 0) > 0 ? "text-amber-600" : "text-green-600")}>{d?.overview?.supervisions_overdue ?? 0}</p>
+            <p className="text-[10px] text-muted-foreground">Overdue</p>
+          </div>
+          <div className="text-center rounded-lg bg-green-50 p-2">
+            <p className="text-lg font-bold tabular-nums text-green-600">{Math.round(d?.overview?.action_completion_rate ?? 0)}%</p>
+            <p className="text-[10px] text-muted-foreground">Actions %</p>
+          </div>
         </div>
 
-        {/* Checklist items */}
-        <div className="space-y-1">
-          {items.map((item) => {
-            const Icon = item.icon;
-            return (
-              <Link key={item.id} href={item.href}>
-                <div className={cn(
-                  "flex items-center gap-2.5 rounded-lg px-2.5 py-2 hover:bg-[var(--cs-surface)] transition-colors",
-                  item.completed && "opacity-60",
-                )}>
-                  {item.completed ? (
-                    <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" />
-                  ) : (
-                    <Circle className={cn(
-                      "h-4 w-4 shrink-0",
-                      item.critical ? "text-amber-400" : "text-[var(--cs-text-gentle)]",
-                    )} />
-                  )}
-                  <Icon className={cn(
-                    "h-3 w-3 shrink-0",
-                    item.completed ? "text-emerald-400" : "text-[var(--cs-text-muted)]",
-                  )} />
-                  <div className="flex-1 min-w-0">
-                    <p className={cn(
-                      "text-[11px] font-medium",
-                      item.completed ? "text-emerald-700 line-through" : "text-[var(--cs-text-secondary)]",
-                    )}>
-                      {item.label}
-                    </p>
-                  </div>
-                  {!item.completed && item.critical && (
-                    <Badge className="bg-amber-100 text-amber-600 border-0 text-[8px] rounded-full shrink-0">
-                      Required
-                    </Badge>
-                  )}
-                  <ChevronRight className="h-3 w-3 text-[var(--cs-text-gentle)] shrink-0" />
-                </div>
-              </Link>
-            );
-          })}
-        </div>
+        {alerts.length > 0 && (
+          <div className="space-y-1.5">
+            <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
+              <AlertTriangle className="h-3 w-3" />
+              Alerts
+            </p>
+            {alerts.slice(0, 3).map((a, i) => (
+              <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", ALERT_STYLES[a.severity] ?? ALERT_STYLES.medium)}>
+                {a.message}
+              </div>
+            ))}
+          </div>
+        )}
 
-        {/* All done message */}
-        {allDone && (
-          <div className="mt-2 rounded-lg bg-emerald-50 border border-emerald-200 p-2.5 text-center">
-            <CheckCircle2 className="h-4 w-4 text-emerald-500 mx-auto mb-0.5" />
-            <p className="text-[10px] font-medium text-emerald-700">All checks complete — ready for handover</p>
+        {insights.length > 0 && (
+          <div className="space-y-1.5">
+            <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
+              <Brain className="h-3 w-3" />
+              ARIA Shift Checklist Intelligence
+            </p>
+            {insights.slice(0, 2).map((insight, i) => (
+              <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>
+                {insight.text}
+              </div>
+            ))}
           </div>
         )}
       </CardContent>

@@ -2,9 +2,8 @@
 
 // ══════════════════════════════════════════════════════════════════════════════
 // CORNERSTONE — CONTACT MONITORING INTELLIGENCE CARD
-// Dashboard card for family contact session tracking and outcomes.
-// CHR 2015 Reg 7/8. Care Planning Regs 2010.
-// SCCIF: Overall Experiences — Contact arrangements.
+// Dashboard card powered by the Contact Engagement Intelligence Engine.
+// CHR 2015 Reg 8. SCCIF: Overall Experiences — Contact & relationships.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import Link from "next/link";
@@ -12,60 +11,53 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
   Phone, ChevronRight, AlertTriangle, Brain,
-  Calendar, Heart, User,
+  Users, Loader2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useContactEngagement } from "@/hooks/use-contact-engagement";
 
-const DEMO_METRICS = {
-  total_sessions: 42,
-  completed_count: 32,
-  cancelled_count: 5,
-  no_show_count: 3,
-  refused_count: 2,
-  completion_rate: 76.2,
-  positive_outcome_rate: 68.8,
-  negative_outcome_rate: 9.4,
-  children_with_contact: 5,
-  contact_coverage: 83.3,
-  concerns_raised_count: 2,
-  supervised_count: 18,
-  court_ordered_count: 8,
-  average_duration: 55,
-  child_views_recorded_rate: 71.4,
+// ── Styling ─────────────────────────────────────────────────────────────────
+
+const ALERT_STYLES: Record<string, string> = {
+  critical: "border-red-200 bg-red-50 text-red-800",
+  high:     "border-red-200 bg-red-50 text-red-800",
+  medium:   "border-amber-200 bg-amber-50 text-amber-800",
+  low:      "border-blue-200 bg-blue-50 text-blue-800",
 };
 
-const DEMO_SESSIONS: { child: string; contact: string; type: string; outcome: string; mood: string }[] = [
-  { child: "Child A", contact: "Mother", type: "Face to Face", outcome: "Positive", mood: "happy" },
-  { child: "Child B", contact: "Father", type: "Supervised Visit", outcome: "Neutral", mood: "calm" },
-  { child: "Child C", contact: "Grandmother", type: "Video Call", outcome: "Positive", mood: "excited" },
-  { child: "Child A", contact: "Father", type: "Phone Call", outcome: "Negative", mood: "upset" },
-  { child: "Child D", contact: "Mother", type: "Face to Face", outcome: "Positive", mood: "happy" },
-  { child: "Child B", contact: "Sibling", type: "Community Outing", outcome: "Positive", mood: "excited" },
-];
-
-const DEMO_ALERTS: { type: string; severity: "critical" | "high" | "medium"; message: string }[] = [
-  { type: "concern_not_reported", severity: "critical", message: "Concerns raised during Child A's contact with Father but social worker not informed — immediate action required." },
-  { type: "repeated_no_show", severity: "high", message: "Father has not attended 3 scheduled contacts with Child B — discuss with social worker and review contact plan." },
-  { type: "distress_after_contact", severity: "medium", message: "Child A was upset after contact with Father — review contact arrangements." },
-];
-
-const ARIA_INSIGHTS = [
-  "42 contact sessions across 5 children (83.3% coverage). 32 completed (76.2%), 5 cancelled, 3 no-shows, 2 refused. Positive: 68.8%. Avg duration: 55 mins. Court-ordered: 8. Concerns raised: 2.",
-  "Priority: Unreported concerns from Child A's contact with Father is a critical safeguarding issue — must inform social worker immediately. Father's repeated no-shows with Child B require contact plan review. Child A distressed after paternal contact — consider supervision level increase.",
-  "Positive: Maternal contacts consistently positive. Sibling contact (community outings) producing excellent outcomes. Grandparent video calls working well. Child views recorded in 71.4% of sessions — target 100% to evidence Reg 7 compliance.",
-];
-
-const OUTCOME_BADGES: Record<string, { label: string; color: string }> = {
-  Positive: { label: "Positive", color: "text-green-700 bg-green-50 border-green-200" },
-  Neutral: { label: "Neutral", color: "text-gray-700 bg-gray-50 border-gray-200" },
-  Negative: { label: "Negative", color: "text-red-700 bg-red-50 border-red-200" },
-  "No Show": { label: "No Show", color: "text-amber-700 bg-amber-50 border-amber-200" },
-  Cancelled: { label: "Cancelled", color: "text-orange-700 bg-orange-50 border-orange-200" },
-  Refused: { label: "Refused", color: "text-purple-700 bg-purple-50 border-purple-200" },
+const INSIGHT_STYLES: Record<string, string> = {
+  critical: "border-red-200 bg-red-50 text-red-800",
+  warning:  "border-amber-200 bg-amber-50 text-amber-800",
+  positive: "border-green-200 bg-green-50 text-green-800",
 };
+
+// ── Component ───────────────────────────────────────────────────────────────
 
 export function ContactMonitoringCard() {
-  const m = DEMO_METRICS;
+  const { data, isLoading } = useContactEngagement();
+  const intel = data?.data;
+
+  if (isLoading || !intel) {
+    return (
+      <Card>
+        <CardHeader className="pb-3">
+          <CardTitle className="text-sm flex items-center gap-2">
+            <Phone className="h-4 w-4 text-brand" />
+            Contact Monitoring
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center justify-center py-8">
+            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  const c = intel.compliance;
+  const ft = intel.family_time;
+
   return (
     <Card className="overflow-hidden">
       <CardHeader className="pb-3">
@@ -74,68 +66,115 @@ export function ContactMonitoringCard() {
             <Phone className="h-4 w-4 text-brand" />
             Contact Monitoring
           </CardTitle>
-          <Link href="/contact-monitoring" className="text-xs text-brand hover:underline flex items-center gap-1">
-            Contacts <ChevronRight className="h-3 w-3" />
+          <Link href="/contact" className="text-xs text-brand hover:underline flex items-center gap-1">
+            Contact <ChevronRight className="h-3 w-3" />
           </Link>
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
+
+        {/* ── Summary strip ────────────────────────────────────────────── */}
+
         <div className="grid grid-cols-4 gap-2">
-          <div className={cn("text-center rounded-lg p-2", m.completion_rate >= 80 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", m.completion_rate >= 80 ? "text-green-600" : "text-amber-600")}>{m.completion_rate}%</p>
-            <p className="text-[10px] text-muted-foreground">Completed</p>
+          <div className={cn("text-center rounded-lg p-2.5", c.overall_completion_rate >= 90 ? "bg-green-50" : c.overall_completion_rate >= 75 ? "bg-amber-50" : "bg-red-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", c.overall_completion_rate >= 90 ? "text-green-600" : c.overall_completion_rate >= 75 ? "text-amber-600" : "text-red-600")}>{c.overall_completion_rate}%</p>
+            <p className="text-[10px] text-muted-foreground">Completion</p>
           </div>
-          <div className={cn("text-center rounded-lg p-2", m.positive_outcome_rate >= 70 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", m.positive_outcome_rate >= 70 ? "text-green-600" : "text-amber-600")}>{m.positive_outcome_rate}%</p>
-            <p className="text-[10px] text-muted-foreground">Positive</p>
+          <div className="text-center rounded-lg bg-blue-50 p-2.5">
+            <p className="text-lg font-bold tabular-nums text-blue-600">{c.completed_sessions_30d}</p>
+            <p className="text-[10px] text-muted-foreground">Sessions/30d</p>
           </div>
-          <div className={cn("text-center rounded-lg p-2", m.no_show_count === 0 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", m.no_show_count === 0 ? "text-green-600" : "text-amber-600")}>{m.no_show_count}</p>
-            <p className="text-[10px] text-muted-foreground">No Shows</p>
+          <div className={cn("text-center rounded-lg p-2.5", c.plans_overdue_review === 0 ? "bg-green-50" : "bg-amber-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", c.plans_overdue_review === 0 ? "text-green-600" : "text-amber-600")}>{c.plans_overdue_review}</p>
+            <p className="text-[10px] text-muted-foreground">Overdue</p>
           </div>
-          <div className={cn("text-center rounded-lg p-2", m.concerns_raised_count === 0 ? "bg-green-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", m.concerns_raised_count === 0 ? "text-green-600" : "text-red-600")}>{m.concerns_raised_count}</p>
+          <div className={cn("text-center rounded-lg p-2.5", ft.concern_sessions === 0 ? "bg-green-50" : "bg-amber-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", ft.concern_sessions === 0 ? "text-green-600" : "text-amber-600")}>{ft.concern_sessions}</p>
             <p className="text-[10px] text-muted-foreground">Concerns</p>
           </div>
         </div>
 
-        <div className="space-y-1.5">
-          <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1"><Calendar className="h-3 w-3" />Recent Contact Sessions</p>
-          <div className="space-y-1">
-            {DEMO_SESSIONS.map((cs, i) => {
-              const badge = OUTCOME_BADGES[cs.outcome] ?? OUTCOME_BADGES.Neutral;
-              return (
-                <div key={i} className="flex items-center justify-between rounded border p-2 text-xs">
-                  <div className="flex items-center gap-2 flex-1 min-w-0">
-                    <Heart className="h-3 w-3 text-pink-500 shrink-0" />
-                    <span className="font-medium">{cs.child}</span>
-                    <span className="text-muted-foreground truncate">{cs.contact} · {cs.type}</span>
-                  </div>
-                  <div className="flex items-center gap-1.5 shrink-0">
-                    <span className="text-[10px] text-muted-foreground">{cs.mood}</span>
-                    <Badge variant="outline" className={cn("text-[10px]", badge.color)}>{badge.label}</Badge>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
+        {/* ── Supervision breakdown ───────────────────────────────────── */}
 
-        {DEMO_ALERTS.length > 0 && (
+        {ft.supervision_breakdown.length > 0 && (
+          <div className="rounded-lg border p-3 space-y-2">
+            <p className="text-xs font-semibold">Supervision Levels</p>
+            <div className="flex flex-wrap gap-1">
+              {ft.supervision_breakdown.map((sb) => (
+                <Badge key={sb.level} variant="outline" className="text-[10px] capitalize">
+                  {sb.level.replace(/_/g, " ")} ({sb.count})
+                </Badge>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* ── Child profiles ──────────────────────────────────────────── */}
+
+        {intel.child_profiles.length > 0 && (
           <div className="space-y-1.5">
-            <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1"><AlertTriangle className="h-3 w-3" />Contact Alerts</p>
-            {DEMO_ALERTS.map((a, i) => (
-              <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", a.severity === "critical" || a.severity === "high" ? "border-red-200 bg-red-50 text-red-800" : "border-amber-200 bg-amber-50 text-amber-800")}>{a.message}</div>
+            <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
+              <Users className="h-3 w-3" />
+              By Young Person
+            </p>
+            {intel.child_profiles.map((cp) => (
+              <div key={cp.child_id} className="flex items-center justify-between rounded border p-2.5 text-xs">
+                <div className="flex items-center gap-2">
+                  <span className="font-medium">{cp.child_name}</span>
+                  <span className="text-[10px] text-muted-foreground">{cp.sessions_30d} sessions</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  {!cp.plan_review_current && <Badge className="text-[9px] bg-amber-100 text-amber-700">review due</Badge>}
+                  {cp.has_active_plan && <Badge className="text-[9px] bg-green-100 text-green-700">active</Badge>}
+                </div>
+              </div>
             ))}
           </div>
         )}
 
-        <div className="space-y-1.5">
-          <p className="text-xs font-semibold flex items-center gap-1 text-purple-700"><Brain className="h-3 w-3" />ARIA Contact Intelligence</p>
-          {ARIA_INSIGHTS.map((insight, i) => (
-            <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", i === 0 ? "border-blue-200 bg-blue-50 text-blue-800" : i === 1 ? "border-amber-200 bg-amber-50 text-amber-800" : "border-green-200 bg-green-50 text-green-800")}>{insight}</div>
-          ))}
-        </div>
+        {/* ── Alerts ──────────────────────────────────────────────────── */}
+
+        {intel.alerts.length > 0 && (
+          <div className="space-y-1.5">
+            <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
+              <AlertTriangle className="h-3 w-3" />
+              Contact Alerts
+            </p>
+            {intel.alerts.slice(0, 3).map((alert, i) => (
+              <div
+                key={i}
+                className={cn(
+                  "rounded border p-2.5 text-xs leading-relaxed",
+                  ALERT_STYLES[alert.severity] ?? ALERT_STYLES.medium,
+                )}
+              >
+                {alert.message}
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* ── ARIA Intelligence ───────────────────────────────────────── */}
+
+        {intel.insights.length > 0 && (
+          <div className="space-y-1.5">
+            <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
+              <Brain className="h-3 w-3" />
+              ARIA Contact Intelligence
+            </p>
+            {intel.insights.slice(0, 3).map((insight, i) => (
+              <div
+                key={i}
+                className={cn(
+                  "rounded border p-2.5 text-xs leading-relaxed",
+                  INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.positive,
+                )}
+              >
+                {insight.text}
+              </div>
+            ))}
+          </div>
+        )}
       </CardContent>
     </Card>
   );

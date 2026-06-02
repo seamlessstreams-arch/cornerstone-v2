@@ -43,6 +43,24 @@ import type {
 import { useKeyWorkSessions, useCreateKeyWorkSession } from "@/hooks/use-intelligence";
 import { EmptyState } from "@/components/ui/empty-state";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { Child360IntelligenceCard } from "@/components/intelligence/child-360-intelligence-card";
+import { TherapeuticProgressCard } from "@/components/intelligence/therapeutic-progress-card";
+import { FamilyRelationshipsCard } from "@/components/intelligence/family-relationships-card";
+import { ChildEducationIntelligenceCard } from "@/components/intelligence/child-education-intelligence-card";
+import { ChildHealthIntelligenceCard } from "@/components/intelligence/child-health-intelligence-card";
+import { ChildBehaviourSafetyIntelligenceCard } from "@/components/intelligence/child-behaviour-safety-intelligence-card";
+import { ChildIndependenceIntelligenceCard } from "@/components/intelligence/child-independence-intelligence-card";
+import { ChildSafeguardingIntelligenceCard } from "@/components/intelligence/child-safeguarding-intelligence-card";
+import { ChildPlacementQualityCard } from "@/components/intelligence/child-placement-quality-card";
+import { ChildMissingIntelligenceCard } from "@/components/intelligence/child-missing-intelligence-card";
+import { ChildLACReviewIntelligenceCard } from "@/components/intelligence/child-lac-review-intelligence-card";
+import { ChildOutcomeIntelligenceCard } from "@/components/intelligence/child-outcome-intelligence-card";
+import { ChildKeyworkingIntelligenceCard } from "@/components/intelligence/child-keyworking-intelligence-card";
+import { ChildRiskProfileIntelligenceCard } from "@/components/intelligence/child-risk-profile-intelligence-card";
+import { ChildDailyLifeIntelligenceCard } from "@/components/intelligence/child-daily-life-intelligence-card";
+import { ChildMedicationIntelligenceCard } from "@/components/intelligence/child-medication-intelligence-card";
+import { ChildRestrictivePracticeIntelligenceCard } from "@/components/intelligence/child-restrictive-practice-intelligence-card";
+import { ChildEmotionalWellbeingIntelligenceCard } from "@/components/intelligence/child-emotional-wellbeing-intelligence-card";
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
@@ -611,6 +629,96 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
                 </div>
               </div>
             )}
+
+            {/* Child 360 Intelligence Profile */}
+            <div className="sm:col-span-2">
+              <Child360IntelligenceCard childId={id} />
+            </div>
+
+            {/* Therapeutic Progress Intelligence */}
+            <div className="sm:col-span-2">
+              <TherapeuticProgressCard childId={id} />
+            </div>
+
+            {/* Family & Relationships Intelligence */}
+            <div className="sm:col-span-2">
+              <FamilyRelationshipsCard childId={id} />
+            </div>
+
+            {/* Education & Learning Intelligence */}
+            <div className="sm:col-span-2">
+              <ChildEducationIntelligenceCard childId={id} />
+            </div>
+
+            {/* Health & Wellbeing Intelligence */}
+            <div className="sm:col-span-2">
+              <ChildHealthIntelligenceCard childId={id} />
+            </div>
+
+            {/* Behaviour & Safety Intelligence */}
+            <div className="sm:col-span-2">
+              <ChildBehaviourSafetyIntelligenceCard childId={id} />
+            </div>
+
+            {/* Independence & Life Skills Intelligence */}
+            <div className="sm:col-span-2">
+              <ChildIndependenceIntelligenceCard childId={id} />
+            </div>
+
+            {/* Safeguarding Intelligence */}
+            <div className="sm:col-span-2">
+              <ChildSafeguardingIntelligenceCard childId={id} />
+            </div>
+
+            {/* Placement Quality Intelligence */}
+            <div className="sm:col-span-2">
+              <ChildPlacementQualityCard childId={id} />
+            </div>
+
+            {/* Missing & Return Intelligence */}
+            <div className="sm:col-span-2">
+              <ChildMissingIntelligenceCard childId={id} />
+            </div>
+
+            {/* LAC Review Intelligence */}
+            <div className="sm:col-span-2">
+              <ChildLACReviewIntelligenceCard childId={id} />
+            </div>
+
+            {/* Outcome Progress Intelligence */}
+            <div className="sm:col-span-2">
+              <ChildOutcomeIntelligenceCard childId={id} />
+            </div>
+
+            {/* Keyworking Intelligence */}
+            <div className="sm:col-span-2">
+              <ChildKeyworkingIntelligenceCard childId={id} />
+            </div>
+
+            {/* Risk Profile Intelligence */}
+            <div className="sm:col-span-2">
+              <ChildRiskProfileIntelligenceCard childId={id} />
+            </div>
+
+            {/* Daily Life Intelligence */}
+            <div className="sm:col-span-2">
+              <ChildDailyLifeIntelligenceCard childId={id} />
+            </div>
+
+            {/* Medication Safety Intelligence */}
+            <div className="sm:col-span-2">
+              <ChildMedicationIntelligenceCard childId={id} />
+            </div>
+
+            {/* Restrictive Practice Intelligence */}
+            <div className="sm:col-span-2">
+              <ChildRestrictivePracticeIntelligenceCard childId={id} />
+            </div>
+
+            {/* Emotional Wellbeing Intelligence */}
+            <div className="sm:col-span-2">
+              <ChildEmotionalWellbeingIntelligenceCard childId={id} />
+            </div>
           </div>
         )}
 

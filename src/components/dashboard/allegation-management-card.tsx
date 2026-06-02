@@ -2,7 +2,7 @@
 
 // ══════════════════════════════════════════════════════════════════════════════
 // CORNERSTONE — ALLEGATION MANAGEMENT INTELLIGENCE CARD
-// Dashboard card for staff allegations, LADO referrals, and investigation.
+// Live data from safeguarding intelligence engine.
 // CHR 2015 Reg 12, Reg 33; Working Together 2023.
 // SCCIF: Helped & Protected — "Allegations are managed swiftly."
 // ══════════════════════════════════════════════════════════════════════════════
@@ -11,49 +11,36 @@ import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
-  ShieldAlert, ChevronRight, AlertTriangle, Brain,
-  Clock, FileWarning, User,
+  ShieldAlert, ChevronRight, Brain, Loader2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useSafeguardingIntelligence } from "@/hooks/use-safeguarding-intelligence";
 
-const DEMO_METRICS = {
-  total_allegations: 4,
-  open_allegations: 2,
-  substantiated_count: 1,
-  lado_referral_rate: 75.0,
-  risk_assessment_rate: 50.0,
-  child_safe_rate: 75.0,
-  average_days_to_resolution: 22.5,
-};
-
-const DEMO_RECORDS: { subject: string; type: string; date: string; stage: string }[] = [
-  { subject: "J. Adams", type: "Inapprop. Behaviour", date: "10 May", stage: "Investigating" },
-  { subject: "K. Patel", type: "Failure to SG", date: "5 May", stage: "LADO Ref." },
-  { subject: "M. Taylor", type: "Physical", date: "20 Apr", stage: "Closed" },
-  { subject: "R. Chen", type: "Emotional", date: "8 Apr", stage: "Closed" },
-];
-
-const DEMO_ALERTS: { type: string; severity: "critical" | "high" | "medium"; message: string }[] = [
-  { type: "no_lado_referral", severity: "critical", message: "Allegation against J. Adams on 2025-05-10 without LADO referral — refer immediately." },
-  { type: "child_not_safe", severity: "high", message: "Child safety and support not confirmed for allegation involving K. Patel — review safeguarding plan." },
-  { type: "no_risk_assessment", severity: "high", message: "2 allegations without risk assessment — complete promptly." },
-];
-
-const ARIA_INSIGHTS = [
-  "4 allegations. Open: 2. Substantiated: 1. LADO referral: 75.0%. Risk assessment: 50.0%. Child safe: 75.0%. Avg resolution: 22.5 days.",
-  "Priority: 1 allegation without LADO referral — urgent. 1 child safety not confirmed. 2 risk assessments incomplete. Investigation timescales require monitoring.",
-  "Positive: 75% LADO referral compliance. Closed cases resolved. Ensure all open allegations have LADO involvement and risk assessments completed.",
-];
-
-const STAGE_BADGES: Record<string, { label: string; color: string }> = {
-  "Investigating": { label: "Investigating", color: "text-amber-700 bg-amber-50 border-amber-200" },
-  "LADO Ref.": { label: "LADO Ref.", color: "text-orange-700 bg-orange-50 border-orange-200" },
-  "Closed": { label: "Closed", color: "text-green-700 bg-green-50 border-green-200" },
-  "Outcome": { label: "Outcome", color: "text-blue-700 bg-blue-50 border-blue-200" },
+const INSIGHT_STYLES: Record<string, string> = {
+  critical: "border-red-200 bg-red-50 text-red-800",
+  warning: "border-amber-200 bg-amber-50 text-amber-800",
+  positive: "border-green-200 bg-green-50 text-green-800",
 };
 
 export function AllegationManagementCard() {
-  const m = DEMO_METRICS;
+  const { data, isLoading } = useSafeguardingIntelligence();
+
+  if (isLoading) {
+    return (
+      <Card className="overflow-hidden">
+        <CardContent className="flex items-center justify-center py-12">
+          <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
+        </CardContent>
+      </Card>
+    );
+  }
+
+  const d = data?.data;
+  const profile = d?.profile;
+  const restraints = d?.restraints;
+  const notifiable = d?.notifiable_events;
+  const insights = d?.insights ?? [];
+
   return (
     <Card className="overflow-hidden">
       <CardHeader className="pb-3">
@@ -62,65 +49,69 @@ export function AllegationManagementCard() {
             <ShieldAlert className="h-4 w-4 text-brand" />
             Allegation Management
           </CardTitle>
-          <Link href="/allegation-management" className="text-xs text-brand hover:underline flex items-center gap-1">
-            Allegations <ChevronRight className="h-3 w-3" />
+          <Link href="/safeguarding" className="text-xs text-brand hover:underline flex items-center gap-1">
+            Safeguarding <ChevronRight className="h-3 w-3" />
           </Link>
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
+        {/* Summary strip */}
         <div className="grid grid-cols-4 gap-2">
           <div className="text-center rounded-lg bg-blue-50 p-2">
-            <p className="text-lg font-bold tabular-nums text-blue-600">{m.total_allegations}</p>
-            <p className="text-[10px] text-muted-foreground">Total</p>
+            <p className="text-lg font-bold tabular-nums text-blue-600">{profile?.total_incidents_90d ?? 0}</p>
+            <p className="text-[10px] text-muted-foreground">Incidents 90d</p>
           </div>
-          <div className={cn("text-center rounded-lg p-2", m.open_allegations > 0 ? "bg-red-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", m.open_allegations > 0 ? "text-red-600" : "text-green-600")}>{m.open_allegations}</p>
+          <div className={cn("text-center rounded-lg p-2", (profile?.open_incidents ?? 0) > 0 ? "bg-red-50" : "bg-green-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", (profile?.open_incidents ?? 0) > 0 ? "text-red-600" : "text-green-600")}>{profile?.open_incidents ?? 0}</p>
             <p className="text-[10px] text-muted-foreground">Open</p>
           </div>
+          <div className={cn("text-center rounded-lg p-2", (profile?.incidents_needing_oversight ?? 0) > 0 ? "bg-amber-50" : "bg-green-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", (profile?.incidents_needing_oversight ?? 0) > 0 ? "text-amber-600" : "text-green-600")}>{profile?.incidents_needing_oversight ?? 0}</p>
+            <p className="text-[10px] text-muted-foreground">Oversight</p>
+          </div>
           <div className="text-center rounded-lg bg-emerald-50 p-2">
-            <p className="text-lg font-bold tabular-nums text-emerald-600">{m.lado_referral_rate}%</p>
-            <p className="text-[10px] text-muted-foreground">LADO Ref</p>
-          </div>
-          <div className="text-center rounded-lg bg-green-50 p-2">
-            <p className="text-lg font-bold tabular-nums text-green-600">{m.child_safe_rate}%</p>
-            <p className="text-[10px] text-muted-foreground">Child Safe</p>
+            <p className="text-lg font-bold tabular-nums text-emerald-600">{profile?.outcome_documented_rate ?? 0}%</p>
+            <p className="text-[10px] text-muted-foreground">Outcome Doc</p>
           </div>
         </div>
 
+        {/* Restraint & Notifiable detail */}
         <div className="space-y-1.5">
-          <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1"><Clock className="h-3 w-3" />Recent Allegations</p>
-          <div className="space-y-1">
-            {DEMO_RECORDS.map((r, i) => {
-              const badge = STAGE_BADGES[r.stage] ?? STAGE_BADGES["Investigating"];
-              return (
-                <div key={i} className="flex items-center justify-between rounded border p-2 text-xs">
-                  <div className="flex items-center gap-2 flex-1 min-w-0">
-                    <FileWarning className="h-3 w-3 text-red-500 shrink-0" />
-                    <span className="font-medium">{r.subject}</span>
-                    <span className="text-muted-foreground truncate">{r.type} · {r.date}</span>
-                  </div>
-                  <Badge variant="outline" className={cn("text-[10px] shrink-0", badge.color)}>{badge.label}</Badge>
-                </div>
-              );
-            })}
+          <p className="text-xs font-semibold text-muted-foreground">Restraint / Notifiable Detail</p>
+          <div className="grid grid-cols-2 gap-2 text-xs">
+            <div className="rounded border p-2">
+              <span className="text-muted-foreground">Restraints 90d:</span>{" "}
+              <span className="font-semibold">{restraints?.total_restraints_90d ?? 0}</span>
+            </div>
+            <div className="rounded border p-2">
+              <span className="text-muted-foreground">Debrief rate:</span>{" "}
+              <span className="font-semibold">{restraints?.debrief_rate ?? 0}%</span>
+            </div>
+            <div className="rounded border p-2">
+              <span className="text-muted-foreground">Notifiable events:</span>{" "}
+              <span className="font-semibold">{notifiable?.total_events ?? 0}</span>
+            </div>
+            <div className="rounded border p-2">
+              <span className="text-muted-foreground">Notified on time:</span>{" "}
+              <span className="font-semibold">{notifiable?.notified_on_time ?? 0}</span>
+            </div>
           </div>
         </div>
 
-        {DEMO_ALERTS.length > 0 && (
+        {/* ARIA insights */}
+        {insights.length > 0 && (
           <div className="space-y-1.5">
-            <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1"><AlertTriangle className="h-3 w-3" />Allegation Alerts</p>
-            {DEMO_ALERTS.map((a, i) => (
-              <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", a.severity === "critical" || a.severity === "high" ? "border-red-200 bg-red-50 text-red-800" : "border-amber-200 bg-amber-50 text-amber-800")}>{a.message}</div>
+            <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
+              <Brain className="h-3 w-3" />
+              ARIA Allegation Intelligence
+            </p>
+            {insights.map((insight, i) => (
+              <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>
+                {insight.text}
+              </div>
             ))}
           </div>
         )}
-
-        <div className="space-y-1.5">
-          <p className="text-xs font-semibold flex items-center gap-1 text-purple-700"><Brain className="h-3 w-3" />ARIA Allegation Intelligence</p>
-          {ARIA_INSIGHTS.map((insight, i) => (
-            <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", i === 0 ? "border-blue-200 bg-blue-50 text-blue-800" : i === 1 ? "border-amber-200 bg-amber-50 text-amber-800" : "border-green-200 bg-green-50 text-green-800")}>{insight}</div>
-          ))}
-        </div>
       </CardContent>
     </Card>
   );

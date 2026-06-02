@@ -637,6 +637,57 @@ export const NAV_GROUPS: NavGroup[] = [
   },
 ];
 
+// ══════════════════════════════════════════════════════════════════════════════
+// DOMAIN NAV — Simplified 3-domain navigation for the sidebar redesign.
+// Uses the same NavGroup / NavChild types as NAV_GROUPS above.
+// ══════════════════════════════════════════════════════════════════════════════
+
+export const DOMAIN_NAV: NavGroup[] = [
+  {
+    id: "young_person",
+    label: "Young People",
+    icon: "HeartHandshake",
+    href: "/young-people",
+    module: "young-people",
+    children: [
+      { label: "All Children", href: "/young-people", icon: "Heart", module: "young-people" },
+      { label: "Care Events", href: "/care-events", icon: "Zap", module: "care-events", badgeKey: "care_events_review" },
+      { label: "Incidents", href: "/incidents", icon: "AlertTriangle", module: "incidents", badgeKey: "incidents" },
+      { label: "Safeguarding", href: "/safeguarding", icon: "Shield", module: "safeguarding" },
+      { label: "Missing from Care", href: "/missing-from-care", icon: "MapPin", module: "safeguarding" },
+      { label: "Risk Register", href: "/risk-register", icon: "ShieldAlert", module: "safeguarding" },
+    ],
+  },
+  {
+    id: "employee",
+    label: "Employees",
+    icon: "Users",
+    href: "/staff",
+    module: "staff",
+    children: [
+      { label: "All Staff", href: "/staff", icon: "Users", module: "staff" },
+      { label: "Supervisions", href: "/supervisions", icon: "MessageSquare", module: "supervisions" },
+      { label: "Training", href: "/training", icon: "GraduationCap", module: "training" },
+      { label: "Rota", href: "/rota", icon: "Calendar", module: "rota" },
+    ],
+  },
+  {
+    id: "home",
+    label: "Home",
+    icon: "Building2",
+    href: "/dashboard",
+    module: "dashboard",
+    children: [
+      { label: "Dashboard", href: "/dashboard", icon: "LayoutDashboard", module: "dashboard" },
+      { label: "Manager Control", href: "/dashboard/manager-control-centre", icon: "ShieldCheck", module: "dashboard" },
+      { label: "Tasks", href: "/tasks", icon: "CheckSquare", module: "tasks", badgeKey: "tasks" },
+      { label: "Handover", href: "/handover", icon: "ArrowRightLeft", module: "handover" },
+      { label: "Compliance", href: "/ri", icon: "Gavel", module: "ri" },
+      { label: "ARIA Intelligence", href: "/intelligence", icon: "Sparkles", module: "aria" },
+    ],
+  },
+];
+
 // ── Global Create menu items ───────────────────────────────────────────────────
 
 export interface CreateMenuItem {

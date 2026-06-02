@@ -2,94 +2,72 @@
 
 // ══════════════════════════════════════════════════════════════════════════════
 // CORNERSTONE — FAMILY ENGAGEMENT INTELLIGENCE CARD
-// Dashboard card for family contact, relationships, and engagement tracking.
-// CHR 2015 Reg 7/14/6. SCCIF: Experiences and Progress.
+// Dashboard card powered by the Contact Engagement Intelligence Engine.
+// CHR 2015 Reg 8/9. SCCIF: Overall Experiences — Contact & relationships.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
-  HeartHandshake, ChevronRight, AlertTriangle, Brain,
-  Phone, TrendingUp, TrendingDown, Users,
-  CheckCircle2,
+  Heart, ChevronRight, AlertTriangle, Brain,
+  Users, Loader2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useContactEngagement } from "@/hooks/use-contact-engagement";
 
-// ── Demo data ────────────────────────────────────────────────────────────────
+// ── Styling ─────────────────────────────────────────────────────────────────
 
-const DEMO_METRICS = {
-  contacts_this_month: 18,
-  contacts_this_quarter: 52,
-  children_with_contact: 5,
-  positive_contact_rate: 72.2,
-  cancelled_dna_rate: 11.5,
-  avg_contact_duration: 68,
-  relationships_strong: 6,
-  relationships_fragile: 2,
-  relationships_no_contact: 1,
-  engagement_improving: 3,
-  engagement_declining: 1,
+const ALERT_STYLES: Record<string, string> = {
+  critical: "border-red-200 bg-red-50 text-red-800",
+  high:     "border-red-200 bg-red-50 text-red-800",
+  medium:   "border-amber-200 bg-amber-50 text-amber-800",
+  low:      "border-blue-200 bg-blue-50 text-blue-800",
 };
 
-const DEMO_CHILDREN = [
-  { name: "Child A", contacts: 5, quality: "strong", trend: "stable", lastContact: "2026-05-11" },
-  { name: "Child B", contacts: 4, quality: "developing", trend: "improving", lastContact: "2026-05-09" },
-  { name: "Child C", contacts: 3, quality: "fragile", trend: "declining", lastContact: "2026-04-28" },
-  { name: "Child D", contacts: 4, quality: "strong", trend: "stable", lastContact: "2026-05-12" },
-  { name: "Child E", contacts: 2, quality: "strained", trend: "stable", lastContact: "2026-05-05" },
-];
-
-const DEMO_RECENT = [
-  { child: "Child D", member: "Mum", type: "Face to Face", outcome: "positive", date: "2026-05-12" },
-  { child: "Child A", member: "Dad", type: "Video Call", outcome: "positive", date: "2026-05-11" },
-  { child: "Child B", member: "Sibling", type: "Community Outing", outcome: "positive", date: "2026-05-09" },
-  { child: "Child E", member: "Mum", type: "Supervised", outcome: "mixed", date: "2026-05-05" },
-];
-
-const DEMO_ALERTS: { type: string; severity: "critical" | "high" | "medium"; message: string }[] = [
-  { type: "declining_engagement", severity: "medium", message: "Child C's relationship with birth mother is declining — 2 cancelled contacts this month. Discuss at next LAC review." },
-  { type: "no_recent_contact", severity: "medium", message: "Child C has had no contact with birth father for 45 days — check if contact arrangement needs updating." },
-];
-
-const ARIA_INSIGHTS = [
-  "18 family contacts this month across 5 children (100% had at least one contact). 72.2% rated positive. Average contact duration 68 minutes. 6 strong relationships, 2 fragile, 1 no-contact arrangement (court-ordered).",
-  "Focus: Child C's contact with birth mother is declining — 2 of last 3 sessions cancelled by family. Key worker to call mum this week. Child E's supervised contact with mum was 'mixed' — child was unsettled afterwards. Review with therapist whether contact is supporting or undermining therapeutic progress.",
-  "Positive: Child B's sibling contact programme is working well — relationship quality has improved from fragile to developing over 3 months. Child D's mum is now attending regularly and relationship is strong. Consider requesting unsupervised contact for Child D at next review.",
-];
-
-// ── Helpers ──────────────────────────────────────────────────────────────────
-
-const QUALITY_BADGES: Record<string, { label: string; color: string }> = {
-  strong: { label: "Strong", color: "text-green-700 bg-green-50 border-green-200" },
-  developing: { label: "Developing", color: "text-blue-700 bg-blue-50 border-blue-200" },
-  fragile: { label: "Fragile", color: "text-amber-700 bg-amber-50 border-amber-200" },
-  strained: { label: "Strained", color: "text-red-700 bg-red-50 border-red-200" },
-  no_contact: { label: "No Contact", color: "text-gray-700 bg-gray-50 border-gray-200" },
+const INSIGHT_STYLES: Record<string, string> = {
+  critical: "border-red-200 bg-red-50 text-red-800",
+  warning:  "border-amber-200 bg-amber-50 text-amber-800",
+  positive: "border-green-200 bg-green-50 text-green-800",
 };
 
-const OUTCOME_COLORS: Record<string, string> = {
-  positive: "text-green-600",
-  mixed: "text-amber-600",
-  difficult: "text-orange-600",
-  distressing: "text-red-600",
-};
-
-// ── Component ────────────────────────────────────────────────────────────────
+// ── Component ───────────────────────────────────────────────────────────────
 
 export function FamilyEngagementCard() {
-  const m = DEMO_METRICS;
+  const { data, isLoading } = useContactEngagement();
+  const intel = data?.data;
+
+  if (isLoading || !intel) {
+    return (
+      <Card>
+        <CardHeader className="pb-3">
+          <CardTitle className="text-sm flex items-center gap-2">
+            <Heart className="h-4 w-4 text-brand" />
+            Family Engagement
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center justify-center py-8">
+            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  const ft = intel.family_time;
+  const c = intel.compliance;
 
   return (
     <Card className="overflow-hidden">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm flex items-center gap-2">
-            <HeartHandshake className="h-4 w-4 text-brand" />
+            <Heart className="h-4 w-4 text-brand" />
             Family Engagement
           </CardTitle>
-          <Link href="/family-engagement" className="text-xs text-brand hover:underline flex items-center gap-1">
-            Family <ChevronRight className="h-3 w-3" />
+          <Link href="/contact" className="text-xs text-brand hover:underline flex items-center gap-1">
+            Contact <ChevronRight className="h-3 w-3" />
           </Link>
         </div>
       </CardHeader>
@@ -98,93 +76,76 @@ export function FamilyEngagementCard() {
         {/* ── Summary strip ────────────────────────────────────────────── */}
 
         <div className="grid grid-cols-4 gap-2">
-          <div className="text-center rounded-lg bg-blue-50 p-2">
-            <p className="text-lg font-bold tabular-nums text-blue-600">{m.contacts_this_month}</p>
-            <p className="text-[10px] text-muted-foreground">This Month</p>
+          <div className="text-center rounded-lg bg-blue-50 p-2.5">
+            <p className="text-lg font-bold tabular-nums text-blue-600">{ft.family_contact_sessions}</p>
+            <p className="text-[10px] text-muted-foreground">Family</p>
           </div>
-          <div className={cn("text-center rounded-lg p-2", m.positive_contact_rate >= 70 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", m.positive_contact_rate >= 70 ? "text-green-600" : "text-amber-600")}>
-              {m.positive_contact_rate}%
-            </p>
-            <p className="text-[10px] text-muted-foreground">Positive</p>
+          <div className="text-center rounded-lg bg-blue-50 p-2.5">
+            <p className="text-lg font-bold tabular-nums text-blue-600">{ft.sibling_contact_sessions}</p>
+            <p className="text-[10px] text-muted-foreground">Sibling</p>
           </div>
-          <div className="text-center rounded-lg bg-green-50 p-2">
-            <p className="text-lg font-bold tabular-nums text-green-600">{m.relationships_strong}</p>
-            <p className="text-[10px] text-muted-foreground">Strong</p>
+          <div className={cn("text-center rounded-lg p-2.5", c.overall_completion_rate >= 90 ? "bg-green-50" : "bg-amber-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", c.overall_completion_rate >= 90 ? "text-green-600" : "text-amber-600")}>{c.overall_completion_rate}%</p>
+            <p className="text-[10px] text-muted-foreground">Completion</p>
           </div>
-          <div className={cn("text-center rounded-lg p-2", m.relationships_fragile === 0 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", m.relationships_fragile === 0 ? "text-green-600" : "text-amber-600")}>
-              {m.relationships_fragile}
-            </p>
-            <p className="text-[10px] text-muted-foreground">Fragile</p>
+          <div className={cn("text-center rounded-lg p-2.5", ft.concern_sessions === 0 ? "bg-green-50" : "bg-amber-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", ft.concern_sessions === 0 ? "text-green-600" : "text-amber-600")}>{ft.concern_sessions}</p>
+            <p className="text-[10px] text-muted-foreground">Concerns</p>
           </div>
         </div>
 
-        {/* ── Children's family engagement ────────────────────────────── */}
+        {/* ── Presentation breakdown ──────────────────────────────────── */}
 
-        <div className="space-y-1.5">
-          <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
-            <Users className="h-3 w-3" />
-            Family Relationships
-          </p>
-          <div className="space-y-1">
-            {DEMO_CHILDREN.map((c) => {
-              const badge = QUALITY_BADGES[c.quality] ?? QUALITY_BADGES.developing;
-              return (
-                <div key={c.name} className="flex items-center justify-between rounded border p-2 text-xs">
-                  <div className="flex items-center gap-2 flex-1 min-w-0">
-                    <span className="font-medium">{c.name}</span>
-                    <span className="text-muted-foreground">{c.contacts} contacts</span>
-                  </div>
-                  <div className="flex items-center gap-1.5 shrink-0 ml-1">
-                    {c.trend === "improving" && <TrendingUp className="h-3 w-3 text-green-500" />}
-                    {c.trend === "declining" && <TrendingDown className="h-3 w-3 text-red-500" />}
-                    <Badge variant="outline" className={cn("text-[10px]", badge.color)}>
-                      {badge.label}
-                    </Badge>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* ── Recent contacts ────────────────────────────────────────── */}
-
-        <div className="rounded-lg border p-3 space-y-1.5">
-          <p className="text-xs font-semibold flex items-center gap-1">
-            <Phone className="h-3 w-3 text-blue-500" />
-            Recent Contacts
-          </p>
-          {DEMO_RECENT.map((r, i) => (
-            <div key={i} className="flex items-center justify-between text-xs">
-              <span className="truncate flex-1">{r.child} — {r.member} ({r.type})</span>
-              <div className="flex items-center gap-1.5 shrink-0 ml-1">
-                <span className={cn("font-semibold", OUTCOME_COLORS[r.outcome] ?? "text-gray-600")}>
-                  {r.outcome}
-                </span>
-                <span className="text-muted-foreground">{r.date}</span>
-              </div>
+        {ft.presentation_breakdown.length > 0 && (
+          <div className="rounded-lg border p-3 space-y-2">
+            <p className="text-xs font-semibold">Child Presentation</p>
+            <div className="flex flex-wrap gap-1">
+              {ft.presentation_breakdown.map((p) => (
+                <Badge key={p.presentation} variant="outline" className="text-[10px] capitalize">
+                  {p.presentation.replace(/_/g, " ")} ({p.count})
+                </Badge>
+              ))}
             </div>
-          ))}
-        </div>
+          </div>
+        )}
+
+        {/* ── Child profiles ──────────────────────────────────────────── */}
+
+        {intel.child_profiles.length > 0 && (
+          <div className="space-y-1.5">
+            <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
+              <Users className="h-3 w-3" />
+              By Young Person
+            </p>
+            {intel.child_profiles.map((cp) => (
+              <div key={cp.child_id} className="flex items-center justify-between rounded border p-2.5 text-xs">
+                <div className="flex items-center gap-2">
+                  <span className="font-medium">{cp.child_name}</span>
+                  <span className="text-[10px] text-muted-foreground">{cp.sessions_30d} sessions/30d</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  {!cp.has_active_plan && <Badge className="text-[9px] bg-red-100 text-red-700">no plan</Badge>}
+                  {!cp.plan_review_current && cp.has_active_plan && <Badge className="text-[9px] bg-amber-100 text-amber-700">review due</Badge>}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
 
         {/* ── Alerts ──────────────────────────────────────────────────── */}
 
-        {DEMO_ALERTS.length > 0 && (
+        {intel.alerts.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
               <AlertTriangle className="h-3 w-3" />
-              Family Engagement Alerts
+              Engagement Alerts
             </p>
-            {DEMO_ALERTS.map((alert, i) => (
+            {intel.alerts.slice(0, 3).map((alert, i) => (
               <div
                 key={i}
                 className={cn(
                   "rounded border p-2.5 text-xs leading-relaxed",
-                  alert.severity === "critical" || alert.severity === "high"
-                    ? "border-red-200 bg-red-50 text-red-800"
-                    : "border-amber-200 bg-amber-50 text-amber-800",
+                  ALERT_STYLES[alert.severity] ?? ALERT_STYLES.medium,
                 )}
               >
                 {alert.message}
@@ -193,27 +154,27 @@ export function FamilyEngagementCard() {
           </div>
         )}
 
-        {/* ── ARIA insights ───────────────────────────────────────────── */}
+        {/* ── ARIA Intelligence ───────────────────────────────────────── */}
 
-        <div className="space-y-1.5">
-          <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
-            <Brain className="h-3 w-3" />
-            ARIA Family Intelligence
-          </p>
-          {ARIA_INSIGHTS.map((insight, i) => (
-            <div
-              key={i}
-              className={cn(
-                "rounded border p-2.5 text-xs leading-relaxed",
-                i === 0 ? "border-blue-200 bg-blue-50 text-blue-800"
-                  : i === 1 ? "border-amber-200 bg-amber-50 text-amber-800"
-                  : "border-green-200 bg-green-50 text-green-800",
-              )}
-            >
-              {insight}
-            </div>
-          ))}
-        </div>
+        {intel.insights.length > 0 && (
+          <div className="space-y-1.5">
+            <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
+              <Brain className="h-3 w-3" />
+              ARIA Engagement Intelligence
+            </p>
+            {intel.insights.slice(0, 3).map((insight, i) => (
+              <div
+                key={i}
+                className={cn(
+                  "rounded border p-2.5 text-xs leading-relaxed",
+                  INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.positive,
+                )}
+              >
+                {insight.text}
+              </div>
+            ))}
+          </div>
+        )}
       </CardContent>
     </Card>
   );

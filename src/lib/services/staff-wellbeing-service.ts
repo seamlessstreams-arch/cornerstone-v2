@@ -155,6 +155,7 @@ export function computeWellbeingMetrics(
   checks: WellbeingCheck[],
   debriefs: DebriefRecord[],
   totalStaff: number,
+  now: Date = new Date(),
 ): {
   staff_checked: number;
   checks_this_quarter: number;
@@ -170,7 +171,6 @@ export function computeWellbeingMetrics(
   by_stress_level: Record<string, number>;
   overdue_follow_ups: number;
 } {
-  const now = new Date();
   const quarterAgo = new Date(now.getTime() - 90 * 86400000);
 
   const staffChecked = new Set(checks.map((c) => c.staff_member)).size;

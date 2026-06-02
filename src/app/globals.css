@@ -525,8 +525,186 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
   html {
-    @apply font-sans;
+    font-family: var(--font-sans);
+    scroll-behavior: smooth;
   }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   CORNERSTONE BESPOKE IDENTITY
+   Not a template. Not a default. Distinctly Cornerstone.
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+/* ── Custom scrollbars — warm, thin, unobtrusive ──────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--cs-border);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--cs-text-gentle);
+}
+@supports (scrollbar-width: thin) {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--cs-border) transparent;
+  }
+}
+
+/* ── Focus rings — gold, not blue ─────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--cs-aria-gold);
+  outline-offset: 2px;
+  border-radius: var(--cs-radius-sm);
+}
+
+/* ── Text selection — warm gold ───────────────────────────────────────────── */
+::selection {
+  background: var(--cs-aria-gold-soft);
+  color: var(--cs-navy);
+}
+
+/* ── Cornerstone typography — distinctive letter-spacing and weight ────────── */
+h1, h2, h3, h4, h5, h6,
+[class*="CardTitle"],
+[class*="font-bold"] {
+  letter-spacing: -0.01em;
+  font-feature-settings: "kern" 1, "liga" 1;
+}
+
+/* Headings get the navy ink treatment */
+h1, h2, h3 {
+  color: var(--cs-navy);
+}
+
+/* Small text gets slightly more spacing for readability */
+.text-xs, .text-\[10px\], .text-\[11px\], .text-\[9px\] {
+  letter-spacing: 0.01em;
+}
+
+/* ── Cornerstone card elevation — warm floating effect ────────────────────── */
+.cs-card-float {
+  transition: transform var(--cs-duration-normal) var(--cs-ease-default),
+              box-shadow var(--cs-duration-normal) var(--cs-ease-default);
+}
+.cs-card-float:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--cs-shadow-card);
+}
+
+/* ── Cornerstone button press — subtle tactile feedback ───────────────────── */
+button:not(:disabled):active,
+[role="button"]:not(:disabled):active {
+  transform: scale(0.98);
+  transition: transform 80ms ease;
+}
+
+/* ── Cornerstone input focus — warm glow instead of harsh blue ────────────── */
+input:focus,
+textarea:focus,
+select:focus,
+[contenteditable]:focus {
+  box-shadow: 0 0 0 3px var(--cs-aria-glow);
+  border-color: var(--cs-aria-gold) !important;
+  outline: none;
+}
+
+/* ── Cornerstone link style — navy with gold hover ────────────────────────── */
+a:not([class]) {
+  color: var(--cs-navy-muted);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: var(--cs-border);
+  transition: color var(--cs-duration-fast) ease, text-decoration-color var(--cs-duration-fast) ease;
+}
+a:not([class]):hover {
+  color: var(--cs-aria-gold);
+  text-decoration-color: var(--cs-aria-gold);
+}
+
+/* ── Cornerstone badge pill — rounded, warm ───────────────────────────────── */
+.cs-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.125rem 0.625rem;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  border-radius: 999px;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+/* ── Cornerstone page background texture — subtle warmth ──────────────────── */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(200, 155, 60, 0.03) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 100%, rgba(15, 30, 54, 0.02) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ── Cornerstone sidebar — deep navy gradient ─────────────────────────────── */
+.cs-sidebar-gradient {
+  background: linear-gradient(
+    180deg,
+    var(--cs-navy) 0%,
+    #0a1628 60%,
+    #070e1a 100%
+  );
+}
+
+/* ── Cornerstone loading shimmer — gold warmth ────────────────────────────── */
+@keyframes cornerstoneShimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.cs-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--cs-surface) 25%,
+    var(--cs-aria-gold-bg) 50%,
+    var(--cs-surface) 75%
+  );
+  background-size: 200% 100%;
+  animation: cornerstoneShimmer 2s infinite var(--cs-ease-default);
+}
+
+/* ── Cornerstone status dot — pulsing for live/active items ───────────────── */
+@keyframes cornerstonePulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.1); }
+}
+.cs-dot-live {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--cs-success);
+  animation: cornerstonePulse 2s infinite ease-in-out;
+}
+.cs-dot-alert {
+  background: var(--cs-risk);
+  animation: cornerstonePulse 1.2s infinite ease-in-out;
+}
+
+/* ── Print styles — clean, no chrome ──────────────────────────────────────── */
+@media print {
+  body::before { display: none; }
+  nav, .cs-sidebar-gradient, [class*="bottom-nav"], [class*="QuickCreateFab"] { display: none !important; }
+  .cs-card-float:hover { transform: none; box-shadow: none; }
+  * { color: #000 !important; background: #fff !important; }
 }

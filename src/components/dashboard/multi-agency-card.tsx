@@ -2,9 +2,8 @@
 
 // ══════════════════════════════════════════════════════════════════════════════
 // CORNERSTONE — MULTI-AGENCY WORKING INTELLIGENCE CARD
-// Dashboard card for professional contacts, LAC reviews, multi-agency
-// meetings, and ARIA multi-agency intelligence.
-// CHR 2015 Reg 5 (engagement), Reg 13 (leadership),
+// Dashboard card powered by the Multi-Agency Intelligence Engine.
+// Reg 5 (engagement), Reg 13 (leadership),
 // Working Together to Safeguard Children 2018.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -13,52 +12,51 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
   Network, ChevronRight, AlertTriangle, Brain,
-  Users, Calendar, FileText, CheckCircle,
+  Users, Calendar, FileText, CheckCircle, Loader2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useMultiAgencyIntelligence } from "@/hooks/use-multi-agency-intelligence";
 
-// ── Demo data ────────────────────────────────────────────────────────────────
+// ── Styling ─────────────────────────────────────────────────────────────────
 
-const DEMO_METRICS = {
-  active_contacts: 18,
-  children_with_sw: 5,
-  total_children: 5,
-  overdue_contacts: 2,
-  lac_reviews_this_year: 8,
-  child_participation_rate: 88,
-  care_plan_agreement_rate: 100,
-  home_report_rate: 75,
-  meetings_this_quarter: 6,
-  follow_up_completion_rate: 83,
+const ALERT_STYLES: Record<string, string> = {
+  critical: "border-red-200 bg-red-50 text-red-800",
+  high:     "border-red-200 bg-red-50 text-red-800",
+  medium:   "border-amber-200 bg-amber-50 text-amber-800",
+  low:      "border-blue-200 bg-blue-50 text-blue-800",
 };
 
-const DEMO_UPCOMING_REVIEWS = [
-  { child: "Child A", type: "Subsequent", date: "2026-05-20", iro: "S. Williams", report_submitted: true },
-  { child: "Child C", type: "Second", date: "2026-05-28", iro: "M. Khan", report_submitted: false },
-];
+const INSIGHT_STYLES: Record<string, string> = {
+  critical: "border-red-200 bg-red-50 text-red-800",
+  warning:  "border-amber-200 bg-amber-50 text-amber-800",
+  positive: "border-green-200 bg-green-50 text-green-800",
+};
 
-const DEMO_MEETING_TYPES = [
-  { type: "LAC Review", count: 3, completed: 3 },
-  { type: "PEP Meeting", count: 2, completed: 2 },
-  { type: "Professionals Meeting", count: 2, completed: 1 },
-  { type: "Strategy Meeting", count: 1, completed: 1 },
-];
-
-const DEMO_ALERTS: { type: string; severity: "critical" | "high" | "medium" | "low"; message: string }[] = [
-  { type: "home_report", severity: "high", message: "Home report not submitted for Child C's LAC review on 28 May. Reports must be submitted at least 3 working days before the review." },
-  { type: "overdue_contact", severity: "medium", message: "2 professional contacts overdue — Child B's CAMHS worker (21 days) and Child D's YOT worker (16 days). Schedule contact this week." },
-];
-
-const ARIA_INSIGHTS = [
-  "2 LAC reviews upcoming: Child A (subsequent, 20 May — report submitted) and Child C (second review, 28 May — report NOT submitted). Prioritise Child C's home report. Ensure both children have been consulted about their wishes and feelings for the review.",
-  "Professional network: 18 active contacts across 5 children. All children have allocated social workers — good compliance with Reg 5. 2 contacts overdue (CAMHS and YOT). Next professionals meeting scheduled for 2 June.",
-  "Overall: 8 LAC reviews this year, 88% child participation rate, 100% care plan agreement. Home report submission rate at 75% — target 100%. 6 multi-agency meetings this quarter. Follow-up completion at 83%. Strengthen CAMHS engagement for Child B — 3 cancelled appointments in 2 months.",
-];
-
-// ── Component ────────────────────────────────────────────────────────────────
+// ── Component ───────────────────────────────────────────────────────────────
 
 export function MultiAgencyCard() {
-  const m = DEMO_METRICS;
+  const { data, isLoading } = useMultiAgencyIntelligence();
+  const intel = data?.data;
+
+  if (isLoading || !intel) {
+    return (
+      <Card>
+        <CardHeader className="pb-3">
+          <CardTitle className="text-sm flex items-center gap-2">
+            <Network className="h-4 w-4 text-brand" />
+            Multi-Agency Working
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center justify-center py-8">
+            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  const o = intel.overview;
 
   return (
     <Card className="overflow-hidden">
@@ -78,25 +76,43 @@ export function MultiAgencyCard() {
         {/* ── Summary strip ────────────────────────────────────────────── */}
 
         <div className="grid grid-cols-4 gap-2">
-          <div className={cn("text-center rounded-lg p-2", m.children_with_sw === m.total_children ? "bg-green-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", m.children_with_sw === m.total_children ? "text-green-600" : "text-red-600")}>
-              {m.children_with_sw}/{m.total_children}
+          <div className={cn(
+            "text-center rounded-lg p-2.5",
+            o.children_with_social_worker === o.total_children ? "bg-green-50" : "bg-red-50",
+          )}>
+            <p className={cn(
+              "text-lg font-bold tabular-nums",
+              o.children_with_social_worker === o.total_children ? "text-green-600" : "text-red-600",
+            )}>
+              {o.children_with_social_worker}/{o.total_children}
             </p>
             <p className="text-[10px] text-muted-foreground">Have SW</p>
           </div>
-          <div className="text-center rounded-lg bg-blue-50 p-2">
-            <p className="text-lg font-bold tabular-nums text-blue-600">{m.active_contacts}</p>
+          <div className="text-center rounded-lg bg-blue-50 p-2.5">
+            <p className="text-lg font-bold tabular-nums text-blue-600">{o.total_professionals}</p>
             <p className="text-[10px] text-muted-foreground">Contacts</p>
           </div>
-          <div className={cn("text-center rounded-lg p-2", m.child_participation_rate >= 90 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", m.child_participation_rate >= 90 ? "text-green-600" : "text-amber-600")}>
-              {m.child_participation_rate}%
+          <div className={cn(
+            "text-center rounded-lg p-2.5",
+            o.child_participation_rate >= 90 ? "bg-green-50" : "bg-amber-50",
+          )}>
+            <p className={cn(
+              "text-lg font-bold tabular-nums",
+              o.child_participation_rate >= 90 ? "text-green-600" : "text-amber-600",
+            )}>
+              {o.child_participation_rate}%
             </p>
             <p className="text-[10px] text-muted-foreground">Participation</p>
           </div>
-          <div className={cn("text-center rounded-lg p-2", m.overdue_contacts === 0 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", m.overdue_contacts === 0 ? "text-green-600" : "text-amber-600")}>
-              {m.overdue_contacts}
+          <div className={cn(
+            "text-center rounded-lg p-2.5",
+            o.overdue_contacts === 0 ? "bg-green-50" : "bg-amber-50",
+          )}>
+            <p className={cn(
+              "text-lg font-bold tabular-nums",
+              o.overdue_contacts === 0 ? "text-green-600" : "text-amber-600",
+            )}>
+              {o.overdue_contacts}
             </p>
             <p className="text-[10px] text-muted-foreground">Overdue</p>
           </div>
@@ -104,53 +120,57 @@ export function MultiAgencyCard() {
 
         {/* ── Upcoming LAC reviews ────────────────────────────────────── */}
 
-        <div className="space-y-1.5">
-          <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
-            <Calendar className="h-3 w-3" />
-            Upcoming LAC Reviews
-          </p>
-          {DEMO_UPCOMING_REVIEWS.map((r) => (
-            <div key={r.child} className="rounded border p-2.5 text-xs space-y-1">
-              <div className="flex items-center justify-between">
-                <span className="font-semibold">{r.child}</span>
-                <Badge variant="outline" className="text-[10px]">{r.type}</Badge>
+        {intel.upcoming_reviews.length > 0 && (
+          <div className="space-y-1.5">
+            <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
+              <Calendar className="h-3 w-3" />
+              Upcoming LAC Reviews
+            </p>
+            {intel.upcoming_reviews.slice(0, 3).map((r) => (
+              <div key={r.review_id} className="rounded border p-2.5 text-xs space-y-1">
+                <div className="flex items-center justify-between">
+                  <span className="font-semibold">{r.child_name}</span>
+                  <Badge variant="outline" className="text-[10px]">{r.review_type}</Badge>
+                </div>
+                <div className="flex items-center justify-between text-muted-foreground">
+                  <span>{new Date(r.date).toLocaleDateString("en-GB", { day: "numeric", month: "short" })} — IRO: {r.iro_name}</span>
+                  <Badge className={cn(
+                    "text-[10px]",
+                    r.home_report_submitted ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700",
+                  )}>
+                    <FileText className="h-2.5 w-2.5 mr-0.5" />
+                    {r.home_report_submitted ? "Report sent" : "Report due"}
+                  </Badge>
+                </div>
               </div>
-              <div className="flex items-center justify-between text-muted-foreground">
-                <span>{new Date(r.date).toLocaleDateString("en-GB", { day: "numeric", month: "short" })} — IRO: {r.iro}</span>
-                <Badge className={cn(
-                  "text-[10px]",
-                  r.report_submitted ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700",
-                )}>
-                  <FileText className="h-2.5 w-2.5 mr-0.5" />
-                  {r.report_submitted ? "Report sent" : "Report due"}
-                </Badge>
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
 
         {/* ── Meeting types ───────────────────────────────────────────── */}
 
-        <div className="space-y-1.5">
-          <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
-            <Users className="h-3 w-3" />
-            Meetings This Quarter ({m.meetings_this_quarter})
-          </p>
-          {DEMO_MEETING_TYPES.map((mt) => (
-            <div key={mt.type} className="flex items-center justify-between rounded border p-2 text-xs">
-              <span className="truncate flex-1">{mt.type}</span>
-              <div className="flex items-center gap-1.5 ml-2">
-                <Badge variant="outline" className="text-[10px] tabular-nums">{mt.count}</Badge>
-                <Badge className={cn(
-                  "text-[10px]",
-                  mt.completed === mt.count ? "bg-green-100 text-green-700" : "bg-amber-100 text-amber-700",
-                )}>
-                  {mt.completed}/{mt.count}
-                </Badge>
+        {intel.meeting_types.length > 0 && (
+          <div className="space-y-1.5">
+            <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
+              <Users className="h-3 w-3" />
+              Meetings ({o.meetings_this_quarter})
+            </p>
+            {intel.meeting_types.map((mt) => (
+              <div key={mt.meeting_type} className="flex items-center justify-between rounded border p-2 text-xs">
+                <span className="truncate flex-1">{mt.type_label}</span>
+                <div className="flex items-center gap-1.5 ml-2">
+                  <Badge variant="outline" className="text-[10px] tabular-nums">{mt.count}</Badge>
+                  <Badge className={cn(
+                    "text-[10px]",
+                    mt.actions_completion_rate >= 90 ? "bg-green-100 text-green-700" : "bg-amber-100 text-amber-700",
+                  )}>
+                    {mt.actions_completion_rate}% done
+                  </Badge>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
 
         {/* ── Compliance ─────────────────────────────────────────────── */}
 
@@ -159,22 +179,22 @@ export function MultiAgencyCard() {
             <CheckCircle className="h-3 w-3 text-blue-500" />
             Compliance
           </p>
-          <div className="grid grid-cols-3 gap-2">
-            <div className="text-center rounded border p-2">
-              <p className={cn("text-sm font-bold tabular-nums", m.care_plan_agreement_rate === 100 ? "text-green-600" : "text-amber-600")}>
-                {m.care_plan_agreement_rate}%
-              </p>
-              <p className="text-[10px] text-muted-foreground">Care Plans</p>
-            </div>
-            <div className="text-center rounded border p-2">
-              <p className={cn("text-sm font-bold tabular-nums", m.home_report_rate >= 90 ? "text-green-600" : "text-amber-600")}>
-                {m.home_report_rate}%
+          <div className="grid grid-cols-3 gap-2 text-center text-xs">
+            <div>
+              <p className={cn("font-bold tabular-nums", o.home_report_rate >= 90 ? "text-green-600" : "text-amber-600")}>
+                {o.home_report_rate}%
               </p>
               <p className="text-[10px] text-muted-foreground">Reports</p>
             </div>
-            <div className="text-center rounded border p-2">
-              <p className={cn("text-sm font-bold tabular-nums", m.follow_up_completion_rate >= 90 ? "text-green-600" : "text-amber-600")}>
-                {m.follow_up_completion_rate}%
+            <div>
+              <p className={cn("font-bold tabular-nums", o.child_participation_rate >= 90 ? "text-green-600" : "text-amber-600")}>
+                {o.child_participation_rate}%
+              </p>
+              <p className="text-[10px] text-muted-foreground">Participation</p>
+            </div>
+            <div>
+              <p className={cn("font-bold tabular-nums", o.follow_up_completion_rate >= 90 ? "text-green-600" : "text-amber-600")}>
+                {o.follow_up_completion_rate}%
               </p>
               <p className="text-[10px] text-muted-foreground">Follow-ups</p>
             </div>
@@ -183,20 +203,18 @@ export function MultiAgencyCard() {
 
         {/* ── Alerts ──────────────────────────────────────────────────── */}
 
-        {DEMO_ALERTS.length > 0 && (
+        {intel.alerts.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
               <AlertTriangle className="h-3 w-3" />
               Multi-Agency Alerts
             </p>
-            {DEMO_ALERTS.map((alert, i) => (
+            {intel.alerts.slice(0, 3).map((alert, i) => (
               <div
                 key={i}
                 className={cn(
                   "rounded border p-2.5 text-xs leading-relaxed",
-                  alert.severity === "critical" || alert.severity === "high"
-                    ? "border-red-200 bg-red-50 text-red-800"
-                    : "border-amber-200 bg-amber-50 text-amber-800",
+                  ALERT_STYLES[alert.severity] ?? ALERT_STYLES.medium,
                 )}
               >
                 {alert.message}
@@ -205,27 +223,27 @@ export function MultiAgencyCard() {
           </div>
         )}
 
-        {/* ── ARIA insights ────────────────────────────────────────────── */}
+        {/* ── ARIA Multi-Agency Intelligence ──────────────────────────── */}
 
-        <div className="space-y-1.5">
-          <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
-            <Brain className="h-3 w-3" />
-            ARIA Multi-Agency Intelligence
-          </p>
-          {ARIA_INSIGHTS.map((insight, i) => (
-            <div
-              key={i}
-              className={cn(
-                "rounded border p-2.5 text-xs leading-relaxed",
-                i === 0 ? "border-red-200 bg-red-50 text-red-800"
-                  : i === 1 ? "border-amber-200 bg-amber-50 text-amber-800"
-                  : "border-green-200 bg-green-50 text-green-800",
-              )}
-            >
-              {insight}
-            </div>
-          ))}
-        </div>
+        {intel.insights.length > 0 && (
+          <div className="space-y-1.5">
+            <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
+              <Brain className="h-3 w-3" />
+              ARIA Multi-Agency Intelligence
+            </p>
+            {intel.insights.slice(0, 3).map((insight, i) => (
+              <div
+                key={i}
+                className={cn(
+                  "rounded border p-2.5 text-xs leading-relaxed",
+                  INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.positive,
+                )}
+              >
+                {insight.text}
+              </div>
+            ))}
+          </div>
+        )}
       </CardContent>
     </Card>
   );

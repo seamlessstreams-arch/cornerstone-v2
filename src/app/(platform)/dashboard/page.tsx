@@ -33,6 +33,10 @@ import { SmartUploadButton } from "@/components/documents/smart-upload-button";
 
 
 const IntelligenceBriefWidget = dynamic(() => import("@/components/intelligence/intelligence-brief-widget").then(m => m.IntelligenceBriefWidget ? { default: m.IntelligenceBriefWidget } : m), { ssr: false });
+const ManagerIntelligenceBriefingCard = dynamic(() => import("@/components/dashboard/manager-intelligence-briefing-card").then(m => m.ManagerIntelligenceBriefingCard ? { default: m.ManagerIntelligenceBriefingCard } : m), { ssr: false });
+const InspectionReadinessIntelligenceCard = dynamic(() => import("@/components/dashboard/inspection-readiness-intelligence-card").then(m => m.InspectionReadinessIntelligenceCard ? { default: m.InspectionReadinessIntelligenceCard } : m), { ssr: false });
+const StaffWellbeingIntelligenceCard = dynamic(() => import("@/components/dashboard/staff-wellbeing-intelligence-card").then(m => m.StaffWellbeingIntelligenceCard ? { default: m.StaffWellbeingIntelligenceCard } : m), { ssr: false });
+const RiskIntelligenceDashboardCard = dynamic(() => import("@/components/dashboard/risk-intelligence-dashboard-card").then(m => m.RiskIntelligenceDashboardCard ? { default: m.RiskIntelligenceDashboardCard } : m), { ssr: false });
 const AriaDashboardPanel = dynamic(() => import("@/components/dashboard/aria-dashboard-panel").then(m => m.AriaDashboardPanel ? { default: m.AriaDashboardPanel } : m), { ssr: false });
 const AriaDailyIntelligence = dynamic(() => import("@/components/aria/aria-daily-intelligence").then(m => m.AriaDailyIntelligence ? { default: m.AriaDailyIntelligence } : m), { ssr: false });
 const AriaTodayBriefing = dynamic(() => import("@/components/aria/aria-today-briefing").then(m => m.AriaTodayBriefing ? { default: m.AriaTodayBriefing } : m), { ssr: false });
@@ -82,6 +86,400 @@ const AuditComplianceCard = dynamic(() => import("@/components/dashboard/audit-c
 const ExpensesSummaryCard = dynamic(() => import("@/components/dashboard/expenses-summary-card").then(m => m.ExpensesSummaryCard ? { default: m.ExpensesSummaryCard } : m), { ssr: false });
 const FormComplianceCard = dynamic(() => import("@/components/dashboard/form-compliance-card").then(m => m.FormComplianceCard ? { default: m.FormComplianceCard } : m), { ssr: false });
 const CareEventsPanel = dynamic(() => import("@/components/care-events/care-events-panel").then(m => m.CareEventsPanel ? { default: m.CareEventsPanel } : m), { ssr: false });
+const ChildVoiceParticipationCard = dynamic(() => import("@/components/dashboard/child-voice-participation-card").then(m => m.ChildVoiceParticipationCard ? { default: m.ChildVoiceParticipationCard } : m), { ssr: false });
+const HomeWellbeingIntelligenceCard = dynamic(() => import("@/components/dashboard/home-wellbeing-intelligence-card").then(m => m.HomeWellbeingIntelligenceCard ? { default: m.HomeWellbeingIntelligenceCard } : m), { ssr: false });
+const HomeActivityEnrichmentIntelligenceCard = dynamic(() => import("@/components/dashboard/home-activity-enrichment-intelligence-card").then(m => m.HomeActivityEnrichmentIntelligenceCard ? { default: m.HomeActivityEnrichmentIntelligenceCard } : m), { ssr: false });
+const HomeNightSafetyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-night-safety-intelligence-card").then(m => m.HomeNightSafetyIntelligenceCard ? { default: m.HomeNightSafetyIntelligenceCard } : m), { ssr: false });
+const HomeRegulatoryComplianceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-regulatory-compliance-intelligence-card").then(m => m.HomeRegulatoryComplianceIntelligenceCard ? { default: m.HomeRegulatoryComplianceIntelligenceCard } : m), { ssr: false });
+const HomeStaffDevelopmentIntelligenceCard = dynamic(() => import("@/components/dashboard/home-staff-development-intelligence-card").then(m => m.HomeStaffDevelopmentIntelligenceCard ? { default: m.HomeStaffDevelopmentIntelligenceCard } : m), { ssr: false });
+const HomeIncidentSafetyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-incident-safety-intelligence-card").then(m => m.HomeIncidentSafetyIntelligenceCard ? { default: m.HomeIncidentSafetyIntelligenceCard } : m), { ssr: false });
+const HomeChildVoiceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-child-voice-intelligence-card").then(m => m.HomeChildVoiceIntelligenceCard ? { default: m.HomeChildVoiceIntelligenceCard } : m), { ssr: false });
+const HomeKeyWorkingIntelligenceCard = dynamic(() => import("@/components/dashboard/home-key-working-intelligence-card").then(m => m.HomeKeyWorkingIntelligenceCard ? { default: m.HomeKeyWorkingIntelligenceCard } : m), { ssr: false });
+const HomeEducationAchievementIntelligenceCard = dynamic(() => import("@/components/dashboard/home-education-achievement-intelligence-card").then(m => m.HomeEducationAchievementIntelligenceCard ? { default: m.HomeEducationAchievementIntelligenceCard } : m), { ssr: false });
+const HomeMissingEpisodesIntelligenceCard = dynamic(() => import("@/components/dashboard/home-missing-episodes-intelligence-card").then(m => m.HomeMissingEpisodesIntelligenceCard ? { default: m.HomeMissingEpisodesIntelligenceCard } : m), { ssr: false });
+const HomeHealthWellbeingIntelligenceCard = dynamic(() => import("@/components/dashboard/home-health-wellbeing-intelligence-card").then(m => m.HomeHealthWellbeingIntelligenceCard ? { default: m.HomeHealthWellbeingIntelligenceCard } : m), { ssr: false });
+const HomeLACReviewIntelligenceCard = dynamic(() => import("@/components/dashboard/home-lac-review-intelligence-card").then(m => m.HomeLACReviewIntelligenceCard ? { default: m.HomeLACReviewIntelligenceCard } : m), { ssr: false });
+const HomeRiskAssessmentIntelligenceCard = dynamic(() => import("@/components/dashboard/home-risk-assessment-intelligence-card").then(m => m.HomeRiskAssessmentIntelligenceCard ? { default: m.HomeRiskAssessmentIntelligenceCard } : m), { ssr: false });
+const HomeIndependenceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-independence-intelligence-card").then(m => m.HomeIndependenceIntelligenceCard ? { default: m.HomeIndependenceIntelligenceCard } : m), { ssr: false });
+const HomeParticipationIntelligenceCard = dynamic(() => import("@/components/dashboard/home-participation-intelligence-card").then(m => m.HomeParticipationIntelligenceCard ? { default: m.HomeParticipationIntelligenceCard } : m), { ssr: false });
+const HomeNotifiableEventsIntelligenceCard = dynamic(() => import("@/components/dashboard/home-notifiable-events-intelligence-card").then(m => m.HomeNotifiableEventsIntelligenceCard ? { default: m.HomeNotifiableEventsIntelligenceCard } : m), { ssr: false });
+const HomeRestrictivePracticeIntelligenceCard = dynamic(() => import("@/components/dashboard/home-restrictive-practice-intelligence-card").then(m => m.HomeRestrictivePracticeIntelligenceCard ? { default: m.HomeRestrictivePracticeIntelligenceCard } : m), { ssr: false });
+const HomeSupervisionIntelligenceCard = dynamic(() => import("@/components/dashboard/home-supervision-intelligence-card").then(m => m.HomeSupervisionIntelligenceCard ? { default: m.HomeSupervisionIntelligenceCard } : m), { ssr: false });
+const HomeBehaviourIntelligenceCard = dynamic(() => import("@/components/dashboard/home-behaviour-intelligence-card").then(m => m.HomeBehaviourIntelligenceCard ? { default: m.HomeBehaviourIntelligenceCard } : m), { ssr: false });
+const HomeSafeguardingIntelligenceCard = dynamic(() => import("@/components/dashboard/home-safeguarding-intelligence-card").then(m => m.HomeSafeguardingIntelligenceCard ? { default: m.HomeSafeguardingIntelligenceCard } : m), { ssr: false });
+const HomeReg44IntelligenceCard = dynamic(() => import("@/components/dashboard/home-reg44-intelligence-card").then(m => m.HomeReg44IntelligenceCard ? { default: m.HomeReg44IntelligenceCard } : m), { ssr: false });
+const HomeFamilyEngagementIntelligenceCard = dynamic(() => import("@/components/dashboard/home-family-engagement-intelligence-card").then(m => m.HomeFamilyEngagementIntelligenceCard ? { default: m.HomeFamilyEngagementIntelligenceCard } : m), { ssr: false });
+const HomeAdmissionIntelligenceCard = dynamic(() => import("@/components/dashboard/home-admission-intelligence-card").then(m => m.HomeAdmissionIntelligenceCard ? { default: m.HomeAdmissionIntelligenceCard } : m), { ssr: false });
+const HomeVisitorIntelligenceCard = dynamic(() => import("@/components/dashboard/home-visitor-intelligence-card").then(m => m.HomeVisitorIntelligenceCard ? { default: m.HomeVisitorIntelligenceCard } : m), { ssr: false });
+const HomeEmergencyPreparednessIntelligenceCard = dynamic(() => import("@/components/dashboard/home-emergency-preparedness-intelligence-card").then(m => m.HomeEmergencyPreparednessIntelligenceCard ? { default: m.HomeEmergencyPreparednessIntelligenceCard } : m), { ssr: false });
+const HomeComplaintsIntelligenceCard = dynamic(() => import("@/components/dashboard/home-complaints-intelligence-card").then(m => m.HomeComplaintsIntelligenceCard ? { default: m.HomeComplaintsIntelligenceCard } : m), { ssr: false });
+const HomeQualityAssuranceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-quality-assurance-intelligence-card").then(m => m.HomeQualityAssuranceIntelligenceCard ? { default: m.HomeQualityAssuranceIntelligenceCard } : m), { ssr: false });
+const HomeFinancialWellbeingIntelligenceCard = dynamic(() => import("@/components/dashboard/home-financial-wellbeing-intelligence-card").then(m => m.HomeFinancialWellbeingIntelligenceCard ? { default: m.HomeFinancialWellbeingIntelligenceCard } : m), { ssr: false });
+const HomePolicyComplianceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-policy-compliance-intelligence-card").then(m => m.HomePolicyComplianceIntelligenceCard ? { default: m.HomePolicyComplianceIntelligenceCard } : m), { ssr: false });
+const HomePremisesSafetyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-premises-safety-intelligence-card").then(m => m.HomePremisesSafetyIntelligenceCard ? { default: m.HomePremisesSafetyIntelligenceCard } : m), { ssr: false });
+const HomeHandoverContinuityIntelligenceCard = dynamic(() => import("@/components/dashboard/home-handover-continuity-intelligence-card").then(m => m.HomeHandoverContinuityIntelligenceCard ? { default: m.HomeHandoverContinuityIntelligenceCard } : m), { ssr: false });
+const HomeDocumentGovernanceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-document-governance-intelligence-card").then(m => m.HomeDocumentGovernanceIntelligenceCard ? { default: m.HomeDocumentGovernanceIntelligenceCard } : m), { ssr: false });
+const HomeRecordingQualityIntelligenceCard = dynamic(() => import("@/components/dashboard/home-recording-quality-intelligence-card").then(m => m.HomeRecordingQualityIntelligenceCard ? { default: m.HomeRecordingQualityIntelligenceCard } : m), { ssr: false });
+const HomeSaferRecruitmentIntelligenceCard = dynamic(() => import("@/components/dashboard/home-safer-recruitment-intelligence-card").then(m => m.HomeSaferRecruitmentIntelligenceCard ? { default: m.HomeSaferRecruitmentIntelligenceCard } : m), { ssr: false });
+const HomeWorkforcePlanningIntelligenceCard = dynamic(() => import("@/components/dashboard/home-workforce-planning-intelligence-card").then(m => m.HomeWorkforcePlanningIntelligenceCard ? { default: m.HomeWorkforcePlanningIntelligenceCard } : m), { ssr: false });
+const HomeChronologyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-chronology-intelligence-card").then(m => m.HomeChronologyIntelligenceCard ? { default: m.HomeChronologyIntelligenceCard } : m), { ssr: false });
+const HomeMeetingGovernanceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-meeting-governance-intelligence-card").then(m => m.HomeMeetingGovernanceIntelligenceCard ? { default: m.HomeMeetingGovernanceIntelligenceCard } : m), { ssr: false });
+const HomeKeyworkerIntelligenceCard = dynamic(() => import("@/components/dashboard/home-keyworker-intelligence-card").then(m => m.HomeKeyworkerIntelligenceCard ? { default: m.HomeKeyworkerIntelligenceCard } : m), { ssr: false });
+const HomePlacementStabilityIntelligenceCard = dynamic(() => import("@/components/dashboard/home-placement-stability-intelligence-card").then(m => m.HomePlacementStabilityIntelligenceCard ? { default: m.HomePlacementStabilityIntelligenceCard } : m), { ssr: false });
+const HomeOutcomesProgressIntelligenceCard = dynamic(() => import("@/components/dashboard/home-outcomes-progress-intelligence-card").then(m => m.HomeOutcomesProgressIntelligenceCard ? { default: m.HomeOutcomesProgressIntelligenceCard } : m), { ssr: false });
+const HomeRiskLandscapeIntelligenceCard = dynamic(() => import("@/components/dashboard/home-risk-landscape-intelligence-card").then(m => m.HomeRiskLandscapeIntelligenceCard ? { default: m.HomeRiskLandscapeIntelligenceCard } : m), { ssr: false });
+const HomeTherapeuticClimateIntelligenceCard = dynamic(() => import("@/components/dashboard/home-therapeutic-climate-intelligence-card").then(m => m.HomeTherapeuticClimateIntelligenceCard ? { default: m.HomeTherapeuticClimateIntelligenceCard } : m), { ssr: false });
+const HomeBSPEffectivenessIntelligenceCard = dynamic(() => import("@/components/dashboard/home-bsp-effectiveness-intelligence-card").then(m => m.HomeBSPEffectivenessIntelligenceCard ? { default: m.HomeBSPEffectivenessIntelligenceCard } : m), { ssr: false });
+const HomeCompetencyLandscapeIntelligenceCard = dynamic(() => import("@/components/dashboard/home-competency-landscape-intelligence-card").then(m => m.HomeCompetencyLandscapeIntelligenceCard ? { default: m.HomeCompetencyLandscapeIntelligenceCard } : m), { ssr: false });
+const HomeExpenseGovernanceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-expense-governance-intelligence-card").then(m => m.HomeExpenseGovernanceIntelligenceCard ? { default: m.HomeExpenseGovernanceIntelligenceCard } : m), { ssr: false });
+const HomeShiftPatternIntelligenceCard = dynamic(() => import("@/components/dashboard/home-shift-pattern-intelligence-card").then(m => m.HomeShiftPatternIntelligenceCard ? { default: m.HomeShiftPatternIntelligenceCard } : m), { ssr: false });
+const HomeLeaveAbsenceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-leave-absence-intelligence-card").then(m => m.HomeLeaveAbsenceIntelligenceCard ? { default: m.HomeLeaveAbsenceIntelligenceCard } : m), { ssr: false });
+const HomeStaffWellbeingIntelligenceCard = dynamic(() => import("@/components/dashboard/home-staff-wellbeing-intelligence-card").then(m => m.HomeStaffWellbeingIntelligenceCard ? { default: m.HomeStaffWellbeingIntelligenceCard } : m), { ssr: false });
+const HomePeerDynamicsIntelligenceCard = dynamic(() => import("@/components/dashboard/home-peer-dynamics-intelligence-card").then(m => m.HomePeerDynamicsIntelligenceCard ? { default: m.HomePeerDynamicsIntelligenceCard } : m), { ssr: false });
+const HomeOnCallGovernanceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-on-call-governance-intelligence-card").then(m => m.HomeOnCallGovernanceIntelligenceCard ? { default: m.HomeOnCallGovernanceIntelligenceCard } : m), { ssr: false });
+const HomeTransitionPlanningIntelligenceCard = dynamic(() => import("@/components/dashboard/home-transition-planning-intelligence-card").then(m => m.HomeTransitionPlanningIntelligenceCard ? { default: m.HomeTransitionPlanningIntelligenceCard } : m), { ssr: false });
+const HomeDelegatedAuthorityIntelligenceCard = dynamic(() => import("@/components/dashboard/home-delegated-authority-intelligence-card").then(m => m.HomeDelegatedAuthorityIntelligenceCard ? { default: m.HomeDelegatedAuthorityIntelligenceCard } : m), { ssr: false });
+const HomeFireSafetyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-fire-safety-intelligence-card").then(m => m.HomeFireSafetyIntelligenceCard ? { default: m.HomeFireSafetyIntelligenceCard } : m), { ssr: false });
+const HomeSleepQualityIntelligenceCard = dynamic(() => import("@/components/dashboard/home-sleep-quality-intelligence-card").then(m => m.HomeSleepQualityIntelligenceCard ? { default: m.HomeSleepQualityIntelligenceCard } : m), { ssr: false });
+const HomeMedicationManagementIntelligenceCard = dynamic(() => import("@/components/dashboard/home-medication-management-intelligence-card").then(m => m.HomeMedicationManagementIntelligenceCard ? { default: m.HomeMedicationManagementIntelligenceCard } : m), { ssr: false });
+const HomeExploitationScreeningIntelligenceCard = dynamic(() => import("@/components/dashboard/home-exploitation-screening-intelligence-card").then(m => m.HomeExploitationScreeningIntelligenceCard ? { default: m.HomeExploitationScreeningIntelligenceCard } : m), { ssr: false });
+const HomeDailyLogIntelligenceCard = dynamic(() => import("@/components/dashboard/home-daily-log-intelligence-card").then(m => m.HomeDailyLogIntelligenceCard ? { default: m.HomeDailyLogIntelligenceCard } : m), { ssr: false });
+const HomeDigitalSafetyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-digital-safety-intelligence-card").then(m => m.HomeDigitalSafetyIntelligenceCard ? { default: m.HomeDigitalSafetyIntelligenceCard } : m), { ssr: false });
+const HomeMentalHealthIntelligenceCard = dynamic(() => import("@/components/dashboard/home-mental-health-intelligence-card").then(m => m.HomeMentalHealthIntelligenceCard ? { default: m.HomeMentalHealthIntelligenceCard } : m), { ssr: false });
+const HomeStaffSafetyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-staff-safety-intelligence-card").then(m => m.HomeStaffSafetyIntelligenceCard ? { default: m.HomeStaffSafetyIntelligenceCard } : m), { ssr: false });
+const HomeOrganizationalLearningIntelligenceCard = dynamic(() => import("@/components/dashboard/home-organizational-learning-intelligence-card").then(m => m.HomeOrganizationalLearningIntelligenceCard ? { default: m.HomeOrganizationalLearningIntelligenceCard } : m), { ssr: false });
+const HomeMultiAgencyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-multi-agency-intelligence-card").then(m => m.HomeMultiAgencyIntelligenceCard ? { default: m.HomeMultiAgencyIntelligenceCard } : m), { ssr: false });
+const HomeDataGovernanceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-data-governance-intelligence-card").then(m => m.HomeDataGovernanceIntelligenceCard ? { default: m.HomeDataGovernanceIntelligenceCard } : m), { ssr: false });
+const HomeNutritionCateringIntelligenceCard = dynamic(() => import("@/components/dashboard/home-nutrition-catering-intelligence-card").then(m => m.HomeNutritionCateringIntelligenceCard ? { default: m.HomeNutritionCateringIntelligenceCard } : m), { ssr: false });
+const HomeHealthMonitoringIntelligenceCard = dynamic(() => import("@/components/dashboard/home-health-monitoring-intelligence-card").then(m => m.HomeHealthMonitoringIntelligenceCard ? { default: m.HomeHealthMonitoringIntelligenceCard } : m), { ssr: false });
+const HomeMedicationGovernanceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-medication-governance-intelligence-card").then(m => m.HomeMedicationGovernanceIntelligenceCard ? { default: m.HomeMedicationGovernanceIntelligenceCard } : m), { ssr: false });
+const HomeSpecializedHealthPlansIntelligenceCard = dynamic(() => import("@/components/dashboard/home-specialized-health-plans-intelligence-card").then(m => m.HomeSpecializedHealthPlansIntelligenceCard ? { default: m.HomeSpecializedHealthPlansIntelligenceCard } : m), { ssr: false });
+const HomeEducationEngagementIntelligenceCard = dynamic(() => import("@/components/dashboard/home-education-engagement-intelligence-card").then(m => m.HomeEducationEngagementIntelligenceCard ? { default: m.HomeEducationEngagementIntelligenceCard } : m), { ssr: false });
+const HomeSafeguardingPreventionIntelligenceCard = dynamic(() => import("@/components/dashboard/home-safeguarding-prevention-intelligence-card").then(m => m.HomeSafeguardingPreventionIntelligenceCard ? { default: m.HomeSafeguardingPreventionIntelligenceCard } : m), { ssr: false });
+const HomeCommunicationContactIntelligenceCard = dynamic(() => import("@/components/dashboard/home-communication-contact-intelligence-card").then(m => m.HomeCommunicationContactIntelligenceCard ? { default: m.HomeCommunicationContactIntelligenceCard } : m), { ssr: false });
+const HomeStaffLifecycleIntelligenceCard = dynamic(() => import("@/components/dashboard/home-staff-lifecycle-intelligence-card").then(m => m.HomeStaffLifecycleIntelligenceCard ? { default: m.HomeStaffLifecycleIntelligenceCard } : m), { ssr: false });
+const HomeFacilitiesComplianceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-facilities-compliance-intelligence-card").then(m => m.HomeFacilitiesComplianceIntelligenceCard ? { default: m.HomeFacilitiesComplianceIntelligenceCard } : m), { ssr: false });
+const HomeTherapeuticProgressIntelligenceCard = dynamic(() => import("@/components/dashboard/home-therapeutic-progress-intelligence-card").then(m => m.HomeTherapeuticProgressIntelligenceCard ? { default: m.HomeTherapeuticProgressIntelligenceCard } : m), { ssr: false });
+const HomeChildrensRightsParticipationIntelligenceCard = dynamic(() => import("@/components/dashboard/home-childrens-rights-participation-intelligence-card").then(m => m.HomeChildrensRightsParticipationIntelligenceCard ? { default: m.HomeChildrensRightsParticipationIntelligenceCard } : m), { ssr: false });
+const HomePlacementStabilityDepthIntelligenceCard = dynamic(() => import("@/components/dashboard/home-placement-stability-depth-intelligence-card").then(m => m.HomePlacementStabilityDepthIntelligenceCard ? { default: m.HomePlacementStabilityDepthIntelligenceCard } : m), { ssr: false });
+const HomeCulturalIdentityIntelligenceCard = dynamic(() => import("@/components/dashboard/home-cultural-identity-intelligence-card").then(m => m.HomeCulturalIdentityIntelligenceCard ? { default: m.HomeCulturalIdentityIntelligenceCard } : m), { ssr: false });
+const HomeIndependenceLifeSkillsIntelligenceCard = dynamic(() => import("@/components/dashboard/home-independence-life-skills-intelligence-card").then(m => m.HomeIndependenceLifeSkillsIntelligenceCard ? { default: m.HomeIndependenceLifeSkillsIntelligenceCard } : m), { ssr: false });
+const HomeEnrichmentAchievementIntelligenceCard = dynamic(() => import("@/components/dashboard/home-enrichment-achievement-intelligence-card").then(m => m.HomeEnrichmentAchievementIntelligenceCard ? { default: m.HomeEnrichmentAchievementIntelligenceCard } : m), { ssr: false });
+const HomeLivingEnvironmentIntelligenceCard = dynamic(() => import("@/components/dashboard/home-living-environment-intelligence-card").then(m => m.HomeLivingEnvironmentIntelligenceCard ? { default: m.HomeLivingEnvironmentIntelligenceCard } : m), { ssr: false });
+const HomeCommunityAccessIntelligenceCard = dynamic(() => import("@/components/dashboard/home-community-access-intelligence-card").then(m => m.HomeCommunityAccessIntelligenceCard ? { default: m.HomeCommunityAccessIntelligenceCard } : m), { ssr: false });
+const HomeNightCareSafetyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-night-care-safety-intelligence-card").then(m => m.HomeNightCareSafetyIntelligenceCard ? { default: m.HomeNightCareSafetyIntelligenceCard } : m), { ssr: false });
+const HomeSafeguardingDepthIntelligenceCard = dynamic(() => import("@/components/dashboard/home-safeguarding-depth-intelligence-card").then(m => m.HomeSafeguardingDepthIntelligenceCard ? { default: m.HomeSafeguardingDepthIntelligenceCard } : m), { ssr: false });
+const HomeReg4445EvidenceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-reg4445-evidence-intelligence-card").then(m => m.HomeReg4445EvidenceIntelligenceCard ? { default: m.HomeReg4445EvidenceIntelligenceCard } : m), { ssr: false });
+const HomePlacementJourneyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-placement-journey-intelligence-card").then(m => m.HomePlacementJourneyIntelligenceCard ? { default: m.HomePlacementJourneyIntelligenceCard } : m), { ssr: false });
+const HomeLifeStoryIdentityIntelligenceCard = dynamic(() => import("@/components/dashboard/home-life-story-identity-intelligence-card").then(m => m.HomeLifeStoryIdentityIntelligenceCard ? { default: m.HomeLifeStoryIdentityIntelligenceCard } : m), { ssr: false });
+const HomeStrategicRiskIntelligenceCard = dynamic(() => import("@/components/dashboard/home-strategic-risk-intelligence-card").then(m => m.HomeStrategicRiskIntelligenceCard ? { default: m.HomeStrategicRiskIntelligenceCard } : m), { ssr: false });
+const HomeBuildingOpsSafetyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-building-ops-safety-intelligence-card").then(m => m.HomeBuildingOpsSafetyIntelligenceCard ? { default: m.HomeBuildingOpsSafetyIntelligenceCard } : m), { ssr: false });
+const HomeOfstedReadinessCompositeCard = dynamic(() => import("@/components/dashboard/home-ofsted-readiness-composite-card").then(m => m.HomeOfstedReadinessCompositeCard ? { default: m.HomeOfstedReadinessCompositeCard } : m), { ssr: false });
+const HomeChildWellbeingCompositeCard = dynamic(() => import("@/components/dashboard/home-child-wellbeing-composite-card").then(m => m.HomeChildWellbeingCompositeCard ? { default: m.HomeChildWellbeingCompositeCard } : m), { ssr: false });
+const HomeWorkforceResilienceCompositeCard = dynamic(() => import("@/components/dashboard/home-workforce-resilience-composite-card").then(m => m.HomeWorkforceResilienceCompositeCard ? { default: m.HomeWorkforceResilienceCompositeCard } : m), { ssr: false });
+const HomeSafeguardingOversightCompositeCard = dynamic(() => import("@/components/dashboard/home-safeguarding-oversight-composite-card").then(m => m.HomeSafeguardingOversightCompositeCard ? { default: m.HomeSafeguardingOversightCompositeCard } : m), { ssr: false });
+const HomeRegulatoryComplianceCompositeCard = dynamic(() => import("@/components/dashboard/home-regulatory-compliance-composite-card").then(m => m.HomeRegulatoryComplianceCompositeCard ? { default: m.HomeRegulatoryComplianceCompositeCard } : m), { ssr: false });
+const HomeQualityOfCareCompositeCard = dynamic(() => import("@/components/dashboard/home-quality-of-care-composite-card").then(m => m.HomeQualityOfCareCompositeCard ? { default: m.HomeQualityOfCareCompositeCard } : m), { ssr: false });
+const HomeAccidentInjurySurveillanceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-accident-injury-surveillance-intelligence-card").then(m => m.HomeAccidentInjurySurveillanceIntelligenceCard ? { default: m.HomeAccidentInjurySurveillanceIntelligenceCard } : m), { ssr: false });
+const HomeStatutoryVisitComplianceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-statutory-visit-compliance-intelligence-card").then(m => m.HomeStatutoryVisitComplianceIntelligenceCard ? { default: m.HomeStatutoryVisitComplianceIntelligenceCard } : m), { ssr: false });
+const HomeBelongingPersonalPropertyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-belonging-personal-property-intelligence-card").then(m => m.HomeBelongingPersonalPropertyIntelligenceCard ? { default: m.HomeBelongingPersonalPropertyIntelligenceCard } : m), { ssr: false });
+const HomeCamhsSpecialistReferralIntelligenceCard = dynamic(() => import("@/components/dashboard/home-camhs-specialist-referral-intelligence-card").then(m => m.HomeCamhsSpecialistReferralIntelligenceCard ? { default: m.HomeCamhsSpecialistReferralIntelligenceCard } : m), { ssr: false });
+const HomeConsentRightsLiteracyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-consent-rights-literacy-intelligence-card").then(m => m.HomeConsentRightsLiteracyIntelligenceCard ? { default: m.HomeConsentRightsLiteracyIntelligenceCard } : m), { ssr: false });
+const HomeStaffReflectivePracticeIntelligenceCard = dynamic(() => import("@/components/dashboard/home-staff-reflective-practice-intelligence-card").then(m => m.HomeStaffReflectivePracticeIntelligenceCard ? { default: m.HomeStaffReflectivePracticeIntelligenceCard } : m), { ssr: false });
+const HomeSensoryTherapeuticEnvironmentIntelligenceCard = dynamic(() => import("@/components/dashboard/home-sensory-therapeutic-environment-intelligence-card").then(m => m.HomeSensoryTherapeuticEnvironmentIntelligenceCard ? { default: m.HomeSensoryTherapeuticEnvironmentIntelligenceCard } : m), { ssr: false });
+const HomeDailyRoutineCareContinuityIntelligenceCard = dynamic(() => import("@/components/dashboard/home-daily-routine-care-continuity-intelligence-card").then(m => m.HomeDailyRoutineCareContinuityIntelligenceCard ? { default: m.HomeDailyRoutineCareContinuityIntelligenceCard } : m), { ssr: false });
+// Batch 11 — Outcome Star, Infection Control, Case File Audit, Stakeholder Engagement
+const HomeOutcomeStarNeedsIntelligenceCard = dynamic(() => import("@/components/dashboard/home-outcome-star-needs-intelligence-card").then(m => m.HomeOutcomeStarNeedsIntelligenceCard ? { default: m.HomeOutcomeStarNeedsIntelligenceCard } : m), { ssr: false });
+const HomeInfectionControlHealthSafetyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-infection-control-health-safety-intelligence-card").then(m => m.HomeInfectionControlHealthSafetyIntelligenceCard ? { default: m.HomeInfectionControlHealthSafetyIntelligenceCard } : m), { ssr: false });
+const HomeCaseFileAuditQualityIntelligenceCard = dynamic(() => import("@/components/dashboard/home-case-file-audit-quality-intelligence-card").then(m => m.HomeCaseFileAuditQualityIntelligenceCard ? { default: m.HomeCaseFileAuditQualityIntelligenceCard } : m), { ssr: false });
+const HomeStakeholderEngagementFeedbackIntelligenceCard = dynamic(() => import("@/components/dashboard/home-stakeholder-engagement-feedback-intelligence-card").then(m => m.HomeStakeholderEngagementFeedbackIntelligenceCard ? { default: m.HomeStakeholderEngagementFeedbackIntelligenceCard } : m), { ssr: false });
+// Batch 12 — Financial Literacy, Safer Recruitment, Leaving Care, Governance
+const HomeFinancialLiteracyMoneyManagementIntelligenceCard = dynamic(() => import("@/components/dashboard/home-financial-literacy-money-management-intelligence-card").then(m => m.HomeFinancialLiteracyMoneyManagementIntelligenceCard ? { default: m.HomeFinancialLiteracyMoneyManagementIntelligenceCard } : m), { ssr: false });
+const HomeSaferRecruitmentVettingIntelligenceCard = dynamic(() => import("@/components/dashboard/home-safer-recruitment-vetting-intelligence-card").then(m => m.HomeSaferRecruitmentVettingIntelligenceCard ? { default: m.HomeSaferRecruitmentVettingIntelligenceCard } : m), { ssr: false });
+const HomeLeavingCareTransitionIntelligenceCard = dynamic(() => import("@/components/dashboard/home-leaving-care-transition-intelligence-card").then(m => m.HomeLeavingCareTransitionIntelligenceCard ? { default: m.HomeLeavingCareTransitionIntelligenceCard } : m), { ssr: false });
+const HomeGovernanceManagementOversightIntelligenceCard = dynamic(() => import("@/components/dashboard/home-governance-management-oversight-intelligence-card").then(m => m.HomeGovernanceManagementOversightIntelligenceCard ? { default: m.HomeGovernanceManagementOversightIntelligenceCard } : m), { ssr: false });
+// Batch 13 — Staff Competency, Children's Voice, Digital Safety, Therapeutic Wellbeing
+const HomeStaffCompetencyTrainingIntelligenceCard = dynamic(() => import("@/components/dashboard/home-staff-competency-training-intelligence-card").then(m => m.HomeStaffCompetencyTrainingIntelligenceCard ? { default: m.HomeStaffCompetencyTrainingIntelligenceCard } : m), { ssr: false });
+const HomeChildrensVoiceParticipationIntelligenceCard = dynamic(() => import("@/components/dashboard/home-childrens-voice-participation-intelligence-card").then(m => m.HomeChildrensVoiceParticipationIntelligenceCard ? { default: m.HomeChildrensVoiceParticipationIntelligenceCard } : m), { ssr: false });
+const HomeDigitalLiteracyOnlineSafetyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-digital-literacy-online-safety-intelligence-card").then(m => m.HomeDigitalLiteracyOnlineSafetyIntelligenceCard ? { default: m.HomeDigitalLiteracyOnlineSafetyIntelligenceCard } : m), { ssr: false });
+const HomeTherapeuticWellbeingImpactIntelligenceCard = dynamic(() => import("@/components/dashboard/home-therapeutic-wellbeing-impact-intelligence-card").then(m => m.HomeTherapeuticWellbeingImpactIntelligenceCard ? { default: m.HomeTherapeuticWellbeingImpactIntelligenceCard } : m), { ssr: false });
+// Batch 14 — LADO Allegations, Disruption Prevention, Lessons Learned, Diversity & Inclusion
+const HomeLadoAllegationManagementIntelligenceCard = dynamic(() => import("@/components/dashboard/home-lado-allegation-management-intelligence-card").then(m => m.HomeLadoAllegationManagementIntelligenceCard ? { default: m.HomeLadoAllegationManagementIntelligenceCard } : m), { ssr: false });
+const HomePlacementDisruptionPreventionIntelligenceCard = dynamic(() => import("@/components/dashboard/home-placement-disruption-prevention-intelligence-card").then(m => m.HomePlacementDisruptionPreventionIntelligenceCard ? { default: m.HomePlacementDisruptionPreventionIntelligenceCard } : m), { ssr: false });
+const HomeLessonsLearnedImprovementIntelligenceCard = dynamic(() => import("@/components/dashboard/home-lessons-learned-improvement-intelligence-card").then(m => m.HomeLessonsLearnedImprovementIntelligenceCard ? { default: m.HomeLessonsLearnedImprovementIntelligenceCard } : m), { ssr: false });
+const HomeDiversityInclusionEqualityIntelligenceCard = dynamic(() => import("@/components/dashboard/home-diversity-inclusion-equality-intelligence-card").then(m => m.HomeDiversityInclusionEqualityIntelligenceCard ? { default: m.HomeDiversityInclusionEqualityIntelligenceCard } : m), { ssr: false });
+// Batch 15 — Lone Working Safety, Food Nutrition Hygiene, Whistleblowing Transparency, Staff Debrief
+const HomeLoneWorkingStaffSafetyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-lone-working-staff-safety-intelligence-card").then(m => m.HomeLoneWorkingStaffSafetyIntelligenceCard ? { default: m.HomeLoneWorkingStaffSafetyIntelligenceCard } : m), { ssr: false });
+const HomeFoodNutritionHygieneSafetyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-food-nutrition-hygiene-safety-intelligence-card").then(m => m.HomeFoodNutritionHygieneSafetyIntelligenceCard ? { default: m.HomeFoodNutritionHygieneSafetyIntelligenceCard } : m), { ssr: false });
+const HomeWhistleblowingTransparencyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-whistleblowing-transparency-intelligence-card").then(m => m.HomeWhistleblowingTransparencyIntelligenceCard ? { default: m.HomeWhistleblowingTransparencyIntelligenceCard } : m), { ssr: false });
+const HomeStaffDebriefEmotionalSupportIntelligenceCard = dynamic(() => import("@/components/dashboard/home-staff-debrief-emotional-support-intelligence-card").then(m => m.HomeStaffDebriefEmotionalSupportIntelligenceCard ? { default: m.HomeStaffDebriefEmotionalSupportIntelligenceCard } : m), { ssr: false });
+// Batch 16 — Agency Staff Management, Holiday Experiences, Quality of Care Review, Transport Safety
+const HomeAgencyStaffManagementIntelligenceCard = dynamic(() => import("@/components/dashboard/home-agency-staff-management-intelligence-card").then(m => m.HomeAgencyStaffManagementIntelligenceCard ? { default: m.HomeAgencyStaffManagementIntelligenceCard } : m), { ssr: false });
+const HomeHolidayEnrichingExperiencesIntelligenceCard = dynamic(() => import("@/components/dashboard/home-holiday-enriching-experiences-intelligence-card").then(m => m.HomeHolidayEnrichingExperiencesIntelligenceCard ? { default: m.HomeHolidayEnrichingExperiencesIntelligenceCard } : m), { ssr: false });
+const HomeQualityOfCareReviewIntelligenceCard = dynamic(() => import("@/components/dashboard/home-quality-of-care-review-intelligence-card").then(m => m.HomeQualityOfCareReviewIntelligenceCard ? { default: m.HomeQualityOfCareReviewIntelligenceCard } : m), { ssr: false });
+const HomeTransportJourneySafetyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-transport-journey-safety-intelligence-card").then(m => m.HomeTransportJourneySafetyIntelligenceCard ? { default: m.HomeTransportJourneySafetyIntelligenceCard } : m), { ssr: false });
+// Batch 17 — Management Walkrounds, Practice Observations, House Meetings, Staff Recognition
+const HomeManagementWalkroundOversightIntelligenceCard = dynamic(() => import("@/components/dashboard/home-management-walkround-oversight-intelligence-card").then(m => m.HomeManagementWalkroundOversightIntelligenceCard ? { default: m.HomeManagementWalkroundOversightIntelligenceCard } : m), { ssr: false });
+const HomePracticeObservationCompetencyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-practice-observation-competency-intelligence-card").then(m => m.HomePracticeObservationCompetencyIntelligenceCard ? { default: m.HomePracticeObservationCompetencyIntelligenceCard } : m), { ssr: false });
+const HomeHouseMeetingGovernanceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-house-meeting-governance-intelligence-card").then(m => m.HomeHouseMeetingGovernanceIntelligenceCard ? { default: m.HomeHouseMeetingGovernanceIntelligenceCard } : m), { ssr: false });
+const HomeStaffRecognitionMoraleIntelligenceCard = dynamic(() => import("@/components/dashboard/home-staff-recognition-morale-intelligence-card").then(m => m.HomeStaffRecognitionMoraleIntelligenceCard ? { default: m.HomeStaffRecognitionMoraleIntelligenceCard } : m), { ssr: false });
+// Batch 18 — Cooking Life Skills, Self-Evaluation, Night Handover, Contextual Safeguarding
+const HomeCookingLifeSkillsIntelligenceCard = dynamic(() => import("@/components/dashboard/home-cooking-life-skills-intelligence-card").then(m => m.HomeCookingLifeSkillsIntelligenceCard ? { default: m.HomeCookingLifeSkillsIntelligenceCard } : m), { ssr: false });
+const HomeSelfEvaluationImprovementIntelligenceCard = dynamic(() => import("@/components/dashboard/home-self-evaluation-improvement-intelligence-card").then(m => m.HomeSelfEvaluationImprovementIntelligenceCard ? { default: m.HomeSelfEvaluationImprovementIntelligenceCard } : m), { ssr: false });
+const HomeNightHandoverQualityIntelligenceCard = dynamic(() => import("@/components/dashboard/home-night-handover-quality-intelligence-card").then(m => m.HomeNightHandoverQualityIntelligenceCard ? { default: m.HomeNightHandoverQualityIntelligenceCard } : m), { ssr: false });
+const HomeContextualSafeguardingIntelligenceCard = dynamic(() => import("@/components/dashboard/home-contextual-safeguarding-intelligence-card").then(m => m.HomeContextualSafeguardingIntelligenceCard ? { default: m.HomeContextualSafeguardingIntelligenceCard } : m), { ssr: false });
+
+// Batch 19 — Health Appointments, Return Interviews, Fire Drills, Parent Partnership
+const HomeHealthAppointmentContinuityIntelligenceCard = dynamic(() => import("@/components/dashboard/home-health-appointment-continuity-intelligence-card").then(m => m.HomeHealthAppointmentContinuityIntelligenceCard ? { default: m.HomeHealthAppointmentContinuityIntelligenceCard } : m), { ssr: false });
+const HomeReturnInterviewQualityIntelligenceCard = dynamic(() => import("@/components/dashboard/home-return-interview-quality-intelligence-card").then(m => m.HomeReturnInterviewQualityIntelligenceCard ? { default: m.HomeReturnInterviewQualityIntelligenceCard } : m), { ssr: false });
+const HomeFireDrillEmergencyPreparednessIntelligenceCard = dynamic(() => import("@/components/dashboard/home-fire-drill-emergency-preparedness-intelligence-card").then(m => m.HomeFireDrillEmergencyPreparednessIntelligenceCard ? { default: m.HomeFireDrillEmergencyPreparednessIntelligenceCard } : m), { ssr: false });
+const HomeParentPartnershipEngagementIntelligenceCard = dynamic(() => import("@/components/dashboard/home-parent-partnership-engagement-intelligence-card").then(m => m.HomeParentPartnershipEngagementIntelligenceCard ? { default: m.HomeParentPartnershipEngagementIntelligenceCard } : m), { ssr: false });
+
+// Batch 20 — Advocacy, Substance Screening, Annual Health Assessment, PEP Education
+const HomeAdvocacyIndependentVoiceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-advocacy-independent-voice-intelligence-card").then(m => m.HomeAdvocacyIndependentVoiceIntelligenceCard ? { default: m.HomeAdvocacyIndependentVoiceIntelligenceCard } : m), { ssr: false });
+const HomeSubstanceMisuseScreeningIntelligenceCard = dynamic(() => import("@/components/dashboard/home-substance-misuse-screening-intelligence-card").then(m => m.HomeSubstanceMisuseScreeningIntelligenceCard ? { default: m.HomeSubstanceMisuseScreeningIntelligenceCard } : m), { ssr: false });
+const HomeAnnualHealthAssessmentIntelligenceCard = dynamic(() => import("@/components/dashboard/home-annual-health-assessment-intelligence-card").then(m => m.HomeAnnualHealthAssessmentIntelligenceCard ? { default: m.HomeAnnualHealthAssessmentIntelligenceCard } : m), { ssr: false });
+const HomePepEducationQualityIntelligenceCard = dynamic(() => import("@/components/dashboard/home-pep-education-quality-intelligence-card").then(m => m.HomePepEducationQualityIntelligenceCard ? { default: m.HomePepEducationQualityIntelligenceCard } : m), { ssr: false });
+
+// Batch 21 — Sibling Contact, Placement Impact, Multi-Disciplinary Formulation, Social Worker Contact
+const HomeSiblingContactProtocolIntelligenceCard = dynamic(() => import("@/components/dashboard/home-sibling-contact-protocol-intelligence-card").then(m => m.HomeSiblingContactProtocolIntelligenceCard ? { default: m.HomeSiblingContactProtocolIntelligenceCard } : m), { ssr: false });
+const HomePlacementImpactAssessmentIntelligenceCard = dynamic(() => import("@/components/dashboard/home-placement-impact-assessment-intelligence-card").then(m => m.HomePlacementImpactAssessmentIntelligenceCard ? { default: m.HomePlacementImpactAssessmentIntelligenceCard } : m), { ssr: false });
+const HomeMultidisciplinaryFormulationIntelligenceCard = dynamic(() => import("@/components/dashboard/home-multidisciplinary-formulation-intelligence-card").then(m => m.HomeMultidisciplinaryFormulationIntelligenceCard ? { default: m.HomeMultidisciplinaryFormulationIntelligenceCard } : m), { ssr: false });
+const HomeSocialWorkerContactIntelligenceCard = dynamic(() => import("@/components/dashboard/home-social-worker-contact-intelligence-card").then(m => m.HomeSocialWorkerContactIntelligenceCard ? { default: m.HomeSocialWorkerContactIntelligenceCard } : m), { ssr: false });
+
+// Batch 22 — Trauma Therapy, Attachment Profile, Self-Harm Safety Plan, Post-Incident Child Debrief
+const HomeTraumaTherapyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-trauma-therapy-intelligence-card").then(m => m.HomeTraumaTherapyIntelligenceCard ? { default: m.HomeTraumaTherapyIntelligenceCard } : m), { ssr: false });
+const HomeAttachmentProfileIntelligenceCard = dynamic(() => import("@/components/dashboard/home-attachment-profile-intelligence-card").then(m => m.HomeAttachmentProfileIntelligenceCard ? { default: m.HomeAttachmentProfileIntelligenceCard } : m), { ssr: false });
+const HomeSelfHarmSafetyPlanIntelligenceCard = dynamic(() => import("@/components/dashboard/home-self-harm-safety-plan-intelligence-card").then(m => m.HomeSelfHarmSafetyPlanIntelligenceCard ? { default: m.HomeSelfHarmSafetyPlanIntelligenceCard } : m), { ssr: false });
+const HomePostIncidentChildDebriefIntelligenceCard = dynamic(() => import("@/components/dashboard/home-post-incident-child-debrief-intelligence-card").then(m => m.HomePostIncidentChildDebriefIntelligenceCard ? { default: m.HomePostIncidentChildDebriefIntelligenceCard } : m), { ssr: false });
+
+// Batch 23 — Outcome Star, Behaviour Support Plan, Contextual Safeguarding, Risk Management Plan
+const HomeOutcomeStarAssessmentIntelligenceCard = dynamic(() => import("@/components/dashboard/home-outcome-star-assessment-intelligence-card").then(m => m.HomeOutcomeStarAssessmentIntelligenceCard ? { default: m.HomeOutcomeStarAssessmentIntelligenceCard } : m), { ssr: false });
+const HomeBehaviourSupportPlanIntelligenceCard = dynamic(() => import("@/components/dashboard/home-behaviour-support-plan-intelligence-card").then(m => m.HomeBehaviourSupportPlanIntelligenceCard ? { default: m.HomeBehaviourSupportPlanIntelligenceCard } : m), { ssr: false });
+const HomeContextualSafeguardingRiskIntelligenceCard = dynamic(() => import("@/components/dashboard/home-contextual-safeguarding-risk-intelligence-card").then(m => m.HomeContextualSafeguardingRiskIntelligenceCard ? { default: m.HomeContextualSafeguardingRiskIntelligenceCard } : m), { ssr: false });
+const HomeRiskManagementPlanIntelligenceCard = dynamic(() => import("@/components/dashboard/home-risk-management-plan-intelligence-card").then(m => m.HomeRiskManagementPlanIntelligenceCard ? { default: m.HomeRiskManagementPlanIntelligenceCard } : m), { ssr: false });
+
+// Batch 24 — Restraint/Physical Intervention, Missing Episodes, Sleep & Night Care, Medication Administration
+const HomeRestraintPhysicalInterventionIntelligenceCard = dynamic(() => import("@/components/dashboard/home-restraint-physical-intervention-intelligence-card").then(m => m.HomeRestraintPhysicalInterventionIntelligenceCard ? { default: m.HomeRestraintPhysicalInterventionIntelligenceCard } : m), { ssr: false });
+const HomeMissingEpisodeIntelligenceCard = dynamic(() => import("@/components/dashboard/home-missing-episode-intelligence-card").then(m => m.HomeMissingEpisodeIntelligenceCard ? { default: m.HomeMissingEpisodeIntelligenceCard } : m), { ssr: false });
+const HomeSleepNightCareIntelligenceCard = dynamic(() => import("@/components/dashboard/home-sleep-night-care-intelligence-card").then(m => m.HomeSleepNightCareIntelligenceCard ? { default: m.HomeSleepNightCareIntelligenceCard } : m), { ssr: false });
+const HomeMedicationAdministrationIntelligenceCard = dynamic(() => import("@/components/dashboard/home-medication-administration-intelligence-card").then(m => m.HomeMedicationAdministrationIntelligenceCard ? { default: m.HomeMedicationAdministrationIntelligenceCard } : m), { ssr: false });
+
+// Batch 25 — Welfare Check Compliance, Deprivation of Liberty, Sanction & Reward Balance, Staff Disciplinary & Conduct
+const HomeWelfareCheckComplianceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-welfare-check-compliance-intelligence-card").then(m => m.HomeWelfareCheckComplianceIntelligenceCard ? { default: m.HomeWelfareCheckComplianceIntelligenceCard } : m), { ssr: false });
+const HomeDeprivationOfLibertyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-deprivation-of-liberty-intelligence-card").then(m => m.HomeDeprivationOfLibertyIntelligenceCard ? { default: m.HomeDeprivationOfLibertyIntelligenceCard } : m), { ssr: false });
+const HomeSanctionRewardBalanceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-sanction-reward-balance-intelligence-card").then(m => m.HomeSanctionRewardBalanceIntelligenceCard ? { default: m.HomeSanctionRewardBalanceIntelligenceCard } : m), { ssr: false });
+const HomeStaffDisciplinaryConductIntelligenceCard = dynamic(() => import("@/components/dashboard/home-staff-disciplinary-conduct-intelligence-card").then(m => m.HomeStaffDisciplinaryConductIntelligenceCard ? { default: m.HomeStaffDisciplinaryConductIntelligenceCard } : m), { ssr: false });
+
+// Batch 26 — Care Event Quality, Statutory Notification Compliance, Staff Performance Composite, Young Person Daily Wellbeing
+const HomeCareEventQualityIntelligenceCard = dynamic(() => import("@/components/dashboard/home-care-event-quality-intelligence-card").then(m => m.HomeCareEventQualityIntelligenceCard ? { default: m.HomeCareEventQualityIntelligenceCard } : m), { ssr: false });
+const HomeStatutoryNotificationComplianceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-statutory-notification-compliance-intelligence-card").then(m => m.HomeStatutoryNotificationComplianceIntelligenceCard ? { default: m.HomeStatutoryNotificationComplianceIntelligenceCard } : m), { ssr: false });
+const HomeStaffPerformanceCompositeIntelligenceCard = dynamic(() => import("@/components/dashboard/home-staff-performance-composite-intelligence-card").then(m => m.HomeStaffPerformanceCompositeIntelligenceCard ? { default: m.HomeStaffPerformanceCompositeIntelligenceCard } : m), { ssr: false });
+const HomeYoungPersonDailyWellbeingIntelligenceCard = dynamic(() => import("@/components/dashboard/home-young-person-daily-wellbeing-intelligence-card").then(m => m.HomeYoungPersonDailyWellbeingIntelligenceCard ? { default: m.HomeYoungPersonDailyWellbeingIntelligenceCard } : m), { ssr: false });
+
+// Batch 27 — Automation ROI, Task Action Completion, Professional Network, Locality Safeguarding
+const HomeAutomationROIIntelligenceCard = dynamic(() => import("@/components/dashboard/home-automation-roi-intelligence-card").then(m => m.HomeAutomationROIIntelligenceCard ? { default: m.HomeAutomationROIIntelligenceCard } : m), { ssr: false });
+const HomeTaskActionCompletionIntelligenceCard = dynamic(() => import("@/components/dashboard/home-task-action-completion-intelligence-card").then(m => m.HomeTaskActionCompletionIntelligenceCard ? { default: m.HomeTaskActionCompletionIntelligenceCard } : m), { ssr: false });
+const HomeProfessionalNetworkIntelligenceCard = dynamic(() => import("@/components/dashboard/home-professional-network-intelligence-card").then(m => m.HomeProfessionalNetworkIntelligenceCard ? { default: m.HomeProfessionalNetworkIntelligenceCard } : m), { ssr: false });
+const HomeLocalitySafeguardingIntelligenceCard = dynamic(() => import("@/components/dashboard/home-locality-safeguarding-intelligence-card").then(m => m.HomeLocalitySafeguardingIntelligenceCard ? { default: m.HomeLocalitySafeguardingIntelligenceCard } : m), { ssr: false });
+
+// Batch 28 — Recruitment Audit Trail, Filing Evidence Governance, Independence Skills Readiness, ARIA Content Quality
+const HomeRecruitmentAuditTrailIntelligenceCard = dynamic(() => import("@/components/dashboard/home-recruitment-audit-trail-intelligence-card").then(m => m.HomeRecruitmentAuditTrailIntelligenceCard ? { default: m.HomeRecruitmentAuditTrailIntelligenceCard } : m), { ssr: false });
+const HomeFilingEvidenceGovernanceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-filing-evidence-governance-intelligence-card").then(m => m.HomeFilingEvidenceGovernanceIntelligenceCard ? { default: m.HomeFilingEvidenceGovernanceIntelligenceCard } : m), { ssr: false });
+const HomeIndependenceSkillsReadinessIntelligenceCard = dynamic(() => import("@/components/dashboard/home-independence-skills-readiness-intelligence-card").then(m => m.HomeIndependenceSkillsReadinessIntelligenceCard ? { default: m.HomeIndependenceSkillsReadinessIntelligenceCard } : m), { ssr: false });
+const HomeAriaContentQualityIntelligenceCard = dynamic(() => import("@/components/dashboard/home-aria-content-quality-intelligence-card").then(m => m.HomeAriaContentQualityIntelligenceCard ? { default: m.HomeAriaContentQualityIntelligenceCard } : m), { ssr: false });
+
+// Batch 29 — Notification Responsiveness, Holistic Child Progress, Information Flow Quality, Regulatory Evidence Completeness
+const HomeNotificationResponsivenessIntelligenceCard = dynamic(() => import("@/components/dashboard/home-notification-responsiveness-intelligence-card").then(m => m.HomeNotificationResponsivenessIntelligenceCard ? { default: m.HomeNotificationResponsivenessIntelligenceCard } : m), { ssr: false });
+const HomeHolisticChildProgressIntelligenceCard = dynamic(() => import("@/components/dashboard/home-holistic-child-progress-intelligence-card").then(m => m.HomeHolisticChildProgressIntelligenceCard ? { default: m.HomeHolisticChildProgressIntelligenceCard } : m), { ssr: false });
+const HomeInformationFlowQualityIntelligenceCard = dynamic(() => import("@/components/dashboard/home-information-flow-quality-intelligence-card").then(m => m.HomeInformationFlowQualityIntelligenceCard ? { default: m.HomeInformationFlowQualityIntelligenceCard } : m), { ssr: false });
+const HomeRegulatoryEvidenceCompletenessIntelligenceCard = dynamic(() => import("@/components/dashboard/home-regulatory-evidence-completeness-intelligence-card").then(m => m.HomeRegulatoryEvidenceCompletenessIntelligenceCard ? { default: m.HomeRegulatoryEvidenceCompletenessIntelligenceCard } : m), { ssr: false });
+
+// Batch 30 — Family Social Connectivity, Emotional Safety Climate, Staff Induction Onboarding, Living Environment Standards
+const HomeFamilySocialConnectivityIntelligenceCard = dynamic(() => import("@/components/dashboard/home-family-social-connectivity-intelligence-card").then(m => m.HomeFamilySocialConnectivityIntelligenceCard ? { default: m.HomeFamilySocialConnectivityIntelligenceCard } : m), { ssr: false });
+const HomeEmotionalSafetyClimateIntelligenceCard = dynamic(() => import("@/components/dashboard/home-emotional-safety-climate-intelligence-card").then(m => m.HomeEmotionalSafetyClimateIntelligenceCard ? { default: m.HomeEmotionalSafetyClimateIntelligenceCard } : m), { ssr: false });
+const HomeStaffInductionOnboardingIntelligenceCard = dynamic(() => import("@/components/dashboard/home-staff-induction-onboarding-intelligence-card").then(m => m.HomeStaffInductionOnboardingIntelligenceCard ? { default: m.HomeStaffInductionOnboardingIntelligenceCard } : m), { ssr: false });
+const HomeLivingEnvironmentStandardsIntelligenceCard = dynamic(() => import("@/components/dashboard/home-living-environment-standards-intelligence-card").then(m => m.HomeLivingEnvironmentStandardsIntelligenceCard ? { default: m.HomeLivingEnvironmentStandardsIntelligenceCard } : m), { ssr: false });
+
+// ── Batch 31 ──
+const HomeHealthWellbeingOversightIntelligenceCard = dynamic(() => import("@/components/dashboard/home-health-wellbeing-oversight-intelligence-card").then(m => m.HomeHealthWellbeingOversightIntelligenceCard ? { default: m.HomeHealthWellbeingOversightIntelligenceCard } : m), { ssr: false });
+const HomeCulturalIdentityDiversityIntelligenceCard = dynamic(() => import("@/components/dashboard/home-cultural-identity-diversity-intelligence-card").then(m => m.HomeCulturalIdentityDiversityIntelligenceCard ? { default: m.HomeCulturalIdentityDiversityIntelligenceCard } : m), { ssr: false });
+const HomeNightCareQualityIntelligenceCard = dynamic(() => import("@/components/dashboard/home-night-care-quality-intelligence-card").then(m => m.HomeNightCareQualityIntelligenceCard ? { default: m.HomeNightCareQualityIntelligenceCard } : m), { ssr: false });
+const HomeComplaintAdvocacyResponsivenessIntelligenceCard = dynamic(() => import("@/components/dashboard/home-complaint-advocacy-responsiveness-intelligence-card").then(m => m.HomeComplaintAdvocacyResponsivenessIntelligenceCard ? { default: m.HomeComplaintAdvocacyResponsivenessIntelligenceCard } : m), { ssr: false });
+
+// ── Batch 32 ──
+const HomeMedicationSafetyComplianceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-medication-safety-compliance-intelligence-card").then(m => m.HomeMedicationSafetyComplianceIntelligenceCard ? { default: m.HomeMedicationSafetyComplianceIntelligenceCard } : m), { ssr: false });
+const HomeTransportVehicleSafetyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-transport-vehicle-safety-intelligence-card").then(m => m.HomeTransportVehicleSafetyIntelligenceCard ? { default: m.HomeTransportVehicleSafetyIntelligenceCard } : m), { ssr: false });
+const HomeTransitionLeavingCareReadinessIntelligenceCard = dynamic(() => import("@/components/dashboard/home-transition-leaving-care-readiness-intelligence-card").then(m => m.HomeTransitionLeavingCareReadinessIntelligenceCard ? { default: m.HomeTransitionLeavingCareReadinessIntelligenceCard } : m), { ssr: false });
+const HomeStaffSupervisionReflectivePracticeIntelligenceCard = dynamic(() => import("@/components/dashboard/home-staff-supervision-reflective-practice-intelligence-card").then(m => m.HomeStaffSupervisionReflectivePracticeIntelligenceCard ? { default: m.HomeStaffSupervisionReflectivePracticeIntelligenceCard } : m), { ssr: false });
+
+// ── Batch 33 ──
+const HomeEmergencyPreparednessContinuityIntelligenceCard = dynamic(() => import("@/components/dashboard/home-emergency-preparedness-continuity-intelligence-card").then(m => m.HomeEmergencyPreparednessContinuityIntelligenceCard ? { default: m.HomeEmergencyPreparednessContinuityIntelligenceCard } : m), { ssr: false });
+const HomePeerRelationshipSocialDevelopmentIntelligenceCard = dynamic(() => import("@/components/dashboard/home-peer-relationship-social-development-intelligence-card").then(m => m.HomePeerRelationshipSocialDevelopmentIntelligenceCard ? { default: m.HomePeerRelationshipSocialDevelopmentIntelligenceCard } : m), { ssr: false });
+const HomeDigitalSafetyOnlineProtectionIntelligenceCard = dynamic(() => import("@/components/dashboard/home-digital-safety-online-protection-intelligence-card").then(m => m.HomeDigitalSafetyOnlineProtectionIntelligenceCard ? { default: m.HomeDigitalSafetyOnlineProtectionIntelligenceCard } : m), { ssr: false });
+const HomeTherapeuticInterventionEffectivenessIntelligenceCard = dynamic(() => import("@/components/dashboard/home-therapeutic-intervention-effectiveness-intelligence-card").then(m => m.HomeTherapeuticInterventionEffectivenessIntelligenceCard ? { default: m.HomeTherapeuticInterventionEffectivenessIntelligenceCard } : m), { ssr: false });
+
+// ── Batch 34 ──
+const HomeNutritionDietaryManagementIntelligenceCard = dynamic(() => import("@/components/dashboard/home-nutrition-dietary-management-intelligence-card").then(m => m.HomeNutritionDietaryManagementIntelligenceCard ? { default: m.HomeNutritionDietaryManagementIntelligenceCard } : m), { ssr: false });
+const HomeParentalContactFamilyEngagementIntelligenceCard = dynamic(() => import("@/components/dashboard/home-parental-contact-family-engagement-intelligence-card").then(m => m.HomeParentalContactFamilyEngagementIntelligenceCard ? { default: m.HomeParentalContactFamilyEngagementIntelligenceCard } : m), { ssr: false });
+const HomeStaffTrainingCpdComplianceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-staff-training-cpd-compliance-intelligence-card").then(m => m.HomeStaffTrainingCpdComplianceIntelligenceCard ? { default: m.HomeStaffTrainingCpdComplianceIntelligenceCard } : m), { ssr: false });
+const HomePhysicalActivityRecreationIntelligenceCard = dynamic(() => import("@/components/dashboard/home-physical-activity-recreation-intelligence-card").then(m => m.HomePhysicalActivityRecreationIntelligenceCard ? { default: m.HomePhysicalActivityRecreationIntelligenceCard } : m), { ssr: false });
+
+// ── Batch 35 ──
+const HomeEnvironmentalSustainabilityEcoAwarenessIntelligenceCard = dynamic(() => import("@/components/dashboard/home-environmental-sustainability-eco-awareness-intelligence-card").then(m => m.HomeEnvironmentalSustainabilityEcoAwarenessIntelligenceCard ? { default: m.HomeEnvironmentalSustainabilityEcoAwarenessIntelligenceCard } : m), { ssr: false });
+const HomeSensoryAccessibilitySupportIntelligenceCard = dynamic(() => import("@/components/dashboard/home-sensory-accessibility-support-intelligence-card").then(m => m.HomeSensoryAccessibilitySupportIntelligenceCard ? { default: m.HomeSensoryAccessibilitySupportIntelligenceCard } : m), { ssr: false });
+const HomeSleepQualityRestManagementIntelligenceCard = dynamic(() => import("@/components/dashboard/home-sleep-quality-rest-management-intelligence-card").then(m => m.HomeSleepQualityRestManagementIntelligenceCard ? { default: m.HomeSleepQualityRestManagementIntelligenceCard } : m), { ssr: false });
+const HomeReligiousSpiritualWellbeingIntelligenceCard = dynamic(() => import("@/components/dashboard/home-religious-spiritual-wellbeing-intelligence-card").then(m => m.HomeReligiousSpiritualWellbeingIntelligenceCard ? { default: m.HomeReligiousSpiritualWellbeingIntelligenceCard } : m), { ssr: false });
+
+// ── Batch 36 ──
+const HomeVisitorManagementSecurityIntelligenceCard = dynamic(() => import("@/components/dashboard/home-visitor-management-security-intelligence-card").then(m => m.HomeVisitorManagementSecurityIntelligenceCard ? { default: m.HomeVisitorManagementSecurityIntelligenceCard } : m), { ssr: false });
+const HomeKeyWorkerRelationshipQualityIntelligenceCard = dynamic(() => import("@/components/dashboard/home-key-worker-relationship-quality-intelligence-card").then(m => m.HomeKeyWorkerRelationshipQualityIntelligenceCard ? { default: m.HomeKeyWorkerRelationshipQualityIntelligenceCard } : m), { ssr: false });
+const HomeBehaviourSupportPlanEffectivenessIntelligenceCard = dynamic(() => import("@/components/dashboard/home-behaviour-support-plan-effectiveness-intelligence-card").then(m => m.HomeBehaviourSupportPlanEffectivenessIntelligenceCard ? { default: m.HomeBehaviourSupportPlanEffectivenessIntelligenceCard } : m), { ssr: false });
+const HomePocketMoneyFinancialLiteracyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-pocket-money-financial-literacy-intelligence-card").then(m => m.HomePocketMoneyFinancialLiteracyIntelligenceCard ? { default: m.HomePocketMoneyFinancialLiteracyIntelligenceCard } : m), { ssr: false });
+
+// ── Batch 37 ──
+const HomeIndependenceLifeSkillsDevelopmentIntelligenceCard = dynamic(() => import("@/components/dashboard/home-independence-life-skills-development-intelligence-card").then(m => m.HomeIndependenceLifeSkillsDevelopmentIntelligenceCard ? { default: m.HomeIndependenceLifeSkillsDevelopmentIntelligenceCard } : m), { ssr: false });
+const HomeMultiAgencyCollaborationIntelligenceCard = dynamic(() => import("@/components/dashboard/home-multi-agency-collaboration-intelligence-card").then(m => m.HomeMultiAgencyCollaborationIntelligenceCard ? { default: m.HomeMultiAgencyCollaborationIntelligenceCard } : m), { ssr: false });
+const HomeStaffWellbeingRetentionIntelligenceCard = dynamic(() => import("@/components/dashboard/home-staff-wellbeing-retention-intelligence-card").then(m => m.HomeStaffWellbeingRetentionIntelligenceCard ? { default: m.HomeStaffWellbeingRetentionIntelligenceCard } : m), { ssr: false });
+const HomePlacementStabilityPermanenceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-placement-stability-permanence-intelligence-card").then(m => m.HomePlacementStabilityPermanenceIntelligenceCard ? { default: m.HomePlacementStabilityPermanenceIntelligenceCard } : m), { ssr: false });
+
+// ── Batch 38 ──
+const HomeRecordKeepingDocumentationQualityIntelligenceCard = dynamic(() => import("@/components/dashboard/home-record-keeping-documentation-quality-intelligence-card").then(m => m.HomeRecordKeepingDocumentationQualityIntelligenceCard ? { default: m.HomeRecordKeepingDocumentationQualityIntelligenceCard } : m), { ssr: false });
+const HomeClothingPersonalPossessionsIntelligenceCard = dynamic(() => import("@/components/dashboard/home-clothing-personal-possessions-intelligence-card").then(m => m.HomeClothingPersonalPossessionsIntelligenceCard ? { default: m.HomeClothingPersonalPossessionsIntelligenceCard } : m), { ssr: false });
+const HomeCommunicationLanguageSupportIntelligenceCard = dynamic(() => import("@/components/dashboard/home-communication-language-support-intelligence-card").then(m => m.HomeCommunicationLanguageSupportIntelligenceCard ? { default: m.HomeCommunicationLanguageSupportIntelligenceCard } : m), { ssr: false });
+const HomeHomeworkAcademicSupportIntelligenceCard = dynamic(() => import("@/components/dashboard/home-homework-academic-support-intelligence-card").then(m => m.HomeHomeworkAcademicSupportIntelligenceCard ? { default: m.HomeHomeworkAcademicSupportIntelligenceCard } : m), { ssr: false });
+
+// ── Batch 39 ──
+const HomeConsentCapacityManagementIntelligenceCard = dynamic(() => import("@/components/dashboard/home-consent-capacity-management-intelligence-card").then(m => m.HomeConsentCapacityManagementIntelligenceCard ? { default: m.HomeConsentCapacityManagementIntelligenceCard } : m), { ssr: false });
+const HomeFireSafetyEmergencyDrillIntelligenceCard = dynamic(() => import("@/components/dashboard/home-fire-safety-emergency-drill-intelligence-card").then(m => m.HomeFireSafetyEmergencyDrillIntelligenceCard ? { default: m.HomeFireSafetyEmergencyDrillIntelligenceCard } : m), { ssr: false });
+const HomeInfectionPreventionControlIntelligenceCard = dynamic(() => import("@/components/dashboard/home-infection-prevention-control-intelligence-card").then(m => m.HomeInfectionPreventionControlIntelligenceCard ? { default: m.HomeInfectionPreventionControlIntelligenceCard } : m), { ssr: false });
+const HomePrivacyDignityIntelligenceCard = dynamic(() => import("@/components/dashboard/home-privacy-dignity-intelligence-card").then(m => m.HomePrivacyDignityIntelligenceCard ? { default: m.HomePrivacyDignityIntelligenceCard } : m), { ssr: false });
+
+// ── Batch 40 ──
+const HomeAllegationsInvestigationsManagementIntelligenceCard = dynamic(() => import("@/components/dashboard/home-allegations-investigations-management-intelligence-card").then(m => m.HomeAllegationsInvestigationsManagementIntelligenceCard ? { default: m.HomeAllegationsInvestigationsManagementIntelligenceCard } : m), { ssr: false });
+const HomeAdmissionsMatchingAssessmentIntelligenceCard = dynamic(() => import("@/components/dashboard/home-admissions-matching-assessment-intelligence-card").then(m => m.HomeAdmissionsMatchingAssessmentIntelligenceCard ? { default: m.HomeAdmissionsMatchingAssessmentIntelligenceCard } : m), { ssr: false });
+const HomeDailyRoutineStructureIntelligenceCard = dynamic(() => import("@/components/dashboard/home-daily-routine-structure-intelligence-card").then(m => m.HomeDailyRoutineStructureIntelligenceCard ? { default: m.HomeDailyRoutineStructureIntelligenceCard } : m), { ssr: false });
+const HomeOutdoorNatureEngagementIntelligenceCard = dynamic(() => import("@/components/dashboard/home-outdoor-nature-engagement-intelligence-card").then(m => m.HomeOutdoorNatureEngagementIntelligenceCard ? { default: m.HomeOutdoorNatureEngagementIntelligenceCard } : m), { ssr: false });
+
+// ── Batch 41 ──
+const HomeCulturalEventsCelebrationsIntelligenceCard = dynamic(() => import("@/components/dashboard/home-cultural-events-celebrations-intelligence-card").then(m => m.HomeCulturalEventsCelebrationsIntelligenceCard ? { default: m.HomeCulturalEventsCelebrationsIntelligenceCard } : m), { ssr: false });
+const HomeWaterSafetyHydrationIntelligenceCard = dynamic(() => import("@/components/dashboard/home-water-safety-hydration-intelligence-card").then(m => m.HomeWaterSafetyHydrationIntelligenceCard ? { default: m.HomeWaterSafetyHydrationIntelligenceCard } : m), { ssr: false });
+const HomeDentalOralHealthIntelligenceCard = dynamic(() => import("@/components/dashboard/home-dental-oral-health-intelligence-card").then(m => m.HomeDentalOralHealthIntelligenceCard ? { default: m.HomeDentalOralHealthIntelligenceCard } : m), { ssr: false });
+const HomeTechnologyDigitalInclusionIntelligenceCard = dynamic(() => import("@/components/dashboard/home-technology-digital-inclusion-intelligence-card").then(m => m.HomeTechnologyDigitalInclusionIntelligenceCard ? { default: m.HomeTechnologyDigitalInclusionIntelligenceCard } : m), { ssr: false });
+
+// ── Batch 42 ──
+const HomeGriefBereavementSupportIntelligenceCard = dynamic(() => import("@/components/dashboard/home-grief-bereavement-support-intelligence-card").then(m => m.HomeGriefBereavementSupportIntelligenceCard ? { default: m.HomeGriefBereavementSupportIntelligenceCard } : m), { ssr: false });
+const HomeSubstanceMisusePreventionIntelligenceCard = dynamic(() => import("@/components/dashboard/home-substance-misuse-prevention-intelligence-card").then(m => m.HomeSubstanceMisusePreventionIntelligenceCard ? { default: m.HomeSubstanceMisusePreventionIntelligenceCard } : m), { ssr: false });
+const HomeYouthJusticeOffendingIntelligenceCard = dynamic(() => import("@/components/dashboard/home-youth-justice-offending-intelligence-card").then(m => m.HomeYouthJusticeOffendingIntelligenceCard ? { default: m.HomeYouthJusticeOffendingIntelligenceCard } : m), { ssr: false });
+const HomePositiveIdentitySelfEsteemIntelligenceCard = dynamic(() => import("@/components/dashboard/home-positive-identity-self-esteem-intelligence-card").then(m => m.HomePositiveIdentitySelfEsteemIntelligenceCard ? { default: m.HomePositiveIdentitySelfEsteemIntelligenceCard } : m), { ssr: false });
+
+// ── Batch 43 ──
+const HomePetAnimalTherapyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-pet-animal-therapy-intelligence-card").then(m => m.HomePetAnimalTherapyIntelligenceCard ? { default: m.HomePetAnimalTherapyIntelligenceCard } : m), { ssr: false });
+const HomeSiblingContactRelationshipsIntelligenceCard = dynamic(() => import("@/components/dashboard/home-sibling-contact-relationships-intelligence-card").then(m => m.HomeSiblingContactRelationshipsIntelligenceCard ? { default: m.HomeSiblingContactRelationshipsIntelligenceCard } : m), { ssr: false });
+const HomeStaffRotaAdequateStaffingIntelligenceCard = dynamic(() => import("@/components/dashboard/home-staff-rota-adequate-staffing-intelligence-card").then(m => m.HomeStaffRotaAdequateStaffingIntelligenceCard ? { default: m.HomeStaffRotaAdequateStaffingIntelligenceCard } : m), { ssr: false });
+const HomeWhistleblowingSafeguardingCultureIntelligenceCard = dynamic(() => import("@/components/dashboard/home-whistleblowing-safeguarding-culture-intelligence-card").then(m => m.HomeWhistleblowingSafeguardingCultureIntelligenceCard ? { default: m.HomeWhistleblowingSafeguardingCultureIntelligenceCard } : m), { ssr: false });
+
+// ── Batch 44 ──
+const HomeAnxietyMentalHealthScreeningIntelligenceCard = dynamic(() => import("@/components/dashboard/home-anxiety-mental-health-screening-intelligence-card").then(m => m.HomeAnxietyMentalHealthScreeningIntelligenceCard ? { default: m.HomeAnxietyMentalHealthScreeningIntelligenceCard } : m), { ssr: false });
+const HomeMinorRepairsMaintenanceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-minor-repairs-maintenance-intelligence-card").then(m => m.HomeMinorRepairsMaintenanceIntelligenceCard ? { default: m.HomeMinorRepairsMaintenanceIntelligenceCard } : m), { ssr: false });
+const HomeCommunityIntegrationVolunteeringIntelligenceCard = dynamic(() => import("@/components/dashboard/home-community-integration-volunteering-intelligence-card").then(m => m.HomeCommunityIntegrationVolunteeringIntelligenceCard ? { default: m.HomeCommunityIntegrationVolunteeringIntelligenceCard } : m), { ssr: false });
+const HomePersonalCalendarAppointmentsIntelligenceCard = dynamic(() => import("@/components/dashboard/home-personal-calendar-appointments-intelligence-card").then(m => m.HomePersonalCalendarAppointmentsIntelligenceCard ? { default: m.HomePersonalCalendarAppointmentsIntelligenceCard } : m), { ssr: false });
+
+// ── Batch 45 ──
+const HomeHobbiesInterestsDevelopmentIntelligenceCard = dynamic(() => import("@/components/dashboard/home-hobbies-interests-development-intelligence-card").then(m => m.HomeHobbiesInterestsDevelopmentIntelligenceCard ? { default: m.HomeHobbiesInterestsDevelopmentIntelligenceCard } : m), { ssr: false });
+const HomeContinencePersonalHygieneSupportIntelligenceCard = dynamic(() => import("@/components/dashboard/home-continence-personal-hygiene-support-intelligence-card").then(m => m.HomeContinencePersonalHygieneSupportIntelligenceCard ? { default: m.HomeContinencePersonalHygieneSupportIntelligenceCard } : m), { ssr: false });
+const HomeRewardsIncentivesManagementIntelligenceCard = dynamic(() => import("@/components/dashboard/home-rewards-incentives-management-intelligence-card").then(m => m.HomeRewardsIncentivesManagementIntelligenceCard ? { default: m.HomeRewardsIncentivesManagementIntelligenceCard } : m), { ssr: false });
+const HomeStaffDebriefingCriticalIncidentSupportIntelligenceCard = dynamic(() => import("@/components/dashboard/home-staff-debriefing-critical-incident-support-intelligence-card").then(m => m.HomeStaffDebriefingCriticalIncidentSupportIntelligenceCard ? { default: m.HomeStaffDebriefingCriticalIncidentSupportIntelligenceCard } : m), { ssr: false });
+
+// ── Batch 46 ──
+const HomeSensoryDietRegulationIntelligenceCard = dynamic(() => import("@/components/dashboard/home-sensory-diet-regulation-intelligence-card").then(m => m.HomeSensoryDietRegulationIntelligenceCard ? { default: m.HomeSensoryDietRegulationIntelligenceCard } : m), { ssr: false });
+const HomeEthnicHairSkincareIntelligenceCard = dynamic(() => import("@/components/dashboard/home-ethnic-hair-skincare-intelligence-card").then(m => m.HomeEthnicHairSkincareIntelligenceCard ? { default: m.HomeEthnicHairSkincareIntelligenceCard } : m), { ssr: false });
+const HomeHolidayTripPlanningIntelligenceCard = dynamic(() => import("@/components/dashboard/home-holiday-trip-planning-intelligence-card").then(m => m.HomeHolidayTripPlanningIntelligenceCard ? { default: m.HomeHolidayTripPlanningIntelligenceCard } : m), { ssr: false });
+const HomeRestorativePracticeConflictResolutionIntelligenceCard = dynamic(() => import("@/components/dashboard/home-restorative-practice-conflict-resolution-intelligence-card").then(m => m.HomeRestorativePracticeConflictResolutionIntelligenceCard ? { default: m.HomeRestorativePracticeConflictResolutionIntelligenceCard } : m), { ssr: false });
+
+// ── Batch 47 ──
+const HomeSexualHealthRseEducationIntelligenceCard = dynamic(() => import("@/components/dashboard/home-sexual-health-rse-education-intelligence-card").then(m => m.HomeSexualHealthRseEducationIntelligenceCard ? { default: m.HomeSexualHealthRseEducationIntelligenceCard } : m), { ssr: false });
+const HomeNoiseSoundManagementIntelligenceCard = dynamic(() => import("@/components/dashboard/home-noise-sound-management-intelligence-card").then(m => m.HomeNoiseSoundManagementIntelligenceCard ? { default: m.HomeNoiseSoundManagementIntelligenceCard } : m), { ssr: false });
+const HomeStaffPerformanceAppraisalIntelligenceCard = dynamic(() => import("@/components/dashboard/home-staff-performance-appraisal-intelligence-card").then(m => m.HomeStaffPerformanceAppraisalIntelligenceCard ? { default: m.HomeStaffPerformanceAppraisalIntelligenceCard } : m), { ssr: false });
+const HomeAdvocacyIndependentVisitorIntelligenceCard = dynamic(() => import("@/components/dashboard/home-advocacy-independent-visitor-intelligence-card").then(m => m.HomeAdvocacyIndependentVisitorIntelligenceCard ? { default: m.HomeAdvocacyIndependentVisitorIntelligenceCard } : m), { ssr: false });
+
+// ── Batch 48 ──
+const HomeEmotionalLiteracyFeelingsExpressionIntelligenceCard = dynamic(() => import("@/components/dashboard/home-emotional-literacy-feelings-expression-intelligence-card").then(m => m.HomeEmotionalLiteracyFeelingsExpressionIntelligenceCard ? { default: m.HomeEmotionalLiteracyFeelingsExpressionIntelligenceCard } : m), { ssr: false });
+const HomeSavingsBankingSkillsIntelligenceCard = dynamic(() => import("@/components/dashboard/home-savings-banking-skills-intelligence-card").then(m => m.HomeSavingsBankingSkillsIntelligenceCard ? { default: m.HomeSavingsBankingSkillsIntelligenceCard } : m), { ssr: false });
+const HomeHazardNearMissReportingIntelligenceCard = dynamic(() => import("@/components/dashboard/home-hazard-near-miss-reporting-intelligence-card").then(m => m.HomeHazardNearMissReportingIntelligenceCard ? { default: m.HomeHazardNearMissReportingIntelligenceCard } : m), { ssr: false });
+const HomeMenstruationPubertySupportIntelligenceCard = dynamic(() => import("@/components/dashboard/home-menstruation-puberty-support-intelligence-card").then(m => m.HomeMenstruationPubertySupportIntelligenceCard ? { default: m.HomeMenstruationPubertySupportIntelligenceCard } : m), { ssr: false });
+
+// ── Batch 49 ──
+const HomeEyeHealthVisionCareIntelligenceCard = dynamic(() => import("@/components/dashboard/home-eye-health-vision-care-intelligence-card").then(m => m.HomeEyeHealthVisionCareIntelligenceCard ? { default: m.HomeEyeHealthVisionCareIntelligenceCard } : m), { ssr: false });
+const HomeAsthmaRespiratoryManagementIntelligenceCard = dynamic(() => import("@/components/dashboard/home-asthma-respiratory-management-intelligence-card").then(m => m.HomeAsthmaRespiratoryManagementIntelligenceCard ? { default: m.HomeAsthmaRespiratoryManagementIntelligenceCard } : m), { ssr: false });
+const HomeLaundryLinenManagementIntelligenceCard = dynamic(() => import("@/components/dashboard/home-laundry-linen-management-intelligence-card").then(m => m.HomeLaundryLinenManagementIntelligenceCard ? { default: m.HomeLaundryLinenManagementIntelligenceCard } : m), { ssr: false });
+const HomeBirthdaySpecialOccasionCelebrationIntelligenceCard = dynamic(() => import("@/components/dashboard/home-birthday-special-occasion-celebration-intelligence-card").then(m => m.HomeBirthdaySpecialOccasionCelebrationIntelligenceCard ? { default: m.HomeBirthdaySpecialOccasionCelebrationIntelligenceCard } : m), { ssr: false });
+
+// ── Batch 50 ──
+const HomeFriendshipSocialNetworkIntelligenceCard = dynamic(() => import("@/components/dashboard/home-friendship-social-network-intelligence-card").then(m => m.HomeFriendshipSocialNetworkIntelligenceCard ? { default: m.HomeFriendshipSocialNetworkIntelligenceCard } : m), { ssr: false });
+const HomeCctvSurveillanceGovernanceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-cctv-surveillance-governance-intelligence-card").then(m => m.HomeCctvSurveillanceGovernanceIntelligenceCard ? { default: m.HomeCctvSurveillanceGovernanceIntelligenceCard } : m), { ssr: false });
+const HomePocketMoneyAuditReconciliationIntelligenceCard = dynamic(() => import("@/components/dashboard/home-pocket-money-audit-reconciliation-intelligence-card").then(m => m.HomePocketMoneyAuditReconciliationIntelligenceCard ? { default: m.HomePocketMoneyAuditReconciliationIntelligenceCard } : m), { ssr: false });
+const HomeImmunisationVaccinationComplianceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-immunisation-vaccination-compliance-intelligence-card").then(m => m.HomeImmunisationVaccinationComplianceIntelligenceCard ? { default: m.HomeImmunisationVaccinationComplianceIntelligenceCard } : m), { ssr: false });
+
+// ── Batch 51 ──
+const HomeFurnitureRoomPersonalisationIntelligenceCard = dynamic(() => import("@/components/dashboard/home-furniture-room-personalisation-intelligence-card").then(m => m.HomeFurnitureRoomPersonalisationIntelligenceCard ? { default: m.HomeFurnitureRoomPersonalisationIntelligenceCard } : m), { ssr: false });
+const HomeCookingKitchenSkillsIntelligenceCard = dynamic(() => import("@/components/dashboard/home-cooking-kitchen-skills-intelligence-card").then(m => m.HomeCookingKitchenSkillsIntelligenceCard ? { default: m.HomeCookingKitchenSkillsIntelligenceCard } : m), { ssr: false });
+const HomeBedwettingEnuresisSupportIntelligenceCard = dynamic(() => import("@/components/dashboard/home-bedwetting-enuresis-support-intelligence-card").then(m => m.HomeBedwettingEnuresisSupportIntelligenceCard ? { default: m.HomeBedwettingEnuresisSupportIntelligenceCard } : m), { ssr: false });
+const HomeStaffLoneWorkingSafetyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-staff-lone-working-safety-intelligence-card").then(m => m.HomeStaffLoneWorkingSafetyIntelligenceCard ? { default: m.HomeStaffLoneWorkingSafetyIntelligenceCard } : m), { ssr: false });
+
+// ── Batch 52 ──
+const HomeTeethBrushingOralRoutineIntelligenceCard = dynamic(() => import("@/components/dashboard/home-teeth-brushing-oral-routine-intelligence-card").then(m => m.HomeTeethBrushingOralRoutineIntelligenceCard ? { default: m.HomeTeethBrushingOralRoutineIntelligenceCard } : m), { ssr: false });
+const HomeGardenOutdoorSpaceMaintenanceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-garden-outdoor-space-maintenance-intelligence-card").then(m => m.HomeGardenOutdoorSpaceMaintenanceIntelligenceCard ? { default: m.HomeGardenOutdoorSpaceMaintenanceIntelligenceCard } : m), { ssr: false });
+const HomeEmergencyContactNextOfKinIntelligenceCard = dynamic(() => import("@/components/dashboard/home-emergency-contact-next-of-kin-intelligence-card").then(m => m.HomeEmergencyContactNextOfKinIntelligenceCard ? { default: m.HomeEmergencyContactNextOfKinIntelligenceCard } : m), { ssr: false });
+const HomeWeeklyPlannerActivityScheduleIntelligenceCard = dynamic(() => import("@/components/dashboard/home-weekly-planner-activity-schedule-intelligence-card").then(m => m.HomeWeeklyPlannerActivityScheduleIntelligenceCard ? { default: m.HomeWeeklyPlannerActivityScheduleIntelligenceCard } : m), { ssr: false });
+
+// ── Batch 53 ──
+const HomeDbsRenewalStaffVettingIntelligenceCard = dynamic(() => import("@/components/dashboard/home-dbs-renewal-staff-vetting-intelligence-card").then(m => m.HomeDbsRenewalStaffVettingIntelligenceCard ? { default: m.HomeDbsRenewalStaffVettingIntelligenceCard } : m), { ssr: false });
+const HomeChildVoiceParticipationIntelligenceCard = dynamic(() => import("@/components/dashboard/home-child-voice-participation-intelligence-card").then(m => m.HomeChildVoiceParticipationIntelligenceCard ? { default: m.HomeChildVoiceParticipationIntelligenceCard } : m), { ssr: false });
+const HomeAromatherapyWellbeingTherapiesIntelligenceCard = dynamic(() => import("@/components/dashboard/home-aromatherapy-wellbeing-therapies-intelligence-card").then(m => m.HomeAromatherapyWellbeingTherapiesIntelligenceCard ? { default: m.HomeAromatherapyWellbeingTherapiesIntelligenceCard } : m), { ssr: false });
+const HomePestControlHygieneComplianceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-pest-control-hygiene-compliance-intelligence-card").then(m => m.HomePestControlHygieneComplianceIntelligenceCard ? { default: m.HomePestControlHygieneComplianceIntelligenceCard } : m), { ssr: false });
+
+// ── Batch 54 ──
+const HomeMissingPersonAbsentAuthorityIntelligenceCard = dynamic(() => import("@/components/dashboard/home-missing-person-absent-authority-intelligence-card").then(m => m.HomeMissingPersonAbsentAuthorityIntelligenceCard ? { default: m.HomeMissingPersonAbsentAuthorityIntelligenceCard } : m), { ssr: false });
+const HomeBedroomTemperatureVentilationIntelligenceCard = dynamic(() => import("@/components/dashboard/home-bedroom-temperature-ventilation-intelligence-card").then(m => m.HomeBedroomTemperatureVentilationIntelligenceCard ? { default: m.HomeBedroomTemperatureVentilationIntelligenceCard } : m), { ssr: false });
+const HomeHomeworkEnvironmentStudySpaceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-homework-environment-study-space-intelligence-card").then(m => m.HomeHomeworkEnvironmentStudySpaceIntelligenceCard ? { default: m.HomeHomeworkEnvironmentStudySpaceIntelligenceCard } : m), { ssr: false });
+const HomeWeightManagementHealthyEatingIntelligenceCard = dynamic(() => import("@/components/dashboard/home-weight-management-healthy-eating-intelligence-card").then(m => m.HomeWeightManagementHealthyEatingIntelligenceCard ? { default: m.HomeWeightManagementHealthyEatingIntelligenceCard } : m), { ssr: false });
+
+// ── Batch 55 ──
+const HomeFirstAidKitMedicalSuppliesIntelligenceCard = dynamic(() => import("@/components/dashboard/home-first-aid-kit-medical-supplies-intelligence-card").then(m => m.HomeFirstAidKitMedicalSuppliesIntelligenceCard ? { default: m.HomeFirstAidKitMedicalSuppliesIntelligenceCard } : m), { ssr: false });
+const HomeKeyholdingAccessControlIntelligenceCard = dynamic(() => import("@/components/dashboard/home-keyholding-access-control-intelligence-card").then(m => m.HomeKeyholdingAccessControlIntelligenceCard ? { default: m.HomeKeyholdingAccessControlIntelligenceCard } : m), { ssr: false });
+const HomeHandoverCommunicationQualityIntelligenceCard = dynamic(() => import("@/components/dashboard/home-handover-communication-quality-intelligence-card").then(m => m.HomeHandoverCommunicationQualityIntelligenceCard ? { default: m.HomeHandoverCommunicationQualityIntelligenceCard } : m), { ssr: false });
+const HomeClothingLabellingStorageIntelligenceCard = dynamic(() => import("@/components/dashboard/home-clothing-labelling-storage-intelligence-card").then(m => m.HomeClothingLabellingStorageIntelligenceCard ? { default: m.HomeClothingLabellingStorageIntelligenceCard } : m), { ssr: false });
+
+// ── Batch 56 ──
+const HomeElectricityGasSafetyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-electricity-gas-safety-intelligence-card").then(m => m.HomeElectricityGasSafetyIntelligenceCard ? { default: m.HomeElectricityGasSafetyIntelligenceCard } : m), { ssr: false });
+const HomeBathroomShowerFacilitiesIntelligenceCard = dynamic(() => import("@/components/dashboard/home-bathroom-shower-facilities-intelligence-card").then(m => m.HomeBathroomShowerFacilitiesIntelligenceCard ? { default: m.HomeBathroomShowerFacilitiesIntelligenceCard } : m), { ssr: false });
+const HomeMobilePhoneScreenTimeIntelligenceCard = dynamic(() => import("@/components/dashboard/home-mobile-phone-screen-time-intelligence-card").then(m => m.HomeMobilePhoneScreenTimeIntelligenceCard ? { default: m.HomeMobilePhoneScreenTimeIntelligenceCard } : m), { ssr: false });
+const HomePocketMoneyDistributionEquityIntelligenceCard = dynamic(() => import("@/components/dashboard/home-pocket-money-distribution-equity-intelligence-card").then(m => m.HomePocketMoneyDistributionEquityIntelligenceCard ? { default: m.HomePocketMoneyDistributionEquityIntelligenceCard } : m), { ssr: false });
+
+// ── Batch 57 ──
+const HomeAllergyManagementFoodSafetyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-allergy-management-food-safety-intelligence-card").then(m => m.HomeAllergyManagementFoodSafetyIntelligenceCard ? { default: m.HomeAllergyManagementFoodSafetyIntelligenceCard } : m), { ssr: false });
+const HomeBathroomAccessibilityAdaptationsIntelligenceCard = dynamic(() => import("@/components/dashboard/home-bathroom-accessibility-adaptations-intelligence-card").then(m => m.HomeBathroomAccessibilityAdaptationsIntelligenceCard ? { default: m.HomeBathroomAccessibilityAdaptationsIntelligenceCard } : m), { ssr: false });
+const HomeUtilityBillsCostManagementIntelligenceCard = dynamic(() => import("@/components/dashboard/home-utility-bills-cost-management-intelligence-card").then(m => m.HomeUtilityBillsCostManagementIntelligenceCard ? { default: m.HomeUtilityBillsCostManagementIntelligenceCard } : m), { ssr: false });
+const HomeNeighbourhoodSafetyRiskAssessmentIntelligenceCard = dynamic(() => import("@/components/dashboard/home-neighbourhood-safety-risk-assessment-intelligence-card").then(m => m.HomeNeighbourhoodSafetyRiskAssessmentIntelligenceCard ? { default: m.HomeNeighbourhoodSafetyRiskAssessmentIntelligenceCard } : m), { ssr: false });
+
+// ── Batch 58 ──
+const HomeWashingMachineDryerMaintenanceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-washing-machine-dryer-maintenance-intelligence-card").then(m => m.HomeWashingMachineDryerMaintenanceIntelligenceCard ? { default: m.HomeWashingMachineDryerMaintenanceIntelligenceCard } : m), { ssr: false });
+const HomeItEquipmentConnectivityIntelligenceCard = dynamic(() => import("@/components/dashboard/home-it-equipment-connectivity-intelligence-card").then(m => m.HomeItEquipmentConnectivityIntelligenceCard ? { default: m.HomeItEquipmentConnectivityIntelligenceCard } : m), { ssr: false });
+const HomeWindowBlindCurtainSafetyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-window-blind-curtain-safety-intelligence-card").then(m => m.HomeWindowBlindCurtainSafetyIntelligenceCard ? { default: m.HomeWindowBlindCurtainSafetyIntelligenceCard } : m), { ssr: false });
+const HomeSharpsDisposalHazardousWasteIntelligenceCard = dynamic(() => import("@/components/dashboard/home-sharps-disposal-hazardous-waste-intelligence-card").then(m => m.HomeSharpsDisposalHazardousWasteIntelligenceCard ? { default: m.HomeSharpsDisposalHazardousWasteIntelligenceCard } : m), { ssr: false });
+
+// ── Batch 59 ──
+const HomeReg4445QualityAssuranceReportingIntelligenceCard = dynamic(() => import("@/components/dashboard/home-reg44-45-quality-assurance-reporting-intelligence-card").then(m => m.HomeReg4445QualityAssuranceReportingIntelligenceCard ? { default: m.HomeReg4445QualityAssuranceReportingIntelligenceCard } : m), { ssr: false });
+const HomeDampMouldManagementIntelligenceCard = dynamic(() => import("@/components/dashboard/home-damp-mould-management-intelligence-card").then(m => m.HomeDampMouldManagementIntelligenceCard ? { default: m.HomeDampMouldManagementIntelligenceCard } : m), { ssr: false });
+const HomeFoodStorageRefrigerationSafetyIntelligenceCard = dynamic(() => import("@/components/dashboard/home-food-storage-refrigeration-safety-intelligence-card").then(m => m.HomeFoodStorageRefrigerationSafetyIntelligenceCard ? { default: m.HomeFoodStorageRefrigerationSafetyIntelligenceCard } : m), { ssr: false });
+const HomeSlipsTripsFallsPreventionIntelligenceCard = dynamic(() => import("@/components/dashboard/home-slips-trips-falls-prevention-intelligence-card").then(m => m.HomeSlipsTripsFallsPreventionIntelligenceCard ? { default: m.HomeSlipsTripsFallsPreventionIntelligenceCard } : m), { ssr: false });
+
+// ── Batch 60 ──
+const HomeBoilerHeatingSystemServicingIntelligenceCard = dynamic(() => import("@/components/dashboard/home-boiler-heating-system-servicing-intelligence-card").then(m => m.HomeBoilerHeatingSystemServicingIntelligenceCard ? { default: m.HomeBoilerHeatingSystemServicingIntelligenceCard } : m), { ssr: false });
+const HomeStatementPurposeChildrenGuideIntelligenceCard = dynamic(() => import("@/components/dashboard/home-statement-purpose-children-guide-intelligence-card").then(m => m.HomeStatementPurposeChildrenGuideIntelligenceCard ? { default: m.HomeStatementPurposeChildrenGuideIntelligenceCard } : m), { ssr: false });
+const HomePolicyReviewCycleComplianceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-policy-review-cycle-compliance-intelligence-card").then(m => m.HomePolicyReviewCycleComplianceIntelligenceCard ? { default: m.HomePolicyReviewCycleComplianceIntelligenceCard } : m), { ssr: false });
+const HomeDataProtectionGdprComplianceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-data-protection-gdpr-compliance-intelligence-card").then(m => m.HomeDataProtectionGdprComplianceIntelligenceCard ? { default: m.HomeDataProtectionGdprComplianceIntelligenceCard } : m), { ssr: false });
 
 // ─── Greeting ─────────────────────────────────────────────────────────────────
 
@@ -1198,6 +1596,10 @@ export default function DashboardPage() {
                 {config.showMedicationCard && <MedicationStatusCard />}
                 {config.showIntelligenceBrief && (
                   <>
+                    <ManagerIntelligenceBriefingCard />
+                    <InspectionReadinessIntelligenceCard />
+                    <StaffWellbeingIntelligenceCard />
+                    <RiskIntelligenceDashboardCard />
                     <AriaTodayBriefing />
                     <AriaShiftSafety />
                     <AriaRegulatoryPulse />
@@ -1209,6 +1611,308 @@ export default function DashboardPage() {
                     <AriaIncidentAnalysis />
                     <AriaDailyIntelligence />
                     <AriaDashboardPanel />
+                    <HomeOfstedReadinessCompositeCard />
+                    <HomeChildWellbeingCompositeCard />
+                    <HomeWorkforceResilienceCompositeCard />
+                    <HomeSafeguardingOversightCompositeCard />
+                    <HomeRegulatoryComplianceCompositeCard />
+                    <HomeQualityOfCareCompositeCard />
+                    <ChildVoiceParticipationCard />
+                    <HomeWellbeingIntelligenceCard />
+                    <HomeActivityEnrichmentIntelligenceCard />
+                    <HomeNightSafetyIntelligenceCard />
+                    <HomeRegulatoryComplianceIntelligenceCard />
+                    <HomeStaffDevelopmentIntelligenceCard />
+                    <HomeIncidentSafetyIntelligenceCard />
+                    <HomeChildVoiceIntelligenceCard />
+                    <HomeKeyWorkingIntelligenceCard />
+                    <HomeEducationAchievementIntelligenceCard />
+                    <HomeMissingEpisodesIntelligenceCard />
+                    <HomeHealthWellbeingIntelligenceCard />
+                    <HomeLACReviewIntelligenceCard />
+                    <HomeRiskAssessmentIntelligenceCard />
+                    <HomeIndependenceIntelligenceCard />
+                    <HomeParticipationIntelligenceCard />
+                    <HomeNotifiableEventsIntelligenceCard />
+                    <HomeRestrictivePracticeIntelligenceCard />
+                    <HomeSupervisionIntelligenceCard />
+                    <HomeBehaviourIntelligenceCard />
+                    <HomeSafeguardingIntelligenceCard />
+                    <HomeReg44IntelligenceCard />
+                    <HomeFamilyEngagementIntelligenceCard />
+                    <HomeAdmissionIntelligenceCard />
+                    <HomeVisitorIntelligenceCard />
+                    <HomeEmergencyPreparednessIntelligenceCard />
+                    <HomeComplaintsIntelligenceCard />
+                    <HomeQualityAssuranceIntelligenceCard />
+                    <HomeFinancialWellbeingIntelligenceCard />
+                    <HomePolicyComplianceIntelligenceCard />
+                    <HomePremisesSafetyIntelligenceCard />
+                    <HomeHandoverContinuityIntelligenceCard />
+                    <HomeDocumentGovernanceIntelligenceCard />
+                    <HomeRecordingQualityIntelligenceCard />
+                    <HomeSaferRecruitmentIntelligenceCard />
+                    <HomeWorkforcePlanningIntelligenceCard />
+                    <HomeChronologyIntelligenceCard />
+                    <HomeMeetingGovernanceIntelligenceCard />
+                    <HomeKeyworkerIntelligenceCard />
+                    <HomePlacementStabilityIntelligenceCard />
+                    <HomeOutcomesProgressIntelligenceCard />
+                    <HomeRiskLandscapeIntelligenceCard />
+                    <HomeTherapeuticClimateIntelligenceCard />
+                    <HomeBSPEffectivenessIntelligenceCard />
+                    <HomeCompetencyLandscapeIntelligenceCard />
+                    <HomeExpenseGovernanceIntelligenceCard />
+                    <HomeShiftPatternIntelligenceCard />
+                    <HomeLeaveAbsenceIntelligenceCard />
+                    <HomeStaffWellbeingIntelligenceCard />
+                    <HomePeerDynamicsIntelligenceCard />
+                    <HomeOnCallGovernanceIntelligenceCard />
+                    <HomeTransitionPlanningIntelligenceCard />
+                    <HomeDelegatedAuthorityIntelligenceCard />
+                    <HomeFireSafetyIntelligenceCard />
+                    <HomeSleepQualityIntelligenceCard />
+                    <HomeMedicationManagementIntelligenceCard />
+                    <HomeExploitationScreeningIntelligenceCard />
+                    <HomeDailyLogIntelligenceCard />
+                    <HomeDigitalSafetyIntelligenceCard />
+                    <HomeMentalHealthIntelligenceCard />
+                    <HomeOrganizationalLearningIntelligenceCard />
+                    <HomeStaffSafetyIntelligenceCard />
+                    <HomeMultiAgencyIntelligenceCard />
+                    <HomeDataGovernanceIntelligenceCard />
+                    <HomeNutritionCateringIntelligenceCard />
+                    <HomeHealthMonitoringIntelligenceCard />
+                    <HomeMedicationGovernanceIntelligenceCard />
+                    <HomeSpecializedHealthPlansIntelligenceCard />
+                    <HomeEducationEngagementIntelligenceCard />
+                    <HomeSafeguardingPreventionIntelligenceCard />
+                    <HomeCommunicationContactIntelligenceCard />
+                    <HomeStaffLifecycleIntelligenceCard />
+                    <HomeFacilitiesComplianceIntelligenceCard />
+                    <HomeTherapeuticProgressIntelligenceCard />
+                    <HomeChildrensRightsParticipationIntelligenceCard />
+                    <HomePlacementStabilityDepthIntelligenceCard />
+                    <HomeCulturalIdentityIntelligenceCard />
+                    <HomeIndependenceLifeSkillsIntelligenceCard />
+                    <HomeEnrichmentAchievementIntelligenceCard />
+                    <HomeLivingEnvironmentIntelligenceCard />
+                    <HomeCommunityAccessIntelligenceCard />
+                    <HomeNightCareSafetyIntelligenceCard />
+                    <HomeSafeguardingDepthIntelligenceCard />
+                    <HomeReg4445EvidenceIntelligenceCard />
+                    <HomePlacementJourneyIntelligenceCard />
+                    <HomeLifeStoryIdentityIntelligenceCard />
+                    <HomeStrategicRiskIntelligenceCard />
+                    <HomeBuildingOpsSafetyIntelligenceCard />
+                    <HomeAccidentInjurySurveillanceIntelligenceCard />
+                    <HomeStatutoryVisitComplianceIntelligenceCard />
+                    <HomeBelongingPersonalPropertyIntelligenceCard />
+                    <HomeCamhsSpecialistReferralIntelligenceCard />
+                    <HomeConsentRightsLiteracyIntelligenceCard />
+                    <HomeStaffReflectivePracticeIntelligenceCard />
+                    <HomeSensoryTherapeuticEnvironmentIntelligenceCard />
+                    <HomeDailyRoutineCareContinuityIntelligenceCard />
+                    <HomeOutcomeStarNeedsIntelligenceCard />
+                    <HomeInfectionControlHealthSafetyIntelligenceCard />
+                    <HomeCaseFileAuditQualityIntelligenceCard />
+                    <HomeStakeholderEngagementFeedbackIntelligenceCard />
+                    <HomeFinancialLiteracyMoneyManagementIntelligenceCard />
+                    <HomeSaferRecruitmentVettingIntelligenceCard />
+                    <HomeLeavingCareTransitionIntelligenceCard />
+                    <HomeGovernanceManagementOversightIntelligenceCard />
+                    <HomeStaffCompetencyTrainingIntelligenceCard />
+                    <HomeChildrensVoiceParticipationIntelligenceCard />
+                    <HomeDigitalLiteracyOnlineSafetyIntelligenceCard />
+                    <HomeTherapeuticWellbeingImpactIntelligenceCard />
+                    <HomeLadoAllegationManagementIntelligenceCard />
+                    <HomePlacementDisruptionPreventionIntelligenceCard />
+                    <HomeLessonsLearnedImprovementIntelligenceCard />
+                    <HomeDiversityInclusionEqualityIntelligenceCard />
+                    <HomeLoneWorkingStaffSafetyIntelligenceCard />
+                    <HomeFoodNutritionHygieneSafetyIntelligenceCard />
+                    <HomeWhistleblowingTransparencyIntelligenceCard />
+                    <HomeStaffDebriefEmotionalSupportIntelligenceCard />
+                    <HomeAgencyStaffManagementIntelligenceCard />
+                    <HomeHolidayEnrichingExperiencesIntelligenceCard />
+                    <HomeQualityOfCareReviewIntelligenceCard />
+                    <HomeTransportJourneySafetyIntelligenceCard />
+                    <HomeManagementWalkroundOversightIntelligenceCard />
+                    <HomePracticeObservationCompetencyIntelligenceCard />
+                    <HomeHouseMeetingGovernanceIntelligenceCard />
+                    <HomeStaffRecognitionMoraleIntelligenceCard />
+                    <HomeCookingLifeSkillsIntelligenceCard />
+                    <HomeSelfEvaluationImprovementIntelligenceCard />
+                    <HomeNightHandoverQualityIntelligenceCard />
+                    <HomeContextualSafeguardingIntelligenceCard />
+                    <HomeHealthAppointmentContinuityIntelligenceCard />
+                    <HomeReturnInterviewQualityIntelligenceCard />
+                    <HomeFireDrillEmergencyPreparednessIntelligenceCard />
+                    <HomeParentPartnershipEngagementIntelligenceCard />
+                    <HomeAdvocacyIndependentVoiceIntelligenceCard />
+                    <HomeSubstanceMisuseScreeningIntelligenceCard />
+                    <HomeAnnualHealthAssessmentIntelligenceCard />
+                    <HomePepEducationQualityIntelligenceCard />
+                    <HomeSiblingContactProtocolIntelligenceCard />
+                    <HomePlacementImpactAssessmentIntelligenceCard />
+                    <HomeMultidisciplinaryFormulationIntelligenceCard />
+                    <HomeSocialWorkerContactIntelligenceCard />
+                    <HomeTraumaTherapyIntelligenceCard />
+                    <HomeAttachmentProfileIntelligenceCard />
+                    <HomeSelfHarmSafetyPlanIntelligenceCard />
+                    <HomePostIncidentChildDebriefIntelligenceCard />
+                    <HomeOutcomeStarAssessmentIntelligenceCard />
+                    <HomeBehaviourSupportPlanIntelligenceCard />
+                    <HomeContextualSafeguardingRiskIntelligenceCard />
+                    <HomeRiskManagementPlanIntelligenceCard />
+                    <HomeRestraintPhysicalInterventionIntelligenceCard />
+                    <HomeMissingEpisodeIntelligenceCard />
+                    <HomeSleepNightCareIntelligenceCard />
+                    <HomeMedicationAdministrationIntelligenceCard />
+                    <HomeWelfareCheckComplianceIntelligenceCard />
+                    <HomeDeprivationOfLibertyIntelligenceCard />
+                    <HomeSanctionRewardBalanceIntelligenceCard />
+                    <HomeStaffDisciplinaryConductIntelligenceCard />
+                    <HomeCareEventQualityIntelligenceCard />
+                    <HomeStatutoryNotificationComplianceIntelligenceCard />
+                    <HomeStaffPerformanceCompositeIntelligenceCard />
+                    <HomeYoungPersonDailyWellbeingIntelligenceCard />
+                    <HomeAutomationROIIntelligenceCard />
+                    <HomeTaskActionCompletionIntelligenceCard />
+                    <HomeProfessionalNetworkIntelligenceCard />
+                    <HomeLocalitySafeguardingIntelligenceCard />
+                    <HomeRecruitmentAuditTrailIntelligenceCard />
+                    <HomeFilingEvidenceGovernanceIntelligenceCard />
+                    <HomeIndependenceSkillsReadinessIntelligenceCard />
+                    <HomeAriaContentQualityIntelligenceCard />
+                    <HomeNotificationResponsivenessIntelligenceCard />
+                    <HomeHolisticChildProgressIntelligenceCard />
+                    <HomeInformationFlowQualityIntelligenceCard />
+                    <HomeRegulatoryEvidenceCompletenessIntelligenceCard />
+                    <HomeFamilySocialConnectivityIntelligenceCard />
+                    <HomeEmotionalSafetyClimateIntelligenceCard />
+                    <HomeStaffInductionOnboardingIntelligenceCard />
+                    <HomeLivingEnvironmentStandardsIntelligenceCard />
+                    <HomeHealthWellbeingOversightIntelligenceCard />
+                    <HomeCulturalIdentityDiversityIntelligenceCard />
+                    <HomeNightCareQualityIntelligenceCard />
+                    <HomeComplaintAdvocacyResponsivenessIntelligenceCard />
+                    <HomeMedicationSafetyComplianceIntelligenceCard />
+                    <HomeTransportVehicleSafetyIntelligenceCard />
+                    <HomeTransitionLeavingCareReadinessIntelligenceCard />
+                    <HomeStaffSupervisionReflectivePracticeIntelligenceCard />
+                    <HomeEmergencyPreparednessContinuityIntelligenceCard />
+                    <HomePeerRelationshipSocialDevelopmentIntelligenceCard />
+                    <HomeDigitalSafetyOnlineProtectionIntelligenceCard />
+                    <HomeTherapeuticInterventionEffectivenessIntelligenceCard />
+                    <HomeNutritionDietaryManagementIntelligenceCard />
+                    <HomeParentalContactFamilyEngagementIntelligenceCard />
+                    <HomeStaffTrainingCpdComplianceIntelligenceCard />
+                    <HomePhysicalActivityRecreationIntelligenceCard />
+                    <HomeEnvironmentalSustainabilityEcoAwarenessIntelligenceCard />
+                    <HomeSensoryAccessibilitySupportIntelligenceCard />
+                    <HomeSleepQualityRestManagementIntelligenceCard />
+                    <HomeReligiousSpiritualWellbeingIntelligenceCard />
+                    <HomeVisitorManagementSecurityIntelligenceCard />
+                    <HomeKeyWorkerRelationshipQualityIntelligenceCard />
+                    <HomeBehaviourSupportPlanEffectivenessIntelligenceCard />
+                    <HomePocketMoneyFinancialLiteracyIntelligenceCard />
+                    <HomeIndependenceLifeSkillsDevelopmentIntelligenceCard />
+                    <HomeMultiAgencyCollaborationIntelligenceCard />
+                    <HomeStaffWellbeingRetentionIntelligenceCard />
+                    <HomePlacementStabilityPermanenceIntelligenceCard />
+                    <HomeRecordKeepingDocumentationQualityIntelligenceCard />
+                    <HomeClothingPersonalPossessionsIntelligenceCard />
+                    <HomeCommunicationLanguageSupportIntelligenceCard />
+                    <HomeHomeworkAcademicSupportIntelligenceCard />
+                    <HomeConsentCapacityManagementIntelligenceCard />
+                    <HomeFireSafetyEmergencyDrillIntelligenceCard />
+                    <HomeInfectionPreventionControlIntelligenceCard />
+                    <HomePrivacyDignityIntelligenceCard />
+                    <HomeAllegationsInvestigationsManagementIntelligenceCard />
+                    <HomeAdmissionsMatchingAssessmentIntelligenceCard />
+                    <HomeDailyRoutineStructureIntelligenceCard />
+                    <HomeOutdoorNatureEngagementIntelligenceCard />
+                    <HomeCulturalEventsCelebrationsIntelligenceCard />
+                    <HomeWaterSafetyHydrationIntelligenceCard />
+                    <HomeDentalOralHealthIntelligenceCard />
+                    <HomeTechnologyDigitalInclusionIntelligenceCard />
+                    <HomeGriefBereavementSupportIntelligenceCard />
+                    <HomeSubstanceMisusePreventionIntelligenceCard />
+                    <HomeYouthJusticeOffendingIntelligenceCard />
+                    <HomePositiveIdentitySelfEsteemIntelligenceCard />
+                    <HomePetAnimalTherapyIntelligenceCard />
+                    <HomeSiblingContactRelationshipsIntelligenceCard />
+                    <HomeStaffRotaAdequateStaffingIntelligenceCard />
+                    <HomeWhistleblowingSafeguardingCultureIntelligenceCard />
+                    <HomeAnxietyMentalHealthScreeningIntelligenceCard />
+                    <HomeMinorRepairsMaintenanceIntelligenceCard />
+                    <HomeCommunityIntegrationVolunteeringIntelligenceCard />
+                    <HomePersonalCalendarAppointmentsIntelligenceCard />
+                    <HomeHobbiesInterestsDevelopmentIntelligenceCard />
+                    <HomeContinencePersonalHygieneSupportIntelligenceCard />
+                    <HomeRewardsIncentivesManagementIntelligenceCard />
+                    <HomeStaffDebriefingCriticalIncidentSupportIntelligenceCard />
+                    <HomeSensoryDietRegulationIntelligenceCard />
+                    <HomeEthnicHairSkincareIntelligenceCard />
+                    <HomeHolidayTripPlanningIntelligenceCard />
+                    <HomeRestorativePracticeConflictResolutionIntelligenceCard />
+                    <HomeSexualHealthRseEducationIntelligenceCard />
+                    <HomeNoiseSoundManagementIntelligenceCard />
+                    <HomeStaffPerformanceAppraisalIntelligenceCard />
+                    <HomeAdvocacyIndependentVisitorIntelligenceCard />
+                    <HomeEmotionalLiteracyFeelingsExpressionIntelligenceCard />
+                    <HomeSavingsBankingSkillsIntelligenceCard />
+                    <HomeHazardNearMissReportingIntelligenceCard />
+                    <HomeMenstruationPubertySupportIntelligenceCard />
+                    <HomeEyeHealthVisionCareIntelligenceCard />
+                    <HomeAsthmaRespiratoryManagementIntelligenceCard />
+                    <HomeLaundryLinenManagementIntelligenceCard />
+                    <HomeBirthdaySpecialOccasionCelebrationIntelligenceCard />
+                    <HomeFriendshipSocialNetworkIntelligenceCard />
+                    <HomeCctvSurveillanceGovernanceIntelligenceCard />
+                    <HomePocketMoneyAuditReconciliationIntelligenceCard />
+                    <HomeImmunisationVaccinationComplianceIntelligenceCard />
+                    <HomeFurnitureRoomPersonalisationIntelligenceCard />
+                    <HomeCookingKitchenSkillsIntelligenceCard />
+                    <HomeBedwettingEnuresisSupportIntelligenceCard />
+                    <HomeStaffLoneWorkingSafetyIntelligenceCard />
+                    <HomeTeethBrushingOralRoutineIntelligenceCard />
+                    <HomeGardenOutdoorSpaceMaintenanceIntelligenceCard />
+                    <HomeEmergencyContactNextOfKinIntelligenceCard />
+                    <HomeWeeklyPlannerActivityScheduleIntelligenceCard />
+                    <HomeDbsRenewalStaffVettingIntelligenceCard />
+                    <HomeChildVoiceParticipationIntelligenceCard />
+                    <HomeAromatherapyWellbeingTherapiesIntelligenceCard />
+                    <HomePestControlHygieneComplianceIntelligenceCard />
+                    <HomeMissingPersonAbsentAuthorityIntelligenceCard />
+                    <HomeBedroomTemperatureVentilationIntelligenceCard />
+                    <HomeHomeworkEnvironmentStudySpaceIntelligenceCard />
+                    <HomeWeightManagementHealthyEatingIntelligenceCard />
+                    <HomeFirstAidKitMedicalSuppliesIntelligenceCard />
+                    <HomeKeyholdingAccessControlIntelligenceCard />
+                    <HomeHandoverCommunicationQualityIntelligenceCard />
+                    <HomeClothingLabellingStorageIntelligenceCard />
+                    <HomeElectricityGasSafetyIntelligenceCard />
+                    <HomeBathroomShowerFacilitiesIntelligenceCard />
+                    <HomeMobilePhoneScreenTimeIntelligenceCard />
+                    <HomePocketMoneyDistributionEquityIntelligenceCard />
+                    <HomeAllergyManagementFoodSafetyIntelligenceCard />
+                    <HomeBathroomAccessibilityAdaptationsIntelligenceCard />
+                    <HomeUtilityBillsCostManagementIntelligenceCard />
+                    <HomeNeighbourhoodSafetyRiskAssessmentIntelligenceCard />
+                    <HomeWashingMachineDryerMaintenanceIntelligenceCard />
+                    <HomeItEquipmentConnectivityIntelligenceCard />
+                    <HomeWindowBlindCurtainSafetyIntelligenceCard />
+                    <HomeSharpsDisposalHazardousWasteIntelligenceCard />
+                    <HomeReg4445QualityAssuranceReportingIntelligenceCard />
+                    <HomeDampMouldManagementIntelligenceCard />
+                    <HomeFoodStorageRefrigerationSafetyIntelligenceCard />
+                    <HomeSlipsTripsFallsPreventionIntelligenceCard />
+                    <HomeBoilerHeatingSystemServicingIntelligenceCard />
+                    <HomeStatementPurposeChildrenGuideIntelligenceCard />
+                    <HomePolicyReviewCycleComplianceIntelligenceCard />
+                    <HomeDataProtectionGdprComplianceIntelligenceCard />
                     <IntelligenceBriefWidget />
                   </>
                 )}

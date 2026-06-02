@@ -1,67 +1,147 @@
 "use client";
 
+// ══════════════════════════════════════════════════════════════════════════════
+// CORNERSTONE — TRANSITION PLANNING READINESS CARD
+// Live data from useLeavingCareIntelligence() — overview, skills, readiness.
+// CHR 2015 Reg 44. SCCIF: Overall Experiences.
+// ══════════════════════════════════════════════════════════════════════════════
+
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { GraduationCap, ChevronRight, AlertTriangle, Brain, Clock, MapPin } from "lucide-react";
+import {
+  Target, ChevronRight, AlertTriangle, Brain, Loader2,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useLeavingCareIntelligence } from "@/hooks/use-leaving-care-intelligence";
 
-const DEMO_METRICS = { total_assessments: 6, not_ready_count: 1, not_assessed_count: 1, overdue_pathway_count: 1, not_started_pathway_count: 1, child_views_rate: 83.3, life_skills_rate: 66.7, housing_rate: 50.0, personal_advisor_rate: 66.7, unique_children: 5 };
+const ALERT_STYLES: Record<string, string> = {
+  critical: "border-red-200 bg-red-50 text-red-800",
+  high: "border-red-200 bg-red-50 text-red-800",
+  medium: "border-amber-200 bg-amber-50 text-amber-800",
+  low: "border-blue-200 bg-blue-50 text-blue-800",
+};
 
-const DEMO_RECORDS: { child: string; type: string; readiness: string; pathway: string }[] = [
-  { child: "Child A", type: "Leaving Care", readiness: "Mostly Ready", pathway: "In Place" },
-  { child: "Child B", type: "School Trans", readiness: "Not Ready", pathway: "Overdue" },
-  { child: "Child C", type: "Semi-Indep", readiness: "Partially", pathway: "In Progress" },
-  { child: "Child D", type: "Step Down", readiness: "Fully Ready", pathway: "In Place" },
-  { child: "Child E", type: "Leaving Care", readiness: "Not Assessed", pathway: "Not Started" },
-  { child: "Child A", type: "Age Trans", readiness: "Mostly Ready", pathway: "In Place" },
-];
-
-const DEMO_ALERTS: { type: string; severity: "critical" | "high" | "medium"; message: string }[] = [
-  { type: "leaving_care_not_ready", severity: "critical", message: "Child B not ready for leaving care with pathway plan overdue." },
-  { type: "pathway_overdue", severity: "high", message: "1 assessment has overdue pathway plan." },
-  { type: "housing_not_identified", severity: "high", message: "3 assessments have no housing identified." },
-];
-
-const ARIA_INSIGHTS = [
-  "6 assessments. Not ready: 1. Not assessed: 1. Pathway overdue: 1. Not started: 1. Life skills: 66.7%. Housing: 50%.",
-  "Priority: 1 leaving care not ready. 1 pathway overdue. 3 no housing. Strengthen transition preparation.",
-  "Positive: Child views increasingly included. Care plans updated. Social workers consistently involved.",
-];
-
-const READINESS_BADGES: Record<string, { label: string; color: string }> = {
-  "Fully Ready": { label: "Ready", color: "text-green-700 bg-green-50 border-green-200" },
-  "Mostly Ready": { label: "Mostly", color: "text-blue-700 bg-blue-50 border-blue-200" },
-  "Partially": { label: "Partial", color: "text-amber-700 bg-amber-50 border-amber-200" },
-  "Not Ready": { label: "Not Ready", color: "text-red-700 bg-red-50 border-red-200" },
-  "Not Assessed": { label: "N/A", color: "text-gray-700 bg-gray-50 border-gray-200" },
+const INSIGHT_STYLES: Record<string, string> = {
+  critical: "border-red-200 bg-red-50 text-red-800",
+  warning: "border-amber-200 bg-amber-50 text-amber-800",
+  positive: "border-green-200 bg-green-50 text-green-800",
 };
 
 export function TransitionPlanningReadinessCard() {
-  const m = DEMO_METRICS;
+  const { data, isLoading } = useLeavingCareIntelligence();
+  const intel = data?.data;
+
+  if (isLoading || !intel) {
+    return (
+      <Card>
+        <CardHeader className="pb-3">
+          <CardTitle className="text-sm flex items-center gap-2">
+            <Target className="h-4 w-4 text-brand" />
+            Transition Readiness
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center justify-center py-8">
+            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  const { overview, child_readiness, skills_summary } = intel;
+
   return (
     <Card className="overflow-hidden">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-sm flex items-center gap-2"><GraduationCap className="h-4 w-4 text-brand" />Transition Planning</CardTitle>
-          <Link href="/transition-planning-readiness" className="text-xs text-brand hover:underline flex items-center gap-1">Readiness <ChevronRight className="h-3 w-3" /></Link>
+          <CardTitle className="text-sm flex items-center gap-2">
+            <Target className="h-4 w-4 text-brand" />
+            Transition Readiness
+          </CardTitle>
+          <Link href="/leaving-care" className="text-xs text-brand hover:underline flex items-center gap-1">
+            Leaving Care <ChevronRight className="h-3 w-3" />
+          </Link>
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
+
         <div className="grid grid-cols-4 gap-2">
-          <div className={cn("text-center rounded-lg p-2", m.not_ready_count === 0 ? "bg-green-50" : "bg-red-50")}><p className={cn("text-lg font-bold tabular-nums", m.not_ready_count === 0 ? "text-green-600" : "text-red-600")}>{m.not_ready_count}</p><p className="text-[10px] text-muted-foreground">Not Ready</p></div>
-          <div className={cn("text-center rounded-lg p-2", m.overdue_pathway_count === 0 ? "bg-green-50" : "bg-red-50")}><p className={cn("text-lg font-bold tabular-nums", m.overdue_pathway_count === 0 ? "text-green-600" : "text-red-600")}>{m.overdue_pathway_count}</p><p className="text-[10px] text-muted-foreground">Overdue</p></div>
-          <div className={cn("text-center rounded-lg p-2", m.not_started_pathway_count === 0 ? "bg-green-50" : "bg-amber-50")}><p className={cn("text-lg font-bold tabular-nums", m.not_started_pathway_count === 0 ? "text-green-600" : "text-amber-600")}>{m.not_started_pathway_count}</p><p className="text-[10px] text-muted-foreground">Not Started</p></div>
-          <div className="text-center rounded-lg p-2 bg-blue-50"><p className="text-lg font-bold tabular-nums text-blue-600">{m.total_assessments}</p><p className="text-[10px] text-muted-foreground">Total</p></div>
-        </div>
-        <div className="space-y-1.5">
-          <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1"><Clock className="h-3 w-3" />Recent Assessments</p>
-          <div className="space-y-1">
-            {DEMO_RECORDS.map((r, i) => { const badge = READINESS_BADGES[r.readiness] ?? READINESS_BADGES["Not Assessed"]; return (<div key={i} className="flex items-center justify-between rounded border p-2 text-xs"><div className="flex items-center gap-2 flex-1 min-w-0"><MapPin className="h-3 w-3 text-green-500 shrink-0" /><span className="font-medium">{r.child}</span><span className="text-muted-foreground truncate">{r.type} · {r.pathway}</span></div><Badge variant="outline" className={cn("text-[10px] shrink-0", badge.color)}>{badge.label}</Badge></div>); })}
+          <div className={cn("text-center rounded-lg p-2.5", overview.avg_skills_competency_rate >= 70 ? "bg-green-50" : "bg-amber-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", overview.avg_skills_competency_rate >= 70 ? "text-green-600" : "text-amber-600")}>{overview.avg_skills_competency_rate}%</p>
+            <p className="text-[10px] text-muted-foreground">Skills</p>
+          </div>
+          <div className={cn("text-center rounded-lg p-2.5", overview.accommodation_secured_count > 0 ? "bg-green-50" : "bg-amber-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", overview.accommodation_secured_count > 0 ? "text-green-600" : "text-amber-600")}>{overview.accommodation_secured_count}</p>
+            <p className="text-[10px] text-muted-foreground">Housing</p>
+          </div>
+          <div className="text-center rounded-lg bg-blue-50 p-2.5">
+            <p className="text-lg font-bold tabular-nums text-blue-600">{overview.eet_confirmed_count}</p>
+            <p className="text-[10px] text-muted-foreground">EET</p>
+          </div>
+          <div className="text-center rounded-lg bg-blue-50 p-2.5">
+            <p className="text-lg font-bold tabular-nums text-blue-600">{overview.support_network_complete}</p>
+            <p className="text-[10px] text-muted-foreground">Network</p>
           </div>
         </div>
-        {DEMO_ALERTS.length > 0 && (<div className="space-y-1.5"><p className="text-xs font-semibold text-muted-foreground flex items-center gap-1"><AlertTriangle className="h-3 w-3" />Transition Alerts</p>{DEMO_ALERTS.map((a, i) => (<div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", a.severity === "critical" || a.severity === "high" ? "border-red-200 bg-red-50 text-red-800" : "border-amber-200 bg-amber-50 text-amber-800")}>{a.message}</div>))}</div>)}
-        <div className="space-y-1.5"><p className="text-xs font-semibold flex items-center gap-1 text-purple-700"><Brain className="h-3 w-3" />ARIA Transition Intelligence</p>{ARIA_INSIGHTS.map((insight, i) => (<div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", i === 0 ? "border-blue-200 bg-blue-50 text-blue-800" : i === 1 ? "border-amber-200 bg-amber-50 text-amber-800" : "border-green-200 bg-green-50 text-green-800")}>{insight}</div>))}</div>
+
+        {/* ── Skills breakdown ────────────────────────────────────────── */}
+
+        {skills_summary.length > 0 && (
+          <div className="space-y-1.5">
+            <p className="text-xs font-semibold text-muted-foreground">Skills Competency</p>
+            <div className="flex flex-wrap gap-1">
+              {skills_summary.map((s) => {
+                const total = s.independent_count + s.competent_count + s.developing_count + s.not_started_count;
+                const pct = total > 0 ? Math.round(((s.independent_count + s.competent_count) / total) * 100) : 0;
+                return (
+                  <Badge key={s.skill_area} variant="outline" className={cn("text-[10px]", pct >= 70 ? "text-green-700 border-green-200" : pct >= 50 ? "text-amber-700 border-amber-200" : "text-red-700 border-red-200")}>
+                    {s.skill_label} {pct}%
+                  </Badge>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* ── Alerts ──────────────────────────────────────────────────── */}
+
+        {intel.alerts.length > 0 && (
+          <div className="space-y-1.5">
+            <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
+              <AlertTriangle className="h-3 w-3" />
+              Readiness Alerts
+            </p>
+            {intel.alerts.slice(0, 2).map((alert, i) => (
+              <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", ALERT_STYLES[alert.severity] ?? ALERT_STYLES.medium)}>
+                {alert.message}
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* ── ARIA insights ───────────────────────────────────────────── */}
+
+        {intel.insights.length > 0 && (
+          <div className="space-y-1.5">
+            <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
+              <Brain className="h-3 w-3" />
+              ARIA Readiness Intelligence
+            </p>
+            {intel.insights.slice(0, 2).map((insight, i) => (
+              <div
+                key={i}
+                className={cn(
+                  "rounded border p-2.5 text-xs leading-relaxed",
+                  INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.positive,
+                )}
+              >
+                {insight.text}
+              </div>
+            ))}
+          </div>
+        )}
       </CardContent>
     </Card>
   );

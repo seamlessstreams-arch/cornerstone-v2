@@ -295,9 +295,9 @@ export function computeEventAnalysis(events: NotifiableEvent[]): {
 export function identifyNotificationAlerts(
   events: NotifiableEvent[],
   notifications: EventNotification[],
+  now: Date = new Date(),
 ): { type: string; severity: "critical" | "high" | "medium"; message: string }[] {
   const alerts: { type: string; severity: "critical" | "high" | "medium"; message: string }[] = [];
-  const now = new Date();
 
   const sevenDaysMs = 7 * 24 * 60 * 60 * 1000;
   const thirtyDaysMs = 30 * 24 * 60 * 60 * 1000;

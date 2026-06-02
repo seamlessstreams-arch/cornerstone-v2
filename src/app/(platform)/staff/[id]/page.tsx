@@ -182,6 +182,15 @@ export default function StaffProfilePage({ params }: { params: Promise<{ id: str
           <Button
             size="sm"
             className="gap-1.5 bg-[var(--cs-navy)] hover:bg-[var(--cs-navy)]/90 text-white"
+            onClick={() => router.push(`/record-staff/${id}`)}
+          >
+            <Sparkles className="h-3.5 w-3.5 text-[var(--cs-aria-gold)]" />
+            Record anything
+          </Button>
+          <Button
+            size="sm"
+            variant="outline"
+            className="gap-1.5"
             onClick={() => setShowAria((p) => !p)}
           >
             <Sparkles className="h-3.5 w-3.5" />

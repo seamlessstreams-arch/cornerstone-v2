@@ -2,7 +2,7 @@
 
 // ══════════════════════════════════════════════════════════════════════════════
 // CORNERSTONE — BEHAVIOUR SUPPORT PLANS INTELLIGENCE CARD
-// Dashboard card for BSP tracking, strategy effectiveness, and reviews.
+// Dashboard card powered by the Behaviour Intelligence Engine.
 // CHR 2015 Reg 19/20/6. SCCIF: Overall Experiences — Behaviour support.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -11,54 +11,74 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
   ClipboardList, ChevronRight, AlertTriangle, Brain,
-  Target, TrendingUp, User,
+  TrendingUp, TrendingDown, Minus, Loader2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useBehaviourIntelligence } from "@/hooks/use-behaviour-intelligence";
 
-const DEMO_METRICS = {
-  total_plans: 8,
-  active_plans: 5,
-  expired_plans: 1,
-  draft_plans: 2,
-  children_with_bsp: 5,
-  highly_effective_count: 2,
-  not_effective_count: 1,
-  child_involvement_rate: 62.5,
-  staff_briefed_rate: 75.0,
-  psychologist_input_rate: 37.5,
+// ── Styling ─────────────────────────────────────────────────────────────────
+
+const ALERT_STYLES: Record<string, string> = {
+  critical: "border-red-200 bg-red-50 text-red-800",
+  high:     "border-red-200 bg-red-50 text-red-800",
+  medium:   "border-amber-200 bg-amber-50 text-amber-800",
+  low:      "border-blue-200 bg-blue-50 text-blue-800",
 };
 
-const DEMO_PLANS: { child: string; status: string; effectiveness: string; incidents: number }[] = [
-  { child: "Child A", status: "Active", effectiveness: "Effective", incidents: 2 },
-  { child: "Child B", status: "Active", effectiveness: "Highly Effective", incidents: 0 },
-  { child: "Child C", status: "Active", effectiveness: "Not Effective", incidents: 8 },
-  { child: "Child D", status: "Active", effectiveness: "Partially Effective", incidents: 4 },
-  { child: "Child E", status: "Draft", effectiveness: "Not Yet Evaluated", incidents: 0 },
-  { child: "Child A", status: "Expired", effectiveness: "Effective", incidents: 1 },
-];
-
-const DEMO_ALERTS: { type: string; severity: "critical" | "high" | "medium"; message: string }[] = [
-  { type: "bsp_not_effective", severity: "critical", message: "Child C's behaviour support plan rated not effective (8 incidents) — urgent review with specialist input needed." },
-  { type: "staff_not_briefed", severity: "high", message: "Staff not briefed on Child D's active behaviour support plan — brief all staff immediately." },
-  { type: "child_not_involved", severity: "medium", message: "Child E not involved in creating their behaviour support plan — Reg 7 requires participation." },
-];
-
-const ARIA_INSIGHTS = [
-  "8 BSPs across 5 children. 5 active, 1 expired, 2 draft. 2 highly effective, 1 not effective. Child involvement: 62.5%. Staff briefed: 75%. Psychologist input: 37.5%.",
-  "Priority: Child C's BSP is failing — 8 incidents since last review. Needs urgent specialist review. Increase psychologist input from 37.5%. Ensure all staff briefed on all active plans (currently 75%).",
-  "Positive: Child B's BSP highly effective with zero incidents. Child A showing improvement. Increase child involvement rate to 100% — children who co-create their plans show better outcomes. Draft plans for Child E need finalising.",
-];
-
-const EFF_BADGES: Record<string, { label: string; color: string }> = {
-  "Highly Effective": { label: "Excellent", color: "text-green-700 bg-green-50 border-green-200" },
-  Effective: { label: "Effective", color: "text-emerald-700 bg-emerald-50 border-emerald-200" },
-  "Partially Effective": { label: "Partial", color: "text-amber-700 bg-amber-50 border-amber-200" },
-  "Not Effective": { label: "Ineffective", color: "text-red-700 bg-red-50 border-red-200" },
-  "Not Yet Evaluated": { label: "Pending", color: "text-gray-700 bg-gray-50 border-gray-200" },
+const INSIGHT_STYLES: Record<string, string> = {
+  critical: "border-red-200 bg-red-50 text-red-800",
+  warning:  "border-amber-200 bg-amber-50 text-amber-800",
+  positive: "border-green-200 bg-green-50 text-green-800",
 };
+
+const TREND_ICON = {
+  improving: TrendingUp,
+  stable: Minus,
+  declining: TrendingDown,
+  insufficient_data: Minus,
+};
+
+const TREND_COLOUR = {
+  improving: "text-green-600",
+  stable: "text-blue-600",
+  declining: "text-red-600",
+  insufficient_data: "text-gray-400",
+};
+
+const SEVERITY_STYLES: Record<string, string> = {
+  critical: "bg-red-50 text-red-700 border-red-200",
+  high: "bg-orange-50 text-orange-700 border-orange-200",
+  medium: "bg-amber-50 text-amber-700 border-amber-200",
+  low: "bg-green-50 text-green-700 border-green-200",
+};
+
+// ── Component ───────────────────────────────────────────────────────────────
 
 export function BehaviourSupportPlansCard() {
-  const m = DEMO_METRICS;
+  const { data, isLoading } = useBehaviourIntelligence();
+  const intel = data?.data;
+
+  if (isLoading || !intel) {
+    return (
+      <Card>
+        <CardHeader className="pb-3">
+          <CardTitle className="text-sm flex items-center gap-2">
+            <ClipboardList className="h-4 w-4 text-brand" />
+            Behaviour Support Plans
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center justify-center py-8">
+            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  const p = intel.profile;
+  const rs = intel.rewards_sanctions;
+
   return (
     <Card className="overflow-hidden">
       <CardHeader className="pb-3">
@@ -73,59 +93,140 @@ export function BehaviourSupportPlansCard() {
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
+
+        {/* ── Summary strip ────────────────────────────────────────────── */}
+
         <div className="grid grid-cols-4 gap-2">
-          <div className="text-center rounded-lg bg-green-50 p-2">
-            <p className="text-lg font-bold tabular-nums text-green-600">{m.active_plans}</p>
-            <p className="text-[10px] text-muted-foreground">Active</p>
+          <div className={cn(
+            "text-center rounded-lg p-2.5",
+            p.positive_percentage >= 50 ? "bg-green-50" : "bg-amber-50",
+          )}>
+            <p className={cn("text-lg font-bold tabular-nums", p.positive_percentage >= 50 ? "text-green-600" : "text-amber-600")}>
+              {p.positive_percentage}%
+            </p>
+            <p className="text-[10px] text-muted-foreground">Positive</p>
           </div>
-          <div className="text-center rounded-lg bg-green-50 p-2">
-            <p className="text-lg font-bold tabular-nums text-green-600">{m.highly_effective_count}</p>
-            <p className="text-[10px] text-muted-foreground">Effective</p>
+          <div className={cn(
+            "text-center rounded-lg p-2.5",
+            p.de_escalation_success_rate >= 80 ? "bg-green-50" : "bg-amber-50",
+          )}>
+            <p className={cn("text-lg font-bold tabular-nums", p.de_escalation_success_rate >= 80 ? "text-green-600" : "text-amber-600")}>
+              {p.de_escalation_success_rate}%
+            </p>
+            <p className="text-[10px] text-muted-foreground">De-escal.</p>
           </div>
-          <div className={cn("text-center rounded-lg p-2", m.not_effective_count === 0 ? "bg-green-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", m.not_effective_count === 0 ? "text-green-600" : "text-red-600")}>{m.not_effective_count}</p>
-            <p className="text-[10px] text-muted-foreground">Failing</p>
+          <div className="text-center rounded-lg bg-blue-50 p-2.5">
+            <p className="text-lg font-bold tabular-nums text-blue-600">{rs.reward_to_sanction}</p>
+            <p className="text-[10px] text-muted-foreground">R:S Ratio</p>
           </div>
-          <div className={cn("text-center rounded-lg p-2", m.staff_briefed_rate >= 90 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", m.staff_briefed_rate >= 90 ? "text-green-600" : "text-amber-600")}>{m.staff_briefed_rate}%</p>
-            <p className="text-[10px] text-muted-foreground">Briefed</p>
+          <div className={cn(
+            "text-center rounded-lg p-2.5",
+            p.pi_count === 0 ? "bg-green-50" : "bg-red-50",
+          )}>
+            <p className={cn("text-lg font-bold tabular-nums", p.pi_count === 0 ? "text-green-600" : "text-red-600")}>
+              {p.pi_count}
+            </p>
+            <p className="text-[10px] text-muted-foreground">PIs</p>
           </div>
         </div>
 
-        <div className="space-y-1.5">
-          <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1"><Target className="h-3 w-3" />Support Plans</p>
-          <div className="space-y-1">
-            {DEMO_PLANS.map((bp, i) => {
-              const badge = EFF_BADGES[bp.effectiveness] ?? EFF_BADGES["Not Yet Evaluated"];
+        {/* ── Child trajectories ──────────────────────────────────────── */}
+
+        {intel.child_trajectories.length > 0 && (
+          <div className="space-y-1.5">
+            <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
+              <TrendingUp className="h-3 w-3" />
+              Child Trajectories
+            </p>
+            {intel.child_trajectories.map((ct) => {
+              const TrendIcon = TREND_ICON[ct.trend] ?? Minus;
               return (
-                <div key={i} className="flex items-center justify-between rounded border p-2 text-xs">
-                  <div className="flex items-center gap-2 flex-1 min-w-0">
-                    <TrendingUp className="h-3 w-3 text-blue-500 shrink-0" />
-                    <span className="font-medium">{bp.child}</span>
-                    <span className="text-muted-foreground truncate">{bp.status} · {bp.incidents} incidents</span>
+                <div key={ct.child_id} className="flex items-center justify-between rounded border p-2.5 text-xs">
+                  <div className="flex items-center gap-2">
+                    <TrendIcon className={cn("h-3.5 w-3.5", TREND_COLOUR[ct.trend])} />
+                    <span className="font-medium">{ct.child_name}</span>
+                    <span className="text-muted-foreground">
+                      {ct.positive_recent}+ / {ct.concerning_recent}−
+                    </span>
                   </div>
-                  <Badge variant="outline" className={cn("text-[10px] shrink-0", badge.color)}>{badge.label}</Badge>
+                  <Badge variant="outline" className={cn("text-[10px]", SEVERITY_STYLES[ct.severity] ?? SEVERITY_STYLES.medium)}>
+                    {ct.trend}
+                  </Badge>
                 </div>
               );
             })}
           </div>
-        </div>
+        )}
 
-        {DEMO_ALERTS.length > 0 && (
+        {/* ── PI compliance ───────────────────────────────────────────── */}
+
+        {p.pi_count > 0 && (
+          <div className="rounded-lg border p-3 space-y-2">
+            <p className="text-xs font-semibold">Physical Intervention Compliance</p>
+            <div className="grid grid-cols-3 gap-2 text-center text-xs">
+              <div>
+                <p className={cn("font-bold tabular-nums", p.pi_debrief_completion_rate >= 100 ? "text-green-600" : "text-amber-600")}>
+                  {p.pi_debrief_completion_rate}%
+                </p>
+                <p className="text-[10px] text-muted-foreground">Debriefed</p>
+              </div>
+              <div>
+                <p className={cn("font-bold tabular-nums", p.pi_injury_rate === 0 ? "text-green-600" : "text-red-600")}>
+                  {p.pi_injury_rate}%
+                </p>
+                <p className="text-[10px] text-muted-foreground">Injury Rate</p>
+              </div>
+              <div>
+                <p className="font-bold tabular-nums text-slate-700">{p.pi_avg_duration_minutes}m</p>
+                <p className="text-[10px] text-muted-foreground">Avg Duration</p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ── Alerts ──────────────────────────────────────────────────── */}
+
+        {intel.alerts.length > 0 && (
           <div className="space-y-1.5">
-            <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1"><AlertTriangle className="h-3 w-3" />BSP Alerts</p>
-            {DEMO_ALERTS.map((a, i) => (
-              <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", a.severity === "critical" || a.severity === "high" ? "border-red-200 bg-red-50 text-red-800" : "border-amber-200 bg-amber-50 text-amber-800")}>{a.message}</div>
+            <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
+              <AlertTriangle className="h-3 w-3" />
+              BSP Alerts
+            </p>
+            {intel.alerts.slice(0, 3).map((alert, i) => (
+              <div
+                key={i}
+                className={cn(
+                  "rounded border p-2.5 text-xs leading-relaxed",
+                  ALERT_STYLES[alert.severity] ?? ALERT_STYLES.medium,
+                )}
+              >
+                {alert.message}
+              </div>
             ))}
           </div>
         )}
 
-        <div className="space-y-1.5">
-          <p className="text-xs font-semibold flex items-center gap-1 text-purple-700"><Brain className="h-3 w-3" />ARIA BSP Intelligence</p>
-          {ARIA_INSIGHTS.map((insight, i) => (
-            <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", i === 0 ? "border-blue-200 bg-blue-50 text-blue-800" : i === 1 ? "border-amber-200 bg-amber-50 text-amber-800" : "border-green-200 bg-green-50 text-green-800")}>{insight}</div>
-          ))}
-        </div>
+        {/* ── ARIA Behaviour Intelligence ─────────────────────────────── */}
+
+        {intel.insights.length > 0 && (
+          <div className="space-y-1.5">
+            <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
+              <Brain className="h-3 w-3" />
+              ARIA BSP Intelligence
+            </p>
+            {intel.insights.slice(0, 3).map((insight, i) => (
+              <div
+                key={i}
+                className={cn(
+                  "rounded border p-2.5 text-xs leading-relaxed",
+                  INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.positive,
+                )}
+              >
+                {insight.text}
+              </div>
+            ))}
+          </div>
+        )}
       </CardContent>
     </Card>
   );

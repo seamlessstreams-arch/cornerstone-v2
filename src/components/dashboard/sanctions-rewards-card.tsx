@@ -2,8 +2,7 @@
 
 // ══════════════════════════════════════════════════════════════════════════════
 // CORNERSTONE — SANCTIONS & REWARDS INTELLIGENCE CARD
-// Dashboard card for behaviour management, sanction/reward ratios,
-// proportionality tracking, and ARIA behaviour management intelligence.
+// Dashboard card powered by the Sanctions & Rewards Intelligence Engine.
 // CHR 2015 Reg 19 (behaviour management), Reg 35 (behaviour management
 // standards), SCCIF Experiences & Progress, Helped & Protected.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -13,61 +12,51 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
   Award, ChevronRight, AlertTriangle, Brain,
-  ThumbsDown, ThumbsUp, BarChart3, Eye,
+  ThumbsDown, ThumbsUp, BarChart3, Loader2, FileWarning,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useSanctionsRewardsIntelligence } from "@/hooks/use-sanctions-rewards-intelligence";
 
-// ── Demo data ────────────────────────────────────────────────────────────────
+// ── Styling ─────────────────────────────────────────────────────────────────
 
-const DEMO_BEHAVIOUR_METRICS = {
-  sanctions_this_month: 8,
-  rewards_this_month: 22,
-  reward_to_sanction_ratio: 2.75,
-  proportionality_rate: 88,
-  manager_review_rate: 75,
-  unreviewed_sanctions: 2,
-  children_with_sanctions: 3,
-  children_with_rewards: 5,
+const ALERT_STYLES: Record<string, string> = {
+  critical: "border-red-200 bg-red-50 text-red-800",
+  high:     "border-red-200 bg-red-50 text-red-800",
+  medium:   "border-amber-200 bg-amber-50 text-amber-800",
+  low:      "border-blue-200 bg-blue-50 text-blue-800",
 };
 
-const DEMO_SANCTION_TYPES = [
-  { type: "Verbal Reminder", count: 3 },
-  { type: "Time Out", count: 2 },
-  { type: "Loss of Privilege", count: 1 },
-  { type: "Restorative Conversation", count: 2 },
-];
+const INSIGHT_STYLES: Record<string, string> = {
+  critical: "border-red-200 bg-red-50 text-red-800",
+  warning:  "border-amber-200 bg-amber-50 text-amber-800",
+  positive: "border-green-200 bg-green-50 text-green-800",
+};
 
-const DEMO_REWARD_TYPES = [
-  { type: "Verbal Praise", count: 10 },
-  { type: "Extra Privilege", count: 4 },
-  { type: "Special Activity", count: 3 },
-  { type: "Sticker Chart", count: 3 },
-  { type: "Certificate", count: 2 },
-];
-
-const DEMO_CHILD_BREAKDOWN = [
-  { child: "Child A", sanctions: 4, rewards: 8, ratio: 2.0 },
-  { child: "Child B", sanctions: 3, rewards: 6, ratio: 2.0 },
-  { child: "Child C", sanctions: 1, rewards: 4, ratio: 4.0 },
-  { child: "Child D", sanctions: 0, rewards: 2, ratio: 0 },
-  { child: "Child E", sanctions: 0, rewards: 2, ratio: 0 },
-];
-
-const DEMO_ALERTS: { type: string; severity: "critical" | "high" | "medium" | "low"; message: string }[] = [
-  { type: "unreviewed", severity: "high", message: "2 sanctions not yet reviewed by a manager. All sanctions must be reviewed for proportionality (Reg 19)." },
-  { type: "high_sanctions", severity: "medium", message: "Child A has 4 sanctions this month — review behaviour support plan and discuss with key worker." },
-];
-
-const ARIA_INSIGHTS = [
-  "2 unreviewed sanctions — both from the last 3 days. Manager review ensures proportionality and consistency. Schedule review before end of shift. Both are for Child A (verbal reminder + time out).",
-  "Reward-to-sanction ratio is 2.75:1 — above the recommended 3:1 target but improving. Verbal praise is the most used reward (10/22). Consider diversifying with more tangible rewards and linking to specific targets in behaviour support plans.",
-  "Overall behaviour management: 88% proportionality rate, 75% manager review rate. 5 of 5 children received rewards this month. Restorative conversations used twice — good practice. No prohibited sanctions detected. Child A and B have highest sanction counts — cross-reference with incident and restraint data.",
-];
-
-// ── Component ────────────────────────────────────────────────────────────────
+// ── Component ───────────────────────────────────────────────────────────────
 
 export function SanctionsRewardsCard() {
-  const b = DEMO_BEHAVIOUR_METRICS;
+  const { data, isLoading } = useSanctionsRewardsIntelligence();
+  const intel = data?.data;
+
+  if (isLoading || !intel) {
+    return (
+      <Card>
+        <CardHeader className="pb-3">
+          <CardTitle className="text-sm flex items-center gap-2">
+            <Award className="h-4 w-4 text-brand" />
+            Sanctions & Rewards
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center justify-center py-8">
+            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  const o = intel.overview;
 
   return (
     <Card className="overflow-hidden">
@@ -87,129 +76,156 @@ export function SanctionsRewardsCard() {
         {/* ── Summary strip ────────────────────────────────────────────── */}
 
         <div className="grid grid-cols-4 gap-2">
-          <div className={cn("text-center rounded-lg p-2", b.reward_to_sanction_ratio >= 3 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", b.reward_to_sanction_ratio >= 3 ? "text-green-600" : "text-amber-600")}>
-              {b.reward_to_sanction_ratio}:1
+          <div className={cn(
+            "text-center rounded-lg p-2.5",
+            o.reward_to_sanction_ratio >= 3 ? "bg-green-50" : o.reward_to_sanction_ratio >= 2 ? "bg-amber-50" : "bg-red-50",
+          )}>
+            <p className={cn(
+              "text-lg font-bold tabular-nums",
+              o.reward_to_sanction_ratio >= 3 ? "text-green-600" : o.reward_to_sanction_ratio >= 2 ? "text-amber-600" : "text-red-600",
+            )}>
+              {o.reward_to_sanction_ratio}:1
             </p>
             <p className="text-[10px] text-muted-foreground">R:S Ratio</p>
           </div>
-          <div className={cn("text-center rounded-lg p-2", b.proportionality_rate >= 90 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", b.proportionality_rate >= 90 ? "text-green-600" : "text-amber-600")}>
-              {b.proportionality_rate}%
+          <div className={cn(
+            "text-center rounded-lg p-2.5",
+            o.proportionality_rate === 100 ? "bg-green-50" : o.proportionality_rate >= 80 ? "bg-amber-50" : "bg-red-50",
+          )}>
+            <p className={cn(
+              "text-lg font-bold tabular-nums",
+              o.proportionality_rate === 100 ? "text-green-600" : o.proportionality_rate >= 80 ? "text-amber-600" : "text-red-600",
+            )}>
+              {o.proportionality_rate}%
             </p>
             <p className="text-[10px] text-muted-foreground">Proportionate</p>
           </div>
-          <div className={cn("text-center rounded-lg p-2", b.manager_review_rate >= 90 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", b.manager_review_rate >= 90 ? "text-green-600" : "text-amber-600")}>
-              {b.manager_review_rate}%
+          <div className="text-center rounded-lg bg-green-50 p-2.5">
+            <p className="text-lg font-bold tabular-nums text-green-600">
+              {o.total_rewards}
             </p>
-            <p className="text-[10px] text-muted-foreground">Reviewed</p>
+            <p className="text-[10px] text-muted-foreground">Rewards</p>
           </div>
-          <div className={cn("text-center rounded-lg p-2", b.unreviewed_sanctions === 0 ? "bg-green-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", b.unreviewed_sanctions === 0 ? "text-green-600" : "text-red-600")}>
-              {b.unreviewed_sanctions}
+          <div className={cn(
+            "text-center rounded-lg p-2.5",
+            o.total_sanctions === 0 ? "bg-green-50" : "bg-amber-50",
+          )}>
+            <p className={cn(
+              "text-lg font-bold tabular-nums",
+              o.total_sanctions === 0 ? "text-green-600" : "text-amber-600",
+            )}>
+              {o.total_sanctions}
             </p>
-            <p className="text-[10px] text-muted-foreground">Unreviewed</p>
+            <p className="text-[10px] text-muted-foreground">Sanctions</p>
           </div>
         </div>
 
-        {/* ── Sanctions vs rewards ────────────────────────────────────── */}
+        {/* ── Type breakdowns (side by side) ──────────────────────────── */}
 
         <div className="grid grid-cols-2 gap-3">
-          <div className="space-y-1.5">
-            <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
-              <ThumbsDown className="h-3 w-3" />
-              Sanctions ({b.sanctions_this_month})
-            </p>
-            {DEMO_SANCTION_TYPES.map((s) => (
-              <div key={s.type} className="flex items-center justify-between text-xs rounded border p-1.5">
-                <span className="truncate">{s.type}</span>
-                <Badge variant="outline" className="text-[10px] tabular-nums">{s.count}</Badge>
-              </div>
-            ))}
-          </div>
-          <div className="space-y-1.5">
-            <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
-              <ThumbsUp className="h-3 w-3" />
-              Rewards ({b.rewards_this_month})
-            </p>
-            {DEMO_REWARD_TYPES.map((r) => (
-              <div key={r.type} className="flex items-center justify-between text-xs rounded border p-1.5">
-                <span className="truncate">{r.type}</span>
-                <Badge variant="outline" className="text-[10px] tabular-nums">{r.count}</Badge>
-              </div>
-            ))}
-          </div>
+          {intel.sanction_types.length > 0 && (
+            <div className="space-y-1.5">
+              <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
+                <ThumbsDown className="h-3 w-3" />
+                Sanctions ({o.total_sanctions})
+              </p>
+              {intel.sanction_types.slice(0, 4).map((s) => (
+                <div key={s.type} className="flex items-center justify-between text-xs rounded border p-1.5">
+                  <span className="truncate">{s.type_label}</span>
+                  <Badge variant="outline" className="text-[10px] tabular-nums">{s.count}</Badge>
+                </div>
+              ))}
+            </div>
+          )}
+          {intel.reward_types.length > 0 && (
+            <div className="space-y-1.5">
+              <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
+                <ThumbsUp className="h-3 w-3" />
+                Rewards ({o.total_rewards})
+              </p>
+              {intel.reward_types.slice(0, 4).map((r) => (
+                <div key={r.type} className="flex items-center justify-between text-xs rounded border p-1.5">
+                  <span className="truncate">{r.type_label}</span>
+                  <Badge variant="outline" className="text-[10px] tabular-nums">{r.count}</Badge>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* ── Per-child breakdown ──────────────────────────────────────── */}
 
-        <div className="space-y-1.5">
-          <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
-            <BarChart3 className="h-3 w-3" />
-            Per Child (This Month)
-          </p>
-          {DEMO_CHILD_BREAKDOWN.map((c) => (
-            <div key={c.child} className="flex items-center justify-between rounded border p-2 text-xs">
-              <span className="font-medium">{c.child}</span>
-              <div className="flex items-center gap-2">
-                <span className="text-red-600 tabular-nums">{c.sanctions}S</span>
-                <span className="text-green-600 tabular-nums">{c.rewards}R</span>
-                {c.sanctions > 0 && (
-                  <Badge className={cn(
-                    "text-[10px] tabular-nums",
-                    c.ratio >= 3 ? "bg-green-100 text-green-700" : c.ratio >= 2 ? "bg-amber-100 text-amber-700" : "bg-red-100 text-red-700",
-                  )}>
-                    {c.ratio.toFixed(1)}:1
-                  </Badge>
+        {intel.child_profiles.length > 0 && (
+          <div className="space-y-1.5">
+            <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
+              <BarChart3 className="h-3 w-3" />
+              Per Child
+            </p>
+            {intel.child_profiles.slice(0, 5).map((c) => (
+              <div key={c.child_id} className="rounded-lg border p-2.5 text-xs">
+                <div className="flex items-center justify-between">
+                  <span className="font-medium">{c.child_name}</span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-red-600 tabular-nums">{c.sanctions}S</span>
+                    <span className="text-green-600 tabular-nums">{c.rewards}R</span>
+                    {c.sanctions > 0 && (
+                      <Badge className={cn(
+                        "text-[10px] tabular-nums",
+                        c.ratio >= 3 ? "bg-green-100 text-green-700"
+                          : c.ratio >= 2 ? "bg-amber-100 text-amber-700"
+                          : "bg-red-100 text-red-700",
+                      )}>
+                        {c.ratio}:1
+                      </Badge>
+                    )}
+                  </div>
+                </div>
+                {c.risk_flags.length > 0 && (
+                  <div className="flex flex-wrap gap-1 mt-1.5">
+                    {c.risk_flags.slice(0, 3).map((flag, i) => (
+                      <Badge key={i} className="text-[9px] bg-red-100 text-red-700">
+                        <FileWarning className="h-2.5 w-2.5 mr-0.5" />
+                        {flag.replace(/_/g, " ")}
+                      </Badge>
+                    ))}
+                  </div>
                 )}
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
 
-        {/* ── Manager review compliance ───────────────────────────────── */}
+        {/* ── Key metrics bar ──────────────────────────────────────────── */}
 
-        <div className="rounded-lg border p-3 space-y-1.5">
-          <p className="text-xs font-semibold flex items-center gap-1">
-            <Eye className="h-3 w-3 text-blue-500" />
-            Manager Review Compliance
-          </p>
-          <div className="flex items-center gap-2">
-            <div className="flex-1 h-2.5 rounded-full bg-gray-100 overflow-hidden">
-              <div
-                className={cn(
-                  "h-full rounded-full transition-all",
-                  b.manager_review_rate >= 90 ? "bg-green-500" : b.manager_review_rate >= 70 ? "bg-amber-500" : "bg-red-500",
-                )}
-                style={{ width: `${b.manager_review_rate}%` }}
-              />
-            </div>
-            <span className={cn(
-              "text-xs font-bold tabular-nums",
-              b.manager_review_rate >= 90 ? "text-green-600" : b.manager_review_rate >= 70 ? "text-amber-600" : "text-red-600",
-            )}>
-              {b.manager_review_rate}%
-            </span>
+        <div className="grid grid-cols-3 gap-2 text-center text-xs">
+          <div>
+            <p className="font-bold text-slate-700 tabular-nums">{o.children_with_entries}</p>
+            <p className="text-[10px] text-muted-foreground">Children</p>
+          </div>
+          <div>
+            <p className="font-bold text-green-600 tabular-nums">{o.children_with_rewards_only}</p>
+            <p className="text-[10px] text-muted-foreground">Rewards Only</p>
+          </div>
+          <div>
+            <p className="font-bold text-slate-700 tabular-nums">{o.staff_recording_count}</p>
+            <p className="text-[10px] text-muted-foreground">Staff Recording</p>
           </div>
         </div>
 
         {/* ── Alerts ──────────────────────────────────────────────────── */}
 
-        {DEMO_ALERTS.length > 0 && (
+        {intel.alerts.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
               <AlertTriangle className="h-3 w-3" />
               Behaviour Alerts
             </p>
-            {DEMO_ALERTS.map((alert, i) => (
+            {intel.alerts.slice(0, 3).map((alert, i) => (
               <div
                 key={i}
                 className={cn(
                   "rounded border p-2.5 text-xs leading-relaxed",
-                  alert.severity === "critical" || alert.severity === "high"
-                    ? "border-red-200 bg-red-50 text-red-800"
-                    : "border-amber-200 bg-amber-50 text-amber-800",
+                  ALERT_STYLES[alert.severity] ?? ALERT_STYLES.medium,
                 )}
               >
                 {alert.message}
@@ -218,27 +234,27 @@ export function SanctionsRewardsCard() {
           </div>
         )}
 
-        {/* ── ARIA insights ────────────────────────────────────────────── */}
+        {/* ── ARIA Behaviour Intelligence ─────────────────────────────── */}
 
-        <div className="space-y-1.5">
-          <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
-            <Brain className="h-3 w-3" />
-            ARIA Behaviour Intelligence
-          </p>
-          {ARIA_INSIGHTS.map((insight, i) => (
-            <div
-              key={i}
-              className={cn(
-                "rounded border p-2.5 text-xs leading-relaxed",
-                i === 0 ? "border-red-200 bg-red-50 text-red-800"
-                  : i === 1 ? "border-amber-200 bg-amber-50 text-amber-800"
-                  : "border-green-200 bg-green-50 text-green-800",
-              )}
-            >
-              {insight}
-            </div>
-          ))}
-        </div>
+        {intel.insights.length > 0 && (
+          <div className="space-y-1.5">
+            <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
+              <Brain className="h-3 w-3" />
+              ARIA Behaviour Intelligence
+            </p>
+            {intel.insights.slice(0, 3).map((insight, i) => (
+              <div
+                key={i}
+                className={cn(
+                  "rounded border p-2.5 text-xs leading-relaxed",
+                  INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.positive,
+                )}
+              >
+                {insight.text}
+              </div>
+            ))}
+          </div>
+        )}
       </CardContent>
     </Card>
   );

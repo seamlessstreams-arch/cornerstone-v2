@@ -97,7 +97,7 @@ describe("computeNightMonitoringMetrics", () => {
         status: "completed",
       }),
     ];
-    const m = computeNightMonitoringMetrics(checks, logs);
+    const m = computeNightMonitoringMetrics(checks, logs, NOW);
     expect(m.total_checks_last_7d).toBe(2);
     expect(m.avg_checks_per_night).toBe(7); // (8+6)/2
     expect(m.all_children_checked_rate).toBe(50);

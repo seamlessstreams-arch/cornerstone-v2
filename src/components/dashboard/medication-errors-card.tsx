@@ -12,52 +12,61 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
   Pill, ChevronRight, AlertTriangle, Brain,
-  ShieldAlert, CheckCircle2, User,
+  User, Loader2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useMedicationIntelligence } from "@/hooks/use-medication-intelligence";
 
-const DEMO_METRICS = {
-  total_errors: 5,
-  near_miss_count: 2,
-  actual_error_count: 3,
-  no_harm_count: 3,
-  harm_caused_count: 2,
-  child_harmed_count: 1,
-  open_investigations: 2,
-  actions_outstanding: 1,
-  parent_informed_rate: 80.0,
-  duty_of_candour_rate: 60.0,
+// ── Styling ─────────────────────────────────────────────────────────────────
+
+const ALERT_STYLES: Record<string, string> = {
+  critical: "border-red-200 bg-red-50 text-red-800",
+  high:     "border-red-200 bg-red-50 text-red-800",
+  medium:   "border-amber-200 bg-amber-50 text-amber-800",
+  low:      "border-blue-200 bg-blue-50 text-blue-800",
 };
 
-const DEMO_ERRORS: { child: string; medication: string; type: string; severity: string; status: string }[] = [
-  { child: "Child A", medication: "Melatonin", type: "Wrong Dose", severity: "Low Harm", status: "Actions Identified" },
-  { child: "Child C", medication: "Methylphenidate", type: "Omission", severity: "No Harm", status: "Closed" },
-  { child: "Child B", medication: "Fluoxetine", type: "Wrong Time", severity: "No Harm", status: "Under Investigation" },
-  { child: "Child D", medication: "Risperidone", type: "Double Dose", severity: "Moderate Harm", status: "Reported" },
-  { child: "Child A", medication: "Melatonin", type: "Near Miss", severity: "No Harm", status: "Closed" },
-];
-
-const DEMO_ALERTS: { type: string; severity: "critical" | "high" | "medium"; message: string }[] = [
-  { type: "severe_error", severity: "critical", message: "Parent not informed of medication error causing harm to Child D — duty of candour requires immediate disclosure." },
-  { type: "actions_outstanding", severity: "high", message: "Corrective actions outstanding for Child A (Melatonin) wrong dose — complete actions to prevent recurrence." },
-  { type: "not_investigated", severity: "medium", message: "Medication error for Child D (Risperidone) reported but not yet investigated — begin investigation." },
-];
-
-const ARIA_INSIGHTS = [
-  "5 medication errors: 2 near misses, 3 actual errors. 2 caused harm, 1 child harmed. 2 open investigations. 1 outstanding corrective action. Parent informed rate: 80%. Duty of candour: 60%.",
-  "Priority: Child D's double dose of Risperidone caused moderate harm — parent not yet informed, breaching duty of candour. Corrective actions for Child A still incomplete. Investigate reported errors within 24 hours.",
-  "Positive: 2 near misses caught before reaching children — demonstrates vigilance. Melatonin errors suggest dose-time review needed. Consider medication competency refresher for all staff and double-check protocol for controlled medications.",
-];
-
-const SEVERITY_BADGES: Record<string, { label: string; color: string }> = {
-  "No Harm": { label: "No Harm", color: "text-green-700 bg-green-50 border-green-200" },
-  "Low Harm": { label: "Low", color: "text-amber-700 bg-amber-50 border-amber-200" },
-  "Moderate Harm": { label: "Moderate", color: "text-orange-700 bg-orange-50 border-orange-200" },
-  "Severe Harm": { label: "Severe", color: "text-red-700 bg-red-50 border-red-200" },
+const INSIGHT_STYLES: Record<string, string> = {
+  critical: "border-red-200 bg-red-50 text-red-800",
+  warning:  "border-amber-200 bg-amber-50 text-amber-800",
+  positive: "border-green-200 bg-green-50 text-green-800",
 };
+
+// ── Component ───────────────────────────────────────────────────────────────
 
 export function MedicationErrorsCard() {
-  const m = DEMO_METRICS;
+  const { data, isLoading } = useMedicationIntelligence();
+  const intel = data?.data;
+
+  if (isLoading || !intel) {
+    return (
+      <Card>
+        <CardHeader className="pb-3">
+          <CardTitle className="text-sm flex items-center gap-2">
+            <Pill className="h-4 w-4 text-brand" />
+            Medication Errors
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center justify-center py-8">
+            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-text-muted)]" />
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  const o = intel.overview;
+
+  // Calculate total missed/refusal counts from child profiles
+  const totalRefusals = intel.child_profiles.reduce((sum, cp) => sum + cp.refusal_count_30d, 0);
+  const totalMissed = intel.child_profiles.reduce((sum, cp) => sum + cp.missed_count_30d, 0);
+
+  // Sort children by combined refusal + missed count (highest first)
+  const childrenWithIssues = [...intel.child_profiles]
+    .filter((cp) => cp.refusal_count_30d > 0 || cp.missed_count_30d > 0)
+    .sort((a, b) => (b.refusal_count_30d + b.missed_count_30d) - (a.refusal_count_30d + a.missed_count_30d));
+
   return (
     <Card className="overflow-hidden">
       <CardHeader className="pb-3">
@@ -66,65 +75,142 @@ export function MedicationErrorsCard() {
             <Pill className="h-4 w-4 text-brand" />
             Medication Errors
           </CardTitle>
-          <Link href="/medication-errors" className="text-xs text-brand hover:underline flex items-center gap-1">
+          <Link href="/medication" className="text-xs text-brand hover:underline flex items-center gap-1">
             Errors <ChevronRight className="h-3 w-3" />
           </Link>
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
+
+        {/* ── Summary strip ────────────────────────────────────────────── */}
+
         <div className="grid grid-cols-4 gap-2">
-          <div className={cn("text-center rounded-lg p-2", m.total_errors === 0 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", m.total_errors === 0 ? "text-green-600" : "text-amber-600")}>{m.total_errors}</p>
-            <p className="text-[10px] text-muted-foreground">Total</p>
+          <div className={cn(
+            "text-center rounded-lg p-2.5",
+            o.missed_rate === 0 ? "bg-green-50" : o.missed_rate <= 3 ? "bg-amber-50" : "bg-red-50",
+          )}>
+            <p className={cn(
+              "text-lg font-bold tabular-nums",
+              o.missed_rate === 0 ? "text-green-600" : o.missed_rate <= 3 ? "text-amber-600" : "text-red-600",
+            )}>
+              {o.missed_rate}%
+            </p>
+            <p className="text-[10px] text-muted-foreground">Missed</p>
           </div>
-          <div className={cn("text-center rounded-lg p-2", m.harm_caused_count === 0 ? "bg-green-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", m.harm_caused_count === 0 ? "text-green-600" : "text-red-600")}>{m.harm_caused_count}</p>
-            <p className="text-[10px] text-muted-foreground">Harm</p>
+          <div className={cn(
+            "text-center rounded-lg p-2.5",
+            o.refusal_rate === 0 ? "bg-green-50" : o.refusal_rate <= 5 ? "bg-amber-50" : "bg-red-50",
+          )}>
+            <p className={cn(
+              "text-lg font-bold tabular-nums",
+              o.refusal_rate === 0 ? "text-green-600" : o.refusal_rate <= 5 ? "text-amber-600" : "text-red-600",
+            )}>
+              {o.refusal_rate}%
+            </p>
+            <p className="text-[10px] text-muted-foreground">Refusal</p>
           </div>
-          <div className={cn("text-center rounded-lg p-2", m.open_investigations === 0 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", m.open_investigations === 0 ? "text-green-600" : "text-amber-600")}>{m.open_investigations}</p>
-            <p className="text-[10px] text-muted-foreground">Open</p>
+          <div className={cn(
+            "text-center rounded-lg p-2.5",
+            totalMissed === 0 ? "bg-green-50" : "bg-amber-50",
+          )}>
+            <p className={cn(
+              "text-lg font-bold tabular-nums",
+              totalMissed === 0 ? "text-green-600" : "text-amber-600",
+            )}>
+              {totalMissed}
+            </p>
+            <p className="text-[10px] text-muted-foreground">Missed (30d)</p>
           </div>
-          <div className={cn("text-center rounded-lg p-2", m.actions_outstanding === 0 ? "bg-green-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", m.actions_outstanding === 0 ? "text-green-600" : "text-red-600")}>{m.actions_outstanding}</p>
-            <p className="text-[10px] text-muted-foreground">Actions</p>
+          <div className={cn(
+            "text-center rounded-lg p-2.5",
+            totalRefusals === 0 ? "bg-green-50" : "bg-red-50",
+          )}>
+            <p className={cn(
+              "text-lg font-bold tabular-nums",
+              totalRefusals === 0 ? "text-green-600" : "text-red-600",
+            )}>
+              {totalRefusals}
+            </p>
+            <p className="text-[10px] text-muted-foreground">Refusals (30d)</p>
           </div>
         </div>
 
-        <div className="space-y-1.5">
-          <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1"><ShieldAlert className="h-3 w-3" />Recent Errors</p>
-          <div className="space-y-1">
-            {DEMO_ERRORS.map((e, i) => {
-              const badge = SEVERITY_BADGES[e.severity] ?? SEVERITY_BADGES["No Harm"];
-              return (
-                <div key={i} className="flex items-center justify-between rounded border p-2 text-xs">
+        {/* ── Children with refusals/missed ───────────────────────────── */}
+
+        {childrenWithIssues.length > 0 && (
+          <div className="space-y-1.5">
+            <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
+              <User className="h-3 w-3" />
+              Children with Refusals / Missed
+            </p>
+            <div className="space-y-1">
+              {childrenWithIssues.slice(0, 6).map((cp) => (
+                <div key={cp.child_id} className="flex items-center justify-between rounded border p-2 text-xs">
                   <div className="flex items-center gap-2 flex-1 min-w-0">
                     <User className="h-3 w-3 text-blue-500 shrink-0" />
-                    <span className="font-medium">{e.child}</span>
-                    <span className="text-muted-foreground truncate">{e.type} · {e.medication}</span>
+                    <span className="font-medium truncate">{cp.child_name}</span>
                   </div>
-                  <Badge variant="outline" className={cn("text-[10px] shrink-0", badge.color)}>{badge.label}</Badge>
+                  <div className="flex items-center gap-1.5 ml-2">
+                    {cp.refusal_count_30d > 0 && (
+                      <Badge variant="outline" className="text-[10px] text-red-700 bg-red-50 border-red-200">
+                        {cp.refusal_count_30d} refused
+                      </Badge>
+                    )}
+                    {cp.missed_count_30d > 0 && (
+                      <Badge variant="outline" className="text-[10px] text-amber-700 bg-amber-50 border-amber-200">
+                        {cp.missed_count_30d} missed
+                      </Badge>
+                    )}
+                  </div>
                 </div>
-              );
-            })}
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
-        {DEMO_ALERTS.length > 0 && (
+        {/* ── Alerts ──────────────────────────────────────────────────── */}
+
+        {intel.alerts.length > 0 && (
           <div className="space-y-1.5">
-            <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1"><AlertTriangle className="h-3 w-3" />Error Alerts</p>
-            {DEMO_ALERTS.map((a, i) => (
-              <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", a.severity === "critical" || a.severity === "high" ? "border-red-200 bg-red-50 text-red-800" : "border-amber-200 bg-amber-50 text-amber-800")}>{a.message}</div>
+            <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
+              <AlertTriangle className="h-3 w-3" />
+              Error Alerts
+            </p>
+            {intel.alerts.slice(0, 3).map((alert, i) => (
+              <div
+                key={i}
+                className={cn(
+                  "rounded border p-2.5 text-xs leading-relaxed",
+                  ALERT_STYLES[alert.severity] ?? ALERT_STYLES.medium,
+                )}
+              >
+                {alert.message}
+              </div>
             ))}
           </div>
         )}
 
-        <div className="space-y-1.5">
-          <p className="text-xs font-semibold flex items-center gap-1 text-purple-700"><Brain className="h-3 w-3" />ARIA Medication Safety Intelligence</p>
-          {ARIA_INSIGHTS.map((insight, i) => (
-            <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", i === 0 ? "border-blue-200 bg-blue-50 text-blue-800" : i === 1 ? "border-amber-200 bg-amber-50 text-amber-800" : "border-green-200 bg-green-50 text-green-800")}>{insight}</div>
-          ))}
-        </div>
+        {/* ── ARIA Medication Safety Intelligence ─────────────────────── */}
+
+        {intel.insights.length > 0 && (
+          <div className="space-y-1.5">
+            <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
+              <Brain className="h-3 w-3" />
+              ARIA Medication Safety Intelligence
+            </p>
+            {intel.insights.slice(0, 3).map((insight, i) => (
+              <div
+                key={i}
+                className={cn(
+                  "rounded border p-2.5 text-xs leading-relaxed",
+                  INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.positive,
+                )}
+              >
+                {insight.text}
+              </div>
+            ))}
+          </div>
+        )}
       </CardContent>
     </Card>
   );

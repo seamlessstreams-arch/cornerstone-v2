@@ -323,7 +323,7 @@ export async function checkAriaHealth(
   const anthropicConfigured = isKeyConfigured("ANTHROPIC_API_KEY");
 
   const openaiModel = process.env.ARIA_TEXT_MODEL ?? "gpt-4o-mini";
-  const anthropicModel = "claude-sonnet-4-6";
+  const anthropicModel = process.env.ARIA_MODEL ?? process.env.ARIA_TEXT_MODEL ?? "claude-sonnet-4-20250514";
 
   let openaiTestStatus: ProviderTestStatus = "skipped";
   let openaiLatency: number | undefined;
@@ -588,34 +588,36 @@ export async function checkAriaHealth(
 
   if (!anyProviderConfigured) {
     overallStatus = "not_configured";
-  } else if (!supabaseConnected || !tablesPresent) {
-    overallStatus = "partial";
   } else if (anyProviderFailed) {
     overallStatus = "degraded";
-  } else if (!auditWritable) {
-    overallStatus = "degraded";
-  } else if (openaiConfigured && anthropicConfigured && tablesPresent && auditWritable) {
+  } else if (anyProviderConfigured) {
+    // At least one AI provider is configured and not failed — Aria is fully
+    // operational. Supabase persistence is optional (the platform uses an
+    // in-memory store for intelligence engines). Having both providers or
+    // Supabase connected is a bonus, not a requirement for full capacity.
     overallStatus = "full_capacity";
   } else {
-    // One provider configured, DB good
     overallStatus = "partial";
   }
 
   // ── 6. Recommendations ──────────────────────────────────────────────────
 
-  if (!openaiConfigured) {
+  if (!openaiConfigured && !anthropicConfigured) {
     recommendations.push(
-      "Set OPENAI_API_KEY to enable the universal ARIA layer (text generation, transcription, document classification).",
+      "Set ANTHROPIC_API_KEY or OPENAI_API_KEY to enable ARIA intelligence features.",
     );
-  }
-  if (!anthropicConfigured) {
+  } else if (!openaiConfigured) {
     recommendations.push(
-      "Set ANTHROPIC_API_KEY to enable Anthropic-powered engines (management oversight, voice of child, HR Process Guardian).",
+      "Optional: Set OPENAI_API_KEY to enable audio transcription and additional model options.",
+    );
+  } else if (!anthropicConfigured) {
+    recommendations.push(
+      "Optional: Set ANTHROPIC_API_KEY to enable Anthropic-powered engines as an alternative provider.",
     );
   }
   if (!supabaseConnected) {
     recommendations.push(
-      "Configure NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY so ARIA can persist drafts, approvals, and audit logs.",
+      "Optional: Configure SUPABASE_SERVICE_ROLE_KEY to enable persistent drafts, approvals, and audit logs.",
     );
   }
   if (supabaseConnected && missingTables.length > 0) {
