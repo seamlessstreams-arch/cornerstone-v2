@@ -226,20 +226,20 @@ export function Sidebar() {
     >
       {/* ── Logo & Home ──────────────────────────────────────────────────── */}
       <div className={cn(
-        "flex h-[60px] items-center border-b border-slate-100 shrink-0",
+        "flex h-[60px] items-center border-b border-white/10 shrink-0",
         collapsed ? "justify-center px-0" : "gap-3 px-4",
       )}>
         <Link href="/dashboard" className="flex items-center gap-3 min-w-0">
-          {/* Logo mark */}
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-slate-900 text-white">
+          {/* Logo mark — gold accent on dark */}
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-[var(--cs-aria-gold)] text-[var(--cs-navy)]">
             <span className="text-sm font-bold tracking-tight">C</span>
           </div>
           {!collapsed && (
             <div className="min-w-0">
-              <p className="text-sm font-bold text-slate-900 leading-tight tracking-tight">
+              <p className="text-sm font-bold text-white leading-tight tracking-tight">
                 Cornerstone
               </p>
-              <p className="text-[11px] text-slate-400 truncate">Oak House</p>
+              <p className="text-[11px] text-white/50 truncate">Oak House</p>
             </div>
           )}
         </Link>
@@ -247,7 +247,7 @@ export function Sidebar() {
         {!collapsed && (
           <button
             onClick={() => setCollapsed(true)}
-            className="ml-auto rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-600 transition-colors shrink-0"
+            className="ml-auto rounded-lg p-1.5 text-white/40 hover:bg-white/10 hover:text-white/70 transition-colors shrink-0"
             title="Collapse sidebar"
           >
             <PanelLeftClose className="h-4 w-4" />
@@ -259,7 +259,7 @@ export function Sidebar() {
       {collapsed && (
         <button
           onClick={() => setCollapsed(false)}
-          className="mx-auto mt-2 mb-1 flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-600 transition-colors"
+          className="mx-auto mt-2 mb-1 flex h-8 w-8 items-center justify-center rounded-lg text-white/40 hover:bg-white/10 hover:text-white/70 transition-colors"
           title="Expand sidebar"
         >
           <PanelLeft className="h-4 w-4" />
@@ -298,8 +298,8 @@ export function Sidebar() {
                   className={cn(
                     "flex h-10 w-10 mx-auto items-center justify-center rounded-xl transition-all",
                     childActive
-                      ? "bg-[#eef2ff] text-[#1e3a8a]"
-                      : "text-[#6b7280] hover:bg-slate-100 hover:text-slate-800",
+                      ? "bg-[var(--cs-aria-gold)]/15 text-[var(--cs-aria-gold)]"
+                      : "text-white/50 hover:bg-white/10 hover:text-white/80",
                   )}
                 >
                   <PrimaryIcon className="h-5 w-5" />
@@ -318,18 +318,18 @@ export function Sidebar() {
                   className={cn(
                     "flex-1 flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all",
                     childActive
-                      ? "bg-[#eef2ff] text-[#1e3a8a]"
-                      : "text-[#374151] hover:bg-[#f9fafb] hover:text-slate-900",
+                      ? "bg-white/10 text-white"
+                      : "text-white/70 hover:bg-white/5 hover:text-white",
                   )}
                 >
                   <PrimaryIcon className={cn(
                     "h-[18px] w-[18px] shrink-0 transition-colors",
-                    childActive ? "text-[#1e3a8a]" : "text-[#9ca3af]",
+                    childActive ? "text-[var(--cs-aria-gold)]" : "text-white/40",
                   )} />
                   <span className="flex-1 text-left truncate">{group.label}</span>
                   {isOpen
-                    ? <ChevronDown className="h-3.5 w-3.5 text-slate-400 shrink-0" />
-                    : <ChevronRight className="h-3.5 w-3.5 text-slate-400 shrink-0" />
+                    ? <ChevronDown className="h-3.5 w-3.5 text-white/30 shrink-0" />
+                    : <ChevronRight className="h-3.5 w-3.5 text-white/30 shrink-0" />
                   }
                 </button>
 
@@ -344,7 +344,7 @@ export function Sidebar() {
 
               {/* Children */}
               {isOpen && visibleChildren.length > 0 && (
-                <div className="mt-0.5 ml-3 pl-3 border-l border-slate-100 space-y-0.5 pb-1">
+                <div className="mt-0.5 ml-3 pl-3 border-l border-white/10 space-y-0.5 pb-1">
                   {visibleChildren.map((child) => {
                     const ChildIcon: React.ElementType = (child.icon ? ICON_MAP[child.icon] : null) ?? ChevronRight;
                     const isChildActive =
@@ -363,18 +363,18 @@ export function Sidebar() {
                         className={cn(
                           "flex items-center gap-2.5 rounded-lg px-2.5 py-1.5 text-[13px] transition-all",
                           isChildActive
-                            ? "bg-[#eef2ff] text-[#1e3a8a] font-medium"
-                            : "text-[#6b7280] hover:bg-slate-50 hover:text-slate-800",
+                            ? "bg-[var(--cs-aria-gold)]/10 text-[var(--cs-aria-gold)] font-medium"
+                            : "text-white/50 hover:bg-white/5 hover:text-white/80",
                         )}
                       >
                         <ChildIcon className={cn(
                           "h-3.5 w-3.5 shrink-0",
-                          isChildActive ? "text-[#1e3a8a]" : "text-slate-400",
+                          isChildActive ? "text-[var(--cs-aria-gold)]" : "text-white/30",
                         )} />
                         <span className="flex-1 truncate">{child.label}</span>
                         {badgeCount > 0 && (
                           <Badge
-                            variant={isChildActive ? "secondary" : "destructive"}
+                            variant="destructive"
                             className="h-4 min-w-4 justify-center rounded-full px-1 text-[9px] font-bold"
                           >
                             {badgeCount}
@@ -390,7 +390,7 @@ export function Sidebar() {
         })}
 
         {/* ── Settings (standalone link) ───────────────────────────────── */}
-        <div className={cn("px-3", collapsed && "px-2")}>
+        <div className={cn("px-3 mt-2 pt-2 border-t border-white/10", collapsed && "px-2")}>
           {collapsed ? (
             <Link
               href="/settings"
@@ -398,8 +398,8 @@ export function Sidebar() {
               className={cn(
                 "flex h-10 w-10 mx-auto items-center justify-center rounded-xl transition-all",
                 pathname.startsWith("/settings")
-                  ? "bg-[#eef2ff] text-[#1e3a8a]"
-                  : "text-[#6b7280] hover:bg-slate-100 hover:text-slate-800",
+                  ? "bg-[var(--cs-aria-gold)]/15 text-[var(--cs-aria-gold)]"
+                  : "text-white/40 hover:bg-white/10 hover:text-white/70",
               )}
             >
               <Settings className="h-5 w-5" />
@@ -410,13 +410,13 @@ export function Sidebar() {
               className={cn(
                 "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all",
                 pathname.startsWith("/settings")
-                  ? "bg-[#eef2ff] text-[#1e3a8a]"
-                  : "text-[#374151] hover:bg-[#f9fafb] hover:text-slate-900",
+                  ? "bg-white/10 text-white"
+                  : "text-white/50 hover:bg-white/5 hover:text-white/70",
               )}
             >
               <Settings className={cn(
                 "h-[18px] w-[18px] shrink-0 transition-colors",
-                pathname.startsWith("/settings") ? "text-[#1e3a8a]" : "text-[#9ca3af]",
+                pathname.startsWith("/settings") ? "text-[var(--cs-aria-gold)]" : "text-white/30",
               )} />
               <span className="flex-1 text-left truncate">Settings</span>
             </Link>
