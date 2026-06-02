@@ -6,10 +6,8 @@ const nextConfig: NextConfig = {
     // TODO: resolve all TS errors and remove this flag.
     ignoreBuildErrors: true,
   },
-  eslint: {
-    // ESLint warnings should not block production deploys.
-    ignoreDuringBuilds: true,
-  },
+  // Note: the `eslint` config key was removed in Next.js 16 (ESLint no longer
+  // runs during `next build`), so it is intentionally omitted here.
 };
 
 export default nextConfig;
