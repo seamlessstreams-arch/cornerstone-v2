@@ -15,6 +15,7 @@
 
 import { db } from "@/lib/db/store";
 import { generateId, todayStr } from "@/lib/utils";
+import { captureDomainEvent } from "@/lib/event-capture/capture-event-service";
 import { classifyCareEvent, buildRoutingSummary } from "./routing-engine";
 import type { CareEvent, RouteType, CareEventRoute, FilingCategory } from "@/types/care-events";
 
@@ -490,6 +491,31 @@ function processMissingEpisode(event: CareEvent, route: CareEventRoute): void {
     care_event_id: event.id,
     created_by: event.staff_id,
   } as never);
+
+  // Write through the canonical event spine (forms-as-views). The care event has
+  // materialised a missing episode; also emit a validated canonical event under
+  // the projection's stable id (evt_mis_<id>) so it surfaces on the spine with a
+  // clean summary — the projection sees no `risk_level` on care-event episodes and
+  // renders "(undefined risk)". De-dupes by id (persisted wins). Best-effort.
+  try {
+    const risk = event.is_safeguarding ? "critical" : "high";
+    const t = /^\d{2}:\d{2}$/.test(episode.time_missing ?? "") ? episode.time_missing! : "00:00";
+    captureDomainEvent(
+      {
+        eventType: "missing",
+        childId: episode.child_id,
+        homeId: episode.home_id,
+        occurredAt: `${episode.date_missing}T${t}:00.000Z`,
+        createdBy: episode.created_by ?? "system",
+        summary: `Missing episode ${episode.reference} (${risk} risk) — active`,
+        riskLevel: risk,
+        structuredTags: ["missing", risk, "rhi_outstanding"],
+      },
+      { id: `evt_mis_${episode.id}` },
+    );
+  } catch {
+    // Best-effort write-through; never block care-event processing.
+  }
 
   db.careEventRoutes.patch(route.id, {
     status: "completed",

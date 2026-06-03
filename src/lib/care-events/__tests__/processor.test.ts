@@ -5,7 +5,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect, beforeEach } from "vitest";
-import { db } from "@/lib/db/store";
+import { db, getStore } from "@/lib/db/store";
+import { buildLiveEventStream } from "@/lib/event-stream/live-event-stream";
 import { classifyCareEvent, buildRoutingSummary } from "../routing-engine";
 import { processCareEvent, retryFailedRoutes } from "../processor";
 import { hasPermission, toAppRole, PERMISSIONS } from "@/lib/permissions";
@@ -903,5 +904,27 @@ describe("Regulation 40 triage", () => {
     const updated = db.careEvents.findById(event.id);
     // Should have triage marked
     expect(updated?.requires_reg40_triage).toBe(true);
+  });
+
+  // ── Canonical spine write-through (forms-as-views increment 3) ─────────────
+  describe("missing episode writes through the canonical spine", () => {
+    it("emits a validated canonical evt_mis_ event with a clean summary (not the lossy projection)", () => {
+      getStore().cornerstoneEvents.length = 0; // isolate the persisted spine
+      const event = makeEvent({ category: "missing_episode", title: "Alex missing from home", content: "Alex left without permission at 19:00.", event_date: "2026-06-02", event_time: "19:00", is_safeguarding: true });
+      processCareEvent(event);
+
+      const episode = getStore().missingEpisodes.find((m: any) => m.care_event_id === event.id);
+      expect(episode).toBeDefined();
+
+      const live = buildLiveEventStream(getStore());
+      const ev = live.events.find((e) => e.id === `evt_mis_${episode!.id}`);
+      expect(ev).toBeDefined();
+      expect(ev!.eventType).toBe("missing");
+      expect(ev!.structuredTags).toContain("spine_capture");
+      expect(ev!.riskLevel).toBe("critical"); // is_safeguarding → critical
+      expect(ev!.summary).not.toMatch(/undefined risk/); // the projection's lossiness is fixed
+      expect(ev!.summary).toMatch(/Missing episode MFC-/);
+      expect(live.events.filter((e) => e.id === `evt_mis_${episode!.id}`).length).toBe(1); // de-duped vs projection
+    });
   });
 });
