@@ -10,6 +10,7 @@
 import { getStore } from "@/lib/db/store";
 import { recordEvent } from "@/lib/timeline/timeline-service";
 import { logInteraction } from "@/lib/aria/aria-config";
+import { captureDomainEvent } from "@/lib/event-capture/capture-event-service";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -32,6 +33,8 @@ export interface DailyLogOrchestrationResult {
   timeline_event: Record<string, unknown>;
   linked_updates: string[];
   alerts: string[];
+  /** Canonical spine event id written through at creation (forms-as-views), or null. */
+  canonical_event_id?: string | null;
 }
 
 // ─── Orchestrator ────────────────────────────────────────────────────────────
@@ -65,6 +68,35 @@ export function createDailyLog(input: CreateDailyLogInput): DailyLogOrchestratio
 
   (store.dailyLog as unknown[]).push(log);
   linkedUpdates.push(`Daily log ${id} saved for ${input.child_id}`);
+
+  // ── 1b. Write through the canonical event spine (forms-as-views) ───────────
+  // The form's create path now ALSO emits a validated canonical event, persisted
+  // under the same stable id the projection uses (evt_log_<id>) so it de-dupes by
+  // id and surfaces across the timeline + intelligence with a richer summary than
+  // the lossy projection. Best-effort: never blocks the daily-log creation.
+  let canonicalEventId: string | null = null;
+  try {
+    const outcome = captureDomainEvent(
+      {
+        eventType: "daily_log",
+        childId: log.child_id,
+        staffId: log.staff_id,
+        homeId: log.home_id,
+        occurredAt: `${log.date}T${log.time}:00.000Z`,
+        createdBy: log.created_by,
+        summary: `${log.shift} log: ${input.key_events}`.slice(0, 200) || "Daily log entry",
+        riskLevel: input.mood === "distressed" ? "medium" : "low",
+        structuredTags: ["daily_log", input.mood, log.shift].filter(Boolean) as string[],
+      },
+      { id: `evt_log_${id}`, now },
+    );
+    if (outcome.persisted) {
+      canonicalEventId = outcome.event!.id;
+      linkedUpdates.push("Captured to the canonical event spine — surfaces across the timeline and intelligence");
+    }
+  } catch {
+    // Write-through is best-effort; never block the daily-log creation.
+  }
 
   // ── 2. Audit entry ─────────────────────────────────────────────────────
   const auditEntry = {
@@ -143,5 +175,6 @@ export function createDailyLog(input: CreateDailyLogInput): DailyLogOrchestratio
     timeline_event: timelineEvent,
     linked_updates: linkedUpdates,
     alerts,
+    canonical_event_id: canonicalEventId,
   };
 }
