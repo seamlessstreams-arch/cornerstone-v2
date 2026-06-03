@@ -103,6 +103,7 @@ const HomeLACReviewIntelligenceCard = dynamic(() => import("@/components/dashboa
 const HomeRiskAssessmentIntelligenceCard = dynamic(() => import("@/components/dashboard/home-risk-assessment-intelligence-card").then(m => m.HomeRiskAssessmentIntelligenceCard ? { default: m.HomeRiskAssessmentIntelligenceCard } : m), { ssr: false });
 const PlacementBreakdownForecastCard = dynamic(() => import("@/components/dashboard/placement-breakdown-forecast-card").then(m => m.PlacementBreakdownForecastCard ? { default: m.PlacementBreakdownForecastCard } : m), { ssr: false });
 const MedicationErrorTrendsCard = dynamic(() => import("@/components/dashboard/medication-error-trends-card").then(m => m.MedicationErrorTrendsCard ? { default: m.MedicationErrorTrendsCard } : m), { ssr: false });
+const ComplaintsIncidentCorrelationCard = dynamic(() => import("@/components/dashboard/complaints-incident-correlation-card").then(m => m.ComplaintsIncidentCorrelationCard ? { default: m.ComplaintsIncidentCorrelationCard } : m), { ssr: false });
 const HomeIndependenceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-independence-intelligence-card").then(m => m.HomeIndependenceIntelligenceCard ? { default: m.HomeIndependenceIntelligenceCard } : m), { ssr: false });
 const HomeParticipationIntelligenceCard = dynamic(() => import("@/components/dashboard/home-participation-intelligence-card").then(m => m.HomeParticipationIntelligenceCard ? { default: m.HomeParticipationIntelligenceCard } : m), { ssr: false });
 const HomeNotifiableEventsIntelligenceCard = dynamic(() => import("@/components/dashboard/home-notifiable-events-intelligence-card").then(m => m.HomeNotifiableEventsIntelligenceCard ? { default: m.HomeNotifiableEventsIntelligenceCard } : m), { ssr: false });
@@ -1641,6 +1642,7 @@ export default function DashboardPage() {
                     <HomeRiskAssessmentIntelligenceCard />
                     <PlacementBreakdownForecastCard />
                     <MedicationErrorTrendsCard />
+                    <ComplaintsIncidentCorrelationCard />
                     <HomeIndependenceIntelligenceCard />
                     <HomeParticipationIntelligenceCard />
                     <HomeNotifiableEventsIntelligenceCard />
