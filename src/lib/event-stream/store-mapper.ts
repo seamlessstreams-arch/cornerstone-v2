@@ -89,5 +89,10 @@ export function mapStoreToEventInput(store: any): EventProjectorInput {
       yp_mood_after: c.yp_mood_after, concerns_identified: c.concerns_identified, safeguarding_concern: c.safeguarding_concern,
       follow_up_required: c.follow_up_required, supervised_by: c.supervised_by, home_id: c.home_id, created_at: c.created_at,
     })),
+    riskAssessments: ((store.riskAssessments ?? []) as any[]).map((r: any) => ({
+      id: r.id, child_id: r.child_id, domain: r.domain, current_level: r.current_level, previous_level: r.previous_level,
+      trend: r.trend, status: r.status, assessed_by: r.assessed_by, assessed_date: d(r.assessed_date ?? r.created_at),
+      review_date: d(r.review_date), home_id: r.home_id, created_at: r.created_at,
+    })),
   };
 }

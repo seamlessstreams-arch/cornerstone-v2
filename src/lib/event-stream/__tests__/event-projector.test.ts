@@ -12,6 +12,7 @@ import {
   type EducationSource,
   type ComplaintSource,
   type ContactLogSource,
+  type RiskAssessmentSource,
 } from "../event-projector";
 
 const inc = (o: Partial<IncidentSource> & { id: string }): IncidentSource => ({
@@ -277,5 +278,35 @@ describe("projectFamilyContact (new spine domain)", () => {
     expect(withConcerns.riskLevel).toBe("medium");
     const [distressed] = projectEvents({ familyContacts: [fc({ id: "cl4", yp_mood_after: "distressed" })] });
     expect(distressed.riskLevel).toBe("medium");
+  });
+});
+
+const ra = (o: Partial<RiskAssessmentSource> & { id: string }): RiskAssessmentSource => ({
+  child_id: "yp_alex", domain: "aggression", current_level: "high", previous_level: "very_high", trend: "decreasing",
+  status: "current", assessed_by: "staff_darren", assessed_date: "2026-06-01", review_date: "2026-06-20", ...o,
+});
+
+describe("projectRiskAssessment (new spine domain)", () => {
+  it("projects a risk assessment into a risk_assessment event mapping the level", () => {
+    const [e] = projectEvents({ riskAssessments: [ra({ id: "ra1" })] });
+    expect(e.id).toBe("evt_ra_ra1");
+    expect(e.eventType).toBe("risk_assessment");
+    expect(e.childId).toBe("yp_alex");
+    expect(e.riskLevel).toBe("high");
+    expect(e.structuredTags).toContain("risk_assessment");
+    expect(e.structuredTags).toContain("aggression");
+    expect(e.linkedRisks).toContain("ra1");
+    expect(e.evidenceCategories).toContain("risk management");
+    expect(e.summary).toMatch(/Risk assessment \(aggression\): high risk/);
+  });
+
+  it("maps very_high to critical", () => {
+    const [e] = projectEvents({ riskAssessments: [ra({ id: "ra2", current_level: "very_high" })] });
+    expect(e.riskLevel).toBe("critical");
+  });
+
+  it("flags a not-finalised (under_review/draft) assessment", () => {
+    const [e] = projectEvents({ riskAssessments: [ra({ id: "ra3", status: "under_review" })] });
+    expect(e.ariaAnalysis!.complianceFlags.some((f) => /not finalised/i.test(f))).toBe(true);
   });
 });
