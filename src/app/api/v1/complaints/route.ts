@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { intelligenceDb } from "@/lib/intelligence/store";
 import { generateId } from "@/lib/utils";
 import { runPostSaveIntelligence } from "@/lib/aria/post-save-intelligence";
+import { captureDomainEvent } from "@/lib/event-capture/capture-event-service";
 
 // Working-day calculator
 function addWorkingDays(dateStr: string, days: number): string {
@@ -75,6 +76,32 @@ export async function POST(req: NextRequest) {
     aria_summary:              null,
     created_by:                body.created_by ?? "staff_darren",
   });
+
+  // Write through the canonical event spine (forms-as-views). The canonical event
+  // lands on getStore().cornerstoneEvents (the spine), so the complaint surfaces in
+  // the timeline + intelligence under the projection's stable id (evt_cmp_<id>).
+  // Best-effort; never blocks complaint creation.
+  try {
+    const sg = !!record.includes_safeguarding_element;
+    const escalated = record.stage === "stage_2" || record.stage === "ombudsman" || record.status === "escalated";
+    const resolved = record.status === "response_sent" || record.status === "closed";
+    const risk = sg || escalated ? "high" : resolved ? "low" : "medium";
+    const tags = ["complaint", record.category, record.stage, record.status].filter(Boolean) as string[];
+    if (sg) tags.push("safeguarding_element");
+    captureDomainEvent(
+      {
+        eventType: "complaint",
+        childId: record.child_id ?? undefined,
+        homeId: record.home_id,
+        occurredAt: `${(record.date_received ?? "").slice(0, 10)}T00:00:00.000Z`,
+        createdBy: record.created_by ?? "system",
+        summary: `Complaint ${record.reference} (${String(record.category).replace(/_/g, " ")}): ${(record.summary ?? "").slice(0, 120)}`,
+        riskLevel: risk,
+        structuredTags: tags,
+      },
+      { id: `evt_cmp_${record.id}` },
+    );
+  } catch { /* best-effort write-through; never block complaint creation */ }
 
   // Fire-and-forget ARIA intelligence hook (golden thread + child voice detection)
   runPostSaveIntelligence({
