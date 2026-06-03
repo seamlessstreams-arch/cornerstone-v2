@@ -6,6 +6,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 
 import type { EventProjectorInput } from "./event-projector";
+import { intelligenceDb } from "@/lib/intelligence/store";
 
 const d = (v: unknown, fallback = ""): string => (v == null ? fallback : v.toString().slice(0, 10));
 
@@ -79,6 +80,14 @@ export function mapStoreToEventInput(store: any): EventProjectorInput {
       summary: c.summary, date_received: d(c.date_received ?? c.created_at), outcome: c.outcome,
       includes_safeguarding_element: c.includes_safeguarding_element, response_sent_at: c.response_sent_at,
       home_id: c.home_id, created_by: c.created_by, created_at: c.created_at,
+    })),
+    // Family contact lives in the separate intelligence store (contactLogs), so the
+    // spine reads it from there — the assembly layer is the right place to bridge.
+    familyContacts: ((intelligenceDb.contactLogs.findAll("home_oak") ?? []) as any[]).map((c: any) => ({
+      id: c.id, child_id: c.child_id, contact_type: c.contact_type, date: d(c.date ?? c.created_at), start_time: c.start_time,
+      supervision_level: c.supervision_level, outcome: c.outcome, status: c.status, narrative: c.narrative, yp_voice: c.yp_voice,
+      yp_mood_after: c.yp_mood_after, concerns_identified: c.concerns_identified, safeguarding_concern: c.safeguarding_concern,
+      follow_up_required: c.follow_up_required, supervised_by: c.supervised_by, home_id: c.home_id, created_at: c.created_at,
     })),
   };
 }

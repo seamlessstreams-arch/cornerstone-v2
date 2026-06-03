@@ -11,6 +11,7 @@ import {
   type KeyworkSource,
   type EducationSource,
   type ComplaintSource,
+  type ContactLogSource,
 } from "../event-projector";
 
 const inc = (o: Partial<IncidentSource> & { id: string }): IncidentSource => ({
@@ -244,5 +245,37 @@ describe("projectComplaint (new spine domain)", () => {
     expect(open.riskLevel).toBe("low");
     const [closed] = projectEvents({ complaints: [cmp({ id: "c4", status: "closed", outcome: null })] });
     expect(closed.ariaAnalysis!.missingInformation).toContain("outcome");
+  });
+});
+
+const fc = (o: Partial<ContactLogSource> & { id: string }): ContactLogSource => ({
+  child_id: "yp_alex", contact_type: "supervised_visit", date: "2026-06-01", start_time: "15:00",
+  outcome: "positive", status: "completed", narrative: "Alex enjoyed seeing mum; warm and settled throughout.", ...o,
+});
+
+describe("projectFamilyContact (new spine domain)", () => {
+  it("projects a contact log into a family_contact event with evt_fc_ id and evidence", () => {
+    const [e] = projectEvents({ familyContacts: [fc({ id: "cl1" })] });
+    expect(e.id).toBe("evt_fc_cl1");
+    expect(e.eventType).toBe("family_contact");
+    expect(e.childId).toBe("yp_alex");
+    expect(e.riskLevel).toBe("low");           // positive, no concerns
+    expect(e.structuredTags).toContain("family_contact");
+    expect(e.evidenceCategories).toContain("positive relationships");
+    expect(e.summary).toMatch(/Family contact/);
+  });
+
+  it("rates a safeguarding-concern contact high and flags it", () => {
+    const [e] = projectEvents({ familyContacts: [fc({ id: "cl2", safeguarding_concern: true })] });
+    expect(e.riskLevel).toBe("high");
+    expect(e.structuredTags).toContain("safeguarding_concern");
+    expect(e.ariaAnalysis!.complianceFlags.some((f) => /safeguarding/i.test(f))).toBe(true);
+  });
+
+  it("rates a contact with concerns or a distressed child as medium", () => {
+    const [withConcerns] = projectEvents({ familyContacts: [fc({ id: "cl3", concerns_identified: true })] });
+    expect(withConcerns.riskLevel).toBe("medium");
+    const [distressed] = projectEvents({ familyContacts: [fc({ id: "cl4", yp_mood_after: "distressed" })] });
+    expect(distressed.riskLevel).toBe("medium");
   });
 });

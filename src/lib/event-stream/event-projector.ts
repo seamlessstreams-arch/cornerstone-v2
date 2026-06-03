@@ -96,6 +96,12 @@ export interface ComplaintSource {
   summary?: string; date_received: string; outcome?: string | null; includes_safeguarding_element?: boolean;
   response_sent_at?: string | null; home_id?: string; created_by?: string; created_at?: string;
 }
+export interface ContactLogSource {
+  id: string; child_id: string; contact_type?: string; date: string; start_time?: string | null;
+  supervision_level?: string; outcome?: string; status?: string; narrative?: string; yp_voice?: string | null;
+  yp_mood_after?: string | null; concerns_identified?: boolean; safeguarding_concern?: boolean;
+  follow_up_required?: boolean; supervised_by?: string | null; home_id?: string; created_at?: string;
+}
 
 export interface EventProjectorInput {
   dailyLogs?: DailyLogSource[];
@@ -113,6 +119,7 @@ export interface EventProjectorInput {
   appointments?: AppointmentSource[];
   leaveRequests?: LeaveSource[];
   complaints?: ComplaintSource[];
+  familyContacts?: ContactLogSource[];
   homeId?: string;
 }
 
@@ -192,6 +199,7 @@ const THEMES: Partial<Record<CornerstoneEventType, string[]>> = {
   reg44: ["independent oversight", "Reg 44"],
   health: ["health & wellbeing"],
   complaint: ["complaints handling", "leadership and management", "child voice"],
+  family_contact: ["positive relationships", "family time", "child voice"],
   staff_absence: ["staff wellbeing", "staffing"],
 };
 const ACTIONS: Partial<Record<CornerstoneEventType, string[]>> = {
@@ -207,6 +215,7 @@ const ACTIONS: Partial<Record<CornerstoneEventType, string[]>> = {
   reg44: ["Respond to the Reg 44 recommendations", "Send the report to Ofsted if not already sent"],
   health: ["Ensure the appointment is attended or rebooked and the outcome recorded"],
   complaint: ["Acknowledge within 3 working days and respond within 10", "Record the outcome and any lessons learned", "Share the learning with the team"],
+  family_contact: ["Record the child's wishes and feelings about the contact", "Follow up any concerns and update the contact plan"],
   staff_absence: ["Complete the return-to-work interview where required"],
 };
 
@@ -539,6 +548,29 @@ function projectComplaint(r: ComplaintSource, homeId?: string): CornerstoneEvent
   };
 }
 
+function projectFamilyContact(r: ContactLogSource, homeId?: string): CornerstoneEvent {
+  const sg = !!r.safeguarding_concern;
+  const concerns = !!r.concerns_identified;
+  const distressed = r.yp_mood_after === "distressed";
+  const risk: CornerstoneRiskLevel = sg ? "high" : concerns || distressed ? "medium" : "low";
+  const tags = ["family_contact", r.contact_type, r.supervision_level, r.outcome, r.status].filter(Boolean) as string[];
+  if (concerns) tags.push("concerns_identified");
+  if (sg) tags.push("safeguarding_concern");
+  if (r.follow_up_required) tags.push("follow_up_required");
+  const compliance: string[] = [];
+  if (sg) compliance.push("Safeguarding concern raised during family contact — follow the safeguarding process");
+  if (concerns) compliance.push("Concerns identified during family contact — record the follow-up");
+  const { requiresApproval, approvalLevel } = deriveApproval("family_contact", risk);
+  return {
+    id: `evt_fc_${r.id}`, eventType: "family_contact", ...base(r.home_id ?? homeId, toIso(r.date, r.start_time), r.created_at),
+    childId: r.child_id, staffId: r.supervised_by ?? undefined, occurredAt: toIso(r.date, r.start_time), createdBy: r.supervised_by ?? "system",
+    summary: `Family contact${r.contact_type ? ` (${r.contact_type.replace(/_/g, " ")})` : ""}${r.outcome ? ` — ${r.outcome.replace(/_/g, " ")}` : ""}: ${(r.narrative ?? "").slice(0, 110)}`,
+    structuredTags: tags, riskLevel: risk, requiresApproval, approvalLevel,
+    linkedDocuments: [], linkedTasks: [], linkedRisks: [], linkedNotifications: [],
+    ariaAnalysis: buildAria("family_contact", compliance, [], risk),
+  };
+}
+
 const ABSENCE_TYPE = /sick|emergency|unauth|compassion|bereav/i;
 
 // ── Evidence category mapping (Ofsted evidence bank) ────────────────────────────
@@ -597,6 +629,7 @@ export function projectEvents(input: EventProjectorInput): CornerstoneEvent[] {
     ...(input.appointments ?? []).map((r) => projectHealth(r, home)),
     ...(input.leaveRequests ?? []).filter((l) => ABSENCE_TYPE.test(l.leave_type ?? "")).map((r) => projectStaffAbsence(r, home)),
     ...(input.complaints ?? []).map((r) => projectComplaint(r, home)),
+    ...(input.familyContacts ?? []).map((r) => projectFamilyContact(r, home)),
   ];
   // Populate evidence categories for every event (spine completion).
   for (const e of events) e.evidenceCategories = evidenceCategoriesFor(e.eventType, e.riskLevel);

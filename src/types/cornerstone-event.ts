@@ -20,6 +20,7 @@ export type CornerstoneEventType =
   | "education"
   | "health"
   | "complaint"
+  | "family_contact"
   | "staff_absence"
   | "overtime"
   | "supervision"
