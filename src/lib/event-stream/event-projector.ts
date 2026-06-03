@@ -509,6 +509,42 @@ function projectStaffAbsence(r: LeaveSource, homeId?: string): CornerstoneEvent 
 
 const ABSENCE_TYPE = /sick|emergency|unauth|compassion|bereav/i;
 
+// ── Evidence category mapping (Ofsted evidence bank) ────────────────────────────
+
+const EVIDENCE_MAP: Partial<Record<CornerstoneEventType, string[]>> = {
+  safeguarding: ["safeguarding", "help and protection", "risk management", "Regulation 45"],
+  incident: ["help and protection", "risk management", "Regulation 45"],
+  missing: ["safeguarding", "help and protection", "risk management", "Regulation 45"],
+  physical_intervention: ["help and protection", "positive relationships", "risk management", "Regulation 45"],
+  medication: ["health", "quality assurance", "Regulation 45"],
+  daily_log: ["children's progress", "positive relationships"],
+  keywork: ["positive relationships", "children's progress", "consultation"],
+  education: ["education", "children's progress"],
+  health: ["health", "children's progress"],
+  family_contact: ["positive relationships", "consultation", "children's progress"],
+  complaint: ["complaints", "leadership and management", "consultation"],
+  supervision: ["workforce development", "leadership and management"],
+  training: ["workforce development"],
+  overtime: ["workforce development", "leadership and management"],
+  staff_absence: ["workforce development"],
+  maintenance: ["quality assurance", "leadership and management"],
+  fire_check: ["quality assurance", "health"],
+  vehicle_check: ["quality assurance"],
+  qa_check: ["quality assurance", "leadership and management", "Regulation 45"],
+  reg44: ["Regulation 44", "leadership and management", "quality assurance"],
+  reg45: ["Regulation 45", "leadership and management"],
+};
+
+export function evidenceCategoriesFor(eventType: CornerstoneEventType, risk: CornerstoneRiskLevel): string[] {
+  const cats = new Set(EVIDENCE_MAP[eventType] ?? ["children's progress"]);
+  // A high-risk event of any type also evidences risk management & safeguarding.
+  if (risk === "critical" || risk === "high") {
+    cats.add("risk management");
+    if (eventType !== "incident") cats.add("help and protection");
+  }
+  return [...cats];
+}
+
 // ── Projection + aggregation ──────────────────────────────────────────────────
 
 export function projectEvents(input: EventProjectorInput): CornerstoneEvent[] {
@@ -529,6 +565,8 @@ export function projectEvents(input: EventProjectorInput): CornerstoneEvent[] {
     ...(input.appointments ?? []).map((r) => projectHealth(r, home)),
     ...(input.leaveRequests ?? []).filter((l) => ABSENCE_TYPE.test(l.leave_type ?? "")).map((r) => projectStaffAbsence(r, home)),
   ];
+  // Populate evidence categories for every event (spine completion).
+  for (const e of events) e.evidenceCategories = evidenceCategoriesFor(e.eventType, e.riskLevel);
   // Newest first.
   events.sort((a, b) => b.occurredAt.localeCompare(a.occurredAt));
   return events;
