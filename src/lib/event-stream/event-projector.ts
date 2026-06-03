@@ -106,6 +106,10 @@ export interface RiskAssessmentSource {
   id: string; child_id: string; domain?: string; current_level?: string; previous_level?: string; trend?: string;
   status?: string; assessed_by?: string; assessed_date: string; review_date?: string; home_id?: string; created_at?: string;
 }
+export interface LacReviewSource {
+  id: string; child_id: string; date: string; review_type?: string; iro?: string; child_participation?: string;
+  outcome?: string; placement_stability?: string; care_plan_updated?: boolean; recorded_by?: string; home_id?: string; created_at?: string;
+}
 
 export interface EventProjectorInput {
   dailyLogs?: DailyLogSource[];
@@ -125,6 +129,7 @@ export interface EventProjectorInput {
   complaints?: ComplaintSource[];
   familyContacts?: ContactLogSource[];
   riskAssessments?: RiskAssessmentSource[];
+  lacReviews?: LacReviewSource[];
   homeId?: string;
 }
 
@@ -206,6 +211,7 @@ const THEMES: Partial<Record<CornerstoneEventType, string[]>> = {
   complaint: ["complaints handling", "leadership and management", "child voice"],
   family_contact: ["positive relationships", "family time", "child voice"],
   risk_assessment: ["risk management", "help and protection"],
+  lac_review: ["statutory reviews", "children's progress", "child voice"],
   staff_absence: ["staff wellbeing", "staffing"],
 };
 const ACTIONS: Partial<Record<CornerstoneEventType, string[]>> = {
@@ -223,6 +229,7 @@ const ACTIONS: Partial<Record<CornerstoneEventType, string[]>> = {
   complaint: ["Acknowledge within 3 working days and respond within 10", "Record the outcome and any lessons learned", "Share the learning with the team"],
   family_contact: ["Record the child's wishes and feelings about the contact", "Follow up any concerns and update the contact plan"],
   risk_assessment: ["Review and update the risk assessment by the review date", "Check the mitigations are in place and effective"],
+  lac_review: ["Complete the agreed actions by their due dates", "Update the care plan and confirm the next review date"],
   staff_absence: ["Complete the return-to-work interview where required"],
 };
 
@@ -596,6 +603,27 @@ function projectRiskAssessment(r: RiskAssessmentSource, homeId?: string): Corner
   };
 }
 
+function projectLacReview(r: LacReviewSource, homeId?: string): CornerstoneEvent {
+  const unstable = r.placement_stability === "at_risk";
+  const urgent = r.review_type === "emergency" || r.review_type === "disruption";
+  const change = r.outcome === "placement_change" || r.outcome === "return_home";
+  const risk: CornerstoneRiskLevel = unstable || urgent ? "high" : r.placement_stability === "some_concerns" || change ? "medium" : "low";
+  const tags = ["lac_review", r.review_type, r.outcome, r.placement_stability, r.child_participation].filter(Boolean) as string[];
+  if (r.care_plan_updated === false) tags.push("care_plan_not_updated");
+  const compliance: string[] = [];
+  if (r.care_plan_updated === false) compliance.push("Care plan not updated following the LAC review");
+  if (r.child_participation === "did_not_participate") compliance.push("Child did not participate in the LAC review — ensure their views were sought");
+  const { requiresApproval, approvalLevel } = deriveApproval("lac_review", risk);
+  return {
+    id: `evt_lac_${r.id}`, eventType: "lac_review", ...base(r.home_id ?? homeId, toIso(r.date), r.created_at),
+    childId: r.child_id, staffId: r.recorded_by, occurredAt: toIso(r.date), createdBy: r.recorded_by ?? "system",
+    summary: `LAC review${r.review_type ? ` (${r.review_type.replace(/_/g, " ")})` : ""}${r.iro ? ` — IRO ${r.iro}` : ""}: ${(r.outcome ?? "").replace(/_/g, " ")}`,
+    structuredTags: tags, riskLevel: risk, requiresApproval, approvalLevel,
+    linkedDocuments: [], linkedTasks: [], linkedRisks: [], linkedNotifications: [],
+    ariaAnalysis: buildAria("lac_review", compliance, [], risk),
+  };
+}
+
 const ABSENCE_TYPE = /sick|emergency|unauth|compassion|bereav/i;
 
 // ── Evidence category mapping (Ofsted evidence bank) ────────────────────────────
@@ -613,6 +641,7 @@ const EVIDENCE_MAP: Partial<Record<CornerstoneEventType, string[]>> = {
   family_contact: ["positive relationships", "consultation", "children's progress"],
   complaint: ["complaints", "leadership and management", "consultation"],
   risk_assessment: ["risk management", "help and protection", "children's progress"],
+  lac_review: ["leadership and management", "children's progress", "consultation"],
   supervision: ["workforce development", "leadership and management"],
   training: ["workforce development"],
   overtime: ["workforce development", "leadership and management"],
@@ -657,6 +686,7 @@ export function projectEvents(input: EventProjectorInput): CornerstoneEvent[] {
     ...(input.complaints ?? []).map((r) => projectComplaint(r, home)),
     ...(input.familyContacts ?? []).map((r) => projectFamilyContact(r, home)),
     ...(input.riskAssessments ?? []).map((r) => projectRiskAssessment(r, home)),
+    ...(input.lacReviews ?? []).map((r) => projectLacReview(r, home)),
   ];
   // Populate evidence categories for every event (spine completion).
   for (const e of events) e.evidenceCategories = evidenceCategoriesFor(e.eventType, e.riskLevel);
