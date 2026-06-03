@@ -94,5 +94,10 @@ export function mapStoreToEventInput(store: any): EventProjectorInput {
       trend: r.trend, status: r.status, assessed_by: r.assessed_by, assessed_date: d(r.assessed_date ?? r.created_at),
       review_date: d(r.review_date), home_id: r.home_id, created_at: r.created_at,
     })),
+    lacReviews: ((store.lacReviews ?? []) as any[]).map((r: any) => ({
+      id: r.id, child_id: r.child_id, date: d(r.date ?? r.created_at), review_type: r.review_type, iro: r.iro,
+      child_participation: r.child_participation, outcome: r.outcome, placement_stability: r.placement_stability,
+      care_plan_updated: r.care_plan_updated, recorded_by: r.recorded_by, home_id: r.home_id, created_at: r.created_at,
+    })),
   };
 }

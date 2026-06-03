@@ -13,6 +13,7 @@ import {
   type ComplaintSource,
   type ContactLogSource,
   type RiskAssessmentSource,
+  type LacReviewSource,
 } from "../event-projector";
 
 const inc = (o: Partial<IncidentSource> & { id: string }): IncidentSource => ({
@@ -308,5 +309,38 @@ describe("projectRiskAssessment (new spine domain)", () => {
   it("flags a not-finalised (under_review/draft) assessment", () => {
     const [e] = projectEvents({ riskAssessments: [ra({ id: "ra3", status: "under_review" })] });
     expect(e.ariaAnalysis!.complianceFlags.some((f) => /not finalised/i.test(f))).toBe(true);
+  });
+});
+
+const lac = (o: Partial<LacReviewSource> & { id: string }): LacReviewSource => ({
+  child_id: "yp_alex", date: "2026-06-01", review_type: "subsequent", iro: "Sarah Mitchell",
+  child_participation: "attended", outcome: "placement_continues", placement_stability: "stable",
+  care_plan_updated: true, recorded_by: "staff_darren", ...o,
+});
+
+describe("projectLacReview (new spine domain)", () => {
+  it("projects a LAC review into a lac_review event with evidence", () => {
+    const [e] = projectEvents({ lacReviews: [lac({ id: "lac1" })] });
+    expect(e.id).toBe("evt_lac_lac1");
+    expect(e.eventType).toBe("lac_review");
+    expect(e.childId).toBe("yp_alex");
+    expect(e.riskLevel).toBe("low");           // stable, placement continues
+    expect(e.structuredTags).toContain("lac_review");
+    expect(e.evidenceCategories).toContain("children's progress");
+    expect(e.summary).toMatch(/LAC review .*IRO Sarah Mitchell/);
+  });
+
+  it("rates an at-risk placement or emergency/disruption review high", () => {
+    const [atRisk] = projectEvents({ lacReviews: [lac({ id: "lac2", placement_stability: "at_risk" })] });
+    expect(atRisk.riskLevel).toBe("high");
+    const [disruption] = projectEvents({ lacReviews: [lac({ id: "lac3", review_type: "disruption" })] });
+    expect(disruption.riskLevel).toBe("high");
+  });
+
+  it("flags a non-participating child and a care plan not updated", () => {
+    const [e] = projectEvents({ lacReviews: [lac({ id: "lac4", child_participation: "did_not_participate", care_plan_updated: false })] });
+    expect(e.structuredTags).toContain("care_plan_not_updated");
+    expect(e.ariaAnalysis!.complianceFlags.some((f) => /did not participate/i.test(f))).toBe(true);
+    expect(e.ariaAnalysis!.complianceFlags.some((f) => /care plan not updated/i.test(f))).toBe(true);
   });
 });
