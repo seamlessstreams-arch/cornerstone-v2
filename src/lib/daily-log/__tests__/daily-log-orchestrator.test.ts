@@ -1,5 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { createDailyLog, type CreateDailyLogInput } from "../daily-log-orchestrator";
+import { getStore } from "@/lib/db/store";
+import { buildLiveEventStream } from "@/lib/event-stream/live-event-stream";
 
 function base(overrides?: Partial<CreateDailyLogInput>): CreateDailyLogInput {
   return {
@@ -69,5 +71,22 @@ describe("Daily Log Orchestrator — createDailyLog", () => {
   it("distressed mood sets medium risk on the timeline event", () => {
     const r = createDailyLog(base({ mood: "distressed" }));
     expect(r.timeline_event.risk_level).toBe("medium");
+  });
+
+  it("writes through to the canonical spine with a richer summary than the lossy projection (forms-as-views)", () => {
+    getStore().cornerstoneEvents.length = 0; // isolate the persisted spine
+    const r = createDailyLog(base({ key_events: "Distinctive write-through probe: baking with the keyworker and a calm settled evening." }));
+
+    // The create path emitted a canonical event under the projection's stable id.
+    expect(r.canonical_event_id).toMatch(/^evt_log_dl_/);
+
+    const live = buildLiveEventStream(getStore());
+    const ev = live.events.find((e) => e.id === r.canonical_event_id);
+    expect(ev).toBeDefined();
+    expect(ev!.structuredTags).toContain("spine_capture");
+    // Richer than the projection (which sees no `content`/`entry_type` on orchestrator logs → "undefined log:").
+    expect(ev!.summary).toMatch(/baking with the keyworker/);
+    // De-duped by id: the persisted canonical event wins over the projection — no double-count.
+    expect(live.events.filter((e) => e.id === r.canonical_event_id).length).toBe(1);
   });
 });

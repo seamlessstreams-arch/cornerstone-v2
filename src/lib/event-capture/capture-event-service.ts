@@ -143,3 +143,44 @@ export function captureEvent(
     hold_reason: plan.hold_reason,
   };
 }
+
+/**
+ * Write-through capture for an in-use domain record (the forms-as-views increment).
+ * A live form's create path calls this to ALSO emit a canonical event, persisted
+ * under a STABLE caller-supplied id (e.g. `evt_log_<id>` — the same id the
+ * read-only projection would produce). buildLiveEventStream then de-dupes by id,
+ * so the persisted canonical event WINS over the projection with no double-count.
+ *
+ * Validation still applies (validate-once). Content-duplication is NOT a gate here:
+ * the stable id is the record's identity, so a real domain record is never dropped
+ * for merely resembling another. Idempotent — re-running upserts by id. The event
+ * is tagged `spine_capture` to mark that it was captured through the pipeline rather
+ * than projected.
+ */
+export function captureDomainEvent(
+  draft: CaptureDraft,
+  opts: { id: string; now?: string; today?: string },
+): CaptureOutcome {
+  const now = opts.now ?? new Date().toISOString();
+  const today = opts.today ?? now.slice(0, 10);
+  const store = getStore() as any;
+
+  const tags = [...(draft.structuredTags ?? [draft.eventType]), "spine_capture"];
+  const candidate = draftToEvent({ ...draft, structuredTags: tags }, { id: opts.id, now });
+
+  // Capture metadata against the spine minus this id, so the record's own projection
+  // is never treated as a duplicate of itself.
+  const existingEvents = buildLiveEventStream(store).events.filter((e: CornerstoneEvent) => e.id !== opts.id);
+  const capture = computeEventCapture({ draft: candidate, existingEvents, today });
+
+  if (!capture.validation.passed) {
+    return { persisted: false, event: null, capture, hold_reason: "Validation failed — canonical event not written." };
+  }
+
+  // Upsert by stable id (idempotent write-through).
+  const idx = store.cornerstoneEvents.findIndex((e: CornerstoneEvent) => e.id === opts.id);
+  if (idx >= 0) store.cornerstoneEvents[idx] = candidate;
+  else db.cornerstoneEvents.append(candidate);
+
+  return { persisted: true, event: candidate, capture, hold_reason: null };
+}

@@ -1,7 +1,7 @@
 // Integration: captureEvent → persisted spine → buildLiveEventStream → intelligence.
 import { describe, it, expect, beforeEach } from "vitest";
 import { getStore, db } from "@/lib/db/store";
-import { captureEvent } from "../capture-event-service";
+import { captureEvent, captureDomainEvent } from "../capture-event-service";
 import { buildLiveEventStream } from "@/lib/event-stream/live-event-stream";
 import { buildEventStream } from "@/lib/event-stream/event-projector";
 import { mapStoreToEventInput } from "@/lib/event-stream/store-mapper";
@@ -69,6 +69,29 @@ describe("captureEvent integration (write path → spine)", () => {
     if (out.capture.routing.external_apis.length > 0) {
       expect(out.capture.routing.requires_human_approval).toBe(true);
     }
+  });
+
+  it("captureDomainEvent (write-through) upserts by stable id, tags provenance, and is not gated by content-duplication", () => {
+    const draft = { eventType: "daily_log" as const, childId: "yp_alex", riskLevel: "low" as const, summary: "Write-through probe: settled evening, dinner and a film together." };
+
+    const a = captureDomainEvent(draft, { id: "evt_log_wt_x", now: "2026-06-02T18:00:00.000Z", today: TODAY });
+    expect(a.persisted).toBe(true);
+    expect(a.event!.structuredTags).toContain("spine_capture");
+    expect(getStore().cornerstoneEvents.length).toBe(1);
+
+    // Same id again → upsert (replace), not a second row.
+    const b = captureDomainEvent(draft, { id: "evt_log_wt_x", now: "2026-06-02T19:00:00.000Z", today: TODAY });
+    expect(b.persisted).toBe(true);
+    expect(getStore().cornerstoneEvents.length).toBe(1);
+
+    // Content-identical but DIFFERENT id → still persists (no content-dedupe gate; id is identity).
+    const c = captureDomainEvent(draft, { id: "evt_log_wt_y", now: "2026-06-02T20:00:00.000Z", today: TODAY });
+    expect(c.persisted).toBe(true);
+    expect(getStore().cornerstoneEvents.length).toBe(2);
+
+    // De-dupes by id in the live spine — exactly one of each.
+    const live = buildLiveEventStream(getStore());
+    expect(live.events.filter((e) => e.id === "evt_log_wt_x").length).toBe(1);
   });
 
   it("is deterministic — identical capture (same id/now/today) yields identical outcome JSON", () => {
