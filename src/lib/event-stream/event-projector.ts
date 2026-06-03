@@ -102,6 +102,10 @@ export interface ContactLogSource {
   yp_mood_after?: string | null; concerns_identified?: boolean; safeguarding_concern?: boolean;
   follow_up_required?: boolean; supervised_by?: string | null; home_id?: string; created_at?: string;
 }
+export interface RiskAssessmentSource {
+  id: string; child_id: string; domain?: string; current_level?: string; previous_level?: string; trend?: string;
+  status?: string; assessed_by?: string; assessed_date: string; review_date?: string; home_id?: string; created_at?: string;
+}
 
 export interface EventProjectorInput {
   dailyLogs?: DailyLogSource[];
@@ -120,6 +124,7 @@ export interface EventProjectorInput {
   leaveRequests?: LeaveSource[];
   complaints?: ComplaintSource[];
   familyContacts?: ContactLogSource[];
+  riskAssessments?: RiskAssessmentSource[];
   homeId?: string;
 }
 
@@ -200,6 +205,7 @@ const THEMES: Partial<Record<CornerstoneEventType, string[]>> = {
   health: ["health & wellbeing"],
   complaint: ["complaints handling", "leadership and management", "child voice"],
   family_contact: ["positive relationships", "family time", "child voice"],
+  risk_assessment: ["risk management", "help and protection"],
   staff_absence: ["staff wellbeing", "staffing"],
 };
 const ACTIONS: Partial<Record<CornerstoneEventType, string[]>> = {
@@ -216,6 +222,7 @@ const ACTIONS: Partial<Record<CornerstoneEventType, string[]>> = {
   health: ["Ensure the appointment is attended or rebooked and the outcome recorded"],
   complaint: ["Acknowledge within 3 working days and respond within 10", "Record the outcome and any lessons learned", "Share the learning with the team"],
   family_contact: ["Record the child's wishes and feelings about the contact", "Follow up any concerns and update the contact plan"],
+  risk_assessment: ["Review and update the risk assessment by the review date", "Check the mitigations are in place and effective"],
   staff_absence: ["Complete the return-to-work interview where required"],
 };
 
@@ -571,6 +578,24 @@ function projectFamilyContact(r: ContactLogSource, homeId?: string): Cornerstone
   };
 }
 
+const RA_RISK: Record<string, CornerstoneRiskLevel> = { low: "low", medium: "medium", high: "high", very_high: "critical" };
+
+function projectRiskAssessment(r: RiskAssessmentSource, homeId?: string): CornerstoneEvent {
+  const risk = RA_RISK[r.current_level ?? ""] ?? "medium";
+  const tags = ["risk_assessment", r.domain, r.current_level, r.status, r.trend].filter(Boolean) as string[];
+  const compliance: string[] = [];
+  if (r.status === "under_review" || r.status === "draft") compliance.push(`Risk assessment not finalised (${r.status}) — complete and sign off`);
+  const { requiresApproval, approvalLevel } = deriveApproval("risk_assessment", risk);
+  return {
+    id: `evt_ra_${r.id}`, eventType: "risk_assessment", ...base(r.home_id ?? homeId, toIso(r.assessed_date), r.created_at),
+    childId: r.child_id, staffId: r.assessed_by, occurredAt: toIso(r.assessed_date), createdBy: r.assessed_by ?? "system",
+    summary: `Risk assessment${r.domain ? ` (${r.domain.replace(/_/g, " ")})` : ""}: ${r.current_level ?? "?"} risk${r.trend ? `, ${r.trend.replace(/_/g, " ")}` : ""}`,
+    structuredTags: tags, riskLevel: risk, requiresApproval, approvalLevel,
+    linkedDocuments: [], linkedTasks: [], linkedRisks: [r.id], linkedNotifications: [],
+    ariaAnalysis: buildAria("risk_assessment", compliance, [], risk),
+  };
+}
+
 const ABSENCE_TYPE = /sick|emergency|unauth|compassion|bereav/i;
 
 // ── Evidence category mapping (Ofsted evidence bank) ────────────────────────────
@@ -587,6 +612,7 @@ const EVIDENCE_MAP: Partial<Record<CornerstoneEventType, string[]>> = {
   health: ["health", "children's progress"],
   family_contact: ["positive relationships", "consultation", "children's progress"],
   complaint: ["complaints", "leadership and management", "consultation"],
+  risk_assessment: ["risk management", "help and protection", "children's progress"],
   supervision: ["workforce development", "leadership and management"],
   training: ["workforce development"],
   overtime: ["workforce development", "leadership and management"],
@@ -630,6 +656,7 @@ export function projectEvents(input: EventProjectorInput): CornerstoneEvent[] {
     ...(input.leaveRequests ?? []).filter((l) => ABSENCE_TYPE.test(l.leave_type ?? "")).map((r) => projectStaffAbsence(r, home)),
     ...(input.complaints ?? []).map((r) => projectComplaint(r, home)),
     ...(input.familyContacts ?? []).map((r) => projectFamilyContact(r, home)),
+    ...(input.riskAssessments ?? []).map((r) => projectRiskAssessment(r, home)),
   ];
   // Populate evidence categories for every event (spine completion).
   for (const e of events) e.evidenceCategories = evidenceCategoriesFor(e.eventType, e.riskLevel);
