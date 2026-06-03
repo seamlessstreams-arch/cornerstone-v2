@@ -74,5 +74,11 @@ export function mapStoreToEventInput(store: any): EventProjectorInput {
       total_days: l.total_days, status: l.status, return_to_work_required: l.return_to_work_required, return_to_work_completed: l.return_to_work_completed,
       home_id: l.home_id, created_at: l.created_at,
     })),
+    complaints: ((store.complaints ?? []) as any[]).map((c: any) => ({
+      id: c.id, child_id: c.child_id, reference: c.reference, category: c.category, stage: c.stage, status: c.status,
+      summary: c.summary, date_received: d(c.date_received ?? c.created_at), outcome: c.outcome,
+      includes_safeguarding_element: c.includes_safeguarding_element, response_sent_at: c.response_sent_at,
+      home_id: c.home_id, created_by: c.created_by, created_at: c.created_at,
+    })),
   };
 }

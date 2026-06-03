@@ -10,6 +10,7 @@ import {
   type DailyLogSource,
   type KeyworkSource,
   type EducationSource,
+  type ComplaintSource,
 } from "../event-projector";
 
 const inc = (o: Partial<IncidentSource> & { id: string }): IncidentSource => ({
@@ -209,5 +210,39 @@ describe("determinism", () => {
   it("returns identical output for identical input", () => {
     const input = { incidents: [inc({ id: "1", type: "safeguarding_concern", severity: "high" })], missingEpisodes: [mis({ id: "1" })] };
     expect(JSON.stringify(buildEventStream(input))).toBe(JSON.stringify(buildEventStream(input)));
+  });
+});
+
+const cmp = (o: Partial<ComplaintSource> & { id: string }): ComplaintSource => ({
+  child_id: "yp_jordan", reference: "CMP-2026-101", category: "care_practice", stage: "stage_1",
+  status: "received", summary: "Concern raised about how a sanction was applied.", date_received: "2026-06-01", ...o,
+});
+
+describe("projectComplaint (new spine domain)", () => {
+  it("projects a complaint into a complaint event with evt_cmp_ id and RM approval", () => {
+    const [e] = projectEvents({ complaints: [cmp({ id: "c1" })] });
+    expect(e.id).toBe("evt_cmp_c1");
+    expect(e.eventType).toBe("complaint");
+    expect(e.childId).toBe("yp_jordan");
+    expect(e.riskLevel).toBe("medium");          // open, not safeguarding/escalated
+    expect(e.requiresApproval).toBe(true);
+    expect(e.approvalLevel).toBe("manager");     // complaints are RM-owned
+    expect(e.structuredTags).toContain("complaint");
+    expect(e.evidenceCategories).toContain("complaints");
+    expect(e.summary).toMatch(/Complaint CMP-2026-101/);
+  });
+
+  it("rates a safeguarding-element complaint high and flags it", () => {
+    const [e] = projectEvents({ complaints: [cmp({ id: "c2", includes_safeguarding_element: true })] });
+    expect(e.riskLevel).toBe("high");
+    expect(e.structuredTags).toContain("safeguarding_element");
+    expect(e.ariaAnalysis!.complianceFlags.some((f) => /safeguarding element/i.test(f))).toBe(true);
+  });
+
+  it("rates a resolved complaint low and flags a missing outcome when closed without one", () => {
+    const [open] = projectEvents({ complaints: [cmp({ id: "c3", status: "response_sent" })] });
+    expect(open.riskLevel).toBe("low");
+    const [closed] = projectEvents({ complaints: [cmp({ id: "c4", status: "closed", outcome: null })] });
+    expect(closed.ariaAnalysis!.missingInformation).toContain("outcome");
   });
 });

@@ -91,6 +91,11 @@ export interface LeaveSource {
   total_days?: number; status?: string; return_to_work_required?: boolean; return_to_work_completed?: boolean;
   home_id?: string; created_at?: string;
 }
+export interface ComplaintSource {
+  id: string; child_id?: string | null; reference?: string; category?: string; stage?: string; status?: string;
+  summary?: string; date_received: string; outcome?: string | null; includes_safeguarding_element?: boolean;
+  response_sent_at?: string | null; home_id?: string; created_by?: string; created_at?: string;
+}
 
 export interface EventProjectorInput {
   dailyLogs?: DailyLogSource[];
@@ -107,6 +112,7 @@ export interface EventProjectorInput {
   reg44Reports?: Reg44Source[];
   appointments?: AppointmentSource[];
   leaveRequests?: LeaveSource[];
+  complaints?: ComplaintSource[];
   homeId?: string;
 }
 
@@ -165,6 +171,7 @@ export function deriveApproval(
   if (eventType === "physical_intervention") level = bumpAtLeast(level, "manager");
   if (eventType === "missing") level = bumpAtLeast(level, "deputy");
   if (eventType === "medication" && (risk === "high" || risk === "critical")) level = bumpAtLeast(level, "manager");
+  if (eventType === "complaint" && (risk === "high" || risk === "medium")) level = bumpAtLeast(level, "manager");
   if (eventType === "reg44" || eventType === "reg45") level = bumpAtLeast(level, "ri");
   return level ? { requiresApproval: true, approvalLevel: level } : { requiresApproval: false };
 }
@@ -184,6 +191,7 @@ const THEMES: Partial<Record<CornerstoneEventType, string[]>> = {
   qa_check: ["quality assurance"],
   reg44: ["independent oversight", "Reg 44"],
   health: ["health & wellbeing"],
+  complaint: ["complaints handling", "leadership and management", "child voice"],
   staff_absence: ["staff wellbeing", "staffing"],
 };
 const ACTIONS: Partial<Record<CornerstoneEventType, string[]>> = {
@@ -198,6 +206,7 @@ const ACTIONS: Partial<Record<CornerstoneEventType, string[]>> = {
   qa_check: ["Action the audit findings and re-check"],
   reg44: ["Respond to the Reg 44 recommendations", "Send the report to Ofsted if not already sent"],
   health: ["Ensure the appointment is attended or rebooked and the outcome recorded"],
+  complaint: ["Acknowledge within 3 working days and respond within 10", "Record the outcome and any lessons learned", "Share the learning with the team"],
   staff_absence: ["Complete the return-to-work interview where required"],
 };
 
@@ -507,6 +516,29 @@ function projectStaffAbsence(r: LeaveSource, homeId?: string): CornerstoneEvent 
   };
 }
 
+function projectComplaint(r: ComplaintSource, homeId?: string): CornerstoneEvent {
+  const sg = !!r.includes_safeguarding_element;
+  const escalated = r.stage === "stage_2" || r.stage === "ombudsman" || r.status === "escalated";
+  const resolved = r.status === "response_sent" || r.status === "closed";
+  const risk: CornerstoneRiskLevel = sg || escalated ? "high" : resolved ? "low" : "medium";
+  const tags = ["complaint", r.category, r.stage, r.status].filter(Boolean) as string[];
+  if (sg) tags.push("safeguarding_element");
+  const compliance: string[] = [];
+  if (sg) compliance.push("Complaint includes a safeguarding element — ensure the safeguarding process is followed");
+  if (r.stage === "ombudsman") compliance.push("Complaint escalated to the Ombudsman");
+  const missing: string[] = [];
+  if (r.status === "closed" && !r.outcome) missing.push("outcome");
+  const { requiresApproval, approvalLevel } = deriveApproval("complaint", risk);
+  return {
+    id: `evt_cmp_${r.id}`, eventType: "complaint", ...base(r.home_id ?? homeId, toIso(r.date_received), r.created_at),
+    childId: r.child_id ?? undefined, occurredAt: toIso(r.date_received), createdBy: r.created_by ?? "system",
+    summary: `Complaint${r.reference ? ` ${r.reference}` : ""}${r.category ? ` (${r.category.replace(/_/g, " ")})` : ""}: ${(r.summary ?? "").slice(0, 120)}`,
+    structuredTags: tags, riskLevel: risk, requiresApproval, approvalLevel,
+    linkedDocuments: [], linkedTasks: [], linkedRisks: [], linkedNotifications: [],
+    ariaAnalysis: buildAria("complaint", compliance, missing, risk),
+  };
+}
+
 const ABSENCE_TYPE = /sick|emergency|unauth|compassion|bereav/i;
 
 // ── Evidence category mapping (Ofsted evidence bank) ────────────────────────────
@@ -564,6 +596,7 @@ export function projectEvents(input: EventProjectorInput): CornerstoneEvent[] {
     ...(input.reg44Reports ?? []).map((r) => projectReg44(r, home)),
     ...(input.appointments ?? []).map((r) => projectHealth(r, home)),
     ...(input.leaveRequests ?? []).filter((l) => ABSENCE_TYPE.test(l.leave_type ?? "")).map((r) => projectStaffAbsence(r, home)),
+    ...(input.complaints ?? []).map((r) => projectComplaint(r, home)),
   ];
   // Populate evidence categories for every event (spine completion).
   for (const e of events) e.evidenceCategories = evidenceCategoriesFor(e.eventType, e.riskLevel);
