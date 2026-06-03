@@ -1,0 +1,23 @@
+// ══════════════════════════════════════════════════════════════════════════════
+// CORNERSTONE — MANAGER ACTION INBOX API ROUTE
+// GET /api/v1/manager-inbox
+//
+// One prioritised command centre: composes the canonical event stream into the
+// approvals, safeguarding alerts, high-risk events and compliance gaps a manager
+// must act on — each with reason, deadline, links, ARIA suggestion and actions.
+// CHR 2015 Reg 13 (leadership oversight).
+// ══════════════════════════════════════════════════════════════════════════════
+
+export const dynamic = "force-dynamic";
+
+import { NextResponse } from "next/server";
+import { getStore } from "@/lib/db/store";
+import { buildEventStream } from "@/lib/event-stream/event-projector";
+import { mapStoreToEventInput } from "@/lib/event-stream/store-mapper";
+import { computeManagerInbox } from "@/lib/manager-inbox/manager-inbox-engine";
+
+export async function GET() {
+  const stream = buildEventStream(mapStoreToEventInput(getStore()));
+  const result = computeManagerInbox({ events: stream.events });
+  return NextResponse.json({ data: result });
+}

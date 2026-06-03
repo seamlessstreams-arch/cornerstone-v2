@@ -67,6 +67,8 @@ export interface CornerstoneEvent {
 
   summary: string;
   structuredTags: string[];
+  /** Ofsted evidence categories this event contributes to (populated by the projector). */
+  evidenceCategories?: string[];
 
   riskLevel: CornerstoneRiskLevel;
   requiresApproval: boolean;

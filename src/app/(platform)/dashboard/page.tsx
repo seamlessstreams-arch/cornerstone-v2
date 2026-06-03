@@ -101,6 +101,8 @@ const HomeMissingEpisodesIntelligenceCard = dynamic(() => import("@/components/d
 const HomeHealthWellbeingIntelligenceCard = dynamic(() => import("@/components/dashboard/home-health-wellbeing-intelligence-card").then(m => m.HomeHealthWellbeingIntelligenceCard ? { default: m.HomeHealthWellbeingIntelligenceCard } : m), { ssr: false });
 const HomeLACReviewIntelligenceCard = dynamic(() => import("@/components/dashboard/home-lac-review-intelligence-card").then(m => m.HomeLACReviewIntelligenceCard ? { default: m.HomeLACReviewIntelligenceCard } : m), { ssr: false });
 const HomeRiskAssessmentIntelligenceCard = dynamic(() => import("@/components/dashboard/home-risk-assessment-intelligence-card").then(m => m.HomeRiskAssessmentIntelligenceCard ? { default: m.HomeRiskAssessmentIntelligenceCard } : m), { ssr: false });
+const ManagerInboxCard = dynamic(() => import("@/components/dashboard/manager-inbox-card").then(m => m.ManagerInboxCard ? { default: m.ManagerInboxCard } : m), { ssr: false });
+const EvidenceBankCard = dynamic(() => import("@/components/dashboard/evidence-bank-card").then(m => m.EvidenceBankCard ? { default: m.EvidenceBankCard } : m), { ssr: false });
 const EventStreamCard = dynamic(() => import("@/components/dashboard/event-stream-card").then(m => m.EventStreamCard ? { default: m.EventStreamCard } : m), { ssr: false });
 const EventIntelligenceCard = dynamic(() => import("@/components/dashboard/event-intelligence-card").then(m => m.EventIntelligenceCard ? { default: m.EventIntelligenceCard } : m), { ssr: false });
 const EventRoutingCard = dynamic(() => import("@/components/dashboard/event-routing-card").then(m => m.EventRoutingCard ? { default: m.EventRoutingCard } : m), { ssr: false });
@@ -1649,6 +1651,8 @@ export default function DashboardPage() {
                     <HomeHealthWellbeingIntelligenceCard />
                     <HomeLACReviewIntelligenceCard />
                     <HomeRiskAssessmentIntelligenceCard />
+                    <ManagerInboxCard />
+                    <EvidenceBankCard />
                     <EventStreamCard />
                     <EventIntelligenceCard />
                     <EventRoutingCard />
