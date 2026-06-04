@@ -13,7 +13,7 @@ export function useFilingCabinetIndex(homeId: string) {
     queryKey: ["filing-cabinet-index", homeId],
     queryFn: () =>
       api.get<Response>(
-        `/api/v1/care-events/filing-cabinet?home_id=${encodeURIComponent(homeId)}`,
+        `/care-events/filing-cabinet?home_id=${encodeURIComponent(homeId)}`,
       ),
     refetchInterval: 30000,
   });

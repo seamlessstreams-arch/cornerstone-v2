@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import {
-  generateStaffSupervisionEffectivenessIntelligence,
+  // NB: the barrel's plain `generateStaffSupervisionEffectivenessIntelligence` is the
+  // object-input "intelligence" engine; this route uses the legacy positional engine
+  // (matching its SupervisionSession DEMO data + positional call), so alias that one.
+  generateLegacyStaffSupervisionEffectivenessIntelligence as generateStaffSupervisionEffectivenessIntelligence,
   getSupervisionTypeLabel,
   getSupervisionOutcomeLabel,
   getRatingLabel,

@@ -65,10 +65,10 @@ export async function GET() {
   const result = computeDigitalLiteracyOnlineSafety({
     today,
     total_children: (children as any[]).length,
-    skills,
-    plans,
-    phones,
-    rse_records,
+    digital_skills: skills,
+    digital_plans: plans,
+    phone_records: phones,
+    rse_digital: rse_records,
   });
 
   return NextResponse.json({ data: result });

@@ -19,7 +19,7 @@ export function useExportHistory(homeId: string) {
     queryKey: ["export-history", homeId],
     queryFn: () =>
       api.get<SummaryResponse>(
-        `/api/v1/care-events/exports?home_id=${encodeURIComponent(homeId)}`,
+        `/care-events/exports?home_id=${encodeURIComponent(homeId)}`,
       ),
     refetchInterval: 60000,
   });
@@ -33,7 +33,7 @@ export function useArtifactExportHistory(homeId: string, artifactId: string | nu
     enabled: !!artifactId,
     queryFn: () =>
       api.get<ArtifactHistoryResponse>(
-        `/api/v1/care-events/exports/by-artifact?home_id=${encodeURIComponent(homeId)}&artifact_id=${encodeURIComponent(artifactId!)}`,
+        `/care-events/exports/by-artifact?home_id=${encodeURIComponent(homeId)}&artifact_id=${encodeURIComponent(artifactId!)}`,
       ),
     refetchInterval: 30000,
   });
@@ -50,7 +50,7 @@ export function useExportInspectionSnapshot() {
   return useMutation({
     mutationFn: (input: { id: string; reason?: string }) =>
       api.post<SnapshotExportResponse>(
-        `/api/v1/care-events/inspection-snapshot/${encodeURIComponent(input.id)}/export`,
+        `/care-events/inspection-snapshot/${encodeURIComponent(input.id)}/export`,
         { reason: input.reason ?? null },
       ),
   });
@@ -60,7 +60,7 @@ export function useExportReg44Pack() {
   return useMutation({
     mutationFn: (input: { id: string; reason?: string }) =>
       api.post<Reg44ExportResponse>(
-        `/api/v1/care-events/reg44-pack/${encodeURIComponent(input.id)}/export`,
+        `/care-events/reg44-pack/${encodeURIComponent(input.id)}/export`,
         { reason: input.reason ?? null },
       ),
   });
@@ -77,7 +77,7 @@ export function useExportFilingCabinet() {
   return useMutation({
     mutationFn: (input: { homeId: string; category?: FilingCategory; reason?: string }) =>
       api.post<FilingExportResponse>(
-        `/api/v1/care-events/filing-cabinet/export`,
+        `/care-events/filing-cabinet/export`,
         {
           home_id: input.homeId,
           category: input.category ?? null,
@@ -95,7 +95,7 @@ export function useExportInspectionBundle() {
   return useMutation({
     mutationFn: (input: { homeId: string; reason?: string }) =>
       api.post<InspectionBundleExportResponse>(
-        `/api/v1/care-events/inspection-bundle/export`,
+        `/care-events/inspection-bundle/export`,
         { home_id: input.homeId, reason: input.reason ?? null },
       ),
   });

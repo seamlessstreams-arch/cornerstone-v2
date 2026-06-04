@@ -10,7 +10,7 @@ export function useChronologyEntries(childId?: string) {
   return useQuery({
     queryKey: ["chronology-entries", childId],
     queryFn: () =>
-      api.get<{ data: ChronologyEntry[] }>(`/api/v1/chronology-entries${qs ? `?${qs}` : ""}`),
+      api.get<{ data: ChronologyEntry[] }>(`/chronology-entries${qs ? `?${qs}` : ""}`),
     staleTime: 30_000,
   });
 }

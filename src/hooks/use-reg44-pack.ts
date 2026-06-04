@@ -13,7 +13,7 @@ export function usePersistedReg44Packs(homeId: string) {
     queryKey: ["reg44-packs", homeId],
     queryFn: () =>
       api.get<ListResponse>(
-        `/api/v1/care-events/reg44-pack?home_id=${encodeURIComponent(homeId)}`,
+        `/care-events/reg44-pack?home_id=${encodeURIComponent(homeId)}`,
       ),
     refetchInterval: 60000,
   });
@@ -23,7 +23,7 @@ export function useGenerateAndPersistReg44Pack(homeId: string) {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (days: number) =>
-      api.post<PackResponse>(`/api/v1/care-events/reg44-pack`, {
+      api.post<PackResponse>(`/care-events/reg44-pack`, {
         home_id: homeId,
         days,
       }),
@@ -37,7 +37,7 @@ export function useFetchPersistedReg44Pack() {
   return useMutation({
     mutationFn: (id: string) =>
       api.get<DetailResponse>(
-        `/api/v1/care-events/reg44-pack/${encodeURIComponent(id)}`,
+        `/care-events/reg44-pack/${encodeURIComponent(id)}`,
       ),
   });
 }

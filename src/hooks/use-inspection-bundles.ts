@@ -17,7 +17,7 @@ export function useInspectionBundles(homeId: string) {
     queryKey: ["inspection-bundles", homeId],
     queryFn: () =>
       api.get<ListResponse>(
-        `/api/v1/care-events/inspection-bundle?home_id=${encodeURIComponent(homeId)}`,
+        `/care-events/inspection-bundle?home_id=${encodeURIComponent(homeId)}`,
       ),
     refetchInterval: 60000,
   });
@@ -29,7 +29,7 @@ export function useInspectionBundle(id: string | null | undefined) {
     enabled: !!id,
     queryFn: () =>
       api.get<DetailResponse>(
-        `/api/v1/care-events/inspection-bundle/${encodeURIComponent(id!)}`,
+        `/care-events/inspection-bundle/${encodeURIComponent(id!)}`,
       ),
   });
 }
@@ -45,7 +45,7 @@ export function useInspectionBundleDiff(
       const qs = new URLSearchParams();
       qs.set("current_id", currentId!);
       if (previousId) qs.set("previous_id", previousId);
-      return api.get<DiffResponse>(`/api/v1/care-events/inspection-bundle/diff?${qs.toString()}`);
+      return api.get<DiffResponse>(`/care-events/inspection-bundle/diff?${qs.toString()}`);
     },
   });
 }

@@ -14,7 +14,7 @@ export function usePersistedSnapshots(homeId: string) {
     queryKey: ["inspection-snapshots", homeId],
     queryFn: () =>
       api.get<ListResponse>(
-        `/api/v1/care-events/inspection-snapshot?home_id=${encodeURIComponent(homeId)}`,
+        `/care-events/inspection-snapshot?home_id=${encodeURIComponent(homeId)}`,
       ),
     refetchInterval: 60000,
   });
@@ -24,7 +24,7 @@ export function useGenerateAndPersistSnapshot(homeId: string) {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: () =>
-      api.post<SnapResponse>(`/api/v1/care-events/inspection-snapshot`, { home_id: homeId }),
+      api.post<SnapResponse>(`/care-events/inspection-snapshot`, { home_id: homeId }),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["inspection-snapshots", homeId] });
     },
@@ -35,7 +35,7 @@ export function useFetchPersistedSnapshot() {
   return useMutation({
     mutationFn: (id: string) =>
       api.get<DetailResponse>(
-        `/api/v1/care-events/inspection-snapshot/${encodeURIComponent(id)}`,
+        `/care-events/inspection-snapshot/${encodeURIComponent(id)}`,
       ),
   });
 }

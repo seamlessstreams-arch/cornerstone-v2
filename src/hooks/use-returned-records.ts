@@ -13,7 +13,7 @@ export function useReturnedRecords(homeId: string) {
     queryKey: ["returned-records", homeId],
     queryFn: () =>
       api.get<Response>(
-        `/api/v1/care-events/returned-records?home_id=${encodeURIComponent(homeId)}`,
+        `/care-events/returned-records?home_id=${encodeURIComponent(homeId)}`,
       ),
     refetchInterval: 30000,
   });

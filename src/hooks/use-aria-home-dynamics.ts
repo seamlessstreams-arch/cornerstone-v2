@@ -25,7 +25,7 @@ export function useHomeDynamicsSnapshots(homeId?: string) {
     queryKey: ["aria-home-dynamics", "list", homeId ?? null],
     queryFn: () =>
       api.get<ListResponse>(
-        `/api/v1/aria-studio/home-dynamics${qs ? `?${qs}` : ""}`,
+        `/aria-studio/home-dynamics${qs ? `?${qs}` : ""}`,
       ),
     refetchInterval: 60000,
   });
@@ -38,7 +38,7 @@ export function useLatestHomeDynamicsSnapshot(homeId?: string) {
     queryKey: ["aria-home-dynamics", "latest", homeId ?? null],
     queryFn: () =>
       api.get<LatestResponse>(
-        `/api/v1/aria-studio/home-dynamics?${search.toString()}`,
+        `/aria-studio/home-dynamics?${search.toString()}`,
       ),
     refetchInterval: 60000,
   });
@@ -56,7 +56,7 @@ export function useGenerateHomeDynamicsSnapshot() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (input: GenerateInput) =>
-      api.post<SingleResponse>("/api/v1/aria-studio/home-dynamics", input),
+      api.post<SingleResponse>("/aria-studio/home-dynamics", input),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["aria-home-dynamics"] });
     },

@@ -21,7 +21,7 @@ export function usePromotePatternsToReg45() {
       actor_id?: string;
       actor_role?: string;
     }) =>
-      api.post<Response>("/api/v1/care-events/patterns/promote", input),
+      api.post<Response>("/care-events/patterns/promote", input),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["aria-reg45-evidence"] });
       qc.invalidateQueries({ queryKey: ["aria-audit-trail"] });

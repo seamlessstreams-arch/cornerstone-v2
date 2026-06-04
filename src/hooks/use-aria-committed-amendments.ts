@@ -47,7 +47,7 @@ export function useAmendCommittedRecord() {
       actor_role?: string;
     }) =>
       api.post<AmendResponse>(
-        "/api/v1/aria-studio/committed-amendments",
+        "/aria-studio/committed-amendments",
         input,
       ),
     onSuccess: (_data, vars) => {

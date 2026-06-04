@@ -75,10 +75,10 @@ export async function GET() {
   const result = computeTherapeuticWellbeingImpact({
     today,
     total_children: (children as any[]).length,
-    impacts,
-    pulses,
-    toolkits,
-    grief_records,
+    therapeutic_impacts: impacts,
+    wellbeing_pulses: pulses,
+    self_soothing: toolkits,
+    grief_support: grief_records,
   });
 
   return NextResponse.json({ data: result });
