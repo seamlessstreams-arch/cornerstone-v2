@@ -63,6 +63,9 @@ const AUDIT_ACTION: Record<string, "create" | "update" | "delete" | "view"> = {
   message_edited: "update",
   message_deleted: "delete",
   message_action_created: "update",
+  message_converted: "create",
+  message_held: "update",
+  message_hold_released: "update",
   trust_notice_acknowledged: "update",
   access_denied: "view",
 };

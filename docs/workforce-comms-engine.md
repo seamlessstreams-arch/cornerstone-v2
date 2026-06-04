@@ -72,7 +72,79 @@ Set `NEXT_PUBLIC_SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY` (already enabled pe
 project decision) and run migration `403_comms_centre.sql`. With Supabase off the
 feature runs fully on the in-memory store.
 
+## Phase 2 — Message Governance (implemented)
+
+Turns everyday messages into accountable records so nothing important lives **only**
+as a chat message ("capture once, surface everywhere, no hidden second record").
+Purely additive over Phase 1 — no schema change (Phase 1's migration 403 already
+created `comms_message_actions` + the `retention_category`/`investigation_hold`
+columns). External notifications are still never auto-sent.
+
+### What it does
+- **Professional-language nudge** — as staff type (debounced, ≥12 words) the draft
+  is scored by the **shared ARIA recording-quality engine**
+  (`scoreRecordingQuality`); a non-blocking tip appears when the writing is thin or
+  unprofessional. Advisory only — it never blocks a send and never alters a message.
+- **Recordable-content detection** — a pure keyword heuristic flags messages that
+  look like they belong in a formal record (safeguarding/disclosure, missing-from-
+  care, restraint, medication error, incident, complaint), ordered by concern, and
+  suggests the right conversion. It *prompts a human*; it never auto-files.
+- **Convert message → formal record / task (capture once)** — any staff member who
+  can see a message may escalate it:
+  - record types are written to the **Cornerstone event spine** via
+    `captureDomainEvent` (validated + de-duplicated once); the canonical-event id is
+    `evt_cap_<messageId>_<action>`, so re-converting the same message to the same
+    record type **upserts** rather than duplicates;
+  - `task` creates a real `db.tasks` task;
+  - the source message is stamped with `linked_record_type`/`linked_record_id` and
+    the thread shows **"Recorded as …"** — the link back that prevents a hidden
+    second record. The conversion is logged in `comms_message_actions` and audited.
+  - Held messages cannot be converted (423).
+- **Investigation hold + retention (manager-only)** — a manager can **freeze** a
+  message (no edit / delete / convert — enforced server-side by 423 checks) and set
+  a **retention category** (routine, child-related, safeguarding, HR/conduct,
+  investigation). Releasing lifts the freeze. The body is never altered; every
+  change is audited.
+
+### Files
+- Governance (pure): `src/lib/comms/comms-governance.ts` —
+  `analyseMessageLanguage`, `detectRecordableContent`, `ACTION_EVENT_MAP`,
+  `CONVERSION_ACTIONS`, `RETENTION_CATEGORIES`, `isValidRetentionCategory`
+- API: `src/app/api/v1/comms/analyse-language` (advisory, read-only),
+  `.../comms/messages/[id]/convert`, `.../comms/messages/[id]/hold`
+- Write-through: `persistCommsMessageAction` in `src/lib/supabase/comms.ts`
+- Audit events: `message_converted`/`message_held`/`message_hold_released` in
+  `comms-service.ts`
+- Hooks: `useAnalyseLanguage`, `useConvertMessage`, `useSetInvestigationHold`
+  in `src/hooks/use-comms.ts`
+- UI: `src/components/comms/message-governance.tsx` (`LanguageNudge`,
+  `MessageActionMenu`), wired into `comms-centre.tsx`
+- Reuse (no new validate/route/score logic): `scoreRecordingQuality`
+  (`src/lib/aria/recording-quality.ts`), `captureDomainEvent`
+  (`src/lib/event-capture/capture-event-service.ts`), `db.tasks.create`
+- Tests: `src/lib/comms/__tests__/comms-governance.test.ts` (17)
+
+### Safety / guarantees
+- Pure cores are deterministic (no wall-clock / I/O) — language scoring,
+  detection and mapping are unit-tested in isolation.
+- Conversions are **additive**: a message is never deleted by converting it; the
+  capture pipeline keeps external destinations gated (`requires_human_approval`),
+  so converting never sends anything to Ofsted / families / professionals.
+- Permissions are unchanged: hold is manager-only (server-side role check);
+  conversion is attributed + audited; held messages are immutable server-side.
+
+### Manual QA
+1. In `/comms`, type a thin message ("he was kicking off again all day") → a
+   **Writing tip** appears under the composer (non-blocking).
+2. Type "C disclosed something happened, possible allegation" → a **"may need a
+   formal record"** prompt appears; send it.
+3. On the sent message, open **Record / Task** → convert to *Safeguarding concern*
+   → the bubble shows **"Recorded as incident record"**; check the event appears in
+   `/event-stream` (id `evt_cap_…`).
+4. Convert the same message to *Safeguarding concern* again → no duplicate (upsert).
+5. As a manager, **Place under investigation hold** → the message shows a lock
+   badge; edit/delete/convert are now blocked (423). **Release** to restore.
+
 ### Next phases
-Phase 2 (message governance: convert-to-record, ARIA professional language,
-retention/hold), Phase 3 (Smart Sign-In), Phase 4 (wire the access engine to real
-clock-in + `withPermission` rollout + off-shift portal).
+Phase 3 (Smart Sign-In), Phase 4 (wire the access engine to real clock-in +
+`withPermission` rollout + off-shift portal).

@@ -13,7 +13,9 @@ import { useAuthContext } from "@/contexts/auth-context";
 import { isManagerRole } from "@/lib/comms/comms-access";
 import {
   useCommsChannels, useChannelMessages, useSendMessage, useMarkReceipt, useDeleteMessage,
+  useAnalyseLanguage, type MessageGovernanceAnalysis,
 } from "@/hooks/use-comms";
+import { LanguageNudge, MessageActionMenu } from "@/components/comms/message-governance";
 import type { CommsChannelType, CommsChannelSummary, CommsMessageEnriched } from "@/types/comms";
 
 const CHANNEL_ICON: Record<CommsChannelType, ComponentType<{ className?: string }>> = {
@@ -46,6 +48,22 @@ export function CommsCentre() {
   const [draft, setDraft] = useState("");
   const [priority, setPriority] = useState<"normal" | "urgent" | "emergency">("normal");
 
+  // Advisory language + recordable-content nudge — debounced, non-blocking.
+  const analyse = useAnalyseLanguage();
+  const [analysis, setAnalysis] = useState<MessageGovernanceAnalysis | null>(null);
+  useEffect(() => {
+    const text = draft.trim();
+    if (text.length < 8) { setAnalysis(null); return; }
+    const t = setTimeout(() => {
+      analyse.mutate(
+        { text, has_linked_child: !!active?.linked_child_id, has_linked_incident: !!active?.linked_incident_id },
+        { onSuccess: (d) => setAnalysis(d ?? null) },
+      );
+    }, 600);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [draft, channelId]);
+
   // Auto-mark unread messages as read when a channel is viewed.
   useEffect(() => {
     if (!channelId) return;
@@ -61,7 +79,7 @@ export function CommsCentre() {
     if (!channelId || !draft.trim()) return;
     send.mutate(
       { channel_id: channelId, body: draft.trim(), priority },
-      { onSuccess: () => { setDraft(""); setPriority("normal"); } },
+      { onSuccess: () => { setDraft(""); setPriority("normal"); setAnalysis(null); } },
     );
   };
 
@@ -150,12 +168,15 @@ export function CommsCentre() {
                               </button>
                             )
                           )}
-                          {(mine || isManager) && !m.is_deleted && (
+                          {(mine || isManager) && !m.is_deleted && !m.investigation_hold && (
                             <button onClick={() => del.mutate({ messageId: m.id, channelId: m.channel_id })} className="inline-flex items-center gap-0.5 text-[10px] text-[var(--cs-text-muted)] hover:text-red-600">
                               <Trash2 className="h-3 w-3" />Delete
                             </button>
                           )}
                         </div>
+                        {!m.is_deleted && (
+                          <MessageActionMenu message={m} channelId={m.channel_id} isManager={isManager} />
+                        )}
                       </div>
                     </div>
                   );
@@ -165,6 +186,7 @@ export function CommsCentre() {
 
             {/* ── Composer ─────────────────────────────────────────── */}
             <div className="border-t border-[var(--cs-border-subtle)] p-3 space-y-2">
+              <LanguageNudge analysis={analysis} />
               <Textarea
                 value={draft}
                 onChange={(e) => setDraft(e.target.value)}

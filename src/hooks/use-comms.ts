@@ -7,7 +7,14 @@ import type {
   CommsMessageEnriched,
   CommsMessagePriority,
   CommsLinkedRecordType,
+  CommsMessageActionType,
 } from "@/types/comms";
+import type { MessageLanguageAnalysis, RecordableDetection } from "@/lib/comms/comms-governance";
+
+export interface MessageGovernanceAnalysis {
+  language: MessageLanguageAnalysis;
+  recordable: RecordableDetection;
+}
 
 export function useCommsChannels() {
   return useQuery({
@@ -73,6 +80,61 @@ export function useDeleteMessage() {
   return useMutation({
     mutationFn: ({ messageId }: { messageId: string; channelId: string }) => api.delete(`/comms/messages/${messageId}`),
     onSuccess: (_d, vars) => qc.invalidateQueries({ queryKey: ["comms", "messages", vars.channelId] }),
+  });
+}
+
+/** Advisory draft analysis (professional-language nudge + recordable detection). */
+export function useAnalyseLanguage() {
+  return useMutation({
+    mutationFn: async (payload: { text: string; has_linked_child?: boolean; has_linked_incident?: boolean }) =>
+      (await api.post<{ data: MessageGovernanceAnalysis }>("/comms/analyse-language", payload)).data,
+  });
+}
+
+/** Convert a message into a formal record (event spine) or a task — capture once. */
+export function useConvertMessage() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({
+      messageId,
+      ...payload
+    }: {
+      messageId: string;
+      channelId: string;
+      action_type: CommsMessageActionType;
+      child_id?: string | null;
+      summary?: string;
+      task_title?: string;
+      task_priority?: "low" | "medium" | "high" | "urgent";
+      due_date?: string | null;
+    }) => api.post(`/comms/messages/${messageId}/convert`, payload),
+    onSuccess: (_d, vars) => {
+      qc.invalidateQueries({ queryKey: ["comms", "messages", vars.channelId] });
+      qc.invalidateQueries({ queryKey: ["tasks"] });
+      qc.invalidateQueries({ queryKey: ["event-stream"] });
+      qc.invalidateQueries({ queryKey: ["event-intelligence"] });
+    },
+  });
+}
+
+/** Manager-only: place or release an investigation hold (freeze) on a message. */
+export function useSetInvestigationHold() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({
+      messageId,
+      ...payload
+    }: {
+      messageId: string;
+      channelId: string;
+      hold: boolean;
+      retention_category?: string;
+      reason?: string;
+    }) => api.post(`/comms/messages/${messageId}/hold`, payload),
+    onSuccess: (_d, vars) => {
+      qc.invalidateQueries({ queryKey: ["comms", "messages", vars.channelId] });
+      qc.invalidateQueries({ queryKey: ["comms", "channels"] });
+    },
   });
 }
 
