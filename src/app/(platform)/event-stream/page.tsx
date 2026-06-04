@@ -13,7 +13,7 @@ import { Layers, Loader2, Info, ShieldCheck, AlertTriangle, Brain } from "lucide
 import { cn } from "@/lib/utils";
 import { useEventStream } from "@/hooks/use-event-stream";
 import { eventTypeLabel } from "@/lib/event-stream/event-type-meta";
-import { eventTypeIcon } from "@/lib/event-stream/event-type-icons";
+import { eventTypeIcon, eventTypeIconClass } from "@/lib/event-stream/event-type-icons";
 
 const RISK_STYLES: Record<string, { bg: string; text: string; ring: string }> = {
   low: { bg: "bg-gray-100", text: "text-gray-600", ring: "ring-gray-200" },
@@ -103,7 +103,7 @@ export default function EventStreamPage() {
                       <div className="min-w-0">
                         <CardTitle className="text-sm flex items-center gap-2 flex-wrap">
                           <span className="inline-flex items-center gap-1.5">
-                            <Icon className="h-3.5 w-3.5 shrink-0 text-[var(--cs-text-muted)]" />
+                            <Icon className={cn("h-3.5 w-3.5 shrink-0", eventTypeIconClass(e.eventType))} />
                             <Badge className="text-[10px] bg-[var(--cs-bg)] text-[var(--cs-text-secondary)] border">{eventTypeLabel(e.eventType)}</Badge>
                           </span>
                           <span className="font-medium">{e.summary}</span>
