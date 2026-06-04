@@ -10,7 +10,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { createServerClient, isSupabaseEnabled } from "./server";
-import type { CommsChannel, CommsMessage, CommsMessageReceipt, StaffTrustNoticeAck } from "@/types/comms";
+import type { CommsChannel, CommsMessage, CommsMessageReceipt, CommsMessageAction, StaffTrustNoticeAck } from "@/types/comms";
 
 // Loose-typed — these tables aren't in the generated Database types yet.
 type SB = any; // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -54,6 +54,13 @@ export function persistCommsReceipt(r: CommsMessageReceipt) {
   return upsert("comms_message_receipts", {
     id: r.id, message_id: r.message_id, channel_id: r.channel_id, user_id: r.user_id,
     read_at: r.read_at, acknowledged_at: r.acknowledged_at,
+  });
+}
+
+export function persistCommsMessageAction(a: CommsMessageAction) {
+  return upsert("comms_message_actions", {
+    id: a.id, message_id: a.message_id, action_type: a.action_type,
+    target_record_id: a.target_record_id, created_by: a.created_by, created_at: a.created_at,
   });
 }
 
