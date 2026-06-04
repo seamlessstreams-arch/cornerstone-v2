@@ -18,6 +18,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createServerClient, isSupabaseEnabled } from "@/lib/supabase/server";
 import { checkAccess } from "./access-decision-service";
+import { computeShiftActive, isShiftEnforcementEnabled } from "./shift-enforcement";
 import type { UserContext, ResourceType, Action, Role, EmploymentStatus } from "./types";
 import type { AccessCheckRequest } from "./access-decision-service";
 
@@ -176,7 +177,11 @@ async function loadUserContext(sb: any, userId: string): Promise<UserContext | n
     assignedChildIds: profile.assigned_child_ids ?? [],
     assignedStaffIds: profile.assigned_staff_ids ?? [],
     employmentStatus: (profile.employment_status ?? "active") as EmploymentStatus,
-    shiftActive: profile.shift_active ?? true,
+    // Phase 4: when enforcement is on, derive shiftActive from real on-shift state;
+    // otherwise preserve the original column behaviour (no change).
+    shiftActive: isShiftEnforcementEnabled()
+      ? computeShiftActive(profile.role as Role, userId)
+      : (profile.shift_active ?? true),
     isAgencyStaff: profile.is_agency_staff ?? false,
     isSuspended: profile.is_suspended ?? false,
     isLeaver: profile.is_leaver ?? false,

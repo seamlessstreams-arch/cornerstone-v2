@@ -131,6 +131,7 @@ export const PERMISSION_RULES: PermissionRule[] = [
     actions: ["view", "create", "edit"],
     requiresAssignment: true,
     requiresHomeMatch: true,
+    requiresShift: true, // Phase 4: general staff need an active shift (gated by SHIFT_BASED_ACCESS_ENFORCED)
     sensitivityMax: "internal",
   },
   {
@@ -236,6 +237,7 @@ export const PERMISSION_RULES: PermissionRule[] = [
     resourceType: "safeguarding",
     actions: ["create", "view"],
     requiresHomeMatch: true,
+    requiresShift: true, // Phase 4: general staff need an active shift (gated by SHIFT_BASED_ACCESS_ENFORCED)
     // view only records they created or are assigned to
   },
   {
