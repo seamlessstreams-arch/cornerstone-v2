@@ -4,7 +4,7 @@ import type { Reg40StaffEntry } from "@/types/extended";
 export function useReg40StaffEntries() {
   return useQuery<Reg40StaffEntry[]>({
     queryKey: ["reg40-staff-entries"],
-    queryFn: () => fetch("/api/v1/reg40-staff-entries").then((r) => r.json()),
+    queryFn: () => fetch("/api/v1/reg40-staff-entries").then((r) => r.json()).then((j) => Array.isArray(j) ? j : (j?.data ?? [])),
   });
 }
 

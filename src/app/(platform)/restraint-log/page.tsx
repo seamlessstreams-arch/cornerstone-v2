@@ -59,7 +59,7 @@ const EXPORT_COLS: ExportColumn<RestraintRecord>[] = [
   { header: "De-escalation",   accessor: (r: RestraintRecord) => r.de_escalation_attempts.join("; ") },
   { header: "Description",     accessor: (r: RestraintRecord) => r.description },
   { header: "Injuries",        accessor: (r: RestraintRecord) => r.injuries.length > 0 ? r.injuries.map((inj: { person: string; injury: string }) => `${inj.person}: ${inj.injury}`).join("; ") : "None" },
-  { header: "Review Status",   accessor: (r: RestraintRecord) => REVIEW_META[r.review_status].label },
+  { header: "Review Status",   accessor: (r: RestraintRecord) => REVIEW_META[r.review_status]?.label ?? String(r.review_status ?? "Unknown") },
   { header: "Notifications",   accessor: (r: RestraintRecord) => r.notifications_sent.map((n: { party: string; date: string }) => `${n.party} (${n.date})`).join("; ") },
   { header: "Recorded By",     accessor: (r: RestraintRecord) => getStaffName(r.recorded_by) },
 ];
@@ -161,7 +161,7 @@ export default function RestraintLogPage() {
           {filtered.length === 0 && <p className="text-center text-muted-foreground py-8">No restraint records found.</p>}
           {filtered.map((r) => {
             const open = !!expanded[r.id];
-            const reviewM = REVIEW_META[r.review_status];
+            const reviewM = REVIEW_META[r.review_status] ?? { label: String(r.review_status ?? "Unknown"), color: "bg-slate-100 text-slate-700" };
             return (
               <Card key={r.id} className="border-l-4 border-l-red-500">
                 <CardContent className="p-4">

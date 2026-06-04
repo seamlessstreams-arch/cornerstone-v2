@@ -4,7 +4,7 @@ import type { Reg22Record } from "@/types/extended";
 export function useReg22Records() {
   return useQuery<Reg22Record[]>({
     queryKey: ["reg22-records"],
-    queryFn: () => fetch("/api/v1/reg22-records").then((r) => r.json()),
+    queryFn: () => fetch("/api/v1/reg22-records").then((r) => r.json()).then((j) => Array.isArray(j) ? j : (j?.data ?? [])),
   });
 }
 
