@@ -4,7 +4,7 @@ import type { ReferralTrackerRecord } from "@/types/extended";
 export function useReferralTrackerRecords() {
   return useQuery<ReferralTrackerRecord[]>({
     queryKey: ["referral-tracker-records"],
-    queryFn: () => fetch("/api/v1/referral-tracker-records").then((r) => r.json()),
+    queryFn: () => fetch("/api/v1/referral-tracker-records").then((r) => r.json()).then((j) => Array.isArray(j) ? j : (j?.data ?? [])),
   });
 }
 

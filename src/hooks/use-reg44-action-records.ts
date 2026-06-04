@@ -4,7 +4,7 @@ import type { Reg44ActionRecord } from "@/types/extended";
 export function useReg44ActionRecords() {
   return useQuery<Reg44ActionRecord[]>({
     queryKey: ["reg44-action-records"],
-    queryFn: () => fetch("/api/v1/reg44-action-records").then((r) => r.json()),
+    queryFn: () => fetch("/api/v1/reg44-action-records").then((r) => r.json()).then((j) => Array.isArray(j) ? j : (j?.data ?? [])),
   });
 }
 

@@ -4,7 +4,7 @@ import type { RegistrationChangeRecord } from "@/types/extended";
 export function useRegistrationChangeRecords() {
   return useQuery<RegistrationChangeRecord[]>({
     queryKey: ["registration-change-records"],
-    queryFn: () => fetch("/api/v1/registration-change-records").then((r) => r.json()),
+    queryFn: () => fetch("/api/v1/registration-change-records").then((r) => r.json()).then((j) => Array.isArray(j) ? j : (j?.data ?? [])),
   });
 }
 

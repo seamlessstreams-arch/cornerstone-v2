@@ -126,7 +126,7 @@ export function KeyworkerSessionsCard() {
                     {profile.days_since_last}d ago
                   </Badge>
                 </div>
-                {profile.topics_covered.length > 0 && (
+                {(profile.topics_covered?.length ?? 0) > 0 && (
                   <div className="flex flex-wrap gap-1 mt-1.5">
                     {(profile.topics_covered ?? []).slice(0, 4).map((topic, i) => (
                       <Badge key={i} className="text-[9px] bg-gray-100 text-gray-700 border-gray-200">

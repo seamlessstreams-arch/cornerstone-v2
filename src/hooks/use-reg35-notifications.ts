@@ -8,7 +8,7 @@ export function useReg35Notifications(childId?: string) {
       const url = childId
         ? `/api/v1/reg35-notifications?child_id=${childId}`
         : "/api/v1/reg35-notifications";
-      return fetch(url).then((r) => r.json());
+      return fetch(url).then((r) => r.json()).then((j) => Array.isArray(j) ? j : (j?.data ?? []));
     },
   });
 }
