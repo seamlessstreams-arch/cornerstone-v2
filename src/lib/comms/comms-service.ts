@@ -11,22 +11,14 @@
 import type { NextRequest } from "next/server";
 import { db } from "@/lib/db/store";
 import { writeAuditLog } from "@/lib/supabase/audit";
+import { isStaffOnShift } from "@/lib/attendance/sign-in-service";
 import type { CommsUser } from "./comms-access";
 
 const DEFAULT_USER_ID = "staff_darren";
 
 /** Is this staff member currently on an active shift (clocked in, not out)? */
 export function isOnShift(staffId: string): boolean {
-  const today = new Date().toISOString().slice(0, 10);
-  const shifts = (db.shifts?.findAll?.() ?? []) as Array<{
-    staff_id: string; date: string; status?: string; clock_in_at?: string | null; clock_out_at?: string | null;
-  }>;
-  return shifts.some(
-    (s) =>
-      s.staff_id === staffId &&
-      s.date === today &&
-      (s.status === "in_progress" || (!!s.clock_in_at && !s.clock_out_at)),
-  );
+  return isStaffOnShift(staffId);
 }
 
 /** Resolve the acting comms user from the request (header → staff record). */

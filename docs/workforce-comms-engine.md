@@ -195,6 +195,65 @@ exist but are **read/plan/analytics only** — none wrote `clock_in_at`. Smart S
 adds the write path they were missing; `isOnShift()` (and therefore Comms shift-aware
 access) now reflects real clock-ins automatically.
 
+## Phase 4 — Shift-Based Access (implemented, feature-flagged DEFAULT OFF)
+
+Makes the permission engine's `shiftActive` reflect **real on-shift state** (the
+signal Phase 3 keeps current), so general care staff lose access to operational
+child-facing records when **off shift**, while managers/senior leaders keep full
+access off shift (per the brief). **Reuses** the existing engine (`checkAccess` +
+role rules) — no parallel permission system.
+
+### Feature flag — nothing changes until you enable it
+- Master switch: server env **`SHIFT_BASED_ACCESS_ENFORCED`** (default unset = OFF).
+- `computeShiftActive(role, staffId)` returns `true` for everyone when the flag is
+  off → the engine's existing `requiresShift` gate never fires → **zero behaviour
+  change**. Set the env var to `"true"` to enforce.
+- A **preview** mode computes the result *as if* enforcement were on (display-only,
+  never changes real access) so a manager can see exactly what would change first.
+
+### What it does (when enabled)
+- `shiftActive` = `true` for manager/senior-leader/admin roles (keep off-shift
+  access); for gated general-staff roles (`rsw`, `senior_rsw`, `waking_night`,
+  `agency_staff`) it = "are they actually clocked in right now?" (`isStaffOnShift`).
+- Added `requiresShift: true` to the operational general-staff rules in
+  `role-rules.ts` (`child_record`, `safeguarding` — the `["rsw","senior_rsw",
+  "waking_night"]` rules, matched first per the engine's first-match selection;
+  `agency_staff` already had it). Managers' own rules are untouched.
+- The engine's existing shift gate (`access-decision-service.ts`, `if
+  (rule.requiresShift && !user.shiftActive) deny("not_on_shift")`) now does real
+  work — no engine-logic change needed.
+- `middleware.loadUserContext` (Supabase path) derives `shiftActive` from the real
+  signal when the flag is on, else preserves the original column behaviour.
+
+### Off-shift portal
+- `GET /api/v1/access/shift-status[?preview=1]` runs the REAL engine for the acting
+  user against the shift-sensitive capabilities and reports what they can/can't do.
+- `OffShiftBanner` (on `/sign-in`): off-shift general staff see what's restricted +
+  a **Clock-in CTA** (ties to Phase 3); managers see "you keep full off-shift
+  access". Clearly labelled **Preview** until the flag is enabled.
+
+### Centralised on-shift truth
+`isStaffOnShift(staffId, now?)` now lives in `src/lib/attendance/sign-in-service.ts`
+and is the single source used by Comms (`comms-service.isOnShift` delegates to it),
+Phase 3 sign-in, and Phase 4 access. One definition, no drift.
+
+### Files
+- `src/lib/permissions/shift-enforcement.ts` (flag, `computeShiftActive`,
+  `buildShiftAwareUserContext`, `buildShiftAccessOverview`)
+- `role-rules.ts` (+`requiresShift` on 2 rules), `middleware.ts` (loadUserContext)
+- `GET /api/v1/access/shift-status`, `src/hooks/use-shift-access.ts`,
+  `src/components/attendance/off-shift-banner.tsx`, wired into `/sign-in`
+- Tests: `src/lib/permissions/__tests__/shift-enforcement.test.ts` (11) — the real
+  engine flips child_record/safeguarding purely on shift state; managers exempt;
+  flag default off = no change.
+
+### Safety
+Default OFF (no runtime change until enabled); managers/senior leaders never
+shift-blocked; only `child_record`/`safeguarding` operational rules gated (no
+weakening of any other permission/RLS/audit); reuses the audited engine. The hard
+gate currently bites callers of `checkAccess` (the engine) + the status endpoint;
+broad `withPermission` rollout onto every route remains a later increment.
+
 ### Next phases
-Phase 4 (wire the permission engine's `loadUserContext` to real on-shift state via
-`isOnShift`/sign-in + `withPermission` rollout + off-shift portal for managers).
+Phase 5 (geofence/QR/kiosk sign-in), Phase 6 (sensitive screen protection),
+Phase 7 (safe staffing/emergency), Phase 8 (evidence/oversight).

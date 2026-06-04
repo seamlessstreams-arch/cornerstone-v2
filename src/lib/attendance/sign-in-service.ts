@@ -91,6 +91,18 @@ export function inferShiftType(nowIso: string): ShiftType {
 
 // ── Shift selection ───────────────────────────────────────────────────────────
 
+/**
+ * Canonical "is this staff member on shift right now?" — today's shift is in
+ * progress, or clocked in and not yet out. This is the single source of on-shift
+ * truth (Comms + Phase 4 access both use it; Phase 3 sign-in keeps it current).
+ */
+export function isStaffOnShift(staffId: string, nowIso?: string): boolean {
+  const today = nowIso ? ISO_DATE(nowIso) : new Date().toISOString().slice(0, 10);
+  return db.shifts
+    .findByStaff(staffId)
+    .some((s) => s.date === today && (s.status === "in_progress" || (!!s.clock_in_at && !s.clock_out_at)));
+}
+
 const CLOCKABLE_STATUSES = new Set(["scheduled", "confirmed", "in_progress"]);
 
 /**
