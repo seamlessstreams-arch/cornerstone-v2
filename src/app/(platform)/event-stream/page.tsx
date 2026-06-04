@@ -13,6 +13,7 @@ import { Layers, Loader2, Info, ShieldCheck, AlertTriangle, Brain } from "lucide
 import { cn } from "@/lib/utils";
 import { useEventStream } from "@/hooks/use-event-stream";
 import { eventTypeLabel } from "@/lib/event-stream/event-type-meta";
+import { eventTypeIcon } from "@/lib/event-stream/event-type-icons";
 
 const RISK_STYLES: Record<string, { bg: string; text: string; ring: string }> = {
   low: { bg: "bg-gray-100", text: "text-gray-600", ring: "ring-gray-200" },
@@ -75,11 +76,14 @@ export default function EventStreamPage() {
           {/* Filters */}
           <div className="flex flex-wrap items-center gap-2">
             <Chip active={typeFilter === "all"} onClick={() => setTypeFilter("all")}>All types</Chip>
-            {typeOptions.map((t) => (
-              <Chip key={t} active={typeFilter === t} onClick={() => setTypeFilter(t)}>
-                {eventTypeLabel(t)} <span className="opacity-60">{intel.overview.by_type[t]}</span>
-              </Chip>
-            ))}
+            {typeOptions.map((t) => {
+              const Icon = eventTypeIcon(t);
+              return (
+                <Chip key={t} active={typeFilter === t} onClick={() => setTypeFilter(t)}>
+                  <Icon className="h-3 w-3 shrink-0" /> {eventTypeLabel(t)} <span className="opacity-60">{intel.overview.by_type[t]}</span>
+                </Chip>
+              );
+            })}
             <span className="mx-1 text-[var(--cs-text-gentle)]">|</span>
             {(["all", "critical", "high", "medium", "low"] as const).map((r) => (
               <Chip key={r} active={riskFilter === r} onClick={() => setRiskFilter(r)}>{r}</Chip>
@@ -91,13 +95,17 @@ export default function EventStreamPage() {
             {events.length === 0 && <p className="text-sm text-[var(--cs-text-muted)]">No events match these filters.</p>}
             {events.map((e) => {
               const risk = RISK_STYLES[e.riskLevel] ?? RISK_STYLES.low;
+              const Icon = eventTypeIcon(e.eventType);
               return (
                 <Card key={e.id} className={cn("overflow-hidden ring-1", risk.ring)}>
                   <CardHeader className="pb-2">
                     <div className="flex items-start justify-between gap-3">
                       <div className="min-w-0">
                         <CardTitle className="text-sm flex items-center gap-2 flex-wrap">
-                          <Badge className="text-[10px] bg-[var(--cs-bg)] text-[var(--cs-text-secondary)] border">{eventTypeLabel(e.eventType)}</Badge>
+                          <span className="inline-flex items-center gap-1.5">
+                            <Icon className="h-3.5 w-3.5 shrink-0 text-[var(--cs-text-muted)]" />
+                            <Badge className="text-[10px] bg-[var(--cs-bg)] text-[var(--cs-text-secondary)] border">{eventTypeLabel(e.eventType)}</Badge>
+                          </span>
                           <span className="font-medium">{e.summary}</span>
                         </CardTitle>
                         <p className="text-[10px] text-[var(--cs-text-muted)] mt-1">
@@ -154,7 +162,7 @@ function Chip({ active, onClick, children }: { active: boolean; onClick: () => v
     <button
       onClick={onClick}
       className={cn(
-        "rounded-full px-2.5 py-1 text-[11px] capitalize transition-colors border",
+        "inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] capitalize transition-colors border",
         active ? "bg-[var(--cs-navy)] text-white border-[var(--cs-navy)]" : "bg-white text-[var(--cs-text-secondary)] border-[var(--cs-border)] hover:bg-[var(--cs-bg)]",
       )}
     >
