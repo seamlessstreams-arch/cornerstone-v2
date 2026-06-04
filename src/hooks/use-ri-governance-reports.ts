@@ -8,7 +8,7 @@ export function useRiGovernanceReports(homeId?: string) {
   const qs = homeId ? `?home_id=${homeId}` : "";
   return useQuery({
     queryKey: [KEY, homeId],
-    queryFn: () => api.get<{ data: RiGovernanceReport[] }>(`/api/v1/ri-governance-reports${qs}`),
+    queryFn: () => api.get<{ data: RiGovernanceReport[] }>(`/ri-governance-reports${qs}`),
     staleTime: 30_000,
   });
 }
@@ -17,7 +17,7 @@ export function useCreateRiGovernanceReport() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (data: Partial<RiGovernanceReport>) =>
-      api.post<{ data: RiGovernanceReport }>("/api/v1/ri-governance-reports", data),
+      api.post<{ data: RiGovernanceReport }>("/ri-governance-reports", data),
     onSuccess: () => qc.invalidateQueries({ queryKey: [KEY] }),
   });
 }
@@ -26,7 +26,7 @@ export function useUpdateRiGovernanceReport() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (data: Partial<RiGovernanceReport> & { id: string }) =>
-      api.post<{ data: RiGovernanceReport }>("/api/v1/ri-governance-reports", data),
+      api.post<{ data: RiGovernanceReport }>("/ri-governance-reports", data),
     onSuccess: () => qc.invalidateQueries({ queryKey: [KEY] }),
   });
 }

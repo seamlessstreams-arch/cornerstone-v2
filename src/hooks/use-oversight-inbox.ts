@@ -13,7 +13,7 @@ export function useOversightInbox(homeId: string) {
     queryKey: ["oversight-inbox", homeId],
     queryFn: () =>
       api.get<Response>(
-        `/api/v1/care-events/oversight-inbox?home_id=${encodeURIComponent(homeId)}`,
+        `/care-events/oversight-inbox?home_id=${encodeURIComponent(homeId)}`,
       ),
     refetchInterval: 30000,
   });

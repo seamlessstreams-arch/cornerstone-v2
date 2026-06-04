@@ -81,7 +81,7 @@ interface SavedTimeMeta {
 function useAnnexAReadiness() {
   return useQuery<{ data: AnnexAData }>({
     queryKey: ["annex-a-readiness"],
-    queryFn: () => api.get("/api/v1/annex-a-readiness"),
+    queryFn: () => api.get("/annex-a-readiness"),
     staleTime: 60_000,
   });
 }
@@ -89,7 +89,7 @@ function useAnnexAReadiness() {
 function useReg45Evidence() {
   return useQuery<{ data: Reg45Item[]; meta: { total: number; pending: number; approved: number } }>({
     queryKey: ["reg45-evidence"],
-    queryFn: () => api.get("/api/v1/reg45-evidence"),
+    queryFn: () => api.get("/reg45-evidence"),
     staleTime: 60_000,
   });
 }
@@ -97,7 +97,7 @@ function useReg45Evidence() {
 function useManagementOversight() {
   return useQuery<{ data: ManagementOversightItem[]; meta: { total: number; pending: number } }>({
     queryKey: ["management-oversight"],
-    queryFn: () => api.get("/api/v1/management-oversight"),
+    queryFn: () => api.get("/management-oversight"),
     staleTime: 60_000,
   });
 }
@@ -105,7 +105,7 @@ function useManagementOversight() {
 function useReg40Triage() {
   return useQuery<{ data: Reg40Item[]; meta: { total: number; pending: number } }>({
     queryKey: ["reg40-triage"],
-    queryFn: () => api.get("/api/v1/reg40-triage"),
+    queryFn: () => api.get("/reg40-triage"),
     staleTime: 60_000,
   });
 }
@@ -114,7 +114,7 @@ function useCareEventsSummary() {
   const thirtyDaysAgo = daysFromNow(-30);
   return useQuery<{ data: CareEvent[]; meta: { total: number } }>({
     queryKey: ["care-events-inspection", thirtyDaysAgo],
-    queryFn: () => api.get(`/api/v1/care-events?from_date=${thirtyDaysAgo}`),
+    queryFn: () => api.get(`/care-events?from_date=${thirtyDaysAgo}`),
     staleTime: 60_000,
   });
 }
@@ -122,7 +122,7 @@ function useCareEventsSummary() {
 function useFilingCabinetSummary() {
   return useQuery<{ data: FilingItem[]; meta: { total: number; verified: number; unverified: number; category_counts: Record<string, number> } }>({
     queryKey: ["filing-cabinet-inspection"],
-    queryFn: () => api.get("/api/v1/filing-cabinet"),
+    queryFn: () => api.get("/filing-cabinet"),
     staleTime: 60_000,
   });
 }
@@ -130,7 +130,7 @@ function useFilingCabinetSummary() {
 function useSavedTimeSummary() {
   return useQuery<{ metrics: unknown[]; meta: SavedTimeMeta }>({
     queryKey: ["saved-time-inspection"],
-    queryFn: () => api.get("/api/v1/saved-time"),
+    queryFn: () => api.get("/saved-time"),
     staleTime: 60_000,
   });
 }

@@ -68,7 +68,7 @@ export function useFilingCabinet(params?: FilingParams) {
 
   return useQuery<{ items: FilingCabinetItemEnriched[]; meta: FilingCabinetMeta }>({
     queryKey: ["filing-cabinet", params],
-    queryFn: () => api.get(`/api/v1/filing-cabinet${query}`),
+    queryFn: () => api.get(`/filing-cabinet${query}`),
   });
 }
 
@@ -76,7 +76,7 @@ export function useVerifyFilingItem() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (vars: { id: string; verified_by: string }) =>
-      api.patch("/api/v1/filing-cabinet", { ...vars, action: "verify" }),
+      api.patch("/filing-cabinet", { ...vars, action: "verify" }),
     onSuccess: () => qc.invalidateQueries({ queryKey: ["filing-cabinet"] }),
   });
 }
@@ -100,6 +100,6 @@ export function useSavedTime(params?: SavedTimeParams) {
 
   return useQuery<{ metrics: SavedTimeMetricEnriched[]; meta: SavedTimeMeta }>({
     queryKey: ["saved-time", params],
-    queryFn: () => api.get(`/api/v1/saved-time${query}`),
+    queryFn: () => api.get(`/saved-time${query}`),
   });
 }

@@ -72,7 +72,7 @@ export function useChildChronology({
     queryKey: ["child-chronology", childId, from, to, types, limit],
     queryFn: () =>
       api.get<ChronologyResponse>(
-        `/api/v1/young-people/${childId}/chronology${query ? `?${query}` : ""}`
+        `/young-people/${childId}/chronology${query ? `?${query}` : ""}`
       ),
     enabled: enabled && !!childId,
     staleTime: 30_000,

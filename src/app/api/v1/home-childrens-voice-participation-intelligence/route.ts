@@ -70,7 +70,7 @@ export async function GET() {
     meetings,
     feedback,
     policies,
-    experts,
+    expert_entries: experts,
   });
 
   return NextResponse.json({ data: result });

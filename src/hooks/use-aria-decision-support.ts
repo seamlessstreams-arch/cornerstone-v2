@@ -21,7 +21,7 @@ export function useDecisionSupport(homeId?: string, childId?: string | null) {
     queryKey: ["aria-decision-support", homeId ?? null, childId ?? null],
     queryFn: () =>
       api.get<SnapshotResponse>(
-        `/api/v1/aria-studio/decision-support${qs ? `?${qs}` : ""}`,
+        `/aria-studio/decision-support${qs ? `?${qs}` : ""}`,
       ),
     refetchInterval: 60000,
   });
@@ -37,7 +37,7 @@ export function useRunDecisionSupport() {
       actor_id?: string;
       actor_role?: string;
     }) =>
-      api.post<SnapshotResponse>("/api/v1/aria-studio/decision-support", input),
+      api.post<SnapshotResponse>("/aria-studio/decision-support", input),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["aria-decision-support"] });
     },
@@ -55,7 +55,7 @@ export function useUpdateRecommendation() {
       actor_role?: string;
     }) =>
       api.patch<{ data: AriaDecisionRecommendation }>(
-        "/api/v1/aria-studio/decision-recommendations",
+        "/aria-studio/decision-recommendations",
         input,
       ),
     onSuccess: () => {
@@ -75,7 +75,7 @@ export function useUpdateFormulation() {
       actor_role?: string;
     }) =>
       api.patch<{ data: AriaFormulation }>(
-        "/api/v1/aria-studio/formulations",
+        "/aria-studio/formulations",
         input,
       ),
     onSuccess: () => {

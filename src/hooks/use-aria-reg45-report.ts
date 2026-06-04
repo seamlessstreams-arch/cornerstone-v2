@@ -15,7 +15,7 @@ export function useReg45Reports(homeId?: string) {
   const qs = homeId ? `?home_id=${encodeURIComponent(homeId)}` : "";
   return useQuery({
     queryKey: ["aria-reg45-report", homeId ?? null],
-    queryFn: () => api.get<ListResponse>(`/api/v1/aria-studio/reg45-reports${qs}`),
+    queryFn: () => api.get<ListResponse>(`/aria-studio/reg45-reports${qs}`),
     refetchInterval: 60000,
   });
 }
@@ -30,7 +30,7 @@ export function useBuildReg45Report() {
       title?: string;
       actor_id?: string;
       actor_role?: string;
-    }) => api.post<OneResponse>("/api/v1/aria-studio/reg45-reports", input),
+    }) => api.post<OneResponse>("/aria-studio/reg45-reports", input),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["aria-reg45-report"] });
     },
@@ -47,7 +47,7 @@ export function useEditReg45Report() {
       section_narratives?: Partial<Record<AriaReg45Theme, string>>;
       actor_id?: string;
       actor_role?: string;
-    }) => api.patch<OneResponse>("/api/v1/aria-studio/reg45-reports", input),
+    }) => api.patch<OneResponse>("/aria-studio/reg45-reports", input),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["aria-reg45-report"] });
     },
@@ -63,7 +63,7 @@ export function useSetReg45ReportStatus() {
       note?: string | null;
       actor_id?: string;
       actor_role?: string;
-    }) => api.patch<OneResponse>("/api/v1/aria-studio/reg45-reports", input),
+    }) => api.patch<OneResponse>("/aria-studio/reg45-reports", input),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["aria-reg45-report"] });
       // a lock promotes evidence chips to included_in_report

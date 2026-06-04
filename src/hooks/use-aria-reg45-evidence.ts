@@ -21,7 +21,7 @@ export function useReg45Evidence(homeId?: string, periodStart?: string, periodEn
     queryKey: ["aria-reg45-evidence", homeId ?? null, periodStart ?? null, periodEnd ?? null],
     queryFn: () =>
       api.get<SnapshotResponse>(
-        `/api/v1/aria-studio/reg45-evidence${qs ? `?${qs}` : ""}`,
+        `/aria-studio/reg45-evidence${qs ? `?${qs}` : ""}`,
       ),
     refetchInterval: 60000,
   });
@@ -36,7 +36,7 @@ export function useRunReg45EvidenceBuild() {
       period_end?: string;
       actor_id?: string;
       actor_role?: string;
-    }) => api.post<SnapshotResponse>("/api/v1/aria-studio/reg45-evidence", input),
+    }) => api.post<SnapshotResponse>("/aria-studio/reg45-evidence", input),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["aria-reg45-evidence"] });
     },
@@ -54,7 +54,7 @@ export function useUpdateReg45EvidenceItem() {
       actor_role?: string;
     }) =>
       api.patch<{ data: AriaReg45EvidenceItem }>(
-        "/api/v1/aria-studio/reg45-evidence-items",
+        "/aria-studio/reg45-evidence-items",
         input,
       ),
     onSuccess: () => {

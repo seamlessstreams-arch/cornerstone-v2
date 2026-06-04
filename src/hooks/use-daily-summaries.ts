@@ -74,7 +74,7 @@ export function useChildDailySummaries(params?: DailySummaryParams) {
 
   return useQuery<{ summaries: ChildDailySummaryEnriched[]; meta: DailySummariesMeta }>({
     queryKey: ["child-daily-summaries", params],
-    queryFn: () => api.get(`/api/v1/child-daily-summaries${query}`),
+    queryFn: () => api.get(`/child-daily-summaries${query}`),
   });
 }
 
@@ -101,6 +101,6 @@ export function useCareEventAuditLog(params?: AuditLogParams) {
 
   return useQuery<{ entries: AuditLogEntryEnriched[]; meta: AuditLogMeta }>({
     queryKey: ["care-event-audit", params],
-    queryFn: () => api.get(`/api/v1/care-event-audit${query}`),
+    queryFn: () => api.get(`/care-event-audit${query}`),
   });
 }

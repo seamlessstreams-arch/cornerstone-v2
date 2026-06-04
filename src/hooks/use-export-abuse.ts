@@ -11,7 +11,7 @@ export function useExportAbuse(homeId: string) {
     queryKey: ["export-abuse", homeId],
     queryFn: () =>
       api.get<Response>(
-        `/api/v1/care-events/export-abuse?home_id=${encodeURIComponent(homeId)}`,
+        `/care-events/export-abuse?home_id=${encodeURIComponent(homeId)}`,
       ),
     refetchInterval: 60000,
   });

@@ -13,7 +13,7 @@ export function useJobQueueStatus(homeId: string) {
     queryKey: ["job-queue-status", homeId],
     queryFn: () =>
       api.get<Response>(
-        `/api/v1/care-events/job-queue?home_id=${encodeURIComponent(homeId)}`,
+        `/care-events/job-queue?home_id=${encodeURIComponent(homeId)}`,
       ),
     refetchInterval: 15000,
   });

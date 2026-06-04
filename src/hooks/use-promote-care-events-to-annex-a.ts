@@ -18,7 +18,7 @@ export function usePromoteCareEventsToAnnexA() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (payload: { home_id?: string } = {}) =>
-      api.post<Response>("/api/v1/care-events/annex-a/promote", payload),
+      api.post<Response>("/care-events/annex-a/promote", payload),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["annex-a-evidence"] });
       qc.invalidateQueries({ queryKey: ["aria-annex-a-snapshot"] });

@@ -19,7 +19,7 @@ export function useTrajectoryAlerts(homeId: string | null | undefined) {
     refetchInterval: 60_000,
     queryFn: () =>
       api.get<ListResponse>(
-        `/api/v1/care-events/inspection-bundle/trajectory-alerts?home_id=${encodeURIComponent(homeId!)}`,
+        `/care-events/inspection-bundle/trajectory-alerts?home_id=${encodeURIComponent(homeId!)}`,
       ),
   });
 }
@@ -29,7 +29,7 @@ export function useAckTrajectoryAlert(homeId: string) {
   return useMutation({
     mutationFn: (input: { alert_id: string; note: string }) =>
       api.post<AckResponse>(
-        `/api/v1/care-events/inspection-bundle/trajectory-alerts/ack`,
+        `/care-events/inspection-bundle/trajectory-alerts/ack`,
         { home_id: homeId, ...input },
       ),
     onSuccess: () => {

@@ -13,7 +13,7 @@ export function useInspectionReadiness(homeId: string) {
     queryKey: ["inspection-readiness", homeId],
     queryFn: () =>
       api.get<Response>(
-        `/api/v1/care-events/inspection-readiness?home_id=${encodeURIComponent(homeId)}`,
+        `/care-events/inspection-readiness?home_id=${encodeURIComponent(homeId)}`,
       ),
     refetchInterval: 30000,
   });

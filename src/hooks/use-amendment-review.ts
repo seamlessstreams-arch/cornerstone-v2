@@ -13,7 +13,7 @@ export function useAmendmentReview(homeId: string) {
     queryKey: ["amendment-review", homeId],
     queryFn: () =>
       api.get<Response>(
-        `/api/v1/care-events/amendment-review?home_id=${encodeURIComponent(homeId)}`,
+        `/care-events/amendment-review?home_id=${encodeURIComponent(homeId)}`,
       ),
     refetchInterval: 30000,
   });

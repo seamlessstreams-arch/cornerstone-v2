@@ -13,7 +13,7 @@ export function useManagerVerifyQueue(homeId: string) {
     queryKey: ["manager-verify-queue", homeId],
     queryFn: () =>
       api.get<QueueResponse>(
-        `/api/v1/care-events/manager-verify-queue?home_id=${encodeURIComponent(homeId)}`,
+        `/care-events/manager-verify-queue?home_id=${encodeURIComponent(homeId)}`,
       ),
     refetchInterval: 30000,
   });
@@ -38,7 +38,7 @@ export function useManagerBulkVerify(homeId: string) {
   return useMutation({
     mutationFn: (input: BulkVerifyInput) =>
       api.post<ActionResponse>(
-        "/api/v1/care-events/manager-verify-queue",
+        "/care-events/manager-verify-queue",
         { action: "verify", ...input },
       ),
     onSuccess: () => {
@@ -52,7 +52,7 @@ export function useManagerBulkReturn(homeId: string) {
   return useMutation({
     mutationFn: (input: BulkReturnInput) =>
       api.post<ActionResponse>(
-        "/api/v1/care-events/manager-verify-queue",
+        "/care-events/manager-verify-queue",
         { action: "return", ...input },
       ),
     onSuccess: () => {

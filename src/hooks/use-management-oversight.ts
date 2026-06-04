@@ -17,7 +17,7 @@ export function useManagementOversight(homeId: string) {
     queryKey: ["aria-management-oversight", homeId],
     queryFn: () =>
       api.get<QueueResponse>(
-        `/api/v1/aria-studio/management-oversight?home_id=${encodeURIComponent(homeId)}`,
+        `/aria-studio/management-oversight?home_id=${encodeURIComponent(homeId)}`,
       ),
     refetchInterval: 30000,
   });
@@ -31,7 +31,7 @@ export function useAcknowledgeAmendment() {
       actor_id?: string;
       actor_role?: string;
     }) =>
-      api.post<AckResponse>("/api/v1/aria-studio/management-oversight", {
+      api.post<AckResponse>("/aria-studio/management-oversight", {
         ...input,
         action: "acknowledge",
       }),

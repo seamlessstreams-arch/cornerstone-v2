@@ -11,7 +11,7 @@ export function useSavedTimeDashboard(homeId: string) {
     queryKey: ["saved-time-dashboard", homeId],
     queryFn: () =>
       api.get<Response>(
-        `/api/v1/care-events/saved-time-dashboard?home_id=${encodeURIComponent(homeId)}`,
+        `/care-events/saved-time-dashboard?home_id=${encodeURIComponent(homeId)}`,
       ),
     refetchInterval: 30000,
   });

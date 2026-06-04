@@ -29,7 +29,7 @@ export function useBridgeCareEvents() {
       actor_id?: string;
       actor_role?: string;
     }) =>
-      api.post<BridgeResponse>("/api/v1/aria-studio/care-event-bridge", input),
+      api.post<BridgeResponse>("/aria-studio/care-event-bridge", input),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["aria-suggested-records"] });
       qc.invalidateQueries({ queryKey: ["aria-audit-trail"] });

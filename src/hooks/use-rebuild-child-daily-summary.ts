@@ -23,7 +23,7 @@ export function useRebuildChildDailySummary() {
   return useMutation({
     mutationFn: (payload: RebuildPayload) =>
       api.post<RebuildResponse>(
-        "/api/v1/care-events/child-daily-summaries/rebuild",
+        "/care-events/child-daily-summaries/rebuild",
         payload,
       ),
     onSuccess: () => {

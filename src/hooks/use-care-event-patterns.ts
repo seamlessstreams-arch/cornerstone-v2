@@ -31,7 +31,7 @@ export function useCareEventPatterns(
       options.timeBandHours ?? null,
     ],
     queryFn: () =>
-      api.get<Response>(`/api/v1/care-events/patterns?${search.toString()}`),
+      api.get<Response>(`/care-events/patterns?${search.toString()}`),
     refetchInterval: 60000,
   });
 }

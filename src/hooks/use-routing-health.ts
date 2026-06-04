@@ -33,7 +33,7 @@ export function useRoutingHealth(homeId: string) {
     queryKey: ["routing-health", homeId],
     queryFn: () =>
       api.get<QueueResponse>(
-        `/api/v1/care-events/routing-health?home_id=${encodeURIComponent(homeId)}`,
+        `/care-events/routing-health?home_id=${encodeURIComponent(homeId)}`,
       ),
     refetchInterval: 30000,
   });
@@ -47,7 +47,7 @@ export function useRetryRoutes() {
       actor_id?: string;
       actor_role?: string;
     }) =>
-      api.post<{ data: unknown }>("/api/v1/care-events/routing-health", {
+      api.post<{ data: unknown }>("/care-events/routing-health", {
         ...input,
         action: "retry_routes",
       }),
@@ -66,7 +66,7 @@ export function useRetryJob() {
       actor_id?: string;
       actor_role?: string;
     }) =>
-      api.post<{ data: CareEventJob }>("/api/v1/care-events/routing-health", {
+      api.post<{ data: CareEventJob }>("/care-events/routing-health", {
         ...input,
         action: "retry_job",
       }),

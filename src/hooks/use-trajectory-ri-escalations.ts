@@ -20,7 +20,7 @@ export function useTrajectoryRiEscalations(homeId: string | null | undefined) {
     refetchInterval: 60_000,
     queryFn: () =>
       api.get<ListResponse>(
-        `/api/v1/care-events/inspection-bundle/ri-escalations?home_id=${encodeURIComponent(homeId!)}`,
+        `/care-events/inspection-bundle/ri-escalations?home_id=${encodeURIComponent(homeId!)}`,
       ),
   });
 }
@@ -30,7 +30,7 @@ export function useAckTrajectoryRiEscalation(homeId: string) {
   return useMutation({
     mutationFn: (input: { escalation_id: string; note: string }) =>
       api.post<AckResponse>(
-        `/api/v1/care-events/inspection-bundle/ri-escalations/ack`,
+        `/care-events/inspection-bundle/ri-escalations/ack`,
         { home_id: homeId, ...input },
       ),
     onSuccess: () => {
