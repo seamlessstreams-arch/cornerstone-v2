@@ -15,7 +15,7 @@ import { Layers, ChevronRight, Loader2, ShieldCheck, AlertTriangle } from "lucid
 import { cn } from "@/lib/utils";
 import { useEventStream } from "@/hooks/use-event-stream";
 import { eventTypeLabel } from "@/lib/event-stream/event-type-meta";
-import { eventTypeIcon } from "@/lib/event-stream/event-type-icons";
+import { eventTypeIcon, eventTypeIconClass } from "@/lib/event-stream/event-type-icons";
 
 const RISK_STYLES: Record<string, { bg: string; text: string }> = {
   low: { bg: "bg-gray-100", text: "text-gray-600" },
@@ -99,7 +99,7 @@ export function EventStreamCard() {
                 <div key={e.id} className="rounded-lg border p-2.5 text-xs">
                   <div className="flex items-center justify-between gap-2">
                     <div className="flex items-center gap-1.5 min-w-0">
-                      <Icon className="h-3 w-3 shrink-0 text-[var(--cs-text-muted)]" />
+                      <Icon className={cn("h-3 w-3 shrink-0", eventTypeIconClass(e.eventType))} />
                       <Badge className="text-[9px] bg-[var(--cs-bg)] text-[var(--cs-text-secondary)] border">{eventTypeLabel(e.eventType, true)}</Badge>
                       <span className="truncate text-[var(--cs-text-secondary)]">{e.summary}</span>
                     </div>

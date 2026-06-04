@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { EVENT_TYPE_ICON, eventTypeIcon } from "../event-type-icons";
+import { EVENT_TYPE_ICON, eventTypeIcon, EVENT_TYPE_CATEGORY, eventTypeIconClass } from "../event-type-icons";
 import { EVENT_TYPE_LABEL } from "../event-type-meta";
 
 describe("event-type icons", () => {
@@ -20,5 +20,15 @@ describe("event-type icons", () => {
     expect(fallback).toBeTruthy();
     // The fallback is the generic glyph, distinct from a real domain icon.
     expect(fallback).not.toBe(EVENT_TYPE_ICON.incident);
+  });
+
+  it("assigns a domain category (and colour class) to every event type", () => {
+    expect(Object.keys(EVENT_TYPE_CATEGORY).sort()).toEqual(Object.keys(EVENT_TYPE_ICON).sort());
+    // Safeguarding-class domains are red; risk amber; unknown falls back to muted.
+    expect(eventTypeIconClass("notifiable_event")).toBe("text-red-500");
+    expect(eventTypeIconClass("safeguarding")).toBe("text-red-500");
+    expect(eventTypeIconClass("risk_assessment")).toBe("text-orange-500");
+    expect(eventTypeIconClass("family_contact")).toBe("text-blue-500");
+    expect(eventTypeIconClass("some_unknown_type")).toBe("text-[var(--cs-text-muted)]");
   });
 });
