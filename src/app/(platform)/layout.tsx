@@ -5,11 +5,14 @@ import { Sidebar } from "@/components/layout/sidebar";
 import { BottomNav } from "@/components/layout/bottom-nav";
 import { AuthProvider } from "@/contexts/auth-context";
 import { SidebarProvider, useSidebar } from "@/contexts/sidebar-context";
+import { PrivacyProvider } from "@/contexts/privacy-context";
 import { KeyboardShortcuts } from "@/components/layout/keyboard-shortcuts";
 import { useCareEventsRealtime } from "@/hooks/use-care-events-realtime";
 import { useAuthContext } from "@/contexts/auth-context";
 import { AriaGlobalButton } from "@/components/aria/aria-global-button";
 import { QuickCreateFab } from "@/components/common/quick-create-fab";
+import { PrivacyScreenOverlay } from "@/components/privacy/privacy-screen-overlay";
+import { PrivacyToggle } from "@/components/privacy/privacy-toggle";
 
 function RealtimeSubscriptions() {
   const { currentUser } = useAuthContext();
@@ -37,15 +40,19 @@ export default function PlatformLayout({
   return (
     <AuthProvider>
       <SidebarProvider>
-        <div className="flex min-h-screen bg-[#f7f8fa]">
-          <Sidebar />
-          <PlatformContent>{children}</PlatformContent>
-          <BottomNav />
-          <KeyboardShortcuts />
-          <RealtimeSubscriptions />
-          <AriaGlobalButton />
-          <QuickCreateFab />
-        </div>
+        <PrivacyProvider>
+          <div className="flex min-h-screen bg-[#f7f8fa]">
+            <Sidebar />
+            <PlatformContent>{children}</PlatformContent>
+            <BottomNav />
+            <KeyboardShortcuts />
+            <RealtimeSubscriptions />
+            <AriaGlobalButton />
+            <QuickCreateFab />
+            <PrivacyToggle />
+            <PrivacyScreenOverlay />
+          </div>
+        </PrivacyProvider>
       </SidebarProvider>
     </AuthProvider>
   );

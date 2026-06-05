@@ -299,6 +299,46 @@ and without storing raw coordinates**. Extends sign-in; no biometrics.
 production it would be locked to the home's on-site device. The geofence method
 provides location-based proof independently of the code.
 
+## Phase 6 — Sensitive Screen Protection (implemented)
+
+A **defence-in-depth UI layer** over the server-side permission engine (Phase 4) —
+it reduces shoulder-surfing / accidental exposure of already-permitted content. It
+is **never a security boundary on its own**: the server still decides what a user may
+load. Drives off the sensitivity scales already in the app.
+
+### What it does
+- **Privacy screen lock** — a full-screen blur overlay (`PrivacyScreenOverlay`)
+  triggered by: a "Hide screen now" panic button, **idle** (configurable, default
+  2 min), or the **tab being switched away / hidden**. Tap to return. Clearing the
+  lock also clears any reveals.
+- **Privacy mode** (opt-in, off by default) — obscures sensitive content until the
+  user taps to reveal it (for public/visible spaces). When obscured, the sensitive
+  text is **kept out of the DOM** (a redaction chip is rendered instead of the
+  content — not merely a CSS blur).
+- **`PrivacyToggle`** — floating control (bottom-left, clear of the sidebar + the
+  bottom-right action buttons): hide-now, privacy-mode toggle, auto-hide-when-idle
+  interval, and "hide when I switch tabs". Preferences persist in localStorage.
+- **Sensitivity-driven** — `restricted` / `confidential` / `safeguarding` /
+  `highly_restricted` are protected; `public` / `internal` are not (unifies the
+  permissions `Sensitivity` + `CommsSensitivity` scales).
+
+### Files
+- Pure core: `src/lib/privacy/screen-protection.ts` (`shouldProtect`,
+  `sensitivityRank/Label`, `maxSensitivity`, `isIdleLocked`, idle options) — distinct
+  from the pre-existing GDPR `privacy-engine.ts`
+- Context: `src/contexts/privacy-context.tsx` (`PrivacyProvider`/`usePrivacy`;
+  idle + visibility auto-lock; localStorage prefs; safe no-op outside the provider)
+- Components: `protected-content.tsx`, `privacy-screen-overlay.tsx`,
+  `privacy-toggle.tsx`; wired into `(platform)/layout.tsx`
+- Reference integration: Comms Centre message bodies wrapped in `ProtectedContent`
+  by channel sensitivity
+- Tests: `src/lib/privacy/__tests__/screen-protection.test.ts` (9)
+
+### Safety note
+Display-only. The server-side permission engine remains the real control; this layer
+assumes content was already permitted and simply governs whether it's visible on
+screen right now. `usePrivacy()` returns a safe no-op outside the provider so
+components never crash.
+
 ### Next phases
-Phase 6 (sensitive screen protection), Phase 7 (safe staffing/emergency),
-Phase 8 (evidence/oversight).
+Phase 7 (safe staffing/emergency), Phase 8 (evidence/oversight).
