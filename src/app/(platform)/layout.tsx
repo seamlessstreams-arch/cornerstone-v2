@@ -13,6 +13,7 @@ import { AriaGlobalButton } from "@/components/aria/aria-global-button";
 import { QuickCreateFab } from "@/components/common/quick-create-fab";
 import { PrivacyScreenOverlay } from "@/components/privacy/privacy-screen-overlay";
 import { PrivacyToggle } from "@/components/privacy/privacy-toggle";
+import { GlobalEmergencyBanner } from "@/components/staffing/global-emergency-banner";
 
 function RealtimeSubscriptions() {
   const { currentUser } = useAuthContext();
@@ -27,6 +28,7 @@ function PlatformContent({ children }: { children: React.ReactNode }) {
       className="flex-1 min-w-0 transition-all duration-300 ease-in-out pb-[72px] md:pb-0"
       style={{ marginLeft: isMobile ? 0 : collapsed ? 64 : 256 }}
     >
+      <GlobalEmergencyBanner />
       {children}
     </div>
   );
