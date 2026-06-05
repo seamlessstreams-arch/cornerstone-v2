@@ -254,6 +254,51 @@ weakening of any other permission/RLS/audit); reuses the audited engine. The har
 gate currently bites callers of `checkAccess` (the engine) + the status endpoint;
 broad `withPermission` rollout onto every route remains a later increment.
 
+## Phase 5 — Geofence / QR / Kiosk sign-in (implemented)
+
+Adds **discrete, opt-in presence verification** to Phase 3's clock-in — confirming a
+staff member is physically at the home — **without any continuous location tracking
+and without storing raw coordinates**. Extends sign-in; no biometrics.
+
+### Three methods (all opt-in, checked once at clock-in)
+- **Kiosk / QR code** — a time-rotating code shown on a device at the home
+  (`/kiosk` page). Staff enter it at clock-in; you can only read it if you're there,
+  and it rotates (15-min window + previous-window grace) so it can't be shared
+  usefully.
+- **Geofence** — an optional ONE-TIME `navigator.geolocation` reading taken on an
+  explicit tap. The server checks "within the home's radius?" and stores only a
+  pass/fail + **coarse band** (`on_site`/`nearby`/`off_site`). The latitude/longitude
+  are used for that single check and **never returned or persisted**.
+- **Manual** — explicit fallback, recorded as **unverified**.
+
+### Hard privacy guarantees (enforced in code + tests)
+- A `PresenceResult` / `SignInVerification` carries **method + verified + band only**
+  — no coordinates. Unit tests assert the result/record JSON never contains
+  lat/lng/coords.
+- Verification happens **once**, on the clock-in action — there is no background or
+  continuous location capture anywhere.
+- The geolocation prompt is user-initiated (browser permission), and the UI says the
+  reading is one-time and not stored.
+
+### Files
+- Pure core: `src/lib/attendance/presence-verification.ts` (`verifyPresence`,
+  `verifyGeofence`, `haversineMetres`, `currentKioskCode`/`verifyKioskCode`,
+  per-home `HOME_CONFIG`, `SignInVerification` type)
+- Store: `db.signInVerifications` (Phase 5 collection — no coordinates)
+- Service: `clockIn` extended with optional `verification` (records method/verified/
+  band); `buildSignInStatus.presence`
+- API: `POST /api/v1/sign-in` accepts `verification`; `GET /api/v1/sign-in/kiosk-code`
+  (rotating code for the home's kiosk display)
+- UI: `presence-clock-in.tsx` (method chooser + kiosk-code entry + opt-in
+  geolocation), wired into `smart-sign-in.tsx`; `/kiosk` display page (deliberately
+  NOT in nav so the code isn't trivially read remotely)
+- Tests: `presence-verification.test.ts` (12) + 5 added to `sign-in-service.test.ts`
+
+### Note on the kiosk page
+`/kiosk` is reachable by direct URL for demo/setup but is intentionally unlisted; in
+production it would be locked to the home's on-site device. The geofence method
+provides location-based proof independently of the code.
+
 ### Next phases
-Phase 5 (geofence/QR/kiosk sign-in), Phase 6 (sensitive screen protection),
-Phase 7 (safe staffing/emergency), Phase 8 (evidence/oversight).
+Phase 6 (sensitive screen protection), Phase 7 (safe staffing/emergency),
+Phase 8 (evidence/oversight).

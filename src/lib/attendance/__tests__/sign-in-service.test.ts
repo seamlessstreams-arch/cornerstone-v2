@@ -4,6 +4,7 @@ import {
   scheduledInstant, pickTodayShift, buildSignInStatus, clockIn, clockOut,
 } from "../sign-in-service";
 import { db } from "@/lib/db/store";
+import { currentKioskCode } from "../presence-verification";
 
 // Unique ids/date per concern so tests don't collide with seed data or each other.
 const DATE = "2026-09-15";
@@ -105,5 +106,53 @@ describe("clock-out guard", () => {
     expect(r.ok).toBe(false);
     expect(r.was_on_shift).toBe(false);
     expect(r.shift).toBeNull();
+  });
+});
+
+describe("presence-verified clock-in (Phase 5)", () => {
+  it("records a verified kiosk sign-in (home defaults to home_oak)", () => {
+    const staff = "staff_test_kiosk";
+    const code = currentKioskCode("home_oak", at("14:00"));
+    const r = clockIn(staff, at("14:00"), { verification: { method: "kiosk", code } });
+    expect(r.presence?.method).toBe("kiosk");
+    expect(r.presence?.verified).toBe(true);
+    const recs = db.signInVerifications.findByStaff(staff);
+    expect(recs).toHaveLength(1);
+    expect(recs[0].verified).toBe(true);
+    // PRIVACY: the stored record carries no coordinates
+    expect(JSON.stringify(recs[0])).not.toMatch(/lat|lng|coord/);
+  });
+
+  it("records a manual sign-in as unverified", () => {
+    const staff = "staff_test_manual";
+    const r = clockIn(staff, at("14:00"), { verification: { method: "manual" } });
+    expect(r.presence?.verified).toBe(false);
+    expect(db.signInVerifications.findByStaff(staff)[0].method).toBe("manual");
+  });
+
+  it("a geofence clock-in stores band but never coordinates", () => {
+    const staff = "staff_test_geo";
+    const r = clockIn(staff, at("14:00"), { verification: { method: "geofence", coords: { lat: 53.4808, lng: -2.2426 } } });
+    expect(r.presence?.method).toBe("geofence");
+    expect(r.presence?.verified).toBe(true);
+    const rec = db.signInVerifications.findByStaff(staff)[0];
+    expect(rec.band).toBe("on_site");
+    expect(JSON.stringify(rec)).not.toMatch(/53\.48|-2\.24|lat|lng|coord/);
+  });
+
+  it("surfaces the verification in the sign-in status", () => {
+    const staff = "staff_test_status_presence";
+    const code = currentKioskCode("home_oak", at("14:00"));
+    clockIn(staff, at("14:00"), { verification: { method: "kiosk", code } });
+    const s = buildSignInStatus(staff, at("14:30"));
+    expect(s.presence?.verified).toBe(true);
+    expect(s.presence?.method).toBe("kiosk");
+  });
+
+  it("clock-in without verification leaves presence null and stores no record", () => {
+    const staff = "staff_test_noverify";
+    const r = clockIn(staff, at("14:00"));
+    expect(r.presence).toBeNull();
+    expect(db.signInVerifications.findByStaff(staff)).toHaveLength(0);
   });
 });
