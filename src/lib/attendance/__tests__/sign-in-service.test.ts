@@ -1,14 +1,16 @@
 import { describe, it, expect } from "vitest";
 import {
   computeLatenessMinutes, computeOvertimeMinutes, minutesBetween, inferShiftType,
-  scheduledInstant, pickTodayShift, buildSignInStatus, clockIn, clockOut,
+  scheduledInstant, pickTodayShift, buildSignInStatus, clockIn, clockOut, isStaffOnShift,
 } from "../sign-in-service";
 import { db } from "@/lib/db/store";
 import { currentKioskCode } from "../presence-verification";
 
 // Unique ids/date per concern so tests don't collide with seed data or each other.
 const DATE = "2026-09-15";
+const NEXT = "2026-09-16"; // the morning after an overnight shift dated DATE
 const at = (hhmm: string) => `${DATE}T${hhmm}:00.000Z`;
+const atNext = (hhmm: string) => `${NEXT}T${hhmm}:00.000Z`;
 
 describe("pure time helpers", () => {
   it("lateness is 0 when on time or early, positive when late", () => {
@@ -17,11 +19,18 @@ describe("pure time helpers", () => {
     expect(computeLatenessMinutes(DATE, "08:00", at("08:15"))).toBe(15);
   });
 
-  it("overtime is 0 before the end, positive after (with overnight rollover)", () => {
-    expect(computeOvertimeMinutes(DATE, "16:00", at("15:30"))).toBe(0);
-    expect(computeOvertimeMinutes(DATE, "16:00", at("16:20"))).toBe(20);
-    // night shift 22:00 → 07:00; clocking out 07:30 is 30m overtime, not "negative"
-    expect(computeOvertimeMinutes(DATE, "07:00", at("07:30"))).toBe(30);
+  it("overtime is 0 before the end, positive after (day shift)", () => {
+    expect(computeOvertimeMinutes(DATE, "08:00", "16:00", at("15:30"))).toBe(0);
+    expect(computeOvertimeMinutes(DATE, "08:00", "16:00", at("16:20"))).toBe(20);
+  });
+
+  it("overnight overtime rolls the scheduled end to the following day", () => {
+    // waking-night 22:00 → 07:00 dated DATE; clocking out 07:05 the NEXT morning is 5m over
+    expect(computeOvertimeMinutes(DATE, "22:00", "07:00", atNext("07:05"))).toBe(5);
+    // on time to the minute the next morning → 0 (not ~24h of phantom overtime)
+    expect(computeOvertimeMinutes(DATE, "22:00", "07:00", atNext("07:00"))).toBe(0);
+    // clocking out early the same evening (23:30) is not "negative" overtime
+    expect(computeOvertimeMinutes(DATE, "22:00", "07:00", at("23:30"))).toBe(0);
   });
 
   it("minutesBetween is non-negative whole minutes", () => {
@@ -85,6 +94,50 @@ describe("clock in / out against a scheduled shift", () => {
 
   it("after clock-out, no longer on shift", () => {
     expect(buildSignInStatus(staff, at("17:00")).on_shift).toBe(false);
+  });
+});
+
+describe("overnight (waking-night) shift spanning midnight", () => {
+  const staff = "staff_test_overnight";
+  it("clocks into a 22:00 → 07:00 shift the night before", () => {
+    db.shifts.create({
+      staff_id: staff, date: DATE, shift_type: "waking_night", start_time: "22:00", end_time: "07:00",
+      break_minutes: 0, actual_start: null, actual_end: null, clock_in_at: null, clock_out_at: null,
+      overtime_minutes: 0, notes: null, status: "scheduled", is_open_shift: false, home_id: "home_oak",
+      created_by: staff, updated_by: staff,
+    });
+    const r = clockIn(staff, at("22:05"));
+    expect(r.ok).toBe(true);
+    expect(r.created_adhoc).toBe(false);
+    expect(r.shift.status).toBe("in_progress");
+  });
+
+  it("is STILL on shift after midnight (the shift is stored under the start day)", () => {
+    // Regression: a today-only lookup would drop the worker off shift at 00:00.
+    expect(isStaffOnShift(staff, atNext("02:00"))).toBe(true);
+    const s = buildSignInStatus(staff, atNext("02:00"));
+    expect(s.on_shift).toBe(true);
+    expect(s.shift?.staff_id).toBe(staff);
+  });
+
+  it("a clock-in after midnight is still idempotent (same open overnight shift)", () => {
+    const r = clockIn(staff, atNext("02:30"));
+    expect(r.already_on_shift).toBe(true);
+    expect(r.shift.clock_in_at).toBe(at("22:05")); // unchanged
+    expect(r.created_adhoc).toBe(false); // did NOT create a phantom new shift
+  });
+
+  it("clocks out the next morning with correct overtime (not ~24h)", () => {
+    const r = clockOut(staff, atNext("07:05"));
+    expect(r.ok).toBe(true);
+    expect(r.was_on_shift).toBe(true);
+    expect(r.shift?.status).toBe("completed");
+    expect(r.overtime_minutes).toBe(5); // 5m past the 07:00 end, NOT 1445
+    expect(r.duration_minutes).toBe(540); // 22:05 → 07:05 = 9h
+  });
+
+  it("after clocking out, no longer on shift", () => {
+    expect(isStaffOnShift(staff, atNext("08:00"))).toBe(false);
   });
 });
 

@@ -23,6 +23,8 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   const { id } = await params;
   const auth = requirePermission(req, PERMISSIONS.MANAGE_INCIDENTS);
   if (auth instanceof NextResponse) return auth;
+  const shift = requireOnShift(req); // parity with GET — off-shift general staff can't edit either
+  if (shift) return shift;
 
   const incident = db.incidents.findById(id);
   if (!incident) return NextResponse.json({ error: "Incident not found" }, { status: 404 });

@@ -123,8 +123,8 @@ const KEYWORD_RULES: KeywordRule[] = [
     reason: "Mentions a possible safeguarding or welfare concern — this usually needs a formal safeguarding record.",
     weight: 100,
     keywords: [
-      "disclosure", "disclosed", "allegation", "alleged", "abuse", "neglect", "grooming",
-      "exploitation", "cse", "cce", "self-harm", "self harm", "suicidal", "suicide",
+      "disclosure", "disclosed", "allegation", "alleged", "abuse", "abused", "neglect", "neglected",
+      "grooming", "exploitation", "cse", "cce", "self-harm", "self harm", "suicidal", "suicide",
       "overdose", "ligature", "safeguarding", "at risk", "unsafe", "bruise", "bruising",
       "injury", "injured", "hit", "assault", "assaulted",
     ],

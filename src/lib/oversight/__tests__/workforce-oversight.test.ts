@@ -77,6 +77,19 @@ describe("buildWorkforceOversight", () => {
     expect(o.emergencies.total_responders).toBe(3);
   });
 
+  it("counts a still-open alert from BEFORE the window as active (current-state, not windowed)", () => {
+    const i = input();
+    // An alert raised outside the 7-day window but still active today.
+    i.emergencies = [
+      ...i.emergencies,
+      { id: "e_old", home_id: "home_oak", status: "active", responders: [], created_at: OLD } as EmergencyAlert,
+    ];
+    const o2 = buildWorkforceOversight(i);
+    expect(o2.emergencies.raised).toBe(2); // OLD one is outside the period → not "raised this period"
+    expect(o2.emergencies.active).toBe(2); // …but it IS still active now
+    expect(o2.flags.some((f) => f.severity === "critical" && f.label.includes("emergency"))).toBe(true);
+  });
+
   it("carries the current staffing severity", () => {
     expect(o.staffing.severity).toBe("critical");
     expect(o.staffing.open_alerts).toBe(2);

@@ -18,6 +18,12 @@ describe("detectRecordableContent", () => {
     expect(r.signals[0].category).toBe("safeguarding");
   });
 
+  it("flags past-tense safeguarding language ('abused' / 'neglected'), not just the root word", () => {
+    // Whole-word matching meant "\\babuse\\b" missed "abused" — the highest-weight category.
+    expect(detectRecordableContent("She said he abused her last year.").signals[0]?.category).toBe("safeguarding");
+    expect(detectRecordableContent("The child has been neglected at home.").signals[0]?.category).toBe("safeguarding");
+  });
+
   it("flags a child missing from care", () => {
     const r = detectRecordableContent("J has gone missing and has not returned from school.");
     expect(r.recordable).toBe(true);
