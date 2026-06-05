@@ -10,6 +10,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useAuthContext } from "@/contexts/auth-context";
 import { useSignInStatus, useClockInOut, type ClockActionResult } from "@/hooks/use-sign-in";
+import { PresenceClockIn } from "@/components/attendance/presence-clock-in";
+import type { PresenceVerificationInput } from "@/lib/attendance/sign-in-service";
 
 function fmtMins(mins: number): string {
   if (mins < 60) return `${mins}m`;
@@ -29,9 +31,9 @@ export function SmartSignIn() {
   const clock = useClockInOut();
   const [lastAction, setLastAction] = useState<{ kind: "in" | "out"; result: ClockActionResult } | null>(null);
 
-  const onClock = (action: "clock_in" | "clock_out") => {
+  const onClock = (action: "clock_in" | "clock_out", verification?: PresenceVerificationInput) => {
     clock.mutate(
-      { action },
+      { action, verification },
       { onSuccess: (res) => setLastAction({ kind: action === "clock_in" ? "in" : "out", result: res.data }) },
     );
   };
@@ -76,18 +78,36 @@ export function SmartSignIn() {
               </p>
             )}
           </div>
-          <div className="shrink-0">
-            {onShift ? (
+          {onShift && (
+            <div className="shrink-0">
               <Button onClick={() => onClock("clock_out")} disabled={clock.isPending} variant="outline" className="gap-1.5 border-[var(--cs-avisaar-coral)] text-[var(--cs-avisaar-coral)] hover:bg-[var(--cs-avisaar-coral)]/10">
                 {clock.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <LogOut className="h-4 w-4" />}Clock out
               </Button>
+            </div>
+          )}
+        </div>
+
+        {/* Presence-verified clock-in (off shift) */}
+        {!onShift && (
+          <div className="mt-4 pt-4 border-t border-[var(--cs-border-subtle)]">
+            <PresenceClockIn onClockIn={(v) => onClock("clock_in", v)} pending={clock.isPending} />
+          </div>
+        )}
+
+        {/* On-shift: show how presence was verified */}
+        {onShift && status.presence && (
+          <div className="mt-3">
+            {status.presence.verified ? (
+              <Badge variant="outline" className="text-[10px] gap-0.5 text-[var(--cs-teal-strong)] border-[var(--cs-teal-soft)]">
+                <CheckCircle2 className="h-2.5 w-2.5" />Presence verified · {status.presence.method}
+              </Badge>
             ) : (
-              <Button onClick={() => onClock("clock_in")} disabled={clock.isPending} className="gap-1.5">
-                {clock.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <LogIn className="h-4 w-4" />}Clock in
-              </Button>
+              <Badge variant="outline" className="text-[10px] gap-0.5 text-amber-700 border-amber-300">
+                <AlertTriangle className="h-2.5 w-2.5" />Unverified sign-in
+              </Badge>
             )}
           </div>
-        </div>
+        )}
 
         {clock.isError && (
           <p className="text-xs text-red-600 mt-3">{(clock.error as Error)?.message ?? "Could not update your shift."}</p>
@@ -100,6 +120,12 @@ export function SmartSignIn() {
           <p className="flex items-center gap-2 text-sm font-semibold text-[var(--cs-navy)]">
             <CheckCircle2 className="h-4 w-4 text-[var(--cs-teal)]" />Signed in{lastAction.result.created_adhoc ? " (ad-hoc cover shift)" : ""}
           </p>
+          {lastAction.result.presence && (
+            <p className={cn("flex items-center gap-1.5 text-xs", lastAction.result.presence.verified ? "text-[var(--cs-teal-strong)]" : "text-amber-700")}>
+              {lastAction.result.presence.verified ? <CheckCircle2 className="h-3.5 w-3.5" /> : <AlertTriangle className="h-3.5 w-3.5" />}
+              {lastAction.result.presence.detail}
+            </p>
+          )}
           {!!lastAction.result.late_minutes && lastAction.result.late_minutes > 0 && (
             <p className="flex items-center gap-1.5 text-xs text-amber-700">
               <AlertTriangle className="h-3.5 w-3.5" />Clocked in {fmtMins(lastAction.result.late_minutes)} after the scheduled start.

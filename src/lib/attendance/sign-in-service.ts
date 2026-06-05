@@ -17,8 +17,17 @@
 
 import { db } from "@/lib/db/store";
 import { writeAuditLog } from "@/lib/supabase/audit";
+import { verifyPresence, type PresenceMethod, type PresenceResult, type PresenceBand } from "./presence-verification";
 import type { Shift } from "@/types";
 import type { ShiftType } from "@/lib/constants";
+
+export interface PresenceVerificationInput {
+  method: PresenceMethod;
+  /** Kiosk code (method = kiosk). */
+  code?: string;
+  /** One-time coordinates (method = geofence) — used for the check, never stored. */
+  coords?: { lat: number; lng: number };
+}
 
 const DEFAULT_USER_ID = "staff_darren";
 const DEFAULT_HOME = "home_oak";
@@ -153,6 +162,8 @@ export interface SignInStatus {
   colleagues_on_shift: ColleagueOnShift[];
   /** Total staff currently clocked in (including this user if on shift). */
   staffing_count: number;
+  /** Presence verification on the active shift (no coordinates), if any. */
+  presence: { method: PresenceMethod; verified: boolean; band: PresenceBand | null } | null;
 }
 
 function isClockedIn(s: Shift): boolean {
@@ -206,6 +217,11 @@ export function buildSignInStatus(staffId: string, nowIso: string): SignInStatus
     has_shift_today: !!pickTodayShift(staffId, nowIso) || !!myActive,
     colleagues_on_shift: colleagues,
     staffing_count: onShiftShifts.length,
+    presence: (() => {
+      if (!myActive) return null;
+      const v = db.signInVerifications.findByShift(myActive.id).slice(-1)[0];
+      return v ? { method: v.method, verified: v.verified, band: v.band } : null;
+    })(),
   };
 }
 
@@ -228,14 +244,23 @@ export interface ClockInResult {
   created_adhoc: boolean;
   shift: Shift;
   late_minutes: number;
+  /** Presence verification outcome (no coordinates) — null if none was supplied. */
+  presence: PresenceResult | null;
 }
 
 /**
  * Clock the staff member into today's shift. If none is scheduled, create an ad-hoc
  * shift so cover/unscheduled work is still captured. Idempotent: a second clock-in
  * while already on shift returns the current shift unchanged.
+ *
+ * An optional presence verification (kiosk code / one-time geofence) is checked and
+ * recorded as method + verified + coarse band — never raw coordinates.
  */
-export function clockIn(staffId: string, nowIso: string, opts: { note?: string } = {}): ClockInResult {
+export function clockIn(
+  staffId: string,
+  nowIso: string,
+  opts: { note?: string; verification?: PresenceVerificationInput } = {},
+): ClockInResult {
   const staff = resolveSignInStaff({ get: (n) => (n === "x-user-id" ? staffId : null) });
   const today = ISO_DATE(nowIso);
 
@@ -251,6 +276,7 @@ export function clockIn(staffId: string, nowIso: string, opts: { note?: string }
       late_minutes: existingActive.clock_in_at
         ? computeLatenessMinutes(existingActive.date, existingActive.start_time, existingActive.clock_in_at)
         : 0,
+      presence: null,
     };
   }
 
@@ -291,8 +317,35 @@ export function clockIn(staffId: string, nowIso: string, opts: { note?: string }
     }) ?? shift;
 
   const late = computeLatenessMinutes(updated.date, updated.start_time, nowIso);
-  audit("update", staff, updated.id, { event: "clock_in", clock_in_at: nowIso, late_minutes: late, adhoc: createdAdhoc });
-  return { ok: true, already_on_shift: false, created_adhoc: createdAdhoc, shift: updated, late_minutes: late };
+
+  // Optional presence verification — checked once, stored as method/verified/band only.
+  let presence: PresenceResult | null = null;
+  if (opts.verification) {
+    presence = verifyPresence({
+      homeId: staff.home_id,
+      method: opts.verification.method,
+      code: opts.verification.code,
+      coords: opts.verification.coords, // used for the check here, never persisted
+      nowIso,
+    });
+    db.signInVerifications.create({
+      staff_id: staffId,
+      shift_id: updated.id,
+      home_id: staff.home_id,
+      method: presence.method,
+      verified: presence.verified,
+      band: presence.band,
+    });
+  }
+
+  audit("update", staff, updated.id, {
+    event: "clock_in",
+    clock_in_at: nowIso,
+    late_minutes: late,
+    adhoc: createdAdhoc,
+    ...(presence ? { presence_method: presence.method, presence_verified: presence.verified } : {}),
+  });
+  return { ok: true, already_on_shift: false, created_adhoc: createdAdhoc, shift: updated, late_minutes: late, presence };
 }
 
 export interface ClockOutResult {

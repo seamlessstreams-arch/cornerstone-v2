@@ -27,6 +27,7 @@ import type {
   CommsMessageAction,
   StaffTrustNoticeAck,
 } from "@/types/comms";
+import type { SignInVerification } from "@/lib/attendance/presence-verification";
 import type {
   Building, BuildingCheck, Vehicle, VehicleCheck,
   MissingEpisode, ChronologyEntry, HandoverEntry,
@@ -558,6 +559,7 @@ const store = {
   tasks: [...TASKS] as Task[],
   incidents: [...INCIDENTS] as Incident[],
   shifts: [...SHIFTS] as Shift[],
+  signInVerifications: [] as SignInVerification[],
   medications: [...MEDICATIONS] as Medication[],
   medicationAdministrations: [] as MedicationAdministration[],
   dailyLog: [...DAILY_LOG] as DailyLogEntry[],
@@ -6609,6 +6611,20 @@ export const db = {
       } as Shift;
       store.shifts.push(shift);
       return shift;
+    },
+  },
+
+  // ── Sign-in presence verifications (Phase 5 — no coordinates stored) ────────
+  signInVerifications: {
+    findAll: (): SignInVerification[] => store.signInVerifications,
+    findByStaff: (staffId: string): SignInVerification[] =>
+      store.signInVerifications.filter((v) => v.staff_id === staffId),
+    findByShift: (shiftId: string): SignInVerification[] =>
+      store.signInVerifications.filter((v) => v.shift_id === shiftId),
+    create: (data: Omit<SignInVerification, "id" | "created_at">): SignInVerification => {
+      const rec: SignInVerification = { ...data, id: generateId("siv"), created_at: new Date().toISOString() };
+      store.signInVerifications.push(rec);
+      return rec;
     },
   },
 

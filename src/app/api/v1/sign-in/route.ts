@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import {
-  resolveSignInStaff, buildSignInStatus, clockIn, clockOut,
+  resolveSignInStaff, buildSignInStatus, clockIn, clockOut, type PresenceVerificationInput,
 } from "@/lib/attendance/sign-in-service";
 
 export const dynamic = "force-dynamic";
@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
   const staff = resolveSignInStaff(req.headers);
   const now = new Date().toISOString();
 
-  let body: { action?: "clock_in" | "clock_out"; note?: string };
+  let body: { action?: "clock_in" | "clock_out"; note?: string; verification?: PresenceVerificationInput };
   try {
     body = await req.json();
   } catch {
@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
   }
 
   if (body.action === "clock_in") {
-    const result = clockIn(staff.id, now, { note: body.note });
+    const result = clockIn(staff.id, now, { note: body.note, verification: body.verification });
     return NextResponse.json({ data: { ...result, status: buildSignInStatus(staff.id, now) } }, { status: 201 });
   }
   if (body.action === "clock_out") {
