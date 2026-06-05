@@ -16,6 +16,7 @@ import {
   useAnalyseLanguage, type MessageGovernanceAnalysis,
 } from "@/hooks/use-comms";
 import { LanguageNudge, MessageActionMenu } from "@/components/comms/message-governance";
+import { ProtectedContent } from "@/components/privacy/protected-content";
 import type { CommsChannelType, CommsChannelSummary, CommsMessageEnriched } from "@/types/comms";
 
 const CHANNEL_ICON: Record<CommsChannelType, ComponentType<{ className?: string }>> = {
@@ -152,7 +153,13 @@ export function CommsCentre() {
                           )}
                           <span className="text-[10px] text-[var(--cs-text-muted)]">{timeLabel(m.created_at)}{m.edited ? " · edited" : ""}</span>
                         </div>
-                        <p className={cn("text-sm leading-relaxed whitespace-pre-wrap", m.is_deleted ? "italic text-[var(--cs-text-muted)]" : "text-[var(--cs-text-secondary)]")}>{m.body}</p>
+                        {m.is_deleted ? (
+                          <p className="text-sm leading-relaxed whitespace-pre-wrap italic text-[var(--cs-text-muted)]">{m.body}</p>
+                        ) : (
+                          <ProtectedContent id={`msg:${m.id}`} sensitivity={active.sensitivity}>
+                            <p className="text-sm leading-relaxed whitespace-pre-wrap text-[var(--cs-text-secondary)]">{m.body}</p>
+                          </ProtectedContent>
+                        )}
                         <div className="flex items-center gap-3 mt-1">
                           {mine && (
                             <span className="inline-flex items-center gap-0.5 text-[10px] text-[var(--cs-text-muted)]">
