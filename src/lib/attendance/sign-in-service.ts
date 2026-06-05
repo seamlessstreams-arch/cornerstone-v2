@@ -82,14 +82,28 @@ export function minutesBetween(startIso: string, endIso: string): number {
   return Math.max(0, Math.round((b - a) / 60000));
 }
 
-/** Overtime = minutes worked beyond the scheduled end (0 if none). */
-export function computeOvertimeMinutes(date: string, scheduledEnd: string, clockOutIso: string): number {
-  let sched = scheduledInstant(date, scheduledEnd);
+/**
+ * Overtime = minutes worked beyond the scheduled end (0 if none).
+ *
+ * The scheduled end is anchored to the shift's `date` (its start day). For an
+ * overnight shift (end wall-time strictly before start, e.g. 22:00 → 07:00) the end
+ * instant belongs to the *next* day, so we roll it forward by 24h before comparing.
+ * Without the start time we can't tell an overnight end from a normal one — passing it
+ * in is what makes a real waking-night clock-out compute correctly instead of ~24h of
+ * phantom overtime. (`end === start`, an ad-hoc zero-length placeholder, is not rolled.)
+ */
+export function computeOvertimeMinutes(
+  date: string,
+  scheduledStart: string,
+  scheduledEnd: string,
+  clockOutIso: string,
+): number {
+  const start = scheduledInstant(date, scheduledStart);
+  let end = scheduledInstant(date, scheduledEnd);
   const actual = Date.parse(clockOutIso);
-  if (sched === null || Number.isNaN(actual)) return 0;
-  // Overnight shift: end time earlier than start rolls to the next day.
-  if (actual - sched < -12 * 3600_000) sched += 24 * 3600_000;
-  return Math.max(0, Math.round((actual - sched) / 60000));
+  if (start === null || end === null || Number.isNaN(actual)) return 0;
+  if (end < start) end += 24 * 3600_000; // overnight: scheduled end is the following day
+  return Math.max(0, Math.round((actual - end) / 60000));
 }
 
 /** Infer a sensible shift type for an ad-hoc (unscheduled) sign-in by hour. */
@@ -101,16 +115,39 @@ export function inferShiftType(nowIso: string): ShiftType {
 
 // ── Shift selection ───────────────────────────────────────────────────────────
 
+/** A shift whose wall-clock end is strictly before its start crosses midnight (e.g. 22:00 → 07:00). */
+function isOvernight(s: Shift): boolean {
+  return !!s.start_time && !!s.end_time && s.end_time < s.start_time;
+}
+
+/** The calendar date (YYYY-MM-DD) one day before the given instant. */
+function prevDate(nowIso: string): string {
+  const ms = Date.parse(nowIso);
+  return Number.isNaN(ms) ? ISO_DATE(nowIso) : ISO_DATE(new Date(ms - 86_400_000).toISOString());
+}
+
 /**
- * Canonical "is this staff member on shift right now?" — today's shift is in
- * progress, or clocked in and not yet out. This is the single source of on-shift
- * truth (Comms + Phase 4 access both use it; Phase 3 sign-in keeps it current).
+ * The staff member's currently-active shift: clocked in and not yet out, dated either
+ * today OR an overnight shift that started yesterday and is still open (the worker is
+ * mid-shift after midnight). This is the single "active shift" lookup every on-shift
+ * check shares — without the overnight arm, waking-night staff silently drop off shift
+ * at 00:00 and cannot clock out the next morning (their shift is stored under day one).
  */
-export function isStaffOnShift(staffId: string, nowIso?: string): boolean {
-  const today = nowIso ? ISO_DATE(nowIso) : new Date().toISOString().slice(0, 10);
+function findActiveShift(staffId: string, nowIso: string): Shift | undefined {
+  const today = ISO_DATE(nowIso);
+  const yesterday = prevDate(nowIso);
   return db.shifts
     .findByStaff(staffId)
-    .some((s) => s.date === today && (s.status === "in_progress" || (!!s.clock_in_at && !s.clock_out_at)));
+    .find((s) => isClockedIn(s) && (s.date === today || (s.date === yesterday && isOvernight(s))));
+}
+
+/**
+ * Canonical "is this staff member on shift right now?" — clocked in and not yet out on
+ * today's shift, or still mid-overnight-shift after midnight. The single source of
+ * on-shift truth (Comms + Phase 4 access both use it; sign-in keeps it current).
+ */
+export function isStaffOnShift(staffId: string, nowIso?: string): boolean {
+  return !!findActiveShift(staffId, nowIso ?? new Date().toISOString());
 }
 
 const CLOCKABLE_STATUSES = new Set(["scheduled", "confirmed", "in_progress"]);
@@ -177,9 +214,7 @@ export function buildSignInStatus(staffId: string, nowIso: string): SignInStatus
   const today = ISO_DATE(nowIso);
   const todays = db.shifts.findAll().filter((s) => s.date === today);
 
-  const myActive = db.shifts
-    .findByStaff(staffId)
-    .find((s) => s.date === today && isClockedIn(s));
+  const myActive = findActiveShift(staffId, nowIso);
   const myShift = myActive ?? pickTodayShift(staffId, nowIso);
 
   const staffNames = new Map(
@@ -265,9 +300,7 @@ export function clockIn(
   const staff = resolveSignInStaff({ get: (n) => (n === "x-user-id" ? staffId : null) });
   const today = ISO_DATE(nowIso);
 
-  const existingActive = db.shifts
-    .findByStaff(staffId)
-    .find((s) => s.date === today && isClockedIn(s));
+  const existingActive = findActiveShift(staffId, nowIso);
   if (existingActive) {
     return {
       ok: true,
@@ -361,14 +394,13 @@ export interface ClockOutResult {
 /** Clock the staff member out of their current shift (completes it). */
 export function clockOut(staffId: string, nowIso: string, opts: { note?: string } = {}): ClockOutResult {
   const staff = resolveSignInStaff({ get: (n) => (n === "x-user-id" ? staffId : null) });
-  const today = ISO_DATE(nowIso);
-  const active = db.shifts.findByStaff(staffId).find((s) => s.date === today && isClockedIn(s));
+  const active = findActiveShift(staffId, nowIso);
   if (!active) {
     return { ok: false, was_on_shift: false, shift: null, duration_minutes: 0, overtime_minutes: 0 };
   }
   const startIso = active.clock_in_at ?? active.actual_start ?? nowIso;
   const duration = minutesBetween(startIso, nowIso);
-  const overtime = computeOvertimeMinutes(active.date, active.end_time, nowIso);
+  const overtime = computeOvertimeMinutes(active.date, active.start_time, active.end_time, nowIso);
   const updated =
     db.shifts.update(active.id, {
       clock_out_at: nowIso,

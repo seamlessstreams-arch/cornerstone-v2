@@ -56,4 +56,15 @@ describe("emergency service", () => {
     resolveEmergency(alert.id, "m", NOW);
     expect(acknowledgeEmergency(alert.id, "x", "X", NOW)).toBeNull();
   });
+
+  it("resolve is idempotent — a second resolve keeps the first resolver and time", () => {
+    const { alert } = triggerEmergency(
+      { homeId: "home_oak", raisedBy: "staff_test_e5", raisedByName: "Raiser", type: "fire" },
+      NOW,
+    );
+    resolveEmergency(alert.id, "first_mgr", "2026-09-22T12:30:00.000Z");
+    const second = resolveEmergency(alert.id, "second_mgr", "2026-09-22T13:00:00.000Z");
+    expect(second?.resolved_by).toBe("first_mgr"); // not overwritten
+    expect(second?.resolved_at).toBe("2026-09-22T12:30:00.000Z");
+  });
 });

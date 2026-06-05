@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState, type ComponentType } from "react";
+import { useEffect, useMemo, useRef, useState, type ComponentType } from "react";
 import {
   Megaphone, Users, MoonStar, Pill, ShieldAlert, CalendarClock, HardHat, Wrench,
   GraduationCap, HeartHandshake, Siren, Hash, Send, Check, CheckCheck, Trash2, AlertTriangle,
@@ -65,16 +65,21 @@ export function CommsCentre() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [draft, channelId]);
 
-  // Auto-mark unread messages as read when a channel is viewed.
+  // Auto-mark unread messages as read when a channel is viewed. Track which messages
+  // we've already sent a receipt for: each mutation invalidates the query, and the
+  // refetch still shows the in-flight ones as unread — without this guard the effect
+  // re-fires duplicate receipts every refetch until the server state catches up.
+  const markedRef = useRef<Set<string>>(new Set());
   useEffect(() => {
     if (!channelId) return;
     for (const m of messages) {
-      if (!m.read_by_me && m.author_id !== userId && !m.is_deleted) {
+      if (!m.read_by_me && m.author_id !== userId && !m.is_deleted && !markedRef.current.has(m.id)) {
+        markedRef.current.add(m.id);
         mark.mutate({ messageId: m.id, channelId });
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [channelId, messages.length]);
+  }, [channelId, messages]);
 
   const onSend = () => {
     if (!channelId || !draft.trim()) return;

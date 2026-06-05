@@ -135,11 +135,15 @@ export function buildWorkforceOversight(input: WorkforceOversightInput): Workfor
     retained_non_routine: homeMessages.filter((m) => m.retention_category && m.retention_category !== "routine_messages").length,
   };
 
-  // ── Emergencies (period) ──
-  const emergs = input.emergencies.filter((e) => inHome(e) && inPeriod(e.created_at));
+  // ── Emergencies ──
+  // raised / resolved / responders are period events (windowed); "active" is a
+  // current-state fact — an alert still open from before the window must still count
+  // (and still drive the critical flag below), so it's taken from all home emergencies.
+  const homeEmergs = input.emergencies.filter((e) => inHome(e));
+  const emergs = homeEmergs.filter((e) => inPeriod(e.created_at));
   const emergencies = {
     raised: emergs.length,
-    active: emergs.filter((e) => e.status === "active").length,
+    active: homeEmergs.filter((e) => e.status === "active").length,
     resolved: emergs.filter((e) => e.status === "resolved").length,
     total_responders: emergs.reduce((n, e) => n + e.responders.length, 0),
   };

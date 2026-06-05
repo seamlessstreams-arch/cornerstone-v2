@@ -102,6 +102,7 @@ export function acknowledgeEmergency(
 export function resolveEmergency(alertId: string, staffId: string, nowIso: string): EmergencyAlert | null {
   const alert = db.emergencyAlerts.findById(alertId);
   if (!alert) return null;
+  if (alert.status === "resolved") return alert; // idempotent — keep the first resolver/time, don't re-audit
   const updated = db.emergencyAlerts.patch(alertId, {
     status: "resolved",
     resolved_at: nowIso,
