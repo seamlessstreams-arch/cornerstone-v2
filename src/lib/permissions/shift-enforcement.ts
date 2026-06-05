@@ -43,6 +43,47 @@ export function isShiftEnforcementEnabled(): boolean {
   return process.env.SHIFT_BASED_ACCESS_ENFORCED !== "false";
 }
 
+/**
+ * The app's staff records use `SystemRole` strings (e.g. "residential_care_worker")
+ * while the permission engine uses `Role` (e.g. "rsw"). Map between them so
+ * checkAccess matches a rule — without this, care workers get a "no_rule" denial.
+ */
+const SYSTEM_TO_PERMISSION_ROLE: Record<string, Role> = {
+  // management / senior leaders (keep off-shift access)
+  registered_manager: "registered_manager",
+  deputy_manager: "deputy_manager",
+  team_leader: "team_leader",
+  responsible_individual: "responsible_individual",
+  operations_manager: "operations_manager",
+  provider_owner: "provider_owner",
+  super_admin: "super_admin",
+  // operational care staff (shift-gated)
+  residential_care_worker: "rsw",
+  bank_staff: "agency_staff",
+  agency_staff: "agency_staff",
+  therapist: "senior_rsw",
+  // non-care admin / professional (not shift-gated)
+  admin: "hr_admin",
+  hr_recruitment: "hr_admin",
+  hr_admin: "hr_admin",
+  finance_operations: "finance_admin",
+  finance_admin: "finance_admin",
+  external_partner: "external_auditor",
+  auditor: "external_auditor",
+  external_auditor: "external_auditor",
+  reg44_visitor: "reg44_visitor",
+  ofsted_readonly_export: "ofsted_readonly_export",
+  // already-permission-Role care values pass through
+  rsw: "rsw",
+  senior_rsw: "senior_rsw",
+  waking_night: "waking_night",
+};
+
+/** Map a staff SystemRole (or already-a-Role string) to the permission `Role`. */
+export function toPermissionRole(role: string | null | undefined): Role {
+  return (role && SYSTEM_TO_PERMISSION_ROLE[role]) || "rsw";
+}
+
 export interface ShiftComputeOpts {
   /** ISO now (for deterministic tests). */
   now?: string;
@@ -79,7 +120,7 @@ interface StaffRow {
  */
 export function buildShiftAwareUserContext(staffId: string, opts: ShiftComputeOpts = {}): UserContext {
   const staff = (db.staff?.findAll?.() ?? []).find((s: { id: string }) => s.id === staffId) as StaffRow | undefined;
-  const role = (staff?.role ?? "rsw") as Role;
+  const role = toPermissionRole(staff?.role);
   const homeId = staff?.home_id ?? "home_oak";
   const assignedChildIds = (db.youngPeople?.findAll?.() ?? [])
     .filter((yp: { key_worker_id?: string | null }) => yp.key_worker_id === staffId)

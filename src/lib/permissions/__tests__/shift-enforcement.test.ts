@@ -1,7 +1,7 @@
 import { describe, it, expect, afterEach } from "vitest";
 import {
   computeShiftActive, keepsOffShiftAccess, isShiftEnforcementEnabled,
-  buildShiftAccessOverview, SHIFT_GATED_ROLES,
+  buildShiftAccessOverview, SHIFT_GATED_ROLES, toPermissionRole,
 } from "../shift-enforcement";
 import { checkAccess } from "../access-decision-service";
 import type { Role, UserContext } from "../types";
@@ -18,6 +18,24 @@ function ctx(role: Role, shiftActive: boolean): UserContext {
 
 afterEach(() => {
   delete process.env.SHIFT_BASED_ACCESS_ENFORCED;
+});
+
+describe("toPermissionRole (SystemRole → permission Role)", () => {
+  it("maps care SystemRoles to gated permission roles", () => {
+    expect(toPermissionRole("residential_care_worker")).toBe("rsw");
+    expect(toPermissionRole("bank_staff")).toBe("agency_staff");
+    expect(keepsOffShiftAccess(toPermissionRole("residential_care_worker"))).toBe(false);
+  });
+  it("maps management SystemRoles to non-gated roles", () => {
+    expect(toPermissionRole("registered_manager")).toBe("registered_manager");
+    expect(toPermissionRole("team_leader")).toBe("team_leader");
+    expect(keepsOffShiftAccess(toPermissionRole("registered_manager"))).toBe(true);
+  });
+  it("passes through already-permission roles and defaults unknown to rsw", () => {
+    expect(toPermissionRole("rsw")).toBe("rsw");
+    expect(toPermissionRole(undefined)).toBe("rsw");
+    expect(toPermissionRole("something_new")).toBe("rsw");
+  });
 });
 
 describe("keepsOffShiftAccess / SHIFT_GATED_ROLES", () => {
