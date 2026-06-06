@@ -340,10 +340,13 @@ export function computeMissingAlerts(
       });
     }
 
-    // return_interview_overdue: resolved, status "pending", found_at > 72h ago
+    // return_interview_overdue: child has returned (resolved OR closed) with the
+    // interview still outstanding (pending OR merely scheduled), found_at > 72h ago.
+    // The statutory 72h deadline applies once the child is back, regardless of
+    // whether the episode was later closed or the interview was only scheduled.
     if (
-      ep.status === "resolved" &&
-      ep.return_interview_status === "pending" &&
+      (ep.status === "resolved" || ep.status === "closed") &&
+      (ep.return_interview_status === "pending" || ep.return_interview_status === "scheduled") &&
       ep.found_at
     ) {
       const foundDate = new Date(ep.found_at);
@@ -372,8 +375,9 @@ export function computeMissingAlerts(
       });
     }
 
-    // debrief_pending: resolved episode where debrief_completed is false
-    if (ep.status === "resolved" && !ep.debrief_completed) {
+    // debrief_pending: a returned episode (resolved OR closed) without a completed
+    // staff debrief — closing the episode must not silently drop the outstanding debrief.
+    if ((ep.status === "resolved" || ep.status === "closed") && !ep.debrief_completed) {
       alerts.push({
         type: "debrief_pending",
         severity: "medium",

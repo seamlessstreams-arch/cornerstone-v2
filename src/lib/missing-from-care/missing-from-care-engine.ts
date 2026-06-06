@@ -649,11 +649,11 @@ function deriveAreasForImprovement(
     areas.push("Risk assessment update rate at " + quality.riskAssessmentUpdatedRate + "% — assessments should be updated after every episode");
   }
 
-  if (compliance.documentationRate > 0 && compliance.documentationRate < 60) {
+  if (quality.totalRecords > 0 && compliance.documentationRate < 60) {
     areas.push("Documentation rate at " + compliance.documentationRate + "% — all missing episodes must be fully documented");
   }
 
-  if (compliance.timelyRecordingRate > 0 && compliance.timelyRecordingRate < 60) {
+  if (quality.totalRecords > 0 && compliance.timelyRecordingRate < 60) {
     areas.push("Timely recording rate at " + compliance.timelyRecordingRate + "% — records must be completed promptly after episodes");
   }
 
@@ -691,11 +691,11 @@ function deriveActions(
     actions.push("Implement consistent return interview process to improve completion from " + quality.returnInterviewCompletedRate + "%");
   }
 
-  if (compliance.documentationRate > 0 && compliance.documentationRate < 60) {
+  if (quality.totalRecords > 0 && compliance.documentationRate < 60) {
     actions.push("Ensure all missing episodes are fully documented (" + compliance.documentationRate + "% currently documented)");
   }
 
-  if (compliance.timelyRecordingRate > 0 && compliance.timelyRecordingRate < 60) {
+  if (quality.totalRecords > 0 && compliance.timelyRecordingRate < 60) {
     actions.push("Improve recording timeliness — currently at " + compliance.timelyRecordingRate + "%");
   }
 
