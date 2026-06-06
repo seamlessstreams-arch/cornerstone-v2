@@ -230,10 +230,9 @@ export function Sidebar() {
         collapsed ? "justify-center px-0" : "gap-3 px-4",
       )}>
         <Link href="/dashboard" className="flex items-center gap-3 min-w-0">
-          {/* Logo mark — Cornerstone teal accent on dark */}
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-[var(--cs-teal)] text-white">
-            <span className="text-sm font-bold tracking-tight">C</span>
-          </div>
+          {/* Logo mark — the Cornerstone app icon */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/icon-192.png" alt="Cornerstone" className="h-8 w-8 shrink-0 rounded-xl" />
           {!collapsed && (
             <div className="min-w-0">
               <p className="text-sm font-bold text-white leading-tight tracking-tight">
