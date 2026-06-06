@@ -551,6 +551,29 @@ export interface ExportHistoryEntry {
   reason: string | null;
 }
 
+/**
+ * A learned ARIA answer — produced once by Claude, then replayed for near-identical
+ * future requests so the API isn't called again. Only ever populated for LOW-risk,
+ * non-sensitive commands, and bucketed by child so an answer is never served across
+ * different children. (The intelligence chain: rules → this learned cache → Claude.)
+ */
+export interface AriaCachedResponse {
+  id: string;
+  /** ARIA command this answer was produced for (the cache bucket). */
+  command_id: string;
+  /** Child bucket — a learned answer is NEVER matched across different children. */
+  child_id: string | null;
+  /** Original input text (for near-identical similarity matching). */
+  input_text: string;
+  /** The learned answer, replayed without an API call. */
+  output: string;
+  confidence: string;
+  /** Times this answer has been replayed instead of calling Claude. */
+  hit_count: number;
+  created_at: string;
+  last_used_at: string;
+}
+
 // ── Mutable collections ───────────────────────────────────────────────────────
 
 const store = {
@@ -562,6 +585,7 @@ const store = {
   shifts: [...SHIFTS] as Shift[],
   signInVerifications: [] as SignInVerification[],
   emergencyAlerts: [] as EmergencyAlert[],
+  ariaResponseCache: [] as AriaCachedResponse[],
   medications: [...MEDICATIONS] as Medication[],
   medicationAdministrations: [] as MedicationAdministration[],
   dailyLog: [...DAILY_LOG] as DailyLogEntry[],
@@ -6629,6 +6653,36 @@ export const db = {
       const rec: SignInVerification = { ...data, id: generateId("siv"), created_at: new Date().toISOString() };
       store.signInVerifications.push(rec);
       return rec;
+    },
+  },
+
+  // ── ARIA learned-answer cache (rules → cache → Claude) ──────────────────────
+  ariaResponseCache: {
+    findAll: (): AriaCachedResponse[] => store.ariaResponseCache,
+    findByBucket: (commandId: string, childId: string | null): AriaCachedResponse[] =>
+      store.ariaResponseCache.filter(
+        (r) => r.command_id === commandId && r.child_id === (childId ?? null),
+      ),
+    create: (
+      data: Omit<AriaCachedResponse, "id" | "created_at" | "last_used_at" | "hit_count">,
+    ): AriaCachedResponse => {
+      const now = new Date().toISOString();
+      const rec: AriaCachedResponse = {
+        ...data,
+        id: generateId("arc"),
+        hit_count: 0,
+        created_at: now,
+        last_used_at: now,
+      };
+      store.ariaResponseCache.push(rec);
+      return rec;
+    },
+    recordHit: (id: string): void => {
+      const rec = store.ariaResponseCache.find((r) => r.id === id);
+      if (rec) {
+        rec.hit_count += 1;
+        rec.last_used_at = new Date().toISOString();
+      }
     },
   },
 

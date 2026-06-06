@@ -61,51 +61,35 @@ export interface GatewayResponse {
 
 // ── Provider Routing ─────────────────────────────────────────────────────────
 
-const OPENAI_DOMAINS: OversightDomain[] = [
-  "quality_of_care_review",
-  "compliance_audit",
-  "pattern_detection",
-  "ofsted_readiness",
-  "staff_practice_quality",
-  "governance_verification",
-  "outcome_tracking",
-  "risk_escalation",
-  "financial_oversight",
-  "safeguarding_audit",
-  "aria_output_validation",
-  "regulatory_interpretation",
-];
-
-const ANTHROPIC_DOMAINS: OversightDomain[] = [
-  "record_oversight",
-  "operational_intelligence",
-  "therapeutic_support",
-  "daily_analysis",
+// Every oversight domain now runs on Claude (OpenAI removed). Kept as a single list
+// so callers that enumerate valid domains keep working.
+export const ALL_OVERSIGHT_DOMAINS: OversightDomain[] = [
+  "quality_of_care_review", "compliance_audit", "pattern_detection", "ofsted_readiness",
+  "staff_practice_quality", "governance_verification", "outcome_tracking", "risk_escalation",
+  "financial_oversight", "safeguarding_audit", "aria_output_validation", "regulatory_interpretation",
+  "record_oversight", "operational_intelligence", "therapeutic_support", "daily_analysis",
 ];
 
 function resolveProvider(domain: OversightDomain, explicit?: AIProvider): AIProvider {
-  if (explicit) return explicit;
-  if (OPENAI_DOMAINS.includes(domain)) return "openai";
-  if (ANTHROPIC_DOMAINS.includes(domain)) return "anthropic";
-  return "openai"; // default to OpenAI for management-level tasks
+  // OpenAI removed — every oversight domain runs on Claude (Anthropic) now,
+  // regardless of domain or any legacy explicit request. (Params retained for
+  // signature compatibility.)
+  void domain;
+  void explicit;
+  return "anthropic";
 }
 
 function resolveModel(provider: AIProvider): string {
-  switch (provider) {
-    case "openai":
-      return "openai/gpt-4.1";
-    case "anthropic":
-      return "anthropic/claude-sonnet-4-6";
-    default:
-      return "openai/gpt-4.1";
-  }
+  // OpenAI removed — Claude is the only gateway model.
+  void provider;
+  return "anthropic/claude-sonnet-4-6";
 }
 
 // ── Core Generation ──────────────────────────────────────────────────────────
 
 /**
- * Generate AI content through Vercel AI Gateway.
- * Routes to OpenAI or Anthropic based on domain.
+ * Generate AI content through Vercel AI Gateway. Runs on Claude (Anthropic) —
+ * OpenAI has been removed.
  */
 export async function generateViaGateway(request: GatewayRequest): Promise<GatewayResponse> {
   const provider = resolveProvider(request.domain, request.provider);
@@ -306,4 +290,4 @@ function buildOversightUserPrompt(request: OversightAnalysisRequest): string {
 
 // ── Convenience exports ──────────────────────────────────────────────────────
 
-export { resolveProvider, resolveModel, OPENAI_DOMAINS, ANTHROPIC_DOMAINS };
+export { resolveProvider, resolveModel };
