@@ -3,9 +3,9 @@
 //
 // Server-side only. Never imported into client code.
 //
-// Supports both Anthropic and OpenAI providers. The default provider is
-// determined by ARIA_PROVIDER or AI_PROVIDER env vars (defaults to
-// "anthropic"). The repo also has Anthropic-based engines
+// Uses Claude (Anthropic) as the only LLM provider — OpenAI has been removed.
+// The provider is read from ARIA_PROVIDER / AI_PROVIDER (defaults to "anthropic").
+// The repo also has Anthropic-based engines
 // (managementOversightEngine, voiceOfChildSummariser, hrProcessGuardian)
 // that talk to Anthropic directly via the @anthropic-ai/sdk package. This
 // abstraction is for the universal /api/aria/generate and /api/aria/transcribe
@@ -20,7 +20,7 @@
 
 export interface AriaProviderConfig {
   configured: boolean;
-  providerId: "openai" | "anthropic" | "none";
+  providerId: "anthropic" | "none";
   textModel: string;
   transcribeModel: string;
   maxAudioBytes: number;
@@ -57,39 +57,15 @@ export function getAriaProviderConfig(): AriaProviderConfig {
     };
   }
 
-  if (providerEnv === "openai") {
-    const apiKey = process.env.OPENAI_API_KEY;
-    const textModel = process.env.ARIA_TEXT_MODEL ?? "gpt-4.1-mini";
-
-    if (!apiKey || apiKey.includes("placeholder")) {
-      return {
-        configured: false,
-        providerId: "openai",
-        textModel,
-        transcribeModel,
-        maxAudioBytes,
-        reason: "OPENAI_API_KEY is not set. Configure it server-side to enable the universal Aria layer.",
-      };
-    }
-
-    return {
-      configured: true,
-      providerId: "openai",
-      textModel,
-      transcribeModel,
-      maxAudioBytes,
-    };
-  }
-
-  // Unsupported provider value
-  const textModel = process.env.ARIA_TEXT_MODEL ?? "gpt-4.1-mini";
+  // Any other provider value is unsupported — OpenAI has been removed; Claude only.
+  const textModel = process.env.ARIA_TEXT_MODEL ?? "claude-sonnet-4-20250514";
   return {
     configured: false,
     providerId: "none",
     textModel,
     transcribeModel,
     maxAudioBytes,
-    reason: `Unsupported ARIA_PROVIDER / AI_PROVIDER value "${providerEnv}". Supported providers: "anthropic", "openai".`,
+    reason: `Unsupported ARIA_PROVIDER / AI_PROVIDER value "${providerEnv}". The only supported provider is "anthropic" (Claude).`,
   };
 }
 
@@ -175,55 +151,14 @@ export async function generateText(
     }
   }
 
-  // ── OpenAI path ─────────────────────────────────────────────────────────
-  // Lazy import: OpenAI is loaded only when actually called, and only on
-  // the server. Falling back to fetch keeps the dependency surface light if
-  // the openai package isn't already in the project.
-  const apiKey = process.env.OPENAI_API_KEY!;
-  const url = "https://api.openai.com/v1/chat/completions";
-  const body = {
-    model: config.textModel,
-    messages: [
-      { role: "system", content: input.systemPrompt },
-      { role: "user", content: input.userPrompt },
-    ],
-    temperature: input.temperature ?? 0.4,
-    max_tokens: input.maxOutputTokens ?? 1500,
-    ...(input.expectJson ? { response_format: { type: "json_object" } } : {}),
+  // Only "anthropic" and "none" are possible now (OpenAI removed), both handled above.
+  // Defensive fallback should the provider config ever be in an unexpected state.
+  return {
+    text: ariaNotConfiguredFallback(input.expectJson === true),
+    llmUsed: false,
+    providerId: "none",
+    modelId: config.textModel,
   };
-
-  try {
-    const res = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify(body),
-    });
-    if (!res.ok) {
-      const detail = await res.text();
-      throw new Error(`OpenAI text generation failed (${res.status}): ${detail.slice(0, 400)}`);
-    }
-    const data = (await res.json()) as {
-      choices?: { message?: { content?: string } }[];
-    };
-    const text = data.choices?.[0]?.message?.content?.trim() ?? "";
-    return {
-      text,
-      llmUsed: true,
-      providerId: "openai",
-      modelId: config.textModel,
-    };
-  } catch (err) {
-    console.warn("[aria-provider] generateText failed:", err);
-    return {
-      text: ariaNotConfiguredFallback(input.expectJson === true),
-      llmUsed: false,
-      providerId: "openai",
-      modelId: config.textModel,
-    };
-  }
 }
 
 // ─── Audio transcription ────────────────────────────────────────────────────
@@ -265,58 +200,22 @@ export async function transcribeAudio(
     };
   }
 
-  const apiKey = process.env.OPENAI_API_KEY!;
-  const url = "https://api.openai.com/v1/audio/transcriptions";
-
-  // Build the multipart form using global FormData / Blob (Node 18+, Next.js
-  // route handlers run on the Edge or Node runtime depending on config; both
-  // expose FormData and Blob).
-  const form = new FormData();
-  // Coerce to a plain ArrayBuffer to satisfy strict BlobPart typing across
-  // Node 18+/Edge runtimes where Uint8Array<ArrayBufferLike> is the default.
-  const audio = input.audio;
-  const ab: ArrayBuffer =
-    audio instanceof Buffer
-      ? audio.buffer.slice(audio.byteOffset, audio.byteOffset + audio.byteLength) as ArrayBuffer
-      : (audio.buffer as ArrayBuffer).slice(audio.byteOffset, audio.byteOffset + audio.byteLength);
-  const blob = new Blob([ab], { type: input.mimeType });
-  form.append("file", blob, input.fileName);
-  form.append("model", config.transcribeModel);
-  form.append("response_format", "json");
-
-  try {
-    const res = await fetch(url, {
-      method: "POST",
-      headers: { Authorization: `Bearer ${apiKey}` },
-      body: form,
-    });
-    if (!res.ok) {
-      const detail = await res.text();
-      throw new Error(`OpenAI transcription failed (${res.status}): ${detail.slice(0, 400)}`);
-    }
-    const data = (await res.json()) as { text?: string };
-    return {
-      transcript: data.text?.trim() ?? "",
-      llmUsed: true,
-      providerId: "openai",
-      modelId: config.transcribeModel,
-    };
-  } catch (err) {
-    console.warn("[aria-provider] transcribeAudio failed:", err);
-    return {
-      transcript: "",
-      llmUsed: false,
-      providerId: "openai",
-      modelId: config.transcribeModel,
-    };
-  }
+  // Only "anthropic" and "none" are possible now (OpenAI removed) — both handled
+  // above. Server-side transcription is unavailable; callers fall back to the
+  // browser's built-in SpeechRecognition.
+  return {
+    transcript: "",
+    llmUsed: false,
+    providerId: "none",
+    modelId: config.transcribeModel,
+  };
 }
 
 // ─── Fallback when not configured ──────────────────────────────────────────
 
 function ariaNotConfiguredFallback(expectJson: boolean): string {
   const message =
-    "Aria is not configured in this environment. The provider key has not been set, so the universal Aria layer cannot generate text. Add ANTHROPIC_API_KEY or OPENAI_API_KEY to your server environment to enable it.";
+    "Aria is not configured in this environment. The provider key has not been set, so the universal Aria layer cannot generate text. Add ANTHROPIC_API_KEY to your server environment to enable it.";
   if (expectJson) {
     return JSON.stringify({ ariaNotConfigured: true, message });
   }
@@ -329,7 +228,7 @@ function ariaProviderErrorFallback(errorDetail: string, provider: string, expect
   const lower = errorDetail.toLowerCase();
 
   if (lower.includes("credit balance") || lower.includes("billing") || lower.includes("purchase credits")) {
-    userMessage = `Aria's AI provider (${provider}) requires account credits to be topped up. Please visit your ${provider === "anthropic" ? "Anthropic" : "OpenAI"} dashboard to add credits, then Aria will work automatically.`;
+    userMessage = `Aria's AI provider (${provider}) requires account credits to be topped up. Please visit your Anthropic dashboard to add credits, then Aria will work automatically.`;
   } else if (lower.includes("authentication") || lower.includes("401") || lower.includes("invalid.*key")) {
     userMessage = `Aria's API key for ${provider} is invalid or expired. Please update it in the server environment variables.`;
   } else if (lower.includes("rate limit") || lower.includes("429")) {

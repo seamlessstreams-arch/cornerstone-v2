@@ -2,8 +2,7 @@
 // API: /api/aria/oversight-intelligence
 //
 // AI-powered management oversight intelligence using Vercel AI Gateway.
-// Routes to OpenAI (management oversight) or Anthropic (operational) based
-// on the oversight domain.
+// Runs on Claude (Anthropic) — OpenAI has been removed.
 //
 // POST — Run AI analysis for a specific oversight domain
 // GET  — Health check / provider status
@@ -17,14 +16,10 @@ import {
   resolveModel,
   type OversightDomain,
   type AIProvider,
-  OPENAI_DOMAINS,
-  ANTHROPIC_DOMAINS,
+  ALL_OVERSIGHT_DOMAINS,
 } from "@/lib/aria/ai/gateway";
 
-const VALID_DOMAINS: OversightDomain[] = [
-  ...OPENAI_DOMAINS,
-  ...ANTHROPIC_DOMAINS,
-];
+const VALID_DOMAINS: OversightDomain[] = [...ALL_OVERSIGHT_DOMAINS];
 
 // ── POST: Run AI oversight analysis ──────────────────────────────────────────
 
@@ -167,9 +162,7 @@ export async function POST(req: NextRequest) {
         domain,
         provider: resolved,
         model,
-        reason: OPENAI_DOMAINS.includes(domain as OversightDomain)
-          ? "Management-level oversight → OpenAI"
-          : "Operational intelligence → Anthropic (ARIA)",
+        reason: "Oversight intelligence → Claude (Anthropic)",
       },
     });
   }
@@ -187,18 +180,13 @@ export async function GET() {
     status: "operational",
     gateway: "vercel-ai-sdk",
     providers: {
-      openai: {
-        role: "Management Oversight (Reg 45, SCCIF Leadership)",
-        model: resolveModel("openai"),
-        domains: OPENAI_DOMAINS,
-      },
       anthropic: {
-        role: "Operational Intelligence (ARIA)",
+        role: "Oversight & Operational Intelligence (ARIA)",
         model: resolveModel("anthropic"),
-        domains: ANTHROPIC_DOMAINS,
+        domains: ALL_OVERSIGHT_DOMAINS,
       },
     },
-    routing: "Automatic by domain, with OpenAI → Anthropic fallback on failure",
+    routing: "All oversight domains run on Claude (Anthropic) — OpenAI removed",
     ariaLabel: "All AI output is labelled 'AI suggested draft' — never final until human-approved",
   });
 }

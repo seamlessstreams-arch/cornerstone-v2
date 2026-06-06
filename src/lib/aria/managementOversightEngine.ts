@@ -769,8 +769,8 @@ async function enhanceWithLlm(
     .join("\n");
 
   try {
-    // Use AI Gateway (OpenAI for management oversight, with Anthropic fallback)
-    const model = hasGateway ? "openai/gpt-4.1" : "anthropic/claude-sonnet-4-6";
+    // Claude (Anthropic) only — OpenAI removed. Uses the gateway when available.
+    const model = "anthropic/claude-sonnet-4-6";
 
     const result = await generateText({
       model: model as any,

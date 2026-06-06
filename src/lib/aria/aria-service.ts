@@ -1526,14 +1526,45 @@ export async function invokeAriaCommand(
     // care principle that high-risk outputs must be human-verified.
     confidence = command.riskLevel === "high" ? "low" : ruleResult.confidence;
   } else {
-    // Rules couldn't handle it — fall through to LLM provider
-    generation = await generateText({
-      systemPrompt,
-      userPrompt,
-      expectJson: false,
+    // ── Tier 2: learned cache — replay a near-identical past answer, no API call ──
+    const { lookupLearnedAnswer, learnAnswer } = await import("@/lib/aria/resolution/learned-cache");
+    const cached = lookupLearnedAnswer({
+      commandId: command.id,
+      childId: args.childId ?? null,
+      input: args.inputText ?? "",
+      riskLevel: command.riskLevel,
     });
-    cleanedText = applyAriaPostprocessor(generation.text);
-    confidence = inferConfidence(command, cleanedText);
+
+    if (cached) {
+      generation = {
+        text: cached.output,
+        llmUsed: false,
+        providerId: "learned_cache",
+        modelId: "learned",
+      };
+      cleanedText = cached.output;
+      confidence = command.riskLevel === "high" ? "low" : cached.confidence;
+    } else {
+      // ── Tier 3: Claude — the last resort ──
+      generation = await generateText({
+        systemPrompt,
+        userPrompt,
+        expectJson: false,
+      });
+      cleanedText = applyAriaPostprocessor(generation.text);
+      confidence = inferConfidence(command, cleanedText);
+      // Learn from Claude so the next near-identical request skips the API.
+      if (generation.llmUsed) {
+        learnAnswer({
+          commandId: command.id,
+          childId: args.childId ?? null,
+          input: args.inputText ?? "",
+          output: cleanedText,
+          confidence,
+          riskLevel: command.riskLevel,
+        });
+      }
+    }
   }
   const outputId = `aria_out_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
 

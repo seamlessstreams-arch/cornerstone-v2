@@ -1,8 +1,9 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // ARIA INTELLIGENCE — PROVIDER ADAPTER
 //
-// Multi-provider JSON generation for the intelligence engine.
-// Supports OpenAI, Anthropic, and stub mode.
+// JSON generation for the intelligence engine. Claude (Anthropic) is the only LLM
+// provider; anything else falls back to stub/demo mode. OpenAI has been removed —
+// ARIA resolves rules → learned cache → Claude (last resort).
 // Server-side only — never import in client components.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -24,45 +25,12 @@ export type GenerateJsonInput = {
 export async function generateAriaJson(input: GenerateJsonInput): Promise<unknown> {
   const provider = (process.env.AI_PROVIDER ?? "stub").toLowerCase();
 
-  if (provider === "openai") {
-    return generateViaOpenAI(input);
-  }
-
   if (provider === "anthropic") {
     return generateViaAnthropic(input);
   }
 
-  // Stub mode — return a safe demo response
+  // Stub mode — return a safe demo response (also the fallback for any non-Anthropic value)
   return generateStub(input);
-}
-
-async function generateViaOpenAI(input: GenerateJsonInput): Promise<unknown> {
-  const apiKey = process.env.OPENAI_API_KEY;
-  if (!apiKey || apiKey.includes("placeholder")) {
-    throw new Error("OPENAI_API_KEY is missing or set to placeholder.");
-  }
-
-  // Dynamic import using variable to prevent Turbopack static resolution
-  const moduleName = "openai";
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { default: OpenAI } = await import(/* webpackIgnore: true */ moduleName) as { default: new (opts: { apiKey: string }) => any };
-  const client = new OpenAI({ apiKey });
-
-  const completion = await client.chat.completions.create({
-    model: input.model ?? process.env.ARIA_MODEL ?? "gpt-4.1-mini",
-    temperature: input.temperature ?? 0.2,
-    response_format: { type: "json_object" },
-    messages: input.messages,
-  });
-
-  const raw = completion.choices[0]?.message?.content;
-  if (!raw) throw new Error("AI provider returned an empty response.");
-
-  try {
-    return JSON.parse(raw);
-  } catch {
-    throw new Error("AI provider returned invalid JSON.");
-  }
 }
 
 async function generateViaAnthropic(input: GenerateJsonInput): Promise<unknown> {
@@ -110,7 +78,7 @@ function generateStub(_input: GenerateJsonInput): unknown {
     managementOversightRequired: false,
     regulatoryRefs: [],
     qualityStandardRefs: [],
-    practicePrompts: ["Configure AI_PROVIDER=anthropic or AI_PROVIDER=openai to enable live Aria intelligence."],
+    practicePrompts: ["Configure AI_PROVIDER=anthropic to enable live Aria intelligence."],
     nextBestActions: [
       {
         title: "Configure AI provider",
