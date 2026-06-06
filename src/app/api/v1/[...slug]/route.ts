@@ -10,6 +10,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db/store";
+import { dal } from "@/lib/db/dal";
 import { createServerClient } from "@/lib/supabase/server";
 import * as sq from "@/lib/supabase/queries";
 
@@ -493,6 +494,17 @@ const CORE_COLLECTIONS = new Set<string>([
   "commsMessageActions", "commsMessageReceipts", "cornerstoneEvents", "careEvents",
 ]);
 
+// Core entities with a real Supabase table + dal coverage AND no app-level writers
+// (read-only / seed data) → route READS through the dual-mode dal so they come from
+// the real table when Supabase is on, and the in-memory store when off. Writes (rare/
+// none for these) stay on the store. Entities are added here as their writers are
+// converted, taking precedence over CORE_COLLECTIONS.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const DAL_READ_MAP: Record<string, any> = {
+  youngPeople: dal.youngPeople,
+  medications: dal.medications,
+};
+
 interface AsyncCollection {
   findAll(): Promise<unknown[]>;
   findByChild: ((childId: string) => Promise<unknown[]>) | null;
@@ -513,6 +525,30 @@ function resolveAccessor(slug: string): AsyncCollection | null {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const mem = (db as Record<string, any>)[collectionName] as Record<string, (...args: unknown[]) => unknown> | undefined;
   if (!mem || typeof mem !== "object") return null;
+
+  // Dal-routed core entities: reads go through the dual-mode dal (real table when on,
+  // store when off); writes stay on the store (these entities have no app writers).
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const dalCol = DAL_READ_MAP[collectionName] as any;
+  if (dalCol) {
+    return {
+      findAll: async () => asList(await dalCol.findAll()),
+      findByChild:
+        typeof dalCol.findByChild === "function" ? async (id: string) => asList(await dalCol.findByChild(id))
+        : typeof mem.findByChild === "function" ? async (id: string) => asList(mem.findByChild!(id))
+        : null,
+      findById:
+        typeof dalCol.findById === "function" ? async (id: string) => (await dalCol.findById(id)) ?? null
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        : async (id: string) => asList(await dalCol.findAll()).find((x: any) => x?.id === id) ?? null,
+      create: typeof mem.create === "function" ? async (d: Record<string, unknown>) => mem.create!(d) : null,
+      update: typeof mem.update === "function" ? async (id: string, d: Record<string, unknown>) => mem.update!(id, d) ?? null : null,
+      patch:
+        typeof mem.patch === "function" ? async (id: string, d: Record<string, unknown>) => mem.patch!(id, d) ?? null
+        : typeof mem.update === "function" ? async (id: string, d: Record<string, unknown>) => mem.update!(id, d) ?? null
+        : null,
+    };
+  }
 
   const c = sb();
 
