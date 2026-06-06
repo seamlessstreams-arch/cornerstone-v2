@@ -6247,6 +6247,12 @@ export const db = {
       store.incidents[idx] = { ...store.incidents[idx], oversight_note: note, oversight_by: by, oversight_at: new Date().toISOString() };
       return store.incidents[idx];
     },
+    update: (id: string, data: Partial<Incident>): Incident | null => {
+      const idx = store.incidents.findIndex((i) => i.id === id);
+      if (idx === -1) return null;
+      store.incidents[idx] = { ...store.incidents[idx], ...data, updated_at: new Date().toISOString() };
+      return store.incidents[idx];
+    },
   },
 
   // ── Missing Episodes ──────────────────────────────────────────────────────

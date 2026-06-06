@@ -16,7 +16,7 @@
 import { db } from "@/lib/db/store";
 import { generateId, todayStr } from "@/lib/utils";
 import { captureDomainEvent, type CaptureDraft } from "@/lib/event-capture/capture-event-service";
-import { persistDailyLog } from "@/lib/supabase/care-records";
+import { persistDailyLog, createIncidentRecord } from "@/lib/supabase/care-records";
 import { classifyCareEvent, buildRoutingSummary } from "./routing-engine";
 
 // ── Forms-as-views: spine write-through helpers ───────────────────────────────
@@ -445,7 +445,7 @@ function processIncident(event: CareEvent, route: CareEventRoute): void {
     general: "low",
   };
 
-  const incident = db.incidents.create({
+  const incident = createIncidentRecord({
     reference: `INC-${new Date().getFullYear()}-${String(db.incidents.findAll().length + 1).padStart(4, "0")}`,
     type: (categoryToType[event.category] ?? "other") as never,
     severity: (categoryToSeverity[event.category] ?? "medium") as never,
@@ -865,7 +865,7 @@ function processComplaintRecord(event: CareEvent, route: CareEventRoute): void {
     return;
   }
 
-  const incident = db.incidents.create({
+  const incident = createIncidentRecord({
     reference: `CMP-${new Date().getFullYear()}-${String(db.incidents.findAll().length + 1).padStart(4, "0")}`,
     type: "complaint" as never,
     severity: "medium" as never,
@@ -921,7 +921,7 @@ function processSafeguardingRecord(event: CareEvent, route: CareEventRoute): voi
     return;
   }
 
-  const incident = db.incidents.create({
+  const incident = createIncidentRecord({
     reference: `SG-${new Date().getFullYear()}-${String(db.incidents.findAll().length + 1).padStart(4, "0")}`,
     type: "safeguarding_concern" as never,
     severity: "high" as never,

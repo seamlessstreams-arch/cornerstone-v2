@@ -505,6 +505,7 @@ const DAL_MAP: Record<string, any> = {
   youngPeople: dal.youngPeople,
   medications: dal.medications,
   dailyLog: dal.dailyLog,
+  incidents: dal.incidents,
 };
 
 interface AsyncCollection {

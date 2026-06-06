@@ -13,6 +13,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { db, getStore } from "@/lib/db/store";
+import { createIncidentRecord } from "@/lib/supabase/care-records";
 import type { Incident, Task } from "@/types";
 import { recordEvent, type TimelineEvent } from "@/lib/timeline/timeline-service";
 import { evaluateRules, getApplicableRules } from "@/lib/automation/automation-engine";
@@ -252,7 +253,7 @@ export function createIncident(input: CreateIncidentInput): IncidentOrchestratio
   const reference = generateReference();
   const requiresOversight = input.severity === "high" || input.severity === "critical";
 
-  const incident = db.incidents.create({
+  const incident = createIncidentRecord({
     reference,
     type: input.type as Incident["type"],
     severity: input.severity as Incident["severity"],

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/lib/db/store";
+import { dal } from "@/lib/db/dal";
 import { requirePermission } from "@/lib/auth-guard";
 import { PERMISSIONS } from "@/lib/permissions";
 import { requireOnShift } from "@/lib/permissions/require-on-shift";
@@ -13,7 +13,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
   const shift = requireOnShift(req);
   if (shift) return shift;
 
-  const incident = db.incidents.findById(id);
+  const incident = await dal.incidents.findById(id);
   if (!incident) return NextResponse.json({ error: "Incident not found" }, { status: 404 });
 
   return NextResponse.json({ data: incident });
@@ -26,14 +26,14 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   const shift = requireOnShift(req); // parity with GET — off-shift general staff can't edit either
   if (shift) return shift;
 
-  const incident = db.incidents.findById(id);
+  const incident = await dal.incidents.findById(id);
   if (!incident) return NextResponse.json({ error: "Incident not found" }, { status: 404 });
 
   const body = await req.json();
   const { action, ...rest } = body;
 
   if (action === "oversight") {
-    const updated = db.incidents.addOversight(
+    const updated = await dal.incidents.addOversight(
       id,
       rest.oversight_note ?? "",
       auth.userId
@@ -41,11 +41,9 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     return NextResponse.json({ data: updated });
   }
 
-  // General update — strip audit fields
+  // General update — strip audit fields (dal merges + stamps updated_at, dual-mode)
   const { id: _id, created_at: _c, created_by: _cb, reference: _ref, ...safe } = rest;
-  const idx = db.incidents.findAll().findIndex((i) => i.id === id);
-  if (idx === -1) return NextResponse.json({ error: "Not found" }, { status: 404 });
-  const updated = { ...incident, ...safe, updated_at: new Date().toISOString(), updated_by: auth.userId };
-  db.incidents.findAll()[idx] = updated as typeof incident;
+  const updated = await dal.incidents.update(id, { ...safe, updated_by: auth.userId });
+  if (!updated) return NextResponse.json({ error: "Not found" }, { status: 404 });
   return NextResponse.json({ data: updated });
 }
