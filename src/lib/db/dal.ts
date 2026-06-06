@@ -409,6 +409,16 @@ export const dal = {
       if (c) return sq.updateCareForm(c, id, data);
       return db.careForms.update(id, data);
     },
+    async submit(id: string, by: string) {
+      const c = sb();
+      if (c) return sq.updateCareForm(c, id, { status: "submitted", submitted_at: new Date().toISOString(), submitted_by: by, updated_by: by });
+      return db.careForms.submit(id, by);
+    },
+    async approve(id: string, by: string, notes?: string) {
+      const c = sb();
+      if (c) return sq.updateCareForm(c, id, { status: "approved", approved_at: new Date().toISOString(), approved_by: by, reviewed_by: by, reviewed_at: new Date().toISOString(), review_notes: notes ?? null, updated_by: by });
+      return db.careForms.approve(id, by, notes);
+    },
   },
 
   // ── QA Audits ─────────────────────────────────────────────────────────────

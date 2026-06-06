@@ -10,7 +10,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/lib/db/store";
+import { dal } from "@/lib/db/dal";
 
 export const dynamic = "force-dynamic";
 
@@ -24,23 +24,19 @@ export async function GET(req: NextRequest) {
   const filterStatus = searchParams.get("status");
   const filterType = searchParams.get("form_type");
 
-  let list = db.careForms.findAll();
+  // Dual-mode: real Supabase `care_forms` table when enabled, in-memory store otherwise.
+  const all = await dal.careForms.findAll();
 
+  let list = all;
+  if (filterType) {
+    list = list.filter((f) => f.form_type === filterType);
+  }
   if (filterStatus) {
     list = list.filter((f) => f.status === filterStatus);
   }
-  if (filterType) {
-    list = db.careForms.findByType(filterType);
-    if (filterStatus) {
-      list = list.filter((f) => f.status === filterStatus);
-    }
-  }
 
   // Sort: most recently updated first
-  list.sort((a, b) => (b.updated_at ?? "").localeCompare(a.updated_at ?? ""));
-
-  // ── Compute meta over ALL forms ─────────────────────────────────────────
-  const all = db.careForms.findAll();
+  list = [...list].sort((a, b) => (b.updated_at ?? "").localeCompare(a.updated_at ?? ""));
 
   const draft = all.filter((f) => f.status === "draft").length;
   const pendingReview = all.filter(
@@ -69,6 +65,6 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  const form = db.careForms.create(body);
+  const form = await dal.careForms.create(body);
   return NextResponse.json({ data: form }, { status: 201 });
 }
