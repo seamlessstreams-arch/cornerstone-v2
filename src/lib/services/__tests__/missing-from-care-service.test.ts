@@ -536,6 +536,26 @@ describe("computeMissingAlerts", () => {
     expect(overdue).toHaveLength(0);
   });
 
+  it("generates return_interview_overdue for a CLOSED episode with interview still pending (>72h)", () => {
+    const fourDaysAgo = new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString();
+    const episodes = [ep({ id: "ep-1", status: "closed", return_interview_status: "pending", found_at: fourDaysAgo })];
+    const overdue = computeMissingAlerts(episodes).filter((a) => a.type === "return_interview_overdue");
+    expect(overdue).toHaveLength(1);
+  });
+
+  it("generates return_interview_overdue when the interview is only SCHEDULED (>72h, not completed)", () => {
+    const fourDaysAgo = new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString();
+    const episodes = [ep({ id: "ep-1", status: "resolved", return_interview_status: "scheduled", found_at: fourDaysAgo })];
+    const overdue = computeMissingAlerts(episodes).filter((a) => a.type === "return_interview_overdue");
+    expect(overdue).toHaveLength(1);
+  });
+
+  it("generates debrief_pending for a CLOSED episode without a completed debrief", () => {
+    const episodes = [ep({ id: "ep-1", status: "closed", debrief_completed: false })];
+    const debrief = computeMissingAlerts(episodes).filter((a) => a.type === "debrief_pending");
+    expect(debrief).toHaveLength(1);
+  });
+
   it("generates police_not_notified alert for missing episode without police", () => {
     const episodes = [ep({
       id: "ep-1",

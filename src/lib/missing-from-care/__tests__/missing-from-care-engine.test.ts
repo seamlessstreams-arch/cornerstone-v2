@@ -873,6 +873,17 @@ describe("generateMissingFromCareIntelligence", () => {
     expect(result.overallScore).toBeLessThanOrEqual(100);
   });
 
+  it("flags 0% documentation / timely recording (worst case must not be hidden by a >0 guard)", () => {
+    // Every episode undocumented + recorded late — the worst possible state. The
+    // improvement areas must surface; previously a `rate > 0` guard suppressed 0%.
+    const records = OAK_HOUSE_RECORDS.map((r) => ({ ...r, documentationComplete: false, timelyRecording: false }));
+    const result = generateMissingFromCareIntelligence(
+      records, OAK_HOUSE_POLICY, OAK_HOUSE_TRAINING, "home-oak", "2026-01-01", "2026-05-20",
+    );
+    expect(result.areasForImprovement.some((a) => a.toLowerCase().includes("documentation"))).toBe(true);
+    expect(result.areasForImprovement.some((a) => a.toLowerCase().includes("recording"))).toBe(true);
+  });
+
   it("produces a valid rating", () => {
     const result = generateMissingFromCareIntelligence(
       OAK_HOUSE_RECORDS, OAK_HOUSE_POLICY, OAK_HOUSE_TRAINING,
