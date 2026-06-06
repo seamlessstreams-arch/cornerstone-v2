@@ -8,6 +8,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { IntelligenceCardEmpty } from "@/components/dashboard/intelligence-card-empty";
 import {
   AlertTriangle, Brain, Loader2, AlertCircle,
   Sparkles, Palette, Activity, Star,
@@ -100,6 +101,7 @@ export function HomeActivityEnrichmentIntelligenceCard() {
         <p className="text-xs text-muted-foreground mt-1">{d.headline}</p>
       </CardHeader>
       <CardContent className="space-y-4">
+        {d.enrichment_rating === "insufficient_data" && <IntelligenceCardEmpty />}
 
         {/* Provision KPIs */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">

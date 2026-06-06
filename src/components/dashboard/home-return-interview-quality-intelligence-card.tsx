@@ -1,6 +1,7 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { IntelligenceCardEmpty } from "@/components/dashboard/intelligence-card-empty";
 import { Loader2, AlertCircle, AlertTriangle, Sparkles, Brain, UserSearch } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useHomeReturnInterviewQualityIntelligence } from "@/hooks/use-home-return-interview-quality-intelligence";
@@ -38,6 +39,7 @@ export function HomeReturnInterviewQualityIntelligenceCard() {
         <p className="text-xs text-muted-foreground mt-1">{d.headline}</p>
       </CardHeader>
       <CardContent className="space-y-4">
+        {d.interview_rating === "insufficient_data" && <IntelligenceCardEmpty />}
         {d.interview_rating !== "insufficient_data" && (
           <div className="grid grid-cols-3 sm:grid-cols-6 gap-1.5">
             <div className={cn("text-center rounded-lg p-1.5", d.total_interviews > 0 ? "bg-green-50" : "bg-amber-50")}>

@@ -8,6 +8,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { IntelligenceCardEmpty } from "@/components/dashboard/intelligence-card-empty";
 import {
   AlertTriangle, Brain, Loader2, AlertCircle,
   Sparkles, MapPin, Shield, Bus,
@@ -81,6 +82,7 @@ export function HomeCommunityAccessIntelligenceCard() {
         <p className="text-xs text-muted-foreground mt-1">{d.headline}</p>
       </CardHeader>
       <CardContent className="space-y-4">
+        {d.community_access_rating === "insufficient_data" && <IntelligenceCardEmpty />}
 
         {/* KPIs */}
         <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">

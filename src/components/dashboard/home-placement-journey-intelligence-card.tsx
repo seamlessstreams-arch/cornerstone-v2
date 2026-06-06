@@ -1,6 +1,7 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { IntelligenceCardEmpty } from "@/components/dashboard/intelligence-card-empty";
 import { Loader2, AlertCircle, AlertTriangle, Sparkles, Brain, MapPin } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useHomePlacementJourneyIntelligence } from "@/hooks/use-home-placement-journey-intelligence";
@@ -38,6 +39,7 @@ export function HomePlacementJourneyIntelligenceCard() {
         <p className="text-xs text-muted-foreground mt-1">{d.headline}</p>
       </CardHeader>
       <CardContent className="space-y-4">
+        {d.placement_journey_rating === "insufficient_data" && <IntelligenceCardEmpty />}
         {d.placement_journey_rating !== "insufficient_data" && (
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
             <div className="text-center rounded-lg bg-slate-50 p-2">
