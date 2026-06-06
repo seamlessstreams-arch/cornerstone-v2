@@ -10,6 +10,8 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db/store";
+import { createServerClient } from "@/lib/supabase/server";
+import * as sq from "@/lib/supabase/queries";
 
 // ---------------------------------------------------------------------------
 // Slug -> db collection mapping (434 entries)
@@ -459,13 +461,114 @@ interface RouteContext {
   params: Promise<{ slug: string[] }>;
 }
 
-/** Resolve slug to its db collection (or null). */
-function resolveCollection(slug: string): Record<string, (...args: unknown[]) => unknown> | null {
+// ---------------------------------------------------------------------------
+// Dual-mode accessor: Supabase generic_records when enabled, else in-memory db.
+//
+// CORE / service-backed collections (dedicated routes, real Supabase tables, or
+// service writers like sign-in / comms / the event spine) stay on the in-memory
+// store here so this catch-all can't fork them away from their other access paths
+// — they move to their real Supabase tables in a later batch. Every other
+// (extended) record type — whose ONLY access path is this catch-all — persists to
+// the generic_records catch-all table when Supabase is enabled. When Supabase is
+// OFF, every collection falls back to the in-memory store (identical to before).
+// ---------------------------------------------------------------------------
+
+function sb() {
+  return createServerClient();
+}
+function homeId(): string {
+  return process.env.SUPABASE_HOME_ID ?? "a0000000-0000-0000-0000-000000000001";
+}
+
+const CORE_COLLECTIONS = new Set<string>([
+  // dal-covered core domain (real Supabase tables)
+  "staff", "youngPeople", "tasks", "incidents", "missingEpisodes", "shifts",
+  "leave", "training", "medications", "medicationAdministrations", "dailyLog",
+  "supervisions", "documents", "documentReadReceipts", "expenses", "careForms",
+  "audits", "maintenance", "chronology", "handovers", "buildings", "buildingChecks",
+  "vehicles", "vehicleChecks", "notifications", "vacancies", "candidateProfiles",
+  "candidateChecks", "candidateReferences",
+  // service-backed (sign-in / comms / emergency / event spine)
+  "signInVerifications", "emergencyAlerts", "commsChannels", "commsMessages",
+  "commsMessageActions", "commsMessageReceipts", "cornerstoneEvents", "careEvents",
+]);
+
+interface AsyncCollection {
+  findAll(): Promise<unknown[]>;
+  findByChild: ((childId: string) => Promise<unknown[]>) | null;
+  findById: ((id: string) => Promise<unknown>) | null;
+  create: ((data: Record<string, unknown>) => Promise<unknown>) | null;
+  update: ((id: string, data: Record<string, unknown>) => Promise<unknown>) | null;
+  patch: ((id: string, data: Record<string, unknown>) => Promise<unknown>) | null;
+}
+
+const asList = (d: unknown): unknown[] => (Array.isArray(d) ? d : d == null ? [] : [d]);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const mapRow = (r: any) => ({ id: r.id, ...r.data, created_at: r.created_at, updated_at: r.updated_at });
+
+/** Resolve a slug to a dual-mode async accessor, or null if the slug is unknown. */
+function resolveAccessor(slug: string): AsyncCollection | null {
   const collectionName = SLUG_MAP[slug];
   if (!collectionName) return null;
-  const collection = (db as Record<string, unknown>)[collectionName];
-  if (!collection || typeof collection !== "object") return null;
-  return collection as Record<string, (...args: unknown[]) => unknown>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const mem = (db as Record<string, any>)[collectionName] as Record<string, (...args: unknown[]) => unknown> | undefined;
+  if (!mem || typeof mem !== "object") return null;
+
+  const c = sb();
+
+  // In-memory path: Supabase off, or a core/service collection kept here for now.
+  if (!c || CORE_COLLECTIONS.has(collectionName)) {
+    return {
+      findAll: async () => asList(typeof mem.findAll === "function" ? mem.findAll() : typeof mem.getAll === "function" ? mem.getAll() : []),
+      findByChild: typeof mem.findByChild === "function" ? async (id: string) => asList(mem.findByChild!(id)) : null,
+      findById: typeof mem.findById === "function" ? async (id: string) => mem.findById!(id) ?? null : null,
+      create: typeof mem.create === "function" ? async (d: Record<string, unknown>) => mem.create!(d) : null,
+      update: typeof mem.update === "function" ? async (id: string, d: Record<string, unknown>) => mem.update!(id, d) ?? null : null,
+      patch:
+        typeof mem.patch === "function" ? async (id: string, d: Record<string, unknown>) => mem.patch!(id, d) ?? null
+        : typeof mem.update === "function" ? async (id: string, d: Record<string, unknown>) => mem.update!(id, d) ?? null
+        : null,
+    };
+  }
+
+  // Supabase-enabled extended record type → the generic_records catch-all table.
+  return {
+    findAll: async () => (await sq.getGenericRecords(c, homeId(), collectionName)).map(mapRow),
+    findByChild: async (childId: string) =>
+      (await sq.getGenericRecords(c, homeId(), collectionName, { child_id: childId })).map(mapRow),
+    findById: async (id: string) => {
+      try { return mapRow(await sq.getGenericRecordById(c, id)); } catch { return null; }
+    },
+    create: async (data: Record<string, unknown>) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { id: _id, child_id, staff_id, created_by, ...rest } = data as any;
+      void _id;
+      const row = await sq.createGenericRecord(c, {
+        home_id: homeId(),
+        record_type: collectionName,
+        data: rest,
+        child_id: child_id ?? null,
+        staff_id: staff_id ?? null,
+        created_by: created_by ?? null,
+      });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return { id: (row as any).id, ...rest, created_at: (row as any).created_at };
+    },
+    update: (id: string, data: Record<string, unknown>) => updateGeneric(c, id, data),
+    patch: (id: string, data: Record<string, unknown>) => updateGeneric(c, id, data),
+  };
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function updateGeneric(c: any, id: string, data: Record<string, unknown>) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let existing: any = null;
+  try { existing = await sq.getGenericRecordById(c, id); } catch { return null; }
+  if (!existing) return null;
+  const merged = { ...existing.data, ...data };
+  const row = await sq.updateGenericRecord(c, id, { data: merged, updated_by: (data.updated_by as string) ?? null });
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return { id: (row as any).id, ...merged, updated_at: (row as any).updated_at };
 }
 
 function json(data: unknown, status = 200) {
@@ -488,31 +591,17 @@ export async function GET(req: NextRequest, ctx: RouteContext) {
   try {
     const { slug } = await ctx.params;
     const slugKey = slug[0];
-    const collection = resolveCollection(slugKey);
+    const collection = resolveAccessor(slugKey);
     if (!collection) return notFound(slugKey);
 
-    // Check for child_id query param
     const childId = req.nextUrl.searchParams.get("child_id");
-
-    if (childId && typeof collection.findByChild === "function") {
-      const data = collection.findByChild(childId);
-      const list = Array.isArray(data) ? data : [data];
+    if (childId && collection.findByChild) {
+      const list = await collection.findByChild(childId);
       return json({ data: list, meta: { total: list.length } });
     }
 
-    // Try findAll first, then getAll
-    if (typeof collection.findAll === "function") {
-      const data = collection.findAll();
-      const list = Array.isArray(data) ? data : [data];
-      return json({ data: list, meta: { total: list.length } });
-    }
-
-    if (typeof collection.getAll === "function") {
-      const data = collection.getAll();
-      return json({ data });
-    }
-
-    return json({ error: `Collection "${slugKey}" has no list method` }, 500);
+    const list = await collection.findAll();
+    return json({ data: list, meta: { total: list.length } });
   } catch (err) {
     return serverError(err);
   }
@@ -525,28 +614,25 @@ export async function POST(req: NextRequest, ctx: RouteContext) {
   try {
     const { slug } = await ctx.params;
     const slugKey = slug[0];
-    const collection = resolveCollection(slugKey);
+    const collection = resolveAccessor(slugKey);
     if (!collection) return notFound(slugKey);
 
     const body = await req.json();
 
-    // If body has an id and collection supports update, treat as upsert
-    if (body.id && typeof collection.update === "function") {
-      const existing =
-        typeof collection.findById === "function"
-          ? collection.findById(body.id)
-          : null;
+    // If body has an id and the collection supports update, treat as upsert
+    if (body.id && collection.update && collection.findById) {
+      const existing = await collection.findById(body.id);
       if (existing) {
-        const updated = collection.update(body.id, body);
+        const updated = await collection.update(body.id, body);
         return json({ data: updated });
       }
     }
 
-    if (typeof collection.create !== "function") {
+    if (!collection.create) {
       return json({ error: `Collection "${slugKey}" does not support create` }, 405);
     }
 
-    const record = collection.create(body);
+    const record = await collection.create(body);
     return json({ data: record }, 201);
   } catch (err) {
     return serverError(err);
@@ -560,10 +646,10 @@ export async function PUT(req: NextRequest, ctx: RouteContext) {
   try {
     const { slug } = await ctx.params;
     const slugKey = slug[0];
-    const collection = resolveCollection(slugKey);
+    const collection = resolveAccessor(slugKey);
     if (!collection) return notFound(slugKey);
 
-    if (typeof collection.update !== "function") {
+    if (!collection.update) {
       return json({ error: `Collection "${slugKey}" does not support update` }, 405);
     }
 
@@ -574,7 +660,7 @@ export async function PUT(req: NextRequest, ctx: RouteContext) {
       return json({ error: "Missing required field: id" }, 400);
     }
 
-    const record = collection.update(id, rest);
+    const record = await collection.update(id, rest);
     if (!record) {
       return json({ error: "Not found" }, 404);
     }
@@ -592,7 +678,7 @@ export async function PATCH(req: NextRequest, ctx: RouteContext) {
   try {
     const { slug } = await ctx.params;
     const slugKey = slug[0];
-    const collection = resolveCollection(slugKey);
+    const collection = resolveAccessor(slugKey);
     if (!collection) return notFound(slugKey);
 
     const body = await req.json();
@@ -602,20 +688,14 @@ export async function PATCH(req: NextRequest, ctx: RouteContext) {
       return json({ error: "Missing required field: id" }, 400);
     }
 
-    // Prefer patch() if available, fall back to update()
-    if (typeof collection.patch === "function") {
-      const record = collection.patch(id, data);
-      if (!record) return json({ error: "Not found" }, 404);
-      return json({ data: record });
+    // accessor.patch falls back to update() internally when there's no dedicated patch.
+    if (!collection.patch) {
+      return json({ error: `Collection "${slugKey}" does not support patch or update` }, 405);
     }
 
-    if (typeof collection.update === "function") {
-      const record = collection.update(id, data);
-      if (!record) return json({ error: "Not found" }, 404);
-      return json({ data: record });
-    }
-
-    return json({ error: `Collection "${slugKey}" does not support patch or update` }, 405);
+    const record = await collection.patch(id, data);
+    if (!record) return json({ error: "Not found" }, 404);
+    return json({ data: record });
   } catch (err) {
     return serverError(err);
   }
