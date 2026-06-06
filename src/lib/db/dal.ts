@@ -135,11 +135,12 @@ export const dal = {
     async update(id: string, data: any) {
       const c = sb();
       if (c) return sq.updateIncident(c, id, data);
-      // In-memory: use addOversight for oversight updates
-      if (data.oversight_note && data.oversight_by) {
-        return db.incidents.addOversight(id, data.oversight_note, data.oversight_by);
-      }
-      return null;
+      return db.incidents.update(id, data);
+    },
+    async addOversight(id: string, note: string, by: string) {
+      const c = sb();
+      if (c) return sq.updateIncident(c, id, { oversight_note: note, oversight_by: by, oversight_at: new Date().toISOString() });
+      return db.incidents.addOversight(id, note, by);
     },
   },
 

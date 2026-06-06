@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/lib/db/store";
+import { dal } from "@/lib/db/dal";
 
 export async function POST(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -10,7 +10,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
     return NextResponse.json({ error: "oversight_note and oversight_by are required" }, { status: 400 });
   }
 
-  const updated = db.incidents.addOversight(id, oversight_note, oversight_by);
+  const updated = await dal.incidents.addOversight(id, oversight_note, oversight_by);
   if (!updated) {
     return NextResponse.json({ error: "Incident not found" }, { status: 404 });
   }

@@ -12,6 +12,7 @@
 // Supabase rows, so ids stay internally consistent.
 // ══════════════════════════════════════════════════════════════════════════════
 
+import { db } from "@/lib/db/store";
 import { isSupabaseEnabled, createServerClient } from "./server";
 import * as sq from "./queries";
 
@@ -31,4 +32,30 @@ export async function persistDailyLog(entry: Record<string, unknown>): Promise<v
   } catch {
     // best-effort — the in-memory write already succeeded; never block the caller
   }
+}
+
+/** Best-effort write-through of an incident created by a sync service / orchestrator. */
+export async function persistIncident(incident: Record<string, unknown>): Promise<void> {
+  if (!isSupabaseEnabled()) return;
+  const c = createServerClient();
+  if (!c) return;
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { id: _id, ...rest } = incident as any;
+    await sq.createIncident(c, { ...rest, home_id: homeId() });
+  } catch {
+    // best-effort — the in-memory write already succeeded; never block the caller
+  }
+}
+
+/**
+ * Create an incident in the in-memory store AND best-effort persist it to Supabase.
+ * Used by the sync services / orchestrators that create incidents directly (and so
+ * bypass the async dal), so those incidents reach the real table when Supabase is on.
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function createIncidentRecord(data: any) {
+  const incident = db.incidents.create(data);
+  void persistIncident(incident as unknown as Record<string, unknown>);
+  return incident;
 }
