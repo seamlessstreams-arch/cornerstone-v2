@@ -7,7 +7,7 @@
 
 import React, { useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
-import { Plus, X, Loader2, CheckCircle2, Target } from "lucide-react";
+import { Plus, X, Loader2, CheckCircle2, Target, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { EntryAssist } from "@/components/forms/entry-assist";
 import { useCreateActionOutcome } from "@/hooks/use-intelligence";
@@ -82,6 +82,7 @@ export function ActionOutcomeAddModal({
     whatWasAgreed?: string;
     whyItMatters?: string;
   }>({});
+  const [saveError, setSaveError] = useState<string | null>(null);
 
   const createActionOutcome = useCreateActionOutcome();
 
@@ -94,6 +95,7 @@ export function ActionOutcomeAddModal({
     setDueDate("");
     setSelectedOwner("staff_darren");
     setErrors({});
+    setSaveError(null);
     setSubmitted(false);
   }
 
@@ -116,6 +118,7 @@ export function ActionOutcomeAddModal({
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!validate()) return;
+    setSaveError(null);
 
     createActionOutcome.mutate(
       {
@@ -143,6 +146,9 @@ export function ActionOutcomeAddModal({
           setTimeout(() => {
             handleOpenChange(false);
           }, 1200);
+        },
+        onError: () => {
+          setSaveError("Something went wrong saving this action. Your entry is still here — please try again.");
         },
       }
     );
@@ -341,6 +347,13 @@ export function ActionOutcomeAddModal({
                   </select>
                 </div>
               </div>
+
+              {saveError && (
+                <div className="mx-5 mb-1 flex items-start gap-2 rounded-lg border border-red-200 bg-red-50 p-2.5 text-xs text-red-700" role="alert">
+                  <AlertTriangle className="h-3.5 w-3.5 shrink-0 mt-0.5" />
+                  <span>{saveError}</span>
+                </div>
+              )}
 
               {/* Footer */}
               <div className="flex items-center justify-end gap-2 border-t border-[var(--cs-border-subtle)] px-5 py-4">

@@ -7,7 +7,7 @@
 
 import React, { useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
-import { Pencil, X, Loader2, CheckCircle2 } from "lucide-react";
+import { Pencil, X, Loader2, CheckCircle2, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DictationButton } from "@/components/common/dictation-button";
 import { EntryAssist } from "@/components/forms/entry-assist";
@@ -62,6 +62,7 @@ export function InterventionUpdateModal({
   const [outcomeNotes, setOutcomeNotes] = useState(intervention.outcome_notes ?? "");
   const [reviewDate, setReviewDate] = useState(intervention.review_date ?? "");
   const [success, setSuccess]       = useState(false);
+  const [saveError, setSaveError]   = useState<string | null>(null);
 
   const update = useUpdateIntervention();
 
@@ -73,11 +74,13 @@ export function InterventionUpdateModal({
       setOutcomeNotes(intervention.outcome_notes ?? "");
       setReviewDate(intervention.review_date ?? "");
       setSuccess(false);
+      setSaveError(null);
     }
     setOpen(next);
   }
 
   function handleSubmit() {
+    setSaveError(null);
     update.mutate(
       {
         id:           intervention.id,
@@ -94,6 +97,9 @@ export function InterventionUpdateModal({
         onSuccess: () => {
           setSuccess(true);
           setTimeout(() => { setSuccess(false); setOpen(false); }, 1400);
+        },
+        onError: () => {
+          setSaveError("Couldn't save this update. Your changes are still here — please try again.");
         },
       }
     );
@@ -227,6 +233,13 @@ export function InterventionUpdateModal({
                   className="w-full rounded-xl border border-[var(--cs-border)] bg-[var(--cs-surface)] px-3 py-2.5 text-xs text-[var(--cs-navy)] focus:border-[var(--cs-aria-gold)] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[var(--cs-aria-gold-bg)] transition-colors"
                 />
               </div>
+
+              {saveError && (
+                <div className="flex items-start gap-2 rounded-lg border border-red-200 bg-red-50 p-2.5 text-xs text-red-700" role="alert">
+                  <AlertTriangle className="h-3.5 w-3.5 shrink-0 mt-0.5" />
+                  <span>{saveError}</span>
+                </div>
+              )}
 
               {/* Footer */}
               <div className="flex gap-2 pt-1">
