@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/lib/db/store";
+import { dal } from "@/lib/db/dal";
 import { requirePermission } from "@/lib/auth-guard";
 import { PERMISSIONS } from "@/lib/permissions";
 
@@ -12,7 +12,7 @@ export async function GET(req: NextRequest, { params }: RouteParams) {
   if (auth instanceof NextResponse) return auth;
 
   const { id } = await params;
-  const form = db.careForms.findById(id);
+  const form = await dal.careForms.findById(id);
   if (!form) return NextResponse.json({ error: "Form not found" }, { status: 404 });
   return NextResponse.json({ data: form });
 }
@@ -28,7 +28,7 @@ export async function PATCH(req: NextRequest, { params }: RouteParams) {
     const auth = requirePermission(req, PERMISSIONS.SUBMIT_FORMS);
     if (auth instanceof NextResponse) return auth;
 
-    const updated = db.careForms.submit(id, body.submitted_by ?? auth.userId);
+    const updated = await dal.careForms.submit(id, body.submitted_by ?? auth.userId);
     if (!updated) return NextResponse.json({ error: "Form not found" }, { status: 404 });
     return NextResponse.json({ data: updated });
   }
@@ -38,7 +38,7 @@ export async function PATCH(req: NextRequest, { params }: RouteParams) {
     const auth = requirePermission(req, PERMISSIONS.APPROVE_FORMS);
     if (auth instanceof NextResponse) return auth;
 
-    const updated = db.careForms.approve(id, body.approved_by ?? auth.userId, body.review_notes);
+    const updated = await dal.careForms.approve(id, body.approved_by ?? auth.userId, body.review_notes);
     if (!updated) return NextResponse.json({ error: "Form not found" }, { status: 404 });
     return NextResponse.json({ data: updated });
   }
@@ -47,11 +47,11 @@ export async function PATCH(req: NextRequest, { params }: RouteParams) {
   const auth = requirePermission(req, PERMISSIONS.EDIT_FORMS);
   if (auth instanceof NextResponse) return auth;
 
-  const form = db.careForms.findById(id);
+  const form = await dal.careForms.findById(id);
   if (!form) return NextResponse.json({ error: "Form not found" }, { status: 404 });
 
   const { action: _action, id: _id, created_at: _ca, created_by: _cb, ...safeBody } = body;
-  const updated = db.careForms.update(id, {
+  const updated = await dal.careForms.update(id, {
     ...safeBody,
     updated_by: auth.userId,
   });
