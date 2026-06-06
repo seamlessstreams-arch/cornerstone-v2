@@ -3,6 +3,7 @@ import { db } from "@/lib/db/store";
 import { resolveCommsUser, auditComms } from "@/lib/comms/comms-service";
 import { canViewChannel, canPostChannel, type CommsUser } from "@/lib/comms/comms-access";
 import { persistCommsMessage } from "@/lib/supabase/comms";
+import { sendPushToUser } from "@/lib/push/web-push";
 import type { CommsMessage, CommsMessageEnriched } from "@/types/comms";
 
 export const dynamic = "force-dynamic";
@@ -103,6 +104,14 @@ export async function POST(req: NextRequest) {
         priority: priority === "emergency" ? "urgent" : "high",
         read: false,
         action_url: "/comms",
+      });
+      // Also ping the device — operational only (channel name, no message content).
+      void sendPushToUser(r.id, {
+        title: priority === "emergency" ? "Emergency broadcast" : "Urgent message",
+        body: `New ${priority} message in ${channel.name}.`,
+        url: "/comms",
+        tag: `comms-${channelId}`,
+        priority: priority === "emergency" ? "critical" : "normal",
       });
     }
   }

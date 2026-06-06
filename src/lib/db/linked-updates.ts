@@ -18,6 +18,7 @@
 import { db } from "@/lib/db/store";
 import { todayStr, generateId } from "@/lib/utils";
 import { persistDailyLog, createTaskRecord } from "@/lib/supabase/care-records";
+import { sendPushToUser } from "@/lib/push/web-push";
 import type { Incident } from "@/types";
 import type { MissingEpisode } from "@/types/extended";
 
@@ -139,6 +140,14 @@ export function processIncidentCreated(incident: Incident, createdBy: string): v
     action_url: `/incidents`,
     entity_type: "incident",
     entity_id: incident.id,
+  });
+  // Ping the RM's device — deliberately generic (no incident type/detail on a lock screen).
+  void sendPushToUser("staff_darren", {
+    title: incident.severity === "critical" ? "🔴 Critical incident" : "Incident logged",
+    body: incident.requires_oversight ? "A new incident needs your oversight." : "A new incident has been logged.",
+    url: "/incidents",
+    tag: "incident",
+    priority: incident.severity === "critical" ? "critical" : "normal",
   });
 
   // 6. Track time saved
