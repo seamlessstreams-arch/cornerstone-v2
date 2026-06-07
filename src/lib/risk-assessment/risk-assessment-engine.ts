@@ -396,6 +396,15 @@ export function generateRiskAssessmentIntelligence(input: {
   if (staffReadiness.overallScore < 15) actions.push("Prioritise staff risk assessment training programme");
   if (riskAssessmentQuality.reviewDateSetRate < 50) actions.push("Ensure review dates are set for all risk assessments");
   if (records.length === 0) actions.push("URGENT: No risk assessment records found — establish systematic risk assessment processes immediately");
+  // Surface the worst case explicitly: an assessment where the risk INCREASED but
+  // no control measures were identified. A rate-based view (controlMeasuresRate)
+  // can stay above threshold while this individual high-risk record is missed.
+  const riskIncreasedNoControls = records.filter(
+    (r) => r.outcome === "risk_increased" && !r.controlMeasuresIdentified,
+  );
+  if (riskIncreasedNoControls.length > 0) {
+    actions.unshift(`URGENT: ${riskIncreasedNoControls.length} assessment(s) where risk increased without control measures identified — review and mitigate immediately`);
+  }
 
   const regulatoryLinks = [
     "CHR 2015 Reg 34 — Safeguarding (risk assessment)",

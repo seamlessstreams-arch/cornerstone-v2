@@ -480,6 +480,19 @@ export function generateRiskAssessmentQualityIntelligence(
   const strengths = aggregateStrengths(riskQuality, riskCompliance, riskPolicy, staffRiskReadiness, overallScore);
   const areasForImprovement = aggregateAreasForImprovement(riskQuality, riskCompliance, riskPolicy, staffRiskReadiness, overallScore);
   const actions = generateActions(riskQuality, riskCompliance, riskPolicy, staffRiskReadiness, childProfiles);
+
+  // Surface individual high/critical-risk assessments that lack a mitigation plan
+  // or a scheduled review. An aggregate mitigationRate can stay high while a single
+  // critical risk is unmitigated — so a rate-only view hides the most dangerous case.
+  const unmitigatedHighRisk = periodAssessments.filter(
+    (a) => (a.riskLevel === "critical" || a.riskLevel === "high") && (!a.mitigationPlanInPlace || !a.reviewScheduled),
+  );
+  if (unmitigatedHighRisk.length > 0) {
+    actions.unshift(
+      `URGENT: ${unmitigatedHighRisk.length} high/critical-risk assessment(s) without a mitigation plan or scheduled review — address immediately to safeguard the child(ren)`,
+    );
+  }
+
   const regulatoryLinks = [
     "CHR 2015 Regulation 12 — Positive behaviour support (risk assessment)",
     "CHR 2015 Regulation 13 — Protection of children (risk management)",

@@ -693,6 +693,19 @@ describe("generateRiskAssessmentQualityIntelligence", () => {
     expect(Array.isArray(result.actions)).toBe(true);
   });
 
+  it("surfaces an URGENT action for a high/critical-risk assessment lacking mitigation or review", () => {
+    // Aggregate mitigationRate stays high (9/10), so only the per-assessment
+    // check surfaces the unmitigated critical risk.
+    const assessments = [
+      makeAssessment({ id: "u1", riskLevel: "critical", mitigationPlanInPlace: false }),
+      ...Array.from({ length: 9 }, (_, i) => makeAssessment({ id: `ok-${i}` })),
+    ];
+    const r = generateRiskAssessmentQualityIntelligence(
+      assessments, OAK_HOUSE_POLICY, OAK_HOUSE_TRAINING, "oak-house", "2026-05-01", "2026-05-20",
+    );
+    expect(r.actions.some((a) => a.toLowerCase().includes("without a mitigation plan or scheduled review"))).toBe(true);
+  });
+
   it("filters assessments by period", () => {
     const narrow = generateRiskAssessmentQualityIntelligence(
       OAK_HOUSE_ASSESSMENTS,
