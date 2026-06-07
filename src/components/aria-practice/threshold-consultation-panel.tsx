@@ -9,9 +9,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ShieldAlert, Loader2, AlertTriangle } from "lucide-react";
-import { useAriaThreshold } from "@/hooks/use-aria-practice";
+import { useAriaThreshold, useAriaReview } from "@/hooks/use-aria-practice";
 
 interface ThresholdResult {
+  consultationId?: string | null;
   summary?: string;
   note?: string;
   requiresManagerReview?: boolean;
@@ -30,6 +31,7 @@ export function ThresholdConsultationPanel({ childId, homeId }: { childId?: stri
   const [decision, setDecision] = useState("");
   const [rationale, setRationale] = useState("");
   const consult = useAriaThreshold();
+  const review = useAriaReview();
   const r = (consult.data?.data ?? null) as ThresholdResult | null;
   const t = r?.threshold ?? null;
 
@@ -73,6 +75,20 @@ export function ThresholdConsultationPanel({ childId, homeId }: { childId?: stri
               <h4 className="text-xs font-semibold text-slate-600 uppercase">Manager decision (ARIA does not decide this)</h4>
               <input className="w-full rounded-md border border-slate-200 p-2 text-sm" placeholder="Decision (e.g. threshold met / not met; strategy discussion requested)" value={decision} onChange={(e) => setDecision(e.target.value)} />
               <textarea className="w-full min-h-[60px] rounded-md border border-slate-200 p-2 text-sm" placeholder="Rationale for the decision…" value={rationale} onChange={(e) => setRationale(e.target.value)} />
+              <div className="flex items-center gap-2">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  disabled={!r.consultationId || review.isPending || !decision.trim() || !rationale.trim()}
+                  onClick={() => r.consultationId && review.mutate({ entity: "threshold", id: r.consultationId, decision, rationale })}
+                >
+                  {review.isPending ? <Loader2 className="h-4 w-4 animate-spin mr-1" /> : null}
+                  Save decision
+                </Button>
+                {review.isSuccess && <span className="text-[11px] text-emerald-700">Decision saved to record.</span>}
+                {review.isError && <span className="text-[11px] text-red-600">{(review.error as Error)?.message}</span>}
+                {!r.consultationId && <span className="text-[11px] text-muted-foreground">Provide a childId to persist the decision.</span>}
+              </div>
               <p className="text-[11px] text-muted-foreground">{r.note}</p>
             </div>
           </div>

@@ -353,6 +353,8 @@ export interface AriaPracticeFlag {
   resolved: boolean;
   created_at: string;
   resolved_at: string | null;
+  resolved_by?: string | null;
+  resolution_rationale?: string | null;
 }
 
 export interface AriaGuidanceRule {
