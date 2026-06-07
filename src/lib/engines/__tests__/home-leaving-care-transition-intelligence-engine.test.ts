@@ -346,11 +346,11 @@ describe("mod1: pathway plan coverage", () => {
     expect(rBase.leaving_care_score - r.leaving_care_score).toBe(20);
   });
 
-  it("only counts active plans (active_16_18 and active_18_plus)", () => {
+  it("only counts active plans (active_16_18 and active_18plus_formerly_looked_after)", () => {
     const r = computeLeavingCareTransition(baseInput({
       pathway_plans: [
         makePlan("pp1", "yp_alex", { status: "active_16_18" }),
-        makePlan("pp2", "yp_jordan", { status: "active_18_plus" }),
+        makePlan("pp2", "yp_jordan", { status: "active_18plus_formerly_looked_after" }),
         makePlan("pp3", "yp_casey", { status: "draft" }),
         makePlan("pp4", "yp_riley", { status: "expired" }),
       ],
@@ -661,7 +661,7 @@ describe("output metrics", () => {
     const r = computeLeavingCareTransition(baseInput({
       pathway_plans: [
         makePlan("pp1", "yp_alex"),
-        makePlan("pp2", "yp_alex", { status: "active_18_plus" }), // duplicate child
+        makePlan("pp2", "yp_alex", { status: "active_18plus_formerly_looked_after" }), // duplicate child
         makePlan("pp3", "yp_jordan"),
       ],
     }));
@@ -1153,7 +1153,7 @@ describe("edge cases", () => {
     const r = computeLeavingCareTransition(baseInput({
       pathway_plans: [
         makePlan("pp1", "yp_alex", { status: "active_16_18" }),
-        makePlan("pp2", "yp_alex", { status: "active_18_plus" }),
+        makePlan("pp2", "yp_alex", { status: "active_18plus_formerly_looked_after" }),
         makePlan("pp3", "yp_jordan", { status: "active_16_18" }),
       ],
     }));
@@ -1176,7 +1176,7 @@ describe("edge cases", () => {
         makePlan("pp1", "yp_alex", { status: "active_16_18" }),
         makePlan("pp2", "yp_jordan", { status: "draft" }),
         makePlan("pp3", "yp_casey", { status: "expired" }),
-        makePlan("pp4", "yp_riley", { status: "active_18_plus" }),
+        makePlan("pp4", "yp_riley", { status: "active_18plus_formerly_looked_after" }),
       ],
     }));
     expect(r.children_with_pathway_plans).toBe(2); // alex + riley

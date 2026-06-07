@@ -27,7 +27,7 @@ function makePathwayPlan(overrides: Partial<PathwayPlanInput> = {}): PathwayPlan
   return {
     id: "pp_001",
     child_id: "yp_alex",
-    status: "active",
+    status: "active_16_18",
     plan_date: "2026-01-15",
     next_review_date: "2026-07-15",
     accommodation_plan: "identified",
@@ -116,9 +116,9 @@ const CASEY_SKILLS: IndependenceSkillInput[] = [
 const ALL_SKILLS = [...ALEX_SKILLS, ...JORDAN_SKILLS, ...CASEY_SKILLS];
 
 const PATHWAY_PLANS: PathwayPlanInput[] = [
-  makePathwayPlan({ id: "pp_alex", child_id: "yp_alex", status: "active", independence_skills_score: 72, accommodation_plan: "identified", eet_plan: "education", support_network_mapped: true, young_person_involved: true }),
-  makePathwayPlan({ id: "pp_jordan", child_id: "yp_jordan", status: "review_due", independence_skills_score: 48, accommodation_plan: "searching", eet_plan: "undecided", support_network_mapped: false, young_person_involved: true, next_review_date: "2026-05-20" }),
-  makePathwayPlan({ id: "pp_casey", child_id: "yp_casey", status: "draft", independence_skills_score: 35, accommodation_plan: "not_started", eet_plan: "undecided", support_network_mapped: false, young_person_involved: false }),
+  makePathwayPlan({ id: "pp_alex", child_id: "yp_alex", status: "active_16_18", independence_skills_score: 72, accommodation_plan: "identified", eet_plan: "education", support_network_mapped: true, young_person_involved: true }),
+  makePathwayPlan({ id: "pp_jordan", child_id: "yp_jordan", status: "active_16_18", independence_skills_score: 48, accommodation_plan: "searching", eet_plan: "undecided", support_network_mapped: false, young_person_involved: true, next_review_date: "2026-05-20" }),
+  makePathwayPlan({ id: "pp_casey", child_id: "yp_casey", status: "active_16_18", independence_skills_score: 35, accommodation_plan: "not_started", eet_plan: "undecided", support_network_mapped: false, young_person_involved: false }),
 ];
 
 function makeFullInput(overrides: Partial<LeavingCareIntelligenceInput> = {}): LeavingCareIntelligenceInput {
@@ -343,16 +343,19 @@ describe("Leaving Care Intelligence Engine — Child Readiness", () => {
     expect(alex.readiness_rating).toBe("on_track");
     expect(alex.age).toBe(17);
     expect(alex.has_pathway_plan).toBe(true);
-    expect(alex.plan_status).toBe("active");
+    expect(alex.plan_status).toBe("active_16_18");
     expect(alex.independence_score).toBe(72);
     expect(alex.accommodation_status).toBe("identified");
     expect(alex.eet_status).toBe("education");
   });
 
-  it("correctly identifies Jordan as needs_attention", () => {
+  it("identifies Jordan as at_risk (pathway-plan review overdue)", () => {
     const result = computeLeavingCareIntelligence(makeFullInput());
     const jordan = result.child_readiness.find((c) => c.child_id === "yp_jordan")!;
-    expect(jordan.readiness_rating).toBe("needs_attention");
+    // Jordan's next_review_date (2026-05-20) has passed → at_risk. Previously the
+    // readiness rating keyed off a non-existent status === "overdue", so an
+    // overdue plan never raised the rating.
+    expect(jordan.readiness_rating).toBe("at_risk");
     expect(jordan.independence_score).toBe(48);
     expect(jordan.accommodation_status).toBe("searching");
   });
@@ -421,7 +424,7 @@ describe("Leaving Care Intelligence Engine — Child Readiness", () => {
 
   it("rates at_risk when plan is overdue", () => {
     const result = computeLeavingCareIntelligence({
-      pathwayPlans: [makePathwayPlan({ child_id: "yp_a", status: "overdue", independence_skills_score: 70, accommodation_plan: "identified", young_person_involved: true })],
+      pathwayPlans: [makePathwayPlan({ child_id: "yp_a", status: "active_16_18", independence_skills_score: 70, accommodation_plan: "identified", young_person_involved: true, next_review_date: "2026-01-01" })],
       independenceSkills: [],
       children: [makeChild({ id: "yp_a", name: "A", date_of_birth: "2008-01-01" })],
       staff: [],
@@ -597,9 +600,9 @@ describe("Leaving Care Intelligence Engine — Alerts", () => {
       expect(highs.some((a) => a.message.includes("overdue for review"))).toBe(true);
     });
 
-    it("fires when plan status is overdue", () => {
+    it("fires when plan review date is overdue", () => {
       const result = computeLeavingCareIntelligence({
-        pathwayPlans: [makePathwayPlan({ child_id: "yp_a", status: "overdue", next_review_date: "2026-06-01" })],
+        pathwayPlans: [makePathwayPlan({ child_id: "yp_a", status: "active_16_18", next_review_date: "2026-01-01" })],
         independenceSkills: [],
         children: [makeChild({ id: "yp_a", name: "Alex", date_of_birth: "2008-01-01" })],
         staff: [],
@@ -673,7 +676,7 @@ describe("Leaving Care Intelligence Engine — Alerts", () => {
 
     it("fires when active plan has no support network mapped", () => {
       const result = computeLeavingCareIntelligence({
-        pathwayPlans: [makePathwayPlan({ child_id: "yp_a", status: "active", support_network_mapped: false })],
+        pathwayPlans: [makePathwayPlan({ child_id: "yp_a", status: "active_16_18", support_network_mapped: false })],
         independenceSkills: [],
         children: [makeChild({ id: "yp_a", name: "Alex", date_of_birth: "2008-01-01" })],
         staff: [],
@@ -685,7 +688,7 @@ describe("Leaving Care Intelligence Engine — Alerts", () => {
 
     it("does NOT fire support network alert for non-active plans", () => {
       const result = computeLeavingCareIntelligence({
-        pathwayPlans: [makePathwayPlan({ child_id: "yp_a", status: "draft", support_network_mapped: false })],
+        pathwayPlans: [makePathwayPlan({ child_id: "yp_a", status: "closed_at_25", support_network_mapped: false })],
         independenceSkills: [],
         children: [makeChild({ id: "yp_a", name: "Alex", date_of_birth: "2008-01-01" })],
         staff: [],
@@ -693,6 +696,37 @@ describe("Leaving Care Intelligence Engine — Alerts", () => {
       });
       const mediums = result.alerts.filter((a) => a.severity === "medium" && a.message.includes("support network"));
       expect(mediums).toHaveLength(0);
+    });
+  });
+
+  // Regression tests for the real PathwayPlanStatus enum + date-driven overdue.
+  describe("real-data behaviour (enum + missing dates + NEET)", () => {
+    const childA = makeChild({ id: "yp_a", name: "Alex", date_of_birth: "2008-01-01" });
+
+    it("flags a pathway plan with NO review date set as overdue", () => {
+      const result = computeLeavingCareIntelligence({
+        pathwayPlans: [makePathwayPlan({ child_id: "yp_a", status: "active_16_18", next_review_date: "" })],
+        independenceSkills: [], children: [childA], staff: [], today: TODAY,
+      });
+      expect(result.overview.plans_overdue_review).toBe(1);
+      expect(result.alerts.some((a) => a.message.includes("overdue for review"))).toBe(true);
+    });
+
+    it("treats active_18plus_formerly_looked_after as an active plan", () => {
+      const result = computeLeavingCareIntelligence({
+        pathwayPlans: [makePathwayPlan({ child_id: "yp_a", status: "active_18plus_formerly_looked_after", support_network_mapped: false })],
+        independenceSkills: [], children: [childA], staff: [], today: TODAY,
+      });
+      // active plan + no support network → the medium alert must fire.
+      expect(result.alerts.some((a) => a.message.includes("no support network mapped"))).toBe(true);
+    });
+
+    it("raises an alert when an eligible care leaver is NEET", () => {
+      const result = computeLeavingCareIntelligence({
+        pathwayPlans: [makePathwayPlan({ child_id: "yp_a", status: "active_16_18", eet_plan: "neet" })],
+        independenceSkills: [], children: [childA], staff: [], today: TODAY,
+      });
+      expect(result.alerts.some((a) => a.message.includes("NEET"))).toBe(true);
     });
   });
 
@@ -871,8 +905,8 @@ describe("Leaving Care Intelligence Engine — Insights", () => {
     it("fires when all eligible children have active pathway plans", () => {
       const result = computeLeavingCareIntelligence({
         pathwayPlans: [
-          makePathwayPlan({ id: "pp1", child_id: "yp_a", status: "active" }),
-          makePathwayPlan({ id: "pp2", child_id: "yp_b", status: "active" }),
+          makePathwayPlan({ id: "pp1", child_id: "yp_a", status: "active_16_18" }),
+          makePathwayPlan({ id: "pp2", child_id: "yp_b", status: "active_16_18" }),
         ],
         independenceSkills: [],
         children: [
@@ -943,8 +977,8 @@ describe("Leaving Care Intelligence Engine — Insights", () => {
     it("does NOT fire active plans positive when a plan is overdue", () => {
       const result = computeLeavingCareIntelligence({
         pathwayPlans: [
-          makePathwayPlan({ id: "pp1", child_id: "yp_a", status: "active" }),
-          makePathwayPlan({ id: "pp2", child_id: "yp_b", status: "overdue" }),
+          makePathwayPlan({ id: "pp1", child_id: "yp_a", status: "active_16_18" }),
+          makePathwayPlan({ id: "pp2", child_id: "yp_b", status: "active_16_18", next_review_date: "2026-01-01" }),
         ],
         independenceSkills: [],
         children: [
@@ -1082,7 +1116,7 @@ describe("Leaving Care Intelligence Engine — Edge Cases", () => {
   it("review_due status counts as active for positive insight check", () => {
     const result = computeLeavingCareIntelligence({
       pathwayPlans: [
-        makePathwayPlan({ id: "pp1", child_id: "yp_a", status: "review_due", next_review_date: "2026-07-01" }),
+        makePathwayPlan({ id: "pp1", child_id: "yp_a", status: "active_16_18", next_review_date: "2026-07-01" }),
       ],
       independenceSkills: [],
       children: [makeChild({ id: "yp_a", date_of_birth: "2008-01-01" })],
