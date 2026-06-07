@@ -172,6 +172,21 @@ describe("Child Education Intelligence Engine", () => {
     expect(result.attendance.band).toBe("excellent");
   });
 
+  it("reports insufficient_data (not 100% 'excellent') for a child with NO attendance records", () => {
+    // A child with education records but zero attendance sessions previously read
+    // 100% / "excellent" (pct(0,0)=100) + earned the score boost and strength.
+    const result = computeChildEducationIntelligence(baseInput({
+      attendance_records: [],
+      education_records: [
+        makeEduRecord({ id: "c1", record_type: "concern", attendance_status: undefined, details: "Behaviour concern" }),
+      ],
+    }));
+    expect(result.attendance.total_sessions).toBe(0);
+    expect(result.attendance.band).toBe("insufficient_data");
+    expect(result.attendance.overall_pct).toBe(0);
+    expect(result.strengths.some((s) => s.includes("Excellent attendance"))).toBe(false);
+  });
+
   it("uses formal attendance records when available", () => {
     const result = computeChildEducationIntelligence(baseInput({
       attendance_records: [

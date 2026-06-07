@@ -101,7 +101,7 @@ export interface ChildEducationIntelligenceInput {
 // ── Output Types ────────────────────────────────────────────────────────────
 
 export type EducationHealth = "outstanding" | "good" | "requires_improvement" | "inadequate" | "insufficient_data";
-export type AttendanceBand = "excellent" | "good" | "concern" | "persistent_absence" | "severe_absence";
+export type AttendanceBand = "excellent" | "good" | "concern" | "persistent_absence" | "severe_absence" | "insufficient_data";
 
 export interface AttendanceAnalysis {
   overall_pct: number;
@@ -285,8 +285,13 @@ export function computeChildEducationIntelligence(
     }
   }
 
-  const overallAttendancePct = pct(presentCount, totalSessions);
+  // pct(0,0) returns 100 — so a child with NO attendance records (e.g. newly
+  // placed, or NEET) would otherwise read 100% / "excellent". Treat zero sessions
+  // as insufficient_data so it can't masquerade as perfect attendance.
+  const hasAttendanceData = totalSessions > 0;
+  const overallAttendancePct = hasAttendanceData ? pct(presentCount, totalSessions) : 0;
   const attendanceBand: AttendanceBand =
+    !hasAttendanceData ? "insufficient_data" :
     overallAttendancePct >= 96 ? "excellent" :
     overallAttendancePct >= 90 ? "good" :
     overallAttendancePct >= 85 ? "concern" :
@@ -487,12 +492,15 @@ export function computeChildEducationIntelligence(
   // ── Education Score (0-100) ───────────────────────────────────────────
   let score = 50;
 
-  // Attendance
-  if (overallAttendancePct >= 96) score += 15;
-  else if (overallAttendancePct >= 90) score += 8;
-  else if (overallAttendancePct >= 85) score += 0;
-  else if (overallAttendancePct >= 50) score -= 10;
-  else score -= 20;
+  // Attendance — only score when there are attendance records. A child with no
+  // attendance data must not read as excellent (+15) NOR as severe absence (-20).
+  if (hasAttendanceData) {
+    if (overallAttendancePct >= 96) score += 15;
+    else if (overallAttendancePct >= 90) score += 8;
+    else if (overallAttendancePct >= 85) score += 0;
+    else if (overallAttendancePct >= 50) score -= 10;
+    else score -= 20;
+  }
 
   if (attendanceTrend === "improving") score += 5;
   else if (attendanceTrend === "declining") score -= 5;
