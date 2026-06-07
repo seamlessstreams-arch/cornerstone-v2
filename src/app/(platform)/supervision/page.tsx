@@ -4,6 +4,7 @@ import React, { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { PageShell } from "@/components/layout/page-shell";
 import { PageGuidance } from "@/components/ui/page-guidance";
+import { AriaPracticePanel } from "@/components/aria-practice/aria-practice-panel";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -1115,6 +1116,7 @@ export default function SupervisionPage() {
         recordType="supervision"
         className="mt-6"
       />
+      <AriaPracticePanel sourceType="supervision" homeId="home_oak" title="Run ARIA on this supervision" />
     </PageShell>
     </>
   );
