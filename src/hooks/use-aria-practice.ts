@@ -76,6 +76,20 @@ export function useAriaLado() {
   });
 }
 
+// ── Manager review / resolution (persists decisions + rationale, audit trail) ──
+export interface ReviewInput {
+  entity: "flag" | "assessment" | "threshold";
+  id: string;
+  rationale?: string;
+  decision?: string;
+}
+export function useAriaReview() {
+  return useMutation({
+    mutationFn: (input: ReviewInput) =>
+      practiceFetch<{ data: Record<string, unknown> }>("/review", { method: "PATCH", body: JSON.stringify(input) }),
+  });
+}
+
 // ── Dashboard ─────────────────────────────────────────────────────────────────
 export function useAriaPracticeDashboard(homeId?: string, childId?: string) {
   const qs = new URLSearchParams();
