@@ -4,6 +4,8 @@ import { PageShell } from "@/components/layout/page-shell";
 import { AriaPracticeDashboard } from "@/components/aria-practice/aria-practice-dashboard";
 import { AriaPracticePanel } from "@/components/aria-practice/aria-practice-panel";
 import { AriaDraftAssistant } from "@/components/aria-practice/aria-draft-assistant";
+import { ThresholdConsultationPanel } from "@/components/aria-practice/threshold-consultation-panel";
+import { LadoConsultationPanel } from "@/components/aria-practice/lado-consultation-panel";
 import { Sparkles } from "lucide-react";
 
 export default function AriaPracticePage() {
@@ -27,6 +29,10 @@ export default function AriaPracticePage() {
             homeId="home_oak"
             content="Staff completed key work. Child engaged well. No concerns."
           />
+        </div>
+        <div className="grid lg:grid-cols-2 gap-6">
+          <ThresholdConsultationPanel childId="yp_alex" homeId="home_oak" />
+          <LadoConsultationPanel homeId="home_oak" />
         </div>
       </div>
     </PageShell>
