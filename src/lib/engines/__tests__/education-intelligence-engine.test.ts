@@ -289,6 +289,22 @@ describe("Education Intelligence Engine — Attendance", () => {
     expect(result.attendance.overall_pct).toBe(60);
   });
 
+  it("excludes children with no attendance data from the home average", () => {
+    // A no-data child reads 100% (pct(0,0)) — it must not inflate the home average.
+    const result = computeEducationIntelligence(makeInput({
+      children: [makeChild({ id: "with_data", name: "A" }), makeChild({ id: "no_data", name: "B" })],
+      eduAttendance: [
+        makeEduAttendance({ id: "1", child_id: "with_data", date: "2025-03-01", attendance_code: "/" }),
+        makeEduAttendance({ id: "2", child_id: "with_data", date: "2025-03-02", attendance_code: "/" }),
+        makeEduAttendance({ id: "3", child_id: "with_data", date: "2025-03-03", attendance_code: "/" }),
+        makeEduAttendance({ id: "4", child_id: "with_data", date: "2025-03-04", attendance_code: "U" }),
+        makeEduAttendance({ id: "5", child_id: "with_data", date: "2025-03-05", attendance_code: "U" }),
+      ],
+    }));
+    // Only the tracked child counts: 60%, not (60 + 100) / 2 = 80.
+    expect(result.overview.avg_attendance_pct).toBe(60);
+  });
+
   it("raises a critical low_attendance alert for a child with 0% attendance (all absent)", () => {
     // Previously suppressed by `attendance_pct > 0` — the single worst case.
     const child = makeChild({ id: "child_1", name: "Alex" });

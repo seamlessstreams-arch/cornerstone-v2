@@ -249,11 +249,11 @@ export function computeEducationIntelligence(
 
   // ── Compute per-child attendance percentages ─────────────────────────────
 
-  function getChildAttendance(childId: string): { pct: number; trend: "improving" | "stable" | "declining" | "unknown" } {
+  function getChildAttendance(childId: string): { pct: number; trend: "improving" | "stable" | "declining" | "unknown"; hasData: boolean } {
     if (hasDetailedAttendance) {
       const records = (attendanceByChild.get(childId) ?? [])
         .filter((r) => r.date >= ninetyDaysAgo && r.date <= today);
-      if (records.length === 0) return { pct: 100, trend: "unknown" };
+      if (records.length === 0) return { pct: 100, trend: "unknown", hasData: false };
 
       const presentCount = records.filter((r) => isPresent(r.attendance_code) || isLate(r.attendance_code)).length;
       const pct = computeAttendancePct(presentCount, records.length);
@@ -267,16 +267,16 @@ export function computeEducationIntelligence(
         const olderPresent = olderRecords.filter((r) => isPresent(r.attendance_code) || isLate(r.attendance_code)).length;
         const recentPct = computeAttendancePct(recentPresent, recentRecords.length);
         const olderPct = computeAttendancePct(olderPresent, olderRecords.length);
-        return { pct, trend: computeAttendanceTrend(recentPct, olderPct) };
+        return { pct, trend: computeAttendanceTrend(recentPct, olderPct), hasData: true };
       }
 
-      return { pct, trend: "unknown" };
+      return { pct, trend: "unknown", hasData: true };
     }
 
     // Fallback: use education records with attendance_status
     const childRecs = (eduRecordsByChild.get(childId) ?? [])
       .filter((r) => r.record_type === "attendance" && r.attendance_status != null);
-    if (childRecs.length === 0) return { pct: 100, trend: "unknown" };
+    if (childRecs.length === 0) return { pct: 100, trend: "unknown", hasData: false };
 
     const presentStatuses = ["present", "late", "part_day"];
     const presentCount = childRecs.filter((r) => presentStatuses.includes(r.attendance_status!)).length;
@@ -291,10 +291,10 @@ export function computeEducationIntelligence(
       const olderPresent = olderRecs.filter((r) => presentStatuses.includes(r.attendance_status!)).length;
       const recentPct = computeAttendancePct(recentPresent, recentRecs.length);
       const olderPct = computeAttendancePct(olderPresent, olderRecs.length);
-      return { pct, trend: computeAttendanceTrend(recentPct, olderPct) };
+      return { pct, trend: computeAttendanceTrend(recentPct, olderPct), hasData: true };
     }
 
-    return { pct, trend: "unknown" };
+    return { pct, trend: "unknown", hasData: true };
   }
 
   // ── Exclusions (90 days) ─────────────────────────────────────────────────
@@ -334,8 +334,12 @@ export function computeEducationIntelligence(
   // ── Overview ─────────────────────────────────────────────────────────────
 
   const childAttendances = children.map((c) => getChildAttendance(c.id));
-  const avgAttendance = children.length > 0
-    ? Math.round((childAttendances.reduce((sum, a) => sum + a.pct, 0) / children.length) * 10) / 10
+  // Average only children who actually have attendance data. A no-data child
+  // reads 100% (pct(0,0)), which would otherwise inflate the home average and
+  // can trigger a false "exceeding national target" insight.
+  const trackedAttendances = childAttendances.filter((a) => a.hasData);
+  const avgAttendance = trackedAttendances.length > 0
+    ? Math.round((trackedAttendances.reduce((sum, a) => sum + a.pct, 0) / trackedAttendances.length) * 10) / 10
     : 100;
 
   let pepCurrentCount = 0;
@@ -615,8 +619,9 @@ export function computeEducationIntelligence(
     });
   }
 
-  // 7. Positive: good attendance
-  if (avgAttendance >= 95 && children.length > 0) {
+  // 7. Positive: good attendance — only when there is actual attendance data
+  // (otherwise a home with no logged attendance would falsely "exceed" the target).
+  if (avgAttendance >= 95 && trackedAttendances.length > 0) {
     insights.push({
       severity: "positive",
       text: `Average attendance is ${avgAttendance}% — exceeding the 95% national target. Excellent evidence of the home's commitment to educational stability and support.`,
