@@ -208,6 +208,17 @@ describe("generateRiskAssessmentIntelligence", () => {
     expect(result.actions.length).toBeGreaterThan(0);
   });
 
+  it("surfaces an URGENT action when risk increased without control measures", () => {
+    // Aggregate controlMeasuresRate stays high (9/10), so only the per-record
+    // check surfaces the risk_increased-without-controls case.
+    const records = [
+      makeRecord({ id: "ri1", outcome: "risk_increased", controlMeasuresIdentified: false }),
+      ...Array.from({ length: 9 }, (_, i) => makeRecord({ id: `ok-${i}` })),
+    ];
+    const result = generateRiskAssessmentIntelligence({ homeId: "home-oak", periodStart: "2026-01-01", periodEnd: "2026-05-20", records, policy: makeFullPolicy(), staff: [makeFullStaff()] });
+    expect(result.actions.some((a) => a.toLowerCase().includes("risk increased without control"))).toBe(true);
+  });
+
   it("returns good for decent data", () => {
     const records = [
       makeRecord({ id: "ra-1", category: "initial_assessment" }),
