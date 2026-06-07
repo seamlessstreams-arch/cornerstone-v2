@@ -454,6 +454,23 @@ export function computePlacementStability(input: PlacementStabilityInput): Place
       });
     }
 
+    // A single high/critical-risk missing episode is itself a disruption/CSE
+    // indicator — repeat_missing only fires at >= 2, so one high-risk episode
+    // (the canonical exploitation signal) would otherwise not surface per-child.
+    const highRiskMissing30d = missingEpisodes.filter(
+      (m) => m.child_id === child.child_id && m.date_missing >= thirtyDaysAgo && m.date_missing <= today
+        && (m.risk_level === "high" || m.risk_level === "critical"),
+    ).length;
+    if (highRiskMissing30d >= 1 && child.missing_count_30d < 2) {
+      disruptionIndicators.push({
+        child_id: child.child_id,
+        child_name: child.child_name,
+        indicator: "high_risk_missing",
+        severity: "high",
+        detail: `${highRiskMissing30d} high/critical-risk missing episode${highRiskMissing30d > 1 ? "s" : ""} in 30 days — review the risk assessment and contextual-safeguarding response.`,
+      });
+    }
+
     // High incident rate
     if (child.incident_count_30d >= 3) {
       disruptionIndicators.push({

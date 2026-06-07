@@ -539,6 +539,16 @@ describe("computePlacementStability — at-risk child", () => {
     expect(types).toContain("no_keywork");
   });
 
+  it("flags a single high-risk missing episode as a disruption indicator", () => {
+    const r = computePlacementStability(makeInput({
+      children: [makeChild({ id: "child_1" })],
+      missingEpisodes: [makeMissing({ id: "m1", child_id: "child_1", date_missing: "2026-05-20", risk_level: "high" })],
+    }));
+    const ind = r.disruption_indicators.find((d) => d.indicator === "high_risk_missing" && d.child_id === "child_1");
+    expect(ind).toBeTruthy();
+    expect(ind?.severity).toBe("high");
+  });
+
   it("generates warning/critical insights", () => {
     const severities = result.insights.map((i) => i.severity);
     expect(severities).toContain("warning");
