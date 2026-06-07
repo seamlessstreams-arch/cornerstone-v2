@@ -225,7 +225,10 @@ export function computeHomeEducationEngagement(
 
   // ── PEP Compliance ────────────────────────────────────────────────────
   const currentPeps = pep_records.filter(p => p.status === "current").length;
-  const overduePeps = pep_records.filter(p => p.status === "overdue").length;
+  // "review_due" (review date reached, not yet done) must surface alongside
+  // "overdue" — otherwise a PEP that is due now is counted as neither current
+  // nor overdue and silently vanishes from the overdue concern/recommendation.
+  const overduePeps = pep_records.filter(p => p.status === "overdue" || p.status === "review_due").length;
   const uniquePepChildren = new Set(pep_records.map(p => p.child_id));
   const pepCoverage = pct(uniquePepChildren.size, total_children);
   const avgPepAttendance = pep_records.length > 0
@@ -241,8 +244,12 @@ export function computeHomeEducationEngagement(
   };
 
   // ── EHCP ──────────────────────────────────────────────────────────────
+  // An EHCP annual review is overdue once its due date has passed, whatever the
+  // plan_status. Previously this required plan_status === "annual_review_due",
+  // so a plan still tagged "final_plan_in_place" whose review date had lapsed
+  // was counted on-time — masking a statutory SEND annual-review breach.
   const ehcpOverdue = ehcp_records.filter(e =>
-    e.plan_status === "annual_review_due" && daysBetween(e.next_annual_review_due, today) > 0,
+    !!e.next_annual_review_due && daysBetween(e.next_annual_review_due, today) > 0,
   ).length;
   const ehcpOnTime = ehcp_records.length - ehcpOverdue;
   const ehcpContributionRate = pct(

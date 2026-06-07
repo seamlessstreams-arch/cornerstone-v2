@@ -185,6 +185,41 @@ describe("computeHomeEducationEngagement", () => {
     });
   });
 
+  describe("overdue surfacing (EHCP date-driven + PEP review_due)", () => {
+    function ctx(): Parameters<typeof computeHomeEducationEngagement>[0] {
+      return {
+        today: "2026-05-27",
+        attendance_records: [], pep_records: [], ehcp_records: [],
+        school_engagement_events: [], tutoring_records: [], homework_sessions: [],
+        total_children: 3,
+      };
+    }
+
+    it("counts an EHCP with a lapsed review date as overdue regardless of plan_status", () => {
+      const r = computeHomeEducationEngagement({
+        ...ctx(),
+        ehcp_records: [makeEhcp({ child_id: "c1", plan_status: "final_plan_in_place", next_annual_review_due: "2026-01-01" })],
+      });
+      expect(r.ehcp.overdue_reviews).toBe(1);
+    });
+
+    it("does not count an EHCP with a future review date as overdue", () => {
+      const r = computeHomeEducationEngagement({
+        ...ctx(),
+        ehcp_records: [makeEhcp({ child_id: "c1", plan_status: "final_plan_in_place", next_annual_review_due: "2026-09-01" })],
+      });
+      expect(r.ehcp.overdue_reviews).toBe(0);
+    });
+
+    it("counts a PEP in review_due state as overdue (not silently dropped)", () => {
+      const r = computeHomeEducationEngagement({
+        ...ctx(),
+        pep_records: [makePep({ child_id: "c1", status: "review_due" })],
+      });
+      expect(r.pep_compliance.overdue_count).toBe(1);
+    });
+  });
+
   // ── Rating boundaries ─────────────────────────────────────────────────
 
   describe("rating boundaries", () => {

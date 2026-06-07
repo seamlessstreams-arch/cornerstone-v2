@@ -521,9 +521,14 @@ export function computeEducationIntelligence(
     }
   }
 
-  // Low attendance
+  // Low attendance. The previous `&& attendance_pct > 0` guard suppressed the
+  // single worst case — a child whose recorded attendance is 0% (all absent) —
+  // while below90/persistentAbsence already counted them, so the overview showed
+  // a child below 90% with no alert naming them. A child with NO attendance
+  // records reads 100% (handled separately), so dropping the guard does not
+  // false-alert untracked children; it only surfaces genuine 0% attendance.
   for (const profile of childProfiles) {
-    if (profile.attendance_pct < 90 && profile.attendance_pct > 0) {
+    if (profile.attendance_pct < 90) {
       alerts.push({
         severity: profile.attendance_pct < 50 ? "critical" : "medium",
         type: "low_attendance",
