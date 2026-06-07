@@ -289,6 +289,23 @@ describe("Education Intelligence Engine — Attendance", () => {
     expect(result.attendance.overall_pct).toBe(60);
   });
 
+  it("raises a critical low_attendance alert for a child with 0% attendance (all absent)", () => {
+    // Previously suppressed by `attendance_pct > 0` — the single worst case.
+    const child = makeChild({ id: "child_1", name: "Alex" });
+    const result = computeEducationIntelligence(makeInput({
+      children: [child],
+      eduAttendance: [
+        makeEduAttendance({ id: "z1", date: "2025-03-01", attendance_code: "U" }),
+        makeEduAttendance({ id: "z2", date: "2025-03-05", attendance_code: "U" }),
+        makeEduAttendance({ id: "z3", date: "2025-03-08", attendance_code: "U" }),
+        makeEduAttendance({ id: "z4", date: "2025-03-12", attendance_code: "U" }),
+      ],
+    }));
+    const alert = result.alerts.find((a) => a.type === "low_attendance" && a.child_name === "Alex");
+    expect(alert).toBeTruthy();
+    expect(alert?.severity).toBe("critical");
+  });
+
   it("uses education records as fallback when no detailed attendance", () => {
     const child = makeChild();
     const result = computeEducationIntelligence(makeInput({
