@@ -143,6 +143,23 @@ export function isDateBefore(dateA: string, dateB: string): boolean {
   return new Date(dateA).getTime() < new Date(dateB).getTime();
 }
 
+// A pathway-plan review is overdue if its next review date has passed OR is not
+// set at all. isDateBefore("", today) is false (NaN comparison), so a missing
+// review date would otherwise read as compliant — the worst statutory case.
+export function isReviewOverdue(nextReviewDate: string, today: string): boolean {
+  if (!nextReviewDate || Number.isNaN(new Date(nextReviewDate).getTime())) return true;
+  return isDateBefore(nextReviewDate, today);
+}
+
+// Real PathwayPlanStatus active states (16-18 and 18+ former-relevant). The
+// engine previously tested status === "active"/"review_due"/"overdue" — values
+// the enum never uses ("pre_pathway_15plus" | "active_16_18" |
+// "active_18plus_formerly_looked_after" | "closed_at_25"), silently disabling
+// the alert, at-risk and positive-insight logic that keyed off them.
+export function isActivePlan(status: string): boolean {
+  return status === "active_16_18" || status === "active_18plus_formerly_looked_after";
+}
+
 export function monthsBetween(dateA: string, dateB: string): number {
   const a = new Date(dateA);
   const b = new Date(dateB);
@@ -199,8 +216,8 @@ export function computeLeavingCareIntelligence(
   // ── Compute overview ────────────────────────────────────────────────────
   const childrenWithPlan = eligibleChildren.filter((c) => plansByChild.has(c.id));
   const plansOverdueReview = pathwayPlans.filter(
-    (p) => isDateBefore(p.next_review_date, today) && p.status !== "overdue"
-  ).length + pathwayPlans.filter((p) => p.status === "overdue").length;
+    (p) => isReviewOverdue(p.next_review_date, today)
+  ).length;
 
   const independenceScores = eligibleChildren
     .map((c) => plansByChild.get(c.id)?.independence_skills_score)
@@ -259,11 +276,12 @@ export function computeLeavingCareIntelligence(
     const youngPersonInvolved = plan?.young_person_involved ?? false;
 
     // Readiness rating logic — check at_risk first since overdue overrides on_track
+    const planOverdue = plan ? isReviewOverdue(plan.next_review_date, today) : false;
     let readinessRating: string;
     if (
       independenceScore < 40 ||
       accommodationStatus === "not_started" ||
-      planStatus === "overdue"
+      planOverdue
     ) {
       readinessRating = "at_risk";
     } else if (
@@ -317,13 +335,14 @@ export function computeLeavingCareIntelligence(
     }
   }
 
-  // High: Pathway plan overdue for review
+  // High: Pathway plan overdue for review (or with no review date set at all)
   for (const plan of pathwayPlans) {
-    if (isDateBefore(plan.next_review_date, today) || plan.status === "overdue") {
+    if (isReviewOverdue(plan.next_review_date, today)) {
       const childName = childNameMap.get(plan.child_id) || "Unknown child";
+      const due = plan.next_review_date || "not set";
       alerts.push({
         severity: "high",
-        message: `Pathway plan for ${childName} is overdue for review (due ${plan.next_review_date})`,
+        message: `Pathway plan for ${childName} is overdue for review (due ${due})`,
       });
     }
   }
@@ -353,9 +372,20 @@ export function computeLeavingCareIntelligence(
     }
   }
 
+  // High: Eligible care leaver who is NEET (not in education, employment or training)
+  for (const child of eligibleChildren) {
+    const plan = plansByChild.get(child.id);
+    if (plan && plan.eet_plan === "neet") {
+      alerts.push({
+        severity: "high",
+        message: `${child.name} is NEET (not in education, employment or training) — a key care-leaver risk; review the EET plan`,
+      });
+    }
+  }
+
   // Medium: No support network mapped for child with active plan
   for (const plan of pathwayPlans) {
-    if (plan.status === "active" && !plan.support_network_mapped) {
+    if (isActivePlan(plan.status) && !plan.support_network_mapped) {
       const childName = childNameMap.get(plan.child_id) || "Unknown child";
       alerts.push({
         severity: "medium",
@@ -420,11 +450,12 @@ export function computeLeavingCareIntelligence(
     });
   }
 
-  // Positive: All eligible children have active pathway plans
-  if (totalEligible > 0 && childrenWithPlan.length === totalEligible) {
+  // Positive: All eligible children have active pathway plans (and none overdue
+  // for review — don't celebrate compliance while a statutory review has lapsed).
+  if (totalEligible > 0 && childrenWithPlan.length === totalEligible && plansOverdueReview === 0) {
     const allActive = eligibleChildren.every((c) => {
       const plan = plansByChild.get(c.id);
-      return plan && (plan.status === "active" || plan.status === "review_due");
+      return !!plan && isActivePlan(plan.status);
     });
     if (allActive) {
       insights.push({

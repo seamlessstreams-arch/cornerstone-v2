@@ -135,7 +135,10 @@ export function computeLeavingCareTransition(
   }
 
   // ── Metric: Pathway plan coverage (Mod 1) ────────────────────────────
-  const activePlanStatuses = ["active_16_18", "active_18_plus"];
+  // Real PathwayPlanStatus 18+ value is "active_18plus_formerly_looked_after"
+  // (NOT "active_18_plus") — using the wrong literal dropped every 18-25
+  // former-relevant care leaver from coverage/quality.
+  const activePlanStatuses = ["active_16_18", "active_18plus_formerly_looked_after"];
   const activePlans = pathway_plans.filter((p) =>
     activePlanStatuses.includes(p.status),
   );
