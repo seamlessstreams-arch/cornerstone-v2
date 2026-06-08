@@ -38,6 +38,7 @@ const ManagerIntelligenceBriefingCard = dynamic(() => import("@/components/dashb
 const ManagerPriorityBriefingCard = dynamic(() => import("@/components/dashboard/manager-priority-briefing-card").then(m => ({ default: m.ManagerPriorityBriefingCard })), { ssr: false });
 const HomeSummaryReportCard = dynamic(() => import("@/components/dashboard/home-summary-report-card").then(m => ({ default: m.HomeSummaryReportCard })), { ssr: false });
 const ChildReviewPackCard = dynamic(() => import("@/components/dashboard/child-review-pack-card").then(m => ({ default: m.ChildReviewPackCard })), { ssr: false });
+const HomeTrendsCard = dynamic(() => import("@/components/dashboard/home-trends-card").then(m => ({ default: m.HomeTrendsCard })), { ssr: false });
 const InspectionReadinessIntelligenceCard = dynamic(() => import("@/components/dashboard/inspection-readiness-intelligence-card").then(m => m.InspectionReadinessIntelligenceCard ? { default: m.InspectionReadinessIntelligenceCard } : m), { ssr: false });
 const StaffWellbeingIntelligenceCard = dynamic(() => import("@/components/dashboard/staff-wellbeing-intelligence-card").then(m => m.StaffWellbeingIntelligenceCard ? { default: m.StaffWellbeingIntelligenceCard } : m), { ssr: false });
 const RiskIntelligenceDashboardCard = dynamic(() => import("@/components/dashboard/risk-intelligence-dashboard-card").then(m => m.RiskIntelligenceDashboardCard ? { default: m.RiskIntelligenceDashboardCard } : m), { ssr: false });
@@ -1629,6 +1630,7 @@ export default function DashboardPage() {
                     <ManagerPriorityBriefingCard />
                     <HomeSummaryReportCard />
                     <ChildReviewPackCard />
+                    <HomeTrendsCard />
                     <ManagerIntelligenceBriefingCard />
                     <InspectionReadinessIntelligenceCard />
                     <StaffWellbeingIntelligenceCard />
