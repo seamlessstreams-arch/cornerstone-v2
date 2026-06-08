@@ -317,16 +317,21 @@ describe("computeOutcomeStarNeeds", () => {
         needs_assessments: [],
         kpis: [],
       }));
+      // No stars, but other data present → engine still scores (no-stars contributes +0).
       const noStars = computeOutcomeStarNeeds(baseInput({
         total_children: 1,
         outcome_stars: [],
-        needs_assessments: [],
+        needs_assessments: [makeNeeds({ id: "na_1", child_id: "c1" })],
         kpis: [],
       }));
-      // withStars: mod2=+2(avg5), mod3=+1(no previous via single star with previous_avg=6 so 1 improving → 100%→+5)
-      // Actually the default star has previous 6, current 8. Let me use avg 5 with previous null.
-      // Let me just verify no stars doesn't crash and gives reasonable score.
       expect(noStars.outcome_score).toBeGreaterThan(0);
+      // Regression: a home with NO outcome/needs/KPI data at all must be insufficient_data,
+      // never a falsely-reassuring "adequate" score.
+      const noDataAtAll = computeOutcomeStarNeeds(baseInput({
+        total_children: 1, outcome_stars: [], needs_assessments: [], kpis: [],
+      }));
+      expect(noDataAtAll.outcome_rating).toBe("insufficient_data");
+      expect(noDataAtAll.outcome_score).toBe(0);
     });
 
     it("modifier 3: improvement rate >=70% gives +5", () => {

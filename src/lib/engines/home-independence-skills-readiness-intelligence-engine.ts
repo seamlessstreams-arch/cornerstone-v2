@@ -236,8 +236,10 @@ export function computeIndependenceSkillsReadiness(
   ).length;
   const skill_progression_rate = pct(skillsProgressing, totalSkills);
 
-  // Pathway plan rate (% of children with active pathway plan)
-  const activePlans = pathway_plans.filter((p) => p.status === "active");
+  // Pathway plan rate (% of children with active pathway plan).
+  // Canonical PathwayPlanStatus has no "active" value — it's "active_16_18" /
+  // "active_18plus_formerly_looked_after" / "pre_pathway_15plus" / "closed_at_25".
+  const activePlans = pathway_plans.filter((p) => (p.status ?? "").startsWith("active"));
   const childrenWithActivePlan = new Set(activePlans.map((p) => p.child_id)).size;
   const pathway_plan_rate = pct(childrenWithActivePlan, total_children);
 
