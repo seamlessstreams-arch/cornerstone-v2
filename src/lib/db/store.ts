@@ -6362,6 +6362,942 @@ store.annualHealthAssessments = [
   },
 ];
 
+// ── Education PEP records (seed) ──────────────────────────────────────────────
+// Personal Education Plans (Reg/statutory). Mixed: Alex low attendance + exclusion
+// + review due; Jordan strong; Casey SEN support + a slipping maths target.
+store.pepRecords = [
+  {
+    id: "pep_alex_1",
+    child_id: "yp_alex",
+    school: "Derby Alternative Provision",
+    year_group: 11,
+    key_stage: "KS4",
+    designated_teacher: "L. Hartley",
+    virtual_school_contact: "Derby City Virtual School — M. Okafor",
+    pep_date: daysFromNow(-58),
+    next_review_date: daysFromNow(-4),
+    status: "review_due" as const,
+    attendance: 71,
+    exclusions: 1,
+    exclusion_days: 3,
+    sen_status: "sen_support" as const,
+    sen_details: "SEMH needs; on SEN support register. Pastoral mentor and reduced timetable in place following missing-from-care episodes.",
+    targets: [
+      {
+        subject: "English Language",
+        current_level: "Grade 2",
+        target_level: "Grade 4",
+        attainment: "below" as const,
+        progress: "some_progress" as const,
+        notes: "Engages well 1:1; attendance gaps disrupt coursework completion.",
+      },
+      {
+        subject: "Maths",
+        current_level: "Grade 2",
+        target_level: "Grade 3",
+        attainment: "significantly_below" as const,
+        progress: "limited_progress" as const,
+        notes: "Target slipping — missed assessments during March absence. Needs catch-up plan.",
+      },
+      {
+        subject: "Vocational — Motor Vehicle (Level 1)",
+        current_level: "Working towards",
+        target_level: "Pass",
+        attainment: "at" as const,
+        progress: "on_track" as const,
+        notes: "Strong practical engagement; best attendance day of the week.",
+      },
+    ],
+    pupil_premium: {
+      annual_allocation: 2530,
+      spent_to_date: 1340,
+      items: [
+        { description: "1:1 English tuition (weekly)", amount: 840, impact: "Improved reading confidence; coursework re-engaged." },
+        { description: "Travel/escort to alternative provision", amount: 500, impact: "Reduced missing-from-care risk on the school commute." },
+      ],
+    },
+    child_views: "Alex says he likes the motor vehicle workshop and wants to do an apprenticeship. Finds full school days hard and says mornings after a bad night are the worst.",
+    carer_views: "Key worker reports Alex responds well to consistent routines and praise. Attendance improves when transport is arranged and he is woken gently with a clear plan for the day.",
+    social_worker_views: "Supports the reduced timetable and vocational pathway. Asks that the exploitation risk be reviewed at every PEP given the missing-from-care history.",
+    strengths: ["Genuine interest in vocational learning", "Builds trusting relationships with key adults", "Attendance trend improving over the last half-term"],
+    barriers: ["Self-harm and SEMH needs affect engagement", "History of missing from care disrupts attendance", "Risk of child criminal exploitation"],
+    key_worker: "staff_edward",
+    actions: [
+      { action: "Agree catch-up plan for Maths with designated teacher", owner: "staff_edward", deadline: daysFromNow(9), status: "pending" as const },
+      { action: "Confirm reduced-timetable review with virtual school", owner: "staff_darren", deadline: daysFromNow(-2), status: "pending" as const },
+      { action: "Arrange morning transport to provision", owner: "staff_edward", deadline: daysFromNow(-20), status: "completed" as const },
+    ],
+    created_at: daysFromNow(-58),
+  },
+  {
+    id: "pep_jordan_1",
+    child_id: "yp_jordan",
+    school: "Highfields Academy",
+    year_group: 9,
+    key_stage: "KS3",
+    designated_teacher: "S. Whitmore",
+    virtual_school_contact: "Derby City Virtual School — M. Okafor",
+    pep_date: daysFromNow(-21),
+    next_review_date: daysFromNow(70),
+    status: "current" as const,
+    attendance: 97,
+    exclusions: 0,
+    exclusion_days: 0,
+    sen_status: "none" as const,
+    sen_details: "",
+    targets: [
+      {
+        subject: "Maths",
+        current_level: "Grade 5 (working at)",
+        target_level: "Grade 6",
+        attainment: "above" as const,
+        progress: "exceeded" as const,
+        notes: "Consistently above age-related expectations; nominated for maths challenge club.",
+      },
+      {
+        subject: "Science",
+        current_level: "Grade 5",
+        target_level: "Grade 6",
+        attainment: "at" as const,
+        progress: "on_track" as const,
+        notes: "Strong practical work; homework completed reliably.",
+      },
+      {
+        subject: "English",
+        current_level: "Grade 4",
+        target_level: "Grade 5",
+        attainment: "at" as const,
+        progress: "on_track" as const,
+        notes: "Reading for pleasure encouraged at home; vocabulary developing well.",
+      },
+    ],
+    pupil_premium: {
+      annual_allocation: 2530,
+      spent_to_date: 2100,
+      items: [
+        { description: "Football club subscription and kit", amount: 360, impact: "Improved peer relationships and self-esteem; excellent attendance." },
+        { description: "Laptop for homework", amount: 540, impact: "Homework completion at 100% this term." },
+        { description: "Maths intervention/challenge programme", amount: 1200, impact: "Exceeding target in maths." },
+      ],
+    },
+    child_views: "Jordan says school is going well and he enjoys football and science. He wants to keep his attendance high and is proud of his maths.",
+    carer_views: "Key worker reports Jordan is settled, motivated and engages fully. Halal dietary needs and prayer space are respected; staff support his routine which helps school.",
+    social_worker_views: "Delighted with progress under the full care order. Supports continued investment in football and maths enrichment.",
+    strengths: ["Excellent attendance and punctuality", "Exceeding expectations in maths", "Motivated, settled and aspirational"],
+    barriers: ["None significant currently — monitor transition pressures into KS4 next year"],
+    key_worker: "staff_anna",
+    actions: [
+      { action: "Book place on maths challenge club", owner: "staff_anna", deadline: daysFromNow(-10), status: "completed" as const },
+      { action: "Confirm halal catering arrangement with school for trips", owner: "staff_anna", deadline: daysFromNow(-6), status: "completed" as const },
+      { action: "Plan KS4 options conversation with designated teacher", owner: "staff_darren", deadline: daysFromNow(40), status: "pending" as const },
+    ],
+    created_at: daysFromNow(-21),
+  },
+  {
+    id: "pep_casey_1",
+    child_id: "yp_casey",
+    school: "Allestree Woodlands School",
+    year_group: 11,
+    key_stage: "KS4",
+    designated_teacher: "R. Caldwell",
+    virtual_school_contact: "Derby City Virtual School — M. Okafor",
+    pep_date: daysFromNow(-34),
+    next_review_date: daysFromNow(56),
+    status: "current" as const,
+    attendance: 83,
+    exclusions: 0,
+    exclusion_days: 0,
+    sen_status: "sen_support" as const,
+    sen_details: "SEN support for anxiety and emotional regulation; CAMHS-involved. Exam access arrangements (rest breaks, separate room) agreed for GCSEs.",
+    targets: [
+      {
+        subject: "English Literature",
+        current_level: "Grade 4",
+        target_level: "Grade 5",
+        attainment: "at" as const,
+        progress: "on_track" as const,
+        notes: "Responds well to coursework; benefits from quiet study space.",
+      },
+      {
+        subject: "Maths",
+        current_level: "Grade 3",
+        target_level: "Grade 4",
+        attainment: "below" as const,
+        progress: "limited_progress" as const,
+        notes: "Morning lessons missed due to sleep difficulties (melatonin); target at risk — needs revised support plan.",
+      },
+      {
+        subject: "Art & Design",
+        current_level: "Grade 5",
+        target_level: "Grade 6",
+        attainment: "above" as const,
+        progress: "exceeded" as const,
+        notes: "Real strength and source of motivation; portfolio ahead of schedule.",
+      },
+    ],
+    pupil_premium: {
+      annual_allocation: 2530,
+      spent_to_date: 1620,
+      items: [
+        { description: "GCSE revision materials and online tuition", amount: 720, impact: "Supporting English and maths revision in exam year." },
+        { description: "Art supplies and portfolio materials", amount: 400, impact: "Sustaining engagement and exceeding art target." },
+        { description: "Wellbeing/CAMHS-aligned counselling sessions", amount: 500, impact: "Reduced anxiety on school mornings." },
+      ],
+    },
+    child_views: "Casey says art is her favourite subject and she wants to go to college for graphic design. She finds mornings hard because she doesn't sleep well and worries about maths exams.",
+    carer_views: "Key worker reports Casey is more settled since the CAMHS sleep plan began. A later, calmer morning routine and reduced first-period pressure would protect her maths attendance.",
+    social_worker_views: "Supports exam access arrangements and the college aspiration. Asks that sleep difficulties and Fluoxetine review be factored into the morning timetable.",
+    strengths: ["Exceptional ability and motivation in art", "Clear post-16 aspiration (college / graphic design)", "Engaging well with CAMHS and counselling support"],
+    barriers: ["Sleep difficulties affect morning attendance and maths", "Anxiety around exams", "SEN support needs in a GCSE year"],
+    key_worker: "staff_chervelle",
+    actions: [
+      { action: "Revise maths support plan with designated teacher to protect morning attendance", owner: "staff_chervelle", deadline: daysFromNow(-3), status: "pending" as const },
+      { action: "Confirm GCSE exam access arrangements (rest breaks, separate room)", owner: "staff_darren", deadline: daysFromNow(14), status: "pending" as const },
+      { action: "Arrange college open-day visit for graphic design course", owner: "staff_chervelle", deadline: daysFromNow(21), status: "pending" as const },
+      { action: "Liaise with CAMHS on sleep plan and morning routine", owner: "staff_chervelle", deadline: daysFromNow(-8), status: "completed" as const },
+    ],
+    created_at: daysFromNow(-34),
+  },
+];
+
+// ── Self-harm safety plans (seed) ─────────────────────────────────────────────
+// Co-produced safety plans. Mixed: Alex robust + child-signed + recently reviewed;
+// Jordan precautionary/low-risk; Casey active with review now overdue.
+store.selfHarmSafetyPlanRecords = [
+  {
+    id: "shsp_alex_1",
+    child_id: "yp_alex",
+    plan_date: daysFromNow(-21),
+    status: "active_preventive" as const,
+    co_produced_with: [
+      "Alex W",
+      "Edward (key worker)",
+      "CAMHS practitioner (Dr Olubayo)",
+    ],
+    warning_signs_external: [
+      "Withdrawing to bedroom for long periods",
+      "Wearing long sleeves in warm weather",
+      "Declining shared meals and group activities",
+      "Increased phone use late at night",
+    ],
+    warning_signs_internal: [
+      "Tells staff he feels 'numb' or 'empty'",
+      "Says things feel pointless",
+      "Reports racing thoughts he can't slow down",
+    ],
+    early_triggers: [
+      "Contact sessions with birth family being cancelled at short notice",
+      "Arguments with peers at college",
+      "Anniversary dates linked to past placement moves",
+    ],
+    internal_coping_strategies: [
+      "Listening to a calming playlist with headphones",
+      "Using the grounding 5-4-3-2-1 technique he practised with CAMHS",
+      "Cold-water hand splash and slow breathing",
+      "Drawing in his sketchbook",
+    ],
+    social_distractions: [
+      "Playing pool with staff in the games room",
+      "Walking the dog at the local park",
+      "Cooking dinner with Edward on shift",
+    ],
+    people_to_contact: [
+      { name: "Edward", relationship: "Key worker", how: "Find on shift or ask any staff to call him" },
+      { name: "Diane", relationship: "Trusted staff member", how: "On shift or via the office phone" },
+      { name: "Auntie Sam", relationship: "Approved family contact", how: "Supervised call arranged through staff" },
+    ],
+    professional_contacts: [
+      { name: "Dr Olubayo", role: "CAMHS practitioner", how: "Weekly session; staff can request earlier appointment" },
+      { name: "Childline", role: "Confidential helpline", how: "Call 0800 1111 (free, 24/7)" },
+    ],
+    means_restriction_agreed: [
+      "Sharps and razors stored in the office and signed out for supervised use",
+      "Medication held and administered by staff (MAR)",
+      "Agreed staff check-ins every 30 minutes during identified higher-risk evenings",
+    ],
+    reasons_to_live: [
+      "Wants to finish his Level 2 motor vehicle course",
+      "Looking forward to getting his own flat one day",
+      "His relationship with his younger sister",
+    ],
+    reasons_for_hope: [
+      "Feels CAMHS sessions are starting to help",
+      "Proud he went two months without self-harm",
+      "Enjoys being trusted with the home's dog",
+    ],
+    child_signed_off: true,
+    child_signed_date: daysFromNow(-21),
+    professionals_informed: [
+      "CAMHS (Dr Olubayo)",
+      "Allocated social worker",
+      "GP",
+      "Designated safeguarding lead",
+    ],
+    review_frequency: "monthly" as const,
+    next_review_date: daysFromNow(9),
+    child_voice:
+      "Alex said the plan 'actually feels like mine this time' and asked that staff check in casually rather than making 'a big deal' of it. He wants the cold-water and music strategies tried first before anyone calls CAMHS.",
+    staff_observation:
+      "Alex engaged fully in co-production and suggested most of his own coping strategies. Last reviewed at his monthly LAC catch-up; no incidents in the past eight weeks and he has used the grounding technique independently twice.",
+    flags_for_review: [],
+    key_worker: "staff_edward",
+  },
+  {
+    id: "shsp_jordan_1",
+    child_id: "yp_jordan",
+    plan_date: daysFromNow(-48),
+    status: "not_currently_needed" as const,
+    co_produced_with: ["Jordan M", "Anna (key worker)"],
+    warning_signs_external: [
+      "Becomes quieter than usual and avoids eye contact",
+      "Reluctant to go to school in the morning",
+    ],
+    warning_signs_internal: [
+      "Says he feels 'wound up' or frustrated",
+    ],
+    early_triggers: [
+      "Feeling unfairly treated or being told 'no'",
+      "Unstructured weekends with little to do",
+    ],
+    internal_coping_strategies: [
+      "Going to his room to listen to music until he feels calmer",
+      "Kicking a football in the garden to let off steam",
+      "Talking it through with Anna",
+    ],
+    social_distractions: [
+      "Football with peers and staff",
+      "Playing on the games console in the lounge",
+    ],
+    people_to_contact: [
+      { name: "Anna", relationship: "Key worker", how: "On shift or ask staff to contact her" },
+      { name: "Any staff on shift", relationship: "Trusted adults", how: "Approach anyone in the staff team" },
+    ],
+    professional_contacts: [
+      { name: "Childline", role: "Confidential helpline", how: "Call 0800 1111 (free, 24/7)" },
+    ],
+    means_restriction_agreed: [
+      "Standard home practice — sharps stored securely in the kitchen and office",
+    ],
+    reasons_to_live: [
+      "Wants to make the school football team",
+      "Looking forward to his birthday and seeing his nan",
+    ],
+    reasons_for_hope: [
+      "Settling well into the home and building good relationships with staff",
+      "Proud of how much calmer he has been over the last month",
+    ],
+    child_signed_off: true,
+    child_signed_date: daysFromNow(-48),
+    professionals_informed: ["Allocated social worker"],
+    review_frequency: "quarterly" as const,
+    next_review_date: daysFromNow(42),
+    child_voice:
+      "Jordan said he 'doesn't really need a plan' but was happy to agree one 'just in case'. He prefers space in his room over being talked to when he is frustrated.",
+    staff_observation:
+      "Precautionary monitoring plan only — relates to a single historic low-level concern shortly after admission. No self-harm presentation since; Jordan is settled and using healthy outlets. Retained as a light-touch safeguard and reviewed quarterly.",
+    flags_for_review: [],
+    key_worker: "staff_anna",
+  },
+  {
+    id: "shsp_casey_1",
+    child_id: "yp_casey",
+    plan_date: daysFromNow(-37),
+    status: "active_preventive" as const,
+    co_produced_with: [
+      "Casey T",
+      "Chervelle (key worker)",
+      "CAMHS clinician",
+    ],
+    warning_signs_external: [
+      "Staying in bed late and disrupted sleep despite Melatonin",
+      "Tearfulness and low engagement in the mornings",
+      "Skipping meals and isolating from the group",
+    ],
+    warning_signs_internal: [
+      "Describes feeling 'flat' and that nothing matters",
+      "Says she is 'a burden' to others",
+      "Reports intrusive critical thoughts about herself",
+    ],
+    early_triggers: [
+      "Conflict or fallings-out with friends",
+      "Reminders of past trauma",
+      "Days when she feels her medication 'isn't working'",
+    ],
+    internal_coping_strategies: [
+      "Using her weighted blanket and dimming her bedroom lights",
+      "Journaling how she feels",
+      "Mindful colouring and slow breathing",
+      "Holding ice cubes as an agreed alternative to self-harm",
+    ],
+    social_distractions: [
+      "Baking with Chervelle on shift",
+      "Watching a favourite series in the lounge with staff",
+      "Caring for the plants in the garden",
+    ],
+    people_to_contact: [
+      { name: "Chervelle", relationship: "Key worker", how: "On shift or ask staff to call her" },
+      { name: "Ryan", relationship: "Deputy Manager", how: "In the office during the day or on call" },
+      { name: "Mum", relationship: "Approved family contact", how: "Phone call arranged with staff support" },
+    ],
+    professional_contacts: [
+      { name: "CAMHS duty line", role: "Mental health service", how: "Staff call during office hours for urgent advice" },
+      { name: "Childline", role: "Confidential helpline", how: "Call 0800 1111 (free, 24/7)" },
+      { name: "111 option 2", role: "Out-of-hours mental health crisis line", how: "Staff call if Casey is in crisis overnight" },
+    ],
+    means_restriction_agreed: [
+      "Fluoxetine and Melatonin held and administered by staff via MAR",
+      "Sharps and razors stored in the office and signed out for supervised use only",
+      "Increased welfare checks at night during identified low periods",
+    ],
+    reasons_to_live: [
+      "Her younger cousins who look up to her",
+      "Wants to train as a hairdresser",
+      "Her dog at her mum's house",
+    ],
+    reasons_for_hope: [
+      "Days are starting to feel 'a bit lighter' since the medication review",
+      "Feels listened to by Chervelle",
+    ],
+    child_signed_off: true,
+    child_signed_date: daysFromNow(-37),
+    professionals_informed: [
+      "CAMHS clinician",
+      "Allocated social worker",
+      "GP (prescribing Fluoxetine and Melatonin)",
+      "Designated safeguarding lead",
+    ],
+    review_frequency: "monthly" as const,
+    next_review_date: daysFromNow(-7),
+    child_voice:
+      "Casey said the ice-cube strategy and her weighted blanket help most. She asked staff not to remove her journal as writing things down 'gets them out of my head'.",
+    staff_observation:
+      "Plan co-produced after a period of low mood; Casey engages well with Chervelle. Monthly review is now seven days overdue — CAMHS appointment and key-worker session needed to refresh the plan and confirm medication response.",
+    flags_for_review: [
+      "Monthly review overdue — reschedule key-worker session",
+      "Confirm response to recent Fluoxetine review with CAMHS and GP",
+    ],
+    key_worker: "staff_chervelle",
+  },
+];
+
+// ── Risk management plans (seed) ──────────────────────────────────────────────
+// Mixed: Alex very-high CCE + multi-agency + current review; Jordan medium;
+// Casey high self-harm with review overdue + no manager sign-off yet.
+store.riskManagementPlanRecords = [
+  {
+    id: "rmp_alex_1",
+    child_id: "yp_alex",
+    risk_category: "exploitation" as const,
+    current_risk_level: "very_high" as const,
+    previous_risk_level: "high" as const,
+    risk_description:
+      "Alex is at very high risk of child criminal exploitation. He has been groomed by an older peer group linked to county-lines drug supply and has gone missing on three occasions in the last six weeks, twice located out-of-area. Disclosures and police intelligence indicate he is carrying packages and may be holding a weapon for others under coercion. Risk is compounded by associated missing-from-care episodes and self-harm when contact with the exploitative group is disrupted.",
+    triggers: [
+      {
+        trigger: "Unscheduled contact or messages from named older associates",
+        likelihood: "high" as const,
+        context: "Typically precedes a missing episode within 24 hours; associates use a second 'burner' phone.",
+      },
+      {
+        trigger: "Being told he cannot leave the home or attend an arranged meeting",
+        likelihood: "high" as const,
+        context: "Perceived debt-bondage means Alex believes he must comply with the group or face reprisal.",
+      },
+      {
+        trigger: "Receiving unexplained cash, trainers or a new phone",
+        likelihood: "medium" as const,
+        context: "Indicates renewed exploitative activity; often denied or minimised by Alex.",
+      },
+    ],
+    warning_signals: [
+      "Becomes secretive and guards his phone, leaving the room to take calls",
+      "Sudden agitation or pacing in the hour before he absconds",
+      "Skipping meals and education, sleeping during the day",
+      "Superficial cuts to forearms after being prevented from leaving",
+    ],
+    management_strategies: [
+      {
+        strategy: "Return-home interview within 72 hours of every missing episode, shared with police and social worker",
+        owner: "staff_edward",
+        frequency: "Every missing episode",
+        effectiveness: "effective" as const,
+      },
+      {
+        strategy: "Daily key-work check-in mapping associates, locations and mood using the exploitation screening tool",
+        owner: "staff_edward",
+        frequency: "Daily",
+        effectiveness: "effective" as const,
+      },
+      {
+        strategy: "Enhanced staffing and visual checks during identified high-risk evening window (16:00-22:00)",
+        owner: "staff_ryan",
+        frequency: "Daily during high-risk window",
+        effectiveness: "partially_effective" as const,
+      },
+      {
+        strategy: "Disruption plan with police CCE team and trigger-plan circulated to all agencies",
+        owner: "staff_darren",
+        frequency: "Reviewed monthly at MACE",
+        effectiveness: "partially_effective" as const,
+      },
+    ],
+    emergency_plan:
+      "If Alex is believed to be at imminent risk or goes missing: implement the agreed missing-from-care protocol immediately, report to police as high-risk missing within 15 minutes quoting the CCE marker and his known associates/vehicles, notify the on-call manager and EDT, inform the social worker and parents, and circulate his trigger plan. On return, do not interrogate; ensure medical check, offer food and a trusted adult, and book the return interview.",
+    protective_factors: [
+      "Strong trusting relationship with key worker staff_edward",
+      "Engages well with the CAMHS practitioner when sessions are kept consistent",
+      "Wants to complete his motor-vehicle college course and talks about it positively",
+      "Maternal grandmother is a consistent, safe contact",
+    ],
+    escalation_procedure:
+      "Concerns escalate from key worker to Deputy Manager staff_ryan, then to Registered Manager staff_darren. Any new disclosure, weapon indication or out-of-area location triggers same-day strategy discussion with the allocated social worker and a referral to the multi-agency child exploitation (MACE) panel. Serious incidents are notified to Ofsted and the LADO where staff or other children are implicated.",
+    review_date: daysFromNow(9),
+    last_reviewed: daysFromNow(21),
+    created_by: "staff_edward",
+    approved_by: "staff_darren",
+    multi_agency_input: [
+      {
+        professional: "DC Hollis",
+        role: "Police Child Exploitation Team",
+        input: "Confirmed active intelligence linking Alex to a county-lines network; supports weekly disruption updates and shared missing-person trigger plan.",
+      },
+      {
+        professional: "Marcus Bell",
+        role: "Allocated Social Worker",
+        input: "Chairs multi-agency strategy meetings; agreed Section 20 placement remains appropriate with enhanced exploitation oversight.",
+      },
+      {
+        professional: "Dr Priya Anand",
+        role: "CAMHS Clinical Practitioner",
+        input: "Provides trauma-informed sessions and advises staff on de-escalation following disrupted contact and self-harm.",
+      },
+    ],
+    child_views:
+      "Alex says he 'isn't being exploited' and that the older lads are his friends, but admits he 'owes them' and feels scared when he can't pay. He values time with staff_edward and his nan, and says he wants to pass his college course and 'not end up inside'.",
+    status: "active" as const,
+  },
+  {
+    id: "rmp_jordan_1",
+    child_id: "yp_jordan",
+    risk_category: "aggression" as const,
+    current_risk_level: "medium" as const,
+    previous_risk_level: "high" as const,
+    risk_description:
+      "Jordan experiences difficulty regulating his emotions, leading to verbal outbursts and occasional property damage during peer conflict, particularly over shared spaces and the games console. Risk has reduced over the last term as his emotional-literacy work has embedded, and there have been no physical assaults in eight weeks. Current focus is on sustaining co-regulation strategies and reducing flashpoints with one particular peer.",
+    triggers: [
+      {
+        trigger: "Disputes over console time or perceived unfairness in the house routine",
+        likelihood: "medium" as const,
+        context: "Most common flashpoint, usually early evening when several children are home together.",
+      },
+      {
+        trigger: "Feeling 'told off' or corrected in front of peers",
+        likelihood: "medium" as const,
+        context: "Jordan is sensitive to public criticism and can respond with raised voice and walking off.",
+      },
+    ],
+    warning_signals: [
+      "Voice rises and speech speeds up",
+      "Clenches fists and withdraws eye contact",
+      "Stops engaging and puts headphones on to block others out",
+    ],
+    management_strategies: [
+      {
+        strategy: "Agreed 'time and space' plan: Jordan goes to his agreed calm area and staff give him five minutes before talking it through",
+        owner: "staff_anna",
+        frequency: "As needed",
+        effectiveness: "effective" as const,
+      },
+      {
+        strategy: "Weekly emotional-regulation key-work session using zones-of-regulation worksheets",
+        owner: "staff_anna",
+        frequency: "Weekly",
+        effectiveness: "effective" as const,
+      },
+      {
+        strategy: "Visual house timetable and turn-taking rota for the console to reduce disputes",
+        owner: "staff_diane",
+        frequency: "Daily",
+        effectiveness: "partially_effective" as const,
+      },
+    ],
+    emergency_plan:
+      "If Jordan becomes physically aggressive or damages property: prioritise the safety of other children by calmly moving them away, give Jordan space rather than crowding him, and use low-arousal language. Do not restrain unless there is an immediate risk of significant harm and only as a last resort per the home's positive-handling policy. Once settled, complete a behaviour record and offer a repair conversation; inform the social worker if there is any injury.",
+    protective_factors: [
+      "Responds very well to predictable routines and clear visual structure",
+      "Has a positive relationship with key worker staff_anna",
+      "Enjoys football and attends a local club twice a week, which regulates his mood",
+    ],
+    escalation_procedure:
+      "Recurring or escalating incidents are raised by staff_anna with Deputy Manager staff_ryan at the weekly review. If the pattern worsens or a peer is hurt, a behaviour-support review is convened and the allocated social worker informed. Section 31 statutory reviews provide the formal oversight point.",
+    review_date: daysFromNow(24),
+    last_reviewed: daysFromNow(35),
+    created_by: "staff_anna",
+    approved_by: "staff_ryan",
+    multi_agency_input: [
+      {
+        professional: "Sarah Coyle",
+        role: "Allocated Social Worker",
+        input: "Notes good progress; agrees current medium-risk rating and supports continuing the in-house emotional-regulation plan without external CAMHS referral at this stage.",
+      },
+    ],
+    child_views:
+      "Jordan says he 'just gets wound up' when others 'take the mick' over the console, and that taking five minutes in his room 'actually helps'. He is proud he 'hasn't kicked off' for a while and wants to keep playing football.",
+    status: "active" as const,
+  },
+  {
+    id: "rmp_casey_1",
+    child_id: "yp_casey",
+    risk_category: "self_harm" as const,
+    current_risk_level: "high" as const,
+    previous_risk_level: "medium" as const,
+    risk_description:
+      "Casey presents with persistent low mood and a history of self-harm by cutting, alongside intermittent refusal of her prescribed medication. Risk has increased recently following a deterioration in mood and two episodes of medication refusal in the past fortnight. There is no current expression of suicidal intent, but staff remain vigilant to changes. This plan is due a formal review, which is now overdue, and has not yet been signed off by the Registered Manager.",
+    triggers: [
+      {
+        trigger: "Difficult contact or perceived rejection from a family member",
+        likelihood: "high" as const,
+        context: "Mood typically drops sharply for 24-48 hours afterwards, raising self-harm risk.",
+      },
+      {
+        trigger: "Being asked to take her medication when she feels low or distrustful",
+        likelihood: "medium" as const,
+        context: "Refusal often coincides with low mood; Casey says the medication 'makes her feel like a problem'.",
+      },
+    ],
+    warning_signals: [
+      "Becomes withdrawn and stays in her room, declining meals",
+      "Wears long sleeves in warm weather and avoids personal-care checks",
+      "Gives away possessions or makes self-critical statements",
+    ],
+    management_strategies: [
+      {
+        strategy: "Twice-daily mood and wellbeing check-ins with a trusted member of staff, recorded on the wellbeing log",
+        owner: "staff_chervelle",
+        frequency: "Twice daily",
+        effectiveness: "partially_effective" as const,
+      },
+      {
+        strategy: "Medication offered calmly at agreed times with explanation and choice of who supports her; refusals logged and GP informed",
+        owner: "staff_chervelle",
+        frequency: "Daily, per prescription",
+        effectiveness: "not_effective" as const,
+      },
+      {
+        strategy: "Safe-care plan reducing access to means and agreed distraction/grounding techniques",
+        owner: "staff_diane",
+        frequency: "Ongoing",
+        effectiveness: "not_assessed" as const,
+      },
+    ],
+    emergency_plan:
+      "If Casey self-harms or expresses intent to harm herself: provide first aid and seek urgent medical attention where needed (call 999 for any serious injury or overdose), stay with her and remove means, and use a calm, non-judgemental approach. Contact the on-call manager and out-of-hours GP/111, inform the allocated social worker, and complete a safeguarding and incident record. Escalate to CAMHS crisis line if there is suicidal intent.",
+    protective_factors: [
+      "Has a warm, trusting relationship with key worker staff_chervelle",
+      "Engages with art and journaling, which she uses to manage difficult feelings",
+    ],
+    escalation_procedure:
+      "Any self-harm, repeated medication refusal or stated intent is escalated same-day by staff_chervelle to Deputy Manager staff_ryan and Registered Manager staff_darren. A strategy discussion is held with the social worker and a CAMHS review requested where mood deterioration continues. Notifiable events are reported to Ofsted.",
+    review_date: daysFromNow(-6),
+    last_reviewed: daysFromNow(-41),
+    created_by: "staff_chervelle",
+    approved_by: "",
+    multi_agency_input: [
+      {
+        professional: "Dr Eleanor Wise",
+        role: "GP",
+        input: "Reviewed the recent medication refusals and advised continuing to offer the current prescription with monitoring; asked to be informed of any further missed doses.",
+      },
+    ],
+    child_views:
+      "Casey says she 'doesn't see the point' of the medication and feels staff 'are always watching her', but she trusts staff_chervelle and finds her art and journal helpful. She does not want to talk about the recent contact with her family.",
+    status: "active" as const,
+  },
+];
+
+// ── Attachment profiles (seed) ────────────────────────────────────────────────
+// Trauma-informed attachment formulations. Mixed: Alex disorganised + review
+// overdue; Jordan emerging-secure + current; Casey anxious-avoidant + current.
+store.attachmentProfiles = [
+  {
+    id: "attach_alex_1",
+    child_id: "yp_alex",
+    status: "under_review" as const,
+    primary_style: "disorganised" as const,
+    secondary_patterns: [
+      "Hypervigilance to adult mood and footsteps in the corridor",
+      "Approach-avoidance with key worker: seeks closeness then withdraws sharply",
+      "Dissociative 'shutdown' under perceived threat",
+    ],
+    assessed_by: "staff_edward",
+    assessment_date: daysFromNow(-118),
+    review_date: daysFromNow(-12),
+    assessment_source:
+      "Key-worker observation over first 6 weeks, CAMHS consultation notes, and information from placing authority social worker",
+    early_history:
+      "Significant early relational trauma. Exposed to domestic abuse and parental substance misuse from infancy; multiple unplanned separations from primary carer before age 5. No consistent attachment figure in early years.",
+    placement_history:
+      "Three previous placements before Oak House (one foster, two residential), all ending in placement breakdown linked to escalation and going missing. Current placement under Section 20 since admission, now 17 weeks.",
+    behaviours: [
+      {
+        context: "When asked direct questions about his day or his family",
+        behaviour: "Becomes guarded, gives one-word answers or leaves the room",
+        underlying_need:
+          "Safety and predictability; needs to control the pace of disclosure to feel safe",
+        recommended_response:
+          "Offer side-by-side activities rather than face-to-face questioning; let Alex lead conversation; name that he doesn't have to answer",
+      },
+      {
+        context: "Late evening, around bedtime and when staff change over",
+        behaviour:
+          "Heightened agitation, paces, occasionally self-harms (superficial scratching to forearms)",
+        underlying_need:
+          "Co-regulation and felt safety during transitions; reassurance that he will not be left or moved",
+        recommended_response:
+          "Consistent calm staff presence at handover; predictable bedtime routine; agreed grounding plan and access to sensory items; record and review with CAMHS",
+      },
+      {
+        context: "When he perceives criticism or a raised voice",
+        behaviour: "Shuts down, becomes unresponsive and avoids eye contact",
+        underlying_need:
+          "To not be shamed; needs repair and reconnection after rupture",
+        recommended_response:
+          "Lower voice and body posture, give physical space, return later to repair warmly without demanding he talk about it",
+      },
+    ],
+    key_relationships: [
+      {
+        person: "Edward (key worker)",
+        role: "Key worker",
+        quality: "developing" as const,
+        notes:
+          "Trust is slowly building. Alex now seeks Edward out at difficult moments roughly twice a week, though can reject him sharply the next day. Consistency is key.",
+      },
+      {
+        person: "Diane (night staff)",
+        role: "Residential support worker",
+        quality: "developing" as const,
+        notes:
+          "Calm presence at bedtime that Alex tolerates well; helpful for the evening dysregulation pattern.",
+      },
+      {
+        person: "Birth mother",
+        role: "Parent",
+        quality: "strained" as const,
+        notes:
+          "Supervised contact is inconsistent and often cancelled by mother; Alex is dysregulated for 24-48 hours after missed or difficult contact.",
+      },
+    ],
+    therapeutic_approach: [
+      "PACE (Playfulness, Acceptance, Curiosity, Empathy) as the core relational stance",
+      "Dyadic Developmental Practice principles led by key worker with CAMHS oversight",
+      "Trauma-informed sensory regulation plan for evening transitions",
+    ],
+    staff_guidance: [
+      "Maintain a small, consistent team around Alex; minimise unplanned staff changes",
+      "Always offer choice and narrate what is going to happen next to reduce unpredictability",
+      "Do not pursue eye contact or insist on talking when he shuts down; prioritise repair over compliance",
+      "Log self-harm incidents factually and share with CAMHS; keep means-restriction plan current",
+    ],
+    protective_factors: [
+      "Emerging trusted relationship with key worker Edward",
+      "Engaged and responsive CAMHS practitioner",
+      "Stable, low-arousal placement with a consistent staff team",
+      "Responds well to predictable routines and sensory regulation tools",
+    ],
+    risk_factors: [
+      "History of going missing and child criminal exploitation when placements destabilise",
+      "Self-harm escalates at transitions and after difficult family contact",
+      "Disrupted contact with birth mother is a recurring destabiliser",
+    ],
+    child_views:
+      "Alex says he 'doesn't really do feelings talk' but told Edward he 'feels less wound up than the last place'. He has asked to keep the same key worker.",
+    professional_input:
+      "CAMHS clinician supports a disorganised-attachment formulation and recommends a consistent dyadic relational approach. Social worker agrees placement should be protected from change wherever possible.",
+    notes:
+      "Review is now 12 days overdue following the planned 6-month point; CAMHS consultation booked to refresh the formulation and update the regulation plan.",
+    created_at: daysFromNow(-118),
+  },
+  {
+    id: "attach_jordan_1",
+    child_id: "yp_jordan",
+    status: "active" as const,
+    primary_style: "emerging_secure" as const,
+    secondary_patterns: [
+      "Anxious-ambivalent pattern around separation, especially contact with sibling",
+      "Seeks frequent reassurance that he is doing 'the right thing'",
+    ],
+    assessed_by: "staff_anna",
+    assessment_date: daysFromNow(-46),
+    review_date: daysFromNow(44),
+    assessment_source:
+      "Key-worker assessment, observations across the home and school, and social worker chronology",
+    early_history:
+      "Experienced neglect and inconsistent care, but had one warm, fairly reliable relationship with an older sibling who often took a caregiving role. Some early protective relational experience despite adversity.",
+    placement_history:
+      "One previous short-term foster placement that ended due to carer ill-health, not breakdown. Placed at Oak House under Section 31; settling well over the first 6 weeks.",
+    behaviours: [
+      {
+        context: "On days when contact with his sibling is due or has just happened",
+        behaviour:
+          "Clingy and emotionally heightened, repeatedly checks arrangements, tearful at separation",
+        underlying_need:
+          "Reassurance that the sibling bond is protected and that contact will reliably happen",
+        recommended_response:
+          "Give clear, written contact arrangements in advance; acknowledge the feelings; plan a settling activity for after contact",
+      },
+      {
+        context: "When he makes a small mistake or breaks a minor rule",
+        behaviour:
+          "Over-apologises, becomes anxious he will be 'sent away' or that staff will be angry",
+        underlying_need:
+          "Reassurance of unconditional positive regard and that the placement is secure",
+        recommended_response:
+          "Respond warmly and proportionately; explicitly separate the behaviour from the relationship; remind him he is not going anywhere",
+      },
+    ],
+    key_relationships: [
+      {
+        person: "Anna (key worker)",
+        role: "Key worker",
+        quality: "strong" as const,
+        notes:
+          "Warm, trusting relationship established quickly. Jordan seeks Anna out to share news and worries and responds well to her encouragement.",
+      },
+      {
+        person: "Older sibling (in separate placement)",
+        role: "Sibling",
+        quality: "strong" as const,
+        notes:
+          "Central protective relationship. Jordan misses his sibling and is motivated by maintaining regular contact.",
+      },
+      {
+        person: "Ryan (deputy manager)",
+        role: "Deputy manager",
+        quality: "developing" as const,
+        notes:
+          "Jordan is increasingly comfortable approaching Ryan; sees him as a fair and steady figure in the home.",
+      },
+    ],
+    therapeutic_approach: [
+      "PACE relational stance to reinforce felt security",
+      "Consistent key-worker sessions focused on naming and normalising feelings",
+      "Predictable, protected sibling-contact planning to support the attachment bond",
+    ],
+    staff_guidance: [
+      "Plan and confirm sibling contact well in advance and prepare Jordan for it",
+      "Use everyday moments of connection to reinforce that the placement is stable and unconditional",
+      "Praise effort and name strengths; he responds strongly to genuine encouragement",
+    ],
+    protective_factors: [
+      "Strong, trusting relationship with key worker Anna",
+      "Meaningful and protective sibling relationship maintained through contact",
+      "Genuine capacity to seek comfort and accept reassurance from trusted adults",
+      "Settling well with a positive early trajectory in placement",
+    ],
+    risk_factors: [
+      "Separation anxiety can spike around sibling contact",
+      "Fear of rejection may lead to masking distress or over-compliance",
+    ],
+    child_views:
+      "Jordan says he 'likes it here' and that Anna 'actually listens'. His main worry is making sure he still gets to see his brother regularly.",
+    professional_input:
+      "Social worker notes a positive early trajectory and supports prioritising sibling contact as a protective factor. No CAMHS involvement required at this stage; key-worker-led support assessed as sufficient.",
+    notes:
+      "Profile is current and next review is scheduled within timescale. Clear therapeutic approach in place and being followed consistently by the team.",
+    created_at: daysFromNow(-46),
+  },
+  {
+    id: "attach_casey_1",
+    child_id: "yp_casey",
+    status: "active" as const,
+    primary_style: "anxious_avoidant" as const,
+    secondary_patterns: [
+      "Self-reliance and reluctance to ask for help even when distressed",
+      "Minimises difficulties and presents as 'fine' when low",
+    ],
+    assessed_by: "staff_chervelle",
+    assessment_date: daysFromNow(-72),
+    review_date: daysFromNow(18),
+    assessment_source:
+      "Key-worker assessment and observations, with input from school pastoral lead and placing social worker",
+    early_history:
+      "Emotional neglect and unpredictable parental availability; learned early that expressing need rarely brought comfort, so became highly self-reliant and emotionally contained.",
+    placement_history:
+      "Two previous placements; the most recent residential placement was reasonably stable but ended on a planned basis to move closer to her home area. Placed at Oak House under Section 31.",
+    behaviours: [
+      {
+        context: "When she has had a low day or poor night's sleep",
+        behaviour:
+          "Withdraws to her room, declines support, insists she is 'fine' and pushes staff away",
+        underlying_need:
+          "Low-pressure connection; needs staff to remain available without crowding her",
+        recommended_response:
+          "Offer brief, undemanding check-ins; leave a note or a drink; make clear support is there when she wants it without forcing conversation",
+      },
+      {
+        context: "When offered praise or warmth directly",
+        behaviour: "Deflects, becomes awkward or dismissive, changes the subject",
+        underlying_need:
+          "To experience that she is valued without it feeling overwhelming or unsafe",
+        recommended_response:
+          "Keep praise low-key, specific and matter-of-fact; let warmth be shown through reliable actions rather than effusive words",
+      },
+    ],
+    key_relationships: [
+      {
+        person: "Chervelle (key worker)",
+        role: "Key worker",
+        quality: "developing" as const,
+        notes:
+          "Casey is cautious but warming up; she has started accepting brief chats over a hot drink and is testing whether Chervelle is consistent.",
+      },
+      {
+        person: "School pastoral lead",
+        role: "Education support",
+        quality: "developing" as const,
+        notes:
+          "A trusted adult at school Casey will sometimes confide in; useful bridge for monitoring low mood.",
+      },
+      {
+        person: "Peers in the home",
+        role: "Peer group",
+        quality: "strained" as const,
+        notes:
+          "Tends to keep peers at a distance and can be prickly when overwhelmed; relationships are tentative rather than hostile.",
+      },
+    ],
+    therapeutic_approach: [
+      "Low-arousal, low-demand relational approach respecting her need for control and space",
+      "Consistency and reliability over time to gently challenge an avoidant working model",
+      "Key-worker sessions paced to Casey's comfort, with attention to sleep and mood",
+    ],
+    staff_guidance: [
+      "Do not crowd or pursue Casey when she withdraws; stay warm and available at the edges",
+      "Follow through reliably on every small commitment; predictability is the intervention",
+      "Monitor mood and sleep patterns and share concerns discreetly without making her feel watched",
+    ],
+    protective_factors: [
+      "Cautiously developing trust with key worker Chervelle",
+      "A trusted confiding relationship with the school pastoral lead",
+      "Strong capacity for self-reliance and resilience that can be built on",
+      "Relationships described by staff as gradually improving",
+    ],
+    risk_factors: [
+      "Tendency to mask low mood means distress can be missed",
+      "Sleep difficulties and low mood require ongoing monitoring",
+      "Avoidant pattern means she may not seek help in a crisis",
+    ],
+    child_views:
+      "Casey says she 'doesn't really need anyone' but admitted to Chervelle that the drinks-and-chat catch-ups are 'alright'. She would like help with her sleep.",
+    professional_input:
+      "Social worker supports the low-demand relational approach. Referral to the GP regarding sleep agreed; CAMHS not currently indicated but to be revisited at review if low mood persists.",
+    notes:
+      "Profile is current with a review scheduled within timescale. Therapeutic approach is clear, but secondary patterns mean staff consistency and mood monitoring are the priority over the coming weeks.",
+    created_at: daysFromNow(-72),
+  },
+];
+
 // ── CRUD helpers ──────────────────────────────────────────────────────────────
 
 export function getStore() { return store; }
