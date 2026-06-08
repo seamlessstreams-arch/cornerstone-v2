@@ -108,6 +108,25 @@ export function computeOutcomeStarNeeds(
     };
   }
 
+  // ── No outcome/needs/KPI data → insufficient (mirror the sibling engines;
+  //    never rate a data-empty home as "adequate") ─────────────────────
+  if (outcome_stars.length === 0 && needs_assessments.length === 0 && kpis.length === 0) {
+    return {
+      outcome_rating: "insufficient_data",
+      outcome_score: 0,
+      headline: "No Outcome Star, needs assessment or KPI data recorded — outcomes cannot be evaluated.",
+      children_assessed: 0,
+      average_outcome_score: 0,
+      children_improving: 0,
+      needs_addressed_rate: 0,
+      kpi_met_rate: 0,
+      strengths: [],
+      concerns: ["No Outcome Star assessments, needs assessments or KPI entries exist despite children on placement — outcome progress cannot be evidenced."],
+      recommendations: [{ rank: 1, recommendation: "Establish Outcome Star assessments, needs tracking and KPI recording so outcome progress can be measured.", urgency: "immediate", regulatory_ref: "CHR 2015 Reg 5" }],
+      insights: [{ text: "No outcome, needs or KPI records exist. Without them the home cannot evidence that children's outcomes are improving — a fundamental data gap.", severity: "critical" }],
+    };
+  }
+
   // ── Derived metrics ────────────────────────────────────────────────
   const childIdsWithStars = new Set(outcome_stars.map(s => s.child_id));
   const childrenAssessed = childIdsWithStars.size;
