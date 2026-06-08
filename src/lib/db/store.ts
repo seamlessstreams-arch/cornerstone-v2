@@ -6255,6 +6255,113 @@ store.ariaPracticeAssessments = [
   { id: "apa_seed_2", tenant_id: null, child_id: "yp_casey", staff_id: null, home_id: "home_oak", source_type: "key_work", source_id: null, assessment_type: "practice_quality", status: "open", created_by: "staff_chervelle", created_at: ariaPracticeSeedAt, updated_at: ariaPracticeSeedAt, developmental_gap_score: 78, child_lived_experience_score: 90, protective_factor_score: 100, relationship_depth_score: 64, safeguarding_threshold_score: 100, supervision_quality_score: 72, workforce_wellbeing_score: 100, overall_practice_quality_score: 72, summary: "Strong child-centred record evidencing what changed for the child.", aria_advice: [], aria_flags: [], aria_recommendations: [], aria_questions: [], aria_draft_output: null, reviewer_id: null, reviewed_at: null, manager_decision: null, manager_rationale: null },
 ];
 
+// ── Outcome Star assessments (seed) ───────────────────────────────────────────
+// Wellbeing/progress star (1–10 per domain) with prior scores to show trajectory.
+// Deliberately mixed: Alex improving from a low base; Casey's wellbeing/health
+// recovering; Jordan steady — so the engine surfaces real progress + focus areas.
+store.outcomeStarAssessments = [
+  {
+    id: "osa_alex_1", child_id: "yp_alex", assessed_by_id: "staff_edward",
+    date: "2026-05-18",
+    scores: { safety: 5, emotional_wellbeing: 5, physical_health: 7, education: 5, relationships: 5, identity: 6, independence: 6, social_presentation: 7, self_care: 7, community: 5 },
+    previous_scores: { safety: 3, emotional_wellbeing: 4, physical_health: 6, education: 4, relationships: 4, identity: 5, independence: 5, social_presentation: 6, self_care: 6, community: 4 },
+    child_views: "Alex says he feels a bit safer than before but still worries about some people he knows in the community.",
+    staff_views: "Real progress in self-care and physical health. Safety and relationships remain the priority, linked to the ongoing exploitation risk and missing episodes.",
+    action_plan: [
+      { domain: "safety" as const, action: "Continue safety mapping and check-ins on return from community time." },
+      { domain: "relationships" as const, action: "Build one trusted positive relationship outside the peer group via the mentoring scheme." },
+    ],
+    created_at: "2026-05-18T14:00:00Z",
+  },
+  {
+    id: "osa_jordan_1", child_id: "yp_jordan", assessed_by_id: "staff_anna",
+    date: "2026-05-09",
+    scores: { safety: 7, emotional_wellbeing: 6, physical_health: 8, education: 7, relationships: 6, identity: 7, independence: 5, social_presentation: 7, self_care: 7, community: 6 },
+    previous_scores: { safety: 6, emotional_wellbeing: 5, physical_health: 7, education: 6, relationships: 5, identity: 6, independence: 4, social_presentation: 6, self_care: 6, community: 5 },
+    child_views: "Jordan is proud of his school attendance and says he wants to spend more time with his brother.",
+    staff_views: "Jordan is settling well with steady gains across the board. Independence skills and sibling contact are the next areas of focus.",
+    action_plan: [
+      { domain: "independence" as const, action: "Begin weekly budgeting and travel-training sessions." },
+      { domain: "relationships" as const, action: "Progress supervised sibling contact plan with the social worker." },
+    ],
+    created_at: "2026-05-09T11:30:00Z",
+  },
+  {
+    id: "osa_casey_1", child_id: "yp_casey", assessed_by_id: "staff_chervelle",
+    date: "2026-05-25",
+    scores: { safety: 7, emotional_wellbeing: 5, physical_health: 6, education: 6, relationships: 6, identity: 6, independence: 7, social_presentation: 7, self_care: 6, community: 6 },
+    previous_scores: { safety: 6, emotional_wellbeing: 3, physical_health: 4, education: 6, relationships: 5, identity: 5, independence: 6, social_presentation: 6, self_care: 5, community: 5 },
+    child_views: "Casey says her sleep is better with the new bedtime routine and she feels less low than she did.",
+    staff_views: "Emotional wellbeing and physical health are improving with CAMHS support and sleep hygiene work. Continue to monitor medication engagement and morning routine.",
+    action_plan: [
+      { domain: "emotional_wellbeing" as const, action: "Maintain CAMHS sessions and weekly mood tracking with key worker." },
+      { domain: "physical_health" as const, action: "Review medication timing with the prescriber and sustain the sleep routine." },
+    ],
+    created_at: "2026-05-25T16:15:00Z",
+  },
+];
+
+// ── Annual health assessments (seed) ──────────────────────────────────────────
+// Statutory annual health check (Reg 10). Mixed: Casey's was completed late with
+// LA sign-off still pending; Alex's optical check is overdue — so the engine shows
+// genuine compliance gaps rather than a flat 100%.
+store.annualHealthAssessments = [
+  {
+    id: "aha_alex_1", child_id: "yp_alex",
+    assessment_date: "2026-04-20", assessment_due_date: "2026-04-30",
+    assessor: "Priya Nair (Looked-After Children Nurse)", location: "Derby City LAC Health Team",
+    completed_within_deadline: true,
+    height: "172cm", weight: "61kg", bmi_centile: "50th", growth_on_track: true,
+    domains: [
+      { domain: "Emotional & mental health", findings: "History of self-harm; currently engaging with CAMHS. Mood more stable.", actions: "Continue CAMHS; staff to maintain safety plan.", follow_up: "Review at next CAMHS appointment" },
+      { domain: "Sexual health & exploitation", findings: "Identified exploitation risk in the community. Age-appropriate education provided.", actions: "Continue contextual safeguarding work.", follow_up: "Ongoing" },
+      { domain: "Substance awareness", findings: "No current use identified. Aware of risks.", actions: "Maintain harm-reduction conversations.", follow_up: "Annual" },
+    ],
+    immunisations_up_to_date: true, dental_check_up_to_date: true, optical_check_up_to_date: false,
+    child_contribution: "Alex took part and asked about registering with a GP independently after 18.",
+    report_shared: true, report_shared_with: ["Social Worker", "Registered Manager", "GP"],
+    recommendations: ["Book optician appointment (overdue)", "Continue CAMHS engagement"],
+    next_assessment_date: "2027-04-20", signed_off_by_la: true,
+    created_at: "2026-04-22T10:00:00Z",
+  },
+  {
+    id: "aha_jordan_1", child_id: "yp_jordan",
+    assessment_date: "2026-03-15", assessment_due_date: "2026-03-31",
+    assessor: "Priya Nair (Looked-After Children Nurse)", location: "Highfields Academy (in-school clinic)",
+    completed_within_deadline: true,
+    height: "159cm", weight: "48kg", bmi_centile: "45th", growth_on_track: true,
+    domains: [
+      { domain: "Allergies & medication", findings: "Penicillin allergy confirmed and clearly flagged. Piriton PRN in place.", actions: "Ensure allergy alert on all health records.", follow_up: "Annual" },
+      { domain: "Diet & nutrition", findings: "Halal diet well supported. Good appetite and growth.", actions: "Maintain culturally appropriate meal planning.", follow_up: "Routine" },
+      { domain: "Emotional & mental health", findings: "Settling well. No current concerns. Misses sibling.", actions: "Support sibling contact.", follow_up: "Routine" },
+    ],
+    immunisations_up_to_date: true, dental_check_up_to_date: true, optical_check_up_to_date: true,
+    child_contribution: "Jordan engaged fully and asked about playing football for a local club.",
+    report_shared: true, report_shared_with: ["Social Worker", "Registered Manager", "GP", "School Nurse"],
+    recommendations: ["Refer to local football club", "Maintain allergy alerts"],
+    next_assessment_date: "2027-03-15", signed_off_by_la: true,
+    created_at: "2026-03-17T09:30:00Z",
+  },
+  {
+    id: "aha_casey_1", child_id: "yp_casey",
+    assessment_date: "2026-05-12", assessment_due_date: "2026-04-30",
+    assessor: "Priya Nair (Looked-After Children Nurse)", location: "Derby City LAC Health Team",
+    completed_within_deadline: false,
+    height: "165cm", weight: "58kg", bmi_centile: "60th", growth_on_track: true,
+    domains: [
+      { domain: "Emotional & mental health", findings: "Low mood and sleep disturbance. On Fluoxetine and Melatonin; engaging with CAMHS.", actions: "Continue CAMHS and medication review.", follow_up: "6-week medication review" },
+      { domain: "Medication", findings: "Melatonin and Fluoxetine prescribed. History of morning medication refusal — improving.", actions: "Review timing with prescriber.", follow_up: "Prescriber review" },
+      { domain: "Sleep", findings: "Sleep hygiene programme in place; improving with routine.", actions: "Sustain bedtime routine.", follow_up: "Monthly" },
+    ],
+    immunisations_up_to_date: true, dental_check_up_to_date: true, optical_check_up_to_date: true,
+    child_contribution: "Casey shared that her sleep is improving and contributed to her health goals.",
+    report_shared: true, report_shared_with: ["Social Worker", "Registered Manager", "CAMHS"],
+    recommendations: ["Complete prescriber medication review", "Continue sleep hygiene programme"],
+    next_assessment_date: "2027-04-30", signed_off_by_la: false,
+    created_at: "2026-05-14T13:00:00Z",
+  },
+];
+
 // ── CRUD helpers ──────────────────────────────────────────────────────────────
 
 export function getStore() { return store; }
