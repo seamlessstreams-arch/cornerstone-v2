@@ -9,7 +9,7 @@ export default function manifest(): MetadataRoute.Manifest {
     short_name: "Cornerstone",
     description:
       "Secure operations for children's residential care — sign-in, comms, safeguarding, staffing and oversight.",
-    start_url: "/",
+    start_url: "/dashboard",
     scope: "/",
     display: "standalone",
     orientation: "portrait-primary",
