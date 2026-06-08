@@ -187,7 +187,7 @@ export default function HomePage() {
             <span className="text-[var(--cs-border)]">•</span>
             <span>Ofsted SCCIF</span>
             <span className="text-[var(--cs-border)]">•</span>
-            <span>Working Together 2023</span>
+            <span>Working Together 2025</span>
             <span className="text-[var(--cs-border)]">•</span>
             <span>Reg 44 &amp; 45</span>
           </div>
