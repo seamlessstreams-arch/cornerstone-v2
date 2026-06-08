@@ -171,6 +171,22 @@ describe("computeManagerPriorityBriefing", () => {
     expect(r.priority_signals[59].rank).toBe(60);
   });
 
+  it("maps rare-but-severe vocab: life_threatening insight -> critical, emergency/urgent recs -> high", () => {
+    const r = computeManagerPriorityBriefing({
+      signals: [
+        sig({ engine_key: "a", label: "A", insights: [{ text: "ligature risk", severity: "life_threatening" }] }),
+        sig({ engine_key: "b", label: "B", recommendations: [{ text: "evacuate", urgency: "emergency", regulatory_ref: null }] }),
+        sig({ engine_key: "c", label: "C", recommendations: [{ text: "call now", urgency: "urgent", regulatory_ref: null }] }),
+      ],
+      engines_queried: 3,
+      engines_responded: 3,
+      today: TODAY,
+    });
+    expect(r.total_critical).toBe(1);
+    expect(r.total_high).toBe(2);
+    expect(r.priority_signals[0]).toMatchObject({ severity: "critical", message: "ligature risk" });
+  });
+
   it("ignores positive/low insight severities as attention signals", () => {
     const r = computeManagerPriorityBriefing({
       signals: [sig({ insights: [{ text: "great progress", severity: "positive" }] })],

@@ -101,11 +101,11 @@ const SEVERITY_ORDER: Record<SignalSeverity, number> = {
 /** Map an engine insight's free-form severity vocab → our 4-tier scale (or null to drop). */
 function normaliseInsightSeverity(raw: string): SignalSeverity | null {
   const s = (raw || "").toLowerCase().trim();
-  if (s === "critical" || s === "severe" || s === "red") return "critical";
+  if (s === "critical" || s === "severe" || s === "red" || s === "life_threatening") return "critical";
   if (s === "high" || s === "urgent") return "high";
   if (s === "warning" || s === "concern" || s === "medium" || s === "amber" || s === "moderate") return "warning";
   if (s === "watch" || s === "low" || s === "minor") return "watch";
-  // "positive" / "good" / "green" / unknown → not an attention signal
+  // "positive" / "good" / "green" / "none" / "mild" / "no_harm" / unknown → not an attention signal
   return null;
 }
 
@@ -121,9 +121,9 @@ function ratingToSeverity(rating: string | null): SignalSeverity | null {
 /** Map a recommendation urgency → severity (or null to drop low-urgency items). */
 function urgencyToSeverity(urgency: string): SignalSeverity | null {
   const u = (urgency || "").toLowerCase().trim();
-  if (u === "immediate") return "high";
+  if (u === "immediate" || u === "emergency" || u === "urgent") return "high";
   if (u === "soon") return "warning";
-  // "planned" / unknown → too low for the attention feed
+  // "planned" / "routine" / unknown → too low for the attention feed
   return null;
 }
 
