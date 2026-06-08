@@ -110,7 +110,7 @@ export default function HomeSummaryReportPage() {
           >
             <RefreshCw className={cn("h-3.5 w-3.5", isFetching && "animate-spin")} /> Refresh
           </button>
-          <PrintButton />
+          <PrintButton title="Home Summary Report" />
         </div>
       }
     >
