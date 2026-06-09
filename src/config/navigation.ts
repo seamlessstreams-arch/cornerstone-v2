@@ -341,6 +341,7 @@ export const NAV_GROUPS: NavGroup[] = [
     href:   "/staff",
     module: "staff",
     children: [
+      { label: "Workforce Command",    href: "/workforce-command",           icon: "LayoutDashboard",module: "staff"       },
       { label: "Staff Profiles",       href: "/staff",                       icon: "Users",         module: "staff"        },
       { label: "Rota",                 href: "/rota",                        icon: "Calendar",      module: "rota"         },
       { label: "Supervision",          href: "/supervision",                 icon: "MessageSquare", module: "supervision"  },
