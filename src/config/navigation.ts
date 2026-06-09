@@ -497,6 +497,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: "Reg 44 Actions",href: "/reg44-actions",          icon: "ListChecks",      module: "ri"         },
       { label: "Prevent Duty",  href: "/prevent-duty",           icon: "Shield",          module: "ri"         },
       { label: "Complaints Outcomes",href: "/complaints-outcomes",icon: "MessageSquare",  module: "ri"         },
+      { label: "Complaints Clock", href: "/complaints-clock",      icon: "Clock",          module: "ri"         },
       { label: "Reg 35 Notifications",href: "/reg35-notifications",icon: "Bell",          module: "ri"         },
       { label: "Subject Access Requests",href: "/subject-access-requests",icon: "Lock",   module: "ri"         },
       { label: "Incident Debriefs",href: "/critical-incident-debrief",icon: "Brain",         module: "ri"         },
