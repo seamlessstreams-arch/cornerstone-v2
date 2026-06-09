@@ -93,7 +93,7 @@ export default function TourPage() {
           </p>
           <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
             <Link href="/dashboard" className="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--cs-navy)] px-5 py-3 text-sm font-semibold text-white shadow-sm transition-all hover:bg-[var(--cs-navy-soft)] hover:shadow-md">Open the live demo <ArrowRight className="h-4 w-4" /></Link>
-            <Link href="/#contact" className="inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--cs-border)] bg-white/70 px-5 py-3 text-sm font-semibold text-[var(--cs-navy)] transition-colors hover:bg-white">Book a walkthrough</Link>
+            <Link href="/contact" className="inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--cs-border)] bg-white/70 px-5 py-3 text-sm font-semibold text-[var(--cs-navy)] transition-colors hover:bg-white">Book a walkthrough</Link>
           </div>
           <p className="mt-4 text-xs text-[var(--cs-text-muted)]">Demo data — a fictional home, fictional people. No real child or staff information.</p>
         </div>
@@ -138,7 +138,7 @@ export default function TourPage() {
             <p className="mx-auto mt-4 max-w-xl text-lg text-white/75">Step into the live demo and click around, or book a walkthrough on your own home&rsquo;s data.</p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <Link href="/dashboard" className="inline-flex items-center justify-center gap-2 rounded-xl bg-white px-6 py-3.5 text-sm font-bold text-[var(--cs-navy)] transition-transform hover:-translate-y-0.5">Open the live demo <ArrowRight className="h-4 w-4" /></Link>
-              <Link href="/#contact" className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/25 bg-white/5 px-6 py-3.5 text-sm font-bold text-white transition-colors hover:bg-white/10">Book a walkthrough</Link>
+              <Link href="/contact" className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/25 bg-white/5 px-6 py-3.5 text-sm font-bold text-white transition-colors hover:bg-white/10">Book a walkthrough</Link>
             </div>
           </div>
         </div>

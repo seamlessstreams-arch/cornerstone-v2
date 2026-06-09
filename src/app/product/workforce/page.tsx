@@ -40,7 +40,7 @@ export default function WorkforcePage() {
             recruitment into evidence you can show an inspector. One workforce, one source of truth.
           </p>
           <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
-            <Link href="/#contact" className="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--cs-navy)] px-5 py-3 text-sm font-semibold text-white shadow-sm transition-all hover:bg-[var(--cs-navy-soft)] hover:shadow-md">Book a demo <ArrowRight className="h-4 w-4" /></Link>
+            <Link href="/contact" className="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--cs-navy)] px-5 py-3 text-sm font-semibold text-white shadow-sm transition-all hover:bg-[var(--cs-navy-soft)] hover:shadow-md">Book a demo <ArrowRight className="h-4 w-4" /></Link>
             <Link href="/dashboard" className="inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--cs-border)] bg-white/70 px-5 py-3 text-sm font-semibold text-[var(--cs-navy)] transition-colors hover:bg-white">Explore the platform</Link>
           </div>
         </div>
@@ -196,7 +196,7 @@ export default function WorkforcePage() {
           <h2 className="text-3xl font-extrabold tracking-tight text-[var(--cs-navy)] sm:text-4xl">Run a safer, calmer staffing operation.</h2>
           <p className="mx-auto mt-4 max-w-xl text-lg text-[var(--cs-text-secondary)]">See how Cornerstone joins the rota, the doorway and the evidence into one picture.</p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-            <Link href="/#contact" className="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--cs-navy)] px-6 py-3.5 text-sm font-bold text-white transition-all hover:bg-[var(--cs-navy-soft)] hover:shadow-md">Book a demo <ArrowRight className="h-4 w-4" /></Link>
+            <Link href="/contact" className="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--cs-navy)] px-6 py-3.5 text-sm font-bold text-white transition-all hover:bg-[var(--cs-navy-soft)] hover:shadow-md">Book a demo <ArrowRight className="h-4 w-4" /></Link>
             <Link href="/product/intelligence" className="inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--cs-border)] bg-white px-6 py-3.5 text-sm font-bold text-[var(--cs-navy)] transition-colors hover:bg-[var(--cs-bg)]">Explore intelligence <CheckCircle2 className="h-4 w-4 text-[var(--cs-teal)]" /></Link>
           </div>
         </div>

@@ -21,32 +21,31 @@ export function MarketingFooter() {
           </div>
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
             <div>
-              <p className="text-xs font-bold uppercase tracking-wider text-[var(--cs-text-gentle)]">Product</p>
+              <p className="text-xs font-bold uppercase tracking-wider text-[var(--cs-text-gentle)]">Platform</p>
               <ul className="mt-3 space-y-2 text-sm text-[var(--cs-text-secondary)]">
                 <li><a href="/#how" className="hover:text-[var(--cs-navy)]">How it works</a></li>
-                <li><Link href="/product/intelligence" className="hover:text-[var(--cs-navy)]">ARIA intelligence</Link></li>
-                <li><a href="/#features" className="hover:text-[var(--cs-navy)]">Features</a></li>
+                <li><a href="/#modules" className="hover:text-[var(--cs-navy)]">Modules</a></li>
+                <li><Link href="/product/intelligence" className="hover:text-[var(--cs-navy)]">Practice intelligence</Link></li>
                 <li><Link href="/product/workforce" className="hover:text-[var(--cs-navy)]">Workforce</Link></li>
                 <li><Link href="/product/tour" className="hover:text-[var(--cs-navy)]">Product tour</Link></li>
                 <li><Link href="/pricing" className="hover:text-[var(--cs-navy)]">Pricing</Link></li>
-                <li><Link href="/dashboard" className="hover:text-[var(--cs-navy)]">Platform</Link></li>
-              </ul>
-            </div>
-            <div>
-              <p className="text-xs font-bold uppercase tracking-wider text-[var(--cs-text-gentle)]">Trust</p>
-              <ul className="mt-3 space-y-2 text-sm text-[var(--cs-text-secondary)]">
-                <li><Link href="/security" className="hover:text-[var(--cs-navy)]">Security &amp; trust</Link></li>
-                <li><a href="/#why" className="hover:text-[var(--cs-navy)]">Why Cornerstone</a></li>
-                <li><a href="/#compliance" className="hover:text-[var(--cs-navy)]">Compliance</a></li>
-                <li><a href="/#faq" className="hover:text-[var(--cs-navy)]">FAQ</a></li>
               </ul>
             </div>
             <div>
               <p className="text-xs font-bold uppercase tracking-wider text-[var(--cs-text-gentle)]">Company</p>
               <ul className="mt-3 space-y-2 text-sm text-[var(--cs-text-secondary)]">
                 <li><Link href="/about" className="hover:text-[var(--cs-navy)]">About</Link></li>
-                <li><a href="/#contact" className="hover:text-[var(--cs-navy)]">Book a demo</a></li>
+                <li><Link href="/product/workforce" className="hover:text-[var(--cs-navy)]">Cornerstone People</Link></li>
+                <li><Link href="/contact" className="hover:text-[var(--cs-navy)]">Contact</Link></li>
                 <li><Link href="/dashboard" className="hover:text-[var(--cs-navy)]">Sign in</Link></li>
+              </ul>
+            </div>
+            <div>
+              <p className="text-xs font-bold uppercase tracking-wider text-[var(--cs-text-gentle)]">Trust &amp; legal</p>
+              <ul className="mt-3 space-y-2 text-sm text-[var(--cs-text-secondary)]">
+                <li><Link href="/security" className="hover:text-[var(--cs-navy)]">Security &amp; trust</Link></li>
+                <li><Link href="/privacy" className="hover:text-[var(--cs-navy)]">Privacy</Link></li>
+                <li><Link href="/terms" className="hover:text-[var(--cs-navy)]">Terms</Link></li>
               </ul>
             </div>
           </div>

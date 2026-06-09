@@ -6,15 +6,15 @@ import { Menu, X, ArrowRight } from "lucide-react";
 
 const LINKS = [
   { href: "/#how", label: "How it works" },
-  { href: "/product/intelligence", label: "ARIA Intelligence" },
-  { href: "/#features", label: "Features" },
+  { href: "/#modules", label: "Modules" },
+  { href: "/product/intelligence", label: "Practice Intelligence" },
   { href: "/product/workforce", label: "Workforce" },
+  { href: "/#comparison", label: "Where we fit" },
   { href: "/product/tour", label: "Product tour" },
-  { href: "/#platform", label: "Platform" },
   { href: "/pricing", label: "Pricing" },
   { href: "/security", label: "Security & trust" },
   { href: "/about", label: "About" },
-  { href: "/#faq", label: "FAQ" },
+  { href: "/contact", label: "Contact" },
 ];
 
 /** Mobile-only hamburger that opens a full-screen nav overlay. */
@@ -72,11 +72,11 @@ export function MobileMenu() {
               Sign in
             </Link>
             <Link
-              href="#contact"
+              href="/contact"
               onClick={() => setOpen(false)}
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--cs-navy)] px-5 py-3 text-sm font-semibold text-white"
             >
-              Book a demo <ArrowRight className="h-4 w-4" />
+              Request early access <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
         </div>

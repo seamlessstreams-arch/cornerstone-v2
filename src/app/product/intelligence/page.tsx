@@ -50,7 +50,7 @@ export default function IntelligencePage() {
             Cornerstone turns the notes your team already keeps into live RAG ratings, ranked priorities and a clear direction of travel — computed from your real records by around 300 deterministic engines. No overnight batch. No black box.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-            <Link href="/#contact" className="inline-flex items-center justify-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-bold text-[var(--cs-navy)] transition-transform hover:-translate-y-0.5">Book a demo <ArrowRight className="h-4 w-4" /></Link>
+            <Link href="/contact" className="inline-flex items-center justify-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-bold text-[var(--cs-navy)] transition-transform hover:-translate-y-0.5">Book a demo <ArrowRight className="h-4 w-4" /></Link>
             <Link href="/dashboard" className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/25 bg-white/5 px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-white/10">Explore the platform</Link>
           </div>
         </div>
@@ -223,7 +223,7 @@ export default function IntelligencePage() {
           <h2 className="text-3xl font-extrabold tracking-tight text-[var(--cs-navy)] sm:text-4xl">See the intelligence on your own home&rsquo;s data.</h2>
           <p className="mx-auto mt-4 max-w-xl text-lg text-[var(--cs-text-secondary)]">Book a walkthrough, or step into the platform and watch the ratings move as you record.</p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-            <Link href="/#contact" className="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--cs-navy)] px-6 py-3.5 text-sm font-bold text-white transition-all hover:bg-[var(--cs-navy-soft)] hover:shadow-md">Book a demo <ArrowRight className="h-4 w-4" /></Link>
+            <Link href="/contact" className="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--cs-navy)] px-6 py-3.5 text-sm font-bold text-white transition-all hover:bg-[var(--cs-navy-soft)] hover:shadow-md">Book a demo <ArrowRight className="h-4 w-4" /></Link>
             <Link href="/product/workforce" className="inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--cs-border)] bg-white px-6 py-3.5 text-sm font-bold text-[var(--cs-navy)] transition-colors hover:bg-[var(--cs-bg)]">Explore workforce <CheckCircle2 className="h-4 w-4 text-[var(--cs-teal)]" /></Link>
           </div>
         </div>

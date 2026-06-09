@@ -121,7 +121,7 @@ export default function PricingPage() {
                   <li key={j} className="flex items-start gap-2.5 text-sm text-[var(--cs-text-secondary)]"><CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[var(--cs-teal)]" /> {p}</li>
                 ))}
               </ul>
-              <Link href="/#contact" className={`mt-7 inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold transition-colors ${t.featured ? "bg-[var(--cs-navy)] text-white hover:bg-[var(--cs-navy-soft)]" : "border border-[var(--cs-border)] bg-white text-[var(--cs-navy)] hover:bg-[var(--cs-bg)]"}`}>
+              <Link href="/contact" className={`mt-7 inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold transition-colors ${t.featured ? "bg-[var(--cs-navy)] text-white hover:bg-[var(--cs-navy-soft)]" : "border border-[var(--cs-border)] bg-white text-[var(--cs-navy)] hover:bg-[var(--cs-bg)]"}`}>
                 {t.cta} <ArrowRight className="h-4 w-4" />
               </Link>
             </div>

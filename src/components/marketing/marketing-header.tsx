@@ -36,10 +36,10 @@ export function MarketingHeader() {
         <div className="flex items-center gap-2.5">
           <Link href="/dashboard" className="hidden text-sm font-semibold text-[var(--cs-navy)] hover:text-[var(--cs-teal-strong)] sm:inline">Sign in</Link>
           <Link
-            href="/#contact"
+            href="/contact"
             className="hidden items-center justify-center gap-2 rounded-xl bg-[var(--cs-navy)] px-5 py-3 text-sm font-semibold text-white shadow-sm transition-all hover:bg-[var(--cs-navy-soft)] hover:shadow-md sm:inline-flex"
           >
-            Book a demo
+            Request early access
           </Link>
           <MobileMenu />
         </div>
