@@ -9,9 +9,8 @@ import { MobileMenu } from "@/components/marketing/mobile-menu";
 
 const NAV = [
   { href: "/#how", label: "How it works" },
-  { href: "/#intelligence", label: "Intelligence" },
-  { href: "/#features", label: "Features" },
-  { href: "/#workforce", label: "Workforce" },
+  { href: "/product/intelligence", label: "Intelligence" },
+  { href: "/product/workforce", label: "Workforce" },
   { href: "/security", label: "Security" },
   { href: "/#pricing", label: "Pricing" },
 ];
