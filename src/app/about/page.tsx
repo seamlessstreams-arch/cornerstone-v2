@@ -102,7 +102,7 @@ export default function AboutPage() {
         <div className="pointer-events-none absolute inset-0 opacity-40" style={{ background: "radial-gradient(50% 60% at 100% 0%, var(--cs-teal-glow) 0%, transparent 55%)" }} />
         <div className="relative mx-auto max-w-4xl px-5 py-20 text-center">
           <span className="inline-block rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-[var(--cs-teal-soft)]">Our mission</span>
-          <h2 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl">Let great care speak for itself.</h2>
+          <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Let great care speak for itself.</h2>
           <p className="mx-auto mt-4 max-w-2xl text-lg text-white/75">
             To give every children&rsquo;s home the clarity, confidence and evidence to do its best work — so the people doing
             the caring can spend less time proving it, and more time doing it.

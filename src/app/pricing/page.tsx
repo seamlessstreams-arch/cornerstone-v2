@@ -212,7 +212,7 @@ export default function PricingPage() {
         <div className="relative overflow-hidden rounded-3xl bg-[var(--cs-navy)] px-6 py-16 text-center text-white shadow-[var(--cs-shadow-card)]">
           <div className="pointer-events-none absolute inset-0 opacity-50" style={{ background: "radial-gradient(50% 80% at 50% 0%, var(--cs-teal-glow) 0%, transparent 60%)" }} />
           <div className="relative">
-            <h2 className="mx-auto max-w-2xl text-3xl font-extrabold tracking-tight sm:text-4xl">Let&rsquo;s build a quote that fits.</h2>
+            <h2 className="mx-auto max-w-2xl text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Let&rsquo;s build a quote that fits.</h2>
             <p className="mx-auto mt-4 max-w-xl text-lg text-white/75">Tell us about your service and we&rsquo;ll tailor a plan and price — or step into the live demo first.</p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <Link href="mailto:hello@cornerstonecare.app?subject=Cornerstone%20Care%20OS%20quote" className="inline-flex items-center justify-center gap-2 rounded-xl bg-white px-6 py-3.5 text-sm font-bold text-[var(--cs-navy)] transition-transform hover:-translate-y-0.5">Book a walkthrough <ArrowRight className="h-4 w-4" /></Link>

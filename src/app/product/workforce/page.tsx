@@ -167,7 +167,7 @@ export default function WorkforcePage() {
           <div className="grid items-center gap-10 lg:grid-cols-2">
             <div>
               <span className="inline-block rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-[var(--cs-teal-soft)]">Leadership &amp; oversight</span>
-              <h2 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl">Lead the shift today. Oversee the group from anywhere.</h2>
+              <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Lead the shift today. Oversee the group from anywhere.</h2>
               <p className="mt-4 text-lg text-white/75">
                 The <span className="font-semibold text-white">Shift Briefing</span> gives staff coming on duty one screen — who&rsquo;s on, what&rsquo;s due this shift, and what happened overnight. For Responsible Individuals, oversight rolls up across every home — readiness, risk and direction of travel, without chasing.
               </p>
@@ -181,7 +181,7 @@ export default function WorkforcePage() {
               ].map((c, i) => (
                 <div key={i} className="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
                   <c.Icon className="h-6 w-6 text-[var(--cs-teal-soft)]" />
-                  <h3 className="mt-3 text-sm font-bold">{c.t}</h3>
+                  <h3 className="mt-3 text-sm font-bold text-white">{c.t}</h3>
                   <p className="mt-1 text-xs leading-relaxed text-white/65">{c.d}</p>
                 </div>
               ))}
