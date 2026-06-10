@@ -45,7 +45,7 @@ export default function IntelligencePage() {
         <div className="pointer-events-none absolute inset-0 opacity-50" style={{ background: "radial-gradient(50% 60% at 15% 0%, var(--cs-aria-glow) 0%, transparent 55%), radial-gradient(45% 55% at 100% 100%, var(--cs-teal-glow) 0%, transparent 50%)" }} />
         <div className="relative mx-auto max-w-4xl px-5 py-20 text-center lg:py-28">
           <span className="inline-block rounded-full border border-[var(--cs-aria-gold)]/30 bg-[var(--cs-aria-gold)]/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-[var(--cs-aria-gold-soft)]">ARIA · real-time intelligence</span>
-          <h1 className="mt-5 text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl">Your records, analysed the moment they land.</h1>
+          <h1 className="mt-5 text-4xl font-extrabold leading-[1.1] tracking-tight text-white sm:text-5xl">Your records, analysed the moment they land.</h1>
           <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-white/75">
             Cornerstone turns the notes your team already keeps into live RAG ratings, ranked priorities and a clear direction of travel — computed from your real records by around 300 deterministic engines. No overnight batch. No black box.
           </p>
@@ -169,7 +169,7 @@ export default function IntelligencePage() {
         <div className="relative mx-auto max-w-7xl px-5 py-20">
           <div className="mx-auto max-w-2xl text-center">
             <span className="inline-block rounded-full border border-[var(--cs-aria-gold)]/30 bg-[var(--cs-aria-gold)]/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-[var(--cs-aria-gold-soft)]">ARIA Practice Assistant</span>
-            <h2 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl">Live support when practice is hardest.</h2>
+            <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Live support when practice is hardest.</h2>
             <p className="mt-4 text-lg leading-relaxed text-white/75">
               Intelligence isn&rsquo;t only hindsight. During and after an incident, ARIA works alongside your team — in the moment, in the write-up, and in the follow-up.
             </p>
@@ -183,7 +183,7 @@ export default function IntelligencePage() {
             ].map((c, i) => (
               <div key={i} className="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
                 <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-white/10 text-[var(--cs-teal-soft)]"><c.Icon className="h-6 w-6" /></div>
-                <h3 className="mt-4 text-base font-bold">{c.t}</h3>
+                <h3 className="mt-4 text-base font-bold text-white">{c.t}</h3>
                 <p className="mt-1.5 text-sm leading-relaxed text-white/70">{c.d}</p>
               </div>
             ))}

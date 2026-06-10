@@ -71,7 +71,7 @@ export default function SecurityPage() {
         <div className="relative mx-auto max-w-7xl px-5 py-20">
           <div className="mx-auto max-w-2xl text-center">
             <span className="inline-block rounded-full border border-[var(--cs-aria-gold)]/30 bg-[var(--cs-aria-gold)]/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-[var(--cs-aria-gold-soft)]">The ARIA safety contract</span>
-            <h2 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl">AI that assists — and never oversteps.</h2>
+            <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">AI that assists — and never oversteps.</h2>
             <p className="mt-4 text-lg text-white/75">
               Your RAG ratings come from deterministic, explainable engines — not a language model guessing. Where AI does help,
               it operates inside hard limits that put the practitioner in charge of every decision that matters.
@@ -87,7 +87,7 @@ export default function SecurityPage() {
               <div key={i} className="flex gap-4 rounded-2xl border border-white/10 bg-white/[0.04] p-6">
                 <div className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[var(--cs-teal)]/20 text-[var(--cs-teal-soft)]"><w.Icon className="h-6 w-6" /></div>
                 <div>
-                  <h3 className="text-lg font-bold">{w.t}</h3>
+                  <h3 className="text-lg font-bold text-white">{w.t}</h3>
                   <p className="mt-1.5 text-sm leading-relaxed text-white/70">{w.d}</p>
                 </div>
               </div>
@@ -139,7 +139,7 @@ export default function SecurityPage() {
         <div className="relative overflow-hidden rounded-3xl bg-[var(--cs-navy)] px-6 py-16 text-center text-white shadow-[var(--cs-shadow-card)]">
           <div className="pointer-events-none absolute inset-0 opacity-50" style={{ background: "radial-gradient(50% 80% at 50% 0%, var(--cs-teal-glow) 0%, transparent 60%)" }} />
           <div className="relative">
-            <h2 className="mx-auto max-w-2xl text-3xl font-extrabold tracking-tight sm:text-4xl">Questions about your data? Let&rsquo;s talk.</h2>
+            <h2 className="mx-auto max-w-2xl text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Questions about your data? Let&rsquo;s talk.</h2>
             <p className="mx-auto mt-4 max-w-xl text-lg text-white/75">We&rsquo;ll happily walk your team through how Cornerstone handles, protects and evidences the records you keep.</p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <Link href="mailto:hello@cornerstonecare.app?subject=Cornerstone%20security%20%26%20data%20handling" className="inline-flex items-center justify-center gap-2 rounded-xl bg-white px-6 py-3.5 text-sm font-bold text-[var(--cs-navy)] transition-transform hover:-translate-y-0.5">
