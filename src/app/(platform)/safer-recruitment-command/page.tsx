@@ -15,7 +15,7 @@ import {
   ChevronDown, ChevronUp, CheckCircle2, XCircle, CircleDashed, Phone, Link2,
 } from "lucide-react";
 import { PageShell } from "@/components/layout/page-shell";
-import { useSaferRecruitmentCommand, useIssueReferenceLink, type IssuedReferenceLink } from "@/hooks/use-safer-recruitment-command";
+import { useSaferRecruitmentCommand, useIssueReferenceLink, useSyncChaseReminders, type IssuedReferenceLink } from "@/hooks/use-safer-recruitment-command";
 import type {
   CommandCandidate,
   TrafficLight,
@@ -57,7 +57,10 @@ export default function SaferRecruitmentCommandPage() {
         <div className="space-y-6">
           {/* ── Summary strip ── */}
           <div className="rounded-2xl border border-[var(--cs-border)] bg-white p-5 shadow-[var(--cs-shadow-card)]">
-            <p className="text-sm font-semibold text-[var(--cs-navy)]">{data.summary.headline}</p>
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <p className="text-sm font-semibold text-[var(--cs-navy)]">{data.summary.headline}</p>
+              <SyncRemindersButton />
+            </div>
             <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-7">
               <SummaryStat label="Active candidates" value={data.summary.total_candidates} Icon={UserCheck} />
               <SummaryStat label="Red" value={data.summary.red} Icon={AlertTriangle} tone="text-red-600" />
@@ -90,6 +93,29 @@ export default function SaferRecruitmentCommandPage() {
         </div>
       )}
     </PageShell>
+  );
+}
+
+function SyncRemindersButton() {
+  const sync = useSyncChaseReminders();
+  return (
+    <div className="flex items-center gap-2">
+      {sync.isSuccess && (
+        <span className="text-xs text-[var(--cs-text-muted)]">
+          {sync.data.created > 0
+            ? `${sync.data.created} task${sync.data.created === 1 ? "" : "s"} created · ${sync.data.skipped_existing} already open`
+            : `Up to date — ${sync.data.skipped_existing} reminder task${sync.data.skipped_existing === 1 ? "" : "s"} already open`}
+        </span>
+      )}
+      {sync.isError && <span className="text-xs text-red-600">{sync.error.message}</span>}
+      <button
+        onClick={() => sync.mutate()}
+        disabled={sync.isPending}
+        className="inline-flex items-center gap-1.5 rounded-lg bg-[var(--cs-navy)] px-3 py-2 text-xs font-semibold text-white transition-colors hover:bg-[var(--cs-navy-soft)] disabled:opacity-60"
+      >
+        <Clock className="h-3.5 w-3.5" /> {sync.isPending ? "Syncing…" : "Generate chase tasks"}
+      </button>
+    </div>
   );
 }
 

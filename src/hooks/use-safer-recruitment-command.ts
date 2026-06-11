@@ -23,6 +23,28 @@ export interface IssuedReferenceLink {
   note: string;
 }
 
+export interface ReminderSyncResult {
+  created: number;
+  skipped_existing: number;
+  tasks: { id: string; title: string; priority: string }[];
+}
+
+export function useSyncChaseReminders() {
+  const qc = useQueryClient();
+  return useMutation<ReminderSyncResult, Error, void>({
+    mutationFn: async () => {
+      const res = await fetch("/api/v1/safer-recruitment-command/sync-reminders", { method: "POST" });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error ?? "Couldn't sync chase reminders");
+      return json.data;
+    },
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["safer-recruitment-command"] });
+      qc.invalidateQueries({ queryKey: ["tasks"] });
+    },
+  });
+}
+
 export function useIssueReferenceLink() {
   const qc = useQueryClient();
   return useMutation<IssuedReferenceLink, Error, string>({
