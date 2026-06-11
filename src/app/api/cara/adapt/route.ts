@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
     outputText: output.adaptedVersion,
   });
 
-  const result = persistCaraOutput({
+  const result = await persistCaraOutput({
     module: "adaptation",
     promptType: "send_adaptation",
     actor,

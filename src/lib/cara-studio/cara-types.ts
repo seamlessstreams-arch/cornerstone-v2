@@ -399,6 +399,40 @@ export const AdaptRequestSchema = z.object({
   format: z.enum(["text", "visual", "audio", "low_writing"]).default("text"),
 });
 
+export const LearningStyleSchema = z.object({
+  visual: z.boolean(),
+  audio: z.boolean(),
+  practical: z.boolean(),
+  movement_based: z.boolean(),
+  conversation_based: z.boolean(),
+  creative: z.boolean(),
+  low_literacy: z.boolean(),
+  short_bursts: z.boolean(),
+});
+
+export const LearningProfileUpsertSchema = z.object({
+  age: z.number().min(4).max(25).nullable().optional(),
+  developmental_age_notes: z.string().nullable().optional(),
+  communication_needs: z.string().nullable().optional(),
+  send_needs: z.string().nullable().optional(),
+  learning_style: LearningStyleSchema,
+  attention_profile: z.string().nullable().optional(),
+  sensory_profile: z.string().nullable().optional(),
+  emotional_triggers: z.string().nullable().optional(),
+  calming_strategies: z.string().nullable().optional(),
+  trauma_considerations: z.string().nullable().optional(),
+  cultural_identity_notes: z.string().nullable().optional(),
+  literacy_level: z.string().nullable().optional(),
+  preferred_activities: z.string().nullable().optional(),
+  avoided_topics: z.string().nullable().optional(),
+  trusted_adults: z.string().nullable().optional(),
+  known_strengths: z.string().nullable().optional(),
+  current_goals: z.string().nullable().optional(),
+  risk_themes: z.array(z.string()).default([]),
+  review_notes: z.string().nullable().optional(),
+});
+export type LearningProfileUpsert = z.infer<typeof LearningProfileUpsertSchema>;
+
 export const DebriefRequestSchema = z.object({
   childId: z.string().optional(),
   incidentSummary: z.string().min(5),

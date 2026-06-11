@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
   if (!ctx.childId) return NextResponse.json({ error: "Child not found" }, { status: 404 });
 
   const { output, review } = generateCaraInteractiveMaterial({ ctx, ...body.data });
-  const result = persistCaraOutput({
+  const result = await persistCaraOutput({
     module: "material",
     promptType: body.data.materialType,
     actor,
@@ -25,6 +25,7 @@ export async function POST(req: NextRequest) {
     schema: CaraInteractiveMaterialOutputSchema,
     output,
     review,
+    enrichWith: ctx.contextText,
   });
   return NextResponse.json({ data: caraResponse(result) }, { status: 201 });
 }

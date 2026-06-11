@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
   if (!ctx.childId) return NextResponse.json({ error: "Child not found" }, { status: 404 });
 
   const { output, review } = convertIncidentToLearning({ ctx, ...body.data, incidentSummary: summary });
-  const result = persistCaraOutput({
+  const result = await persistCaraOutput({
     module: "incident_learning",
     promptType: "incident_to_learning",
     actor,
@@ -33,6 +33,7 @@ export async function POST(req: NextRequest) {
     schema: CaraIncidentLearningOutputSchema,
     output,
     review,
+    enrichWith: ctx.contextText,
   });
   return NextResponse.json({ data: caraResponse(result) }, { status: 201 });
 }

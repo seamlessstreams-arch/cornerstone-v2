@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
   if (!body.success) return NextResponse.json({ error: body.error.issues[0]?.message ?? "Invalid request" }, { status: 422 });
 
   const { output, review } = generateStaffDebrief(body.data);
-  const result = persistCaraOutput({
+  const result = await persistCaraOutput({
     module: "debrief",
     promptType: "staff_debrief",
     actor,
@@ -22,6 +22,7 @@ export async function POST(req: NextRequest) {
     schema: CaraStaffDebriefOutputSchema,
     output,
     review,
+    enrichWith: `Incident: ${body.data.incidentSummary}`,
   });
   return NextResponse.json({ data: caraResponse(result) }, { status: 201 });
 }
