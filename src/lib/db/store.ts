@@ -3281,9 +3281,10 @@ store.employerValuesProfiles = [
 ];
 
 // ── Safer-recruitment training (panel eligibility for vacancy setup) ─────────
+// APPENDED to the seed-data.ts records (never reassign — that wipes them).
 // Deliberately is_mandatory:false (specialist CPD) so the mandatory-training
 // compliance engines are unaffected by these records.
-store.trainingRecords = [
+store.trainingRecords.push(
   {
     id: "tr_diane_safer_rec",
     staff_id: "staff_diane",
@@ -3338,7 +3339,7 @@ store.trainingRecords = [
     created_by: "staff_darren",
     updated_by: "staff_darren",
   },
-];
+);
 
 // ── Candidate values profiles (overlay the recruitment candidate records) ────
 store.candidateValuesProfiles = [
