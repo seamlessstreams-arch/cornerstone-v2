@@ -9,17 +9,17 @@ import { NextRequest } from "next/server";
 import { db } from "@/lib/db/store";
 import {
   POST as generatePOST,
-} from "@/app/api/v1/aria-studio/generate/route";
+} from "@/app/api/v1/cara-studio/generate/route";
 import {
   POST as artifactsPOST,
-} from "@/app/api/v1/aria-studio/artifacts/route";
+} from "@/app/api/v1/cara-studio/artifacts/route";
 import {
   PATCH as artifactPATCH,
   DELETE as artifactDELETE,
-} from "@/app/api/v1/aria-studio/artifacts/[id]/route";
+} from "@/app/api/v1/cara-studio/artifacts/[id]/route";
 import {
   POST as qualityPOST,
-} from "@/app/api/v1/aria-studio/quality-check/route";
+} from "@/app/api/v1/cara-studio/quality-check/route";
 import { requireAriaStudioPermission } from "@/lib/aria/aria-studio-guard";
 
 function makeReq(url: string, init?: RequestInit): NextRequest {
@@ -34,9 +34,9 @@ function jsonBody(payload: Record<string, unknown>, headers: Record<string, stri
   };
 }
 
-const URL_GEN = "http://test/api/v1/aria-studio/generate";
-const URL_ARTS = "http://test/api/v1/aria-studio/artifacts";
-const URL_QC = "http://test/api/v1/aria-studio/quality-check";
+const URL_GEN = "http://test/api/v1/cara-studio/generate";
+const URL_ARTS = "http://test/api/v1/cara-studio/artifacts";
+const URL_QC = "http://test/api/v1/cara-studio/quality-check";
 
 beforeEach(() => {
   // Force "deny by default" for these tests so we exercise real RBAC.
@@ -165,7 +165,7 @@ describe("Cara Studio guard — denial behaviour", () => {
     });
 
     const res = await artifactPATCH(
-      makeReq(`http://test/api/v1/aria-studio/artifacts/${art.id}`, jsonBody({
+      makeReq(`http://test/api/v1/cara-studio/artifacts/${art.id}`, jsonBody({
         action: "commit",
         actor_id: "tl_1",
         actor_role: "team_leader",
@@ -217,7 +217,7 @@ describe("Cara Studio guard — denial behaviour", () => {
     });
 
     const res = await artifactPATCH(
-      makeReq(`http://test/api/v1/aria-studio/artifacts/${art.id}`, jsonBody({
+      makeReq(`http://test/api/v1/cara-studio/artifacts/${art.id}`, jsonBody({
         action: "approve",
         actor_id: "dep_1",
         actor_role: "deputy_manager",
@@ -271,7 +271,7 @@ describe("Cara Studio guard — denial behaviour", () => {
     });
 
     const res = await artifactDELETE(
-      makeReq(`http://test/api/v1/aria-studio/artifacts/${art.id}`, {
+      makeReq(`http://test/api/v1/cara-studio/artifacts/${art.id}`, {
         method: "DELETE",
         headers: {
           "x-aria-actor-role": "residential_support_worker",

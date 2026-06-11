@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 // ─────────────────────────────────────────────────────────────────────────────
-// POST /api/v1/aria/chat
+// POST /api/v1/cara/chat
 //
 // Lightweight chat endpoint for the Cara drawer.
 // Accepts { context, prompt } and returns { response }.

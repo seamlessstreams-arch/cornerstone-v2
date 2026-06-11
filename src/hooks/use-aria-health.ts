@@ -3,7 +3,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 // useAriaHealth — client hook for Cara diagnostics
 //
-// Fetches from GET /api/v1/aria/health.
+// Fetches from GET /api/v1/cara/health.
 // Results are stale after 5 minutes; refetch manually for deep tests.
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -85,7 +85,7 @@ const QUERY_KEY = ["aria", "health"] as const;
 const STALE_TIME = 5 * 60 * 1000; // 5 minutes
 
 async function fetchAriaHealth(deep = false): Promise<AriaHealthStatus> {
-  const url = `/api/v1/aria/health${deep ? "?deep=true" : ""}`;
+  const url = `/api/v1/cara/health${deep ? "?deep=true" : ""}`;
   const res = await fetch(url, {
     headers: {
       // These headers are populated from the auth context in the UI wrapper.

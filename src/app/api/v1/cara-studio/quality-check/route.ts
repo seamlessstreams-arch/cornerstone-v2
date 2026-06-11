@@ -3,7 +3,7 @@ import { db } from "@/lib/db/store";
 import { runQualityCheck } from "@/lib/aria/aria-studio-quality";
 import { requireAriaStudioPermission } from "@/lib/aria/aria-studio-guard";
 
-// POST /api/v1/aria-studio/quality-check
+// POST /api/v1/cara-studio/quality-check
 // Runs a quality check on an artifact by ID
 export async function POST(req: NextRequest) {
   let body: Record<string, unknown>;

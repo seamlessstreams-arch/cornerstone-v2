@@ -202,7 +202,7 @@ export default function DocumentWizardPage() {
     setStage("classifying");
 
     try {
-      const res = await fetch("/api/v1/aria", {
+      const res = await fetch("/api/v1/cara", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ mode: "document_classify", document_text: text, stream: false }),
@@ -229,7 +229,7 @@ export default function DocumentWizardPage() {
     const text = pasteMode ? pastedText : documentText;
 
     try {
-      const res = await fetch("/api/v1/aria", {
+      const res = await fetch("/api/v1/cara", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ mode: "document_to_form", document_text: text, stream: false }),

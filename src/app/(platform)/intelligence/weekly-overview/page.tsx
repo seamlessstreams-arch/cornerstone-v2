@@ -581,7 +581,7 @@ function AriaWeeklyReportSection() {
     setError(null);
 
     try {
-      const res = await fetch("/api/v1/aria", {
+      const res = await fetch("/api/v1/cara", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -824,7 +824,7 @@ function BulkComputeSection() {
           lines.push("");
         }
 
-        const res = await fetch("/api/v1/aria", {
+        const res = await fetch("/api/v1/cara", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

@@ -23,7 +23,7 @@ export function useSuggestedRecords(
     queryKey: ["aria-suggested-records", homeId, status ?? "all"],
     queryFn: () =>
       api.get<ListResponse<AriaSuggestedRecord>>(
-        `/api/v1/aria-studio/suggested-records?${qs.toString()}`,
+        `/api/v1/cara-studio/suggested-records?${qs.toString()}`,
       ),
     refetchInterval: 60000,
   });
@@ -34,7 +34,7 @@ export function useCommittedRecords(homeId: string) {
     queryKey: ["aria-committed-records", homeId],
     queryFn: () =>
       api.get<ListResponse<AriaCommittedRecord>>(
-        `/api/v1/aria-studio/suggested-records?home_id=${encodeURIComponent(
+        `/api/v1/cara-studio/suggested-records?home_id=${encodeURIComponent(
           homeId,
         )}&committed=1`,
       ),
@@ -58,7 +58,7 @@ export function useProposeSuggestedRecord() {
       actor_role?: string;
     }) =>
       api.post<OneResponse<AriaSuggestedRecord>>(
-        "/api/v1/aria-studio/suggested-records",
+        "/api/v1/cara-studio/suggested-records",
         input,
       ),
     onSuccess: () => {
@@ -79,7 +79,7 @@ export function useEditSuggestedRecord() {
       actor_role?: string;
     }) =>
       api.patch<OneResponse<AriaSuggestedRecord>>(
-        "/api/v1/aria-studio/suggested-records",
+        "/api/v1/cara-studio/suggested-records",
         { ...input, action: "edit" },
       ),
     onSuccess: () => {
@@ -93,7 +93,7 @@ export function useRejectSuggestedRecord() {
   return useMutation({
     mutationFn: (input: { id: string; note?: string; actor_id?: string; actor_role?: string }) =>
       api.patch<OneResponse<AriaSuggestedRecord>>(
-        "/api/v1/aria-studio/suggested-records",
+        "/api/v1/cara-studio/suggested-records",
         { ...input, action: "reject" },
       ),
     onSuccess: () => {
@@ -108,7 +108,7 @@ export function useCommitSuggestedRecord() {
     mutationFn: (input: { id: string; note?: string; actor_id?: string; actor_role?: string }) =>
       api.patch<
         OneResponse<{ suggestion: AriaSuggestedRecord; committed: AriaCommittedRecord }>
-      >("/api/v1/aria-studio/suggested-records", { ...input, action: "commit" }),
+      >("/api/v1/cara-studio/suggested-records", { ...input, action: "commit" }),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["aria-suggested-records"] });
       qc.invalidateQueries({ queryKey: ["aria-committed-records"] });

@@ -271,7 +271,7 @@ export default function OversightRadarPage() {
 
       const context = lines.join("\n");
 
-      const res = await fetch("/api/v1/aria", {
+      const res = await fetch("/api/v1/cara", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

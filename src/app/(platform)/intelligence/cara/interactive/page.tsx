@@ -342,7 +342,7 @@ function SessionSummary({
     setGeneratingSummary(true);
     try {
       const context = responses.map((r) => `${r.activity_title}: ${r.response_type === "declined" ? "Declined" : (r.child_words ?? r.response_value ?? "")}${r.staff_observation ? ` [Staff: ${r.staff_observation}]` : ""}`).join("\n");
-      const res = await fetch("/api/v1/aria", {
+      const res = await fetch("/api/v1/cara", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

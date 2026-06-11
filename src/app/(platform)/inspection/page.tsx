@@ -88,7 +88,7 @@ function NarrativeGenerator() {
     abortRef.current = new AbortController();
 
     try {
-      const response = await fetch("/api/v1/aria", {
+      const response = await fetch("/api/v1/cara", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         signal: abortRef.current.signal,
