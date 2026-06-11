@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
   if (!ctx.childId) return NextResponse.json({ error: "Child not found" }, { status: 404 });
 
   const { output, review } = generateCaraCurriculumMap({ ctx, ...body.data });
-  const result = persistCaraOutput({
+  const result = await persistCaraOutput({
     module: "curriculum",
     promptType: "curriculum_map",
     actor,
@@ -25,6 +25,7 @@ export async function POST(req: NextRequest) {
     schema: CaraCurriculumMapOutputSchema,
     output,
     review,
+    enrichWith: ctx.contextText,
   });
   return NextResponse.json({ data: caraResponse(result) }, { status: 201 });
 }

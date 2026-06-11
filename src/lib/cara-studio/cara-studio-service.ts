@@ -19,6 +19,8 @@ import {
   persistCaraAiRun,
   persistCaraGuardrailEvent,
 } from "@/lib/supabase/cara-persist";
+import { getCaraAIProvider } from "./ai-provider";
+import { decideEnrichment, enrichmentPrompt } from "./cara-enrichment";
 import { buildChildContext, type CaraChildContext } from "./cara-context-builder";
 import { runCaraGuardrails } from "./cara-guardrails";
 import type {
@@ -88,6 +90,9 @@ export interface PersistParams<T> {
   schema: z.ZodType<T>;
   output: T & { managerReviewNeeded: boolean };
   review: ManagerReviewDecision;
+  /** Child context text — when set, the LLM may re-voice the scaffold
+   *  (enrichment is discarded if it fails the schema or any guardrail). */
+  enrichWith?: string;
   llmUsed?: boolean;
   modelUsed?: string;
 }
@@ -98,10 +103,31 @@ export interface PersistResult<T> {
   blocked: boolean;
 }
 
-export function persistCaraOutput<T>(params: PersistParams<T>): PersistResult<T> {
+export async function persistCaraOutput<T>(params: PersistParams<T>): Promise<PersistResult<T>> {
+  // 0. Optional LLM enrichment — re-voices the safe scaffold for this child.
+  //    The candidate is discarded unless it passes the schema AND guardrails,
+  //    and it can never relax managerReviewNeeded. No key → clean no-op.
+  let output = params.output;
+  let llmUsed = params.llmUsed ?? false;
+  let modelUsed = params.modelUsed ?? "deterministic";
+  if (params.enrichWith !== undefined) {
+    const gen = await getCaraAIProvider().generateStructured({
+      schema: params.schema,
+      schemaName: `${params.module}_output`,
+      prompt: enrichmentPrompt(params.module, params.enrichWith, JSON.stringify(params.output)),
+      temperature: 0.5,
+    });
+    const decision = decideEnrichment(params.output, (gen.value as typeof params.output | null) ?? null);
+    output = decision.output;
+    if (decision.llmUsed) {
+      llmUsed = true;
+      modelUsed = gen.modelId;
+    }
+  }
+
   // 1. Zod validation — generators are typed, but this is the contract gate
-  //    (and the gate for future LLM-enriched outputs).
-  const parsed = params.schema.safeParse(params.output);
+  //    (and the gate for LLM-enriched outputs).
+  const parsed = params.schema.safeParse(output);
   if (!parsed.success) {
     throw new Error(`Cara output failed ${params.module} schema validation: ${parsed.error.issues[0]?.message ?? "unknown"}`);
   }
@@ -111,7 +137,7 @@ export function persistCaraOutput<T>(params: PersistParams<T>): PersistResult<T>
   const blocked = guardrails.action === "block_pending_review";
 
   // 3. Merge §23 review with guardrail outcome — either source can require it.
-  const reviewRequired = params.review.required || params.output.managerReviewNeeded || guardrails.action !== "allow";
+  const reviewRequired = params.review.required || output.managerReviewNeeded || guardrails.action !== "allow";
   const reasons = [
     ...params.review.reasons,
     ...guardrails.flags.map((f) => `Guardrail: ${f.risk_type} (${f.severity})`),
@@ -129,7 +155,7 @@ export function persistCaraOutput<T>(params: PersistParams<T>): PersistResult<T>
     manager_review_reasons: [...new Set(reasons)],
     guardrail_severity: guardrails.severity,
     guardrail_flags: guardrails.flags,
-    llm_used: params.llmUsed ?? false,
+    llm_used: llmUsed,
     created_by: params.actor.userId,
     reviewed_by: null,
     reviewed_at: null,
@@ -150,8 +176,8 @@ export function persistCaraOutput<T>(params: PersistParams<T>): PersistResult<T>
     input_summary: params.inputSummary.slice(0, 300),
     output_id: saved.id,
     safety_flags: guardrails.flags.map((f) => f.risk_type),
-    model_used: params.modelUsed ?? "deterministic",
-    llm_used: params.llmUsed ?? false,
+    model_used: modelUsed,
+    llm_used: llmUsed,
     human_review_required: reviewRequired,
     created_at: now,
   });

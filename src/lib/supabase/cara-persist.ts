@@ -77,6 +77,31 @@ export async function persistCaraStudioReview(o: CaraSavedOutput): Promise<void>
   }
 }
 
+/** Upsert the child's learning profile (matched by child_id; 411 table). */
+export async function persistCaraLearningProfile(p: {
+  child_id: string;
+  [key: string]: unknown;
+}): Promise<void> {
+  if (!isSupabaseEnabled()) return;
+  const c = createServerClient();
+  if (!c) return;
+  try {
+    const { id: _id, child_id, created_by, updated_by, created_at, updated_at, ...fields } = p as Record<string, unknown>;
+    const { data } = await raw(c)
+      .from("cara_child_learning_profiles")
+      .select("id")
+      .eq("child_id", child_id)
+      .maybeSingle();
+    if (data?.id) {
+      await raw(c).from("cara_child_learning_profiles").update({ ...fields, updated_at }).eq("id", data.id);
+    } else {
+      await raw(c).from("cara_child_learning_profiles").insert({ ...fields, child_id, home_id: homeId(), created_at, updated_at });
+    }
+  } catch {
+    // best-effort
+  }
+}
+
 /** Append the AI-run audit row (maps onto migration 411 cara_ai_runs). */
 export async function persistCaraAiRun(r: CaraAiRun): Promise<void> {
   if (!isSupabaseEnabled()) return;
