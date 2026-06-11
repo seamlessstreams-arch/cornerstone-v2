@@ -1,0 +1,23 @@
+{
+  "id": "/fiwi",
+  "name": "FiWi TV — Live TV, Movies & Series",
+  "short_name": "FiWi TV",
+  "description": "A beautiful streaming app for your IPTV subscription: live TV with a full guide, plus on-demand films and box sets.",
+  "start_url": "/fiwi",
+  "scope": "/fiwi",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#07090f",
+  "theme_color": "#07090f",
+  "categories": ["entertainment", "video", "lifestyle"],
+  "icons": [
+    { "src": "/fiwi/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "/fiwi/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Live TV", "short_name": "Live", "url": "/fiwi/live" },
+    { "name": "Movies", "short_name": "Movies", "url": "/fiwi/movies" },
+    { "name": "Series", "short_name": "Series", "url": "/fiwi/series" },
+    { "name": "Search", "short_name": "Search", "url": "/fiwi/search" }
+  ]
+}

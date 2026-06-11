@@ -1,0 +1,141 @@
+/* ══════════════════════════════════════════════════════════════════════════════
+   FiWi TV — cinematic theme
+   Scoped under .fiwi so none of this leaks into Cara OS's calm light palette.
+   A dark, premium broadcaster look (Sky/Virgin live + Netflix VOD).
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+.fiwi {
+  --fw-bg: #07090f;
+  --fw-bg-2: #0c1018;
+  --fw-surface: #11141d;
+  --fw-surface-2: #171b27;
+  --fw-elevated: #1d2130;
+  --fw-border: #262b3a;
+  --fw-border-soft: #1b1f2b;
+
+  --fw-text: #f4f6fb;
+  --fw-text-2: #b7bdcc;
+  --fw-text-3: #7c8499;
+
+  /* FiWi signature — electric magenta→indigo with a cyan spark */
+  --fw-brand: #ff2e88;
+  --fw-brand-2: #7b2ff7;
+  --fw-accent: #19d3e2;
+  --fw-live: #ff3b3b;
+  --fw-gold: #f5c451;
+
+  --fw-grad-brand: linear-gradient(120deg, #ff2e88 0%, #7b2ff7 60%, #4f46e5 100%);
+  --fw-grad-sheen: linear-gradient(120deg, rgba(255, 46, 136, 0.18), rgba(123, 47, 247, 0.18));
+
+  color: var(--fw-text);
+  background: var(--fw-bg);
+  font-family: var(--font-sans);
+  min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Ambient backdrop glow behind the app shell */
+.fiwi-shell {
+  position: relative;
+  min-height: 100dvh;
+  background:
+    radial-gradient(1200px 600px at 85% -10%, rgba(123, 47, 247, 0.16), transparent 60%),
+    radial-gradient(1000px 500px at 0% 0%, rgba(255, 46, 136, 0.12), transparent 55%),
+    var(--fw-bg);
+}
+
+.fiwi-glass {
+  background: color-mix(in srgb, var(--fw-surface) 78%, transparent);
+  backdrop-filter: blur(14px) saturate(1.3);
+  -webkit-backdrop-filter: blur(14px) saturate(1.3);
+}
+
+.fiwi-brandtext {
+  background: var(--fw-grad-brand);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Hide scrollbars on the horizontal rails but keep them scrollable */
+.fiwi-rail {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.fiwi-rail::-webkit-scrollbar {
+  display: none;
+}
+
+/* Poster placeholder — deterministic gradient when no artwork is supplied */
+.fiwi-poster-ph {
+  position: relative;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+}
+.fiwi-poster-ph::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(0, 0, 0, 0.72) 100%);
+}
+
+/* Card hover lift */
+.fiwi-card {
+  transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.22s ease, outline-color 0.2s;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+.fiwi-card:hover,
+.fiwi-card:focus-visible {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 18px 40px -16px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.06);
+  outline-color: rgba(255, 255, 255, 0.85);
+  z-index: 5;
+}
+
+/* Skeleton shimmer */
+@keyframes fiwi-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.fiwi-skeleton {
+  background: linear-gradient(90deg, var(--fw-surface) 25%, var(--fw-surface-2) 37%, var(--fw-surface) 63%);
+  background-size: 200% 100%;
+  animation: fiwi-shimmer 1.4s ease-in-out infinite;
+}
+
+/* Live "now" pulse */
+@keyframes fiwi-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.55; transform: scale(0.82); }
+}
+.fiwi-livedot {
+  animation: fiwi-pulse 1.8s ease-in-out infinite;
+}
+
+/* EPG progress underline */
+.fiwi-epg-now {
+  background: linear-gradient(90deg, rgba(255, 46, 136, 0.22), rgba(123, 47, 247, 0.18));
+  border-color: rgba(255, 46, 136, 0.5) !important;
+}
+
+/* Player controls fade */
+.fiwi-player-controls {
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.25) 55%, transparent 100%);
+  transition: opacity 0.25s ease;
+}
+
+/* Hero ken-burns drift */
+@keyframes fiwi-kenburns {
+  from { transform: scale(1.05); }
+  to { transform: scale(1.16); }
+}
+.fiwi-kenburns {
+  animation: fiwi-kenburns 22s ease-in-out infinite alternate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fiwi-kenburns, .fiwi-livedot, .fiwi-skeleton { animation: none; }
+  .fiwi-card { transition: none; }
+}

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ff2e88"/>
+      <stop offset="0.6" stop-color="#7b2ff7"/>
+      <stop offset="1" stop-color="#4f46e5"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="#07090f"/>
+  <g fill="none" stroke="url(#g)" stroke-linecap="round">
+    <path d="M150 330 Q200 150 250 330" stroke-width="26"/>
+    <path d="M120 360 Q200 110 280 360" stroke-width="26" opacity="0.5"/>
+  </g>
+  <circle cx="200" cy="372" r="22" fill="url(#g)"/>
+  <text x="300" y="320" font-family="Avenir Next, Arial, sans-serif" font-size="150" font-weight="800" fill="url(#g)" text-anchor="middle">TV</text>
+</svg>
