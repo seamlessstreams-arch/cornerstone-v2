@@ -6,28 +6,13 @@
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { NextResponse } from "next/server";
-import { db } from "@/lib/db/store";
-import {
-  computeSaferRecruitmentCommand,
-  type CommandCandidateInput,
-} from "@/lib/engines/safer-recruitment-command-engine";
+import { computeSaferRecruitmentCommand } from "@/lib/engines/safer-recruitment-command-engine";
+import { assembleCommandCandidates } from "@/lib/safer-recruitment/command-data";
 
 export const dynamic = "force-dynamic";
 
 export async function GET() {
   const today = new Date().toISOString().slice(0, 10);
-
-  const candidates: CommandCandidateInput[] = db.candidateProfiles.findAll().map((profile) => ({
-    profile,
-    vacancy: profile.vacancy_id ? db.vacancies.findById(profile.vacancy_id) ?? null : null,
-    checks: db.candidateChecks.findByCandidate(profile.id),
-    references: db.candidateReferences.findByCandidate(profile.id),
-    employment_history: db.employmentHistory.findByCandidate(profile.id),
-    gaps: db.gapExplanations.findByCandidate(profile.id),
-    interviews: db.candidateInterviews.findByCandidate(profile.id),
-    offer: db.conditionalOffers.findByCandidate(profile.id) ?? null,
-  }));
-
-  const result = computeSaferRecruitmentCommand({ today, candidates });
+  const result = computeSaferRecruitmentCommand({ today, candidates: assembleCommandCandidates() });
   return NextResponse.json({ data: result });
 }
