@@ -4,6 +4,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { db } from "@/lib/db/store";
 import { actorFromHeaders, canApprove } from "@/lib/cara-studio/cara-studio-service";
+import { persistCaraStudioReview } from "@/lib/supabase/cara-persist";
 
 export const dynamic = "force-dynamic";
 
@@ -32,5 +33,6 @@ export async function PATCH(req: NextRequest, ctx: { params: Promise<{ id: strin
     reviewed_at: now,
     review_note: body.note ?? null,
   });
+  if (updated) void persistCaraStudioReview(updated); // durable when Supabase is on
   return NextResponse.json({ data: updated });
 }

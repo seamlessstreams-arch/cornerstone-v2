@@ -666,6 +666,7 @@ export const NAV_GROUPS: NavGroup[] = [
     module: "dashboard",
     children: [
       { label: "Settings", href: "/settings", icon: "Settings", module: "dashboard" },
+      { label: "Data Persistence", href: "/data-persistence", icon: "Database", module: "dashboard" },
     ],
   },
 ];
