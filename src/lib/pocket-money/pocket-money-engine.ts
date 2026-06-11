@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Pocket Money & Savings Engine
+// Cara Pocket Money & Savings Engine
 //
 // Deterministic engine for tracking children's financial entitlements,
 // pocket money, savings, clothing allowances, birthday/festival money,

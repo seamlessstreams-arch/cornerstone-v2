@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PRIORITY CARD
+// CARA — PRIORITY CARD
 // Used in "What Needs Attention" zone of the Command Centre.
 // Each card is a self-contained call to action.
 // ══════════════════════════════════════════════════════════════════════════════

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF CONFIDENCE INDICATOR SERVICE TESTS
+// CARA — STAFF CONFIDENCE INDICATOR SERVICE TESTS
 // Pure-function unit tests for confidence indicator metrics computation and
 // alert identification.
 // CHR 2015 Reg 33 (monitoring the home), Reg 34 (employment of staff),

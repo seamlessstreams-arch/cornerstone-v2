@@ -349,7 +349,7 @@ import type {
 } from "@/types/intelligence.layer";
 
 /* ══════════════════════════════════════════════════════════════════════════════
-   CORNERSTONE — MANAGER CONTROL CENTRE
+   CARA — MANAGER CONTROL CENTRE
    Registered Manager's single-pane-of-glass for oversight and compliance.
    ══════════════════════════════════════════════════════════════════════════════ */
 
@@ -417,7 +417,7 @@ const CATEGORY_META: Record<AttentionCategory, { label: string; badge: string; i
   task_overdue:          { label: "Task Overdue",          badge: "bg-stone-100 text-stone-800",   icon: Clock },
   staff_debrief:         { label: "Staff Debrief",         badge: "bg-blue-100 text-blue-800",     icon: Users },
   document_sign_off:     { label: "Document Sign-off",     badge: "bg-zinc-100 text-zinc-800",     icon: ClipboardList },
-  aria_pattern:          { label: "ARIA Pattern",          badge: "bg-purple-100 text-purple-800", icon: Brain },
+  aria_pattern:          { label: "Cara Pattern",          badge: "bg-purple-100 text-purple-800", icon: Brain },
 };
 
 const STATUS_LABELS: Record<AttentionStatus, string> = {
@@ -477,7 +477,7 @@ const CATEGORY_OPTIONS: { value: AttentionCategory; label: string }[] = [
   { value: "task_overdue", label: "Task Overdue" },
   { value: "staff_debrief", label: "Staff Debrief" },
   { value: "document_sign_off", label: "Document Sign-off" },
-  { value: "aria_pattern", label: "ARIA Pattern" },
+  { value: "aria_pattern", label: "Cara Pattern" },
 ];
 
 /* ══════════════════════════════════════════════════════════════════════════════
@@ -493,7 +493,7 @@ export default function ManagerControlCentrePage() {
   const { data: voiceData } = useVoiceEntries();
   const { data: evidenceData } = useEvidenceItems();
 
-  // ── ARIA proactive alert engine ─────────────────────────────────────────
+  // ── Cara proactive alert engine ─────────────────────────────────────────
   const { data: incidentsData } = useIncidents();
   const { data: ypData }        = useYoungPeople();
   const { data: kwData }        = useKeyWorkingSessions();
@@ -567,7 +567,7 @@ export default function ManagerControlCentrePage() {
     }
   }, [apiData]);
 
-  // Merge live ARIA proactive alerts into the attention items list
+  // Merge live Cara proactive alerts into the attention items list
   useEffect(() => {
     if (ariaAlerts.length === 0) return;
     const severityToUrgency = (s: string): Urgency =>
@@ -734,7 +734,7 @@ export default function ManagerControlCentrePage() {
         ))}
       </div>
 
-      {/* ── ARIA Daily Intelligence Brief ─────────────────────────────────── */}
+      {/* ── Cara Daily Intelligence Brief ─────────────────────────────────── */}
       <AriaDailyIntelligence className="mb-6" />
 
       {/* ── cross-module intelligence ─────────────────────────────────────── */}
@@ -790,13 +790,13 @@ export default function ManagerControlCentrePage() {
         </Card>
       </div>
 
-      {/* ── ARIA proactive intelligence panel ─────────────────────────────── */}
+      {/* ── Cara proactive intelligence panel ─────────────────────────────── */}
       {ariaAlerts.length > 0 && (
         <div className="rounded-xl border border-violet-200 bg-violet-50 p-4 mb-4 flex items-start gap-3">
           <Brain className="h-5 w-5 text-violet-600 shrink-0 mt-0.5" />
           <div className="flex-1 min-w-0">
             <p className="text-sm font-semibold text-violet-900">
-              ARIA has detected {ariaAlerts.length} proactive {ariaAlerts.length === 1 ? "alert" : "alerts"} from live records
+              Cara has detected {ariaAlerts.length} proactive {ariaAlerts.length === 1 ? "alert" : "alerts"} from live records
             </p>
             <p className="text-xs text-violet-700 mt-0.5">
               {ariaAlerts.filter((a) => a.severity === "urgent").length} urgent ·{" "}
@@ -805,7 +805,7 @@ export default function ManagerControlCentrePage() {
               patterns, voice gaps and compliance concerns surfaced automatically
             </p>
           </div>
-          <Link href="/intelligence/aria/pattern-intelligence">
+          <Link href="/intelligence/cara/pattern-intelligence">
             <Button size="sm" variant="outline" className="gap-1.5 text-violet-700 border-violet-300 hover:bg-violet-100 shrink-0">
               <ArrowUpRight className="h-3.5 w-3.5" />
               View all
@@ -1083,7 +1083,7 @@ export default function ManagerControlCentrePage() {
                       </Button>
                       <Button variant="outline" size="sm" className="gap-1.5 border-indigo-200 text-indigo-700 hover:bg-indigo-50">
                         <Sparkles className="h-3.5 w-3.5" />
-                        Request ARIA Draft
+                        Request Cara Draft
                       </Button>
                       <Button
                         variant="outline"
@@ -1436,7 +1436,7 @@ export default function ManagerControlCentrePage() {
           Reg 40 (notifications), Reg 44 (independent person visits), Reg 45 (review of quality of care).
           The Manager Control Centre surfaces items requiring oversight by the Registered Manager as required
           under the social care common inspection framework. Quality Standards 1–6 are monitored through
-          category-specific attention items. Items marked as ARIA patterns are generated by the platform&apos;s
+          category-specific attention items. Items marked as Cara patterns are generated by the platform&apos;s
           intelligence layer and require human review before any action is taken.
         </p>
       </div>

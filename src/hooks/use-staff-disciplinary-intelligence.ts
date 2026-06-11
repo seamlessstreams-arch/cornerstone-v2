@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF DISCIPLINARY INTELLIGENCE HOOK
+// CARA — STAFF DISCIPLINARY INTELLIGENCE HOOK
 // React Query wrapper for /api/v1/staff-disciplinary-intelligence
 // ══════════════════════════════════════════════════════════════════════════════
 

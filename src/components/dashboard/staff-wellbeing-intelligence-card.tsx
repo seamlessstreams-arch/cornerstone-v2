@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF WELLBEING INTELLIGENCE CARD
+// CARA — STAFF WELLBEING INTELLIGENCE CARD
 // Real-time workforce wellbeing, burnout risk, and home resilience dashboard.
 // CHR 2015 Reg 33 (employment of staff), Reg 34 (leadership qualities).
 // SCCIF: Leadership & Management.
@@ -264,12 +264,12 @@ export function StaffWellbeingIntelligenceCard() {
           </div>
         </div>
 
-        {/* ARIA Insights */}
+        {/* Cara Insights */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Wellbeing Intelligence
+              Cara Wellbeing Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

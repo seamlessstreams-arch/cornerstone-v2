@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA Studio — Regulation 45 Report Builder
+// Cara Studio — Regulation 45 Report Builder
 //
 // Composes a draft Regulation 45 report from manager-accepted /
-// included-in-report evidence chips. ARIA produces draft narrative;
+// included-in-report evidence chips. Cara produces draft narrative;
 // the manager edits, reviews, approves and locks. Locked reports are
 // immutable and feed Annex A Section 9 evidence.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -72,7 +72,7 @@ function buildExecutiveSummary(
     `Regulation 45 review for ${homeId} covering ${periodStart} to ${periodEnd}.`,
     `Drawn from ${items.length} item(s) of manager-accepted evidence across ${themesActive} theme(s).`,
     `${concerns} item(s) flagged as concerns, ${positives} item(s) flagged as positive practice.`,
-    "ARIA has drafted the narrative; the Registered Manager is responsible for reviewing, editing, approving and locking the final report before it is shared.",
+    "Cara has drafted the narrative; the Registered Manager is responsible for reviewing, editing, approving and locking the final report before it is shared.",
   ].join(" ");
 }
 

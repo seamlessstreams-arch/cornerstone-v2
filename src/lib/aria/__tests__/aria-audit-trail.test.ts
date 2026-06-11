@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA Audit Trail — engine tests (Milestone 11)
+// Cara Audit Trail — engine tests (Milestone 11)
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect, beforeEach } from "vitest";

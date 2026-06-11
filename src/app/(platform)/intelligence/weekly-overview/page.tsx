@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — WEEKLY INTELLIGENCE OVERVIEW
+// CARA — WEEKLY INTELLIGENCE OVERVIEW
 // Comprehensive management report: aggregated intelligence snapshot for the week.
 // For Registered Managers — Chamberlain House.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -392,7 +392,7 @@ function PatternAlertsSection() {
           <div className="flex flex-col items-center gap-2 py-8 text-center">
             <CheckCircle2 className="h-10 w-10 text-slate-200" />
             <p className="text-sm text-[var(--cs-text-muted)]">No active pattern alerts</p>
-            <p className="text-xs text-[var(--cs-text-muted)]">ARIA is monitoring for emerging patterns</p>
+            <p className="text-xs text-[var(--cs-text-muted)]">Cara is monitoring for emerging patterns</p>
           </div>
         ) : (
           <div className="space-y-3">
@@ -565,7 +565,7 @@ function ActionsTrackerSection() {
   );
 }
 
-// ── Section E: ARIA Weekly Report Generator ───────────────────────────────────
+// ── Section E: Cara Weekly Report Generator ───────────────────────────────────
 
 function AriaWeeklyReportSection() {
   const [isGenerating, setIsGenerating] = useState(false);
@@ -597,7 +597,7 @@ function AriaWeeklyReportSection() {
       });
 
       if (!res.ok || !res.body) {
-        throw new Error(`ARIA returned ${res.status}`);
+        throw new Error(`Cara returned ${res.status}`);
       }
 
       const reader  = res.body.getReader();
@@ -659,7 +659,7 @@ function AriaWeeklyReportSection() {
       <CardHeader className="pb-3">
         <CardTitle className="text-sm font-semibold flex items-center gap-2">
           <Sparkles className="h-4 w-4 text-[var(--cs-aria-gold)]" />
-          ARIA Weekly Report
+          Cara Weekly Report
           {isDone && rawOutput && (
             <Badge className="ml-auto bg-emerald-100 text-emerald-700 border-0 text-[10px] rounded-full">
               <CheckCircle2 className="h-3 w-3 mr-1" />Generated
@@ -670,7 +670,7 @@ function AriaWeeklyReportSection() {
       <CardContent className="space-y-4">
         {!rawOutput && !isGenerating && (
           <div className="rounded-xl bg-[var(--cs-aria-gold-bg)] border border-[var(--cs-aria-gold-soft)] p-4 text-xs text-[var(--cs-aria-gold)] leading-relaxed">
-            ARIA will generate a comprehensive management narrative covering home climate, pattern alerts,
+            Cara will generate a comprehensive management narrative covering home climate, pattern alerts,
             wellbeing scores, outstanding actions, and children&apos;s voice coverage for the week.
           </div>
         )}
@@ -712,7 +712,7 @@ function AriaWeeklyReportSection() {
           {isGenerating ? (
             <><Loader2 className="h-4 w-4 mr-2 animate-spin" />Generating...</>
           ) : (
-            <><Sparkles className="h-4 w-4 mr-2" />{rawOutput ? "Re-generate Report" : "Generate ARIA Weekly Report"}</>
+            <><Sparkles className="h-4 w-4 mr-2" />{rawOutput ? "Re-generate Report" : "Generate Cara Weekly Report"}</>
           )}
         </Button>
       </CardContent>
@@ -843,7 +843,7 @@ function BulkComputeSection() {
         const json = await res.json();
         const parsed = json?.data?.parsed;
         if (!parsed || typeof parsed !== "object") {
-          throw new Error(`${child.name}: ARIA did not return valid JSON`);
+          throw new Error(`${child.name}: Cara did not return valid JSON`);
         }
 
         await createSnapshot.mutateAsync({
@@ -862,7 +862,7 @@ function BulkComputeSection() {
           stability_score:     Number(parsed.stability_score     ?? 50),
           achievement_score:   Number(parsed.achievement_score   ?? 50),
           overall_score:       Number(parsed.overall_score       ?? 50),
-          narrative:           parsed.narrative ?? "ARIA analysis complete.",
+          narrative:           parsed.narrative ?? "Cara analysis complete.",
           trend:               parsed.trend ?? "stable",
           strengths:           Array.isArray(parsed.strengths) ? parsed.strengths : [],
           concerns:            Array.isArray(parsed.concerns)  ? parsed.concerns  : [],
@@ -913,7 +913,7 @@ function BulkComputeSection() {
       <CardContent className="space-y-3">
         {state === "idle" && progress.length === 0 && (
           <p className="text-xs text-[var(--cs-text-muted)] leading-relaxed">
-            Ask ARIA to compute fresh wellbeing snapshots for all three children simultaneously,
+            Ask Cara to compute fresh wellbeing snapshots for all three children simultaneously,
             using their latest voice records, interventions, and practice bank data as context.
           </p>
         )}
@@ -970,7 +970,7 @@ export default function WeeklyOverviewPage() {
         {/* D: Actions tracker */}
         <ActionsTrackerSection />
 
-        {/* E: ARIA weekly report */}
+        {/* E: Cara weekly report */}
         <AriaWeeklyReportSection />
 
         {/* F: Bulk compute snapshots */}

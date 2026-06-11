@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF CONFLICT OF INTEREST SERVICE TESTS
+// CARA — STAFF CONFLICT OF INTEREST SERVICE TESTS
 // Pure-function tests for conflict metrics, alert identification,
-// ARIA insight generation, and edge cases.
+// Cara insight generation, and edge cases.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";

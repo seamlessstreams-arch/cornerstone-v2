@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILDREN'S MEETINGS INTELLIGENCE CARD
+// CARA — CHILDREN'S MEETINGS INTELLIGENCE CARD
 // Dashboard card for house meetings, children's council, and participation.
 // Powered by the Contact Engagement Intelligence Engine — live data.
 // CHR 2015 Reg 7, Reg 10, Reg 16.
@@ -182,13 +182,13 @@ export function ChildrensMeetingsCard() {
           </div>
         )}
 
-        {/* ── ARIA Meeting Intelligence ───────────────────────────────── */}
+        {/* ── Cara Meeting Intelligence ───────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Meeting Intelligence
+              Cara Meeting Intelligence
             </p>
             {intel.insights.slice(0, 2).map((insight, i) => (
               <div

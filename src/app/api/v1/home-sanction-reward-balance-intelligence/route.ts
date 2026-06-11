@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SANCTION & REWARD BALANCE INTELLIGENCE API ROUTE
+// CARA — HOME SANCTION & REWARD BALANCE INTELLIGENCE API ROUTE
 // GET /api/v1/home-sanction-reward-balance-intelligence
 // Synthesises sanction/reward records to assess reward-to-sanction ratio,
 // proportionality, child voice, documentation, equity, and outcome tracking.

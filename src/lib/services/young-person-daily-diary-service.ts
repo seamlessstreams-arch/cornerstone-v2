@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — YOUNG PERSON DAILY DIARY SERVICE
+// CARA — YOUNG PERSON DAILY DIARY SERVICE
 // Structured daily diary entries from young people themselves — capturing
 // their voice, feelings, experiences, and reflections. The child's own
 // account of their day.

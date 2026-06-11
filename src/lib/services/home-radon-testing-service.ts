@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME RADON TESTING SERVICE
+// CARA — HOME RADON TESTING SERVICE
 // Tracks radon gas testing, levels, and mitigation measures for the
 // residential home. UK PHE/UKHSA radon action level compliance.
 //

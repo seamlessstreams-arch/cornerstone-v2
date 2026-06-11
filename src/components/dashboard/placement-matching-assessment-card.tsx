@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PLACEMENT MATCHING ASSESSMENT CARD
+// CARA — PLACEMENT MATCHING ASSESSMENT CARD
 // Live data from usePlacementStability() — children, disruption indicators.
 // CHR 2015 Reg 36. SCCIF: Leadership & Management.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -96,13 +96,13 @@ export function PlacementMatchingAssessmentCard() {
           </div>
         )}
 
-        {/* ── ARIA insights ───────────────────────────────────────────── */}
+        {/* ── Cara insights ───────────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Matching Intelligence
+              Cara Matching Intelligence
             </p>
             {intel.insights.slice(0, 2).map((insight, i) => (
               <div

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD WELLBEING CHECK-IN INTELLIGENCE CARD
+// CARA — CHILD WELLBEING CHECK-IN INTELLIGENCE CARD
 // Live data from health & wellbeing engine.
 // CHR 2015 Reg 7/10. SCCIF: Overall Experiences.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -152,12 +152,12 @@ export function ChildWellbeingCheckinCard() {
           </div>
         )}
 
-        {/* ARIA insights */}
+        {/* Cara insights */}
         {insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Wellbeing Intelligence
+              Cara Wellbeing Intelligence
             </p>
             {insights.map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

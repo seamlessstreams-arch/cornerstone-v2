@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HEALTH & WELLBEING HOOK
+// CARA — HEALTH & WELLBEING HOOK
 // React Query wrapper for /api/v1/health-wellbeing
 // ══════════════════════════════════════════════════════════════════════════════
 

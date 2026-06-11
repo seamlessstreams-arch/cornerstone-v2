@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME EMERGENCY PREPAREDNESS INTELLIGENCE ENGINE
+// CARA — HOME EMERGENCY PREPAREDNESS INTELLIGENCE ENGINE
 // Home-level: analyses emergency plans, protocol drills, and home policies to
 // assess readiness for emergencies, policy compliance, drill coverage, and
 // staff acknowledgement rates.

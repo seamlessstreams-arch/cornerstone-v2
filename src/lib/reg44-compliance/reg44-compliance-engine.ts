@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Reg 44 Compliance Intelligence Engine
+// Cara — Reg 44 Compliance Intelligence Engine
 //
 // Pure deterministic engine. No AI, no external calls, no side-effects.
 //

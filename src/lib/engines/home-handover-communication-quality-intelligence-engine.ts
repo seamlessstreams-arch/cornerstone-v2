@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME HANDOVER & COMMUNICATION QUALITY INTELLIGENCE ENGINE
+// CARA — HOME HANDOVER & COMMUNICATION QUALITY INTELLIGENCE ENGINE
 // Measures shift handover quality, communication log completeness,
 // critical information transfer, handover timeliness, staff satisfaction
 // with handovers, and handover action completion across the home.

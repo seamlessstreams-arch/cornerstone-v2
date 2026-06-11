@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF RETURN-TO-WORK INTERVIEW SERVICE
+// CARA — STAFF RETURN-TO-WORK INTERVIEW SERVICE
 // Tracks return-to-work interviews after staff absences, support plans,
 // phased returns, adjustments, occupational health referrals, and trigger
 // level management.
@@ -204,7 +204,7 @@ export function computeAlerts(rows: StaffReturnToWorkInterviewRow[]): {
 }
 
 /**
- * Generate ARIA intelligence insights for return-to-work interviews.
+ * Generate Cara intelligence insights for return-to-work interviews.
  * Returns 3 strings: summary, priority items, reflective question.
  */
 export function computeAriaInsights(

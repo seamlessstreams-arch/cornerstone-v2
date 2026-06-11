@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Trauma-Informed Care Intelligence — Public API
+// Cara Trauma-Informed Care Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

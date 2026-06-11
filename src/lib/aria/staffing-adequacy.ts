@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — STAFFING ADEQUACY ANALYSER
+// Cara — STAFFING ADEQUACY ANALYSER
 //
 // Assesses whether current and upcoming staffing levels meet:
 //   - Regulatory minimums (CHR 2015 Reg 22: Employment of staff)

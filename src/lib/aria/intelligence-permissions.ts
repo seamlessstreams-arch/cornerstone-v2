@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA INTELLIGENCE — RBAC PERMISSIONS
+// Cara INTELLIGENCE — RBAC PERMISSIONS
 //
 // Permission gates for the intelligence layer. These should be integrated
-// with Cornerstone's existing RBAC system.
+// with Cara's existing RBAC system.
 // ══════════════════════════════════════════════════════════════════════════════
 
 export const ARIA_INTELLIGENCE_PERMISSIONS = {

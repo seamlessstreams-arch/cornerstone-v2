@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EVENT TYPE DISPLAY METADATA
+// CARA — EVENT TYPE DISPLAY METADATA
 // Single source of truth for how CornerstoneEvent types render in the UI. Both
 // maps are exhaustive Record<CornerstoneEventType, string>, so adding a new event
 // type forces a label here — no more snake_case leaking into the timeline.

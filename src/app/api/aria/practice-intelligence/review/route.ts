@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // PATCH /api/aria/practice-intelligence/review
 //
-// Manager review of ARIA output — persists decisions + rationale (audit trail):
+// Manager review of Cara output — persists decisions + rationale (audit trail):
 //   • { entity: "flag",       id, rationale }            → resolve a flag (never deleted)
 //   • { entity: "assessment", id, decision, rationale }  → record manager decision
 //   • { entity: "threshold",  id, decision, rationale }  → record threshold decision
@@ -24,13 +24,13 @@ export async function PATCH(req: Request) {
     return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
   }
 
-  // Role gate — only managers/RI/deputy may approve/close ARIA output.
+  // Role gate — only managers/RI/deputy may approve/close Cara output.
   const appRole = getUserRoleFromRequest(req);
   const userId = getUserIdFromRequest(req);
   const ariaRole = appRoleToAriaRole(appRole);
   const access = checkAriaAccess({ userId, role: ariaRole, staffSelfId: userId }, { permission: "aria.approve_outputs" });
   if (!access.allowed) {
-    return NextResponse.json({ error: access.reason ?? "Reviewing ARIA output requires manager approval rights." }, { status: 403 });
+    return NextResponse.json({ error: access.reason ?? "Reviewing Cara output requires manager approval rights." }, { status: 403 });
   }
 
   const v = validateReview(body);

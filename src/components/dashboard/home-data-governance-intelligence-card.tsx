@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME DATA GOVERNANCE INTELLIGENCE CARD
+// CARA — HOME DATA GOVERNANCE INTELLIGENCE CARD
 // Data breaches, data protection records, CCTV access logs, SARs.
 // GDPR, Data Protection Act 2018, CHR 2015 Reg 13 (Confidentiality).
 // ══════════════════════════════════════════════════════════════════════════════
@@ -222,12 +222,12 @@ export function HomeDataGovernanceIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Data Governance Intelligence */}
+        {/* Cara Data Governance Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Data Governance Intelligence
+              Cara Data Governance Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

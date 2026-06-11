@@ -114,7 +114,7 @@ export default function StaffPage() {
           title="Team management"
           description="Staff directory, supervision tracking, training compliance, and shift management. Click any team member to see their full profile and compliance status."
           evidenceTip="Reg 44 visitors check that staff have up-to-date DBS, training, and regular supervision. Keep profiles current to demonstrate compliance."
-          ariaTip="ARIA tracks supervision frequency and training expiry across your team, alerting you before deadlines are missed."
+          ariaTip="Cara tracks supervision frequency and training expiry across your team, alerting you before deadlines are missed."
           regulationRef="Children's Homes Regulations 2015, Reg 33 — Employment of staff"
           variant="compliance"
         />

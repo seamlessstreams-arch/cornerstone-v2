@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CONTEXTUAL SAFEGUARDING INTELLIGENCE API ROUTE
+// CARA — CONTEXTUAL SAFEGUARDING INTELLIGENCE API ROUTE
 // GET /api/v1/contextual-safeguarding-intelligence
 // Returns exploitation screening coverage, child risk profiles, locality risk
-// mapping, safety plan status, referral tracking, and ARIA intelligence.
+// mapping, safety plan status, referral tracking, and Cara intelligence.
 // Reg 12 — protection from harm, extra-familial risks
 // Reg 13 — leadership and management
 // Reg 34 — fitness of workers to safeguard

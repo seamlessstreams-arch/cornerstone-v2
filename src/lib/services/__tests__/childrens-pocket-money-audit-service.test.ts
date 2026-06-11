@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILDREN'S POCKET MONEY AUDIT SERVICE TESTS
+// CARA — CHILDREN'S POCKET MONEY AUDIT SERVICE TESTS
 // Pure-function tests for pocket money audit metrics, alert identification,
-// ARIA insight generation, and edge cases.
+// Cara insight generation, and edge cases.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";

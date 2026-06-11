@@ -43,7 +43,7 @@ const FLOW_MAP: Record<string, FlowItem[]> = {
     { icon: "BookOpen", label: "Child timeline", description: "Added to the child's story view" },
     { icon: "BarChart3", label: "Dashboard", description: "Updates the daily log completion tracker" },
     { icon: "FileText", label: "Reports", description: "Included in Reg 45 and inspection evidence" },
-    { icon: "Sparkles", label: "ARIA intelligence", description: "Available for pattern analysis and summaries" },
+    { icon: "Sparkles", label: "Cara intelligence", description: "Available for pattern analysis and summaries" },
   ],
   incident: [
     { icon: "BookOpen", label: "Child timeline", description: "Recorded as a timeline event with risk level" },
@@ -52,7 +52,7 @@ const FLOW_MAP: Record<string, FlowItem[]> = {
     { icon: "Shield", label: "Oversight queue", description: "Added to manager oversight queue if high/critical" },
     { icon: "BarChart3", label: "Dashboard", description: "Updates incident count and safety intelligence" },
     { icon: "FileText", label: "Evidence pack", description: "Included in inspection evidence — incidents section" },
-    { icon: "Sparkles", label: "ARIA intelligence", description: "Available for incident analysis and pattern detection" },
+    { icon: "Sparkles", label: "Cara intelligence", description: "Available for incident analysis and pattern detection" },
     { icon: "TrendingUp", label: "Child impact", description: "Factored into behaviour and emotional wellbeing assessment" },
   ],
   safeguarding_concern: [
@@ -62,7 +62,7 @@ const FLOW_MAP: Record<string, FlowItem[]> = {
     { icon: "BookOpen", label: "Child timeline", description: "Recorded with restricted visibility" },
     { icon: "FileText", label: "Evidence pack", description: "Included in safeguarding actions section" },
     { icon: "ClipboardList", label: "Reg 40 triage", description: "Assessed for Ofsted notification requirement" },
-    { icon: "Sparkles", label: "ARIA context", description: "Available for safeguarding pattern analysis" },
+    { icon: "Sparkles", label: "Cara context", description: "Available for safeguarding pattern analysis" },
   ],
   risk_assessment: [
     { icon: "Shield", label: "Risk register", description: "Updates the child's active risk profile" },
@@ -78,14 +78,14 @@ const FLOW_MAP: Record<string, FlowItem[]> = {
     { icon: "CheckSquare", label: "Goal tasks", description: "Creates tasks for each new goal" },
     { icon: "FileText", label: "Evidence pack", description: "Included in care plan progress evidence" },
     { icon: "TrendingUp", label: "Child impact", description: "Factored into plans & goals domain" },
-    { icon: "Sparkles", label: "ARIA intelligence", description: "Available for care plan gap analysis" },
+    { icon: "Sparkles", label: "Cara intelligence", description: "Available for care plan gap analysis" },
   ],
   key_work_session: [
     { icon: "BookOpen", label: "Child timeline", description: "Recorded as direct work in the child's story" },
     { icon: "BarChart3", label: "Dashboard", description: "Updates direct work completion tracker" },
     { icon: "FileText", label: "Evidence pack", description: "Included in direct work summary section" },
     { icon: "TrendingUp", label: "Child impact", description: "Factored into direct work and voice domains" },
-    { icon: "Sparkles", label: "ARIA intelligence", description: "Available for key work theme analysis" },
+    { icon: "Sparkles", label: "Cara intelligence", description: "Available for key work theme analysis" },
   ],
   direct_work: [
     { icon: "BookOpen", label: "Child timeline", description: "Recorded as direct work in the child's story" },
@@ -97,7 +97,7 @@ const FLOW_MAP: Record<string, FlowItem[]> = {
     { icon: "BookOpen", label: "Child timeline", description: "Recorded as a health event" },
     { icon: "FileText", label: "Evidence pack", description: "Included in health notes section" },
     { icon: "TrendingUp", label: "Child impact", description: "Factored into health domain" },
-    { icon: "Sparkles", label: "ARIA intelligence", description: "Available for health pattern analysis" },
+    { icon: "Sparkles", label: "Cara intelligence", description: "Available for health pattern analysis" },
   ],
   education_update: [
     { icon: "BookOpen", label: "Child timeline", description: "Recorded as an education event" },

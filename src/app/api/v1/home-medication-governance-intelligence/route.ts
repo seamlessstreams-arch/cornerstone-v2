@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME MEDICATION GOVERNANCE INTELLIGENCE API ROUTE
+// CARA — HOME MEDICATION GOVERNANCE INTELLIGENCE API ROUTE
 // GET /api/v1/home-medication-governance-intelligence
 // Medication audits, error investigations, near misses, stock checks,
 // storage audits, and emergency medication protocols.

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME THERAPEUTIC CLIMATE INTELLIGENCE API ROUTE
+// CARA — HOME THERAPEUTIC CLIMATE INTELLIGENCE API ROUTE
 // GET /api/v1/home-therapeutic-climate-intelligence
 // Meta-analysis combining behaviour log, restraints, incidents, and missing
 // episodes to assess the overall therapeutic atmosphere of the home.

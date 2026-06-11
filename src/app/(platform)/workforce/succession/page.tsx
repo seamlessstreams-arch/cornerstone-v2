@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SUCCESSION PLANNING BOARD
+// CARA — SUCCESSION PLANNING BOARD
 // Role coverage analysis, internal readiness scoring, candidate comparison,
-// risk assessment, and ARIA-powered gap analysis. Critical for demonstrating
+// risk assessment, and Cara-powered gap analysis. Critical for demonstrating
 // organisational resilience to Ofsted.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -206,7 +206,7 @@ export default function SuccessionBoardPage() {
   return (
     <PageShell
       title="Succession Planning Board"
-      subtitle="Role coverage, internal readiness & ARIA gap analysis"
+      subtitle="Role coverage, internal readiness & Cara gap analysis"
       ariaContext={{ pageTitle: "Succession Planning Board", sourceType: "staff" }}
       showQuickCreate={false}
       actions={
@@ -225,7 +225,7 @@ export default function SuccessionBoardPage() {
             onClick={() => setShowAria((p) => !p)}
           >
             <Sparkles className="h-3.5 w-3.5" />
-            ARIA Analysis
+            Cara Analysis
           </Button>
           <Link href="/workforce">
             <Button variant="outline" size="sm">Workforce Hub</Button>
@@ -236,7 +236,7 @@ export default function SuccessionBoardPage() {
     >
       <div id="succession-content" className="space-y-4 animate-fade-in">
 
-        {/* ── ARIA Panel ──────────────────────────────────────────────────── */}
+        {/* ── Cara Panel ──────────────────────────────────────────────────── */}
         {showAria && (
           <div className="relative">
             <button onClick={() => setShowAria(false)} className="absolute top-3 right-3 z-10 text-slate-400 hover:text-slate-600 text-xs">✕ Close</button>
@@ -309,7 +309,7 @@ export default function SuccessionBoardPage() {
           <div className="text-center py-16 text-slate-500">
             <GitBranch className="h-10 w-10 mx-auto mb-3 text-slate-300" />
             <p className="font-medium">No succession plans configured</p>
-            <p className="text-xs mt-1">Use ARIA to generate initial succession recommendations</p>
+            <p className="text-xs mt-1">Use Cara to generate initial succession recommendations</p>
           </div>
         ) : filteredPlans.length === 0 ? (
           <div className="text-center py-16 text-slate-500">
@@ -429,12 +429,12 @@ export default function SuccessionBoardPage() {
                     })}
                   </div>
 
-                  {/* ARIA Narrative — in expanded mode */}
+                  {/* Cara Narrative — in expanded mode */}
                   {isExpanded && plan.aria_narrative && (
                     <div className="mx-4 mb-4 rounded-xl border border-indigo-100 bg-indigo-50/50 px-3 py-2.5">
                       <p className="text-[10px] font-semibold text-indigo-600 mb-1 flex items-center gap-1">
                         <Sparkles className="h-3 w-3" />
-                        ARIA Succession Intelligence
+                        Cara Succession Intelligence
                       </p>
                       <p className="text-xs text-indigo-800 leading-relaxed">{plan.aria_narrative}</p>
                     </div>

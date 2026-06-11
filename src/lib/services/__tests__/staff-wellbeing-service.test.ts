@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF WELLBEING SERVICE TESTS
+// CARA — STAFF WELLBEING SERVICE TESTS
 // Pure-function unit tests for staff wellbeing metrics computation,
 // alert identification, constant validation, and CRUD fallback behaviour
 // (Supabase disabled). CHR 2015 Reg 33 (employment of staff — support and

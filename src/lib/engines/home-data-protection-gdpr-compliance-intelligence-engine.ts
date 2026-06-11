@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME DATA PROTECTION & GDPR COMPLIANCE INTELLIGENCE ENGINE
+// CARA -- HOME DATA PROTECTION & GDPR COMPLIANCE INTELLIGENCE ENGINE
 // Measures data protection policy compliance, subject access request handling,
 // data breach management, privacy notice currency, staff GDPR training, and
 // record security across the home.

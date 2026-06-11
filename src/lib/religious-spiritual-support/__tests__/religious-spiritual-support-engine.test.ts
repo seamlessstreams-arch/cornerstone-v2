@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Religious & Spiritual Support Intelligence — Engine Tests
+// Cara Religious & Spiritual Support Intelligence — Engine Tests
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";

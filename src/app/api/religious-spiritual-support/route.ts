@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Religious & Spiritual Support Intelligence API Route
+// Cara — Religious & Spiritual Support Intelligence API Route
 //
 // GET  → returns Chamberlain House demo intelligence
 // POST → accepts custom data for any home

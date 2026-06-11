@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ARRIVAL SETTLING EXPERIENCE SERVICE
+// CARA — ARRIVAL SETTLING EXPERIENCE SERVICE
 // Tracks new arrival experiences, settling-in quality, welcome processes,
 // first impressions, and transition support from arrival.
 // CHR 2015 Reg 14(1)(a) (admission and assessment procedures),

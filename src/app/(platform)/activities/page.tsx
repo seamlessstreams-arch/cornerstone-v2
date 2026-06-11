@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ACTIVITIES & ENRICHMENT TRACKER
+// CARA — ACTIVITIES & ENRICHMENT TRACKER
 // Captures the meaningful activities, hobbies, and enrichment opportunities
 // provided to young people. Evidences QS Standard 2 (Quality of Care)
 // and supports Ofsted's assessment of whether children enjoy fulfilling lives.

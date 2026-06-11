@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — POLICIES INTELLIGENCE HOOK
+// CARA — POLICIES INTELLIGENCE HOOK
 // React Query wrapper for /api/v1/policies-intelligence
 // ══════════════════════════════════════════════════════════════════════════════
 

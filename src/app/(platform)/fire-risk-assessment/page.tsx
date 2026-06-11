@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — FIRE RISK ASSESSMENT
+// CARA — FIRE RISK ASSESSMENT
 // Documents the home's fire risk assessment: hazards identified, controls in
 // place, residual risk levels, people at risk, and additional control measures
 // required. Distinct from fire drills — this is the underpinning assessment

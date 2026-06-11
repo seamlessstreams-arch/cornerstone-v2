@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME GOVERNANCE & MANAGEMENT OVERSIGHT INTELLIGENCE ENGINE
+// CARA — HOME GOVERNANCE & MANAGEMENT OVERSIGHT INTELLIGENCE ENGINE
 // Home-level: assesses quality of governance and management oversight —
 // walkrounds, governance meetings, board reporting, operational meetings,
 // and commissioning feedback.

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CANONICAL EVENT MODEL
+// CARA — CANONICAL EVENT MODEL
 //
 // The single, unified shape every domain event normalises into — the backbone of
 // the core rule: "capture once, link intelligently, surface everywhere, never

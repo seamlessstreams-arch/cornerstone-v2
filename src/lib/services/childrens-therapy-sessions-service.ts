@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILDREN'S THERAPY SESSIONS SERVICE
+// CARA — CHILDREN'S THERAPY SESSIONS SERVICE
 // Tracks individual therapy sessions including CAMHS, play therapy,
 // art therapy, CBT, and other therapeutic interventions to support
 // children's emotional wellbeing and mental health.

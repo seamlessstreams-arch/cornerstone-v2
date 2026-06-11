@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — POSSESSIONS INTELLIGENCE ENGINE TESTS
+// CARA — POSSESSIONS INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite for children's property and possessions analysis.
 // Covers Reg 20 (safeguarding belongings), SCCIF property management,
 // and Children Act 1989 s26 (right to personal property).

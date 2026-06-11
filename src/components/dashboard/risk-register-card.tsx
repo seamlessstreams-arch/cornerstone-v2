@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RISK REGISTER INTELLIGENCE CARD
+// CARA — RISK REGISTER INTELLIGENCE CARD
 // Dashboard card powered by the Quality Assurance Intelligence Engine.
 // CHR 2015 Reg 13 (risk management), Reg 40, Reg 45.
 // SCCIF: Leadership & Management — "Risks are identified, managed,
@@ -97,7 +97,7 @@ export function RiskRegisterCard() {
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Risk Intelligence
+              Cara Risk Intelligence
             </p>
             {insights.slice(0, 2).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.positive)}>

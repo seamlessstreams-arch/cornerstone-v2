@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME LEGIONELLA RISK ASSESSMENT SERVICE TESTS
+// CARA — HOME LEGIONELLA RISK ASSESSMENT SERVICE TESTS
 // Pure-function tests for legionella risk metrics, alert identification,
-// ARIA insight generation, constant validation, and edge cases.
+// Cara insight generation, constant validation, and edge cases.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME EXPENSE GOVERNANCE INTELLIGENCE API ROUTE
+// CARA — HOME EXPENSE GOVERNANCE INTELLIGENCE API ROUTE
 // GET /api/v1/home-expense-governance-intelligence
 // Financial stewardship: expense approval, receipt compliance, oversight.
 // CHR 2015 Reg 36. SCCIF: "The arrangements for the financial management."

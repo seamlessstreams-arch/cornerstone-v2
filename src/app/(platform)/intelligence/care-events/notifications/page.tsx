@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — Notifications Center  (Milestone 27)
+// CARA — Notifications Center  (Milestone 27)
 //
 // Live unified notifications stream derived from returned records (M23),
 // sensitive amendments (M19), Reg 40 triages, manager review backlog and

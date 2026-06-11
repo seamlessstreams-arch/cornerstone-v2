@@ -3,7 +3,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // AriaTodayBriefing
 //
-// Dashboard widget showing the ARIA morning briefing. Displays prioritised
+// Dashboard widget showing the Cara morning briefing. Displays prioritised
 // signals across the home: critical items needing immediate action, high
 // priority tasks, compliance deadlines, and positive developments to celebrate.
 //
@@ -153,7 +153,7 @@ export function AriaTodayBriefing({ homeId = "home_oak" }: { homeId?: string }) 
       <div className="rounded-2xl border border-[var(--cs-border)] bg-white p-6">
         <div className="flex items-center gap-3">
           <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-aria-gold)]" />
-          <span className="text-sm text-[var(--cs-text-secondary)]">Loading ARIA morning briefing...</span>
+          <span className="text-sm text-[var(--cs-text-secondary)]">Loading Cara morning briefing...</span>
         </div>
       </div>
     );
@@ -189,7 +189,7 @@ export function AriaTodayBriefing({ homeId = "home_oak" }: { homeId?: string }) 
               <Sparkles className="h-4 w-4 text-[var(--cs-aria-gold)]" />
             </div>
             <div>
-              <h3 className="text-sm font-semibold text-[var(--cs-navy)]">ARIA Today Briefing</h3>
+              <h3 className="text-sm font-semibold text-[var(--cs-navy)]">Cara Today Briefing</h3>
               <p className="text-[10px] text-[var(--cs-text-muted)]">{briefing.homeName} — {new Date(briefing.date + "T00:00:00").toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long" })}</p>
             </div>
           </div>

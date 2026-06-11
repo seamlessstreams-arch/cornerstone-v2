@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME DIGITAL LITERACY & ONLINE SAFETY INTELLIGENCE ENGINE
+// CARA — HOME DIGITAL LITERACY & ONLINE SAFETY INTELLIGENCE ENGINE
 // Home-level: assesses digital literacy skills, online safety measures, device
 // management, and RSE digital safety coverage across all children.
 // CHR 2015 Reg 12 (health): children's physical, emotional and digital wellbeing.

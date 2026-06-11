@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — GARDEN & HORTICULTURE ACTIVITIES SERVICE
+// CARA — GARDEN & HORTICULTURE ACTIVITIES SERVICE
 // Tracks garden and horticulture activities for children
 // in residential care homes.
 // CHR 2015 Reg 9 (enjoyment — outdoor and creative pursuits),

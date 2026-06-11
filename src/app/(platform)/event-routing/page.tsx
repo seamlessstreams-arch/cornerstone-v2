@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EVENT ROUTING (detail page)
+// CARA — EVENT ROUTING (detail page)
 // Where each event flows, and the human-gated queue of external notifications.
 // ══════════════════════════════════════════════════════════════════════════════
 

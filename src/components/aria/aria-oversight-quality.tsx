@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — MANAGEMENT OVERSIGHT QUALITY CHECKER
+// Cara — MANAGEMENT OVERSIGHT QUALITY CHECKER
 // Scores management oversight entries against Ofsted's quality dimensions:
 // Reflective Analysis, Child Focus, Professional Challenge, Decision Clarity,
 // and Action Specificity.
@@ -53,7 +53,7 @@ interface OversightQualityProps {
   recordType?: "incident" | "daily_log" | "safeguarding" | "complaint" | "missing" | "general";
   /** The record reference for display */
   recordReference?: string;
-  /** Callback when user requests ARIA improvement */
+  /** Callback when user requests Cara improvement */
   onRequestImprovement?: (suggestions: OversightSuggestion[]) => void;
   /** Optional className */
   className?: string;
@@ -523,7 +523,7 @@ export function AriaOversightQuality({
                       className="mt-2 inline-flex items-center gap-1.5 rounded-xl bg-[var(--cs-aria-gold-bg)] border border-[var(--cs-aria-gold-soft)] px-3 py-1.5 text-xs font-semibold text-[var(--cs-aria-gold)] hover:bg-[var(--cs-aria-gold-soft)] cs-transition-fast"
                     >
                       <Sparkles className="h-3.5 w-3.5" />
-                      Ask ARIA to improve this oversight
+                      Ask Cara to improve this oversight
                     </button>
                   )}
                 </div>

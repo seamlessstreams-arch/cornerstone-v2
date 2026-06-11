@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Complaints & Feedback Quality Intelligence Engine
+// Cara — Complaints & Feedback Quality Intelligence Engine
 //
 // Pure deterministic engine — no AI, no external calls.
 // Analyses complaint handling, feedback culture, learning outcomes and policy

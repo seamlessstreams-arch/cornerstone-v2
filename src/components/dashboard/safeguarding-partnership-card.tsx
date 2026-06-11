@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SAFEGUARDING PARTNERSHIP CARD
+// CARA — SAFEGUARDING PARTNERSHIP CARD
 // Dashboard card powered by the Safeguarding Intelligence Engine.
 // Focus: referrals, escalations, outcomes, notifiable events.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -126,13 +126,13 @@ export function SafeguardingPartnershipCard() {
           </div>
         )}
 
-        {/* ── ARIA Partnership Intelligence ───────────────────────────── */}
+        {/* ── Cara Partnership Intelligence ───────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Partnership Intelligence
+              Cara Partnership Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

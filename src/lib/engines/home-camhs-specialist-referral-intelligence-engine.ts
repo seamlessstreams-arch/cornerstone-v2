@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME CAMHS & SPECIALIST REFERRAL INTELLIGENCE ENGINE
+// CARA — HOME CAMHS & SPECIALIST REFERRAL INTELLIGENCE ENGINE
 // Tracks CAMHS referrals, specialist service access, waiting times, appointment
 // attendance, and therapeutic pathway quality for looked-after children.
 // Pure deterministic engine. CHR 2015 Reg 10/33/34.

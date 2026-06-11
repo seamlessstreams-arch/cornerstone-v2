@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — FAMILY RELATIONSHIP QUALITY TRACKER
+// CARA — FAMILY RELATIONSHIP QUALITY TRACKER
 // Children's Homes Regulations 2015 — Quality Standard 9 (Care Planning)
 // Tracks the quality of each child's family relationships over time so we can
 // see relationship temperature, key indicators, and the impact of intervention.

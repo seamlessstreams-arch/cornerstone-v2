@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA Studio — filing cabinet writeback
+// Cara Studio — filing cabinet writeback
 // Verifies that committing an approved artifact pushes it into the
 // filing cabinet, links the official record id, and is idempotent.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -62,7 +62,7 @@ function seed(overrides: Partial<AriaArtifact> = {}): AriaArtifact {
   return db.ariaArtifacts.create(base);
 }
 
-describe("ARIA Studio — filing cabinet writeback", () => {
+describe("Cara Studio — filing cabinet writeback", () => {
   it("buildAriaFilingPath uses scope, category, year, month, type and title", () => {
     const art = seed({
       child_id: "yp_001",

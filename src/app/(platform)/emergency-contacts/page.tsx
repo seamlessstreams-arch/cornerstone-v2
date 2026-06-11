@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EMERGENCY CONTACTS BOARD
+// CARA — EMERGENCY CONTACTS BOARD
 // Digital version of the office emergency contacts board. Shows key contacts
 // for each child (social worker, IRO, parents, school, GP, dentist, CAMHS)
 // and home-level emergency contacts (on-call manager, emergency maintenance,

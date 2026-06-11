@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — CHILD INTELLIGENCE OVERVIEW
+// Cara — CHILD INTELLIGENCE OVERVIEW
 //
-// Summary dashboard for ARIA intelligence related to a specific child.
+// Summary dashboard for Cara intelligence related to a specific child.
 // Shows report stats, risk profile, recent activity, and quick actions.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -72,7 +72,7 @@ export default function ChildIntelligencePage({
   const activity = getDemoActivity();
 
   return (
-    <PageShell title={`ARIA Intelligence — ${childName}`}>
+    <PageShell title={`Cara Intelligence — ${childName}`}>
       {/* Header */}
       <div className="mb-6 flex items-center gap-3">
         <div
@@ -83,7 +83,7 @@ export default function ChildIntelligencePage({
         </div>
         <div>
           <h1 className="text-xl font-semibold" style={{ color: "var(--cs-navy)" }}>
-            ARIA Intelligence — {childName}
+            Cara Intelligence — {childName}
           </h1>
           <p className="text-sm" style={{ color: "var(--cs-text-muted)" }}>
             AI-assisted report generation, evidence analysis, and insights
@@ -160,13 +160,13 @@ export default function ChildIntelligencePage({
                 View All Reports
               </Button>
             </Link>
-            <Link href={`/aria-studio/therapeutic-profile?childId=${childId}`} className="block">
+            <Link href={`/cara-studio/therapeutic-profile?childId=${childId}`} className="block">
               <Button variant="outline" className="w-full justify-start gap-2 text-sm">
                 <Heart className="h-4 w-4" style={{ color: "var(--cs-aria-gold)" }} />
                 Therapeutic Profile
               </Button>
             </Link>
-            <Link href={`/aria/reg45`} className="block">
+            <Link href={`/cara/reg45`} className="block">
               <Button variant="outline" className="w-full justify-start gap-2 text-sm">
                 <TrendingUp className="h-4 w-4" style={{ color: "var(--cs-aria-gold)" }} />
                 Reg 45 Evidence
@@ -178,7 +178,7 @@ export default function ChildIntelligencePage({
         {/* Recent Activity */}
         <Card className="lg:col-span-2">
           <CardHeader className="pb-3">
-            <CardTitle className="text-base">Recent ARIA Activity</CardTitle>
+            <CardTitle className="text-base">Recent Cara Activity</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">

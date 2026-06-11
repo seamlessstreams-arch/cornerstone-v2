@@ -507,8 +507,8 @@ function buildHtmlExport(
   ${auditHtml}
 
   <div class="footer">
-    Cornerstone &bull; Care Event ${esc(event.id)} &bull; Exported ${exportedAt} &bull; Version ${esc(String(event.version))}
-    <br>This document is generated from the live Cornerstone record. For statutory purposes, only verified and locked records are authoritative.
+    Cara &bull; Care Event ${esc(event.id)} &bull; Exported ${exportedAt} &bull; Version ${esc(String(event.version))}
+    <br>This document is generated from the live Cara record. For statutory purposes, only verified and locked records are authoritative.
   </div>
 </body>
 </html>`;

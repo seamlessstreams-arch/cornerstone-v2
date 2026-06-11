@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ADMISSIONS & MATCHING ASSESSMENT INTELLIGENCE API ROUTE
+// CARA — HOME ADMISSIONS & MATCHING ASSESSMENT INTELLIGENCE API ROUTE
 // GET /api/v1/home-admissions-matching-assessment-intelligence
 // Cross-domain composite: referralAssessmentRecords + impactRiskAssessmentRecords +
 // matchingCriteriaRecords + placementSuitabilityRecords + admissionPlanningRecords

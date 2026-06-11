@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Quality Ecology — Record Locking & Amendment Engine
+// Cara Quality Ecology — Record Locking & Amendment Engine
 //
 // Once a record reaches 'locked' or 'filed' status, it becomes immutable.
 // No field can be changed, no content deleted. Any correction or addition

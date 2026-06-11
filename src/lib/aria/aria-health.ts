@@ -1,9 +1,9 @@
 // ═════════════════════════════════════════════════════════════════════════════
-// ARIA — HEALTH & DIAGNOSTICS MODULE
+// Cara — HEALTH & DIAGNOSTICS MODULE
 //
 // Server-only. Never import this file in client components.
 //
-// Checks the full ARIA stack:
+// Checks the full Cara stack:
 //   - Provider keys (OpenAI, Anthropic) — presence + optional live ping
 //   - Supabase connection + table existence
 //   - Audit log writability
@@ -52,7 +52,7 @@ export interface ProviderHealth {
 export interface PersistenceHealth {
   /** Whether a Supabase client could be constructed. */
   connected: boolean;
-  /** Whether all expected ARIA tables exist in the public schema. */
+  /** Whether all expected Cara tables exist in the public schema. */
   tablesPresent: boolean;
   /** Tables that could not be reached (empty when tablesPresent=true). */
   missingTables: string[];
@@ -96,7 +96,7 @@ export interface CommandRegistryHealth {
 export interface ModuleCoverageHealth {
   /** Total known platform modules. */
   totalModules: number;
-  /** Modules that have at least one ARIA command or general coverage. */
+  /** Modules that have at least one Cara command or general coverage. */
   modulesWithCommands: number;
   /** 0–100 percentage. */
   coveragePercent: number;
@@ -123,7 +123,7 @@ export interface AriaHealthStatus {
   recommendations: string[];
 }
 
-// ─── ARIA tables that must be present ────────────────────────────────────────
+// ─── Cara tables that must be present ────────────────────────────────────────
 
 const REQUIRED_ARIA_TABLES = [
   "aria_requests",
@@ -322,8 +322,8 @@ export async function checkAriaHealth(
   const openaiConfigured = isKeyConfigured("OPENAI_API_KEY");
   const anthropicConfigured = isKeyConfigured("ANTHROPIC_API_KEY");
 
-  const openaiModel = process.env.ARIA_TEXT_MODEL ?? "gpt-4o-mini";
-  const anthropicModel = process.env.ARIA_MODEL ?? process.env.ARIA_TEXT_MODEL ?? "claude-sonnet-4-20250514";
+  const openaiModel = (process.env.CARA_TEXT_MODEL ?? process.env.ARIA_TEXT_MODEL) ?? "gpt-4o-mini";
+  const anthropicModel = (process.env.CARA_MODEL ?? process.env.ARIA_MODEL) ?? (process.env.CARA_TEXT_MODEL ?? process.env.ARIA_TEXT_MODEL) ?? "claude-sonnet-4-20250514";
 
   let openaiTestStatus: ProviderTestStatus = "skipped";
   let openaiLatency: number | undefined;
@@ -390,7 +390,7 @@ export async function checkAriaHealth(
   if (supabase && supabaseUrlConfigured && supabaseKeyConfigured) {
     supabaseConnected = true;
 
-    // Check all required ARIA tables
+    // Check all required Cara tables
     for (const table of REQUIRED_ARIA_TABLES) {
       const exists = await tableExists(supabase, table);
       if (!exists) missingTables.push(table);
@@ -539,7 +539,7 @@ export async function checkAriaHealth(
         void err;
       }
     } else {
-      supabaseError = `Missing tables: ${missingTables.join(", ")}. Run ARIA migrations.`;
+      supabaseError = `Missing tables: ${missingTables.join(", ")}. Run Cara migrations.`;
     }
   } else if (!supabaseUrlConfigured || !supabaseKeyConfigured) {
     supabaseError = "Supabase environment variables not configured";
@@ -591,7 +591,7 @@ export async function checkAriaHealth(
   } else if (anyProviderFailed) {
     overallStatus = "degraded";
   } else if (anyProviderConfigured) {
-    // At least one AI provider is configured and not failed — Aria is fully
+    // At least one AI provider is configured and not failed — Cara is fully
     // operational. Supabase persistence is optional (the platform uses an
     // in-memory store for intelligence engines). Having both providers or
     // Supabase connected is a bonus, not a requirement for full capacity.
@@ -604,7 +604,7 @@ export async function checkAriaHealth(
 
   if (!openaiConfigured && !anthropicConfigured) {
     recommendations.push(
-      "Set ANTHROPIC_API_KEY or OPENAI_API_KEY to enable ARIA intelligence features.",
+      "Set ANTHROPIC_API_KEY or OPENAI_API_KEY to enable Cara intelligence features.",
     );
   } else if (!openaiConfigured) {
     recommendations.push(
@@ -627,12 +627,12 @@ export async function checkAriaHealth(
   }
   if (!auditWritable && supabaseConnected && tablesPresent) {
     recommendations.push(
-      "ARIA audit log is not writable. Check RLS policies on aria_audit_events for the service role.",
+      "Cara audit log is not writable. Check RLS policies on aria_audit_events for the service role.",
     );
   }
   if (overdueCount > 0) {
     recommendations.push(
-      `${overdueCount} ARIA draft${overdueCount === 1 ? "" : "s"} pending approval for more than 24 hours. Review the ARIA approval queue.`,
+      `${overdueCount} Cara draft${overdueCount === 1 ? "" : "s"} pending approval for more than 24 hours. Review the Cara approval queue.`,
     );
   }
   if (deepTest && openaiTestStatus === "failed") {
@@ -647,7 +647,7 @@ export async function checkAriaHealth(
   }
   if (failedPersistenceCount && failedPersistenceCount > 0) {
     recommendations.push(
-      `${failedPersistenceCount} provider-failed ARIA request${failedPersistenceCount === 1 ? "" : "s"} recorded. Check ARIA error logs.`,
+      `${failedPersistenceCount} provider-failed Cara request${failedPersistenceCount === 1 ? "" : "s"} recorded. Check Cara error logs.`,
     );
   }
 

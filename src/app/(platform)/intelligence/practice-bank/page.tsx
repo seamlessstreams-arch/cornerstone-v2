@@ -109,7 +109,7 @@ function YPPracticeBankCard({ yp }: { yp: YPEnriched }) {
     try {
       const existingEntries = entries.map((e) => `${e.category}: ${e.title} — ${e.description}`).join("\n");
       const res = await api.post<{ data: { response?: string; parsed?: { what_is_working?: string[]; suggested_approaches?: Array<{ approach: string; rationale: string; how_to_try: string; expected_benefit: string }>; [key: string]: unknown }; text?: string } }>(
-        "/aria",
+        "/cara",
         {
           mode: "practice_bank",
           source_content: `Young person: ${displayName} (Age ${yp.age})\n\nExisting practice bank entries:\n${existingEntries || "(no entries yet)"}`,
@@ -249,7 +249,7 @@ function YPPracticeBankCard({ yp }: { yp: YPEnriched }) {
             <div className="sticky top-0 z-10 bg-white border-b px-6 py-4 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Sparkles className="h-5 w-5 text-[var(--cs-aria-gold)]" />
-                <span className="text-lg font-bold text-[var(--cs-navy)]">ARIA — What Works Suggestions</span>
+                <span className="text-lg font-bold text-[var(--cs-navy)]">Cara — What Works Suggestions</span>
               </div>
               <button onClick={() => setSuggestions(null)} className="text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)]"><X className="h-5 w-5" /></button>
             </div>
@@ -452,7 +452,7 @@ export default function PracticeBankPage() {
           <CheckCircle2 className="h-4 w-4 text-emerald-500 mt-0.5 shrink-0" />
           <div className="text-xs text-[var(--cs-text-secondary)]">
             <strong className="text-[var(--cs-navy)]">Staff tip:</strong> Practice bank entries can be added from any young
-            person's intelligence tab. ARIA will automatically surface relevant entries when generating care
+            person's intelligence tab. Cara will automatically surface relevant entries when generating care
             recommendations, keywork plans, and shift briefings.
           </div>
         </div>

@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ADVOCACY INTELLIGENCE API ROUTE
+// CARA — ADVOCACY INTELLIGENCE API ROUTE
 // GET /api/v1/advocacy-intelligence
 // Returns advocacy referral analysis: access coverage, referral timeliness,
-// visit frequency, children's participation, and ARIA intelligence.
+// visit frequency, children's participation, and Cara intelligence.
 // Reg 7: children's wishes — Reg 14: needs assessment
 // Reg 45: quality of care review — Children Act 1989 s26: advocacy for LAC
 // ══════════════════════════════════════════════════════════════════════════════

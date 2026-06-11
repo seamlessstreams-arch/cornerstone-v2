@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — END-OF-SHIFT CHECKLIST
+// CARA — END-OF-SHIFT CHECKLIST
 // Standardised closing-down tasks completed by staff before handover.
 // Required by Quality Standard 13 (Leadership & Management) and Reg 33.
 // ══════════════════════════════════════════════════════════════════════════════

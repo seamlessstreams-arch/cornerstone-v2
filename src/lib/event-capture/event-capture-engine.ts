@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EVENT CAPTURE ORCHESTRATOR (the write path)
+// CARA — EVENT CAPTURE ORCHESTRATOR (the write path)
 //
 // Pure deterministic engine — no DB calls, no side effects, no external calls.
 //

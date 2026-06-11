@@ -126,7 +126,7 @@ const TABS: { id: TabId; label: string }[] = [
   { id: "comparison", label: "Home Comparison" },
   { id: "risk", label: "Risk Matrix" },
   { id: "compliance", label: "Compliance" },
-  { id: "aria", label: "ARIA Analysis" },
+  { id: "aria", label: "Cara Analysis" },
 ];
 
 const DEMO_ORG_ID = "org-demo-1";
@@ -553,7 +553,7 @@ export default function CrossHomeIntelligencePage() {
         {/* Footer */}
         <div className="text-center py-4 border-t" style={{ borderColor: "var(--cs-border)" }}>
           <p className="text-xs" style={{ color: "var(--cs-text-muted)" }}>
-            ARIA Cross-home Intelligence provides oversight support. Professional judgement must inform all decisions.
+            Cara Cross-home Intelligence provides oversight support. Professional judgement must inform all decisions.
           </p>
         </div>
       </div>
@@ -764,7 +764,7 @@ function ComparisonTab({
         </h3>
         <Button size="sm" onClick={onGenerateAnalysis}>
           <Sparkles className="h-4 w-4 mr-1" />
-          Generate ARIA Analysis
+          Generate Cara Analysis
         </Button>
       </div>
 
@@ -1145,7 +1145,7 @@ function ComplianceTab({ snapshots }: { snapshots: CrossHomeSnapshot[] }) {
   );
 }
 
-// ── ARIA Analysis Tab ────────────────────────────────────────────────────────
+// ── Cara Analysis Tab ────────────────────────────────────────────────────────
 
 function AriaAnalysisTab({
   query,
@@ -1167,7 +1167,7 @@ function AriaAnalysisTab({
         <CardHeader>
           <CardTitle className="text-sm font-semibold flex items-center gap-2">
             <Sparkles className="h-4 w-4" style={{ color: "var(--cs-aria-gold)" }} />
-            Ask ARIA about your organisation
+            Ask Cara about your organisation
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -1224,7 +1224,7 @@ function AriaAnalysisTab({
           <CardContent className="p-8 text-center">
             <RefreshCw className="h-8 w-8 animate-spin mx-auto mb-3" style={{ color: "var(--cs-aria-gold)" }} />
             <p className="text-sm" style={{ color: "var(--cs-text-secondary)" }}>
-              ARIA is analysing cross-home intelligence...
+              Cara is analysing cross-home intelligence...
             </p>
           </CardContent>
         </Card>
@@ -1237,7 +1237,7 @@ function AriaAnalysisTab({
             <CardHeader>
               <CardTitle className="text-sm font-semibold flex items-center gap-2">
                 <Sparkles className="h-4 w-4" style={{ color: "var(--cs-aria-gold)" }} />
-                ARIA Analysis
+                Cara Analysis
               </CardTitle>
               <p className="text-xs" style={{ color: "var(--cs-text-muted)" }}>
                 Generated {new Date(response.generated_at).toLocaleString()}
@@ -1340,10 +1340,10 @@ function AriaAnalysisTab({
           <CardContent className="p-12 text-center">
             <Sparkles className="h-12 w-12 mx-auto mb-4 opacity-30" style={{ color: "var(--cs-aria-gold)" }} />
             <p className="text-sm" style={{ color: "var(--cs-text-muted)" }}>
-              Ask ARIA a question or use one of the quick queries above to get started.
+              Ask Cara a question or use one of the quick queries above to get started.
             </p>
             <p className="text-xs mt-2" style={{ color: "var(--cs-text-muted)" }}>
-              ARIA will analyse data across all homes in your organisation.
+              Cara will analyse data across all homes in your organisation.
             </p>
           </CardContent>
         </Card>

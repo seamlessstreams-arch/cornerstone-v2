@@ -1,9 +1,9 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA V2 — PROACTIVE ALERTS ENGINE
+// Cara V2 — PROACTIVE ALERTS ENGINE
 //
 // Combines pattern detection, voice gap analysis, and compliance monitoring
 // into a single alert stream. Generates structured alerts that surface on the
-// dashboard, in the patterns page, and in ARIA suggestions.
+// dashboard, in the patterns page, and in Cara suggestions.
 //
 // Alert sources:
 //   - Pattern engine: behavioural and incident patterns

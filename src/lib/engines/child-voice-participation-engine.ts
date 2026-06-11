@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD VOICE & PARTICIPATION INTELLIGENCE ENGINE
+// CARA — CHILD VOICE & PARTICIPATION INTELLIGENCE ENGINE
 //
 // Home-level engine aggregating how well children's voices are heard and
 // represented across the home: LAC review participation, advocacy access,
@@ -486,7 +486,7 @@ export function computeChildVoiceParticipation(
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
   const insights: VoiceInsight[] = [];
 
   if (voice_health === "inadequate") {

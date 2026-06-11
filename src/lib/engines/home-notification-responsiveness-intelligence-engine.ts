@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME NOTIFICATION RESPONSIVENESS INTELLIGENCE ENGINE
+// CARA — HOME NOTIFICATION RESPONSIVENESS INTELLIGENCE ENGINE
 // Home-level: aggregates system notifications to assess how responsively the
 // home's staff team engages with platform notifications — critical for
 // demonstrating that important care events, safeguarding alerts, and management

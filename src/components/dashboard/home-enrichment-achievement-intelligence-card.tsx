@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ENRICHMENT & ACHIEVEMENT INTELLIGENCE CARD
+// CARA — HOME ENRICHMENT & ACHIEVEMENT INTELLIGENCE CARD
 // Creative projects, clubs, achievements, rewards/sanctions.
 // CHR 2015 Reg 9.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -191,12 +191,12 @@ export function HomeEnrichmentAchievementIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Insights */}
+        {/* Cara Insights */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Enrichment Intelligence
+              Cara Enrichment Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

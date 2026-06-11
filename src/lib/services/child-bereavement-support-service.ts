@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD BEREAVEMENT SUPPORT SERVICE
+// CARA — CHILD BEREAVEMENT SUPPORT SERVICE
 // Tracks bereavement support provided to children in residential care,
 // including therapeutic interventions, grief stages, specialist referrals,
 // and multi-agency notification.

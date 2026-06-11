@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — Workspace Component
+// Cara STUDIO — Workspace Component
 //
 // Main generation workspace. Handles:
 //   - Generation type selection

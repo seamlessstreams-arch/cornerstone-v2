@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — BARREL EXPORT
+// Cara STUDIO — BARREL EXPORT
 // ══════════════════════════════════════════════════════════════════════════════
 
 export { getStudioAIProvider, generateStudioContent } from "./ai-provider.service";

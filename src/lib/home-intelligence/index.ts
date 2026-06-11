@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Home Intelligence Summary — Public API
+// Cara Home Intelligence Summary — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

@@ -1,12 +1,12 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA ORCHESTRATOR — TYPE DEFINITIONS
+// Cara ORCHESTRATOR — TYPE DEFINITIONS
 //
 // All types for the orchestration system: request/response shapes, routing
 // decisions, risk classification, evidence items, suggested actions, safety
 // review results, cost entries, and model profiles.
 //
 // These types are specific to the orchestrator layer. They extend but do not
-// duplicate types from the core Aria type system in ../types.ts.
+// duplicate types from the core Cara type system in ../types.ts.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import type { AgentId } from "@/types/aria-reports";

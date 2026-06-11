@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF LONE WORKING RISK SERVICE
+// CARA — STAFF LONE WORKING RISK SERVICE
 // Tracks lone working risk assessments, check-in protocols, personal safety
 // equipment, training compliance, and incident monitoring for staff working
 // alone in children's residential homes.
@@ -230,7 +230,7 @@ export function computeAlerts(
   return alerts;
 }
 
-// ── ARIA Insights ─────────────────────────────────────────────────────────
+// ── Cara Insights ─────────────────────────────────────────────────────────
 
 export function computeAriaInsights(rows: StaffLoneWorkingRiskRow[]): string[] {
   const metrics = computeMetrics(rows);

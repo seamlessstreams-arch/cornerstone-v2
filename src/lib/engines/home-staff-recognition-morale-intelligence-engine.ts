@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME STAFF RECOGNITION & MORALE INTELLIGENCE ENGINE
+// CARA — HOME STAFF RECOGNITION & MORALE INTELLIGENCE ENGINE
 // Pure deterministic engine: staff recognition frequency, variety, child
 // involvement, public celebration, impact documentation, and morale indicators.
 // CHR 2015 Reg 33: "Fitness of workers." SCCIF: "Well-led and managed."

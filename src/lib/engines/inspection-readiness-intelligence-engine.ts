@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — INSPECTION READINESS INTELLIGENCE ENGINE
+// CARA — INSPECTION READINESS INTELLIGENCE ENGINE
 // Meta-engine: real-time Ofsted inspection preparedness score.
 // Maps all care domains to SCCIF judgment areas, identifies evidence gaps,
 // computes weighted readiness, and generates action priorities.

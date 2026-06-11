@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — OFSTED ACTION PLAN CARD
+// CARA — OFSTED ACTION PLAN CARD
 // Dashboard card powered by the Quality Assurance Intelligence Engine.
 // Tracks action plan progress, completion rates, and overdue items.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -189,13 +189,13 @@ export function OfstedActionPlanCard() {
           </div>
         )}
 
-        {/* ── ARIA Ofsted Intelligence ────────────────────────────────── */}
+        {/* ── Cara Ofsted Intelligence ────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Ofsted Intelligence
+              Cara Ofsted Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME REG 44 VISITS INTELLIGENCE CARD
+// CARA — HOME REG 44 VISITS INTELLIGENCE CARD
 // Home-level: visit frequency, recommendation completion, action plan
 // compliance, child voice capture, Ofsted notification, quality trends.
 // CHR 2015 Reg 44. SCCIF: "Well-led and managed."
@@ -236,12 +236,12 @@ export function HomeReg44IntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Reg 44 Intelligence */}
+        {/* Cara Reg 44 Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Reg 44 Intelligence
+              Cara Reg 44 Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

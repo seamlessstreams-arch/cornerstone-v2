@@ -1,8 +1,8 @@
 "use client";
 
 // ThresholdConsultationPanel — manager safeguarding-threshold consultation tool.
-// ARIA structures the thinking and drafts the formulation; the MANAGER records the
-// statutory decision and rationale. ARIA never decides.
+// Cara structures the thinking and drafts the formulation; the MANAGER records the
+// statutory decision and rationale. Cara never decides.
 
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -41,7 +41,7 @@ export function ThresholdConsultationPanel({ childId, homeId }: { childId?: stri
         <CardTitle className="text-sm flex items-center gap-2">
           <ShieldAlert className="h-4 w-4 text-red-600" /> Safeguarding threshold consultation
         </CardTitle>
-        <p className="text-xs text-muted-foreground mt-1">ARIA structures the consultation and drafts the formulation. <strong>You make the statutory decision.</strong></p>
+        <p className="text-xs text-muted-foreground mt-1">Cara structures the consultation and drafts the formulation. <strong>You make the statutory decision.</strong></p>
       </CardHeader>
       <CardContent className="space-y-3">
         <textarea
@@ -52,7 +52,7 @@ export function ThresholdConsultationPanel({ childId, homeId }: { childId?: stri
         />
         <Button size="sm" onClick={() => consult.mutate({ childId, concern, homeId })} disabled={consult.isPending || concern.trim().length === 0}>
           {consult.isPending ? <Loader2 className="h-4 w-4 animate-spin mr-1" /> : <ShieldAlert className="h-4 w-4 mr-1" />}
-          Consult ARIA
+          Consult Cara
         </Button>
         {consult.isError && <p className="text-sm text-red-600">{(consult.error as Error)?.message}</p>}
 
@@ -72,7 +72,7 @@ export function ThresholdConsultationPanel({ childId, homeId }: { childId?: stri
               </div>
             )}
             <div className="rounded-md border border-slate-300 bg-slate-50 p-3 space-y-2">
-              <h4 className="text-xs font-semibold text-slate-600 uppercase">Manager decision (ARIA does not decide this)</h4>
+              <h4 className="text-xs font-semibold text-slate-600 uppercase">Manager decision (Cara does not decide this)</h4>
               <input className="w-full rounded-md border border-slate-200 p-2 text-sm" placeholder="Decision (e.g. threshold met / not met; strategy discussion requested)" value={decision} onChange={(e) => setDecision(e.target.value)} />
               <textarea className="w-full min-h-[60px] rounded-md border border-slate-200 p-2 text-sm" placeholder="Rationale for the decision…" value={rationale} onChange={(e) => setRationale(e.target.value)} />
               <div className="flex items-center gap-2">

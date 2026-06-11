@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — AUTOMATION ENGINE
+// CARA — AUTOMATION ENGINE
 // Deterministic trigger-action engine. Evaluates rules against trigger data,
 // checks conditions, and returns an AutomationRun describing what WOULD
 // happen — without side-effects. The caller decides whether to execute.

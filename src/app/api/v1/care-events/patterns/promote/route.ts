@@ -6,7 +6,7 @@
 //   → PromotionResult
 //
 // Permission: aria.generate_drafts. Each promoted chip is appended to the
-// ARIA audit tail as artifact_generated. Chips remain provisional until a
+// Cara audit tail as artifact_generated. Chips remain provisional until a
 // manager accepts them via the existing Reg 45 evidence workflow.
 // ══════════════════════════════════════════════════════════════════════════════
 

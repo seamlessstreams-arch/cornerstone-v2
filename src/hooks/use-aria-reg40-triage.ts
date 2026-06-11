@@ -23,7 +23,7 @@ export function useReg40Queue(homeId: string, status?: Reg40TriageStatus) {
       const qs = new URLSearchParams({ home_id: homeId });
       if (status) qs.set("status", status);
       return api.get<ListResponse>(
-        `/aria-studio/reg40-triage?${qs.toString()}`,
+        `/cara-studio/reg40-triage?${qs.toString()}`,
       );
     },
     refetchInterval: 30000,
@@ -34,7 +34,7 @@ export function useScanReg40() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (input: { home_id: string; actor_id?: string; actor_role?: string }) =>
-      api.post<ScanResponse>("/aria-studio/reg40-triage", {
+      api.post<ScanResponse>("/cara-studio/reg40-triage", {
         ...input,
         action: "scan",
       }),
@@ -56,7 +56,7 @@ export function useDecideReg40() {
       notification_ref?: string;
       actor_id?: string;
       actor_role?: string;
-    }) => api.post<DecisionResponse>("/aria-studio/reg40-triage", input),
+    }) => api.post<DecisionResponse>("/cara-studio/reg40-triage", input),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["aria-reg40-queue"] });
       qc.invalidateQueries({ queryKey: ["aria-management-oversight"] });

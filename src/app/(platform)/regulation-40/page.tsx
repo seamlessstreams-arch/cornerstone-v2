@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — REGULATION 40 TRIAGE QUEUE
+// CARA — REGULATION 40 TRIAGE QUEUE
 // Notifiable events requiring manager review + potential Ofsted notification
 // ══════════════════════════════════════════════════════════════════════════════
 

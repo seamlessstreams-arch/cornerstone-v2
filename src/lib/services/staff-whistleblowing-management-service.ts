@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF WHISTLEBLOWING MANAGEMENT SERVICE
+// CARA — STAFF WHISTLEBLOWING MANAGEMENT SERVICE
 // Tracks whistleblowing disclosures, investigations, outcomes, and
 // whistleblower protection for staff in children's residential homes.
 //
@@ -232,7 +232,7 @@ export function computeAlerts(
   return alerts;
 }
 
-// ── ARIA Insights ─────────────────────────────────────────────────────────
+// ── Cara Insights ─────────────────────────────────────────────────────────
 
 export function computeAriaInsights(rows: StaffWhistleblowingDisclosureRow[]): string[] {
   const metrics = computeMetrics(rows);

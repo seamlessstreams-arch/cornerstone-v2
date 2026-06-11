@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME KEYHOLDING & ACCESS CONTROL INTELLIGENCE API ROUTE
+// CARA — HOME KEYHOLDING & ACCESS CONTROL INTELLIGENCE API ROUTE
 // GET /api/v1/home-keyholding-access-control-intelligence
 // Cross-domain composite: keyRegisterRecords + accessControlRecords +
 // keyTrackingRecords + securityAuditRecords + childSafeRecords

@@ -3,9 +3,9 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // AriaHistoryTimeline
 //
-// Compact timeline showing a user's recent ARIA interactions. Shows command
+// Compact timeline showing a user's recent Cara interactions. Shows command
 // name, module, status, confidence, and a text preview. Designed for the
-// ARIA dashboard and profile pages.
+// Cara dashboard and profile pages.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React from "react";
@@ -109,7 +109,7 @@ export function AriaHistoryTimeline({
         <div className="flex items-center gap-2">
           <Loader2 className="h-4 w-4 animate-spin text-[var(--cs-aria-gold)]" />
           <span className="text-xs text-[var(--cs-text-muted)]">
-            Loading ARIA history...
+            Loading Cara history...
           </span>
         </div>
       </div>
@@ -126,7 +126,7 @@ export function AriaHistoryTimeline({
       >
         <Sparkles className="h-6 w-6 text-[var(--cs-text-gentle)] mx-auto mb-2" />
         <p className="text-xs text-[var(--cs-text-muted)]">
-          No ARIA activity in the last {days} days
+          No Cara activity in the last {days} days
         </p>
       </div>
     );
@@ -146,7 +146,7 @@ export function AriaHistoryTimeline({
         </div>
         <div>
           <div className="text-sm font-bold text-[var(--cs-navy)]">
-            My ARIA History
+            My Cara History
           </div>
           <div className="text-[10px] text-[var(--cs-text-muted)]">
             Last {days} days · {entries.length} interaction

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME EMOTIONAL SAFETY CLIMATE INTELLIGENCE ENGINE
+// CARA — HOME EMOTIONAL SAFETY CLIMATE INTELLIGENCE ENGINE
 // Cross-domain composite engine measuring the emotional safety culture of the
 // home through analysis of post-incident debriefs, staff debriefs, restraint
 // practices, sanction/reward balance, and positive achievements.

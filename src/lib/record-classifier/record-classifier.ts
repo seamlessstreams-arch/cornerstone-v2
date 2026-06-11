@@ -9,7 +9,7 @@
 //   5. Where the data should FLOW to
 //
 // Pure deterministic — no LLM calls. Pattern matching and keyword scoring.
-// "Staff just writes. Cornerstone figures out the rest."
+// "Staff just writes. Cara figures out the rest."
 // ══════════════════════════════════════════════════════════════════════════════
 
 export interface ClassificationResult {

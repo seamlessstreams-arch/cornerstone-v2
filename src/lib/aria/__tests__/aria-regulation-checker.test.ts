@@ -67,7 +67,7 @@ describe("AriaRegulationChecker", () => {
       }
     });
 
-    it("some regulations have ARIA suggestions", () => {
+    it("some regulations have Cara suggestions", () => {
       const withSuggestions = regulations.filter((r) => r.ariaSuggestion);
       expect(withSuggestions.length).toBeGreaterThan(0);
     });

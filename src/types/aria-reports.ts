@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ARIA REPORTS & REVIEW INTELLIGENCE TYPE SYSTEM
+// CARA — Cara REPORTS & REVIEW INTELLIGENCE TYPE SYSTEM
 // Comprehensive types for report generation, evidence retrieval, agent
-// orchestration, governance controls, and the ARIA challenge layer.
+// orchestration, governance controls, and the Cara challenge layer.
 // ══════════════════════════════════════════════════════════════════════════════
 
 // ── Report Types ────────────────────────────────────────────────────────────

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — DOCUMENT INTELLIGENCE AGENT
+// Cara — DOCUMENT INTELLIGENCE AGENT
 //
 // Handles PDF/report analysis, extracting actions from reports, comparing
 // Reg 44 reports across periods, building evidence maps, and detecting
@@ -43,7 +43,7 @@ export const AGENT_CONFIG = {
 
 // ── System Prompt ────────────────────────────────────────────────────────────
 
-const DOCUMENT_INTELLIGENCE_SYSTEM_PROMPT = `You are the Document Intelligence Agent within Cornerstone, a children's residential care management platform. You specialise in extracting structured intelligence from documents.
+const DOCUMENT_INTELLIGENCE_SYSTEM_PROMPT = `You are the Document Intelligence Agent within Cara, a children's residential care management platform. You specialise in extracting structured intelligence from documents.
 
 ═══ YOUR CAPABILITIES ═══
 

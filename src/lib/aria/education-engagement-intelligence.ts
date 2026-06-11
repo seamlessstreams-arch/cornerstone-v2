@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — EDUCATION ENGAGEMENT INTELLIGENCE
+// Cara — EDUCATION ENGAGEMENT INTELLIGENCE
 //
 // Pure deterministic engine analysing education engagement:
 //   - Attendance tracking (actual vs expected)

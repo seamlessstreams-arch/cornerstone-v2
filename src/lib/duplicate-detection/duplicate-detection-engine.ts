@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DUPLICATE DETECTION ENGINE
+// CARA — DUPLICATE DETECTION ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls, and NO
 // argless current-time calls. Accepts an injectable `today` (yyyy-mm-dd).
@@ -341,7 +341,7 @@ function buildAlerts(clusters: DuplicateCluster[]): DuplicateAlert[] {
   return alerts;
 }
 
-// ── ARIA insights ─────────────────────────────────────────────────────────────
+// ── Cara insights ─────────────────────────────────────────────────────────────
 
 function buildInsights(
   overview: DuplicateOverview,

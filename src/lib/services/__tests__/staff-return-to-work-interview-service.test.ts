@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF RETURN-TO-WORK INTERVIEW SERVICE TESTS
+// CARA — STAFF RETURN-TO-WORK INTERVIEW SERVICE TESTS
 // Pure-function unit tests for return-to-work interview metrics computation,
-// alert identification, ARIA insights, and CRUD fallback behaviour
+// alert identification, Cara insights, and CRUD fallback behaviour
 // (Supabase disabled). CHR 2015 Reg 33 (employment — managing staffing
 // levels and absence), Reg 13 (leadership — workforce planning).
 //

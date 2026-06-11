@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PLACEMENT STABILITY INTELLIGENCE API ROUTE
+// CARA — PLACEMENT STABILITY INTELLIGENCE API ROUTE
 // GET /api/v1/placement-stability
 // Returns aggregated placement stability intelligence from the engine.
 // Reg 5/12/14 — placement stability, protection, assessment.

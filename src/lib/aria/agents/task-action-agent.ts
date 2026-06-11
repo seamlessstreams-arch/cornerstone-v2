@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — TASK ACTION AGENT
+// Cara — TASK ACTION AGENT
 //
 // Generates actions from context, assigns owners, suggests deadlines, links
 // actions to forms/reports, and updates improvement plans. Lightweight agent
@@ -56,7 +56,7 @@ const ASSIGNABLE_ROLES = [
 
 // ── System Prompt ────────────────────────────────────────────────────────────
 
-const TASK_ACTION_SYSTEM_PROMPT = `You are the Task Action Agent within Cornerstone, a children's residential care management platform. You convert insights, recommendations, and identified needs into clear, trackable actions.
+const TASK_ACTION_SYSTEM_PROMPT = `You are the Task Action Agent within Cara, a children's residential care management platform. You convert insights, recommendations, and identified needs into clear, trackable actions.
 
 ═══ YOUR ROLE ═══
 

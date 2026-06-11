@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — QUALIFICATIONS & DBS TRACKER
+// CARA — QUALIFICATIONS & DBS TRACKER
 // Regulatory fitness — mandatory and CPD qualifications across the team.
 // Staff-grouped compliance matrix with DBS/right-to-work tracking.
 // Reg 29 (RM Level 5), Reg 32 (staff Level 3), Reg 5 (DBS/right-to-work).

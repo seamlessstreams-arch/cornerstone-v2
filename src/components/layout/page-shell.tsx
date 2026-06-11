@@ -24,7 +24,7 @@ export interface PageShellProps {
   recordAnything?:   boolean;
   /** Pre-fill the captured record against this child (young-person pages) */
   recordChildId?:    string;
-  /** Aria context — passed to the ARIA drawer for contextual suggestions */
+  /** Cara context — passed to the Cara drawer for contextual suggestions */
   ariaContext?:      AriaDrawerContext;
   children:          React.ReactNode;
   fullWidth?:        boolean;

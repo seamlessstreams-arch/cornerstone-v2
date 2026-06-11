@@ -1,6 +1,6 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — FILING CABINET SERVICE
-// Pushes a committed ARIA artifact into the filing cabinet so that the
+// Cara STUDIO — FILING CABINET SERVICE
+// Pushes a committed Cara artifact into the filing cabinet so that the
 // official record is searchable, indexed, and inspection-ready alongside
 // every other care event derived document.
 //

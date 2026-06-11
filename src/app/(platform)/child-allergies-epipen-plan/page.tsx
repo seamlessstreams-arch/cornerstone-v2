@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD ALLERGIES & ANAPHYLAXIS (AAI / EPIPEN) PLAN
+// CARA — CHILD ALLERGIES & ANAPHYLAXIS (AAI / EPIPEN) PLAN
 // Per-child BSACI-format allergy and anaphylaxis management plan covering known
 // allergens, severity grading, antihistamine, AAI/EpiPen brand + dose +
 // locations + expiry, staff trained to administer, school provision, hospital

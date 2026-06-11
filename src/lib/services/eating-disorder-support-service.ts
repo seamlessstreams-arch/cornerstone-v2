@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- EATING DISORDER & DISORDERED EATING SUPPORT SERVICE
+// CARA -- EATING DISORDER & DISORDERED EATING SUPPORT SERVICE
 // Tracks assessments, specialist referrals, meal plans, monitoring regimes,
 // behavioural indicators, professional engagement, and recovery status for
 // children with eating disorders or disordered eating patterns in residential

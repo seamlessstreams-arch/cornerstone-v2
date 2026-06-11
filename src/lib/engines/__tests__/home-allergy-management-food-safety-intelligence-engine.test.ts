@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ALLERGY MANAGEMENT & FOOD SAFETY INTELLIGENCE ENGINE — TESTS
+// CARA — HOME ALLERGY MANAGEMENT & FOOD SAFETY INTELLIGENCE ENGINE — TESTS
 // CHR 2015 Reg 14/5: Allergy plan coverage, allergen awareness training,
 // epipen compliance, food labelling, emergency response preparedness.
 // ══════════════════════════════════════════════════════════════════════════════

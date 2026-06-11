@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA V1 — SUGGESTION SERVICE
+// Cara V1 — SUGGESTION SERVICE
 //
-// The proactive intelligence layer. Given an incident, Aria generates a set
+// The proactive intelligence layer. Given an incident, Cara generates a set
 // of suggestions for the manager to review: oversight, risk reviews, plan
 // reviews, safeguarding considerations, key work, staff debriefs, and
 // notifications. Every suggestion requires human approval.
@@ -246,7 +246,7 @@ export async function generateManagementOversightDraft(
 
   if (providerConfig.configured) {
     const systemPrompt = [
-      "You are Aria, the intelligent professional assistant built into Cornerstone, the operating system for UK residential children's homes.",
+      "You are Cara, the intelligent professional assistant built into Cara, the operating system for UK residential children's homes.",
       "",
       ARIA_PROFESSIONAL_IDENTITY_PROMPT,
       "",
@@ -270,7 +270,7 @@ export async function generateManagementOversightDraft(
       "- Next actions",
       "- Review timeframe",
       "",
-      "Label the output: Aria suggested draft — requires manager review before saving.",
+      "Label the output: Cara suggested draft — requires manager review before saving.",
       "",
       ARIA_WRITING_STYLE_PROMPT,
     ].join("\n");
@@ -302,7 +302,7 @@ export async function generateManagementOversightDraft(
 function buildDeterministicOversightDraft(input: IncidentInput): string {
   const isHighSeverity = input.severity === "critical" || input.severity === "high";
 
-  return applyAriaPostprocessor(`Aria suggested draft — requires manager review before saving.
+  return applyAriaPostprocessor(`Cara suggested draft — requires manager review before saving.
 
 What was reviewed:
 The incident record dated today involving ${input.incidentType}${input.childId ? ` concerning ${input.childId}` : ""}. The description, immediate action, and staff response have been considered.

@@ -1,6 +1,6 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ARIA CONTENT QUALITY INTELLIGENCE ENGINE
-// Home-level: aggregates ARIA artifacts (AI-assisted content drafts for care
+// CARA — HOME Cara CONTENT QUALITY INTELLIGENCE ENGINE
+// Home-level: aggregates Cara artifacts (AI-assisted content drafts for care
 // records) to assess quality, governance, and effectiveness of AI-assisted
 // content generation. Tracks review turnaround, approval rates, quality scores,
 // safeguarding awareness, and framework diversity.
@@ -102,7 +102,7 @@ export function computeAriaContentQuality(
     return {
       content_rating: "insufficient_data",
       content_score: 0,
-      headline: "No home data available — ARIA content quality cannot be assessed.",
+      headline: "No home data available — Cara content quality cannot be assessed.",
       total_artifacts: 0,
       approval_rate: 0,
       rejection_rate: 0,
@@ -118,7 +118,7 @@ export function computeAriaContentQuality(
       strengths: [],
       concerns: [],
       recommendations: [],
-      insights: [{ text: "No staff or children registered and no ARIA artifacts exist. Content quality assessment requires an active home.", severity: "warning" }],
+      insights: [{ text: "No staff or children registered and no Cara artifacts exist. Content quality assessment requires an active home.", severity: "warning" }],
     };
   }
 
@@ -127,7 +127,7 @@ export function computeAriaContentQuality(
     return {
       content_rating: "good",
       content_score: 72,
-      headline: "ARIA not yet adopted — no AI-assisted content generated",
+      headline: "Cara not yet adopted — no AI-assisted content generated",
       total_artifacts: 0,
       approval_rate: 0,
       rejection_rate: 0,
@@ -145,12 +145,12 @@ export function computeAriaContentQuality(
       recommendations: [
         {
           rank: 1,
-          recommendation: "Consider adopting ARIA for AI-assisted content generation to support recording quality and reduce administrative burden on staff.",
+          recommendation: "Consider adopting Cara for AI-assisted content generation to support recording quality and reduce administrative burden on staff.",
           urgency: "planned",
           regulatory_ref: "CHR 2015 Reg 36",
         },
       ],
-      insights: [{ text: "ARIA has not yet been used in this home. AI-assisted content generation can improve recording quality and free staff time for direct care.", severity: "warning" }],
+      insights: [{ text: "Cara has not yet been used in this home. AI-assisted content generation can improve recording quality and free staff time for direct care.", severity: "warning" }],
     };
   }
 
@@ -277,13 +277,13 @@ export function computeAriaContentQuality(
 
   let headline: string;
   if (rating === "outstanding") {
-    headline = "ARIA content quality is outstanding — AI-assisted drafts are high quality and well-governed.";
+    headline = "Cara content quality is outstanding — AI-assisted drafts are high quality and well-governed.";
   } else if (rating === "good") {
-    headline = "ARIA content quality is good — AI-assisted content generation is effective with minor areas for improvement.";
+    headline = "Cara content quality is good — AI-assisted content generation is effective with minor areas for improvement.";
   } else if (rating === "adequate") {
-    headline = "ARIA content quality is adequate — AI-assisted content meets minimum standards but needs strengthening.";
+    headline = "Cara content quality is adequate — AI-assisted content meets minimum standards but needs strengthening.";
   } else {
-    headline = "ARIA content quality is inadequate — significant concerns with AI-assisted content quality and governance.";
+    headline = "Cara content quality is inadequate — significant concerns with AI-assisted content quality and governance.";
   }
 
   // ── Strengths ─────────────────────────────────────────────────────────
@@ -291,9 +291,9 @@ export function computeAriaContentQuality(
   const strengths: string[] = [];
 
   if (avgQuality >= 80) {
-    strengths.push(`Average quality score of ${avgQuality}% — ARIA-generated content is consistently high quality.`);
+    strengths.push(`Average quality score of ${avgQuality}% — Cara-generated content is consistently high quality.`);
   } else if (avgQuality >= 65) {
-    strengths.push(`Average quality score of ${avgQuality}% — ARIA-generated content meets good quality standards.`);
+    strengths.push(`Average quality score of ${avgQuality}% — Cara-generated content meets good quality standards.`);
   }
 
   if (approvalRate >= 90 && submittedArtifacts.length > 0) {
@@ -303,9 +303,9 @@ export function computeAriaContentQuality(
   }
 
   if (avgEvidence >= 75) {
-    strengths.push(`Evidence confidence averaging ${avgEvidence}% — ARIA content is well-grounded in source evidence.`);
+    strengths.push(`Evidence confidence averaging ${avgEvidence}% — Cara content is well-grounded in source evidence.`);
   } else if (avgEvidence >= 60) {
-    strengths.push(`Evidence confidence averaging ${avgEvidence}% — ARIA content has reasonable evidence backing.`);
+    strengths.push(`Evidence confidence averaging ${avgEvidence}% — Cara content has reasonable evidence backing.`);
   }
 
   if (frameworkUsageRate >= 80) {
@@ -321,7 +321,7 @@ export function computeAriaContentQuality(
   }
 
   if (childCoverageRate >= 80) {
-    strengths.push(`${childCoverageRate}% child coverage — ARIA is being used for most children in the home.`);
+    strengths.push(`${childCoverageRate}% child coverage — Cara is being used for most children in the home.`);
   }
 
   if (frameworkDiversity >= 3) {
@@ -329,7 +329,7 @@ export function computeAriaContentQuality(
   }
 
   if (artifactTypeDiversity >= 4) {
-    strengths.push(`${artifactTypeDiversity} distinct artifact types — ARIA is being used across a broad range of record types.`);
+    strengths.push(`${artifactTypeDiversity} distinct artifact types — Cara is being used across a broad range of record types.`);
   }
 
   if (reviewTurnaroundHours > 0 && reviewTurnaroundHours <= 24) {
@@ -351,9 +351,9 @@ export function computeAriaContentQuality(
   }
 
   if (avgEvidence < 30) {
-    concerns.push(`Evidence confidence averaging only ${avgEvidence}% — ARIA content is not well-supported by source evidence, raising reliability concerns.`);
+    concerns.push(`Evidence confidence averaging only ${avgEvidence}% — Cara content is not well-supported by source evidence, raising reliability concerns.`);
   } else if (avgEvidence < 60) {
-    concerns.push(`Evidence confidence averaging ${avgEvidence}% — ARIA content evidence backing needs strengthening.`);
+    concerns.push(`Evidence confidence averaging ${avgEvidence}% — Cara content evidence backing needs strengthening.`);
   }
 
   if (safeguardingFlaggedRate > 50 && approvalRate < 60) {
@@ -369,7 +369,7 @@ export function computeAriaContentQuality(
   }
 
   if (childCoverageRate < 50 && total_children > 0) {
-    concerns.push(`Only ${childCoverageRate}% child coverage — ARIA is not being used for most children, creating inconsistent recording quality.`);
+    concerns.push(`Only ${childCoverageRate}% child coverage — Cara is not being used for most children, creating inconsistent recording quality.`);
   }
 
   if (reviewTurnaroundHours > 72) {
@@ -384,14 +384,14 @@ export function computeAriaContentQuality(
   if (avgQuality < 40) {
     recommendations.push({
       rank: ++rank,
-      recommendation: "Urgently review ARIA prompt configuration and quality thresholds — current AI-generated content does not meet minimum quality standards for care records.",
+      recommendation: "Urgently review Cara prompt configuration and quality thresholds — current AI-generated content does not meet minimum quality standards for care records.",
       urgency: "immediate",
       regulatory_ref: "CHR 2015 Reg 36",
     });
   } else if (avgQuality < 65) {
     recommendations.push({
       rank: ++rank,
-      recommendation: "Review ARIA content generation settings to improve output quality — current drafts are below good standard.",
+      recommendation: "Review Cara content generation settings to improve output quality — current drafts are below good standard.",
       urgency: "soon",
       regulatory_ref: "CHR 2015 Reg 36",
     });
@@ -400,7 +400,7 @@ export function computeAriaContentQuality(
   if (rejectionRate > 30 && submittedArtifacts.length > 0) {
     recommendations.push({
       rank: ++rank,
-      recommendation: "Investigate high rejection rate of AI-assisted drafts — review common rejection reasons and refine ARIA generation to reduce rework.",
+      recommendation: "Investigate high rejection rate of AI-assisted drafts — review common rejection reasons and refine Cara generation to reduce rework.",
       urgency: "immediate",
       regulatory_ref: "CHR 2015 Reg 36",
     });
@@ -409,14 +409,14 @@ export function computeAriaContentQuality(
   if (avgEvidence < 30) {
     recommendations.push({
       rank: ++rank,
-      recommendation: "Increase evidence source linking in ARIA configurations — AI-generated content must be grounded in recorded evidence to support inspection readiness.",
+      recommendation: "Increase evidence source linking in Cara configurations — AI-generated content must be grounded in recorded evidence to support inspection readiness.",
       urgency: "immediate",
       regulatory_ref: "CHR 2015 Reg 36",
     });
   } else if (avgEvidence < 60) {
     recommendations.push({
       rank: ++rank,
-      recommendation: "Strengthen evidence confidence in ARIA-generated content by increasing source linking requirements.",
+      recommendation: "Strengthen evidence confidence in Cara-generated content by increasing source linking requirements.",
       urgency: "soon",
       regulatory_ref: "CHR 2015 Reg 36",
     });
@@ -425,7 +425,7 @@ export function computeAriaContentQuality(
   if (safeguardingFlaggedRate > 50 && approvalRate < 60) {
     recommendations.push({
       rank: ++rank,
-      recommendation: "Prioritise review and approval of safeguarding-flagged ARIA content — safeguarding records require timely governance to protect children.",
+      recommendation: "Prioritise review and approval of safeguarding-flagged Cara content — safeguarding records require timely governance to protect children.",
       urgency: "immediate",
       regulatory_ref: "CHR 2015 Reg 12",
     });
@@ -434,7 +434,7 @@ export function computeAriaContentQuality(
   if (frameworkUsageRate < 30) {
     recommendations.push({
       rank: ++rank,
-      recommendation: "Configure ARIA to align with the home's therapeutic frameworks — AI-generated content should consistently reference the care model.",
+      recommendation: "Configure Cara to align with the home's therapeutic frameworks — AI-generated content should consistently reference the care model.",
       urgency: "soon",
       regulatory_ref: "CHR 2015 Reg 12",
     });
@@ -443,7 +443,7 @@ export function computeAriaContentQuality(
   if (evidenceSourcedRate < 50) {
     recommendations.push({
       rank: ++rank,
-      recommendation: "Ensure ARIA draws from evidence sources when generating content — unsourced AI content undermines recording integrity.",
+      recommendation: "Ensure Cara draws from evidence sources when generating content — unsourced AI content undermines recording integrity.",
       urgency: "soon",
       regulatory_ref: "CHR 2015 Reg 36",
     });
@@ -452,7 +452,7 @@ export function computeAriaContentQuality(
   if (childCoverageRate < 50 && total_children > 0) {
     recommendations.push({
       rank: ++rank,
-      recommendation: "Expand ARIA usage to cover all children in the home — inconsistent AI-assisted recording creates uneven care documentation.",
+      recommendation: "Expand Cara usage to cover all children in the home — inconsistent AI-assisted recording creates uneven care documentation.",
       urgency: "planned",
       regulatory_ref: "CHR 2015 Reg 36",
     });
@@ -461,7 +461,7 @@ export function computeAriaContentQuality(
   if (reviewTurnaroundHours > 72) {
     recommendations.push({
       rank: ++rank,
-      recommendation: "Reduce review turnaround time for ARIA-generated content — delays in governance of AI-assisted records risk information becoming stale.",
+      recommendation: "Reduce review turnaround time for Cara-generated content — delays in governance of AI-assisted records risk information becoming stale.",
       urgency: "soon",
       regulatory_ref: "CHR 2015 Reg 36",
     });
@@ -470,7 +470,7 @@ export function computeAriaContentQuality(
   if (recommendations.length === 0 && rating !== "outstanding") {
     recommendations.push({
       rank: 1,
-      recommendation: "Continue monitoring ARIA content quality metrics and refine generation settings as the home's needs evolve.",
+      recommendation: "Continue monitoring Cara content quality metrics and refine generation settings as the home's needs evolve.",
       urgency: "planned",
       regulatory_ref: "CHR 2015 Reg 36",
     });
@@ -489,14 +489,14 @@ export function computeAriaContentQuality(
 
   if (rejectionRate > 30 && submittedArtifacts.length > 0) {
     insights.push({
-      text: `${rejectionRate}% of submitted AI drafts are being rejected — this suggests ARIA configuration needs attention to reduce staff rework burden.`,
+      text: `${rejectionRate}% of submitted AI drafts are being rejected — this suggests Cara configuration needs attention to reduce staff rework burden.`,
       severity: "critical",
     });
   }
 
   if (avgEvidence < 30) {
     insights.push({
-      text: `Evidence confidence is critically low at ${avgEvidence}% — ARIA content lacks adequate source evidence, undermining the reliability of AI-assisted records.`,
+      text: `Evidence confidence is critically low at ${avgEvidence}% — Cara content lacks adequate source evidence, undermining the reliability of AI-assisted records.`,
       severity: "critical",
     });
   }
@@ -529,26 +529,26 @@ export function computeAriaContentQuality(
 
   if (childCoverageRate < 50 && total_children > 0) {
     insights.push({
-      text: `ARIA is only being used for ${childCoverageRate}% of children — recording quality may be inconsistent across the home.`,
+      text: `Cara is only being used for ${childCoverageRate}% of children — recording quality may be inconsistent across the home.`,
       severity: "warning",
     });
   }
 
   if (avgQuality >= 80 && approvalRate >= 90 && submittedArtifacts.length > 0) {
     insights.push({
-      text: `Excellent combination of high quality (${avgQuality}%) and high approval (${approvalRate}%) — ARIA is delivering reliable, governance-ready content.`,
+      text: `Excellent combination of high quality (${avgQuality}%) and high approval (${approvalRate}%) — Cara is delivering reliable, governance-ready content.`,
       severity: "positive",
     });
   } else if (avgQuality >= 65 && approvalRate >= 75 && submittedArtifacts.length > 0) {
     insights.push({
-      text: `Good quality (${avgQuality}%) and approval rate (${approvalRate}%) — ARIA is performing well as a content generation tool.`,
+      text: `Good quality (${avgQuality}%) and approval rate (${approvalRate}%) — Cara is performing well as a content generation tool.`,
       severity: "positive",
     });
   }
 
   if (frameworkDiversity >= 3) {
     insights.push({
-      text: `${frameworkDiversity} therapeutic frameworks are being used across ARIA content — demonstrating a rich, multi-model approach to care.`,
+      text: `${frameworkDiversity} therapeutic frameworks are being used across Cara content — demonstrating a rich, multi-model approach to care.`,
       severity: "positive",
     });
   }
@@ -562,7 +562,7 @@ export function computeAriaContentQuality(
 
   if (childCoverageRate >= 80 && total_children > 0) {
     insights.push({
-      text: `${childCoverageRate}% child coverage — ARIA is being used consistently across the home for most children.`,
+      text: `${childCoverageRate}% child coverage — Cara is being used consistently across the home for most children.`,
       severity: "positive",
     });
   }

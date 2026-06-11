@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EDUCATION & ACTIVITIES SERVICE
+// CARA — EDUCATION & ACTIVITIES SERVICE
 // Tracks education placements, attendance, exclusions, PEPs, enrichment
 // activities, and generates alerts for Ofsted-scrutinised outcomes.
 // CHR 2015 Reg 8 (education), Reg 10 (enjoyment and achievement).

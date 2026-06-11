@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ASTHMA & RESPIRATORY MANAGEMENT INTELLIGENCE ENGINE
+// CARA — HOME ASTHMA & RESPIRATORY MANAGEMENT INTELLIGENCE ENGINE
 // Monitors respiratory health management across the home — asthma action plan
 // coverage, inhaler technique checks, trigger management, peak flow monitoring,
 // and emergency preparedness for respiratory events.

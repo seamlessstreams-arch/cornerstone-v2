@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Advocacy & Representation Intelligence API Route
+// Cara — Advocacy & Representation Intelligence API Route
 //
 // GET  → returns Chamberlain House demo advocacy & representation intelligence
 // POST → accepts custom data for any home

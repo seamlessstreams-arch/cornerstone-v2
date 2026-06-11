@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HANDOVER CONTINUITY INTELLIGENCE CARD
+// CARA — HANDOVER CONTINUITY INTELLIGENCE CARD
 // Dashboard card powered by the Handover Continuity Intelligence Engine — live data.
 // Reg 34(1)(b) — staff must understand responsibilities at handover.
 // SCCIF: "Do staff share information effectively at handover?"
@@ -266,13 +266,13 @@ export function ShiftHandoverQualityCard() {
           </div>
         )}
 
-        {/* ── ARIA Handover Intelligence ──────────────────────────────── */}
+        {/* ── Cara Handover Intelligence ──────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Handover Intelligence
+              Cara Handover Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

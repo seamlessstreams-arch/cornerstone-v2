@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA Intelligence Engine — Placement Stability
+// Cara Intelligence Engine — Placement Stability
 //
 // Pure deterministic analysis of placement stability and disruption risk.
 // Tracks:

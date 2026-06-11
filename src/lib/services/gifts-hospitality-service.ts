@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — GIFTS & HOSPITALITY REGISTER SERVICE
+// CARA — GIFTS & HOSPITALITY REGISTER SERVICE
 // Tracks gifts received/given, hospitality offered, declarations of interest,
 // and compliance with anti-bribery and professional conduct policies.
 // CHR 2015 Reg 13 (leadership — governance),

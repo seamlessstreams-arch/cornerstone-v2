@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- CAREER GUIDANCE & WORK EXPERIENCE SERVICE
+// CARA -- CAREER GUIDANCE & WORK EXPERIENCE SERVICE
 // Tracks career guidance and work experience activities for looked-after
 // children including careers interviews, skills assessments, CV writing,
 // interview practice, job search support, work experience placements,

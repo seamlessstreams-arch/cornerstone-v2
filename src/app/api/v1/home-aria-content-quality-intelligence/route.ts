@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ARIA CONTENT QUALITY INTELLIGENCE API ROUTE
+// CARA — HOME Cara CONTENT QUALITY INTELLIGENCE API ROUTE
 // GET /api/v1/home-aria-content-quality-intelligence
-// Synthesises ARIA artifacts to assess AI-assisted content quality, governance,
+// Synthesises Cara artifacts to assess AI-assisted content quality, governance,
 // review turnaround, safeguarding awareness, and framework diversity.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -25,7 +25,7 @@ export async function GET() {
     const yp = (store.youngPeople ?? []) as any[];
     const total_children = yp.length;
 
-    // ARIA artifacts
+    // Cara artifacts
     const rawArtifacts = (store.ariaArtifacts ?? []) as any[];
     const artifacts: AriaArtifactInput[] = rawArtifacts.map((a: any) => ({
       id: a.id ?? "",

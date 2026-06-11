@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — AUDIT SERVICE
+// Cara — AUDIT SERVICE
 //
-// Writes and retrieves audit events for every ARIA operation. Every report
+// Writes and retrieves audit events for every Cara operation. Every report
 // generation, approval, rejection, AI call, and governance action is
 // recorded here for transparency and regulatory compliance.
 //

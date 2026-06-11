@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SUPERVISION COMPLIANCE CARD
+// CARA — SUPERVISION COMPLIANCE CARD
 // Dashboard widget showing supervision completion rate, overdue sessions,
 // upcoming schedule, and wellbeing trends.
 // Reg 33 — Staff must receive regular supervision appropriate to their role.

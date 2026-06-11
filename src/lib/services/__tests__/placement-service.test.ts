@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PLACEMENT & CARE PLANNING SERVICE TESTS
+// CARA — PLACEMENT & CARE PLANNING SERVICE TESTS
 // Pure-function unit tests for plan compliance computation, child plan profile
 // aggregation, LAC review compliance, plan alerts, and constant validation.
 // ══════════════════════════════════════════════════════════════════════════════

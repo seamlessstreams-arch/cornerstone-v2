@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LIFE SKILLS & INDEPENDENCE INTELLIGENCE CARD
+// CARA — LIFE SKILLS & INDEPENDENCE INTELLIGENCE CARD
 // Dashboard card powered by the Life Skills Intelligence Engine.
 // Reg 8, Reg 9, Reg 14, SCCIF Experiences & Progress.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -231,13 +231,13 @@ export function LifeSkillsCard() {
           </div>
         )}
 
-        {/* ── ARIA Independence Intelligence ──────────────────────────── */}
+        {/* ── Cara Independence Intelligence ──────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Independence Intelligence
+              Cara Independence Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

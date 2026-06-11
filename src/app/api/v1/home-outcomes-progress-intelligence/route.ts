@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME OUTCOMES PROGRESS INTELLIGENCE API ROUTE
+// CARA — HOME OUTCOMES PROGRESS INTELLIGENCE API ROUTE
 // GET /api/v1/home-outcomes-progress-intelligence
 // Synthesises therapeutic outcome targets — domain coverage, rating progress,
 // direction trends, review timeliness, young person voice, and child-level

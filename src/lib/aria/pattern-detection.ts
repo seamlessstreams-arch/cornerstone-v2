@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — PATTERN DETECTION ENGINE
+// Cara — PATTERN DETECTION ENGINE
 //
 // Analyses time-series event data to surface behavioural patterns in young
 // people's lives. Runs deterministically (no AI call) — just statistical

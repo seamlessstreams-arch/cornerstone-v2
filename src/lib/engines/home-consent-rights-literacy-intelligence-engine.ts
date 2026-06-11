@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME CONSENT & RIGHTS LITERACY INTELLIGENCE ENGINE
+// CARA — HOME CONSENT & RIGHTS LITERACY INTELLIGENCE ENGINE
 // Tracks consent management, children's rights knowledge, parental responsibility
 // documentation, and rights exercise to ensure children are empowered and protected.
 // Pure deterministic engine. CHR 2015 Reg 5/7.

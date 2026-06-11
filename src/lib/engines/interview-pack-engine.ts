@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — INTERVIEW PACK ENGINE (pure / deterministic)
+// CARA — INTERVIEW PACK ENGINE (pure / deterministic)
 //
 // Assembles a structured, values-aligned interview pack for a children's-home
 // role — values, safeguarding, trauma-informed practice, PACE/co-regulation,

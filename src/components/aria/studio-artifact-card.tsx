@@ -65,7 +65,7 @@ export function AriaStudioArtifactCard({
             <FileText className="h-4 w-4 text-muted-foreground mt-0.5 shrink-0" />
             <div className="flex-1 min-w-0">
               <Link
-                href={`/intelligence/aria/studio/${artifact.id}`}
+                href={`/intelligence/cara/studio/${artifact.id}`}
                 className="font-medium text-sm leading-snug hover:underline line-clamp-2"
               >
                 {artifact.title}
@@ -139,7 +139,7 @@ export function AriaStudioArtifactCard({
 
         {/* Action buttons */}
         <div className="mt-3 flex items-center gap-1.5 flex-wrap">
-          <Link href={`/intelligence/aria/studio/${artifact.id}`}>
+          <Link href={`/intelligence/cara/studio/${artifact.id}`}>
             <Button variant="outline" size="sm" className="h-6 px-2 text-xs gap-1">
               <Eye className="h-3 w-3" />
               View

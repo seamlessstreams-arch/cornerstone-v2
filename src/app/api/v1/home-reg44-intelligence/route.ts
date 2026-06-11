@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME REG 44 VISITS INTELLIGENCE API ROUTE
+// CARA — HOME REG 44 VISITS INTELLIGENCE API ROUTE
 // GET /api/v1/home-reg44-intelligence
 // Synthesises Regulation 44 independent visitor reports to assess visit
 // frequency, recommendation completion, action plan compliance, child voice

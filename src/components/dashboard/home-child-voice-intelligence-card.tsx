@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME CHILD VOICE INTELLIGENCE CARD
+// CARA — HOME CHILD VOICE INTELLIGENCE CARD
 // Home-level: house meetings, visitor engagement, child participation —
 // holistic child voice intelligence view for the home dashboard.
 // CHR 2015 Reg 7, 11. SCCIF: "Experiences and progress of children."
@@ -235,12 +235,12 @@ export function HomeChildVoiceIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Child Voice Intelligence */}
+        {/* Cara Child Voice Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Child Voice Intelligence
+              Cara Child Voice Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

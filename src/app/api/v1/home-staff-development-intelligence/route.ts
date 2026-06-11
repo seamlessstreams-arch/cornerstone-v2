@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME STAFF DEVELOPMENT INTELLIGENCE API ROUTE
+// CARA — HOME STAFF DEVELOPMENT INTELLIGENCE API ROUTE
 // GET /api/v1/home-staff-development-intelligence
 // Synthesises supervision, training, qualifications, and induction records
 // to produce an overall staff development compliance score.

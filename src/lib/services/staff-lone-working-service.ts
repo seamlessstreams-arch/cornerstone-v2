@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF LONE WORKING SERVICE
+// CARA — STAFF LONE WORKING SERVICE
 // Tracks lone working risk assessments, safety protocols, and
 // check-in procedures for staff working alone in the home or
 // during community activities with children.

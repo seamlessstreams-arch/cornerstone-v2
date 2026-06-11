@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME VISITOR & ACCESS INTELLIGENCE ENGINE
+// CARA — HOME VISITOR & ACCESS INTELLIGENCE ENGINE
 // Home-level: analyses visitor records to assess DBS compliance, ID
 // verification, sign-in/out completion, safeguarding oversight for
 // tradespeople, inspector readiness, and multi-agency engagement.

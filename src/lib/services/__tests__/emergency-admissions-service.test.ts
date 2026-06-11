@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EMERGENCY ADMISSIONS SERVICE TESTS
+// CARA — EMERGENCY ADMISSIONS SERVICE TESTS
 // Pure-function unit tests for admission metrics computation, alert
 // identification, and constant validation.
 // CHR 2015 Reg 35 (admissions — emergency placements),

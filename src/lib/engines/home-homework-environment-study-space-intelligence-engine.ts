@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME HOMEWORK ENVIRONMENT & STUDY SPACE INTELLIGENCE ENGINE
+// CARA — HOME HOMEWORK ENVIRONMENT & STUDY SPACE INTELLIGENCE ENGINE
 // Monitors study environment quality — dedicated study space provision,
 // noise-free environment, equipment availability, lighting adequacy,
 // and child satisfaction with study conditions.

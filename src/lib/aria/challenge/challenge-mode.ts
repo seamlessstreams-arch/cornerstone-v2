@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — CHALLENGE MODE SERVICE
+// Cara — CHALLENGE MODE SERVICE
 //
 // Runs a comprehensive set of quality checks against a completed draft
 // report. Challenges surface missing evidence, weak sections, absent child

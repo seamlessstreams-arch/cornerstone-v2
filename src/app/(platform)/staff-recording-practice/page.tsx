@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF RECORDING PRACTICE (detail page)
+// CARA — STAFF RECORDING PRACTICE (detail page)
 // Record quality rolled up by staff member — concrete supervision targets.
 // ══════════════════════════════════════════════════════════════════════════════
 

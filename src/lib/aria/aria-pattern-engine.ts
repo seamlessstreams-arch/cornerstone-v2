@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA V2 — PATTERN DETECTION ENGINE
+// Cara V2 — PATTERN DETECTION ENGINE
 //
 // Analyses incident data to detect behavioural, temporal, and staffing patterns
 // that a manager might miss when reviewing incidents individually. Produces
@@ -14,7 +14,7 @@
 //   - Missing oversight: incidents without management oversight past SLA
 //   - Cross-child: patterns affecting multiple children simultaneously
 //
-// All outputs are "Aria detected pattern — requires manager review."
+// All outputs are "Cara detected pattern — requires manager review."
 // ══════════════════════════════════════════════════════════════════════════════
 
 import type { PatternAlert, PatternSeverity } from "@/types/extended";

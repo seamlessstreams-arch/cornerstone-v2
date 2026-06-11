@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — POLICIES INTELLIGENCE API ROUTE
+// CARA — POLICIES INTELLIGENCE API ROUTE
 // GET /api/v1/policies-intelligence
 // Returns policy register coverage analysis: review compliance,
-// acknowledgement rates, category coverage, and ARIA intelligence.
+// acknowledgement rates, category coverage, and Cara intelligence.
 // Reg 38: policies and procedures — Reg 13: leadership and management
 // ══════════════════════════════════════════════════════════════════════════════
 

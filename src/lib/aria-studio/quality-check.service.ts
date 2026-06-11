@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — QUALITY CHECK SERVICE
+// Cara STUDIO — QUALITY CHECK SERVICE
 // Runs dignity, evidence, safeguarding, and writing quality checks.
 // ══════════════════════════════════════════════════════════════════════════════
 

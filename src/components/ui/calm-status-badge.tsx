@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CALM STATUS BADGE
+// CARA — CALM STATUS BADGE
 // Gentle, rounded-full pills with soft backgrounds.
 // Text always present — never colour-only meaning.
 // ══════════════════════════════════════════════════════════════════════════════

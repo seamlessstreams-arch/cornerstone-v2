@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — RI Governance Scoring API Route
+// Cara — RI Governance Scoring API Route
 //
 // GET  → returns Chamberlain House demo governance scorecard
 // POST → accepts custom RiScoreInputs for any home

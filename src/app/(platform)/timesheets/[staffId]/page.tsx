@@ -247,7 +247,7 @@ export default function TimesheetDetailPage({
       }
     >
       <div id="timesheet-detail-content" className="space-y-0">
-      {/* ARIA Panel */}
+      {/* Cara Panel */}
       {showAria && (
         <div className="mb-6 relative">
           <button
@@ -301,7 +301,7 @@ export default function TimesheetDetailPage({
                 className="gap-1.5 text-xs"
                 onClick={() => setShowAria((v) => !v)}
               >
-                <Sparkles className="h-3.5 w-3.5 text-[var(--cs-aria-gold)]" />ARIA Analysis
+                <Sparkles className="h-3.5 w-3.5 text-[var(--cs-aria-gold)]" />Cara Analysis
               </Button>
               <Button
                 size="sm"

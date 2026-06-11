@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — APPRAISAL INTELLIGENCE HOOK
+// CARA — APPRAISAL INTELLIGENCE HOOK
 // React Query wrapper for /api/v1/appraisal-intelligence
 // ══════════════════════════════════════════════════════════════════════════════
 

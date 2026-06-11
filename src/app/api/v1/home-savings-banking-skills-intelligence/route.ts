@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SAVINGS & BANKING SKILLS INTELLIGENCE API ROUTE
+// CARA — HOME SAVINGS & BANKING SKILLS INTELLIGENCE API ROUTE
 // GET /api/v1/home-savings-banking-skills-intelligence
 // Cross-domain composite: savingsAccountRecords + bankingSkillsRecords +
 // financialGoalRecords + moneyConfidenceRecords + financialIndependenceRecords

@@ -1,7 +1,7 @@
 "use client";
 
 // ═══════════════════��══════════════════════════════════════════════════════════
-// CORNERSTONE — CHILDREN'S THERAPY SESSIONS CARD
+// CARA — CHILDREN'S THERAPY SESSIONS CARD
 // Live data from useHealthWellbeing() — CAMHS, wellbeing, child profiles.
 // CHR 2015 Reg 23/33. SCCIF: Health & Wellbeing.
 // ════════════════════════════���═════════════════════════════════════════════════
@@ -116,13 +116,13 @@ export function ChildrensTherapySessionsCard() {
           </div>
         )}
 
-        {/* ── ARIA insights ───────────────────────────────────────────── */}
+        {/* ── Cara insights ───────────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Therapy Intelligence
+              Cara Therapy Intelligence
             </p>
             {intel.insights.slice(0, 2).map((insight, i) => (
               <div

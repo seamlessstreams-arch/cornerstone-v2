@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RISK ASSESSMENT SERVICE
+// CARA — RISK ASSESSMENT SERVICE
 // Manages individual and environmental risk assessments, scoring matrices,
-// mitigation tracking, and generates ARIA risk intelligence.
+// mitigation tracking, and generates Cara risk intelligence.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { createServerClient, isSupabaseEnabled } from "@/lib/supabase/server";

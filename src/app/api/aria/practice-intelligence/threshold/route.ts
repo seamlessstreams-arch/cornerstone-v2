@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // POST /api/aria/practice-intelligence/threshold
 //
-// Supports a manager's safeguarding-threshold consultation. ARIA structures the
+// Supports a manager's safeguarding-threshold consultation. Cara structures the
 // thinking and drafts the formulation — it does NOT make the statutory decision.
 // Role-gated via aria.analyse_risk. Persists a consultation record (audit trail).
 // ══════════════════════════════════════════════════════════════════════════════
@@ -58,7 +58,7 @@ export async function POST(req: Request) {
       evidence_and_harm_analysis: t?.evidenceAndHarm ?? "",
       family_functioning_parental_capacity: "<manager to complete — parental capacity and family functioning>",
       threshold_and_escalation_analysis: t?.managerSummary ?? output.summary,
-      decision_rationale: "<manager to complete — ARIA does not make the statutory decision>",
+      decision_rationale: "<manager to complete — Cara does not make the statutory decision>",
       recommended_next_step: output.recommendations.map((r) => r.title).join("; ") || "Complete a threshold consultation",
       reasonable_cause_to_suspect_significant_harm: null,
       strategy_discussion_recommended: t?.strategyDiscussionRecommended ?? false,
@@ -83,7 +83,7 @@ export async function POST(req: Request) {
       requiresManagerReview: output.requiresManagerReview,
       requiresRiReview: output.requiresRiReview,
       highestSeverity: output.highestSeverity,
-      note: "ARIA structures the consultation and drafts the formulation. The manager makes the statutory decision.",
+      note: "Cara structures the consultation and drafts the formulation. The manager makes the statutory decision.",
       meta: { engine: "aria-practice-threshold", version: "1.0.0", ranBy: userId, role: ariaRole },
     },
   });

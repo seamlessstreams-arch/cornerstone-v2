@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EVENT CAPTURE (write path) detail page
+// CARA — EVENT CAPTURE (write path) detail page
 // "Capture once, validate once, route everywhere" — the pre-submission preview.
 // ══════════════════════════════════════════════════════════════════════════════
 

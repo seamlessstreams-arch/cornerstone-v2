@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME PREMISES SAFETY INTELLIGENCE API ROUTE
+// CARA — HOME PREMISES SAFETY INTELLIGENCE API ROUTE
 // GET /api/v1/home-premises-safety-intelligence
 // Synthesises building certifications, premises checks, vehicle compliance,
 // and maintenance records to assess premises safety.

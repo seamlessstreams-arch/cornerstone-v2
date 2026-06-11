@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — VISITORS LOG SERVICE TESTS
+// CARA — VISITORS LOG SERVICE TESTS
 // Pure-function tests for visitor summaries, compliance metrics,
 // alert identification, and constant validation.
 // ══════════════════════════════════════════════════════════════════════════════

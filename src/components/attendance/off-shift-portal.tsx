@@ -35,7 +35,7 @@ export function OffShiftPortal() {
       <div className="max-w-xl mx-auto rounded-2xl border border-[var(--cs-teal-soft)] bg-[var(--cs-teal-bg)] p-6 text-center">
         <ShieldCheck className="h-7 w-7 text-[var(--cs-teal)] mx-auto mb-2" />
         <p className="text-lg font-bold text-[var(--cs-navy)]">You have full access</p>
-        <p className="text-sm text-[var(--cs-text-secondary)] mt-1">As a senior member of staff you keep full Cornerstone access off shift.</p>
+        <p className="text-sm text-[var(--cs-text-secondary)] mt-1">As a senior member of staff you keep full Cara access off shift.</p>
         <Link href="/dashboard" className="inline-flex items-center gap-1.5 mt-4 text-sm font-semibold text-[var(--cs-teal)] hover:underline">Go to dashboard <ArrowRight className="h-4 w-4" /></Link>
       </div>
     );

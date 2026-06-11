@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME MEETING GOVERNANCE INTELLIGENCE CARD
+// CARA — HOME MEETING GOVERNANCE INTELLIGENCE CARD
 // Home-level: house meeting regularity, action completion, child attendance,
 // feedback quality, and governance structure.
 // CHR 2015 Reg 45. SCCIF: "Well-Led."
@@ -216,12 +216,12 @@ export function HomeMeetingGovernanceIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Meeting Governance Intelligence */}
+        {/* Cara Meeting Governance Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Meeting Intelligence
+              Cara Meeting Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

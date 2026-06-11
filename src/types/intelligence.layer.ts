@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE INTELLIGENCE LAYER — TYPED MODELS
+// CARA INTELLIGENCE LAYER — TYPED MODELS
 // Mirrors migration 015_intelligence_layer_schema.sql
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -472,7 +472,7 @@ export interface SmartLinkSuggestion {
   autoLink: boolean;
 }
 
-// ── ARIA humanised oversight ───────────────────────────────────────────────
+// ── Cara humanised oversight ───────────────────────────────────────────────
 
 export interface HumanisedOversightInput {
   recordType: string;

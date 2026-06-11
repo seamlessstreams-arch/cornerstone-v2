@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Staff Training & CPD Compliance Intelligence Engine
+// Cara — Staff Training & CPD Compliance Intelligence Engine
 //
 // Pure deterministic engine. No AI, no external calls, no side-effects.
 //

@@ -3,7 +3,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // AriaAuditTimeline
 //
-// Shows a timeline of ARIA audit events for a specific output or request.
+// Shows a timeline of Cara audit events for a specific output or request.
 // Displays who did what and when across the generation/approval lifecycle.
 // ══════════════════════════════════════════════════════════════════════════════
 

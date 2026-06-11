@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF SUPPORT ACTION SERVICE
+// CARA — STAFF SUPPORT ACTION SERVICE
 // Records specific support actions taken for staff — training, mentoring,
 // supervision adjustments, reasonable adjustments, wellbeing interventions,
-// team support, and more. Part of the ARIA Staff Development, Support and
+// team support, and more. Part of the Cara Staff Development, Support and
 // Risk Intelligence layer.
 //
 // CHR 2015 Reg 33 (employment of staff — support and development),

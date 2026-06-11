@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — NIGHT MONITORING & WELFARE INTELLIGENCE ENGINE
+// CARA — NIGHT MONITORING & WELFARE INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses welfare check compliance, night-time disturbances, child sleep
@@ -299,7 +299,7 @@ export function computeNightMonitoring(input: NightMonitoringInput): NightMonito
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
   const insights: AriaNightInsight[] = [];
 
   // Critical: child missing from room

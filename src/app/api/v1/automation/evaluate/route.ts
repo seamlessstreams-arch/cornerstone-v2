@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — AUTOMATION ENGINE EVALUATE API ROUTE
+// CARA — AUTOMATION ENGINE EVALUATE API ROUTE
 // POST /api/v1/automation/evaluate
 // Accepts { trigger, triggerData } and returns all actions that would fire.
 // Deterministic / side-effect-free — nothing is persisted or dispatched.

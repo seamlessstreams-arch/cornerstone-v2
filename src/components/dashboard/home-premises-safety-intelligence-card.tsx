@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME PREMISES SAFETY INTELLIGENCE CARD
+// CARA — HOME PREMISES SAFETY INTELLIGENCE CARD
 // Home-level: building certifications, premises checks, vehicle compliance,
 // and maintenance responsiveness.
 // CHR 2015 Reg 25. SCCIF: "Safe."
@@ -221,12 +221,12 @@ export function HomePremisesSafetyIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Premises Intelligence */}
+        {/* Cara Premises Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Premises Intelligence
+              Cara Premises Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

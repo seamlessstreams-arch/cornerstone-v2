@@ -3,8 +3,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // AriaOnboardingCard
 //
-// Welcome card shown to users who haven't used ARIA yet (or have low usage).
-// Explains what ARIA does, provides quick-start actions, and dismisses
+// Welcome card shown to users who haven't used Cara yet (or have low usage).
+// Explains what Cara does, provides quick-start actions, and dismisses
 // persistently via localStorage.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -36,7 +36,7 @@ const FEATURES = [
   {
     icon: Mic,
     title: "Voice Dictation",
-    description: "Speak your notes and ARIA transcribes them directly into records.",
+    description: "Speak your notes and Cara transcribes them directly into records.",
   },
   {
     icon: Shield,
@@ -46,7 +46,7 @@ const FEATURES = [
   {
     icon: ListTodo,
     title: "Task Extraction",
-    description: "ARIA pulls action items from meeting notes, supervision records, and incident reviews.",
+    description: "Cara pulls action items from meeting notes, supervision records, and incident reviews.",
   },
 ] as const;
 
@@ -82,7 +82,7 @@ export function AriaOnboardingCard({ className }: AriaOnboardingCardProps) {
           </div>
           <div>
             <h3 className="text-sm font-bold text-[var(--cs-navy)]">
-              Welcome to ARIA Intelligence
+              Welcome to Cara Intelligence
             </h3>
             <p className="text-[11px] text-[var(--cs-text-muted)]">
               Your AI-powered care assistant
@@ -101,9 +101,9 @@ export function AriaOnboardingCard({ className }: AriaOnboardingCardProps) {
       {/* Description */}
       <div className="px-5 py-3">
         <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed">
-          ARIA helps you write better records, extract actions, and maintain
+          Cara helps you write better records, extract actions, and maintain
           oversight. Every AI output is a <strong>draft suggestion</strong> that
-          requires your review before use. ARIA never commits to records without
+          requires your review before use. Cara never commits to records without
           your approval.
         </p>
       </div>

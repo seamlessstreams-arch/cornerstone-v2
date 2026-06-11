@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MEDICATION STORAGE INTELLIGENCE CARD
+// CARA — MEDICATION STORAGE INTELLIGENCE CARD
 // Dashboard card for stock checks, controlled drugs, and storage compliance.
 // CHR 2015 Reg 23, Reg 12, Reg 40.
 // SCCIF: Safety — "Medication is stored securely and safely."
@@ -171,13 +171,13 @@ export function MedicationStorageCard() {
           </div>
         )}
 
-        {/* ── ARIA Storage Intelligence ───────────────────────────────── */}
+        {/* ── Cara Storage Intelligence ───────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Storage Intelligence
+              Cara Storage Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — AGENT REGISTRY TESTS
+// Cara — AGENT REGISTRY TESTS
 // ══════════════════════════════════════════════════════════════════════════════
 
 import {

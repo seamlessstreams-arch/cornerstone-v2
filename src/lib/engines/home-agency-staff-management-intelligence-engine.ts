@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME AGENCY STAFF MANAGEMENT INTELLIGENCE ENGINE
+// CARA — HOME AGENCY STAFF MANAGEMENT INTELLIGENCE ENGINE
 // Pure deterministic engine: agency shift vetting, induction quality,
 // feedback oversight, safeguarding briefing compliance, concern management.
 // CHR 2015 Reg 32: "Fitness of workers." SCCIF: "Well-led and managed."

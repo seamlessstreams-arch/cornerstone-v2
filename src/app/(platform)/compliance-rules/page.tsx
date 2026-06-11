@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — COMPLIANCE RULES detail page
+// CARA — COMPLIANCE RULES detail page
 // The home's FIXED regulatory checks — hard pass/fail rules, deliberately
-// SEPARATE from ARIA. ARIA suggests; these rules enforce. Every monitored duty
+// SEPARATE from Cara. Cara suggests; these rules enforce. Every monitored duty
 // is shown with its status, severity and the specific record it links to.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -45,7 +45,7 @@ export default function ComplianceRulesPage() {
   return (
     <PageShell
       title="Compliance Rules — Fixed Checks"
-      subtitle="Hard regulatory rules, pass or fail — deliberately separate from ARIA's suggestions"
+      subtitle="Hard regulatory rules, pass or fail — deliberately separate from Cara's suggestions"
       icon={<ShieldCheck className="h-5 w-5" />}
       showQuickCreate={false}
       ariaContext={{ pageTitle: "Compliance Rules — Fixed Checks", sourceType: "general" }}
@@ -62,7 +62,7 @@ export default function ComplianceRulesPage() {
             <Info className="h-4 w-4 text-[var(--cs-text-muted)] shrink-0 mt-0.5" />
             <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed">
               These are <strong>fixed regulatory rules</strong> — each one is simply <em>passing</em> or <em>failing</em> on
-              the facts of the record. They are <strong>not</strong> ARIA suggestions: ARIA may surface a concern, but a
+              the facts of the record. They are <strong>not</strong> Cara suggestions: Cara may surface a concern, but a
               rule fails on the record, not on a model&rsquo;s confidence. Covers Children&rsquo;s Homes (England)
               Regulations 2015 — Reg&nbsp;33 (supervision), Reg&nbsp;34/35 (medicines &amp; behaviour management),
               Reg&nbsp;40 (notifications) and Reg&nbsp;12/13 (protection &amp; leadership).
@@ -79,11 +79,11 @@ export default function ComplianceRulesPage() {
             <OverviewStat label="Medium" value={intel.overview.by_severity.medium} tone={intel.overview.by_severity.medium > 0 ? "blue" : "gray"} />
           </div>
 
-          {/* ── ARIA posture insights ──────────────────────────────────── */}
+          {/* ── Cara posture insights ──────────────────────────────────── */}
           {(intel.insights ?? []).length > 0 && (
             <div className="space-y-2">
               <h2 className="text-sm font-semibold flex items-center gap-1.5 text-purple-700">
-                <Brain className="h-4 w-4" /> ARIA Compliance Posture
+                <Brain className="h-4 w-4" /> Cara Compliance Posture
               </h2>
               {(intel.insights ?? []).map((insight, i) => (
                 <div key={i} className={cn("rounded-xl border p-3 text-sm leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.positive)}>

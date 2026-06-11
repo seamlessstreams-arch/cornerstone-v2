@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SAFER RECRUITMENT INTELLIGENCE HOOK
+// CARA — SAFER RECRUITMENT INTELLIGENCE HOOK
 // React Query wrapper for /api/v1/safer-recruitment-intelligence
 // ══════════════════════════════════════════════════════════════════════════════
 

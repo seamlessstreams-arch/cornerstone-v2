@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — FAMILY CONTACT CARD
+// CARA — FAMILY CONTACT CARD
 // Dashboard widget showing recent contact sessions, suspended arrangements,
 // concerns flagged, and upcoming scheduled contact.
 // Reg 7 — Contact between children & parents/family must be promoted.

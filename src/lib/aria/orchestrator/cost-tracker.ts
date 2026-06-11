@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA ORCHESTRATOR — COST TRACKER
+// Cara ORCHESTRATOR — COST TRACKER
 //
 // Tracks token usage, estimated cost, and latency per request. Provides cost
 // estimation before invocation and actual cost recording after completion.

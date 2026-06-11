@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME DECORATION & PERSONALISATION SERVICE
+// CARA — HOME DECORATION & PERSONALISATION SERVICE
 // Tracks how children personalise their bedrooms and contribute
 // to communal spaces, ensuring a homely environment that reflects
 // individual identity and preferences.

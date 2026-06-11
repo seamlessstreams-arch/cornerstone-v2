@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RI ALERTS COMMAND CENTRE
+// CARA — RI ALERTS COMMAND CENTRE
 // Auto-detected governance, compliance, and safeguarding alerts with
 // severity distribution, category filtering, trend analysis, and resolution
 // workflow. Powers the RI engine's proactive risk identification.

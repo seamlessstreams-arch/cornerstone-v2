@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — INSPECTION EVIDENCE PACK TYPES
+// CARA — INSPECTION EVIDENCE PACK TYPES
 // Type definitions for the Inspection Evidence Pack Generator.
 // Used by the engine, API route, hook, and view component.
 // ══════════════════════════════════════════════════════════════════════════════

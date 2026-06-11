@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — INCIDENT ANALYTICS SERVICE
+// CARA — INCIDENT ANALYTICS SERVICE
 // Aggregates incident data for trend analysis, pattern detection,
-// regulatory reporting, and ARIA intelligence inputs.
+// regulatory reporting, and Cara intelligence inputs.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { createServerClient, isSupabaseEnabled } from "@/lib/supabase/server";

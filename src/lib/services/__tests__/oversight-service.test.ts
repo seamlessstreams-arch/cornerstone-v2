@@ -1,6 +1,6 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — OVERSIGHT SERVICE TESTS
-// Pure-function tests for ARIA prompt generation and regulation reference
+// CARA — OVERSIGHT SERVICE TESTS
+// Pure-function tests for Cara prompt generation and regulation reference
 // constants. Covers all record types, edge cases, and prompt structure.
 // ══════════════════════════════════════════════════════════════════════════════
 

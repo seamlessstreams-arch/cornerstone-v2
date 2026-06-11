@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LEAVING CARE / PATHWAY PLANNING SERVICE
+// CARA — LEAVING CARE / PATHWAY PLANNING SERVICE
 // Manages transition planning for young people aged 16+ leaving residential
 // care. Covers pathway plans, independence skills assessments, and leaving
 // care entitlements (CHR 2015 Reg 14 duty of care leaving, Children (Leaving

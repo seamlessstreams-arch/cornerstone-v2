@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILDREN'S PROGRESS TRACKING SERVICE
+// CARA — CHILDREN'S PROGRESS TRACKING SERVICE
 // Tracks individual children's progress across all outcome domains
 // including education, health, emotional wellbeing, relationships,
 // independence, and participation. Maps to Every Child Matters outcomes.

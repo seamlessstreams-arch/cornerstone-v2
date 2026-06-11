@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RECORDING QUALITY INTELLIGENCE CARD
+// CARA — RECORDING QUALITY INTELLIGENCE CARD
 // Dashboard card powered by the Recording Quality Intelligence Engine.
 // Reg 36 (records), SCCIF (evidence of day-to-day experiences).
 // ══════════════════════════════════════════════════════════════════════════════
@@ -244,13 +244,13 @@ export function RecordingQualityCard() {
           </div>
         )}
 
-        {/* ── ARIA Recording Intelligence ─────────────────────────────── */}
+        {/* ── Cara Recording Intelligence ─────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Recording Intelligence
+              Cara Recording Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

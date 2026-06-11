@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME MENTAL HEALTH INTELLIGENCE CARD
+// CARA — HOME MENTAL HEALTH INTELLIGENCE CARD
 // Mental health check-ins, therapy, safety plans, therapeutic referrals.
 // CHR 2015 Reg 7/10: "Welfare — promote physical/mental health."
 // ══════════════════════════════════════════════════════════════════════════════
@@ -228,12 +228,12 @@ export function HomeMentalHealthIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Mental Health Intelligence */}
+        {/* Cara Mental Health Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Mental Health Intelligence
+              Cara Mental Health Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — BUILDING SECURITY SERVICE TESTS
+// CARA — BUILDING SECURITY SERVICE TESTS
 // Pure-function tests for security metrics, alert identification,
 // constant validation, and edge cases.
 // ══════════════════════════════════════════════════════════════════════════════

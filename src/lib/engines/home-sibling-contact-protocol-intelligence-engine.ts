@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SIBLING CONTACT PROTOCOL INTELLIGENCE ENGINE
+// CARA — HOME SIBLING CONTACT PROTOCOL INTELLIGENCE ENGINE
 // Pure deterministic engine: sibling contact frequency, child preferences,
 // contact diversity, celebration planning, supervision appropriateness,
 // court-order compliance, relationship quality, and review currency.

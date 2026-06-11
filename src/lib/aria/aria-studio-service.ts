@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — CORE GENERATION SERVICE
+// Cara STUDIO — CORE GENERATION SERVICE
 // Builds prompts, calls the provider, persists artifact, writes audit log.
-// ARIA drafts. Humans decide. Nothing is committed without approval.
+// Cara drafts. Humans decide. Nothing is committed without approval.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { db } from "@/lib/db/store";
@@ -32,7 +32,7 @@ CRITICAL RULES:
 - Safeguarding is paramount — flag concerns, never downplay them.
 - Use plain, professional language appropriate to a children's residential home.
 - Structure output in clear sections with Markdown headings.
-- Always end with: "This is an ARIA-generated draft. A human must review and approve before use."`;
+- Always end with: "This is an Cara-generated draft. A human must review and approve before use."`;
 }
 
 // ── Main generation entry point ───────────────────────────────────────────────

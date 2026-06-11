@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME AUTOMATION ROI INTELLIGENCE API ROUTE
+// CARA — HOME AUTOMATION ROI INTELLIGENCE API ROUTE
 // GET /api/v1/home-automation-roi-intelligence
 // Synthesises savedTimeMetrics, careEventRoutes, and careEvents to assess
 // platform automation effectiveness, time savings, routing success rates,

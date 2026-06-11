@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MEDICATION ERRORS SERVICE
+// CARA — MEDICATION ERRORS SERVICE
 // Dedicated tracking of medication errors, near-misses, root cause analysis,
 // corrective actions, and learning from medication incidents.
 // CHR 2015 Reg 23 (medication — safe administration),

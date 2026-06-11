@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD HEALTH & WELLBEING INTELLIGENCE ENGINE
+// CARA — CHILD HEALTH & WELLBEING INTELLIGENCE ENGINE
 //
 // Per-child health analysis: medication compliance, health assessment status,
 // dental/optician/immunisation compliance, CAMHS engagement, mental health
@@ -604,7 +604,7 @@ export function computeChildHealthIntelligence(
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
   const insights: HealthInsight[] = [];
 
   if (health_status === "critical") {

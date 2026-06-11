@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ADVOCACY & INDEPENDENT VOICE INTELLIGENCE ENGINE
+// CARA — HOME ADVOCACY & INDEPENDENT VOICE INTELLIGENCE ENGINE
 // Pure deterministic engine: advocacy access, independence of advocates,
 // child voice capture, visit frequency, private sessions, and action follow-through.
 // CHR 2015 Reg 7: "The children's wishes and feelings standard." SCCIF: Voice.

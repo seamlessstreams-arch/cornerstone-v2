@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Medication Error Prevention Intelligence Engine
+// Cara — Medication Error Prevention Intelligence Engine
 //
 // Pure deterministic engine — no AI, no external calls.
 // Analyses medication safety practice including:

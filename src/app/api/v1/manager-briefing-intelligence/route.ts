@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MANAGER'S INTELLIGENCE BRIEFING API ROUTE
+// CARA — MANAGER'S INTELLIGENCE BRIEFING API ROUTE
 // GET /api/v1/manager-briefing-intelligence
 //
 // Meta-route that aggregates outputs from all major domain intelligence

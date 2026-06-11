@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — SAFE CONTEXT BUILDER
+// Cara — SAFE CONTEXT BUILDER
 //
-// Fetches operational Cornerstone records for ARIA command context. Every
+// Fetches operational Cara records for Cara command context. Every
 // record retrieved is permission-checked, summarised (never raw PII sent to
 // the model), and logged in aria_context_links for audit.
 //
@@ -517,7 +517,7 @@ function buildContextSnippet(records: AriaContextRecord[]): string {
   });
 
   const lines: string[] = [
-    "ADDITIONAL CONTEXT FROM CORNERSTONE RECORDS (do not invent beyond these):",
+    "ADDITIONAL CONTEXT FROM CARA RECORDS (do not invent beyond these):",
     "",
   ];
 

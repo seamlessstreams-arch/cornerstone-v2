@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Sleep & Wellbeing Monitoring Intelligence Engine — Tests
+// Cara — Sleep & Wellbeing Monitoring Intelligence Engine — Tests
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";

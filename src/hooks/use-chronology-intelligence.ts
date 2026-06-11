@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHRONOLOGY INTELLIGENCE HOOK
+// CARA — CHRONOLOGY INTELLIGENCE HOOK
 // React Query wrapper for /api/v1/chronology-intelligence
 // ══════════════════════════════════════════════════════════════════════════════
 

@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // AriaRotaIntelligence — AI-powered rota analysis & staffing alerts
 //
-// Shows ARIA-detected issues with the weekly rota: lone-working risk,
+// Shows Cara-detected issues with the weekly rota: lone-working risk,
 // overtime patterns, ratio non-compliance, fatigue risk, and optimal
 // suggestions. Designed for the Rota page sidebar or inline placement.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -182,7 +182,7 @@ export function AriaRotaIntelligence() {
               <Sparkles className="h-4 w-4 text-[var(--cs-aria-gold)]" />
             </div>
             <div>
-              <h3 className="text-sm font-semibold text-[var(--cs-navy)]">ARIA Rota Intelligence</h3>
+              <h3 className="text-sm font-semibold text-[var(--cs-navy)]">Cara Rota Intelligence</h3>
               <p className="text-[10px] text-[var(--cs-text-muted)]">{data.weekLabel}</p>
             </div>
           </div>
@@ -281,7 +281,7 @@ export function AriaRotaIntelligence() {
                     <div className="rounded-xl bg-[var(--cs-aria-gold-bg)] border border-[var(--cs-aria-gold-soft)] p-2.5 mt-1">
                       <div className="flex items-center gap-1.5 mb-1">
                         <Sparkles className="h-3 w-3 text-[var(--cs-aria-gold)]" />
-                        <span className="text-[10px] font-semibold text-[var(--cs-navy)]">ARIA Suggestion</span>
+                        <span className="text-[10px] font-semibold text-[var(--cs-navy)]">Cara Suggestion</span>
                       </div>
                       <p className="text-[11px] text-[var(--cs-text-secondary)]">{alert.suggestion}</p>
                     </div>
@@ -296,7 +296,7 @@ export function AriaRotaIntelligence() {
       {/* Footer */}
       <div className="px-4 py-2.5 border-t border-[var(--cs-border)] bg-slate-50/50">
         <p className="text-[10px] text-[var(--cs-text-muted)] text-center">
-          ARIA analyses rota patterns against regulations and your Statement of Purpose. All suggestions require human review.
+          Cara analyses rota patterns against regulations and your Statement of Purpose. All suggestions require human review.
         </p>
       </div>
     </div>

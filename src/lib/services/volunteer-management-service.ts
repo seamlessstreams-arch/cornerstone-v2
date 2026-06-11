@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — VOLUNTEER MANAGEMENT SERVICE
+// CARA — VOLUNTEER MANAGEMENT SERVICE
 // Tracks volunteers, DBS checks, training, supervision, and safeguarding
 // compliance for people supporting children's residential homes.
 // CHR 2015 Reg 32 (fitness of workers — includes volunteers),

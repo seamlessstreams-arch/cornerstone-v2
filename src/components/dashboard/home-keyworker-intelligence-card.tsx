@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME KEYWORKER INTELLIGENCE CARD
+// CARA — HOME KEYWORKER INTELLIGENCE CARD
 // Home-level: keyworker session coverage, therapeutic quality, child
 // engagement, mood improvement, follow-through, theme diversity.
 // CHR 2015 Reg 44. SCCIF: "How well children are helped and protected."
@@ -220,12 +220,12 @@ export function HomeKeyworkerIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Keyworker Intelligence */}
+        {/* Cara Keyworker Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Keyworker Intelligence
+              Cara Keyworker Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

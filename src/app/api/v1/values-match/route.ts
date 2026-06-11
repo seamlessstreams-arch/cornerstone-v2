@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — VALUES-BASED MATCHING API
+// CARA — VALUES-BASED MATCHING API
 // GET /api/v1/values-match[?candidateId=...]
 //
 // Computes a transparent, dimension-by-dimension match between each candidate's

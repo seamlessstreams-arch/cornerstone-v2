@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME EMOTIONAL LITERACY & FEELINGS EXPRESSION INTELLIGENCE API ROUTE
+// CARA — HOME EMOTIONAL LITERACY & FEELINGS EXPRESSION INTELLIGENCE API ROUTE
 // GET /api/v1/home-emotional-literacy-feelings-expression-intelligence
 // Cross-domain composite: emotionIdentificationRecords + feelingsVocabularyRecords +
 // expressionToolRecords + therapeuticJournalRecords + staffAttunementRecords

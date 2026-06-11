@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SUPERVISION SERVICE TESTS
+// CARA — SUPERVISION SERVICE TESTS
 // Pure-function unit tests for supervision compliance, quality scoring,
 // overdue detection, and constant validation.
 // ══════════════════════════════════════════════════════════════════════════════

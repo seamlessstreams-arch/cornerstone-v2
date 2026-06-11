@@ -1,6 +1,6 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // API: /api/aria/audit
-// GET — returns recent ARIA audit events. Requires aria.view_audit_logs.
+// GET — returns recent Cara audit events. Requires aria.view_audit_logs.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { NextRequest, NextResponse } from "next/server";

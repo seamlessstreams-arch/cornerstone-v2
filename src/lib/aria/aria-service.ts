@@ -1,15 +1,15 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — UNIVERSAL SERVICE LAYER
+// Cara — UNIVERSAL SERVICE LAYER
 //
-// The orchestrator that every Aria-driven feature can route through. It
-// authenticates, checks Aria permissions, builds safe context, calls the
+// The orchestrator that every Cara-driven feature can route through. It
+// authenticates, checks Cara permissions, builds safe context, calls the
 // provider, validates the response, persists a draft, and writes the audit
 // event. Domain engines (oversight, voice-of-child, HR Process Guardian)
 // remain authoritative for their own deep checks; this service is the
-// thin universal layer that makes Aria available across the rest of the
+// thin universal layer that makes Cara available across the rest of the
 // platform with the same lifecycle.
 //
-// All output is "Aria suggested draft" until a human approves and commits.
+// All output is "Cara suggested draft" until a human approves and commits.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import type { SupabaseClient } from "@supabase/supabase-js";
@@ -684,7 +684,7 @@ export const ARIA_COMMANDS: Record<AriaCommandId, AriaCommandSpec> = {
   suggest_where_document_should_link: {
     id: "suggest_where_document_should_link",
     label: "Suggest filing location",
-    description: "Suggest the right place in Cornerstone for the document.",
+    description: "Suggest the right place in Cara for the document.",
     modules: ["documents"],
     requiredPermission: "aria.summarise",
     approvalRequired: true,
@@ -692,7 +692,7 @@ export const ARIA_COMMANDS: Record<AriaCommandId, AriaCommandSpec> = {
     canCommit: false,
     riskLevel: "low",
     systemPromptFragment:
-      "Suggest the most appropriate Cornerstone module(s) and confidentiality level for the document. Stay grounded in the document content.",
+      "Suggest the most appropriate Cara module(s) and confidentiality level for the document. Stay grounded in the document content.",
   },
   create_document_summary_for_record: {
     id: "create_document_summary_for_record",
@@ -1627,7 +1627,7 @@ export async function invokeAriaCommand(
       confidence,
       redactedContextSummary: redactedContextSummaryFor(args),
       contextRecordIds: contextRecordIdsFor(args),
-      ariaLabel: "Aria suggested draft",
+      ariaLabel: "Cara suggested draft",
       llmUsed: generation.llmUsed,
       providerId: generation.providerId,
       modelId: generation.modelId,
@@ -1787,12 +1787,12 @@ export async function applyApprovalDecision(args: ApplyApprovalArgs): Promise<{
 
 function buildSystemPrompt(command: AriaCommandSpec): string {
   return [
-    "You are Aria, the intelligent professional assistant built into Cornerstone, the operating system for UK residential children's homes.",
+    "You are Cara, the intelligent professional assistant built into Cara, the operating system for UK residential children's homes.",
     "",
     ARIA_PROFESSIONAL_IDENTITY_PROMPT,
     "",
     "Universal rules:",
-    "- Output is always labelled as an Aria suggested draft. The Registered Manager remains the decision-maker and the author.",
+    "- Output is always labelled as an Cara suggested draft. The Registered Manager remains the decision-maker and the author.",
     "- Use only the source provided. Do not invent facts. Do not invent chronology. Do not invent quotes from children or staff.",
     "- Never declare high confidence on safeguarding-, HR-, or legal-sensitive content unless the source evidence is unambiguous.",
     "",
@@ -1811,7 +1811,7 @@ function buildUserPrompt(args: AriaInvokeArgs): string {
   if (args.sourceModule) lines.push(`SOURCE MODULE: ${args.sourceModule}`);
   if (args.sourceRecordId) lines.push(`SOURCE RECORD: ${args.sourceRecordType ?? ""} ${args.sourceRecordId}`);
   lines.push("");
-  lines.push("USER INPUT (the source text Aria should work from):");
+  lines.push("USER INPUT (the source text Cara should work from):");
   lines.push(args.inputText ?? "(no input text provided)");
   if (args.inputMetadata && Object.keys(args.inputMetadata).length > 0) {
     lines.push("");

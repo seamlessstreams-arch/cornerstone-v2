@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Aria Intelligence — Governance System Tests
+// Cara Intelligence — Governance System Tests
 //
 // Tests: model routing, sensitivity classification, redaction, provider
 // blocking, role permissions, audit logging, approval workflow, cost limits,

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME DAILY LOG INTELLIGENCE CARD
+// CARA — HOME DAILY LOG INTELLIGENCE CARD
 // Recording patterns, mood tracking, entry types, staff participation.
 // CHR 2015 Reg 36: "Records — maintain comprehensive records."
 // SCCIF: "Records are clear, up to date, and stored safely."
@@ -223,12 +223,12 @@ export function HomeDailyLogIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Daily Log Intelligence */}
+        {/* Cara Daily Log Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Daily Log Intelligence
+              Cara Daily Log Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

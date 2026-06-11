@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MEDICATION STORAGE SERVICE
+// CARA — MEDICATION STORAGE SERVICE
 // Tracks medication storage conditions, controlled drug cupboard checks,
 // fridge temperature monitoring, and secure storage compliance.
 // CHR 2015 Reg 23 (health — safe medication storage),

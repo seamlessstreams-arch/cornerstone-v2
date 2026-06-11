@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME EMERGENCY PREPAREDNESS & BUSINESS CONTINUITY API ROUTE
+// CARA — HOME EMERGENCY PREPAREDNESS & BUSINESS CONTINUITY API ROUTE
 // GET /api/v1/home-emergency-preparedness-continuity-intelligence
 // Cross-domain composite: fireDrillRecords + evacuationPlans +
 // emergencyContacts + businessContinuityPlans + firstAidRecords

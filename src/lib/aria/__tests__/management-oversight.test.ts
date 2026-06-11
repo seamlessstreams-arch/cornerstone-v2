@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA Management Oversight Queue — engine tests (Milestone 14)
+// Cara Management Oversight Queue — engine tests (Milestone 14)
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect, beforeEach } from "vitest";

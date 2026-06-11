@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILDREN'S POSSESSIONS & PROPERTY SERVICE TESTS
+// CARA — CHILDREN'S POSSESSIONS & PROPERTY SERVICE TESTS
 // Pure-function unit tests for possession summary computation, alert
 // identification, and constant validation (CHR 2015 Reg 21 — privacy &
 // access, Reg 36 — case records, SCCIF Experiences).

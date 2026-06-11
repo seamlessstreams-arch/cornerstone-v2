@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — FAITH & SPIRITUAL OBSERVANCE SERVICE
+// CARA — FAITH & SPIRITUAL OBSERVANCE SERVICE
 // Tracks faith and spiritual observance support for children in
 // residential care homes, ensuring religious identity is respected
 // and spiritual needs are actively facilitated.

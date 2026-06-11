@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CARE PLANNING SERVICE
+// CARA — CARE PLANNING SERVICE
 // Manages care plans, statutory reviews, placement plans, and care plan
 // objectives tracking for every child in the home.
 // CHR 2015 Reg 14 (care planning — placement plan must address child's

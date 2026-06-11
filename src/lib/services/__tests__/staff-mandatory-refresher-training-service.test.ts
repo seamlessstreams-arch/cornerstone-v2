@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF MANDATORY REFRESHER TRAINING SERVICE TESTS
+// CARA — STAFF MANDATORY REFRESHER TRAINING SERVICE TESTS
 // Pure-function unit tests for refresher training metrics computation, alert
-// identification, and ARIA insight generation.
+// identification, and Cara insight generation.
 //
 // CHR 2015 Reg 33 (employment of staff), Reg 34 (fitness of workers),
 // Reg 35 (supervision and training). Schedule 2 — fitness of workers.

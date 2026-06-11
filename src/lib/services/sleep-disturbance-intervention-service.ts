@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SLEEP DISTURBANCE INTERVENTION SERVICE
+// CARA — SLEEP DISTURBANCE INTERVENTION SERVICE
 // Night disturbance logging, intervention strategies, sleep hygiene plans,
 // clinical referrals, trauma-linked sleep issues. Helps track patterns
 // and improve sleep quality for children in residential care.

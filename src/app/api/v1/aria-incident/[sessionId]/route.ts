@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ARIA INCIDENT MODE · SESSION API
+// CARA — Cara INCIDENT MODE · SESSION API
 // GET   /api/v1/aria-incident/[sessionId]  → full live bundle (timeline, checklist,
 //                                            prompts, quality gate, child voice)
 // PATCH /api/v1/aria-incident/[sessionId]  → { action: "end" | "notify_manager" |

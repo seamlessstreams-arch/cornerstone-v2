@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Quality Assurance & Continuous Improvement API Route
+// Cara — Quality Assurance & Continuous Improvement API Route
 //
 // GET  → returns Chamberlain House demo QA intelligence
 // POST → accepts custom data for any home

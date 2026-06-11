@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // GET /api/aria/insights
 //
-// Returns ARIA proactive insights — patterns detected, risk escalations,
+// Returns Cara proactive insights — patterns detected, risk escalations,
 // compliance gaps, and positive trends. Query params: homeId, limit, type
 // ══════════════════════════════════════════════════════════════════════════════
 

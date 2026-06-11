@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME HOLIDAY & ENRICHING EXPERIENCES INTELLIGENCE ENGINE
+// CARA — HOME HOLIDAY & ENRICHING EXPERIENCES INTELLIGENCE ENGINE
 // Pure deterministic engine: holiday records, care anniversaries, child
 // voice in planning, memorable experiences, and celebration of milestones.
 // CHR 2015 Reg 9: "Promoting good health and enjoyment." SCCIF: Experiences.

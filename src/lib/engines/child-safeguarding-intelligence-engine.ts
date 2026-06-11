@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD SAFEGUARDING INTELLIGENCE ENGINE
+// CARA — CHILD SAFEGUARDING INTELLIGENCE ENGINE
 // Per-child engine producing a holistic safeguarding profile combining:
 // risk assessments, incidents, missing episodes, restraints, contextual
 // safeguarding markers, and professional input to determine a child's
@@ -604,7 +604,7 @@ export function computeChildSafeguarding(
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
   const insights: SafeguardingInsight[] = [];
 
   if (safeguarding_status === "critical") {

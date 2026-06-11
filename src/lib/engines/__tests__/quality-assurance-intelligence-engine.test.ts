@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — QUALITY ASSURANCE INTELLIGENCE ENGINE — TESTS
+// CARA — QUALITY ASSURANCE INTELLIGENCE ENGINE — TESTS
 //
 // Comprehensive test suite for the quality assurance intelligence engine.
 // Reg 45 (quality of care review), SCCIF Leadership & Management.

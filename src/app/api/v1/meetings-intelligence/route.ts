@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MEETINGS & CHILDREN'S VOICE INTELLIGENCE API ROUTE
+// CARA — MEETINGS & CHILDREN'S VOICE INTELLIGENCE API ROUTE
 // GET /api/v1/meetings-intelligence
 // Returns children's participation analysis: meeting attendance, action
-// tracking, child voice engagement, and ARIA intelligence.
+// tracking, child voice engagement, and Cara intelligence.
 // Reg 7, Reg 16, SCCIF.
 // ══════════════════════════════════════════════════════════════════════════════
 

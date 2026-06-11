@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SOCIAL WORKER CONTACT INTELLIGENCE ENGINE
+// CARA — HOME SOCIAL WORKER CONTACT INTELLIGENCE ENGINE
 // Pure deterministic engine: contact frequency, direction balance, child
 // awareness, follow-up compliance, urgency patterns, decision documentation,
 // action completion, and statutory visit compliance.

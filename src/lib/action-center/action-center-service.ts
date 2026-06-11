@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — Action Centre service
+// CARA — Action Centre service
 //
 // Gathers the live signals from the store + safe-staffing, then delegates to the
 // pure aggregator. Read-only.

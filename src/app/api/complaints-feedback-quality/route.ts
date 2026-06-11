@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Complaints & Feedback Quality Intelligence API Route
+// Cara — Complaints & Feedback Quality Intelligence API Route
 //
 // GET  → returns Chamberlain House demo complaints & feedback quality intelligence
 // POST → accepts custom data for any home

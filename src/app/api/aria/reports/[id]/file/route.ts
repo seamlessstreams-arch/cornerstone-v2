@@ -1,6 +1,6 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // API — POST /api/aria/reports/[id]/file
-// Files a locked report into the Cornerstone filing cabinet.
+// Files a locked report into the Cara filing cabinet.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { NextRequest, NextResponse } from "next/server";

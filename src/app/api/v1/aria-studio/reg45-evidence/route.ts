@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// API — ARIA Reg 45 Live Evidence Bank
+// API — Cara Reg 45 Live Evidence Bank
 // GET  → load themed snapshot (filter period_start/period_end)
 // POST → run evidence build (RBAC: aria.generate_drafts)
 // ══════════════════════════════════════════════════════════════════════════════

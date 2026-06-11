@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ROOM TEMPERATURE MONITORING SERVICE
+// CARA — ROOM TEMPERATURE MONITORING SERVICE
 // Tracks temperature readings, heating compliance, and comfort levels
 // across all rooms in the children's home.
 // CHR 2015 Reg 25 (premises — adequate heating),

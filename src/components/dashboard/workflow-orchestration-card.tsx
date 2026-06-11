@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — WORKFLOW ORCHESTRATION CARD
+// CARA — WORKFLOW ORCHESTRATION CARD
 // Actions auto-generated from events by configurable workflow rules — tasks,
-// approvals, debriefs, evidence, ARIA summaries, gated notification drafts — with
+// approvals, debriefs, evidence, Cara summaries, gated notification drafts — with
 // escalation. Powered by the Workflow Orchestration engine (Reg 13).
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -19,7 +19,7 @@ const INSIGHT_STYLES: Record<string, string> = {
 };
 const TYPE_LABEL: Record<string, string> = {
   create_approval_task: "Approval", create_task: "Task", create_debrief_task: "Debrief", suggest_keywork: "Key-work",
-  add_evidence: "Evidence", generate_aria_summary: "ARIA summary", update_trend: "Trend", create_notification_draft: "Notification draft",
+  add_evidence: "Evidence", generate_aria_summary: "Cara summary", update_trend: "Trend", create_notification_draft: "Notification draft",
 };
 
 export function WorkflowOrchestrationCard() {
@@ -70,7 +70,7 @@ export function WorkflowOrchestrationCard() {
 
         {insights.length > 0 && (
           <div className="space-y-1.5">
-            <p className="text-xs font-semibold flex items-center gap-1 text-purple-700"><Brain className="h-3 w-3" /> ARIA Workflow Intelligence</p>
+            <p className="text-xs font-semibold flex items-center gap-1 text-purple-700"><Brain className="h-3 w-3" /> Cara Workflow Intelligence</p>
             {insights.slice(0, 2).map((i, idx) => (
               <div key={idx} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[i.severity] ?? INSIGHT_STYLES.positive)}>{i.text}</div>
             ))}

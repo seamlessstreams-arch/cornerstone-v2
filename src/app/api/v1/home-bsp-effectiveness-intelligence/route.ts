@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME BSP EFFECTIVENESS INTELLIGENCE API ROUTE
+// CARA — HOME BSP EFFECTIVENESS INTELLIGENCE API ROUTE
 // GET /api/v1/home-bsp-effectiveness-intelligence
 // Cross-cutting analysis: BSPs × behaviour log × restraints.
 // CHR 2015 Reg 19 (Behaviour management), Reg 20 (Restraint).

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — PROVIDER ABSTRACTION
+// Cara — PROVIDER ABSTRACTION
 //
 // Server-side only. Never imported into client code.
 //
@@ -15,7 +15,7 @@
 // rather than at module-load time (Turbopack / Next.js 16 compatibility).
 //
 // Missing keys must not crash the app. Callers receive { configured: false }
-// and surface a clear "Aria is not configured yet" message in the UI.
+// and surface a clear "Cara is not configured yet" message in the UI.
 // ══════════════════════════════════════════════════════════════════════════════
 
 export interface AriaProviderConfig {
@@ -28,14 +28,14 @@ export interface AriaProviderConfig {
 }
 
 export function getAriaProviderConfig(): AriaProviderConfig {
-  const providerEnv = (process.env.ARIA_PROVIDER ?? process.env.AI_PROVIDER ?? "anthropic").toLowerCase();
-  const transcribeModel = process.env.ARIA_TRANSCRIBE_MODEL ?? "gpt-4o-transcribe";
-  const maxAudioMb = Number.parseInt(process.env.ARIA_MAX_AUDIO_MB ?? "25", 10);
+  const providerEnv = ((process.env.CARA_PROVIDER ?? process.env.ARIA_PROVIDER) ?? process.env.AI_PROVIDER ?? "anthropic").toLowerCase();
+  const transcribeModel = (process.env.CARA_TRANSCRIBE_MODEL ?? process.env.ARIA_TRANSCRIBE_MODEL) ?? "gpt-4o-transcribe";
+  const maxAudioMb = Number.parseInt((process.env.CARA_MAX_AUDIO_MB ?? process.env.ARIA_MAX_AUDIO_MB) ?? "25", 10);
   const maxAudioBytes = Number.isFinite(maxAudioMb) ? maxAudioMb * 1024 * 1024 : 25 * 1024 * 1024;
 
   if (providerEnv === "anthropic") {
     const apiKey = process.env.ANTHROPIC_API_KEY;
-    const textModel = process.env.ARIA_MODEL ?? process.env.ARIA_TEXT_MODEL ?? "claude-sonnet-4-20250514";
+    const textModel = (process.env.CARA_MODEL ?? process.env.ARIA_MODEL) ?? (process.env.CARA_TEXT_MODEL ?? process.env.ARIA_TEXT_MODEL) ?? "claude-sonnet-4-20250514";
 
     if (!apiKey || apiKey.includes("placeholder")) {
       return {
@@ -44,7 +44,7 @@ export function getAriaProviderConfig(): AriaProviderConfig {
         textModel,
         transcribeModel,
         maxAudioBytes,
-        reason: "ANTHROPIC_API_KEY is not set. Configure it server-side to enable the universal Aria layer.",
+        reason: "ANTHROPIC_API_KEY is not set. Configure it server-side to enable the universal Cara layer.",
       };
     }
 
@@ -58,7 +58,7 @@ export function getAriaProviderConfig(): AriaProviderConfig {
   }
 
   // Any other provider value is unsupported — OpenAI has been removed; Claude only.
-  const textModel = process.env.ARIA_TEXT_MODEL ?? "claude-sonnet-4-20250514";
+  const textModel = (process.env.CARA_TEXT_MODEL ?? process.env.ARIA_TEXT_MODEL) ?? "claude-sonnet-4-20250514";
   return {
     configured: false,
     providerId: "none",
@@ -215,11 +215,11 @@ export async function transcribeAudio(
 
 function ariaNotConfiguredFallback(expectJson: boolean): string {
   const message =
-    "Aria is not configured in this environment. The provider key has not been set, so the universal Aria layer cannot generate text. Add ANTHROPIC_API_KEY to your server environment to enable it.";
+    "Cara is not configured in this environment. The provider key has not been set, so the universal Cara layer cannot generate text. Add ANTHROPIC_API_KEY to your server environment to enable it.";
   if (expectJson) {
     return JSON.stringify({ ariaNotConfigured: true, message });
   }
-  return `Aria suggested draft. ${message}`;
+  return `Cara suggested draft. ${message}`;
 }
 
 function ariaProviderErrorFallback(errorDetail: string, provider: string, expectJson: boolean): string {
@@ -228,21 +228,21 @@ function ariaProviderErrorFallback(errorDetail: string, provider: string, expect
   const lower = errorDetail.toLowerCase();
 
   if (lower.includes("credit balance") || lower.includes("billing") || lower.includes("purchase credits")) {
-    userMessage = `Aria's AI provider (${provider}) requires account credits to be topped up. Please visit your Anthropic dashboard to add credits, then Aria will work automatically.`;
+    userMessage = `Cara's AI provider (${provider}) requires account credits to be topped up. Please visit your Anthropic dashboard to add credits, then Cara will work automatically.`;
   } else if (lower.includes("authentication") || lower.includes("401") || lower.includes("invalid.*key")) {
-    userMessage = `Aria's API key for ${provider} is invalid or expired. Please update it in the server environment variables.`;
+    userMessage = `Cara's API key for ${provider} is invalid or expired. Please update it in the server environment variables.`;
   } else if (lower.includes("rate limit") || lower.includes("429")) {
-    userMessage = `Aria's AI provider (${provider}) is temporarily rate-limited. Please try again in a moment.`;
+    userMessage = `Cara's AI provider (${provider}) is temporarily rate-limited. Please try again in a moment.`;
   } else if (lower.includes("503") || lower.includes("529") || lower.includes("overloaded") || lower.includes("unavailable")) {
-    userMessage = `Aria's AI provider (${provider}) is temporarily unavailable. This usually resolves within minutes.`;
+    userMessage = `Cara's AI provider (${provider}) is temporarily unavailable. This usually resolves within minutes.`;
   } else if (lower.includes("timeout") || lower.includes("abort")) {
-    userMessage = `Aria's AI provider (${provider}) took too long to respond. Please try again.`;
+    userMessage = `Cara's AI provider (${provider}) took too long to respond. Please try again.`;
   } else {
-    userMessage = `Aria encountered an issue connecting to ${provider}. The AI provider returned an error. Please check your configuration or try again later.`;
+    userMessage = `Cara encountered an issue connecting to ${provider}. The AI provider returned an error. Please check your configuration or try again later.`;
   }
 
   if (expectJson) {
     return JSON.stringify({ ariaError: true, message: userMessage, provider });
   }
-  return `Aria notice: ${userMessage}`;
+  return `Cara notice: ${userMessage}`;
 }

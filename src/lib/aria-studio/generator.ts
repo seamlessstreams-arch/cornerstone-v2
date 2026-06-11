@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — Generator
+// Cara STUDIO — Generator
 //
 // Orchestrates the full generation pipeline:
 //   1. Build/fetch child profile (if applicable)
@@ -28,9 +28,9 @@ import type {
 // ── Configuration ────────────────────────────────────────────────────────────
 
 // Claude (Anthropic) only — OpenAI was removed platform-wide.
-const LLM_API_URL = process.env.ARIA_STUDIO_LLM_URL ?? "https://api.anthropic.com/v1/messages";
-const LLM_API_KEY = process.env.ARIA_STUDIO_LLM_KEY ?? process.env.ANTHROPIC_API_KEY ?? "";
-const LLM_MODEL = process.env.ARIA_STUDIO_MODEL ?? process.env.ARIA_MODEL ?? "claude-sonnet-4-20250514";
+const LLM_API_URL = (process.env.CARA_STUDIO_LLM_URL ?? process.env.ARIA_STUDIO_LLM_URL) ?? "https://api.anthropic.com/v1/messages";
+const LLM_API_KEY = (process.env.CARA_STUDIO_LLM_KEY ?? process.env.ARIA_STUDIO_LLM_KEY) ?? process.env.ANTHROPIC_API_KEY ?? "";
+const LLM_MODEL = (process.env.CARA_STUDIO_MODEL ?? process.env.ARIA_STUDIO_MODEL) ?? (process.env.CARA_MODEL ?? process.env.ARIA_MODEL) ?? "claude-sonnet-4-20250514";
 
 // ── Result Type ──────────────────────────────────────────────────────────────
 

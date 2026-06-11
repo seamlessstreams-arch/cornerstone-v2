@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EMERGENCY PROTOCOL DRILLS
+// CARA — EMERGENCY PROTOCOL DRILLS
 // Records emergency protocol drills beyond fire drills — testing responses to
 // scenarios like missing child, medical emergency, power failure, intruder,
 // flood/leak, restraint scenario, medication errors.

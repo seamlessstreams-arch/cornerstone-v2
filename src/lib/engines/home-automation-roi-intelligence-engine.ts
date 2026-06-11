@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME AUTOMATION ROI INTELLIGENCE ENGINE
+// CARA — HOME AUTOMATION ROI INTELLIGENCE ENGINE
 // Home-level: measures platform automation effectiveness — time savings from
 // automated routing, route success/failure rates, automation coverage, error
 // rates, and operational efficiency gains.

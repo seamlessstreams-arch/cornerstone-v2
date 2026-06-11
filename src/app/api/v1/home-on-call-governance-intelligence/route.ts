@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ON-CALL GOVERNANCE INTELLIGENCE API ROUTE
+// CARA — HOME ON-CALL GOVERNANCE INTELLIGENCE API ROUTE
 // GET /api/v1/home-on-call-governance-intelligence
 // On-call coverage, response patterns, escalation governance, feedback loops.
 // CHR 2015 Reg 33(4)(b): "Systems for out-of-hours management support."

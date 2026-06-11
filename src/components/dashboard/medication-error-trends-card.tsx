@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MEDICATION ERROR TRENDS CARD
+// CARA — MEDICATION ERROR TRENDS CARD
 // Temporal + repeat-pattern early-warning for medication safety. Powered by the
 // Medication Error Trend Engine — live data (Reg 23 medicines / Reg 13 learning).
 // ══════════════════════════════════════════════════════════════════════════════
@@ -174,12 +174,12 @@ export function MedicationErrorTrendsCard() {
           </div>
         )}
 
-        {/* ── ARIA Medication Safety Intelligence ──────────────────────── */}
+        {/* ── Cara Medication Safety Intelligence ──────────────────────── */}
         {insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Medication Safety Intelligence
+              Cara Medication Safety Intelligence
             </p>
             {insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.positive)}>

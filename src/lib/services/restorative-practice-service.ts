@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- RESTORATIVE PRACTICE & CONFLICT RESOLUTION SERVICE
+// CARA -- RESTORATIVE PRACTICE & CONFLICT RESOLUTION SERVICE
 // Tracks restorative practice and conflict resolution sessions for looked-after
 // children including restorative conferences, restorative chats, community
 // meetings, harm circles, peer mediation, staff-child mediation, conflict

@@ -1,11 +1,11 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PRACTICE INTELLIGENCE TYPE SYSTEM
+// CARA — PRACTICE INTELLIGENCE TYPE SYSTEM
 // Types for the Therapeutic Curriculum Hub: profiles, sessions, learning
 // resources, oversight intelligence, regulation mapping, and workflow triggers.
 // ══════════════════════════════════════════════════════════════════════════════
 
 // ── Extended Therapeutic Frameworks ─────────────────────────────────────────
-// Adds frameworks not in the base ARIA Studio type system
+// Adds frameworks not in the base Cara Studio type system
 
 export const PRACTICE_INTELLIGENCE_FRAMEWORKS = [
   "pace", "ddp", "arc", "trauma_informed", "therapeutic_parenting",
@@ -660,7 +660,7 @@ export interface PatternAnalysisEntry {
   significance: string;
 }
 
-// ── ARIA Safeguards ─────────────────────────────────────────────────────────
+// ── Cara Safeguards ─────────────────────────────────────────────────────────
 
 export const ARIA_SAFEGUARD_RULES = [
   "never_state_speculation_as_fact",

@@ -416,7 +416,7 @@ describe("Home Activity & Enrichment Intelligence Engine", () => {
     expect(hasImmediate).toBe(true);
   });
 
-  // ── ARIA Insights ──────────────────────────────────────────────────────
+  // ── Cara Insights ──────────────────────────────────────────────────────
 
   it("generates critical insight for inadequate enrichment", () => {
     const r = computeHomeActivityEnrichment(baseInput());

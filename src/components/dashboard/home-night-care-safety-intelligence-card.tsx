@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME NIGHT CARE & SAFETY INTELLIGENCE CARD
+// CARA — HOME NIGHT CARE & SAFETY INTELLIGENCE CARD
 // Home-level: night checks, handovers, night anxiety support, bedtime routines,
 // wake-up routines, sleep quality, child voice, review compliance.
 // CHR 2015 Reg 12/25: Night care and safety.
@@ -208,12 +208,12 @@ export function HomeNightCareSafetyIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Night Care Insights */}
+        {/* Cara Night Care Insights */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-indigo-700">
               <Brain className="h-3 w-3" />
-              ARIA Night Care Intelligence
+              Cara Night Care Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

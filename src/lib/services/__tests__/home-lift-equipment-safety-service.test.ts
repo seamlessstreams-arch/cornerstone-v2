@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME LIFT EQUIPMENT SAFETY SERVICE TESTS
+// CARA — HOME LIFT EQUIPMENT SAFETY SERVICE TESTS
 // Pure-function tests for lift equipment safety metrics, alert identification,
-// ARIA insights, constant validation, and edge cases.
+// Cara insights, constant validation, and edge cases.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";

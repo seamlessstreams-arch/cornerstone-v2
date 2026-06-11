@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Allegations Intelligence Engine
+// Cara Allegations Intelligence Engine
 //
 // Deterministic engine for evaluating allegations management quality in
 // children's homes — safeguarding response, LADO referrals, investigation

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Permission System — Role-Based Dashboard Configuration
+// Cara Permission System — Role-Based Dashboard Configuration
 //
 // Defines which dashboard sections, widgets, and navigation items each role
 // can see. Consumed by the dashboard layout to render role-appropriate views.

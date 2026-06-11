@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — REG 44 INDEPENDENT VISITOR REPORTS SERVICE
+// CARA — REG 44 INDEPENDENT VISITOR REPORTS SERVICE
 // Manages Reg 44 Independent Visitor Reports — monthly independent person
 // visits required by Children's Homes Regulations 2015 Regulation 44.
 // The independent visitor inspects the home, speaks to children, reviews
@@ -332,7 +332,7 @@ export function computeReg44IndependentVisitorAlerts(
 }
 
 /**
- * Generate ARIA intelligence insights for Reg 44 independent visitor reports.
+ * Generate Cara intelligence insights for Reg 44 independent visitor reports.
  */
 export function generateReg44IndependentVisitorAriaInsights(
   metrics: ReturnType<typeof computeReg44IndependentVisitorMetrics>,

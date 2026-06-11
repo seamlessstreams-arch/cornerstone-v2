@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF HANDBOOK ACKNOWLEDGEMENTS
+// CARA — STAFF HANDBOOK ACKNOWLEDGEMENTS
 // Tracks which staff members have read and acknowledged receipt of key
 // documents — the staff handbook, updated policies, procedure changes,
 // safeguarding briefings, etc. Supports Regulation 33 (fitness of workers)

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA SERVICE — TESTS
+// Cara SERVICE — TESTS
 //
 // Tests the universal command registry, invoke pipeline, approval lifecycle,
 // audit events, and permission checks.
@@ -206,7 +206,7 @@ describe("ARIA_COMMANDS registry", () => {
 
 // ── Permission model ────────────────────────────────────────────────────────
 
-describe("ARIA permission model", () => {
+describe("Cara permission model", () => {
   it("registered_manager has full access except admin_config", () => {
     expect(ariaCan("registered_manager", "aria.use")).toBe(true);
     expect(ariaCan("registered_manager", "aria.dictate")).toBe(true);
@@ -282,7 +282,7 @@ describe("invokeAriaCommand", () => {
     const result = await invokeAriaCommand(baseArgs);
     expect(result.ok).toBe(true);
     expect(result.result).toBeDefined();
-    expect(result.result!.ariaLabel).toBe("Aria suggested draft");
+    expect(result.result!.ariaLabel).toBe("Cara suggested draft");
     expect(result.result!.generatedText).toBeTruthy();
     expect(result.result!.approvalRequired).toBe(true);
   });

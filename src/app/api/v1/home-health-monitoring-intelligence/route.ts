@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME HEALTH MONITORING INTELLIGENCE API ROUTE
+// CARA — HOME HEALTH MONITORING INTELLIGENCE API ROUTE
 // GET /api/v1/home-health-monitoring-intelligence
 // Synthesises annual health assessments, immunisation records, dental records,
 // and health passports across all children to produce health monitoring intelligence.

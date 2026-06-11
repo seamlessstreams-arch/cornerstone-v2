@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PROFESSIONAL NETWORK DIRECTORY SERVICE TESTS
+// CARA — PROFESSIONAL NETWORK DIRECTORY SERVICE TESTS
 // Pure-function tests for professional network metrics, alert identification,
 // breakdown validation, and edge cases.
 // ══════════════════════════════════════════════════════════════════════════════

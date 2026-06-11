@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME STAFF LIFECYCLE INTELLIGENCE API ROUTE
+// CARA — HOME STAFF LIFECYCLE INTELLIGENCE API ROUTE
 // GET /api/v1/home-staff-lifecycle-intelligence
 // Staff inductions, sickness, exit interviews, recognition — full lifecycle.
 // CHR 2015 Reg 32/33. SCCIF: "How well does the home manage staff lifecycle?"

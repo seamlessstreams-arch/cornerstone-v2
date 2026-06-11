@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — VISITORS INTELLIGENCE API ROUTE
+// CARA — VISITORS INTELLIGENCE API ROUTE
 // GET /api/v1/visitors-intelligence
 // Returns visitor management analysis: compliance rates, category breakdown,
-// per-child contact profiles, and ARIA visitor intelligence.
+// per-child contact profiles, and Cara visitor intelligence.
 // Reg 12, Reg 22, Reg 44, SCCIF.
 // ══════════════════════════════════════════════════════════════════════════════
 

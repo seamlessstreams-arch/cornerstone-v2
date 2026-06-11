@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — WORKFORCE COMMAND API  (the org workforce dashboard, spec §1)
+// CARA — WORKFORCE COMMAND API  (the org workforce dashboard, spec §1)
 // GET /api/v1/workforce-command
 //
 // Composes the workforce layer into one manager landing view. Direct store reads

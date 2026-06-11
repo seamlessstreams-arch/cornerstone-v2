@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Sensory Environment Quality Intelligence — Public API
+// Cara — Sensory Environment Quality Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

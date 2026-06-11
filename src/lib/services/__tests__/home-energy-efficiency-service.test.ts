@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ENERGY EFFICIENCY SERVICE TESTS
+// CARA — HOME ENERGY EFFICIENCY SERVICE TESTS
 // Pure-function tests for energy efficiency metrics, alert identification,
-// ARIA insight generation, and edge cases.
+// Cara insight generation, and edge cases.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";

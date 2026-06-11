@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME CULTURAL IDENTITY & DIVERSITY INTELLIGENCE ENGINE
+// CARA — HOME CULTURAL IDENTITY & DIVERSITY INTELLIGENCE ENGINE
 // Monitors whether each child's cultural, religious, ethnic, and identity needs
 // are being actively supported. Tracks cultural identity plans, religious/cultural
 // mentoring, cultural visits, diversity calendar participation, and identity

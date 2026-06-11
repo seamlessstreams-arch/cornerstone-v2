@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RISK ASSESSMENT INTELLIGENCE HOOK
+// CARA — RISK ASSESSMENT INTELLIGENCE HOOK
 // React Query wrapper for /api/v1/risk-assessment-intelligence
 // ══════════════════════════════════════════════════════════════════════════════
 

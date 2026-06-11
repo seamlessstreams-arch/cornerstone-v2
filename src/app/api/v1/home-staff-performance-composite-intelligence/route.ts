@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME STAFF PERFORMANCE COMPOSITE INTELLIGENCE API ROUTE
+// CARA — HOME STAFF PERFORMANCE COMPOSITE INTELLIGENCE API ROUTE
 // GET /api/v1/home-staff-performance-composite-intelligence
 // Synthesises appraisals, supervisions, and training to assess staff
 // competency, supervision regularity, training compliance, and development.

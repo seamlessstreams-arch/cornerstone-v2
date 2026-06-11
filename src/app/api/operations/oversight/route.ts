@@ -33,7 +33,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ ok: true, data: result.data });
   }
 
-  // ARIA prompts (client-side generation — no DB needed)
+  // Cara prompts (client-side generation — no DB needed)
   if (type === "prompts") {
     const recordType = searchParams.get("recordType") as any;
     const recordSummary = searchParams.get("summary") ?? "";

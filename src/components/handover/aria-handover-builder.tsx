@@ -95,12 +95,12 @@ function StaffContextCard({ ctx }: { ctx: StaffHandoverContext }) {
             </div>
           </div>
 
-          {/* ARIA generated summary */}
+          {/* Cara generated summary */}
           <div className="rounded-xl bg-[var(--cs-aria-gold-bg)] border border-[var(--cs-aria-gold-soft)] p-3">
             <div className="flex items-center gap-1.5 mb-2">
               <Sparkles className="h-3.5 w-3.5 text-[var(--cs-aria-gold)]" />
               <span className="text-[11px] font-semibold text-[var(--cs-aria-gold)]">
-                ARIA — Personalised handover for {firstName}
+                Cara — Personalised handover for {firstName}
               </span>
             </div>
             <pre className="text-[11px] text-[var(--cs-text-secondary)] whitespace-pre-wrap font-sans leading-relaxed">
@@ -133,7 +133,7 @@ export function AriaHandoverBuilder({ incomingStaffIds }: AriaHandoverBuilderPro
               <Sparkles className="h-4 w-4 text-[var(--cs-aria-gold)]" />
             </div>
             <div>
-              <div className="text-sm font-semibold text-[var(--cs-navy)]">ARIA Handover Builder</div>
+              <div className="text-sm font-semibold text-[var(--cs-navy)]">Cara Handover Builder</div>
               <div className="text-[11px] text-[var(--cs-text-muted)]">
                 Personalised context based on when each staff member was last on shift
               </div>
@@ -162,7 +162,7 @@ export function AriaHandoverBuilder({ incomingStaffIds }: AriaHandoverBuilderPro
             {isLoading ? (
               <div className="flex items-center justify-center py-8 text-[var(--cs-aria-gold)]">
                 <Loader2 className="h-5 w-5 animate-spin mr-2" />
-                <span className="text-sm">ARIA is building personalised handovers...</span>
+                <span className="text-sm">Cara is building personalised handovers...</span>
               </div>
             ) : contexts.length > 0 ? (
               <div className="space-y-2">
@@ -178,7 +178,7 @@ export function AriaHandoverBuilder({ incomingStaffIds }: AriaHandoverBuilderPro
 
             {!isLoading && contexts.length > 0 && (
               <div className="rounded-xl bg-[var(--cs-surface)] border border-[var(--cs-border-subtle)] px-3 py-2.5 text-[11px] text-[var(--cs-text-muted)]">
-                <strong className="text-[var(--cs-text-secondary)]">How this works:</strong> ARIA checks the rota to see when each incoming
+                <strong className="text-[var(--cs-text-secondary)]">How this works:</strong> Cara checks the rota to see when each incoming
                 staff member was last on shift. Staff who have been away longer receive more comprehensive context — including
                 incidents, young person updates, and completed tasks they missed.
               </div>

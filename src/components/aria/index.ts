@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA Components — barrel export
+// Cara Components — barrel export
 // ══════════════════════════════════════════════════════════════════════════════
 
 export { AriaCommandPanel } from "./aria-command-panel";

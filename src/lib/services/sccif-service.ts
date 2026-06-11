@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- SCCIF SELF-EVALUATION SERVICE
+// CARA -- SCCIF SELF-EVALUATION SERVICE
 // Social Care Common Inspection Framework self-evaluation tooling. Manages
 // self-evaluations, evidence entries, judgment grading, and inspection readiness
 // alerts aligned to Ofsted's three key judgments.

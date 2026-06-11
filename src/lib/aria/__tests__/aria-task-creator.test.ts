@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Tests — ARIA Task Creator (parser + component logic)
+// Tests — Cara Task Creator (parser + component logic)
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";

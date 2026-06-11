@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME MENTAL HEALTH INTELLIGENCE API ROUTE
+// CARA — HOME MENTAL HEALTH INTELLIGENCE API ROUTE
 // GET /api/v1/home-mental-health-intelligence
 // Mental health check-ins, therapy sessions, safety plans, referrals.
 // CHR 2015 Reg 7/10: "Welfare — promote physical/mental health."

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ENTITY DEEP-LINK CONFIG
+// CARA — ENTITY DEEP-LINK CONFIG
 //
 // Maps the data entities surfaced on the operational boards (Shift Briefing,
 // Plan Currency, Premises Compliance) to the platform page where you actually

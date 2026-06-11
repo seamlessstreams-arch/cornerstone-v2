@@ -1,11 +1,11 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // POST /api/aria/practice-intelligence/analyse
 //
-// Runs the deterministic ARIA Practice Intelligence engine over a piece of
+// Runs the deterministic Cara Practice Intelligence engine over a piece of
 // professional text and (when a sourceId is supplied) persists the assessment +
-// flags as the audit trail. Role-gated via the existing ARIA permission model.
+// flags as the audit trail. Role-gated via the existing Cara permission model.
 //
-// ARIA advises — the manager decides. No statutory decision is made here.
+// Cara advises — the manager decides. No statutory decision is made here.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { NextResponse } from "next/server";

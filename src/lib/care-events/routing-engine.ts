@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CARE EVENT ROUTING ENGINE
+// CARA — CARE EVENT ROUTING ENGINE
 //
 // "Record once, update everywhere."
 //

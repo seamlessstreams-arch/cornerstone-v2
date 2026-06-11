@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME MEDICATION MANAGEMENT INTELLIGENCE ENGINE
+// CARA — HOME MEDICATION MANAGEMENT INTELLIGENCE ENGINE
 // Home-level: aggregates medication administration, errors, witnessing,
 // stock management, and compliance across all children.
 // CHR 2015 Reg 23: "Health needs — including medication."
@@ -383,7 +383,7 @@ export function computeHomeMedicationManagement(
     recommendations.push({ rank: ++rank, recommendation: "Review persistent medication refusals with prescriber and explore therapeutic approaches.", urgency: "planned", regulatory_ref: "Reg 23" });
   }
 
-  // ARIA Insights
+  // Cara Insights
   if (complianceRate >= 95 && witnessingRate >= 95 && errors90d.length === 0) {
     insights.push({ text: "Medication management is exemplary. High compliance, universal witnessing, and zero errors demonstrate a well-embedded safety culture. This is a key strength for Ofsted inspection.", severity: "positive" });
   }

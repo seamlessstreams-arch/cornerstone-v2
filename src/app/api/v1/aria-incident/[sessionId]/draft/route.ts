@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ARIA INCIDENT MODE · DRAFT RECORD API
+// CARA — Cara INCIDENT MODE · DRAFT RECORD API
 // POST /api/v1/aria-incident/[sessionId]/draft
 //   {}                                   → generate draft (deterministic + optional
-//                                          ARIA rewrite when an LLM key is set)
+//                                          Cara rewrite when an LLM key is set)
 //   { accept: true, confirm: true,
 //     final_text, ai_suggested_text? }   → staff-confirmed acceptance: preserves
 //                                          raw + AI suggestion + final version
@@ -100,7 +100,7 @@ export async function POST(req: Request, ctx: { params: Promise<{ sessionId: str
       deterministic_draft: deterministic,
       ai_draft: llmUsed ? result.text.trim() : null,
       llmUsed,
-      llm_message: llmUsed ? null : "ARIA's AI rewrite isn't configured in this environment — the factual draft below is assembled from your timeline and is complete on its own.",
+      llm_message: llmUsed ? null : "Cara's AI rewrite isn't configured in this environment — the factual draft below is assembled from your timeline and is complete on its own.",
       gate,
       disclaimer: INCIDENT_DISCLAIMER,
     },

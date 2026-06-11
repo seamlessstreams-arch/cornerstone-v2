@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — POSITIVE HANDLING SERVICE
+// CARA — POSITIVE HANDLING SERVICE
 // Tracks positive handling plans and de-escalation strategies for children
 // requiring physical intervention support. Ensures proportionate,
 // planned approaches to managing challenging behaviour safely.

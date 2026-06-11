@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Communication & Accessibility Intelligence Engine Tests
+// Cara — Communication & Accessibility Intelligence Engine Tests
 // 100+ tests covering all functions, scoring, labels, edge cases
 // ══════════════════════════════════════════════════════════════════════════════
 

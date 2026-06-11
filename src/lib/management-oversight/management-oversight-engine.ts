@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Management Oversight Intelligence Engine
+// Cara — Management Oversight Intelligence Engine
 //
 // Pure deterministic engine — no AI, no external calls.
 // Evaluates quality of management oversight in children's homes:

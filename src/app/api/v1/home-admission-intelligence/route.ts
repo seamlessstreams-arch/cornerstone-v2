@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ADMISSION & PLACEMENT INTELLIGENCE API ROUTE
+// CARA — HOME ADMISSION & PLACEMENT INTELLIGENCE API ROUTE
 // GET /api/v1/home-admission-intelligence
 // Synthesises admission referral data to assess impact assessment compliance,
 // matching consideration quality, decision timeliness, and alignment with the

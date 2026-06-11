@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME INDEPENDENCE & LIFE SKILLS DEVELOPMENT INTELLIGENCE ENGINE
+// CARA — HOME INDEPENDENCE & LIFE SKILLS DEVELOPMENT INTELLIGENCE ENGINE
 // Tracks how effectively the home prepares children/young people for
 // independent living — cooking skills, cleaning/laundry, travel training,
 // personal hygiene management, money management practice, social skills

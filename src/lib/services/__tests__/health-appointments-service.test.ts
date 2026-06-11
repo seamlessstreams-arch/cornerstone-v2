@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HEALTH APPOINTMENTS SERVICE TESTS
+// CARA — HEALTH APPOINTMENTS SERVICE TESTS
 // Pure-function unit tests for health appointment metrics computation
 // and alert identification. CHR 2015 Reg 7 (health needs),
 // Reg 10 (children's views — health decisions),

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD RESTRICTIVE PRACTICE INTELLIGENCE API ROUTE
+// CARA — CHILD RESTRICTIVE PRACTICE INTELLIGENCE API ROUTE
 // GET /api/v1/child-restrictive-practice-intelligence?childId=yp_alex
 // Per-child engine analysing restraint episodes: frequency, duration,
 // compliance, patterns, injuries, debrief rates.

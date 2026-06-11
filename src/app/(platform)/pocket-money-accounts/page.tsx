@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — POCKET MONEY ACCOUNTS
+// CARA — POCKET MONEY ACCOUNTS
 // Individual running-balance ledgers for each child. Tracks credits (weekly
 // allowance, birthday money, savings interest, chore bonuses) and debits
 // (shop purchases, online purchases, activity costs). Receipts retained.

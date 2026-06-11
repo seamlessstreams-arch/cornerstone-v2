@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME CCTV & SURVEILLANCE GOVERNANCE INTELLIGENCE ENGINE TESTS
+// CARA — HOME CCTV & SURVEILLANCE GOVERNANCE INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite covering insufficient_data, inadequate floor,
 // all rating bands, bonuses (+28 max), penalties, composite rates, strengths,
 // concerns, recommendations, insights, and edge cases.

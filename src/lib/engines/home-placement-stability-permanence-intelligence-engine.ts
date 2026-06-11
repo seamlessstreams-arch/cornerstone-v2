@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME PLACEMENT STABILITY & PERMANENCE INTELLIGENCE ENGINE
+// CARA -- HOME PLACEMENT STABILITY & PERMANENCE INTELLIGENCE ENGINE
 // Tracks placement quality, stability metrics, unplanned placement endings,
 // breakdown prevention effectiveness, matching quality, and placement duration
 // analysis. Aggregates across all children at the home level.

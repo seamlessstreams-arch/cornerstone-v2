@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — BEHAVIOUR TRIGGER & ESCALATION PATTERNS CARD
+// CARA — BEHAVIOUR TRIGGER & ESCALATION PATTERNS CARD
 // Per-child triggers, intensity trajectory and de-escalation coverage. Powered by
 // the Behaviour Trigger Pattern Engine (Reg 11 — behaviour management).
 // ══════════════════════════════════════════════════════════════════════════════
@@ -152,12 +152,12 @@ export function BehaviourTriggerPatternsCard() {
           </div>
         )}
 
-        {/* ── ARIA insights ────────────────────────────────────────────── */}
+        {/* ── Cara insights ────────────────────────────────────────────── */}
         {insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Behaviour Pattern Intelligence
+              Cara Behaviour Pattern Intelligence
             </p>
             {insights.slice(0, 2).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.positive)}>

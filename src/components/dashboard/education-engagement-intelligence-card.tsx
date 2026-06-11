@@ -207,12 +207,12 @@ export function EducationEngagementIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Insights */}
+        {/* Cara Insights */}
         {insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Engagement Intelligence
+              Cara Engagement Intelligence
             </p>
             {insights.map((insight: { severity: string; text: string }, i: number) => (
               <div

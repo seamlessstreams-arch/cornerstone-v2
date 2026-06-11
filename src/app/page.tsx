@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE CARE OS — PUBLIC MARKETING HOME PAGE  (route: /)
+// CARA OS — PUBLIC MARKETING HOME PAGE  (route: /)
 //
 // Positioning: the missing WORKFORCE / recruitment / culture / supervision /
 // practice-intelligence layer for children's homes — NOT a care-recording clone.
@@ -20,9 +20,9 @@ import { MarketingFooter } from "@/components/marketing/marketing-footer";
 import { SectionEyebrow, PrimaryButton, GhostButton } from "@/components/marketing/ui";
 
 export const metadata: Metadata = {
-  title: "Cornerstone Care OS | Care quality starts with workforce quality",
+  title: "Cara OS | Care quality starts with workforce quality",
   description:
-    "Cornerstone Care OS is one complete system to run your children's home — recording, safeguarding, live incident support, medication, care planning, workforce, practice intelligence and Ofsted evidence in one place. Care quality starts with workforce quality.",
+    "Cara OS is one complete system to run your children's home — recording, safeguarding, live incident support, medication, care planning, workforce, practice intelligence and Ofsted evidence in one place. Care quality starts with workforce quality.",
 };
 
 const PROBLEMS = [
@@ -43,7 +43,7 @@ const PILLARS = [
   "Staff onboarding & induction pathway", "Probation review tracking", "Supervision & reflective practice tools",
   "Training matrix & development planning", "Burnout & retention risk indicators", "Ofsted-readiness dashboard",
   "Practice quality intelligence", "PACE, trauma-informed & relational safeguarding prompts",
-  "Live incident support & recording quality (ARIA)",
+  "Live incident support & recording quality (Cara)",
 ];
 
 const STEPS = [
@@ -61,7 +61,7 @@ const MODULES = [
   { Icon: MessageSquare, t: "Supervision", href: "/product/workforce", d: "Reflective practice, not tick-box.", pts: ["Wellbeing, workload & safeguarding", "PACE & reflective-practice prompts", "Actions with follow-up dates"] },
   { Icon: GraduationCap, t: "Training & Development", href: "/product/workforce", d: "A living view of capability.", pts: ["Mandatory & role-specific training", "Expiry & currency, RAG-rated", "Development planning"] },
   { Icon: Brain, t: "Practice Intelligence", href: "/product/intelligence", d: "Understand how care is really going.", pts: ["Relational & trauma-informed signals", "Direction of travel over time", "Explainable, never a black box"] },
-  { Icon: Siren, t: "ARIA Practice Assistant", href: "/product/intelligence#practice-assistant", d: "Live support during & after incidents.", pts: ["Incident Mode — guided, in the moment", "Recording quality checks & re-writes", "Restorative follow-up, manager-reviewed"] },
+  { Icon: Siren, t: "Cara Practice Assistant", href: "/product/intelligence#practice-assistant", d: "Live support during & after incidents.", pts: ["Incident Mode — guided, in the moment", "Recording quality checks & re-writes", "Restorative follow-up, manager-reviewed"] },
   { Icon: FileText, t: "Ofsted Evidence", href: "/product/intelligence", d: "Inspection-ready, all year.", pts: ["Workforce evidence maintained live", "Mapped to the way inspectors read", "Export when you need it"] },
   { Icon: Sparkles, t: "AI Assistant for Managers", href: "/product/intelligence", d: "A draft-first co-pilot for RMs.", pts: ["Adverts, questions & summaries", "Supervision & action-plan prompts", "Human approval on everything"] },
 ];
@@ -90,7 +90,7 @@ export default function HomePage() {
             Build safer, stronger children&rsquo;s homes from the people up.
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-[var(--cs-text-secondary)]">
-            Cornerstone Care OS helps children&rsquo;s home providers recruit, onboard, supervise and develop values-led teams
+            Cara OS helps children&rsquo;s home providers recruit, onboard, supervise and develop values-led teams
             while strengthening Ofsted readiness, safer recruitment and practice quality.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
@@ -138,7 +138,7 @@ export default function HomePage() {
           <div className="mx-auto max-w-2xl text-center">
             <SectionEyebrow>One complete system</SectionEyebrow>
             <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-[var(--cs-navy)] sm:text-4xl">Everything your home needs, working together.</h2>
-            <p className="mt-4 text-lg text-[var(--cs-text-secondary)]">Cornerstone Care OS brings the whole home into one place — the children, the records, the workforce and the evidence — from the first advert to the moment an inspector reads it.</p>
+            <p className="mt-4 text-lg text-[var(--cs-text-secondary)]">Cara OS brings the whole home into one place — the children, the records, the workforce and the evidence — from the first advert to the moment an inspector reads it.</p>
           </div>
           <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {PILLARS.map((p) => (
@@ -208,7 +208,7 @@ export default function HomePage() {
           <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-[var(--cs-navy)] sm:text-4xl">Everything your home needs — in one system.</h2>
           <p className="mt-4 text-lg text-[var(--cs-text-secondary)]">
             No more juggling a recording tool here, spreadsheets there, and separate documents for recruitment, training and supervision.
-            Cornerstone Care OS runs your whole home — the children, the records, the workforce and the evidence — in one place.
+            Cara OS runs your whole home — the children, the records, the workforce and the evidence — in one place.
           </p>
         </div>
         <div className="mt-12 grid gap-5 md:grid-cols-2">
@@ -222,7 +222,7 @@ export default function HomePage() {
             </ul>
           </div>
           <div className="rounded-3xl border-2 border-[var(--cs-teal)] bg-[var(--cs-teal-bg)]/30 p-7 shadow-[var(--cs-shadow-card)]">
-            <h3 className="text-lg font-bold text-[var(--cs-navy)]">Cornerstone Care OS</h3>
+            <h3 className="text-lg font-bold text-[var(--cs-navy)]">Cara OS</h3>
             <p className="mt-0.5 text-xs font-semibold uppercase tracking-wide text-[var(--cs-teal-strong)]">One total system for everything</p>
             <ul className="mt-4 space-y-2.5">
               {ALL_IN_ONE.map((c) => (
@@ -268,7 +268,7 @@ export default function HomePage() {
         </div>
         <div className="mt-8 space-y-5 text-lg leading-relaxed text-[var(--cs-text-secondary)]">
           <p>
-            Cornerstone Care OS is shaped by real experience of children&rsquo;s residential care — of leading teams, of safeguarding,
+            Cara OS is shaped by real experience of children&rsquo;s residential care — of leading teams, of safeguarding,
             of youth-violence prevention, and of seeing first-hand how much a child&rsquo;s outcomes depend on the adults around them.
           </p>
           <p>

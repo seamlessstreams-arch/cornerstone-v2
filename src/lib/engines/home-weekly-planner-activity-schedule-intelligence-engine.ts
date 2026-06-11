@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME WEEKLY PLANNER & ACTIVITY SCHEDULE INTELLIGENCE ENGINE
+// CARA -- HOME WEEKLY PLANNER & ACTIVITY SCHEDULE INTELLIGENCE ENGINE
 // Home-level engine measuring weekly planning quality -- schedule creation
 // timeliness, activity variety, child input in planning, schedule communication
 // effectiveness, and adherence to planned activities.

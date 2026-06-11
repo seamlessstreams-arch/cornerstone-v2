@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — AI SAFETY & OUTPUT SANITISATION TESTS
+// Cara — AI SAFETY & OUTPUT SANITISATION TESTS
 // ══════════════════════════════════════════════════════════════════════════════
 
 import {
@@ -40,11 +40,11 @@ describe("ARIA_SAFETY_RULES", () => {
 });
 
 describe("ARIA_SYSTEM_PREAMBLE", () => {
-  it("identifies ARIA as an AI assistant", () => {
-    expect(ARIA_SYSTEM_PREAMBLE).toContain("You are ARIA");
+  it("identifies Cara as an AI assistant", () => {
+    expect(ARIA_SYSTEM_PREAMBLE).toContain("You are Cara");
   });
 
-  it("states ARIA is not a decision-maker", () => {
+  it("states Cara is not a decision-maker", () => {
     expect(ARIA_SYSTEM_PREAMBLE).toContain("not a decision-maker");
   });
 

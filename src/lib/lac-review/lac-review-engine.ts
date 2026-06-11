@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — LAC Review Intelligence Engine
+// Cara — LAC Review Intelligence Engine
 //
 // Pure deterministic engine — no AI, no external calls.
 // Analyses effectiveness of Looked After Children statutory reviews:

@@ -1,5 +1,5 @@
 // ==============================================================================
-// Cornerstone Complaint Resolution Effectiveness Intelligence -- Public API
+// Cara Complaint Resolution Effectiveness Intelligence -- Public API
 // ==============================================================================
 
 export {

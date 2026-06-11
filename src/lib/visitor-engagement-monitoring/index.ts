@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Visitor Engagement Monitoring Intelligence — Public API
+// Cara Visitor Engagement Monitoring Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

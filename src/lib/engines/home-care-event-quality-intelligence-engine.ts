@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME CARE EVENT QUALITY INTELLIGENCE ENGINE
+// CARA — HOME CARE EVENT QUALITY INTELLIGENCE ENGINE
 // Home-level: analyses care event recording quality, verification compliance,
 // routing effectiveness, audit trails, return/correction rates, and coverage
 // to assess the quality and governance of care event documentation.

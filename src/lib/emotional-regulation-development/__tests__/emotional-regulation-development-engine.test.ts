@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Emotional Regulation Development Intelligence — Engine Tests
+// Cara Emotional Regulation Development Intelligence — Engine Tests
 //
 // Covers all evaluators, helpers, label getters, child profiles, and the
 // main orchestrator. 50+ tests covering empty, perfect, partial, and edge cases.

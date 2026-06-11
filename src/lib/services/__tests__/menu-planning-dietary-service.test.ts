@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MENU PLANNING & DIETARY SERVICE TESTS
+// CARA — MENU PLANNING & DIETARY SERVICE TESTS
 // Pure-function tests for metrics computation, alert identification,
 // breakdown validation, and edge cases.
 // ══════════════════════════════════════════════════════════════════════════════

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RECORDS MANAGEMENT SERVICE TESTS
+// CARA — RECORDS MANAGEMENT SERVICE TESTS
 // Pure-function unit tests for records management metrics computation,
 // alert identification, constant validation, and CRUD fallback behaviour
 // (Supabase disabled). CHR 2015 Reg 39 (records — maintenance and availability),

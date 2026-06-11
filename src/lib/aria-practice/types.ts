@@ -1,12 +1,12 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA PRACTICE INTELLIGENCE — DOMAIN TYPES
+// Cara PRACTICE INTELLIGENCE — DOMAIN TYPES
 //
-// ARIA is a practice-intelligence layer that DRAFTS, ADVISES and RECOGNISES.
-// Central principle: Cornerstone does not simply ask whether work was completed —
+// Cara is a practice-intelligence layer that DRAFTS, ADVISES and RECOGNISES.
+// Central principle: Cara does not simply ask whether work was completed —
 // it asks whether life became safer, more stable, more relational, more hopeful
 // and more developmentally sufficient for the child.
 //
-// Central ARIA questions:
+// Central Cara questions:
 //   "Are we closing the developmental gap?"
 //   "What has become different for the child?"
 //
@@ -179,7 +179,7 @@ export interface AriaPracticeScores {
 }
 
 export interface AriaPracticeOutput {
-  /** Which ARIA modes engaged for this input. */
+  /** Which Cara modes engaged for this input. */
   mode: AriaMode[];
   summary: string;
   scores: AriaPracticeScores;

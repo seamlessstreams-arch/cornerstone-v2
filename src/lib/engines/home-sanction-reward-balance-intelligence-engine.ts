@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME SANCTION & REWARD BALANCE INTELLIGENCE ENGINE
+// CARA -- HOME SANCTION & REWARD BALANCE INTELLIGENCE ENGINE
 // Analyses the balance, proportionality, documentation quality, child voice,
 // equity, and outcome tracking of sanctions and rewards across the home.
 // Pure deterministic engine -- no imports, no LLM, no external deps.

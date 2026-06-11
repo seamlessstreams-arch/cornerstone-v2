@@ -1,7 +1,7 @@
 "use client";
 
 // ==============================================================================
-// CORNERSTONE -- WHISTLEBLOWING INTELLIGENCE HOOK
+// CARA -- WHISTLEBLOWING INTELLIGENCE HOOK
 // React Query wrapper for /api/v1/whistleblowing-intelligence
 // ==============================================================================
 

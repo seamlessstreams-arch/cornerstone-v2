@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME DAMP & MOULD MANAGEMENT INTELLIGENCE ENGINE — TESTS
+// CARA — HOME DAMP & MOULD MANAGEMENT INTELLIGENCE ENGINE — TESTS
 // CHR 2015 Reg 25 (Premises), Reg 14 (Health).
 // SCCIF: "Safety", "Quality of care", "Living in the home".
 // base=52, max bonus=+28 → max 80. 4 penalties (guarded).

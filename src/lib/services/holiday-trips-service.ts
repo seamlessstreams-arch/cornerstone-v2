@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOLIDAY & TRIPS SERVICE
+// CARA — HOLIDAY & TRIPS SERVICE
 // Tracks outings, holidays, day trips, and recreational activities
 // for children, including risk assessments, consent, and outcomes.
 // CHR 2015 Reg 7 (children's plan — enrichment activities),

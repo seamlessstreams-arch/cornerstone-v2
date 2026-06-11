@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ANNEX A READINESS DASHBOARD
+// CARA — ANNEX A READINESS DASHBOARD
 // Continuously inspection-ready, evidence-backed, live-updating
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -876,7 +876,7 @@ export default function AnnexAReadinessPage() {
             </div>
 
             <p className="text-[10px] text-slate-400 border-t pt-3">
-              Cornerstone · Annex A Snapshot · Generated {new Date(snapshotDate).toLocaleString("en-GB")} · Home: Chamberlain House
+              Cara · Annex A Snapshot · Generated {new Date(snapshotDate).toLocaleString("en-GB")} · Home: Chamberlain House
             </p>
           </div>
 

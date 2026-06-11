@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME HEALTH & WELLBEING INTELLIGENCE API ROUTE
+// CARA — HOME HEALTH & WELLBEING INTELLIGENCE API ROUTE
 // GET /api/v1/home-health-wellbeing-intelligence
 // Synthesises health records and medication data across all children to produce
 // an overall health monitoring and wellbeing intelligence score.

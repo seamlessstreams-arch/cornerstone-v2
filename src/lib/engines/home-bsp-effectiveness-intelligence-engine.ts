@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME BSP EFFECTIVENESS INTELLIGENCE ENGINE
+// CARA — HOME BSP EFFECTIVENESS INTELLIGENCE ENGINE
 // Cross-cutting analysis: behaviour support plans × behaviour log × restraints.
 // Assesses BSP quality, currency, whether strategies are being used in practice,
 // and whether restrictive practice is reducing for children with BSPs.

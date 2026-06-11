@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — AUTOMATION ENGINE TYPES
+// CARA — AUTOMATION ENGINE TYPES
 // Centralised trigger-action automation system. Defines triggers, actions,
 // rules, conditions, and run records for the deterministic automation engine.
 // ══════════════════════════════════════════════════════════════════════════════

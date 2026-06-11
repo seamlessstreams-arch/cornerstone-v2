@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA REPORTS — AI PROVIDER
+// Cara REPORTS — AI PROVIDER
 //
 // Wraps the existing multi-provider layer (OpenAI / Anthropic / Gemini / stub)
-// with ARIA-specific safety controls. Every call through this module:
+// with Cara-specific safety controls. Every call through this module:
 //
 //   1. Prepends ARIA_SYSTEM_PREAMBLE to the system prompt
 //   2. Delegates to generateStudioContent from aria-studio
@@ -38,7 +38,7 @@ export interface AriaAIResponse {
 }
 
 // ── generateAriaContent ────────────────────────────────────────────────────
-// Primary text generation entry point for ARIA Reports. Prepends the safety
+// Primary text generation entry point for Cara Reports. Prepends the safety
 // preamble, calls the shared provider, and sanitises the output.
 
 export async function generateAriaContent(request: AriaAIRequest): Promise<AriaAIResponse> {
@@ -65,7 +65,7 @@ export async function generateAriaContent(request: AriaAIRequest): Promise<AriaA
 
     return {
       content:
-        "ARIA was unable to generate content at this time. The AI provider returned an error. " +
+        "Cara was unable to generate content at this time. The AI provider returned an error. " +
         "Please retry or contact your system administrator if the problem persists. " +
         "This section requires manual completion by the reviewing manager.",
       model: "unavailable",

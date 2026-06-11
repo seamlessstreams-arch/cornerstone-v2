@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — TRAINING COMPLIANCE TRACKER
+// Cara — TRAINING COMPLIANCE TRACKER
 //
 // Monitors staff training completion, expiry, and gaps:
 //   - Mandatory training compliance (safeguarding, first aid, fire)

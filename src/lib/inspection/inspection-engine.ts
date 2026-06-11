@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Inspection Intelligence Engine
+// Cara Inspection Intelligence Engine
 //
 // Deterministic engine for evaluating inspection readiness and quality in
 // children's homes — evidence documentation, action planning, staff

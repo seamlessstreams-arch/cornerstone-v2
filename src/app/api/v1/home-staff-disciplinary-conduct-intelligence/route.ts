@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME STAFF DISCIPLINARY & CONDUCT INTELLIGENCE API ROUTE
+// CARA — HOME STAFF DISCIPLINARY & CONDUCT INTELLIGENCE API ROUTE
 // GET /api/v1/home-staff-disciplinary-conduct-intelligence
 // Synthesises staff disciplinary records to assess investigation quality,
 // timeliness, LADO compliance, suspension management, outcome recording,

@@ -1,6 +1,6 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // API: /api/aria/create-tasks
-// POST — creates one or more tasks from an ARIA output. Links them via
+// POST — creates one or more tasks from an Cara output. Links them via
 // aria_task_links. Requires aria.create_tasks permission.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -115,7 +115,7 @@ export async function POST(req: NextRequest) {
     if (!insertError && inserted) {
       createdTasks.push({ id: inserted.id, title: inserted.title, created: true });
 
-      // Link to ARIA output if provided
+      // Link to Cara output if provided
       if (outputId) {
         await (supabase.from("aria_task_links") as any).insert({
           id: `aria_tl_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,

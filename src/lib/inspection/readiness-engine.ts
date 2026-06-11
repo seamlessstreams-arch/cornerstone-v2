@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Inspection — Readiness Assessment Engine
+// Cara Inspection — Readiness Assessment Engine
 //
 // Deterministic engine aggregating all compliance domains into a single
 // Ofsted inspection readiness score, aligned to the Social Care Common
@@ -10,7 +10,7 @@
 //   3. How well children and young people are helped and protected
 //   4. The positive contribution of the residential experience
 //
-// Each domain maps to specific Cornerstone modules and generates an
+// Each domain maps to specific Cara modules and generates an
 // evidence-based assessment with action priorities.
 //
 // No AI. No external calls. Pure input → output.

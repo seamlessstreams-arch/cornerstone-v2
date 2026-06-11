@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME PERSONAL CALENDAR & APPOINTMENTS INTELLIGENCE API ROUTE
+// CARA -- HOME PERSONAL CALENDAR & APPOINTMENTS INTELLIGENCE API ROUTE
 // GET /api/v1/home-personal-calendar-appointments-intelligence
 // Cross-domain composite: appointmentRecords + calendarManagementRecords +
 // medicalComplianceRecords + transportArrangementRecords +

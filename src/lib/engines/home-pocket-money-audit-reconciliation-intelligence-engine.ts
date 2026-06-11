@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME POCKET MONEY AUDIT & RECONCILIATION INTELLIGENCE ENGINE
+// CARA — HOME POCKET MONEY AUDIT & RECONCILIATION INTELLIGENCE ENGINE
 // Monitors financial audit and reconciliation quality — pocket money audit
 // compliance, reconciliation accuracy, discrepancy resolution timeliness,
 // transparency in financial management, and child financial awareness.

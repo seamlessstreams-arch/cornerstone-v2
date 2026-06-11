@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SUPERVISION BULK ENDPOINT (enriched meta)
+// CARA — SUPERVISION BULK ENDPOINT (enriched meta)
 //
 // Returns all supervisions with computed meta matching SupervisionListResponse:
 // overdue, due_soon, scheduled, completed counts.

@@ -3,7 +3,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // AriaHumanReviewBanner
 //
-// A clear, prominent banner that appears on every ARIA-generated draft.
+// A clear, prominent banner that appears on every Cara-generated draft.
 // Communicates that the output requires human review before use.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils";
 import { AlertTriangle, Shield, Sparkles } from "lucide-react";
 
 interface AriaHumanReviewBannerProps {
-  /** Confidence level from the ARIA output */
+  /** Confidence level from the Cara output */
   confidence?: "low" | "medium" | "high";
   /** Whether this is a high-risk command (safeguarding, HR, etc.) */
   highRisk?: boolean;
@@ -28,8 +28,8 @@ export function AriaHumanReviewBanner({
   className,
 }: AriaHumanReviewBannerProps) {
   const defaultMessage = highRisk
-    ? "This ARIA draft involves sensitive content. It must be reviewed by a qualified professional before any action is taken."
-    : "This is an ARIA suggested draft. It requires human review and approval before use.";
+    ? "This Cara draft involves sensitive content. It must be reviewed by a qualified professional before any action is taken."
+    : "This is an Cara suggested draft. It requires human review and approval before use.";
 
   return (
     <div
@@ -58,7 +58,7 @@ export function AriaHumanReviewBanner({
             "text-xs font-semibold",
             highRisk ? "text-red-800" : "text-amber-800",
           )}>
-            ARIA suggested draft
+            Cara suggested draft
           </span>
           <span className={cn(
             "text-[9px] px-1.5 py-0.5 rounded-full font-medium",

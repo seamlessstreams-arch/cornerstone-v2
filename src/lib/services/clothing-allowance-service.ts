@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- CLOTHING ALLOWANCE & WARDROBE MANAGEMENT SERVICE
+// CARA -- CLOTHING ALLOWANCE & WARDROBE MANAGEMENT SERVICE
 // Tracks clothing purchases, allowances, wardrobe audits, style consultations,
 // school uniforms, and seasonal clothing for looked-after children. Covers child
 // choice, age appropriateness, condition, quantity, brand preferences, cultural

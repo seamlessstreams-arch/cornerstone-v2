@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — INTELLIGENCE BRIEF WIDGET
+// CARA — INTELLIGENCE BRIEF WIDGET
 // Compact intelligence bar: home climate, active alerts, overdue actions,
-// and an inline Morning Brief powered by ARIA streaming.
+// and an inline Morning Brief powered by Cara streaming.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState, useRef } from "react";
@@ -185,12 +185,12 @@ export function IntelligenceBriefWidget() {
       {/* ── Bar row ──────────────────────────────────────────────────────── */}
       <div className="flex flex-wrap items-center gap-3 px-4 py-2.5">
 
-        {/* Left: ARIA label */}
+        {/* Left: Cara label */}
         <div className="flex items-center gap-2 min-w-0">
           <Brain className="h-4 w-4 text-[var(--cs-aria-gold)] shrink-0" />
           <div>
             <div className="text-[11px] font-semibold text-[var(--cs-aria-gold)] leading-none">
-              ARIA Intelligence
+              Cara Intelligence
             </div>
             <div className="text-[10px] text-[var(--cs-text-muted)] leading-none mt-0.5">{todayLabel}</div>
           </div>

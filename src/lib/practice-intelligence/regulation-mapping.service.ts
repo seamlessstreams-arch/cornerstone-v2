@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // PRACTICE INTELLIGENCE — REGULATION & QUALITY STANDARDS MAPPING SERVICE
 //
-// Maps ARIA outputs to Children's Homes Regulations 2015, Quality Standards,
+// Maps Cara outputs to Children's Homes Regulations 2015, Quality Standards,
 // SCCIF themes, and other regulatory frameworks. Supports Ofsted readiness
 // and Reg 45/Annex A evidence building by linking practice evidence to
 // specific regulations and quality standards.

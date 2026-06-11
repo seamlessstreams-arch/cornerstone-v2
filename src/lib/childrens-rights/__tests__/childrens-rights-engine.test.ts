@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Children's Rights & Advocacy Intelligence Engine Tests
+// Cara — Children's Rights & Advocacy Intelligence Engine Tests
 // 100+ tests covering all 8 functions + scoring + labels + edge cases
 // ══════════════════════════════════════════════════════════════════════════════
 

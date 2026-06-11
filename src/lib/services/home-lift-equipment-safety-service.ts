@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME LIFT EQUIPMENT SAFETY SERVICE
+// CARA — HOME LIFT EQUIPMENT SAFETY SERVICE
 // Tracks LOLER inspections, lift testing, stairlift maintenance,
 // and compliance with Lifting Operations and Lifting Equipment Regulations 1998.
 //

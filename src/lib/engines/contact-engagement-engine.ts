@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CONTACT & FAMILY ENGAGEMENT INTELLIGENCE ENGINE
+// CARA — CONTACT & FAMILY ENGAGEMENT INTELLIGENCE ENGINE
 //
 // Pure deterministic engine that analyses contact and family engagement:
 // - Contact plan compliance (completion rate, plan review currency)
@@ -7,7 +7,7 @@
 // - Per-child contact profiles
 // - Mood impact analysis (before/after contact presentation)
 // - Sibling contact tracking
-// - Auto-generated ARIA contact insights (deterministic)
+// - Auto-generated Cara contact insights (deterministic)
 //
 // Key regulatory requirements:
 //   Reg 6  — Quality and purpose of care (maintaining family relationships)
@@ -491,7 +491,7 @@ export function computeContactEngagement(
   const sevOrder: Record<string, number> = { critical: 0, high: 1, medium: 2, low: 3 };
   alerts.sort((a, b) => (sevOrder[a.severity] ?? 3) - (sevOrder[b.severity] ?? 3));
 
-  // ── ARIA Insights ────────────────────────────────────────────────────────
+  // ── Cara Insights ────────────────────────────────────────────────────────
 
   const insights: AriaContactInsight[] = [];
 

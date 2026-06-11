@@ -1,6 +1,6 @@
 "use client";
 
-// ARIA Practice Assistant — post-incident reflection (learning, not blame).
+// Cara Practice Assistant — post-incident reflection (learning, not blame).
 // Reflective questions + contributing-factor and outcome flags; suggested
 // follow-up actions are derived deterministically by the engine. Manager review
 // is flagged automatically for statutory-plan or supervision outcomes.
@@ -54,7 +54,7 @@ export function PostIncidentReflectionForm({ sessionId }: { sessionId: string })
             )}
             {existing.ai_reflective_summary && (
               <div className="rounded-xl border border-[var(--cs-aria-gold)]/30 bg-[var(--cs-aria-gold-bg)]/40 px-3 py-2">
-                <p className="flex items-center gap-1 text-[11px] font-bold text-[var(--cs-navy)]"><Sparkles className="h-3 w-3 text-[var(--cs-aria-gold)]" /> ARIA reflective summary (AI-assisted draft)</p>
+                <p className="flex items-center gap-1 text-[11px] font-bold text-[var(--cs-navy)]"><Sparkles className="h-3 w-3 text-[var(--cs-aria-gold)]" /> Cara reflective summary (AI-assisted draft)</p>
                 <p className="mt-1 text-sm text-[var(--cs-text-secondary)]">{existing.ai_reflective_summary}</p>
               </div>
             )}

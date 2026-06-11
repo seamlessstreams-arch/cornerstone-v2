@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME PEER DYNAMICS INTELLIGENCE API ROUTE
+// CARA — HOME PEER DYNAMICS INTELLIGENCE API ROUTE
 // GET /api/v1/home-peer-dynamics-intelligence
 // Peer relationships, group atmosphere, risk management between children.
 // CHR 2015 Reg 19. SCCIF: "Children feel safe with each other."

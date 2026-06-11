@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — Output Preview Component
+// Cara STUDIO — Output Preview Component
 //
 // Renders the structured generation output with:
 //   - Section-by-section display

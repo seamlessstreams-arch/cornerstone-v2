@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Aria Intelligence — Perplexity Provider Adapter
+// Cara Intelligence — Perplexity Provider Adapter
 //
 // CRITICAL SAFETY RULE: Perplexity is for PUBLIC RESEARCH ONLY.
 // Never send child-identifiable, staff-identifiable, or confidential

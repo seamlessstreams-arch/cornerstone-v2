@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ADMISSION & REFERRAL INTELLIGENCE HOOK
+// CARA — ADMISSION & REFERRAL INTELLIGENCE HOOK
 // React Query wrapper for /api/v1/admission-referral-intelligence
 // ══════════════════════════════════════════════════════════════════════════════
 

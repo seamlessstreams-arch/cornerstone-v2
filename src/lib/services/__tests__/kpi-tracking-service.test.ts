@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — KPI TRACKING SERVICE TESTS
+// CARA — KPI TRACKING SERVICE TESTS
 // Pure-function unit tests for KPI metrics computation,
 // alert identification, constant validation, and CRUD fallback behaviour
 // (Supabase disabled). CHR 2015 Reg 45 (quality of care review —

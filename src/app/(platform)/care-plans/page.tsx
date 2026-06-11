@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CARE PLANS
+// CARA — CARE PLANS
 // Care Planning, Placement and Case Review (England) Regulations 2010
 // Children's Homes Quality Standards — Standard 1 (Care and Support)
 // ══════════════════════════════════════════════════════════════════════════════
@@ -495,12 +495,12 @@ function CarePlanCard({
             </div>
           </div>
 
-          {/* ARIA overview */}
+          {/* Cara overview */}
           {plan.aria_overview ? (
             <div className="rounded-xl border border-teal-100 bg-teal-50/40 p-3">
               <div className="flex items-center gap-1.5 mb-1.5">
                 <Sparkles className="h-3.5 w-3.5 text-teal-600" />
-                <p className="text-[10px] font-semibold text-teal-700 uppercase tracking-widest">ARIA Overview</p>
+                <p className="text-[10px] font-semibold text-teal-700 uppercase tracking-widest">Cara Overview</p>
               </div>
               <p className="text-xs text-[var(--cs-text-secondary)]">{plan.aria_overview}</p>
             </div>
@@ -511,8 +511,8 @@ function CarePlanCard({
               className="inline-flex items-center gap-1.5 text-xs text-teal-600 hover:text-teal-800 disabled:opacity-50"
             >
               {ariaBusy === plan.id
-                ? <><Sparkles className="h-3.5 w-3.5 animate-spin" />ARIA generating…</>
-                : <><Sparkles className="h-3.5 w-3.5" />Generate ARIA overview</>}
+                ? <><Sparkles className="h-3.5 w-3.5 animate-spin" />Cara generating…</>
+                : <><Sparkles className="h-3.5 w-3.5" />Generate Cara overview</>}
             </button>
           )}
 
@@ -634,7 +634,7 @@ export default function CarePlansPage() {
         .map((g) => `[${GOAL_STATUS_LABELS[g.status].toUpperCase()}] ${DOMAIN_LABELS[g.domain]}: ${g.title}`)
         .join("\n");
 
-      const prompt = `You are ARIA, a regulatory compliance and care quality AI for a children's residential home. Analyse this care plan and produce a concise 2–3 sentence professional overview for the registered manager, covering: overall care plan status, the most pressing priorities, and any regulatory or placement stability considerations.
+      const prompt = `You are Cara, a regulatory compliance and care quality AI for a children's residential home. Analyse this care plan and produce a concise 2–3 sentence professional overview for the registered manager, covering: overall care plan status, the most pressing priorities, and any regulatory or placement stability considerations.
 
 Young person: ${ypName}
 Legal status: ${plan.legal_status}
@@ -648,7 +648,7 @@ Strengths: ${plan.strengths_summary ?? "not recorded"}
 Concerns: ${plan.concerns_summary ?? "not recorded"}`;
 
       const response = await api.post<{ choices: { message: { content: string } }[] }>(
-        "/aria/chat",
+        "/cara/chat",
         { messages: [{ role: "user", content: prompt }], context: "care_plan_overview" },
       );
 
@@ -658,7 +658,7 @@ Concerns: ${plan.concerns_summary ?? "not recorded"}`;
 
       await updatePlan.mutateAsync({ id: plan.id, data: { aria_overview: overview } });
     } catch {
-      setAriaError("ARIA generation failed — please try again");
+      setAriaError("Cara generation failed — please try again");
     } finally {
       setAriaBusy(null);
     }

@@ -1,5 +1,5 @@
 // ==============================================================================
-// Cornerstone -- Financial Stewardship Intelligence Engine Tests
+// Cara -- Financial Stewardship Intelligence Engine Tests
 // ==============================================================================
 
 import { describe, it, expect } from "vitest";

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME WELFARE CHECK COMPLIANCE INTELLIGENCE ENGINE
+// CARA — HOME WELFARE CHECK COMPLIANCE INTELLIGENCE ENGINE
 // Pure deterministic engine: overnight welfare check rounds, child completion
 // rates, building security, distress response, fire exit compliance,
 // environmental safety, and documentation quality.

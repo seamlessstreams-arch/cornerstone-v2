@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE — SEARCH API ROUTE
+// CARA — SEARCH API ROUTE
 //
 // GET /api/v1/search?q=...&types=...&home_id=...&child_id=...&limit=...&offset=...
 // Returns SearchResponse from the in-memory search engine.

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Equality & Diversity Intelligence Engine
+// Cara — Equality & Diversity Intelligence Engine
 //
 // Pure deterministic engine. No AI, no external calls, no side-effects.
 //

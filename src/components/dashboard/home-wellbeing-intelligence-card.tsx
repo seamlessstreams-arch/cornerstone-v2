@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME WELLBEING INTELLIGENCE CARD
+// CARA — HOME WELLBEING INTELLIGENCE CARD
 // Home-level: emotional temperature, mood trends, sleep quality, welfare,
-// per-child wellbeing profiles, children of concern, ARIA insights.
+// per-child wellbeing profiles, children of concern, Cara insights.
 // CHR 2015 Reg 6, 7, 34. SCCIF: "Experiences and progress of children."
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -276,12 +276,12 @@ export function HomeWellbeingIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Wellbeing Insights */}
+        {/* Cara Wellbeing Insights */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Wellbeing Intelligence
+              Cara Wellbeing Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

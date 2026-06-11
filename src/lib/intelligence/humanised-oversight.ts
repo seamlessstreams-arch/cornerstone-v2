@@ -1,11 +1,11 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA HUMANISED OVERSIGHT SERVICE
+// Cara HUMANISED OVERSIGHT SERVICE
 //
 // Generates draft management oversight in a warm, professional, evidence-based
 // tone. Works with or without an AI API key — falls back to structured
 // templates when no provider is configured.
 //
-// Every output is marked "Aria suggested draft" and requires manager approval.
+// Every output is marked "Cara suggested draft" and requires manager approval.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import type {
@@ -18,7 +18,7 @@ import {
 } from "@/lib/aria/aria-provider";
 import { applyAriaPostprocessor } from "@/lib/aria/writingStyleRules";
 
-const SYSTEM_PROMPT = `You are Aria, the intelligent professional assistant built into Cornerstone, the operating system for UK residential children's homes.
+const SYSTEM_PROMPT = `You are Cara, the intelligent professional assistant built into Cara, the operating system for UK residential children's homes.
 
 You are drafting management oversight for a Registered Manager. Your output must:
 

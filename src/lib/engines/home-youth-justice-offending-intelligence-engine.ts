@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME YOUTH JUSTICE & OFFENDING INTELLIGENCE ENGINE
+// CARA — HOME YOUTH JUSTICE & OFFENDING INTELLIGENCE ENGINE
 // Tracks youth justice engagement quality — YOT (Youth Offending Team) liaison,
 // offending behaviour plan compliance, restorative justice participation,
 // court order adherence, and reoffending prevention. Critical for Ofsted under

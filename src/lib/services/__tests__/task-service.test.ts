@@ -1,6 +1,6 @@
 // ==============================================================================
-// CORNERSTONE -- TASK EXPLORER SERVICE TESTS
-// Pure-function unit tests for task reference generation, ARIA risk scoring,
+// CARA -- TASK EXPLORER SERVICE TESTS
+// Pure-function unit tests for task reference generation, Cara risk scoring,
 // and constant validation. Covers CATEGORY_PREFIX, generateTaskReference,
 // and computeTaskRiskScore.
 // ==============================================================================

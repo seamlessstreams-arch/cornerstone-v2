@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME CONTEXT
+// CARA — HOME CONTEXT
 //
 // Provides the currently selected home and a switcher to all client components.
 // Persists the choice in localStorage so it survives page reloads.

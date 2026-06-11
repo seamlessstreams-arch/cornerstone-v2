@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ARIA POST-INCIDENT ENGINE (pure / deterministic)
+// CARA — Cara POST-INCIDENT ENGINE (pure / deterministic)
 //
 // Slice B of the Practice Assistant: the restorative-conversation template and
 // the post-incident reflection — both tied to an incident session. Complements
@@ -16,7 +16,7 @@ export const RESTORATIVE_DISCLAIMER =
   "Restorative conversations happen at the child's pace. If the child is not ready, record that their decision was respected and when staff will gently revisit.";
 
 export const REFLECTION_DISCLAIMER =
-  "Reflection is about learning, not blame. ARIA's suggestions support the conversation — conclusions belong to staff and the manager.";
+  "Reflection is about learning, not blame. Cara's suggestions support the conversation — conclusions belong to staff and the manager.";
 
 // ── Restorative conversation ───────────────────────────────────────────────────
 export const RESTORATIVE_READINESS_CHECKS: string[] = [
@@ -164,4 +164,4 @@ export function buildReflectionSummary(r: Pick<PostIncidentReflectionRecord,
 
 // ── AI summary prompt (route-side; drafts only, staff accept/reject) ───────────
 export const POST_INCIDENT_AI_SYSTEM_PROMPT =
-  "You are ARIA, supporting residential childcare staff after an incident. Summarise the reflection or restorative conversation provided in 3–5 calm, factual, non-blaming sentences using only the facts given — never invent, never diagnose, never judge the child or staff. Frame behaviour as communication. End with one sentence on the agreed next steps. This is a draft for staff to review.";
+  "You are Cara, supporting residential childcare staff after an incident. Summarise the reflection or restorative conversation provided in 3–5 calm, factual, non-blaming sentences using only the facts given — never invent, never diagnose, never judge the child or staff. Frame behaviour as communication. End with one sentence on the agreed next steps. This is a draft for staff to review.";

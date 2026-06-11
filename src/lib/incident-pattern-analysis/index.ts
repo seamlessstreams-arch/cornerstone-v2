@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Incident Pattern Analysis Intelligence — Public API
+// Cara — Incident Pattern Analysis Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

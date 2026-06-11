@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME WEIGHT MANAGEMENT & HEALTHY EATING INTELLIGENCE ENGINE TESTS
+// CARA — HOME WEIGHT MANAGEMENT & HEALTHY EATING INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite covering weight monitoring, BMI tracking, healthy
 // eating programmes, portion control, body positivity, and scoring.
 // CHR 2015 Reg 14 (Health care), SCCIF Health and wellbeing.

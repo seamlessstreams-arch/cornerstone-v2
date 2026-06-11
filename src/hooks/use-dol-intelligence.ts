@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DEPRIVATION OF LIBERTY INTELLIGENCE HOOK
+// CARA — DEPRIVATION OF LIBERTY INTELLIGENCE HOOK
 // React Query wrapper for /api/v1/dol-intelligence
 // Reg 20 — restraint and deprivation of liberty
 // Reg 21 — privacy and access

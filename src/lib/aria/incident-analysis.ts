@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — INCIDENT ANALYSIS
+// Cara — INCIDENT ANALYSIS
 //
 // Analyses incident records to surface:
 //   - Frequency trends (increasing/decreasing)

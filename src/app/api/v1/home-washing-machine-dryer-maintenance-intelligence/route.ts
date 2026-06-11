@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME WASHING MACHINE & DRYER MAINTENANCE INTELLIGENCE API ROUTE
+// CARA — HOME WASHING MACHINE & DRYER MAINTENANCE INTELLIGENCE API ROUTE
 // GET /api/v1/home-washing-machine-dryer-maintenance-intelligence
 // Cross-domain composite: servicingRecords + breakdownRecords +
 // childAccessRecords + hygieneCycleRecords + energyRecords

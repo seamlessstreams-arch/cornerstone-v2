@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ASTHMA & RESPIRATORY MANAGEMENT INTELLIGENCE API ROUTE
+// CARA — HOME ASTHMA & RESPIRATORY MANAGEMENT INTELLIGENCE API ROUTE
 // GET /api/v1/home-asthma-respiratory-management-intelligence
 // Cross-domain composite: asthmaActionPlanRecords + inhalerTechniqueRecords +
 // triggerManagementRecords + peakFlowRecords + emergencyPreparednessRecords

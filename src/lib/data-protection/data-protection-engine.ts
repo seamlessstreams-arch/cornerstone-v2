@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Data Protection & GDPR Intelligence Engine
+// Cara — Data Protection & GDPR Intelligence Engine
 //
 // Pure deterministic engine — no AI, no external calls.
 // Evaluates GDPR / DPA 2018 compliance for children's homes:

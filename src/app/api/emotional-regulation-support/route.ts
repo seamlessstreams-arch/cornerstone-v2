@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Emotional Regulation Support API Route
+// Cara — Emotional Regulation Support API Route
 //
 // GET  → returns Chamberlain House demo emotional regulation support intelligence
 // POST → accepts custom data for any home

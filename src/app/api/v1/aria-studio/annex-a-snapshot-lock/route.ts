@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// API — ARIA Annex A Snapshot lock
+// API — Cara Annex A Snapshot lock
 // PATCH → lock a draft snapshot (RBAC: aria.approve_outputs, safeguarding-sensitive)
 // ══════════════════════════════════════════════════════════════════════════════
 

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — REFLECTIVE SUPERVISION API
+// CARA — REFLECTIVE SUPERVISION API
 // GET  /api/v1/reflective-supervision  → per-staff status rollup + records + staff
 // POST /api/v1/reflective-supervision  → record a reflective supervision
 //

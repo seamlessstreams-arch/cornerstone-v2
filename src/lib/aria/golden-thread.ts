@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA INTELLIGENCE — GOLDEN THREAD ENGINE
+// Cara INTELLIGENCE — GOLDEN THREAD ENGINE
 //
 // Weaves a continuous evidence trail connecting events, decisions, actions
 // and outcomes for every child. Each significant event creates a golden

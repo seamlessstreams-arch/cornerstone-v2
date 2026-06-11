@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME STAFF WELLBEING INTELLIGENCE ENGINE
+// CARA — HOME STAFF WELLBEING INTELLIGENCE ENGINE
 // Pure deterministic engine: staff wellbeing checks, morale, stressors, support.
 // CHR 2015 Reg 33: "The registered person must ensure that staff are supported."
 // SCCIF: "How well does the leadership team support staff wellbeing?"

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME LAC REVIEW INTELLIGENCE CARD
+// CARA — HOME LAC REVIEW INTELLIGENCE CARD
 // Home-level: LAC review compliance, child participation, action tracking,
 // placement stability, care plan updates.
 // CHR 2015 Reg 36. SCCIF: "Experiences and progress", "Overall experiences."
@@ -210,12 +210,12 @@ export function HomeLACReviewIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA LAC Review Intelligence */}
+        {/* Cara LAC Review Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA LAC Review Intelligence
+              Cara LAC Review Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

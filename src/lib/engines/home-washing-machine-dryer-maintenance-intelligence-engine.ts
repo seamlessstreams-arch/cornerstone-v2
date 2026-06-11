@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME WASHING MACHINE & DRYER MAINTENANCE INTELLIGENCE ENGINE
+// CARA — HOME WASHING MACHINE & DRYER MAINTENANCE INTELLIGENCE ENGINE
 // Measures appliance servicing schedules, breakdown response, child laundry
 // access, hygiene cycle compliance, energy efficiency, and child independence
 // in using laundry facilities safely and confidently.

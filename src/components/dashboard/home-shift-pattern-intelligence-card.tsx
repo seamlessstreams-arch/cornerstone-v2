@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SHIFT PATTERN INTELLIGENCE CARD
+// CARA — HOME SHIFT PATTERN INTELLIGENCE CARD
 // Staffing patterns: coverage, punctuality, overtime, workload fairness.
 // CHR 2015 Reg 33(4)(c). SCCIF: "Staffing arrangements."
 // ══════════════════════════════════════════════════════════════════════════════
@@ -223,12 +223,12 @@ export function HomeShiftPatternIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Shift Intelligence */}
+        {/* Cara Shift Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Shift Intelligence
+              Cara Shift Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — INSPECTION EVIDENCE PACK VIEW
+// CARA — INSPECTION EVIDENCE PACK VIEW
 // Full-page evidence pack renderer with expandable sections, traffic light
 // indicators, print-friendly layout, section navigation, and overall scoring.
 // ══════════════════════════════════════════════════════════════════════════════

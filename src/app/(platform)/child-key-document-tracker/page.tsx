@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD KEY DOCUMENT TRACKER
+// CARA — CHILD KEY DOCUMENT TRACKER
 // Tracks the critical legal, identity, health and education documents the home
 // holds on behalf of each young person — birth certificate, NHS card, passport,
 // EHCP, court orders, IDs, etc. Required by Regulation 36 (records) and a vital

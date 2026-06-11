@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF WHISTLEBLOWING INVESTIGATION SERVICE
+// CARA — STAFF WHISTLEBLOWING INVESTIGATION SERVICE
 // Manages investigation records following whistleblowing disclosures,
 // investigation outcomes, protection for whistleblowers, organisational
 // learning, and regulatory notifications.

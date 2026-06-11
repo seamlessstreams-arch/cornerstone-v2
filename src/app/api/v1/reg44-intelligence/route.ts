@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — REG 44 INTELLIGENCE API ROUTE
+// CARA — REG 44 INTELLIGENCE API ROUTE
 // GET /api/v1/reg44-intelligence
 // Returns visit compliance, recommendation follow-through, Ofsted reporting
-// timeliness, and ARIA independent scrutiny intelligence.
+// timeliness, and Cara independent scrutiny intelligence.
 // Reg 44 — independent person visits (monthly, report within 5 working days).
 // ══════════════════════════════════════════════════════════════════════════════
 

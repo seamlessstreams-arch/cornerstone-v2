@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MANAGER ACTION INBOX HOOK
+// CARA — MANAGER ACTION INBOX HOOK
 // React Query wrapper for /api/v1/manager-inbox
 // ══════════════════════════════════════════════════════════════════════════════
 

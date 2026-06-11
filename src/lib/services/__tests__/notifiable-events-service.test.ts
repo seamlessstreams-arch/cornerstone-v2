@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — NOTIFIABLE EVENTS SERVICE TESTS
+// CARA — NOTIFIABLE EVENTS SERVICE TESTS
 // Pure-function tests for notification compliance, event analysis,
 // notification alert identification, and constant validation.
 // ══════════════════════════════════════════════════════════════════════════════

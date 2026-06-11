@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — WATER SAFETY & LEGIONELLA INTELLIGENCE CARD
+// CARA — WATER SAFETY & LEGIONELLA INTELLIGENCE CARD
 // Dashboard card powered by the Premises Safety Intelligence Engine.
 // CHR 2015 Reg 25, Reg 36; HSE L8, HSG274.
 // SCCIF: Helped & Protected — "Water systems are safe."
@@ -145,13 +145,13 @@ export function WaterSafetyCard() {
           </div>
         )}
 
-        {/* ── ARIA Intelligence ──────────────────────────────────────── */}
+        {/* ── Cara Intelligence ──────────────────────────────────────── */}
 
         {(d.insights ?? []).length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Water Safety Intelligence
+              Cara Water Safety Intelligence
             </p>
             {(d.insights ?? []).slice(0, 2).map((insight, i) => (
               <div

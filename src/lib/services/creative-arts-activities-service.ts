@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- CREATIVE ARTS & THERAPEUTIC ACTIVITIES SERVICE
+// CARA -- CREATIVE ARTS & THERAPEUTIC ACTIVITIES SERVICE
 // Tracks creative arts and therapeutic activities for looked-after children
 // including art therapy, music therapy, drama therapy, dance/movement, creative
 // writing, photography, film making, pottery/ceramics, textiles/sewing, cooking

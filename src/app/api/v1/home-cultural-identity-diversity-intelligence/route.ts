@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME CULTURAL IDENTITY & DIVERSITY INTELLIGENCE API ROUTE
+// CARA — HOME CULTURAL IDENTITY & DIVERSITY INTELLIGENCE API ROUTE
 // GET /api/v1/home-cultural-identity-diversity-intelligence
 // Cross-domain composite: culturalIdentityPlans + culturalReligiousMentors
 // + culturalVisits + diversityCalendarEvents + personalPassports

@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ACTIVITY & ENRICHMENT INTELLIGENCE CARD
+// CARA — HOME ACTIVITY & ENRICHMENT INTELLIGENCE CARD
 // Home-level: activity provision quality, participation rates, category
-// variety, new experiences, per-child profiles, ARIA insights.
+// variety, new experiences, per-child profiles, Cara insights.
 // CHR 2015 Reg 9 (enjoyment & achievement). SCCIF: "Experiences and progress."
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -247,12 +247,12 @@ export function HomeActivityEnrichmentIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Enrichment Insights */}
+        {/* Cara Enrichment Insights */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Enrichment Intelligence
+              Cara Enrichment Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

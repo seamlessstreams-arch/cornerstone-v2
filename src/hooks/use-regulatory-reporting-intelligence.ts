@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — REGULATORY REPORTING INTELLIGENCE HOOK
+// CARA — REGULATORY REPORTING INTELLIGENCE HOOK
 // React Query wrapper for /api/v1/regulatory-reporting-intelligence
 // ══════════════════════════════════════════════════════════════════════════════
 

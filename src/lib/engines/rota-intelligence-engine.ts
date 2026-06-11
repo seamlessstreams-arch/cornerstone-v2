@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ROTA & WORKFORCE INTELLIGENCE ENGINE
+// CARA — ROTA & WORKFORCE INTELLIGENCE ENGINE
 //
 // Pure deterministic engine that analyses shift coverage, staffing levels,
 // absence, overtime, and agency usage across the children's home rota.

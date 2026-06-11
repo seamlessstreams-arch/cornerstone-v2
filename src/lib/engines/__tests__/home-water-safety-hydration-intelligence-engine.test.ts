@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME WATER SAFETY & HYDRATION INTELLIGENCE ENGINE TESTS
+// CARA — HOME WATER SAFETY & HYDRATION INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite covering water temperature checks, legionella
 // assessments, hydration monitoring, swimming competency, water activity safety.
 // Reg 25 premises/safety, Reg 5 quality of care, SCCIF safety.

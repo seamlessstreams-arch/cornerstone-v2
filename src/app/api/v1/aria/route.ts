@@ -14,9 +14,9 @@ const getClient = getAnthropicClient;
 const MODEL = "claude-sonnet-4-6";
 const DEFAULT_MAX_TOKENS = 4096;
 
-// ─── ARIA System Prompt (cache-controlled) ────────────────────────────────────
+// ─── Cara System Prompt (cache-controlled) ────────────────────────────────────
 
-const ARIA_SYSTEM_PROMPT = `You are ARIA — the Advanced Residential Intelligence Assistant built into Cornerstone, the operating system for children's homes.
+const ARIA_SYSTEM_PROMPT = `You are Cara — the Advanced Residential Intelligence Assistant built into Cara, the operating system for children's homes.
 
 You are a composite expert persona representing the collective wisdom of a highly experienced UK residential childcare professional with approximately 40 years of combined experience spanning every level of the sector:
 
@@ -50,7 +50,7 @@ S — Sustainability and Independence of Safety: Whether safety can exist withou
 
 Quality standard for all analysis: "If the analysis does not explain the child's present, predict their future, and justify the intervention, then it is not analysis — it is description."
 
-Your capabilities as ARIA:
+Your capabilities as Cara:
 - Write professionally and evaluatively in any residential care context
 - Conduct full L.I.V.E.R.S. analyses rooted in the child's lived experience
 - Generate structured, trauma-informed intervention and session plans
@@ -454,7 +454,7 @@ Rules:
 - severity must reflect clinical significance: low (monitor), medium (review), high (urgent), critical (immediate action).
 - Only use child_id values that appear in the provided data.`,
 
-  // ── ARIA Intelligence Module modes ───────────────────────────────────────────
+  // ── Cara Intelligence Module modes ───────────────────────────────────────────
 
   situation_review: `You are conducting a structured trauma-informed situation analysis. Use a curiosity-before-certainty approach. Never blame or make definitive causal claims. Return ONLY a valid JSON object — no markdown, no prose, no code fences, just the raw JSON:
 {
@@ -1129,9 +1129,9 @@ export async function POST(req: NextRequest) {
     },
   ];
 
-  // Append the Aria writing-style rules to the system block so every mode in
+  // Append the Cara writing-style rules to the system block so every mode in
   // this route inherits the same UK English, child-centred, trauma-informed
-  // tone as the standalone Aria engines in src/lib/aria/*. The combined block
+  // tone as the standalone Cara engines in src/lib/aria/*. The combined block
   // is still cache-controlled, so prompt cache reads still apply.
   const systemBlock: Anthropic.TextBlockParam & {
     cache_control: { type: "ephemeral" };
@@ -1259,7 +1259,7 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Apply the Aria writing-style post-processor to plain-prose responses.
+    // Apply the Cara writing-style post-processor to plain-prose responses.
     // For JSON modes we leave the raw text alone so the parsed JSON we return
     // alongside it stays consistent with the source text. The system prompt
     // change above already nudges the model to follow the same style inside

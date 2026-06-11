@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Sensory Processing Support Intelligence — Public API
+// Cara — Sensory Processing Support Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

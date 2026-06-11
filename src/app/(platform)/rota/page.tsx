@@ -302,7 +302,7 @@ export default function RotaPage() {
           title="Staff rota & scheduling"
           description="Weekly shift planner with gap detection. Open shifts are highlighted in amber and must be filled to maintain safe staffing ratios at all times."
           evidenceTip="Reg 40 requires adequate staffing. Document your rationale when running below planned levels — inspectors need to see risk was managed."
-          ariaTip="ARIA can analyse shift patterns to identify fatigue risks and suggest optimal rota configurations based on children's needs."
+          ariaTip="Cara can analyse shift patterns to identify fatigue risks and suggest optimal rota configurations based on children's needs."
           regulationRef="Children's Homes Regulations 2015, Reg 40(2)(c) — Staffing of children's homes"
         />
 
@@ -439,7 +439,7 @@ export default function RotaPage() {
           </div>
         )}
 
-        {/* ARIA Rota Intelligence */}
+        {/* Cara Rota Intelligence */}
         <AriaRotaIntelligence />
 
         {/* Week Navigation + Search */}

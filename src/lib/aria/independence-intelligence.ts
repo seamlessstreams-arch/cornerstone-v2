@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA Intelligence Engine — Independence & Pathway Planning
+// Cara Intelligence Engine — Independence & Pathway Planning
 //
 // Pure deterministic analysis of independence preparation for LAC aged 14+.
 // Tracks:

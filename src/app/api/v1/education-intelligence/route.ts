@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EDUCATION INTELLIGENCE API ROUTE
+// CARA — EDUCATION INTELLIGENCE API ROUTE
 // GET /api/v1/education-intelligence
 // Returns education status, attendance, activities, PEP compliance.
 // Reg 8 — Promotion of educational achievement.

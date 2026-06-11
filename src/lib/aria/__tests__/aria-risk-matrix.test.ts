@@ -88,7 +88,7 @@ describe("AriaRiskMatrix", () => {
       }
     });
 
-    it("at least one profile has ARIA notes", () => {
+    it("at least one profile has Cara notes", () => {
       const withNotes = profiles.filter((p) => p.ariaNotes);
       expect(withNotes.length).toBeGreaterThan(0);
     });

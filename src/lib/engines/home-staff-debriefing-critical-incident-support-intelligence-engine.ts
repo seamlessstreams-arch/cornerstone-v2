@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME STAFF DEBRIEFING & CRITICAL INCIDENT SUPPORT INTELLIGENCE ENGINE
+// CARA — HOME STAFF DEBRIEFING & CRITICAL INCIDENT SUPPORT INTELLIGENCE ENGINE
 // Pure deterministic engine: debriefing completion, critical incident support
 // timeliness, emotional wellbeing follow-up, learning extraction, support access,
 // and staff satisfaction with debriefing & support processes.

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME DIGITAL SAFETY & ONLINE PROTECTION INTELLIGENCE ENGINE
+// CARA — HOME DIGITAL SAFETY & ONLINE PROTECTION INTELLIGENCE ENGINE
 // Evaluates digital safety and online protection for children in care:
 // e-safety training compliance, internet usage monitoring, social media risk
 // assessments, online access agreements, and digital literacy support.

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// API — ARIA Studio Home Dynamics
+// API — Cara Studio Home Dynamics
 // GET  → list snapshots for a home (newest first), or ?latest=1 for the latest
 // POST → generate a new snapshot from live records (RBAC: aria.generate_drafts)
 // ══════════════════════════════════════════════════════════════════════════════

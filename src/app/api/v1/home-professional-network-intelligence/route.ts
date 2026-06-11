@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME PROFESSIONAL NETWORK INTELLIGENCE API ROUTE
+// CARA — HOME PROFESSIONAL NETWORK INTELLIGENCE API ROUTE
 // GET /api/v1/home-professional-network-intelligence
 // Synthesises professional network contacts and multi-agency meetings to
 // assess the strength, currency, and health of the professional support

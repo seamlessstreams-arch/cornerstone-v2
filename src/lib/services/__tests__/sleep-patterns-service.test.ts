@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SLEEP PATTERNS SERVICE TESTS
+// CARA — SLEEP PATTERNS SERVICE TESTS
 // Pure-function unit tests for sleep metrics computation,
 // alert identification, constant validation, and CRUD fallback behaviour
 // (Supabase disabled). CHR 2015 Reg 6 (quality of care — rest and sleep),

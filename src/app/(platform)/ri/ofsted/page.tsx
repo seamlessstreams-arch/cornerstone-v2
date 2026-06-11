@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — OFSTED READINESS REVIEW
+// CARA — OFSTED READINESS REVIEW
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState } from "react";
@@ -96,7 +96,7 @@ export default function OfstedReadinessPage() {
     setResult(null);
     try {
       const res = await api.post<{ data: { parsed?: ReadinessResult } }>(
-        "/aria",
+        "/cara",
         {
           mode: "ri_ofsted_readiness",
           style: "inspection_ready",
@@ -141,7 +141,7 @@ export default function OfstedReadinessPage() {
           <CardHeader className="pb-3">
             <CardTitle className="text-sm font-semibold flex items-center gap-2">
               <Sparkles className="h-4 w-4 text-[var(--cs-aria-gold)]" />
-              Generate Readiness Review with ARIA
+              Generate Readiness Review with Cara
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
@@ -162,7 +162,7 @@ export default function OfstedReadinessPage() {
               size="sm"
             >
               <Sparkles className="h-3.5 w-3.5" />
-              {generating ? "ARIA is reviewing…" : "Run Ofsted Readiness Review"}
+              {generating ? "Cara is reviewing…" : "Run Ofsted Readiness Review"}
             </Button>
           </CardContent>
         </Card>
@@ -300,7 +300,7 @@ export default function OfstedReadinessPage() {
           <div className="text-center py-16 text-[var(--cs-text-muted)]">
             <Award className="h-12 w-12 mx-auto mb-3 text-[var(--cs-text-gentle)]" />
             <p className="text-sm font-medium">Run a readiness review to see your inspection position</p>
-            <p className="text-xs mt-1">ARIA will analyse current evidence and predict your likely ILACS judgement</p>
+            <p className="text-xs mt-1">Cara will analyse current evidence and predict your likely ILACS judgement</p>
           </div>
         )}
       </div>

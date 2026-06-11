@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME CONTINENCE & PERSONAL HYGIENE SUPPORT INTELLIGENCE API ROUTE
+// CARA -- HOME CONTINENCE & PERSONAL HYGIENE SUPPORT INTELLIGENCE API ROUTE
 // GET /api/v1/home-continence-personal-hygiene-support-intelligence
 // Cross-domain composite: continencePlanRecords + hygieneRoutineRecords +
 // dignityCareRecords + ageGuidanceRecords + productProvisionRecords

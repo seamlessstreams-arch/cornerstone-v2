@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — Emergency service (Phase 7)
+// CARA — Emergency service (Phase 7)
 //
 // Raises an emergency alert and broadcasts a PRIVACY-SAFE message to on-shift staff
 // + managers via the Phase 1 Comms `emergency_broadcast` channel. The broadcast says

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILDREN'S POCKET MONEY AUDIT SERVICE
+// CARA — CHILDREN'S POCKET MONEY AUDIT SERVICE
 // Manages audit trail of pocket money transactions, receipt management,
 // balance reconciliation, spending oversight, and Ofsted financial
 // compliance for looked-after children.

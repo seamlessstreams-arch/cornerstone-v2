@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME DEPRIVATION OF LIBERTY INTELLIGENCE API ROUTE
+// CARA — HOME DEPRIVATION OF LIBERTY INTELLIGENCE API ROUTE
 // GET /api/v1/home-deprivation-of-liberty-intelligence
 // Synthesises DOL records to assess proportionality, child consultation,
 // professional oversight, review timeliness, alternatives, and legal framework.

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CONTACT & FAMILY ENGAGEMENT ENGINE TESTS
+// CARA — CONTACT & FAMILY ENGAGEMENT ENGINE TESTS
 // Comprehensive unit + integration tests for Contact Engagement Intelligence.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -503,7 +503,7 @@ describe("Contact Engagement Engine — Alerts", () => {
 // INTEGRATION TESTS — INSIGHTS
 // ══════════════════════════════════════════════════════════════════════════════
 
-describe("Contact Engagement Engine — ARIA Insights", () => {
+describe("Contact Engagement Engine — Cara Insights", () => {
   it("generates warning for children without active plans", () => {
     const child = makeChild();
     const result = computeContactEngagement(makeInput({

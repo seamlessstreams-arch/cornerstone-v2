@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME COOKING & KITCHEN SKILLS INTELLIGENCE API ROUTE
+// CARA — HOME COOKING & KITCHEN SKILLS INTELLIGENCE API ROUTE
 // GET /api/v1/home-cooking-kitchen-skills-intelligence
 // Cross-domain composite: cookingSessionRecords + kitchenSafetyRecords +
 // mealPreparationRecords + nutritionalUnderstandingRecords +

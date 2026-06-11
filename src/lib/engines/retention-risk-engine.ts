@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RETENTION & SUPPORT-INDICATOR ENGINE (pure / deterministic)
+// CARA — RETENTION & SUPPORT-INDICATOR ENGINE (pure / deterministic)
 //
 // A NON-CLINICAL view of where staff may need support, to help managers offer
 // timely help and protect retention. Fans in everyday operational signals —

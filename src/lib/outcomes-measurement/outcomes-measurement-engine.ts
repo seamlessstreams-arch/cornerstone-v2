@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Outcomes Measurement — Intelligence Engine
+// Cara Outcomes Measurement — Intelligence Engine
 //
 // Pure deterministic engine. No AI, no external calls, no side-effects.
 //

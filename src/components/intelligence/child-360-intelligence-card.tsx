@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD 360 INTELLIGENCE CARD
+// CARA — CHILD 360 INTELLIGENCE CARD
 // Per-child holistic intelligence profile across all care domains.
 // CHR 2015 Reg 5, Reg 9, Reg 14. SCCIF: Overall Experiences.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -218,12 +218,12 @@ export function Child360IntelligenceCard({ childId }: { childId: string }) {
           </div>
         )}
 
-        {/* ARIA Insights */}
+        {/* Cara Insights */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Child Intelligence
+              Cara Child Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

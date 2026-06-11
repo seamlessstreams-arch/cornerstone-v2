@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME STAFF DEBRIEF & EMOTIONAL SUPPORT INTELLIGENCE ENGINE
+// CARA — HOME STAFF DEBRIEF & EMOTIONAL SUPPORT INTELLIGENCE ENGINE
 // Pure deterministic engine: debrief completion, follow-up, learning capture,
 // support provision, and staff wellbeing checks after critical events.
 // CHR 2015 Reg 33: "The registered person must ensure that staff are supported."

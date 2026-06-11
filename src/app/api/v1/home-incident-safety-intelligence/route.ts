@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME INCIDENT SAFETY INTELLIGENCE API ROUTE
+// CARA — HOME INCIDENT SAFETY INTELLIGENCE API ROUTE
 // GET /api/v1/home-incident-safety-intelligence
 // Synthesises incidents, restraints, notifiable events, and handovers to
 // produce an overall home safety intelligence score.

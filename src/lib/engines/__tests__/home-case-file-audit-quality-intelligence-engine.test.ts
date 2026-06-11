@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME CASE FILE AUDIT & QUALITY INTELLIGENCE ENGINE — TESTS
+// CARA — HOME CASE FILE AUDIT & QUALITY INTELLIGENCE ENGINE — TESTS
 // Tests the pure deterministic engine for case file audit quality, handover
 // audits, policy currency, and Ofsted engagement preparedness.
 // ══════════════════════════════════════════════════════════════════════════════

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Handover & Communication Quality Intelligence Engine
+// Cara — Handover & Communication Quality Intelligence Engine
 //
 // Pure deterministic engine — no AI, no external calls.
 // Evaluates shift handovers, team communication, information sharing and

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CONTEXTUAL SAFEGUARDING INTELLIGENCE ENGINE
+// CARA — CONTEXTUAL SAFEGUARDING INTELLIGENCE ENGINE
 //
 // Pure deterministic engine that analyses exploitation screening coverage,
 // child risk levels, locality risk mapping, safety plan status, referral
@@ -7,7 +7,7 @@
 // - Screening coverage overview (per-type analysis)
 // - Child risk profiles (individual risk assessment)
 // - Locality risk summaries (contextual environmental threats)
-// - Auto-generated alerts and ARIA contextual insights (deterministic)
+// - Auto-generated alerts and Cara contextual insights (deterministic)
 //
 // Key regulatory requirements:
 //   Reg 12 — Protection from harm, extra-familial risks

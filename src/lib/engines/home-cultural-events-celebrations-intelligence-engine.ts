@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME CULTURAL EVENTS & CELEBRATIONS INTELLIGENCE ENGINE
+// CARA — HOME CULTURAL EVENTS & CELEBRATIONS INTELLIGENCE ENGINE
 // Home-level engine tracking cultural celebration quality — cultural event
 // participation, diversity celebration planning, heritage day acknowledgement,
 // multi-faith festival inclusion, and child-led cultural activities.

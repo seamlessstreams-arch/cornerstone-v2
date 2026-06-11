@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MANAGER ACTION INBOX ENGINE
+// CARA — MANAGER ACTION INBOX ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 //
@@ -7,7 +7,7 @@
 // the canonical event stream into a single prioritised list of things that need a
 // human: approvals, safeguarding alerts, high-risk events, missing information and
 // compliance gaps — each with a reason, a deadline, the linked child/staff, the
-// required action, an ARIA-suggested response, evidence links and the actions a
+// required action, an Cara-suggested response, evidence links and the actions a
 // manager can take (approve / request changes / escalate).
 //
 // It never decides or auto-acts — it surfaces and routes. Approvals and escalations
@@ -208,7 +208,7 @@ function buildInsights(items: InboxItem[], overview: ManagerInboxOverview): Aria
   if (overview.approvals_pending > 0) {
     insights.push({
       severity: overview.approvals_pending >= 5 ? "warning" : "positive",
-      text: `${overview.approvals_pending} item${overview.approvals_pending === 1 ? "" : "s"} await sign-off. Timely approval keeps the audit trail tight and surfaces serious events without delay — each item shows who needs to approve and an ARIA-suggested response to speed the decision.`,
+      text: `${overview.approvals_pending} item${overview.approvals_pending === 1 ? "" : "s"} await sign-off. Timely approval keeps the audit trail tight and surfaces serious events without delay — each item shows who needs to approve and an Cara-suggested response to speed the decision.`,
     });
   }
 

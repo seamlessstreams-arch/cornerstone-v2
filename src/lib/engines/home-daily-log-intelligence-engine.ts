@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME DAILY LOG INTELLIGENCE ENGINE
+// CARA — HOME DAILY LOG INTELLIGENCE ENGINE
 // Home-level: aggregates daily recording patterns, mood tracking, entry types,
 // staff participation, and significant event flagging.
 // CHR 2015 Reg 36: "Records — maintain comprehensive records."
@@ -357,7 +357,7 @@ export function computeHomeDailyLog(
     recommendations.push({ rank: ++rank, recommendation: "All staff should contribute to daily logs — discuss recording expectations in supervision.", urgency: "soon", regulatory_ref: "Reg 36" });
   }
 
-  // ARIA Insights
+  // Cara Insights
   if (frequencyRate >= 90 && childCoverageRate >= 100 && typeDiversityRate >= 70 && moodTrackingRate >= 80) {
     insights.push({ text: "Daily log recording is exemplary. Consistent, comprehensive, and emotionally attuned recording across all children and life domains. Ofsted will recognise this as outstanding practice.", severity: "positive" });
   }

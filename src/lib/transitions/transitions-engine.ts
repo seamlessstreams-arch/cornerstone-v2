@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Transitions Intelligence Engine
+// Cara Transitions Intelligence Engine
 //
 // Deterministic engine for evaluating the quality and compliance of
 // transitions in children's homes — admissions, discharges, placement

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME COMPETENCY LANDSCAPE INTELLIGENCE ENGINE
+// CARA — HOME COMPETENCY LANDSCAPE INTELLIGENCE ENGINE
 // Assesses the overall competency profile of the staff team: readiness
 // scores, progression pathways, development plan engagement, and team
 // capability gaps. Combines competencyProfiles + developmentPlans.

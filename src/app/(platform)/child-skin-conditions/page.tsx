@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD SKIN CONDITIONS
+// CARA — CHILD SKIN CONDITIONS
 // Per-child skin condition management — eczema, acne, psoriasis, vitiligo,
 // scarring and related conditions. Captures treatment plan, emollients and
 // topicals, dermatology referral pathway, school PE / swimming considerations,

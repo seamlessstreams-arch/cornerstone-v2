@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME STAFF PERFORMANCE APPRAISAL INTELLIGENCE API ROUTE
+// CARA — HOME STAFF PERFORMANCE APPRAISAL INTELLIGENCE API ROUTE
 // GET /api/v1/home-staff-performance-appraisal-intelligence
 // Synthesises appraisal records, performance targets, competency assessments,
 // development goals, and feedback records to produce an overall staff
@@ -232,7 +232,7 @@ export async function GET() {
   }
 
   // ── Feedback Records ──────────────────────────────────────────────────
-  // Derive from practice observations and appraisal ARIA insights
+  // Derive from practice observations and appraisal Cara insights
   const rawObservations = (store.practiceObservations ?? []) as any[];
   const feedback_records: FeedbackRecordInput[] = [];
 
@@ -268,7 +268,7 @@ export async function GET() {
     });
   }
 
-  // Appraisal-derived feedback (from completed appraisals with ARIA insights)
+  // Appraisal-derived feedback (from completed appraisals with Cara insights)
   for (const a of rawAppraisals) {
     if (a.status !== "completed") continue;
     if (a.aria_insights) {

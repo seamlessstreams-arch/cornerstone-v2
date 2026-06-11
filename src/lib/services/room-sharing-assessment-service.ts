@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ROOM SHARING ASSESSMENT SERVICE
+// CARA — ROOM SHARING ASSESSMENT SERVICE
 // Tracks room sharing risk assessments, compatibility checks,
 // and ongoing monitoring of shared room arrangements.
 // CHR 2015 Reg 10 (accommodation — safe and suitable),

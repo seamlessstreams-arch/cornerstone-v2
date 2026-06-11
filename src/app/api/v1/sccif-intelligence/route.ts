@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SCCIF SELF-EVALUATION INTELLIGENCE API ROUTE
+// CARA — SCCIF SELF-EVALUATION INTELLIGENCE API ROUTE
 // GET /api/v1/sccif-intelligence
 // Returns self-evaluation coverage, strength ratios, action tracking,
 // evidence gaps, and inspection readiness score across SCCIF judgment areas.

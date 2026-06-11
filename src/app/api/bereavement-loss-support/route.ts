@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Bereavement, Loss & Support API Route
+// Cara — Bereavement, Loss & Support API Route
 //
 // GET  → returns Chamberlain House demo bereavement/loss/support intelligence
 // POST → accepts custom data for any home

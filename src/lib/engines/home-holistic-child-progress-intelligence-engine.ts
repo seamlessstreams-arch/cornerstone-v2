@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME HOLISTIC CHILD PROGRESS COMPOSITE INTELLIGENCE ENGINE
+// CARA — HOME HOLISTIC CHILD PROGRESS COMPOSITE INTELLIGENCE ENGINE
 // Cross-domain composite that aggregates outcome reviews, education records,
 // key working sessions, and independence skills records to give a single
 // holistic view of each child's progress trajectory across all life domains.

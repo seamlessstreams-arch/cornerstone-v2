@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME BATHROOM & SHOWER FACILITIES INTELLIGENCE API ROUTE
+// CARA — HOME BATHROOM & SHOWER FACILITIES INTELLIGENCE API ROUTE
 // GET /api/v1/home-bathroom-shower-facilities-intelligence
 // Cross-domain composite: cleanlinessAuditRecords + showerAvailabilityRecords +
 // hotWaterRecords + privacyRecords + accessibilityRecords

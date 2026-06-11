@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — NOTIFICATION CENTRE
+// CARA — NOTIFICATION CENTRE
 // Dropdown panel from the Bell icon showing live alerts, overdue tasks,
 // incidents needing oversight, medication alerts, and compliance warnings.
 // ══════════════════════════════════════════════════════════════════════════════

@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // GET /api/aria/context-links
 //
-// Returns bidirectional record links that ARIA has identified between records.
+// Returns bidirectional record links that Cara has identified between records.
 // Query params: sourceTable, recordId, status (optional)
 // ══════════════════════════════════════════════════════════════════════════════
 

@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — Profile Builder
+// Cara STUDIO — Profile Builder
 //
-// Compiles a child's intelligence profile from Cornerstone data sources.
+// Compiles a child's intelligence profile from Cara data sources.
 // This produces a DISTILLED view (not raw data) suitable for LLM prompting.
 //
 // Sources:

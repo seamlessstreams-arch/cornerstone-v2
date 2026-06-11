@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD KEYWORKING INTELLIGENCE API ROUTE
+// CARA — CHILD KEYWORKING INTELLIGENCE API ROUTE
 // GET /api/v1/child-keyworking-intelligence?childId=yp_alex
 // Per-child engine analysing keyworking session frequency, quality,
 // mood impact, thematic coverage, follow-up completion.

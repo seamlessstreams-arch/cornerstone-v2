@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — GUARDRAILS UNIT TESTS
+// Cara — GUARDRAILS UNIT TESTS
 //
 // Tests for detectUnsafeOutput (banned-phrase scanning) and hashPrompt
 // (deterministic prompt hashing).

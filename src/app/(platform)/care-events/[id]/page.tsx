@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CARE EVENT DETAIL
+// CARA — CARE EVENT DETAIL
 // Full view of a single care event: details, routing, linked records, audit
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -402,7 +402,7 @@ function AuditTab({ entries }: { entries: CareEventAuditLog[] }) {
   );
 }
 
-// ── ARIA suggestions panel ─────────────────────────────────────────────────────
+// ── Cara suggestions panel ─────────────────────────────────────────────────────
 
 // ── Background jobs tab ────────────────────────────────────────────────────────
 
@@ -543,7 +543,7 @@ function ARIASuggestionsPanel({
     <div className="rounded-lg border border-indigo-100 bg-indigo-50/30 p-4 space-y-3">
       <div className="flex items-center justify-between">
         <p className="text-xs font-semibold text-indigo-700 uppercase tracking-wide">
-          ARIA suggestions
+          Cara suggestions
         </p>
         <span className="text-xs text-indigo-500">
           {event.aria_suggestions_reviewed ? "Reviewed" : "Awaiting review"}
@@ -827,7 +827,7 @@ export default function CareEventDetailPage({
             );
           })()}
 
-          {/* ARIA suggestions */}
+          {/* Cara suggestions */}
           <ARIASuggestionsPanel event={event} />
 
           {/* Tabbed detail: Routing + Audit */}

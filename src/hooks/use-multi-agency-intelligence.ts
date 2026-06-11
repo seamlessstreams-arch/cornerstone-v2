@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MULTI-AGENCY WORKING INTELLIGENCE HOOK
+// CARA — MULTI-AGENCY WORKING INTELLIGENCE HOOK
 // React Query wrapper for /api/v1/multi-agency-intelligence
 // ═════════════���════════════════════════════════════════════════════════════════
 

@@ -1,12 +1,12 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MISSING FROM CARE INTELLIGENCE ENGINE
+// CARA — MISSING FROM CARE INTELLIGENCE ENGINE
 //
 // Pure deterministic engine that aggregates missing episodes and computes:
 // - Profile summary (total, active, avg duration, return interview rate)
 // - Recent episodes with risk levels and statuses
 // - Push/pull factor analysis from pattern notes
 // - Contextual safeguarding risk flags
-// - Auto-generated ARIA intelligence insights (deterministic, no LLM)
+// - Auto-generated Cara intelligence insights (deterministic, no LLM)
 //
 // Key regulatory requirement: Reg 34 (missing children), Children's Homes
 // Regulations 2015. Ofsted always examines missing patterns, return
@@ -309,7 +309,7 @@ export function computeMissingIntelligence(input: MissingEngineInput): MissingIn
     risk: toSorted(riskCounts),
   };
 
-  // ── ARIA Intelligence Insights (deterministic) ──────────────────────────
+  // ── Cara Intelligence Insights (deterministic) ──────────────────────────
   const insights: AriaInsight[] = [];
 
   // No episodes at all — clean record
@@ -326,7 +326,7 @@ export function computeMissingIntelligence(input: MissingEngineInput): MissingIn
     const activeNames = [...new Set(active.map((e) => childName(e.child_id)))].join(", ");
     insights.push({
       severity: "critical",
-      text: `${active.length} active missing episode(s): ${activeNames}. Ensure police notification, placing authority contact, and risk assessment are current. Check ARIA dashboard for live updates.`,
+      text: `${active.length} active missing episode(s): ${activeNames}. Ensure police notification, placing authority contact, and risk assessment are current. Check Cara dashboard for live updates.`,
     });
   }
 

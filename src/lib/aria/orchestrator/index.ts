@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA INTELLIGENCE — ORCHESTRATION ENGINE
+// Cara INTELLIGENCE — ORCHESTRATION ENGINE
 //
 // The main orchestration entry point. Receives an AriaRequest, coordinates the
 // full intelligence pipeline, and returns a structured AriaResponse.
@@ -16,7 +16,7 @@
 //   9. Audit logging + cost tracking
 //  10. Return response
 //
-// All output is "Aria suggested draft" until a human approves and commits.
+// All output is "Cara suggested draft" until a human approves and commits.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { createServerClient, isSupabaseEnabled } from "@/lib/supabase/server";
@@ -52,7 +52,7 @@ export async function orchestrate(request: AriaRequest): Promise<AriaResponse> {
 
   if (!hasIntelligencePermission(request.role, "askAria")) {
     return buildPermissionDeniedResponse(
-      `Role "${request.role}" does not have permission to use Aria Intelligence.`,
+      `Role "${request.role}" does not have permission to use Cara Intelligence.`,
       request,
     );
   }
@@ -185,7 +185,7 @@ export async function orchestrate(request: AriaRequest): Promise<AriaResponse> {
     });
 
     return {
-      answer: "Aria was unable to process your request at this time. The AI provider returned an error. Please try again shortly, or contact your system administrator if the problem persists.",
+      answer: "Cara was unable to process your request at this time. The AI provider returned an error. Please try again shortly, or contact your system administrator if the problem persists.",
       agentUsed: routeDecision.requiredAgent,
       modelProfile: routeDecision.requiredModelProfile,
       riskLevel: routeDecision.riskLevel,
@@ -291,7 +291,7 @@ function extractTextFromResponse(result: unknown): string {
   if (typeof obj.text === "string") return obj.text;
   if (typeof obj.response === "string") return obj.response;
 
-  // If the object has an executiveSummary + answer pattern (existing Aria shape)
+  // If the object has an executiveSummary + answer pattern (existing Cara shape)
   if (typeof obj.executiveSummary === "string" && typeof obj.answer === "string") {
     return obj.answer;
   }

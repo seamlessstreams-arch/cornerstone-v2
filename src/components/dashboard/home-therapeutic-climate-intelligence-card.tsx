@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME THERAPEUTIC CLIMATE INTELLIGENCE CARD
+// CARA — HOME THERAPEUTIC CLIMATE INTELLIGENCE CARD
 // Home-level meta-analysis: behaviour log, restraints, incidents, missing
 // episodes combined to assess overall therapeutic atmosphere.
 // CHR 2015 Reg 19, Reg 20, Reg 35. SCCIF: "How well children are helped
@@ -233,12 +233,12 @@ export function HomeTherapeuticClimateIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Climate Intelligence */}
+        {/* Cara Climate Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Climate Intelligence
+              Cara Climate Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

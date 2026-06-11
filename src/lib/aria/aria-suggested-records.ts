@@ -1,13 +1,13 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA Studio — Suggested Records (Commit Queue)
+// Cara Studio — Suggested Records (Commit Queue)
 //
-// ARIA proposes a record. A human edits if needed. An authorised human
+// Cara proposes a record. A human edits if needed. An authorised human
 // commits it to the official record (or rejects it). Until commit, the
 // suggestion has no statutory weight. On commit, an immutable
 // AriaCommittedRecord row is written; in production this writes to the
 // appropriate domain table.
 //
-// Spec invariant: ARIA drafts. Humans decide. Only authorised humans
+// Spec invariant: Cara drafts. Humans decide. Only authorised humans
 // approve and commit to the official record.
 // ══════════════════════════════════════════════════════════════════════════════
 

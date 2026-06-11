@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — BEHAVIOUR SUPPORT INTELLIGENCE CARD
+// CARA — BEHAVIOUR SUPPORT INTELLIGENCE CARD
 // Dashboard card for behaviour trends, PI analysis, de-escalation success,
-// rewards/sanctions balance, and ARIA behaviour intelligence (Reg 19/20).
+// rewards/sanctions balance, and Cara behaviour intelligence (Reg 19/20).
 // Powered by the Behaviour Intelligence Engine — live data.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -211,13 +211,13 @@ export function BehaviourIntelligenceCard() {
           </div>
         )}
 
-        {/* ── ARIA insights ────────────────────────────────────────────── */}
+        {/* ── Cara insights ────────────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Behaviour Intelligence
+              Cara Behaviour Intelligence
             </p>
             {intel.insights.map((insight, i) => (
               <div

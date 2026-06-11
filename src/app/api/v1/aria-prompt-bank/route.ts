@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ARIA PRACTICE LIBRARY API (prompt bank + workflow templates)
+// CARA — Cara PRACTICE LIBRARY API (prompt bank + workflow templates)
 // GET   /api/v1/aria-prompt-bank → prompt bank (core + custom) + workflow
 //                                  checklists per incident type (read-only view)
 // POST  /api/v1/aria-prompt-bank → add a CUSTOM prompt (merges into live

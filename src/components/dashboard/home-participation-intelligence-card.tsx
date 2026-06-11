@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME PARTICIPATION & ENGAGEMENT INTELLIGENCE CARD
+// CARA — HOME PARTICIPATION & ENGAGEMENT INTELLIGENCE CARD
 // Home-level: house meeting attendance, child voice, agenda participation,
 // action follow-through, and engagement quality.
 // CHR 2015 Reg 7, 9. SCCIF: "Overall experiences", "Experiences and progress."
@@ -217,12 +217,12 @@ export function HomeParticipationIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Participation Intelligence */}
+        {/* Cara Participation Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Participation Intelligence
+              Cara Participation Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

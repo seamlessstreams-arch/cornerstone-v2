@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME THERAPEUTIC WELLBEING IMPACT INTELLIGENCE ENGINE
+// CARA -- HOME THERAPEUTIC WELLBEING IMPACT INTELLIGENCE ENGINE
 // Home-level: assesses therapeutic impact on children, wellbeing pulse tracking,
 // self-soothing toolkit effectiveness, and grief/loss support provision.
 // CHR 2015 Reg 9 (quality of care) / Reg 10 (enjoyment and achievement).

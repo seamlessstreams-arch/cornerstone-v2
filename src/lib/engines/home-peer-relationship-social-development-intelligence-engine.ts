@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME PEER RELATIONSHIP & SOCIAL DEVELOPMENT INTELLIGENCE ENGINE
+// CARA — HOME PEER RELATIONSHIP & SOCIAL DEVELOPMENT INTELLIGENCE ENGINE
 // Evaluates quality of peer relationships and social development support:
 // peer relationship assessments, social skills development programmes,
 // bullying incident management, friendship support plans, and social

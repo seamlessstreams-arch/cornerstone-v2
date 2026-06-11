@@ -3,12 +3,12 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // AriaGuardrailBanner
 //
-// Displays safeguarding guardrail flags on ARIA outputs. Shows a clear
+// Displays safeguarding guardrail flags on Cara outputs. Shows a clear
 // warning banner when the guardrail scanner detects content that needs
 // human review — especially safeguarding themes, diagnostic language,
 // inappropriate conclusions, or risk indicators.
 //
-// ARIA suggests. Humans decide. Cornerstone evidences.
+// Cara suggests. Humans decide. Cara evidences.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState } from "react";

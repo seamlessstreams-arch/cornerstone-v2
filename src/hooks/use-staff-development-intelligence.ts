@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF DEVELOPMENT INTELLIGENCE HOOK
+// CARA — STAFF DEVELOPMENT INTELLIGENCE HOOK
 // React Query wrapper for /api/v1/staff-development-intelligence
 // ══════════════════════════════════════════════════════════════════════════════
 

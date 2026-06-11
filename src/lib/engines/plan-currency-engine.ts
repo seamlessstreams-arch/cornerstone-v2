@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PLAN CURRENCY REGISTER ENGINE
+// CARA — PLAN CURRENCY REGISTER ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 //

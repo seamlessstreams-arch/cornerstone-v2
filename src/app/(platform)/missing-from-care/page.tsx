@@ -1,8 +1,8 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MISSING FROM CARE
-// Full episode management: report, track, log return, ARIA return interview.
+// CARA — MISSING FROM CARE
+// Full episode management: report, track, log return, Cara return interview.
 // Statutory compliance: s.20 / Full Care Order reporting obligations.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -574,7 +574,7 @@ function RhiDialog({
         context ? `\nAdditional context from staff:\n${context}` : "",
       ].filter(Boolean).join("\n");
 
-      const res = await api.post<{ data: { parsed?: RhiResult } }>("/aria", {
+      const res = await api.post<{ data: { parsed?: RhiResult } }>("/cara", {
         mode: "return_home_interview",
         style: "safeguarding_focused",
         source_content: sourceContent,
@@ -635,7 +635,7 @@ function RhiDialog({
           {!rhiResult && (
             <div>
               <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">
-                Additional context for ARIA (optional)
+                Additional context for Cara (optional)
               </label>
               <Textarea
                 className="mt-1 text-sm"
@@ -650,12 +650,12 @@ function RhiDialog({
                 disabled={generating}
               >
                 <Sparkles className="h-4 w-4" />
-                {generating ? "ARIA is preparing the interview…" : "Generate Return Home Interview with ARIA"}
+                {generating ? "Cara is preparing the interview…" : "Generate Return Home Interview with Cara"}
               </Button>
             </div>
           )}
 
-          {/* ARIA Result */}
+          {/* Cara Result */}
           {rhiResult && (
             <div className="space-y-4">
               {rhiResult.escalation_required && (
@@ -688,7 +688,7 @@ function RhiDialog({
 
               {rhiResult.interview_summary && (
                 <div>
-                  <div className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-1">ARIA Summary</div>
+                  <div className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-1">Cara Summary</div>
                   <p className="text-sm text-[var(--cs-text-secondary)] leading-relaxed">{rhiResult.interview_summary}</p>
                 </div>
               )}

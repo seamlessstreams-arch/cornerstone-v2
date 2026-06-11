@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — VEHICLE MANAGEMENT INTELLIGENCE CARD
+// CARA — VEHICLE MANAGEMENT INTELLIGENCE CARD
 // Dashboard card powered by the Premises & Safety Intelligence Engine.
 // Tracks vehicle checks, MOT, insurance, and fleet status.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -158,13 +158,13 @@ export function VehicleManagementCard() {
           </div>
         )}
 
-        {/* ── ARIA Intelligence ───────────────────────────────────────── */}
+        {/* ── Cara Intelligence ───────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Vehicle Intelligence
+              Cara Vehicle Intelligence
             </p>
             {intel.insights.slice(0, 2).map((insight, i) => (
               <div

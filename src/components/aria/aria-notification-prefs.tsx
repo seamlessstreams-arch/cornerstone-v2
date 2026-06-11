@@ -3,8 +3,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // AriaNotificationPrefs
 //
-// Per-user notification preferences for ARIA alerts. Controls which types of
-// ARIA insights, suggestions, and review requests generate notifications.
+// Per-user notification preferences for Cara alerts. Controls which types of
+// Cara insights, suggestions, and review requests generate notifications.
 // Persisted via localStorage with API sync when available.
 //
 // Usage:
@@ -47,7 +47,7 @@ const NOTIFICATION_CATEGORIES: NotificationCategory[] = [
   {
     id: "critical_safeguarding",
     label: "Critical Safeguarding",
-    description: "Immediate alerts when ARIA detects safeguarding concerns requiring urgent action.",
+    description: "Immediate alerts when Cara detects safeguarding concerns requiring urgent action.",
     icon: Shield,
     defaultEnabled: true,
   },
@@ -61,14 +61,14 @@ const NOTIFICATION_CATEGORIES: NotificationCategory[] = [
   {
     id: "risk_escalation",
     label: "Risk Escalation",
-    description: "Alerts when ARIA detects escalating risk patterns across incidents or behaviours.",
+    description: "Alerts when Cara detects escalating risk patterns across incidents or behaviours.",
     icon: AlertTriangle,
     defaultEnabled: true,
   },
   {
     id: "pending_approvals",
     label: "Pending Approvals",
-    description: "Reminders about ARIA outputs waiting for your review and approval.",
+    description: "Reminders about Cara outputs waiting for your review and approval.",
     icon: Clock,
     defaultEnabled: true,
   },
@@ -82,7 +82,7 @@ const NOTIFICATION_CATEGORIES: NotificationCategory[] = [
   {
     id: "behaviour_patterns",
     label: "Behaviour Patterns",
-    description: "Insights when ARIA detects recurring patterns in incident or daily log data.",
+    description: "Insights when Cara detects recurring patterns in incident or daily log data.",
     icon: Brain,
     defaultEnabled: true,
   },
@@ -96,7 +96,7 @@ const NOTIFICATION_CATEGORIES: NotificationCategory[] = [
   {
     id: "positive_trends",
     label: "Positive Trends",
-    description: "Notifications when ARIA identifies positive progress or improved outcomes.",
+    description: "Notifications when Cara identifies positive progress or improved outcomes.",
     icon: Sparkles,
     defaultEnabled: false,
   },
@@ -171,7 +171,7 @@ export function AriaNotificationPrefs({
         <div className="flex items-center gap-2">
           <Bell className="h-4 w-4 text-[var(--cs-aria-gold)]" />
           <h3 className="text-sm font-bold text-[var(--cs-navy)]">
-            ARIA Notification Preferences
+            Cara Notification Preferences
           </h3>
         </div>
         <div className="flex items-center gap-2">
@@ -201,7 +201,7 @@ export function AriaNotificationPrefs({
       </div>
 
       <p className="px-5 pb-3 text-[10px] text-[var(--cs-text-muted)] leading-relaxed">
-        Choose which ARIA alerts and insights you receive. Critical safeguarding
+        Choose which Cara alerts and insights you receive. Critical safeguarding
         and management oversight notifications cannot be fully disabled for
         Registered Managers.
       </p>

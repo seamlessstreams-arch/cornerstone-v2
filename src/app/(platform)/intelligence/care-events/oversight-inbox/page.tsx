@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — Manager Oversight Inbox  (Milestone 24)
+// CARA — Manager Oversight Inbox  (Milestone 24)
 //
 // One ranked queue of every item awaiting a manager decision, drawn from the
 // existing live engines (manager review, Reg 40, sensitive amendments, Reg 45

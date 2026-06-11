@@ -1,5 +1,5 @@
 // ══════════════════════════��════════════════════════════════��══════════════════
-// CORNERSTONE — ROTA INTELLIGENCE API ROUTE
+// CARA — ROTA INTELLIGENCE API ROUTE
 // GET /api/v1/rota-intelligence
 // Returns rota coverage, staffing levels, overtime, and workforce alerts.
 // ══════════════════════════════════════════════════════════════════════════════

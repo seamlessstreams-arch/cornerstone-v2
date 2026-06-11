@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ASBESTOS MANAGEMENT SERVICE TESTS
+// CARA — HOME ASBESTOS MANAGEMENT SERVICE TESTS
 // Pure-function tests for asbestos management metrics, alert identification,
-// ARIA insight generation, constant validation, and edge cases.
+// Cara insight generation, constant validation, and edge cases.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";

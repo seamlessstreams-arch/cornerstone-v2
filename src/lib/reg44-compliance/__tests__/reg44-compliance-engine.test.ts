@@ -194,7 +194,7 @@ const RECOMMENDATIONS: Reg44Recommendation[] = [
     assignedTo: "Darren Laville",
     targetDate: "2025-03-15",
     completedDate: "2025-03-14",
-    evidenceOfCompletion: "Plans reviewed and updated on Cornerstone",
+    evidenceOfCompletion: "Plans reviewed and updated on Cara",
     impactAssessed: true,
   },
   {

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA Intelligence Engine — Health Appointments Tracker
+// Cara Intelligence Engine — Health Appointments Tracker
 //
 // Pure deterministic analysis of health appointments for looked-after children.
 // Tracks:

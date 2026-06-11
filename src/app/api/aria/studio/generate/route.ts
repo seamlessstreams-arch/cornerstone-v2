@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// API: POST /api/aria/studio/generate — Generate Aria Studio content
+// API: POST /api/aria/studio/generate — Generate Cara Studio content
 //
 // Creates child-centred session plans, therapeutic activities, and resources.
 // ══════════════════════════════════════════════════════════════════════════════

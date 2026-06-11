@@ -1,5 +1,5 @@
 // ==============================================================================
-// Cornerstone -- Children's Fund Management Intelligence Engine
+// Cara -- Children's Fund Management Intelligence Engine
 //
 // Pure deterministic engine -- no AI, no external calls.
 // Evaluates how well a children's home manages pocket money, savings,

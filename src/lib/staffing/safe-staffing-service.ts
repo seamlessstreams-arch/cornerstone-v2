@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — Safe Staffing service (Phase 7)
+// CARA — Safe Staffing service (Phase 7)
 //
 // Reads the live store (Phase 3 clock-ins + on-call rota) and produces a real-time
 // safe-staffing status. Pure assessment is delegated to safe-staffing.ts.

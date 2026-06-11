@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Sleep & Wellbeing Monitoring Intelligence API Route
+// Cara — Sleep & Wellbeing Monitoring Intelligence API Route
 //
 // GET  → returns Chamberlain House demo intelligence (~15 records)
 // POST → accepts custom data for any home

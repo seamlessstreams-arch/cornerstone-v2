@@ -3,8 +3,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // useAriaPending
 //
-// Client hook for fetching ARIA outputs awaiting human review. Powers the
-// approval queue on the ARIA review page.
+// Client hook for fetching Cara outputs awaiting human review. Powers the
+// approval queue on the Cara review page.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { useQuery } from "@tanstack/react-query";
@@ -38,7 +38,7 @@ export function useAriaPending(params?: {
     queryKey: ["aria-pending", params],
     queryFn: async () => {
       const res = await fetch(`/api/aria/pending?${query}`);
-      if (!res.ok) throw new Error("Failed to fetch pending ARIA outputs");
+      if (!res.ok) throw new Error("Failed to fetch pending Cara outputs");
       const data = await res.json();
       return data.data as PendingOutput[];
     },

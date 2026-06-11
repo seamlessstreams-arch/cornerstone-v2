@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME RISK LANDSCAPE INTELLIGENCE ENGINE — TESTS
+// CARA — HOME RISK LANDSCAPE INTELLIGENCE ENGINE — TESTS
 // Comprehensive coverage: insufficient data, rating classifications,
 // distribution profile, trend profile, mitigation profile, currency profile,
 // coverage profile, scoring modifiers, strengths, concerns, recommendations,

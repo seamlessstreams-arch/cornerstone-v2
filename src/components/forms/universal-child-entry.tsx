@@ -4,7 +4,7 @@
 // UNIVERSAL CHILD ENTRY
 //
 // One form. One text box. Staff just writes about the child.
-// Cornerstone figures out what type of record it is and routes it everywhere.
+// Cara figures out what type of record it is and routes it everywhere.
 //
 // "Just tell us what happened. We'll handle the rest."
 // ══════════════════════════════════════════════════════════════════════════════

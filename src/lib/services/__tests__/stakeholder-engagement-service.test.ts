@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAKEHOLDER ENGAGEMENT SERVICE TESTS
+// CARA — STAKEHOLDER ENGAGEMENT SERVICE TESTS
 // Pure-function unit tests for stakeholder engagement metrics computation,
 // alert identification, constant validation, and CRUD fallback behaviour
 // (Supabase disabled). CHR 2015 Reg 45 (independent person — collaboration),

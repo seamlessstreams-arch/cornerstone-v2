@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — COMPLAINTS ↔ INCIDENT CORRELATION CARD
+// CARA — COMPLAINTS ↔ INCIDENT CORRELATION CARD
 // Cross-dataset early warning: where complaints preceded or converge with
 // incidents, and where incidents occur with no complaint (a voice gap).
 // Powered by the Complaints↔Incident Correlation Engine (Reg 22 / 12 / 7).
@@ -147,12 +147,12 @@ export function ComplaintsIncidentCorrelationCard() {
           </div>
         )}
 
-        {/* ── ARIA insights ────────────────────────────────────────────── */}
+        {/* ── Cara insights ────────────────────────────────────────────── */}
         {insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Voice & Protection Intelligence
+              Cara Voice & Protection Intelligence
             </p>
             {insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.positive)}>

@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 // ─────────────────────────────────────────────────────────────────────────────
 // POST /api/v1/aria/chat
 //
-// Lightweight chat endpoint for the ARIA drawer.
+// Lightweight chat endpoint for the Cara drawer.
 // Accepts { context, prompt } and returns { response }.
 //
 // Tries Anthropic first; falls back to OpenAI if only OpenAI is configured.
@@ -18,7 +18,7 @@ export const dynamic = "force-dynamic";
 
 const MAX_TOKENS = 1024;
 const SYSTEM_PROMPT =
-  "You are ARIA — the AI assistant built into Cornerstone, the operating system for children's homes. " +
+  "You are Cara — the AI assistant built into Cara, the operating system for children's homes. " +
   "You assist residential care professionals with professional writing, analysis, safeguarding checks, and compliance support. " +
   "Be concise, professional, and child-centred. " +
   "Never invent facts — only work from the context provided. " +
@@ -210,7 +210,7 @@ export async function POST(req: NextRequest) {
             "anthropic-version": "2023-06-01",
           },
           body: JSON.stringify({
-            model: process.env.ARIA_MODEL ?? "claude-sonnet-4-20250514",
+            model: (process.env.CARA_MODEL ?? process.env.ARIA_MODEL) ?? "claude-sonnet-4-20250514",
             max_tokens: MAX_TOKENS,
             system: SYSTEM_PROMPT,
             messages: [{ role: "user", content: userMessage }],
@@ -233,7 +233,7 @@ export async function POST(req: NextRequest) {
   // ── Try OpenAI ─────────────────────────────────────────────────────────────
 
   const openaiKey = process.env.OPENAI_API_KEY;
-  const openaiModel = process.env.ARIA_TEXT_MODEL ?? "gpt-4o-mini";
+  const openaiModel = (process.env.CARA_TEXT_MODEL ?? process.env.ARIA_TEXT_MODEL) ?? "gpt-4o-mini";
   if (openaiKey && openaiKey.length > 10 && !openaiKey.includes("placeholder")) {
     if (shouldStream) {
       try {
@@ -275,7 +275,7 @@ export async function POST(req: NextRequest) {
   // ── Neither configured ─────────────────────────────────────────────────────
 
   const notConfigured =
-    "ARIA is not yet configured. To enable AI assistance, set OPENAI_API_KEY or ANTHROPIC_API_KEY " +
+    "Cara is not yet configured. To enable AI assistance, set OPENAI_API_KEY or ANTHROPIC_API_KEY " +
     "in your environment variables. Contact your system administrator to configure AI providers.";
 
   if (shouldStream) {

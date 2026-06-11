@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Missing From Care — Public API
+// Cara Missing From Care — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 // ── Legacy episode engine (unchanged) ──

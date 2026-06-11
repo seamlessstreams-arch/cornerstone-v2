@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MEDICATION INCIDENT REPORTING SERVICE
+// CARA — MEDICATION INCIDENT REPORTING SERVICE
 // Manages Medication Incident Reporting — tracking medication errors,
 // near-misses, adverse reactions, and the investigation and learning
 // outcomes from each incident.

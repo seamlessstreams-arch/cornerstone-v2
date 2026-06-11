@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DISCHARGE & TRANSITION INTELLIGENCE CARD
+// CARA — DISCHARGE & TRANSITION INTELLIGENCE CARD
 // Dashboard widget for discharge planning and transition readiness.
-// Shows accommodation, EET, pathway planning, child readiness, and ARIA insights.
+// Shows accommodation, EET, pathway planning, child readiness, and Cara insights.
 // Powered by the Leaving Care Intelligence Engine — live data (Reg 36/37).
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -163,13 +163,13 @@ export function DischargeTransitionCard() {
           </div>
         )}
 
-        {/* ── ARIA Transition Intelligence ─────────────────────────────── */}
+        {/* ── Cara Transition Intelligence ─────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Transition Intelligence
+              Cara Transition Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MANAGER'S INTELLIGENCE BRIEFING CARD
+// CARA — MANAGER'S INTELLIGENCE BRIEFING CARD
 // Cross-cutting meta-intelligence aggregated from all domain engines.
 // CHR 2015 Reg 5 (RM duties), Reg 45 (quality of care review).
 // SCCIF: Overall Experiences, Helped & Protected, Leadership & Management.
@@ -237,12 +237,12 @@ export function ManagerIntelligenceBriefingCard() {
           </div>
         </div>
 
-        {/* ARIA Intelligence Insights */}
+        {/* Cara Intelligence Insights */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Intelligence Briefing
+              Cara Intelligence Briefing
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

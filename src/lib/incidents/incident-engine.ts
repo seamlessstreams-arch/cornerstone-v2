@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Incidents & Restraint — Compliance Engine
+// Cara Incidents & Restraint — Compliance Engine
 //
 // Deterministic engine for managing incident records, physical intervention
 // tracking, de-escalation compliance, and behavioural analysis.

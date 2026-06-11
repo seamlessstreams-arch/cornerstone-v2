@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Post-Incident Learning Intelligence Engine
+// Cara — Post-Incident Learning Intelligence Engine
 //
 // Pure deterministic engine — no AI, no external calls.
 // Analyses how effectively a children's home learns from incidents, near

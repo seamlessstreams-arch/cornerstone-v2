@@ -1,8 +1,8 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHRONOLOGY INTELLIGENCE PAGE
-// ARIA-powered chronology summaries and gap analysis
+// CARA — CHRONOLOGY INTELLIGENCE PAGE
+// Cara-powered chronology summaries and gap analysis
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState } from "react";
@@ -59,9 +59,9 @@ const SEV_CLASSES: Record<string, string> = {
   low:      "bg-slate-100 text-[var(--cs-text-secondary)]",
 };
 
-// ── Parse raw ARIA text into chronology rows ──────────────────────────────────
+// ── Parse raw Cara text into chronology rows ──────────────────────────────────
 //
-// Expected format (from the ARIA chronology_summary mode):
+// Expected format (from the Cara chronology_summary mode):
 //   "1. Date | Event | Significance"  or
 //   "Date | Event | Significance"
 //
@@ -160,7 +160,7 @@ export default function ChronologyIntelligencePage() {
       });
 
       if (!res.ok || !res.body) {
-        throw new Error(`ARIA returned ${res.status}`);
+        throw new Error(`Cara returned ${res.status}`);
       }
 
       const reader  = res.body.getReader();
@@ -225,11 +225,11 @@ export default function ChronologyIntelligencePage() {
   return (
     <PageShell
       title="Chronology Intelligence"
-      subtitle="ARIA-generated chronology summaries and gap analysis"
+      subtitle="Cara-generated chronology summaries and gap analysis"
       showQuickCreate={false}
       actions={
         <div className="flex items-center gap-2">
-          <PrintButton title="Chronology Intelligence" subtitle="Chamberlain House — ARIA Chronology Analysis" targetId="chronology-content" />
+          <PrintButton title="Chronology Intelligence" subtitle="Chamberlain House — Cara Chronology Analysis" targetId="chronology-content" />
           <SmartUploadButton variant="inline" label="Upload Chronology Document" uploadContext="Intelligence — chronology or historical record document upload" />
         </div>
       }
@@ -372,7 +372,7 @@ export default function ChronologyIntelligencePage() {
                 ) : (
                   <>
                     <Sparkles className="h-4 w-4 mr-2" />
-                    Generate with ARIA
+                    Generate with Cara
                   </>
                 )}
               </Button>
@@ -458,7 +458,7 @@ export default function ChronologyIntelligencePage() {
                 {isGenerating && (
                   <div className="mt-2 flex items-center gap-1.5 text-xs text-[var(--cs-text-muted)]">
                     <Loader2 className="h-3 w-3 animate-spin" />
-                    ARIA is writing…
+                    Cara is writing…
                   </div>
                 )}
 
@@ -548,12 +548,12 @@ export default function ChronologyIntelligencePage() {
             </CardContent>
           </Card>
 
-          {/* What ARIA can do */}
+          {/* What Cara can do */}
           <Card>
             <CardHeader className="pb-3">
               <CardTitle className="flex items-center gap-2 text-sm font-semibold">
                 <Sparkles className="h-4 w-4 text-[var(--cs-text-muted)]" />
-                What ARIA can do
+                What Cara can do
               </CardTitle>
             </CardHeader>
             <CardContent>

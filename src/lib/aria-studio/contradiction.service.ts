@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — CONTRADICTION DETECTION SERVICE
+// Cara STUDIO — CONTRADICTION DETECTION SERVICE
 //
 // Identifies conflicting information across evidence sources: risk levels
 // that disagree, dates that don't align, facts stated differently in

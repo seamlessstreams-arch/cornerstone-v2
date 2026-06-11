@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — REPORT SECTION TEMPLATES
+// Cara — REPORT SECTION TEMPLATES
 // Canonical section definitions for every report type. Each template defines
 // the section key, display title, ordering, and whether the section requires
 // evidence links or child voice content.

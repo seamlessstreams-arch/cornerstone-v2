@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — VISITOR FEEDBACK COLLECTION INTELLIGENCE CARD
+// CARA — VISITOR FEEDBACK COLLECTION INTELLIGENCE CARD
 // Dashboard card for visitor feedback metrics, category breakdown,
-// recent visitors, and ARIA feedback intelligence.
+// recent visitors, and Cara feedback intelligence.
 // CHR 2015 Reg 44, SCCIF Leadership & Management.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -179,13 +179,13 @@ export function VisitorFeedbackCollectionCard() {
           </div>
         )}
 
-        {/* ── ARIA insights ────────────────────────────────────────────── */}
+        {/* ── Cara insights ────────────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Feedback Intelligence
+              Cara Feedback Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

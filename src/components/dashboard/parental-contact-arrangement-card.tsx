@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PARENTAL CONTACT ARRANGEMENT INTELLIGENCE CARD
+// CARA — PARENTAL CONTACT ARRANGEMENT INTELLIGENCE CARD
 // Dashboard card for parental contact compliance, supervision, and outcomes.
 // Powered by the Contact Engagement Intelligence Engine — live data.
 // CHR 2015 Reg 6/7. SCCIF: Overall Experiences — Contact & relationships.
@@ -163,13 +163,13 @@ export function ParentalContactArrangementCard() {
           </div>
         )}
 
-        {/* ── ARIA Contact Intelligence ───────────────────────────────── */}
+        {/* ── Cara Contact Intelligence ───────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Contact Intelligence
+              Cara Contact Intelligence
             </p>
             {intel.insights.slice(0, 2).map((insight, i) => (
               <div

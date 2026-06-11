@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — APP SHELL
+// CARA — APP SHELL
 // Composable wrapper: Sidebar + TopBar + main content area + QuickCreateFab.
 // Drop this into any layout to get the full chrome.
 // Does NOT replace layout.tsx — it's a component used inside it.

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME STAFF PERFORMANCE COMPOSITE INTELLIGENCE ENGINE
+// CARA — HOME STAFF PERFORMANCE COMPOSITE INTELLIGENCE ENGINE
 // Home-level: correlates appraisal quality, supervision regularity, training
 // compliance, safeguarding discussion, action follow-through, and wellbeing &
 // development to produce an overall staff performance composite score.

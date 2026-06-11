@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME LAC REVIEW INTELLIGENCE ENGINE
+// CARA — HOME LAC REVIEW INTELLIGENCE ENGINE
 // Home-level: synthesises LAC (Looked After Child) review data across all
 // children to produce an overall review compliance, child participation, action
 // tracking, and placement stability intelligence.

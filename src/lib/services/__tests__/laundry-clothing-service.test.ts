@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LAUNDRY & CLOTHING SERVICE TESTS
+// CARA — LAUNDRY & CLOTHING SERVICE TESTS
 // Pure-function tests for laundry/clothing metrics, alert identification,
 // constant validation, and edge cases.
 // ══════════════════════════════════════════════════════════════════════════════

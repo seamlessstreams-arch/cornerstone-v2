@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ADMISSION & REFERRAL INTELLIGENCE API ROUTE
+// CARA — ADMISSION & REFERRAL INTELLIGENCE API ROUTE
 // GET /api/v1/admission-referral-intelligence
 // Returns referral pipeline, impact assessment compliance, decision analytics,
-// occupancy management, and ARIA admission intelligence.
+// occupancy management, and Cara admission intelligence.
 // Reg 11 — matching; Reg 12 — impact assessments.
 // ══════════════════════════════════════════════════════════════════════════════
 

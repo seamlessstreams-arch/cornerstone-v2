@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME TRANSITION & LEAVING CARE READINESS INTELLIGENCE API ROUTE
+// CARA — HOME TRANSITION & LEAVING CARE READINESS INTELLIGENCE API ROUTE
 // GET /api/v1/home-transition-leaving-care-readiness-intelligence
 // Cross-domain composite: transitionPlanningRecords + pathwayPlans +
 // leavingCarePackages + independencePathways + afterCareRecords

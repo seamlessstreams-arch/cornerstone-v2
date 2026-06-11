@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — WHAT NEEDS DOING TODAY PANEL
+// CARA — WHAT NEEDS DOING TODAY PANEL
 // Aggregates overdue tasks, missing logs, reviews, care plans, risk assessments,
 // and children needing follow-up into urgency-grouped action items.
 // Tap an item to open the relevant form with context pre-filled.

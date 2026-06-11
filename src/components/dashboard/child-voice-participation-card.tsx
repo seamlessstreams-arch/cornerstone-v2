@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD VOICE & PARTICIPATION DASHBOARD CARD
+// CARA — CHILD VOICE & PARTICIPATION DASHBOARD CARD
 // Home-level card showing how well children's voices are heard across the
 // home: LAC review participation, advocacy access, key work engagement,
 // feedback loops, and per-child voice profiles.
@@ -326,12 +326,12 @@ export function ChildVoiceParticipationCard() {
           </div>
         )}
 
-        {/* ARIA Voice Insights */}
+        {/* Cara Voice Insights */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Voice Intelligence
+              Cara Voice Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

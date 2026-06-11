@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Homework & Learning Support Intelligence — Public API
+// Cara Homework & Learning Support Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

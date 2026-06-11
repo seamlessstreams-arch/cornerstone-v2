@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — TOAST HELPERS
+// CARA — TOAST HELPERS
 // Typed wrappers around sonner for consistent toast messages across the app.
 // ══════════════════════════════════════════════════════════════════════════════
 

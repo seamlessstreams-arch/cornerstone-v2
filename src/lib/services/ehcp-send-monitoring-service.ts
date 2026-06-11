@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EHCP & SEND MONITORING SERVICE
+// CARA — EHCP & SEND MONITORING SERVICE
 // Tracks Education, Health and Care Plans for children with Special
 // Educational Needs and Disabilities. Monitors EHCP compliance, annual
 // reviews, provision delivery, and outcomes.

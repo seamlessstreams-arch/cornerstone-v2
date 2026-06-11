@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MEDICATION MANAGEMENT SERVICE
+// CARA — MEDICATION MANAGEMENT SERVICE
 // Manages prescriptions, MAR sheets, controlled drug audits, medication error
 // reporting, and compliance analytics. CHR 2015 Reg 23 (health) and Reg 12.
 // ══════════════════════════════════════════════════════════════════════════════

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — BEHAVIOUR TRIGGER & ESCALATION PATTERNS (detail page)
+// CARA — BEHAVIOUR TRIGGER & ESCALATION PATTERNS (detail page)
 // Per-child triggers, intensity trajectory, de-escalation coverage, balance.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -99,11 +99,11 @@ export default function BehaviourTriggerPatternsPage() {
             </Card>
           )}
 
-          {/* ── ARIA insights ────────────────────────────────────────────── */}
+          {/* ── Cara insights ────────────────────────────────────────────── */}
           {(intel.insights ?? []).length > 0 && (
             <div className="space-y-2">
               <h2 className="text-sm font-semibold flex items-center gap-1.5 text-purple-700">
-                <Brain className="h-4 w-4" /> ARIA Behaviour Pattern Intelligence
+                <Brain className="h-4 w-4" /> Cara Behaviour Pattern Intelligence
               </h2>
               {(intel.insights ?? []).map((insight, i) => (
                 <div key={i} className={cn("rounded-xl border p-3 text-sm leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.positive)}>

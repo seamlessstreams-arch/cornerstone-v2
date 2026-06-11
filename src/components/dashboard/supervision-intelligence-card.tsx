@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SUPERVISION INTELLIGENCE CARD
+// CARA — SUPERVISION INTELLIGENCE CARD
 // Dashboard widget for supervision compliance, staff wellbeing, training
-// status, and ARIA staff development intelligence.
+// status, and Cara staff development intelligence.
 // Powered by the Supervision Intelligence Engine — live data (Reg 33/32/29).
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -219,13 +219,13 @@ export function SupervisionIntelligenceCard() {
           </div>
         )}
 
-        {/* ── ARIA Supervision Intelligence ────────────────────────────── */}
+        {/* ── Cara Supervision Intelligence ────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Supervision Intelligence
+              Cara Supervision Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

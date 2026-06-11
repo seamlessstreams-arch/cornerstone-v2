@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SERVER-SIDE AUTH GUARD
+// CARA — SERVER-SIDE AUTH GUARD
 // Used inside API route handlers to enforce permission checks.
 //
 // Two modes:

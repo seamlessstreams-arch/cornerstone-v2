@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MEDICATION STATUS CARD
+// CARA — MEDICATION STATUS CARD
 // Dashboard widget showing medication administration status.
 // Powered by the Medication Intelligence Engine — live data (Reg 23/12).
 // ══════════════════════════════════════════════════════════════════════════════
@@ -151,13 +151,13 @@ export function MedicationStatusCard() {
           </div>
         )}
 
-        {/* ── ARIA Intelligence ───────────────────────────────────────── */}
+        {/* ── Cara Intelligence ───────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Medication Status
+              Cara Medication Status
             </p>
             {intel.insights.slice(0, 2).map((insight, i) => (
               <div

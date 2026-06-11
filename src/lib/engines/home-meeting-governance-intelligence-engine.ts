@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME MEETING GOVERNANCE INTELLIGENCE ENGINE
+// CARA — HOME MEETING GOVERNANCE INTELLIGENCE ENGINE
 // Home-level: analyses house meeting regularity, action completion,
 // child attendance, feedback quality, and governance structure.
 // CHR 2015 Reg 45 (Review of Quality of Care). SCCIF: "Well-Led."

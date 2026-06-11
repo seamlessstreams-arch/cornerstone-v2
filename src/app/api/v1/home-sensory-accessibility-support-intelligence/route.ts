@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SENSORY & ACCESSIBILITY SUPPORT INTELLIGENCE API ROUTE
+// CARA — HOME SENSORY & ACCESSIBILITY SUPPORT INTELLIGENCE API ROUTE
 // GET /api/v1/home-sensory-accessibility-support-intelligence
 // Cross-domain composite: sensoryProfileRecords + accessibilityAdaptationRecords +
 // sensoryRoomRecords + sensoryEquipmentRecords + sensoryInterventionRecords

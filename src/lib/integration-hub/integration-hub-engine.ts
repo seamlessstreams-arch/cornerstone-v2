@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — INTEGRATION HUB (ADAPTER FRAMEWORK) INTELLIGENCE ENGINE
+// CARA — INTEGRATION HUB (ADAPTER FRAMEWORK) INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls and no
-// real external network calls. This is the SCAFFOLD for Cornerstone's integration
+// real external network calls. This is the SCAFFOLD for Cara's integration
 // framework: a registry of typed adapters (rota, payroll, HR/training, calendar,
 // notifications, document storage, external forms, LA reporting) plus the
 // non-negotiable plumbing every adapter ships with — secure credentials, retry
@@ -10,7 +10,7 @@
 // trail and a manual override.
 //
 // "Capture once, surface everywhere" extends outward: a home already records its
-// rota, training, contacts and notifications inside Cornerstone, so the right
+// rota, training, contacts and notifications inside Cara, so the right
 // integration means a fact is entered once here and flows to (or from) the
 // external system automatically — no double-keying, no drift, full provenance.
 //
@@ -151,7 +151,7 @@ export const ADAPTER_KIND_LABELS: Record<AdapterKind, string> = {
 /** What each adapter automates once connected — used in views and insights. */
 export const ADAPTER_CAPABILITY: Record<AdapterKind, string> = {
   rota:
-    "Two-way rota sync keeps planned shifts, sickness and agency cover aligned between Cornerstone and the rostering system — staffing-against-ratio is always current without re-keying.",
+    "Two-way rota sync keeps planned shifts, sickness and agency cover aligned between Cara and the rostering system — staffing-against-ratio is always current without re-keying.",
   payroll:
     "Approved hours, overtime, sleep-ins and on-call flow straight to payroll — no manual timesheet export and a clean audit trail from shift to pay.",
   hr_training:
@@ -163,7 +163,7 @@ export const ADAPTER_CAPABILITY: Record<AdapterKind, string> = {
   document_storage:
     "Evidence, policies and signed records archive to secure document storage with retention and immutable references — nothing is captured twice or lost.",
   external_forms:
-    "External or partner forms ingest as structured Cornerstone events, captured once and linked to the child, with no transcription gap.",
+    "External or partner forms ingest as structured Cara events, captured once and linked to the child, with no transcription gap.",
   la_reporting:
     "Statutory returns and placement notifications submit to the local authority on time, with confirmations logged as evidence.",
 };
@@ -455,7 +455,7 @@ function buildAlerts(adapters: AdapterView[]): IntegrationHubAlert[] {
   return alerts;
 }
 
-// ── ARIA insights builder ───────────────────────────────────────────────────
+// ── Cara insights builder ───────────────────────────────────────────────────
 
 function buildInsights(
   adapters: AdapterView[],
@@ -511,7 +511,7 @@ function buildInsights(
   ) {
     insights.push({
       severity: "positive",
-      text: `All ${overview.key_adapters} key integrations are connected and syncing cleanly (health score ${overview.health_score}/100). Facts entered once in Cornerstone are flowing to the right external systems automatically, with provenance preserved.`,
+      text: `All ${overview.key_adapters} key integrations are connected and syncing cleanly (health score ${overview.health_score}/100). Facts entered once in Cara are flowing to the right external systems automatically, with provenance preserved.`,
     });
   }
 

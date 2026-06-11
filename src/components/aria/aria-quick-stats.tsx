@@ -4,7 +4,7 @@
 // AriaQuickStats
 //
 // Compact inline stats bar for embedding in dashboards and page headers.
-// Shows key ARIA metrics in a single row: requests, approved, pending, rate.
+// Shows key Cara metrics in a single row: requests, approved, pending, rate.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React from "react";
@@ -36,7 +36,7 @@ export function AriaQuickStats({
       <div className={cn("flex items-center gap-2", className)}>
         <Loader2 className="h-3 w-3 animate-spin text-[var(--cs-aria-gold)]" />
         <span className="text-[10px] text-[var(--cs-text-muted)]">
-          Loading ARIA stats...
+          Loading Cara stats...
         </span>
       </div>
     );

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CARE EVENT PROCESSOR
+// CARA — CARE EVENT PROCESSOR
 //
 // Executes routing decisions from the routing engine.
 // Called after a Care Event is submitted (staff signature confirmed).

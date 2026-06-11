@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Tests — Aria Configuration Layer
+// Tests — Cara Configuration Layer
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";
@@ -43,7 +43,7 @@ describe("getActiveSystemProfile", () => {
 
     expect(profile).toBeDefined();
     expect(profile.id).toBe("profile_cornerstone_aria_default");
-    expect(profile.name).toContain("Cornerstone");
+    expect(profile.name).toContain("Cara");
     expect(profile.active).toBe(true);
     expect(typeof profile.system_prompt).toBe("string");
     expect(profile.system_prompt.length).toBeGreaterThan(0);

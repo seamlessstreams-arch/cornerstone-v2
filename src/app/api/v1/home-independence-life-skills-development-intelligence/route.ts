@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME INDEPENDENCE & LIFE SKILLS DEVELOPMENT INTELLIGENCE API ROUTE
+// CARA — HOME INDEPENDENCE & LIFE SKILLS DEVELOPMENT INTELLIGENCE API ROUTE
 // GET /api/v1/home-independence-life-skills-development-intelligence
 // Cross-domain composite: lifeSkillsAssessmentRecords + cookingProgrammeRecords +
 // travelTrainingRecords + personalCareRecords + independenceMilestoneRecords

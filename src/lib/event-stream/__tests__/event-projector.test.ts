@@ -206,7 +206,7 @@ describe("buildEventStream overview", () => {
     expect(r.events[0].occurredAt >= r.events[1].occurredAt).toBe(true);
     expect(r.overview.latest_occurred_at).toBe(r.events[0].occurredAt);
   });
-  it("counts compliance flags from the ARIA analysis", () => {
+  it("counts compliance flags from the Cara analysis", () => {
     expect(r.overview.compliance_flags).toBeGreaterThan(0);
   });
 });

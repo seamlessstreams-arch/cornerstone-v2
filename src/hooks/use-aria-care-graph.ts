@@ -17,7 +17,7 @@ export function useCareGraph(homeId?: string, childId?: string | null) {
     queryKey: ["aria-care-graph", homeId ?? null, childId ?? null],
     queryFn: () =>
       api.get<CareGraphResponse>(
-        `/aria-studio/care-graph${qs ? `?${qs}` : ""}`,
+        `/cara-studio/care-graph${qs ? `?${qs}` : ""}`,
       ),
     refetchInterval: 60000,
   });
@@ -33,7 +33,7 @@ export function useRebuildCareGraph() {
       actor_id?: string;
       actor_role?: string;
     }) =>
-      api.post<CareGraphResponse>("/aria-studio/care-graph", input),
+      api.post<CareGraphResponse>("/cara-studio/care-graph", input),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["aria-care-graph"] });
     },

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — VISITORS INTELLIGENCE ENGINE TESTS
+// CARA — VISITORS INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite for visitor management analysis.
 // Reg 12, Reg 22, Reg 44, SCCIF.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -328,7 +328,7 @@ describe("Visitors Intelligence Engine", () => {
     });
   });
 
-  describe("ARIA insights", () => {
+  describe("Cara insights", () => {
     it("generates critical insight for DBS gaps", () => {
       const result = run([
         makeVisitor({ category: "professional", dbs_checked: false }),

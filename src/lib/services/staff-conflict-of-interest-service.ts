@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF CONFLICT OF INTEREST SERVICE
+// CARA — STAFF CONFLICT OF INTEREST SERVICE
 // Manages annual declarations, risk assessments, mitigation plans, and
 // monitoring of potential conflicts that could compromise care quality.
 // CHR 2015 Reg 13 (leadership — governance and transparency),

@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF EXIT INTERVIEW MANAGEMENT SERVICE TESTS
+// CARA — STAFF EXIT INTERVIEW MANAGEMENT SERVICE TESTS
 // Pure-function unit tests for exit interview metrics, alert
-// identification, and ARIA insight generation.
+// identification, and Cara insight generation.
 //
 // CHR 2015 Reg 33 (employment of staff — proper offboarding procedures),
 // CHR 2015 Reg 34 (staff leaving — knowledge transfer and continuity of care).

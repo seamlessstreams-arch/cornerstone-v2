@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILDREN'S FEEDBACK SERVICE TESTS
+// CARA — CHILDREN'S FEEDBACK SERVICE TESTS
 // Pure-function unit tests for feedback metrics computation, alert
 // identification, constant validation. CHR 2015 Reg 7 (quality of care —
 // responsive to views), Reg 10 (children's views — consultation and feedback),

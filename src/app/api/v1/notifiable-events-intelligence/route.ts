@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — NOTIFIABLE EVENTS INTELLIGENCE API ROUTE
+// CARA — NOTIFIABLE EVENTS INTELLIGENCE API ROUTE
 // GET /api/v1/notifiable-events-intelligence
 // Returns Reg 40 notifiable events analysis: notification compliance,
-// event distribution, per-child frequency, and ARIA intelligence.
+// event distribution, per-child frequency, and Cara intelligence.
 // ══════════════════════════════════════════════════════════════════════════════
 
 export const dynamic = "force-dynamic";

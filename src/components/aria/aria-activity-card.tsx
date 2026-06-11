@@ -3,7 +3,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // AriaActivityCard
 //
-// Dashboard widget showing ARIA usage statistics at a glance. Shows key
+// Dashboard widget showing Cara usage statistics at a glance. Shows key
 // metrics (requests, approvals, tasks, transcriptions) and top commands.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -53,7 +53,7 @@ export function AriaActivityCard({
         <div className="flex items-center gap-2">
           <Loader2 className="h-4 w-4 animate-spin text-[var(--cs-aria-gold)]" />
           <span className="text-xs text-[var(--cs-text-muted)]">
-            Loading ARIA activity...
+            Loading Cara activity...
           </span>
         </div>
       </div>
@@ -115,7 +115,7 @@ export function AriaActivityCard({
         </div>
         <div>
           <div className="text-sm font-bold text-[var(--cs-navy)]">
-            ARIA Activity
+            Cara Activity
           </div>
           <div className="text-[10px] text-[var(--cs-text-muted)]">
             Last {days} days

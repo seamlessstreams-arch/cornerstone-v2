@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — YOUNG PEOPLE RISK OVERVIEW CARD
+// CARA — YOUNG PEOPLE RISK OVERVIEW CARD
 // Dashboard widget showing each young person's current risk flags,
 // key worker allocation, and last daily log date.
 // Critical for RM oversight — "Where is each child at right now?"

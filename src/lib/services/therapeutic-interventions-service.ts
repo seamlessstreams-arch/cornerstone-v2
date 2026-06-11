@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — THERAPEUTIC INTERVENTIONS SERVICE
+// CARA — THERAPEUTIC INTERVENTIONS SERVICE
 // Manages therapy sessions, therapeutic care plans, therapeutic parenting
 // approaches, and outcomes tracking.
 // CHR 2015 Reg 6 (quality and purpose of care — meeting emotional needs),

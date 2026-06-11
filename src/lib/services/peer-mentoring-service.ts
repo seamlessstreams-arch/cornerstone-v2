@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PEER MENTORING SERVICE
+// CARA — PEER MENTORING SERVICE
 // Manages peer mentoring and buddy programmes — pairing children for
 // mutual support, tracking progress, and monitoring outcomes.
 // CHR 2015 Reg 5 (engaging with the wider community — peer support),

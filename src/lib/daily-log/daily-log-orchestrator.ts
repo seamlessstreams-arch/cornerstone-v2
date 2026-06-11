@@ -2,7 +2,7 @@
 // DAILY LOG ORCHESTRATOR
 //
 // Same pattern as incident-orchestrator: one entry creates all linked records.
-// Form → Store → Audit → Timeline → Dashboard → Reports → ARIA
+// Form → Store → Audit → Timeline → Dashboard → Reports → Cara
 //
 // "Enter once. Use everywhere."
 // ══════════════════════════════════════════════════════════════════════════════
@@ -137,7 +137,7 @@ export function createDailyLog(input: CreateDailyLogInput): DailyLogOrchestratio
   // ── 5. Reports availability ────────────────────────────────────────────
   linkedUpdates.push("Available in Reg 45 report and inspection evidence pack");
 
-  // ── 6. ARIA context ────────────────────────────────────────────────────
+  // ── 6. Cara context ────────────────────────────────────────────────────
   logInteraction({
     user_id: input.staff_id,
     child_id: input.child_id,
@@ -149,7 +149,7 @@ export function createDailyLog(input: CreateDailyLogInput): DailyLogOrchestratio
     risk_level: riskLevel === "medium" ? "medium" : "low",
     requires_review: false,
   });
-  linkedUpdates.push("ARIA intelligence context updated");
+  linkedUpdates.push("Cara intelligence context updated");
 
   // ── 7. Alerts based on content ─────────────────────────────────────────
   if (input.mood === "distressed") {

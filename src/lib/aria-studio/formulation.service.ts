@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — THERAPEUTIC FORMULATION ENGINE
+// Cara STUDIO — THERAPEUTIC FORMULATION ENGINE
 //
 // Builds and maintains therapeutic formulations for each young person.
 // ══════════════════════════════════════════════════════════════════════════════

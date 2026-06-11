@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ADMISSION & PLACEMENT INTELLIGENCE ENGINE
+// CARA — HOME ADMISSION & PLACEMENT INTELLIGENCE ENGINE
 // Home-level: analyses admission referrals to assess placement matching quality,
 // impact assessment compliance, decision timeliness, referral volume, and
 // alignment with the Statement of Purpose.

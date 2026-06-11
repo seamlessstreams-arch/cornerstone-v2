@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Risk Assessment Intelligence Engine  (v2 — standardised)
+// Cara Risk Assessment Intelligence Engine  (v2 — standardised)
 //
 // Deterministic engine for evaluating risk assessment quality, compliance,
 // policy frameworks, staff readiness, and per-child risk profiles.

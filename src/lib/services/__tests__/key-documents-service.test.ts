@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — KEY DOCUMENTS SERVICE TESTS
+// CARA — KEY DOCUMENTS SERVICE TESTS
 // Pure-function unit tests for document metrics computation, alert
 // identification, constant validation, and CRUD fallback behaviour.
 // ══════════════════════════════════════════════════════════════════════════════

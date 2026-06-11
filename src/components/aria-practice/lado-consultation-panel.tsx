@@ -2,7 +2,7 @@
 
 // LadoConsultationPanel — recognises possible concerns about an adult who works
 // with or cares for children, and advises a manager/RI review + LADO consideration.
-// ARIA NEVER decides the outcome and never advises a premature internal investigation.
+// Cara NEVER decides the outcome and never advises a premature internal investigation.
 
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -32,7 +32,7 @@ export function LadoConsultationPanel({ childId, staffId, homeId }: { childId?: 
         <CardTitle className="text-sm flex items-center gap-2">
           <UserX className="h-4 w-4 text-orange-600" /> LADO consultation support
         </CardTitle>
-        <p className="text-xs text-muted-foreground mt-1">For concerns about an adult&apos;s conduct toward a child. <strong>Child welfare first; ARIA never decides the outcome.</strong></p>
+        <p className="text-xs text-muted-foreground mt-1">For concerns about an adult&apos;s conduct toward a child. <strong>Child welfare first; Cara never decides the outcome.</strong></p>
       </CardHeader>
       <CardContent className="space-y-3">
         <textarea
@@ -43,7 +43,7 @@ export function LadoConsultationPanel({ childId, staffId, homeId }: { childId?: 
         />
         <Button size="sm" onClick={() => consult.mutate({ childId, staffId, concern, homeId })} disabled={consult.isPending || concern.trim().length === 0}>
           {consult.isPending ? <Loader2 className="h-4 w-4 animate-spin mr-1" /> : <UserX className="h-4 w-4 mr-1" />}
-          Consult ARIA
+          Consult Cara
         </Button>
         {consult.isError && <p className="text-sm text-red-600">{(consult.error as Error)?.message}</p>}
 

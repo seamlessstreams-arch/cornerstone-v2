@@ -366,7 +366,7 @@ export function AriaWriteToChild({
           <Sparkles className="h-3.5 w-3.5 text-[var(--cs-aria-gold)] mt-0.5 shrink-0" />
           <div>
             <p className="text-[11px] text-[var(--cs-text-secondary)]">
-              ARIA creates a child-understandable version using trauma-informed language (PACE, ARC).
+              Cara creates a child-understandable version using trauma-informed language (PACE, ARC).
               The child version avoids jargon, blame, and labelling. You must review and approve before sharing.
             </p>
             <p className="text-[10px] text-[var(--cs-text-gentle)] mt-1">
@@ -386,7 +386,7 @@ export function AriaWriteToChild({
             Create a child-friendly version
           </h4>
           <p className="text-xs text-[var(--cs-text-muted)] mb-4 max-w-md mx-auto">
-            ARIA will create both a management version and a version written directly to {childName.split(" ")[0]},
+            Cara will create both a management version and a version written directly to {childName.split(" ")[0]},
             using age-appropriate, trauma-informed language.
           </p>
           <button

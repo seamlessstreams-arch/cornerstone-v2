@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME MENTAL HEALTH INTELLIGENCE ENGINE
+// CARA — HOME MENTAL HEALTH INTELLIGENCE ENGINE
 // Home-level: aggregates mental health check-ins, therapy sessions,
 // self-harm safety plans, and therapeutic input referrals.
 // CHR 2015 Reg 7/10: "Welfare — promote physical/mental health."
@@ -403,7 +403,7 @@ export function computeHomeMentalHealth(
     recommendations.push({ rank: ++rank, recommendation: "Address barriers to therapy attendance — transport, timing, and emotional readiness should be reviewed.", urgency: "soon", regulatory_ref: "Reg 10" });
   }
 
-  // ARIA Insights
+  // Cara Insights
   if (checkInCoverageRate >= 100 && checkInsPerChild >= 4 && (flaggedCheckIns === 0 || followUpRate >= 100)) {
     insights.push({ text: "Mental health monitoring is exemplary. Every child receives regular check-ins with prompt follow-up on any concerns. This proactive emotional awareness will be recognised by Ofsted as outstanding practice.", severity: "positive" });
   }

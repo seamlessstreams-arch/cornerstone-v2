@@ -3,10 +3,10 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // AriaCompose
 //
-// A reusable composer for any long-text field in Cornerstone. Pairs a
-// textarea with the ARIA microphone button and an "Ask ARIA" command picker,
+// A reusable composer for any long-text field in Cara. Pairs a
+// textarea with the Cara microphone button and an "Ask Cara" command picker,
 // then renders the suggested draft for the manager to insert, send back to
-// Aria for refinement, or discard.
+// Cara for refinement, or discard.
 //
 // Drop-in usage:
 //
@@ -25,7 +25,7 @@
 //   />
 //
 // The widget only requests the microphone after a click. The mic button is
-// hidden when the role doesn't grant aria.dictate. The Aria panel hides
+// hidden when the role doesn't grant aria.dictate. The Cara panel hides
 // when the role doesn't grant aria.use. Server still enforces every
 // permission, regardless of UI hiding.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -96,7 +96,7 @@ export interface AriaComposeProps {
   sourceRecordId?: string;
   sourceField?: string;
 
-  // Optional override of the default ARIA command shown in the picker.
+  // Optional override of the default Cara command shown in the picker.
   defaultCommand?: AriaCommandId;
   // Optional override of the visible quick-pick commands.
   commands?: CommandSpec[];
@@ -115,7 +115,7 @@ export interface AriaComposeProps {
 interface AriaResult {
   outputId?: string;
   generatedText: string;
-  ariaLabel: "ARIA suggested draft";
+  ariaLabel: "Cara suggested draft";
   llmUsed: boolean;
   approvalRequired: boolean;
   persisted: boolean;
@@ -165,7 +165,7 @@ export function AriaCompose(props: AriaComposeProps) {
 
   async function runCommand() {
     if (!value || value.trim().length < 5) {
-      setError("Add some text to the field before running an ARIA command.");
+      setError("Add some text to the field before running an Cara command.");
       return;
     }
     setRunning(true);
@@ -192,7 +192,7 @@ export function AriaCompose(props: AriaComposeProps) {
       });
       const data = await res.json();
       if (!res.ok) {
-        setError(data.error ?? "ARIA command failed.");
+        setError(data.error ?? "Cara command failed.");
       } else {
         setResult(data.data as AriaResult);
         setResultEdited((data.data as AriaResult).generatedText ?? "");
@@ -280,7 +280,7 @@ export function AriaCompose(props: AriaComposeProps) {
       {canUseAria && visibleCommands.length > 0 ? (
         <div className="flex items-center gap-2 flex-wrap">
           <Sparkles className="h-4 w-4 text-[var(--cs-aria-gold)]" />
-          <span className="text-xs text-[var(--cs-text-muted)]">Ask ARIA:</span>
+          <span className="text-xs text-[var(--cs-text-muted)]">Ask Cara:</span>
           <Select value={commandId} onValueChange={(v) => setCommandId(v as AriaCommandId)}>
             <SelectTrigger className="h-8 w-56 text-sm">
               <SelectValue />
@@ -319,7 +319,7 @@ export function AriaCompose(props: AriaComposeProps) {
             <CardTitle className="flex items-center justify-between gap-2 text-sm">
               <span className="flex items-center gap-2">
                 <Sparkles className="h-4 w-4 text-[var(--cs-aria-gold)]" />
-                <span>ARIA suggested draft</span>
+                <span>Cara suggested draft</span>
                 <Badge className="border bg-[var(--cs-aria-gold-bg)] text-[var(--cs-navy)] border-[var(--cs-aria-gold-soft)] text-xs">
                   {result.llmUsed ? "Generated" : "Not configured"}
                 </Badge>

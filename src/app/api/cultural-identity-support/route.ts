@@ -1,5 +1,5 @@
 // ==============================================================================
-// Cornerstone — Cultural Identity Support Intelligence API Route
+// Cara — Cultural Identity Support Intelligence API Route
 //
 // GET  -> returns Chamberlain House demo intelligence (Alex, Jordan, Morgan)
 // POST -> accepts custom data for any home

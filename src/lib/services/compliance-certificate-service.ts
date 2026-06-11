@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — COMPLIANCE CERTIFICATE TRACKING SERVICE
+// CARA — COMPLIANCE CERTIFICATE TRACKING SERVICE
 // Manages gas safety certificates, electrical installation reports,
 // fire alarm service records, PAT testing, legionella risk assessments,
 // insurance certificates, and other regulatory compliance documents

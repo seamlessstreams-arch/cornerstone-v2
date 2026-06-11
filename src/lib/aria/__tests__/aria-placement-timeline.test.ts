@@ -51,7 +51,7 @@ describe("AriaPlacementTimeline", () => {
       expect(data.placementDays).toBeGreaterThan(0);
     });
 
-    it("has ARIA overview text", () => {
+    it("has Cara overview text", () => {
       expect(data.ariaOverview.length).toBeGreaterThan(20);
     });
 
@@ -80,7 +80,7 @@ describe("AriaPlacementTimeline", () => {
       expect(data.events[0].type).toBe("placement_start");
     });
 
-    it("includes events with ARIA narratives", () => {
+    it("includes events with Cara narratives", () => {
       const withNarrative = data.events.filter((e) => e.ariaNarrative);
       expect(withNarrative.length).toBeGreaterThan(0);
     });

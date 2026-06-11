@@ -380,7 +380,7 @@ describe("Child Risk Profile Intelligence Engine", () => {
     expect(r.recommendations.some((rec) => rec.urgency === "immediate")).toBe(true);
   });
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
 
   it("generates critical insight for no assessments", () => {
     const r = computeChildRiskProfile(baseInput());

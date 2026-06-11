@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME POLICY REVIEW CYCLE COMPLIANCE INTELLIGENCE ENGINE
+// CARA — HOME POLICY REVIEW CYCLE COMPLIANCE INTELLIGENCE ENGINE
 // Measures policy review schedule adherence, version control, staff
 // acknowledgement tracking, regulatory alignment, and policy accessibility.
 // Pure deterministic engine — no imports, no LLM, no external deps.

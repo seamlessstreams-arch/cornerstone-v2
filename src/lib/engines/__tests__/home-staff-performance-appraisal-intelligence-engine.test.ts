@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME STAFF PERFORMANCE APPRAISAL INTELLIGENCE ENGINE — TESTS
+// CARA — HOME STAFF PERFORMANCE APPRAISAL INTELLIGENCE ENGINE — TESTS
 // Comprehensive vitest suite: insufficient_data, inadequate floor, all rating
 // bands, every bonus in isolation, every penalty, all 6 rates, profiles,
 // strengths, concerns, recommendations, insights, and edge cases.

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SAFEGUARDING PARTNERSHIP INTELLIGENCE SERVICE
+// CARA — SAFEGUARDING PARTNERSHIP INTELLIGENCE SERVICE
 // Manages multi-agency safeguarding partnerships, MASH referrals, strategy
 // discussions, Section 47 enquiry outcomes, MARAC conferences, and child
 // protection plan tracking.

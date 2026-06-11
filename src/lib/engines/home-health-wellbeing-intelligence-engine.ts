@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME HEALTH & WELLBEING INTELLIGENCE ENGINE
+// CARA — HOME HEALTH & WELLBEING INTELLIGENCE ENGINE
 // Home-level: synthesises health records across all children to produce an
 // overall health monitoring, referral compliance, and wellbeing intelligence.
 // CHR 2015 Reg 10. SCCIF: "Health", "Experiences and progress."

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HEALTH SCREENING & IMMUNISATION CARD
+// CARA — HEALTH SCREENING & IMMUNISATION CARD
 // Dashboard card powered by the Health & Wellbeing Intelligence Engine.
 // CHR 2015 Reg 23/33. SCCIF: Health & Wellbeing.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -140,13 +140,13 @@ export function HealthScreeningImmunisationCard() {
           </div>
         )}
 
-        {/* ── ARIA Intelligence ───────────────────────────────────────── */}
+        {/* ── Cara Intelligence ───────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Screening Intelligence
+              Cara Screening Intelligence
             </p>
             {intel.insights.slice(0, 2).map((insight, i) => (
               <div

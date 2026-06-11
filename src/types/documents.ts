@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DOCUMENT INTELLIGENCE TYPES
+// CARA — DOCUMENT INTELLIGENCE TYPES
 // ══════════════════════════════════════════════════════════════════════════════
 
 export type DocumentIntelStatus =
@@ -294,7 +294,7 @@ export interface UploadedDocument {
   approved_at: string | null;
   // Extracted text (simulated — in production parsed from actual file)
   extracted_text: string;
-  // AI outputs (set after ARIA processes the document)
+  // AI outputs (set after Cara processes the document)
   ai_result: DocumentAiResult | null;
   // Actions taken
   tasks_created: string[];

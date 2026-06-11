@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ORGANIZATIONAL LEARNING INTELLIGENCE ENGINE
+// CARA — HOME ORGANIZATIONAL LEARNING INTELLIGENCE ENGINE
 // Home-level: aggregates serious incident reviews, critical incident debriefs,
 // service improvements, lessons learned, and practice change culture.
 // CHR 2015 Reg 45: "Review of quality of care."
@@ -349,7 +349,7 @@ export function computeHomeOrganizationalLearning(
     recommendations.push({ rank: ++rank, recommendation: "Review and reset overdue improvement targets — ensure they remain achievable and resourced.", urgency: "soon", regulatory_ref: "Reg 45" });
   }
 
-  // ARIA Insights
+  // Cara Insights
   if (sirActionCompletionRate >= 90 && debriefCompletedRate >= 90 && implementedCount + embeddedCount >= 3 && totalLessons >= 5) {
     insights.push({ text: "Organisational learning is exemplary. Serious incidents drive real practice change, debriefs embed reflection, and service improvements are systematically tracked. Ofsted will recognise this as a hallmark of outstanding leadership.", severity: "positive" });
   }

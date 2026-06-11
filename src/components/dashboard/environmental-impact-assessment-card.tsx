@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ENVIRONMENTAL IMPACT ASSESSMENT CARD
+// CARA — ENVIRONMENTAL IMPACT ASSESSMENT CARD
 // Dashboard card powered by the Premises Safety Intelligence Engine.
 // CHR 2015 Reg 25. Sustainability and environmental responsibility.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -138,13 +138,13 @@ export function EnvironmentalImpactAssessmentCard() {
           </div>
         )}
 
-        {/* ── ARIA Intelligence ──────────────────────────────────────── */}
+        {/* ── Cara Intelligence ──────────────────────────────────────── */}
 
         {(d.insights ?? []).length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Environmental Intelligence
+              Cara Environmental Intelligence
             </p>
             {(d.insights ?? []).slice(0, 2).map((insight, i) => (
               <div

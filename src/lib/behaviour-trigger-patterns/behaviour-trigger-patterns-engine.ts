@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — BEHAVIOUR TRIGGER & ESCALATION PATTERN INTELLIGENCE ENGINE
+// CARA — BEHAVIOUR TRIGGER & ESCALATION PATTERN INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 //
@@ -356,7 +356,7 @@ function buildAlerts(children: ChildBehaviourPattern[]): BehaviourPatternAlert[]
   return alerts;
 }
 
-// ── ARIA insights builder ───────────────────────────────────────────────────
+// ── Cara insights builder ───────────────────────────────────────────────────
 
 function buildInsights(children: ChildBehaviourPattern[], overview: BehaviourPatternOverview): AriaBehaviourInsight[] {
   const insights: AriaBehaviourInsight[] = [];

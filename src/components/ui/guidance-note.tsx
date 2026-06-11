@@ -128,7 +128,7 @@ export function GuidanceNote({
                 <div className="flex items-start gap-2">
                   <Sparkles className="h-3.5 w-3.5 text-[var(--cs-aria-gold)] mt-0.5 shrink-0" />
                   <p className="text-xs text-[var(--cs-text-muted)] leading-relaxed">
-                    <span className="font-medium text-[var(--cs-aria-gold)]">ARIA can help:</span>{" "}
+                    <span className="font-medium text-[var(--cs-aria-gold)]">Cara can help:</span>{" "}
                     {ariaTip}
                   </p>
                 </div>

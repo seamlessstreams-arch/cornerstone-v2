@@ -1,17 +1,17 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — CARE EVENT → SUGGESTED RECORD BRIDGE  (Milestone 12)
+// Cara STUDIO — CARE EVENT → SUGGESTED RECORD BRIDGE  (Milestone 12)
 //
-// When a Care Event is verified, ARIA drafts the matching written record
+// When a Care Event is verified, Cara drafts the matching written record
 // (behaviour note, incident summary, risk update, reflection, etc.) and
 // pushes it into the Suggested Records commit queue (M10). The manager
-// then edits or commits, exactly like any other ARIA suggestion.
+// then edits or commits, exactly like any other Cara suggestion.
 //
 // Idempotent: re-running for the same Care Event will not create a
 // second suggestion of the same record_type — the existing one is
 // returned instead. This keeps the M10 queue clean if a verifier
 // triggers more than once or the bridge is replayed.
 //
-// Spec invariant: ARIA drafts. Humans decide. Only authorised humans
+// Spec invariant: Cara drafts. Humans decide. Only authorised humans
 // approve and commit to the official record.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -29,7 +29,7 @@ import type {
 import { proposeSuggestedRecord } from "@/lib/aria/aria-suggested-records";
 
 /**
- * Care Event category → which written records ARIA should draft on verify.
+ * Care Event category → which written records Cara should draft on verify.
  * A category may map to more than one record type. Daily/general categories
  * are intentionally excluded — the daily log routing already covers them.
  */
@@ -46,11 +46,11 @@ const RECORDS_BY_CATEGORY: Partial<Record<CareEventCategory, AriaSuggestedRecord
 };
 
 /**
- * Build a short ARIA-flavoured body draft from the source Care Event.
+ * Build a short Cara-flavoured body draft from the source Care Event.
  */
 function draftBody(event: CareEvent, recordType: AriaSuggestedRecordType): string {
   const lines: string[] = [];
-  lines.push(`Drafted by ARIA from verified care event "${event.title}" on ${event.event_date}.`);
+  lines.push(`Drafted by Cara from verified care event "${event.title}" on ${event.event_date}.`);
   lines.push("");
   lines.push(event.content);
 
@@ -68,12 +68,12 @@ function draftBody(event: CareEvent, recordType: AriaSuggestedRecordType): strin
   if (recordType === "incident_summary" || recordType === "risk_update") {
     lines.push("");
     lines.push(
-      "ARIA draft only — manager to confirm wording, statutory categorisation and any onward referrals before committing to the official record.",
+      "Cara draft only — manager to confirm wording, statutory categorisation and any onward referrals before committing to the official record.",
     );
   } else {
     lines.push("");
     lines.push(
-      "ARIA draft only — manager to confirm wording before committing to the record.",
+      "Cara draft only — manager to confirm wording before committing to the record.",
     );
   }
 
@@ -126,7 +126,7 @@ export interface BridgeResult {
 }
 
 /**
- * Propose ARIA-drafted suggested records for one Care Event. Idempotent.
+ * Propose Cara-drafted suggested records for one Care Event. Idempotent.
  *
  * @param event       The verified Care Event (or one being verified).
  * @param generatedBy Acting user id (audit trail).
@@ -142,7 +142,7 @@ export function proposeRecordsFromCareEvent(
       proposed: [],
       reused: [],
       skipped: true,
-      reason: `No ARIA suggested records mapped for category '${event.category}'`,
+      reason: `No Cara suggested records mapped for category '${event.category}'`,
     };
   }
 

@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- APPRENTICESHIP & VOCATIONAL TRAINING TRACKING SERVICE
+// CARA -- APPRENTICESHIP & VOCATIONAL TRAINING TRACKING SERVICE
 // Tracks apprenticeship exploration, applications, enrolment, progress reviews,
 // employer liaison, bursary applications, qualification achievements, pastoral
 // support, and drop-out risk for looked-after young people.

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Visitor Management Safety Intelligence — Public API
+// Cara Visitor Management Safety Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

@@ -3,7 +3,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // AriaAdminStatusPanel
 //
-// Admin-level ARIA configuration status panel. Shows detailed system health
+// Admin-level Cara configuration status panel. Shows detailed system health
 // for privileged roles (registered_manager, responsible_individual, admin)
 // and a simple "being set up" message for everyone else.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -81,12 +81,12 @@ export function AriaAdminStatusPanel() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          message: "Respond with: Aria is operational.",
+          message: "Respond with: Cara is operational.",
           conversationId: `test_${Date.now()}`,
         }),
       });
       if (!res.ok) throw new Error(`Test failed (${res.status})`);
-      setTestResult("Aria responded successfully.");
+      setTestResult("Cara responded successfully.");
     } catch (err) {
       setTestResult(
         `Test failed: ${err instanceof Error ? err.message : "Unknown error"}`,
@@ -103,13 +103,13 @@ export function AriaAdminStatusPanel() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-base">
             <Sparkles className="h-4 w-4 text-[var(--cs-aria-gold)]" />
-            Aria Status
+            Cara Status
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="rounded-lg border border-amber-200 bg-amber-50 p-3">
             <p className="text-xs font-medium text-amber-800">
-              Aria is being set up by your administrator.
+              Cara is being set up by your administrator.
             </p>
           </div>
         </CardContent>
@@ -124,7 +124,7 @@ export function AriaAdminStatusPanel() {
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2 text-base">
             <Sparkles className="h-4 w-4 text-[var(--cs-aria-gold)]" />
-            Aria Configuration Status
+            Cara Configuration Status
           </CardTitle>
           <Button
             size="sm"
@@ -224,7 +224,7 @@ export function AriaAdminStatusPanel() {
                 {testLoading ? (
                   <><RefreshCw className="h-3 w-3 animate-spin" />Testing...</>
                 ) : (
-                  <><Sparkles className="h-3 w-3" />Test Aria</>
+                  <><Sparkles className="h-3 w-3" />Test Cara</>
                 )}
               </Button>
 

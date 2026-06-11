@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — KEY WORK SESSION QUALITY
+// Cara — KEY WORK SESSION QUALITY
 //
 // Analyses key work session records to surface:
 //   - Frequency compliance (are sessions happening regularly?)

@@ -3,8 +3,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // AriaApprovalCard
 //
-// Card that shows an ARIA draft with approve/reject/edit controls.
-// Used in the ARIA review queue and wherever drafts need manager sign-off.
+// Card that shows an Cara draft with approve/reject/edit controls.
+// Used in the Cara review queue and wherever drafts need manager sign-off.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState } from "react";

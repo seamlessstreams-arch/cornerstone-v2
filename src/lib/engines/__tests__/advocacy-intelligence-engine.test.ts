@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ADVOCACY & CHILDREN'S RIGHTS INTELLIGENCE ENGINE TESTS
+// CARA — ADVOCACY & CHILDREN'S RIGHTS INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite for advocacy referral analysis.
 // Covers Reg 7 children's wishes, Reg 14 needs assessment, Reg 45 quality
 // of care review, and Children Act 1989 s26 advocacy for LAC.

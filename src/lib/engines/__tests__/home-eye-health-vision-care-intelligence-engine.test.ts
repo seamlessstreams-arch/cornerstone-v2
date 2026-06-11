@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME EYE HEALTH & VISION CARE INTELLIGENCE ENGINE TESTS
+// CARA — HOME EYE HEALTH & VISION CARE INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite covering insufficient_data, inadequate floor,
 // all rating bands, each bonus in isolation, each penalty, all 6 composite
 // rates, strengths, concerns, recommendations, insights, and edge cases.

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ELECTRICITY & GAS SAFETY INTELLIGENCE API ROUTE
+// CARA — HOME ELECTRICITY & GAS SAFETY INTELLIGENCE API ROUTE
 // GET /api/v1/home-electricity-gas-safety-intelligence
 // Cross-domain composite: patTestingRecords + gasCertificateRecords +
 // electricalInspectionRecords + coDetectorRecords + childSafetyRecords

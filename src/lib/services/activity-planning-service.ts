@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ACTIVITY PLANNING SERVICE
+// CARA — ACTIVITY PLANNING SERVICE
 // Manages recreational, leisure, cultural, and educational activities
 // for children and young people.
 // CHR 2015 Reg 9 (enjoyment and achievement),

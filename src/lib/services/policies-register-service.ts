@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — POLICIES & PROCEDURES REGISTER SERVICE
+// CARA — POLICIES & PROCEDURES REGISTER SERVICE
 // Manages the home's policy register, staff acknowledgements, and review
 // history under CHR 2015 Reg 38 (policies and procedures). Cross-references
 // Reg 12 (safeguarding), Reg 19 (behaviour management), Reg 20 (restraint),

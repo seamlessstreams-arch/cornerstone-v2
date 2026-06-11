@@ -1,10 +1,10 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — MANAGEMENT OVERSIGHT ENGINE
+// Cara — MANAGEMENT OVERSIGHT ENGINE
 //
 // Analyses completed care records and produces a draft management oversight
 // review for Registered Managers, Deputies and Responsible Individuals.
 //
-// All output is "Aria suggested draft" — never final until a human approves.
+// All output is "Cara suggested draft" — never final until a human approves.
 //
 // Pipeline:
 //   1. Deterministic record analysis (rule-based, audit-traceable)
@@ -101,7 +101,7 @@ export interface OversightReview {
   recordType: RecordType;
   generatedAt: string;
   status: "draft";
-  ariaLabel: "Aria suggested draft";
+  ariaLabel: "Cara suggested draft";
 
   oversightDraft: string;
   ofstedSummary: string;
@@ -641,7 +641,7 @@ function buildTemplatedDraft(input: OversightInput, partial: {
 
   const paragraphs: string[] = [];
 
-  paragraphs.push(`Aria suggested draft. Management oversight of the ${recordTypeLabel} for ${child}.`);
+  paragraphs.push(`Cara suggested draft. Management oversight of the ${recordTypeLabel} for ${child}.`);
 
   paragraphs.push(
     `I have read the record${dateLine}. On the evidence presented, the assessed risk sits at ${partial.riskLevel} and the practice on show reads as ${partial.practiceJudgement.replace(/_/g, " ")}. I have set that out below alongside what I think the team has done well, what is missing, and what I expect to happen next.`,
@@ -688,7 +688,7 @@ function buildTemplatedDraft(input: OversightInput, partial: {
   }
 
   paragraphs.push(
-    `Next steps for me. I will revisit this record in the next supervision and confirm the actions set above have been completed. This wording is an Aria suggested draft. It must be reviewed, edited, and approved by the Registered Manager before it forms part of the regulatory record.`,
+    `Next steps for me. I will revisit this record in the next supervision and confirm the actions set above have been completed. This wording is an Cara suggested draft. It must be reviewed, edited, and approved by the Registered Manager before it forms part of the regulatory record.`,
   );
 
   const oversightDraft = applyAriaPostprocessor(paragraphs.join("\n\n"));
@@ -726,12 +726,12 @@ async function enhanceWithLlm(
   if (!hasGateway && !hasAnthropicKey) return null;
 
   const system = [
-    `You are Aria, the intelligent professional assistant built into Cornerstone, the operating system for UK residential children's homes. You are drafting a management oversight comment for a Registered Manager to review and approve.`,
+    `You are Cara, the intelligent professional assistant built into Cara, the operating system for UK residential children's homes. You are drafting a management oversight comment for a Registered Manager to review and approve.`,
     ``,
     ARIA_PROFESSIONAL_IDENTITY_PROMPT,
     ``,
     `Hard rules for this draft:`,
-    `- Label the wording clearly as an Aria suggested draft.`,
+    `- Label the wording clearly as an Cara suggested draft.`,
     `- Reflective, evidence-based, accountable. Do not duplicate the record narrative. Comment on it.`,
     `- Use only what the record provides. Do not invent facts.`,
     `- No blame-based language about staff or the child.`,
@@ -761,7 +761,7 @@ async function enhanceWithLlm(
     ``,
     `Return ONLY a JSON object — no prose, no code fences:`,
     `{`,
-    `  "oversightDraft": string  // 4-8 sentence reflective Registered Manager draft, labelled "Aria suggested draft" at the start`,
+    `  "oversightDraft": string  // 4-8 sentence reflective Registered Manager draft, labelled "Cara suggested draft" at the start`,
     `  "ofstedSummary": string   // single-paragraph Ofsted-ready summary`,
     `}`,
   ]
@@ -860,7 +860,7 @@ export async function analyseRecord(input: OversightInput): Promise<OversightRev
     recordType: input.recordType,
     generatedAt: new Date().toISOString(),
     status: "draft",
-    ariaLabel: "Aria suggested draft",
+    ariaLabel: "Cara suggested draft",
     oversightDraft: templated.oversightDraft,
     ofstedSummary: templated.ofstedSummary,
     qualityScore,

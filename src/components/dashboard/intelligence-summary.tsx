@@ -44,7 +44,7 @@ function useIntelligenceSummary() {
     if (daysSince > 30) overdue.push(`Fire drill — last completed ${daysSince} days ago`);
   }
 
-  // Aria says
+  // Cara says
   const topConcern = needsAttention[0]?.text ?? "";
   const topPositive = goingWell[0] ?? "";
   const ariaSays = topConcern && topPositive
@@ -127,7 +127,7 @@ export function IntelligenceSummary() {
           </div>
         )}
 
-        {/* Aria says */}
+        {/* Cara says */}
         <div className="rounded-xl bg-[var(--cs-aria-gold-bg)] border border-[var(--cs-aria-gold-soft)] p-3 flex items-start gap-2">
           <Sparkles className="h-4 w-4 text-[var(--cs-aria-gold)] shrink-0 mt-0.5" />
           <p className="text-xs text-[var(--cs-text-secondary)] italic">{data.ariaSays}</p>

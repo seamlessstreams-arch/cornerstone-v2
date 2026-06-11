@@ -62,7 +62,7 @@ const MODE_COLORS: Partial<Record<AriaMode, string>> & Record<string, string> = 
   document_to_form:  "text-teal-600 bg-teal-50",
 };
 
-// ── Aria Panel ────────────────────────────────────────────────────────────────
+// ── Cara Panel ────────────────────────────────────────────────────────────────
 
 export function AriaPanel({
   mode: defaultMode = "assist",
@@ -128,7 +128,7 @@ export function AriaPanel({
             <Sparkles className="h-3.5 w-3.5 text-white" />
           </div>
           <div>
-            <div className="text-sm font-bold text-slate-900">Aria</div>
+            <div className="text-sm font-bold text-slate-900">Cara</div>
             <div className="text-[10px] text-slate-500">AI workflow assistant</div>
           </div>
         </div>
@@ -192,11 +192,11 @@ export function AriaPanel({
           {/* Prompt input */}
           <div>
             <label className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">
-              {mode === "write"             ? "What would you like Aria to write?" :
+              {mode === "write"             ? "What would you like Cara to write?" :
                mode === "review"            ? "Any specific concerns to check?" :
-               mode === "oversee"           ? "What should Aria focus on?" :
+               mode === "oversee"           ? "What should Cara focus on?" :
                mode === "document_classify" ? "Any specific focus for classification?" :
-               mode === "document_to_form"  ? "Which form type should Aria create?" :
+               mode === "document_to_form"  ? "Which form type should Cara create?" :
                "What do you need help with?"}
             </label>
             <div className="relative">
@@ -231,7 +231,7 @@ export function AriaPanel({
           {/* Context indicator */}
           {(sourceContent || linkedRecords) && (
             <div className="rounded-xl bg-slate-50 border border-slate-200 px-3 py-2">
-              <div className="text-[10px] text-slate-500 font-medium">Aria can see</div>
+              <div className="text-[10px] text-slate-500 font-medium">Cara can see</div>
               <div className="flex flex-wrap gap-1.5 mt-1">
                 {sourceContent && (
                   <Badge className="text-[9px] rounded-full bg-blue-100 text-blue-700 border-0">Source record</Badge>
@@ -252,9 +252,9 @@ export function AriaPanel({
             size="sm"
           >
             {isStreaming ? (
-              <><RefreshCw className="h-3.5 w-3.5 mr-2 animate-spin" />Aria is writing...</>
+              <><RefreshCw className="h-3.5 w-3.5 mr-2 animate-spin" />Cara is writing...</>
             ) : (
-              <><Sparkles className="h-3.5 w-3.5 mr-2" />Ask Aria</>
+              <><Sparkles className="h-3.5 w-3.5 mr-2" />Ask Cara</>
             )}
           </Button>
 
@@ -262,7 +262,7 @@ export function AriaPanel({
           {(response !== null && response !== "") && (
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Aria&apos;s response</div>
+                <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Cara&apos;s response</div>
                 <div className="flex items-center gap-1.5">
                   {isStreaming && (
                     <button
@@ -299,7 +299,7 @@ export function AriaPanel({
               </div>
               <div className="flex items-start gap-1.5 text-[10px] text-slate-400">
                 <AlertTriangle className="h-3 w-3 shrink-0 mt-0.5" />
-                <span>Always review before use. Aria uses only the information you provided — never fabricates facts.</span>
+                <span>Always review before use. Cara uses only the information you provided — never fabricates facts.</span>
               </div>
             </div>
           )}
@@ -309,7 +309,7 @@ export function AriaPanel({
   );
 }
 
-// ── Aria Floating Button (for pages that want a minimised trigger) ─────────────
+// ── Cara Floating Button (for pages that want a minimised trigger) ─────────────
 
 export function AriaFloatingTrigger({ onClick }: { onClick: () => void }) {
   return (
@@ -318,7 +318,7 @@ export function AriaFloatingTrigger({ onClick }: { onClick: () => void }) {
       className="fixed bottom-6 right-6 z-50 flex items-center gap-2 rounded-2xl bg-violet-600 px-4 py-3 text-white shadow-xl hover:bg-violet-700 transition-all hover:scale-105"
     >
       <Sparkles className="h-4 w-4" />
-      <span className="text-sm font-semibold">Aria</span>
+      <span className="text-sm font-semibold">Cara</span>
     </button>
   );
 }

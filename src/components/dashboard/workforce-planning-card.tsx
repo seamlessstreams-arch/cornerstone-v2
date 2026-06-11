@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — WORKFORCE INTELLIGENCE CARD
+// CARA — WORKFORCE INTELLIGENCE CARD
 // Dashboard card for staffing profile, DBS compliance, training status,
-// shift coverage, supervision compliance, and ARIA workforce intelligence.
+// shift coverage, supervision compliance, and Cara workforce intelligence.
 // Powered by the Workforce Intelligence Engine — live data (Reg 33/34).
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -204,13 +204,13 @@ export function WorkforcePlanningCard() {
           </div>
         )}
 
-        {/* ── ARIA Workforce Intelligence ──────────────────────────────── */}
+        {/* ── Cara Workforce Intelligence ──────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Workforce Intelligence
+              Cara Workforce Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

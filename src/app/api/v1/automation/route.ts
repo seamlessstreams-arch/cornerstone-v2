@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — AUTOMATION ENGINE API ROUTE
+// CARA — AUTOMATION ENGINE API ROUTE
 // GET /api/v1/automation
 // Returns all automation rules (default + custom) with run counts and status.
 // ══════════════════════════════════════════════════════════════════════════════

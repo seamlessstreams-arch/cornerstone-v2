@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Restorative Practice Intelligence API Route
+// Cara — Restorative Practice Intelligence API Route
 //
 // GET  → returns Chamberlain House demo intelligence
 // POST → accepts custom data for any home

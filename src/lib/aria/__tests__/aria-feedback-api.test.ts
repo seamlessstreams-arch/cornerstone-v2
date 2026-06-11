@@ -104,6 +104,6 @@ describe("sanitiseNote", () => {
   });
 
   it("preserves short notes exactly", () => {
-    expect(sanitiseNote("ARIA was very helpful here")).toBe("ARIA was very helpful here");
+    expect(sanitiseNote("Cara was very helpful here")).toBe("Cara was very helpful here");
   });
 });

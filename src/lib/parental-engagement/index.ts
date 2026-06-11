@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Parental Engagement Intelligence — Public API
+// Cara Parental Engagement Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

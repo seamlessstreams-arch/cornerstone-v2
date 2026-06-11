@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME RECORD KEEPING & DOCUMENTATION QUALITY INTELLIGENCE ENGINE
+// CARA -- HOME RECORD KEEPING & DOCUMENTATION QUALITY INTELLIGENCE ENGINE
 // Tracks the quality, completeness, and timeliness of care records -- daily logs,
 // care plans, risk assessments, incident reports, and regulatory documentation.
 // Critical for Ofsted under Children's Homes Regulations 2015 (Reg 36 review of

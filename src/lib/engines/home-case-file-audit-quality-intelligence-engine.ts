@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME CASE FILE AUDIT & QUALITY INTELLIGENCE ENGINE
+// CARA — HOME CASE FILE AUDIT & QUALITY INTELLIGENCE ENGINE
 // Tracks case file audit quality, handover audits, policy currency, and Ofsted
 // engagement preparedness to ensure robust internal quality assurance.
 // Pure deterministic engine. CHR 2015 Reg 40/45.

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA ORCHESTRATOR — COMPREHENSIVE TESTS
+// Cara ORCHESTRATOR — COMPREHENSIVE TESTS
 //
 // Tests the full orchestration pipeline: routing, risk classification, safety
 // governor, model registry, permissions, response formatting, and cost tracking.

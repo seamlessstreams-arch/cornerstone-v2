@@ -15,9 +15,9 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
     return NextResponse.json({ error: "Incident not found" }, { status: 404 });
   }
 
-  // Track time saved (Aria draft used)
+  // Track time saved (Cara draft used)
   if (body.aria_assisted) {
-    // Log Aria-assisted time saving
+    // Log Cara-assisted time saving
   }
 
   return NextResponse.json({ data: updated, message: "Oversight recorded" });

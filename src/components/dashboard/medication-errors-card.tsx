@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MEDICATION ERRORS INTELLIGENCE CARD
+// CARA — MEDICATION ERRORS INTELLIGENCE CARD
 // Dashboard card for medication error tracking and investigation.
 // CHR 2015 Reg 23, Reg 40. Duty of Candour.
 // SCCIF: Helped & Protected — "Medication is managed safely."
@@ -190,13 +190,13 @@ export function MedicationErrorsCard() {
           </div>
         )}
 
-        {/* ── ARIA Medication Safety Intelligence ─────────────────────── */}
+        {/* ── Cara Medication Safety Intelligence ─────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Medication Safety Intelligence
+              Cara Medication Safety Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — COMPLIANCE CERTIFICATE TRACKING SERVICE TESTS
+// CARA — COMPLIANCE CERTIFICATE TRACKING SERVICE TESTS
 // Pure-function tests for compliance certificate metrics, alert identification,
-// ARIA insight generation, and edge cases.
+// Cara insight generation, and edge cases.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";

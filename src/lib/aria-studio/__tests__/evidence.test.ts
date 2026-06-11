@@ -3,7 +3,7 @@ import { assessEvidence, calculateOverallConfidence } from "../evidence.service"
 import type { AriaStudioSource } from "@/types/aria-studio";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — EVIDENCE SERVICE TESTS
+// Cara STUDIO — EVIDENCE SERVICE TESTS
 // ══════════════════════════════════════════════════════════════════════════════
 
 function makeSource(overrides: Partial<AriaStudioSource> = {}): AriaStudioSource {

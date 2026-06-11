@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// API — ARIA Formulation status updates
+// API — Cara Formulation status updates
 // PATCH → in_review / approved / rejected (RBAC: aria.approve_outputs)
 // ══════════════════════════════════════════════════════════════════════════════
 

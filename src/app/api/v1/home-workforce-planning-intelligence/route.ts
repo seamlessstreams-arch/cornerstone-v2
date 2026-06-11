@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME WORKFORCE PLANNING INTELLIGENCE API ROUTE
+// CARA — HOME WORKFORCE PLANNING INTELLIGENCE API ROUTE
 // GET /api/v1/home-workforce-planning-intelligence
 // Synthesises staff composition, succession readiness, vacancy coverage,
 // induction completion, and workforce stability.

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EDUCATION ATTENDANCE TRACKING SERVICE
+// CARA — EDUCATION ATTENDANCE TRACKING SERVICE
 // Tracks school attendance, exclusions, absence reasons, and
 // educational engagement for children in residential care.
 // CHR 2015 Reg 8 (education — promoting attendance),

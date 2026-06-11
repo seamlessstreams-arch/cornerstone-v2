@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EMERGENCY PREPAREDNESS INTELLIGENCE HOOK
+// CARA — EMERGENCY PREPAREDNESS INTELLIGENCE HOOK
 // React Query wrapper for /api/v1/emergency-intelligence
 // ══════════════════════════════════════════════════════════════════════════════
 

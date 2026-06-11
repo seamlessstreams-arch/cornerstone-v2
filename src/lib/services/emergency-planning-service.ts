@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EMERGENCY PLANNING & BUSINESS CONTINUITY SERVICE
+// CARA — EMERGENCY PLANNING & BUSINESS CONTINUITY SERVICE
 // Manages emergency procedures, fire drill records, evacuation plans,
 // emergency contacts, business continuity plans, and contingency protocols.
 // Reg 22 (arrangements when child not in home), Reg 25 (premises),

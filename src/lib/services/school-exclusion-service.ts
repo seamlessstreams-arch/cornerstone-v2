@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- SCHOOL EXCLUSION & ALTERNATIVE PROVISION SERVICE
+// CARA -- SCHOOL EXCLUSION & ALTERNATIVE PROVISION SERVICE
 // Tracks school exclusions (fixed-term, permanent, informal/illegal), alternative
 // provision arrangements, managed moves, Virtual School Head notifications,
 // reintegration planning, advocacy, and child/parent views for looked-after children.

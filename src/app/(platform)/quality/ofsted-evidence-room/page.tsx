@@ -47,7 +47,7 @@ import type {
 } from "@/types/intelligence.layer";
 
 /* ══════════════════════════════════════════════════════════════════════════════
-   CORNERSTONE — OFSTED EVIDENCE ROOM
+   CARA — OFSTED EVIDENCE ROOM
    Organised evidence for inspection readiness. Calm, professional interface.
    ══════════════════════════════════════════════════════════════════════════════ */
 

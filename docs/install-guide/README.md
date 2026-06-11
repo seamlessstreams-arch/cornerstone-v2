@@ -1,20 +1,20 @@
-# Cornerstone — Install Guide kit
+# Cara — Install Guide kit
 
-Print-and-share materials for getting Cornerstone onto staff phones, tablets and
-computers. Cornerstone is an installable web app (PWA) — **no App Store download**.
+Print-and-share materials for getting Cara onto staff phones, tablets and
+computers. Cara is an installable web app (PWA) — **no App Store download**.
 
-**Live address:** https://cornerstone-v2-fresh.vercel.app
+**Live address:** https://cara-os-fresh.vercel.app
 
 ## What's in here
 | File | Use |
 |---|---|
-| `Cornerstone-Install-Guide.pdf` | One-page printable guide (with QR code) for noticeboards / onboarding |
-| `Cornerstone-Install-Guide.docx` | Editable Word version of the same guide |
+| `Cara-Install-Guide.pdf` | One-page printable guide (with QR code) for noticeboards / onboarding |
+| `Cara-Install-Guide.docx` | Editable Word version of the same guide |
 | `cornerstone-install-qr.png` | Standalone QR code (800px) for posters, the wifi sign, email signatures |
 
 Regenerate the PDF + QR any time:
 ```bash
-node scripts/generate-install-guide.mjs        # → Cornerstone-Install-Guide.pdf
+node scripts/generate-install-guide.mjs        # → Cara-Install-Guide.pdf
 ```
 (uses `qrcode` + `playwright`, both in devDependencies)
 
@@ -24,7 +24,7 @@ node scripts/generate-install-guide.mjs        # → Cornerstone-Install-Guide.p
 
 **Android** — use **Chrome**: open the address → **Install app** prompt (or **⋮ → Install app**) → **Install**.
 
-**Mac / Windows** — **Chrome or Edge**: open the address → **install icon** in the address bar (or **⋮ → Install Cornerstone…**).
+**Mac / Windows** — **Chrome or Edge**: open the address → **install icon** in the address bar (or **⋮ → Install Cara…**).
 
 ## Good to know
 - Free — no account or app store needed.

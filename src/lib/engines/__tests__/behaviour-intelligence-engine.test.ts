@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — BEHAVIOUR INTELLIGENCE ENGINE TESTS
+// CARA — BEHAVIOUR INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite: unit + integration
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -740,7 +740,7 @@ describe("computeBehaviourIntelligence — alerts", () => {
 
 // ── computeBehaviourIntelligence — Insights ─────────────────────────────────
 
-describe("computeBehaviourIntelligence — ARIA insights", () => {
+describe("computeBehaviourIntelligence — Cara insights", () => {
   it("generates positive de-escalation insight when rate >= 75%", () => {
     const result = computeBehaviourIntelligence({
       behaviourEntries: [
@@ -933,7 +933,7 @@ describe("computeBehaviourIntelligence — Chamberlain House integration", () =>
     expect(piAlert!.message).toContain("Alex W");
   });
 
-  it("generates multiple ARIA insights", () => {
+  it("generates multiple Cara insights", () => {
     const result = computeBehaviourIntelligence(oakHouseInput);
 
     expect(result.insights.length).toBeGreaterThanOrEqual(2);

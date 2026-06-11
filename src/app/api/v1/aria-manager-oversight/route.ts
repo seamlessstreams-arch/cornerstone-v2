@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ARIA MANAGER OVERSIGHT API (slice C)
+// CARA — Cara MANAGER OVERSIGHT API (slice C)
 // GET  /api/v1/aria-manager-oversight
 //        → live-derived alerts (with resolve/dismiss state), AI-assisted records
 //          awaiting approval, pattern insights, summary

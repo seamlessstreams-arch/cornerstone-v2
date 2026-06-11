@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ENVIRONMENTAL SAFETY SERVICE
+// CARA — ENVIRONMENTAL SAFETY SERVICE
 // Manages fire safety, legionella checks, electrical safety, gas safety,
 // PAT testing, COSHH, environmental risk assessments, and premises compliance.
 // CHR 2015 Reg 25 (premises safety and suitability),

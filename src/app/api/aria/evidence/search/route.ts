@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // API: POST /api/aria/evidence/search — Semantic evidence search
 //
-// Search across all Cornerstone records using embeddings and reranking.
+// Search across all Cara records using embeddings and reranking.
 // Respects role permissions and organisation boundaries.
 // ══════════════════════════════════════════════════════════════════════════════
 

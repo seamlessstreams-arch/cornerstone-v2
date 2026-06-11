@@ -18,7 +18,7 @@ function makeRecord(overrides: Partial<StaffPatternInsightRecord> = {}): StaffPa
     confidence_level: "high",
     insight_status: "reviewed",
     session_date: "2026-04-01",
-    identified_by: "ARIA",
+    identified_by: "Cara",
     title: "Strong engagement pattern",
     description: "Consistently high quality engagement",
     evidence_summary: "Multiple daily log entries",

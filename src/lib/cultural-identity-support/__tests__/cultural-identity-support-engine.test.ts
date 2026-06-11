@@ -1,5 +1,5 @@
 // ==============================================================================
-// Cornerstone Cultural Identity Support Intelligence — Engine Tests
+// Cara Cultural Identity Support Intelligence — Engine Tests
 // ==============================================================================
 
 import { describe, it, expect } from "vitest";

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME RECORD KEEPING & DOCUMENTATION QUALITY INTELLIGENCE ENGINE — TESTS
+// CARA — HOME RECORD KEEPING & DOCUMENTATION QUALITY INTELLIGENCE ENGINE — TESTS
 //
 // Comprehensive test suite for the record keeping documentation quality engine.
 // CHR 2015 Reg 36 (Review of quality of care), Reg 37-40 (Records/notifications).

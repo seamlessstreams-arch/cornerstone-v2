@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA Agent Learning & Cost Reduction Layer — Public API
+// Cara Agent Learning & Cost Reduction Layer — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

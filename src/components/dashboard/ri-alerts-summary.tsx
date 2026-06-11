@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RI ALERTS SUMMARY WIDGET
+// CARA — RI ALERTS SUMMARY WIDGET
 // Dashboard card showing active governance/compliance alerts at a glance.
 // Highlights critical alerts requiring immediate attention.
 // ══════════════════════════════════════════════════════════════════════════════

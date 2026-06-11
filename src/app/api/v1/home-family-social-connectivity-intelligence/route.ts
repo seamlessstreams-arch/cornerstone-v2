@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME FAMILY & SOCIAL CONNECTIVITY INTELLIGENCE API ROUTE
+// CARA — HOME FAMILY & SOCIAL CONNECTIVITY INTELLIGENCE API ROUTE
 // GET /api/v1/home-family-social-connectivity-intelligence
 // Cross-domain composite: familyTimeSessions + contactPlans +
 // parentPartnershipRecords + socialWorkerContactRecords + siblingContactProtocolRecords

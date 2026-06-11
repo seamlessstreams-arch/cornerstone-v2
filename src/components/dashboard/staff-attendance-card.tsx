@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF ATTENDANCE & STAFFING INTELLIGENCE CARD
+// CARA — STAFF ATTENDANCE & STAFFING INTELLIGENCE CARD
 // Dashboard card for shift coverage, overtime, agency usage, and supervision.
 // Powered by the Workforce Intelligence Engine — live data.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -150,13 +150,13 @@ export function StaffAttendanceCard() {
           )}
         </div>
 
-        {/* ── ARIA insights ───────────────────────────────────────────── */}
+        {/* ── Cara insights ───────────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Attendance Intelligence
+              Cara Attendance Intelligence
             </p>
             {intel.insights.map((insight, i) => (
               <div

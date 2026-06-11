@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HEALTH & WELLBEING API ROUTE
+// CARA — HEALTH & WELLBEING API ROUTE
 // GET /api/v1/health-wellbeing
 // Returns health compliance, wellbeing trends, CAMHS, appointments analysis.
 // Reg 23 — Health of children.

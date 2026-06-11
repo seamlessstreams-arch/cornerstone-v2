@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MEDICATION ERROR TRENDS HOOK
+// CARA — MEDICATION ERROR TRENDS HOOK
 // React Query wrapper for /api/v1/medication-error-trends
 // ══════════════════════════════════════════════════════════════════════════════
 

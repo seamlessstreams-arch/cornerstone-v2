@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — INCIDENT ANALYTICS HOOK
+// CARA — INCIDENT ANALYTICS HOOK
 // React Query wrapper for /api/v1/incident-analytics
 // ══════════════════════════════════════════════════════════════════════════════
 

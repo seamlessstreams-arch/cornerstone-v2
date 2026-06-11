@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — COMPLAINT RESOLUTION TRACKING SERVICE
+// CARA — COMPLAINT RESOLUTION TRACKING SERVICE
 // Tracks complaint resolutions, timelines, outcomes, and
 // complainant satisfaction through the resolution process.
 // CHR 2015 Reg 39 (complaints — handling and resolution),

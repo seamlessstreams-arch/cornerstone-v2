@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Aria Intelligence — Role-Based Access Control for AI Features
+// Cara Intelligence — Role-Based Access Control for AI Features
 //
 // Enforces which roles can access which AI capabilities.
-// Integrated with Cornerstone RBAC system.
+// Integrated with Cara RBAC system.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import type { AriaRole, AriaTaskType, AriaRiskLevel } from "../core/types";

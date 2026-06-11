@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME KEY WORKING INTELLIGENCE ENGINE
+// CARA — HOME KEY WORKING INTELLIGENCE ENGINE
 // Home-level: synthesises key working sessions across all children to
 // produce an overall key working quality and coverage intelligence score.
 // CHR 2015 Reg 14, 44. SCCIF: "Experiences and progress of children."

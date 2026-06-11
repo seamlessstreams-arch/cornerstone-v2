@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PROFESSIONAL DEVELOPMENT SERVICE TESTS
+// CARA — PROFESSIONAL DEVELOPMENT SERVICE TESTS
 // Pure-function unit tests for CPD metrics computation, development alert
 // identification, constant validation, and CRUD fallback behaviour.
 // ══════════════════════════════════════════════════════════════════════════════

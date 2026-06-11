@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD RISK PROFILE INTELLIGENCE ENGINE
+// CARA — CHILD RISK PROFILE INTELLIGENCE ENGINE
 // Per-child engine analysing risk assessments across domains,
 // risk trajectory, mitigation effectiveness, review compliance,
 // and whether risks are being actively managed and reducing.
@@ -420,7 +420,7 @@ export function computeChildRiskProfile(
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
   const insights: RiskInsight[] = [];
 
   if (management_rating === "inadequate") {

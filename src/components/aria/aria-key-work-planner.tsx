@@ -66,7 +66,7 @@ function getDemoKeyWorkPlan(): KeyWorkPlan {
     childId: "yp_001",
     lastSessionDate: "2026-04-28",
     daysSinceLastSession: 14,
-    regulatoryContext: "Reg 6 requires children are enabled to express views about their care. Reg 14 requires key work to evidence care plan progress. ARIA has identified 3 priority topics based on recent events.",
+    regulatoryContext: "Reg 6 requires children are enabled to express views about their care. Reg 14 requires key work to evidence care plan progress. Cara has identified 3 priority topics based on recent events.",
     prepChecklist: [
       "Review recent incident reports (3 in last 14 days)",
       "Check current behaviour support plan targets",
@@ -203,7 +203,7 @@ export function AriaKeyWorkPlanner() {
         </div>
       </div>
 
-      {/* ARIA context */}
+      {/* Cara context */}
       <div className="px-4 py-3 border-b border-[var(--cs-border)] bg-[var(--cs-aria-gold-bg)]/30">
         <div className="flex items-start gap-2">
           <Sparkles className="h-3.5 w-3.5 text-[var(--cs-aria-gold)] mt-0.5 shrink-0" />

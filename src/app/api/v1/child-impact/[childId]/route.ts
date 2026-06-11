@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD IMPACT API ROUTE
+// CARA — CHILD IMPACT API ROUTE
 // GET /api/v1/child-impact/[childId]
 // Returns a ChildImpactView for a specific child — holistic 10-domain impact
 // assessment covering risk, care planning, behaviour, education, health,

@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PREMISES & SAFETY INTELLIGENCE ENGINE · TEST SUITE
+// CARA — PREMISES & SAFETY INTELLIGENCE ENGINE · TEST SUITE
 //
 // 60+ tests covering overview, building profiles, check type analysis,
-// maintenance analysis, vehicle profiles, alerts, ARIA insights, and
+// maintenance analysis, vehicle profiles, alerts, Cara insights, and
 // Chamberlain House integration.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -647,9 +647,9 @@ describe("alerts", () => {
   });
 });
 
-// ── ARIA Insights ─────────────────────────────────────────────────────────
+// ── Cara Insights ─────────────────────────────────────────────────────────
 
-describe("ARIA insights", () => {
+describe("Cara insights", () => {
   it("critical: expired certifications", () => {
     const b = makeBuilding({ gas_cert_expiry: "2026-01-01" });
     const r = run({ buildings: [b] });
@@ -842,7 +842,7 @@ describe("Chamberlain House integration scenario", () => {
     // Medium: urgent gate lock maintenance
     expect(r.alerts.some((a) => a.severity === "medium" && a.message.includes("gate lock"))).toBe(true);
 
-    // ── ARIA Insights ─────────────────────────────────────────────────
+    // ── Cara Insights ─────────────────────────────────────────────────
     // Fire safety compliant → positive
     expect(r.insights.some((i) => i.severity === "positive" && i.text.includes("Fire safety compliance confirmed"))).toBe(true);
 

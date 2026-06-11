@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — YOUNG PEOPLE AT-A-GLANCE STRIP
+// CARA — YOUNG PEOPLE AT-A-GLANCE STRIP
 // Dashboard widget showing each child's current status at a glance.
 // Key worker, risk flags, last log, active meds, open incidents.
 // ══════════════════════════════════════════════════════════════════════════════

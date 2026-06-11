@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// API — ARIA Early Warnings
+// API — Cara Early Warnings
 // GET   → list warnings (filterable by status/severity)
 // PATCH → acknowledge / escalate / close (RBAC: aria.approve_outputs)
 // ══════════════════════════════════════════════════════════════════════════════

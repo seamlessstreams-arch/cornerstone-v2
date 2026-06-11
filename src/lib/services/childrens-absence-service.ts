@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILDREN'S ABSENCE SERVICE
+// CARA — CHILDREN'S ABSENCE SERVICE
 // Tracks school absences, authorised/unauthorised absences, patterns,
 // interventions, and educational engagement for looked-after children.
 // CHR 2015 Reg 8 (education — promoting educational achievement),

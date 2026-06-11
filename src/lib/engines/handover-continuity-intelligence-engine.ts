@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HANDOVER CONTINUITY INTELLIGENCE ENGINE
+// CARA — HANDOVER CONTINUITY INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses shift handover quality: completion rates, sign-off compliance,
@@ -342,7 +342,7 @@ export function computeHandoverContinuityIntelligence(
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
   const insights: AriaHandoverInsight[] = [];
 
   // Critical: incomplete handovers

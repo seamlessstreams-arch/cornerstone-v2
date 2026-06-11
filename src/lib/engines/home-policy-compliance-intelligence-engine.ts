@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME POLICY COMPLIANCE INTELLIGENCE ENGINE
+// CARA — HOME POLICY COMPLIANCE INTELLIGENCE ENGINE
 // Home-level: analyses policy currency, staff acknowledgement rates,
 // regulatory coverage, and governance to assess policy management.
 // CHR 2015 Reg 35, Reg 16. SCCIF: "Well-led and managed."

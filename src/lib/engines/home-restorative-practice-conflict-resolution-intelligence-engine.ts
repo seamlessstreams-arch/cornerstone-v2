@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME RESTORATIVE PRACTICE & CONFLICT RESOLUTION INTELLIGENCE ENGINE
+// CARA -- HOME RESTORATIVE PRACTICE & CONFLICT RESOLUTION INTELLIGENCE ENGINE
 // Monitors restorative practice quality -- restorative conference completion,
 // conflict resolution effectiveness, relationship repair tracking, mediation
 // quality, and child voice in resolution processes.

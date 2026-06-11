@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME DIGITAL SAFETY INTELLIGENCE CARD
+// CARA — HOME DIGITAL SAFETY INTELLIGENCE CARD
 // Online safety incidents, agreements, photo & media consents.
 // KCSIE 2024: "Online safety — appropriate systems."
 // CHR 2015 Reg 12/13: "Protection of children."
@@ -225,12 +225,12 @@ export function HomeDigitalSafetyIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Digital Safety Intelligence */}
+        {/* Cara Digital Safety Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Digital Safety Intelligence
+              Cara Digital Safety Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

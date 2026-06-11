@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA Reg 40 Triage — engine tests (Milestone 15)
+// Cara Reg 40 Triage — engine tests (Milestone 15)
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect, beforeEach } from "vitest";

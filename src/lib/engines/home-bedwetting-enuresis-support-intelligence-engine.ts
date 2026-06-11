@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME BEDWETTING & ENURESIS SUPPORT INTELLIGENCE ENGINE
+// CARA — HOME BEDWETTING & ENURESIS SUPPORT INTELLIGENCE ENGINE
 // Monitors enuresis management quality — management plan coverage, discreet
 // support provision, dignity preservation in care, medical referral tracking,
 // and child emotional wellbeing around bedwetting.

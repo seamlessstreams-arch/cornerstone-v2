@@ -1,12 +1,12 @@
 "use client";
 
 // ─────────────────────────────────────────────────────────────────────────────
-// ARIA GLOBAL BUTTON
+// Cara GLOBAL BUTTON
 //
 // A floating Sparkles button that appears on every platform page and opens
 // the AriaDrawer with context inferred from the current URL.
 //
-// Drop into the platform layout once; ARIA is then available everywhere.
+// Drop into the platform layout once; Cara is then available everywhere.
 // ─────────────────────────────────────────────────────────────────────────────
 
 import React, { useState, useCallback } from "react";
@@ -94,7 +94,7 @@ function inferContext(pathname: string): AriaDrawerContext {
 }
 
 function toTitle(s: string): string {
-  if (!s) return "Cornerstone";
+  if (!s) return "Cara";
   return s
     .split(/[-_]/)
     .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
@@ -111,16 +111,16 @@ export function AriaGlobalButton({ className }: { className?: string }) {
   const handleOpen = useCallback(() => setOpen(true), []);
   const handleClose = useCallback(() => setOpen(false), []);
 
-  // Don't render the global button on the ARIA-specific pages — they have
-  // their own more detailed ARIA UI already.
-  if (pathname.startsWith("/aria/")) return null;
+  // Don't render the global button on the Cara-specific pages — they have
+  // their own more detailed Cara UI already.
+  if (pathname.startsWith("/cara/")) return null;
 
   return (
     <>
       {/* Floating trigger button */}
       <button
         onClick={handleOpen}
-        aria-label="Open ARIA assistant"
+        aria-label="Open Cara assistant"
         className={cn(
           // Position: fixed bottom-right, above BottomNav (72px) on mobile
           "fixed bottom-[88px] right-4 z-40",

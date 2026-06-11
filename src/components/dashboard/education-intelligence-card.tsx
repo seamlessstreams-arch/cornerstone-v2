@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EDUCATION & ACTIVITIES INTELLIGENCE CARD
+// CARA — EDUCATION & ACTIVITIES INTELLIGENCE CARD
 // Dashboard widget for education status, attendance, enrichment activities,
-// PEP compliance, and ARIA education intelligence.
+// PEP compliance, and Cara education intelligence.
 // Powered by the Education Intelligence Engine — live data (Reg 8/10).
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -207,13 +207,13 @@ export function EducationIntelligenceCard() {
           </div>
         )}
 
-        {/* ── ARIA Education Intelligence ──────────────────────────────── */}
+        {/* ── Cara Education Intelligence ──────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Education Intelligence
+              Cara Education Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

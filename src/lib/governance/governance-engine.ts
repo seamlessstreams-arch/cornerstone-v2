@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Governance & Leadership Intelligence Engine
+// Cara — Governance & Leadership Intelligence Engine
 //
 // Pure deterministic engine. No AI, no external calls, no side-effects.
 //

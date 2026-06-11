@@ -5,7 +5,7 @@
 //
 // Drops next to / under a textarea to give EVERY data-entry point two things:
 //   1. a microphone (Web Speech dictation — appends to the field), and
-//   2. a "Rewrite" menu of ARIA writing styles (improve / make professional /
+//   2. a "Rewrite" menu of Cara writing styles (improve / make professional /
 //      simplify / check tone) that rewrites the field via the rules→cache→Claude
 //      command chain.
 //
@@ -35,7 +35,7 @@ const MIN_LEN = 10;
 export interface EntryAssistProps {
   value: string;
   onChange: (next: string) => void;
-  /** Audit/context hints passed to the ARIA command. */
+  /** Audit/context hints passed to the Cara command. */
   sourceModule?: string;
   sourceField?: string;
   childId?: string;
@@ -78,7 +78,7 @@ export function EntryAssist({ value, onChange, sourceModule, sourceField, childI
           type="button"
           disabled={!canRewrite}
           onClick={() => setOpen((o) => !o)}
-          title="Rewrite with ARIA"
+          title="Rewrite with Cara"
           className="inline-flex items-center gap-1 rounded-lg border border-[var(--cs-aria-gold)] bg-[var(--cs-aria-gold-bg)] px-2.5 min-h-[34px] text-xs font-medium text-[var(--cs-navy)] transition-colors hover:bg-[var(--cs-aria-gold-bg)]/70 disabled:opacity-40 disabled:cursor-not-allowed"
         >
           {aria.loading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Sparkles className="h-3.5 w-3.5 text-[var(--cs-aria-gold)]" />}

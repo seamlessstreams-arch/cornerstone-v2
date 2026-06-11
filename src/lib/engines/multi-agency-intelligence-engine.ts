@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MULTI-AGENCY WORKING INTELLIGENCE ENGINE
+// CARA — MULTI-AGENCY WORKING INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses LAC review compliance, professional contact currency,

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — OUTCOMES PROGRESS ENGINE TESTS
+// CARA — OUTCOMES PROGRESS ENGINE TESTS
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";
@@ -598,7 +598,7 @@ describe("computeOutcomesProgress", () => {
     });
   });
 
-  describe("ARIA insights", () => {
+  describe("Cara insights", () => {
     it("generates critical insight for declining child with overdue reviews", () => {
       const result = computeOutcomesProgress({
         children: [makeChild("yp_1", "Alex")],

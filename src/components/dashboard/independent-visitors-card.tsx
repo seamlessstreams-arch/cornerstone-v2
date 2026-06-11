@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — INDEPENDENT VISITORS INTELLIGENCE CARD
+// CARA — INDEPENDENT VISITORS INTELLIGENCE CARD
 // Dashboard card for IV assignments, visit tracking, child engagement,
-// and ARIA independent visitor intelligence.
+// and Cara independent visitor intelligence.
 // Children Act 1989 s23ZB, CHR 2015 Reg 44, IRO Handbook 2010.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -174,13 +174,13 @@ export function IndependentVisitorsCard() {
           </div>
         )}
 
-        {/* ── ARIA insights ────────────────────────────────────────────── */}
+        {/* ── Cara insights ────────────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA IV Intelligence
+              Cara IV Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME REG 44/45 QUALITY ASSURANCE REPORTING INTELLIGENCE API ROUTE
+// CARA — HOME REG 44/45 QUALITY ASSURANCE REPORTING INTELLIGENCE API ROUTE
 // GET /api/v1/home-reg44-45-quality-assurance-reporting-intelligence
 // Cross-domain composite: reg44ReportRecords + reg45ReviewRecords +
 // actionPlanRecords + qualityImprovementRecords + notificationRecords

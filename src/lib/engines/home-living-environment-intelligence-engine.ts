@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME LIVING ENVIRONMENT INTELLIGENCE ENGINE
+// CARA — HOME LIVING ENVIRONMENT INTELLIGENCE ENGINE
 // Home-level: aggregates bedroom personalisation, pet care, garden plots,
 // outdoor activity safety, environmental risks, and child voice.
 // CHR 2015 Reg 15: "Living environment — accommodation and furnishing."
@@ -524,7 +524,7 @@ export function computeHomeLivingEnvironment(
     recommendations.push({ rank: ++rank, recommendation: "Clear the backlog of overdue reviews across bedrooms, gardens, and environmental risks.", urgency: "soon", regulatory_ref: "Reg 15" });
   }
 
-  // ARIA Insights
+  // Cara Insights
   if (avgSatisfaction >= 4.5 && chooseColoursRate >= 90 && childAuthoredRate >= 80 && bedroomCoverage >= 90) {
     insights.push({ text: "Bedroom personalisation is exemplary. Children are actively shaping their living spaces with high satisfaction — this demonstrates truly child-centred care under Reg 15.", severity: "positive" });
   }

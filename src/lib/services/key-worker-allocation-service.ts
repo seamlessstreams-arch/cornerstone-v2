@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — KEY WORKER ALLOCATION SERVICE
+// CARA — KEY WORKER ALLOCATION SERVICE
 // Tracks key worker assignments, relationship quality, workload
 // balance, and continuity of trusted adult relationships.
 // CHR 2015 Reg 21 (privacy and dignity — trusted relationships),

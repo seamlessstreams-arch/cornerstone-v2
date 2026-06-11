@@ -1,10 +1,10 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SCCIF SELF-EVALUATION INTELLIGENCE CARD
+// CARA — SCCIF SELF-EVALUATION INTELLIGENCE CARD
 // Dashboard card powered by the SCCIF Self-Evaluation Intelligence Engine.
 // SCCIF judgment areas, evidence coverage, action tracking,
-// inspection readiness score, alerts, and ARIA inspection intelligence.
+// inspection readiness score, alerts, and Cara inspection intelligence.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import Link from "next/link";
@@ -279,13 +279,13 @@ export function SCCIFEvaluationCard() {
           </div>
         )}
 
-        {/* ── ARIA Inspection Intelligence ────────────────────────────── */}
+        {/* ── Cara Inspection Intelligence ────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Inspection Intelligence
+              Cara Inspection Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

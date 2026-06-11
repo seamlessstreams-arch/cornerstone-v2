@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF PAYROLL COMPLIANCE SERVICE
+// CARA — STAFF PAYROLL COMPLIANCE SERVICE
 // Tracks payroll compliance checks, right to work verification, pension
 // auto-enrolment, and HMRC compliance for staff in children's residential homes.
 //
@@ -178,7 +178,7 @@ export function computeAlerts(
   return alerts;
 }
 
-// ── ARIA Insights ─────────────────────────────────────────────────────────
+// ── Cara Insights ─────────────────────────────────────────────────────────
 
 export function computeAriaInsights(rows: StaffPayrollComplianceRow[]): string[] {
   const metrics = computeMetrics(rows);

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — TRAINING & DEVELOPMENT SERVICE
+// CARA — TRAINING & DEVELOPMENT SERVICE
 // Tracks mandatory training compliance, DBS checks, and qualifications for
 // children's home staff under CHR 2015 Reg 33 (employment of staff) and
 // Reg 34 (fitness of workers).

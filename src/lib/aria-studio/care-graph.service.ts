@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — CARE KNOWLEDGE GRAPH SERVICE
+// Cara STUDIO — CARE KNOWLEDGE GRAPH SERVICE
 //
 // Builds and queries a knowledge graph that connects children, incidents,
 // risks, protective factors, plans, actions, outcomes, staff, and evidence.

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — POCKET MONEY MANAGEMENT SERVICE
+// CARA — POCKET MONEY MANAGEMENT SERVICE
 // Tracks pocket money allocation, spending, savings, and financial
 // literacy support for children in residential care.
 // CHR 2015 Reg 9 (financial competence — managing money),

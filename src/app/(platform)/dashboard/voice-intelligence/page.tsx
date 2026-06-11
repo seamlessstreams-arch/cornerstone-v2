@@ -5,7 +5,7 @@
 //
 // Full-page voice capture and structured record generation. Users can record
 // audio for transcription or paste/type a transcript directly, then process it
-// through ARIA's voice reflection agent to produce structured outputs (daily
+// through Cara's voice reflection agent to produce structured outputs (daily
 // logs, supervision notes, handover summaries, reflective journals, management
 // oversight entries).
 //
@@ -208,7 +208,7 @@ function VoiceIntelligenceContent() {
     }
   }
 
-  // ── Process with ARIA ────────────────────────────────────────────────────
+  // ── Process with Cara ────────────────────────────────────────────────────
   async function processTranscript() {
     if (!transcript.trim()) return;
     setProcessing(true);
@@ -311,7 +311,7 @@ function VoiceIntelligenceContent() {
           Voice Intelligence
         </h1>
         <p className="mt-1 text-sm text-[var(--cs-text-secondary)]">
-          Capture voice or paste text — ARIA structures it into professional records ready for
+          Capture voice or paste text — Cara structures it into professional records ready for
           review and approval.
         </p>
       </div>
@@ -519,7 +519,7 @@ function VoiceIntelligenceContent() {
                     ) : (
                       <Sparkles className="h-3.5 w-3.5" />
                     )}
-                    {processing ? "Processing..." : "Process with ARIA"}
+                    {processing ? "Processing..." : "Process with Cara"}
                   </Button>
                 </div>
               </div>
@@ -539,7 +539,7 @@ function VoiceIntelligenceContent() {
                 <CardTitle className="flex items-center justify-between">
                   <span className="flex items-center gap-2 text-sm font-medium text-[var(--cs-navy)]">
                     <Sparkles className="h-4 w-4 text-[var(--cs-aria-gold)]" />
-                    ARIA Structured Output
+                    Cara Structured Output
                   </span>
                   <div className="flex items-center gap-2">
                     <Badge
@@ -570,7 +570,7 @@ function VoiceIntelligenceContent() {
                 {/* Escalation recommendation */}
                 {ariaResponse.escalationRecommended && (
                   <Notice tone="amber" title="Escalation recommended">
-                    ARIA recommends this content be reviewed by a manager or safeguarding lead before
+                    Cara recommends this content be reviewed by a manager or safeguarding lead before
                     any action is taken.
                   </Notice>
                 )}

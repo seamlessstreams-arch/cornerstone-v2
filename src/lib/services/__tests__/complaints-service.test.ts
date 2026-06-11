@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — COMPLAINTS & NOTIFICATIONS SERVICE TESTS
+// CARA — COMPLAINTS & NOTIFICATIONS SERVICE TESTS
 // Pure-function tests for complaint summaries, Reg 40 notification compliance,
 // complaint trends, alert identification, and constant validation.
 // ══════════════════════════════════════════════════════════════════════════════

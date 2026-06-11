@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SIGNIFICANT EVENTS SERVICE TESTS
+// CARA — SIGNIFICANT EVENTS SERVICE TESTS
 // Pure-function unit tests for event metrics computation, alert identification,
 // constant validation, and CRUD fallback behaviour.
 // ══════════════════════════════════════════════════════════════════════════════

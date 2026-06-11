@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — INTERVENTION UPDATE MODAL
+// CARA — INTERVENTION UPDATE MODAL
 // Update status, outcome, notes and review date for an active intervention.
 // ══════════════════════════════════════════════════════════════════════════════
 

@@ -82,7 +82,7 @@ export function AriaLearningIntelligenceWidget() {
     );
   }
 
-  if (error) return <div className="text-red-600 p-4 text-sm">Error loading ARIA learning intelligence: {error}</div>;
+  if (error) return <div className="text-red-600 p-4 text-sm">Error loading Cara learning intelligence: {error}</div>;
   if (!data) return null;
 
   const d = data as Record<string, unknown>;
@@ -99,7 +99,7 @@ export function AriaLearningIntelligenceWidget() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-bold">ARIA Learning Intelligence</h2>
+        <h2 className="text-lg font-bold">Cara Learning Intelligence</h2>
         {ratingBadge(d.rating as string)}
       </div>
 
@@ -110,7 +110,7 @@ export function AriaLearningIntelligenceWidget() {
         <Stat label="Children" value={children.length} />
       </div>
 
-      <Section title="ARIA Learning Quality" defaultOpen>
+      <Section title="Cara Learning Quality" defaultOpen>
         <ScoreBar label="Quality" value={quality.overallScore} />
         <div className="grid grid-cols-2 gap-2 mt-2">
           <Stat label="Task Accuracy" value={`${quality.taskCompletedAccuratelyRate}%`} />
@@ -120,7 +120,7 @@ export function AriaLearningIntelligenceWidget() {
         </div>
       </Section>
 
-      <Section title="ARIA Learning Compliance">
+      <Section title="Cara Learning Compliance">
         <ScoreBar label="Compliance" value={compliance.overallScore} />
         <div className="grid grid-cols-2 gap-2 mt-2">
           <Stat label="Documentation" value={`${compliance.documentationCompleteRate}%`} />
@@ -130,7 +130,7 @@ export function AriaLearningIntelligenceWidget() {
         </div>
       </Section>
 
-      <Section title="ARIA Learning Policy">
+      <Section title="Cara Learning Policy">
         <ScoreBar label="Policy" value={policy.overallScore as number} />
         <ul className="text-sm space-y-1 mt-2">
           {([

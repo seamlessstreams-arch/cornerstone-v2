@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SIDEBAR BADGE COUNTS
+// CARA — SIDEBAR BADGE COUNTS
 // Polls key API endpoints to keep sidebar badges live.
 // Refetches every 60 s; stale for 30 s so navigating between pages is instant.
 // ══════════════════════════════════════════════════════════════════════════════

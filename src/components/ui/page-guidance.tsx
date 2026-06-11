@@ -16,7 +16,7 @@ interface PageGuidanceProps {
 
 /**
  * Top-of-page guidance wrapper. Drop into any page to provide
- * contextual coaching, evidence tips, and ARIA suggestions.
+ * contextual coaching, evidence tips, and Cara suggestions.
  * Wraps GuidanceNote with standard page-level spacing.
  */
 export function PageGuidance({

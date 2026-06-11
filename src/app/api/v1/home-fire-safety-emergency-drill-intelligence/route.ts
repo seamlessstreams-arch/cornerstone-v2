@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME FIRE SAFETY & EMERGENCY DRILL INTELLIGENCE API ROUTE
+// CARA — HOME FIRE SAFETY & EMERGENCY DRILL INTELLIGENCE API ROUTE
 // GET /api/v1/home-fire-safety-emergency-drill-intelligence
 // Cross-domain composite: fireDrillRecords + fireRiskAssessmentRecords +
 // fireEquipmentCheckRecords + fireTrainingRecords + fireSafetyDocumentRecords

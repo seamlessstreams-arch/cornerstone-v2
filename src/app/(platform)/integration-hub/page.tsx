@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — INTEGRATION HUB
+// CARA — INTEGRATION HUB
 // The adapter framework: a registry of typed integrations (rota, payroll,
 // HR/training, calendar, notifications, document storage, external forms, LA
 // reporting). Every adapter ships the same contract — secure credentials, retry
@@ -71,7 +71,7 @@ export default function IntegrationHubPage() {
   return (
     <PageShell
       title="Integration Hub"
-      subtitle="Adapter framework — connect Cornerstone to the systems around the home"
+      subtitle="Adapter framework — connect Cara to the systems around the home"
       icon={<Plug className="h-5 w-5" />}
       showQuickCreate={false}
       ariaContext={{ pageTitle: "Integration Hub", sourceType: "general" }}
@@ -154,13 +154,13 @@ function IntegrationHubBody({ intel }: { intel: NonNullable<ReturnType<typeof us
         </Card>
       )}
 
-      {/* ── ARIA insights ────────────────────────────────────────────────── */}
+      {/* ── Cara insights ────────────────────────────────────────────────── */}
       {insights.length > 0 && (
         <Card>
           <CardHeader className="pb-3">
             <CardTitle className="text-sm flex items-center gap-2 text-purple-700">
               <Brain className="h-4 w-4" />
-              ARIA Integration Intelligence
+              Cara Integration Intelligence
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">

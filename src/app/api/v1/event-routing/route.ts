@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EVENT ROUTING API ROUTE
+// CARA — EVENT ROUTING API ROUTE
 // GET /api/v1/event-routing
 //
 // The "link intelligently" pillar: projects the store into the canonical event

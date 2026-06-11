@@ -1,6 +1,6 @@
 "use client";
 
-// AriaDraftAssistant — ARIA helps write a stronger, child-centred draft. Pick a
+// AriaDraftAssistant — Cara helps write a stronger, child-centred draft. Pick a
 // draft type, supply the source content, generate, then EDIT every section before
 // saving. Deterministic scaffold always; AI narrative when a provider is set.
 
@@ -61,9 +61,9 @@ export function AriaDraftAssistant(props: AriaDraftAssistantProps) {
     <Card className="overflow-hidden border-slate-200">
       <CardHeader className="pb-3 bg-[var(--cs-aria-gold,#f6f1e6)]/40">
         <CardTitle className="text-sm flex items-center gap-2">
-          <PenLine className="h-4 w-4 text-amber-600" /> ARIA Draft Assistant
+          <PenLine className="h-4 w-4 text-amber-600" /> Cara Draft Assistant
         </CardTitle>
-        <p className="text-xs text-muted-foreground mt-1">{draft.data?.data.disclaimer ?? "ARIA drafts; you review, edit and approve before saving."}</p>
+        <p className="text-xs text-muted-foreground mt-1">{draft.data?.data.disclaimer ?? "Cara drafts; you review, edit and approve before saving."}</p>
       </CardHeader>
       <CardContent className="space-y-3">
         <div className="flex flex-wrap items-center gap-2">
@@ -94,7 +94,7 @@ export function AriaDraftAssistant(props: AriaDraftAssistantProps) {
           <div className="space-y-3">
             {narrative && (
               <div>
-                <h4 className="text-xs font-semibold text-emerald-700 uppercase tracking-wide mb-1">ARIA narrative (editable)</h4>
+                <h4 className="text-xs font-semibold text-emerald-700 uppercase tracking-wide mb-1">Cara narrative (editable)</h4>
                 <textarea className="w-full min-h-[120px] rounded-md border border-emerald-200 bg-emerald-50/40 p-2 text-sm" value={narrative} onChange={(e) => setNarrative(e.target.value)} />
               </div>
             )}
@@ -104,7 +104,7 @@ export function AriaDraftAssistant(props: AriaDraftAssistantProps) {
                 <textarea className="w-full min-h-[56px] rounded-md border border-slate-200 p-2 text-sm" value={s.body} onChange={(e) => editSection(i, e.target.value)} />
               </div>
             ))}
-            <p className="text-[11px] text-muted-foreground">Edit any section above before saving into the record. ARIA advises; you decide.</p>
+            <p className="text-[11px] text-muted-foreground">Edit any section above before saving into the record. Cara advises; you decide.</p>
           </div>
         )}
       </CardContent>

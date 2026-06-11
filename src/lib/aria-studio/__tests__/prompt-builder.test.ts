@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — Prompt Builder Tests
+// Cara STUDIO — Prompt Builder Tests
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";
@@ -46,7 +46,7 @@ describe("prompt-builder", () => {
       expect(result.user.length).toBeGreaterThan(10);
     });
 
-    it("system prompt includes ARIA Studio identity", () => {
+    it("system prompt includes Cara Studio identity", () => {
       const { system } = buildPrompt({
         generationType: "KEYWORK_SESSION",
         title: "Test",
@@ -54,8 +54,8 @@ describe("prompt-builder", () => {
         tone: "warm_professional",
         audience: "staff",
       });
-      expect(system).toContain("ARIA Studio");
-      expect(system).toContain("Cornerstone");
+      expect(system).toContain("Cara Studio");
+      expect(system).toContain("Cara");
     });
 
     it("system prompt includes trauma-informed requirements", () => {

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CULTURAL IDENTITY SUPPORT SERVICE
+// CARA — CULTURAL IDENTITY SUPPORT SERVICE
 // Tracks cultural, religious, ethnic, and identity support provided
 // to children in residential care, ensuring heritage is respected
 // and identity development is actively promoted.

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD DAILY SUMMARIES & AUDIT TRAIL HOOKS
+// CARA — CHILD DAILY SUMMARIES & AUDIT TRAIL HOOKS
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { useQuery } from "@tanstack/react-query";

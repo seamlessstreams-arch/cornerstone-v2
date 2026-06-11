@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MULTI-HOME OVERVIEW (Responsible Individual view)
+// CARA — MULTI-HOME OVERVIEW (Responsible Individual view)
 //
 // Portfolio-level dashboard showing all homes at a glance.
 // Each home card displays key metrics with traffic light indicators.

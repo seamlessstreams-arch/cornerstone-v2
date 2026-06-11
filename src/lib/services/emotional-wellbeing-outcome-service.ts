@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EMOTIONAL WELLBEING OUTCOME SERVICE
+// CARA — EMOTIONAL WELLBEING OUTCOME SERVICE
 // Tracks validated outcome measures (SDQ, RCADS, Goodman strengths),
 // wellbeing scores over time, clinical thresholds, and trend analysis
 // for children in residential care.

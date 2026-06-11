@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MEDICATION CONSENT CARD
+// CARA — MEDICATION CONSENT CARD
 // Dashboard widget for medication consent compliance, adherence, witnessing,
 // and per-child compliance profiles.
 // Powered by the Medication Intelligence Engine — live data (Reg 23/12).
@@ -170,13 +170,13 @@ export function MedicationConsentCard() {
           </div>
         )}
 
-        {/* ── ARIA Insights ───────────────────────────────────────────── */}
+        {/* ── Cara Insights ───────────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Consent Intelligence
+              Cara Consent Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

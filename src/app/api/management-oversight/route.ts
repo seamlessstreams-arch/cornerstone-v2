@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Management Oversight Intelligence API Route
+// Cara — Management Oversight Intelligence API Route
 //
 // GET → returns Chamberlain House demo management oversight intelligence
 // ══════════════════════════════════════════════════════════════════════════════

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD RISK ASSESSMENT REVIEW INTELLIGENCE CARD
+// CARA — CHILD RISK ASSESSMENT REVIEW INTELLIGENCE CARD
 // Dashboard card powered by the Risk Assessment Intelligence Engine.
 // CHR 2015 Reg 12. SCCIF: Helped & Protected — Risk management.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -178,13 +178,13 @@ export function ChildRiskAssessmentReviewCard() {
           </div>
         )}
 
-        {/* ── ARIA Risk Intelligence ─────────────────────────────────── */}
+        {/* ── Cara Risk Intelligence ─────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Risk Intelligence
+              Cara Risk Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — COMPLAINTS SUMMARY CARD
+// CARA — COMPLAINTS SUMMARY CARD
 // Dashboard widget showing open complaints, statutory deadlines, escalation
 // status, and safeguarding flags.
 // Reg 39 — Complaints must be managed within statutory timescales.

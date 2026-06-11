@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — WORKFORCE AT A GLANCE CARD
+// CARA — WORKFORCE AT A GLANCE CARD
 // Surfaces the live workforce-engine signals (sign-in / safe staffing / emergencies
 // / message governance — Phases 1-8) on the dashboard, with deep-links. Reads the
 // Phase 8 oversight API. Defensive: tolerates missing fields, never throws.

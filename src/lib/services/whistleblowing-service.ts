@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — WHISTLEBLOWING SERVICE
+// CARA — WHISTLEBLOWING SERVICE
 // Manages whistleblowing disclosures and policy compliance under
 // CHR 2015 Reg 41 (whistleblowing) and the Public Interest Disclosure Act 1998.
 //

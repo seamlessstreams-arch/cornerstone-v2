@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILDREN'S MEETINGS SERVICE TESTS
+// CARA — CHILDREN'S MEETINGS SERVICE TESTS
 // Pure-function unit tests for children's meeting metrics computation,
 // alert identification, constant validation.
 // CHR 2015 Reg 7 (children's plan — participation),

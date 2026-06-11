@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME WATER SAFETY & HYDRATION INTELLIGENCE API ROUTE
+// CARA — HOME WATER SAFETY & HYDRATION INTELLIGENCE API ROUTE
 // GET /api/v1/home-water-safety-hydration-intelligence
 // Cross-domain composite: waterTemperatureRecords + legionellaAssessmentRecords +
 // hydrationMonitoringRecords + swimmingCompetencyRecords + waterActivitySafetyRecords

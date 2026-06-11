@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME EMOTIONAL LITERACY & FEELINGS EXPRESSION INTELLIGENCE ENGINE
+// CARA — HOME EMOTIONAL LITERACY & FEELINGS EXPRESSION INTELLIGENCE ENGINE
 // Measures emotional literacy development across the home — emotion identification
 // skills, feelings vocabulary breadth, expression tool provision, therapeutic
 // journaling engagement, and staff attunement to emotional needs.

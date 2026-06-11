@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import { getStudioAIProvider, generateStudioContent } from "../ai-provider.service";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — AI PROVIDER TESTS
+// Cara STUDIO — AI PROVIDER TESTS
 // ══════════════════════════════════════════════════════════════════════════════
 
 describe("getStudioAIProvider", () => {
@@ -41,7 +41,7 @@ describe("generateStudioContent", () => {
 
   it("returns content containing key work elements for keywork prompts", async () => {
     const result = await generateStudioContent(
-      "You are ARIA.",
+      "You are Cara.",
       "Generate a keywork session plan for a young person.",
     );
     const lower = result.content.toLowerCase();
@@ -50,7 +50,7 @@ describe("generateStudioContent", () => {
 
   it("returns content for management oversight prompts", async () => {
     const result = await generateStudioContent(
-      "You are ARIA.",
+      "You are Cara.",
       "Generate a management oversight comment for this week.",
     );
     const lower = result.content.toLowerCase();
@@ -59,7 +59,7 @@ describe("generateStudioContent", () => {
 
   it("returns default stub for unknown artifact types", async () => {
     const result = await generateStudioContent(
-      "You are ARIA.",
+      "You are Cara.",
       "Generate something unusual and unknown.",
     );
     expect(result.content).toContain("DEMO MODE");

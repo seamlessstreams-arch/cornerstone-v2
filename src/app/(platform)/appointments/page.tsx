@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — APPOINTMENTS
+// CARA — APPOINTMENTS
 // Tracks all appointments for young people: medical, dental, CAMHS, LAC
 // reviews, court, optician, social worker visits, etc. Supports Reg 7
 // (Health), Reg 8 (Education), Reg 36 (Review of Quality of Care),

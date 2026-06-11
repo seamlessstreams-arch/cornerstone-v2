@@ -1,10 +1,10 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ARIA DRAWER
-// A right-side sliding drawer for contextual Aria assistance.
+// CARA — Cara DRAWER
+// A right-side sliding drawer for contextual Cara assistance.
 // Can be opened from any page with context about the current record.
-// All Aria suggestions require human approval before saving.
+// All Cara suggestions require human approval before saving.
 // Uses SSE streaming so text appears token-by-token like AriaPanel.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -154,7 +154,7 @@ function SuggestionCard({
     <div className="rounded-xl border border-indigo-200 bg-indigo-50 p-4 space-y-3 animate-fade-in">
       <div className="flex items-start gap-2">
         <Sparkles className="w-4 h-4 text-indigo-500 mt-0.5 shrink-0" />
-        <p className="text-xs font-semibold text-indigo-700">Aria suggestion</p>
+        <p className="text-xs font-semibold text-indigo-700">Cara suggestion</p>
       </div>
 
       {editing ? (
@@ -168,7 +168,7 @@ function SuggestionCard({
       )}
 
       <p className="text-[10px] text-indigo-500 italic">
-        All Aria suggestions require human review before being saved to the official record.
+        All Cara suggestions require human review before being saved to the official record.
       </p>
 
       <div className="flex gap-2 flex-wrap">
@@ -300,7 +300,7 @@ export function AriaDrawer({ open, onClose, context = {} }: AriaDrawerProps) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          context: contextStr || "Cornerstone Care OS — children's residential home.",
+          context: contextStr || "Cara OS — children's residential home.",
           prompt:  customPrompt ?? action.prompt,
           stream:  true,
         }),
@@ -308,7 +308,7 @@ export function AriaDrawer({ open, onClose, context = {} }: AriaDrawerProps) {
       });
 
       if (!res.ok || !res.body) {
-        setSuggestion("Unable to reach Aria. Please try again.");
+        setSuggestion("Unable to reach Cara. Please try again.");
         setLoading(false);
         return;
       }
@@ -396,7 +396,7 @@ export function AriaDrawer({ open, onClose, context = {} }: AriaDrawerProps) {
             <Sparkles className="h-4 w-4 text-indigo-600" />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-semibold text-slate-900">Aria</p>
+            <p className="text-sm font-semibold text-slate-900">Cara</p>
             <p className="text-[11px] text-slate-500 truncate">
               {context.pageTitle ?? "Intelligent assistance"}
               {context.childName ? ` · ${context.childName}` : ""}
@@ -435,7 +435,7 @@ export function AriaDrawer({ open, onClose, context = {} }: AriaDrawerProps) {
           {loading && !isStreaming && (
             <div className="flex items-center gap-3 rounded-xl bg-indigo-50 border border-indigo-200 px-4 py-5">
               <Loader2 className="w-4 h-4 text-indigo-500 animate-spin shrink-0" />
-              <p className="text-sm text-indigo-700">Aria is thinking…</p>
+              <p className="text-sm text-indigo-700">Cara is thinking…</p>
             </div>
           )}
 
@@ -445,7 +445,7 @@ export function AriaDrawer({ open, onClose, context = {} }: AriaDrawerProps) {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Sparkles className="w-4 h-4 text-indigo-500" />
-                  <p className="text-xs font-semibold text-indigo-700">Aria is writing…</p>
+                  <p className="text-xs font-semibold text-indigo-700">Cara is writing…</p>
                 </div>
                 <Button
                   size="sm"
@@ -519,13 +519,13 @@ export function AriaDrawer({ open, onClose, context = {} }: AriaDrawerProps) {
                   onClick={() => setShowFreePrompt((v) => !v)}
                 >
                   {showFreePrompt ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
-                  Ask Aria something specific
+                  Ask Cara something specific
                 </button>
                 {showFreePrompt && (
                   <div className="mt-2 space-y-2">
                     <Textarea
                       className="h-24 text-sm resize-none"
-                      placeholder="Ask Aria anything about this record…"
+                      placeholder="Ask Cara anything about this record…"
                       value={freePrompt}
                       onChange={(e) => setFreePrompt(e.target.value)}
                     />
@@ -538,7 +538,7 @@ export function AriaDrawer({ open, onClose, context = {} }: AriaDrawerProps) {
                         freePrompt,
                       )}
                     >
-                      <Sparkles className="w-3 h-3 mr-1.5" /> Ask Aria
+                      <Sparkles className="w-3 h-3 mr-1.5" /> Ask Cara
                     </Button>
                   </div>
                 )}
@@ -550,7 +550,7 @@ export function AriaDrawer({ open, onClose, context = {} }: AriaDrawerProps) {
         {/* Footer */}
         <div className="border-t border-slate-100 px-5 py-3">
           <p className="text-[10px] text-slate-400 leading-relaxed">
-            Aria suggestions are AI-generated. All outputs require human review before saving to the official record. Every action is audit logged.
+            Cara suggestions are AI-generated. All outputs require human review before saving to the official record. Every action is audit logged.
           </p>
         </div>
       </aside>
@@ -558,7 +558,7 @@ export function AriaDrawer({ open, onClose, context = {} }: AriaDrawerProps) {
   );
 }
 
-// ── Hook: global Aria drawer state ────────────────────────────────────────────
+// ── Hook: global Cara drawer state ────────────────────────────────────────────
 // Import and use in any component to open the drawer with context.
 
 import { createContext, useContext } from "react";

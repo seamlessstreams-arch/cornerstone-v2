@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EMPLOYEES DOMAIN LANDING PAGE
+// CARA — EMPLOYEES DOMAIN LANDING PAGE
 // Overview of the team: who's on shift, supervision status, training
 // compliance, wellbeing check-ins. Staff are the foundation of good care
 // — this view helps the RM keep the team healthy and supported.

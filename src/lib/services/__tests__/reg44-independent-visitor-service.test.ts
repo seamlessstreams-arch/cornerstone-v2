@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — REG 44 INDEPENDENT VISITOR REPORTS SERVICE TESTS
+// CARA — REG 44 INDEPENDENT VISITOR REPORTS SERVICE TESTS
 // Pure-function unit tests for Reg 44 independent visitor report metrics,
-// alert identification, ARIA insight generation, constant validation,
+// alert identification, Cara insight generation, constant validation,
 // and CRUD fallback behaviour. Covers severity breakdowns, status breakdowns,
 // unique visitor counting, percentage calculations, and all alert conditions.
 // ══════════════════════════════════════════════════════════════════════════════

@@ -238,7 +238,7 @@ export async function POST(req: NextRequest) {
       guardianReviewId,
       guardianReview,
       persisted: true,
-      ariaLabel: "Aria suggested draft",
+      ariaLabel: "Cara suggested draft",
     },
   });
 }

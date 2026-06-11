@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Aria Intelligence — Base Provider Interface
+// Cara Intelligence — Base Provider Interface
 //
 // All AI provider adapters implement this interface.
 // Provides unified API regardless of underlying model service.

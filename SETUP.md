@@ -1,6 +1,6 @@
-# Cornerstone Care OS — Setup Guide
+# Cara OS — Setup Guide
 
-> "Cornerstone turns care records into action, evidence, and time back with children."
+> "Cara turns care records into action, evidence, and time back with children."
 
 ## Quick Start (Local Development)
 
@@ -21,7 +21,7 @@ npm run dev
 
 ## Environment Variables
 
-### Required for AI (Aria Intelligence)
+### Required for AI (Cara Intelligence)
 
 | Variable | Description | Example |
 |----------|-------------|---------|
@@ -48,7 +48,7 @@ Without Supabase, the platform runs in demo mode using an in-memory data store. 
 - **Language**: TypeScript 5
 - **Styling**: Tailwind CSS 4 + shadcn/ui + Radix UI
 - **Database**: Supabase (PostgreSQL) with 384 migrations
-- **AI**: Anthropic Claude / OpenAI (via Aria provider abstraction)
+- **AI**: Anthropic Claude / OpenAI (via Cara provider abstraction)
 - **State**: TanStack React Query
 - **Testing**: Vitest (11,886+ tests)
 - **Deployment**: Vercel
@@ -60,7 +60,7 @@ src/
   app/(platform)/          # 623 pages (Next.js App Router)
   app/api/                 # 1,333 API routes
   components/              # 1,308 React components
-    aria/                  #   Aria AI components (85+)
+    aria/                  #   Cara AI components (85+)
     dashboard/             #   Dashboard intelligence cards (323)
     forms/                 #   Smart form components
     layout/                #   Sidebar, nav, layout
@@ -69,7 +69,7 @@ src/
   contexts/                # Auth, sidebar, record-once
   hooks/                   # 868 React Query hooks
   lib/
-    aria/                  # Aria AI engine, providers, health
+    aria/                  # Cara AI engine, providers, health
     automation/            # Trigger-action automation engine
     db/                    # In-memory store
     engines/               # 376 intelligence engines
@@ -88,7 +88,7 @@ supabase/
 ### Intelligence Engines (301 deployed)
 Pure deterministic engines covering every aspect of children's residential care. Each produces a score (0-100), rating (outstanding/good/adequate/inadequate), strengths, concerns, recommendations, and insights.
 
-### Aria AI Assistant
+### Cara AI Assistant
 Role-aware AI assistant with 18 safety rules, 12 registered tools, and 5 role-specific behaviour configurations. Supports both Anthropic and OpenAI.
 
 ### Task-Centric Domain Architecture
@@ -126,12 +126,12 @@ vercel env add ARIA_MODEL production          # "claude-sonnet-4-20250514"
 npx vercel --prod --yes
 ```
 
-**Live URL**: https://cornerstone-v2-fresh.vercel.app
+**Live URL**: https://cara-os-fresh.vercel.app
 **Domain**: cornerstonecareos.one
 
 ## Regulatory Alignment
 
-Cornerstone is designed around:
+Cara is designed around:
 - Children's Homes (England) Regulations 2015
 - Quality Standards (Reg 1-14)
 - SCCIF (Social Care Common Inspection Framework)

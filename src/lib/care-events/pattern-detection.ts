@@ -3,7 +3,7 @@
 //
 // Cross-event analysis over verified care events for one home. Surfaces
 // patterns a manager might miss when reviewing entries one at a time.
-// All outputs are advisory: ARIA detected — requires manager review.
+// All outputs are advisory: Cara detected — requires manager review.
 //
 // Patterns:
 //   - frequency_cluster   ≥N events of same category for one child

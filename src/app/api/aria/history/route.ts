@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // API: /api/aria/history
-// GET — returns a user's recent ARIA interactions (requests + outputs).
-// Powers the "My ARIA History" view and the ARIA audit timeline component.
+// GET — returns a user's recent Cara interactions (requests + outputs).
+// Powers the "My Cara History" view and the Cara audit timeline component.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { NextRequest, NextResponse } from "next/server";

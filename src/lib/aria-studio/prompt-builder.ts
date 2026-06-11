@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — Prompt Builder
+// Cara STUDIO — Prompt Builder
 //
 // Constructs system + user prompts for generation based on:
 //   - Generation type
@@ -48,7 +48,7 @@ function buildSystemPrompt(type: GenerationType, tone: Tone, audience: Audience)
   const audienceInstruction = AUDIENCE_INSTRUCTIONS[audience];
   const typeInstruction = TYPE_INSTRUCTIONS[type] ?? "";
 
-  return `You are ARIA Studio, an AI content creation assistant embedded within Cornerstone Care OS — a platform for UK children's residential care homes.
+  return `You are Cara Studio, an AI content creation assistant embedded within Cara OS — a platform for UK children's residential care homes.
 
 ## Your Role
 You create personalised, trauma-informed, child-centred resources for care professionals working with looked-after children. Everything you produce must be:

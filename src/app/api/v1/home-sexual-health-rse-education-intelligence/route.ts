@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SEXUAL HEALTH & RSE EDUCATION INTELLIGENCE API ROUTE
+// CARA — HOME SEXUAL HEALTH & RSE EDUCATION INTELLIGENCE API ROUTE
 // GET /api/v1/home-sexual-health-rse-education-intelligence
 // Cross-domain composite: rseEducationRecords + sexualHealthScreeningRecords +
 // ageGuidanceRecords + consentEducationRecords + safeguardingAwarenessRecords

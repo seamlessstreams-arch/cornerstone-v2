@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME POLICY REVIEW CYCLE COMPLIANCE INTELLIGENCE ENGINE — TESTS
+// CARA — HOME POLICY REVIEW CYCLE COMPLIANCE INTELLIGENCE ENGINE — TESTS
 //
 // 180 tests covering: insufficient_data, allEmpty+policies, scoring, rating
 // boundaries, review schedule metrics, version control metrics, staff

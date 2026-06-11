@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — REFLECTIVE SUPERVISION ENGINE (pure / deterministic)
+// CARA — REFLECTIVE SUPERVISION ENGINE (pure / deterministic)
 //
 // The reflective-supervision RECORD (more than tick-box) + a per-staff
 // supervision-STATUS rollup: who is current / due-soon / overdue / never

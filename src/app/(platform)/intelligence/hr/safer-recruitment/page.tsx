@@ -86,7 +86,7 @@ interface Evaluation {
   blockingReasons: string[];
   unmetChecks: CheckRowResult[];
   failedChecks: CheckRowResult[];
-  ariaLabel: "ARIA suggested draft";
+  ariaLabel: "Cara suggested draft";
   rationaleSummary: string;
   regulatoryLinks: string[];
 }
@@ -259,7 +259,7 @@ export default function SaferRecruitmentPage() {
       <div className="mb-6 flex items-start gap-3 rounded-lg border border-[var(--cs-aria-gold-soft)] bg-[var(--cs-aria-gold-bg)] p-4 text-sm text-[var(--cs-navy)]">
         <ShieldCheck className="h-5 w-5 mt-0.5 text-[var(--cs-aria-gold)]" />
         <div>
-          <div className="font-semibold">ARIA suggested draft, never final</div>
+          <div className="font-semibold">Cara suggested draft, never final</div>
           <p className="text-[var(--cs-navy)]">
             The Safer Recruitment Gate decides whether a worker can be marked
             <em> approved for unsupervised work</em>. Every mandatory check

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Annual Development Review Intelligence — Public API
+// Cara Annual Development Review Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — WORKFORCE COMMAND ENGINE (pure / deterministic)
+// CARA — WORKFORCE COMMAND ENGINE (pure / deterministic)
 //
 // The manager's single workforce landing view (spec §1). Composes the already-
 // computed signals from across the workforce layer — recruitment, safer

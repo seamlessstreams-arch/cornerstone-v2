@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EMPTY STATE
+// CARA — EMPTY STATE
 // Helpful, action-oriented empty states. Never a blank white box.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -22,7 +22,7 @@ interface EmptyStateProps {
   title:        string;
   description:  string;
   actions?:     EmptyStateAction[];
-  ariaPrompt?:  string;   // if set, adds an "Ask ARIA" button
+  ariaPrompt?:  string;   // if set, adds an "Ask Cara" button
   onAskAria?:   (prompt: string) => void;
   className?:   string;
   compact?:     boolean;  // smaller padding for inline use
@@ -99,7 +99,7 @@ export function EmptyState({
               onClick={() => onAskAria(ariaPrompt)}
             >
               <Sparkles className="h-3.5 w-3.5" />
-              Ask ARIA
+              Ask Cara
             </Button>
           )}
         </div>

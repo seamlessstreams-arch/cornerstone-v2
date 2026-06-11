@@ -1,5 +1,5 @@
 // ==============================================================================
-// Cornerstone Pocket Money & Financial Education Intelligence -- Public API
+// Cara Pocket Money & Financial Education Intelligence -- Public API
 // ==============================================================================
 
 export {

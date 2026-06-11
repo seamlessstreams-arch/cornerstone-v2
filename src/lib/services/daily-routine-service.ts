@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DAILY ROUTINE SERVICE
+// CARA — DAILY ROUTINE SERVICE
 // Tracks structured daily routines for children, supporting normality,
 // predictability, and wellbeing through consistent schedules.
 // CHR 2015 Reg 6 (quality and purpose of care — meeting needs),

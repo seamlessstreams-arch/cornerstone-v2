@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF APPRAISAL & PERFORMANCE SERVICE TESTS
+// CARA — STAFF APPRAISAL & PERFORMANCE SERVICE TESTS
 // Pure-function unit tests for appraisal compliance computation, goal progress
 // tracking, alert identification, and constant validation.
 // ══════════════════════════════════════════════════════════════════════════════

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SAFEGUARDING DEPTH INTELLIGENCE CARD
+// CARA — HOME SAFEGUARDING DEPTH INTELLIGENCE CARD
 // Body maps, disclosures, escalations, LADO, supervision, safe touch, substance.
 // CHR 2015 Reg 12/13.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -159,7 +159,7 @@ export function HomeSafeguardingDepthIntelligenceCard() {
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
-              <Brain className="h-3 w-3" /> ARIA Safeguarding Intelligence
+              <Brain className="h-3 w-3" /> Cara Safeguarding Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

@@ -1,10 +1,10 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — AUTOMATION DASHBOARD CARD
+// CARA — AUTOMATION DASHBOARD CARD
 // Overview card for the centralised automation engine. Shows total rules,
 // enabled/disabled split, recent automation runs with status badges, and
-// the top-triggered rules. Follows Cornerstone design patterns.
+// the top-triggered rules. Follows Cara design patterns.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";

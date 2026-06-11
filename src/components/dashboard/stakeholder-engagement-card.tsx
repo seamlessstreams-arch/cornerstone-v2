@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAKEHOLDER ENGAGEMENT INTELLIGENCE CARD
+// CARA — STAKEHOLDER ENGAGEMENT INTELLIGENCE CARD
 // Dashboard card powered by the Quality Assurance Intelligence Engine.
 // CHR 2015 Reg 45 (independent person), Reg 44 (visiting),
 // Reg 36 (notifications), Reg 14 (multi-agency working).
@@ -97,7 +97,7 @@ export function StakeholderEngagementCard() {
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Stakeholder Intelligence
+              Cara Stakeholder Intelligence
             </p>
             {insights.slice(0, 2).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.positive)}>

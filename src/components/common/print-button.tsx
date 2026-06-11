@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PRINT BUTTON
+// CARA — PRINT BUTTON
 // Reusable print button that generates a clean, print-optimised version
 // of page content. Adds proper headers with home name, date, and page title.
 // Used across all key pages for Ofsted-ready documentation.
@@ -123,7 +123,7 @@ export function PrintButton({
             ${subtitle ? `<p style="font-size:10pt;color:#666;margin:4px 0 0;">${subtitle}</p>` : ""}
           </div>
           <div style="text-align:right;font-size:9pt;color:#666;">
-            <div>Chamberlain House — Cornerstone</div>
+            <div>Chamberlain House — Cara</div>
             <div>${dateStr}</div>
             <div>Printed at ${timeStr}</div>
           </div>
@@ -138,7 +138,7 @@ export function PrintButton({
       const footer = document.createElement("div");
       footer.className = "print-footer";
       footer.style.cssText = "position:fixed;bottom:0;left:0;right:0;border-top:1px solid #ccc;padding-top:4px;font-size:8pt;color:#999;display:flex;justify-content:space-between;";
-      footer.innerHTML = `<span>Cornerstone — Chamberlain House</span><span>Printed ${dateStr} ${timeStr}</span>`;
+      footer.innerHTML = `<span>Cara — Chamberlain House</span><span>Printed ${dateStr} ${timeStr}</span>`;
       wrapper.appendChild(footer);
 
       // Add to DOM

@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from "vitest";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — EVIDENCE RETRIEVAL TESTS
+// Cara — EVIDENCE RETRIEVAL TESTS
 // ══════════════════════════════════════════════════════════════════════════════
 
 vi.mock("@/lib/supabase/server", () => ({

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — REG 44 INTELLIGENCE HOOK
+// CARA — REG 44 INTELLIGENCE HOOK
 // React Query wrapper for /api/v1/reg44-intelligence
 // ══════════════════════════════════════════════════════════════════════════════
 

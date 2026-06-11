@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Court Order Compliance Intelligence — Public API
+// Cara Court Order Compliance Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

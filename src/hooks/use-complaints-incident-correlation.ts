@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — COMPLAINTS ↔ INCIDENT CORRELATION HOOK
+// CARA — COMPLAINTS ↔ INCIDENT CORRELATION HOOK
 // React Query wrapper for /api/v1/complaints-incident-correlation
 // ══════════════════════════════════════════════════════════════════════════════
 

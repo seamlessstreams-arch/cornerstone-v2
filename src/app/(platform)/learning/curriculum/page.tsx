@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CURRICULUM BUILDER
+// CARA — CURRICULUM BUILDER
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState } from "react";
@@ -139,7 +139,7 @@ export default function CurriculumBuilderPage() {
     setResult(null);
     try {
       const res = await api.post<{ data: { parsed?: CurriculumResult } }>(
-        "/aria",
+        "/cara",
         {
           mode: "curriculum_builder",
           style: "professional_formal",
@@ -180,7 +180,7 @@ export default function CurriculumBuilderPage() {
   return (
     <PageShell
       title="Curriculum Builder"
-      subtitle="Design structured multi-module learning pathways with ARIA"
+      subtitle="Design structured multi-module learning pathways with Cara"
       ariaContext={{ pageTitle: "Learning Curriculum", sourceType: "document" }}
       showQuickCreate={false}
       actions={
@@ -234,7 +234,7 @@ export default function CurriculumBuilderPage() {
             </div>
             <Button onClick={generate} disabled={!topic.trim() || generating} className="gap-1.5 bg-teal-600 hover:bg-teal-700 text-white" size="sm">
               <Sparkles className="h-3.5 w-3.5" />
-              {generating ? "Building Curriculum…" : "Build Curriculum with ARIA"}
+              {generating ? "Building Curriculum…" : "Build Curriculum with Cara"}
             </Button>
           </CardContent>
         </Card>

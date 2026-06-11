@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Aria Intelligence — Model Router (AriaModelRouter)
+// Cara Intelligence — Model Router (AriaModelRouter)
 //
 // Central decision engine. Routes AI tasks to the correct provider based on:
 // task type, risk level, data sensitivity, role permission, cost, speed,
@@ -397,7 +397,7 @@ export class AriaModelRouter {
 
   private buildSystemPrompt(input: AriaTaskRequest): string {
     const parts: string[] = [
-      "You are Aria, an AI assistant for Cornerstone Care OS — a UK children's residential care platform.",
+      "You are Cara, an AI assistant for Cara OS — a UK children's residential care platform.",
       "You support social care professionals in their work with looked-after children.",
       "Always be professional, warm, evidence-informed, and child-centred.",
       "Never fabricate evidence. Always distinguish between evidence, inference, and recommendation.",

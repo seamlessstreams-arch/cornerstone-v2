@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SAFER RECRUITMENT INTELLIGENCE ENGINE
+// CARA — SAFER RECRUITMENT INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses recruitment pipeline health, candidate compliance, check completion,
@@ -615,7 +615,7 @@ export function computeSaferRecruitmentIntelligence(
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
   const insights: AriaRecruitmentInsight[] = [];
 
   // Critical: any candidate at pre-start or beyond without full Schedule 2

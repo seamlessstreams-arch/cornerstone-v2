@@ -381,12 +381,12 @@ export default function ChildProgressPage() {
           </CardContent>
         </Card>
 
-        {/* ARIA Summary */}
+        {/* Cara Summary */}
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Sparkles className="h-5 w-5 text-indigo-600" />
-              ARIA Progress Summary
+              Cara Progress Summary
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -397,13 +397,13 @@ export default function ChildProgressPage() {
                 className="w-full sm:w-auto"
               >
                 <Sparkles className="h-4 w-4 mr-2" />
-                Request ARIA Progress Summary
+                Request Cara Progress Summary
               </Button>
             ) : (
               <div className="space-y-3">
                 <div className="flex items-center gap-2">
                   <Badge className="bg-indigo-100 text-indigo-800 text-xs">
-                    ARIA suggested draft
+                    Cara suggested draft
                   </Badge>
                 </div>
                 <div className="bg-indigo-50 border border-indigo-100 rounded-lg p-4 space-y-3">

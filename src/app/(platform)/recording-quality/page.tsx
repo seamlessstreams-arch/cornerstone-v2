@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RECORDING QUALITY (detail page)
+// CARA — RECORDING QUALITY (detail page)
 // Per-record quality scores across six Ofsted-relevant dimensions, weakest first,
 // each with concrete improvement suggestions for supervision and QA.
 // ══════════════════════════════════════════════════════════════════════════════

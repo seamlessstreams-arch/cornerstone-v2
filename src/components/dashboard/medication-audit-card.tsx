@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MEDICATION AUDIT INTELLIGENCE CARD
+// CARA — MEDICATION AUDIT INTELLIGENCE CARD
 // Dashboard card for controlled drug counts, storage audits, fridge checks.
 // CHR 2015 Reg 23, Reg 12, Reg 40.
 // SCCIF: Safety — "Medication is stored and managed safely."
@@ -171,13 +171,13 @@ export function MedicationAuditCard() {
           </div>
         )}
 
-        {/* ── ARIA Medication Audit Intelligence ──────────────────────── */}
+        {/* ── Cara Medication Audit Intelligence ──────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Medication Audit Intelligence
+              Cara Medication Audit Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

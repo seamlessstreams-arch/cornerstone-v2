@@ -1,9 +1,9 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — DECISION SUPPORT SERVICE
+// Cara STUDIO — DECISION SUPPORT SERVICE
 //
 // Helps managers structure complex decisions: what is known vs unknown,
 // risks of each option, child impact, compliance implications, and
-// recommended next steps. ARIA never makes the decision — it frames it.
+// recommended next steps. Cara never makes the decision — it frames it.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { createServerClient } from "@/lib/supabase/server";

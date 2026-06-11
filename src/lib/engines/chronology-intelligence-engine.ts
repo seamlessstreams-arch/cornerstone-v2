@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHRONOLOGY INTELLIGENCE ENGINE
+// CARA — CHRONOLOGY INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses children's chronologies for event patterns, frequency, gaps,
@@ -299,7 +299,7 @@ export function computeChronologyIntelligence(
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
   const insights: AriaChronologyInsight[] = [];
 
   // Critical: children without chronology

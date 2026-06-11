@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME HOBBIES & INTERESTS DEVELOPMENT INTELLIGENCE ENGINE TESTS
+// CARA — HOME HOBBIES & INTERESTS DEVELOPMENT INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite for hobby participation, interest exploration,
 // talent development, creative expression, and child-led activity analysis.
 // CHR 2015 Reg 5, 6, 7. SCCIF: Experiences and progress.

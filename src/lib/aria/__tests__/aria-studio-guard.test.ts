@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA Studio guard — server-side RBAC enforcement
+// Cara Studio guard — server-side RBAC enforcement
 // Verifies that mutating routes refuse unauthorised actors and accept
 // authorised ones, regardless of UI state.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -47,7 +47,7 @@ afterEach(() => {
   delete process.env.ARIA_FALLBACK_ROLE;
 });
 
-describe("ARIA Studio guard — denial behaviour", () => {
+describe("Cara Studio guard — denial behaviour", () => {
   it("requireAriaStudioPermission returns 401 when no actor role is provided", () => {
     const req = makeReq("http://test/x", { method: "POST" });
     const result = requireAriaStudioPermission(req, null, {
@@ -366,7 +366,7 @@ describe("ARIA Studio guard — denial behaviour", () => {
   });
 });
 
-describe("ARIA Studio guard — fallback role behaviour", () => {
+describe("Cara Studio guard — fallback role behaviour", () => {
   it("default fallback role allows generation in dev/demo (when env unset)", async () => {
     delete process.env.ARIA_FALLBACK_ROLE;
     const res = await generatePOST(

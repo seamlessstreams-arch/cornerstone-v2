@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — APPRAISAL INTELLIGENCE API ROUTE
+// CARA — APPRAISAL INTELLIGENCE API ROUTE
 // GET /api/v1/appraisal-intelligence
 // Returns staff appraisal compliance analysis, competency breakdown,
-// rating distribution, fitness confirmation, and ARIA workforce insights.
+// rating distribution, fitness confirmation, and Cara workforce insights.
 // Reg 32 (fitness of workers), Reg 33 (employment of staff), SCCIF.
 // ══════════════════════════════════════════════════════════════════════════════
 

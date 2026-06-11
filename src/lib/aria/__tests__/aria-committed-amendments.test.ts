@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA Committed Record Amendments — engine tests (Milestone 13)
+// Cara Committed Record Amendments — engine tests (Milestone 13)
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect, beforeEach } from "vitest";

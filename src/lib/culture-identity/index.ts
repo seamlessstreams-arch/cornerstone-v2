@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Culture, Identity & Diversity — Public API
+// Cara Culture, Identity & Diversity — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

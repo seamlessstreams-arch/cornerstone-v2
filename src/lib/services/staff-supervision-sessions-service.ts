@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF SUPERVISION SESSIONS SERVICE
+// CARA — STAFF SUPERVISION SESSIONS SERVICE
 // Tracks individual supervision sessions, case discussions,
 // action items, wellbeing checks, and professional development.
 // CHR 2015 Reg 33 (employment of staff — supervision),

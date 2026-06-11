@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Aria Intelligence — Azure OpenAI Provider Adapter
+// Cara Intelligence — Azure OpenAI Provider Adapter
 //
 // Enterprise-governed deployment. Used for high-risk, safeguarding-sensitive,
 // legal, and management oversight tasks where data governance is essential.

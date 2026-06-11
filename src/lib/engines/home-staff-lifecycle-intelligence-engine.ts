@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME STAFF LIFECYCLE INTELLIGENCE ENGINE
+// CARA — HOME STAFF LIFECYCLE INTELLIGENCE ENGINE
 // Pure deterministic engine: staff inductions, sickness/absence patterns,
 // exit interviews, return-to-work processes, and staff recognition.
 // CHR 2015 Reg 32/33 — Fitness of workers, employment of staff.

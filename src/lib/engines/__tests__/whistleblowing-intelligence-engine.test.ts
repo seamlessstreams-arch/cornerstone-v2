@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- WHISTLEBLOWING INTELLIGENCE ENGINE TESTS
+// CARA -- WHISTLEBLOWING INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite for whistleblowing disclosure analysis.
 // Covers Reg 41 whistleblowing and Public Interest Disclosure Act 1998 (PIDA).
 // ==============================================================================

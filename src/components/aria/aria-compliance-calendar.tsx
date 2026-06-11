@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// AriaComplianceCalendar — Upcoming compliance deadlines tracked by ARIA
+// AriaComplianceCalendar — Upcoming compliance deadlines tracked by Cara
 //
 // Shows a timeline of regulatory deadlines: Reg 45 reports, supervision
 // cycles, training renewals, risk assessment reviews, care plan reviews,
@@ -96,7 +96,7 @@ function getDemoDeadlines(): ComplianceDeadline[] {
       id: "cd_003",
       type: "risk_assessment_review",
       title: "Risk assessment review — Alex W",
-      description: "Behaviour pattern escalation triggered ARIA flag for risk assessment review.",
+      description: "Behaviour pattern escalation triggered Cara flag for risk assessment review.",
       dueDate: "2026-05-14",
       daysUntilDue: 2,
       status: "due_soon",
@@ -201,7 +201,7 @@ export function AriaComplianceCalendar() {
             </div>
             <div>
               <h3 className="text-sm font-semibold text-[var(--cs-navy)]">Compliance Calendar</h3>
-              <p className="text-[10px] text-[var(--cs-text-muted)]">ARIA-tracked regulatory deadlines</p>
+              <p className="text-[10px] text-[var(--cs-text-muted)]">Cara-tracked regulatory deadlines</p>
             </div>
           </div>
           <div className="flex items-center gap-1.5">
@@ -303,7 +303,7 @@ export function AriaComplianceCalendar() {
       {/* Footer */}
       <div className="px-4 py-2.5 border-t border-[var(--cs-border)] bg-slate-50/50">
         <p className="text-[10px] text-[var(--cs-text-muted)] text-center">
-          ARIA tracks deadlines from regulations, your Statement of Purpose, and care planning cycles.
+          Cara tracks deadlines from regulations, your Statement of Purpose, and care planning cycles.
         </p>
       </div>
     </div>

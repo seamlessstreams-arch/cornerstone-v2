@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — INTERVENTIONS TRACKER
+// CARA — INTERVENTIONS TRACKER
 // Tracks active interventions for each young person — rationale, review dates,
 // effectiveness, and linked evidence. Directly supports Ofsted ILACS evidence
 // that the home takes purposeful, child-centred action when patterns emerge.

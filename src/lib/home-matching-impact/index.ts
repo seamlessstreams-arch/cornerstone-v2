@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Home Matching Impact Intelligence — Public API
+// Cara Home Matching Impact Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

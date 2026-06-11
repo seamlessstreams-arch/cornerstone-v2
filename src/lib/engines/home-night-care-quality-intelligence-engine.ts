@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME NIGHT CARE QUALITY INTELLIGENCE ENGINE
+// CARA — HOME NIGHT CARE QUALITY INTELLIGENCE ENGINE
 // Monitors the quality and safety of overnight care provision. Analyzes night
 // check compliance, night log quality, handover completeness, sleep support
 // provision, and night-time anxiety support for children.

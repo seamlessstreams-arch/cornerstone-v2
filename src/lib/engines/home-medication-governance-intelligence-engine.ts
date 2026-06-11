@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME MEDICATION GOVERNANCE INTELLIGENCE ENGINE
+// CARA — HOME MEDICATION GOVERNANCE INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses medication audit records, error investigations, near misses,
@@ -578,7 +578,7 @@ export function computeHomeMedicationGovernance(
     recommendations.push({ rank: ++rank, recommendation: "Obtain GP sign-off for all emergency medication protocols — unsigned protocols may not reflect current medical advice.", urgency: "soon", regulatory_ref: "Reg 12" });
   }
 
-  // ARIA Insights
+  // Cara Insights
   if (audits.length > 0 && auditPassRate >= 90 && errors.length === 0 && stFail === 0 && totalDebriefable === 0) {
     insights.push({ text: "Medication governance is exemplary. High audit pass rates, zero errors, and clean storage audits demonstrate an embedded safety culture. This is a key strength for Ofsted inspection under Reg 12.", severity: "positive" });
   }

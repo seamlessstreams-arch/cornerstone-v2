@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME WATER HYGIENE MANAGEMENT SERVICE
+// CARA — HOME WATER HYGIENE MANAGEMENT SERVICE
 // Tracks water temperature monitoring, flushing regimes, TMV servicing,
 // showerhead descaling, dead leg checks, water sampling, and Legionella
 // compliance in accordance with HSG274 and ACOP L8.

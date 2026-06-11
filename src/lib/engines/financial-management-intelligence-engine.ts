@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — FINANCIAL MANAGEMENT INTELLIGENCE ENGINE
+// CARA — FINANCIAL MANAGEMENT INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses expenses to surface spend patterns, approval compliance, missing
@@ -293,7 +293,7 @@ export function computeFinancialManagementIntelligence(
     }
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
   const insights: AriaFinancialInsight[] = [];
 
   // Critical: stale approvals

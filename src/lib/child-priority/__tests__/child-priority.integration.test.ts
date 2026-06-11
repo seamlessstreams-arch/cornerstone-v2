@@ -68,7 +68,7 @@ describe("child-priority integration (real seed data)", () => {
     expect(domains).toContain("continuity"); // his key worker delivers none of his sessions
   });
 
-  it("surfaces a multi-stream ARIA insight and a top action for the lead child", () => {
+  it("surfaces a multi-stream Cara insight and a top action for the lead child", () => {
     expect(result.overview.multi_domain_count).toBeGreaterThanOrEqual(1);
     expect(result.children[0].top_action).not.toBeNull();
     expect(result.insights.some((i) => i.severity === "critical")).toBe(true);

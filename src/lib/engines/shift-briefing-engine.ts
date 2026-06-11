@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SHIFT BRIEFING ENGINE (pure / deterministic)
+// CARA — SHIFT BRIEFING ENGINE (pure / deterministic)
 //
 // An auto-generated, TIME-BOXED operational snapshot for staff coming on duty:
 //   • who is on duty now + who's coming up

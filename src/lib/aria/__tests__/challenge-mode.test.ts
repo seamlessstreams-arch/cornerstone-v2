@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from "vitest";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — CHALLENGE MODE TESTS
+// Cara — CHALLENGE MODE TESTS
 // ══════════════════════════════════════════════════════════════════════════════
 
 vi.mock("@/lib/supabase/server", () => ({

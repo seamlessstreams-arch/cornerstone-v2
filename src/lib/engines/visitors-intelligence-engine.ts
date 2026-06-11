@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — VISITORS INTELLIGENCE ENGINE
+// CARA — VISITORS INTELLIGENCE ENGINE
 // Pure deterministic engine for visitor management analysis.
 // Reg 12 (contact arrangements), Reg 22 (contact), Reg 44 (independent visits),
 // SCCIF Helped & Protected, Leadership & Management.
@@ -283,7 +283,7 @@ export function computeVisitorsIntelligence(input: EngineInput): VisitorsIntelli
     });
   }
 
-  // ── ARIA Insights ──────────────────────────────────────────────────────
+  // ── Cara Insights ──────────────────────────────────────────────────────
   const insights: AriaVisitorInsight[] = [];
 
   // Critical: DBS gap for professional visitors

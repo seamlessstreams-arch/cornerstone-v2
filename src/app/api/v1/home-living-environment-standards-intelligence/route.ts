@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME LIVING ENVIRONMENT STANDARDS INTELLIGENCE API ROUTE
+// CARA — HOME LIVING ENVIRONMENT STANDARDS INTELLIGENCE API ROUTE
 // GET /api/v1/home-living-environment-standards-intelligence
 // Cross-domain composite: cleaningEntries + maintenance + kitchenHygieneChecks
 // + bedroomProfiles + roomAllocationRecords

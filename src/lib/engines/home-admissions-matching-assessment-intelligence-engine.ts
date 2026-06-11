@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ADMISSIONS & MATCHING ASSESSMENT INTELLIGENCE ENGINE
+// CARA — HOME ADMISSIONS & MATCHING ASSESSMENT INTELLIGENCE ENGINE
 // Tracks referral assessment quality — pre-admission assessment completion,
 // impact risk assessments on existing residents, matching criteria evaluation,
 // placement suitability reviews, and admission planning quality.

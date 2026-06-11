@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF GRIEVANCE INTELLIGENCE CARD
+// CARA — STAFF GRIEVANCE INTELLIGENCE CARD
 // Live data from useWorkforceIntelligence() — sickness, profile, staffing.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -95,13 +95,13 @@ export function StaffGrievanceCard() {
           </div>
         )}
 
-        {/* ── ARIA insights ───────────────────────────────────────────── */}
+        {/* ── Cara insights ───────────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Grievance Intelligence
+              Cara Grievance Intelligence
             </p>
             {intel.insights.slice(0, 2).map((insight, i) => (
               <div

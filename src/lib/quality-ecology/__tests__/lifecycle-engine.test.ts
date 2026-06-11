@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Quality Ecology — Lifecycle Engine Tests
+// Cara Quality Ecology — Lifecycle Engine Tests
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect, beforeEach, vi } from "vitest";

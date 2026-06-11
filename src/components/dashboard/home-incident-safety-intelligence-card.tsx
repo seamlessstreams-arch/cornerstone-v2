@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME INCIDENT SAFETY INTELLIGENCE CARD
+// CARA — HOME INCIDENT SAFETY INTELLIGENCE CARD
 // Home-level: incidents, restraints, notifiable events, handover continuity —
 // holistic safety intelligence view for the home dashboard.
 // CHR 2015 Reg 12, 13, 35, 40. SCCIF: "Safe."
@@ -249,12 +249,12 @@ export function HomeIncidentSafetyIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Safety Intelligence */}
+        {/* Cara Safety Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Safety Intelligence
+              Cara Safety Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

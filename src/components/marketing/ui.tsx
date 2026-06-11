@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SHARED MARKETING UI PRIMITIVES
+// CARA — SHARED MARKETING UI PRIMITIVES
 // Reused across the public pages (/, /security, /about). Server components.
 // ══════════════════════════════════════════════════════════════════════════════
 

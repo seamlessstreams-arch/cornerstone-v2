@@ -37,8 +37,8 @@ export function MobileMenu() {
           <div className="flex items-center justify-between border-b border-[var(--cs-border)] px-5 py-3.5">
             <Link href="/" onClick={() => setOpen(false)} className="flex items-center gap-2.5">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/icon-192.png" alt="Cornerstone" className="h-9 w-9 rounded-xl" />
-              <span className="text-lg font-extrabold tracking-tight text-[var(--cs-navy)]">Cornerstone <span className="text-[var(--cs-teal-strong)]">Care OS</span></span>
+              <img src="/icon-192.png" alt="Cara" className="h-9 w-9 rounded-xl" />
+              <span className="text-lg font-extrabold tracking-tight text-[var(--cs-navy)]">Cara <span className="text-[var(--cs-teal-strong)]">Care OS</span></span>
             </Link>
             <button
               type="button"

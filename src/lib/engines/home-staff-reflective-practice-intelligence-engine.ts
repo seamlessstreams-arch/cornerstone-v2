@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME STAFF REFLECTIVE PRACTICE INTELLIGENCE ENGINE
+// CARA — HOME STAFF REFLECTIVE PRACTICE INTELLIGENCE ENGINE
 // Tracks staff reflections, supervision theme resolution, shadowing quality,
 // and team meeting effectiveness to ensure a learning-oriented workforce.
 // Pure deterministic engine. CHR 2015 Reg 32/33.

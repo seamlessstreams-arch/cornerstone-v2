@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MEDICATION ERRORS SERVICE TESTS
+// CARA — MEDICATION ERRORS SERVICE TESTS
 // Pure-function tests for medication error metrics, alert identification,
 // and constant arrays. CHR 2015 Reg 23 / Reg 40 — Duty of Candour.
 // ══════════════════════════════════════════════════════════════════════════════

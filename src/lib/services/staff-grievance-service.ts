@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF GRIEVANCE SERVICE
+// CARA — STAFF GRIEVANCE SERVICE
 // Tracks formal grievances, investigation process, outcomes,
 // appeal handling, and learning from staff complaints.
 // CHR 2015 Reg 33 (employment — grievance procedures),

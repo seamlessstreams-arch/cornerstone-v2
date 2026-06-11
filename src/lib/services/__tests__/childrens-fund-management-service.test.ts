@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILDREN'S FUND MANAGEMENT SERVICE TESTS
+// CARA — CHILDREN'S FUND MANAGEMENT SERVICE TESTS
 // Pure-function unit tests for fund metrics computation, alert
 // identification, and constant validation.
 // CHR 2015 Reg 34 (money — financial management),

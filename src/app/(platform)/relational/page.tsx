@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RELATIONAL PRACTICE
+// CARA — RELATIONAL PRACTICE
 // Captures trust moments, rupture-repair events, preferred adults,
 // regulation strategies, and attachment indicators for each young person.
 // Builds the "what works" knowledge base that underpins trauma-informed care.

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME STAKEHOLDER ENGAGEMENT & FEEDBACK INTELLIGENCE ENGINE
+// CARA — HOME STAKEHOLDER ENGAGEMENT & FEEDBACK INTELLIGENCE ENGINE
 // Tracks multi-stakeholder feedback, parent partnership quality, community
 // sentiment, and response rates to ensure responsive, accountable care.
 // Pure deterministic engine. CHR 2015 Reg 5/44.

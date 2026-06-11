@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — REG 45 REPORTS SERVICE
+// CARA — REG 45 REPORTS SERVICE
 // Manages the responsible individual's six-monthly quality of care reports
 // required by CHR 2015 Reg 45. The responsible individual must visit the home
 // at least twice per year (once unannounced), interview children and staff,

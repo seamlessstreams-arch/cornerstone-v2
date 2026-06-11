@@ -152,7 +152,7 @@ export default function MyDayPage() {
             <div className="flex flex-wrap items-center gap-3">
               <div className="flex items-center gap-1.5 text-xs font-semibold text-[var(--cs-aria-gold)]">
                 <Brain className="h-3.5 w-3.5" />
-                ARIA Intelligence
+                Cara Intelligence
               </div>
               <div className="flex flex-wrap items-center gap-2 flex-1">
                 {(overdueActionsQuery.data?.data?.length ?? 0) > 0 && (

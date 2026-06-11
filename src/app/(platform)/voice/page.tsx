@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — VOICE OF THE CHILD
+// CARA — VOICE OF THE CHILD
 // Centralised record of young people's wishes, feelings, and views.
 // Tracks whether their voice was heard, acted upon, and the outcome.
 // This is the single most important evidence base for Ofsted ILACS.

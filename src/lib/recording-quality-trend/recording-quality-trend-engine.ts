@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RECORDING QUALITY TREND ENGINE
+// CARA — RECORDING QUALITY TREND ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 //

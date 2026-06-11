@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME FRIENDSHIP & SOCIAL NETWORK INTELLIGENCE ENGINE — TESTS
+// CARA — HOME FRIENDSHIP & SOCIAL NETWORK INTELLIGENCE ENGINE — TESTS
 // CHR 2015 Reg 5/11: Friendship mapping, social networks, peer support,
 // isolation prevention, child satisfaction with friendships.
 // ══════════════════════════════════════════════════════════════════════════════

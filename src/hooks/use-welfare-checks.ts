@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — WELFARE CHECKS HOOK
+// CARA — WELFARE CHECKS HOOK
 // React Query hook for welfare check rounds and individual checks.
 // ══════════════════════════════════════════════════════════════════════════════
 

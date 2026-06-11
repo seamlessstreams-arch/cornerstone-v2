@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RISK ASSESSMENT INTELLIGENCE ENGINE
+// CARA — RISK ASSESSMENT INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses risk levels, trends, review compliance, mitigation effectiveness,
@@ -293,7 +293,7 @@ export function computeRiskAssessmentIntelligence(input: RiskAssessmentIntellige
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
   const insights: AriaRiskInsight[] = [];
 
   // Critical: very_high risk present

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — NIGHT WAKING MONITORING SERVICE
+// CARA — NIGHT WAKING MONITORING SERVICE
 // Tracks overnight waking episodes for children to understand sleep
 // patterns, emotional states, triggers, and staff responses during
 // night-time disturbances.

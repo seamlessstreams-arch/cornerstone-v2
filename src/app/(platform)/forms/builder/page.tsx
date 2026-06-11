@@ -800,11 +800,11 @@ function FormPreview({ fields, title }: { fields: FormFieldDefinition[]; title: 
           </div>
         </div>
 
-        {/* ARIA suggestion */}
+        {/* Cara suggestion */}
         <div className="mt-6 flex items-start gap-2 px-4 py-3 rounded-lg bg-violet-50 border border-violet-100">
           <Sparkles className="h-4 w-4 text-violet-500 shrink-0 mt-0.5" />
           <div>
-            <p className="text-xs text-violet-700 font-medium">ARIA Form Analysis</p>
+            <p className="text-xs text-violet-700 font-medium">Cara Form Analysis</p>
             <p className="text-xs text-violet-600 mt-0.5">
               This form has {fields.filter((f) => f.required).length} required fields and {fields.filter((f) => f.conditional_on).length} conditional fields.
               {fields.filter((f) => f.type === "signature").length > 0 && " Signature capture enabled for evidence purposes."}

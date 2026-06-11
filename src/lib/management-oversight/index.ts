@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Management Oversight Intelligence — Public API
+// Cara — Management Oversight Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

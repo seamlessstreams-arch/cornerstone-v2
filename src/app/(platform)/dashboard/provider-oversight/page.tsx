@@ -429,12 +429,12 @@ export default function ProviderOversightPage() {
                   <span className="text-muted-foreground">Last reviewed: <span className="font-medium text-[var(--cs-navy)]">{new Date(home.lastReviewed).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}</span></span>
                 </div>
 
-                {/* ARIA Risk Flags */}
+                {/* Cara Risk Flags */}
                 {home.ariaRiskFlags.length > 0 && (
                   <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 space-y-2">
                     <div className="flex items-center gap-2">
                       <Sparkles className="h-4 w-4 text-amber-600" />
-                      <span className="text-xs font-semibold text-amber-800">ARIA Risk Flags</span>
+                      <span className="text-xs font-semibold text-amber-800">Cara Risk Flags</span>
                     </div>
                     <ul className="space-y-1">
                       {home.ariaRiskFlags.map((flag, idx) => (

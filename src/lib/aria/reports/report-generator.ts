@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — REPORT GENERATION SERVICE
+// Cara — REPORT GENERATION SERVICE
 //
 // Orchestrates the full report generation pipeline:
 //   1. Validate request
@@ -288,7 +288,7 @@ Rules:
   } else {
     // AI failed — create fallback sections for all templates
     overallSummary =
-      "ARIA was unable to generate this report automatically. " +
+      "Cara was unable to generate this report automatically. " +
       "All sections require manual completion by the reviewing manager. " +
       `AI error: ${aiResult.error ?? "Unknown error"}`;
 

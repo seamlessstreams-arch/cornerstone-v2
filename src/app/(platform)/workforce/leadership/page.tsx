@@ -107,7 +107,7 @@ export default function LeadershipReadinessPage() {
   return (
     <PageShell
       title="Leadership Readiness Panel"
-      subtitle="ARIA gap analysis for Team Leader → RM → RI succession track"
+      subtitle="Cara gap analysis for Team Leader → RM → RI succession track"
       ariaContext={{ pageTitle: "Leadership Readiness Panel", sourceType: "staff" }}
       showQuickCreate={false}
       actions={
@@ -126,7 +126,7 @@ export default function LeadershipReadinessPage() {
             onClick={() => setShowAria((p) => !p)}
           >
             <Sparkles className="h-3.5 w-3.5" />
-            ARIA Leadership Analysis
+            Cara Leadership Analysis
           </Button>
           <Link href="/workforce/succession">
             <Button variant="outline" size="sm">Succession Board</Button>

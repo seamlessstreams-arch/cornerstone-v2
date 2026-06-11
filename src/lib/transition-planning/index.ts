@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Transition & Pathway Planning Intelligence — Public API
+// Cara Transition & Pathway Planning Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

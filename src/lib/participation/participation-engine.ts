@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Participation Intelligence Engine  (v2 — standardised)
+// Cara Participation Intelligence Engine  (v2 — standardised)
 //
 // Deterministic engine for evaluating children's participation quality,
 // compliance, advocacy/voice policies, staff readiness, and per-child

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME FINANCIAL WELLBEING INTELLIGENCE CARD
+// CARA — HOME FINANCIAL WELLBEING INTELLIGENCE CARD
 // Home-level: pocket money management, savings culture, clothing provision,
 // receipt compliance, equity across children.
 // CHR 2015 Reg 7, Reg 8. SCCIF: "Experiences and progress of children."
@@ -222,12 +222,12 @@ export function HomeFinancialWellbeingIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Financial Intelligence */}
+        {/* Cara Financial Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Financial Intelligence
+              Cara Financial Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA Reg 45 Live Evidence Bank — engine tests
+// Cara Reg 45 Live Evidence Bank — engine tests
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect, beforeEach } from "vitest";

@@ -406,7 +406,7 @@ export default function IncidentTrendAnalysisPage() {
             Regulations 2015. It demonstrates the home&apos;s use of intelligence to identify
             triggers, hotspots, and learning, and to drive measurable preventative action —
             evidence required for Quality Standard 5 (the protection of children) and
-            triangulated with Reg 44 visitor reports, ARIA pattern alerts, and individual
+            triangulated with Reg 44 visitor reports, Cara pattern alerts, and individual
             behaviour-support plans. Period-over-period comparison evidences whether
             interventions are reducing incident frequency and severity, supporting Ofsted&apos;s
             Social Care Common Inspection Framework (SCCIF) judgements on leadership and

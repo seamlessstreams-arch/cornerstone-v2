@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — RISK TIER CLASSIFICATION TESTS
+// Cara — RISK TIER CLASSIFICATION TESTS
 // ══════════════════════════════════════════════════════════════════════════════
 
 import {

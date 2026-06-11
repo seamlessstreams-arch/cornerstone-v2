@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — GRANULAR PERMISSIONS ENGINE
+// CARA — GRANULAR PERMISSIONS ENGINE
 // RBAC with hierarchical roles, 100+ individual permissions across 10 groups.
 // Works in both server (Supabase-backed) and client (role-level) contexts.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -74,7 +74,7 @@ export const PERM = {
   TRAINING_MANAGE:    "training.manage",
   COMPLIANCE_VIEW:    "compliance.view",
   COMPLIANCE_MANAGE:  "compliance.manage",
-  // ARIA
+  // Cara
   ARIA_VIEW:          "aria.view",
   ARIA_CONFIGURE:     "aria.configure",
   ARIA_APPROVE:       "aria.approve",

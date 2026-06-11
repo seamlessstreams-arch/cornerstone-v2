@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME LOCALITY SAFEGUARDING INTELLIGENCE API ROUTE
+// CARA — HOME LOCALITY SAFEGUARDING INTELLIGENCE API ROUTE
 // GET /api/v1/home-locality-safeguarding-intelligence
 // Synthesises locality risks, exploitation screenings, and missing episodes
 // to assess the home's awareness and response to local community risks,

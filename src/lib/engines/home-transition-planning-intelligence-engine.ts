@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME TRANSITION PLANNING INTELLIGENCE ENGINE
+// CARA — HOME TRANSITION PLANNING INTELLIGENCE ENGINE
 // Pure deterministic engine: pathway planning, independence preparation,
 // goal achievement, area coverage for children approaching transition.
 // CHR 2015 Reg 14: "The care and independence planning standard."

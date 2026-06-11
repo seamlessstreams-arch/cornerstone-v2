@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — INCIDENT ANALYTICS API ROUTE
+// CARA — INCIDENT ANALYTICS API ROUTE
 // GET /api/v1/incident-analytics
 // Returns incident trend analysis, severity breakdown, patterns.
 // Reg 12/40/45 — protection, notification, quality monitoring.

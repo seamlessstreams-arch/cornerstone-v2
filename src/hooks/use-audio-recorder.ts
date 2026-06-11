@@ -3,7 +3,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // useAudioRecorder
 //
-// Microphone capture for Aria voice dictation. Built on the standard Web
+// Microphone capture for Cara voice dictation. Built on the standard Web
 // MediaRecorder API. Handles the cases the spec calls out: insecure context,
 // missing mediaDevices, permission denied, no microphone found, browser
 // unsupported. Tracks are stopped on unmount, on cancel, and on error so

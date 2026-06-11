@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RISK BADGE
+// CARA — RISK BADGE
 // Circular dot + text label. Accessible — never colour-only meaning.
 // Large touch target (min 44px when interactive).
 // ══════════════════════════════════════════════════════════════════════════════

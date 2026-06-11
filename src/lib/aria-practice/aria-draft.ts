@@ -1,12 +1,12 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA PRACTICE INTELLIGENCE — DRAFTING ENGINE
+// Cara PRACTICE INTELLIGENCE — DRAFTING ENGINE
 //
-// ARIA DRAFTS stronger, child-centred records. Every draft type produces a
+// Cara DRAFTS stronger, child-centred records. Every draft type produces a
 // STRUCTURED, EDITABLE scaffold deterministically (works with NO AI key). When an
 // AI provider is configured, an enhanced narrative is layered on top via the
 // existing generateText() abstraction — the scaffold is never lost.
 //
-// ARIA suggests; humans approve. Every draft carries a clear disclaimer.
+// Cara suggests; humans approve. Every draft carries a clear disclaimer.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { analyzePractice } from "./aria-practice-engine";
@@ -51,7 +51,7 @@ export interface AriaDraftResult {
 }
 
 export const ARIA_DRAFT_DISCLAIMER =
-  "ARIA suggested draft — requires human review and approval before it is committed. ARIA advises; the manager and author decide. The child's lived experience remains the measure of quality.";
+  "Cara suggested draft — requires human review and approval before it is committed. Cara advises; the manager and author decide. The child's lived experience remains the measure of quality.";
 
 const TITLES: Record<AriaDraftType, string> = {
   professional_record: "Professional record (child-centred)",
@@ -63,7 +63,7 @@ const TITLES: Record<AriaDraftType, string> = {
   livers_analysis: "L.I.V.E.R.S. analysis",
 };
 
-// ── Helpers that turn ARIA's analysis into scaffold content ────────────────────
+// ── Helpers that turn Cara's analysis into scaffold content ────────────────────
 
 function recommendationsBlock(a: AriaPracticeOutput): string {
   const recs = a.recommendations.map((r) => `• ${r.title} — ${r.detail} (${r.urgency})`);
@@ -98,7 +98,7 @@ function professionalRecord(content: string, a: AriaPracticeOutput): AriaDraftSe
     { heading: "Risks, worries and evidence", body: flagsBlock(a) },
     { heading: "So What analysis", body: questionsBlock(a, "so_what") || "So what has actually changed for the child as a result of this work?" },
     { heading: "Recommended next steps", body: recommendationsBlock(a) },
-    { heading: "Manager review required", body: a.requiresManagerReview ? `YES — ${a.flags.filter((f) => f.requiresManagerReview).map((f) => f.title).join("; ")}` : "No — routine record; no escalation indicated by ARIA." },
+    { heading: "Manager review required", body: a.requiresManagerReview ? `YES — ${a.flags.filter((f) => f.requiresManagerReview).map((f) => f.title).join("; ")}` : "No — routine record; no escalation indicated by Cara." },
   ];
 }
 
@@ -124,7 +124,7 @@ function thresholdSummary(a: AriaPracticeOutput): AriaDraftSection[] {
     { heading: "Current intervention is / is not sufficient because", body: "<rationale>" },
     { heading: "The immediate risk if we do not escalate is", body: t?.emergencyActionRecommended ? "Immediate danger may be present — take protective action now, then consult." : "<state the risk>" },
     { heading: "The most proportionate next step is", body: t?.strategyDiscussionRecommended ? "Consider a strategy discussion and complete a threshold consultation." : "<state the next step>" },
-    { heading: "Threshold judgement (manager decides — ARIA advises only)", body: "I believe the threshold for a strategy discussion is / is not met because: <manager judgement>" },
+    { heading: "Threshold judgement (manager decides — Cara advises only)", body: "I believe the threshold for a strategy discussion is / is not met because: <manager judgement>" },
   ];
 }
 
@@ -135,7 +135,7 @@ function supervisionReflection(a: AriaPracticeOutput): AriaDraftSection[] {
     { heading: "What has stayed with you outside work", body: "<what has been hard to put down after shift>" },
     { heading: "Pressure to appear certain / confident / in control", body: "<where has there been pressure to seem more certain than you feel?>" },
     { heading: "What support is needed", body: questionsBlock(a, "reflective") || "<what support would help right now?>" },
-    { heading: "How wellbeing may be affecting practice", body: a.flags.some((f) => f.flagType === "staff_wellbeing") ? "ARIA detected wellbeing signals. Interpret these supportively, never punitively." : "<reflect on how wellbeing may be affecting practice>" },
+    { heading: "How wellbeing may be affecting practice", body: a.flags.some((f) => f.flagType === "staff_wellbeing") ? "Cara detected wellbeing signals. Interpret these supportively, never punitively." : "<reflect on how wellbeing may be affecting practice>" },
     { heading: "Development & support actions", body: recommendationsBlock(a) },
     { heading: "What will improve for children if this support works", body: "<what becomes better for the children if the worker is well-supported?>" },
   ];
@@ -219,10 +219,10 @@ export function buildDraftScaffold(input: AriaDraftInput): AriaDraftResult {
   };
 }
 
-// ── System prompt for AI enhancement (encodes ARIA's language standard) ────────
+// ── System prompt for AI enhancement (encodes Cara's language standard) ────────
 
 const DRAFT_SYSTEM_PROMPT = [
-  "You are ARIA, a child-centred practice-intelligence assistant for a children's home.",
+  "You are Cara, a child-centred practice-intelligence assistant for a children's home.",
   "Write in warm, professional, non-shaming language. Never blame the child for adult harm.",
   "Place responsibility for adult behaviour with adults, systems and context.",
   "Distinguish evidence from interpretation. Name what is unknown. Always ask what has changed for the child.",
@@ -248,7 +248,7 @@ export async function generateDraft(input: AriaDraftInput): Promise<AriaDraftRes
       "Produce a stronger, child-centred draft following these section headings:",
       result.sections.map((s) => `- ${s.heading}`).join("\n"),
       "",
-      `ARIA's analysis summary: ${result.analysisSummary}`,
+      `Cara's analysis summary: ${result.analysisSummary}`,
     ].join("\n");
     const ai = await generateText({ systemPrompt: DRAFT_SYSTEM_PROMPT, userPrompt, temperature: 0.4, maxOutputTokens: 1400 });
     if (ai.llmUsed && ai.text.trim().length > 0) {

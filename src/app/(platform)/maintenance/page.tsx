@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MAINTENANCE
+// CARA — MAINTENANCE
 // Building maintenance, safety checks, and scheduled works tracker.
 // Covers H&S compliance, fire safety, plumbing, electrical, HVAC, and general
 // maintenance for Ofsted Reg 25 (premises) requirements.

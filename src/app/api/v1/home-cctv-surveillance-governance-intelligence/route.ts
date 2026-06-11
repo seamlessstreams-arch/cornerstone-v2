@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME CCTV & SURVEILLANCE GOVERNANCE INTELLIGENCE API ROUTE
+// CARA — HOME CCTV & SURVEILLANCE GOVERNANCE INTELLIGENCE API ROUTE
 // GET /api/v1/home-cctv-surveillance-governance-intelligence
 // Cross-domain composite: cctvPolicyRecords + privacyImpactRecords +
 // footageRetentionRecords + childAwarenessRecords + dataProtectionRecords

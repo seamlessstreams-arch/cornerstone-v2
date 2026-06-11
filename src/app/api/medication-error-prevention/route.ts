@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Medication Error Prevention Intelligence API Route
+// Cara — Medication Error Prevention Intelligence API Route
 //
 // GET  → returns Chamberlain House demo medication error prevention intelligence
 // POST → accepts custom data for any home

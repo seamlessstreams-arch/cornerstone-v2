@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SENSORY PROFILE SERVICE TESTS
+// CARA — SENSORY PROFILE SERVICE TESTS
 // Pure-function unit tests for sensory metrics computation,
 // alert identification, constant validation, and CRUD fallback behaviour
 // (Supabase disabled). CHR 2015 Reg 6 (quality and purpose of care),

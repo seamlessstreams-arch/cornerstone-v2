@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — Child Profile Panel
+// Cara STUDIO — Child Profile Panel
 //
 // Displays the compiled child intelligence profile used for generation.
 // Shows strengths, needs, risk flags, and objectives.

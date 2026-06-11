@@ -153,7 +153,7 @@ export default function LeavingCareFinancialPackagePage() {
           <div className="flex items-start gap-2">
             <Info className="h-5 w-5 shrink-0 mt-0.5" />
             <div>
-              <strong>Statutory financial duty to care leavers.</strong> Under the Children (Leaving Care) Act 2000 the local authority — as corporate parent — must prepare each looked-after child for adulthood, including a Setting Up Home Allowance (typically £2,000+), Junior ISA top-ups, ring-fenced savings, and progressive financial literacy. Cornerstone tracks each young person&apos;s package from pre-pathway through to post-care aftercare. <em>All account balances shown are illustrative for review purposes only — no real account numbers, sort codes, or credentials are stored. Anonymised initials used for former residents.</em>
+              <strong>Statutory financial duty to care leavers.</strong> Under the Children (Leaving Care) Act 2000 the local authority — as corporate parent — must prepare each looked-after child for adulthood, including a Setting Up Home Allowance (typically £2,000+), Junior ISA top-ups, ring-fenced savings, and progressive financial literacy. Cara tracks each young person&apos;s package from pre-pathway through to post-care aftercare. <em>All account balances shown are illustrative for review purposes only — no real account numbers, sort codes, or credentials are stored. Anonymised initials used for former residents.</em>
             </div>
           </div>
         </div>
@@ -371,7 +371,7 @@ export default function LeavingCareFinancialPackagePage() {
 
         {/* Regulatory note */}
         <div className="rounded-lg border-l-4 border-blue-400 bg-blue-50 p-4 text-sm text-blue-900">
-          <strong>Children (Leaving Care) Act 2000 &amp; Quality Standard 1.</strong> The corporate parent must give every eligible looked-after child a personal advisor, a pathway plan, and a financial package that includes the Setting Up Home Allowance, ring-fenced savings (Junior ISA top-ups while in care), and progressive financial-literacy support — covering banking, budgeting, tenancy, payslips, debt awareness and scam recognition. Aftercare duties continue to age 21 (or 25 in education). Cornerstone tracks each young person&apos;s journey from pre-pathway through to post-care so transitions are planned, not reactive. <em>All balances shown are illustrative — Cornerstone never stores real account numbers, sort codes, or credentials. Former residents are referenced by anonymised initials only.</em>
+          <strong>Children (Leaving Care) Act 2000 &amp; Quality Standard 1.</strong> The corporate parent must give every eligible looked-after child a personal advisor, a pathway plan, and a financial package that includes the Setting Up Home Allowance, ring-fenced savings (Junior ISA top-ups while in care), and progressive financial-literacy support — covering banking, budgeting, tenancy, payslips, debt awareness and scam recognition. Aftercare duties continue to age 21 (or 25 in education). Cara tracks each young person&apos;s journey from pre-pathway through to post-care so transitions are planned, not reactive. <em>All balances shown are illustrative — Cara never stores real account numbers, sort codes, or credentials. Former residents are referenced by anonymised initials only.</em>
         </div>
       </div>
       <CareEventsPanel

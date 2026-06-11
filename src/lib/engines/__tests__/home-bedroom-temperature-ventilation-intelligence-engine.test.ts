@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME BEDROOM TEMPERATURE & VENTILATION INTELLIGENCE ENGINE TESTS
+// CARA — HOME BEDROOM TEMPERATURE & VENTILATION INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite: unit + integration
 // ══════════════════════════════════════════════════════════════════════════════
 

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RECORD ONCE CONTEXT
+// CARA — RECORD ONCE CONTEXT
 // "Capture once, link intelligently, surface everywhere, never duplicate."
 // Fetches child/staff profile data and provides it to any form via context,
 // so staff never re-enter information the system already knows.

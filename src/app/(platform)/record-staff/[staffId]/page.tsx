@@ -12,7 +12,7 @@ export default function UniversalStaffRecordPage() {
       <div className="mb-6">
         <h1 className="text-lg font-bold text-[var(--cs-navy)]">Record for Staff Member</h1>
         <p className="text-sm text-[var(--cs-text-muted)]">
-          Just write what happened. Cornerstone will classify it and route it everywhere.
+          Just write what happened. Cara will classify it and route it everywhere.
         </p>
       </div>
       <UniversalStaffEntry staffId={staffId} onCancel={() => router.back()} />

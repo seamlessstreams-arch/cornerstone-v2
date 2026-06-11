@@ -1,10 +1,10 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — CONTEXTUAL QUICK ACTIONS
+// Cara STUDIO — CONTEXTUAL QUICK ACTIONS
 //
 // A collapsible card that sits alongside the existing AriaQuickActions on
-// record pages. Pre-fills ARIA Studio with the correct artifact type,
+// record pages. Pre-fills Cara Studio with the correct artifact type,
 // child context, and framework for the current page context.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -103,7 +103,7 @@ function buildUrl(action: StudioAction, childId?: string): string {
   if (action.framework) params.set("framework", action.framework);
   if (action.tone) params.set("tone", action.tone);
   if (action.context) params.set("context", action.context);
-  return `/aria-studio?${params.toString()}`;
+  return `/cara-studio?${params.toString()}`;
 }
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -130,7 +130,7 @@ export function StudioQuickActions({
         <div className="flex h-6 w-6 items-center justify-center rounded-md bg-[var(--cs-navy)]">
           <Sparkles className="h-3 w-3 text-[var(--cs-aria-gold)]" />
         </div>
-        <span className="text-xs font-semibold text-[var(--cs-navy)] flex-1 text-left">ARIA Studio</span>
+        <span className="text-xs font-semibold text-[var(--cs-navy)] flex-1 text-left">Cara Studio</span>
         {open ? (
           <ChevronUp className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />
         ) : (

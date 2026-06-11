@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF SUPERVISION COMPLIANCE SERVICE
+// CARA — STAFF SUPERVISION COMPLIANCE SERVICE
 // Monitors staff supervision frequency, quality, action
 // completion, and professional development tracking.
 // CHR 2015 Reg 33 (employment — supervision and appraisal),

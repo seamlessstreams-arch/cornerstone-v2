@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // API: /api/aria/today-briefing
 //
-// GET — Generates an ARIA morning briefing for the Registered Manager.
+// GET — Generates an Cara morning briefing for the Registered Manager.
 //       Aggregates signals across all home systems to surface what needs
 //       attention today: overdue items, risk changes, compliance gaps,
 //       upcoming deadlines, unresolved incidents, missing oversight, and
@@ -204,7 +204,7 @@ function generateDemoBriefing(homeId: string): TodayBriefing {
   topPriorities.push(`${positiveCount} positive developments to celebrate with the team`);
 
   const summary = `Good morning. It's ${dayOfWeek} ${new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long" })}. ` +
-    `ARIA has identified ${signals.length} signals across Chamberlain House today. ` +
+    `Cara has identified ${signals.length} signals across Chamberlain House today. ` +
     (criticalCount > 0
       ? `There ${criticalCount === 1 ? "is" : "are"} ${criticalCount} critical item${criticalCount > 1 ? "s" : ""} requiring immediate attention. `
       : "No critical concerns today. ") +
@@ -382,7 +382,7 @@ async function generateLiveBriefing(homeId: string): Promise<TodayBriefing> {
   if (positiveCount > 0) topPriorities.push(`${positiveCount} positive development${positiveCount > 1 ? "s" : ""}`);
 
   const summary = `Good morning. It's ${dayOfWeek} ${todayDate.toLocaleDateString("en-GB", { day: "numeric", month: "long" })}. ` +
-    `ARIA has identified ${signals.length} signals across your home today. ` +
+    `Cara has identified ${signals.length} signals across your home today. ` +
     (criticalCount > 0
       ? `There ${criticalCount === 1 ? "is" : "are"} ${criticalCount} critical item${criticalCount > 1 ? "s" : ""} requiring immediate attention. `
       : "No critical concerns today. ") +

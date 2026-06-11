@@ -84,7 +84,7 @@ export function AriaStudioGenerator({
         onGenerated?.(data.result);
       }
     } catch (err) {
-      setError("Network error — could not reach Aria Studio");
+      setError("Network error — could not reach Cara Studio");
     } finally {
       setIsGenerating(false);
     }
@@ -101,7 +101,7 @@ export function AriaStudioGenerator({
             </svg>
           </div>
           <div>
-            <h3 className="text-sm font-semibold">Aria Studio</h3>
+            <h3 className="text-sm font-semibold">Cara Studio</h3>
             <p className="text-xs text-muted-foreground">
               Generate child-centred therapeutic resources
               {childName && ` for ${childName}`}

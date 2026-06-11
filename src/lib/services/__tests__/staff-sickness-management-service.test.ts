@@ -1,6 +1,6 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF SICKNESS MANAGEMENT SERVICE TESTS
-// Pure-function tests for sickness metrics, alert identification, ARIA insights,
+// CARA — STAFF SICKNESS MANAGEMENT SERVICE TESTS
+// Pure-function tests for sickness metrics, alert identification, Cara insights,
 // enum validation, and CRUD fallback behaviour.
 // CHR 2015 Reg 33 / Reg 13 compliance — staffing levels and absence management.
 // ══════════════════════════════════════════════════════════════════════════════

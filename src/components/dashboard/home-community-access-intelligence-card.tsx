@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME COMMUNITY ACCESS INTELLIGENCE CARD
+// CARA — HOME COMMUNITY ACCESS INTELLIGENCE CARD
 // Home-level: transport safety, RA quality, independent travel, trip planning,
 // community engagement aggregated across all children.
 // CHR 2015 Reg 9 (enjoyment & achievement), Reg 12 (independence).
@@ -231,12 +231,12 @@ export function HomeCommunityAccessIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Insights */}
+        {/* Cara Insights */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-emerald-700">
               <Brain className="h-3 w-3" />
-              ARIA Community Access Intelligence
+              Cara Community Access Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

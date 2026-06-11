@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — KEYWORKING INTELLIGENCE API ROUTE
+// CARA — KEYWORKING INTELLIGENCE API ROUTE
 // GET /api/v1/keyworking-intelligence
 // Returns keywork session analysis, mood impact, follow-up compliance,
-// per-child profiles, topic coverage, and ARIA keyworking insights.
+// per-child profiles, topic coverage, and Cara keyworking insights.
 // Reg 9/14/22 — care quality, care plans, young person voice.
 // ══════════════════════════════════════════════════════════════════════════════
 

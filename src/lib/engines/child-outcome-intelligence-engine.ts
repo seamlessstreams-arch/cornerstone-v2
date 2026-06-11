@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD OUTCOME INTELLIGENCE ENGINE
+// CARA — CHILD OUTCOME INTELLIGENCE ENGINE
 // Per-child engine analysing outcome targets across all 8 domains,
 // progress tracking, review compliance, YP participation, barriers,
 // and whether outcomes are translating into real change for the child.
@@ -460,7 +460,7 @@ export function computeChildOutcome(
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
   const insights: OutcomeInsight[] = [];
 
   if (progress_rating === "inadequate") {

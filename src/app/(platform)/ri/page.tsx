@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RI COMMAND CENTRE HUB
+// CARA — RI COMMAND CENTRE HUB
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useMemo } from "react";
@@ -256,7 +256,7 @@ export default function RiHubPage() {
             <FeatureCard
               href="/ri/scorecard"
               title="Governance Scorecard"
-              description="15 live governance metrics with trend analysis and ARIA commentary"
+              description="15 live governance metrics with trend analysis and Cara commentary"
               icon={BarChart3}
               colour="text-indigo-600"
               bg="bg-indigo-50"
@@ -299,7 +299,7 @@ export default function RiHubPage() {
             <FeatureCard
               href="/learning/training-needs"
               title="Training Intelligence"
-              description="ARIA-identified training needs linked to governance evidence"
+              description="Cara-identified training needs linked to governance evidence"
               icon={TrendingUp}
               colour="text-teal-600"
               bg="bg-teal-50"
@@ -308,15 +308,15 @@ export default function RiHubPage() {
           </div>
         </div>
 
-        {/* ARIA RI intelligence prompt */}
+        {/* Cara RI intelligence prompt */}
         <div className="rounded-2xl border border-indigo-200 bg-indigo-50 p-5 flex items-start gap-4">
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--cs-navy)]">
             <Sparkles className="h-5 w-5 text-white" />
           </div>
           <div className="flex-1 space-y-2">
-            <p className="text-sm font-semibold text-indigo-900">Ask ARIA for a Strategic Summary</p>
+            <p className="text-sm font-semibold text-indigo-900">Ask Cara for a Strategic Summary</p>
             <p className="text-xs text-indigo-700 leading-relaxed">
-              ARIA can analyse all current data and generate a strategic governance summary, challenge questions for the manager, or a full Ofsted readiness review.
+              Cara can analyse all current data and generate a strategic governance summary, challenge questions for the manager, or a full Ofsted readiness review.
             </p>
             <div className="flex flex-wrap gap-2 pt-1">
               <Link href="/ri/scorecard?mode=strategic">

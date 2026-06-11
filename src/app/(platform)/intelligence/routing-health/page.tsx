@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — Routing Health (Milestone 16)
+// CARA — Routing Health (Milestone 16)
 //
 // Surfaces failed care-event routes and stuck/failed background jobs so
 // authorised users can see exactly what didn't process and retry. The

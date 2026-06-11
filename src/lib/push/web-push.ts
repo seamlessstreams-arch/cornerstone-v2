@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — Web Push send helper
+// CARA — Web Push send helper
 //
 // Best-effort Web Push to a recipient's subscribed devices. No-op until the VAPID
 // keys are configured (NEXT_PUBLIC_VAPID_PUBLIC_KEY / VAPID_PRIVATE_KEY / VAPID_SUBJECT)

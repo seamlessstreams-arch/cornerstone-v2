@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Missing From Care Intelligence Engine (4-Evaluator Pattern)
+// Cara Missing From Care Intelligence Engine (4-Evaluator Pattern)
 //
 // Deterministic engine for analysing the quality, compliance, policy,
 // and staff readiness of a children's home's missing from care response.

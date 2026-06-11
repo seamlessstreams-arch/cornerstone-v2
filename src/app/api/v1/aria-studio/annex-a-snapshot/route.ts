@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// API — ARIA Annex A Live Snapshot
+// API — Cara Annex A Live Snapshot
 // GET  → list snapshots for a home (latest first)
 // POST → run snapshot build (RBAC: aria.generate_drafts)
 // ══════════════════════════════════════════════════════════════════════════════

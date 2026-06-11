@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Transport & Travel Arrangements Intelligence — Public API
+// Cara Transport & Travel Arrangements Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

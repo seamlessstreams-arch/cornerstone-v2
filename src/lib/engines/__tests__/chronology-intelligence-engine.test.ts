@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHRONOLOGY INTELLIGENCE ENGINE — TEST SUITE
+// CARA — CHRONOLOGY INTELLIGENCE ENGINE — TEST SUITE
 // Reg 36 — case records, event patterns, recording gaps, category coverage,
-// timeline analysis, and ARIA chronology insights.
+// timeline analysis, and Cara chronology insights.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";
@@ -423,10 +423,10 @@ describe("Chronology Engine — Alerts", () => {
 });
 
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA INSIGHTS
+// Cara INSIGHTS
 // ══════════════════════════════════════════════════════════════════════════════
 
-describe("Chronology Engine — ARIA Insights", () => {
+describe("Chronology Engine — Cara Insights", () => {
   it("generates critical insight for missing chronologies", () => {
     const result = computeChronologyIntelligence({
       children: [makeChild({ id: "c1" })],

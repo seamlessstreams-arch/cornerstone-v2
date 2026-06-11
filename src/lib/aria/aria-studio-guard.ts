@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — SERVER-SIDE PERMISSION GUARD
+// Cara STUDIO — SERVER-SIDE PERMISSION GUARD
 //
 // Every mutating studio route calls requireAriaStudioPermission before
 // touching the store. UI hiding is not enough — server is the source of
@@ -58,7 +58,7 @@ function resolveActor(req: NextRequest, body: Record<string, unknown> | null): A
   const rawRole =
     (body?.actor_role as string | undefined) ??
     headerRole ??
-    process.env.ARIA_FALLBACK_ROLE ??
+    (process.env.CARA_FALLBACK_ROLE ?? process.env.ARIA_FALLBACK_ROLE) ??
     "registered_manager";
 
   const userId =

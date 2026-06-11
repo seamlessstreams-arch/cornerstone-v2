@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA PRACTICE INTELLIGENCE — DASHBOARD AGGREGATOR
+// Cara PRACTICE INTELLIGENCE — DASHBOARD AGGREGATOR
 //
-// Pure, deterministic aggregation of persisted ARIA practice signals into the
+// Pure, deterministic aggregation of persisted Cara practice signals into the
 // manager / RI dashboard cards: gap heatmap, practice-drift warnings, protective-
 // factor weaknesses, relationship-depth map, threshold watchlist, wellbeing
 // signals (role-restricted) and the safeguarding culture radar.

@@ -50,7 +50,7 @@ export default function ReflectiveSupervisionPage() {
   const set = (k: string, v: string) => setForm((f: any) => ({ ...f, [k]: v }));
   const [formError, setFormError] = useState<string | null>(null);
 
-  // ARIA reflective prompts
+  // Cara reflective prompts
   const [aiState, setAiState] = useState<"idle" | "loading" | "done">("idle");
   const [aiPrompts, setAiPrompts] = useState<string[]>([]);
   const [aiMessage, setAiMessage] = useState<string | null>(null);
@@ -81,7 +81,7 @@ export default function ReflectiveSupervisionPage() {
       });
       const j = (await res.json()).data;
       setAiPrompts(j.prompts || []); setAiMessage(j.message || null);
-    } catch { setAiMessage("Couldn't reach ARIA. Use the section structure to guide the conversation."); }
+    } catch { setAiMessage("Couldn't reach Cara. Use the section structure to guide the conversation."); }
     setAiState("done");
   }
 
@@ -191,11 +191,11 @@ export default function ReflectiveSupervisionPage() {
               </Card>
             )}
 
-            {/* ARIA reflective prompts */}
+            {/* Cara reflective prompts */}
             <Card className="print:hidden">
               <CardContent className="py-4">
-                <p className="flex items-center gap-1.5 text-sm font-bold text-[var(--cs-navy)]"><Sparkles className="h-4 w-4 text-[var(--cs-aria-gold)]" /> Reflective prompts (ARIA)</p>
-                <p className="mt-0.5 text-xs text-[var(--cs-text-muted)]">Prepare a conversation. ARIA suggests prompts only — it never writes the record or its conclusions.</p>
+                <p className="flex items-center gap-1.5 text-sm font-bold text-[var(--cs-navy)]"><Sparkles className="h-4 w-4 text-[var(--cs-aria-gold)]" /> Reflective prompts (Cara)</p>
+                <p className="mt-0.5 text-xs text-[var(--cs-text-muted)]">Prepare a conversation. Cara suggests prompts only — it never writes the record or its conclusions.</p>
                 <div className="mt-2 flex flex-wrap items-end gap-2">
                   <input className={cn(inputCls, "max-w-md flex-1")} placeholder="Optional: anything you've noticed to focus on…" value={aiContext} onChange={(e) => setAiContext(e.target.value)} />
                   <button onClick={suggestPrompts} disabled={aiState === "loading"} className="inline-flex items-center gap-1.5 rounded-lg bg-[var(--cs-navy)] px-3.5 py-2 text-xs font-semibold text-white hover:bg-[var(--cs-navy-soft)] disabled:opacity-50">{aiState === "loading" ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Sparkles className="h-3.5 w-3.5" />} Suggest prompts</button>

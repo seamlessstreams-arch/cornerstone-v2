@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME CHILD VOICE INTELLIGENCE API ROUTE
+// CARA — HOME CHILD VOICE INTELLIGENCE API ROUTE
 // GET /api/v1/home-child-voice-intelligence
 // Synthesises house meetings & visitor engagement to produce an overall
 // child voice and participation intelligence score.

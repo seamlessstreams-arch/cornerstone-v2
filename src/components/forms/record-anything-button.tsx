@@ -4,7 +4,7 @@
 // RECORD ANYTHING — universal capture entry point
 //
 // A single button (drop into any page header) that opens the free-text "just write
-// what happened" capture. Cornerstone classifies + routes it everywhere (capture once,
+// what happened" capture. Cara classifies + routes it everywhere (capture once,
 // surface everywhere). When a child is in context (a young-person page) it records
 // straight against that child; otherwise it offers a quick child picker plus a general
 // home note. Attribution uses the signed-in user, never a hardcoded staff id.
@@ -117,7 +117,7 @@ function RecordAnythingBody({ childId, onClose, onDirty }: { childId?: string; o
       <>
         <DialogHeader className="pr-8">
           <DialogTitle className="flex items-center gap-2"><Sparkles className="h-4 w-4 text-[var(--cs-aria-gold)]" /> Record anything</DialogTitle>
-          <DialogDescription>Write what happened — Cornerstone classifies it and routes it everywhere.</DialogDescription>
+          <DialogDescription>Write what happened — Cara classifies it and routes it everywhere.</DialogDescription>
         </DialogHeader>
         <UniversalChildEntry
           childId={picked}

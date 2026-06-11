@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA ORCHESTRATOR — RISK CLASSIFIER
+// Cara ORCHESTRATOR — RISK CLASSIFIER
 //
 // Pure function risk classifier. Scans input text for risk indicators,
 // considers user role and context, and returns a risk classification with

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Night Monitoring & Sleep Engine
+// Cara Night Monitoring & Sleep Engine
 //
 // Deterministic engine for managing waking night checks, sleep patterns,
 // night incidents, and overnight staffing compliance.

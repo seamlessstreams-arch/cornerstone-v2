@@ -1,8 +1,8 @@
 // ═══════════════════════════════════════════���══════════════════════════════════
-// Aria Intelligence — Anthropic Provider Adapter
+// Cara Intelligence — Anthropic Provider Adapter
 //
 // Handles Claude Sonnet, Opus, Haiku via Anthropic Messages API.
-// Used for: Aria Studio, reflective writing, child-centred language,
+// Used for: Cara Studio, reflective writing, child-centred language,
 // supervision, long reports, therapeutic narratives, complex care reflection.
 // ══════════════════════════════════════════════════════════════════════════════
 

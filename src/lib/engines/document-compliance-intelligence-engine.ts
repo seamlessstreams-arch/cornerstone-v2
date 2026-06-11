@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DOCUMENT COMPLIANCE INTELLIGENCE ENGINE
+// CARA — DOCUMENT COMPLIANCE INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses documents, read receipts, and signing compliance to surface policy
@@ -378,7 +378,7 @@ export function computeDocumentComplianceIntelligence(
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
   const insights: AriaDocumentInsight[] = [];
 
   // Critical: expired regulatory docs

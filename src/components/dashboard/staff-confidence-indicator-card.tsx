@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF CONFIDENCE INDICATOR CARD
+// CARA — STAFF CONFIDENCE INDICATOR CARD
 // Live data from useSupervisionIntelligence() — wellbeing, threshold, trends.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -161,13 +161,13 @@ export function StaffConfidenceIndicatorCard() {
           </div>
         )}
 
-        {/* ── ARIA insights ───────────────────────────────────────────── */}
+        {/* ── Cara insights ───────────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Confidence Intelligence
+              Cara Confidence Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

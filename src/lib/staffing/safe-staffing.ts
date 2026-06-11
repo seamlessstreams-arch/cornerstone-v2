@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — Real-time Safe Staffing (Phase 7)
+// CARA — Real-time Safe Staffing (Phase 7)
 //
 // Assesses whether the home is SAFELY STAFFED RIGHT NOW, from who is actually
 // clocked in (Phase 3's live sign-in data) — distinct from the rota-service, which

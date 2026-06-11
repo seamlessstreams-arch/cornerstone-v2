@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME RISK LANDSCAPE INTELLIGENCE CARD
+// CARA — HOME RISK LANDSCAPE INTELLIGENCE CARD
 // Home-level: risk assessment distribution, trends, mitigation effectiveness,
 // review currency, child voice, and coverage across all children.
 // CHR 2015 Reg 12, Reg 35, Reg 36. SCCIF: "How well children are helped
@@ -227,12 +227,12 @@ export function HomeRiskLandscapeIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Risk Landscape Intelligence */}
+        {/* Cara Risk Landscape Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Risk Intelligence
+              Cara Risk Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

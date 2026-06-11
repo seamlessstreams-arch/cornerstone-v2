@@ -10,7 +10,7 @@
 //   3. Concern management — early identification and support
 //   4. Outcome decision — confirm, extend, or end employment
 //
-// Aria provides sector-specific guidance on children's home probation
+// Cara provides sector-specific guidance on children's home probation
 // management, regulatory expectations, and safer recruitment compliance.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -348,7 +348,7 @@ export default function ProbationPathwayPage() {
         <div className="rounded-2xl bg-blue-50 border border-blue-200 px-4 py-3 flex items-start gap-3 text-sm text-blue-800">
           <Sparkles className="h-4 w-4 shrink-0 mt-0.5 text-blue-500" />
           <div>
-            <strong>ARIA guidance.</strong> Probation objectives for residential children&apos;s home staff should
+            <strong>Cara guidance.</strong> Probation objectives for residential children&apos;s home staff should
             cover: safeguarding practice, relationship-based care, record keeping, trauma-informed response,
             medication administration (where applicable), and teamwork. Objectives should be achievable but
             stretching, and the staff member should understand what &ldquo;good&rdquo; looks like.
@@ -511,7 +511,7 @@ export default function ProbationPathwayPage() {
         <div className="rounded-2xl bg-blue-50 border border-blue-200 px-4 py-3 flex items-start gap-3 text-sm text-blue-800">
           <Sparkles className="h-4 w-4 shrink-0 mt-0.5 text-blue-500" />
           <div>
-            <strong>ARIA guidance.</strong> Address concerns early — do not wait until the final review.
+            <strong>Cara guidance.</strong> Address concerns early — do not wait until the final review.
             Document informal conversations and coaching. If concerns are serious enough to risk the
             probation not being confirmed, the staff member must be told clearly and given a reasonable
             opportunity to improve with support. In children&apos;s homes, any safeguarding-related concerns
@@ -638,10 +638,10 @@ export default function ProbationPathwayPage() {
   return (
     <PageShell
       title="Probation Pathway"
-      subtitle="Structured probation management — guided by ARIA"
+      subtitle="Structured probation management — guided by Cara"
       actions={
         <Badge className="bg-[var(--cs-aria-gold-bg)] text-[var(--cs-navy)] border-[var(--cs-aria-gold-soft)]">
-          <Sparkles className="h-3 w-3 mr-1" />ARIA Guided
+          <Sparkles className="h-3 w-3 mr-1" />Cara Guided
         </Badge>
       }
     >

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME MEDICATION MANAGEMENT INTELLIGENCE API ROUTE
+// CARA — HOME MEDICATION MANAGEMENT INTELLIGENCE API ROUTE
 // GET /api/v1/home-medication-management-intelligence
 // Medication administration, errors, witnessing, stock, compliance.
 // CHR 2015 Reg 23: "Health needs — including medication."

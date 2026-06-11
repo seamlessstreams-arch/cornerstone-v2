@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Leaving Care Preparation Intelligence — Public API
+// Cara Leaving Care Preparation Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

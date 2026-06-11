@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME THERAPEUTIC INTERVENTION EFFECTIVENESS INTELLIGENCE API ROUTE
+// CARA — HOME THERAPEUTIC INTERVENTION EFFECTIVENESS INTELLIGENCE API ROUTE
 // GET /api/v1/home-therapeutic-intervention-effectiveness-intelligence
 // Cross-domain composite: therapySessionRecords + interventionOutcomeRecords +
 // therapeuticProgressRecords + treatmentPlanRecords + therapeuticRelationshipRecords

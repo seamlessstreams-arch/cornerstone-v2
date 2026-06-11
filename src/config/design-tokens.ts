@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DESIGN TOKENS
+// CARA — DESIGN TOKENS
 // Calm design system constants. Warm neutrals, gentle status colours,
 // generous spacing. Every value here feeds the "professional calm" aesthetic.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -19,7 +19,7 @@ export const CORNERSTONE_TOKENS = {
     infoBlue: "#2563eb",
     // Accents
     ariaGold: "#d4a843",    // AI features
-    calmTeal: "#119488",    // Cornerstone signature teal (logo growth/plant)
+    calmTeal: "#119488",    // Cara signature teal (logo growth/plant)
     softPurple: "#7c3aed",  // Intelligence
     // Avisaar — warm children's-care accent trio (logo puzzle pieces)
     avisaarSage: "#6fb497",

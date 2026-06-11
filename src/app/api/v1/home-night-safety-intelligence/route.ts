@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME NIGHT SAFETY INTELLIGENCE API ROUTE
+// CARA — HOME NIGHT SAFETY INTELLIGENCE API ROUTE
 // GET /api/v1/home-night-safety-intelligence
 // Home-level engine: aggregates overnight safety — welfare check compliance,
 // night disturbances, overnight incidents, security, and staffing coverage.

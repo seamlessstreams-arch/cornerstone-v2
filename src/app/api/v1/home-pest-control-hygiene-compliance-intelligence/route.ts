@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME PEST CONTROL & HYGIENE COMPLIANCE INTELLIGENCE API ROUTE
+// CARA -- HOME PEST CONTROL & HYGIENE COMPLIANCE INTELLIGENCE API ROUTE
 // GET /api/v1/home-pest-control-hygiene-compliance-intelligence
 // Cross-domain composite: pestInspectionRecords + treatmentRecords +
 // kitchenHygieneRecords + cleanlinessRatingRecords + productSafetyRecords

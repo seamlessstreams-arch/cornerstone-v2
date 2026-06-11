@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Admissions & Matching Intelligence — Public API
+// Cara Admissions & Matching Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

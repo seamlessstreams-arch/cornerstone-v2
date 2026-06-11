@@ -1,6 +1,6 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ARIA STUDIO TYPES
-// Complete TypeScript types for the ARIA Studio generative intelligence
+// CARA — Cara STUDIO TYPES
+// Complete TypeScript types for the Cara Studio generative intelligence
 // workspace. Every AI-generated output is a draft until a human approves it.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -909,7 +909,7 @@ export interface AriaReg45Report {
 
 // ── Suggested Records (commit queue) ──────────────────────────────────────────
 //
-// ARIA proposes a record. A human edits if needed, and an authorised human
+// Cara proposes a record. A human edits if needed, and an authorised human
 // commits it to the official record. Until commit, the suggestion has no
 // statutory weight. Once committed, an immutable AriaCommittedRecord row
 // is the record of truth in this in-memory backend (in production this

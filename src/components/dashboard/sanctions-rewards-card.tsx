@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SANCTIONS & REWARDS INTELLIGENCE CARD
+// CARA — SANCTIONS & REWARDS INTELLIGENCE CARD
 // Dashboard card powered by the Sanctions & Rewards Intelligence Engine.
 // CHR 2015 Reg 19 (behaviour management), Reg 35 (behaviour management
 // standards), SCCIF Experiences & Progress, Helped & Protected.
@@ -234,13 +234,13 @@ export function SanctionsRewardsCard() {
           </div>
         )}
 
-        {/* ── ARIA Behaviour Intelligence ─────────────────────────────── */}
+        {/* ── Cara Behaviour Intelligence ─────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Behaviour Intelligence
+              Cara Behaviour Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

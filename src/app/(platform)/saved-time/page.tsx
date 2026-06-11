@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SAVED-TIME DASHBOARD
+// CARA — SAVED-TIME DASHBOARD
 // Shows time saved through automated routing from Care Events
 // ══════════════════════════════════════════════════════════════════════════════
 

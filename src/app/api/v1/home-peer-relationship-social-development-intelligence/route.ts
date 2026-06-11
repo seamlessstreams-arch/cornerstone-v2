@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME PEER RELATIONSHIP & SOCIAL DEVELOPMENT INTELLIGENCE API ROUTE
+// CARA — HOME PEER RELATIONSHIP & SOCIAL DEVELOPMENT INTELLIGENCE API ROUTE
 // GET /api/v1/home-peer-relationship-social-development-intelligence
 // Cross-domain composite: peerAssessmentRecords + socialSkillsProgrammes +
 // bullyingIncidentRecords + friendshipSupportPlans + socialActivityRecords

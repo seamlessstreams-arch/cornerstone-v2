@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Safeguarding Effectiveness Intelligence — Public API
+// Cara Safeguarding Effectiveness Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

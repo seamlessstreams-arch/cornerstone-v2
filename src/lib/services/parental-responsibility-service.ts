@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PARENTAL RESPONSIBILITY SERVICE
+// CARA — PARENTAL RESPONSIBILITY SERVICE
 // Tracks parental responsibility (PR) for each child, care order status,
 // who can exercise PR, and delegated consent arrangements.
 // CHR 2015 Reg 14 (care planning — PR arrangements),

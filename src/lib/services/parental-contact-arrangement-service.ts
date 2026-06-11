@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PARENTAL CONTACT ARRANGEMENT SERVICE
+// CARA — PARENTAL CONTACT ARRANGEMENT SERVICE
 // Manages scheduled contact sessions with parents/carers/family members,
 // court-ordered contact compliance, quality of contact monitoring,
 // and the child's experience of contact.

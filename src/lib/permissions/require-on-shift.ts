@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Permissions — requireOnShift (shift gate for existing-guarded routes)
+// Cara Permissions — requireOnShift (shift gate for existing-guarded routes)
 //
 // Many operational routes already enforce ROLE permissions via the auth-guard
 // (`requirePermission(req, PERMISSIONS.X)`). They don't enforce SHIFT, though.

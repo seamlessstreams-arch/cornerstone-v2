@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RI CHALLENGE LOG
+// CARA — RI CHALLENGE LOG
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState, useMemo } from "react";
@@ -40,7 +40,7 @@ const CHALLENGE_EXPORT_COLS: ExportColumn<RiChallengeLog>[] = [
   { header: "Manager Response", accessor: (c) => c.manager_response ?? "" },
   { header: "Action Required", accessor: (c) => c.action_required ?? "" },
   { header: "Action Due", accessor: (c) => c.action_due_date ?? "" },
-  { header: "ARIA Generated", accessor: (c) => c.aria_generated ? "Yes" : "No" },
+  { header: "Cara Generated", accessor: (c) => c.aria_generated ? "Yes" : "No" },
   { header: "Created", accessor: (c) => c.created_at },
 ];
 import {
@@ -242,7 +242,7 @@ function NewChallengeDialog({ open, onClose }: { open: boolean; onClose: () => v
     setAriaDrafting(true);
     try {
       const res = await api.post<{ data: { text?: string; parsed?: { challenge_text?: string; action_required?: string } } }>(
-        "/aria",
+        "/cara",
         {
           mode: "ri_challenge_question",
           style: "professional_formal",
@@ -329,7 +329,7 @@ function NewChallengeDialog({ open, onClose }: { open: boolean; onClose: () => v
               <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Challenge to Manager</label>
               <Button size="sm" variant="ghost" className="h-6 text-xs text-[var(--cs-aria-gold)] gap-1 px-2" onClick={draftWithAria} disabled={ariaDrafting || !evidence.trim()}>
                 <Sparkles className="h-3 w-3" />
-                {ariaDrafting ? "Drafting…" : "ARIA Draft"}
+                {ariaDrafting ? "Drafting…" : "Cara Draft"}
               </Button>
             </div>
             <Textarea className="mt-0 text-sm" rows={5} placeholder="Write the formal challenge question or statement for the manager…" value={challenge} onChange={(e) => setChallenge(e.target.value)} />

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════���═══════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF TEAM MEETINGS CARD
+// CARA — STAFF TEAM MEETINGS CARD
 // Live data from useSupervisionIntelligence() — overview, wellbeing, training.
 // ════════════════════════════════════════════════════════���═════════════════════
 
@@ -116,13 +116,13 @@ export function StaffTeamMeetingsCard() {
           </div>
         )}
 
-        {/* ── ARIA insights ───────────────────────────────────────────── */}
+        {/* ── Cara insights ───────────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Meeting Intelligence
+              Cara Meeting Intelligence
             </p>
             {intel.insights.slice(0, 2).map((insight, i) => (
               <div

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Bereavement, Loss & Support Intelligence Engine
+// Cara — Bereavement, Loss & Support Intelligence Engine
 //
 // Pure deterministic engine — no AI, no external calls, no randomness.
 // Evaluates how well the home supports children through bereavement, loss,

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME PLACEMENT STABILITY INTELLIGENCE CARD
+// CARA — HOME PLACEMENT STABILITY INTELLIGENCE CARD
 // Home-level: placement tenure, incident patterns, missing episode trends,
 // return interview compliance, and overall stability across children.
 // CHR 2015 Reg 36, Reg 44. SCCIF: "Impact on children's lives" /
@@ -231,12 +231,12 @@ export function HomePlacementStabilityIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Placement Stability Intelligence */}
+        {/* Cara Placement Stability Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Stability Intelligence
+              Cara Stability Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

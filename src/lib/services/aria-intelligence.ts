@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ARIA OPERATIONAL INTELLIGENCE SERVICE
+// CARA — Cara OPERATIONAL INTELLIGENCE SERVICE
 // Cross-module pattern detection: overdue forms, missing oversight, weak
 // recording, staffing concerns, compliance gaps, incident trends, medication
 // patterns, positive recognition, and more. Generates actionable recommendations.
@@ -198,7 +198,7 @@ export function detectMissingOversight(
       title: `${needingOversight.length} record${needingOversight.length > 1 ? "s" : ""} without management oversight`,
       description: `${needingOversight.length} significant record${needingOversight.length > 1 ? "s" : ""} ${needingOversight.length === 1 ? "has" : "have"} been open for more than 48 hours without management oversight. ${Object.entries(byType).map(([t, c]) => `${c} ${t.replace(/_/g, " ")}${c > 1 ? "s" : ""}`).join(", ")}. Ofsted expects timely, reflective management oversight of all significant events.`,
       severity: needingOversight.length > 3 ? "critical" : needingOversight.length > 1 ? "high" : "medium",
-      suggested_action: "Prioritise providing written oversight for these records. Use ARIA's oversight quality prompts to ensure your oversight demonstrates reflective analysis, child focus, and clear actions.",
+      suggested_action: "Prioritise providing written oversight for these records. Use Cara's oversight quality prompts to ensure your oversight demonstrates reflective analysis, child focus, and clear actions.",
       data_points: needingOversight.length,
       confidence: 0.98,
       supporting_data: { by_type: byType, records: needingOversight.map((r) => r.reference) },
@@ -232,7 +232,7 @@ export function detectWeakRecording(
         title: `Brief daily log entries for ${childNames[childId] ?? "a young person"}`,
         description: `${shortEntries.length} of ${childLogs.length} recent daily log entries are very brief (under 50 characters). Short entries may not provide sufficient detail for regulatory compliance or demonstrate the quality of care.`,
         severity: "medium",
-        suggested_action: "Discuss recording standards with the team. Entries should capture the child's experience, mood, activities, and any significant observations. Use ARIA's writing support to improve recording quality.",
+        suggested_action: "Discuss recording standards with the team. Entries should capture the child's experience, mood, activities, and any significant observations. Use Cara's writing support to improve recording quality.",
         linked_child_id: childId,
         data_points: childLogs.length,
         confidence: 0.8,
@@ -246,9 +246,9 @@ export function detectWeakRecording(
       results.push({
         recommendation_type: "weak_recording",
         title: `Missing mood scores for ${childNames[childId] ?? "a young person"}`,
-        description: `${withoutMood.length} of ${childLogs.length} recent daily logs are missing mood scores. Consistent mood tracking enables ARIA to detect trends and supports evidence-based care planning.`,
+        description: `${withoutMood.length} of ${childLogs.length} recent daily logs are missing mood scores. Consistent mood tracking enables Cara to detect trends and supports evidence-based care planning.`,
         severity: "low",
-        suggested_action: "Remind staff to include mood scores in daily logs. Mood data powers ARIA's pattern detection and is valuable evidence for reviews.",
+        suggested_action: "Remind staff to include mood scores in daily logs. Mood data powers Cara's pattern detection and is valuable evidence for reviews.",
         linked_child_id: childId,
         data_points: childLogs.length,
         confidence: 0.85,

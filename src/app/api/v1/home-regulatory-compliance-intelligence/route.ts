@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME REGULATORY COMPLIANCE INTELLIGENCE API ROUTE
+// CARA — HOME REGULATORY COMPLIANCE INTELLIGENCE API ROUTE
 // GET /api/v1/home-regulatory-compliance-intelligence
 // Synthesises Reg 44 visits, quality audits, notifiable events, inspection
 // history, and home policies to produce an overall regulatory compliance score.

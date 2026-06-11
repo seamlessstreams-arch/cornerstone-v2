@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MULTI-AGENCY WORKING SERVICE
+// CARA — MULTI-AGENCY WORKING SERVICE
 // Manages professional contacts, LAC/CLA reviews, and multi-agency meetings
 // to ensure effective inter-agency collaboration around children in care.
 //

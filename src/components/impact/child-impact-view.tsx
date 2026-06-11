@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD IMPACT VIEW
+// CARA — CHILD IMPACT VIEW
 // Beautiful, warm, child-centred impact view across 10 care domains.
 // Hero card with overall progress, domain cards in a responsive grid,
 // achievements, actions, risks, goals, and a narrative "story mode" flow.

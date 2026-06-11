@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PLACEMENT & CARE PLANNING SERVICE
+// CARA — PLACEMENT & CARE PLANNING SERVICE
 // Manages placement plans, care plans, pathway plans, and LAC reviews for
 // looked-after children under CHR 2015 Reg 11, 12, 14.
 // ══════════════════════════════════════════════════════════════════════════════

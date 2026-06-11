@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — POLICY REVIEW TRACKER
+// CARA — POLICY REVIEW TRACKER
 // Tracks the review cycle of all policies — when each was last reviewed, when
 // it's next due, who's responsible, version history, and staff sign-off status.
 // Ensures compliance with Regulation 36 (policies and procedures) and supports

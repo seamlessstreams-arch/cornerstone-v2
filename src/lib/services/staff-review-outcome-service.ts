@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF REVIEW OUTCOME SERVICE
+// CARA — STAFF REVIEW OUTCOME SERVICE
 // Records outcomes of formal and informal staff reviews — supervision
 // sessions, probation reviews, annual appraisals, return-to-work meetings,
-// and performance conversations. Part of the ARIA Staff Development,
+// and performance conversations. Part of the Cara Staff Development,
 // Support and Risk Intelligence layer.
 //
 // CHR 2015 Reg 33 (employment of staff — review and development),

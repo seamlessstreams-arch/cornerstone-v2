@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME HOMEWORK & ACADEMIC SUPPORT INTELLIGENCE ENGINE
+// CARA -- HOME HOMEWORK & ACADEMIC SUPPORT INTELLIGENCE ENGINE
 // Tracks the quality of educational support provided at home -- homework
 // completion support, quiet study environments, tutoring provision, educational
 // resource availability, and school liaison for academic progress.

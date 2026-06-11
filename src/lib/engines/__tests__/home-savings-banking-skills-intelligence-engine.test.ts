@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SAVINGS & BANKING SKILLS INTELLIGENCE ENGINE TESTS
+// CARA — HOME SAVINGS & BANKING SKILLS INTELLIGENCE ENGINE TESTS
 // Comprehensive vitest suite covering: insufficient_data, inadequate floor,
 // outstanding/good/adequate/inadequate scenarios, each bonus in isolation,
 // each penalty, all 6 rates, strengths, concerns, recommendations, insights,

@@ -3,7 +3,7 @@
 //
 // Cross-home intelligence endpoints for multi-home oversight.
 // GET: Fetch overview, snapshots, trends, alerts, or comparison data.
-// POST: Generate snapshots or trigger ARIA cross-home analysis.
+// POST: Generate snapshots or trigger Cara cross-home analysis.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { NextRequest, NextResponse } from "next/server";
@@ -106,7 +106,7 @@ export async function POST(req: NextRequest) {
         const snapshots = await getLatestSnapshots(organisationId);
         const alerts = await getAlerts(organisationId);
 
-        // Build a structured context for ARIA
+        // Build a structured context for Cara
         const analysisContext = {
           snapshots: snapshots.data ?? [],
           alerts: alerts.data ?? [],
@@ -140,7 +140,7 @@ export async function POST(req: NextRequest) {
   }
 }
 
-// ── ARIA Analysis Helper ─────────────────────────────────────────────────────
+// ── Cara Analysis Helper ─────────────────────────────────────────────────────
 
 interface AnalysisContext {
   snapshots: Array<{

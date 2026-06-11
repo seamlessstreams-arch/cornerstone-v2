@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME NIGHT SAFETY INTELLIGENCE CARD
+// CARA — HOME NIGHT SAFETY INTELLIGENCE CARD
 // Home-level: overnight welfare check compliance, night disturbances,
-// incidents, per-child night profiles, ARIA insights.
+// incidents, per-child night profiles, Cara insights.
 // CHR 2015 Reg 12, 34. SCCIF: "Safety of children."
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -241,12 +241,12 @@ export function HomeNightSafetyIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Night Safety Insights */}
+        {/* Cara Night Safety Insights */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Night Safety Intelligence
+              Cara Night Safety Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

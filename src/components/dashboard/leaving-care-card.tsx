@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LEAVING CARE INTELLIGENCE CARD
+// CARA — LEAVING CARE INTELLIGENCE CARD
 // Dashboard card powered by the Leaving Care Intelligence Engine.
 // Reg 12 (preparing to leave care), Reg 14 (needs assessment),
 // Children (Leaving Care) Act 2000, SCCIF Experiences & Progress.
@@ -222,13 +222,13 @@ export function LeavingCareCard() {
           </div>
         )}
 
-        {/* ── ARIA Leaving Care Intelligence ──────────────────────────── */}
+        {/* ── Cara Leaving Care Intelligence ──────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Leaving Care Intelligence
+              Cara Leaving Care Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

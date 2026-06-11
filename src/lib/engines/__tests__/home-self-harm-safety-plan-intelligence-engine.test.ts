@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SELF-HARM SAFETY PLAN INTELLIGENCE ENGINE — TESTS
+// CARA — HOME SELF-HARM SAFETY PLAN INTELLIGENCE ENGINE — TESTS
 // CHR 2015 Reg 12 (Protection) / Reg 13 (Behaviour management).
 // SCCIF: Helped and protected; Health and well-being.
 // ══════════════════════════════════════════════════════════════════════════════

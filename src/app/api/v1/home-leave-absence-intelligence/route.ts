@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME LEAVE & ABSENCE INTELLIGENCE API ROUTE
+// CARA — HOME LEAVE & ABSENCE INTELLIGENCE API ROUTE
 // GET /api/v1/home-leave-absence-intelligence
 // Workforce availability: leave patterns, sickness, approval governance.
 // CHR 2015 Reg 33. SCCIF: "Staffing arrangements — availability and adequacy."

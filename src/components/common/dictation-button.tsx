@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DICTATION BUTTON
+// CARA — DICTATION BUTTON
 // Reusable voice-input component using the Web Speech API.
 // ══════════════════════════════════════════════════════════════════════════════
 

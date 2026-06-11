@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME PLACEMENT IMPACT ASSESSMENT INTELLIGENCE ENGINE
+// CARA — HOME PLACEMENT IMPACT ASSESSMENT INTELLIGENCE ENGINE
 // Pure deterministic engine: matching rigour, risk assessment quality,
 // impact on existing children, compatibility analysis, safeguarding
 // considerations, staffing implications, and decision documentation.

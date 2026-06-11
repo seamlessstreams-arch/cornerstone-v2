@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME MISSING EPISODES INTELLIGENCE API ROUTE
+// CARA — HOME MISSING EPISODES INTELLIGENCE API ROUTE
 // GET /api/v1/home-missing-episodes-intelligence
 // Synthesises missing from care episodes across all children to produce an
 // overall missing episodes and safeguarding response intelligence score.

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — AUDITS & QUALITY ASSURANCE PAGE
+// CARA — AUDITS & QUALITY ASSURANCE PAGE
 // Internal audit schedule, compliance tracking, category breakdown,
 // and action management with print support.
 // ══════════════════════════════════════════════════════════════════════════════

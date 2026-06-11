@@ -1,6 +1,6 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — INTELLIGENCE LAYER TYPES
-// ARIA-powered analysis, pattern detection and child experience tracking.
+// CARA — INTELLIGENCE LAYER TYPES
+// Cara-powered analysis, pattern detection and child experience tracking.
 // ══════════════════════════════════════════════════════════════════════════════
 
 // ── Utility / Shared ──────────────────────────────────────────────────────────
@@ -18,7 +18,7 @@ export type ExperienceIndicator =
   | 'stability'
   | 'achievement';
 
-/** All pattern types ARIA can detect. */
+/** All pattern types Cara can detect. */
 export type PatternAlertType =
   | 'contact_linked_incidents'
   | 'rota_dysregulation'
@@ -133,7 +133,7 @@ export interface EvidenceRef {
 
 // ── Document Classification ───────────────────────────────────────────────────
 
-/** Full ARIA classification result stored in document_intelligence_jobs.classification. */
+/** Full Cara classification result stored in document_intelligence_jobs.classification. */
 export interface DocumentClassification {
   document_type: string;  // e.g. 'incident_report' | 'medical_note' | 'school_update' | 'meeting_minutes'
   confidence: number;     // 0–1
@@ -155,9 +155,9 @@ export interface DocumentClassification {
   recommended_linkages: { type: string; description: string }[];
 }
 
-// ── ARIA Intelligence Request ─────────────────────────────────────────────────
+// ── Cara Intelligence Request ─────────────────────────────────────────────────
 
-/** Payload sent to the ARIA intelligence endpoint. */
+/** Payload sent to the Cara intelligence endpoint. */
 export interface AriaIntelligenceRequest {
   mode:
     | 'experience_summary'
@@ -183,7 +183,7 @@ export interface AriaIntelligenceRequest {
 
 // ── Child Experience Result ───────────────────────────────────────────────────
 
-/** Computed result returned by ARIA before persisting to child_experience_snapshots. */
+/** Computed result returned by Cara before persisting to child_experience_snapshots. */
 export interface ChildExperienceResult {
   child_id: string;
   period_start: string;
@@ -202,7 +202,7 @@ export interface ChildExperienceResult {
 
 // ── Pattern Analysis Result ───────────────────────────────────────────────────
 
-/** Full pattern analysis response from ARIA. */
+/** Full pattern analysis response from Cara. */
 export interface PatternAnalysisResult {
   patterns: DetectedPattern[];
   analysis_period_days: number;
@@ -211,7 +211,7 @@ export interface PatternAnalysisResult {
   generated_at: string;
 }
 
-/** A single pattern detected by ARIA. */
+/** A single pattern detected by Cara. */
 export interface DetectedPattern {
   type: PatternAlertType;
   title: string;
@@ -225,7 +225,7 @@ export interface DetectedPattern {
 
 // ── Home Climate Result ───────────────────────────────────────────────────────
 
-/** Climate computation returned by ARIA before persisting to home_climate_snapshots. */
+/** Climate computation returned by Cara before persisting to home_climate_snapshots. */
 export interface HomeClimateResult {
   snapshot_date: string;
   scores: {
@@ -272,7 +272,7 @@ export interface ChildExperienceSnapshot {
   overall_score: number;
   score_delta: number | null;
 
-  // ARIA output
+  // Cara output
   narrative: string;
   evidence_refs: EvidenceRef[];
 
@@ -535,7 +535,7 @@ export interface DocumentIntelligenceJob {
   updated_at: string;
 }
 
-/** A single chronology entry that ARIA suggests adding after document analysis. */
+/** A single chronology entry that Cara suggests adding after document analysis. */
 export interface ChronologySuggestion {
   date: string;
   category: string;
@@ -544,7 +544,7 @@ export interface ChronologySuggestion {
   significance: EvidenceSignificance;
 }
 
-/** An action that ARIA suggests creating after document analysis. */
+/** An action that Cara suggests creating after document analysis. */
 export interface ActionSuggestion {
   title: string;
   description: string;

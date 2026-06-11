@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — BODY MAP RECORDS
+// CARA — BODY MAP RECORDS
 // Records physical marks, bruises, injuries, and observations on young people.
 // Each entry captures location on a body outline, type, size, colour,
 // explanation, and linked incident. Required after any physical intervention

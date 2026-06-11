@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF DEVELOPMENT INTELLIGENCE ENGINE · TEST SUITE
+// CARA — STAFF DEVELOPMENT INTELLIGENCE ENGINE · TEST SUITE
 //
 // 50+ tests covering overview calculations, staff profiles, competency domain
-// analysis, alert generation, ARIA insights, and Chamberlain House integration.
+// analysis, alert generation, Cara insights, and Chamberlain House integration.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";
@@ -642,9 +642,9 @@ describe("alerts", () => {
   });
 });
 
-// ── ARIA Insights ─────────────────────────────────────────────────────────
+// ── Cara Insights ─────────────────────────────────────────────────────────
 
-describe("ARIA insights", () => {
+describe("Cara insights", () => {
   it("critical: overdue appraisals", () => {
     const s1 = makeStaff();
     const a = makeAppraisal(s1.id, { status: "overdue" });
@@ -973,7 +973,7 @@ describe("Chamberlain House integration scenario", () => {
     // Low: development plans <25% (Ryan 20%, Edward 25%)
     expect(r.alerts.some((a) => a.severity === "low" && a.message.includes("less than 25%"))).toBe(true);
 
-    // ── ARIA Insights ──────────────────────────────────────────────────
+    // ── Cara Insights ──────────────────────────────────────────────────
     // 2 active dev plans → positive succession/development insight
     expect(r.insights.some((i) => i.severity === "positive" && i.text.includes("development plans"))).toBe(true);
 

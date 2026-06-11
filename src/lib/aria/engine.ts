@@ -1,11 +1,11 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA INTELLIGENCE — CORE ENGINE
+// Cara INTELLIGENCE — CORE ENGINE
 //
 // The orchestrator for the intelligence layer. Retrieves evidence, calls the
 // AI provider, validates the output, persists the AI run and evidence links,
 // and records the audit trail.
 //
-// All output is "Aria suggested draft" until a human approves and commits.
+// All output is "Cara suggested draft" until a human approves and commits.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { createServerClient, isSupabaseEnabled } from "@/lib/supabase/server";
@@ -121,8 +121,8 @@ export async function runAriaIntelligence(rawRequest: unknown, requestedBy: stri
 
   const raw = await generateAriaJson({
     model: request.featureKey.includes("inspection")
-      ? process.env.ARIA_REVIEW_MODEL ?? process.env.ARIA_MODEL
-      : process.env.ARIA_MODEL,
+      ? (process.env.CARA_REVIEW_MODEL ?? process.env.ARIA_REVIEW_MODEL) ?? (process.env.CARA_MODEL ?? process.env.ARIA_MODEL)
+      : (process.env.CARA_MODEL ?? process.env.ARIA_MODEL),
     temperature: 0.15,
     messages: [
       { role: "system", content: systemPrompt },
@@ -156,7 +156,7 @@ export async function runAriaIntelligence(rawRequest: unknown, requestedBy: stri
       role_mode: request.roleMode,
       feature_key: request.featureKey,
       prompt_hash: promptHash,
-      model: process.env.ARIA_MODEL ?? "gpt-4.1-mini",
+      model: (process.env.CARA_MODEL ?? process.env.ARIA_MODEL) ?? "gpt-4.1-mini",
       input_summary: request.userQuestion.slice(0, 1000),
       output_summary: output.executiveSummary ?? output.answer.slice(0, 1000),
       output_json: output,
@@ -169,7 +169,7 @@ export async function runAriaIntelligence(rawRequest: unknown, requestedBy: stri
     .select("id")
     .single();
 
-  if (runError || !run) throw new Error(runError?.message ?? "Failed to create Aria AI run.");
+  if (runError || !run) throw new Error(runError?.message ?? "Failed to create Cara AI run.");
 
   const evidenceRows = output.evidenceUsed.length ? output.evidenceUsed : evidence.slice(0, 12);
 
@@ -215,7 +215,7 @@ export async function runAriaIntelligence(rawRequest: unknown, requestedBy: stri
     ai_run_id: run.id,
     actor_id: requestedBy,
     action: "created",
-    notes: "Aria generated a draft requiring human review.",
+    notes: "Cara generated a draft requiring human review.",
     after_json: output,
   });
 
@@ -257,7 +257,7 @@ export async function approveAriaRun(input: {
     ai_run_id: input.aiRunId,
     actor_id: input.actorId,
     action: "approved",
-    notes: input.notes ?? "Human approved Aria draft.",
+    notes: input.notes ?? "Human approved Cara draft.",
     before_json: existing,
   });
 

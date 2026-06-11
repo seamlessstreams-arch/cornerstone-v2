@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// API — ARIA Safeguarding Patterns
+// API — Cara Safeguarding Patterns
 // GET  → list patterns (filterable by status/severity/child)
 // POST → run scan (RBAC: aria.generate_drafts)
 // PATCH → update status (acknowledge / dismiss / mark actioned)

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Daily Log Intelligence — Public API
+// Cara Daily Log Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

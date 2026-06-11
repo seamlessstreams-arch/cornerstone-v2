@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Aria Intelligence — Audit Logger
+// Cara Intelligence — Audit Logger
 //
 // Every AI action is logged. Never stores raw prompts containing sensitive
 // child information unless explicitly configured and encrypted.

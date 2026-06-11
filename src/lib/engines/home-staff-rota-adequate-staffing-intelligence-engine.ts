@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME STAFF ROTA & ADEQUATE STAFFING INTELLIGENCE ENGINE
+// CARA — HOME STAFF ROTA & ADEQUATE STAFFING INTELLIGENCE ENGINE
 // Monitors staffing adequacy — shift coverage completeness, staff-to-child
 // ratios, overtime management, agency staff usage, and rota planning quality.
 // STAFF-FOCUSED ENGINE: uses total_staff from store.staff, NOT total_children.

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Placement Stability Intelligence — Public API
+// Cara Placement Stability Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 // ── Legacy Placement Stability Engine ─────────────────────────────────────

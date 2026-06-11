@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME RISK LANDSCAPE INTELLIGENCE API ROUTE
+// CARA — HOME RISK LANDSCAPE INTELLIGENCE API ROUTE
 // GET /api/v1/home-risk-landscape-intelligence
 // Synthesises risk assessments across all children — risk distribution,
 // trend analysis, mitigation effectiveness, review currency, child voice,

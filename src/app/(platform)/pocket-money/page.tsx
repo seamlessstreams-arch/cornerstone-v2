@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — POCKET MONEY & SAVINGS
+// CARA — POCKET MONEY & SAVINGS
 // Tracks pocket money allowances, spending, savings, and receipts for each
 // young person. Required under Children's Homes Regulations 2015 (Reg 37)
 // and Schedule 3 — the home must keep a record of money managed on behalf

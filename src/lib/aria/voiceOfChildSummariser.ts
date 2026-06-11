@@ -1,11 +1,11 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — VOICE OF THE CHILD SUMMARISER
+// Cara — VOICE OF THE CHILD SUMMARISER
 //
 // Aggregates a child's voice across multiple records (daily logs, key work,
 // 1:1 sessions, complaints, RHIs, family time, etc.) and produces a draft
 // summary of what the child is saying, wanting, fearing, and needing.
 //
-// Output is "Aria suggested draft" — never final until a human approves.
+// Output is "Cara suggested draft" — never final until a human approves.
 //
 // Pipeline:
 //   1. Per-record voice extraction (quotes + paraphrased expressions)
@@ -106,7 +106,7 @@ export interface VoiceSummary {
   childPseudonym?: string;
   generatedAt: string;
   status: "draft";
-  ariaLabel: "Aria suggested draft";
+  ariaLabel: "Cara suggested draft";
 
   periodStart?: string;
   periodEnd?: string;
@@ -380,7 +380,7 @@ function suggestActionsToStrengthenVoice(
   }
 
   actions.push({
-    title: "Share Aria draft with the child in age-appropriate form",
+    title: "Share Cara draft with the child in age-appropriate form",
     description:
       "Once approved, share the voice summary with the child (with adaptations for age and communication style) so they can confirm, correct or expand it. UNCRC Article 12 in practice.",
     priority: "medium",
@@ -425,19 +425,19 @@ function buildTemplatedDraft(
 
   const paragraphs: string[] = [];
 
-  paragraphs.push(`Aria suggested draft. Voice of ${child}${periodLine}.`);
+  paragraphs.push(`Cara suggested draft. Voice of ${child}${periodLine}.`);
 
   paragraphs.push(
-    `${input.records.length} records were considered. Taken together, the voice-capture quality across these records reads as ${computed.overallQuality}. The detail below is what Aria surfaced from the records, and what feels worth thinking through with the team.`,
+    `${input.records.length} records were considered. Taken together, the voice-capture quality across these records reads as ${computed.overallQuality}. The detail below is what Cara surfaced from the records, and what feels worth thinking through with the team.`,
   );
 
   if (computed.themesPresent.length > 0) {
     paragraphs.push(
-      `Themes ${child} appears to be expressing: ${themesPretty(computed.themesPresent)}. These are the threads Aria found running through what was said and how it was said. The records suggest these matter to ${child} now.`,
+      `Themes ${child} appears to be expressing: ${themesPretty(computed.themesPresent)}. These are the threads Cara found running through what was said and how it was said. The records suggest these matter to ${child} now.`,
     );
   } else {
     paragraphs.push(
-      `Aria has not surfaced clear voice themes across the records. That is itself a finding worth sitting with, rather than a clean result. The team may need to consider whether ${child} has had room to speak, and whether the records are catching what they say when they do.`,
+      `Cara has not surfaced clear voice themes across the records. That is itself a finding worth sitting with, rather than a clean result. The team may need to consider whether ${child} has had room to speak, and whether the records are catching what they say when they do.`,
     );
   }
 
@@ -477,7 +477,7 @@ function buildTemplatedDraft(
   }
 
   paragraphs.push(
-    `This wording is an Aria suggested draft. It must be reviewed, edited as needed, and approved by the Registered Manager before it forms part of the regulatory record. Once approved, it should be shared back with ${child} in a format that suits their age and communication style, so they can confirm, correct, or expand on what Aria has surfaced.`,
+    `This wording is an Cara suggested draft. It must be reviewed, edited as needed, and approved by the Registered Manager before it forms part of the regulatory record. Once approved, it should be shared back with ${child} in a format that suits their age and communication style, so they can confirm, correct, or expand on what Cara has surfaced.`,
   );
 
   const narrativeDraft = applyAriaPostprocessor(paragraphs.join("\n\n"));
@@ -517,12 +517,12 @@ async function enhanceWithLlm(
   const client = new Anthropic({ apiKey });
 
   const system = [
-    `You are Aria, the intelligent professional assistant built into Cornerstone, the operating system for UK residential children's homes. You are drafting a voice-of-the-child narrative summary for a Registered Manager to review and approve.`,
+    `You are Cara, the intelligent professional assistant built into Cara, the operating system for UK residential children's homes. You are drafting a voice-of-the-child narrative summary for a Registered Manager to review and approve.`,
     ``,
     ARIA_PROFESSIONAL_IDENTITY_PROMPT,
     ``,
     `Hard rules for this draft:`,
-    `- Label the wording clearly as an Aria suggested draft.`,
+    `- Label the wording clearly as an Cara suggested draft.`,
     `- Use only what the records and deterministic analysis provide. Do not invent facts.`,
     `- No blame-based language about the child or staff.`,
     `- Where the child has expressed feeling unheard or where their wishes appear unmet, foreground it.`,
@@ -556,7 +556,7 @@ async function enhanceWithLlm(
     ``,
     `Return ONLY a JSON object — no prose, no code fences:`,
     `{`,
-    `  "narrativeDraft": string  // 6-12 sentence reflective voice summary, labelled "Aria suggested draft" at the start`,
+    `  "narrativeDraft": string  // 6-12 sentence reflective voice summary, labelled "Cara suggested draft" at the start`,
     `  "ofstedSummary": string   // single-paragraph Ofsted-ready summary suitable for SCCIF Children's Experience evidence`,
     `}`,
   ]
@@ -662,7 +662,7 @@ export async function summariseVoice(input: VoiceSummaryInput): Promise<VoiceSum
     childPseudonym: input.childPseudonym,
     generatedAt: new Date().toISOString(),
     status: "draft",
-    ariaLabel: "Aria suggested draft",
+    ariaLabel: "Cara suggested draft",
 
     periodStart: input.periodStart,
     periodEnd: input.periodEnd,

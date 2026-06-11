@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME TRENDS / "DIRECTION OF TRAVEL" ENGINE
+// CARA — HOME TRENDS / "DIRECTION OF TRAVEL" ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 //

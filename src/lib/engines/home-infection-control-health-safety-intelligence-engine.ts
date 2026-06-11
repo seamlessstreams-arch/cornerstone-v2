@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME INFECTION CONTROL & HEALTH SAFETY INTELLIGENCE ENGINE
+// CARA — HOME INFECTION CONTROL & HEALTH SAFETY INTELLIGENCE ENGINE
 // Tracks infection management, medication administration accuracy, staff medication
 // training, and first aid coverage to ensure children's health and safety.
 // Pure deterministic engine. CHR 2015 Reg 12/31.

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME STAFF COMPETENCY & TRAINING INTELLIGENCE ENGINE
+// CARA — HOME STAFF COMPETENCY & TRAINING INTELLIGENCE ENGINE
 // Home-level: assesses staff training compliance, competency levels, CPD
 // engagement, and handbook awareness to produce an overall competency score.
 // CHR 2015 Reg 32 (fitness of workers) / Reg 33 (employment of staff).

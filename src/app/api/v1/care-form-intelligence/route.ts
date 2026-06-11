@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CARE FORM INTELLIGENCE API ROUTE
+// CARA — CARE FORM INTELLIGENCE API ROUTE
 // GET /api/v1/care-form-intelligence
 // Returns care form pipeline analysis, completion rates, overdue tracking,
-// form type coverage, and ARIA documentation governance insights.
+// form type coverage, and Cara documentation governance insights.
 // Reg 35, Reg 37, Schedule 1, SCCIF documentation quality.
 // ══════════════════════════════════════════════════════════════════════════════
 

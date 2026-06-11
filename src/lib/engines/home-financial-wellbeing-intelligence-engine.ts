@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME FINANCIAL WELLBEING INTELLIGENCE ENGINE
+// CARA — HOME FINANCIAL WELLBEING INTELLIGENCE ENGINE
 // Home-level: analyses pocket money transactions and clothing allowance
 // records to assess financial management, savings culture, receipt compliance,
 // clothing provision, and equity across children.

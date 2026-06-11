@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Sensory Environment Quality Intelligence Engine
+// Cara — Sensory Environment Quality Intelligence Engine
 //
 // Pure deterministic engine — no AI, no external calls, no randomness, no
 // Date.now().

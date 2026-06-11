@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF DEVELOPMENT PLAN SERVICE TESTS
+// CARA — STAFF DEVELOPMENT PLAN SERVICE TESTS
 // Pure-function unit tests for development plan metrics computation and
 // alert identification.
 // ══════════════════════════════════════════════════════════════════════════════

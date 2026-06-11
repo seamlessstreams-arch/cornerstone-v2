@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME LAC REVIEW INTELLIGENCE API ROUTE
+// CARA — HOME LAC REVIEW INTELLIGENCE API ROUTE
 // GET /api/v1/home-lac-review-intelligence
 // Synthesises LAC review data across all children to produce an overall
 // review compliance, child participation, and action tracking intelligence.

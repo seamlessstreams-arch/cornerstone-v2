@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — FILING CABINET
+// CARA — FILING CABINET
 // Auto-filed records from Care Event routing — searchable, filterable archive
 // ══════════════════════════════════════════════════════════════════════════════
 

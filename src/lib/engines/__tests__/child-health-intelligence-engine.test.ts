@@ -751,7 +751,7 @@ describe("computeChildHealthIntelligence", () => {
     expect(result.headline).toContain("CAMHS waiting list");
   });
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
 
   it("generates critical insight for very low medication compliance", () => {
     const meds = [makeMed()];

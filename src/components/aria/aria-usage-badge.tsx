@@ -4,8 +4,8 @@
 // AriaUsageBadge
 //
 // Small badge shown on record pages (daily logs, incidents, key work, etc.)
-// when ARIA was used to assist with that record. Clicking expands to show
-// which ARIA command was used, when, and its current status.
+// when Cara was used to assist with that record. Clicking expands to show
+// which Cara command was used, when, and its current status.
 //
 // Usage:
 //   <AriaUsageBadge sourceTable="daily_log_entries" recordId={entry.id} />
@@ -96,7 +96,7 @@ export function AriaUsageBadge({
     }
   }, [expanded, loaded, fetchUsage]);
 
-  // Don't render if not ARIA-assisted
+  // Don't render if not Cara-assisted
   if (!ariaAssisted) return null;
 
   return (
@@ -115,7 +115,7 @@ export function AriaUsageBadge({
             size === "sm" ? "h-2.5 w-2.5" : "h-3 w-3",
           )}
         />
-        <span className="font-medium text-[var(--cs-navy)]">ARIA assisted</span>
+        <span className="font-medium text-[var(--cs-navy)]">Cara assisted</span>
         {sourceTable && recordId && (
           expanded ? (
             <ChevronUp className="h-2.5 w-2.5 text-[var(--cs-text-muted)]" />
@@ -160,7 +160,7 @@ export function AriaUsageBadge({
 
       {expanded && loaded && usages.length === 0 && (
         <div className="mt-1 text-[10px] text-[var(--cs-text-muted)]">
-          ARIA usage details not available
+          Cara usage details not available
         </div>
       )}
     </div>

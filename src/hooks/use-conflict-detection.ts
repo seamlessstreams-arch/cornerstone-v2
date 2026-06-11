@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CONFLICT DETECTION HOOK
+// CARA — CONFLICT DETECTION HOOK
 // React Query wrapper for /api/v1/conflict-detection
 // ══════════════════════════════════════════════════════════════════════════════
 

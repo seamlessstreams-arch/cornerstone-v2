@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA Intelligence Engine — Complaints & Representations
+// Cara Intelligence Engine — Complaints & Representations
 //
 // Pure deterministic analysis of complaints for LAC in residential care.
 // Tracks:

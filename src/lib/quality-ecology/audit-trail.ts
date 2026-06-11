@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Quality Ecology — Audit Trail Engine
+// Cara Quality Ecology — Audit Trail Engine
 //
 // Immutable audit logging for every action in the system. Every transition,
 // approval, amendment, access decision, and break-glass event is captured.

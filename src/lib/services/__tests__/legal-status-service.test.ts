@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LEGAL STATUS SERVICE TESTS
+// CARA — LEGAL STATUS SERVICE TESTS
 // Pure-function tests for legal status metrics computation, alert identification,
 // and constant validation for CHR 2015 Reg 8/36, Children Act 1989 compliance.
 // ══════════════════════════════════════════════════════════════════════════════

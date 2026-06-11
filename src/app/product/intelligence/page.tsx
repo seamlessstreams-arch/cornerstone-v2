@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ARIA INTELLIGENCE DEEP-DIVE PAGE  (route: /intelligence)
+// CARA — Cara INTELLIGENCE DEEP-DIVE PAGE  (route: /intelligence)
 //
 // Standalone deep-dive on the real-time intelligence layer. Static server
 // component. Honest copy — every capability maps to something real in the app.
@@ -17,9 +17,9 @@ import { MarketingFooter } from "@/components/marketing/marketing-footer";
 import { SectionEyebrow } from "@/components/marketing/ui";
 
 export const metadata: Metadata = {
-  title: "ARIA real-time intelligence | Cornerstone Care OS",
+  title: "Cara real-time intelligence | Cara OS",
   description:
-    "How Cornerstone turns the records your team already keeps into live RAG ratings, ranked priorities and a clear direction of travel — plus the ARIA Practice Assistant: live support during incidents, quality-checked recording and manager-reviewed drafts.",
+    "How Cara turns the records your team already keeps into live RAG ratings, ranked priorities and a clear direction of travel — plus the Cara Practice Assistant: live support during incidents, quality-checked recording and manager-reviewed drafts.",
 };
 
 const OUTPUTS = [
@@ -30,7 +30,7 @@ const OUTPUTS = [
   { Icon: Sunrise, t: "Shift Briefing", d: "What must happen this shift — who's on, tasks and reviews due, medications, and overnight events." },
   { Icon: ClipboardCheck, t: "Ofsted Readiness", d: "A live composite rating across all six judgement areas — where you stand today, not on the night before." },
   { Icon: Brain, t: "Manager Briefing", d: "The core domains distilled for leadership, with the single thing that most needs your attention next." },
-  { Icon: FileText, t: "Report Packs", d: "Home Summary and Child Review packs generated in one click — print-ready and optionally ARIA-narrated." },
+  { Icon: FileText, t: "Report Packs", d: "Home Summary and Child Review packs generated in one click — print-ready and optionally Cara-narrated." },
 ];
 
 const DOMAINS = ["Safeguarding", "Health & medication", "Education", "Positive relationships", "Care & wellbeing", "Leadership & management"];
@@ -44,10 +44,10 @@ export default function IntelligencePage() {
       <section className="relative overflow-hidden bg-[var(--cs-navy)] text-white">
         <div className="pointer-events-none absolute inset-0 opacity-50" style={{ background: "radial-gradient(50% 60% at 15% 0%, var(--cs-aria-glow) 0%, transparent 55%), radial-gradient(45% 55% at 100% 100%, var(--cs-teal-glow) 0%, transparent 50%)" }} />
         <div className="relative mx-auto max-w-4xl px-5 py-20 text-center lg:py-28">
-          <span className="inline-block rounded-full border border-[var(--cs-aria-gold)]/30 bg-[var(--cs-aria-gold)]/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-[var(--cs-aria-gold-soft)]">ARIA · real-time intelligence</span>
+          <span className="inline-block rounded-full border border-[var(--cs-aria-gold)]/30 bg-[var(--cs-aria-gold)]/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-[var(--cs-aria-gold-soft)]">Cara · real-time intelligence</span>
           <h1 className="mt-5 text-4xl font-extrabold leading-[1.1] tracking-tight text-white sm:text-5xl">Your records, analysed the moment they land.</h1>
           <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-white/75">
-            Cornerstone turns the notes your team already keeps into live RAG ratings, ranked priorities and a clear direction of travel — computed from your real records by around 300 deterministic engines. No overnight batch. No black box.
+            Cara turns the notes your team already keeps into live RAG ratings, ranked priorities and a clear direction of travel — computed from your real records by around 300 deterministic engines. No overnight batch. No black box.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <Link href="/contact" className="inline-flex items-center justify-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-bold text-[var(--cs-navy)] transition-transform hover:-translate-y-0.5">Book a demo <ArrowRight className="h-4 w-4" /></Link>
@@ -66,7 +66,7 @@ export default function IntelligencePage() {
         <div className="mt-12 grid gap-5 sm:grid-cols-3">
           {[
             { n: "01", Icon: PenLine, t: "You record", d: "A daily log, an incident, a key-working session — typed, spoken, or tapped in seconds, with the child and shift attached." },
-            { n: "02", Icon: Activity, t: "ARIA analyses", d: "Around 300 deterministic engines re-evaluate the relevant domains immediately, producing explainable RAG ratings." },
+            { n: "02", Icon: Activity, t: "Cara analyses", d: "Around 300 deterministic engines re-evaluate the relevant domains immediately, producing explainable RAG ratings." },
             { n: "03", Icon: Radar, t: "You see what matters", d: "Ranked priorities, trends and ready evidence surface across the platform — before anyone has to ask for them." },
           ].map((s, i) => (
             <div key={i} className="rounded-2xl border border-[var(--cs-border)] bg-white p-7 shadow-[var(--cs-shadow-card)]">
@@ -84,16 +84,16 @@ export default function IntelligencePage() {
         <div className="mx-auto max-w-7xl px-5 py-20">
           <div className="grid items-center gap-12 lg:grid-cols-2">
             <div>
-              <SectionEyebrow>How ARIA thinks</SectionEyebrow>
+              <SectionEyebrow>How Cara thinks</SectionEyebrow>
               <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-[var(--cs-navy)] sm:text-4xl">Fast first. Deep only when needed.</h2>
               <p className="mt-4 text-lg text-[var(--cs-text-secondary)]">
-                Most signals never need an AI model at all. ARIA resolves them with transparent rules, falls back to a learned cache for the rest, and escalates to the model only for the genuinely novel — so it stays fast, low-cost and explainable.
+                Most signals never need an AI model at all. Cara resolves them with transparent rules, falls back to a learned cache for the rest, and escalates to the model only for the genuinely novel — so it stays fast, low-cost and explainable.
               </p>
               <div className="mt-6 space-y-3">
                 {[
                   { Icon: Scale, t: "Deterministic rules", d: "Auditable logic resolves the vast majority of cases — the same way every time, always traceable to the record behind it." },
-                  { Icon: Layers, t: "Learned cache", d: "Patterns ARIA has already reasoned about are recognised and answered instantly, without re-computing from scratch." },
-                  { Icon: Brain, t: "ARIA model", d: "Only the genuinely new escalates to the AI — and even then, anything that matters is held for human review." },
+                  { Icon: Layers, t: "Learned cache", d: "Patterns Cara has already reasoned about are recognised and answered instantly, without re-computing from scratch." },
+                  { Icon: Brain, t: "Cara model", d: "Only the genuinely new escalates to the AI — and even then, anything that matters is held for human review." },
                 ].map((s, i) => (
                   <div key={i} className="flex gap-3.5 rounded-2xl border border-[var(--cs-border)] bg-[var(--cs-bg)] p-4">
                     <div className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--cs-teal-bg)] text-[var(--cs-teal-strong)]"><s.Icon className="h-5 w-5" /></div>
@@ -142,8 +142,8 @@ export default function IntelligencePage() {
       <section className="mx-auto max-w-7xl px-5 py-20">
         <div className="mx-auto max-w-2xl text-center">
           <SectionEyebrow>Practice intelligence</SectionEyebrow>
-          <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-[var(--cs-navy)] sm:text-4xl">Three ways ARIA supports good practice.</h2>
-          <p className="mt-4 text-lg text-[var(--cs-text-secondary)]">Not just risk-spotting — ARIA helps your team record well, decide safely, and notice what&rsquo;s going right.</p>
+          <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-[var(--cs-navy)] sm:text-4xl">Three ways Cara supports good practice.</h2>
+          <p className="mt-4 text-lg text-[var(--cs-text-secondary)]">Not just risk-spotting — Cara helps your team record well, decide safely, and notice what&rsquo;s going right.</p>
         </div>
         <div className="mt-12 grid gap-6 md:grid-cols-3">
           {[
@@ -163,15 +163,15 @@ export default function IntelligencePage() {
         </div>
       </section>
 
-      {/* ARIA Practice Assistant */}
+      {/* Cara Practice Assistant */}
       <section id="practice-assistant" className="relative overflow-hidden bg-[var(--cs-navy)] text-white">
         <div className="pointer-events-none absolute inset-0 opacity-40" style={{ background: "radial-gradient(50% 60% at 85% 0%, var(--cs-aria-glow) 0%, transparent 55%), radial-gradient(45% 55% at 0% 100%, var(--cs-teal-glow) 0%, transparent 50%)" }} />
         <div className="relative mx-auto max-w-7xl px-5 py-20">
           <div className="mx-auto max-w-2xl text-center">
-            <span className="inline-block rounded-full border border-[var(--cs-aria-gold)]/30 bg-[var(--cs-aria-gold)]/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-[var(--cs-aria-gold-soft)]">ARIA Practice Assistant</span>
+            <span className="inline-block rounded-full border border-[var(--cs-aria-gold)]/30 bg-[var(--cs-aria-gold)]/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-[var(--cs-aria-gold-soft)]">Cara Practice Assistant</span>
             <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Live support when practice is hardest.</h2>
             <p className="mt-4 text-lg leading-relaxed text-white/75">
-              Intelligence isn&rsquo;t only hindsight. During and after an incident, ARIA works alongside your team — in the moment, in the write-up, and in the follow-up.
+              Intelligence isn&rsquo;t only hindsight. During and after an incident, Cara works alongside your team — in the moment, in the write-up, and in the follow-up.
             </p>
           </div>
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -247,7 +247,7 @@ export default function IntelligencePage() {
                 <SectionEyebrow>Safe by design</SectionEyebrow>
                 <h2 className="mt-3 text-2xl font-extrabold tracking-tight text-[var(--cs-navy)] sm:text-3xl">Explainable, and always human-in-the-loop.</h2>
                 <p className="mt-3 text-base leading-relaxed text-[var(--cs-text-secondary)]">
-                  Ratings trace back to the records behind them, ARIA never auto-decides a statutory threshold, and high or critical flags are never deleted by automation. The intelligence supports your judgement — it never replaces it.
+                  Ratings trace back to the records behind them, Cara never auto-decides a statutory threshold, and high or critical flags are never deleted by automation. The intelligence supports your judgement — it never replaces it.
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2">
                   {[{ Icon: Eye, t: "Explainable" }, { Icon: ShieldCheck, t: "Human-in-the-loop" }, { Icon: GitMerge, t: "One source of truth" }, { Icon: Lock, t: "Protected flags" }].map((c, i) => (

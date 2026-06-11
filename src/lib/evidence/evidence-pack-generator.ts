@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — INSPECTION EVIDENCE PACK GENERATOR
+// CARA — INSPECTION EVIDENCE PACK GENERATOR
 // Pure deterministic engine that compiles a comprehensive evidence pack
 // from all store data for Ofsted inspection preparation.
 // No LLM calls, no DB access. Uses getStore() pattern.

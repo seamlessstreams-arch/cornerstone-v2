@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA PRACTICE INTELLIGENCE — REVIEW / RESOLUTION (pure logic)
+// Cara PRACTICE INTELLIGENCE — REVIEW / RESOLUTION (pure logic)
 //
-// Manager review of ARIA output: record decisions + rationale on assessments and
+// Manager review of Cara output: record decisions + rationale on assessments and
 // threshold consultations, and RESOLVE flags. Guardrails:
 //   • Flags are never deleted — only resolved, and only WITH a rationale.
 //   • Manager decisions require both a decision and a rationale (audit trail).

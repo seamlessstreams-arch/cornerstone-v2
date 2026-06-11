@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA Intelligence Engine — Health (Physical)
+// Cara Intelligence Engine — Health (Physical)
 //
 // Pure deterministic analysis of physical health for LAC in residential care.
 // Tracks:

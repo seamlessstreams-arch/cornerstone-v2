@@ -3,11 +3,11 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // AriaTaskCreator
 //
-// Parses ARIA-generated task suggestions and lets the manager confirm, edit,
+// Parses Cara-generated task suggestions and lets the manager confirm, edit,
 // or discard each one before creating real tasks. Tasks are created via the
 // existing /api/v1/tasks endpoint with the auto_generated flag.
 //
-// ARIA suggests. Humans decide. Cornerstone evidences.
+// Cara suggests. Humans decide. Cara evidences.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState, useMemo } from "react";
@@ -37,9 +37,9 @@ interface ParsedTask {
 }
 
 interface AriaTaskCreatorProps {
-  /** The raw text from ARIA that contains task suggestions */
+  /** The raw text from Cara that contains task suggestions */
   generatedText: string;
-  /** ARIA output ID for linking */
+  /** Cara output ID for linking */
   outputId?: string;
   /** Home to create tasks in */
   homeId?: string;
@@ -215,7 +215,7 @@ export function AriaTaskCreator({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           title: task.title,
-          description: `${task.description}\n\n[Created by ARIA${outputId ? ` — output ${outputId}` : ""}]`,
+          description: `${task.description}\n\n[Created by Cara${outputId ? ` — output ${outputId}` : ""}]`,
           priority: task.priority,
           category: task.category ?? "general",
           status: "not_started",
@@ -275,7 +275,7 @@ export function AriaTaskCreator({
       >
         <div className="flex items-center gap-2 text-xs text-[var(--cs-text-muted)]">
           <ListTodo className="h-4 w-4" />
-          <span>No tasks could be parsed from the ARIA output</span>
+          <span>No tasks could be parsed from the Cara output</span>
         </div>
       </div>
     );
@@ -296,7 +296,7 @@ export function AriaTaskCreator({
         <div className="flex items-center gap-2">
           <ListTodo className="h-4 w-4 text-[var(--cs-aria-gold)]" />
           <span className="text-sm font-medium text-[var(--cs-navy)]">
-            ARIA suggested {parsedTasks.length} task
+            Cara suggested {parsedTasks.length} task
             {parsedTasks.length !== 1 ? "s" : ""}
           </span>
           {createdCount > 0 && (

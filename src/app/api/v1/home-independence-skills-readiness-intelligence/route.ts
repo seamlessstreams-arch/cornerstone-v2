@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME INDEPENDENCE SKILLS READINESS INTELLIGENCE API ROUTE
+// CARA — HOME INDEPENDENCE SKILLS READINESS INTELLIGENCE API ROUTE
 // GET /api/v1/home-independence-skills-readiness-intelligence
 // Synthesises independenceSkillsRecords and pathwayPlans to assess how well
 // the home is preparing children for independence and leaving care.

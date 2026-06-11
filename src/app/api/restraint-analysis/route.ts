@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Restraint Analysis Intelligence API Route
+// Cara — Restraint Analysis Intelligence API Route
 //
 // GET  → returns Chamberlain House demo restraint analysis intelligence
 // POST → accepts custom data for any home

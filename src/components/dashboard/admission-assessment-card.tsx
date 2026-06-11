@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ADMISSION ASSESSMENT CARD
+// CARA — ADMISSION ASSESSMENT CARD
 // Live data from usePlacementStability() — home metrics, children.
 // CHR 2015 Reg 36. SCCIF: Leadership & Management.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -104,13 +104,13 @@ export function AdmissionAssessmentCard() {
           </div>
         </div>
 
-        {/* ── ARIA insights ───────────────────────────────────────────── */}
+        {/* ── Cara insights ───────────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Placement Intelligence
+              Cara Placement Intelligence
             </p>
             {intel.insights.slice(0, 2).map((insight, i) => (
               <div

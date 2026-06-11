@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME ADVOCACY & INDEPENDENT VISITOR INTELLIGENCE ENGINE TESTS
+// CARA -- HOME ADVOCACY & INDEPENDENT VISITOR INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite covering scoring, rates, bonuses, penalties,
 // strengths, concerns, recommendations, insights, and edge cases.
 // ==============================================================================

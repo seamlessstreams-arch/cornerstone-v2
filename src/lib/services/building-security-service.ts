@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — BUILDING SECURITY SERVICE
+// CARA — BUILDING SECURITY SERVICE
 // Tracks physical security measures, access controls, alarm systems,
 // perimeter checks, and security incidents.
 // CHR 2015 Reg 36 (fitness of premises — security),

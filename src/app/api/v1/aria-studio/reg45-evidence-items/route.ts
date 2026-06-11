@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// API — ARIA Reg 45 Evidence Item status updates
+// API — Cara Reg 45 Evidence Item status updates
 // PATCH → accept / defer / reject / include_in_report
 //   RBAC: aria.approve_outputs (safeguarding-sensitive)
 // ══════════════════════════════════════════════════════════════════════════════

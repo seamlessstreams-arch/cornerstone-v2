@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME BELONGING & PERSONAL PROPERTY INTELLIGENCE ENGINE
+// CARA — HOME BELONGING & PERSONAL PROPERTY INTELLIGENCE ENGINE
 // Tracks children's belongings, clothing provision, haircare, gifts, and property
 // respect to ensure children are valued and their personal identity supported.
 // Pure deterministic engine. CHR 2015 Reg 7/9/10.

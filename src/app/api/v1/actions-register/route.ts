@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — UNIFIED ACTIONS REGISTER API ROUTE
+// CARA — UNIFIED ACTIONS REGISTER API ROUTE
 // GET /api/v1/actions-register
 //
 // Harvests AGREED ACTIONS from every forum (supervisions, LAC reviews, multi-

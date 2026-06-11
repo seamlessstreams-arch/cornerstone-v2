@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA Decision Support + Formulation Engine
+// Cara Decision Support + Formulation Engine
 //
 // Synthesises per-child clinical formulations (4-Ps: Predisposing,
 // Precipitating, Perpetuating, Protective) from live records, and ranks

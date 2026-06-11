@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — WELFARE CHECKS CARD
+// CARA — WELFARE CHECKS CARD
 // Dashboard widget showing today's welfare check round completion,
 // consecutive-day streak, and any flagged concerns.
 // Reg 34 — Staff must safeguard children and promote their welfare.

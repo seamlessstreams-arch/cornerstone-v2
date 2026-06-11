@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA V1 — SUGGESTION TYPES
+// Cara V1 — SUGGESTION TYPES
 // Mirrors the schema in supabase/migrations/014_aria_suggestions.sql.
 // ══════════════════════════════════════════════════════════════════════════════
 

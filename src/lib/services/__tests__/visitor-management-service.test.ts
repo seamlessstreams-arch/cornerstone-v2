@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — VISITOR MANAGEMENT SERVICE TESTS
+// CARA — VISITOR MANAGEMENT SERVICE TESTS
 // Pure-function tests for visitor management metrics, alert identification,
 // constant validation, and edge cases.
 // ══════════════════════════════════════════════════════════════════════════════

@@ -210,7 +210,7 @@ describe("Manager Briefing Intelligence Engine", () => {
     expect(result.priority_actions[0].regulatory_ref).toBeTruthy();
   });
 
-  it("generates ARIA insights for compliance warnings", () => {
+  it("generates Cara insights for compliance warnings", () => {
     const result = computeManagerBriefing(makeInput({
       domains: [
         makeDomain({ domain: "workforce", domain_label: "Workforce", compliance_rate: 60 }),

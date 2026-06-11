@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — POLICIES & PROCEDURES
+// CARA — POLICIES & PROCEDURES
 // Centralised register of all home policies required by Children's Homes
 // Regulations 2015 & Quality Standards 2015. Tracks version history,
 // review dates, responsible owners, and staff read-acknowledgements.

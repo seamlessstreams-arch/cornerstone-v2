@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME CLOTHING LABELLING & STORAGE INTELLIGENCE API ROUTE
+// CARA -- HOME CLOTHING LABELLING & STORAGE INTELLIGENCE API ROUTE
 // GET /api/v1/home-clothing-labelling-storage-intelligence
 // Cross-domain composite: clothingLabellingRecords + clothingStorageRecords +
 // clothingRotationRecords + clothingOwnershipRecords + clothingConditionRecords

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RECORDING QUALITY TREND CARD
+// CARA — RECORDING QUALITY TREND CARD
 // Weekly trajectory of recording quality and the child's voice — is it improving?
 // Powered by the Recording Quality Trend engine (Reg 13 — driving improvement).
 // ══════════════════════════════════════════════════════════════════════════════
@@ -86,10 +86,10 @@ export function RecordingQualityTrendCard() {
           <p className="text-[9px] text-[var(--cs-text-gentle)] mt-1 text-center">avg quality / week · last {series.length} weeks</p>
         </div>
 
-        {/* ── ARIA insights ────────────────────────────────────────────── */}
+        {/* ── Cara insights ────────────────────────────────────────────── */}
         {insights.length > 0 && (
           <div className="space-y-1.5">
-            <p className="text-xs font-semibold flex items-center gap-1 text-purple-700"><Brain className="h-3 w-3" /> ARIA Trend Intelligence</p>
+            <p className="text-xs font-semibold flex items-center gap-1 text-purple-700"><Brain className="h-3 w-3" /> Cara Trend Intelligence</p>
             {insights.slice(0, 2).map((i, idx) => (
               <div key={idx} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[i.severity] ?? INSIGHT_STYLES.positive)}>{i.text}</div>
             ))}

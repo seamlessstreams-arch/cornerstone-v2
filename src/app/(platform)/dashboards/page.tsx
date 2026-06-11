@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — NAMED DASHBOARDS INDEX
+// CARA — NAMED DASHBOARDS INDEX
 // The 8 role dashboards, each composed entirely from the event spine.
 // ══════════════════════════════════════════════════════════════════════════════
 

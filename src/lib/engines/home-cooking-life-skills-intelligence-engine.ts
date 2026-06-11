@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME COOKING & BAKING LIFE SKILLS INTELLIGENCE ENGINE
+// CARA — HOME COOKING & BAKING LIFE SKILLS INTELLIGENCE ENGINE
 // Pure deterministic engine: cooking competency progression, independence,
 // hygiene awareness, cultural exploration, and child voice in food skills.
 // CHR 2015 Reg 9: "Promoting good health and well-being." SCCIF: Independence.

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — TRAINING COMPLIANCE CARD
+// CARA — TRAINING COMPLIANCE CARD
 // Dashboard widget showing mandatory training compliance across the team.
 // Highlights expired and expiring-soon certifications that must be renewed
 // before the next Ofsted inspection or Reg 44 visit.

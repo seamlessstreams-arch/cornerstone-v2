@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME MINOR REPAIRS & MAINTENANCE INTELLIGENCE ENGINE
+// CARA — HOME MINOR REPAIRS & MAINTENANCE INTELLIGENCE ENGINE
 // Monitors premises maintenance quality including maintenance request tracking,
 // repair completion timeliness, health & safety compliance checks, premises
 // condition audits, and planned preventative maintenance.

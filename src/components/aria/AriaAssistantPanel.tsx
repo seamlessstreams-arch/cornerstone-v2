@@ -130,7 +130,7 @@ export function AriaAssistantPanel({
       const errorMessage: Message = {
         id: crypto.randomUUID(),
         role: "system",
-        content: "Network error — could not reach Aria service",
+        content: "Network error — could not reach Cara service",
         error: "NETWORK_ERROR",
         timestamp: new Date().toISOString(),
       };
@@ -149,7 +149,7 @@ export function AriaAssistantPanel({
             <span className="text-xs font-bold text-white">A</span>
           </div>
           <div>
-            <h3 className="text-sm font-semibold">Aria Intelligence</h3>
+            <h3 className="text-sm font-semibold">Cara Intelligence</h3>
             <p className="text-xs text-muted-foreground">Governed AI • {userRole.replace(/_/g, " ")}</p>
           </div>
         </div>

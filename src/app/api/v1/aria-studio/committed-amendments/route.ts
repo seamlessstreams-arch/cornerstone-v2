@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// API — ARIA Committed Record Amendments  (Milestone 13)
+// API — Cara Committed Record Amendments  (Milestone 13)
 //
 // GET    ?record_id=… → return the version history (oldest → newest)
 // POST   → amend a committed record (creates a new version)

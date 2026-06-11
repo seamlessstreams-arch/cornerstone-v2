@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF PERFORMANCE DIP SERVICE
+// CARA — STAFF PERFORMANCE DIP SERVICE
 // Tracks staff performance dips using soft, human language — part of the
-// ARIA Staff Development, Support and Risk Intelligence layer.
+// Cara Staff Development, Support and Risk Intelligence layer.
 // CHR 2015 Reg 33 (employment of staff — competence and support),
 // Reg 34 (fitness of workers), Reg 13 (leadership and management).
 //

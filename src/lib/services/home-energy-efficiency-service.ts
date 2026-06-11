@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ENERGY EFFICIENCY SERVICE
+// CARA — HOME ENERGY EFFICIENCY SERVICE
 // Manages energy usage monitoring, carbon reduction tracking, utility costs,
 // efficiency improvements, and sustainability measures for children's homes.
 // CHR 2015 Reg 25 (premises — suitable, well-maintained, safe environment),

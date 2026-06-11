@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — YOUNG PERSON EMPLOYMENT SUPPORT SERVICE TESTS
+// CARA — YOUNG PERSON EMPLOYMENT SUPPORT SERVICE TESTS
 // Pure-function tests for employment support metrics, alert identification,
-// ARIA insight generation, and edge cases.
+// Cara insight generation, and edge cases.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";

@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // POST /api/aria/practice-intelligence/draft
 //
-// ARIA DRAFTS a stronger, child-centred record/summary/reflection. Returns a
+// Cara DRAFTS a stronger, child-centred record/summary/reflection. Returns a
 // structured, editable scaffold (deterministic) enhanced with an AI narrative
 // when a provider is configured. Role-gated via aria.generate_drafts.
 // ══════════════════════════════════════════════════════════════════════════════

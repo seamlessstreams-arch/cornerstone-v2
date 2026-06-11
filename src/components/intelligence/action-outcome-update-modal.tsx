@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ACTION OUTCOME UPDATE MODAL
+// CARA — ACTION OUTCOME UPDATE MODAL
 // Mark an action outcome as done, record what changed, rate effectiveness.
 // ══════════════════════════════════════════════════════════════════════════════
 

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RESTRAINT DEBRIEF INTELLIGENCE CARD
+// CARA — RESTRAINT DEBRIEF INTELLIGENCE CARD
 // Live data from safeguarding intelligence engine.
 // CHR 2015 Reg 12/34/35. SCCIF: Safety.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -95,12 +95,12 @@ export function RestraintDebriefCard() {
           </div>
         </div>
 
-        {/* ARIA insights */}
+        {/* Cara insights */}
         {insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Restraint Intelligence
+              Cara Restraint Intelligence
             </p>
             {insights.map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

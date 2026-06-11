@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME DOCUMENT GOVERNANCE INTELLIGENCE ENGINE — TESTS
+// CARA — HOME DOCUMENT GOVERNANCE INTELLIGENCE ENGINE — TESTS
 // ══════════════════════════════════════════════════════════════════════════════
 
 import {

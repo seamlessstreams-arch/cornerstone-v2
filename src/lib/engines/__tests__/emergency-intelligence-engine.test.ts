@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EMERGENCY PREPAREDNESS INTELLIGENCE ENGINE · TEST SUITE
+// CARA — EMERGENCY PREPAREDNESS INTELLIGENCE ENGINE · TEST SUITE
 //
 // 50+ tests covering overview, drill type statuses, recent drills, plan
-// coverage, alerts, ARIA insights, and Chamberlain House integration data.
+// coverage, alerts, Cara insights, and Chamberlain House integration data.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";
@@ -840,7 +840,7 @@ describe("Emergency Intelligence Engine", () => {
     });
   });
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────────
 
   describe("insights", () => {
     it("critical insight for drill types never conducted", () => {

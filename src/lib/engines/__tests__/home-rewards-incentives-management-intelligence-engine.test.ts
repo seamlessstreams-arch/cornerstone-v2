@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME REWARDS & INCENTIVES MANAGEMENT INTELLIGENCE ENGINE TESTS
+// CARA — HOME REWARDS & INCENTIVES MANAGEMENT INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite for reward scheme fairness, positive reinforcement
 // consistency, incentive programme effectiveness, child participation in
 // reward design, and equity across children in the home.

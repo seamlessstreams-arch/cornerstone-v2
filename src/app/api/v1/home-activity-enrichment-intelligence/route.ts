@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ACTIVITY & ENRICHMENT INTELLIGENCE API ROUTE
+// CARA — HOME ACTIVITY & ENRICHMENT INTELLIGENCE API ROUTE
 // GET /api/v1/home-activity-enrichment-intelligence
 // Home-level engine: aggregates activity provision, participation rates,
 // variety, new experiences, and enrichment quality across all children.

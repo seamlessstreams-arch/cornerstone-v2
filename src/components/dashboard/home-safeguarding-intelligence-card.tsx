@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SAFEGUARDING INTELLIGENCE CARD
+// CARA — HOME SAFEGUARDING INTELLIGENCE CARD
 // Home-level: contextual safeguarding risks, exploitation screening coverage,
 // online safety incidents, multi-agency engagement, and risk management.
 // CHR 2015 Reg 12, 13, 34. SCCIF: "Safe."
@@ -236,12 +236,12 @@ export function HomeSafeguardingIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Safeguarding Intelligence */}
+        {/* Cara Safeguarding Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Safeguarding Intelligence
+              Cara Safeguarding Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

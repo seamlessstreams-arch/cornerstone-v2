@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — INCIDENT ANALYTICS ENGINE
+// CARA — INCIDENT ANALYTICS ENGINE
 //
 // Pure deterministic engine that analyses incident records to produce:
 // - Period summary (totals, per-week average, trend comparison)
@@ -8,7 +8,7 @@
 // - Time-of-day and day-of-week pattern analysis
 // - Per-child incident frequency with repeat-child detection
 // - Oversight compliance (Reg 45 management review)
-// - Auto-generated ARIA pattern insights (deterministic)
+// - Auto-generated Cara pattern insights (deterministic)
 //
 // Key regulatory requirements:
 //   Reg 12 — Protection of children
@@ -336,7 +336,7 @@ export function computeIncidentAnalytics(
     compliance_rate: complianceRate,
   };
 
-  // ── ARIA Pattern Insights ─────────────────────────────────────────────
+  // ── Cara Pattern Insights ─────────────────────────────────────────────
 
   const insights: AriaInsight[] = [];
 

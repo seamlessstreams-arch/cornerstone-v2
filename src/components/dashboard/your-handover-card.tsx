@@ -83,7 +83,7 @@ export function YourHandoverCard() {
           <div className="rounded-xl bg-[var(--cs-aria-gold-bg)] border border-[var(--cs-aria-gold-soft)] px-3 py-2.5 mb-3">
             <div className="flex items-center gap-1.5 mb-1.5">
               <Sparkles className="h-3 w-3 text-[var(--cs-aria-gold)]" />
-              <span className="text-[10px] font-semibold text-[var(--cs-aria-gold)]">ARIA catch-up</span>
+              <span className="text-[10px] font-semibold text-[var(--cs-aria-gold)]">Cara catch-up</span>
             </div>
             <pre className={cn(
               "text-[10px] text-[var(--cs-text-secondary)] whitespace-pre-wrap font-sans leading-relaxed",

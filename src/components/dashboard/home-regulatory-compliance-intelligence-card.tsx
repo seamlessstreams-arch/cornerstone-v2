@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME REGULATORY COMPLIANCE INTELLIGENCE CARD
+// CARA — HOME REGULATORY COMPLIANCE INTELLIGENCE CARD
 // Home-level: Reg 44 visits, quality audits, notifiable events, inspection
 // history, policy review status — holistic regulatory health view.
 // CHR 2015 Reg 44, 45, 46. SCCIF: "Leadership and management."
@@ -294,12 +294,12 @@ export function HomeRegulatoryComplianceIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Regulatory Intelligence */}
+        {/* Cara Regulatory Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Regulatory Intelligence
+              Cara Regulatory Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — Manager Verify Queue  (Milestone 29 engine)
+// CARA — Manager Verify Queue  (Milestone 29 engine)
 //
 // Read-only listing of care events sitting in `manager_review_required` (or
 // `routing_failed`) status, waiting for a manager to verify or return.

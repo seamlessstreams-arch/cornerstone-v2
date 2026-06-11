@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # ══════════════════════════════════════════════════════════════════════════════
-# Cornerstone — Supabase Cloud Setup Script
+# Cara OS — Supabase Cloud Setup Script
 #
 # Run this interactively in your terminal to:
 #   1. Login to Supabase CLI
-#   2. Link to the Cornerstone project
+#   2. Link to the Cara OS project
 #   3. Push all migrations (001–018)
 #   4. Fetch and configure API keys in .env.local
 #
@@ -17,7 +17,7 @@ PROJECT_REF="qrowfwheedwimgskmefy"
 ENV_FILE=".env.local"
 
 echo "╔══════════════════════════════════════════════════════════════╗"
-echo "║       CORNERSTONE — Supabase Cloud Setup                    ║"
+echo "║       CARA OS — Supabase Cloud Setup                       ║"
 echo "╚══════════════════════════════════════════════════════════════╝"
 echo ""
 

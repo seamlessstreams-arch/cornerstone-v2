@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME CCTV & SURVEILLANCE GOVERNANCE INTELLIGENCE ENGINE
+// CARA — HOME CCTV & SURVEILLANCE GOVERNANCE INTELLIGENCE ENGINE
 // Monitors CCTV governance quality including policy compliance, privacy impact
 // assessments, footage retention management, child awareness of surveillance,
 // and data protection compliance across the home.

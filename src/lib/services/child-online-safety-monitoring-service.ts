@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD ONLINE SAFETY MONITORING SERVICE
+// CARA — CHILD ONLINE SAFETY MONITORING SERVICE
 // Device checks, internet filter reviews, social media audits, app reviews,
 // screen time reviews, online incident recording, education sessions,
 // and policy reviews for children in residential care.

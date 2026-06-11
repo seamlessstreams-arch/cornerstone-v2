@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF DISCIPLINARY INTELLIGENCE API ROUTE
+// CARA — STAFF DISCIPLINARY INTELLIGENCE API ROUTE
 // GET /api/v1/staff-disciplinary-intelligence
 // Returns staff disciplinary case analysis: timelines, outcomes,
-// category patterns, support measures, LADO referrals, and ARIA intelligence.
+// category patterns, support measures, LADO referrals, and Cara intelligence.
 // Reg 33: fitness of staff — Reg 34: employment of staff
 // Reg 21: supervision of staff (Schedule 4)
 // ══════════════════════════════════════════════════════════════════════════════

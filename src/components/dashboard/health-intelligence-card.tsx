@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HEALTH INTELLIGENCE CARD
+// CARA — HEALTH INTELLIGENCE CARD
 // Dashboard widget for physical health compliance, appointments, child health
-// profiles, CAMHS engagement, and ARIA health intelligence.
+// profiles, CAMHS engagement, and Cara health intelligence.
 // Powered by the Health & Wellbeing Intelligence Engine — live data (Reg 23/7).
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -270,13 +270,13 @@ export function HealthIntelligenceCard() {
           </div>
         )}
 
-        {/* ── ARIA Health Intelligence ─────────────────────────────────── */}
+        {/* ── Cara Health Intelligence ─────────────────────────────────── */}
 
         {insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Health Intelligence
+              Cara Health Intelligence
             </p>
             {insights.slice(0, 3).map((insight, i) => (
               <div

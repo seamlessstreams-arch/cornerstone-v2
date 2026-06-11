@@ -483,7 +483,7 @@ describe("saferRecruitmentGate.ts", () => {
 
     it("ariaLabel is always set", () => {
       const result = evaluateSaferRecruitmentGate(completeRecruitmentRecord());
-      expect(result.ariaLabel).toBe("Aria suggested draft");
+      expect(result.ariaLabel).toBe("Cara suggested draft");
     });
 
     it("regulatoryLinks are populated", () => {
@@ -778,7 +778,7 @@ describe("suspensionDecision.ts", () => {
     it("returns a complete analysis with all fields populated", () => {
       const result = analyseSuspensionDecision(baseSuspensionInput());
       expect(result.status).toBe("draft");
-      expect(result.ariaLabel).toBe("Aria suggested draft");
+      expect(result.ariaLabel).toBe("Cara suggested draft");
       expect(result.engineVersion).toBe(ENGINE_VERSION);
       expect(result.generatedAt).toBeTruthy();
       expect(result.overallRiskGrade).toBeTruthy();
@@ -1237,7 +1237,7 @@ describe("suspensionDecision.ts", () => {
   describe("written reasons draft", () => {
     it("suspension draft references the concern and effective date", () => {
       const result = analyseSuspensionDecision(baseSuspensionInput());
-      expect(result.writtenReasonsDraft).toContain("Aria suggested draft");
+      expect(result.writtenReasonsDraft).toContain("Cara suggested draft");
       expect(result.writtenReasonsDraft).toContain("staff-jw-001");
       expect(result.writtenReasonsDraft).toContain("2024-08-16");
     });
@@ -1364,7 +1364,7 @@ describe("letterTemplates.ts", () => {
     expect(output).toContain("[name]");
   });
 
-  it("applies Aria postprocessor (em dashes are replaced)", () => {
+  it("applies Cara postprocessor (em dashes are replaced)", () => {
     const ctxWithDash: LetterContext = {
       recipientName: "Test Worker",
       concernNarrative: "The concern — a serious one — relates to medication errors",

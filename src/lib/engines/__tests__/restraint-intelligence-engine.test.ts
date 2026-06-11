@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RESTRAINT INTELLIGENCE ENGINE — TEST SUITE
+// CARA — RESTRAINT INTELLIGENCE ENGINE — TEST SUITE
 // Reg 20/35 — use of restraint, behaviour management, positive strategies
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -502,7 +502,7 @@ describe("computeRestraintIntelligence", () => {
     });
   });
 
-  describe("ARIA insights", () => {
+  describe("Cara insights", () => {
     it("generates critical insight for high frequency (5+ in 30d)", () => {
       const restraints = [
         makeRestraint({ id: "r1", date: "2026-05-24" }),
@@ -692,7 +692,7 @@ describe("computeRestraintIntelligence", () => {
       expect(result.alerts.some((a) => a.severity === "high" && a.message.includes("not debriefed"))).toBe(true);
       expect(result.alerts.some((a) => a.severity === "medium" && a.message.includes("pending"))).toBe(true);
 
-      // ARIA insights
+      // Cara insights
       expect(result.insights.some((i) => i.severity === "warning" && i.text.includes("resulted in injury"))).toBe(true);
       expect(result.insights.some((i) => i.severity === "warning" && i.text.includes("debrief rate"))).toBe(true);
     });

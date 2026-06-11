@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA INTELLIGENCE — OFSTED READINESS ENGINE
+// Cara INTELLIGENCE — OFSTED READINESS ENGINE
 //
 // Generates a snapshot of inspection readiness by analysing golden thread
 // events, intelligence signals, child voice segments, and AI runs from

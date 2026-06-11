@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Mental Health & Wellbeing — Public API
+// Cara Mental Health & Wellbeing — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

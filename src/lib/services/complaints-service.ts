@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — COMPLAINTS & NOTIFICATIONS SERVICE
+// CARA — COMPLAINTS & NOTIFICATIONS SERVICE
 // Manages complaints handling (CHR 2015 Reg 39), Reg 40 statutory notifications
 // to Ofsted, compliance tracking, and pattern analysis.
 // ══════════════════════════════════════════════════════════════════════════════

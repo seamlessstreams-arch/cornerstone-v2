@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MANAGEMENT OVERSIGHT QUEUE
+// CARA — MANAGEMENT OVERSIGHT QUEUE
 // Connected to Care Event routing — shows all events requiring manager action
 // ══════════════════════════════════════════════════════════════════════════════
 

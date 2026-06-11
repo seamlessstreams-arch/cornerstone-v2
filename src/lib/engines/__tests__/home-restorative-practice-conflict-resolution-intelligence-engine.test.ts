@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME RESTORATIVE PRACTICE & CONFLICT RESOLUTION ENGINE TESTS
+// CARA — HOME RESTORATIVE PRACTICE & CONFLICT RESOLUTION ENGINE TESTS
 // Comprehensive test suite covering: insufficient_data, inadequate floor,
 // outstanding/good/adequate/inadequate scenarios, every bonus in isolation,
 // every penalty, all 6 rates, strengths/concerns/recommendations/insights,

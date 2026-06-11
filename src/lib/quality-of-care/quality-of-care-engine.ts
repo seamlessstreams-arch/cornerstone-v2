@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Quality of Care Intelligence Engine
+// Cara Quality of Care Intelligence Engine
 //
 // Deterministic engine for evaluating the quality of care provided in
 // children's homes across all key domains — safety, education, health,

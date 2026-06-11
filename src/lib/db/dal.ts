@@ -1,6 +1,6 @@
 /**
  * ══════════════════════════════════════════════════════════════════════════════
- * CORNERSTONE — Async Dual-Mode Data Access Layer (DAL)
+ * CARA — Async Dual-Mode Data Access Layer (DAL)
  *
  * When Supabase is enabled and credentials are configured, all reads/writes
  * go to Supabase Cloud. Otherwise falls back to the in-memory store.

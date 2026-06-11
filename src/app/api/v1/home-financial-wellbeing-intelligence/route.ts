@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME FINANCIAL WELLBEING INTELLIGENCE API ROUTE
+// CARA — HOME FINANCIAL WELLBEING INTELLIGENCE API ROUTE
 // GET /api/v1/home-financial-wellbeing-intelligence
 // Synthesises pocket money transactions and clothing allowance records to
 // assess financial management, savings culture, receipt compliance, clothing

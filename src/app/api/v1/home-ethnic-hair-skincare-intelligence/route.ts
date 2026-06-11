@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ETHNIC HAIR & SKINCARE INTELLIGENCE API ROUTE
+// CARA — HOME ETHNIC HAIR & SKINCARE INTELLIGENCE API ROUTE
 // GET /api/v1/home-ethnic-hair-skincare-intelligence
 // Cross-domain composite: hairCareRecords + skincareRoutineRecords +
 // productProvisionRecords + specialistReferralRecords + childSatisfactionRecords

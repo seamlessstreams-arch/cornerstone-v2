@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME WEEKLY PLANNER & ACTIVITY SCHEDULE INTELLIGENCE ENGINE TESTS
+// CARA — HOME WEEKLY PLANNER & ACTIVITY SCHEDULE INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite covering schedule timeliness, activity variety,
 // child input, communication effectiveness, adherence, and scoring.
 // CHR 2015 Reg 5, Reg 6, Reg 7; SCCIF experiences and progress.

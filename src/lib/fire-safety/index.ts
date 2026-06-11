@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Fire Safety Intelligence — Public API
+// Cara Fire Safety Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

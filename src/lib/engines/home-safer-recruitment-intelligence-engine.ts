@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SAFER RECRUITMENT INTELLIGENCE ENGINE
+// CARA — HOME SAFER RECRUITMENT INTELLIGENCE ENGINE
 // Home-level: analyses vacancy management, candidate pipeline, pre-employment
 // checks, reference verification, and DBS compliance to assess recruitment.
 // CHR 2015 Reg 32 (Fitness of Workers). SCCIF: "Well-Led."

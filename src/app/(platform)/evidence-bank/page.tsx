@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — AUTOMATED EVIDENCE BANK (detail page)
+// CARA — AUTOMATED EVIDENCE BANK (detail page)
 // Coverage across the 14 Ofsted evidence categories, built from the event stream.
 // ══════════════════════════════════════════════════════════════════════════════
 

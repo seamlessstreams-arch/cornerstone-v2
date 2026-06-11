@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — COMPLAINTS OUTCOMES
+// CARA — COMPLAINTS OUTCOMES
 // Reg 39 — Complaints & Representations: investigation outcomes, learning
 // points, practice changes, and response timescales.
 // ══════════════════════════════════════════════════════════════════════════════

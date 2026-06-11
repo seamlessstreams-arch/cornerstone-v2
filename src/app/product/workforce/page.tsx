@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — WORKFORCE & SAFE ACCESS DEEP-DIVE PAGE  (route: /workforce)
+// CARA — WORKFORCE & SAFE ACCESS DEEP-DIVE PAGE  (route: /workforce)
 //
 // Standalone deep-dive on the staff-management layer. Static server component.
 // Honest copy — every capability maps to a real part of the platform.
@@ -17,7 +17,7 @@ import { MarketingFooter } from "@/components/marketing/marketing-footer";
 import { SectionEyebrow, FeatureCard } from "@/components/marketing/ui";
 
 export const metadata: Metadata = {
-  title: "Workforce & safe access | Cornerstone Care OS",
+  title: "Workforce & safe access | Cara OS",
   description:
     "Run the whole staffing picture — rotas and shift-based access, Smart Sign-In, safe staffing, supervision, training, safer recruitment and oversight — and turn it into evidence you can show an inspector.",
 };
@@ -36,7 +36,7 @@ export default function WorkforcePage() {
             The right people, on shift, with the right access.
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-[var(--cs-text-secondary)]">
-            Cornerstone runs the whole staffing picture — from the rota to the doorway — and turns supervision, training and
+            Cara runs the whole staffing picture — from the rota to the doorway — and turns supervision, training and
             recruitment into evidence you can show an inspector. One workforce, one source of truth.
           </p>
           <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
@@ -92,7 +92,7 @@ export default function WorkforcePage() {
               <SectionEyebrow>Sign-in &amp; presence</SectionEyebrow>
               <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-[var(--cs-navy)] sm:text-4xl">Access that knows who&rsquo;s really here.</h2>
               <p className="mt-4 text-lg text-[var(--cs-text-secondary)]">
-                Sign-in is more than a clock — it&rsquo;s the gate. Cornerstone confirms presence, ties it to the rota, and only then opens up what a shift needs. When cover dips below safe, you know straight away.
+                Sign-in is more than a clock — it&rsquo;s the gate. Cara confirms presence, ties it to the rota, and only then opens up what a shift needs. When cover dips below safe, you know straight away.
               </p>
               <ul className="mt-6 space-y-2.5">
                 {[
@@ -194,7 +194,7 @@ export default function WorkforcePage() {
       <section className="mx-auto max-w-7xl px-5 py-20">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-extrabold tracking-tight text-[var(--cs-navy)] sm:text-4xl">Run a safer, calmer staffing operation.</h2>
-          <p className="mx-auto mt-4 max-w-xl text-lg text-[var(--cs-text-secondary)]">See how Cornerstone joins the rota, the doorway and the evidence into one picture.</p>
+          <p className="mx-auto mt-4 max-w-xl text-lg text-[var(--cs-text-secondary)]">See how Cara joins the rota, the doorway and the evidence into one picture.</p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <Link href="/contact" className="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--cs-navy)] px-6 py-3.5 text-sm font-bold text-white transition-all hover:bg-[var(--cs-navy-soft)] hover:shadow-md">Book a demo <ArrowRight className="h-4 w-4" /></Link>
             <Link href="/product/intelligence" className="inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--cs-border)] bg-white px-6 py-3.5 text-sm font-bold text-[var(--cs-navy)] transition-colors hover:bg-[var(--cs-bg)]">Explore intelligence <CheckCircle2 className="h-4 w-4 text-[var(--cs-teal)]" /></Link>

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CARE PLAN COMPLIANCE CARD
+// CARA — CARE PLAN COMPLIANCE CARD
 // Dashboard widget surfacing care plan health: RAG distribution, goal status,
 // LAC review deadlines, and attention-needed alerts.
 // Children's Homes Quality Standard 1 — Care and Support.

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Children's Rights & Advocacy Intelligence Engine
+// Cara — Children's Rights & Advocacy Intelligence Engine
 //
 // Pure deterministic engine — no AI, no external calls.
 // Maps to: CHR 2015 Reg 7 (children's guide), Reg 14 (care planning),

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME STATUTORY NOTIFICATION COMPLIANCE INTELLIGENCE API ROUTE
+// CARA — HOME STATUTORY NOTIFICATION COMPLIANCE INTELLIGENCE API ROUTE
 // GET /api/v1/home-statutory-notification-compliance-intelligence
 // Synthesises notification log entries and notifiable events to assess
 // timeliness, completeness, documentation, follow-up, and regulatory accuracy.

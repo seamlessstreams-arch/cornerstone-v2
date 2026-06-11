@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF RETENTION & EXIT ANALYSIS SERVICE TESTS
+// CARA — STAFF RETENTION & EXIT ANALYSIS SERVICE TESTS
 // Pure-function tests for staff retention metrics, alert identification,
-// ARIA insight generation, enum validation, and edge cases.
+// Cara insight generation, enum validation, and edge cases.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";

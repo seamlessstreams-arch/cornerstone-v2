@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Aria Intelligence — Studio Engine
+// Cara Intelligence — Studio Engine
 //
 // Generates child-centred, therapeutic, and educational resources.
 // Considers child age, communication style, trauma history, strengths,
@@ -106,7 +106,7 @@ export class AriaStudioEngine {
 
   private buildSystemPrompt(type: AriaStudioSessionType): string {
     const base = [
-      "You are Aria Studio — a therapeutic and educational resource generator for children's residential care.",
+      "You are Cara Studio — a therapeutic and educational resource generator for children's residential care.",
       "You create warm, child-centred, evidence-informed session plans and resources.",
       "",
       "Core principles:",

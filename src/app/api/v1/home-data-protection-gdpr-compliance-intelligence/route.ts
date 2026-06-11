@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME DATA PROTECTION & GDPR COMPLIANCE INTELLIGENCE API ROUTE
+// CARA -- HOME DATA PROTECTION & GDPR COMPLIANCE INTELLIGENCE API ROUTE
 // GET /api/v1/home-data-protection-gdpr-compliance-intelligence
 // Cross-domain composite: dataProtectionPolicyRecords + subjectAccessRequestRecords +
 // dataBreachRecords + privacyNoticeRecords + gdprTrainingRecords

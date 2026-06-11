@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — REGULATORY REPORTING INTELLIGENCE ENGINE — TEST SUITE
+// CARA — REGULATORY REPORTING INTELLIGENCE ENGINE — TEST SUITE
 // Reg 44 visit schedule, Reg 45 quality of care reviews, Reg 40 notifications,
 // recommendation tracking, overall compliance score, alerts, and insights.
 // ══════════════════════════════════════════════════════════════════════════════

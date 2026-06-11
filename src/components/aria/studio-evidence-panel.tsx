@@ -117,7 +117,7 @@ export function AriaStudioEvidencePanel({
       <div className="text-[10px] text-muted-foreground border-t pt-3 flex gap-1.5">
         <CheckCircle className="h-3.5 w-3.5 shrink-0 mt-0.5 text-green-600" />
         <span>
-          ARIA uses only indexed and approved sources. Unverified records are flagged.
+          Cara uses only indexed and approved sources. Unverified records are flagged.
           A human must confirm all evidence before approval.
         </span>
       </div>

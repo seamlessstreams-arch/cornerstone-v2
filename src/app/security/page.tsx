@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — TRUST & SECURITY PAGE  (route: /security)
+// CARA — TRUST & SECURITY PAGE  (route: /security)
 //
 // Static, on-brand. Honest copy: describes the security MODEL and principles
-// genuinely built into the platform (role-based access, audit trails, the ARIA
+// genuinely built into the platform (role-based access, audit trails, the Cara
 // safety contract, safeguarding-first design) and frames compliance as
 // "designed around" the frameworks — no fabricated certifications.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -18,9 +18,9 @@ import { MarketingFooter } from "@/components/marketing/marketing-footer";
 import { SectionEyebrow, FeatureCard } from "@/components/marketing/ui";
 
 export const metadata: Metadata = {
-  title: "Security & trust | Cornerstone Care OS",
+  title: "Security & trust | Cara OS",
   description:
-    "How Cornerstone protects the most sensitive data in care — role-based access, audit trails, sensitive-screen protection, and an AI safety contract that keeps a human in the loop on anything that matters.",
+    "How Cara protects the most sensitive data in care — role-based access, audit trails, sensitive-screen protection, and an AI safety contract that keeps a human in the loop on anything that matters.",
 };
 
 export default function SecurityPage() {
@@ -37,7 +37,7 @@ export default function SecurityPage() {
             Built for the most sensitive data in care.
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-[var(--cs-text-secondary)]">
-            A children&rsquo;s home holds some of the most sensitive personal data there is. Cornerstone treats it that way —
+            A children&rsquo;s home holds some of the most sensitive personal data there is. Cara treats it that way —
             with access control, audit trails and AI safeguards built into the core, not bolted on.
           </p>
           <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
@@ -70,7 +70,7 @@ export default function SecurityPage() {
         <div className="pointer-events-none absolute inset-0 opacity-40" style={{ background: "radial-gradient(50% 60% at 0% 0%, var(--cs-aria-glow) 0%, transparent 55%), radial-gradient(45% 55% at 100% 100%, var(--cs-teal-glow) 0%, transparent 50%)" }} />
         <div className="relative mx-auto max-w-7xl px-5 py-20">
           <div className="mx-auto max-w-2xl text-center">
-            <span className="inline-block rounded-full border border-[var(--cs-aria-gold)]/30 bg-[var(--cs-aria-gold)]/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-[var(--cs-aria-gold-soft)]">The ARIA safety contract</span>
+            <span className="inline-block rounded-full border border-[var(--cs-aria-gold)]/30 bg-[var(--cs-aria-gold)]/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-[var(--cs-aria-gold-soft)]">The Cara safety contract</span>
             <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">AI that assists — and never oversteps.</h2>
             <p className="mt-4 text-lg text-white/75">
               Your RAG ratings come from deterministic, explainable engines — not a language model guessing. Where AI does help,
@@ -80,7 +80,7 @@ export default function SecurityPage() {
           <div className="mt-12 grid gap-6 md:grid-cols-2">
             {[
               { Icon: Eye, t: "Explainable, not a black box", d: "Every rating traces back to the records behind it. You can show an inspector exactly why a score is what it is." },
-              { Icon: ShieldAlert, t: "Never auto-decides thresholds", d: "ARIA will flag when a LADO or notifiable-event threshold may be met — but the decision is always a person's to make." },
+              { Icon: ShieldAlert, t: "Never auto-decides thresholds", d: "Cara will flag when a LADO or notifiable-event threshold may be met — but the decision is always a person's to make." },
               { Icon: UserCheck, t: "Human in the loop", d: "Anything safeguarding-critical is held for human review. AI drafts and suggests; it does not act on its own." },
               { Icon: ShieldCheck, t: "Protected flags", d: "High and critical risk flags are never deleted by automation — the record of a concern is preserved." },
             ].map((w, i) => (
@@ -101,7 +101,7 @@ export default function SecurityPage() {
         <SectionEyebrow>Designed around the rules you&rsquo;re held to</SectionEyebrow>
         <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-[var(--cs-navy)] sm:text-4xl">Aligned to the frameworks that govern your data and your care.</h2>
         <p className="mx-auto mt-4 max-w-2xl text-lg text-[var(--cs-text-secondary)]">
-          Cornerstone is built to support your obligations under data-protection law and the regulations that govern
+          Cara is built to support your obligations under data-protection law and the regulations that govern
           children&rsquo;s homes — so the way data is handled and evidenced matches the way you&rsquo;re inspected.
         </p>
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
@@ -140,9 +140,9 @@ export default function SecurityPage() {
           <div className="pointer-events-none absolute inset-0 opacity-50" style={{ background: "radial-gradient(50% 80% at 50% 0%, var(--cs-teal-glow) 0%, transparent 60%)" }} />
           <div className="relative">
             <h2 className="mx-auto max-w-2xl text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Questions about your data? Let&rsquo;s talk.</h2>
-            <p className="mx-auto mt-4 max-w-xl text-lg text-white/75">We&rsquo;ll happily walk your team through how Cornerstone handles, protects and evidences the records you keep.</p>
+            <p className="mx-auto mt-4 max-w-xl text-lg text-white/75">We&rsquo;ll happily walk your team through how Cara handles, protects and evidences the records you keep.</p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <Link href="mailto:hello@cornerstonecare.app?subject=Cornerstone%20security%20%26%20data%20handling" className="inline-flex items-center justify-center gap-2 rounded-xl bg-white px-6 py-3.5 text-sm font-bold text-[var(--cs-navy)] transition-transform hover:-translate-y-0.5">
+              <Link href="/contact" className="inline-flex items-center justify-center gap-2 rounded-xl bg-white px-6 py-3.5 text-sm font-bold text-[var(--cs-navy)] transition-transform hover:-translate-y-0.5">
                 Talk to us <ArrowRight className="h-4 w-4" />
               </Link>
               <Link href="/" className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/25 bg-white/5 px-6 py-3.5 text-sm font-bold text-white transition-colors hover:bg-white/10">

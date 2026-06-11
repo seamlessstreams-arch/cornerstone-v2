@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME MEDICATION GOVERNANCE INTELLIGENCE CARD
+// CARA — HOME MEDICATION GOVERNANCE INTELLIGENCE CARD
 // Medication audits, error investigations, near misses, stock checks,
 // storage audits, and emergency medication protocols.
 // CHR 2015 Reg 12: Medication management.
@@ -230,12 +230,12 @@ export function HomeMedicationGovernanceIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Medication Governance Intelligence */}
+        {/* Cara Medication Governance Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Medication Governance Intelligence
+              Cara Medication Governance Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ANTI-BULLYING SERVICE
+// CARA — ANTI-BULLYING SERVICE
 // Manages bullying incident recording, anti-bullying strategies,
 // peer relationship monitoring, and intervention tracking.
 // CHR 2015 Reg 12 (safeguarding — protection from bullying),

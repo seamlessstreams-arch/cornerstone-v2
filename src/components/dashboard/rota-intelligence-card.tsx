@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF ROTA & WORKFORCE INTELLIGENCE CARD
+// CARA — STAFF ROTA & WORKFORCE INTELLIGENCE CARD
 // Dashboard card powered by the Rota Intelligence Engine.
 // Reg 16/33/34 — staffing levels, shift coverage, workforce compliance.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -211,13 +211,13 @@ export function RotaIntelligenceCard() {
           </div>
         )}
 
-        {/* ── ARIA Workforce Intelligence ─────────────────────────────── */}
+        {/* ── Cara Workforce Intelligence ─────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Workforce Intelligence
+              Cara Workforce Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

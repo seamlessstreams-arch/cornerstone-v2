@@ -9,7 +9,7 @@
 // edits.
 //
 // The templates intentionally do not include legalese the home would not
-// say. Tone is the same as the rest of Aria: plain, professional, calm.
+// say. Tone is the same as the rest of Cara: plain, professional, calm.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import type { HrLetterType } from "@/lib/hr/types";

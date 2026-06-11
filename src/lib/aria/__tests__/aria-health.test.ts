@@ -170,7 +170,7 @@ describe("checkAriaHealth — env var checks (no Supabase or provider calls)", (
   // The module uses process.env at call-time so this is safe.
 
   beforeEach(() => {
-    // Clear ARIA-related env vars so each test starts clean
+    // Clear Cara-related env vars so each test starts clean
     delete process.env.OPENAI_API_KEY;
     delete process.env.ANTHROPIC_API_KEY;
     delete process.env.NEXT_PUBLIC_SUPABASE_URL;

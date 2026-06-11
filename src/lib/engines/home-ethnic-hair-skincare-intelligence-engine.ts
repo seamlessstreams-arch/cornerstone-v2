@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ETHNIC HAIR & SKINCARE INTELLIGENCE ENGINE
+// CARA — HOME ETHNIC HAIR & SKINCARE INTELLIGENCE ENGINE
 // Monitors culturally appropriate personal care — ethnic hair care provision,
 // skincare routine adequacy, culturally specific product availability,
 // specialist referral access, staff training, and child satisfaction with

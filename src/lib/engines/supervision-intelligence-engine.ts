@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SUPERVISION & STAFF DEVELOPMENT INTELLIGENCE ENGINE
+// CARA — SUPERVISION & STAFF DEVELOPMENT INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses supervision frequency, timeliness, action completion, staff
@@ -383,7 +383,7 @@ export function computeSupervisionIntelligence(input: SupervisionIntelligenceInp
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
   const insights: AriaSupervisionInsight[] = [];
 
   // Critical: overdue supervision

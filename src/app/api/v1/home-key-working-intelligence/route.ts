@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME KEY WORKING INTELLIGENCE API ROUTE
+// CARA — HOME KEY WORKING INTELLIGENCE API ROUTE
 // GET /api/v1/home-key-working-intelligence
 // Synthesises key working sessions across all children to produce an
 // overall key working quality and coverage intelligence score.

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME STAFF WELLBEING INTELLIGENCE API ROUTE
+// CARA — HOME STAFF WELLBEING INTELLIGENCE API ROUTE
 // GET /api/v1/home-staff-wellbeing-intelligence
 // Staff wellbeing checks, morale, stressors, support responsiveness.
 // CHR 2015 Reg 33. SCCIF: "Leadership supports staff wellbeing."

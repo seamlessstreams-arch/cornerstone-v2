@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ACTIVITY & ENRICHMENT INTELLIGENCE ENGINE
+// CARA — HOME ACTIVITY & ENRICHMENT INTELLIGENCE ENGINE
 // Home-level engine aggregating activity provision, participation rates,
 // variety of experiences, new experiences, and enrichment quality across
 // all children. Surfaces whether the home is providing a rich, varied,
@@ -392,7 +392,7 @@ export function computeHomeActivityEnrichment(
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
   const insights: EnrichmentInsight[] = [];
 
   if (enrichment_rating === "inadequate") {

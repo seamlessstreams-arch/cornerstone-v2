@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone House Meetings Intelligence Engine  (v2 — standardised)
+// Cara House Meetings Intelligence Engine  (v2 — standardised)
 //
 // Deterministic engine for evaluating house meeting quality, compliance,
 // governance policies, staff facilitation readiness, and per-child meeting

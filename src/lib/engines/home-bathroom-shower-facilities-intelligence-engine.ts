@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME BATHROOM & SHOWER FACILITIES INTELLIGENCE ENGINE
+// CARA — HOME BATHROOM & SHOWER FACILITIES INTELLIGENCE ENGINE
 // Monitors the home's bathroom and shower facilities including cleanliness
 // audits, shower availability, hot water temperature safety, privacy
 // provisions, accessibility compliance, and child satisfaction.

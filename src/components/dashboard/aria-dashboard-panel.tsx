@@ -1,8 +1,8 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ARIA DASHBOARD PANEL
-// Dashboard widget showing ARIA's current intelligence position: pending
+// CARA — Cara DASHBOARD PANEL
+// Dashboard widget showing Cara's current intelligence position: pending
 // suggestions, incidents needing oversight, high-risk alerts, recently
 // approved/rejected items, and a link to the full Review Queue.
 //
@@ -131,10 +131,10 @@ export function AriaDashboardPanel() {
             <div className="rounded-xl bg-[var(--cs-aria-gold-bg)] border border-[var(--cs-aria-gold-soft)] p-1.5">
               <Sparkles className="h-4 w-4 text-[var(--cs-aria-gold)]" />
             </div>
-            ARIA Intelligence
+            Cara Intelligence
           </CardTitle>
           <Link
-            href="/aria/review"
+            href="/cara/review"
             className="text-xs font-medium text-[var(--cs-aria-gold)] hover:text-[var(--cs-aria-gold)]/80 flex items-center gap-1 transition-colors"
           >
             Review Queue
@@ -182,7 +182,7 @@ export function AriaDashboardPanel() {
               return (
                 <Link
                   key={s.id}
-                  href={`/aria/review/${s.id}`}
+                  href={`/cara/review/${s.id}`}
                   className="flex items-start gap-3 rounded-xl bg-[var(--cs-surface-elevated)] border border-[var(--cs-border-subtle)] px-3 py-2.5 hover:bg-[var(--cs-surface)] transition-colors group"
                 >
                   <div className={cn("mt-1 h-2 w-2 rounded-full shrink-0", risk.dot)} />
@@ -217,15 +217,15 @@ export function AriaDashboardPanel() {
         ) : (
           <div className="rounded-xl bg-emerald-50/50 border border-emerald-100 px-4 py-3 text-center">
             <CheckCircle2 className="h-4 w-4 text-emerald-500 mx-auto mb-1" />
-            <p className="text-xs text-emerald-700 font-medium">All ARIA suggestions reviewed</p>
+            <p className="text-xs text-emerald-700 font-medium">All Cara suggestions reviewed</p>
           </div>
         )}
 
         {/* CTA */}
-        <Link href="/aria/review" className="block">
+        <Link href="/cara/review" className="block">
           <Button variant="outline" size="sm" className="w-full text-xs gap-1.5 border-[var(--cs-aria-gold-soft)] text-[var(--cs-aria-gold)] hover:bg-[var(--cs-aria-gold-bg)]">
             <Eye className="h-3.5 w-3.5" />
-            Open ARIA Review Queue
+            Open Cara Review Queue
             <ArrowRight className="h-3 w-3 ml-auto" />
           </Button>
         </Link>

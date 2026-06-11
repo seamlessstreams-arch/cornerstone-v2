@@ -71,7 +71,7 @@ describe("AriaDocumentIntelligence", () => {
       }
     });
 
-    it("some documents have ARIA notes", () => {
+    it("some documents have Cara notes", () => {
       const withNotes = docs.filter((d) => d.ariaNotes);
       expect(withNotes.length).toBeGreaterThan(0);
     });

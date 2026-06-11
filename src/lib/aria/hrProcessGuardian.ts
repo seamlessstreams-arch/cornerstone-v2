@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — HR PROCESS GUARDIAN
+// Cara — HR PROCESS GUARDIAN
 //
 // Reviews a draft HR action (letter, meeting outcome, suspension decision,
 // disciplinary outcome, grievance response, probation decision, sickness
@@ -8,7 +8,7 @@
 // risk, evidence quality, representation rights, appeal rights, and the
 // wording of the draft itself.
 //
-// Output is "Aria suggested draft" — never final until a human approves.
+// Output is "Cara suggested draft" — never final until a human approves.
 //
 // Pipeline:
 //   1. Deterministic rule-based analysis (audit-traceable, runs offline)
@@ -108,7 +108,7 @@ export interface GuardianFlag {
 export interface GuardianReview {
   generatedAt: string;
   status: "draft";
-  ariaLabel: "Aria suggested draft";
+  ariaLabel: "Cara suggested draft";
 
   fairnessScore: number;
   fairnessJudgement: FairnessJudgement;
@@ -651,7 +651,7 @@ function buildSuggestedActions(
     out.push({
       title: "Reword the draft using neutral, evidenced language",
       description:
-        "The Guardian has flagged wording that reads as prejudged or emotional. Aria has produced a safer-wording suggestion, but the Registered Manager retains final authorship.",
+        "The Guardian has flagged wording that reads as prejudged or emotional. Cara has produced a safer-wording suggestion, but the Registered Manager retains final authorship.",
       priority: "high",
       dueDays: 2,
       assignedRole: "Registered Manager",
@@ -681,7 +681,7 @@ function buildTemplatedSaferWording(
 ): string {
   const lines: string[] = [];
 
-  lines.push(`Aria suggested draft. Safer wording for ${input.draftActionType.replace(/_/g, " ")}.`);
+  lines.push(`Cara suggested draft. Safer wording for ${input.draftActionType.replace(/_/g, " ")}.`);
   lines.push(``);
   lines.push(
     `This suggestion is a starting point. The Registered Manager remains the author of the final letter and must adapt the wording to the specifics of the case before sending.`,
@@ -787,7 +787,7 @@ function buildTemplatedSaferWording(
 
   lines.push(``);
   lines.push(
-    `This wording is an Aria suggested draft. It must be reviewed, edited, and approved by the Registered Manager before it forms part of the regulatory record or is sent.`,
+    `This wording is an Cara suggested draft. It must be reviewed, edited, and approved by the Registered Manager before it forms part of the regulatory record or is sent.`,
   );
 
   return applyAriaPostprocessor(lines.join("\n\n"));
@@ -805,12 +805,12 @@ async function enhanceWithLlm(
   const client = new Anthropic({ apiKey });
 
   const system = [
-    `You are Aria, the intelligent professional assistant built into Cornerstone, the operating system for UK residential children's homes. You are acting as the HR Process Guardian. You are not the decision-maker. The Registered Manager remains the author and the decision-maker. Your role is to suggest safer wording for an HR letter that has been flagged for review.`,
+    `You are Cara, the intelligent professional assistant built into Cara, the operating system for UK residential children's homes. You are acting as the HR Process Guardian. You are not the decision-maker. The Registered Manager remains the author and the decision-maker. Your role is to suggest safer wording for an HR letter that has been flagged for review.`,
     ``,
     ARIA_PROFESSIONAL_IDENTITY_PROMPT,
     ``,
     `Hard rules:`,
-    `- Label the wording clearly as an Aria suggested draft.`,
+    `- Label the wording clearly as an Cara suggested draft.`,
     `- Use only the case context provided. Do not invent facts.`,
     `- ACAS-aligned, neutral, evidence-led. No prejudgment.`,
     `- Always include the right to be accompanied where a meeting is involved.`,
@@ -840,7 +840,7 @@ async function enhanceWithLlm(
     ``,
     `Return ONLY a JSON object — no prose, no code fences:`,
     `{`,
-    `  "saferWording": string  // a redrafted version of the letter, labelled "Aria suggested draft" at the start, that resolves the issues identified above. Use [square brackets] for any specifics that cannot be inferred from the input.`,
+    `  "saferWording": string  // a redrafted version of the letter, labelled "Cara suggested draft" at the start, that resolves the issues identified above. Use [square brackets] for any specifics that cannot be inferred from the input.`,
     `}`,
   ].join("\n");
 
@@ -949,7 +949,7 @@ export async function reviewHrAction(input: GuardianInput): Promise<GuardianRevi
   const review: GuardianReview = {
     generatedAt: new Date().toISOString(),
     status: "draft",
-    ariaLabel: "Aria suggested draft",
+    ariaLabel: "Cara suggested draft",
     fairnessScore,
     fairnessJudgement,
     acasAlignment,

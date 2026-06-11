@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME GAS SAFETY SERVICE
+// CARA — HOME GAS SAFETY SERVICE
 // Tracks gas safety inspections, CP12 certificates, boiler servicing,
 // and compliance with Gas Safety (Installation and Use) Regulations 1998.
 //

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME HANDOVER CONTINUITY INTELLIGENCE API ROUTE
+// CARA — HOME HANDOVER CONTINUITY INTELLIGENCE API ROUTE
 // GET /api/v1/home-handover-continuity-intelligence
 // Synthesises handover completion, sign-off, child coverage, and continuity
 // indicators to assess the quality of shift-to-shift communication.

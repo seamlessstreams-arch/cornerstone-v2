@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD VOICE & PARTICIPATION INTELLIGENCE API ROUTE
+// CARA — CHILD VOICE & PARTICIPATION INTELLIGENCE API ROUTE
 // GET /api/v1/child-voice-participation
 // Home-level engine: aggregates how well children's voices are heard across
 // the home — LAC review participation, advocacy, key work, feedback.

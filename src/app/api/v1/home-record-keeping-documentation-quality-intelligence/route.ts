@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME RECORD KEEPING & DOCUMENTATION QUALITY INTELLIGENCE API ROUTE
+// CARA -- HOME RECORD KEEPING & DOCUMENTATION QUALITY INTELLIGENCE API ROUTE
 // GET /api/v1/home-record-keeping-documentation-quality-intelligence
 // Cross-domain composite: dailyLogRecords + carePlanRecords +
 // riskAssessmentRecords + incidentReportRecords + regulatoryDocumentRecords

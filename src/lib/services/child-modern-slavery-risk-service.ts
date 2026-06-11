@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD MODERN SLAVERY RISK SERVICE
+// CARA — CHILD MODERN SLAVERY RISK SERVICE
 // Modern slavery risk assessments, NRM referrals, exploitation type tracking,
 // multi-agency safeguarding under the Modern Slavery Act 2015.
 // CHR 2015 Reg 12 (protection of children — safeguarding from exploitation),

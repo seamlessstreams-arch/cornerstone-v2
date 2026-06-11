@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ON-DUTY STATUS BAR
+// CARA — ON-DUTY STATUS BAR
 // Compact, always-visible strip at the bottom of the sidebar showing
 // who is currently on shift. Essential safety feature — every staff member
 // needs to know who is in the building at any time.

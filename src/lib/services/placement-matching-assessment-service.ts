@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PLACEMENT MATCHING ASSESSMENT SERVICE
+// CARA — PLACEMENT MATCHING ASSESSMENT SERVICE
 // Structured assessment of how well a child's placement matches their needs —
 // considering peer dynamics, location, education access, specialist provision,
 // cultural match, and the capacity of the home to meet the child's specific needs.

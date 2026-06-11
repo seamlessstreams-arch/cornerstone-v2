@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EVENT INTELLIGENCE ENGINE (stream-native analytics)
+// CARA — EVENT INTELLIGENCE ENGINE (stream-native analytics)
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 //
@@ -10,7 +10,7 @@
 // medication, restraint, maintenance, QA, Reg 44, staff absence, …) — surfacing:
 //   • a per-child cross-domain risk radar (weighted by event risk + escalation)
 //   • the approval backlog (who needs to sign off what, by level)
-//   • the compliance register (every open ARIA compliance flag, aggregated)
+//   • the compliance register (every open Cara compliance flag, aggregated)
 //   • the most active risk themes
 //
 // This complements the deep per-domain engines: those go deep on one domain with

@@ -10,10 +10,10 @@ export default async function AriaIntelligencePage() {
     <main className="space-y-6 p-6">
       <div>
         <h1 className="text-2xl font-semibold tracking-tight text-[var(--cs-navy)]">
-          Aria Intelligence Command Centre
+          Cara Intelligence Command Centre
         </h1>
         <p className="mt-1 text-sm text-[var(--cs-text-secondary)]">
-          One calm assistant — ask anything, Aria routes to the right specialist
+          One calm assistant — ask anything, Cara routes to the right specialist
           and brings back evidence-based answers.
         </p>
       </div>

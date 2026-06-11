@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EXTENDED TYPES
+// CARA — EXTENDED TYPES
 // New entities: buildings, vehicles, H&S, missing episodes, chronology, etc.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -275,7 +275,7 @@ export interface TimeSavedEntry {
   created_at: string;
 }
 
-// ── Aria Interaction ──────────────────────────────────────────────────────────
+// ── Cara Interaction ──────────────────────────────────────────────────────────
 
 export type AriaMode =
   | "write" | "review" | "oversee" | "assist"
@@ -287,7 +287,7 @@ export type AriaMode =
   | "rewrite"
   // Document modes
   | "document_classify" | "document_to_form"
-  // ARIA Intelligence module modes
+  // Cara Intelligence module modes
   | "situation_review" | "generate_oversight" | "keywork_session_plan"
   | "child_resource_create" | "interactive_session_summary"
   | "check_missing_evidence" | "recommendations" | "safeguarding_scan"
@@ -616,7 +616,7 @@ export interface ActionOutcome {
   updated_at: string;
 }
 
-// ── ARIA Intelligence Module — types ──────────────────────────────────────────
+// ── Cara Intelligence Module — types ──────────────────────────────────────────
 
 export type AriaAssessmentStatus = "draft" | "reviewed" | "approved" | "archived";
 export type AriaAssessmentType = "situation_review" | "pattern_scan" | "safeguarding_scan" | "reflective_debrief";
@@ -1423,7 +1423,7 @@ export interface Reg44VisitReport {
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA LEARNING STUDIO — types
+// Cara LEARNING STUDIO — types
 // ══════════════════════════════════════════════════════════════════════════════
 
 export type LearningPathway = "child" | "staff" | "mixed";
@@ -1573,7 +1573,7 @@ export interface LiversAnalysis {
   // S — Sustainability and Independence of Safety
   sustainability_independence_safety?: string;
   sustainability_rating?: LiversSustainabilityRating;
-  // ARIA output
+  // Cara output
   aria_summary?: string;
   aria_confidence?: LiversConfidence;
   recommended_intervention_type?: string;
@@ -10503,7 +10503,7 @@ export type ClubFundingSource = "home_budget" | "scholarship" | "charitable_fund
 export const CLUB_FUNDING_SOURCE_LABEL: Record<ClubFundingSource, string> = {
   home_budget: "Home budget", scholarship: "Scholarship",
   charitable_funding: "Charitable funding", free: "Free",
-  la_grant: "LA grant", cornerstone_care_group: "Cornerstone Care Group",
+  la_grant: "LA grant", cornerstone_care_group: "Cara Care Group",
 };
 
 export type ClubSocialAspect = "solo_activity" | "with_staff" | "friend_group_at_club" | "group_with_peers" | "mixed";
@@ -10722,7 +10722,7 @@ export const SENDER_TYPE_LABEL: Record<SenderType, string> = {
   grandparent: "Grandparent", aunt_uncle: "Aunt/Uncle", cousin: "Cousin",
   family_friend: "Family friend", coach_mentor: "Coach/mentor",
   school_staff: "School staff", former_carer: "Former carer",
-  cornerstone_staff: "Cornerstone staff", anonymous_well_wisher: "Anonymous well-wisher",
+  cornerstone_staff: "Cara staff", anonymous_well_wisher: "Anonymous well-wisher",
 };
 
 export interface CardRecord {
@@ -17756,7 +17756,7 @@ export const FUNDING_SOURCE_LABEL: Record<FundingSource, string> = {
   home_budget: "Home budget",
   local_authority_funded: "Local Authority funded",
   charitable_funding: "Charitable funding",
-  cornerstone_care_group: "Cornerstone Care Group",
+  cornerstone_care_group: "Cara Care Group",
   health_funded: "Health-funded",
 };
 

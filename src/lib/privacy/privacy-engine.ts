@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Children's Privacy Intelligence Engine
+// Cara Children's Privacy Intelligence Engine
 //
 // Deterministic engine for evaluating privacy protections for looked-after
 // children — ensuring personal information is safeguarded, dignity is

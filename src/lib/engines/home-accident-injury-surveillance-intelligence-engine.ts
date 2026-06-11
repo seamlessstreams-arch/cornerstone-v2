@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ACCIDENT & INJURY SURVEILLANCE INTELLIGENCE ENGINE
+// CARA — HOME ACCIDENT & INJURY SURVEILLANCE INTELLIGENCE ENGINE
 // Monitors accident patterns, injury frequency, debrief quality, safety checks,
 // and identifies systemic environmental or care risks.
 // Pure deterministic engine. CHR 2015 Reg 12/13/40.

@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF WHISTLEBLOWING INVESTIGATION SERVICE TESTS
+// CARA — STAFF WHISTLEBLOWING INVESTIGATION SERVICE TESTS
 // Pure-function tests for whistleblowing investigation metrics, alert
-// identification, ARIA insight generation, and edge cases.
+// identification, Cara insight generation, and edge cases.
 // CHR 2015 Reg 13 (leadership — open culture for raising concerns),
 // Reg 34 (fitness of workers — duty to report),
 // Reg 40 (notifications to Ofsted — notifiable events),

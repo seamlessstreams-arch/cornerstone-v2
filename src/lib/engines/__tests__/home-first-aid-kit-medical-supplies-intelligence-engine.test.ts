@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME FIRST AID KIT & MEDICAL SUPPLIES INTELLIGENCE ENGINE TESTS
+// CARA — HOME FIRST AID KIT & MEDICAL SUPPLIES INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite for first aid kit checks, stock adequacy, expiry
 // monitoring, accessibility, staff training, and children's awareness.
 // Covers CHR 2015 Reg 14, Reg 25, SCCIF safety domain.

@@ -1,8 +1,8 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RI GOVERNANCE REPORTS
-// Central repository of ARIA-generated and manually authored governance
+// CARA — RI GOVERNANCE REPORTS
+// Central repository of Cara-generated and manually authored governance
 // reports for the Responsible Individual. Covers strategic summaries,
 // risk analyses, Reg 45 drafts, Ofsted readiness, and monthly overviews.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -77,7 +77,7 @@ const REPORT_EXPORT_COLS: ExportColumn<LocalReport>[] = [
   { header: "Title",          accessor: (r) => TYPE_CONFIG[r.report_type]?.label ?? r.report_type },
   { header: "Period",         accessor: (r) => r.report_period ?? "" },
   { header: "Status",         accessor: (r) => STATUS_CONFIG[r.status]?.label ?? r.status },
-  { header: "ARIA Generated", accessor: (r) => r.generated_by_aria ? "Yes" : "No" },
+  { header: "Cara Generated", accessor: (r) => r.generated_by_aria ? "Yes" : "No" },
   { header: "Summary",        accessor: (r) => r.content.summary ?? "" },
   { header: "Key Findings",   accessor: (r) => (r.content.key_findings ?? []).join("; ") },
   { header: "Strengths",      accessor: (r) => (r.content.strengths ?? []).join("; ") },
@@ -126,7 +126,7 @@ function ReportCard({
             {report.generated_by_aria && (
               <Badge className="bg-[var(--cs-aria-gold-bg)] text-[var(--cs-aria-gold)] border-[var(--cs-aria-gold-soft)] text-[10px] px-1.5 py-0">
                 <Sparkles className="h-2.5 w-2.5 mr-0.5" />
-                ARIA
+                Cara
               </Badge>
             )}
           </div>
@@ -554,7 +554,7 @@ export default function GovernanceReportsPage() {
           { label: "Drafts",          value: stats.draft,     color: "text-[var(--cs-text-secondary)]",   bg: "bg-slate-50",   border: "border-[var(--cs-border)]"   },
           { label: "Awaiting Review", value: stats.reviewed,  color: "text-amber-600",   bg: "bg-amber-50",   border: "border-amber-200"   },
           { label: "Approved",        value: stats.approved,  color: "text-emerald-600", bg: "bg-emerald-50", border: "border-emerald-200" },
-          { label: "ARIA Generated",  value: stats.ariaGen,   color: "text-[var(--cs-aria-gold)]",  bg: "bg-[var(--cs-aria-gold-bg)]",  border: "border-[var(--cs-aria-gold-soft)]"  },
+          { label: "Cara Generated",  value: stats.ariaGen,   color: "text-[var(--cs-aria-gold)]",  bg: "bg-[var(--cs-aria-gold-bg)]",  border: "border-[var(--cs-aria-gold-soft)]"  },
         ].map((s) => (
           <div key={s.label} className={cn("rounded-lg border p-3 text-center", s.bg, s.border)}>
             <div className={cn("text-xl font-bold", s.color)}>{s.value}</div>

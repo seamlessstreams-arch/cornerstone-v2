@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME PHYSICAL ACTIVITY & RECREATION INTELLIGENCE API ROUTE
+// CARA — HOME PHYSICAL ACTIVITY & RECREATION INTELLIGENCE API ROUTE
 // GET /api/v1/home-physical-activity-recreation-intelligence
 // Cross-domain composite: exerciseProgrammeRecords + recreationalActivityRecords +
 // outdoorEngagementRecords + fitnessAssessmentRecords + activityAccessibilityRecords

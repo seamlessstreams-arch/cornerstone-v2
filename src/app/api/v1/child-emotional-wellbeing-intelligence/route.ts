@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD EMOTIONAL WELLBEING INTELLIGENCE API ROUTE
+// CARA — CHILD EMOTIONAL WELLBEING INTELLIGENCE API ROUTE
 // GET /api/v1/child-emotional-wellbeing-intelligence?childId=yp_alex
 // Per-child engine synthesising mood, behaviour, keywork, therapy, and
 // sanctions/rewards to assess emotional trajectory.

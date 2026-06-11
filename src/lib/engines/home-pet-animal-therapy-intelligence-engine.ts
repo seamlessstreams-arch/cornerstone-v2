@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME PET & ANIMAL THERAPY INTELLIGENCE ENGINE
+// CARA -- HOME PET & ANIMAL THERAPY INTELLIGENCE ENGINE
 // Monitors animal-assisted therapy quality across the home -- therapy session
 // frequency, pet care responsibility allocation, therapeutic animal interaction
 // outcomes, animal welfare compliance, and child engagement with animals.

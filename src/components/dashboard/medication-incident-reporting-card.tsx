@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MEDICATION INCIDENT REPORTING CARD
+// CARA — MEDICATION INCIDENT REPORTING CARD
 // Dashboard widget for medication refusals, missed doses, alerts, and
 // controlled drug tracking.
 // Powered by the Medication Intelligence Engine — live data (Reg 23/12).
@@ -155,13 +155,13 @@ export function MedicationIncidentReportingCard() {
           </div>
         )}
 
-        {/* ── ARIA Insights ───────────────────────────────────────────── */}
+        {/* ── Cara Insights ───────────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Med Safety Intelligence
+              Cara Med Safety Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

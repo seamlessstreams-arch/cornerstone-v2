@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — Library Component
+// Cara STUDIO — Library Component
 //
 // Displays all generated content with:
 //   - Filtering by type, status, child

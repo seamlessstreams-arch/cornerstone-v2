@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME LESSONS LEARNED & IMPROVEMENT INTELLIGENCE ENGINE
+// CARA — HOME LESSONS LEARNED & IMPROVEMENT INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses lessons learned from incidents, complaints, audits, and reflective

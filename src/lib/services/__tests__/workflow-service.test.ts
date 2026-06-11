@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — WORKFLOW ENGINE SERVICE TESTS
+// CARA — WORKFLOW ENGINE SERVICE TESTS
 // Pure-function unit tests for workflow progress computation, template lookup,
 // and constant/template validation.
 // ══════════════════════════════════════════════════════════════════════════════

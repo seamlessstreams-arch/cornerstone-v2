@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CAREER PATHWAY LADDER
+// CARA — CAREER PATHWAY LADDER
 // Five-stage progression framework from Inductee to RI. Combines stage
 // definitions, staff placement, readiness scoring, gap analysis, and
 // development tracking into a single view for workforce planning.
@@ -187,12 +187,12 @@ function StaffReadinessCard({
               </div>
             )}
 
-            {/* ARIA Narrative */}
+            {/* Cara Narrative */}
             {profile.aria_narrative && (
               <div className="rounded-lg bg-indigo-50 border border-indigo-100 px-3 py-2">
                 <p className="text-[10px] font-semibold text-indigo-700 mb-0.5 flex items-center gap-1">
                   <Sparkles className="h-3 w-3" />
-                  ARIA Analysis
+                  Cara Analysis
                 </p>
                 <p className="text-[11px] text-indigo-800 leading-relaxed">{profile.aria_narrative}</p>
               </div>

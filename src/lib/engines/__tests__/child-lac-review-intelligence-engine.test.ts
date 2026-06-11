@@ -389,7 +389,7 @@ describe("Child LAC Review Intelligence Engine", () => {
     expect(r.recommendations.some((rec) => rec.urgency === "immediate")).toBe(true);
   });
 
-  // ── ARIA Insights ──────────────────────────────────────────────────────
+  // ── Cara Insights ──────────────────────────────────────────────────────
 
   it("generates critical insight for inadequate compliance", () => {
     const r = computeChildLACReview(baseInput({

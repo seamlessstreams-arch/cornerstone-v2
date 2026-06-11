@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME ANXIETY & MENTAL HEALTH SCREENING INTELLIGENCE API ROUTE
+// CARA -- HOME ANXIETY & MENTAL HEALTH SCREENING INTELLIGENCE API ROUTE
 // GET /api/v1/home-anxiety-mental-health-screening-intelligence
 // Cross-domain composite: screeningRecords + anxietyAssessmentRecords +
 // camhsReferralRecords + wellbeingCheckinRecords + earlyInterventionRecords

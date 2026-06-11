@@ -3,7 +3,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // AriaConfidenceIndicator
 //
-// Visual indicator for ARIA output confidence level. Shows low/medium/high
+// Visual indicator for Cara output confidence level. Shows low/medium/high
 // with appropriate colour coding and tooltip text.
 // ══════════════════════════════════════════════════════════════════════════════
 

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — Workforce Oversight service (Phase 8)
+// CARA — Workforce Oversight service (Phase 8)
 //
 // Reads the live store + the safe-staffing service, and produces the oversight
 // summary / evidence pack. Read-only.

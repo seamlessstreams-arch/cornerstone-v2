@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME DATA GOVERNANCE INTELLIGENCE API ROUTE
+// CARA — HOME DATA GOVERNANCE INTELLIGENCE API ROUTE
 // GET /api/v1/home-data-governance-intelligence
 // Data breaches, data protection records, CCTV access logs, SARs.
 // GDPR, Data Protection Act 2018, CHR 2015 Reg 13 (Confidentiality).

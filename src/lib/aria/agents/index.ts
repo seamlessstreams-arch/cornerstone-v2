@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — SPECIALIST AGENT INDEX
+// Cara — SPECIALIST AGENT INDEX
 //
 // Central export for all specialist agent implementations. Provides individual
 // agent exports and a unified `getSpecialistAgent()` lookup function that

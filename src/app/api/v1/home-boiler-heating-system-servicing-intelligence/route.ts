@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME BOILER & HEATING SYSTEM SERVICING INTELLIGENCE API ROUTE
+// CARA — HOME BOILER & HEATING SYSTEM SERVICING INTELLIGENCE API ROUTE
 // GET /api/v1/home-boiler-heating-system-servicing-intelligence
 // Cross-domain composite: boilerServiceRecords + heatingCheckRecords +
 // radiatorRecords + thermostatRecords + energyRecords

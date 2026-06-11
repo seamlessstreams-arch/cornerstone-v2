@@ -489,8 +489,8 @@ describe("Home Organizational Learning Intelligence Engine", () => {
     });
   });
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
-  describe("ARIA insights", () => {
+  // ── Cara Insights ─────────────────────────────────────────────────────
+  describe("Cara insights", () => {
     it("produces positive insight for exemplary learning culture", () => {
       const r = computeHomeOrganizationalLearning(baseInput({
         serious_incident_reviews: [

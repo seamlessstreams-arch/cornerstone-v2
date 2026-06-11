@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA ORCHESTRATOR — RESPONSE FORMATTER
+// Cara ORCHESTRATOR — RESPONSE FORMATTER
 //
 // Formats raw AI output into the structured AriaResponse. Attaches:
 // - Evidence citations

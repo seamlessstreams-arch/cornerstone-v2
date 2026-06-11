@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — COMPLIANCE RULES HOOK
+// CARA — COMPLIANCE RULES HOOK
 // React Query wrapper for /api/v1/compliance-rules — the FIXED regulatory
-// rule engine (separate from ARIA).
+// rule engine (separate from Cara).
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { useQuery } from "@tanstack/react-query";

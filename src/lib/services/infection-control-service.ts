@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — INFECTION CONTROL SERVICE
+// CARA — INFECTION CONTROL SERVICE
 // Tracks infection prevention, hand hygiene audits, cleaning schedules,
 // PPE compliance, outbreak management, and immunisation records.
 // CHR 2015 Reg 25 (health and safety — infection prevention),

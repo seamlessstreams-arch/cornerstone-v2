@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — Smart Sign-In (Phase 3)
+// CARA — Smart Sign-In (Phase 3)
 //
 // The missing self-service clock-in / clock-out write path. The Shift model already
 // carries clock_in_at / clock_out_at / actual_start / actual_end / status, and

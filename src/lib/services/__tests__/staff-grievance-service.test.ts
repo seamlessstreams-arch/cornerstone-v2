@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF GRIEVANCE SERVICE TESTS
+// CARA — STAFF GRIEVANCE SERVICE TESTS
 // Pure-function unit tests for grievance metrics computation, alert
 // identification, and constant validation.
 // CHR 2015 Reg 33 (employment — grievance procedures),

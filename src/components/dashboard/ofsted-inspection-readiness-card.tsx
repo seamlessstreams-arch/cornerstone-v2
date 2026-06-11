@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — OFSTED INSPECTION READINESS CARD
+// CARA — OFSTED INSPECTION READINESS CARD
 // Dashboard card powered by the Quality Assurance Intelligence Engine.
 // Readiness overview: ratings, completion rates, audit areas, overdue items.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -196,13 +196,13 @@ export function OfstedInspectionReadinessCard() {
           </div>
         )}
 
-        {/* ── ARIA Inspection Intelligence ────────────────────────────── */}
+        {/* ── Cara Inspection Intelligence ────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Inspection Intelligence
+              Cara Inspection Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

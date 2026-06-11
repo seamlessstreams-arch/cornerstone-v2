@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — INCIDENT ANALYTICS CARD
+// CARA — INCIDENT ANALYTICS CARD
 // Dashboard widget showing incident trends, severity breakdown, category
-// analysis, per-child profiles, oversight compliance, and ARIA intelligence.
+// analysis, per-child profiles, oversight compliance, and Cara intelligence.
 // Powered by the Incident Analytics Engine — live data.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -202,13 +202,13 @@ export function IncidentAnalyticsCard() {
           )}
         </div>
 
-        {/* ── ARIA insights ───────────────────────────────────────────── */}
+        {/* ── Cara insights ───────────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Pattern Intelligence
+              Cara Pattern Intelligence
             </p>
             {intel.insights.map((insight, i) => (
               <div

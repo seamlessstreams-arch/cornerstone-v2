@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME TRANSITION PLANNING INTELLIGENCE API ROUTE
+// CARA — HOME TRANSITION PLANNING INTELLIGENCE API ROUTE
 // GET /api/v1/home-transition-planning-intelligence
 // Pathway planning, independence preparation, goal achievement, area coverage.
 // CHR 2015 Reg 14: "The care and independence planning standard."

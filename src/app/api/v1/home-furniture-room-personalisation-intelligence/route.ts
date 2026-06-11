@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME FURNITURE & ROOM PERSONALISATION INTELLIGENCE API ROUTE
+// CARA — HOME FURNITURE & ROOM PERSONALISATION INTELLIGENCE API ROUTE
 // GET /api/v1/home-furniture-room-personalisation-intelligence
 // Cross-domain composite: furnitureAdequacyRecords + roomPersonalisationRecords +
 // childChoiceRecords + comfortAssessmentRecords + dignitySpaceRecords

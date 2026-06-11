@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Emotional Regulation Support Intelligence Engine
+// Cara — Emotional Regulation Support Intelligence Engine
 //
 // Pure deterministic engine — no AI, no external calls, no randomness.
 // Evaluates how well the home supports children's emotional regulation through

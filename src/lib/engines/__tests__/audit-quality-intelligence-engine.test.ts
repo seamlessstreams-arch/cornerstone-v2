@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — AUDIT QUALITY ASSURANCE INTELLIGENCE ENGINE — TESTS
+// CARA — AUDIT QUALITY ASSURANCE INTELLIGENCE ENGINE — TESTS
 //
 // Comprehensive test suite for the audit quality intelligence engine.
 // Reg 45 (review of quality of care), Schedule 6, SCCIF governance.
@@ -384,9 +384,9 @@ describe("alerts", () => {
   });
 });
 
-// ── ARIA Insights ───────────────────────────────────────────────────────────
+// ── Cara Insights ───────────────────────────────────────────────────────────
 
-describe("ARIA insights", () => {
+describe("Cara insights", () => {
   it("critical: overdue audits", () => {
     const r = run([
       makeAudit({ status: "scheduled", date: "2026-05-20", score: 0, completed_by: null }),
@@ -580,7 +580,7 @@ describe("Chamberlain House integration", () => {
     expect(upcoming).toHaveLength(1);
   });
 
-  it("fires expected ARIA insights for Chamberlain House data", () => {
+  it("fires expected Cara insights for Chamberlain House data", () => {
     const r = run(oakAudits, STAFF);
 
     // No overdue → no critical insight

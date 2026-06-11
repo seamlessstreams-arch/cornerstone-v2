@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EVENT INTELLIGENCE API ROUTE
+// CARA — EVENT INTELLIGENCE API ROUTE
 // GET /api/v1/event-intelligence
 //
 // The "capture once → analytics" payoff: projects the store into the canonical

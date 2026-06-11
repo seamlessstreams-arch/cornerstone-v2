@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME MULTI-AGENCY INTELLIGENCE ENGINE
+// CARA — HOME MULTI-AGENCY INTELLIGENCE ENGINE
 // Home-level: aggregates multi-agency meetings, professional attendance,
 // IRO correspondence, police contacts, and partnership working quality.
 // Working Together 2023: "Inter-agency cooperation."
@@ -390,7 +390,7 @@ export function computeHomeMultiAgency(
     recommendations.push({ rank: ++rank, recommendation: "Ensure 100% protocol compliance in all police contacts — review Concordat principles with all staff.", urgency: "soon", regulatory_ref: "Concordat" });
   }
 
-  // ARIA Insights
+  // Cara Insights
   if (actionCompletionRate >= 90 && childParticipationRate >= 80 && responseComplianceRate >= 100 && reportSubmissionRate >= 90) {
     insights.push({ text: "Multi-agency partnership is exemplary. Actions are completed, children participate, IRO correspondence is timely, and professional reports are submitted. Ofsted will recognise this as outstanding collaborative practice.", severity: "positive" });
   }

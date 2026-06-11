@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA Intelligence Engine — Key Working Sessions
+// Cara Intelligence Engine — Key Working Sessions
 //
 // Pure deterministic analysis of keyworker relationship quality for LAC.
 // Tracks:

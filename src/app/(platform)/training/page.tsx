@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — TRAINING & COMPLIANCE
+// CARA — TRAINING & COMPLIANCE
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState, useMemo } from "react";
@@ -197,7 +197,7 @@ function AddRecordDialog({ open, onClose }: { open: boolean; onClose: () => void
   );
 }
 
-// ── ARIA Compliance Report panel ──────────────────────────────────────────────
+// ── Cara Compliance Report panel ──────────────────────────────────────────────
 type ComplianceReport = {
   summary: string;
   compliance_narrative: string;
@@ -219,7 +219,7 @@ function ComplianceReportPanel({
     setLoading(true);
     try {
       const res = await api.post<{ data: { parsed?: ComplianceReport } }>(
-        "/aria",
+        "/cara",
         {
           mode: "training_needs_analysis",
           style: "provider_summary",
@@ -253,7 +253,7 @@ function ComplianceReportPanel({
             <Sparkles className="h-4 w-4 text-white" />
           </div>
           <div>
-            <p className="text-sm font-semibold text-indigo-900">ARIA Compliance Report</p>
+            <p className="text-sm font-semibold text-indigo-900">Cara Compliance Report</p>
             <p className="text-xs text-indigo-600">AI narrative with risk areas and recommended actions</p>
           </div>
         </div>
@@ -462,7 +462,7 @@ export default function TrainingPage() {
     >
       <div id="training-content" className="space-y-5 animate-fade-in">
 
-        {/* ARIA panel */}
+        {/* Cara panel */}
         <AriaPanel mode="assist" pageContext="Training & Compliance — staff training records, mandatory training matrix, certificate uploads, compliance tracking" recordType="training_record" userRole="registered_manager" className="mb-2" />
 
         {/* Summary stats */}
@@ -534,7 +534,7 @@ export default function TrainingPage() {
           </div>
         )}
 
-        {/* ARIA Compliance Report */}
+        {/* Cara Compliance Report */}
         {meta && (
           <ComplianceReportPanel
             rate={meta.rate}

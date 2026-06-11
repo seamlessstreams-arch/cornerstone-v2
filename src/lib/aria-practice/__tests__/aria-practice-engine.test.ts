@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA PRACTICE INTELLIGENCE ENGINE — TESTS
+// Cara PRACTICE INTELLIGENCE ENGINE — TESTS
 // Includes the 8 spec acceptance cases + guardrail/scoring units.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -158,7 +158,7 @@ describe("guardrails & scoring", () => {
     const out = run("Child disclosed being hit by an adult and is scared to return home.", "safeguarding_concern");
     const sg = out.flags.find((f) => f.flagType === "safeguarding_threshold")!;
     expect(sg.requiresManagerReview).toBe(true);
-    expect(out.threshold!.managerSummary).toContain("ARIA does not decide");
+    expect(out.threshold!.managerSummary).toContain("Cara does not decide");
   });
 
   it("immediate danger pulls overall score down and prioritises safety first", () => {

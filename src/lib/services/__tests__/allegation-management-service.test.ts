@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ALLEGATION MANAGEMENT SERVICE TESTS
+// CARA — ALLEGATION MANAGEMENT SERVICE TESTS
 // Pure-function unit tests for allegation metrics computation, alert
 // identification, and constant validation.
 // CHR 2015 Reg 12 (protection — abuse by staff),

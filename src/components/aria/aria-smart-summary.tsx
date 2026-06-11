@@ -175,7 +175,7 @@ export function AriaSmartSummary({
         <div className="flex items-center gap-2">
           <Sparkles className="h-4 w-4 text-[var(--cs-aria-gold)]" />
           <h3 className="text-xs font-bold text-[var(--cs-navy)]">
-            ARIA Summary — {summary.childName}
+            Cara Summary — {summary.childName}
           </h3>
           <span className="text-[9px] text-[var(--cs-text-muted)]">
             Last {summary.periodDays} days
@@ -277,10 +277,10 @@ export function AriaSmartSummary({
         </div>
       )}
 
-      {/* ARIA disclaimer */}
+      {/* Cara disclaimer */}
       <div className="px-5 py-2 bg-slate-50 text-[9px] text-[var(--cs-text-muted)]">
         <Sparkles className="h-2.5 w-2.5 inline mr-1 text-[var(--cs-aria-gold)]" />
-        ARIA-generated summary. Draft only — verify all facts before use in statutory records.
+        Cara-generated summary. Draft only — verify all facts before use in statutory records.
       </div>
     </div>
   );

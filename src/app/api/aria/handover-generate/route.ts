@@ -6,7 +6,7 @@
 //        and mood scores for the specified shift period, then formats them into
 //        a structured handover note for the incoming team.
 //
-// This embodies the Cornerstone principle: "Capture once, link intelligently,
+// This embodies the Cara principle: "Capture once, link intelligently,
 // surface everywhere, never duplicate."
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -69,7 +69,7 @@ function getDemoShiftData(): ShiftData {
   };
 }
 
-// ── Format shift data into context for ARIA ──────────────────────────────────
+// ── Format shift data into context for Cara ──────────────────────────────────
 
 function formatShiftDataForPrompt(data: ShiftData, shiftDate: string, shiftPeriod: string): string {
   const parts: string[] = [];

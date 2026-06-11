@@ -3,8 +3,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // AriaPendingBanner
 //
-// Notification banner shown on dashboards when there are ARIA outputs awaiting
-// human review. Links to the ARIA review queue. Only visible to users with
+// Notification banner shown on dashboards when there are Cara outputs awaiting
+// human review. Links to the Cara review queue. Only visible to users with
 // approval permissions.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -40,7 +40,7 @@ export function AriaPendingBanner({
 
   return (
     <Link
-      href="/aria/review"
+      href="/cara/review"
       className={cn(
         "flex items-center gap-3 rounded-xl border p-3 transition-all hover:shadow-sm",
         flaggedCount > 0
@@ -64,7 +64,7 @@ export function AriaPendingBanner({
 
       <div className="flex-1 min-w-0">
         <div className="text-xs font-semibold text-[var(--cs-navy)]">
-          {pending.length} ARIA output{pending.length !== 1 ? "s" : ""}{" "}
+          {pending.length} Cara output{pending.length !== 1 ? "s" : ""}{" "}
           awaiting review
         </div>
         <div className="text-[10px] text-[var(--cs-text-muted)]">

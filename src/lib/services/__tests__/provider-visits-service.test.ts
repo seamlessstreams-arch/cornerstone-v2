@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PROVIDER VISITS SERVICE TESTS
+// CARA — PROVIDER VISITS SERVICE TESTS
 // Pure-function tests for visit metrics computation, alert identification,
 // constant validation, and CRUD fallback behaviour.
 // ══════════════════════════════════════════════════════════════════════════════

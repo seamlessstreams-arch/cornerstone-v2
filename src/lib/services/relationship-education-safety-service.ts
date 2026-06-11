@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RELATIONSHIP EDUCATION SAFETY SERVICE
+// CARA — RELATIONSHIP EDUCATION SAFETY SERVICE
 // Tracks relationship education sessions, consent understanding, online safety,
 // personal boundaries, emotional literacy, and age-appropriate content delivery.
 // CHR 2015 Reg 12(2)(b) (online safety and relationships),

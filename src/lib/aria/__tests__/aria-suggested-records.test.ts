@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA Suggested Records (commit queue) — engine tests
+// Cara Suggested Records (commit queue) — engine tests
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect, beforeEach } from "vitest";
@@ -42,7 +42,7 @@ function clearAll() {
   }
 }
 
-describe("ARIA Suggested Records", () => {
+describe("Cara Suggested Records", () => {
   beforeEach(() => {
     clearAll();
   });

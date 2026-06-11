@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Admissions Intelligence Engine
+// Cara Admissions Intelligence Engine
 //
 // Deterministic engine for evaluating the quality of the admissions process
 // in children's homes — matching, planning, pre-admission assessments,

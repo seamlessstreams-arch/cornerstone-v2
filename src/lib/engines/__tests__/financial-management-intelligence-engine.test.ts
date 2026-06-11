@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — FINANCIAL MANAGEMENT INTELLIGENCE ENGINE — TESTS
+// CARA — FINANCIAL MANAGEMENT INTELLIGENCE ENGINE — TESTS
 //
 // Comprehensive test suite for the financial management intelligence engine.
 // Reg 40 (financial management), SCCIF governance indicators.
@@ -416,9 +416,9 @@ describe("alerts", () => {
   });
 });
 
-// ── ARIA Insights ───────────────────────────────────────────────────────────
+// ── Cara Insights ───────────────────────────────────────────────────────────
 
-describe("ARIA insights", () => {
+describe("Cara insights", () => {
   it("critical: stale approvals", () => {
     const r = run([
       makeExpense({ status: "submitted", created_at: "2026-05-10" }),
@@ -673,7 +673,7 @@ describe("Chamberlain House integration", () => {
     expect(draftMed).toHaveLength(1);
   });
 
-  it("fires expected ARIA insights for Chamberlain House data", () => {
+  it("fires expected Cara insights for Chamberlain House data", () => {
     const r = run(oakExpenses, STAFF);
 
     // No stale approvals → no critical insight

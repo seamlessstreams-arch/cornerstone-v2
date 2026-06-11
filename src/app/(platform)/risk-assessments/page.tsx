@@ -383,7 +383,7 @@ export default function RiskAssessmentsPage() {
         days={28}
         defaultCollapsed
       />
-      <AriaPracticePanel sourceType="risk_assessment" homeId="home_oak" title="Run ARIA on this assessment" />
+      <AriaPracticePanel sourceType="risk_assessment" homeId="home_oak" title="Run Cara on this assessment" />
     </PageShell>
   );
 }

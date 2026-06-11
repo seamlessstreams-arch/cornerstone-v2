@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PERMISSION SYSTEM
+// CARA — PERMISSION SYSTEM
 // Central source of truth for all role-based access control.
 // Never scattered if-statements. Never client-only checks.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -103,7 +103,7 @@ export const PERMISSIONS = {
   MANAGE_SETTINGS: "manage_settings",
   MANAGE_ROLES: "manage_roles",
   MANAGE_USERS: "manage_users",
-  // ARIA Intelligence
+  // Cara Intelligence
   VIEW_ARIA_INTELLIGENCE: "view_aria_intelligence",
   USE_ARIA_INTELLIGENCE: "use_aria_intelligence",
   APPROVE_ARIA_CONTENT: "approve_aria_content",
@@ -128,7 +128,7 @@ export const PERMISSIONS = {
   MANAGE_LEARNING_STUDIO: "manage_learning_studio",
   VIEW_TRAINING_NEEDS: "view_training_needs",
   MANAGE_TRAINING_NEEDS: "manage_training_needs",
-  // ARIA Studio
+  // Cara Studio
   ARIA_STUDIO_VIEW: "aria_studio_view",
   ARIA_STUDIO_CREATE: "aria_studio_create",
   ARIA_STUDIO_EDIT: "aria_studio_edit",
@@ -136,7 +136,7 @@ export const PERMISSIONS = {
   ARIA_STUDIO_APPROVE: "aria_studio_approve",
   ARIA_STUDIO_COMMIT: "aria_studio_commit",
   ARIA_STUDIO_ADMIN: "aria_studio_admin",
-  // ARIA Reports & Review Intelligence
+  // Cara Reports & Review Intelligence
   ARIA_REPORTS_VIEW: "aria:view",
   ARIA_REPORTS_GENERATE: "aria:generate",
   ARIA_REPORTS_REVIEW: "aria:review",
@@ -297,7 +297,7 @@ export const ROLE_PERMISSIONS: Record<AppRole, Permission[]> = {
     PERMISSIONS.MANAGE_LEARNING_STUDIO,
     PERMISSIONS.VIEW_TRAINING_NEEDS,
     PERMISSIONS.MANAGE_TRAINING_NEEDS,
-    // ARIA Reports & Review Intelligence (full access for RI)
+    // Cara Reports & Review Intelligence (full access for RI)
     PERMISSIONS.ARIA_REPORTS_VIEW,
     PERMISSIONS.ARIA_REPORTS_GENERATE,
     PERMISSIONS.ARIA_REPORTS_REVIEW,
@@ -373,7 +373,7 @@ export const ROLE_PERMISSIONS: Record<AppRole, Permission[]> = {
     PERMISSIONS.MANAGE_LEARNING_STUDIO,
     PERMISSIONS.VIEW_TRAINING_NEEDS,
     PERMISSIONS.MANAGE_TRAINING_NEEDS,
-    // ARIA Studio (full)
+    // Cara Studio (full)
     PERMISSIONS.ARIA_STUDIO_VIEW,
     PERMISSIONS.ARIA_STUDIO_CREATE,
     PERMISSIONS.ARIA_STUDIO_EDIT,
@@ -381,7 +381,7 @@ export const ROLE_PERMISSIONS: Record<AppRole, Permission[]> = {
     PERMISSIONS.ARIA_STUDIO_APPROVE,
     PERMISSIONS.ARIA_STUDIO_COMMIT,
     PERMISSIONS.ARIA_STUDIO_ADMIN,
-    // ARIA Reports & Review Intelligence (full access for RM)
+    // Cara Reports & Review Intelligence (full access for RM)
     PERMISSIONS.ARIA_REPORTS_VIEW,
     PERMISSIONS.ARIA_REPORTS_GENERATE,
     PERMISSIONS.ARIA_REPORTS_REVIEW,
@@ -446,13 +446,13 @@ export const ROLE_PERMISSIONS: Record<AppRole, Permission[]> = {
     PERMISSIONS.MANAGE_LEARNING_STUDIO,
     PERMISSIONS.VIEW_TRAINING_NEEDS,
     PERMISSIONS.MANAGE_TRAINING_NEEDS,
-    // ARIA Studio
+    // Cara Studio
     PERMISSIONS.ARIA_STUDIO_VIEW,
     PERMISSIONS.ARIA_STUDIO_CREATE,
     PERMISSIONS.ARIA_STUDIO_EDIT,
     PERMISSIONS.ARIA_STUDIO_REVIEW,
     PERMISSIONS.ARIA_STUDIO_APPROVE,
-    // ARIA Reports (review + generate, no lock/configure)
+    // Cara Reports (review + generate, no lock/configure)
     PERMISSIONS.ARIA_REPORTS_VIEW,
     PERMISSIONS.ARIA_REPORTS_GENERATE,
     PERMISSIONS.ARIA_REPORTS_REVIEW,
@@ -499,12 +499,12 @@ export const ROLE_PERMISSIONS: Record<AppRole, Permission[]> = {
     PERMISSIONS.USE_LEARNING_STUDIO,
     PERMISSIONS.VIEW_TRAINING_NEEDS,
     PERMISSIONS.MANAGE_TRAINING_NEEDS,
-    // ARIA Studio
+    // Cara Studio
     PERMISSIONS.ARIA_STUDIO_VIEW,
     PERMISSIONS.ARIA_STUDIO_CREATE,
     PERMISSIONS.ARIA_STUDIO_EDIT,
     PERMISSIONS.ARIA_STUDIO_REVIEW,
-    // ARIA Reports (view + generate)
+    // Cara Reports (view + generate)
     PERMISSIONS.ARIA_REPORTS_VIEW,
     PERMISSIONS.ARIA_REPORTS_GENERATE,
     PERMISSIONS.REPORTS_VIEW,
@@ -524,11 +524,11 @@ export const ROLE_PERMISSIONS: Record<AppRole, Permission[]> = {
     PERMISSIONS.VIEW_LEARNING_STUDIO,
     PERMISSIONS.USE_LEARNING_STUDIO,
     PERMISSIONS.VIEW_TRAINING_NEEDS,
-    // ARIA Studio
+    // Cara Studio
     PERMISSIONS.ARIA_STUDIO_VIEW,
     PERMISSIONS.ARIA_STUDIO_CREATE,
     PERMISSIONS.ARIA_STUDIO_EDIT,
-    // ARIA Reports (view only)
+    // Cara Reports (view only)
     PERMISSIONS.ARIA_REPORTS_VIEW,
     PERMISSIONS.REPORTS_VIEW,
   ],
@@ -789,7 +789,7 @@ export function canAccessModule(role: AppRole, module: string): boolean {
     ri: PERMISSIONS.VIEW_RI_COMMAND_CENTRE,
     // Learning Studio
     learning: PERMISSIONS.VIEW_LEARNING_STUDIO,
-    // ARIA Reports
+    // Cara Reports
     "aria-reports": PERMISSIONS.ARIA_REPORTS_VIEW,
     "aria-dashboard": PERMISSIONS.ARIA_REPORTS_VIEW,
   };

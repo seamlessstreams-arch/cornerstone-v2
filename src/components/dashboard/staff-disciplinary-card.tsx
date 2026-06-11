@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF DISCIPLINARY INTELLIGENCE CARD
+// CARA — STAFF DISCIPLINARY INTELLIGENCE CARD
 // Dashboard card powered by the Staff Disciplinary Intelligence Engine.
 // Reg 33 (fitness of staff), Reg 34 (employment), Reg 40 (notifications),
 // SCCIF Leadership & Management.
@@ -211,13 +211,13 @@ export function StaffDisciplinaryCard() {
           </div>
         )}
 
-        {/* ── ARIA Disciplinary Intelligence ──────────────────────────── */}
+        {/* ── Cara Disciplinary Intelligence ──────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Disciplinary Intelligence
+              Cara Disciplinary Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

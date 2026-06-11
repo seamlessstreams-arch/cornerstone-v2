@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — NOTIFICATIONS REGISTER SERVICE
+// CARA — NOTIFICATIONS REGISTER SERVICE
 // Tracks all statutory notifications to Ofsted, the local authority,
 // LADO, police, and other regulatory bodies as required by law.
 // CHR 2015 Reg 40 (notification of serious events),

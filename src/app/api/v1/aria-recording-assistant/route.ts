@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ARIA RECORDING ASSISTANT API (standalone, any record type)
+// CARA — Cara RECORDING ASSISTANT API (standalone, any record type)
 // GET  /api/v1/aria-recording-assistant → record types, children, recent records
 // POST /api/v1/aria-recording-assistant
-//        { raw_text, record_type, child_id }            → analyse + optional ARIA
+//        { raw_text, record_type, child_id }            → analyse + optional Cara
 //                                                         rewrite (drafts only)
 //        { accept: true, confirm: true, raw_text,
 //          final_text, ai_suggested_text?, ... }        → save audit-safe record
@@ -99,7 +99,7 @@ export async function POST(req: Request) {
       manager_review_required,
       ai_draft: llmUsed ? result.text.trim() : null,
       llmUsed,
-      llm_message: llmUsed ? null : "ARIA's AI rewrite isn't configured in this environment — use the quality checks and guidance below to improve the note yourself.",
+      llm_message: llmUsed ? null : "Cara's AI rewrite isn't configured in this environment — use the quality checks and guidance below to improve the note yourself.",
       disclaimer: RECORDING_DISCLAIMER,
     },
   });

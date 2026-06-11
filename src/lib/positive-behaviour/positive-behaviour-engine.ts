@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Positive Behaviour Support (PBS) Intelligence Engine
+// Cara — Positive Behaviour Support (PBS) Intelligence Engine
 //
 // Pure deterministic engine. No AI, no external calls, no side-effects.
 //

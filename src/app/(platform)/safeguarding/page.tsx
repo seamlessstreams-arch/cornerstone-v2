@@ -332,7 +332,7 @@ function SafeguardingConcernsTab() {
     try {
       const concernText = concerns.map((c) => `${c.reference} (${c.type}): ${c.description}`).join("\n\n");
       const res = await api.post<{ data: { response?: string; parsed?: SafeguardingScanResult; text?: string } }>(
-        "/aria",
+        "/cara",
         {
           mode: "safeguarding_scan",
           source_content: concernText,
@@ -403,7 +403,7 @@ function SafeguardingConcernsTab() {
         <div className="rounded-2xl border border-violet-200 bg-violet-50 p-4">
           <div className="flex items-center justify-between">
             <div>
-              <div className="text-sm font-semibold text-violet-900">ARIA Safeguarding Scan</div>
+              <div className="text-sm font-semibold text-violet-900">Cara Safeguarding Scan</div>
               <div className="text-xs text-violet-700 mt-0.5">Analyse all concerns for themes, patterns, and escalation risks</div>
             </div>
             <Button
@@ -1314,7 +1314,7 @@ function ManagerActionsTab() {
                       onClick={() => setAriaPanelId(ariaPanelId === inc.id ? null : inc.id)}
                       className="flex items-center gap-1 rounded-xl border border-violet-200 bg-violet-50 px-2.5 py-1.5 text-[10px] font-semibold text-violet-700 hover:bg-violet-100 shrink-0"
                     >
-                      <Sparkles className="h-3 w-3" /> Aria
+                      <Sparkles className="h-3 w-3" /> Cara
                     </button>
                   </div>
 
@@ -1447,11 +1447,11 @@ function ManagerActionsTab() {
         </div>
       </div>
 
-      {/* Aria panel */}
+      {/* Cara panel */}
       <div>
         <div className="flex items-center gap-2 mb-4">
           <Sparkles className="h-4 w-4 text-violet-600" />
-          <span className="text-sm font-bold text-slate-900">Aria — Manager Support</span>
+          <span className="text-sm font-bold text-slate-900">Cara — Manager Support</span>
         </div>
         <AriaPanel
           mode="oversee"

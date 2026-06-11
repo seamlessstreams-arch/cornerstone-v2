@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD RISK PROFILE INTELLIGENCE API ROUTE
+// CARA — CHILD RISK PROFILE INTELLIGENCE API ROUTE
 // GET /api/v1/child-risk-profile-intelligence?childId=yp_alex
 // Per-child engine analysing risk assessments across domains,
 // risk trajectory, mitigation effectiveness, review compliance.

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Ofsted Readiness Intelligence — Public API
+// Cara Ofsted Readiness Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Record Quality & Timeliness Intelligence API Route
+// Cara — Record Quality & Timeliness Intelligence API Route
 //
 // GET  → returns Chamberlain House demo intelligence
 // POST → accepts custom data for any home

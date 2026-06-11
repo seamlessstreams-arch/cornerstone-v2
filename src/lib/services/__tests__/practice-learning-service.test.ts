@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PRACTICE LEARNING SERVICE TESTS
+// CARA — PRACTICE LEARNING SERVICE TESTS
 // Pure-function tests for learning metrics computation, alert identification,
 // constant validation, and CRUD fallback behaviour.
 // CHR 2015 Reg 45 (review of quality of care — learning from events),

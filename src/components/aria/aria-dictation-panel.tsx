@@ -3,7 +3,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // AriaDictationPanel
 //
-// Modal/drawer for Aria voice dictation. Works in two modes:
+// Modal/drawer for Cara voice dictation. Works in two modes:
 //
 //  • Server mode  — MediaRecorder → upload → OpenAI Whisper transcription.
 //                   Requires OPENAI_API_KEY server-side.
@@ -287,13 +287,13 @@ export function AriaDictationPanel(props: AriaDictationPanelProps) {
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4"
       role="dialog"
       aria-modal="true"
-      aria-label="Aria voice dictation"
+      aria-label="Cara voice dictation"
     >
       <Card className="w-full max-w-xl">
         <CardHeader>
           <CardTitle className="flex items-center justify-between gap-2 text-base">
             <span className="flex items-center gap-2">
-              <Mic className="h-4 w-4 text-violet-600" /> Aria voice dictation
+              <Mic className="h-4 w-4 text-violet-600" /> Cara voice dictation
               {mode === "browser" && (
                 <Badge className="border border-violet-200 bg-violet-50 text-violet-700 text-[10px] font-medium">
                   Browser mode
@@ -401,7 +401,7 @@ export function AriaDictationPanel(props: AriaDictationPanelProps) {
                         disabled={!transcript.trim()}
                         className="gap-1.5"
                       >
-                        <Sparkles className="h-4 w-4" /> Use with Aria
+                        <Sparkles className="h-4 w-4" /> Use with Cara
                       </Button>
                     ) : null}
                     <Button
@@ -585,7 +585,7 @@ export function AriaDictationPanel(props: AriaDictationPanelProps) {
                             onClick={() => onSendToAria(transcript)}
                             className="gap-1.5"
                           >
-                            <Sparkles className="h-4 w-4" /> Use with Aria
+                            <Sparkles className="h-4 w-4" /> Use with Cara
                           </Button>
                         ) : null}
                         <Button variant="outline" onClick={() => setTranscript("")} className="gap-1.5">

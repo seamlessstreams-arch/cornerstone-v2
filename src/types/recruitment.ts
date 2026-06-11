@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SAFER RECRUITMENT TYPES
+// CARA — SAFER RECRUITMENT TYPES
 // Full type system for the regulated safer recruitment module
 // ══════════════════════════════════════════════════════════════════════════════
 

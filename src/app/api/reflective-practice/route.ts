@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Professional Development & Reflective Practice Intelligence API Route
+// Cara — Professional Development & Reflective Practice Intelligence API Route
 //
 // GET  → returns Chamberlain House demo intelligence
 // POST → accepts custom data for any home

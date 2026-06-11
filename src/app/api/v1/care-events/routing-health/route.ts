@@ -9,7 +9,7 @@
 //
 // Permission: aria.view_audit_logs for read; aria.commit_to_records
 // for retry actions (they re-run logic that creates linked records).
-// All retry actions are appended to the live ARIA audit tail.
+// All retry actions are appended to the live Cara audit tail.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { NextRequest, NextResponse } from "next/server";

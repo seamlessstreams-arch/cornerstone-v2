@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA Care Graph Builder
+// Cara Care Graph Builder
 //
 // Synthesizes a typed knowledge graph (nodes + edges) from live operational
 // records — children, incidents, missing episodes, restraints, risk

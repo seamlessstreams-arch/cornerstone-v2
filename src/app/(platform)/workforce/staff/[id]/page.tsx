@@ -149,7 +149,7 @@ export default function StaffCompetencyProfilePage({ params }: { params: Promise
             onClick={() => setShowAria((p) => !p)}
           >
             <Sparkles className="h-3.5 w-3.5" />
-            ARIA Profile Analysis
+            Cara Profile Analysis
           </Button>
           <Button variant="outline" size="sm" onClick={() => router.push("/workforce/staff")}>
             <ArrowLeft className="h-3.5 w-3.5 mr-1" />
@@ -267,10 +267,10 @@ export default function StaffCompetencyProfilePage({ params }: { params: Promise
       {/* ── Overview tab ─────────────────────────────────────────────── */}
       {tab === "overview" && profile && (
         <div className="space-y-4">
-          {/* ARIA narrative */}
+          {/* Cara narrative */}
           {profile.aria_narrative && (
             <div className="rounded-2xl border border-indigo-100 bg-indigo-50/50 p-4">
-              <p className="text-[10px] font-semibold text-indigo-600 mb-2 uppercase tracking-widest">ARIA Profile Intelligence</p>
+              <p className="text-[10px] font-semibold text-indigo-600 mb-2 uppercase tracking-widest">Cara Profile Intelligence</p>
               <p className="text-sm text-indigo-900 leading-relaxed">{profile.aria_narrative}</p>
               {profile.last_assessed_at && (
                 <p className="text-[10px] text-indigo-400 mt-2">
@@ -384,7 +384,7 @@ export default function StaffCompetencyProfilePage({ params }: { params: Promise
           <div className="rounded-xl border border-indigo-100 bg-indigo-50/40 px-4 py-3 text-xs text-indigo-700">
             Scores are derived from competency profile assessment, practice observations, and appraisal records.
             <Link href="/workforce/aria-planner" className="ml-1 underline hover:text-indigo-900">
-              Generate ARIA development plan →
+              Generate Cara development plan →
             </Link>
           </div>
         </div>
@@ -399,7 +399,7 @@ export default function StaffCompetencyProfilePage({ params }: { params: Promise
               <p className="text-sm">No development plans yet</p>
               <Link href="/workforce/aria-planner">
                 <Button size="sm" className="mt-3 gap-1.5 bg-[var(--cs-navy)] text-white">
-                  <Sparkles className="h-3.5 w-3.5" /> Generate with ARIA
+                  <Sparkles className="h-3.5 w-3.5" /> Generate with Cara
                 </Button>
               </Link>
             </div>
@@ -449,7 +449,7 @@ export default function StaffCompetencyProfilePage({ params }: { params: Promise
                   </div>
                   {plan.aria_rationale && (
                     <div className="rounded-xl border border-indigo-100 bg-indigo-50/50 px-3 py-2.5">
-                      <p className="text-[10px] font-semibold text-indigo-600 mb-0.5">ARIA Rationale</p>
+                      <p className="text-[10px] font-semibold text-indigo-600 mb-0.5">Cara Rationale</p>
                       <p className="text-xs text-indigo-800 leading-relaxed">{plan.aria_rationale}</p>
                     </div>
                   )}
@@ -496,7 +496,7 @@ export default function StaffCompetencyProfilePage({ params }: { params: Promise
                 )}
                 {o.aria_summary && (
                   <div className="rounded-xl border border-indigo-100 bg-indigo-50/50 px-3 py-2">
-                    <p className="text-[10px] font-semibold text-indigo-600 mb-0.5">ARIA</p>
+                    <p className="text-[10px] font-semibold text-indigo-600 mb-0.5">Cara</p>
                     <p className="text-xs text-indigo-800">{o.aria_summary}</p>
                   </div>
                 )}
@@ -548,7 +548,7 @@ export default function StaffCompetencyProfilePage({ params }: { params: Promise
                 )}
                 {appraisal.aria_insights && (
                   <div className="rounded-xl border border-indigo-100 bg-indigo-50/50 px-3 py-2">
-                    <p className="text-[10px] font-semibold text-indigo-600 mb-0.5">ARIA Insights</p>
+                    <p className="text-[10px] font-semibold text-indigo-600 mb-0.5">Cara Insights</p>
                     <p className="text-xs text-indigo-800">{appraisal.aria_insights}</p>
                   </div>
                 )}

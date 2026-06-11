@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// DASHBOARD WIDGET — Education Analysis (ARIA Intelligence-Driven)
+// DASHBOARD WIDGET — Education Analysis (Cara Intelligence-Driven)
 //
 // Shows at a glance:
 //   - Overall score + rating

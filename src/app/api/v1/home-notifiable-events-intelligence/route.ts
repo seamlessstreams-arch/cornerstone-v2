@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME NOTIFIABLE EVENTS INTELLIGENCE API ROUTE
+// CARA — HOME NOTIFIABLE EVENTS INTELLIGENCE API ROUTE
 // GET /api/v1/home-notifiable-events-intelligence
 // Synthesises notifiable event data to produce notification compliance,
 // follow-up quality, lessons learned, and multi-agency reporting intelligence.

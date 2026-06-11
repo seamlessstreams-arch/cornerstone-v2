@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — YOUNG PERSON OUTCOMES INTELLIGENCE CARD
+// CARA — YOUNG PERSON OUTCOMES INTELLIGENCE CARD
 // Dashboard widget for outcome target tracking, domain progress analysis,
-// per-child profiles, review compliance, and ARIA outcomes intelligence.
+// per-child profiles, review compliance, and Cara outcomes intelligence.
 // Powered by the Outcomes Progress Engine — live data (Reg 7–14, SCCIF).
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -235,13 +235,13 @@ export function OutcomesCard() {
           </div>
         )}
 
-        {/* ── ARIA Outcomes Intelligence ──────────────────────────────── */}
+        {/* ── Cara Outcomes Intelligence ──────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Outcomes Intelligence
+              Cara Outcomes Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

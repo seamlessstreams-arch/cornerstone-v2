@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — INDEPENDENT VISITORS SERVICE
+// CARA — INDEPENDENT VISITORS SERVICE
 // Manages independent visitor assignments (Children Act 1989 s23ZB), visit
 // records, and compliance tracking. CHR 2015 Reg 44 (independent person
 // visiting children's homes), IRO Handbook 2010 (independent reviewing

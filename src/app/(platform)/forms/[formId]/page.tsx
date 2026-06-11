@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CARE FORM DETAIL PAGE
+// CARA — CARE FORM DETAIL PAGE
 // View, edit, submit, and approve a single care form.
 // ══════════════════════════════════════════════════════════════════════════════
 

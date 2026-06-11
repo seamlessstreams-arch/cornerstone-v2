@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME QUALITY OF CARE COMPOSITE ENGINE
+// CARA — HOME QUALITY OF CARE COMPOSITE ENGINE
 // Merges child voice, participation, key-working quality, cultural identity,
 // life story work, therapeutic climate, and emotional literacy across all children.
 // Pure deterministic engine. CHR 2015 Reg 5/6/7/9/10.

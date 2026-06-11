@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LAUNDRY & CLOTHING MANAGEMENT SERVICE
+// CARA — LAUNDRY & CLOTHING MANAGEMENT SERVICE
 // Tracks clothing provision, laundry management, personal appearance,
 // clothing budgets, and children's dignity in clothing choices.
 // CHR 2015 Reg 7 (children's plan — personal appearance),

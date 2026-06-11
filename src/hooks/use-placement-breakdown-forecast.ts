@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PLACEMENT BREAKDOWN FORECAST HOOK
+// CARA — PLACEMENT BREAKDOWN FORECAST HOOK
 // React Query wrapper for /api/v1/placement-breakdown-forecast
 // ══════════════════════════════════════════════════════════════════════════════
 

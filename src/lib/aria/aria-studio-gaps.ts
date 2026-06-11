@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — GAP DETECTION ENGINE
+// Cara STUDIO — GAP DETECTION ENGINE
 // Detects recording and evidence gaps that need addressing.
 // Results are presented to staff as suggestions, not automated alerts.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -70,7 +70,7 @@ export async function detectGapsForRequest(
           gap_type: "missing_management_oversight",
           severity: "medium",
           title: "No recent management oversight recorded",
-          description: `No management oversight has been recorded in ARIA Studio. Regular management oversight is required by Regulation 45.`,
+          description: `No management oversight has been recorded in Cara Studio. Regular management oversight is required by Regulation 45.`,
           recommended_action: "Record management oversight covering the past 28 days.",
         }));
       } else {

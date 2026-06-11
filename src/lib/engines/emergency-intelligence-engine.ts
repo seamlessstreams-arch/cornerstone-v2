@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EMERGENCY PREPAREDNESS INTELLIGENCE ENGINE
+// CARA — EMERGENCY PREPAREDNESS INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses protocol drills, emergency plans, and overall preparedness to
@@ -349,7 +349,7 @@ export function computeEmergencyIntelligence(input: {
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
 
   const insights: AriaEmergencyInsight[] = [];
 

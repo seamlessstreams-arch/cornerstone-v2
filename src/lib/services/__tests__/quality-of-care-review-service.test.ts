@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — QUALITY OF CARE REVIEW SERVICE TESTS
+// CARA — QUALITY OF CARE REVIEW SERVICE TESTS
 // Pure-function tests for quality of care review metrics computation,
-// alert identification, ARIA insight generation, and edge cases.
+// alert identification, Cara insight generation, and edge cases.
 // Regulation 45 requires the registered person to review the quality of care
 // provided at least every 6 months.
 // ══════════════════════════════════════════════════════════════════════════════

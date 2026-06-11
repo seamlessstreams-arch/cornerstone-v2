@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME EMERGENCY LIGHTING SERVICE
+// CARA -- HOME EMERGENCY LIGHTING SERVICE
 // Tracks emergency lighting testing and compliance including monthly function
 // tests, annual duration tests, quarterly inspections, battery condition
 // monitoring, escape route coverage, and signage visibility for children's

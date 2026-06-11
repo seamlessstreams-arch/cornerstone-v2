@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME INDEPENDENCE SKILLS READINESS INTELLIGENCE ENGINE
+// CARA — HOME INDEPENDENCE SKILLS READINESS INTELLIGENCE ENGINE
 // Home-level: aggregates independence skills records, pathway plans, and young
 // people data to assess how well the home is preparing children for
 // independence — critical for Ofsted's assessment of leaving care preparation

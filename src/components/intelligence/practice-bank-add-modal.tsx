@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PRACTICE BANK ADD MODAL
+// CARA — PRACTICE BANK ADD MODAL
 // Quick-add a "what works" entry to the practice bank for a child.
 // ══════════════════════════════════════════════════════════════════════════════
 

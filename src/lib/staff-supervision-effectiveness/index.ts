@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Staff Supervision Effectiveness — Public API
+// Cara Staff Supervision Effectiveness — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 // Legacy re-exports from staff-supervision-effectiveness-engine

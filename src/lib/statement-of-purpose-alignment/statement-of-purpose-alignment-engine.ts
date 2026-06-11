@@ -1,5 +1,5 @@
 // ==============================================================================
-// Cornerstone -- Statement of Purpose Alignment Intelligence Engine
+// Cara -- Statement of Purpose Alignment Intelligence Engine
 //
 // Pure deterministic engine -- no AI, no external calls.
 // Measures how well the actual care provided aligns with the children's

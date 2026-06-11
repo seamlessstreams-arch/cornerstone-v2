@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SECURE STORAGE & RECORDS ACCESS SERVICE
+// CARA — SECURE STORAGE & RECORDS ACCESS SERVICE
 // Tracks secure record storage, access logs, data retention,
 // GDPR compliance, and information governance.
 // CHR 2015 Reg 39 (records — secure storage and access),

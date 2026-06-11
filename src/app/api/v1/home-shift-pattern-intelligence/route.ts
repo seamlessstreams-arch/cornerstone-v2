@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SHIFT PATTERN INTELLIGENCE API ROUTE
+// CARA — HOME SHIFT PATTERN INTELLIGENCE API ROUTE
 // GET /api/v1/home-shift-pattern-intelligence
 // Cross-cutting: shifts × shiftSwaps for staffing pattern analysis.
 // CHR 2015 Reg 33(4)(c). SCCIF: "Staffing arrangements."

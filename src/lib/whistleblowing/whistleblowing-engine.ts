@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Whistleblowing & Professional Courage Intelligence Engine
+// Cara — Whistleblowing & Professional Courage Intelligence Engine
 //
 // Pure deterministic engine — no AI, no external calls.
 // Maps to: CHR 2015 Reg 13 (leadership), Reg 12 (protection), Reg 32/33

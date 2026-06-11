@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD SAFEGUARDING INTELLIGENCE API ROUTE
+// CARA — CHILD SAFEGUARDING INTELLIGENCE API ROUTE
 // GET /api/v1/child-safeguarding-intelligence?childId=yp_alex
 // Per-child engine: holistic safeguarding profile combining risk assessments,
 // incidents, missing episodes, restraints, and contextual safeguarding markers.

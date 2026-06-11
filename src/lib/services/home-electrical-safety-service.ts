@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ELECTRICAL SAFETY SERVICE
+// CARA — HOME ELECTRICAL SAFETY SERVICE
 // Tracks EICR inspections, PAT testing, emergency lighting checks,
 // fire alarm testing, lightning protection, and visual inspections.
 // BS 7671 Wiring Regulations compliance,

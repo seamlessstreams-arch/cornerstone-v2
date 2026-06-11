@@ -314,7 +314,7 @@ const HomeTaskActionCompletionIntelligenceCard = dynamic(() => import("@/compone
 const HomeProfessionalNetworkIntelligenceCard = dynamic(() => import("@/components/dashboard/home-professional-network-intelligence-card").then(m => m.HomeProfessionalNetworkIntelligenceCard ? { default: m.HomeProfessionalNetworkIntelligenceCard } : m), { ssr: false });
 const HomeLocalitySafeguardingIntelligenceCard = dynamic(() => import("@/components/dashboard/home-locality-safeguarding-intelligence-card").then(m => m.HomeLocalitySafeguardingIntelligenceCard ? { default: m.HomeLocalitySafeguardingIntelligenceCard } : m), { ssr: false });
 
-// Batch 28 — Recruitment Audit Trail, Filing Evidence Governance, Independence Skills Readiness, ARIA Content Quality
+// Batch 28 — Recruitment Audit Trail, Filing Evidence Governance, Independence Skills Readiness, Cara Content Quality
 const HomeRecruitmentAuditTrailIntelligenceCard = dynamic(() => import("@/components/dashboard/home-recruitment-audit-trail-intelligence-card").then(m => m.HomeRecruitmentAuditTrailIntelligenceCard ? { default: m.HomeRecruitmentAuditTrailIntelligenceCard } : m), { ssr: false });
 const HomeFilingEvidenceGovernanceIntelligenceCard = dynamic(() => import("@/components/dashboard/home-filing-evidence-governance-intelligence-card").then(m => m.HomeFilingEvidenceGovernanceIntelligenceCard ? { default: m.HomeFilingEvidenceGovernanceIntelligenceCard } : m), { ssr: false });
 const HomeIndependenceSkillsReadinessIntelligenceCard = dynamic(() => import("@/components/dashboard/home-independence-skills-readiness-intelligence-card").then(m => m.HomeIndependenceSkillsReadinessIntelligenceCard ? { default: m.HomeIndependenceSkillsReadinessIntelligenceCard } : m), { ssr: false });
@@ -940,7 +940,7 @@ function TimeSavedWidget({ formatted }: { formatted: Record<string, string> }) {
       <CardHeader className="pb-3">
         <CardTitle className="flex items-center gap-2 text-base">
           <Timer className="h-5 w-5 text-[var(--cs-aria-gold)]" />
-          Time Saved by ARIA
+          Time Saved by Cara
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -1089,7 +1089,7 @@ function getDashboardConfig(role: AppRole): DashboardConfig {
       zoneALabel:          "A  ·  What needs attention",
       zoneADescription:    "Priority items requiring immediate action",
       zoneBLabel:          "B  ·  Today's operation",
-      zoneBDescription:    "Shift coverage, tasks, medication, and ARIA intelligence",
+      zoneBDescription:    "Shift coverage, tasks, medication, and Cara intelligence",
     };
   }
 
@@ -2226,7 +2226,7 @@ export default function DashboardPage() {
           </section>
         )}
 
-        {/* Aria anchor for oversight scroll target */}
+        {/* Cara anchor for oversight scroll target */}
         <div id="aria-anchor" />
 
       </div>

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ARIA LEARNING STUDIO HUB
+// CARA — Cara LEARNING STUDIO HUB
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React from "react";
@@ -31,7 +31,7 @@ const FEATURES = [
   {
     href: "/learning/training-needs",
     title: "Training Needs",
-    description: "Core intelligence loop — ARIA-identified and manual training needs",
+    description: "Core intelligence loop — Cara-identified and manual training needs",
     icon: AlertTriangle,
     colour: "text-red-600",
     bg: "bg-red-50",
@@ -95,7 +95,7 @@ const FEATURES = [
   {
     href: "/learning/guidance",
     title: "Guidance Notes",
-    description: "ARIA-generated professional practice guidance for staff or children",
+    description: "Cara-generated professional practice guidance for staff or children",
     icon: FileText,
     colour: "text-blue-600",
     bg: "bg-blue-50",
@@ -171,13 +171,13 @@ export default function LearningHubPage() {
               <BookOpen className="h-5 w-5 text-white" />
             </div>
             <div>
-              <h2 className="text-lg font-bold">ARIA Learning Studio</h2>
+              <h2 className="text-lg font-bold">Cara Learning Studio</h2>
               <p className="text-sm text-[var(--cs-text-gentle)]">Intelligent learning design for residential care</p>
             </div>
           </div>
           <p className="text-sm text-[var(--cs-text-gentle)] leading-relaxed max-w-2xl">
             Generate professional learning resources for staff and children — from workshops and flashcards to full curricula.
-            ARIA identifies training needs from your operational data and closes the loop from governance to learning.
+            Cara identifies training needs from your operational data and closes the loop from governance to learning.
           </p>
           <div className="flex flex-wrap gap-2 pt-1">
             <span className="rounded-full bg-teal-600/40 px-3 py-1 text-xs font-medium text-teal-200">Staff Pathway</span>
@@ -205,7 +205,7 @@ export default function LearningHubPage() {
             {[
               "RI identifies risk",
               "→ Training Need created",
-              "→ ARIA generates resource",
+              "→ Cara generates resource",
               "→ Manager assigns to staff",
               "→ Completion recorded",
               "→ Evidence feeds Reg 45",
@@ -217,7 +217,7 @@ export default function LearningHubPage() {
             ))}
           </div>
           <p className="text-xs text-teal-700">
-            Training needs can be identified automatically by ARIA from incidents, supervision records, and RI alerts — or added manually.
+            Training needs can be identified automatically by Cara from incidents, supervision records, and RI alerts — or added manually.
           </p>
         </div>
 

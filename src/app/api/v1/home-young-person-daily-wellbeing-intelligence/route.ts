@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME YOUNG PERSON DAILY WELLBEING INTELLIGENCE API ROUTE
+// CARA — HOME YOUNG PERSON DAILY WELLBEING INTELLIGENCE API ROUTE
 // GET /api/v1/home-young-person-daily-wellbeing-intelligence
 // Synthesises child daily summaries, daily log entries, and behaviour logs
 // to assess daily recording coverage, mood tracking, behaviour documentation,

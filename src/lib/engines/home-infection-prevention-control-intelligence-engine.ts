@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME INFECTION PREVENTION & CONTROL INTELLIGENCE ENGINE
+// CARA — HOME INFECTION PREVENTION & CONTROL INTELLIGENCE ENGINE
 // Tracks infection control effectiveness — hygiene audits, illness outbreak
 // management, hand hygiene compliance, cleaning schedules, and immunisation
 // tracking. Critical for Ofsted under Children's Homes Regulations 2015.

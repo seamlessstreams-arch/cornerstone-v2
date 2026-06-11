@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME FURNITURE & ROOM PERSONALISATION INTELLIGENCE ENGINE
+// CARA — HOME FURNITURE & ROOM PERSONALISATION INTELLIGENCE ENGINE
 // Monitors bedroom and room personalisation quality — furniture adequacy,
 // child choice in decor, personalisation completion, comfort assessment,
 // and dignity of personal space. Ensures every child has a bedroom they

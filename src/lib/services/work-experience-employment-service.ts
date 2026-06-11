@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — WORK EXPERIENCE EMPLOYMENT SERVICE
+// CARA — WORK EXPERIENCE EMPLOYMENT SERVICE
 // Tracks work experience placements, employment skills development,
 // career guidance, CV building, and workplace readiness.
 // CHR 2015 Reg 8(2)(a)(vi) (preparation for independence),

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — DAILY INTELLIGENCE BRIEF
+// Cara — DAILY INTELLIGENCE BRIEF
 // Synthesises the day's activity across all modules into an intelligent brief
 // for the Registered Manager: incidents, mood trends, medication, key events,
 // staffing, and compliance gaps.

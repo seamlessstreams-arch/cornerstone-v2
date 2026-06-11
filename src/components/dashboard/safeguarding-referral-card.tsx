@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SAFEGUARDING REFERRAL CARD
+// CARA — SAFEGUARDING REFERRAL CARD
 // Dashboard card powered by the Safeguarding Intelligence Engine.
 // Focus: referrals, incidents, oversight, and risk details.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -131,13 +131,13 @@ export function SafeguardingReferralCard() {
           </div>
         </div>
 
-        {/* ── ARIA Referral Intelligence ──────────────────────────────── */}
+        {/* ── Cara Referral Intelligence ──────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Referral Intelligence
+              Cara Referral Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

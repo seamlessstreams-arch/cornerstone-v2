@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILDREN'S FUND MANAGEMENT SERVICE
+// CARA — CHILDREN'S FUND MANAGEMENT SERVICE
 // Tracks personal funds held for children in care, pocket money,
 // savings, birthday/festival allowances, and financial accounting.
 // CHR 2015 Reg 34 (money — financial management),

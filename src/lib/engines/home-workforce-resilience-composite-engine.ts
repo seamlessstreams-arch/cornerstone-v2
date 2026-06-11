@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME WORKFORCE RESILIENCE COMPOSITE ENGINE
+// CARA — HOME WORKFORCE RESILIENCE COMPOSITE ENGINE
 // Correlates staffing stability, supervision quality, training compliance,
 // staff wellbeing, and operational resilience across the entire workforce.
 // Pure deterministic engine. CHR 2015 Reg 31–34 / Schedule 2.

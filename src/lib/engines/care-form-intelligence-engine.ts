@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CARE FORM INTELLIGENCE ENGINE
+// CARA — CARE FORM INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses care form completion pipelines, review turnaround, overdue forms,
@@ -299,7 +299,7 @@ export function computeCareFormIntelligence(
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
   const insights: AriaCareFormInsight[] = [];
 
   // Critical: overdue forms

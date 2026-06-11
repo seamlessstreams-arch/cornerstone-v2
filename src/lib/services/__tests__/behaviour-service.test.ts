@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — BEHAVIOUR SUPPORT SERVICE TESTS
+// CARA — BEHAVIOUR SUPPORT SERVICE TESTS
 // Pure-function unit tests for behaviour summary computation, child behaviour
 // profile aggregation, PI analysis, alert identification, and constant
 // validation.

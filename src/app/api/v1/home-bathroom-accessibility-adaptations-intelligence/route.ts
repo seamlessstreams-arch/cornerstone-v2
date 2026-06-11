@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME BATHROOM ACCESSIBILITY & ADAPTATIONS INTELLIGENCE API ROUTE
+// CARA — HOME BATHROOM ACCESSIBILITY & ADAPTATIONS INTELLIGENCE API ROUTE
 // GET /api/v1/home-bathroom-accessibility-adaptations-intelligence
 // Cross-domain composite: adaptationRecords + grabRailRecords +
 // nonSlipRecords + wheelchairAccessRecords + modificationRecords

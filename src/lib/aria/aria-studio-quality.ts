@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — QUALITY CHECK ENGINE
+// Cara STUDIO — QUALITY CHECK ENGINE
 // Runs 14 checks before commit is allowed. Each check can be overridden
 // with a recorded reason. Audit trail captures every check result.
 // ══════════════════════════════════════════════════════════════════════════════

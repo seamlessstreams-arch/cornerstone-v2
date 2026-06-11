@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME RECRUITMENT AUDIT TRAIL INTELLIGENCE API ROUTE
+// CARA — HOME RECRUITMENT AUDIT TRAIL INTELLIGENCE API ROUTE
 // GET /api/v1/home-recruitment-audit-trail-intelligence
 // Synthesises recruitmentAudit, conditionalOffers, candidateProfiles, and
 // vacancies to assess recruitment audit trail quality and completeness.

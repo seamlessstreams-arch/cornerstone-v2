@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PLACEMENT STABILITY SERVICE
+// CARA — PLACEMENT STABILITY SERVICE
 // Tracks placement moves, stability metrics, disruption meetings,
 // and permanence planning for children in care.
 // CHR 2015 Reg 36 (records — placement history),

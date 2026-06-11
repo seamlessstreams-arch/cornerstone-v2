@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Safeguarding Intelligence Engine  (v2 — standardised)
+// Cara Safeguarding Intelligence Engine  (v2 — standardised)
 //
 // Deterministic engine for evaluating safeguarding quality, compliance,
 // policy frameworks, staff readiness, and per-child safeguarding profiles.

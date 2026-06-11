@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME FIRST AID KIT & MEDICAL SUPPLIES INTELLIGENCE API ROUTE
+// CARA — HOME FIRST AID KIT & MEDICAL SUPPLIES INTELLIGENCE API ROUTE
 // GET /api/v1/home-first-aid-kit-medical-supplies-intelligence
 // Cross-domain composite: kitCheckRecords + stockRecords + expiryRecords +
 // accessibilityRecords + trainingRecords

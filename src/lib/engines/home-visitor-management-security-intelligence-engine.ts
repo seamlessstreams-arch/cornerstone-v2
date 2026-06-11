@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME VISITOR MANAGEMENT & SECURITY INTELLIGENCE ENGINE
+// CARA — HOME VISITOR MANAGEMENT & SECURITY INTELLIGENCE ENGINE
 // Monitors visitor registration compliance, DBS check verification,
 // ID verification, safeguarding protocol adherence, visitor log completeness,
 // and escort compliance across the children's home.

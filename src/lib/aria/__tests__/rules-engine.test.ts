@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { tryRulesFirst, hasRuleHandler, getRuleHandledCommands, getRuleStats } from "../rules-engine";
 
-describe("ARIA Rules Engine", () => {
+describe("Cara Rules Engine", () => {
   // ── Registry ────────────────────────────────────────────────────────────
   describe("rule registry", () => {
     it("has handlers for extraction commands", () => {
@@ -281,7 +281,7 @@ describe("ARIA Rules Engine", () => {
     it("all rule results include rules engine tag", () => {
       const result = tryRulesFirst("extract_actions", "Need to contact the social worker.");
       expect(result).not.toBeNull();
-      expect(result!.output).toContain("Aria Rules Engine");
+      expect(result!.output).toContain("Cara Rules Engine");
       expect(result!.output).toContain("no AI API call");
     });
 

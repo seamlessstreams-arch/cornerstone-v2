@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — NOTIFICATIONS REGISTER SERVICE TESTS
+// CARA — NOTIFICATIONS REGISTER SERVICE TESTS
 // Pure-function unit tests for notification metrics computation, alert
 // identification, and constant validation.
 // CHR 2015 Reg 40 (notification of serious events),

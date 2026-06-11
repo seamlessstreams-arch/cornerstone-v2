@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CONFLICT DETECTION CARD
+// CARA — CONFLICT DETECTION CARD
 // The complement to duplicate detection: records that DISAGREE about the same
 // child, time or situation — surfaced for human reconciliation, never auto-resolved.
 // Powered by the Conflict Detection Engine.
@@ -117,12 +117,12 @@ export function ConflictDetectionCard() {
           </div>
         )}
 
-        {/* ── ARIA insights ─────────────────────────────────────────────── */}
+        {/* ── Cara insights ─────────────────────────────────────────────── */}
         {insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Conflict Intelligence
+              Cara Conflict Intelligence
             </p>
             {insights.slice(0, 2).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.positive)}>

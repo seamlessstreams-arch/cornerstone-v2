@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF RECORDING PRACTICE HOOK
+// CARA — STAFF RECORDING PRACTICE HOOK
 // React Query wrapper for /api/v1/staff-recording-practice
 // ══════════════════════════════════════════════════════════════════════════════
 

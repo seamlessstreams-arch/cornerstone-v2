@@ -3,7 +3,7 @@
 //
 // Monitors supervision adherence, overtime patterns, training compliance,
 // absence trends, and workload balance. Flags staff at risk of burnout
-// or non-compliance, with ARIA-generated recommendations.
+// or non-compliance, with Cara-generated recommendations.
 // ══════════════════════════════════════════════════════════════════════════════
 
 "use client";
@@ -183,7 +183,7 @@ export function AriaStaffWellbeing() {
           </div>
           <div>
             <h3 className="text-sm font-semibold text-[var(--cs-navy)]">Staff Wellbeing Tracker</h3>
-            <p className="text-[10px] text-[var(--cs-text-muted)]">ARIA-analysed staffing health — {staff.length} staff members</p>
+            <p className="text-[10px] text-[var(--cs-text-muted)]">Cara-analysed staffing health — {staff.length} staff members</p>
           </div>
         </div>
       </div>
@@ -284,12 +284,12 @@ export function AriaStaffWellbeing() {
                     </div>
                   )}
 
-                  {/* ARIA suggestion */}
+                  {/* Cara suggestion */}
                   {entry.suggestion && (
                     <div className="rounded-xl bg-[var(--cs-aria-gold-bg)] border border-[var(--cs-aria-gold-soft)] p-2.5">
                       <div className="flex items-center gap-1.5 mb-1">
                         <Sparkles className="h-3 w-3 text-[var(--cs-aria-gold)]" />
-                        <span className="text-[10px] font-semibold text-[var(--cs-navy)]">ARIA Suggestion</span>
+                        <span className="text-[10px] font-semibold text-[var(--cs-navy)]">Cara Suggestion</span>
                       </div>
                       <p className="text-[11px] text-[var(--cs-text-secondary)]">{entry.suggestion}</p>
                     </div>

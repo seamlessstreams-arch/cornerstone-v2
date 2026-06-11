@@ -362,7 +362,7 @@ describe("computeChildVoiceParticipation", () => {
     expect(result.headline).toContain("1 key work session");
   });
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
 
   it("generates critical insight for multiple silent children", () => {
     const result = computeChildVoiceParticipation(baseInput());

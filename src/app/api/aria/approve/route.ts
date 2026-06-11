@@ -1,6 +1,6 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // API: /api/aria/approve
-// Convenience wrapper — applies an approval decision to an ARIA output.
+// Convenience wrapper — applies an approval decision to an Cara output.
 // POST with decision "approve", "reject", "commit", "request_changes", or "withdraw".
 // ══════════════════════════════════════════════════════════════════════════════
 

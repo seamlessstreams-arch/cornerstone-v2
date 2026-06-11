@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — KEYWORKER SESSIONS INTELLIGENCE CARD
+// CARA — KEYWORKER SESSIONS INTELLIGENCE CARD
 // Dashboard widget for keyworking session frequency, quality, child-led rates,
-// documentation compliance, follow-up tracking, and ARIA keyworking intelligence.
+// documentation compliance, follow-up tracking, and Cara keyworking intelligence.
 // Powered by the Keyworking Intelligence Engine — live data (Reg 22).
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -208,13 +208,13 @@ export function KeyworkerSessionsCard() {
           </div>
         )}
 
-        {/* ── ARIA Keyworking Intelligence ─────────────────────────────── */}
+        {/* ── Cara Keyworking Intelligence ─────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Keyworking Intelligence
+              Cara Keyworking Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

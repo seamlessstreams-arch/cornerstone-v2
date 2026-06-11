@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ATMOSPHERE ASSESSMENT SERVICE TESTS
+// CARA — HOME ATMOSPHERE ASSESSMENT SERVICE TESTS
 // Pure-function tests for home atmosphere metrics, alert identification,
-// ARIA insight generation, and edge cases.
+// Cara insight generation, and edge cases.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";

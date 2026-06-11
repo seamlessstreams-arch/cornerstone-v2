@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// API — ARIA Audit Trail (Live Tail Viewer) — Milestone 11
+// API — Cara Audit Trail (Live Tail Viewer) — Milestone 11
 //
 // GET only. Read-only timeline. Append-only writes happen inside other
 // routes via `appendAriaAudit()`. Gated by `aria.view_audit_logs`.

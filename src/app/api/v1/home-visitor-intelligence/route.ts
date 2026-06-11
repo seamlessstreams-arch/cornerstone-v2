@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME VISITOR & ACCESS INTELLIGENCE API ROUTE
+// CARA — HOME VISITOR & ACCESS INTELLIGENCE API ROUTE
 // GET /api/v1/home-visitor-intelligence
 // Synthesises visitor records to assess DBS compliance, ID verification,
 // sign-in/out completion, safeguarding oversight, and multi-agency engagement.

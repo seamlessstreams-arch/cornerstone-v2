@@ -10,7 +10,7 @@ interface SmartUploadButtonProps {
   linkedChildId?: string;
   linkedStaffId?: string;
   linkedIncidentId?: string;
-  /** Upload context hint for ARIA */
+  /** Upload context hint for Cara */
   uploadContext?: string;
   /** Visual variant */
   variant?: "button" | "icon" | "inline";
@@ -34,7 +34,7 @@ export function SmartUploadButton({
       <>
         <button
           onClick={() => setOpen(true)}
-          title="Upload document — ARIA will classify and extract intelligence"
+          title="Upload document — Cara will classify and extract intelligence"
           className={cn(
             "inline-flex items-center justify-center rounded-xl bg-[var(--cs-navy)] text-white hover:bg-[var(--cs-navy)]/90 transition-colors h-8 w-8 shrink-0",
             className,

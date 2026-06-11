@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME LONE WORKING STAFF SAFETY INTELLIGENCE ENGINE — TESTS
+// CARA — HOME LONE WORKING STAFF SAFETY INTELLIGENCE ENGINE — TESTS
 // CHR 2015 Reg 33, HSE Lone Working guidance.
 // ══════════════════════════════════════════════════════════════════════════════
 

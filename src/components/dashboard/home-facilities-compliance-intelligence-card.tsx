@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME FACILITIES COMPLIANCE INTELLIGENCE CARD
+// CARA — HOME FACILITIES COMPLIANCE INTELLIGENCE CARD
 // Home-level: fire equipment checks, water hygiene, window restrictor
 // compliance, and pest control management.
 // CHR 2015 Reg 25. Fire Safety Order 2005. HSE L8.
@@ -230,12 +230,12 @@ export function HomeFacilitiesComplianceIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Facilities Intelligence */}
+        {/* Cara Facilities Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Facilities Intelligence
+              Cara Facilities Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME CHILDREN'S VOICE & PARTICIPATION INTELLIGENCE ENGINE
+// CARA — HOME CHILDREN'S VOICE & PARTICIPATION INTELLIGENCE ENGINE
 // Home-level: assesses how effectively children's voices are heard and
 // participation is enabled. Tracks children's meetings, staff feedback from
 // children, child-friendly policies, and children-as-experts opportunities.
@@ -434,13 +434,13 @@ export function computeChildrensVoiceParticipation(
     expertParticipationRate >= 50
   )
     insights.push({
-      text: "ARIA recognises an embedded children's voice culture — children are heard, responded to, and empowered across all participation domains.",
+      text: "Cara recognises an embedded children's voice culture — children are heard, responded to, and empowered across all participation domains.",
       severity: "positive",
     });
 
   if (meetings.length > 0 && childChairingRate >= 50 && meetingAttendanceRate >= 80)
     insights.push({
-      text: `ARIA detects strong child-led governance — ${childChairingRate}% of meetings child-chaired with ${meetingAttendanceRate}% attendance.`,
+      text: `Cara detects strong child-led governance — ${childChairingRate}% of meetings child-chaired with ${meetingAttendanceRate}% attendance.`,
       severity: "positive",
     });
 
@@ -450,19 +450,19 @@ export function computeChildrensVoiceParticipation(
     feedbackResponseRate < 40
   )
     insights.push({
-      text: "ARIA flags a dual concern — both low positive sentiment and poor feedback response suggest children feel unheard.",
+      text: "Cara flags a dual concern — both low positive sentiment and poor feedback response suggest children feel unheard.",
       severity: "critical",
     });
 
   if (meetings.length === 0 && feedback.length === 0 && total_children > 0)
     insights.push({
-      text: "ARIA flags absence of both meetings and feedback — no formal mechanism exists for children's voices to be heard.",
+      text: "Cara flags absence of both meetings and feedback — no formal mechanism exists for children's voices to be heard.",
       severity: "critical",
     });
 
   if (complaintsCount >= 2)
     insights.push({
-      text: `ARIA notes complaints raised in ${complaintsCount} meetings — pattern may indicate systemic dissatisfaction.`,
+      text: `Cara notes complaints raised in ${complaintsCount} meetings — pattern may indicate systemic dissatisfaction.`,
       severity: "warning",
     });
 

@@ -249,7 +249,7 @@ function LetterStatusBadge({ status }: { status: HrLetterStatus }) {
     withdrawn: "bg-gray-100 text-gray-500 border-gray-200",
   };
   const labels: Record<HrLetterStatus, string> = {
-    aria_draft: "Aria Draft",
+    aria_draft: "Cara Draft",
     manager_review: "Manager Review",
     approved: "Approved",
     sent: "Sent",

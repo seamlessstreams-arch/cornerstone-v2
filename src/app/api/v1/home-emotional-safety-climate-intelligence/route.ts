@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME EMOTIONAL SAFETY CLIMATE INTELLIGENCE API ROUTE
+// CARA — HOME EMOTIONAL SAFETY CLIMATE INTELLIGENCE API ROUTE
 // GET /api/v1/home-emotional-safety-climate-intelligence
 // Cross-domain composite: restraints + sanctionRewards + postIncidentChildDebriefs
 // + staffDebriefRecords + positiveAchievements

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Permission System — Public API
+// Cara Permission System — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export { checkAccess, canAccess, getAllowedActions } from "./access-decision-service";

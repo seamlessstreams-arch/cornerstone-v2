@@ -1,7 +1,7 @@
 "use client";
 
 // ==============================================================================
-// CORNERSTONE — SEARCH HOOK
+// CARA — SEARCH HOOK
 //
 // Debounced React Query hook for full-text search.
 // Only fires when query is at least 2 characters.

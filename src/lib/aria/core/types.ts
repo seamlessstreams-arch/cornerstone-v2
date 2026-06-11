@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Aria Intelligence — Core Types
+// Cara Intelligence — Core Types
 //
-// Central type definitions for the Aria AI governance system.
+// Central type definitions for the Cara AI governance system.
 // Used across all modules: routing, safety, audit, evidence, studio, QA.
 // ══════════════════════════════════════════════════════════════════════════════
 

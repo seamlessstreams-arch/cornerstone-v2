@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CONTACT & FAMILY ENGAGEMENT SERVICE
+// CARA — CONTACT & FAMILY ENGAGEMENT SERVICE
 // Manages contact plans, session recording, family engagement tracking,
 // and compliance analytics. CHR 2015 Reg 7 (care plans / contact),
 // Reg 8 (promoting contact), Reg 10 (positive relationships).

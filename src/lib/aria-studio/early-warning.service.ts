@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — EARLY WARNING INDICATOR ENGINE
+// Cara STUDIO — EARLY WARNING INDICATOR ENGINE
 //
 // Analyses trends across evidence to surface early warnings before they
 // escalate. Covers child risk, home risk, staffing, compliance, safeguarding,

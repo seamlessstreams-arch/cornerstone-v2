@@ -17,7 +17,7 @@ export interface AuditTrailFilters {
 }
 
 /**
- * Live tail of the ARIA Studio audit log. Refreshes every 15s.
+ * Live tail of the Cara Studio audit log. Refreshes every 15s.
  */
 export function useAuditTrail(homeId: string, filters: AuditTrailFilters = {}) {
   const qs = new URLSearchParams({ home_id: homeId });

@@ -4,7 +4,7 @@
 // AriaChallengeModePanel
 //
 // "Challenge Mode" is a professional accountability feature. When enabled,
-// ARIA asks the manager to justify their decision (approve, reject, dismiss)
+// Cara asks the manager to justify their decision (approve, reject, dismiss)
 // before it is recorded. This creates an audit trail showing that decisions
 // were considered rather than reflexive.
 //
@@ -40,7 +40,7 @@ type ChallengeAction = "approve" | "reject" | "dismiss" | "amend_and_approve" | 
 interface AriaChallengeModeProps {
   /** The action the user is trying to take */
   action: ChallengeAction;
-  /** The ARIA output being acted upon */
+  /** The Cara output being acted upon */
   outputId: string;
   /** Brief description of the output for context */
   outputSummary?: string;
@@ -67,7 +67,7 @@ const ACTION_CONFIG: Record<ChallengeAction, {
     icon: CheckCircle2,
     colour: "text-emerald-700",
     bg: "bg-emerald-50",
-    prompt: "What convinced you this ARIA output is accurate and appropriate for the record?",
+    prompt: "What convinced you this Cara output is accurate and appropriate for the record?",
     placeholder: "e.g. The tone, factual accuracy, and safeguarding language are correct. I have verified the dates and names.",
     quickResponses: [
       "Verified all facts and dates",
@@ -81,7 +81,7 @@ const ACTION_CONFIG: Record<ChallengeAction, {
     icon: XCircle,
     colour: "text-red-700",
     bg: "bg-red-50",
-    prompt: "Why are you rejecting this ARIA output? What specifically needs to change?",
+    prompt: "Why are you rejecting this Cara output? What specifically needs to change?",
     placeholder: "e.g. The description of the child's response is inaccurate. The child was calm, not distressed.",
     quickResponses: [
       "Factually inaccurate — details do not match the event",
@@ -96,7 +96,7 @@ const ACTION_CONFIG: Record<ChallengeAction, {
     icon: Archive,
     colour: "text-[var(--cs-text-secondary)]",
     bg: "bg-slate-50",
-    prompt: "Why is this ARIA suggestion being dismissed?",
+    prompt: "Why is this Cara suggestion being dismissed?",
     placeholder: "e.g. Already addressed in an earlier record. No further action needed.",
     quickResponses: [
       "Already addressed in another record",
@@ -110,7 +110,7 @@ const ACTION_CONFIG: Record<ChallengeAction, {
     icon: CheckCircle2,
     colour: "text-blue-700",
     bg: "bg-blue-50",
-    prompt: "What amendments did you make and why? This helps ARIA learn from your professional judgement.",
+    prompt: "What amendments did you make and why? This helps Cara learn from your professional judgement.",
     placeholder: "e.g. Changed the description of the de-escalation approach to match what actually happened.",
     quickResponses: [
       "Corrected factual details",
@@ -206,7 +206,7 @@ export function AriaChallengeModePanel({
       <div className="px-5 pt-4 pb-2 flex items-center gap-2">
         <Brain className="h-4 w-4 text-[var(--cs-aria-gold)]" />
         <span className="text-xs font-bold text-[var(--cs-navy)]">
-          ARIA Challenge Mode
+          Cara Challenge Mode
         </span>
         <div className={cn("inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[9px] font-semibold", config.bg, config.colour)}>
           <ActionIcon className="h-2.5 w-2.5" />
@@ -223,7 +223,7 @@ export function AriaChallengeModePanel({
           <div className="mt-2 rounded-lg border border-[var(--cs-border-subtle)] bg-white/80 px-3 py-2">
             <div className="flex items-center gap-1 mb-0.5">
               <Sparkles className="h-2.5 w-2.5 text-[var(--cs-aria-gold)]" />
-              <span className="text-[9px] font-semibold text-[var(--cs-text-muted)]">ARIA OUTPUT</span>
+              <span className="text-[9px] font-semibold text-[var(--cs-text-muted)]">Cara OUTPUT</span>
             </div>
             <p className="text-[10px] text-[var(--cs-text-secondary)] line-clamp-2">{outputSummary}</p>
           </div>

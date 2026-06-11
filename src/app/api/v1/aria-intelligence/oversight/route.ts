@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
     source_id:    record.id,
   });
 
-  // Fire-and-forget ARIA intelligence hook (golden thread)
+  // Fire-and-forget Cara intelligence hook (golden thread)
   runPostSaveIntelligence({
     homeId: record.home_id ?? "home_oak",
     childId: record.child_id ?? null,

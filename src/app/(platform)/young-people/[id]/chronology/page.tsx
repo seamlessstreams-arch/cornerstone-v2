@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PER-CHILD CHRONOLOGY
+// CARA — PER-CHILD CHRONOLOGY
 // A complete, time-ordered record of all significant events for a child.
 // Designed for LAC reviews, Ofsted inspections and safeguarding oversight.
 // Sources: care events · incidents · missing from care · behaviour log ·
@@ -405,7 +405,7 @@ export default function ChildChronologyPage({
           </Button>
           <PrintButton
             title={`${childName} — Chronology`}
-            subtitle="Cornerstone Children's Home · Confidential"
+            subtitle="Cara Children's Home · Confidential"
             size="sm"
             variant="outline"
           />

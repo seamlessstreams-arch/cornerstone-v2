@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Peer Dynamics & Group Compatibility — Public API
+// Cara Peer Dynamics & Group Compatibility — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

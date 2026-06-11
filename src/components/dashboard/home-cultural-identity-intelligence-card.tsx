@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME CULTURAL IDENTITY & HERITAGE INTELLIGENCE CARD
+// CARA — HOME CULTURAL IDENTITY & HERITAGE INTELLIGENCE CARD
 // Cultural identity plans, cultural visits, religious observance,
 // heritage language, diversity calendar.
 // CHR 2015 Reg 5/6 · UNCRC Article 30.
@@ -192,12 +192,12 @@ export function HomeCulturalIdentityIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Insights */}
+        {/* Cara Insights */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Cultural Intelligence
+              Cara Cultural Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

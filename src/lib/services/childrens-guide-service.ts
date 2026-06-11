@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILDREN'S GUIDE SERVICE
+// CARA — CHILDREN'S GUIDE SERVICE
 // Manages the children's guide document, its versions, accessibility formats,
 // distribution to children, and feedback tracking. CHR 2015 Reg 16(2) requires
 // the registered person to prepare a children's guide covering:

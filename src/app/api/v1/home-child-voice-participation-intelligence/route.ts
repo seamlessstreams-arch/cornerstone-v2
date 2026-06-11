@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME CHILD'S VOICE & PARTICIPATION INTELLIGENCE API ROUTE
+// CARA — HOME CHILD'S VOICE & PARTICIPATION INTELLIGENCE API ROUTE
 // GET /api/v1/home-child-voice-participation-intelligence
 // Cross-domain composite: meetingAttendanceRecords + consultationRecords +
 // feedbackActionRecords + councilEngagementRecords + feelingHeardRecords

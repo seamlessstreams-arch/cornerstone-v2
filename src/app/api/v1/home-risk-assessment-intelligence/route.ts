@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME RISK ASSESSMENT INTELLIGENCE API ROUTE
+// CARA — HOME RISK ASSESSMENT INTELLIGENCE API ROUTE
 // GET /api/v1/home-risk-assessment-intelligence
 // Synthesises risk assessments and behaviour support plans across all children
 // to produce risk management quality, trend analysis, and mitigation reporting.

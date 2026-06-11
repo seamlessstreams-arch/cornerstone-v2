@@ -1,5 +1,5 @@
 // ═══════���══════════════════════════════════════════════════════════════════════
-// Aria Intelligence — OpenAI Provider Adapter
+// Cara Intelligence — OpenAI Provider Adapter
 //
 // Handles GPT-4o, GPT-4-turbo, GPT-4o-mini via OpenAI direct API.
 // Used for: structured reasoning, workflow planning, form intelligence,

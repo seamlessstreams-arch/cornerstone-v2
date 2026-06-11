@@ -31,7 +31,7 @@ export function EarlyAccessForm() {
       setState("done");
     } catch {
       setState("error");
-      setError("Couldn't reach the server. Please try again, or email hello@cornerstonecare.app.");
+      setError("Couldn't reach the server. Please try again in a moment.");
     }
   }
 
@@ -41,8 +41,7 @@ export function EarlyAccessForm() {
         <CheckCircle2 className="mx-auto h-10 w-10 text-[var(--cs-teal-strong)]" />
         <h3 className="mt-3 text-xl font-bold text-[var(--cs-navy)]">Thank you — we&rsquo;ve got it.</h3>
         <p className="mx-auto mt-2 max-w-md text-sm text-[var(--cs-text-secondary)]">
-          We&rsquo;ll be in touch about early access to Cornerstone Care OS. If it&rsquo;s urgent, email us at{" "}
-          <a className="font-semibold text-[var(--cs-teal-strong)] hover:underline" href="mailto:hello@cornerstonecare.app">hello@cornerstonecare.app</a>.
+          We&rsquo;ll be in touch about early access to Cara OS — we read and reply to every message personally.
         </p>
       </div>
     );
@@ -90,7 +89,7 @@ export function EarlyAccessForm() {
       <button type="submit" disabled={state === "submitting"} className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--cs-navy)] px-6 py-3.5 text-sm font-bold text-white transition-all hover:bg-[var(--cs-navy-soft)] hover:shadow-md disabled:opacity-60 sm:w-auto">
         {state === "submitting" ? <><Loader2 className="h-4 w-4 animate-spin" /> Sending…</> : <>Request early access <ArrowRight className="h-4 w-4" /></>}
       </button>
-      <p className="mt-3 text-xs text-[var(--cs-text-muted)]">We&rsquo;ll only use your details to talk to you about Cornerstone Care OS. No spam, ever.</p>
+      <p className="mt-3 text-xs text-[var(--cs-text-muted)]">We&rsquo;ll only use your details to talk to you about Cara OS. No spam, ever.</p>
     </form>
   );
 }

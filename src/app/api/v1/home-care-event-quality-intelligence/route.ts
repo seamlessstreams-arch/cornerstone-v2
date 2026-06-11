@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME CARE EVENT QUALITY INTELLIGENCE API ROUTE
+// CARA — HOME CARE EVENT QUALITY INTELLIGENCE API ROUTE
 // GET /api/v1/home-care-event-quality-intelligence
 // Synthesises care events, routes, and audit logs to assess recording quality,
 // verification compliance, routing effectiveness, and audit trail completeness.

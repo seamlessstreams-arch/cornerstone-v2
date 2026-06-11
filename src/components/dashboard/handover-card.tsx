@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SHIFT HANDOVER INTELLIGENCE CARD
+// CARA — SHIFT HANDOVER INTELLIGENCE CARD
 // Dashboard card powered by the Handover Continuity Intelligence Engine.
 // CHR 2015 Reg 12, 13, 34 — care continuity, leadership, staffing records.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -239,13 +239,13 @@ export function HandoverCard() {
           </div>
         )}
 
-        {/* ── ARIA Handover Intelligence ──────────────────────────────── */}
+        {/* ── Cara Handover Intelligence ──────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Handover Intelligence
+              Cara Handover Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

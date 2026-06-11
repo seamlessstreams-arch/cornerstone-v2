@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Aria Intelligence — Safety & Data Protection Public API
+// Cara Intelligence — Safety & Data Protection Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

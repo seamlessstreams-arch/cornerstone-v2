@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF TEAM MEETINGS SERVICE
+// CARA — STAFF TEAM MEETINGS SERVICE
 // Tracks team meeting attendance, agendas, actions, safeguarding
 // discussions, and communication effectiveness.
 // CHR 2015 Reg 13 (leadership — team communication),

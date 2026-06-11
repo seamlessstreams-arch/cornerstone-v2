@@ -1,5 +1,5 @@
 // ==============================================================================
-// Cornerstone Environmental Sustainability Intelligence Engine
+// Cara Environmental Sustainability Intelligence Engine
 //
 // Evaluates how well a children's residential home promotes environmental
 // awareness and sustainable practices, including recycling, energy

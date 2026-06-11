@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — TRAINING COMPLIANCE MATRIX
+// CARA — TRAINING COMPLIANCE MATRIX
 // Team-wide mandatory and CPD training coverage at a glance. Shows compliance
 // percentage per staff, per category, gap counts, expiry tracking, and
 // colour-coded matrix with print support.

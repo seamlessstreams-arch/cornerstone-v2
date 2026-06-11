@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ARIA RECORDING ASSISTANT ENGINE (pure / deterministic)
+// CARA — Cara RECORDING ASSISTANT ENGINE (pure / deterministic)
 //
 // The spec's analyseRecordingQuality(rawText): detects judgemental language and
 // missing elements (context, child's voice, staff response, de-escalation,
@@ -12,7 +12,7 @@
 import { scoreProfessionalLanguage } from "@/lib/recording-quality/recording-quality-engine";
 
 export const RECORDING_DISCLAIMER =
-  "ARIA improves clarity — it never invents facts. The original note is always preserved alongside the AI suggestion and your final version, and records needing oversight go to the manager.";
+  "Cara improves clarity — it never invents facts. The original note is always preserved alongside the AI suggestion and your final version, and records needing oversight go to the manager.";
 
 export const RECORD_TYPES: { key: string; label: string }[] = [
   { key: "daily_log", label: "Daily log" },

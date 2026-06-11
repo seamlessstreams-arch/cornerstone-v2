@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF DISCIPLINARY & GRIEVANCES SERVICE TESTS
+// CARA — STAFF DISCIPLINARY & GRIEVANCES SERVICE TESTS
 // Pure-function tests for disciplinary metrics, alert identification, and
 // constant validation for CHR 2015 Reg 33/34/40 compliance.
 // ══════════════════════════════════════════════════════════════════════════════

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — BEHAVIOUR SUPPORT INTELLIGENCE ENGINE
+// CARA — BEHAVIOUR SUPPORT INTELLIGENCE ENGINE
 //
 // Pure deterministic engine that aggregates behaviour entries, incidents,
 // physical interventions, sanctions/rewards, and restraint records to produce:
@@ -9,7 +9,7 @@
 // - Rewards vs sanctions balance (proportionality indicator)
 // - Time-of-day pattern analysis (when behaviours cluster)
 // - Per-child behaviour trajectories
-// - Auto-generated ARIA intelligence insights (deterministic, no LLM)
+// - Auto-generated Cara intelligence insights (deterministic, no LLM)
 //
 // Key regulatory requirements:
 //   Reg 19 — Behaviour management (positive strategies)
@@ -643,14 +643,14 @@ export function computeBehaviourIntelligence(input: BehaviourEngineInput): Behav
     });
   }
 
-  // ── ARIA Intelligence Insights (deterministic) ─────────────────────────
+  // ── Cara Intelligence Insights (deterministic) ─────────────────────────
   const insights: AriaInsight[] = [];
 
   // No data at all
   if (totalWithIncidents === 0 && piCount === 0 && sanctionRewards.length === 0) {
     insights.push({
       severity: "positive",
-      text: "No behaviour entries recorded this period. Once behaviour logging is active, ARIA will generate pattern intelligence automatically.",
+      text: "No behaviour entries recorded this period. Once behaviour logging is active, Cara will generate pattern intelligence automatically.",
     });
     return {
       profile,
