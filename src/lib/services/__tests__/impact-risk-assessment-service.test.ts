@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — IMPACT & RISK ASSESSMENT SERVICE TESTS
+// CARA — IMPACT & RISK ASSESSMENT SERVICE TESTS
 // Pure-function unit tests for impact risk assessment metrics computation,
 // alert identification, constant validation, and CRUD fallback behaviour
 // (Supabase disabled). CHR 2015 Reg 12 (children receive care from

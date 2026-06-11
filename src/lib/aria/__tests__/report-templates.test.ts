@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — REPORT TEMPLATES TESTS
+// Cara — REPORT TEMPLATES TESTS
 // ══════════════════════════════════════════════════════════════════════════════
 
 import {

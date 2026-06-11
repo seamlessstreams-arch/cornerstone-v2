@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME HEALTH & WELLBEING OVERSIGHT INTELLIGENCE API ROUTE
+// CARA — HOME HEALTH & WELLBEING OVERSIGHT INTELLIGENCE API ROUTE
 // GET /api/v1/home-health-wellbeing-oversight-intelligence
 // Cross-domain composite: healthAssessments + dentalRecords + healthMonitoring
 // + healthPassports + healthRecordEntries

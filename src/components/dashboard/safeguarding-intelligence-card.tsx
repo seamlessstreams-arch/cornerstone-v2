@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SAFEGUARDING INTELLIGENCE CARD
+// CARA — SAFEGUARDING INTELLIGENCE CARD
 // Dashboard card for incident tracking, restraint analysis, missing episodes,
-// risk assessment overview, Reg 40 notification compliance, and ARIA insights.
+// risk assessment overview, Reg 40 notification compliance, and Cara insights.
 // Powered by the Safeguarding Intelligence Engine — live data.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -236,13 +236,13 @@ export function SafeguardingIntelligenceCard() {
           </div>
         )}
 
-        {/* ── ARIA insights ───────────────────────────────────────────── */}
+        {/* ── Cara insights ───────────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Safeguarding Intelligence
+              Cara Safeguarding Intelligence
             </p>
             {intel.insights.map((insight, i) => (
               <div

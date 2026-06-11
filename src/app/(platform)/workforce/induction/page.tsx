@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — INDUCTION TRACKER
+// CARA — INDUCTION TRACKER
 // Structured induction from Day 1 to probation completion.
 // Compliance: Reg 33 — all staff must complete a structured induction before
 // working unsupervised. Tracks milestones, phases, and sign-off.

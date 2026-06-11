@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PLACEMENT BREAKDOWN FORECAST ENGINE
+// CARA — PLACEMENT BREAKDOWN FORECAST ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 //
@@ -730,7 +730,7 @@ function buildAlerts(forecasts: ChildPlacementForecast[]): ForecastAlert[] {
   return alerts;
 }
 
-// ── ARIA insights builder ───────────────────────────────────────────────────
+// ── Cara insights builder ───────────────────────────────────────────────────
 
 function buildInsights(
   forecasts: ChildPlacementForecast[],

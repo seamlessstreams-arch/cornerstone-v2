@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Children's Outcomes — Progress Tracking Engine
+// Cara Children's Outcomes — Progress Tracking Engine
 //
 // Deterministic engine for tracking children's progress across the 7 outcome
 // domains aligned to Every Child Matters, SCCIF, and Ofsted inspection

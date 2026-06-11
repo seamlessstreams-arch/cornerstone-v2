@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SPECIALIZED HEALTH PLANS INTELLIGENCE CARD
+// CARA — HOME SPECIALIZED HEALTH PLANS INTELLIGENCE CARD
 // ADHD, allergy, asthma, autism, diabetic, epilepsy, continence,
 // physio/OT, menstrual health, occupational therapy.
 // CHR 2015 Reg 10/15.
@@ -192,12 +192,12 @@ export function HomeSpecializedHealthPlansIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Insights */}
+        {/* Cara Insights */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Health Intelligence
+              Cara Health Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

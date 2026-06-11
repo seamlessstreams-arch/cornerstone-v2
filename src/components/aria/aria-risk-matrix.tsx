@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // AriaRiskMatrix — Visual risk assessment matrix for young people
 //
-// Shows ARIA-analysed risk levels across multiple domains (behaviour,
+// Shows Cara-analysed risk levels across multiple domains (behaviour,
 // safeguarding, health, placement stability, education, relationships).
 // Combines data from incidents, risk assessments, daily logs, and care plans
 // to produce an AI-powered risk overview.
@@ -158,7 +158,7 @@ export function AriaRiskMatrix() {
             <Sparkles className="h-4 w-4 text-[var(--cs-aria-gold)]" />
           </div>
           <div>
-            <h3 className="text-sm font-semibold text-[var(--cs-navy)]">ARIA Risk Matrix</h3>
+            <h3 className="text-sm font-semibold text-[var(--cs-navy)]">Cara Risk Matrix</h3>
             <p className="text-[10px] text-[var(--cs-text-muted)]">Cross-domain risk analysis — {profiles.length} young people</p>
           </div>
         </div>
@@ -252,7 +252,7 @@ export function AriaRiskMatrix() {
                             <div className="rounded-xl bg-[var(--cs-aria-gold-bg)] border border-[var(--cs-aria-gold-soft)] p-2.5">
                               <div className="flex items-center gap-1.5 mb-1">
                                 <Sparkles className="h-3 w-3 text-[var(--cs-aria-gold)]" />
-                                <span className="text-[10px] font-semibold text-[var(--cs-navy)]">ARIA Note</span>
+                                <span className="text-[10px] font-semibold text-[var(--cs-navy)]">Cara Note</span>
                               </div>
                               <p className="text-[11px] text-[var(--cs-text-secondary)]">{profile.ariaNotes}</p>
                             </div>

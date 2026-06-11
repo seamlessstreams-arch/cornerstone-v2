@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD KEYWORKING INTELLIGENCE ENGINE
+// CARA — CHILD KEYWORKING INTELLIGENCE ENGINE
 // Per-child engine analysing keyworking session frequency, quality,
 // mood impact, thematic coverage, follow-up completion, and whether
 // keywork is driving meaningful engagement and progress.
@@ -404,7 +404,7 @@ export function computeChildKeyworking(
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
   const insights: KeyworkInsight[] = [];
 
   if (quality_rating === "inadequate") {

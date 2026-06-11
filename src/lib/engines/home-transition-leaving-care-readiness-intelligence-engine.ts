@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME TRANSITION & LEAVING CARE READINESS INTELLIGENCE ENGINE
+// CARA — HOME TRANSITION & LEAVING CARE READINESS INTELLIGENCE ENGINE
 // Monitors how well the home prepares young people for transitions and
 // independence — pathway planning, leaving care preparation, transition
 // support, independence pathways, and aftercare planning.

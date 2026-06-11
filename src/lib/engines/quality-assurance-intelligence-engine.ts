@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — QUALITY ASSURANCE INTELLIGENCE ENGINE
+// CARA — QUALITY ASSURANCE INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses internal audits, recommendations, improvement plans, and ratings

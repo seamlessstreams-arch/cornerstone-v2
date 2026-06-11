@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DEPRIVATION OF LIBERTY INTELLIGENCE API ROUTE
+// CARA — DEPRIVATION OF LIBERTY INTELLIGENCE API ROUTE
 // GET /api/v1/dol-intelligence
 // Returns DoL order tracking, restriction analysis, proportionality reviews,
-// child consultation compliance, and ARIA liberty intelligence.
+// child consultation compliance, and Cara liberty intelligence.
 // Reg 20 — restraint and deprivation of liberty
 // Reg 21 — privacy and access
 // SCCIF Helped & Protected — evidence of proportionality

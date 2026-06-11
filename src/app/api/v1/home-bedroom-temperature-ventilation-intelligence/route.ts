@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME BEDROOM TEMPERATURE & VENTILATION INTELLIGENCE API ROUTE
+// CARA — HOME BEDROOM TEMPERATURE & VENTILATION INTELLIGENCE API ROUTE
 // GET /api/v1/home-bedroom-temperature-ventilation-intelligence
 // Cross-domain composite: temperatureMonitoringRecords + ventilationRecords +
 // heatingCheckRecords + windowComplianceRecords + childComfortRecords

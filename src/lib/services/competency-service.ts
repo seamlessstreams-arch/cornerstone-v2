@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF COMPETENCY & TRAINING SERVICE
+// CARA — STAFF COMPETENCY & TRAINING SERVICE
 // Tracks mandatory training, competency assessments, DBS status, and
-// generates ARIA compliance intelligence.
+// generates Cara compliance intelligence.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { createServerClient, isSupabaseEnabled } from "@/lib/supabase/server";

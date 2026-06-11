@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Escalation & Threshold Intelligence — Public API
+// Cara Escalation & Threshold Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

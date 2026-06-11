@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME EDUCATION ACHIEVEMENT INTELLIGENCE ENGINE
+// CARA — HOME EDUCATION ACHIEVEMENT INTELLIGENCE ENGINE
 // Home-level: synthesises education records across all children to produce
 // an overall education engagement and achievement intelligence score.
 // CHR 2015 Reg 8, 29. SCCIF: "Education", "Experiences and progress."

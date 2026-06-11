@@ -1,5 +1,5 @@
 // ══════���═══════════════════════════════════════════════════════════════════════
-// ARIA ORCHESTRATOR — PROMPT BUILDER
+// Cara ORCHESTRATOR — PROMPT BUILDER
 //
 // Builds system prompts for each agent by combining:
 // - Base safety preamble (from existing ai/safety.ts)

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MEDICATION ADMINISTRATION INTELLIGENCE CARD
+// CARA — MEDICATION ADMINISTRATION INTELLIGENCE CARD
 // Dashboard card for medication rounds, MAR compliance, and safety.
 // CHR 2015 Reg 23, Reg 6.
 // SCCIF: Helped & Protected — "Children's medication is managed
@@ -178,13 +178,13 @@ export function MedicationAdministrationCard() {
           </div>
         )}
 
-        {/* ── ARIA Medication Intelligence ────────────────────────────── */}
+        {/* ── Cara Medication Intelligence ────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Medication Intelligence
+              Cara Medication Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

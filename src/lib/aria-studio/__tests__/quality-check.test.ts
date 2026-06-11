@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import { runQualityCheck } from "../quality-check.service";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — QUALITY CHECK SERVICE TESTS
+// Cara STUDIO — QUALITY CHECK SERVICE TESTS
 // ══════════════════════════════════════════════════════════════════════════════
 
 describe("runQualityCheck", () => {

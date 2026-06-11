@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// API — ARIA Decision Support
+// API — Cara Decision Support
 // GET  → list formulations + recommendations (filter by child_id)
 // POST → run engine (RBAC: aria.generate_drafts)
 // ══════════════════════════════════════════════════════════════════════════════

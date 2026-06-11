@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SAFER RECRUITMENT VETTING INTELLIGENCE ENGINE
+// CARA — HOME SAFER RECRUITMENT VETTING INTELLIGENCE ENGINE
 // Home-level: assesses quality and compliance of safer recruitment practices —
 // DBS clearance, reference verification, employment history gaps, interview
 // panel composition, and recruitment audit trails.

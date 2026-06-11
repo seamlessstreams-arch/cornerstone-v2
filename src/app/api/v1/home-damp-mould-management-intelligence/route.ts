@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME DAMP & MOULD MANAGEMENT INTELLIGENCE API ROUTE
+// CARA — HOME DAMP & MOULD MANAGEMENT INTELLIGENCE API ROUTE
 // GET /api/v1/home-damp-mould-management-intelligence
 // Cross-domain composite: dampSurveyRecords + mouldInspectionRecords +
 // remediationRecords + ventilationAssessmentRecords + healthImpactRecords

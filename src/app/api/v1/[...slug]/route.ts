@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE API — Catch-all handler for /api/v1/[...slug]
+// CARA API — Catch-all handler for /api/v1/[...slug]
 //
 // Consolidates 434 standardised v1 collection routes into a single
 // serverless function to stay within Vercel's function limit.

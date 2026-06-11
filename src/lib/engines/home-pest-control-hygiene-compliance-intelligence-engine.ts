@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME PEST CONTROL & HYGIENE COMPLIANCE INTELLIGENCE ENGINE
+// CARA -- HOME PEST CONTROL & HYGIENE COMPLIANCE INTELLIGENCE ENGINE
 // Monitors pest inspection schedules, treatment effectiveness, kitchen hygiene
 // audits, environmental cleanliness ratings, and child-safe product usage.
 // Pure deterministic engine -- no imports, no LLM, no external deps.

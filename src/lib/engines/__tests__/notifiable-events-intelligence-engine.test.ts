@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — NOTIFIABLE EVENTS INTELLIGENCE ENGINE TESTS
+// CARA — NOTIFIABLE EVENTS INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite for Reg 40 notifiable events analysis.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -420,7 +420,7 @@ describe("Notifiable Events Intelligence Engine", () => {
     });
   });
 
-  describe("ARIA insights", () => {
+  describe("Cara insights", () => {
     it("generates critical insight for pending notifications", () => {
       const result = run([
         makeEvent({ ofsted_status: "pending", date: "2026-05-23" }),
@@ -617,14 +617,14 @@ describe("Notifiable Events Intelligence Engine", () => {
       expect(medium.some((a) => a.message.includes("Alex") && a.message.includes("4 notifiable events"))).toBe(true);
     });
 
-    it("generates critical ARIA insight for pending notification", () => {
+    it("generates critical Cara insight for pending notification", () => {
       const result = run(oakHouseEvents());
       const critical = result.insights.filter((i) => i.severity === "critical");
       expect(critical).toHaveLength(1);
       expect(critical[0].text).toContain("1 Ofsted notification");
     });
 
-    it("generates warning ARIA insight for Alex repeat involvement", () => {
+    it("generates warning Cara insight for Alex repeat involvement", () => {
       const result = run(oakHouseEvents());
       const warnings = result.insights.filter((i) => i.severity === "warning");
       expect(warnings.some((w) => w.text.includes("Alex") && w.text.includes("4 notifiable events"))).toBe(true);

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA INTELLIGENCE — INCIDENT REVIEW PIPELINE
+// Cara INTELLIGENCE — INCIDENT REVIEW PIPELINE
 //
 // Full intelligence pipeline triggered after an incident is recorded.
 // Runs in sequence:
@@ -386,14 +386,14 @@ export async function runIncidentIntelligence(
     }
   }
 
-  // ── Step 5: ARIA AI review (if enabled) ────────────────────────────────
+  // ── Step 5: Cara AI review (if enabled) ────────────────────────────────
   let ariaReview: IncidentIntelligenceResult["ariaReview"] = {
     enabled: false,
     aiRunId: null,
     output: null,
   };
 
-  const aiEnabled = process.env.ARIA_AI_ENABLED === "true";
+  const aiEnabled = (process.env.CARA_AI_ENABLED ?? process.env.ARIA_AI_ENABLED) === "true";
 
   if (aiEnabled) {
     try {
@@ -437,7 +437,7 @@ export async function runIncidentIntelligence(
         enabled: true,
         aiRunId: null,
         output: null,
-        error: err instanceof Error ? err.message : "Aria review failed.",
+        error: err instanceof Error ? err.message : "Cara review failed.",
       };
     }
   }

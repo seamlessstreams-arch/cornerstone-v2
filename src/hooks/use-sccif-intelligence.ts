@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SCCIF SELF-EVALUATION INTELLIGENCE HOOK
+// CARA — SCCIF SELF-EVALUATION INTELLIGENCE HOOK
 // React Query wrapper for /api/v1/sccif-intelligence
 // ══════════════════════════════════════════════════════════════════════════════
 

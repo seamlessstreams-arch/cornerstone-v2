@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD RISK PROFILE INTELLIGENCE CARD
+// CARA — CHILD RISK PROFILE INTELLIGENCE CARD
 // Per-child: risk assessments across domains, risk trajectory,
 // mitigation effectiveness, review compliance.
 // CHR 2015 Reg 12, 34, 5. SCCIF: "Safety of children."
@@ -218,12 +218,12 @@ export function ChildRiskProfileIntelligenceCard({ childId }: { childId: string 
           </div>
         )}
 
-        {/* ARIA Risk Intelligence */}
+        {/* Cara Risk Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Risk Intelligence
+              Cara Risk Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

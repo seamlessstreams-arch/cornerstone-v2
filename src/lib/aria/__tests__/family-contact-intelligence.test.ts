@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — Family Contact Intelligence Tests
+// Cara — Family Contact Intelligence Tests
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";

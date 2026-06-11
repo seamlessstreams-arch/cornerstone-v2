@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PRIORITY ACTION CARD
+// CARA — PRIORITY ACTION CARD
 // Calm card with left-border urgency colour.
 // Used in dashboards and action lists to surface what needs attention.
 // Touch-friendly (48px min action target).

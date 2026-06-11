@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME HOOKS
+// CARA — HOME HOOKS
 //
 // React Query hooks for home data, mirroring the pattern in use-staff.ts.
 // ══════════════════════════════════════════════════════════════════════════════

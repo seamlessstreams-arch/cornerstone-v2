@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EQUALITY & HUMAN RIGHTS SERVICE TESTS
+// CARA — EQUALITY & HUMAN RIGHTS SERVICE TESTS
 // Pure-function tests for equality metrics, alert identification,
 // constant validation, and edge cases.
 // ══════════════════════════════════════════════════════════════════════════════

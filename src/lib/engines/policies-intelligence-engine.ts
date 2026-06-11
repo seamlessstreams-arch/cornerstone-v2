@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — POLICIES REGISTER INTELLIGENCE ENGINE
+// CARA — POLICIES REGISTER INTELLIGENCE ENGINE
 // Pure deterministic engine for policy register coverage analysis.
 // Analyses review compliance, staff acknowledgement rates, category coverage,
-// and generates ARIA intelligence insights.
+// and generates Cara intelligence insights.
 // Reg 38: policies and procedures — Reg 13: leadership and management
 // CHR 2015: documented policies for all key operational areas
 // ══════════════════════════════════════════════════════════════════════════════

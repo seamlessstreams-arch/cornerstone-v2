@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — Emergency alert types (Phase 7)
+// CARA — Emergency alert types (Phase 7)
 //
 // Operational emergency categories only — deliberately NOT child/safeguarding/
 // medical detail. The broadcast notification stays generic ("assistance needed");

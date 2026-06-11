@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME WINDOW, BLIND & CURTAIN SAFETY INTELLIGENCE ENGINE TESTS
+// CARA — HOME WINDOW, BLIND & CURTAIN SAFETY INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite covering window restrictors, blind cord safety,
 // curtain condition, blackout provision, inspections, and scoring.
 // CHR 2015 Reg 25 (Premises), SCCIF safety and wellbeing.

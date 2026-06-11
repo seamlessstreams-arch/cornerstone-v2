@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — KPI TRACKING SERVICE
+// CARA — KPI TRACKING SERVICE
 // Manages key performance indicators, targets, trends, and benchmarking
 // for children's home operational excellence.
 // CHR 2015 Reg 45 (quality of care review — monitoring standards),

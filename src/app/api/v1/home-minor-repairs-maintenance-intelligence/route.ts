@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME MINOR REPAIRS & MAINTENANCE INTELLIGENCE API ROUTE
+// CARA — HOME MINOR REPAIRS & MAINTENANCE INTELLIGENCE API ROUTE
 // GET /api/v1/home-minor-repairs-maintenance-intelligence
 // Cross-domain composite: maintenanceRequestRecords + repairCompletionRecords +
 // safetyCheckRecords + conditionAuditRecords + preventativeMaintenanceRecords

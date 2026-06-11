@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME CONSENT & CAPACITY MANAGEMENT INTELLIGENCE API ROUTE
+// CARA — HOME CONSENT & CAPACITY MANAGEMENT INTELLIGENCE API ROUTE
 // GET /api/v1/home-consent-capacity-management-intelligence
 // Cross-domain composite: consentFormRecords + gillickAssessmentRecords +
 // capacityReviewRecords + informedConsentRecords + consentWithdrawalRecords

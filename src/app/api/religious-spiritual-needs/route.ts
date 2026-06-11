@@ -1,5 +1,5 @@
 // ==============================================================================
-// Cornerstone — Religious & Spiritual Needs Intelligence API Route
+// Cara — Religious & Spiritual Needs Intelligence API Route
 //
 // GET  -> returns Chamberlain House demo intelligence (Alex, Jordan, Morgan, Sam)
 // POST -> accepts custom data for any home

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD DAILY SUMMARIES
+// CARA — CHILD DAILY SUMMARIES
 // Auto-generated daily summaries per child from Care Event routing
 // ══════════════════════════════════════════════════════════════════════════════
 

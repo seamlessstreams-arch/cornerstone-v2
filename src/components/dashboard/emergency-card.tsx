@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EMERGENCY PLANNING INTELLIGENCE CARD
+// CARA — EMERGENCY PLANNING INTELLIGENCE CARD
 // Dashboard card powered by the Emergency Intelligence Engine.
 // Reg 22 (arrangements), Reg 25 (premises), Reg 40 (notifications).
 // ══════════════════════════════════════════════════════════════════════════════
@@ -263,13 +263,13 @@ export function EmergencyCard() {
           </div>
         )}
 
-        {/* ── ARIA Emergency Intelligence ─────────────────────────────── */}
+        {/* ── Cara Emergency Intelligence ─────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Emergency Intelligence
+              Cara Emergency Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

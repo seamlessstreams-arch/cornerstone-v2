@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// API — ARIA Suggested Records (Commit Queue)
+// API — Cara Suggested Records (Commit Queue)
 //
 // GET    → list suggestions for a home (optional ?status=)
 // GET ?committed=1 → list committed records for a home

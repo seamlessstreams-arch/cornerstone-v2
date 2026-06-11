@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EMERGENCY MEDICATION PROTOCOLS
+// CARA — EMERGENCY MEDICATION PROTOCOLS
 // Per-child emergency medication protocols (EpiPen, asthma rescue inhaler,
 // rectal diazepam, glucagon, etc.) with step-by-step staff procedures, 999/GP
 // trigger thresholds, training register, and review sign-off.

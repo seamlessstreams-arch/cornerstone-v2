@@ -1,6 +1,6 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — UNIVERSAL TYPES
-// Shared shapes for the universal Aria layer. Domain engines (oversight,
+// Cara — UNIVERSAL TYPES
+// Shared shapes for the universal Cara layer. Domain engines (oversight,
 // voice-of-child, HR Process Guardian) keep their own narrow types and write
 // their results back into aria_outputs.structured_output.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -135,7 +135,7 @@ export interface AriaCommandSpec {
   modules: string[];
   requiredPermission: AriaPermission;
   // Output requires manager approval before commit. Almost always true for
-  // Aria; the few read-only commands set this to false.
+  // Cara; the few read-only commands set this to false.
   approvalRequired: boolean;
   // Whether the command can create tasks server-side once approved.
   canCreateTasks: boolean;
@@ -178,7 +178,7 @@ export interface AriaGenerationResult {
   confidence: AriaConfidence;
   redactedContextSummary: string;
   contextRecordIds: string[];
-  ariaLabel: "Aria suggested draft";
+  ariaLabel: "Cara suggested draft";
   llmUsed: boolean;
   providerId?: string;
   modelId?: string;

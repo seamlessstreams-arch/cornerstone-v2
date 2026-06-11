@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CARE PLANNING SERVICE TESTS
+// CARA — CARE PLANNING SERVICE TESTS
 // Pure-function unit tests for care plan metrics, alerts, constants, and
 // CRUD fallback behaviour when Supabase is not configured.
 // ══════════════════════════════════════════════════════════════════════════════

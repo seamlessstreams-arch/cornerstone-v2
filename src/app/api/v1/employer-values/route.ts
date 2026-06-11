@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EMPLOYER VALUES PROFILE API
+// CARA — EMPLOYER VALUES PROFILE API
 // GET  /api/v1/employer-values  → the home's values profile (for matching)
 // PUT  /api/v1/employer-values  → save edits (in-memory; dual-mode ready)
 //

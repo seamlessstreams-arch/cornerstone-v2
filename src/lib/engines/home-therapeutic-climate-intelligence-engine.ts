@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME THERAPEUTIC CLIMATE INTELLIGENCE ENGINE
+// CARA — HOME THERAPEUTIC CLIMATE INTELLIGENCE ENGINE
 // Home-level: meta-analysis combining behaviour log, restraints, incidents,
 // and missing episodes to assess the overall therapeutic atmosphere of the
 // home. Measures positive-to-concerning behaviour ratio, restraint frequency,

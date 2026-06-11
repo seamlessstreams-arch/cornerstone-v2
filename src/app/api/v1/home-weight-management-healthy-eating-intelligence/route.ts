@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME WEIGHT MANAGEMENT & HEALTHY EATING INTELLIGENCE API ROUTE
+// CARA -- HOME WEIGHT MANAGEMENT & HEALTHY EATING INTELLIGENCE API ROUTE
 // GET /api/v1/home-weight-management-healthy-eating-intelligence
 // Cross-domain composite: weightMonitoringRecords + bmiTrackingRecords +
 // healthyEatingRecords + portionControlRecords + bodyPositivityRecords

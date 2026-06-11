@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SENSORY DIET & REGULATION INTELLIGENCE API ROUTE
+// CARA — HOME SENSORY DIET & REGULATION INTELLIGENCE API ROUTE
 // GET /api/v1/home-sensory-diet-regulation-intelligence
 // Cross-domain composite: sensoryDietPlanRecords + regulationStrategyRecords +
 // sensoryBreakRecords + occupationalTherapyRecords + selfRegulationRecords

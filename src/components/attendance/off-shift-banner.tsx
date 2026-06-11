@@ -25,7 +25,7 @@ export function OffShiftBanner() {
       <div className="rounded-2xl border border-[var(--cs-teal-soft)] bg-[var(--cs-teal-bg)] p-4 flex items-start gap-2.5">
         <ShieldCheck className="h-4 w-4 mt-0.5 shrink-0 text-[var(--cs-teal)]" />
         <p className="text-sm text-[var(--cs-text-secondary)]">
-          <span className="font-semibold text-[var(--cs-navy)]">Senior access.</span> You keep full Cornerstone
+          <span className="font-semibold text-[var(--cs-navy)]">Senior access.</span> You keep full Cara
           access while off shift — no need to clock in to view records.
         </p>
       </div>

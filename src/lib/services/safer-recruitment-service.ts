@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- SAFER RECRUITMENT SERVICE
+// CARA -- SAFER RECRUITMENT SERVICE
 // Manages the safer recruitment process for children's home staff under
 // CHR 2015 Reg 32 (fitness of staff), Reg 33 (employment of staff),
 // Schedule 1 (information about the registered person),

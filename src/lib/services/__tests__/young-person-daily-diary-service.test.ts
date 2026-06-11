@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — YOUNG PERSON DAILY DIARY SERVICE TESTS
+// CARA — YOUNG PERSON DAILY DIARY SERVICE TESTS
 // Pure-function unit tests for daily diary metrics computation and alert
 // identification — mood/day breakdowns, boolean compliance rates, and
 // per-record/aggregate alerts.

@@ -1,6 +1,6 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — AGENT REGISTRY
-// Canonical definitions for every ARIA agent. Each entry declares what the
+// Cara — AGENT REGISTRY
+// Canonical definitions for every Cara agent. Each entry declares what the
 // agent may and must not do, its risk classification, the roles that may
 // invoke it, and whether a human must approve its output before commit.
 // ══════════════════════════════════════════════════════════════════════════════

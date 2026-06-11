@@ -1,7 +1,7 @@
 // ==============================================================================
-// CORNERSTONE -- HOME EMERGENCY LIGHTING SERVICE TESTS
+// CARA -- HOME EMERGENCY LIGHTING SERVICE TESTS
 // Pure-function tests for emergency lighting metrics, alert identification,
-// ARIA insights, constant validation, and edge cases.
+// Cara insights, constant validation, and edge cases.
 // ==============================================================================
 
 import { describe, it, expect } from "vitest";

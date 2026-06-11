@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Aria Intelligence — Quality Assurance Engine
+// Cara Intelligence — Quality Assurance Engine
 //
 // Reviews records for quality, identifies gaps, and generates QA feedback.
 // Checks for: missing detail, weak analysis, poor reflection, safeguarding

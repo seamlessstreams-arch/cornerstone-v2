@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA Regulation 45 Live Evidence Bank
+// Cara Regulation 45 Live Evidence Bank
 //
-// Continuously surfaces verified records and approved ARIA outputs from the
+// Continuously surfaces verified records and approved Cara outputs from the
 // last review period as themed "evidence chips" that managers can accept,
 // defer or reject before they enter the official Reg 45 report.
 //

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — OUTCOMES TRACKER
+// CARA — OUTCOMES TRACKER
 // Ofsted ILACS primary focus: "Are children making progress?"
 // Tracks outcomes across 8 domains for each young person, capturing
 // voice of the child, progress reviews, barriers, and evidence.

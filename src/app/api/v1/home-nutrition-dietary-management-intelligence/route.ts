@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME NUTRITION & DIETARY MANAGEMENT INTELLIGENCE API ROUTE
+// CARA — HOME NUTRITION & DIETARY MANAGEMENT INTELLIGENCE API ROUTE
 // GET /api/v1/home-nutrition-dietary-management-intelligence
 // Cross-domain composite: mealPlanRecords + dietaryRequirementRecords +
 // nutritionAssessmentRecords + foodHygieneRecords + specialDietRecords

@@ -1,5 +1,5 @@
 // ==============================================================================
-// Cornerstone -- Disability & Reasonable Adjustments Intelligence Engine
+// Cara -- Disability & Reasonable Adjustments Intelligence Engine
 //
 // Pure deterministic engine -- no AI, no external calls, no randomness.
 // Evaluates how well a children's home identifies and implements reasonable

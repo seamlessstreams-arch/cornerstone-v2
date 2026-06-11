@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME CULTURAL EVENTS & CELEBRATIONS INTELLIGENCE API ROUTE
+// CARA — HOME CULTURAL EVENTS & CELEBRATIONS INTELLIGENCE API ROUTE
 // GET /api/v1/home-cultural-events-celebrations-intelligence
 // Cross-domain composite: culturalEventRecords + diversityCelebrationRecords +
 // heritageDayRecords + festivalInclusionRecords + childLedActivityRecords

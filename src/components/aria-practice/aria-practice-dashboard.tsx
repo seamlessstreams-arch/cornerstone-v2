@@ -38,7 +38,7 @@ export function AriaPracticeDashboard({ homeId = "home_oak", childId }: { homeId
     );
   }
   if (isError) {
-    return <Card className="border-red-200"><CardContent className="py-6 text-sm text-red-600">{(error as Error)?.message ?? "Could not load ARIA practice dashboard."}</CardContent></Card>;
+    return <Card className="border-red-200"><CardContent className="py-6 text-sm text-red-600">{(error as Error)?.message ?? "Could not load Cara practice dashboard."}</CardContent></Card>;
   }
   const d = data?.data;
   if (!d) return null;

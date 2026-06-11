@@ -1,11 +1,11 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — SAFEGUARDING GUARDRAILS
+// Cara — SAFEGUARDING GUARDRAILS
 //
-// Post-generation scan of ARIA outputs for safeguarding content. Every
+// Post-generation scan of Cara outputs for safeguarding content. Every
 // generated text passes through this scanner which:
 //
 // 1. Detects safeguarding themes (abuse, exploitation, self-harm, missing, etc.)
-// 2. Detects whether the output makes conclusions ARIA should not make
+// 2. Detects whether the output makes conclusions Cara should not make
 // 3. Flags risk language that needs mandatory human review
 // 4. Returns a structured result the UI uses to show warnings
 //
@@ -136,7 +136,7 @@ const SAFEGUARDING_THEMES: ThemePattern[] = [
   },
 ];
 
-// ── Conclusion patterns ARIA should not make ─────────────────────────────────
+// ── Conclusion patterns Cara should not make ─────────────────────────────────
 
 const CONCLUSION_PATTERNS: ThemePattern[] = [
   {
@@ -144,28 +144,28 @@ const CONCLUSION_PATTERNS: ThemePattern[] = [
     category: "conclusion",
     pattern: /\b(?:the\s+child\s+(?:is|should\s+be)\s+(?:safe|unsafe)|the\s+(?:home|placement)\s+is\s+(?:safe|unsafe|suitable|unsuitable))\b/i,
     severity: "critical",
-    message: "ARIA must not declare safety or suitability. Only qualified humans make these determinations.",
+    message: "Cara must not declare safety or suitability. Only qualified humans make these determinations.",
   },
   {
     id: "conc_referral_decision",
     category: "conclusion",
     pattern: /\b(?:this\s+(?:should|must|needs\s+to)\s+be\s+referred\s+to\s+(?:police|LADO|social\s+(?:services|worker)|Ofsted))\b/i,
     severity: "warning",
-    message: "ARIA should flag referral considerations but must not instruct referrals. Referral decisions belong to the Designated Safeguarding Lead.",
+    message: "Cara should flag referral considerations but must not instruct referrals. Referral decisions belong to the Designated Safeguarding Lead.",
   },
   {
     id: "conc_fitness",
     category: "conclusion",
     pattern: /\b(?:(?:the\s+staff\s+member|this\s+person)\s+(?:is|should\s+be)\s+(?:dismissed|suspended|unfit|unsuitable))\b/i,
     severity: "critical",
-    message: "ARIA must not determine staff fitness or disciplinary outcomes. These are HR and management decisions.",
+    message: "Cara must not determine staff fitness or disciplinary outcomes. These are HR and management decisions.",
   },
   {
     id: "conc_diagnosis",
     category: "conclusion",
     pattern: /\b(?:the\s+child\s+(?:has|is\s+(?:suffering|living)\s+with)\s+(?:PTSD|anxiety|depression|ADHD|ASD|attachment\s+disorder))\b/i,
     severity: "critical",
-    message: "ARIA must not diagnose. Clinical conditions must be diagnosed by qualified health professionals.",
+    message: "Cara must not diagnose. Clinical conditions must be diagnosed by qualified health professionals.",
   },
 ];
 

@@ -159,7 +159,7 @@ describe("repeat pattern — medication + learning-loop failure", () => {
     expect(r.alerts.some((a) => a.severity === "critical" && /recurred despite/i.test(a.message))).toBe(true);
     expect(r.alerts.some((a) => a.severity === "high" && /high-risk medication/i.test(a.message))).toBe(true);
   });
-  it("surfaces a critical ARIA insight about the learning loop", () => {
+  it("surfaces a critical Cara insight about the learning loop", () => {
     expect(r.insights.some((i) => i.severity === "critical")).toBe(true);
   });
 });

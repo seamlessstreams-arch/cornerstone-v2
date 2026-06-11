@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF DBS RENEWAL TRACKING SERVICE
+// CARA — STAFF DBS RENEWAL TRACKING SERVICE
 // Manages DBS check renewal cycles, update service registration, barred list
 // checks, enhanced DBS tracking, and portability for children's home staff.
 //
@@ -213,7 +213,7 @@ export function computeDbsAlerts(
   return alerts;
 }
 
-// ── ARIA Insights ─────────────────────────────────────────────────────────
+// ── Cara Insights ─────────────────────────────────────────────────────────
 
 export function generateDbsAriaInsights(rows: StaffDbsRenewalTrackingRow[]): string[] {
   const metrics = computeDbsMetrics(rows);

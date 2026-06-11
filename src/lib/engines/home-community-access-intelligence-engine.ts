@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME COMMUNITY ACCESS INTELLIGENCE ENGINE
+// CARA — HOME COMMUNITY ACCESS INTELLIGENCE ENGINE
 // Home-level engine aggregating transport safety, transport risk assessments,
 // independent travel development, trip planning quality, and community
 // engagement across all children. Surfaces whether the home is providing safe,
@@ -613,7 +613,7 @@ export function computeHomeCommunityAccess(
     concerns.push(`Low connection-building rate in community engagements — only ${ceBuildsConnRate}%. Activities should foster lasting community ties.`);
   }
 
-  // ── ARIA Insights ────────────────────────────────────────────────────
+  // ── Cara Insights ────────────────────────────────────────────────────
   if (community_access_rating === "outstanding") {
     insights.push({ text: `Community access is outstanding (${score}%). Children enjoy safe, well-planned transport, developing independence in travel, varied trips, and strong community engagement. This evidences excellent Reg 9 and Reg 12 compliance.`, severity: "positive" });
   }

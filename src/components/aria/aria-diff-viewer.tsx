@@ -3,8 +3,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // AriaDiffViewer
 //
-// Side-by-side or inline diff view comparing original text with ARIA-generated
-// output. Helps staff see exactly what ARIA changed before approving.
+// Side-by-side or inline diff view comparing original text with Cara-generated
+// output. Helps staff see exactly what Cara changed before approving.
 // Used in the approval workflow and command panel.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -233,7 +233,7 @@ export function AriaDiffViewer({
                   <div className="flex items-center gap-1.5 mb-2">
                     <Sparkles className="h-3 w-3 text-[var(--cs-aria-gold)]" />
                     <span className="text-[10px] font-semibold text-[var(--cs-aria-gold)] uppercase tracking-wider">
-                      ARIA Output
+                      Cara Output
                     </span>
                   </div>
                   <div className="text-sm leading-relaxed text-[var(--cs-text-secondary)] rounded-lg bg-[var(--cs-aria-gold-bg)] p-3 border border-[var(--cs-aria-gold-soft)]">

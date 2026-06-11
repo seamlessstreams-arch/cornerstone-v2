@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Social Media & Digital Footprint Intelligence — Public API
+// Cara Social Media & Digital Footprint Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

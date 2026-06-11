@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD RADICALISATION PREVENTION (PREVENT DUTY) SERVICE
+// CARA — CHILD RADICALISATION PREVENTION (PREVENT DUTY) SERVICE
 // Prevent duty compliance, Channel referrals, vulnerability indicators,
 // online radicalisation screening, ideology concerns.
 // Counter-Terrorism and Security Act 2015 (Prevent Duty).

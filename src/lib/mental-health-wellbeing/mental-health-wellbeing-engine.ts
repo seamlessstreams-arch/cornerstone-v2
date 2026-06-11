@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Mental Health & Wellbeing Intelligence Engine
+// Cara Mental Health & Wellbeing Intelligence Engine
 //
 // Deterministic engine for evaluating children's mental health assessments,
 // therapeutic interventions, critical incident response, safety planning,

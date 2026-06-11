@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ACTION OUTCOME ADD MODAL
+// CARA — ACTION OUTCOME ADD MODAL
 // Log a new action outcome from any context in the app.
 // ══════════════════════════════════════════════════════════════════════════════
 

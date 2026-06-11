@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Equality & Diversity Intelligence — Public API
+// Cara Equality & Diversity Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME OUTCOME STAR ASSESSMENT INTELLIGENCE ENGINE
+// CARA — HOME OUTCOME STAR ASSESSMENT INTELLIGENCE ENGINE
 // Pure deterministic engine: assessment coverage, score progression,
 // domain balance, action plan quality, child voice, staff alignment,
 // and multi-domain trend analysis.

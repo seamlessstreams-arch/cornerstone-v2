@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DOCUMENT COMPLIANCE INTELLIGENCE HOOK
+// CARA — DOCUMENT COMPLIANCE INTELLIGENCE HOOK
 // React Query wrapper for /api/v1/document-compliance-intelligence
 // ══════════════════════════════════════════════════════════════════════════════
 

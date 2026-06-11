@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — Manager Bulk Actions  (Milestone 29 helper)
+// CARA — Manager Bulk Actions  (Milestone 29 helper)
 //
 // Shared helpers used by the bulk Manager Verify Queue endpoint to perform
 // verify or return on multiple care events safely. Per-event behaviour mirrors

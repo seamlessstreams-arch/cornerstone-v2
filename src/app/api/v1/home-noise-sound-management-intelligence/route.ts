@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME NOISE & SOUND MANAGEMENT INTELLIGENCE API ROUTE
+// CARA — HOME NOISE & SOUND MANAGEMENT INTELLIGENCE API ROUTE
 // GET /api/v1/home-noise-sound-management-intelligence
 // Cross-domain composite: noiseMonitoringRecords + quietHoursRecords +
 // sensoryEnvironmentRecords + soundInsulationRecords + childComfortRecords

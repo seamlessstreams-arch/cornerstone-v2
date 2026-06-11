@@ -580,7 +580,7 @@ function AllIncidentsTab() {
                 )}
               </div>
 
-              {/* Aria write help */}
+              {/* Cara write help */}
               <AriaPanel
                 mode="oversee"
                 pageContext="Incidents — oversight queue, management review, safeguarding triage, Regulation 40 notifications, behaviour and physical intervention monitoring"
@@ -688,7 +688,7 @@ function OversightQueueTab() {
             {queue.length} incident{queue.length !== 1 ? "s" : ""} awaiting management oversight
           </div>
           <div className="text-xs text-amber-700 mt-0.5">
-            Oversight must be recorded by the Registered Manager. ARIA can help you draft your comments.
+            Oversight must be recorded by the Registered Manager. Cara can help you draft your comments.
           </div>
         </div>
       </div>
@@ -800,14 +800,14 @@ function OversightQueueTab() {
                 </div>
               )}
 
-              {/* Aria panel */}
+              {/* Cara panel */}
               <div>
                 <button
                   onClick={() => setAriaPanelId(ariaPanelId === inc.id ? null : inc.id)}
                   className="flex items-center gap-2 rounded-xl border border-[var(--cs-aria-gold-soft)] bg-[var(--cs-aria-gold-bg)] px-3 py-2 text-xs font-semibold text-[var(--cs-aria-gold)] hover:bg-[var(--cs-aria-gold-bg)] transition-colors"
                 >
                   <Sparkles className="h-3.5 w-3.5" />
-                  {ariaPanelId === inc.id ? "Close ARIA" : "Ask ARIA to help draft oversight"}
+                  {ariaPanelId === inc.id ? "Close Cara" : "Ask Cara to help draft oversight"}
                 </button>
 
                 {ariaPanelId === inc.id && (
@@ -1067,7 +1067,7 @@ function LogIncidentTab({ onSuccess }: { onSuccess?: () => void }) {
             className="flex items-center gap-1.5 rounded-xl border border-[var(--cs-aria-gold-soft)] bg-[var(--cs-aria-gold-bg)] px-3 py-1.5 text-xs font-semibold text-[var(--cs-aria-gold)] hover:bg-[var(--cs-aria-gold-bg)] transition-colors"
           >
             <Sparkles className="h-3.5 w-3.5" />
-            ARIA Write
+            Cara Write
           </button>
         </div>
 
@@ -1267,11 +1267,11 @@ export default function IncidentsPage() {
           title="Incident recording & oversight"
           description="Every incident must be logged promptly and reviewed by management within 24 hours. Critical incidents require immediate escalation and statutory notifications."
           evidenceTip="Inspectors assess whether oversight notes demonstrate professional curiosity — not just sign-off but reflective analysis of what happened and what will change."
-          ariaTip="ARIA can detect incident patterns across children and time periods, flagging escalation risks before they become critical."
+          ariaTip="Cara can detect incident patterns across children and time periods, flagging escalation risks before they become critical."
           regulationRef="Children's Homes Regulations 2015, Reg 40 — Notification of significant events"
           variant="safeguarding"
         />
-        {/* ARIA Incident Analytics */}
+        {/* Cara Incident Analytics */}
         <AriaIncidentAnalytics />
 
         {/* Tab bar */}
@@ -1318,7 +1318,7 @@ export default function IncidentsPage() {
           defaultCollapsed
         />
       </div>
-      <AriaPracticePanel sourceType="incident" homeId="home_oak" title="Run ARIA on this incident" />
+      <AriaPracticePanel sourceType="incident" homeId="home_oak" title="Run Cara on this incident" />
     </PageShell>
   );
 }

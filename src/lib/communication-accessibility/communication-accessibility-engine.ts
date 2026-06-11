@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Communication & Accessibility Intelligence Engine
+// Cara — Communication & Accessibility Intelligence Engine
 //
 // Pure deterministic engine — no AI, no external calls.
 // Analyses how effectively a children's home ensures all children can

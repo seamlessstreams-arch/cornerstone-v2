@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME TASK ACTION COMPLETION INTELLIGENCE ENGINE
+// CARA — HOME TASK ACTION COMPLETION INTELLIGENCE ENGINE
 // Home-level: measures task management quality — completion rates, overdue
 // tracking, priority management, incident-linked follow-through, timeliness,
 // and governance around action tracking.

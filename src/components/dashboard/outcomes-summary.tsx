@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — OUTCOMES SUMMARY WIDGET
+// CARA — OUTCOMES SUMMARY WIDGET
 // Dashboard card showing young people's progress at a glance.
 // Highlights declining areas requiring attention.
 // ══════════════════════════════════════════════════════════════════════════════

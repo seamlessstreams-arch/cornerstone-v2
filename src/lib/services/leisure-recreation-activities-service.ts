@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LEISURE RECREATION ACTIVITIES SERVICE
+// CARA — LEISURE RECREATION ACTIVITIES SERVICE
 // Tracks leisure activities, hobbies, recreational participation,
 // community engagement, and enrichment opportunities.
 // CHR 2015 Reg 9(2)(a) (leisure activities appropriate to needs),

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD BEHAVIOUR & SAFETY INTELLIGENCE ENGINE
+// CARA — CHILD BEHAVIOUR & SAFETY INTELLIGENCE ENGINE
 //
 // Per-child behaviour analysis: behaviour patterns, incidents, restraints,
 // missing episodes, sanctions/rewards balance, sleep quality, de-escalation
@@ -727,7 +727,7 @@ export function computeChildBehaviourSafety(
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
   const insights: SafetyInsight[] = [];
 
   if (safety_status === "critical") {

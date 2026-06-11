@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ENVIRONMENT STATUS CARD
+// CARA — ENVIRONMENT STATUS CARD
 // Dashboard card powered by the Premises Safety Intelligence Engine.
 // CHR 2015 Reg 25 — "The premises used for the children's home are designed,
 // furnished and maintained so as to be suitable for the purpose."
@@ -145,13 +145,13 @@ export function EnvironmentStatusCard() {
           </div>
         )}
 
-        {/* ── ARIA Intelligence ──────────────────────────────────────── */}
+        {/* ── Cara Intelligence ──────────────────────────────────────── */}
 
         {(d.insights ?? []).length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Environment Intelligence
+              Cara Environment Intelligence
             </p>
             {(d.insights ?? []).slice(0, 2).map((insight, i) => (
               <div

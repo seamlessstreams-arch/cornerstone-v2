@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — TRAINING NEEDS INTELLIGENCE (Core Loop Page)
+// CARA — TRAINING NEEDS INTELLIGENCE (Core Loop Page)
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState, useMemo } from "react";
@@ -45,7 +45,7 @@ const TRAINING_NEED_EXPORT_COLS: ExportColumn<TrainingNeed>[] = [
   { header: "Description", accessor: (n) => n.description },
   { header: "Affected Roles", accessor: (n) => (n.affected_roles ?? []).join(", ") },
   { header: "Deadline", accessor: (n) => n.deadline ?? "" },
-  { header: "ARIA Evidence", accessor: (n) => n.aria_evidence ?? "" },
+  { header: "Cara Evidence", accessor: (n) => n.aria_evidence ?? "" },
   { header: "Created", accessor: (n) => n.created_at },
 ];
 
@@ -128,7 +128,7 @@ function NeedCard({ need, onSendToStudio }: { need: TrainingNeed; onSendToStudio
             <p className="text-sm text-[var(--cs-text-secondary)] leading-relaxed">{need.description}</p>
             {need.aria_evidence && (
               <div className="rounded-lg bg-[var(--cs-aria-gold-bg)] border border-[var(--cs-aria-gold-soft)] p-3">
-                <p className="text-[10px] font-semibold text-[var(--cs-aria-gold)] mb-1 uppercase tracking-wide">ARIA Evidence</p>
+                <p className="text-[10px] font-semibold text-[var(--cs-aria-gold)] mb-1 uppercase tracking-wide">Cara Evidence</p>
                 <p className="text-xs text-[var(--cs-navy)] leading-relaxed">{need.aria_evidence}</p>
               </div>
             )}
@@ -174,7 +174,7 @@ type PipelineStep = "idle" | "project" | "aria" | "resource" | "linking" | "done
 
 const PIPELINE_STEPS: { key: PipelineStep; label: string }[] = [
   { key: "project",  label: "Creating learning project" },
-  { key: "aria",     label: "Generating resource with ARIA" },
+  { key: "aria",     label: "Generating resource with Cara" },
   { key: "resource", label: "Saving resource to Studio" },
   { key: "linking",  label: "Linking to training need" },
 ];
@@ -234,10 +234,10 @@ function SendToStudioDialog({ need, onClose }: { need: TrainingNeed; onClose: ()
 
       const projectId = project.data.id;
 
-      // ── Step 2: call ARIA ────────────────────────────────────────────────────
+      // ── Step 2: call Cara ────────────────────────────────────────────────────
       setPipelineStep("aria");
       const ariaRes = await api.post<{ data: { parsed?: Record<string, unknown>; text?: string } }>(
-        "/aria",
+        "/cara",
         {
           mode:           ARIA_MODE_MAP[resourceType] ?? "learning_guidance_note",
           style:          pathway === "child" ? "child_friendly" : "professional_formal",
@@ -341,7 +341,7 @@ function SendToStudioDialog({ need, onClose }: { need: TrainingNeed; onClose: ()
                 </Select>
               </div>
               <p className="text-xs text-[var(--cs-text-muted)] bg-teal-50 border border-teal-100 rounded-lg px-3 py-2">
-                ARIA will generate a {resourceType.replace(/_/g, " ")} for the {pathway} pathway and save it to the Learning Studio ready for review.
+                Cara will generate a {resourceType.replace(/_/g, " ")} for the {pathway} pathway and save it to the Learning Studio ready for review.
               </p>
             </>
           )}
@@ -426,7 +426,7 @@ function NewNeedDialog({ open, onClose }: { open: boolean; onClose: () => void }
     setAriaAnalysing(true);
     try {
       const res = await api.post<{ data: { parsed?: { needs?: { title?: string; description?: string; priority?: string }[] } } }>(
-        "/aria",
+        "/cara",
         {
           mode: "training_needs_analysis",
           style: "professional_formal",
@@ -510,7 +510,7 @@ function NewNeedDialog({ open, onClose }: { open: boolean; onClose: () => void }
                 <SelectTrigger className="mt-1"><SelectValue /></SelectTrigger>
                 <SelectContent>
                   <SelectItem value="manual">Manual</SelectItem>
-                  <SelectItem value="aria">ARIA</SelectItem>
+                  <SelectItem value="aria">Cara</SelectItem>
                   <SelectItem value="supervision">Supervision</SelectItem>
                   <SelectItem value="incident">Incident</SelectItem>
                   <SelectItem value="audit">Audit</SelectItem>
@@ -525,7 +525,7 @@ function NewNeedDialog({ open, onClose }: { open: boolean; onClose: () => void }
               <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Description / Evidence</label>
               <Button size="sm" variant="ghost" className="h-6 text-xs text-[var(--cs-aria-gold)] gap-1 px-2" onClick={analyseWithAria} disabled={ariaAnalysing || !description.trim()}>
                 <Sparkles className="h-3 w-3" />
-                {ariaAnalysing ? "Analysing…" : "ARIA Analyse"}
+                {ariaAnalysing ? "Analysing…" : "Cara Analyse"}
               </Button>
             </div>
             <Textarea className="text-sm" rows={4} placeholder="Describe the training need and any supporting evidence…" value={description} onChange={(e) => setDescription(e.target.value)} />
@@ -543,7 +543,7 @@ function NewNeedDialog({ open, onClose }: { open: boolean; onClose: () => void }
   );
 }
 
-// ── ARIA Auto-Detect panel ────────────────────────────────────────────────────
+// ── Cara Auto-Detect panel ────────────────────────────────────────────────────
 type DetectedNeed = {
   title: string;
   description: string;
@@ -584,7 +584,7 @@ function AriaAutoDetect({
 
     try {
       const res = await api.post<{ data: { parsed?: { needs?: DetectedNeed[] } } }>(
-        "/aria",
+        "/cara",
         {
           mode: "training_needs_analysis",
           style: "professional_formal",
@@ -598,7 +598,7 @@ function AriaAutoDetect({
             "Focus on safeguarding, de-escalation, recording quality, medication, contextual safeguarding, MCA, and PACE.",
             "For each need: provide a clear title, description, priority (urgent/high/medium/low), need_type, and aria_evidence explaining why this need was identified.",
           ].join(" "),
-          page_context: "Training Needs — ARIA Auto-Detect",
+          page_context: "Training Needs — Cara Auto-Detect",
           record_type: "training_need",
           user_role: "registered_manager",
         }
@@ -648,7 +648,7 @@ function AriaAutoDetect({
             <Wand2 className="h-4 w-4 text-white" />
           </div>
           <div>
-            <p className="text-sm font-semibold text-[var(--cs-navy)]">ARIA Auto-Detect</p>
+            <p className="text-sm font-semibold text-[var(--cs-navy)]">Cara Auto-Detect</p>
             <p className="text-xs text-[var(--cs-aria-gold)]">Scan operational data for training needs</p>
           </div>
         </div>
@@ -665,7 +665,7 @@ function AriaAutoDetect({
 
       {!scanning && detected.length === 0 && (
         <p className="text-xs text-[var(--cs-aria-gold)]/70 pl-1">
-          ARIA will analyse recent incidents, supervision, medication events and RI alerts to surface training needs you may have missed.
+          Cara will analyse recent incidents, supervision, medication events and RI alerts to surface training needs you may have missed.
         </p>
       )}
 
@@ -713,7 +713,7 @@ function AriaAutoDetect({
                     <p className="text-xs text-[var(--cs-text-secondary)] mt-1 leading-relaxed">{need.description}</p>
                     {need.aria_evidence && (
                       <p className="text-[10px] text-[var(--cs-aria-gold)] mt-1.5 italic leading-relaxed">
-                        ARIA: {need.aria_evidence}
+                        Cara: {need.aria_evidence}
                       </p>
                     )}
                   </div>
@@ -843,7 +843,7 @@ export default function TrainingNeedsPage() {
           ))}
         </div>
 
-        {/* ARIA Auto-Detect */}
+        {/* Cara Auto-Detect */}
         <AriaAutoDetect existingNeeds={needs} onAdded={() => {}} />
 
         {/* Search + Filters */}
@@ -889,7 +889,7 @@ export default function TrainingNeedsPage() {
           <div className="text-center py-16">
             <Brain className="h-10 w-10 text-[var(--cs-text-gentle)] mx-auto mb-3" />
             <p className="text-sm font-medium text-[var(--cs-text-secondary)]">No training needs found</p>
-            <p className="text-xs text-[var(--cs-text-muted)] mt-1">Add needs manually or they are auto-detected by ARIA from your records</p>
+            <p className="text-xs text-[var(--cs-text-muted)] mt-1">Add needs manually or they are auto-detected by Cara from your records</p>
             <Button size="sm" className="mt-4 gap-1" onClick={() => setShowNew(true)}>
               <Plus className="h-3.5 w-3.5" />
               Add First Need

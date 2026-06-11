@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — TERMS  (route: /terms)
+// CARA — TERMS  (route: /terms)
 // Plain-English summary. Honest — no fabricated claims.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -9,8 +9,8 @@ import { MarketingFooter } from "@/components/marketing/marketing-footer";
 import { SectionEyebrow } from "@/components/marketing/ui";
 
 export const metadata: Metadata = {
-  title: "Terms | Cornerstone Care OS",
-  description: "Plain-English terms for using the Cornerstone Care OS website and early-access demo.",
+  title: "Terms | Cara OS",
+  description: "Plain-English terms for using the Cara OS website and early-access demo.",
 };
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
@@ -32,13 +32,13 @@ export default function TermsPage() {
         <p className="mt-3 text-sm text-[var(--cs-text-muted)]">A plain-English summary of the terms for using this website and any demo we share. Full contractual terms are provided separately to customers.</p>
 
         <Section title="About this website">
-          <p>This website describes Cornerstone Care OS, a workforce, recruitment, supervision and practice-intelligence layer for children&rsquo;s homes. The product is in active development and offered on an early-access basis.</p>
+          <p>This website describes Cara OS, a workforce, recruitment, supervision and practice-intelligence layer for children&rsquo;s homes. The product is in active development and offered on an early-access basis.</p>
         </Section>
         <Section title="The demo environment">
           <p>Any demo you see uses fictional, illustrative data — a fictional home and fictional people. It contains no real child or staff information. Demo data may reset and is for demonstration only.</p>
         </Section>
         <Section title="Decision-support, not decisions">
-          <p>Cornerstone Care OS supports professional judgement; it does not replace it. Matching, intelligence and AI features are decision-support tools only. Final recruitment, safeguarding and care decisions must be made by the organisation using its own professional judgement, safer-recruitment practice and statutory responsibilities.</p>
+          <p>Cara OS supports professional judgement; it does not replace it. Matching, intelligence and AI features are decision-support tools only. Final recruitment, safeguarding and care decisions must be made by the organisation using its own professional judgement, safer-recruitment practice and statutory responsibilities.</p>
         </Section>
         <Section title="AI features">
           <p>Where AI assists with drafting or suggestions, outputs are drafts for a human to accept, edit or reject. AI never makes final decisions, and AI-assisted actions are recorded.</p>
@@ -50,7 +50,7 @@ export default function TermsPage() {
           <p>Please don&rsquo;t attempt to disrupt the service, misuse it, or enter real children&rsquo;s or staff personal data into a demo environment.</p>
         </Section>
         <Section title="Contact">
-          <p>Questions about these terms? Email <a className="font-semibold text-[var(--cs-teal-strong)] hover:underline" href="mailto:hello@cornerstonecare.app">hello@cornerstonecare.app</a>.</p>
+          <p>Questions about these terms? Reach us via the <a className="font-semibold text-[var(--cs-teal-strong)] hover:underline" href="/contact">contact page</a>.</p>
         </Section>
       </article>
       <MarketingFooter />

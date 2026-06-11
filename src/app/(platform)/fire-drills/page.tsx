@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — FIRE DRILLS & EMERGENCY PROCEDURES
+// CARA — FIRE DRILLS & EMERGENCY PROCEDURES
 // Records fire drills, evacuation exercises, and emergency procedure checks.
 // Tracks times, attendance, issues identified, and remedial actions.
 // Supports Reg 25 (Fire Precautions), Health & Safety at Work Act, and

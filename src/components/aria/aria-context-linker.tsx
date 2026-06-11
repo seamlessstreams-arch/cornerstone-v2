@@ -3,7 +3,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // AriaContextLinker
 //
-// Shows the bidirectional record links that ARIA has created between records.
+// Shows the bidirectional record links that Cara has created between records.
 // For example, linking an incident to a risk assessment, a behaviour support
 // plan, and a supervision record. Allows managers to view, verify, and
 // dismiss links.
@@ -204,7 +204,7 @@ export function AriaContextLinker({
             {activeLinks.length} linked record{activeLinks.length !== 1 ? "s" : ""}
           </span>
           <span className="text-[9px] text-[var(--cs-text-muted)]">
-            identified by ARIA
+            identified by Cara
           </span>
         </div>
         <ChevronRight
@@ -266,7 +266,7 @@ export function AriaContextLinker({
                       {link.createdBy === "aria" && (
                         <span className="inline-flex items-center gap-0.5 text-[9px] text-[var(--cs-text-muted)]">
                           <Sparkles className="h-2.5 w-2.5 text-[var(--cs-aria-gold)]" />
-                          ARIA identified
+                          Cara identified
                         </span>
                       )}
                     </div>

@@ -816,8 +816,8 @@ describe("computeHomeIndependenceLifeSkills", () => {
     });
   });
 
-  // ── ARIA Insights ─────────────────────────────────────────────────
-  describe("ARIA insights", () => {
+  // ── Cara Insights ─────────────────────────────────────────────────
+  describe("Cara insights", () => {
     it("flags high not_ready rate", () => {
       const assessments = baseInput().independence_assessments.map(a => ({
         ...a, overall_readiness: "not_ready",

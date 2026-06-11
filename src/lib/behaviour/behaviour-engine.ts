@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Behaviour Intelligence Engine
+// Cara Behaviour Intelligence Engine
 //
 // Deterministic engine for evaluating behaviour management quality in
 // children's homes — positive behaviour strategies, de-escalation,

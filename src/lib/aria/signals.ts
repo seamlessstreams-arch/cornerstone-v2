@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA INTELLIGENCE — EARLY-WARNING SIGNALS ENGINE
+// Cara INTELLIGENCE — EARLY-WARNING SIGNALS ENGINE
 //
 // Analyses operational data to detect patterns that may indicate emerging
 // risks, therapeutic opportunities, or safeguarding themes. Generates

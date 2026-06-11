@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ARIA REPORT NARRATIVE HELPER (server-only)
+// CARA — Cara REPORT NARRATIVE HELPER (server-only)
 //
 // Generates an optional AI-written executive narrative for the shareable report
 // packs, reusing the sanctioned aria-provider. Returns null when no LLM is

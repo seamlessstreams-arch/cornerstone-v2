@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Restorative Practice Intelligence Engine — Tests
+// Cara — Restorative Practice Intelligence Engine — Tests
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";

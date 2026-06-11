@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME WASHING MACHINE & DRYER MAINTENANCE INTELLIGENCE ENGINE TESTS
+// CARA — HOME WASHING MACHINE & DRYER MAINTENANCE INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite: unit + integration (180 tests)
 // ══════════════════════════════════════════════════════════════════════════════
 

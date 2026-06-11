@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — AUTOMATED EVIDENCE BANK CARD
+// CARA — AUTOMATED EVIDENCE BANK CARD
 // Coverage across the 14 Ofsted evidence categories, built automatically from the
 // event stream. Powered by the Evidence Bank engine (Reg 44/45).
 // ══════════════════════════════════════════════════════════════════════════════
@@ -72,7 +72,7 @@ export function EvidenceBankCard() {
 
         {insights.length > 0 && (
           <div className="space-y-1.5">
-            <p className="text-xs font-semibold flex items-center gap-1 text-purple-700"><Brain className="h-3 w-3" /> ARIA Evidence Intelligence</p>
+            <p className="text-xs font-semibold flex items-center gap-1 text-purple-700"><Brain className="h-3 w-3" /> Cara Evidence Intelligence</p>
             {insights.slice(0, 2).map((i, idx) => (
               <div key={idx} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[i.severity] ?? INSIGHT_STYLES.positive)}>{i.text}</div>
             ))}

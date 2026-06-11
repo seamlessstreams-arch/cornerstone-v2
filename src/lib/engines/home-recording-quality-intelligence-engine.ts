@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME RECORDING QUALITY INTELLIGENCE ENGINE
+// CARA — HOME RECORDING QUALITY INTELLIGENCE ENGINE
 // Home-level: analyses care form completion, review workflows, approval rates,
 // timeliness, and form diversity to assess recording quality.
 // CHR 2015 Reg 36 (Record Keeping). SCCIF: "Well-Led."

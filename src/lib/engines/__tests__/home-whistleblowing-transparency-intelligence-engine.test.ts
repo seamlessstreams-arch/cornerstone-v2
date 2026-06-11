@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME WHISTLEBLOWING TRANSPARENCY INTELLIGENCE ENGINE TESTS
+// CARA — HOME WHISTLEBLOWING TRANSPARENCY INTELLIGENCE ENGINE TESTS
 // Tests the pure deterministic engine for whistleblowing concern resolution,
 // staff confidence, policy awareness, protection measures, and transparency culture.
 // ══════════════════════════════════════════════════════════════════════════════

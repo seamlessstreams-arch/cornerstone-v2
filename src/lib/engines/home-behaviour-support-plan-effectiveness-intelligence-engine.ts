@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME BEHAVIOUR SUPPORT PLAN EFFECTIVENESS INTELLIGENCE ENGINE
+// CARA -- HOME BEHAVIOUR SUPPORT PLAN EFFECTIVENESS INTELLIGENCE ENGINE
 // Measures how effectively the home creates, implements, and reviews BSPs for
 // children, tracks intervention success, de-escalation outcomes, positive
 // behaviour reinforcement, and restrictive practice minimisation.

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF AGENCY WORKER COMPLIANCE SERVICE
+// CARA — STAFF AGENCY WORKER COMPLIANCE SERVICE
 // Tracks agency worker compliance, induction status, and regulatory checks
 // for agency staff working in children's residential homes.
 //
@@ -182,7 +182,7 @@ export function computeAlerts(
   return alerts;
 }
 
-// ── ARIA Insights ─────────────────────────────────────────────────────────
+// ── Cara Insights ─────────────────────────────────────────────────────────
 
 export function computeAriaInsights(rows: StaffAgencyWorkerComplianceRow[]): string[] {
   const metrics = computeMetrics(rows);

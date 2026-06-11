@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CARE FORM INTELLIGENCE CARD
+// CARA — CARE FORM INTELLIGENCE CARD
 // Dashboard card powered by the Care Form Intelligence Engine — live data.
 // Reg 35 (policies/procedures documentation), Reg 37 (notifications),
 // Schedule 1, SCCIF: "Are records accurate, up to date, and support
@@ -253,13 +253,13 @@ export function FormComplianceCard() {
           </div>
         )}
 
-        {/* ── ARIA Care Form Intelligence ─────────────────────────────── */}
+        {/* ── Cara Care Form Intelligence ─────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Form Intelligence
+              Cara Form Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

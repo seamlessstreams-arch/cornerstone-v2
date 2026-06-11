@@ -22,7 +22,7 @@ import {
 import { ARIA_COMMANDS } from "@/lib/aria/aria-service";
 import { ariaCan, type AriaRole } from "@/lib/aria/aria-permissions";
 
-// Roles that may access ARIA health diagnostics
+// Roles that may access Cara health diagnostics
 const ALLOWED_ROLES: AriaRole[] = [
   "registered_manager",
   "responsible_individual",
@@ -34,7 +34,7 @@ export const dynamic = "force-dynamic";
 export async function GET(req: NextRequest) {
   // ── Auth ─────────────────────────────────────────────────────────────────
   // We rely on the actor role passed in the Authorization header as a bearer
-  // claim, matching the pattern used by the rest of the ARIA API layer.
+  // claim, matching the pattern used by the rest of the Cara API layer.
   // In production, replace this with a real session/JWT check.
 
   const actorRole = req.headers.get("x-aria-role") as AriaRole | null;
@@ -43,7 +43,7 @@ export async function GET(req: NextRequest) {
   if (!actorUserId || !actorRole || !ALLOWED_ROLES.includes(actorRole)) {
     return NextResponse.json(
       {
-        error: "Access denied. ARIA health diagnostics require registered_manager, responsible_individual, or deputy_manager role.",
+        error: "Access denied. Cara health diagnostics require registered_manager, responsible_individual, or deputy_manager role.",
         allowed: false,
       },
       { status: 403 },
@@ -87,12 +87,12 @@ export async function GET(req: NextRequest) {
       status: 200,
       headers: {
         "Cache-Control": "no-store, no-cache",
-        "X-ARIA-Health": health.overallStatus,
+        "X-Cara-Health": health.overallStatus,
       },
     });
   } catch (err) {
     // Never expose internal error details
-    console.error("[ARIA health] Unexpected error:", err);
+    console.error("[Cara health] Unexpected error:", err);
     return NextResponse.json(
       {
         error: "Health check failed unexpectedly. Check server logs.",

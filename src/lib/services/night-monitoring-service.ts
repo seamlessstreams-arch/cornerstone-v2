@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — NIGHT MONITORING SERVICE
+// CARA — NIGHT MONITORING SERVICE
 // Manages waking night duties, sleep/welfare checks on children, night shift
 // logs, and overnight incident tracking. CHR 2015 Reg 12 (protection of
 // children), Reg 25 (premises and environment — night safety), Reg 32/33

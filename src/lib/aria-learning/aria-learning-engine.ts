@@ -1,9 +1,9 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA Agent Learning & Cost Reduction Layer
+// Cara Agent Learning & Cost Reduction Layer
 //
 // Deterministic engine for observing, evaluating, and learning from specialist
 // agent outputs over time — to progressively reduce dependency on paid agents
-// by building Cornerstone's own internal capability.
+// by building Cara's own internal capability.
 //
 // Purpose:
 //   - Track what each agent is used for, inputs/outputs/boundaries
@@ -13,8 +13,8 @@
 //   - Manage shadow mode testing pipeline
 //   - Calculate cost savings and risk levels
 //
-// ARIA learns ONLY from:
-//   - Cornerstone-owned data
+// Cara learns ONLY from:
+//   - Cara-owned data
 //   - Authorised outputs
 //   - Approved manager corrections
 //   - Approved internal workflows
@@ -23,7 +23,7 @@
 //   - Permitted API responses stored under agreed terms
 //   - Human-reviewed examples
 //
-// ARIA must NEVER:
+// Cara must NEVER:
 //   - Copy, steal, or reverse-engineer proprietary models
 //   - Automatically replace paid agents for high-risk workflows
 //   - Replace an external agent without passing evaluation testing
@@ -38,7 +38,7 @@
 //   7. Ongoing monitoring
 //
 // Target State:
-//   ARIA becomes a self-owned Cornerstone AI operating system where most
+//   Cara becomes a self-owned Cara AI operating system where most
 //   repeatable work is handled internally, while premium external models are
 //   reserved only for complex, high-risk, specialist, or quality-critical tasks.
 //
@@ -547,10 +547,10 @@ export function getAgentTypeLabel(type: AgentType): string {
 
 export function getResolutionTierLabel(tier: ResolutionTier): string {
   const labels: Record<ResolutionTier, string> = {
-    cornerstone_native_rules: "Cornerstone Native Rules",
-    cornerstone_local_model: "Cornerstone Local Model",
-    cornerstone_rag: "Cornerstone RAG",
-    cornerstone_finetuned: "Cornerstone Fine-tuned",
+    cornerstone_native_rules: "Cara Native Rules",
+    cornerstone_local_model: "Cara Local Model",
+    cornerstone_rag: "Cara RAG",
+    cornerstone_finetuned: "Cara Fine-tuned",
     external_paid_model: "External Paid Model",
     human_review_only: "Human Review Only",
   };

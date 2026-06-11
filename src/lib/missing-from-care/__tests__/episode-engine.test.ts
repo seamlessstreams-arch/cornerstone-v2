@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Missing From Care — Episode Engine Tests
+// Cara Missing From Care — Episode Engine Tests
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";

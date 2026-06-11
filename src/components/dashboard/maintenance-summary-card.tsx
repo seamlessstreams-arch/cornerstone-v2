@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MAINTENANCE SUMMARY CARD
+// CARA — MAINTENANCE SUMMARY CARD
 // Dashboard widget showing property maintenance status at a glance.
 // Reg 25 — premises must be designed, furnished and maintained to standard.
 // ══════════════════════════════════════════════════════════════════════════════

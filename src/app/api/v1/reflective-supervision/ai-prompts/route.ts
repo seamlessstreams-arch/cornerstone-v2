@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — REFLECTIVE SUPERVISION · ARIA PROMPTS
+// CARA — REFLECTIVE SUPERVISION · Cara PROMPTS
 // POST /api/v1/reflective-supervision/ai-prompts   body: { staffName?, context? }
 //
 // Optional AI support (spec §9): suggests reflective PROMPTS to help a manager
@@ -34,7 +34,7 @@ export async function POST(req: Request) {
       data: {
         prompts: [],
         llmUsed: false,
-        message: "ARIA isn't configured in this environment, so AI reflective prompts are unavailable. Use the section structure below to guide the conversation. (Add an ANTHROPIC_API_KEY to enable AI prompts.)",
+        message: "Cara isn't configured in this environment, so AI reflective prompts are unavailable. Use the section structure below to guide the conversation. (Add an ANTHROPIC_API_KEY to enable AI prompts.)",
         disclaimer: AI_DISCLAIMER,
       },
     });

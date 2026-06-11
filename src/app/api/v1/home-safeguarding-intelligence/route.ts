@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SAFEGUARDING INTELLIGENCE API ROUTE
+// CARA — HOME SAFEGUARDING INTELLIGENCE API ROUTE
 // GET /api/v1/home-safeguarding-intelligence
 // Synthesises contextual safeguarding risks, exploitation screenings, and
 // online safety incidents to assess home-level safeguarding quality,

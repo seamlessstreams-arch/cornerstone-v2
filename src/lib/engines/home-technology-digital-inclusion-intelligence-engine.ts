@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME TECHNOLOGY & DIGITAL INCLUSION INTELLIGENCE ENGINE
+// CARA -- HOME TECHNOLOGY & DIGITAL INCLUSION INTELLIGENCE ENGINE
 // Tracks digital inclusion quality -- device access equity, digital skills
 // development, assistive technology provision, internet safety awareness,
 // and technology-supported learning. Critical for Ofsted under Children's

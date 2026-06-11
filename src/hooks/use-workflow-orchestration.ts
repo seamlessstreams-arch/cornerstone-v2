@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — WORKFLOW ORCHESTRATION HOOK
+// CARA — WORKFLOW ORCHESTRATION HOOK
 // React Query wrapper for /api/v1/workflow-orchestration
 // ══════════════════════════════════════════════════════════════════════════════
 

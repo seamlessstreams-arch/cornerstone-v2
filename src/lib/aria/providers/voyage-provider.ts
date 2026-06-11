@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Aria Intelligence — Voyage AI Provider Adapter
+// Cara Intelligence — Voyage AI Provider Adapter
 //
 // Used for: embeddings, semantic search, filing cabinet search,
 // evidence retrieval, Reg 45 evidence matching, child timeline search.

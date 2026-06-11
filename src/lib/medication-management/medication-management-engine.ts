@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Medication Management Intelligence Engine
+// Cara Medication Management Intelligence Engine
 //
 // Deterministic engine for evaluating medication administration accuracy,
 // error management, stock control, self-administration programmes, and

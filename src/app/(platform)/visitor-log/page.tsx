@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — VISITOR LOG
+// CARA — VISITOR LOG
 // Records all visitors to the home: professionals, family, tradespeople,
 // inspectors, and others. Required under Children's Homes Regulations 2015
 // (Reg 37, Schedule 3) — a record of all persons visiting the home.

@@ -106,7 +106,7 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
       return NextResponse.json({ ok: true, data: result.data }, { status: 201 });
     }
 
-    // ARIA matching analysis
+    // Cara matching analysis
     if (action === "aria_matching") {
       const { incomingChild, currentYoungPeople, homeCapacity } = body;
       if (!incomingChild || !homeCapacity) {

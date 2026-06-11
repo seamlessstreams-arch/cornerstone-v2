@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Aria Intelligence — Human Approval Engine
+// Cara Intelligence — Human Approval Engine
 //
 // AI must never be treated as the legal decision-maker. All high-risk
 // outputs require human review and approval before official use.

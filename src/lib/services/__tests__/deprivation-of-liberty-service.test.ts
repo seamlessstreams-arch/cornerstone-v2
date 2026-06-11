@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DEPRIVATION OF LIBERTY & RESTRICTIONS SERVICE TESTS
+// CARA — DEPRIVATION OF LIBERTY & RESTRICTIONS SERVICE TESTS
 // Pure-function tests for DoL metrics computation, alert identification, and
 // constant validation for CHR 2015 Reg 20/21, Children Act 1989 s25 compliance.
 // ══════════════════════════════════════════════════════════════════════════════

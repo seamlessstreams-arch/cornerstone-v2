@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SUPERVISION INTELLIGENCE HOOK
+// CARA — SUPERVISION INTELLIGENCE HOOK
 // React Query wrapper for /api/v1/supervision-intelligence
 // ══════════════════════════════════════════════════════════════════════════════
 

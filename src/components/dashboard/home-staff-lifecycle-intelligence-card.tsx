@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME STAFF LIFECYCLE INTELLIGENCE CARD
+// CARA — HOME STAFF LIFECYCLE INTELLIGENCE CARD
 // Induction, sickness, exit interviews, recognition — full lifecycle health.
 // CHR 2015 Reg 32/33. SCCIF: "How well does the home manage staff lifecycle?"
 // ══════════════════════════════════════════════════════════════════════════════
@@ -217,12 +217,12 @@ export function HomeStaffLifecycleIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Lifecycle Intelligence */}
+        {/* Cara Lifecycle Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Lifecycle Intelligence
+              Cara Lifecycle Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

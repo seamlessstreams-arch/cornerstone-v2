@@ -343,7 +343,7 @@ describe("overview aggregation across a mixed cohort", () => {
     expect(r.child_forecasts[0].child_name).toBe("Critical Cara");
     expect(r.child_forecasts[1].child_name).toBe("Escalating Ellie");
   });
-  it("produces a critical ARIA insight and a positive improving insight", () => {
+  it("produces a critical Cara insight and a positive improving insight", () => {
     expect(r.insights.some((i) => i.severity === "critical")).toBe(true);
     expect(r.insights.some((i) => i.severity === "warning")).toBe(true);
     expect(r.insights.some((i) => i.severity === "positive")).toBe(true);

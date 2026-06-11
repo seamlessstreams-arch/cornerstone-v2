@@ -123,7 +123,7 @@ export function AriaApprovalWorkflow({
               <div>
                 <p className="text-sm font-medium text-amber-700">Amendment Requested</p>
                 <p className="text-xs text-[var(--cs-text-gentle)]">
-                  An amendment has been requested. Aria will revise the draft.
+                  An amendment has been requested. Cara will revise the draft.
                 </p>
               </div>
             </>

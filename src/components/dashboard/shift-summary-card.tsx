@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SHIFT SUMMARY CARD
+// CARA — SHIFT SUMMARY CARD
 // Auto-generated summary of everything that happened during a shift.
 // Used on the handover page to pre-populate handover notes.
 // Saves staff 15-20 minutes per handover by collating all events.

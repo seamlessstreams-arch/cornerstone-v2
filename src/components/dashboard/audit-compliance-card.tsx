@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — AUDIT QUALITY ASSURANCE INTELLIGENCE CARD
+// CARA — AUDIT QUALITY ASSURANCE INTELLIGENCE CARD
 // Dashboard card powered by the Audit Quality Intelligence Engine — live data.
 // Reg 45 (review of quality of care — the registered person must establish
 // and maintain a system for monitoring, reviewing, and evaluating quality).
@@ -261,13 +261,13 @@ export function AuditComplianceCard() {
           </div>
         )}
 
-        {/* ── ARIA Audit Intelligence ────────────────────────────────── */}
+        {/* ── Cara Audit Intelligence ────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Audit Intelligence
+              Cara Audit Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

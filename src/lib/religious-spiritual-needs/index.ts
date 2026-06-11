@@ -1,5 +1,5 @@
 // ==============================================================================
-// Cornerstone Religious & Spiritual Needs Intelligence — Public API
+// Cara Religious & Spiritual Needs Intelligence — Public API
 // ==============================================================================
 
 export {

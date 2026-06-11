@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ABOUT / STORY PAGE  (route: /about)
+// CARA — ABOUT / STORY PAGE  (route: /about)
 //
 // Static, on-brand. The authentic, practitioner-built narrative and the
 // principles behind the product. No fabricated team, funding or testimonials.
@@ -16,9 +16,9 @@ import { MarketingFooter } from "@/components/marketing/marketing-footer";
 import { SectionEyebrow } from "@/components/marketing/ui";
 
 export const metadata: Metadata = {
-  title: "About | Cornerstone Care OS",
+  title: "About | Cara OS",
   description:
-    "Cornerstone was built inside a real children's home by a Registered Manager — to stop brilliant care being let down by paperwork. Capture once, surface everywhere, never duplicate.",
+    "Cara was built inside a real children's home by a Registered Manager — to stop brilliant care being let down by paperwork. Capture once, surface everywhere, never duplicate.",
 };
 
 export default function AboutPage() {
@@ -35,7 +35,7 @@ export default function AboutPage() {
             Built in a real children&rsquo;s home.
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-[var(--cs-text-secondary)]">
-            Not in a boardroom, and not by people who&rsquo;ve never run a shift. Cornerstone was built by a Registered Manager
+            Not in a boardroom, and not by people who&rsquo;ve never run a shift. Cara was built by a Registered Manager
             who was tired of watching brilliant care get let down by paperwork.
           </p>
         </div>
@@ -52,7 +52,7 @@ export default function AboutPage() {
               vanishes when Ofsted calls, the safeguarding pattern that only became obvious after it became an incident.
             </p>
             <p>
-              Cornerstone started as a simple frustration: <span className="font-semibold text-[var(--cs-navy)]">the home was already
+              Cara started as a simple frustration: <span className="font-semibold text-[var(--cs-navy)]">the home was already
               capturing everything it needed to tell its own story — it just couldn&rsquo;t see it.</span> The notes existed. The
               evidence existed. It was buried in the noise of a dozen disconnected systems.
             </p>
@@ -66,7 +66,7 @@ export default function AboutPage() {
           <div className="mt-10 rounded-3xl border border-[var(--cs-border)] bg-[var(--cs-aria-gold-bg)] p-8 text-center">
             <Quote className="mx-auto h-7 w-7 text-[var(--cs-aria-gold)]" />
             <p className="mt-4 text-lg font-medium leading-relaxed text-[var(--cs-navy)]">
-              &ldquo;I built Cornerstone because I was tired of brilliant care being let down by paperwork. Capture it once, and let the home show its own story.&rdquo;
+              &ldquo;I built Cara because I was tired of brilliant care being let down by paperwork. Capture it once, and let the home show its own story.&rdquo;
             </p>
             <p className="mt-4 text-sm font-semibold text-[var(--cs-text-muted)]">— A Registered Manager, and the person who built this</p>
           </div>

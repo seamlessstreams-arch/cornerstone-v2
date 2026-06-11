@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Aria Intelligence — Cost Control Service
+// Cara Intelligence — Cost Control Service
 //
 // Estimates costs, tracks usage, enforces limits, selects cost-efficient
 // models for low-risk tasks, and prevents overspend.

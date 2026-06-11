@@ -1,10 +1,10 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — UNIFIED EVENT STREAM API ROUTE
+// CARA — UNIFIED EVENT STREAM API ROUTE
 // GET /api/v1/event-stream
 //
 // Projects the home's domain collections into one normalised CornerstoneEvent
 // stream — the "capture once, surface everywhere" backbone. Returns the unified
-// timeline plus an overview (counts by type/risk, pending approvals, ARIA
+// timeline plus an overview (counts by type/risk, pending approvals, Cara
 // compliance flags).
 // ══════════════════════════════════════════════════════════════════════════════
 

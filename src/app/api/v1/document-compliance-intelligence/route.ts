@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DOCUMENT COMPLIANCE INTELLIGENCE API ROUTE
+// CARA — DOCUMENT COMPLIANCE INTELLIGENCE API ROUTE
 // GET /api/v1/document-compliance-intelligence
 // Returns document sign-off compliance, expiry tracking, category analysis,
-// and ARIA document governance insights.
+// and Cara document governance insights.
 // Reg 35, Reg 37, Schedule 1, SCCIF policy implementation.
 // ══════════════════════════════════════════════════════════════════════════════
 

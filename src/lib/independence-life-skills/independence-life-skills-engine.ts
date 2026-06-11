@@ -1,5 +1,5 @@
 // ==============================================================================
-// Cornerstone Independence & Life Skills Intelligence Engine
+// Cara Independence & Life Skills Intelligence Engine
 //
 // Evaluates children's progress toward independent living, daily living skills,
 // practical capabilities, and preparation for transitions out of care.

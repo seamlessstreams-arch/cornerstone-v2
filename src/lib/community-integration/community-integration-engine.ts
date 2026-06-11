@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Community Integration Intelligence Engine
+// Cara Community Integration Intelligence Engine
 //
 // Evaluates how well children are integrated into their local community
 // through activities, social networks, and participation.

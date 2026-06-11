@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// API — ARIA Care Event Bridge (Milestone 12)
+// API — Cara Care Event Bridge (Milestone 12)
 //
-// POST → manually trigger ARIA to draft suggested records from verified
+// POST → manually trigger Cara to draft suggested records from verified
 //        care events that haven't yet been bridged. Idempotent.
 //
 // Body:
@@ -80,7 +80,7 @@ export async function POST(req: NextRequest) {
         actionType: "artifact_generated",
         artifactId: rec.id,
         sourceIds: [r.careEventId],
-        summary: `ARIA drafted ${rec.record_type} from care event ${r.careEventId}`,
+        summary: `Cara drafted ${rec.record_type} from care event ${r.careEventId}`,
         after: { record_type: rec.record_type },
       });
     }

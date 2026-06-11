@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME PET & ANIMAL THERAPY INTELLIGENCE API ROUTE
+// CARA -- HOME PET & ANIMAL THERAPY INTELLIGENCE API ROUTE
 // GET /api/v1/home-pet-animal-therapy-intelligence
 // Cross-domain composite: therapySessionRecords + petCareRecords +
 // animalInteractionRecords + animalWelfareRecords + childEngagementRecords

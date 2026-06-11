@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME KEYHOLDING & ACCESS CONTROL INTELLIGENCE ENGINE
+// CARA — HOME KEYHOLDING & ACCESS CONTROL INTELLIGENCE ENGINE
 // Monitors key register accuracy, access control compliance, key issue/return
 // tracking, security audit outcomes, and child-safe area management across the
 // home. Measures key register accuracy, access control compliance, key tracking

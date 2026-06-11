@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — REGULATORY AGENT
+// Cara — REGULATORY AGENT
 //
 // Handles CHR 2015 regulations, Quality Standards, SCCIF, Reg 44/45,
 // notifications, Ofsted readiness, and inspection evidence mapping.
@@ -96,7 +96,7 @@ const REGULATORY_REFERENCES = {
 
 // ── System Prompt ────────────────────────────────────────────────────────────
 
-const REGULATORY_SYSTEM_PROMPT = `You are the Regulatory Agent within Cornerstone, a children's residential care management platform. You provide analysis grounded in the regulatory framework for children's homes in England.
+const REGULATORY_SYSTEM_PROMPT = `You are the Regulatory Agent within Cara, a children's residential care management platform. You provide analysis grounded in the regulatory framework for children's homes in England.
 
 ═══ YOUR KNOWLEDGE BASE ═══
 

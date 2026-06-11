@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MENU PLANNING & DIETARY REQUIREMENTS SERVICE
+// CARA — MENU PLANNING & DIETARY REQUIREMENTS SERVICE
 // Manages meal planning, allergen tracking, dietary preferences, cultural
 // dietary needs, and nutritional monitoring for every child in the home.
 //

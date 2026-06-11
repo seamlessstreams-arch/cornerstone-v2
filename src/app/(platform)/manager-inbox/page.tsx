@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MANAGER ACTION INBOX (detail page)
+// CARA — MANAGER ACTION INBOX (detail page)
 // One prioritised command centre for managers, deputies, team leaders and the RI.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -56,7 +56,7 @@ export default function ManagerInboxPage() {
             <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed">
               This is assembled automatically from events across the home — it never decides or acts on its own. Each item
               shows <strong>why</strong> it's here, the <strong>deadline</strong>, the linked child/staff, the required
-              action, an <strong>ARIA-suggested response</strong> and the evidence it will contribute to. Approving,
+              action, an <strong>Cara-suggested response</strong> and the evidence it will contribute to. Approving,
               requesting changes or escalating remain your decision, with a full audit trail. Reg 13 (leadership oversight).
             </p>
           </div>

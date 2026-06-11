@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME CHILD VOICE INTELLIGENCE ENGINE
+// CARA — HOME CHILD VOICE INTELLIGENCE ENGINE
 // Home-level: synthesises children's house meetings, visitor engagement,
 // child feedback, and action responsiveness to produce an overall child
 // voice and participation intelligence score.

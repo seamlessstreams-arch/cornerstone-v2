@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME FIRE SAFETY INTELLIGENCE API ROUTE
+// CARA — HOME FIRE SAFETY INTELLIGENCE API ROUTE
 // GET /api/v1/home-fire-safety-intelligence
 // Fire drills, evacuations, equipment checks, response times, participation.
 // CHR 2015 Reg 25: "The premises standard — fire safety."

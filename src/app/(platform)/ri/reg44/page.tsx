@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — REG 44 INDEPENDENT VISIT TRACKER
+// CARA — REG 44 INDEPENDENT VISIT TRACKER
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState, useMemo } from "react";
@@ -351,12 +351,12 @@ function VisitCard({
             </div>
           )}
 
-          {/* ARIA summary */}
+          {/* Cara summary */}
           {visit.aria_summary && (
             <div className="rounded-xl border border-teal-100 bg-teal-50/40 p-3">
               <div className="flex items-center gap-1.5 mb-1.5">
                 <Sparkles className="h-3.5 w-3.5 text-teal-600" />
-                <p className="text-[10px] font-semibold text-teal-700 uppercase tracking-widest">ARIA Analysis</p>
+                <p className="text-[10px] font-semibold text-teal-700 uppercase tracking-widest">Cara Analysis</p>
               </div>
               <p className="text-xs text-[var(--cs-text-secondary)]">{visit.aria_summary}</p>
             </div>
@@ -462,7 +462,7 @@ export default function Reg44Page() {
   const [responseText, setResponseText]  = useState("");
   const [saving, setSaving]             = useState(false);
 
-  // ARIA analysis
+  // Cara analysis
   const [ariaBusy, setAriaBusy]   = useState<string | null>(null);
   const [ariaError, setAriaError] = useState<string | null>(null);
 
@@ -494,7 +494,7 @@ export default function Reg44Page() {
         `[${f.type.toUpperCase()}] ${f.area}: ${f.description}${f.action_required ? ` (Action: ${f.action_required}${f.action_completed ? " — COMPLETED" : " — PENDING"})` : ""}`,
       ).join("\n");
 
-      const prompt = `You are ARIA, an expert regulatory compliance AI for a children's residential home. Analyse this Reg 44 independent visit report and provide a concise 2–3 sentence summary covering: overall finding, key concerns or strengths, and outstanding actions requiring immediate attention. Be precise and regulatory-focused.
+      const prompt = `You are Cara, an expert regulatory compliance AI for a children's residential home. Analyse this Reg 44 independent visit report and provide a concise 2–3 sentence summary covering: overall finding, key concerns or strengths, and outstanding actions requiring immediate attention. Be precise and regulatory-focused.
 
 Visit ${visit.visit_number} — ${visit.visit_date ?? visit.scheduled_date}
 Visitor: ${visit.visitor_name}
@@ -506,7 +506,7 @@ ${findingSummary}
 Manager response: ${visit.manager_response ?? "None submitted yet"}`;
 
       const response = await api.post<{ choices: { message: { content: string } }[] }>(
-        "/aria/chat",
+        "/cara/chat",
         { messages: [{ role: "user", content: prompt }], context: "reg44_analysis" },
       );
 
@@ -516,7 +516,7 @@ Manager response: ${visit.manager_response ?? "None submitted yet"}`;
 
       await updateVisit.mutateAsync({ id: visit.id, data: { aria_summary: summary } });
     } catch {
-      setAriaError("ARIA analysis failed — please try again");
+      setAriaError("Cara analysis failed — please try again");
     } finally {
       setAriaBusy(null);
     }
@@ -702,7 +702,7 @@ Manager response: ${visit.manager_response ?? "None submitted yet"}`;
             filteredVisits.map((visit) => (
               <div key={visit.id}>
                 <VisitCard visit={visit} onRespondClick={setRespondingTo} />
-                {/* ARIA analysis button for visits with findings but no aria_summary */}
+                {/* Cara analysis button for visits with findings but no aria_summary */}
                 {!visit.aria_summary && (visit.findings?.length ?? 0) > 0 && (
                   <div className="mt-1.5 flex justify-end">
                     <button
@@ -713,12 +713,12 @@ Manager response: ${visit.manager_response ?? "None submitted yet"}`;
                       {ariaBusy === visit.id ? (
                         <>
                           <Sparkles className="h-3.5 w-3.5 animate-spin" />
-                          ARIA analysing…
+                          Cara analysing…
                         </>
                       ) : (
                         <>
                           <Sparkles className="h-3.5 w-3.5" />
-                          Generate ARIA analysis
+                          Generate Cara analysis
                         </>
                       )}
                     </button>

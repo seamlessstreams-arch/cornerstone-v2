@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// TESTS — ARIA MANAGEMENT OVERSIGHT ENGINE
+// TESTS — Cara MANAGEMENT OVERSIGHT ENGINE
 //
 // Pure deterministic tests for generateManagementOversight().
 // Covers quality scoring, risk detection, child voice, plan links,
@@ -529,9 +529,9 @@ describe("oversightDraft (via generateManagementOversight)", () => {
     expect(result.oversightDraft).toContain("Alex");
   });
 
-  it("includes Aria quality score", () => {
+  it("includes Cara quality score", () => {
     const result = generateManagementOversight(baseInput());
-    expect(result.oversightDraft).toContain("Aria quality score:");
+    expect(result.oversightDraft).toContain("Cara quality score:");
   });
 
   it("mentions AI-supported draft disclaimer", () => {
@@ -609,7 +609,7 @@ describe("strengths (via generateManagementOversight)", () => {
   });
 });
 
-// ── Aria Confidence ───────────────────────────────────────────────────────
+// ── Cara Confidence ───────────────────────────────────────────────────────
 
 describe("ariaConfidence (via generateManagementOversight)", () => {
   it("returns a fixed confidence value", () => {
@@ -680,7 +680,7 @@ describe("generateManagementOversight — integration", () => {
     }
   });
 
-  it("always includes Aria disclaimer", () => {
+  it("always includes Cara disclaimer", () => {
     const result = generateManagementOversight(sparseInput());
     expect(result.oversightDraft).toContain("AI-supported draft");
     expect(result.oversightDraft).toContain("reviewed and approved by a manager");

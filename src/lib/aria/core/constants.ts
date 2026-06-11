@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Aria Intelligence — Constants & Configuration
+// Cara Intelligence — Constants & Configuration
 // ══════════════════════════════════════════════════════════════════════════════
 
 import type {

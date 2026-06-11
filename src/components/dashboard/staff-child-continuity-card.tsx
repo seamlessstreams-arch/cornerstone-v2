@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF–CHILD CONTINUITY OF CARE CARD
+// CARA — STAFF–CHILD CONTINUITY OF CARE CARD
 // Relational continuity per child: is an active key worker assigned and actually
 // delivering the sessions? Powered by the Staff–Child Continuity Engine
 // (Reg 11 — positive relationships).
@@ -135,12 +135,12 @@ export function StaffChildContinuityCard() {
           </div>
         )}
 
-        {/* ── ARIA insights ────────────────────────────────────────────── */}
+        {/* ── Cara insights ────────────────────────────────────────────── */}
         {insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Relationship Continuity Intelligence
+              Cara Relationship Continuity Intelligence
             </p>
             {insights.slice(0, 2).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.positive)}>

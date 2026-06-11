@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — POCKET MONEY & SAVINGS SERVICE
+// CARA — POCKET MONEY & SAVINGS SERVICE
 // Manages children's pocket money, savings accounts, spending records,
 // and financial literacy tracking.
 // CHR 2015 Reg 37 (children's money — pocket money, savings, and

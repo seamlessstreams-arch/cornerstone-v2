@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PREMISES & SAFETY INTELLIGENCE API ROUTE
+// CARA — PREMISES & SAFETY INTELLIGENCE API ROUTE
 // GET /api/v1/premises-safety-intelligence
 // Returns building compliance, check completion, maintenance status, vehicle
-// fleet readiness, and ARIA premises insights.
+// fleet readiness, and Cara premises insights.
 // Reg 25, Reg 24, Schedule 5, SCCIF environmental safety.
 // ══════════════════════════════════════════════════════════════════════════════
 

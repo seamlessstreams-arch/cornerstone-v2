@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RI COMMAND CENTRE + LEARNING STUDIO HOOKS
+// CARA — RI COMMAND CENTRE + LEARNING STUDIO HOOKS
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";

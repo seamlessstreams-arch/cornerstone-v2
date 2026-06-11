@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DAILY LOG SUMMARY CARD
+// CARA — DAILY LOG SUMMARY CARD
 // Dashboard widget showing today's recording activity across all young people.
 // Highlights gaps in daily recording — every child must have entries each day.
 // Ofsted inspectors check for consistent, contemporaneous record-keeping.

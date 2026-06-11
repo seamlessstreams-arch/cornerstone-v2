@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD VOICE & PARTICIPATION TRACKING SERVICE
+// CARA — CHILD VOICE & PARTICIPATION TRACKING SERVICE
 // Tracks how children's voices are heard and influence decisions.
 // Participation in reviews, care planning, house meetings, complaints,
 // feedback loops, advocacy meetings, and regulatory visits.

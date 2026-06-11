@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME RECORDING QUALITY INTELLIGENCE API ROUTE
+// CARA — HOME RECORDING QUALITY INTELLIGENCE API ROUTE
 // GET /api/v1/home-recording-quality-intelligence
 // Synthesises care form completion, review workflows, approval rates,
 // and timeliness to assess recording quality.

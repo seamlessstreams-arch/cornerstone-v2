@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RETENTION & SUPPORT INDICATORS API
+// CARA — RETENTION & SUPPORT INDICATORS API
 // GET /api/v1/retention-risk
 //
 // Fans in everyday operational signals into a NON-CLINICAL per-staff support

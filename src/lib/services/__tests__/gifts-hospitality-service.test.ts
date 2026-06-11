@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — GIFTS & HOSPITALITY SERVICE TESTS
+// CARA — GIFTS & HOSPITALITY SERVICE TESTS
 // Pure-function tests for gift metrics, alert identification,
 // constant validation, and edge cases.
 // ══════════════════════════════════════════════════════════════════════════════

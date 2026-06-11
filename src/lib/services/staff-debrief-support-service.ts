@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF DEBRIEF SUPPORT SERVICE
+// CARA — STAFF DEBRIEF SUPPORT SERVICE
 // Tracks post-incident and routine debriefs for staff emotional
 // wellbeing, learning, and professional development.
 // CHR 2015 Reg 13 (leadership and management — staff support),

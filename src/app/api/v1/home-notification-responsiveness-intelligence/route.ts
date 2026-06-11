@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME NOTIFICATION RESPONSIVENESS INTELLIGENCE API ROUTE
+// CARA — HOME NOTIFICATION RESPONSIVENESS INTELLIGENCE API ROUTE
 // GET /api/v1/home-notification-responsiveness-intelligence
 // Synthesises system notifications to assess staff responsiveness to platform
 // alerts, care events, safeguarding notifications, and management oversight.

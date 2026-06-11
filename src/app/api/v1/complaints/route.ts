@@ -103,7 +103,7 @@ export async function POST(req: NextRequest) {
     );
   } catch { /* best-effort write-through; never block complaint creation */ }
 
-  // Fire-and-forget ARIA intelligence hook (golden thread + child voice detection)
+  // Fire-and-forget Cara intelligence hook (golden thread + child voice detection)
   runPostSaveIntelligence({
     homeId: record.home_id ?? "home_oak",
     childId: record.child_id ?? null,

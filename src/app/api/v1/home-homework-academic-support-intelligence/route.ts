@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME HOMEWORK & ACADEMIC SUPPORT INTELLIGENCE API ROUTE
+// CARA -- HOME HOMEWORK & ACADEMIC SUPPORT INTELLIGENCE API ROUTE
 // GET /api/v1/home-homework-academic-support-intelligence
 // Cross-domain composite: homeworkSupportRecords + studyEnvironmentRecords +
 // tutoringRecords + educationalResourceRecords + schoolLiaisonRecords

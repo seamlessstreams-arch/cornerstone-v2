@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — Action Centre (pure aggregation)
+// CARA — Action Centre (pure aggregation)
 //
 // A consolidated "what needs me right now" view tying together the live operational
 // signals the workforce engine produces: emergencies (Phase 7), comms awaiting

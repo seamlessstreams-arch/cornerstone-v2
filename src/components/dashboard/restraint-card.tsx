@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PHYSICAL INTERVENTION INTELLIGENCE CARD
+// CARA — PHYSICAL INTERVENTION INTELLIGENCE CARD
 // Dashboard widget for restraint incidents, compliance metrics, de-escalation,
-// debrief rates, injury tracking, and ARIA restraint reduction intelligence.
+// debrief rates, injury tracking, and Cara restraint reduction intelligence.
 // Powered by the Restraint Intelligence Engine — live data (Reg 20/35).
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -244,13 +244,13 @@ export function RestraintCard() {
           </div>
         )}
 
-        {/* ── ARIA Restraint Intelligence ──────────────────────────────── */}
+        {/* ── Cara Restraint Intelligence ──────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Behaviour Intelligence
+              Cara Behaviour Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

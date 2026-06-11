@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Whistleblowing & Professional Courage API Route
+// Cara — Whistleblowing & Professional Courage API Route
 //
 // GET  → returns Chamberlain House demo whistleblowing intelligence
 // POST → accepts custom data for any home

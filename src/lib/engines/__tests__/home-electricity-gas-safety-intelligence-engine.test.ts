@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ELECTRICITY & GAS SAFETY INTELLIGENCE ENGINE — TESTS
+// CARA — HOME ELECTRICITY & GAS SAFETY INTELLIGENCE ENGINE — TESTS
 // Reg 25: "The premises standard — electrical and gas safety."
 // ══════════════════════════════════════════════════════════════════════════════
 

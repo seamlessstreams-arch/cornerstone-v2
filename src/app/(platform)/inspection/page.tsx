@@ -61,7 +61,7 @@ const CLIMATE_LEVEL_BG: Record<string, string> = {
   critical: "bg-red-50 border-red-200",
 };
 
-// ── ARIA Narrative Generator ──────────────────────────────────────────────────
+// ── Cara Narrative Generator ──────────────────────────────────────────────────
 
 function NarrativeGenerator() {
   const [reportType, setReportType] = useState("Reg 44 Independent Visit Report");
@@ -165,13 +165,13 @@ function NarrativeGenerator() {
                 Reg 44/45 Narrative Generator
               </CardTitle>
               <p className="text-xs text-slate-500 mt-0.5">
-                ARIA generates a professional draft for regulatory reporting
+                Cara generates a professional draft for regulatory reporting
               </p>
             </div>
           </div>
           <Badge className="bg-violet-100 text-violet-700 border-violet-200 text-[10px] font-semibold">
             <Sparkles className="h-3 w-3 mr-1" />
-            ARIA
+            Cara
           </Badge>
         </div>
       </CardHeader>
@@ -229,7 +229,7 @@ function NarrativeGenerator() {
                 className="w-full bg-violet-600 hover:bg-violet-700 text-white shadow-sm"
               >
                 <Brain className="h-4 w-4 mr-2" />
-                Generate with ARIA
+                Generate with Cara
               </Button>
             )}
           </div>
@@ -244,7 +244,7 @@ function NarrativeGenerator() {
             value={additionalContext}
             onChange={(e) => setAdditionalContext(e.target.value)}
             disabled={isGenerating}
-            placeholder="Add any specific themes, events, or context you want ARIA to include in the narrative..."
+            placeholder="Add any specific themes, events, or context you want Cara to include in the narrative..."
             rows={3}
             className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 placeholder:text-slate-400 shadow-sm focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-100 disabled:opacity-50 resize-none"
           />
@@ -868,7 +868,7 @@ export default function InspectionPage() {
 
         {activeTab === "readiness" && (
         <div className="space-y-6">
-        {/* ── ARIA Narrative Generator (hero) ─────────────────────────── */}
+        {/* ── Cara Narrative Generator (hero) ─────────────────────────── */}
         <NarrativeGenerator />
 
         {/* ── Current grade & next inspection cards ───────────────────── */}

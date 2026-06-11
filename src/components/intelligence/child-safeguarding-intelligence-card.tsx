@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD SAFEGUARDING INTELLIGENCE CARD
+// CARA — CHILD SAFEGUARDING INTELLIGENCE CARD
 // Per-child safeguarding profile: risk domains, incidents, missing episodes,
-// restraints, contextual safeguarding, child voice, and ARIA insights.
+// restraints, contextual safeguarding, child voice, and Cara insights.
 // CHR 2015 Reg 12, Reg 13, Reg 34, Reg 35.
 // SCCIF: "How well children are helped and protected."
 // ══════════════════════════════════════════════════════════════════════════════
@@ -303,12 +303,12 @@ export function ChildSafeguardingIntelligenceCard({ childId }: { childId: string
           </div>
         )}
 
-        {/* ARIA Safeguarding Insights */}
+        {/* Cara Safeguarding Insights */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Safeguarding Intelligence
+              Cara Safeguarding Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

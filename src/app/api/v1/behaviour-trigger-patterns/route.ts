@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — BEHAVIOUR TRIGGER & ESCALATION PATTERN API ROUTE
+// CARA — BEHAVIOUR TRIGGER & ESCALATION PATTERN API ROUTE
 // GET /api/v1/behaviour-trigger-patterns
 //
 // Per-child behaviour pattern analysis: recurring triggers, intensity trajectory,

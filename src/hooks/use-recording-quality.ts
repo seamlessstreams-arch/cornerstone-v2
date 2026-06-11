@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RECORDING QUALITY HOOK
+// CARA — RECORDING QUALITY HOOK
 // React Query wrapper for /api/v1/recording-quality
 // ══════════════════════════════════════════════════════════════════════════════
 

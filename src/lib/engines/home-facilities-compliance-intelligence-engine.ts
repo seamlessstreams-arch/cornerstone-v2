@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME FACILITIES COMPLIANCE INTELLIGENCE ENGINE
+// CARA — HOME FACILITIES COMPLIANCE INTELLIGENCE ENGINE
 // Pure deterministic engine: fire equipment checks, water hygiene, window
 // restrictor compliance, and pest control management.
 // CHR 2015 Reg 25: Premises. Health & Safety at Work Act. Fire Safety Order 2005.

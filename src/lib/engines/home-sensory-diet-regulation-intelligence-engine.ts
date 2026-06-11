@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SENSORY DIET & REGULATION INTELLIGENCE ENGINE
+// CARA — HOME SENSORY DIET & REGULATION INTELLIGENCE ENGINE
 // Monitors sensory diet plan coverage, regulation strategy effectiveness,
 // sensory break scheduling, occupational therapy integration, and child
 // self-regulation progress across the home.

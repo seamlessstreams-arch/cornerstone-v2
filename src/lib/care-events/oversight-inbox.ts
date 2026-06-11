@@ -104,7 +104,7 @@ export function loadOversightInbox(homeId: string): OversightSummary {
       priority: "critical",
       is_safeguarding_sensitive: true,
       created_at: t.created_at,
-      link_href: `/aria-studio/reg40-triage`,
+      link_href: `/cara-studio/reg40-triage`,
     });
   }
 
@@ -140,7 +140,7 @@ export function loadOversightInbox(homeId: string): OversightSummary {
       priority: c.severity === "critical" || c.severity === "high" ? "high" : "medium",
       is_safeguarding_sensitive: c.theme === "safeguarding",
       created_at: c.generated_at ?? new Date().toISOString(),
-      link_href: `/aria-studio/reg45-evidence`,
+      link_href: `/cara-studio/reg45-evidence`,
     });
   }
 

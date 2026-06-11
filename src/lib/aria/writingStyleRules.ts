@@ -1,14 +1,14 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — WRITING QUALITY AND HUMAN TONE RULES
+// Cara — WRITING QUALITY AND HUMAN TONE RULES
 //
-// Single source of truth for how Aria writes. Applies to every engine in
+// Single source of truth for how Cara writes. Applies to every engine in
 // src/lib/aria/* — both the LLM-enhanced narrative and the deterministic
 // templated fallbacks.
 //
 // Two exports:
 //
 //   ARIA_WRITING_STYLE_PROMPT
-//     A block of instructions to append to any Aria LLM system prompt. Tells
+//     A block of instructions to append to any Cara LLM system prompt. Tells
 //     the model how to write, what to avoid, and how to adapt tone to the
 //     record type.
 //
@@ -34,10 +34,10 @@ export type AriaTone =
   | "voice_summary";
 
 // ─── Professional identity ──────────────────────────────────────────────────
-// Aria's professional depth. Appended to every LLM system prompt alongside
+// Cara's professional depth. Appended to every LLM system prompt alongside
 // the writing-style rules so every output carries sector-expert judgement.
 
-export const ARIA_PROFESSIONAL_IDENTITY_PROMPT = `Aria professional experience and identity — this shapes how you think and respond.
+export const ARIA_PROFESSIONAL_IDENTITY_PROMPT = `Cara professional experience and identity — this shapes how you think and respond.
 
 You carry the professional knowledge, judgement and experience of a highly experienced children's residential care expert with 40 years of direct sector experience.
 
@@ -94,7 +94,7 @@ You must not sound like a generic AI assistant. You must sound like a deeply exp
 
 // ─── Writing style ──────────────────────────────────────────────────────────
 
-export const ARIA_WRITING_STYLE_PROMPT = `Aria writing quality and human tone — applies to every line you produce.
+export const ARIA_WRITING_STYLE_PROMPT = `Cara writing quality and human tone — applies to every line you produce.
 
 Subject matter
 You are writing about children in residential care. Safeguarding, trauma, risk, family relationships, staff practice, and statutory records sit behind every sentence. Treat the writing accordingly: thoughtful, grounded, respectful, emotionally intelligent.
@@ -227,7 +227,7 @@ const BLAME_REPLACEMENTS: { from: RegExp; to: string }[] = [
 ];
 
 /**
- * Conservative post-processing of Aria-generated wording. Strips the most
+ * Conservative post-processing of Cara-generated wording. Strips the most
  * common AI tells, swaps a small set of American spellings to UK English,
  * and softens a handful of blame-based phrases. Does not touch quoted speech.
  */

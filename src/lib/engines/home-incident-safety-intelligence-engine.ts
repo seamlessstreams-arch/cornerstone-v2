@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME INCIDENT SAFETY INTELLIGENCE ENGINE
+// CARA — HOME INCIDENT SAFETY INTELLIGENCE ENGINE
 // Home-level: synthesises incidents, restraints, notifiable events, and
 // handover continuity to produce an overall safety intelligence score.
 // CHR 2015 Reg 12, 13, 35, 40. SCCIF: "How well children are helped and

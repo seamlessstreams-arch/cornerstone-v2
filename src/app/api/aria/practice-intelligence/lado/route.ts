@@ -2,7 +2,7 @@
 // POST /api/aria/practice-intelligence/lado
 //
 // Recognises possible concerns about an adult who works with or cares for
-// children, and advises a manager/RI review + LADO consideration. ARIA NEVER
+// children, and advises a manager/RI review + LADO consideration. Cara NEVER
 // decides the outcome and never starts a premature internal investigation.
 // Role-gated via aria.analyse_risk. Persists a high-severity practice flag.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -82,7 +82,7 @@ export async function POST(req: Request) {
       requiresManagerReview: true,
       requiresRiReview: true,
       guidance:
-        "Put the child's welfare first. Consider a LADO consultation before any internal investigation, record the rationale, and notify the registered manager / responsible individual. ARIA does not decide the outcome.",
+        "Put the child's welfare first. Consider a LADO consultation before any internal investigation, record the rationale, and notify the registered manager / responsible individual. Cara does not decide the outcome.",
       meta: { engine: "aria-practice-lado", version: "1.0.0", ranBy: userId, role: ariaRole },
     },
   });

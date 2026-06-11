@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Whistleblowing & Professional Courage Engine Tests
+// Cara — Whistleblowing & Professional Courage Engine Tests
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";

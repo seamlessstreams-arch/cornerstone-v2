@@ -405,7 +405,7 @@ export default function StaffDashboardPage() {
             className={cn(showAria && "bg-slate-900 text-white")}
           >
             <Sparkles className="mr-1.5 h-4 w-4" />
-            Aria
+            Cara
           </Button>
           <AriaStudioQuickActionButton context={{ record_type: "management_oversight", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
@@ -953,7 +953,7 @@ export default function StaffDashboardPage() {
           </div>
         </div>
 
-        {/* ── Aria Panel ────────────────────────────────────────────────────── */}
+        {/* ── Cara Panel ────────────────────────────────────────────────────── */}
         {showAria && (
           <AriaPanel
             pageContext="Staff Dashboard — personal task list, due recordings, shift handovers, training compliance, supervision schedule, welfare check duties, daily activity log"

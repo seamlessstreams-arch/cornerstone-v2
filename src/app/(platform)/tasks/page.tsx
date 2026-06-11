@@ -75,7 +75,7 @@ export default function TasksPage() {
   const [filterPerson, setFilterPerson] = useState<string | null>(null);
   const [ariaLinkContext, setAriaLinkContext] = useState<{ childId: string; linkedId: string; sourceType: string } | null>(null);
 
-  // Handle ARIA "Create Follow-Up Task" quick-action — pre-filter by child and show prompt
+  // Handle Cara "Create Follow-Up Task" quick-action — pre-filter by child and show prompt
   useEffect(() => {
     const p = new URLSearchParams(window.location.search);
     const isNew = p.get("new") === "1";
@@ -224,7 +224,7 @@ export default function TasksPage() {
           </div>
         )}
 
-        {/* ── ARIA follow-up task prompt ────────────────────────────────────── */}
+        {/* ── Cara follow-up task prompt ────────────────────────────────────── */}
         {ariaLinkContext && (
           <div className="flex items-start gap-3 rounded-2xl border border-violet-200 bg-violet-50 p-4">
             <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-violet-600">

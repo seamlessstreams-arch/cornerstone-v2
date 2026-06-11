@@ -973,7 +973,7 @@ function HazardsTab({ data }: { data: BuildingsData }) {
         </div>
       )}
 
-      {/* Aria for contractor comms */}
+      {/* Cara for contractor comms */}
       <AriaPanel
         mode="write"
         pageContext="Buildings & Premises — property maintenance, hazards, COSHH, asbestos, pest control, fire safety, Reg 44 evidence, health and safety compliance"

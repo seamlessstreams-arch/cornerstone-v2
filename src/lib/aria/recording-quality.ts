@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — RECORDING QUALITY SCORER
+// Cara — RECORDING QUALITY SCORER
 //
 // Analyses daily log entries, incident records, and key work session records
 // for quality indicators. Gives staff and managers feedback on recording

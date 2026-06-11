@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — YOUNG PERSON ADMISSION SERVICE TESTS
+// CARA — YOUNG PERSON ADMISSION SERVICE TESTS
 // Pure-function unit tests for phase transitions, progress computation,
-// checklist logic, matching scores, and ARIA matching intelligence.
+// checklist logic, matching scores, and Cara matching intelligence.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";
@@ -339,7 +339,7 @@ describe("generateAriaMatchingFactors", () => {
     });
     expect(typeof result.summary).toBe("string");
     expect(result.summary.length).toBeGreaterThan(0);
-    expect(result.summary).toContain("ARIA matching analysis");
+    expect(result.summary).toContain("Cara matching analysis");
   });
 });
 

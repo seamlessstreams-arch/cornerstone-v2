@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — Reg 40 Triage Queue  (Milestone 15)
+// Cara STUDIO — Reg 40 Triage Queue  (Milestone 15)
 //
 // Regulation 40 of the Children's Homes (England) Regulations 2015 sets
 // out the events the registered person MUST notify Ofsted about.
@@ -8,7 +8,7 @@
 // drafts a suggested category + reasoning so an authorised human can
 // decide: notify, dismiss (with reason) or escalate.
 //
-// Spec invariant: ARIA drafts the triage suggestion. Humans decide.
+// Spec invariant: Cara drafts the triage suggestion. Humans decide.
 // Notification to Ofsted itself is NEVER auto-sent.
 // ══════════════════════════════════════════════════════════════════════════════
 

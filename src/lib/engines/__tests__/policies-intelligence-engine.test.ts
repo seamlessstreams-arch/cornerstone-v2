@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — POLICIES REGISTER INTELLIGENCE ENGINE TESTS
+// CARA — POLICIES REGISTER INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite for policy register coverage analysis.
 // Covers Reg 38 policy review compliance, Reg 13 management oversight,
-// CHR 2015 documented policy requirements, and ARIA intelligence.
+// CHR 2015 documented policy requirements, and Cara intelligence.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";

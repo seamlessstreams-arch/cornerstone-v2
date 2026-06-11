@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME IMMUNISATION & VACCINATION COMPLIANCE INTELLIGENCE API
+// CARA -- HOME IMMUNISATION & VACCINATION COMPLIANCE INTELLIGENCE API
 // GET /api/v1/home-immunisation-vaccination-compliance-intelligence
 // Cross-domain composite: vaccinationScheduleRecords + catchUpProgrammeRecords +
 // consentManagementRecords + gpLiaisonRecords + childUnderstandingRecords

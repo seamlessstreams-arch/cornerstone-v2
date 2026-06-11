@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — REGULATORY REPORTING INTELLIGENCE CARD
+// CARA — REGULATORY REPORTING INTELLIGENCE CARD
 // Dashboard card powered by the Regulatory Reporting Intelligence Engine.
 // Reg 44 (independent person visits), Reg 45 (quality of care review),
 // Reg 40 (notifications to Ofsted), SCCIF Leadership & Management.
@@ -245,13 +245,13 @@ export function RegulatoryReportingCard() {
           </div>
         )}
 
-        {/* ── ARIA Regulatory Intelligence ────────────────────────────── */}
+        {/* ── Cara Regulatory Intelligence ────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Regulatory Intelligence
+              Cara Regulatory Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

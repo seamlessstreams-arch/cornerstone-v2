@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STATEMENT OF PURPOSE SERVICE
+// CARA — STATEMENT OF PURPOSE SERVICE
 // Manages the Statement of Purpose document, its reviews, amendments, and
 // distribution under CHR 2015 Reg 16 (statement of purpose), Reg 28 (review
 // and revision), Reg 31 (notification to HMCI), Schedule 1 (content

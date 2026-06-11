@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME LEAVE & ABSENCE INTELLIGENCE ENGINE
+// CARA — HOME LEAVE & ABSENCE INTELLIGENCE ENGINE
 // Workforce availability: leave patterns, sickness, approval governance.
 // CHR 2015 Reg 33. SCCIF: "Staffing arrangements — availability and adequacy."
 // ══════════════════════════════════════════════════════════════════════════════

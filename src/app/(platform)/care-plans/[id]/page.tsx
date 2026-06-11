@@ -1,8 +1,8 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CARE PLAN DETAIL
-// Single care plan: domain overview, goals, evidence, ARIA analysis.
+// CARA — CARE PLAN DETAIL
+// Single care plan: domain overview, goals, evidence, Cara analysis.
 // Care Planning, Placement and Case Review (England) Regulations 2010.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -376,7 +376,7 @@ export default function CarePlanDetailPage({ params }: { params: Promise<{ id: s
       const goalSummary = plan.goals
         .map((g) => `${g.title} (${g.domain.replace(/_/g, " ")}): ${g.status.replace(/_/g, " ")}`)
         .join("; ");
-      const res = await api.post<{ data: { response?: string } }>("/aria", {
+      const res = await api.post<{ data: { response?: string } }>("/cara", {
         mode: "care_plan_overview",
         style: "clinical_summary",
         source_content: `Care plan for ${ypName}. Legal status: ${plan.legal_status}. Version ${plan.version}. Goals: ${goalSummary}. Strengths: ${plan.strengths_summary ?? "not recorded"}. Concerns: ${plan.concerns_summary ?? "not recorded"}.`,
@@ -446,7 +446,7 @@ export default function CarePlanDetailPage({ params }: { params: Promise<{ id: s
             disabled={ariaLoading}
           >
             <Sparkles className="h-3.5 w-3.5" />
-            {ariaLoading ? "Analysing…" : "ARIA Overview"}
+            {ariaLoading ? "Analysing…" : "Cara Overview"}
           </Button>
         </div>
       }
@@ -457,18 +457,18 @@ export default function CarePlanDetailPage({ params }: { params: Promise<{ id: s
           title="Care plan goals & outcomes"
           description="Track progress across all 8 care domains. Goals should be specific, measurable, and reviewed at every LAC review. Evidence from daily logs and key work sessions is linked automatically."
           evidenceTip="Inspectors look for SMART goals with clear evidence of progress. Link daily observations to specific goals to build a compelling evidence trail."
-          ariaTip="ARIA can analyse daily logs and incident data to suggest which goals need attention and identify unrecognised progress."
+          ariaTip="Cara can analyse daily logs and incident data to suggest which goals need attention and identify unrecognised progress."
           regulationRef="Care Planning, Placement and Case Review Regulations 2010"
           variant="aria"
         />
 
-        {/* ── ARIA Overview (when generated) ── */}
+        {/* ── Cara Overview (when generated) ── */}
         {ariaOverview && (
           <div className="rounded-2xl border border-[var(--cs-aria-gold-soft)] bg-gradient-to-r from-[var(--cs-aria-gold-bg)] to-[var(--cs-aria-gold-bg)]/30 p-5 space-y-2">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Sparkles className="h-4 w-4 text-[var(--cs-aria-gold)]" />
-                <p className="text-sm font-semibold text-[var(--cs-navy)]">ARIA Care Plan Overview</p>
+                <p className="text-sm font-semibold text-[var(--cs-navy)]">Cara Care Plan Overview</p>
               </div>
               <button onClick={() => setAriaOverview(null)} className="text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)]">
                 <X className="h-4 w-4" />

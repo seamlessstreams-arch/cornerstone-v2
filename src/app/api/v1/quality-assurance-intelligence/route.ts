@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — QUALITY ASSURANCE INTELLIGENCE API ROUTE
+// CARA — QUALITY ASSURANCE INTELLIGENCE API ROUTE
 // GET /api/v1/quality-assurance-intelligence
 // Returns audit quality analysis, area ratings, overdue actions, alerts,
-// and ARIA quality assurance insights.
+// and Cara quality assurance insights.
 // Reg 45 (quality of care review), SCCIF Leadership & Management.
 // ══════════════════════════════════════════════════════════════════════════════
 

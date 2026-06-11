@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME CLOSURE PLANNING SERVICE
+// CARA — HOME CLOSURE PLANNING SERVICE
 // Manages Children's Home Closure Planning — planned and emergency closure
 // procedures, child transfer arrangements, staff redeployment planning,
 // regulatory notifications, and stakeholder communications required when

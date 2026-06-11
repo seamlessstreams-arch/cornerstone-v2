@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ARIA INTELLIGENCE DETECTION TESTS
+// CARA — Cara INTELLIGENCE DETECTION TESTS
 // Pure-function unit tests for all 8 detection engines.
 // ══════════════════════════════════════════════════════════════════════════════
 

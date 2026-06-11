@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LANGUAGE & COMMUNICATION SERVICE
+// CARA — LANGUAGE & COMMUNICATION SERVICE
 // Tracks children's language, communication needs, EAL support,
 // speech and language therapy, communication passports, and
 // reasonable adjustments for effective participation.

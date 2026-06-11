@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF SUPPORT PLAN SERVICE
+// CARA — STAFF SUPPORT PLAN SERVICE
 // Manages supportive, pre-formal staff support plans — part of the
-// ARIA Staff Development, Support and Risk Intelligence layer.
+// Cara Staff Development, Support and Risk Intelligence layer.
 // CHR 2015 Reg 33 (employment of staff — support and development),
 // Reg 34 (fitness of workers), Reg 13 (leadership and management).
 //

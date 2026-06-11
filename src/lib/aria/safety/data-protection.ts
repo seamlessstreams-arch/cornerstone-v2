@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Aria Intelligence — Data Protection Service
+// Cara Intelligence — Data Protection Service
 //
 // Detects, classifies, and redacts sensitive information before routing
 // to AI providers. Ensures child-identifiable data is never sent to
@@ -368,7 +368,7 @@ const REDACTION_RULES: RedactionRule[] = [
   { pattern: "\\b\\d{1,2}[\\/-]\\d{1,2}[\\/-]\\d{2,4}\\b", category: "dob" },
   { pattern: "\\b\\d{4}-\\d{2}-\\d{2}\\b", category: "dob" },
   // Home/placement names — tree-name heuristic + the configured home (keep the
-  // last alternative in sync with HOME.name in seed-data.ts so ARIA redacts it).
+  // last alternative in sync with HOME.name in seed-data.ts so Cara redacts it).
   { pattern: "\\b(?:Oak|Elm|Willow|Beech|Cedar|Maple|Holly|Ivy|Rose|Birch|Chamberlain)\\s+(?:House|Home|Lodge|Cottage|Villa|Court)\\b", category: "home_name" },
   // School names (requires capitalised proper noun + keyword, not just "at school")
   { pattern: "\\b[A-Z][a-z]{2,}\\s+(?:Academy|College|Primary|Secondary|High School|Grammar School)\\b", category: "school_name" },

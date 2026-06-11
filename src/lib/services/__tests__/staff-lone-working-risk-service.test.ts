@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF LONE WORKING RISK SERVICE TESTS
+// CARA — STAFF LONE WORKING RISK SERVICE TESTS
 // Pure-function unit tests for lone working risk assessment metrics, alert
-// identification, and ARIA insight generation.
+// identification, and Cara insight generation.
 //
 // Health and Safety at Work Act 1974 — employer duty to protect lone workers.
 // Management of Health and Safety at Work Regulations 1999 — risk assessment

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME TASK ACTION COMPLETION INTELLIGENCE API ROUTE
+// CARA — HOME TASK ACTION COMPLETION INTELLIGENCE API ROUTE
 // GET /api/v1/home-task-action-completion-intelligence
 // Synthesises tasks, incidents, and notifications to assess action completion
 // rates, overdue tasks, priority management, incident-linked follow-through,

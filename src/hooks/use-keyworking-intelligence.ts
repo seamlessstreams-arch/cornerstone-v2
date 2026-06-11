@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — KEYWORKING INTELLIGENCE HOOK
+// CARA — KEYWORKING INTELLIGENCE HOOK
 // React Query wrapper for /api/v1/keyworking-intelligence
 // ══════════════════════════════════════════════════════════════════════════════
 

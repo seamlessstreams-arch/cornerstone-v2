@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — COMMAND PALETTE (Cmd+K)
+// CARA — COMMAND PALETTE (Cmd+K)
 // Global search across children, staff, pages, and recent actions.
 // Opens with Cmd+K / Ctrl+K. Navigate with arrow keys, select with Enter.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -103,7 +103,7 @@ function buildItems(): CommandItem[] {
     { id: "action_handover", label: "View handover", href: "/handover", icon: ArrowRight, description: "Review shift handover notes" },
     { id: "action_medication", label: "Administer medication", href: "/medication", icon: Pill, description: "Record medication administration" },
     { id: "action_supervision", label: "Schedule supervision", href: "/supervision", icon: Users, description: "Book a staff supervision session" },
-    { id: "action_aria", label: "Open ARIA Intelligence", href: "/intelligence", icon: Sparkles, description: "AI-powered care insights" },
+    { id: "action_aria", label: "Open Cara Intelligence", href: "/intelligence", icon: Sparkles, description: "AI-powered care insights" },
   ];
   actions.forEach((a) => items.push({ ...a, group: "actions" }));
 

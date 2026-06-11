@@ -1,8 +1,8 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF PROFILE PAGE
-// Full development profile: training, supervision, tasks, ARIA learning summary
+// CARA — STAFF PROFILE PAGE
+// Full development profile: training, supervision, tasks, Cara learning summary
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState, use } from "react";
@@ -153,7 +153,7 @@ export default function StaffProfilePage({ params }: { params: Promise<{ id: str
     { id: "documents",   label: "Documents",   count: linkedDocs.length || undefined },
   ];
 
-  // Aria context for development summary
+  // Cara context for development summary
   const ariaContext = [
     `Staff: ${staff.full_name}, ${staff.job_title}`,
     `Start date: ${formatDate(staff.start_date)}`,
@@ -194,14 +194,14 @@ export default function StaffProfilePage({ params }: { params: Promise<{ id: str
             onClick={() => setShowAria((p) => !p)}
           >
             <Sparkles className="h-3.5 w-3.5" />
-            {showAria ? "Close ARIA" : "ARIA Summary"}
+            {showAria ? "Close Cara" : "Cara Summary"}
           </Button>
         </div>
       }
     >
       <div id="staff-detail-content" className="space-y-5 animate-fade-in">
 
-        {/* ARIA Development Summary Panel */}
+        {/* Cara Development Summary Panel */}
         {showAria && (
           <>
             <AriaPanel
@@ -649,16 +649,16 @@ export default function StaffProfilePage({ params }: { params: Promise<{ id: str
               </div>
             )}
 
-            {/* ARIA development narrative */}
+            {/* Cara development narrative */}
             <Card>
               <CardHeader className="pb-2">
                 <CardTitle className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider flex items-center gap-1.5">
-                  <TrendingUp className="h-3.5 w-3.5" />ARIA Development Plan
+                  <TrendingUp className="h-3.5 w-3.5" />Cara Development Plan
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-xs text-[var(--cs-text-muted)] mb-3">
-                  ARIA can analyse this staff member&apos;s training record, supervision history and identified needs to generate a personalised development plan narrative.
+                  Cara can analyse this staff member&apos;s training record, supervision history and identified needs to generate a personalised development plan narrative.
                 </p>
                 <Button
                   size="sm"
@@ -667,7 +667,7 @@ export default function StaffProfilePage({ params }: { params: Promise<{ id: str
                   onClick={() => { setShowAria(true); setTab("overview"); window.scrollTo({ top: 0, behavior: "smooth" }); }}
                 >
                   <Sparkles className="h-3.5 w-3.5 text-[var(--cs-aria-gold)]" />
-                  Generate ARIA Development Summary
+                  Generate Cara Development Summary
                 </Button>
               </CardContent>
             </Card>
@@ -941,7 +941,7 @@ export default function StaffProfilePage({ params }: { params: Promise<{ id: str
                 </div>
                 <p className="text-sm font-semibold text-[var(--cs-text-secondary)] mb-1">No documents linked</p>
                 <p className="text-xs text-[var(--cs-text-muted)] max-w-xs mx-auto mb-4">
-                  Upload DBS certificates, contracts, qualifications, right-to-work documents — ARIA will classify and extract intelligence.
+                  Upload DBS certificates, contracts, qualifications, right-to-work documents — Cara will classify and extract intelligence.
                 </p>
                 <SmartUploadButton
                   variant="button"

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILDREN'S FEEDBACK INTELLIGENCE CARD
+// CARA — CHILDREN'S FEEDBACK INTELLIGENCE CARD
 // Dashboard card for feedback, satisfaction, and response tracking.
 // Powered by the Contact Engagement Intelligence Engine — live data.
 // CHR 2015 Reg 7, Reg 10, Reg 45.
@@ -175,13 +175,13 @@ export function ChildrensFeedbackCard() {
           </div>
         )}
 
-        {/* ── ARIA Feedback Intelligence ──────────────────────────────── */}
+        {/* ── Cara Feedback Intelligence ──────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Feedback Intelligence
+              Cara Feedback Intelligence
             </p>
             {intel.insights.slice(0, 2).map((insight, i) => (
               <div

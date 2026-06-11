@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Nutrition & Hydration Monitoring Intelligence — Public API
+// Cara Nutrition & Hydration Monitoring Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

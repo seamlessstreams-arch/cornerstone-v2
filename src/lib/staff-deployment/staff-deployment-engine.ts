@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Staff Deployment Intelligence Engine
+// Cara Staff Deployment Intelligence Engine
 //
 // Deterministic engine for analysing how effectively a children's home deploys
 // its staff to meet children's needs. Covers staffing adequacy, agency

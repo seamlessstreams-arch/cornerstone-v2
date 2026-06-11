@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA ORCHESTRATOR — MODEL REGISTRY
+// Cara ORCHESTRATOR — MODEL REGISTRY
 //
 // Defines model profiles and maps task types / agents to the appropriate model.
 // Each profile balances cost, latency, quality, and safety for its intended
@@ -17,7 +17,7 @@ import type { ModelProfile, ModelProfileId, TaskType } from "./types";
 export const MODEL_PROFILES: Record<ModelProfileId, ModelProfile> = {
   "fast-cheap": {
     id: "fast-cheap",
-    modelId: process.env.ARIA_MODEL_FAST ?? "claude-haiku-4-20250514",
+    modelId: (process.env.CARA_MODEL_FAST ?? process.env.ARIA_MODEL_FAST) ?? "claude-haiku-4-20250514",
     maxTokens: 2048,
     temperature: 0.2,
     estimatedCostPer1kTokens: 0.00025,
@@ -26,7 +26,7 @@ export const MODEL_PROFILES: Record<ModelProfileId, ModelProfile> = {
   },
   balanced: {
     id: "balanced",
-    modelId: process.env.ARIA_MODEL ?? "claude-sonnet-4-20250514",
+    modelId: (process.env.CARA_MODEL ?? process.env.ARIA_MODEL) ?? "claude-sonnet-4-20250514",
     maxTokens: 4096,
     temperature: 0.15,
     estimatedCostPer1kTokens: 0.003,
@@ -35,7 +35,7 @@ export const MODEL_PROFILES: Record<ModelProfileId, ModelProfile> = {
   },
   "best-reasoning": {
     id: "best-reasoning",
-    modelId: process.env.ARIA_MODEL_REASONING ?? "claude-sonnet-4-20250514",
+    modelId: (process.env.CARA_MODEL_REASONING ?? process.env.ARIA_MODEL_REASONING) ?? "claude-sonnet-4-20250514",
     maxTokens: 8192,
     temperature: 0.1,
     estimatedCostPer1kTokens: 0.003,
@@ -44,7 +44,7 @@ export const MODEL_PROFILES: Record<ModelProfileId, ModelProfile> = {
   },
   "highest-safety": {
     id: "highest-safety",
-    modelId: process.env.ARIA_MODEL_SAFETY ?? "claude-sonnet-4-20250514",
+    modelId: (process.env.CARA_MODEL_SAFETY ?? process.env.ARIA_MODEL_SAFETY) ?? "claude-sonnet-4-20250514",
     maxTokens: 4096,
     temperature: 0.05,
     estimatedCostPer1kTokens: 0.003,

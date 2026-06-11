@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILDREN'S ABSENCE INTELLIGENCE CARD
+// CARA — CHILDREN'S ABSENCE INTELLIGENCE CARD
 // Live data from useEducationIntelligence() — attendance, overview, alerts.
 // CHR 2015 Reg 8. SCCIF: Overall Experiences — Education.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -122,13 +122,13 @@ export function ChildrensAbsenceCard() {
           </div>
         )}
 
-        {/* ── ARIA insights ───────────────────────────────────────────── */}
+        {/* ── Cara insights ───────────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Absence Intelligence
+              Cara Absence Intelligence
             </p>
             {intel.insights.slice(0, 2).map((insight, i) => (
               <div

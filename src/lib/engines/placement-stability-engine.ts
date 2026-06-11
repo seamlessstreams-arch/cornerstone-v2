@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PLACEMENT STABILITY INTELLIGENCE ENGINE
+// CARA — PLACEMENT STABILITY INTELLIGENCE ENGINE
 //
 // Pure deterministic engine that aggregates child data, daily logs, incidents,
 // missing episodes, keyworking sessions, and outcome targets to produce:
@@ -8,7 +8,7 @@
 // - Disruption risk indicators per child
 // - Wellbeing trajectory analysis (mood scores over time)
 // - Protective factors and risk factors
-// - Auto-generated ARIA placement intelligence insights (deterministic)
+// - Auto-generated Cara placement intelligence insights (deterministic)
 //
 // Key regulatory requirements:
 //   Reg 5  — Engaging children (welfare paramount)
@@ -520,7 +520,7 @@ export function computePlacementStability(input: PlacementStabilityInput): Place
   const sevOrder: Record<string, number> = { high: 0, medium: 1, low: 2 };
   disruptionIndicators.sort((a, b) => (sevOrder[a.severity] ?? 3) - (sevOrder[b.severity] ?? 3));
 
-  // ── ARIA Intelligence Insights ─────────────────────────────────────────
+  // ── Cara Intelligence Insights ─────────────────────────────────────────
   const insights: AriaInsight[] = [];
 
   if (currentChildren.length === 0) {

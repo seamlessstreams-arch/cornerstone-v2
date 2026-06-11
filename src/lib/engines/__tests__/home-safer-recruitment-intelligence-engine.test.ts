@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SAFER RECRUITMENT INTELLIGENCE ENGINE — TESTS
+// CARA — HOME SAFER RECRUITMENT INTELLIGENCE ENGINE — TESTS
 // ══════════════════════════════════════════════════════════════════════════════
 
 import {

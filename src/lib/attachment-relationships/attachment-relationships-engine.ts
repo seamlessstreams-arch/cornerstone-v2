@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Attachment & Relationships Intelligence Engine
+// Cara — Attachment & Relationships Intelligence Engine
 //
 // Pure deterministic engine — no AI, no external calls.
 // Maps to: CHR 2015 Reg 6 (quality of care standard), Reg 11 (positive

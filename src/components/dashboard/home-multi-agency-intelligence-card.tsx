@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME MULTI-AGENCY INTELLIGENCE CARD
+// CARA — HOME MULTI-AGENCY INTELLIGENCE CARD
 // Multi-agency meetings, professional attendance, IRO, police contacts.
 // Working Together 2023 / CHR 2015 Reg 5/22.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -192,12 +192,12 @@ export function HomeMultiAgencyIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Insights */}
+        {/* Cara Insights */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Partnership Intelligence
+              Cara Partnership Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

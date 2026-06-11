@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — EVIDENCE CONFIDENCE SERVICE
+// Cara STUDIO — EVIDENCE CONFIDENCE SERVICE
 // Scores evidence quality for transparency and trust.
 // ══════════════════════════════════════════════════════════════════════════════
 

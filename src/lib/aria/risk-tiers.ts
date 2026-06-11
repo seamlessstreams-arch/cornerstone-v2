@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — RISK TIER CLASSIFICATION SYSTEM
+// Cara — RISK TIER CLASSIFICATION SYSTEM
 // Classifies every agent action into a risk tier and derives the governance
 // controls that must be satisfied before the action output is committed.
 //

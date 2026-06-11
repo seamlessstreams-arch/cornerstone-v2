@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Aria Intelligence — Evidence Engine
+// Cara Intelligence — Evidence Engine
 //
-// Semantic search, embedding, and retrieval across all Cornerstone records.
+// Semantic search, embedding, and retrieval across all Cara records.
 // Uses Voyage AI for embeddings, Cohere for reranking.
 // Powers evidence packs, compliance matching, and filing cabinet search.
 // ══════════════════════════════════════════════════════════════════════════════

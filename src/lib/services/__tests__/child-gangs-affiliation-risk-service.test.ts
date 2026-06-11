@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD GANGS AFFILIATION RISK SERVICE TESTS
+// CARA — CHILD GANGS AFFILIATION RISK SERVICE TESTS
 // Pure-function unit tests for gang affiliation risk metrics computation,
-// alert identification, ARIA insights, and constant validation.
+// alert identification, Cara insights, and constant validation.
 // CHR 2015 Reg 12 (protection of children — safeguarding from exploitation),
 // Reg 34 (fitness of workers — recognising exploitation indicators).
 // Working Together to Safeguard Children 2023, Serious Violence Strategy.

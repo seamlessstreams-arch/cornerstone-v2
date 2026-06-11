@@ -102,7 +102,7 @@ describe("leading indicator with safeguarding overlap (the headline case)", () =
     expect(f.recommended_actions.some((a) => a.priority === "urgent")).toBe(true);
     expect(f.recommended_actions.every((a) => a.regulatory_link.length > 0)).toBe(true);
   });
-  it("raises a critical alert and a critical ARIA insight", () => {
+  it("raises a critical alert and a critical Cara insight", () => {
     expect(r.alerts.some((a) => a.severity === "critical")).toBe(true);
     expect(r.insights.some((i) => i.severity === "critical")).toBe(true);
   });

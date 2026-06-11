@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA INTELLIGENCE — POST-SAVE INTELLIGENCE HOOK
+// Cara INTELLIGENCE — POST-SAVE INTELLIGENCE HOOK
 //
 // Called after every major form submission (incident, daily log, key work,
 // missing episode, restraint, complaint, safeguarding concern, management

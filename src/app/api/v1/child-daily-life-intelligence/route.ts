@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD DAILY LIFE INTELLIGENCE API ROUTE
+// CARA — CHILD DAILY LIFE INTELLIGENCE API ROUTE
 // GET /api/v1/child-daily-life-intelligence?childId=yp_alex
 // Per-child engine analysing daily log entries: mood patterns, recording
 // frequency, entry type coverage, significant events.

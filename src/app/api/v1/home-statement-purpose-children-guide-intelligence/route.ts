@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME STATEMENT OF PURPOSE & CHILDREN'S GUIDE INTELLIGENCE API ROUTE
+// CARA — HOME STATEMENT OF PURPOSE & CHILDREN'S GUIDE INTELLIGENCE API ROUTE
 // GET /api/v1/home-statement-purpose-children-guide-intelligence
 // Cross-domain composite: statementRecords + guideRecords +
 // reviewCycleRecords + involvementRecords + submissionRecords

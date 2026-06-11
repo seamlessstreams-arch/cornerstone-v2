@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — BEHAVIOUR INTELLIGENCE HOOK
+// CARA — BEHAVIOUR INTELLIGENCE HOOK
 // React Query wrapper for /api/v1/behaviour-intelligence
 // ══════════════════════════════════════════════════════════════════════════════
 

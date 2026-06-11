@@ -8,7 +8,7 @@ import {
 } from "../prompts";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — PROMPTS TESTS
+// Cara STUDIO — PROMPTS TESTS
 // ══════════════════════════════════════════════════════════════════════════════
 
 describe("ARIA_STUDIO_SYSTEM_PROMPT", () => {

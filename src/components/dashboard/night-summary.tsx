@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — NIGHT SUMMARY WIDGET
+// CARA — NIGHT SUMMARY WIDGET
 // Dashboard card showing last night's welfare check results at a glance.
 // Critical for morning handover — staff arriving for day shift need to
 // immediately see how the night went.

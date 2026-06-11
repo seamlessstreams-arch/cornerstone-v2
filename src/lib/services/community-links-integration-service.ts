@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — COMMUNITY LINKS INTEGRATION SERVICE
+// CARA — COMMUNITY LINKS INTEGRATION SERVICE
 // Tracks children's engagement with community resources, clubs,
 // activities, and local services to support social integration,
 // identity development, and positive relationships.

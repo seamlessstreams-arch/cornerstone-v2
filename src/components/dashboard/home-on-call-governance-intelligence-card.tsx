@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ON-CALL GOVERNANCE INTELLIGENCE CARD
+// CARA — HOME ON-CALL GOVERNANCE INTELLIGENCE CARD
 // On-call coverage, response patterns, escalation governance, feedback loops.
 // CHR 2015 Reg 33(4)(b): "Systems for out-of-hours management support."
 // SCCIF: "The home has robust on-call and emergency arrangements."
@@ -222,12 +222,12 @@ export function HomeOnCallGovernanceIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA On-Call Intelligence */}
+        {/* Cara On-Call Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA On-Call Intelligence
+              Cara On-Call Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

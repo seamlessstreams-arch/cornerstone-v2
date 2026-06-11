@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SWITCHER (TopBar dropdown)
+// CARA — HOME SWITCHER (TopBar dropdown)
 //
 // Compact control that shows the current home name and lets the user
 // switch between all active homes in the organisation.

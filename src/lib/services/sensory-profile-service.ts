@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SENSORY PROFILE SERVICE
+// CARA — SENSORY PROFILE SERVICE
 // Manages sensory profiles and environmental adaptations for children,
 // tracking sensory needs, triggers, calming strategies, and environmental
 // modifications to support each child's wellbeing.

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// API: /api/aria/chat — Aria Conversational Chat Endpoint
+// API: /api/aria/chat — Cara Conversational Chat Endpoint
 //
 // POST /api/aria/chat
 // Body: { message: string, childId?: string, conversationId?: string,
@@ -7,9 +7,9 @@
 // Returns: { response: string, llmUsed: boolean, provider: string,
 //            model: string, conversationId: string }
 //
-// Provides a conversational interface to Aria with role-aware behaviour,
+// Provides a conversational interface to Cara with role-aware behaviour,
 // system profile enforcement, safety rules, and full audit logging.
-// All outputs are "Aria suggested draft" — advisory only.
+// All outputs are "Cara suggested draft" — advisory only.
 // ══════════════════════════════════════════════════════════════════════════════
 
 export const dynamic = "force-dynamic";
@@ -142,13 +142,13 @@ export async function POST(req: NextRequest) {
       : generateConversationId();
   const context = typeof body.context === "string" ? body.context : null;
 
-  // ── Check if Aria AI is enabled ───────────────────────────────────────
-  if (process.env.ARIA_AI_ENABLED === "false") {
+  // ── Check if Cara AI is enabled ───────────────────────────────────────
+  if ((process.env.CARA_AI_ENABLED ?? process.env.ARIA_AI_ENABLED) === "false") {
     return NextResponse.json(
       {
-        error: "Aria AI is currently disabled",
+        error: "Cara AI is currently disabled",
         detail:
-          "Set ARIA_AI_ENABLED to 'true' or remove the environment variable to enable Aria.",
+          "Set ARIA_AI_ENABLED to 'true' or remove the environment variable to enable Cara.",
       },
       { status: 503 },
     );
@@ -159,7 +159,7 @@ export async function POST(req: NextRequest) {
   if (!providerConfig.configured) {
     return NextResponse.json(
       {
-        error: "Aria is not configured",
+        error: "Cara is not configured",
         detail:
           providerConfig.reason ??
           "The AI provider has not been configured. Add the required API key to the server environment.",
@@ -262,7 +262,7 @@ export async function GET() {
   return NextResponse.json({
     endpoint: "/api/aria/chat",
     method: "POST",
-    description: "Aria conversational chat endpoint. Send { message } to get a response.",
+    description: "Cara conversational chat endpoint. Send { message } to get a response.",
     status: "ready",
   });
 }

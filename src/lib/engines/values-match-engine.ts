@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — VALUES-BASED MATCHING ENGINE (pure / deterministic / explainable)
+// CARA — VALUES-BASED MATCHING ENGINE (pure / deterministic / explainable)
 //
 // Compares a candidate against the home's Employer Values Profile and produces a
 // transparent, dimension-by-dimension match with strengths, concerns, interview

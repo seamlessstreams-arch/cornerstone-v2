@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME QUALITY ASSURANCE INTELLIGENCE API ROUTE
+// CARA — HOME QUALITY ASSURANCE INTELLIGENCE API ROUTE
 // GET /api/v1/home-quality-assurance-intelligence
 // Synthesises QA audit records to assess coverage, ratings, action plans,
 // and improvement culture.

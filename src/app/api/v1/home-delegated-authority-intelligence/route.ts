@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME DELEGATED AUTHORITY INTELLIGENCE API ROUTE
+// CARA — HOME DELEGATED AUTHORITY INTELLIGENCE API ROUTE
 // GET /api/v1/home-delegated-authority-intelligence
 // Delegated authority completeness, review compliance, category coverage.
 // CHR 2015 Reg 22: "Arrangements for the delegation of authority."

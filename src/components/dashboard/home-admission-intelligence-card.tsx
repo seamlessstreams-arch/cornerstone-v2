@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ADMISSION & PLACEMENT INTELLIGENCE CARD
+// CARA — HOME ADMISSION & PLACEMENT INTELLIGENCE CARD
 // Home-level: impact assessment compliance, matching quality, decision
 // timeliness, referral volume, and alignment with Statement of Purpose.
 // CHR 2015 Reg 14. SCCIF: "Well-led and managed."
@@ -226,12 +226,12 @@ export function HomeAdmissionIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Admission Intelligence */}
+        {/* Cara Admission Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Admission Intelligence
+              Cara Admission Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

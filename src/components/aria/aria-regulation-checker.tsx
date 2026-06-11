@@ -3,7 +3,7 @@
 //
 // Tracks compliance status against the key Children's Homes Regulations 2015.
 // Shows which regulations are fully evidenced, partially evidenced, or have
-// gaps. ARIA analyses the evidence base and identifies where action is needed.
+// gaps. Cara analyses the evidence base and identifies where action is needed.
 // ══════════════════════════════════════════════════════════════════════════════
 
 "use client";
@@ -251,7 +251,7 @@ export function AriaRegulationChecker() {
                     <div className="rounded-xl bg-[var(--cs-aria-gold-bg)] border border-[var(--cs-aria-gold-soft)] p-2.5">
                       <div className="flex items-center gap-1.5 mb-1">
                         <Sparkles className="h-3 w-3 text-[var(--cs-aria-gold)]" />
-                        <span className="text-[10px] font-semibold text-[var(--cs-navy)]">ARIA Suggestion</span>
+                        <span className="text-[10px] font-semibold text-[var(--cs-navy)]">Cara Suggestion</span>
                       </div>
                       <p className="text-[11px] text-[var(--cs-text-secondary)]">{reg.ariaSuggestion}</p>
                     </div>

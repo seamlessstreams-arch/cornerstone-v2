@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SHIFT PATTERN MONITORING CARD
+// CARA — SHIFT PATTERN MONITORING CARD
 // Live data from useWorkforceIntelligence() — shifts, filled, unfilled, coverage.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -97,11 +97,11 @@ export function StaffShiftPatternMonitoringCard() {
           </div>
         </div>
 
-        {/* ── ARIA insights ──────────────────────────────────────────── */}
+        {/* ── Cara insights ──────────────────────────────────────────── */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
-              <Brain className="h-3 w-3" />ARIA Insights
+              <Brain className="h-3 w-3" />Cara Insights
             </p>
             {d.insights.map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity])}>

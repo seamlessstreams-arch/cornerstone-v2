@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // GET /api/aria/rota-intelligence
 //
-// Returns ARIA-generated rota analysis alerts: lone-working risk, overtime,
+// Returns Cara-generated rota analysis alerts: lone-working risk, overtime,
 // fatigue patterns, ratio compliance, and staffing gaps.
 // Query params: homeId, weekStart
 // ══════════════════════════════════════════════════════════════════════════════

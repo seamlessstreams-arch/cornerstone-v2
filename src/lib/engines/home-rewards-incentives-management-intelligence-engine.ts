@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME REWARDS & INCENTIVES MANAGEMENT INTELLIGENCE ENGINE
+// CARA — HOME REWARDS & INCENTIVES MANAGEMENT INTELLIGENCE ENGINE
 // Monitors reward scheme fairness, positive reinforcement consistency,
 // incentive programme effectiveness, child participation in reward design,
 // and equity across children in the home.

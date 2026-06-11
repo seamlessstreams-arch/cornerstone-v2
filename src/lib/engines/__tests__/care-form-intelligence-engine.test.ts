@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CARE FORM INTELLIGENCE ENGINE — TESTS
+// CARA — CARE FORM INTELLIGENCE ENGINE — TESTS
 //
 // Comprehensive test suite for the care form intelligence engine.
 // Reg 35, Reg 37, Schedule 1, SCCIF documentation quality.
@@ -365,9 +365,9 @@ describe("alerts", () => {
   });
 });
 
-// ── ARIA Insights ───────────────────────────────────────────────────────────
+// ── Cara Insights ───────────────────────────────────────────────────────────
 
-describe("ARIA insights", () => {
+describe("Cara insights", () => {
   it("critical: overdue forms", () => {
     const r = run([makeForm({ due_date: "2026-05-20", status: "submitted" })]);
     const critical = r.insights.filter((i) => i.severity === "critical" && i.text.includes("past their due date"));
@@ -579,7 +579,7 @@ describe("Chamberlain House integration", () => {
     expect(safeguardingLow).toHaveLength(0);
   });
 
-  it("fires expected ARIA insights for Chamberlain House data", () => {
+  it("fires expected Cara insights for Chamberlain House data", () => {
     const r = run(oakForms, STAFF);
 
     // Critical: 4 overdue

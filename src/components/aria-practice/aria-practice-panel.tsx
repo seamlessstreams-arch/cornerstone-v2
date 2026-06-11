@@ -1,7 +1,7 @@
 "use client";
 
-// AriaPracticePanel — embeddable "Run ARIA" panel for any record/assessment.
-// ARIA recognises weak practice and advises; managers decide. Editable text in,
+// AriaPracticePanel — embeddable "Run Cara" panel for any record/assessment.
+// Cara recognises weak practice and advises; managers decide. Editable text in,
 // structured intelligence out (summary, scores, flags, reflective questions,
 // recommendations, next-best-actions).
 
@@ -53,7 +53,7 @@ export function AriaPracticePanel(props: AriaPracticePanelProps) {
       <CardHeader className="pb-3 bg-[var(--cs-aria-gold,#f6f1e6)]/40">
         <CardTitle className="text-sm flex items-center gap-2">
           <Sparkles className="h-4 w-4 text-amber-600" />
-          <span>{props.title ?? "ARIA Practice Intelligence"}</span>
+          <span>{props.title ?? "Cara Practice Intelligence"}</span>
           {out && (
             <span className="ml-auto text-xs font-bold tabular-nums text-slate-600">
               Practice quality {out.scores.overall}%
@@ -61,7 +61,7 @@ export function AriaPracticePanel(props: AriaPracticePanelProps) {
           )}
         </CardTitle>
         <p className="text-xs text-muted-foreground mt-1">
-          ARIA advises — you decide. The child&apos;s lived experience is the measure of quality.
+          Cara advises — you decide. The child&apos;s lived experience is the measure of quality.
         </p>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -74,7 +74,7 @@ export function AriaPracticePanel(props: AriaPracticePanelProps) {
         <div className="flex items-center gap-2">
           <Button size="sm" onClick={run} disabled={analyse.isPending || text.trim().length === 0}>
             {analyse.isPending ? <Loader2 className="h-4 w-4 animate-spin mr-1" /> : <Sparkles className="h-4 w-4 mr-1" />}
-            Run ARIA
+            Run Cara
           </Button>
           {out?.requiresManagerReview && (
             <Badge variant="outline" className="border-orange-300 bg-orange-50 text-orange-800">
@@ -87,7 +87,7 @@ export function AriaPracticePanel(props: AriaPracticePanelProps) {
         </div>
 
         {analyse.isError && (
-          <p className="text-sm text-red-600">{(analyse.error as Error)?.message ?? "ARIA could not analyse this record."}</p>
+          <p className="text-sm text-red-600">{(analyse.error as Error)?.message ?? "Cara could not analyse this record."}</p>
         )}
 
         {out && (
@@ -97,7 +97,7 @@ export function AriaPracticePanel(props: AriaPracticePanelProps) {
             {out.flags.length > 0 && (
               <section>
                 <h4 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1 flex items-center gap-1">
-                  <AlertTriangle className="h-3.5 w-3.5" /> What ARIA recognised
+                  <AlertTriangle className="h-3.5 w-3.5" /> What Cara recognised
                 </h4>
                 <ul className="space-y-2">
                   {out.flags.map((f, i) => (

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RISK INTELLIGENCE DASHBOARD ENGINE
+// CARA — RISK INTELLIGENCE DASHBOARD ENGINE
 //
 // Home-level cross-cutting risk aggregation. Unifies risk assessments,
 // exploitation screenings, missing episodes, incidents, restraints, and
@@ -872,7 +872,7 @@ export function computeRiskIntelligenceDashboard(
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
   const insights: RiskInsight[] = [];
 
   // Critical

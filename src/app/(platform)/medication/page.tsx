@@ -713,7 +713,7 @@ function TodayScheduleTab({
                           </div>
                         )}
 
-                        {/* Aria draft button */}
+                        {/* Cara draft button */}
                         {admin && (
                           <div className="mt-2">
                             <button
@@ -721,7 +721,7 @@ function TodayScheduleTab({
                               className="flex items-center gap-1.5 text-[10px] text-violet-600 hover:text-violet-700 font-medium"
                             >
                               <Sparkles className="h-3 w-3" />
-                              {showAria ? "Close Aria" : "Draft note with Aria"}
+                              {showAria ? "Close Cara" : "Draft note with Cara"}
                             </button>
                           </div>
                         )}
@@ -1339,7 +1339,7 @@ function StockOversightTab({
         )}
       </div>
 
-      {/* RM Oversight with Aria */}
+      {/* RM Oversight with Cara */}
       <div>
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
@@ -1351,13 +1351,13 @@ function StockOversightTab({
             className="flex items-center gap-1.5 text-xs text-violet-600 hover:text-violet-700 font-medium"
           >
             <Sparkles className="h-3.5 w-3.5" />
-            {showAria ? "Close Aria" : "Draft oversight with Aria"}
+            {showAria ? "Close Cara" : "Draft oversight with Cara"}
           </button>
         </div>
 
         <div className="rounded-2xl border bg-amber-50/40 border-amber-200 p-5">
           <div className="text-sm text-slate-700 mb-3">
-            <span className="font-semibold text-slate-900">{unreviewedExceptions.length}</span> medication exception{unreviewedExceptions.length !== 1 ? "s" : ""} currently require RM oversight comment. Use Aria to draft your oversight narrative.
+            <span className="font-semibold text-slate-900">{unreviewedExceptions.length}</span> medication exception{unreviewedExceptions.length !== 1 ? "s" : ""} currently require RM oversight comment. Use Cara to draft your oversight narrative.
           </div>
 
           {unreviewedExceptions.length > 0 && (

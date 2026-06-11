@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EMERGENCY PREPAREDNESS INTELLIGENCE API ROUTE
+// CARA — EMERGENCY PREPAREDNESS INTELLIGENCE API ROUTE
 // GET /api/v1/emergency-intelligence
 // Returns drill analysis, emergency plan coverage, preparedness alerts,
-// and ARIA emergency insights.
+// and Cara emergency insights.
 // Reg 22, Reg 25, Reg 40, SCCIF "Helped & Protected", "Leadership & Management".
 // ══════════════════════════════════════════════════════════════════════════════
 

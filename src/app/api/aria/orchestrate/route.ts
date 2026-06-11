@@ -2,7 +2,7 @@
 // API: /api/aria/orchestrate
 //
 // Main orchestration endpoint. Receives a user query with context and runs it
-// through the full Aria Intelligence pipeline (routing, evidence, generation,
+// through the full Cara Intelligence pipeline (routing, evidence, generation,
 // safety, audit, cost tracking).
 //
 // POST body: { query, homeId, userId, role, childId?, sourceContext?,

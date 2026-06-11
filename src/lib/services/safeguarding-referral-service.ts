@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SAFEGUARDING REFERRAL SERVICE
+// CARA — SAFEGUARDING REFERRAL SERVICE
 // Tracks safeguarding referrals made to external agencies including LADO,
 // MASH, police, social services, and other statutory bodies.
 // CHR 2015 Reg 12 (protection — safeguarding referral obligations),

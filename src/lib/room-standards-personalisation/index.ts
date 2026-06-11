@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Room Standards & Personalisation Intelligence — Public API
+// Cara Room Standards & Personalisation Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

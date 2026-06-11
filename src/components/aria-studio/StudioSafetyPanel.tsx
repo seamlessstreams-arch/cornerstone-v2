@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — Safety Panel Component
+// Cara STUDIO — Safety Panel Component
 //
 // Displays the safety assessment for generated content:
 //   - Overall score (0-100)

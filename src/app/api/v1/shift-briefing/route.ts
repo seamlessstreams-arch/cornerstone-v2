@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SHIFT BRIEFING API ROUTE
+// CARA — SHIFT BRIEFING API ROUTE
 // GET /api/v1/shift-briefing
 //
 // Auto-generated time-boxed operational snapshot for staff coming on duty:

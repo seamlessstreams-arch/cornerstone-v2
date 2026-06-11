@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EVENT INTELLIGENCE HOOK
+// CARA — EVENT INTELLIGENCE HOOK
 // React Query wrapper for /api/v1/event-intelligence
 // ══════════════════════════════════════════════════════════════════════════════
 

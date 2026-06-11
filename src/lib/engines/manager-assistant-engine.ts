@@ -1,11 +1,11 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — AI MANAGER ASSISTANT ENGINE (pure / deterministic)
+// CARA — AI MANAGER ASSISTANT ENGINE (pure / deterministic)
 //
 // Workforce slice 6 (spec §13): drafting tools for managers — job adverts (from
 // the vacancy + the Employer Values Profile), candidate-strengths summaries
 // (from the values match) and action plans. Every tool produces a DETERMINISTIC
 // scaffold assembled only from recorded data (genuinely useful with no AI key);
-// the route may add an optional ARIA polish on top. Drafts only — the manager
+// the route may add an optional Cara polish on top. Drafts only — the manager
 // accepts, edits or rejects, and every generation is audit-logged.
 //
 // "AI suggestions require professional judgement and manager approval."
@@ -83,7 +83,7 @@ export function buildJobAdvertScaffold(vacancy: VacancyLite, employer: EmployerV
 }
 
 export const ADVERT_AI_SYSTEM_PROMPT =
-  "You are ARIA, helping a children's-home manager polish a job advert. Improve warmth, flow and clarity of the draft provided WITHOUT inventing any facts — keep every concrete detail (salary, hours, shift pattern, safeguarding statement, values) exactly as given, keep the safer-recruitment section verbatim, keep all [bracketed placeholders] for the manager to complete, and keep it values-led and non-corporate. Return only the polished advert text.";
+  "You are Cara, helping a children's-home manager polish a job advert. Improve warmth, flow and clarity of the draft provided WITHOUT inventing any facts — keep every concrete detail (salary, hours, shift pattern, safeguarding statement, values) exactly as given, keep the safer-recruitment section verbatim, keep all [bracketed placeholders] for the manager to complete, and keep it values-led and non-corporate. Return only the polished advert text.";
 
 // ── 2. Candidate strengths summary (values match → draft narrative) ────────────
 export function buildCandidateSummaryScaffold(match: ValuesMatchResult): string {
@@ -111,7 +111,7 @@ export function buildCandidateSummaryScaffold(match: ValuesMatchResult): string 
 }
 
 export const SUMMARY_AI_SYSTEM_PROMPT =
-  "You are ARIA, helping a children's-home manager turn a structured candidate analysis into a short, balanced narrative summary (4–6 sentences) for the recruitment file. Use ONLY the facts provided — never invent experience or qualities, keep strengths and areas-to-explore balanced, make no hiring recommendation, and end by noting that the decision rests with the panel under safer recruitment practice. Return only the summary.";
+  "You are Cara, helping a children's-home manager turn a structured candidate analysis into a short, balanced narrative summary (4–6 sentences) for the recruitment file. Use ONLY the facts provided — never invent experience or qualities, keep strengths and areas-to-explore balanced, make no hiring recommendation, and end by noting that the decision rests with the panel under safer recruitment practice. Return only the summary.";
 
 // ── 3. Action plan (goal → structured draft) ───────────────────────────────────
 export function buildActionPlanScaffold(goal: string, context?: string): string {
@@ -136,4 +136,4 @@ export function buildActionPlanScaffold(goal: string, context?: string): string 
 }
 
 export const PLAN_AI_SYSTEM_PROMPT =
-  "You are ARIA, helping a children's-home manager draft an action plan. Expand the goal and context provided into 4–6 specific, realistic actions with suggested owners ([Registered Manager], [Deputy], [Key worker], [Whole team]) and relative timeframes (within 1 week / 1 month). Use ONLY the goal and context given — do not invent facts about the home. Include an evidence-and-review section. This is a draft the manager will edit. Return only the plan.";
+  "You are Cara, helping a children's-home manager draft an action plan. Expand the goal and context provided into 4–6 specific, realistic actions with suggested owners ([Registered Manager], [Deputy], [Key worker], [Whole team]) and relative timeframes (within 1 week / 1 month). Use ONLY the goal and context given — do not invent facts about the home. Include an evidence-and-review section. This is a draft the manager will edit. Return only the plan.";

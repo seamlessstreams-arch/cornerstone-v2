@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LEARNING STUDIO: KNOWLEDGE GAPS
+// CARA — LEARNING STUDIO: KNOWLEDGE GAPS
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState } from "react";

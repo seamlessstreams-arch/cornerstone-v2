@@ -286,7 +286,7 @@ function SupervisionCard({ sup }: { sup: Supervision }) {
     setExtracting(true);
     try {
       const res = await api.post<{ data: { parsed?: { needs?: Array<{ title: string; description: string; priority: string; need_type: string }> } } }>(
-        "/aria",
+        "/cara",
         {
           mode: "training_needs_analysis",
           style: "professional_formal",
@@ -414,7 +414,7 @@ function SupervisionCard({ sup }: { sup: Supervision }) {
                   disabled={extracting || createNeed.isPending}
                 >
                   <Sparkles className={cn("h-3 w-3", extracting && "animate-pulse")} />
-                  {extracting ? "Extracting…" : "ARIA: Find Training Need"}
+                  {extracting ? "Extracting…" : "Cara: Find Training Need"}
                 </Button>
               )}
               {needCreated && (
@@ -712,7 +712,7 @@ export default function SupervisionPage() {
           title="Supervision & performance"
           description="Schedule, record, and track formal supervision for all staff. Overdue supervisions are flagged automatically. Actions from supervision feed into the task system."
           evidenceTip="Supervision records should evidence reflective practice, not just operational updates. Inspectors look for professional development discussions linked to individual children."
-          ariaTip="ARIA can identify supervision themes across the team and flag when a staff member's caseload may be affecting their wellbeing."
+          ariaTip="Cara can identify supervision themes across the team and flag when a staff member's caseload may be affecting their wellbeing."
           regulationRef="Children's Homes Regulations 2015, Reg 33(4)(b) — Supervision of staff"
           variant="compliance"
         />
@@ -1116,7 +1116,7 @@ export default function SupervisionPage() {
         recordType="supervision"
         className="mt-6"
       />
-      <AriaPracticePanel sourceType="supervision" homeId="home_oak" title="Run ARIA on this supervision" />
+      <AriaPracticePanel sourceType="supervision" homeId="home_oak" title="Run Cara on this supervision" />
     </PageShell>
     </>
   );

@@ -32,9 +32,9 @@ import type { AriaResponse, EvidenceItem, SuggestedAction } from "@/lib/aria/orc
 // ══════════════════════════════════════════════════════════════════════════════
 // AriaOrchestrationPanel — main "one calm assistant" intelligence interface
 //
-// This is the primary Aria Intelligence orchestration chat panel. It provides:
+// This is the primary Cara Intelligence orchestration chat panel. It provides:
 // - Command bar ("What are you trying to do?")
-// - Chat message thread (user queries + Aria responses)
+// - Chat message thread (user queries + Cara responses)
 // - Agent route badge, risk level banner, evidence drawer
 // - Suggested actions, approval workflow, refinement controls
 // - Draft/Save/Approve lifecycle
@@ -122,7 +122,7 @@ export function AriaOrchestrationPanel({
         const json = await response.json();
 
         if (!response.ok) {
-          throw new Error(json.error ?? "Aria was unable to process your request.");
+          throw new Error(json.error ?? "Cara was unable to process your request.");
         }
 
         // Store session for follow-up messages
@@ -222,7 +222,7 @@ export function AriaOrchestrationPanel({
           </div>
           <div>
             <h3 className="text-sm font-semibold text-[var(--cs-navy)]">
-              Aria Intelligence
+              Cara Intelligence
             </h3>
             <p className="text-xs text-[var(--cs-text-gentle)]">
               One calm assistant for everything
@@ -346,7 +346,7 @@ function EmptyState({ onSelect }: { onSelect: (query: string) => void }) {
         What are you trying to do?
       </h4>
       <p className="mt-1.5 max-w-sm text-center text-sm text-[var(--cs-text-secondary)]">
-        Aria will route your request to the right specialist, gather evidence,
+        Cara will route your request to the right specialist, gather evidence,
         and provide a thoughtful response with next steps.
       </p>
       <div className="mt-5 grid w-full max-w-md grid-cols-1 gap-2 sm:grid-cols-2">
@@ -377,7 +377,7 @@ function UserMessage({ content }: { content: string }) {
   );
 }
 
-// ── Aria Message ───────────────────────────────────────────────────────────
+// ── Cara Message ───────────────────────────────────────────────────────────
 
 function AriaMessage({
   message,
@@ -497,7 +497,7 @@ function AriaMessage({
             {showExplanation && (
               <div className="rounded-xl border border-[var(--cs-border)] bg-[var(--cs-surface)] px-4 py-3">
                 <p className="mb-1 text-xs font-medium text-[var(--cs-text-gentle)]">
-                  Why Aria suggested this
+                  Why Cara suggested this
                 </p>
                 <p className="text-xs leading-relaxed text-[var(--cs-text-secondary)]">
                   This response was routed to the <strong>{response.agentUsed}</strong> agent
@@ -586,7 +586,7 @@ function LoadingIndicator() {
         </div>
         <div className="space-y-1">
           <p className="text-sm text-[var(--cs-text-secondary)]">
-            Aria is thinking...
+            Cara is thinking...
           </p>
           <p className="text-xs text-[var(--cs-text-gentle)]">
             Routing query, gathering evidence, generating response

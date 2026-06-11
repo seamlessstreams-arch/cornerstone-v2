@@ -1,9 +1,9 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — BRANDING TYPES
-// Dual-branding system: Cornerstone platform brand + client organisation brand
+// CARA — BRANDING TYPES
+// Dual-branding system: Cara platform brand + client organisation brand
 // ══════════════════════════════════════════════════════════════════════════════
 
-// ── System branding (Cornerstone product) ─────────────────────────────────────
+// ── System branding (Cara product) ─────────────────────────────────────
 
 export interface SystemBranding {
   id: "cornerstone_system";

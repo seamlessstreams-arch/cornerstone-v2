@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SLEEP & NIGHT CARE INTELLIGENCE ENGINE
+// CARA — HOME SLEEP & NIGHT CARE INTELLIGENCE ENGINE
 // Home-level: aggregates sleep logs covering waking night and sleep-in shifts,
 // welfare check compliance, building security, alarm compliance, disturbance
 // patterns, handover quality, and overnight response effectiveness.

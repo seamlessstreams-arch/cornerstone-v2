@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — FINANCIAL MANAGEMENT INTELLIGENCE CARD
+// CARA — FINANCIAL MANAGEMENT INTELLIGENCE CARD
 // Dashboard card powered by the Financial Management Intelligence Engine — live data.
 // Reg 40 (financial management — homes must demonstrate responsible and
 // transparent financial management), SCCIF: "Is the home well led and managed?"
@@ -254,13 +254,13 @@ export function ExpensesSummaryCard() {
           </div>
         )}
 
-        {/* ── ARIA Financial Intelligence ────────────────────────────── */}
+        {/* ── Cara Financial Intelligence ────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Financial Intelligence
+              Cara Financial Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

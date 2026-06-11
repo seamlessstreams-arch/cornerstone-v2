@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PLAN CURRENCY REGISTER API ROUTE
+// CARA — PLAN CURRENCY REGISTER API ROUTE
 // GET /api/v1/plan-currency
 //
 // Scans the review date of every statutory child plan/assessment across every

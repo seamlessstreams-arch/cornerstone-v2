@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF NVQ/QCF QUALIFICATION TRACKING SERVICE TESTS
+// CARA — STAFF NVQ/QCF QUALIFICATION TRACKING SERVICE TESTS
 // Pure-function unit tests for NVQ qualification metrics, alert identification,
-// and ARIA insight generation.
+// and Cara insight generation.
 //
 // CHR 2015 Reg 32 (fitness of premises — qualification requirements),
 // Reg 33 (employment — training requirements).

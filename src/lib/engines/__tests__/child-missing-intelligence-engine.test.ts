@@ -381,7 +381,7 @@ describe("Child Missing & Return Intelligence Engine", () => {
     expect(r.recommendations.some((rec) => rec.recommendation.includes("strategy") || rec.recommendation.includes("NRM"))).toBe(true);
   });
 
-  // ── ARIA Insights ──────────────────────────────────────────────────────
+  // ── Cara Insights ──────────────────────────────────────────────────────
 
   it("generates positive insight for no episodes", () => {
     const r = computeChildMissing(baseInput());

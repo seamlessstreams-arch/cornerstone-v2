@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA INTELLIGENCE — EVIDENCE RETRIEVAL ENGINE
+// Cara INTELLIGENCE — EVIDENCE RETRIEVAL ENGINE
 //
-// Gathers source records from Cornerstone operational tables and returns
+// Gathers source records from Cara operational tables and returns
 // normalised evidence items. Each source table has its own query + normaliser;
 // queries run in parallel and results are merged, de-duplicated, and sorted.
 //
@@ -101,7 +101,7 @@ export async function retrieveAriaEvidence(input: EvidenceQueryInput): Promise<A
   const sb = createServerClient();
   if (!sb) return [];
 
-  const maxItems = input.maxItems ?? Number(process.env.ARIA_MAX_EVIDENCE_ITEMS ?? "40");
+  const maxItems = input.maxItems ?? Number((process.env.CARA_MAX_EVIDENCE_ITEMS ?? process.env.ARIA_MAX_EVIDENCE_ITEMS) ?? "40");
   const evidence: AriaEvidenceItem[] = [];
 
   for (const source of SOURCE_TABLES) {

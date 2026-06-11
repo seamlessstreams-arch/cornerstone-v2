@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME WHISTLEBLOWING & SAFEGUARDING CULTURE INTELLIGENCE ENGINE
+// CARA -- HOME WHISTLEBLOWING & SAFEGUARDING CULTURE INTELLIGENCE ENGINE
 // Measures safeguarding culture quality -- whistleblowing policy awareness,
 // reporting confidence, safeguarding training currency, culture audit outcomes,
 // and child protection practice quality.

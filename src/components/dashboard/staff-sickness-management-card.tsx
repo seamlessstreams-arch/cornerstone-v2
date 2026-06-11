@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF SICKNESS MANAGEMENT CARD
+// CARA — STAFF SICKNESS MANAGEMENT CARD
 // Dashboard card powered by the Workforce Intelligence Engine.
 // Tracks sickness patterns, Bradford factor, and trends.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -128,13 +128,13 @@ export function StaffSicknessManagementCard() {
           </div>
         )}
 
-        {/* ── ARIA Intelligence ───────────────────────────────────────── */}
+        {/* ── Cara Intelligence ───────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Sickness Intelligence
+              Cara Sickness Intelligence
             </p>
             {intel.insights.slice(0, 2).map((insight, i) => (
               <div

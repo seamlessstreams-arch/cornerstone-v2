@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — REG 44 INDEPENDENT VISITOR INTELLIGENCE ENGINE — TEST SUITE
+// CARA — REG 44 INDEPENDENT VISITOR INTELLIGENCE ENGINE — TEST SUITE
 // Reg 44 — independent person visits, monthly frequency, report to Ofsted
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -331,7 +331,7 @@ describe("computeReg44Intelligence", () => {
     });
   });
 
-  describe("ARIA insights", () => {
+  describe("Cara insights", () => {
     it("generates critical insight for overdue visit", () => {
       const visits = [
         makeVisit({ id: "v1", visit_date: "2026-04-10" }), // 45 days

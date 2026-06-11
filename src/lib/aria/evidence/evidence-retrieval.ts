@@ -1,9 +1,9 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — EVIDENCE RETRIEVAL LAYER
+// Cara — EVIDENCE RETRIEVAL LAYER
 //
-// Gathers source records from Cornerstone operational tables and returns
+// Gathers source records from Cara operational tables and returns
 // normalised evidence items for report generation, gap detection, and the
-// ARIA challenge layer. Each source table has its own query + normaliser;
+// Cara challenge layer. Each source table has its own query + normaliser;
 // queries run in parallel and results are merged, de-duplicated, and sorted.
 //
 // When Supabase is unavailable the layer returns realistic demo data so the

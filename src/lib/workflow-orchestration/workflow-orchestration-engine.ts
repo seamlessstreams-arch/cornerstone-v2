@@ -1,18 +1,18 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — WORKFLOW ORCHESTRATION ENGINE
+// CARA — WORKFLOW ORCHESTRATION ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no external calls.
 //
 // Processes events against configurable WorkflowRules and emits the concrete
 // ACTIONS each event generates: approval tasks, staff debriefs, key-working
-// follow-ups, evidence-bank additions, ARIA summaries, trend updates and
+// follow-ups, evidence-bank additions, Cara summaries, trend updates and
 // human-gated notification drafts — each with an owner, a deadline and an
 // escalation path. This is the orchestration layer above routing.
 //
 // Realises the spec's example: "When an incident is submitted → check missing
 // info, link to child, update behaviour/risk trend, create manager approval task,
 // create staff debrief task, suggest keywork follow-up, add to Reg 45 evidence
-// bank, update manager dashboard, generate ARIA summary, create notification draft
+// bank, update manager dashboard, generate Cara summary, create notification draft
 // where appropriate." Notification drafts are NEVER sent automatically.
 //
 // Regulatory: CHR 2015 Reg 13 (leadership — consistent processes), Reg 12, Reg 40.
@@ -97,7 +97,7 @@ export const DEFAULT_WORKFLOW_RULES: WorkflowRule[] = [
       { type: "create_debrief_task", title: "Staff debrief following the incident", owner_role: "team_leader", deadline_days: 3 },
       { type: "suggest_keywork", title: "Key-working follow-up with the child", owner_role: "key_worker", deadline_days: 5 },
       { type: "add_evidence", title: "Add to the Regulation 45 evidence bank", owner_role: "system", evidence_categories: ["Regulation 45"] },
-      { type: "generate_aria_summary", title: "Generate an ARIA incident summary", owner_role: "system" },
+      { type: "generate_aria_summary", title: "Generate an Cara incident summary", owner_role: "system" },
       { type: "update_trend", title: "Update behaviour & risk trend", owner_role: "system" },
     ],
   },
@@ -108,7 +108,7 @@ export const DEFAULT_WORKFLOW_RULES: WorkflowRule[] = [
       { type: "create_notification_draft", title: "Draft Ofsted (Reg 40) / LADO notification for approval", owner_role: "manager", requires_approval: true, approval_level: "manager", creates_notification_draft: ["Ofsted", "LADO"], deadline_days: 1 },
       { type: "create_task", title: "Convene a strategy discussion with partner agencies", owner_role: "manager", deadline_days: 1 },
       { type: "add_evidence", title: "Add to the safeguarding & Regulation 45 evidence banks", owner_role: "system", evidence_categories: ["safeguarding", "Regulation 45"] },
-      { type: "generate_aria_summary", title: "Generate an ARIA safeguarding summary", owner_role: "system" },
+      { type: "generate_aria_summary", title: "Generate an Cara safeguarding summary", owner_role: "system" },
     ],
   },
   {
@@ -134,7 +134,7 @@ export const DEFAULT_WORKFLOW_RULES: WorkflowRule[] = [
     actions: [
       { type: "create_task", title: "Medication-error follow-up and root-cause review", owner_role: "deputy", deadline_days: 2, escalation: { after_days: 2, to_role: "manager" } },
       { type: "add_evidence", title: "Add to health & Regulation 45 evidence", owner_role: "system", evidence_categories: ["health", "Regulation 45"] },
-      { type: "generate_aria_summary", title: "Generate an ARIA medication-safety note", owner_role: "system" },
+      { type: "generate_aria_summary", title: "Generate an Cara medication-safety note", owner_role: "system" },
     ],
   },
 ];
@@ -236,7 +236,7 @@ function buildInsights(o: WorkflowOverview): AriaWorkflowInsight[] {
   if (o.actions_generated > 0) {
     insights.push({
       severity: "positive",
-      text: `${o.rules_fired} workflow${o.rules_fired === 1 ? "" : "s"} fired across ${o.events_processed} events, generating ${o.actions_generated} actions automatically — approval tasks, debriefs, key-working follow-ups, evidence additions and ARIA summaries — so consistent process follows every significant event without anyone remembering each step.`,
+      text: `${o.rules_fired} workflow${o.rules_fired === 1 ? "" : "s"} fired across ${o.events_processed} events, generating ${o.actions_generated} actions automatically — approval tasks, debriefs, key-working follow-ups, evidence additions and Cara summaries — so consistent process follows every significant event without anyone remembering each step.`,
     });
   }
   if (o.notifications_drafted > 0) {

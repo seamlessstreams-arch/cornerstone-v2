@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD MISSING & RETURN INTELLIGENCE ENGINE
+// CARA — CHILD MISSING & RETURN INTELLIGENCE ENGINE
 // Per-child engine analysing missing episodes: frequency, duration trends,
 // risk escalation, return interview compliance, contextual safeguarding
 // risks, patterns, and professional response quality.
@@ -481,7 +481,7 @@ export function computeChildMissing(
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
   const insights: MissingInsight[] = [];
 
   if (missing_risk === "high_risk") {

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ALLEGATION MANAGEMENT SERVICE
+// CARA — ALLEGATION MANAGEMENT SERVICE
 // Tracks allegations against staff/volunteers, LADO referrals,
 // investigation progress, outcomes, and safeguarding actions.
 // CHR 2015 Reg 12 (protection — abuse by staff),

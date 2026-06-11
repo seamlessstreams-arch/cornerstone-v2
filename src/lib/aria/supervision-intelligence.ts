@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — SUPERVISION INTELLIGENCE
+// Cara — SUPERVISION INTELLIGENCE
 //
 // Analyses supervision records across staff to identify:
 //   - Overdue supervisions (CHR 2015 Reg 33)

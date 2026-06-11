@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — COMPLAINTS & NOTIFICATIONS INTELLIGENCE ENGINE TESTS
+// CARA — COMPLAINTS & NOTIFICATIONS INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite for complaints handling analysis.
 // Covers Reg 39 complaints procedure and Reg 40 notification compliance.
 // ══════════════════════════════════════════════════════════════════════════════

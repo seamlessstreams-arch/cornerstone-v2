@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME OUTCOME STAR & NEEDS INTELLIGENCE ENGINE
+// CARA — HOME OUTCOME STAR & NEEDS INTELLIGENCE ENGINE
 // Tracks Outcome Star assessments, needs identification and response, KPI achievement,
 // and improvement trajectories to evidence children's progress.
 // Pure deterministic engine. CHR 2015 Reg 5/10.

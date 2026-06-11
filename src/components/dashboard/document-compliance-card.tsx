@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DOCUMENT COMPLIANCE INTELLIGENCE CARD
+// CARA — DOCUMENT COMPLIANCE INTELLIGENCE CARD
 // Dashboard card powered by the Document Compliance Intelligence Engine — live data.
 // Reg 35 (policies and procedures), Reg 37 (notification), Schedule 1,
 // SCCIF: "Does the home have clear policies that staff understand and follow?"
@@ -251,13 +251,13 @@ export function DocumentComplianceCard() {
           </div>
         )}
 
-        {/* ── ARIA Document Intelligence ──────────────────────────────── */}
+        {/* ── Cara Document Intelligence ──────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Document Intelligence
+              Cara Document Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

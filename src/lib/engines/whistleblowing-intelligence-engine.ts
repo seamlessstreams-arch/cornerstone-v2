@@ -1,8 +1,8 @@
 // ==============================================================================
-// CORNERSTONE -- WHISTLEBLOWING INTELLIGENCE ENGINE
+// CARA -- WHISTLEBLOWING INTELLIGENCE ENGINE
 // Pure deterministic engine for whistleblowing disclosure analysis.
 // Analyses disclosure handling, investigation progress, protection compliance,
-// and generates ARIA intelligence insights.
+// and generates Cara intelligence insights.
 // Reg 41: whistleblowing -- Public Interest Disclosure Act 1998 (PIDA)
 // ==============================================================================
 

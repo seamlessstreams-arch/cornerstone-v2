@@ -33,7 +33,7 @@ export function useAriaArtifacts(params: ArtifactListParams = {}) {
 
   return useQuery({
     queryKey: ["aria-studio-artifacts", params],
-    queryFn: () => api.get<AriaArtifactListResponse>(`/aria-studio/artifacts${query ? `?${query}` : ""}`),
+    queryFn: () => api.get<AriaArtifactListResponse>(`/cara-studio/artifacts${query ? `?${query}` : ""}`),
     refetchInterval: 30000,
   });
 }
@@ -55,7 +55,7 @@ interface ArtifactDetailResponse {
 export function useAriaArtifact(id: string | null) {
   return useQuery({
     queryKey: ["aria-studio-artifact", id],
-    queryFn: () => api.get<ArtifactDetailResponse>(`/aria-studio/artifacts/${id}`),
+    queryFn: () => api.get<ArtifactDetailResponse>(`/cara-studio/artifacts/${id}`),
     enabled: !!id,
   });
 }
@@ -76,7 +76,7 @@ export function useGenerateAriaArtifact() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (request: AriaGenerationRequest) =>
-      api.post<GenerateResult>("/aria-studio/generate", request),
+      api.post<GenerateResult>("/cara-studio/generate", request),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["aria-studio-artifacts"] });
       queryClient.invalidateQueries({ queryKey: ["aria-studio-gaps"] });
@@ -90,7 +90,7 @@ export function useCreateAriaArtifact() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (data: Partial<AriaArtifact>) =>
-      api.post<{ data: AriaArtifact }>("/aria-studio/artifacts", data),
+      api.post<{ data: AriaArtifact }>("/cara-studio/artifacts", data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["aria-studio-artifacts"] });
     },
@@ -119,7 +119,7 @@ export function useUpdateAriaArtifact() {
   return useMutation({
     mutationFn: ({ id, ...data }: ArtifactUpdatePayload) =>
       api.patch<{ data: AriaArtifact; qualityCheck?: AriaQualityCheck }>(
-        `/aria-studio/artifacts/${id}`,
+        `/cara-studio/artifacts/${id}`,
         data
       ),
     onSuccess: (_data, variables) => {
@@ -135,7 +135,7 @@ export function useDeleteAriaArtifact() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (id: string) =>
-      api.delete<{ data: AriaArtifact }>(`/aria-studio/artifacts/${id}`),
+      api.delete<{ data: AriaArtifact }>(`/cara-studio/artifacts/${id}`),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["aria-studio-artifacts"] });
     },
@@ -149,7 +149,7 @@ export function useAriaQualityCheck() {
   return useMutation({
     mutationFn: (artifactId: string) =>
       api.post<{ data: { artifact: AriaArtifact; qualityCheck: AriaQualityCheck } }>(
-        "/aria-studio/quality-check",
+        "/cara-studio/quality-check",
         { artifact_id: artifactId }
       ),
     onSuccess: () => {
@@ -178,7 +178,7 @@ export function useAriaSources(params: SourceListParams = {}) {
 
   return useQuery({
     queryKey: ["aria-studio-sources", params],
-    queryFn: () => api.get<AriaSourceListResponse>(`/aria-studio/sources${query ? `?${query}` : ""}`),
+    queryFn: () => api.get<AriaSourceListResponse>(`/cara-studio/sources${query ? `?${query}` : ""}`),
     staleTime: 60000,
   });
 }
@@ -205,7 +205,7 @@ export function useAriaGaps(params: GapListParams = {}) {
 
   return useQuery({
     queryKey: ["aria-studio-gaps", params],
-    queryFn: () => api.get<AriaGapListResponse>(`/aria-studio/gaps${query ? `?${query}` : ""}`),
+    queryFn: () => api.get<AriaGapListResponse>(`/cara-studio/gaps${query ? `?${query}` : ""}`),
     refetchInterval: 60000,
   });
 }
@@ -214,7 +214,7 @@ export function useUpdateAriaGap() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (data: { id: string; status?: string; assigned_to?: string }) =>
-      api.patch<{ data: AriaGap }>("/aria-studio/gaps", data),
+      api.patch<{ data: AriaGap }>("/cara-studio/gaps", data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["aria-studio-gaps"] });
     },

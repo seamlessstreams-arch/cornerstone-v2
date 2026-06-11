@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — OFSTED SELF-EVALUATION
+// CARA — OFSTED SELF-EVALUATION
 // Presents the home's honest self-assessment against Ofsted's SCCIF judgement
 // areas — strengths, evidence, areas for development, and actions in progress.
 // ══════════════════════════════════════════════════════════════════════════════

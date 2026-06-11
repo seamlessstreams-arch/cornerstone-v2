@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RI SCORE COMPUTATION
+// CARA — RI SCORE COMPUTATION
 // Derives the 15 governance metrics from existing in-memory store data.
 // ══════════════════════════════════════════════════════════════════════════════
 

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HEALTHY EATING COOKING SKILLS SERVICE
+// CARA — HEALTHY EATING COOKING SKILLS SERVICE
 // Tracks healthy eating sessions, cooking skill development, food hygiene,
 // menu planning, nutrition education, and dietary management.
 // CHR 2015 Reg 9(2)(a)(v) (healthy diet and cooking),

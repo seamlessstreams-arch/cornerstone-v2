@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ENVIRONMENTAL SUSTAINABILITY & ECO-AWARENESS INTELLIGENCE API ROUTE
+// CARA — HOME ENVIRONMENTAL SUSTAINABILITY & ECO-AWARENESS INTELLIGENCE API ROUTE
 // GET /api/v1/home-environmental-sustainability-eco-awareness-intelligence
 // Cross-domain composite: energyUsageRecords + recyclingRecords +
 // ecoEducationRecords + sustainabilityPracticeRecords + carbonFootprintRecords

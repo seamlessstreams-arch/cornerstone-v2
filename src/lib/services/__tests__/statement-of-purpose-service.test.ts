@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STATEMENT OF PURPOSE SERVICE TESTS
+// CARA — STATEMENT OF PURPOSE SERVICE TESTS
 // Pure-function unit tests for statement metrics computation,
 // alert identification, constant validation, and CRUD fallback behaviour
 // (Supabase disabled). CHR 2015 Reg 16 (statement of purpose),

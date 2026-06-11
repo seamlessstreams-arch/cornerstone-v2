@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // API: /api/aria/generate
 //
-// POST  /api/aria/generate         — invoke an Aria command (write/rewrite/
+// POST  /api/aria/generate         — invoke an Cara command (write/rewrite/
 //                                    summarise/extract). Persists a draft
 //                                    output and writes the audit event.
 // PATCH /api/aria/generate         — manager decision on an output
@@ -89,7 +89,7 @@ export async function POST(req: NextRequest) {
   if (!outcome.ok) {
     return NextResponse.json(
       {
-        error: outcome.errorReason ?? "Aria invocation failed",
+        error: outcome.errorReason ?? "Cara invocation failed",
         providerConfigured: outcome.providerConfig.configured,
       },
       { status: outcome.status },

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ENVIRONMENTAL SAFETY SERVICE TESTS
+// CARA — ENVIRONMENTAL SAFETY SERVICE TESTS
 // Pure-function unit tests for safety metrics computation,
 // alert identification, constant validation, and CRUD fallback behaviour
 // (Supabase disabled). CHR 2015 Reg 25 (premises safety and suitability),

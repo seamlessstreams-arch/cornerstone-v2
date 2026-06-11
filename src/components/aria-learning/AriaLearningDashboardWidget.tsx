@@ -139,7 +139,7 @@ export function AriaLearningDashboardWidget() {
   useEffect(() => {
     fetch("/api/aria-learning?mode=dashboard")
       .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch ARIA learning data");
+        if (!res.ok) throw new Error("Failed to fetch Cara learning data");
         return res.json();
       })
       .then((json) => setData(json))
@@ -162,7 +162,7 @@ export function AriaLearningDashboardWidget() {
   if (error || !data) {
     return (
       <div className="rounded-2xl border border-red-200 bg-red-50 p-6">
-        <p className="text-red-700 text-sm">Error loading ARIA learning data: {error}</p>
+        <p className="text-red-700 text-sm">Error loading Cara learning data: {error}</p>
       </div>
     );
   }
@@ -176,7 +176,7 @@ export function AriaLearningDashboardWidget() {
       <div className="flex items-center justify-between">
         <div>
           <h3 className="text-lg font-semibold text-slate-900">
-            ARIA Agent Learning & Cost Reduction
+            Cara Agent Learning & Cost Reduction
           </h3>
           <p className="text-sm text-slate-500 mt-0.5">
             Progressively reduce dependency on paid agents
@@ -378,7 +378,7 @@ export function AriaLearningDashboardWidget() {
           <MiniStat label="Critical" value={String(metrics.criticalRiskAgents)} />
         </div>
         <span className="text-xs text-slate-400">
-          ARIA Learning Layer v1.0
+          Cara Learning Layer v1.0
         </span>
       </div>
     </div>

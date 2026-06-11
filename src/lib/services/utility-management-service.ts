@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — UTILITY MANAGEMENT SERVICE
+// CARA — UTILITY MANAGEMENT SERVICE
 // Tracks energy usage, meter readings, utility costs, sustainability
 // measures, and environmental compliance for children's homes.
 // CHR 2015 Reg 25 (premises — safe and comfortable environment),

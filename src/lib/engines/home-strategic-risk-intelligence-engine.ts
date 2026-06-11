@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME STRATEGIC RISK INTELLIGENCE ENGINE
+// CARA — HOME STRATEGIC RISK INTELLIGENCE ENGINE
 // Daily risk briefings, risk register, strategic risk, management plans, appetite.
 // Pure deterministic engine. CHR 2015 Reg 35/40.
 // ══════════════════════════════════════════════════════════════════════════════

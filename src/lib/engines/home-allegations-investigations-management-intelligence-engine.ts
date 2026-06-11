@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ALLEGATIONS & INVESTIGATIONS MANAGEMENT INTELLIGENCE ENGINE
+// CARA — HOME ALLEGATIONS & INVESTIGATIONS MANAGEMENT INTELLIGENCE ENGINE
 // Home-level: analyses allegation recording timeliness, LADO referral compliance,
 // investigation completion rates, outcome documentation, and safeguarding
 // response effectiveness.

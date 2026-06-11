@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — YOUNG PERSON'S FINANCIAL MANAGEMENT SERVICE
+// CARA — YOUNG PERSON'S FINANCIAL MANAGEMENT SERVICE
 // Manages pocket money, allowances, savings, and expenditure tracking for
 // looked-after children (CHR 2015 Reg 39 — financial arrangements).
 // All spending must be recorded, receipted, and children consulted.

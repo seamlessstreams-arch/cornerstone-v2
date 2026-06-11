@@ -3,11 +3,12 @@ import { QueryProvider } from "@/providers/query-provider";
 import { Toaster } from "@/components/ui/toaster";
 import { ServiceWorkerRegister } from "@/components/pwa/service-worker-register";
 import { OfflineBanner } from "@/components/pwa/offline-banner";
+import { BRAND } from "@/lib/brand";
 import "./globals.css";
 
-// ── Cornerstone uses Avenir Next LT Pro (declared in globals.css via @font-face)
+// ── Cara OS uses Avenir Next LT Pro (declared in globals.css via @font-face)
 // with a graceful fallback chain. No Google Fonts dependency.
-// This gives Cornerstone a distinctive, warm, professional identity
+// This gives Cara OS a distinctive, warm, professional identity
 // that doesn't look like a generic template.
 
 export const viewport: Viewport = {
@@ -15,14 +16,13 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 5,
   viewportFit: "cover",
-  themeColor: "#0f1e36", // Cornerstone navy
+  themeColor: "#0f1e36", // Cara navy
 };
 
 export const metadata: Metadata = {
-  title: "Cornerstone | Care OS for Children's Homes",
-  description:
-    "The operating system for children's residential care. Safeguarding, compliance, intelligence, and oversight — calm, clear, and always Ofsted-ready.",
-  applicationName: "Cornerstone",
+  title: `${BRAND.productName} | Care OS for Children's Homes`,
+  description: BRAND.description,
+  applicationName: BRAND.productName,
   manifest: "/manifest.webmanifest",
   icons: {
     icon: [
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "Cornerstone",
+    title: BRAND.shortName,
   },
   other: {
     "apple-mobile-web-app-capable": "yes",

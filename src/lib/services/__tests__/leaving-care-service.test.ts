@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LEAVING CARE / PATHWAY PLANNING SERVICE TESTS
+// CARA — LEAVING CARE / PATHWAY PLANNING SERVICE TESTS
 // Pure-function tests for leaving-care metrics computation, alert identification,
 // and constant validation. CHR 2015 Reg 14, Children (Leaving Care) Act 2000,
 // Reg 36 case records, SCCIF Experiences & Progress.

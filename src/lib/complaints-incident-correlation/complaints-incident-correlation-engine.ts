@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — COMPLAINTS ↔ INCIDENT CORRELATION INTELLIGENCE ENGINE
+// CARA — COMPLAINTS ↔ INCIDENT CORRELATION INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 //
@@ -410,7 +410,7 @@ function buildAlerts(rows: ChildCorrelation[]): CorrelationAlert[] {
   return alerts;
 }
 
-// ── ARIA insights builder ───────────────────────────────────────────────────
+// ── Cara insights builder ───────────────────────────────────────────────────
 
 function buildInsights(rows: ChildCorrelation[]): AriaCorrelationInsight[] {
   const insights: AriaCorrelationInsight[] = [];

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HEALTH APPOINTMENTS SERVICE
+// CARA — HEALTH APPOINTMENTS SERVICE
 // Tracks children's medical, dental, optician, and mental health appointments,
 // ensuring timely healthcare access and follow-up.
 // CHR 2015 Reg 7 (children's plan — health needs),

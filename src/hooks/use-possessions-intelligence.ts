@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — POSSESSIONS INTELLIGENCE HOOK
+// CARA — POSSESSIONS INTELLIGENCE HOOK
 // React Query wrapper for /api/v1/possessions-intelligence
 // ══════════════════════════════════════════════════════════════════════════════
 

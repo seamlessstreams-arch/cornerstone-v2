@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SIBLING CONTACT & RELATIONSHIPS INTELLIGENCE ENGINE
+// CARA — HOME SIBLING CONTACT & RELATIONSHIPS INTELLIGENCE ENGINE
 // Measures sibling relationship quality — sibling placement considerations,
 // contact facilitation, relationship quality assessments, sibling event
 // coordination, and child wishes documentation.

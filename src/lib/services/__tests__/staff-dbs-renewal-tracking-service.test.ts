@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF DBS RENEWAL TRACKING SERVICE TESTS
+// CARA — STAFF DBS RENEWAL TRACKING SERVICE TESTS
 // Pure-function unit tests for DBS renewal metrics, alert identification,
-// and ARIA insight generation.
+// and Cara insight generation.
 //
 // CHR 2015 Reg 32 (fitness of premises — DBS requirements),
 // CHR 2015 Sch 2 (information in respect of persons seeking to carry on,

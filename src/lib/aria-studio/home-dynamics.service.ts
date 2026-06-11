@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — HOME DYNAMICS DASHBOARD SERVICE
+// Cara STUDIO — HOME DYNAMICS DASHBOARD SERVICE
 //
 // Generates daily/weekly snapshots of the home's overall dynamics: incident
 // counts, staffing, emotional climate, education, compliance, and suggested

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Children's Rights & Advocacy Intelligence API Route
+// Cara — Children's Rights & Advocacy Intelligence API Route
 //
 // GET  → returns Chamberlain House demo children's rights intelligence
 // POST → accepts custom data for any home

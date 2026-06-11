@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SEXUAL HEALTH & RSE EDUCATION INTELLIGENCE ENGINE
+// CARA — HOME SEXUAL HEALTH & RSE EDUCATION INTELLIGENCE ENGINE
 // Monitors how effectively the home delivers relationships and sex education,
 // ensures sexual health screening compliance, provides age-appropriate guidance,
 // delivers consent education, and maintains safeguarding awareness.

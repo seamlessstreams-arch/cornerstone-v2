@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME LONE WORKING STAFF SAFETY INTELLIGENCE ENGINE
+// CARA — HOME LONE WORKING STAFF SAFETY INTELLIGENCE ENGINE
 // Pure deterministic engine: lone working records, assessments, safety checks.
 // CHR 2015 Reg 33, HSE Lone Working guidance.
 // ══════════════════════════════════════════════════════════════════════════════

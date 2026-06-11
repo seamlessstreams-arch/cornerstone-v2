@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME WEIGHT MANAGEMENT & HEALTHY EATING INTELLIGENCE ENGINE
+// CARA -- HOME WEIGHT MANAGEMENT & HEALTHY EATING INTELLIGENCE ENGINE
 // Monitors weight management quality -- weight monitoring frequency, BMI tracking,
 // healthy eating programme engagement, portion control awareness, and body
 // positivity support across the home.

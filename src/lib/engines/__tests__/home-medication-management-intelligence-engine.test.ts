@@ -677,7 +677,7 @@ describe("computeHomeMedicationManagement", () => {
     });
   });
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
   describe("insights", () => {
     it("generates positive insight for exemplary management", () => {
       const prnMed = makeMed({ id: "med_prn", type: "prn" });

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SUBSTANCE MISUSE SERVICE
+// CARA — SUBSTANCE MISUSE SERVICE
 // Manages substance misuse assessments, incident tracking, referrals, and
 // intervention plans for children in residential care. CHR 2015 Reg 12
 // (protection from harm — including substance-related risks), Reg 34

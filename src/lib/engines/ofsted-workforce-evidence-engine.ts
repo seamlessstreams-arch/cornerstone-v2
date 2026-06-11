@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — OFSTED WORKFORCE EVIDENCE ENGINE (pure / deterministic)
+// CARA — OFSTED WORKFORCE EVIDENCE ENGINE (pure / deterministic)
 //
 // Assembles the workforce evidence an inspector looks for into RAG-rated domains
 // (safer recruitment, induction, supervision, training, probation, leadership

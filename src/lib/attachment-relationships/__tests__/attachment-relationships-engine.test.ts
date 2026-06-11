@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Attachment & Relationships Intelligence — Engine Tests
+// Cara Attachment & Relationships Intelligence — Engine Tests
 //
 // Covers all 7 core functions, scoring logic, and edge cases.
 // Demo data: Chamberlain House — Alex (14), Jordan (13), Morgan (15)

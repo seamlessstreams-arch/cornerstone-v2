@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — FIRE SAFETY & DRILLS INTELLIGENCE CARD
+// CARA — FIRE SAFETY & DRILLS INTELLIGENCE CARD
 // Dashboard card powered by the Emergency Intelligence Engine.
 // CHR 2015 Reg 25, Reg 36; Fire Safety Order 2005.
 // SCCIF: Helped & Protected — "The home has robust fire safety measures."
@@ -192,13 +192,13 @@ export function FireSafetyCard() {
           </div>
         )}
 
-        {/* ── ARIA Intelligence ──────────────────────────────────────── */}
+        {/* ── Cara Intelligence ──────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Fire Safety Intelligence
+              Cara Fire Safety Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

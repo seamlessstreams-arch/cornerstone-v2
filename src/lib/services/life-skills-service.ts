@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LIFE SKILLS & INDEPENDENCE SERVICE
+// CARA — LIFE SKILLS & INDEPENDENCE SERVICE
 // Manages skill assessments and pathway planning for children preparing for
 // independence (CHR 2015 Reg 8 enjoyment & achievement, Reg 9 quality of care,
 // Reg 14 care planning for children leaving care). Tracks readiness across

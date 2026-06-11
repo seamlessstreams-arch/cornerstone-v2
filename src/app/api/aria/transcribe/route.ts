@@ -146,7 +146,7 @@ export async function POST(req: NextRequest) {
     // Fail safely. The UI falls back to browser-based speech recognition.
     const reason = providerConfig.providerId === "anthropic"
       ? "Voice transcription requires OpenAI (Whisper). Your AI provider (Anthropic) does not support audio transcription. Browser speech recognition will be used instead."
-      : "Transcription is not configured. Set up an AI provider server-side to enable Aria voice dictation.";
+      : "Transcription is not configured. Set up an AI provider server-side to enable Cara voice dictation.";
     return NextResponse.json(
       {
         error: reason,

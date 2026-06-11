@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME MEETING GOVERNANCE INTELLIGENCE API ROUTE
+// CARA — HOME MEETING GOVERNANCE INTELLIGENCE API ROUTE
 // GET /api/v1/home-meeting-governance-intelligence
 // Synthesises house meeting regularity, action completion,
 // child attendance, feedback quality, and governance structure.

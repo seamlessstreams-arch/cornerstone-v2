@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME OUTCOME STAR & NEEDS INTELLIGENCE ENGINE — TESTS
+// CARA — HOME OUTCOME STAR & NEEDS INTELLIGENCE ENGINE — TESTS
 // Comprehensive coverage: insufficient data, rating classifications,
 // metric calculations, scoring modifiers, strengths, concerns,
 // recommendations, insights, headlines, edge cases.

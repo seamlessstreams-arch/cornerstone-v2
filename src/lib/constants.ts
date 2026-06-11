@@ -1,9 +1,9 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CONSTANTS
+// CARA — CONSTANTS
 // Regulated care operations platform for children's homes
 // ══════════════════════════════════════════════════════════════════════════════
 
-export const APP_NAME = "Cornerstone";
+export const APP_NAME = "Cara";
 export const APP_TAGLINE = "The operating system for children's homes";
 
 // ── Roles & Permissions ──────────────────────────────────────────────────────

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — WORKFORCE INTELLIGENCE HUB
+// CARA — WORKFORCE INTELLIGENCE HUB
 // Staff Development, Competency & Succession Dashboard
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -53,9 +53,9 @@ const READINESS_BG = (score: number) =>
 const MODULE_TILES = [
   { href: "/workforce/pathway",         icon: Milestone,      label: "Career Pathway",        desc: "5-stage progression ladder",         colour: "text-violet-600 bg-violet-50 border-violet-100" },
   { href: "/workforce/competency",      icon: BarChart2,      label: "Competency Framework",  desc: "10-domain scoring matrix",           colour: "text-blue-600 bg-blue-50 border-blue-100" },
-  { href: "/workforce/aria-planner",    icon: Sparkles,       label: "ARIA Dev Planner",      desc: "ARIA-generated development plans",   colour: "text-indigo-600 bg-indigo-50 border-indigo-100" },
+  { href: "/workforce/aria-planner",    icon: Sparkles,       label: "Cara Dev Planner",      desc: "Cara-generated development plans",   colour: "text-indigo-600 bg-indigo-50 border-indigo-100" },
   { href: "/workforce/succession",      icon: GitBranch,      label: "Succession Board",      desc: "Role coverage & readiness",          colour: "text-emerald-600 bg-emerald-50 border-emerald-100" },
-  { href: "/workforce/leadership",      icon: Telescope,      label: "Leadership Readiness",  desc: "ARIA leadership gap analysis",       colour: "text-amber-600 bg-amber-50 border-amber-100" },
+  { href: "/workforce/leadership",      icon: Telescope,      label: "Leadership Readiness",  desc: "Cara leadership gap analysis",       colour: "text-amber-600 bg-amber-50 border-amber-100" },
   { href: "/workforce/appraisals",      icon: UserCheck,      label: "Appraisals",            desc: "Annual & probation reviews",         colour: "text-teal-600 bg-teal-50 border-teal-100" },
   { href: "/workforce/induction",       icon: ShieldCheck,    label: "Induction Tracker",     desc: "Day 1 to probation completion",      colour: "text-rose-600 bg-rose-50 border-rose-100" },
   { href: "/workforce/training-matrix", icon: GraduationCap,  label: "Training Matrix",       desc: "Team training coverage overview",    colour: "text-sky-600 bg-sky-50 border-sky-100" },
@@ -100,7 +100,7 @@ export default function WorkforceHubPage() {
   return (
     <PageShell
       title="Workforce Intelligence"
-      subtitle="Staff development, competency & succession — powered by ARIA"
+      subtitle="Staff development, competency & succession — powered by Cara"
       ariaContext={{ pageTitle: "Workforce Intelligence", sourceType: "staff" }}
       showQuickCreate={false}
       actions={
@@ -113,13 +113,13 @@ export default function WorkforceHubPage() {
             onClick={() => setShowAria((p) => !p)}
           >
             <Sparkles className="h-3.5 w-3.5" />
-            ARIA Workforce Analysis
+            Cara Workforce Analysis
           </Button>
           <AriaStudioQuickActionButton context={{ record_type: "staff_training", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
-      {/* ARIA Panel */}
+      {/* Cara Panel */}
       {showAria && (
         <div className="relative">
           <button onClick={() => setShowAria(false)} className="absolute top-3 right-3 z-10 text-slate-400 hover:text-slate-600 text-xs">✕ Close</button>

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// API — ARIA Reg 45 Report Builder
+// API — Cara Reg 45 Report Builder
 // GET   → list reports for a home (latest first)
 // POST  → build a new draft report (RBAC: aria.generate_drafts)
 // PATCH → edit text OR transition status (draft → in_review → approved → locked)

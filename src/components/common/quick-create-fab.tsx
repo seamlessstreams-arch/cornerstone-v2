@@ -1,7 +1,7 @@
 "use client";
 
 // ==============================================================================
-// CORNERSTONE -- QUICK CREATE FAB
+// CARA -- QUICK CREATE FAB
 // Floating action button providing universal access to create any form from
 // any page. Opens a command-palette style modal with search, domain tabs,
 // keyboard navigation, and smart context detection from the current URL.

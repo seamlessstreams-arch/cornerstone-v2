@@ -295,7 +295,7 @@ export async function PATCH(
         );
       }
 
-      // ── ARIA bridge: draft suggested records into the M10 commit queue ──
+      // ── Cara bridge: draft suggested records into the M10 commit queue ──
       try {
         const verifiedEvent = await careEventsDb.careEvents.findById(id);
         if (verifiedEvent) {
@@ -308,7 +308,7 @@ export async function PATCH(
                 actionType: "artifact_generated",
                 artifactId: rec.id,
                 sourceIds: [verifiedEvent.id],
-                summary: `ARIA drafted ${rec.record_type} from verified care event "${verifiedEvent.title}"`,
+                summary: `Cara drafted ${rec.record_type} from verified care event "${verifiedEvent.title}"`,
                 after: { record_type: rec.record_type, status: rec.status },
               });
             }

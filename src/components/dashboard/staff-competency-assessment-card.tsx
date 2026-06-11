@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF COMPETENCY & ASSESSMENT INTELLIGENCE CARD
+// CARA — STAFF COMPETENCY & ASSESSMENT INTELLIGENCE CARD
 // Dashboard card for training compliance, supervision, and DBS status overview.
 // Powered by the Workforce Intelligence Engine — live data.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -156,13 +156,13 @@ export function StaffCompetencyAssessmentCard() {
           )}
         </div>
 
-        {/* ── ARIA insights ───────────────────────────────────────────── */}
+        {/* ── Cara insights ───────────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Competency Intelligence
+              Cara Competency Intelligence
             </p>
             {intel.insights.map((insight, i) => (
               <div

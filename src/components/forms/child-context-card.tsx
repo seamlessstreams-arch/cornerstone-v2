@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD CONTEXT CARD
+// CARA — CHILD CONTEXT CARD
 // Compact read-only card shown at the top of any child-related form.
 // Pulls data from RecordOnce context so nothing needs re-entering.
 // CHR 2015 Reg 12 — Evidence that care is informed by the child's plan.

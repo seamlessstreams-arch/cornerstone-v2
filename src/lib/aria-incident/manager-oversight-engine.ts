@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ARIA MANAGER OVERSIGHT ENGINE (pure / deterministic)
+// CARA — Cara MANAGER OVERSIGHT ENGINE (pure / deterministic)
 //
 // Slice C of the Practice Assistant: derives manager ALERTS from incident
 // sessions (missing record / child voice / restorative follow-up / manager
@@ -20,7 +20,7 @@ import { INCIDENT_TYPES, REG40_WORDING } from "./aria-incident-engine";
 import type { RestorativeConversationRecord, PostIncidentReflectionRecord } from "./post-incident-engine";
 
 export const OVERSIGHT_DISCLAIMER =
-  "Alerts clear when the practice happens — they are prompts for support and oversight, not performance judgements. Regulation 40 items are for the manager to consider; ARIA never decides.";
+  "Alerts clear when the practice happens — they are prompts for support and oversight, not performance judgements. Regulation 40 items are for the manager to consider; Cara never decides.";
 
 export type AlertPriority = "urgent" | "high" | "medium" | "low";
 export type AlertStatus = "open" | "resolved" | "dismissed";
@@ -163,7 +163,7 @@ export function detectPatterns(input: OversightInput): PatternInsight[] {
       insights.push({
         key: `frequency:${child_id}`, kind: "repeated_incident_pattern", severity: "attention",
         title: "Increased incident frequency",
-        insight: `ARIA has identified ${list.length} incidents for this child in the last 30 days.`,
+        insight: `Cara has identified ${list.length} incidents for this child in the last 30 days.`,
         child_id, count: list.length,
         suggestion: "Consider a multi-disciplinary review of triggers, support plans and what is changing for the child.",
       });
@@ -188,7 +188,7 @@ export function detectPatterns(input: OversightInput): PatternInsight[] {
       insights.push({
         key: `family_contact:${child_id}`, kind: "repeated_incident_pattern", severity: "attention",
         title: "Incidents linked to family contact",
-        insight: `ARIA has identified that ${familyLinked.length} incidents in the last 30 days occurred after family contact. Consider reviewing the child's family contact support plan, emotional preparation before calls, and post-contact regulation support.`,
+        insight: `Cara has identified that ${familyLinked.length} incidents in the last 30 days occurred after family contact. Consider reviewing the child's family contact support plan, emotional preparation before calls, and post-contact regulation support.`,
         child_id, count: familyLinked.length,
         suggestion: "Key-work session on family contact; review the contact support plan.",
       });
@@ -228,7 +228,7 @@ export function detectPatterns(input: OversightInput): PatternInsight[] {
       insights.push({
         key: `missing_voice:${child_id}`, kind: "missing_child_voice", severity: "attention",
         title: "Child's voice often missing",
-        insight: "ARIA has identified that records for this child often miss the child's voice. Consider a key-work session or advocacy support.",
+        insight: "Cara has identified that records for this child often miss the child's voice. Consider a key-work session or advocacy support.",
         child_id, count: noVoice.length,
         suggestion: "Plan how and when this child is best supported to share their view.",
       });

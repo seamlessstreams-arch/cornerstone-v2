@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME COMMUNICATION & LANGUAGE SUPPORT INTELLIGENCE ENGINE
+// CARA — HOME COMMUNICATION & LANGUAGE SUPPORT INTELLIGENCE ENGINE
 // Tracks speech and language support quality — communication assessments,
 // speech therapy engagement, communication aid provision, inclusive
 // communication practices, and staff training in communication needs.

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// API: /api/aria/system-health — Aria System Configuration Health Check
+// API: /api/aria/system-health — Cara System Configuration Health Check
 //
 // GET /api/aria/system-health
 // Returns system configuration status — no secrets exposed.
@@ -7,7 +7,7 @@
 //             toolsEnabled, timestamp }
 //
 // NOTE: /api/aria/health is the child health intelligence endpoint (CHR 2015
-// Reg 6(2)(b)). This route is for Aria system infrastructure health only.
+// Reg 6(2)(b)). This route is for Cara system infrastructure health only.
 // ══════════════════════════════════════════════════════════════════════════════
 
 export const dynamic = "force-dynamic";

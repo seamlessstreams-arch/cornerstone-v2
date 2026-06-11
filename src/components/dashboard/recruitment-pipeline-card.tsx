@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RECRUITMENT PIPELINE CARD
+// CARA — RECRUITMENT PIPELINE CARD
 // Dashboard widget showing active vacancies, candidate funnel, SCR alerts,
 // and time-to-appoint metrics at a glance.
 // Critical for RMs under constant staffing pressure — Reg 32/33 compliance.

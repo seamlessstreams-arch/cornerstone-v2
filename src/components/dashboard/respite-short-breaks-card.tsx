@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RESPITE & SHORT BREAKS INTELLIGENCE CARD
+// CARA — RESPITE & SHORT BREAKS INTELLIGENCE CARD
 // Live data from usePlacementStability() — home metrics, children.
 // CHR 2015 Reg 14, Reg 36; Children Act 1989 Sch 2 para 6.
 // SCCIF: Overall Experiences.
@@ -80,13 +80,13 @@ export function RespiteShortBreaksCard() {
           </div>
         </div>
 
-        {/* ── ARIA insights ───────────────────────────────────────────── */}
+        {/* ── Cara insights ───────────────────────────────────────────── */}
 
         {(d?.insights ?? []).length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Respite Intelligence
+              Cara Respite Intelligence
             </p>
             {(d?.insights ?? []).slice(0, 2).map((insight, i) => (
               <div

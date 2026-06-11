@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME OUTCOMES PROGRESS INTELLIGENCE ENGINE — TESTS
+// CARA — HOME OUTCOMES PROGRESS INTELLIGENCE ENGINE — TESTS
 // Comprehensive coverage: insufficient data, rating classifications,
 // domain profile, progress profile, review profile, equity profile,
 // scoring modifiers, strengths, concerns, recommendations, insights,

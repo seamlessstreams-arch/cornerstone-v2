@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CONCERN ESCALATION TRACKER
+// CARA — CONCERN ESCALATION TRACKER
 // Dashboard widget that aggregates unresolved concerns from welfare checks,
 // incidents, and safeguarding referrals. Gives RM instant visibility of
 // open concerns requiring action.

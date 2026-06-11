@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — INTERVIEW PACK · ARIA EXTRA QUESTIONS
+// CARA — INTERVIEW PACK · Cara EXTRA QUESTIONS
 // POST /api/v1/interview-pack/ai-questions   body: { role, candidateId? }
 //
 // Optional AI support (spec §7 + §13): suggests a few ADDITIONAL, values-aligned
@@ -56,7 +56,7 @@ export async function POST(req: Request) {
       data: {
         questions: [],
         llmUsed: false,
-        message: "ARIA isn't configured in this environment, so AI-suggested questions are unavailable. The structured pack above is complete on its own. (Add an ANTHROPIC_API_KEY to enable AI suggestions.)",
+        message: "Cara isn't configured in this environment, so AI-suggested questions are unavailable. The structured pack above is complete on its own. (Add an ANTHROPIC_API_KEY to enable AI suggestions.)",
         disclaimer: AI_DISCLAIMER,
       },
     });

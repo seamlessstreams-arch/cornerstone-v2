@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — QUICK CREATE ACTIONS
+// CARA — QUICK CREATE ACTIONS
 // Toolbar trigger component rendered in every page header.
 // Opens QuickCreateModal pre-configured for the current module.
 // ══════════════════════════════════════════════════════════════════════════════

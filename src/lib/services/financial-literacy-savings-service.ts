@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — FINANCIAL LITERACY SAVINGS SERVICE
+// CARA — FINANCIAL LITERACY SAVINGS SERVICE
 // Tracks financial education, savings accounts, budgeting skills,
 // money management, and independence preparation through finance.
 // CHR 2015 Reg 8(2)(a)(vi) (preparation for independence — finances),

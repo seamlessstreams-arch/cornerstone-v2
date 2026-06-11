@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       ok: true,
       result,
-      ariaLabel: "Aria suggested draft — requires manager review and approval",
+      ariaLabel: "Cara suggested draft — requires manager review and approval",
     });
   } catch (err) {
     console.error("[api/intelligence/humanised-oversight] Error:", err);

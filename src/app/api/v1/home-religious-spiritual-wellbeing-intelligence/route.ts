@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME RELIGIOUS & SPIRITUAL WELLBEING INTELLIGENCE API ROUTE
+// CARA -- HOME RELIGIOUS & SPIRITUAL WELLBEING INTELLIGENCE API ROUTE
 // GET /api/v1/home-religious-spiritual-wellbeing-intelligence
 // Cross-domain composite: faithObservanceRecords + spiritualDevelopmentRecords +
 // religiousDietaryRecords + worshipAccessRecords + celebrationParticipationRecords

@@ -387,7 +387,7 @@ export default function WorkforceSupervisionPage() {
         <div className="flex items-center justify-between">
           <div>
             <p className="text-sm font-semibold text-indigo-900">Full Supervision Records</p>
-            <p className="text-xs text-indigo-700 mt-0.5">Detailed supervision logs, reflective notes, and ARIA insights are in the People module</p>
+            <p className="text-xs text-indigo-700 mt-0.5">Detailed supervision logs, reflective notes, and Cara insights are in the People module</p>
           </div>
           <Link href="/supervision">
             <Button size="sm" variant="outline" className="border-indigo-200 text-indigo-700 hover:bg-indigo-100">

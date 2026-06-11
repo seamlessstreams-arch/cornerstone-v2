@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD VOICE & PARTICIPATION TRACKING SERVICE TESTS
+// CARA — CHILD VOICE & PARTICIPATION TRACKING SERVICE TESTS
 // Pure-function unit tests for voice participation metrics computation,
-// alert identification, ARIA insight generation, enum validation, and
+// alert identification, Cara insight generation, enum validation, and
 // CRUD fallback behaviour (Supabase disabled).
 // CHR 2015 Reg 7 (views, wishes and feelings of children),
 // CHR 2015 Reg 44/45 (children consulted during visits/reviews),

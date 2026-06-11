@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD 360 INTELLIGENCE ENGINE
+// CARA — CHILD 360 INTELLIGENCE ENGINE
 // Per-child holistic intelligence profile aggregating all domains.
 // Pure deterministic. No LLM calls, no DB access.
 // CHR 2015 Reg 5 (RM duties), Reg 9 (care plan), Reg 14 (child participation).

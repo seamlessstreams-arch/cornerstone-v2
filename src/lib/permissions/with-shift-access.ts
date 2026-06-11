@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Permissions — withShiftAccess route guard (production hardening)
+// Cara Permissions — withShiftAccess route guard (production hardening)
 //
 // A SERVER-SIDE guard that enforces the real permission engine on an API route using
 // the actual acting user (resolved from x-user-id), so shift-based access (Phase 4)

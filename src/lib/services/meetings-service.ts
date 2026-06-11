@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILDREN'S MEETINGS & CONSULTATION SERVICE
+// CARA — CHILDREN'S MEETINGS & CONSULTATION SERVICE
 // Manages house meetings, children's councils, consultation records, and
 // feedback tracking. Evidence base for Reg 7 (children's wishes and feelings),
 // Reg 16 (consultation with children), and SCCIF Overall Experiences judgment.

@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA RULES ENGINE — Deterministic Intelligence Without API Calls
+// Cara RULES ENGINE — Deterministic Intelligence Without API Calls
 //
-// Replaces LLM calls for ~60% of ARIA commands with:
+// Replaces LLM calls for ~60% of Cara commands with:
 //   1. Pattern matchers — extract structured data from text
 //   2. Template generators — produce formatted output from data
 //   3. Quality checkers — evaluate text against rubrics
@@ -116,7 +116,7 @@ function extractActions(input: string): RuleResult {
 
   const numbered = actions.map((a, i) => `${i + 1}. ${a}`).join("\n");
   return {
-    output: `**Action Items Identified (${actions.length}):**\n\n${numbered}\n\n*Aria suggested actions — extracted from the record text. Assign owners and due dates before actioning.*`,
+    output: `**Action Items Identified (${actions.length}):**\n\n${numbered}\n\n*Cara suggested actions — extracted from the record text. Assign owners and due dates before actioning.*`,
     confidence: actions.length >= 3 ? "high" : "medium",
     method: "pattern",
     metadata: { action_count: actions.length },
@@ -166,7 +166,7 @@ function checkMissingInfo(input: string, context?: RuleContext): RuleResult {
     output += `**Present (${present.length} items):** ${present.join(", ")}\n\n`;
   }
 
-  output += `*Aria completeness check — review missing items and add detail where possible. ${context?.severity === "high" || context?.severity === "critical" ? "High/critical severity records require comprehensive documentation." : ""}*`;
+  output += `*Cara completeness check — review missing items and add detail where possible. ${context?.severity === "high" || context?.severity === "critical" ? "High/critical severity records require comprehensive documentation." : ""}*`;
 
   return {
     output,
@@ -196,7 +196,7 @@ function checkTone(input: string): RuleResult {
 
   if (issues.length === 0) {
     return {
-      output: "**Tone Check: ✅ Good**\n\nNo significant language or tone issues detected. The record uses appropriate professional language.\n\n*Aria tone check — always review in context. What reads well on screen may feel different to the child reading their file.*",
+      output: "**Tone Check: ✅ Good**\n\nNo significant language or tone issues detected. The record uses appropriate professional language.\n\n*Cara tone check — always review in context. What reads well on screen may feel different to the child reading their file.*",
       confidence: "high",
       method: "rules",
       metadata: { issues_found: 0 },
@@ -212,7 +212,7 @@ function checkTone(input: string): RuleResult {
     output += `- **"${issue.text}"** — ${issue.issue}\n  → ${issue.fix}\n\n`;
   }
 
-  output += `*Aria tone check — remember "writing to the child." Every record may one day be read by the young person. Use language that is respectful, factual, and strengths-aware.*`;
+  output += `*Cara tone check — remember "writing to the child." Every record may one day be read by the young person. Use language that is respectful, factual, and strengths-aware.*`;
 
   return {
     output,
@@ -243,7 +243,7 @@ function identifyRisks(input: string): RuleResult {
 
   if (risks.length === 0) {
     return {
-      output: "**Risk Scan: No specific risk indicators detected**\n\nThis does not mean there are no risks — only that no common risk keywords were found. Always apply professional judgement.\n\n*Aria risk scan — pattern-based detection. Does not replace professional risk assessment.*",
+      output: "**Risk Scan: No specific risk indicators detected**\n\nThis does not mean there are no risks — only that no common risk keywords were found. Always apply professional judgement.\n\n*Cara risk scan — pattern-based detection. Does not replace professional risk assessment.*",
       confidence: "medium",
       method: "pattern",
       metadata: { risks_found: 0 },
@@ -269,7 +269,7 @@ function identifyRisks(input: string): RuleResult {
     output += "\n⚠️ **High risk indicators detected.** Ensure manager is informed and risk assessment is reviewed.\n";
   }
 
-  output += "\n*Aria risk scan — keyword-based detection. Always apply professional judgement and follow your home's safeguarding procedures.*";
+  output += "\n*Cara risk scan — keyword-based detection. Always apply professional judgement and follow your home's safeguarding procedures.*";
 
   return {
     output,
@@ -322,7 +322,7 @@ function suggestDueDate(input: string, context?: RuleContext): RuleResult {
   const dayName = dueDate.toLocaleDateString("en-GB", { weekday: "long" });
 
   return {
-    output: `**Suggested Due Date: ${formatted} (${dayName})**\n\nReason: ${reason}\n\n*Aria suggestion — adjust based on professional judgement and operational capacity.*`,
+    output: `**Suggested Due Date: ${formatted} (${dayName})**\n\nReason: ${reason}\n\n*Cara suggestion — adjust based on professional judgement and operational capacity.*`,
     confidence: suggestedDays <= 1 ? "high" : "medium",
     method: "rules",
     metadata: { due_date: formatted, days_from_now: suggestedDays },
@@ -369,7 +369,7 @@ function suggestTaskOwner(input: string, context?: RuleContext): RuleResult {
   }
 
   return {
-    output: `**Suggested Owner: ${role}**\n\nReason: ${reason}\n\n*Aria suggestion — assign to a specific named individual with capacity. Check shift patterns and existing workload.*`,
+    output: `**Suggested Owner: ${role}**\n\nReason: ${reason}\n\n*Cara suggestion — assign to a specific named individual with capacity. Check shift patterns and existing workload.*`,
     confidence: "medium",
     method: "rules",
     metadata: { suggested_role: role },
@@ -415,7 +415,7 @@ function createTaskList(input: string, context?: RuleContext): RuleResult {
   }
 
   const numbered = tasks.map((t, i) => `${i + 1}. [ ] ${t}`).join("\n");
-  const output = `**Task List (${tasks.length} items):**\n\n${numbered}\n\n*Aria suggested tasks — review, assign owners, set due dates, and tick off as completed.*`;
+  const output = `**Task List (${tasks.length} items):**\n\n${numbered}\n\n*Cara suggested tasks — review, assign owners, set due dates, and tick off as completed.*`;
 
   return {
     output,
@@ -461,7 +461,7 @@ function checkFactuality(input: string): RuleResult {
 
   if (issues.length === 0) {
     return {
-      output: "**Factual Check: ✅ No structural issues detected**\n\nThe record appears internally consistent. Always verify facts against other records and direct observation.\n\n*Aria structural check — verifies consistency, not accuracy. Facts must be verified by the author.*",
+      output: "**Factual Check: ✅ No structural issues detected**\n\nThe record appears internally consistent. Always verify facts against other records and direct observation.\n\n*Cara structural check — verifies consistency, not accuracy. Facts must be verified by the author.*",
       confidence: "medium",
       method: "rules",
     };
@@ -469,7 +469,7 @@ function checkFactuality(input: string): RuleResult {
 
   let output = `**Factual Check: ${issues.length} issue${issues.length === 1 ? "" : "s"} found**\n\n`;
   output += issues.map((i) => `- ⚠️ ${i}`).join("\n");
-  output += "\n\n*Aria structural check — review each item and correct before submitting.*";
+  output += "\n\n*Cara structural check — review each item and correct before submitting.*";
 
   return {
     output,
@@ -481,7 +481,7 @@ function checkFactuality(input: string): RuleResult {
 }
 
 // ─── Command → Rule Mapping ──────────────────────────────────────────────────
-// Maps ARIA command IDs to deterministic rule handlers.
+// Maps Cara command IDs to deterministic rule handlers.
 // Commands NOT in this map fall through to LLM.
 
 const RULE_HANDLERS: Record<string, RuleHandler> = {
@@ -524,7 +524,7 @@ const RULE_HANDLERS: Record<string, RuleHandler> = {
     })).sort((a, b) => b.score - a.score);
 
     const top = scored.slice(0, Math.min(5, scored.length));
-    const output = `**Key Points (${top.length}):**\n\n${top.map((p, i) => `${i + 1}. ${p.text}`).join("\n")}\n\n*Aria extraction — review for accuracy and completeness.*`;
+    const output = `**Key Points (${top.length}):**\n\n${top.map((p, i) => `${i + 1}. ${p.text}`).join("\n")}\n\n*Cara extraction — review for accuracy and completeness.*`;
     return { output, confidence: "medium", method: "pattern", metadata: { points: top.length } };
   },
 
@@ -568,7 +568,7 @@ const RULE_HANDLERS: Record<string, RuleHandler> = {
     tasks.push("Update daily log with incident reference");
     tasks.push("Check if Reg 40 notification to Ofsted is required");
 
-    const output = `**Suggested Follow-Up Tasks (${tasks.length}):**\n\n${tasks.map((t, i) => `${i + 1}. [ ] ${t}`).join("\n")}\n\n*Aria suggested follow-ups based on incident content. Assign to specific staff with due dates.*`;
+    const output = `**Suggested Follow-Up Tasks (${tasks.length}):**\n\n${tasks.map((t, i) => `${i + 1}. [ ] ${t}`).join("\n")}\n\n*Cara suggested follow-ups based on incident content. Assign to specific staff with due dates.*`;
     return { output, confidence: "high", method: "rules", metadata: { task_count: tasks.length } };
   },
 
@@ -604,7 +604,7 @@ ${input ? `Based on notes provided:\n${input}` : "[Record key events]"}
 [Anything the incoming team needs to know]
 
 ---
-*Aria template — complete all sections before handing over.*`;
+*Cara template — complete all sections before handing over.*`;
     return { output, confidence: "high", method: "template" };
   },
 
@@ -638,7 +638,7 @@ ${input ? input : "[Summarise main events from the shift]"}
 [Confirm all medications administered correctly or note any issues]
 
 ---
-*Aria template — review and complete all sections before signing off.*`;
+*Cara template — review and complete all sections before signing off.*`;
     return { output, confidence: "high", method: "template" };
   },
 
@@ -686,7 +686,7 @@ Action: [Who / what / by when]`}
 **Next Meeting:** [Date and time]
 
 ---
-*Aria template — complete all sections. Circulate to attendees within 48 hours.*`;
+*Cara template — complete all sections. Circulate to attendees within 48 hours.*`;
     return { output, confidence: "high", method: "template" };
   },
 
@@ -759,7 +759,7 @@ Action: [Who / what / by when]`}
 ${standingItems.map((item, i) => `${i + 1}. ${item}`).join("\n")}
 
 ---
-*Aria template — add specific discussion items and circulate at least 48 hours before the meeting.*`;
+*Cara template — add specific discussion items and circulate at least 48 hours before the meeting.*`;
     return { output, confidence: "high", method: "template" };
   },
 
@@ -787,7 +787,7 @@ ${standingItems.map((item, i) => `${i + 1}. ${item}`).join("\n")}
 10. [ ] Welcome and introductions to team
 11. [ ] Tour of the home — safety exits, medication storage, fire panel
 12. [ ] Issue keys, alarm codes, staff handbook
-13. [ ] IT access set up — email, Cornerstone login, WiFi
+13. [ ] IT access set up — email, Cara login, WiFi
 14. [ ] Emergency contact details collected
 15. [ ] Photograph taken for personnel file
 
@@ -818,7 +818,7 @@ ${standingItems.map((item, i) => `${i + 1}. ${item}`).join("\n")}
 35. [ ] Level 3 Diploma in Residential Childcare — registration
 
 ---
-*Aria template — tick items as completed. Retain in personnel file as safer recruitment evidence.*`;
+*Cara template — tick items as completed. Retain in personnel file as safer recruitment evidence.*`;
     return { output, confidence: "high", method: "template", metadata: { task_count: 35 } };
   },
 
@@ -865,14 +865,14 @@ ${standingItems.map((item, i) => `${i + 1}. ${item}`).join("\n")}
 
     if (tasks.length === 0) {
       return {
-        output: "**Calendar Follow-Up Tasks:** No date references or follow-up triggers found in the text. Add specific dates for Aria to extract.\n\n*Aria extraction — add explicit dates (e.g. 01/07/2025) for best results.*",
+        output: "**Calendar Follow-Up Tasks:** No date references or follow-up triggers found in the text. Add specific dates for Cara to extract.\n\n*Cara extraction — add explicit dates (e.g. 01/07/2025) for best results.*",
         confidence: "low",
         method: "pattern",
         metadata: { task_count: 0 },
       };
     }
 
-    const output = `**Calendar Follow-Up Tasks (${tasks.length}):**\n\n${tasks.map((t, i) => `${i + 1}. [ ] ${t}`).join("\n")}\n\n*Aria extraction — add these to your calendar system and assign owners.*`;
+    const output = `**Calendar Follow-Up Tasks (${tasks.length}):**\n\n${tasks.map((t, i) => `${i + 1}. [ ] ${t}`).join("\n")}\n\n*Cara extraction — add these to your calendar system and assign owners.*`;
     return { output, confidence: "medium", method: "pattern", metadata: { task_count: tasks.length, dates_found: foundDates.length } };
   },
 
@@ -909,7 +909,7 @@ ${standingItems.map((item, i) => `${i + 1}. ${item}`).join("\n")}
 
     if (complianceHits.length === 0 && dates.length === 0) {
       return {
-        output: "**Compliance Dates:** No compliance-related dates or deadlines found in this text.\n\n*Aria scan — ensure compliance deadlines are recorded with explicit dates.*",
+        output: "**Compliance Dates:** No compliance-related dates or deadlines found in this text.\n\n*Cara scan — ensure compliance deadlines are recorded with explicit dates.*",
         confidence: "low",
         method: "pattern",
         metadata: { items_found: 0 },
@@ -925,7 +925,7 @@ ${standingItems.map((item, i) => `${i + 1}. ${item}`).join("\n")}
     if (dates.length > 0) {
       output += `**Date References Found:** ${dates.join(", ")}\n\n`;
     }
-    output += `*Aria compliance scan — cross-reference with your compliance tracker. Set calendar reminders for each deadline.*`;
+    output += `*Cara compliance scan — cross-reference with your compliance tracker. Set calendar reminders for each deadline.*`;
 
     return { output, confidence: "medium", method: "pattern", metadata: { items_found: complianceHits.length, dates_found: dates.length } };
   },
@@ -975,7 +975,7 @@ ${standingItems.map((item, i) => `${i + 1}. ${item}`).join("\n")}
     tasks.push("Update daily log referencing this incident");
     tasks.push("Check whether Reg 40 notification to Ofsted is needed");
 
-    const output = `**Tasks Generated from Incident (${tasks.length}):**\n\n${tasks.map((t, i) => `${i + 1}. [ ] ${t}`).join("\n")}\n\n*Aria task generation — assign owners and due dates. Critical tasks should be actioned immediately.*`;
+    const output = `**Tasks Generated from Incident (${tasks.length}):**\n\n${tasks.map((t, i) => `${i + 1}. [ ] ${t}`).join("\n")}\n\n*Cara task generation — assign owners and due dates. Critical tasks should be actioned immediately.*`;
     return { output, confidence: "high", method: "rules", metadata: { task_count: tasks.length } };
   },
 
@@ -1018,7 +1018,7 @@ ${standingItems.map((item, i) => `${i + 1}. ${item}`).join("\n")}
       tasks.unshift("Identify root causes for each finding");
     }
 
-    const output = `**Tasks Generated from Audit (${tasks.length}):**\n\n${tasks.map((t, i) => `${i + 1}. [ ] ${t}`).join("\n")}\n\n*Aria task generation — assign owners and set realistic deadlines for each corrective action.*`;
+    const output = `**Tasks Generated from Audit (${tasks.length}):**\n\n${tasks.map((t, i) => `${i + 1}. [ ] ${t}`).join("\n")}\n\n*Cara task generation — assign owners and set realistic deadlines for each corrective action.*`;
     return { output, confidence: "high", method: "rules", metadata: { task_count: tasks.length } };
   },
 
@@ -1061,7 +1061,7 @@ ${standingItems.map((item, i) => `${i + 1}. ${item}`).join("\n")}
 
     tasks.push("Manager to confirm completion of oversight actions");
 
-    const output = `**Tasks Generated from Oversight (${tasks.length}):**\n\n${tasks.map((t, i) => `${i + 1}. [ ] ${t}`).join("\n")}\n\n*Aria task generation — assign to specific staff and set due dates.*`;
+    const output = `**Tasks Generated from Oversight (${tasks.length}):**\n\n${tasks.map((t, i) => `${i + 1}. [ ] ${t}`).join("\n")}\n\n*Cara task generation — assign to specific staff and set due dates.*`;
     return { output, confidence: "medium", method: "rules", metadata: { task_count: tasks.length } };
   },
 
@@ -1108,7 +1108,7 @@ ${standingItems.map((item, i) => `${i + 1}. ${item}`).join("\n")}
 
     if (times.length === 0) {
       return {
-        output: "**Chronology Check:** No specific times found in the incident record. Good practice requires recording the time of each key event.\n\n*Aria chronology check — add timestamps throughout the incident record (e.g. 14:30, 14:45).*",
+        output: "**Chronology Check:** No specific times found in the incident record. Good practice requires recording the time of each key event.\n\n*Cara chronology check — add timestamps throughout the incident record (e.g. 14:30, 14:45).*",
         confidence: "medium",
         method: "rules",
         suggestions: ["Add specific times for each event in the incident"],
@@ -1118,7 +1118,7 @@ ${standingItems.map((item, i) => `${i + 1}. ${item}`).join("\n")}
 
     if (times.length === 1) {
       return {
-        output: `**Chronology Check:** Only one time reference found (${times[0].raw}). An incident record should have multiple timestamps showing the sequence of events.\n\n*Aria chronology check — record when each key event occurred.*`,
+        output: `**Chronology Check:** Only one time reference found (${times[0].raw}). An incident record should have multiple timestamps showing the sequence of events.\n\n*Cara chronology check — record when each key event occurred.*`,
         confidence: "medium",
         method: "rules",
         suggestions: ["Add timestamps for the start, key events, and resolution of the incident"],
@@ -1128,7 +1128,7 @@ ${standingItems.map((item, i) => `${i + 1}. ${item}`).join("\n")}
 
     if (issues.length === 0) {
       return {
-        output: `**Chronology Check: Consistent**\n\n${times.length} time references found in chronological order: ${times.map((t) => t.raw).join(" → ")}\n\n*Aria chronology check — timeline appears consistent. Always verify against other records.*`,
+        output: `**Chronology Check: Consistent**\n\n${times.length} time references found in chronological order: ${times.map((t) => t.raw).join(" → ")}\n\n*Cara chronology check — timeline appears consistent. Always verify against other records.*`,
         confidence: "high",
         method: "rules",
         metadata: { times_found: times.length, issues_found: 0 },
@@ -1138,7 +1138,7 @@ ${standingItems.map((item, i) => `${i + 1}. ${item}`).join("\n")}
     let output = `**Chronology Check: ${issues.length} issue${issues.length === 1 ? "" : "s"} found**\n\n`;
     output += `Times found: ${times.map((t) => t.raw).join(", ")}\n\n`;
     output += issues.map((i) => `- Warning: ${i}`).join("\n");
-    output += `\n\n*Aria chronology check — correct any sequencing errors before submitting.*`;
+    output += `\n\n*Cara chronology check — correct any sequencing errors before submitting.*`;
 
     return { output, confidence: "high", method: "rules", metadata: { times_found: times.length, issues_found: issues.length }, warnings: issues };
   },
@@ -1175,7 +1175,7 @@ ${standingItems.map((item, i) => `${i + 1}. ${item}`).join("\n")}
       output += `**Could Be Strengthened (${missing.length}):**\n${missing.map((m) => `- ${m}`).join("\n")}\n\n`;
     }
 
-    output += `*Aria reflection check — good oversight includes reflective practice, strengths-based observations, and forward-looking actions.*`;
+    output += `*Cara reflection check — good oversight includes reflective practice, strengths-based observations, and forward-looking actions.*`;
 
     return {
       output,
@@ -1217,7 +1217,7 @@ ${standingItems.map((item, i) => `${i + 1}. ${item}`).join("\n")}
       output += `**Could Be Strengthened (${missing.length}):**\n${missing.map((m) => `- ${m}`).join("\n")}\n\n`;
     }
 
-    output += `*Aria challenge check — effective oversight includes professional curiosity, evidence-seeking, and holding staff to account.*`;
+    output += `*Cara challenge check — effective oversight includes professional curiosity, evidence-seeking, and holding staff to account.*`;
 
     return {
       output,
@@ -1261,7 +1261,7 @@ ${standingItems.map((item, i) => `${i + 1}. ${item}`).join("\n")}
       output += `**Could Be Strengthened (${missing.length}):**\n${missing.map((m) => `- ${m}`).join("\n")}\n\n`;
     }
 
-    output += `*Aria child-focus check — effective oversight always returns to the question: "What difference is this making for the child?"*`;
+    output += `*Cara child-focus check — effective oversight always returns to the question: "What difference is this making for the child?"*`;
 
     return {
       output,
@@ -1334,7 +1334,7 @@ ${standingItems.map((item, i) => `${i + 1}. ${item}`).join("\n")}
 - Volunteer work and education should be accounted for
 - A full history from leaving secondary education is required
 
-*Aria gap check — pattern-based scan. Always verify manually against application form and at interview.*`;
+*Cara gap check — pattern-based scan. Always verify manually against application form and at interview.*`;
 
     return {
       output,
@@ -1394,7 +1394,7 @@ ${standingItems.map((item, i) => `${i + 1}. ${item}`).join("\n")}
       output += "No overdue items detected from the text provided. Verify against your audit action tracker.\n\n";
     }
 
-    output += `*Aria overdue check — compare against your audit action log for definitive status.*`;
+    output += `*Cara overdue check — compare against your audit action log for definitive status.*`;
 
     return {
       output,
@@ -1453,14 +1453,14 @@ ${standingItems.map((item, i) => `${i + 1}. ${item}`).join("\n")}
 
     if (suggestions.length === 0) {
       return {
-        output: "**Document Linking:** No specific linkable references detected. Ensure the document is linked to the relevant child and/or staff record.\n\n*Aria linking suggestion — all records should be linked to at least one child or staff record.*",
+        output: "**Document Linking:** No specific linkable references detected. Ensure the document is linked to the relevant child and/or staff record.\n\n*Cara linking suggestion — all records should be linked to at least one child or staff record.*",
         confidence: "low",
         method: "pattern",
         metadata: { suggestions_count: 0 },
       };
     }
 
-    const output = `**Suggested Document Links (${suggestions.length}):**\n\n${suggestions.map((s, i) => `${i + 1}. ${s}`).join("\n")}\n\n*Aria linking suggestions — link documents to ensure a complete audit trail and easy retrieval.*`;
+    const output = `**Suggested Document Links (${suggestions.length}):**\n\n${suggestions.map((s, i) => `${i + 1}. ${s}`).join("\n")}\n\n*Cara linking suggestions — link documents to ensure a complete audit trail and easy retrieval.*`;
     return { output, confidence: "medium", method: "pattern", metadata: { suggestions_count: suggestions.length } };
   },
 
@@ -1515,14 +1515,14 @@ ${standingItems.map((item, i) => `${i + 1}. ${item}`).join("\n")}
 
     if (links.length === 0) {
       return {
-        output: "**Document Links:** No specific references to other records, people, or agencies detected.\n\n*Aria link detection — ensure records contain cross-references for a complete audit trail.*",
+        output: "**Document Links:** No specific references to other records, people, or agencies detected.\n\n*Cara link detection — ensure records contain cross-references for a complete audit trail.*",
         confidence: "low",
         method: "pattern",
         metadata: { links_found: 0 },
       };
     }
 
-    const output = `**Document References Identified:**\n\n${links.join("\n\n")}\n\n*Aria link detection — create formal links to these records in the system.*`;
+    const output = `**Document References Identified:**\n\n${links.join("\n\n")}\n\n*Cara link detection — create formal links to these records in the system.*`;
     return { output, confidence: "medium", method: "pattern", metadata: { links_found: links.length, names_found: names.length } };
   },
 
@@ -1530,7 +1530,7 @@ ${standingItems.map((item, i) => `${i + 1}. ${item}`).join("\n")}
     // Extract key sentences using keyword scoring (same approach as extract_key_points but formatted for linking)
     const sentences = input.split(/[.!?]\s+/).filter((s) => s.trim().length > 20);
     if (sentences.length === 0) {
-      return { output: "**Document Summary:** Text is too short to summarise.\n\n*Aria summary — provide more content for a meaningful summary.*", confidence: "low", method: "pattern" };
+      return { output: "**Document Summary:** Text is too short to summarise.\n\n*Cara summary — provide more content for a meaningful summary.*", confidence: "low", method: "pattern" };
     }
 
     const keywords = /important|significant|concern|risk|action|require|must|essential|critical|key|note|decision|agreed|outcome|result|recommendation|safeguard|review|update/gi;
@@ -1545,7 +1545,7 @@ ${standingItems.map((item, i) => `${i + 1}. ${item}`).join("\n")}
     let output = `**Document Summary (for linking to record):**\n\n`;
     output += top.map((p) => `- ${p.text}`).join("\n");
     output += `\n\n**Document Stats:** ${wordCount} words, ${sentences.length} sentences\n`;
-    output += `\n*Aria summary — attach this summary when linking the document to a child or staff record.*`;
+    output += `\n*Cara summary — attach this summary when linking the document to a child or staff record.*`;
 
     return { output, confidence: "medium", method: "pattern", metadata: { key_points: top.length, word_count: wordCount } };
   },
@@ -1599,7 +1599,7 @@ ${standingItems.map((item, i) => `${i + 1}. ${item}`).join("\n")}
     }
 
     output += `**Reminder:** KCSIE 2024 and Regulation 32 of the CH(E) Regulations 2015 require all checks to be completed before an offer of employment is confirmed. Never allow unsupervised access to children before all checks are cleared.\n\n`;
-    output += `*Aria safer recruitment check — verify each item against physical/digital evidence. This scan checks for keyword references, not verified documents.*`;
+    output += `*Cara safer recruitment check — verify each item against physical/digital evidence. This scan checks for keyword references, not verified documents.*`;
 
     return {
       output,
@@ -1704,7 +1704,7 @@ ${standingItems.map((item, i) => `${i + 1}. ${item}`).join("\n")}
 ${items.map((item, i) => `${i + 1}. ${item}`).join("\n")}
 
 ---
-*Aria template — circulate to all attendees at least 48 hours before the meeting.*`;
+*Cara template — circulate to all attendees at least 48 hours before the meeting.*`;
 
     return { output, confidence: "high", method: "template", metadata: { meeting_type: meetingType, items_count: items.length } };
   },
@@ -1749,7 +1749,7 @@ If this task relates to a child's safety, welfare, or a regulatory requirement, 
 [Add context about why this escalation is necessary]
 
 ---
-*Aria template — complete and send to the relevant parties. Record the escalation in the task log.*`;
+*Cara template — complete and send to the relevant parties. Record the escalation in the task log.*`;
 
     return { output, confidence: "high", method: "template" };
   },
@@ -1805,7 +1805,7 @@ If this task relates to a child's safety, welfare, or a regulatory requirement, 
       updates.push("Check care plan, risk assessment, and placement plan for relevance");
     }
 
-    const output = `**Related Documents Requiring Update (${updates.length}):**\n\n${updates.map((u, i) => `${i + 1}. [ ] ${u}`).join("\n")}\n\n*Aria cascade check — when one document changes, others may need updating to maintain consistency.*`;
+    const output = `**Related Documents Requiring Update (${updates.length}):**\n\n${updates.map((u, i) => `${i + 1}. [ ] ${u}`).join("\n")}\n\n*Cara cascade check — when one document changes, others may need updating to maintain consistency.*`;
     return { output, confidence: "medium", method: "rules", metadata: { updates_count: updates.length } };
   },
 
@@ -1818,8 +1818,8 @@ If this task relates to a child's safety, welfare, or a regulatory requirement, 
     const base = extractActions(input);
     const output = base.output
       .replace("Action Items Identified", "Management Actions Identified")
-      .replace("Aria suggested actions — extracted from the record text. Assign owners and due dates before actioning.",
-        "Aria management actions — extracted from oversight/management text. Each action should have a named owner and clear deadline.");
+      .replace("Cara suggested actions — extracted from the record text. Assign owners and due dates before actioning.",
+        "Cara management actions — extracted from oversight/management text. Each action should have a named owner and clear deadline.");
     return { ...base, output };
   },
 
@@ -1856,7 +1856,7 @@ If this task relates to a child's safety, welfare, or a regulatory requirement, 
     }
     output += `\n**Review Date:** [Set review date]\n`;
     output += `**Responsible Manager:** [Name]\n\n`;
-    output += `*Aria action plan — assign owners, set realistic deadlines, and review progress at the agreed date.*`;
+    output += `*Cara action plan — assign owners, set realistic deadlines, and review progress at the agreed date.*`;
 
     return { output, confidence: "medium", method: "rules", metadata: { action_count: actions.length } };
   },
@@ -1904,7 +1904,7 @@ If this task relates to a child's safety, welfare, or a regulatory requirement, 
     tasks.push("Manager: Set review checkpoint to confirm delegated tasks are progressing");
     tasks.push("Manager: Retain overall accountability — delegation is not abdication");
 
-    const output = `**Delegated Audit Tasks (${tasks.length}):**\n\n${tasks.map((t, i) => `${i + 1}. [ ] ${t}`).join("\n")}\n\n*Aria delegation — the Registered Manager retains accountability. Confirm each delegate understands the task, deadline, and expected standard.*`;
+    const output = `**Delegated Audit Tasks (${tasks.length}):**\n\n${tasks.map((t, i) => `${i + 1}. [ ] ${t}`).join("\n")}\n\n*Cara delegation — the Registered Manager retains accountability. Confirm each delegate understands the task, deadline, and expected standard.*`;
     return { output, confidence: "medium", method: "rules", metadata: { task_count: tasks.length } };
   },
 
@@ -1914,8 +1914,8 @@ If this task relates to a child's safety, welfare, or a regulatory requirement, 
     const output = risks.output
       .replace("Risk Indicators Found", "Audit Risk Priorities")
       .replace("No specific risk indicators detected", "No specific risk indicators detected in the audit text")
-      .replace("Aria risk scan — keyword-based detection. Always apply professional judgement and follow your home's safeguarding procedures.",
-        "Aria audit risk prioritisation — address critical and high items first. Create corrective action plans for each category.");
+      .replace("Cara risk scan — keyword-based detection. Always apply professional judgement and follow your home's safeguarding procedures.",
+        "Cara audit risk prioritisation — address critical and high items first. Create corrective action plans for each category.");
     return { ...risks, output };
   },
 
@@ -1966,7 +1966,7 @@ ${hasEvents ? input : "[Record morning activities, interactions, and observation
 [List any actions needed for tomorrow or beyond]
 
 ---
-*Aria template — complete all sections before end of shift. Write to the child — they may read this one day.*`;
+*Cara template — complete all sections before end of shift. Write to the child — they may read this one day.*`;
 
     return { output, confidence: "high", method: "template", metadata: { sections_filled: sectionsFilled } };
   },
@@ -2027,7 +2027,7 @@ ${hasNarrative ? input : "[Describe the incident factually — what did the chil
 [Record the child's own words about what happened]
 
 ---
-*Aria template — complete all sections. High-severity incidents require manager oversight within 24 hours.*`;
+*Cara template — complete all sections. High-severity incidents require manager oversight within 24 hours.*`;
 
     return { output, confidence: "high", method: "template", metadata: { sections_filled: sectionsFilled } };
   },
@@ -2069,7 +2069,7 @@ ${hasThemes ? input : "[What topics were covered in the session?]"}
 **Focus:** [What will be covered next time]
 
 ---
-*Aria template — complete after each key work session. The child's voice should be central to this record.*`;
+*Cara template — complete after each key work session. The child's voice should be central to this record.*`;
 
     return { output, confidence: "high", method: "template", metadata: { sections_filled: sectionsFilled } };
   },
@@ -2124,7 +2124,7 @@ ${hasContent ? input : "[Discuss each key child — progress, concerns, plans]"}
 **Next Supervision Date:** [Date]
 
 ---
-*Aria template — both parties should sign. Supervision should occur at least monthly per Reg 33.*`;
+*Cara template — both parties should sign. Supervision should occur at least monthly per Reg 33.*`;
 
     return { output, confidence: "high", method: "template", metadata: { sections_filled: sectionsFilled } };
   },
@@ -2164,7 +2164,7 @@ ${hasContent ? input : "[Summarise the main points of the conversation]"}
 2. [ ] [Action — who, by when]
 
 ---
-*Aria template — record all external contacts. Link to the relevant child or staff record.*`;
+*Cara template — record all external contacts. Link to the relevant child or staff record.*`;
 
     return { output, confidence: "high", method: "template", metadata: { sections_filled: sectionsFilled } };
   },
@@ -2204,7 +2204,7 @@ ${hasContent ? input : "[Summarise academic progress across subjects]"}
 2. [ ] [Action — who, by when]
 
 ---
-*Aria template — update termly or when circumstances change. Ensure PEP is current.*`;
+*Cara template — update termly or when circumstances change. Ensure PEP is current.*`;
 
     return { output, confidence: "high", method: "template", metadata: { sections_filled: sectionsFilled } };
   },
@@ -2248,7 +2248,7 @@ ${hasContent ? input : "[List recent health appointments and outcomes]"}
 2. [ ] [Action — who, by when]
 
 ---
-*Aria template — review at each health appointment. Ensure annual health assessment is current.*`;
+*Cara template — review at each health appointment. Ensure annual health assessment is current.*`;
 
     return { output, confidence: "high", method: "template", metadata: { sections_filled: sectionsFilled } };
   },
@@ -2292,7 +2292,7 @@ ${hasContent ? input : "[Where has the young person made progress?]"}
 [What support does the young person need to achieve these goals?]
 
 ---
-*Aria template — review monthly. Align with pathway plan if aged 16+.*`;
+*Cara template — review monthly. Align with pathway plan if aged 16+.*`;
 
     return { output, confidence: "high", method: "template", metadata: { sections_filled: sectionsFilled } };
   },
@@ -2349,7 +2349,7 @@ ${hasContent ? input : "[Update for each child — key events, progress, concern
 **Next Meeting:** [Date and time]
 
 ---
-*Aria template — circulate to all staff within 48 hours. File in team meeting records.*`;
+*Cara template — circulate to all staff within 48 hours. File in team meeting records.*`;
 
     return { output, confidence: "high", method: "template", metadata: { sections_filled: sectionsFilled } };
   },
@@ -2405,7 +2405,7 @@ ${hasContent ? input : "[Update for each child — key events, progress, concern
 **Manager Signature:** _______________  **Date:** ${today}
 
 ---
-*Aria template — file in personnel record. Handle sensitively and confidentially.*`;
+*Cara template — file in personnel record. Handle sensitively and confidentially.*`;
 
     return { output, confidence: "high", method: "template", metadata: { sections_filled: sectionsFilled } };
   },
@@ -2451,7 +2451,7 @@ ${hasContent ? input : "[List specific training gaps and how they were identifie
 2. [ ] [Action — who, by when]
 
 ---
-*Aria template — update training matrix once training is booked/completed.*`;
+*Cara template — update training matrix once training is booked/completed.*`;
 
     return { output, confidence: "high", method: "template", metadata: { sections_filled: sectionsFilled } };
   },
@@ -2507,7 +2507,7 @@ Yours sincerely,
 [Your title]
 
 ---
-*Aria template — send promptly. Chase if not received within 10 working days.*`;
+*Cara template — send promptly. Chase if not received within 10 working days.*`;
 
     return { output, confidence: "high", method: "template", metadata: { sections_filled: sectionsFilled } };
   },
@@ -2553,7 +2553,7 @@ Yours sincerely,
 [Your title]
 
 ---
-*Aria template — if no response after second chase, explore alternative referees and document in recruitment file.*`;
+*Cara template — if no response after second chase, explore alternative referees and document in recruitment file.*`;
 
     return { output, confidence: "high", method: "template", metadata: { sections_filled: sectionsFilled } };
   },
@@ -2614,7 +2614,7 @@ I accept this conditional offer of employment.
 **Signed:** _____  **Date:** _____
 
 ---
-*Aria template — do not allow the candidate to start until ALL conditions are satisfied. Safer recruitment is non-negotiable.*`;
+*Cara template — do not allow the candidate to start until ALL conditions are satisfied. Safer recruitment is non-negotiable.*`;
 
     return { output, confidence: "high", method: "template", metadata: { sections_filled: sectionsFilled } };
   },
@@ -2675,7 +2675,7 @@ I accept this conditional offer of employment.
 _______________  _______________  _______________
 
 ---
-*Aria template — retain in recruitment file for a minimum of 6 months (12 months for unsuccessful candidates). Ensure GDPR compliance.*`;
+*Cara template — retain in recruitment file for a minimum of 6 months (12 months for unsuccessful candidates). Ensure GDPR compliance.*`;
 
     return { output, confidence: "high", method: "template", metadata: { sections_filled: sectionsFilled } };
   },
@@ -2743,7 +2743,7 @@ ${hasContent ? input : "[What happened? What were the events leading up to the c
 [What can be learned from this episode? Are any changes needed?]
 
 ---
-*Aria template — complete fully. Share with social worker and include in next LAC review. Update the child's missing risk assessment.*`;
+*Cara template — complete fully. Share with social worker and include in next LAC review. Update the child's missing risk assessment.*`;
 
     return { output, confidence: "high", method: "template", metadata: { sections_filled: sectionsFilled } };
   },
@@ -2804,7 +2804,7 @@ ${hasContent ? input : "[Record the child's response]"}
 **Interview shared with:** [ ] Social worker  [ ] Manager  [ ] Police (if applicable)
 
 ---
-*Aria template — complete within 72 hours. The child should choose the interviewer where possible. Record their exact words.*`;
+*Cara template — complete within 72 hours. The child should choose the interviewer where possible. Record their exact words.*`;
 
     return { output, confidence: "high", method: "template", metadata: { sections_filled: sectionsFilled } };
   },
@@ -2905,7 +2905,7 @@ ${hasContent ? input : "[Record the child's response]"}
 - Use these dates as conversation starters — avoid tokenism
 - Celebrate diversity year-round, not just on specific dates
 
-*Aria calendar — dates vary by year for lunar calendar events. Verify exact dates for the current year.*`;
+*Cara calendar — dates vary by year for lunar calendar events. Verify exact dates for the current year.*`;
 
     const sectionsFilled = months.length;
     return { output, confidence: "high", method: "template", metadata: { sections_filled: sectionsFilled } };
@@ -2914,7 +2914,7 @@ ${hasContent ? input : "[Record the child's response]"}
   convert_to_email: (input) => {
     let sectionsFilled = 0;
     if (input.trim().length < 10) {
-      return { output: "**Email Conversion:** Please provide the text you want converted into email format.\n\n*Aria template — paste or type the content to restructure.*", confidence: "low", method: "template", metadata: { sections_filled: 0 } };
+      return { output: "**Email Conversion:** Please provide the text you want converted into email format.\n\n*Cara template — paste or type the content to restructure.*", confidence: "low", method: "template", metadata: { sections_filled: 0 } };
     }
 
     sectionsFilled++;
@@ -2949,7 +2949,7 @@ Kind regards,
 [Contact details]
 
 ---
-*Aria conversion — review subject line and sign-off before sending. Ensure tone is appropriate for the recipient.*`;
+*Cara conversion — review subject line and sign-off before sending. Ensure tone is appropriate for the recipient.*`;
 
     return { output, confidence: "high", method: "template", metadata: { sections_filled: sectionsFilled } };
   },
@@ -2957,7 +2957,7 @@ Kind regards,
   convert_to_letter: (input) => {
     let sectionsFilled = 0;
     if (input.trim().length < 10) {
-      return { output: "**Letter Conversion:** Please provide the text you want converted into letter format.\n\n*Aria template — paste or type the content to restructure.*", confidence: "low", method: "template", metadata: { sections_filled: 0 } };
+      return { output: "**Letter Conversion:** Please provide the text you want converted into letter format.\n\n*Cara template — paste or type the content to restructure.*", confidence: "low", method: "template", metadata: { sections_filled: 0 } };
     }
 
     sectionsFilled++;
@@ -2995,7 +2995,7 @@ Yours sincerely,
 [Your organisation]
 
 ---
-*Aria conversion — review formatting and tone. Print on headed paper if sending by post.*`;
+*Cara conversion — review formatting and tone. Print on headed paper if sending by post.*`;
 
     return { output, confidence: "high", method: "template", metadata: { sections_filled: sectionsFilled } };
   },
@@ -3078,7 +3078,7 @@ Yours sincerely,
       output += "\n";
     }
 
-    output += `*Aria audit analysis — pattern-based categorisation. Verify severity ratings with professional judgement.*`;
+    output += `*Cara audit analysis — pattern-based categorisation. Verify severity ratings with professional judgement.*`;
 
     return { output, confidence: "high", method: "pattern", metadata: { sections_filled: findings.length, ...severityCounts, themes_found: Object.keys(themes).length } };
   },
@@ -3118,7 +3118,7 @@ Yours sincerely,
       output += `**Note:** More "not started" than "progressing" items — check whether targets are realistic and support is in place.\n\n`;
     }
 
-    output += `*Aria progress check — keyword-based scoring. Verify against actual care plan targets and child's lived experience.*`;
+    output += `*Cara progress check — keyword-based scoring. Verify against actual care plan targets and child's lived experience.*`;
 
     return { output, confidence: "high", method: "pattern", metadata: { sections_filled: totalRefs } };
   },
@@ -3160,7 +3160,7 @@ Yours sincerely,
       output += `**Warning:** More than half the standard care plan sections are not evidenced in this text. A comprehensive care plan should address all 8 dimensions.\n\n`;
     }
 
-    output += `*Aria care plan gap analysis — checked against the 8 standard dimensions of a child's needs. Add content for each gap area.*`;
+    output += `*Cara care plan gap analysis — checked against the 8 standard dimensions of a child's needs. Add content for each gap area.*`;
 
     return { output, confidence: "high", method: "rules", metadata: { sections_filled: covered.length, coverage, gaps_count: gaps.length } };
   },
@@ -3200,7 +3200,7 @@ Yours sincerely,
     if (topTheme && topTheme.count > 0) {
       output += `**Dominant Theme:** ${topTheme.theme} (${topTheme.count} mentions)\n`;
     }
-    output += `\n*Aria theme analysis — keyword frequency across the text. Use to identify areas requiring management attention.*`;
+    output += `\n*Cara theme analysis — keyword frequency across the text. Use to identify areas requiring management attention.*`;
 
     return { output, confidence: "high", method: "pattern", metadata: { sections_filled: themeCounts.filter((t) => t.count > 0).length, total_mentions: totalMentions } };
   },
@@ -3257,7 +3257,7 @@ Yours sincerely,
       output += `**Pattern Detected:** Repeated language suggests a recurring issue. Investigate root cause and consider systemic corrective action.\n\n`;
     }
 
-    output += `*Aria shortfall scan — frequency-based detection. Cross-reference with incident logs and audit findings for confirmation.*`;
+    output += `*Cara shortfall scan — frequency-based detection. Cross-reference with incident logs and audit findings for confirmation.*`;
 
     return { output, confidence: repeatedKeywords.length > 0 ? "high" : "medium", method: "pattern", metadata: { sections_filled: repeatedKeywords.length + repeatedPhrases.length } };
   },
@@ -3295,7 +3295,7 @@ Yours sincerely,
       output += `**Improvement Needed:** This oversight note scores below 50%. Effective oversight should demonstrate reflective practice, professional curiosity, and always return to the child's experience.\n\n`;
     }
 
-    output += `*Aria quality review — combined score across three oversight dimensions. Aim for 75%+ on all three.*`;
+    output += `*Cara quality review — combined score across three oversight dimensions. Aim for 75%+ on all three.*`;
 
     return { output, confidence: "high", method: "rules", metadata: { sections_filled: 3, overall_score: overallScore, reflection_score: reflectionScore, challenge_score: challengeScore, child_focus_score: childFocusScore } };
   },
@@ -3333,10 +3333,10 @@ Yours sincerely,
       suggestions.push("Consider sharing as an example of good practice with the team");
     }
 
-    let output = qualityResult ? qualityResult.output.replace(/\n---\n\*Processed by Aria Rules Engine.*$/, "") + "\n\n" : "";
+    let output = qualityResult ? qualityResult.output.replace(/\n---\n\*Processed by Cara Rules Engine.*$/, "") + "\n\n" : "";
     output += `**Improvement Suggestions (${suggestions.length}):**\n\n`;
     output += suggestions.map((s, i) => `${i + 1}. ${s}`).join("\n");
-    output += `\n\n*Aria oversight improvement — apply these suggestions and re-check. Good oversight is a skill that improves with practice.*`;
+    output += `\n\n*Cara oversight improvement — apply these suggestions and re-check. Good oversight is a skill that improves with practice.*`;
 
     return { output, confidence: "high", method: "rules", metadata: { sections_filled: suggestions.length, overall_score: qualityMeta.overall_score } };
   },
@@ -3417,7 +3417,7 @@ Yours sincerely,
       output += `- Ensure return interview conducted by independent person\n\n`;
     }
 
-    output += `*Aria risk analysis — indicator-based scoring. Always apply professional judgement and consult your missing from care protocol.*`;
+    output += `*Cara risk analysis — indicator-based scoring. Always apply professional judgement and consult your missing from care protocol.*`;
 
     return { output, confidence: riskIndicators.length >= 3 ? "high" : "medium", method: "pattern", metadata: { sections_filled: riskIndicators.length, risk_score: totalScore, risk_level: riskLevel } };
   },
@@ -3478,7 +3478,7 @@ ${hasContent ? input : "[Summary of outcomes for each child this month]"}
 - Actions for next month: [List]
 
 ---
-*Aria template — complete for the Responsible Individual and use in Reg 45 reporting.*`;
+*Cara template — complete for the Responsible Individual and use in Reg 45 reporting.*`;
 
     return { output, confidence: "high", method: "template", metadata: { sections_filled: sectionsFilled } };
   },
@@ -3527,7 +3527,7 @@ ${hasContent ? input : "[What themes are emerging across all homes?]"}
 [Next planned visits]
 
 ---
-*Aria template — the RI must maintain oversight of all homes. File as evidence of governance and quality assurance.*`;
+*Cara template — the RI must maintain oversight of all homes. File as evidence of governance and quality assurance.*`;
 
     return { output, confidence: "high", method: "template", metadata: { sections_filled: sectionsFilled } };
   },
@@ -3571,7 +3571,7 @@ ${hasContent ? input : "[What themes are emerging across all homes?]"}
     output += `- [ ] Complaints log and outcomes available\n`;
     output += `- [ ] Fire safety, H&S, and premises checks current\n\n`;
 
-    output += `*Aria readiness check — matched against SCCIF (Social Care Common Inspection Framework). This is not a full inspection — prepare evidence files for each section.*`;
+    output += `*Cara readiness check — matched against SCCIF (Social Care Common Inspection Framework). This is not a full inspection — prepare evidence files for each section.*`;
 
     return { output, confidence: "high", method: "rules", metadata: { sections_filled: evidencedCount } };
   },
@@ -3615,7 +3615,7 @@ ${hasContent ? input : "[What themes are emerging across all homes?]"}
       }
     }
 
-    output += `\n*Aria evidence count — keyword-based categorisation per Ofsted inspection section. Build evidence files for each section.*`;
+    output += `\n*Cara evidence count — keyword-based categorisation per Ofsted inspection section. Build evidence files for each section.*`;
 
     return { output, confidence: "high", method: "pattern", metadata: { sections_filled: results.filter((r) => r.count > 0).length, total_evidence: totalEvidence } };
   },
@@ -3624,7 +3624,7 @@ ${hasContent ? input : "[What themes are emerging across all homes?]"}
 // ─── Public API ──────────────────────────────────────────────────────────────
 
 /**
- * Attempt to handle an ARIA command using deterministic rules.
+ * Attempt to handle an Cara command using deterministic rules.
  * Returns null if this command requires LLM — caller should fall through.
  */
 export function tryRulesFirst(commandId: string, inputText: string, context?: RuleContext): RuleResult | null {
@@ -3636,7 +3636,7 @@ export function tryRulesFirst(commandId: string, inputText: string, context?: Ru
     if (!result) return null;
 
     // Tag all rule outputs so the UI can differentiate
-    result.output = result.output + "\n\n---\n*Processed by Aria Rules Engine (no AI API call used)*";
+    result.output = result.output + "\n\n---\n*Processed by Cara Rules Engine (no AI API call used)*";
     return result;
   } catch (err) {
     console.warn(`[aria-rules-engine] Rule handler for ${commandId} failed:`, err);

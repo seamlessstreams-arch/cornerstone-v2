@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — REG 44 INDEPENDENT VISITOR INTELLIGENCE ENGINE
+// CARA — REG 44 INDEPENDENT VISITOR INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses visit frequency, recommendation follow-through, Ofsted reporting
@@ -282,7 +282,7 @@ export function computeReg44Intelligence(input: Reg44IntelligenceInput): Reg44In
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
   const insights: AriaReg44Insight[] = [];
 
   // Critical: visit overdue

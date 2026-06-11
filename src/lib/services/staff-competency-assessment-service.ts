@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF COMPETENCY ASSESSMENT SERVICE
+// CARA — STAFF COMPETENCY ASSESSMENT SERVICE
 // Tracks ongoing competency assessments for care staff including
 // practical observations, knowledge checks, and skill evaluations.
 // CHR 2015 Reg 32 (fitness of workers — competence maintained),

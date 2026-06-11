@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — INCIDENT ANALYTICS SERVICE TESTS
+// CARA — INCIDENT ANALYTICS SERVICE TESTS
 // Pure-function tests for incident summary aggregation, trend detection,
 // physical intervention analysis, pattern identification, and notifications.
 // ══════════════════════════════════════════════════════════════════════════════

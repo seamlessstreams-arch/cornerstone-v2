@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SELF-HARM RISK MONITORING SERVICE
+// CARA — SELF-HARM RISK MONITORING SERVICE
 // Tracks self-harm risk indicators, interventions, safety plans,
 // and therapeutic support for children at risk of self-harm.
 // CHR 2015 Reg 12 (health and wellbeing — mental health),

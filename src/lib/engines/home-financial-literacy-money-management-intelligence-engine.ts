@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME FINANCIAL LITERACY & MONEY MANAGEMENT INTELLIGENCE ENGINE
+// CARA — HOME FINANCIAL LITERACY & MONEY MANAGEMENT INTELLIGENCE ENGINE
 // Home-level: assesses pocket money management, bank account setup, savings
 // habits, petty cash governance, and charity grant access across all children.
 // CHR 2015 Reg 9 (quality of care), Reg 40 (standards).

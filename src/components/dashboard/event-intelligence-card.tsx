@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EVENT INTELLIGENCE CARD (stream-native analytics)
+// CARA — EVENT INTELLIGENCE CARD (stream-native analytics)
 // Cross-domain risk radar, approval backlog and compliance register — all derived
 // from the canonical CornerstoneEvent stream. "Capture once → analytics."
 // ══════════════════════════════════════════════════════════════════════════════
@@ -138,12 +138,12 @@ export function EventIntelligenceCard() {
           </div>
         </div>
 
-        {/* ── ARIA insights ────────────────────────────────────────────── */}
+        {/* ── Cara insights ────────────────────────────────────────────── */}
         {insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Event Intelligence
+              Cara Event Intelligence
             </p>
             {insights.slice(0, 2).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.positive)}>

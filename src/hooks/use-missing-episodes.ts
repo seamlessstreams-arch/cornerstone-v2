@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — USE MISSING EPISODES HOOK
+// CARA — USE MISSING EPISODES HOOK
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";

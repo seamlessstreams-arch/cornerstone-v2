@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DEVICE SCREEN TIME MONITORING SERVICE
+// CARA — DEVICE SCREEN TIME MONITORING SERVICE
 // Tracks device usage, screen time limits, digital boundaries,
 // age-appropriate content, and technology wellbeing.
 // CHR 2015 Reg 12(2)(b) (online safety — managing device access),

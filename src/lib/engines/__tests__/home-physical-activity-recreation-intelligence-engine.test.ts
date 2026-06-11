@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME PHYSICAL ACTIVITY & RECREATION INTELLIGENCE ENGINE TESTS
+// CARA — HOME PHYSICAL ACTIVITY & RECREATION INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite for physical activity and recreation provision.
 // Covers CHR 2015 Reg 7, Reg 9, Reg 10, Reg 12 and SCCIF requirements.
 // Base 52, max bonuses 28 (outstanding >= 80), good >= 65, adequate >= 45,

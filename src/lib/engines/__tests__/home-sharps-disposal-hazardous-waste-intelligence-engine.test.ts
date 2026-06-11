@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE -- HOME SHARPS DISPOSAL & HAZARDOUS WASTE INTELLIGENCE ENGINE TESTS
+// CARA -- HOME SHARPS DISPOSAL & HAZARDOUS WASTE INTELLIGENCE ENGINE TESTS
 //
 // 180 tests covering sharps bin compliance, hazardous waste disposal,
 // COSHH compliance, clinical waste management, child safety awareness,

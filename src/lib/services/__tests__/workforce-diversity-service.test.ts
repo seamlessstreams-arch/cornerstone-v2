@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — WORKFORCE DIVERSITY & EQUALITY SERVICE TESTS
+// CARA — WORKFORCE DIVERSITY & EQUALITY SERVICE TESTS
 // Pure-function unit tests for diversity metrics computation,
 // alert identification, constant validation.
 // CHR 2015 Reg 16 (providing suitable staff — diversity),

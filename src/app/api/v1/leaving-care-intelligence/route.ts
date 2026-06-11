@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LEAVING CARE INTELLIGENCE API ROUTE
+// CARA — LEAVING CARE INTELLIGENCE API ROUTE
 // GET /api/v1/leaving-care-intelligence
 // Returns pathway plan readiness, independence skills analysis, accommodation
-// status, EET tracking, and ARIA leaving care intelligence.
+// status, EET tracking, and Cara leaving care intelligence.
 // Reg 12 — preparing children to leave care; Reg 14 — assessment of needs.
 // Children (Leaving Care) Act 2000 — statutory entitlements.
 // ══════════════════════════════════════════════════════════════════════════════

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME BOILER & HEATING SYSTEM SERVICING INTELLIGENCE ENGINE
+// CARA — HOME BOILER & HEATING SYSTEM SERVICING INTELLIGENCE ENGINE
 // Monitors annual boiler servicing, heating system checks, radiator bleeding
 // schedules, thermostat calibration, and energy efficiency across the home.
 // Ensures children live in a warm, safe, and properly maintained environment

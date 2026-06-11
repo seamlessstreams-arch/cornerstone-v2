@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SENSORY & THERAPEUTIC ENVIRONMENT INTELLIGENCE ENGINE
+// CARA — HOME SENSORY & THERAPEUTIC ENVIRONMENT INTELLIGENCE ENGINE
 // Tracks sensory room usage, equipment condition, physical activity participation,
 // and therapeutic benefit to ensure children's sensory and wellbeing needs are met.
 // Pure deterministic engine. CHR 2015 Reg 9/10.

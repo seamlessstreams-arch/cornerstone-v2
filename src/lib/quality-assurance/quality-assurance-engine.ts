@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Quality Assurance & Continuous Improvement Intelligence Engine
+// Cara — Quality Assurance & Continuous Improvement Intelligence Engine
 //
 // Pure deterministic engine — no AI, no external calls.
 // Maps to: CHR 2015 Reg 13 (leadership & management), Reg 45 (RI reviews),

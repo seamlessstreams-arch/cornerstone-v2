@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME BEHAVIOUR MANAGEMENT INTELLIGENCE ENGINE
+// CARA — HOME BEHAVIOUR MANAGEMENT INTELLIGENCE ENGINE
 // Home-level: synthesises behaviour logs, sanctions/rewards, and consequence
 // records to assess therapeutic behaviour management quality, positive
 // reinforcement, restorative approaches, and proportionality.

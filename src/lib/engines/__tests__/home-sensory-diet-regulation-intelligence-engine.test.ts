@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SENSORY DIET & REGULATION INTELLIGENCE ENGINE — TESTS
+// CARA — HOME SENSORY DIET & REGULATION INTELLIGENCE ENGINE — TESTS
 // CHR 2015 Reg 5 / Reg 14: Sensory diet planning, regulation strategies,
 // sensory breaks, OT integration, and self-regulation progress.
 // ══════════════════════════════════════════════════════════════════════════════

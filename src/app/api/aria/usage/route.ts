@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // API: /api/aria/usage
-// GET — returns ARIA usage details for a specific source record. Used by the
-// AriaUsageBadge component to show what ARIA commands were used on a record.
+// GET — returns Cara usage details for a specific source record. Used by the
+// AriaUsageBadge component to show what Cara commands were used on a record.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { NextRequest, NextResponse } from "next/server";

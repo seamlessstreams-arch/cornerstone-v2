@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — BUSINESS CONTINUITY SERVICE TESTS
+// CARA — BUSINESS CONTINUITY SERVICE TESTS
 // Pure-function tests for business continuity metrics computation, alert
 // identification, constant validation, and CRUD fallback behaviour
 // (Supabase disabled). CHR 2015 Reg 29 (business continuity),

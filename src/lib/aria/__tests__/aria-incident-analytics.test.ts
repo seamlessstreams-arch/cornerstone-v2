@@ -77,7 +77,7 @@ describe("AriaIncidentAnalytics", () => {
       }
     });
 
-    it("has ARIA insights", () => {
+    it("has Cara insights", () => {
       expect(data.ariaInsights.length).toBeGreaterThan(0);
       for (const insight of data.ariaInsights) {
         expect(insight.length).toBeGreaterThan(10);

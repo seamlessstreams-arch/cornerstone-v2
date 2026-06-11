@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SIDEBAR (redesigned)
+// CARA — SIDEBAR (redesigned)
 // 3-domain grouped navigation. Calm, premium, role-aware.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -37,7 +37,7 @@ import {
   Gavel, Eye, Flag, ClipboardCheck, Award,
   // Reports icons
   BarChart2,
-  // Aria icons
+  // Cara icons
   Brain, Radar, ListChecks, Layers, Puzzle, PlayCircle, Lightbulb, Activity,
   Wand2,
   // Other
@@ -220,13 +220,13 @@ export function Sidebar() {
         collapsed ? "justify-center px-0" : "gap-3 px-4",
       )}>
         <Link href="/dashboard" className="flex items-center gap-3 min-w-0">
-          {/* Logo mark — the Cornerstone app icon */}
+          {/* Logo mark — the Cara app icon */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/icon-192.png" alt="Cornerstone" className="h-8 w-8 shrink-0 rounded-xl" />
+          <img src="/icon-192.png" alt="Cara" className="h-8 w-8 shrink-0 rounded-xl" />
           {!collapsed && (
             <div className="min-w-0">
               <p className="text-sm font-bold text-[var(--cs-navy)] leading-tight tracking-tight">
-                Cornerstone
+                Cara
               </p>
               <p className="text-[11px] text-[var(--cs-text-secondary)] truncate">Chamberlain House</p>
             </div>
@@ -407,7 +407,7 @@ export function Sidebar() {
       {/* ── On-Duty Status Bar ───────────────────────────────────────────── */}
       <OnDutyBar collapsed={collapsed} />
 
-      {/* ── ARIA Status Badge (managers only) ────────────────────────────── */}
+      {/* ── Cara Status Badge (managers only) ────────────────────────────── */}
       {!collapsed && (
         <AriaStatusBadge
           userRole={currentRole ?? ""}

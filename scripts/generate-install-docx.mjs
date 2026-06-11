@@ -7,7 +7,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 
 const TEAL = "119488", NAVY = "0f1e36", GREY = "56627a", MUTED = "8a93a6", CORAL = "d9685c";
 const QR = "/Users/darrenlaville/cornerstone-v2/docs/install-guide/cornerstone-install-qr.png";
-const OUT = "/Users/darrenlaville/cornerstone-v2/docs/install-guide/Cornerstone-Install-Guide.docx";
+const OUT = "/Users/darrenlaville/cornerstone-v2/docs/install-guide/Cara-Install-Guide.docx";
 const CW = 9026; // content width (A4, 1" margins)
 
 const stepRef = (id, steps) =>
@@ -46,7 +46,7 @@ const doc = new Document({
     properties: { page: { size: { width: 11906, height: 16838 }, margin: { top: 1080, right: 1440, bottom: 900, left: 1440 } } },
     children: [
       // Title
-      new Paragraph({ spacing: { after: 0 }, children: [new TextRun({ text: "Install Cornerstone", bold: true, size: 48, color: NAVY })] }),
+      new Paragraph({ spacing: { after: 0 }, children: [new TextRun({ text: "Install Cara", bold: true, size: 48, color: NAVY })] }),
       new Paragraph({
         spacing: { after: 60 }, border: { bottom: { style: BorderStyle.SINGLE, size: 18, color: TEAL, space: 8 } },
         children: [new TextRun({ text: "Care OS for Children’s Homes — add it to your phone, tablet or computer in under a minute.", size: 22, color: GREY })],
@@ -62,14 +62,14 @@ const doc = new Document({
             shading: { fill: "f1faf7", type: ShadingType.CLEAR }, margins: { top: 160, bottom: 160, left: 200, right: 160 },
             children: [
               new Paragraph({ spacing: { after: 40 }, children: [new TextRun({ text: "OPEN THIS ADDRESS IN YOUR BROWSER", bold: true, size: 16, color: "0b6f66" })] }),
-              new Paragraph({ spacing: { after: 60 }, children: [new TextRun({ text: "cornerstone-v2-fresh.vercel.app", bold: true, size: 30, color: NAVY })] }),
-              new Paragraph({ children: [new TextRun({ text: "There’s no App Store download — Cornerstone installs straight from the web, then gets its own icon and opens full-screen like a normal app.", size: 19, color: GREY })] }),
+              new Paragraph({ spacing: { after: 60 }, children: [new TextRun({ text: "cara-os-fresh.vercel.app", bold: true, size: 30, color: NAVY })] }),
+              new Paragraph({ children: [new TextRun({ text: "There’s no App Store download — Cara installs straight from the web, then gets its own icon and opens full-screen like a normal app.", size: 19, color: GREY })] }),
             ],
           }),
           new TableCell({
             width: { size: 3200, type: WidthType.DXA }, verticalAlign: VerticalAlign.CENTER, shading: { fill: "f1faf7", type: ShadingType.CLEAR },
             children: [
-              new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 20 }, children: [new ImageRun({ type: "png", data: readFileSync(QR), transformation: { width: 132, height: 132 }, altText: { title: "Install QR code", description: "QR code linking to the Cornerstone install page", name: "QR" } })] }),
+              new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 20 }, children: [new ImageRun({ type: "png", data: readFileSync(QR), transformation: { width: 132, height: 132 }, altText: { title: "Install QR code", description: "QR code linking to the Cara install page", name: "QR" } })] }),
               new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: "Scan to open", bold: true, size: 17, color: MUTED })] }),
             ],
           }),
@@ -83,11 +83,11 @@ const doc = new Document({
         width: { size: CW, type: WidthType.DXA }, columnWidths: [3009, 3008, 3009],
         rows: [new TableRow({ children: [
           deviceCell(3009, "📱 iPhone / iPad", "Use Safari (not Chrome)", "ios", [
-            "Open Safari and go to the address above", "Tap the Share button (square with an up-arrow)", "Tap Add to Home Screen", "Tap Add — the Cornerstone icon appears" ]),
+            "Open Safari and go to the address above", "Tap the Share button (square with an up-arrow)", "Tap Add to Home Screen", "Tap Add — the Cara icon appears" ]),
           deviceCell(3008, "🤖 Android", "Use Chrome", "android", [
             "Open Chrome and go to the address above", "Tap the Install app prompt, or the ⋮ menu", "Choose Install app / Add to Home screen", "Confirm Install — it’s added to your apps" ]),
           deviceCell(3009, "💻 Computer", "Chrome or Edge", "pc", [
-            "Open Chrome/Edge and go to the address above", "Click the install icon in the address bar", "Or ⋮ menu → Install Cornerstone…", "It opens in its own window" ]),
+            "Open Chrome/Edge and go to the address above", "Click the install icon in the address bar", "Or ⋮ menu → Install Cara…", "It opens in its own window" ]),
         ] })],
       }),
 
@@ -108,7 +108,7 @@ const doc = new Document({
         })] })],
       }),
 
-      new Paragraph({ spacing: { before: 160 }, alignment: AlignmentType.CENTER, children: [new TextRun({ text: "Cornerstone — Oak House. If a step looks different, your browser may have moved a menu; the option is always called Install or Add to Home Screen.", size: 17, color: MUTED })] }),
+      new Paragraph({ spacing: { before: 160 }, alignment: AlignmentType.CENTER, children: [new TextRun({ text: "Cara — Oak House. If a step looks different, your browser may have moved a menu; the option is always called Install or Add to Home Screen.", size: 17, color: MUTED })] }),
     ],
   }],
 });

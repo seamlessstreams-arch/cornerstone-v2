@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — UNIFIED ACTIONS REGISTER ENGINE
+// CARA — UNIFIED ACTIONS REGISTER ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 //

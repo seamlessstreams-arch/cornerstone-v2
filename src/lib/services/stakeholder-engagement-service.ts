@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAKEHOLDER ENGAGEMENT SERVICE
+// CARA — STAKEHOLDER ENGAGEMENT SERVICE
 // Manages relationships and communication with social workers, placing
 // authorities, parents/carers, IROs, advocates, and other professionals.
 // CHR 2015 Reg 45 (independent person — collaboration with external),

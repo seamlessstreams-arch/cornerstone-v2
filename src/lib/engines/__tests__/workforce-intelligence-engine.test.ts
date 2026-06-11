@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — WORKFORCE INTELLIGENCE ENGINE TESTS
+// CARA — WORKFORCE INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite: unit + integration
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -635,9 +635,9 @@ describe("computeWorkforceIntelligence — sickness", () => {
   });
 });
 
-// ── ARIA Insights ───────────────────────────────────────────────────────────
+// ── Cara Insights ───────────────────────────────────────────────────────────
 
-describe("computeWorkforceIntelligence — ARIA insights", () => {
+describe("computeWorkforceIntelligence — Cara insights", () => {
   const today = "2026-05-23";
 
   it("generates critical insight for expired training", () => {

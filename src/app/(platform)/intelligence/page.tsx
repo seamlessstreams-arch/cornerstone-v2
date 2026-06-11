@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — INTELLIGENCE HUB
+// CARA — INTELLIGENCE HUB
 // Command-centre view for managers: home climate, pattern alerts,
 // active interventions, children's voice coverage.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -223,13 +223,13 @@ function HomeClimateSection() {
 
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
-        throw new Error((err as { error?: string }).error ?? `ARIA returned ${res.status}`);
+        throw new Error((err as { error?: string }).error ?? `Cara returned ${res.status}`);
       }
 
       const json = await res.json();
       const parsed = json?.data?.parsed;
       if (!parsed || typeof parsed !== "object") {
-        throw new Error("ARIA did not return valid JSON");
+        throw new Error("Cara did not return valid JSON");
       }
 
       const periodEnd   = now.toISOString();
@@ -251,7 +251,7 @@ function HomeClimateSection() {
         maintenance_score:           Number(parsed.maintenance_score           ?? 78),
         overall_climate_score:       newScore,
         climate_delta:               prevScore !== null ? newScore - prevScore : null,
-        narrative:                   parsed.narrative ?? "ARIA climate assessment complete.",
+        narrative:                   parsed.narrative ?? "Cara climate assessment complete.",
         hotspot_times:               Array.isArray(parsed.hotspot_times) ? parsed.hotspot_times : [],
         risk_flags:                  Array.isArray(parsed.risk_flags)    ? parsed.risk_flags    : [],
         computed_by:                 "aria",
@@ -329,7 +329,7 @@ function HomeClimateSection() {
 
           {climate.narrative && (
             <div className="rounded-2xl border border-[var(--cs-aria-gold-soft)] bg-[var(--cs-aria-gold-bg)] p-4">
-              <div className="text-[10px] font-semibold text-[var(--cs-aria-gold)] uppercase tracking-wider mb-1">ARIA Analysis</div>
+              <div className="text-[10px] font-semibold text-[var(--cs-aria-gold)] uppercase tracking-wider mb-1">Cara Analysis</div>
               <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed">{climate.narrative}</p>
             </div>
           )}
@@ -433,7 +433,7 @@ function PatternAlertsSection() {
           <div className="flex flex-col items-center gap-2 py-8 text-center">
             <CheckCircle2 className="h-10 w-10 text-slate-200" />
             <p className="text-sm text-[var(--cs-text-muted)]">No active pattern alerts</p>
-            <p className="text-xs text-[var(--cs-text-muted)]">ARIA is monitoring for emerging patterns</p>
+            <p className="text-xs text-[var(--cs-text-muted)]">Cara is monitoring for emerging patterns</p>
           </div>
         ) : (
           <div className="space-y-3">
@@ -576,7 +576,7 @@ function RecentInterventionsSection() {
         intervention.ended_at ? `Ended: ${intervention.ended_at}` : null,
       ].filter(Boolean).join("\n");
 
-      const res = await api.post<{ data: { response?: string; text?: string } }>("/aria", {
+      const res = await api.post<{ data: { response?: string; text?: string } }>("/cara", {
         mode: "intervention_review",
         source_content: sourceContent,
       });
@@ -637,7 +637,7 @@ function RecentInterventionsSection() {
                     <button
                       onClick={(e) => handleReview(e, intervention)}
                       disabled={reviewingId === intervention.id}
-                      title="Review with ARIA"
+                      title="Review with Cara"
                       className="flex items-center gap-1 rounded-lg bg-[var(--cs-aria-gold-bg)] hover:bg-[var(--cs-aria-gold-bg)] text-[var(--cs-aria-gold)] px-2 py-1 text-[10px] font-semibold transition-colors disabled:opacity-50"
                     >
                       {reviewingId === intervention.id ? (
@@ -669,7 +669,7 @@ function RecentInterventionsSection() {
               <div className="flex items-center gap-2">
                 <ClipboardList className="h-5 w-5 text-[var(--cs-aria-gold)]" />
                 <div>
-                  <div className="text-sm font-bold text-[var(--cs-navy)]">ARIA — Intervention Review</div>
+                  <div className="text-sm font-bold text-[var(--cs-navy)]">Cara — Intervention Review</div>
                   <div className="text-xs text-[var(--cs-text-muted)] truncate max-w-sm">{reviewTitle}</div>
                 </div>
               </div>
@@ -897,7 +897,7 @@ function ActionOutcomesSection() {
   );
 }
 
-// ─── ARIA Pattern Scanner ─────────────────────────────────────────────────────
+// ─── Cara Pattern Scanner ─────────────────────────────────────────────────────
 
 const SEV_CLASSES_SCAN: Record<string, string> = {
   critical: "border-red-300 bg-red-50 text-red-800",
@@ -946,7 +946,7 @@ function AriaPatternScanSection() {
     setSaveStates({});
 
     try {
-      // Build aggregate context for ARIA
+      // Build aggregate context for Cara
       const existingAlerts = alertsData?.data ?? [];
       const interventions  = interventionsData?.data ?? [];
       const actions        = actionsData?.data ?? [];
@@ -1013,14 +1013,14 @@ function AriaPatternScanSection() {
 
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
-        throw new Error((err as { error?: string }).error ?? `ARIA returned ${res.status}`);
+        throw new Error((err as { error?: string }).error ?? `Cara returned ${res.status}`);
       }
 
       const json = await res.json();
       const parsed = json?.data?.parsed;
 
       if (!Array.isArray(parsed)) {
-        throw new Error("ARIA returned unexpected data — expected an array of patterns");
+        throw new Error("Cara returned unexpected data — expected an array of patterns");
       }
 
       setPatterns(parsed as ScannedPattern[]);
@@ -1060,7 +1060,7 @@ function AriaPatternScanSection() {
         <div className="flex items-center justify-between gap-3 flex-wrap">
           <CardTitle className="text-sm font-semibold flex items-center gap-2">
             <ScanSearch className="h-4 w-4 text-[var(--cs-aria-gold)]" />
-            ARIA Pattern Scanner
+            Cara Pattern Scanner
           </CardTitle>
           <Button
             size="sm"
@@ -1082,7 +1082,7 @@ function AriaPatternScanSection() {
       <CardContent className="space-y-4">
         {!patterns && !scanning && !scanError && (
           <div className="rounded-xl border border-[var(--cs-aria-gold-soft)] bg-[var(--cs-aria-gold-bg)] p-4 text-xs text-[var(--cs-aria-gold)] leading-relaxed">
-            ARIA will analyse all available intelligence data across the home — voice records,
+            Cara will analyse all available intelligence data across the home — voice records,
             interventions, action outcomes, and existing alerts — and identify significant
             patterns, emerging themes, or concerns requiring manager attention.
           </div>
@@ -1098,7 +1098,7 @@ function AriaPatternScanSection() {
         {scanning && (
           <div className="flex items-center gap-3 py-6 text-xs text-[var(--cs-text-muted)]">
             <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-aria-gold)]" />
-            ARIA is scanning intelligence data across all children…
+            Cara is scanning intelligence data across all children…
           </div>
         )}
 
@@ -1107,12 +1107,12 @@ function AriaPatternScanSection() {
             <div className="flex flex-col items-center gap-2 py-6 text-center">
               <CheckCircle2 className="h-10 w-10 text-emerald-300" />
               <p className="text-sm font-semibold text-[var(--cs-text-secondary)]">No significant patterns detected</p>
-              <p className="text-xs text-[var(--cs-text-muted)]">ARIA found no new patterns requiring attention at this time.</p>
+              <p className="text-xs text-[var(--cs-text-muted)]">Cara found no new patterns requiring attention at this time.</p>
             </div>
           ) : (
             <div className="space-y-3">
               <p className="text-[11px] text-[var(--cs-text-muted)]">
-                ARIA identified <strong>{patterns.length}</strong> pattern{patterns.length !== 1 ? "s" : ""}.
+                Cara identified <strong>{patterns.length}</strong> pattern{patterns.length !== 1 ? "s" : ""}.
                 Review each and save any that are accurate to add them to active alerts.
               </p>
               {patterns.map((p, idx) => {
@@ -1206,7 +1206,7 @@ export default function IntelligenceHubPage() {
           <ActionOutcomesSection />
         </div>
 
-        {/* ARIA Pattern Scanner — full width */}
+        {/* Cara Pattern Scanner — full width */}
         <AriaPatternScanSection />
       </div>
       <CareEventsPanel

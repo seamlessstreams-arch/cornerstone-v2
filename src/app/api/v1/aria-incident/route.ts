@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ARIA INCIDENT MODE API
+// CARA — Cara INCIDENT MODE API
 // GET  /api/v1/aria-incident   → sessions (newest first) + children for selector
 // POST /api/v1/aria-incident   → start an incident session
 // ══════════════════════════════════════════════════════════════════════════════

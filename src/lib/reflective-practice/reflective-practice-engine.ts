@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Professional Development & Reflective Practice Intelligence Engine
+// Cara — Professional Development & Reflective Practice Intelligence Engine
 //
 // Pure deterministic engine. No AI, no external calls, no side-effects.
 //

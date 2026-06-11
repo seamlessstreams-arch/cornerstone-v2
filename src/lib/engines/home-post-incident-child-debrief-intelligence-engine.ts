@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME POST-INCIDENT CHILD DEBRIEF INTELLIGENCE ENGINE
+// CARA — HOME POST-INCIDENT CHILD DEBRIEF INTELLIGENCE ENGINE
 // Pure deterministic engine: debrief completion, timeliness, child readiness,
 // voice capture depth, restorative actions, child-requested changes,
 // follow-up scheduling, and method diversity.

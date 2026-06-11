@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — MANAGEMENT OVERSIGHT QUEUE  (Milestone 14)
+// Cara STUDIO — MANAGEMENT OVERSIGHT QUEUE  (Milestone 14)
 //
 // A unified, live-updating queue of every item across the system that
 // needs an authorised human's attention right now:
@@ -15,7 +15,7 @@
 //   medium — pending 6–24h, or non-sensitive amendment unacknowledged
 //   low    — recent and non-sensitive
 //
-// Spec invariant: ARIA drafts. Humans decide. This queue exists so
+// Spec invariant: Cara drafts. Humans decide. This queue exists so
 // nothing waiting on a human disappears into a list that no one reads.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -71,7 +71,7 @@ export function loadOversightQueue(homeId: string): ManagerOversightQueue {
       created_at: r.generated_at,
       source_id: r.id,
       source_label: ARIA_SUGGESTED_RECORD_LABELS[r.record_type],
-      link_href: `/intelligence/aria/suggested-records?focus=${r.id}`,
+      link_href: `/intelligence/cara/suggested-records?focus=${r.id}`,
       age_hours: ageHours,
     });
   }
@@ -97,7 +97,7 @@ export function loadOversightQueue(homeId: string): ManagerOversightQueue {
       created_at: c.amended_at ?? c.committed_at,
       source_id: c.id,
       source_label: ARIA_SUGGESTED_RECORD_LABELS[c.record_type],
-      link_href: `/intelligence/aria/suggested-records?focus_committed=${c.id}`,
+      link_href: `/intelligence/cara/suggested-records?focus_committed=${c.id}`,
       age_hours: ageHours,
     });
   }
@@ -125,7 +125,7 @@ export function loadOversightQueue(homeId: string): ManagerOversightQueue {
       created_at: r.decided_at ?? r.generated_at,
       source_id: r.id,
       source_label: ARIA_SUGGESTED_RECORD_LABELS[r.record_type],
-      link_href: `/intelligence/aria/suggested-records?focus=${r.id}`,
+      link_href: `/intelligence/cara/suggested-records?focus=${r.id}`,
       age_hours: ageHoursSince(r.decided_at ?? r.generated_at, nowMs),
     });
   }

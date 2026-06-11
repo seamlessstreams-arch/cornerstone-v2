@@ -1,6 +1,6 @@
 "use client";
 
-// ARIA Practice Assistant — restorative conversation, at the child's pace.
+// Cara Practice Assistant — restorative conversation, at the child's pace.
 // Shows the completed record when one exists; otherwise the readiness checks +
 // the restorative question template. Saving writes a restorative_action timeline
 // entry (satisfying the quality gate) and flags manager review when needed.
@@ -46,7 +46,7 @@ export function RestorativeConversationForm({ sessionId, childName }: { sessionI
               ))}
             {existing.ai_summary && (
               <div className="rounded-xl border border-[var(--cs-aria-gold)]/30 bg-[var(--cs-aria-gold-bg)]/40 px-3 py-2">
-                <p className="flex items-center gap-1 text-[11px] font-bold text-[var(--cs-navy)]"><Sparkles className="h-3 w-3 text-[var(--cs-aria-gold)]" /> ARIA summary (AI-assisted draft)</p>
+                <p className="flex items-center gap-1 text-[11px] font-bold text-[var(--cs-navy)]"><Sparkles className="h-3 w-3 text-[var(--cs-aria-gold)]" /> Cara summary (AI-assisted draft)</p>
                 <p className="mt-1 text-sm text-[var(--cs-text-secondary)]">{existing.ai_summary}</p>
               </div>
             )}

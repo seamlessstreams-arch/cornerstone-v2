@@ -73,8 +73,8 @@ export function AriaCommandCentre({
         homeId,
         aiRunId,
         action,
-        notes: action === "approve" ? "Approved from Aria Command Centre." : undefined,
-        reason: action === "reject" ? "Rejected from Aria Command Centre." : undefined,
+        notes: action === "approve" ? "Approved from Cara Command Centre." : undefined,
+        reason: action === "reject" ? "Rejected from Cara Command Centre." : undefined,
       });
     } finally {
       setReviewing(false);
@@ -90,7 +90,7 @@ export function AriaCommandCentre({
               <Sparkles className="h-5 w-5" />
             </div>
             <div>
-              <h2 className="text-xl font-semibold tracking-tight">Aria Intelligence</h2>
+              <h2 className="text-xl font-semibold tracking-tight">Cara Intelligence</h2>
               <p className="text-sm text-slate-600">
                 Critical friend, evidence engine and inspection-readiness support.
               </p>
@@ -144,7 +144,7 @@ export function AriaCommandCentre({
 
         <main className="space-y-4">
           <div className="rounded-2xl border p-4">
-            <label className="text-sm font-medium">Ask Aria</label>
+            <label className="text-sm font-medium">Ask Cara</label>
             <textarea
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
@@ -153,7 +153,7 @@ export function AriaCommandCentre({
             />
             <div className="mt-3 flex items-center justify-between gap-3">
               <p className="text-xs text-slate-500">
-                Aria drafts only. A manager must review and approve before records are committed.
+                Cara drafts only. A manager must review and approve before records are committed.
               </p>
               <button
                 type="button"
@@ -162,7 +162,7 @@ export function AriaCommandCentre({
                 className="inline-flex items-center gap-2 rounded-2xl bg-slate-900 px-4 py-2 text-sm font-medium text-white disabled:opacity-50"
               >
                 <Wand2 className="h-4 w-4" />
-                {loading ? "Thinking..." : "Run Aria"}
+                {loading ? "Thinking..." : "Run Cara"}
               </button>
             </div>
           </div>
@@ -213,7 +213,7 @@ export function AriaCommandCentre({
               )}
 
               <article className="rounded-2xl border p-5">
-                <h3 className="font-semibold">Aria draft</h3>
+                <h3 className="font-semibold">Cara draft</h3>
                 {output.executiveSummary && (
                   <p className="mt-2 rounded-2xl bg-slate-50 p-3 text-sm text-slate-700">
                     {output.executiveSummary}

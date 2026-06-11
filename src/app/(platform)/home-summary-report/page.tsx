@@ -139,7 +139,7 @@ export default function HomeSummaryReportPage() {
               Executive summary
               {r?.ai_narrative && (
                 <span className="inline-flex items-center gap-1 rounded-full bg-indigo-100 px-1.5 py-0.5 text-[9px] font-semibold text-indigo-700">
-                  <Sparkles className="h-2.5 w-2.5" /> ARIA
+                  <Sparkles className="h-2.5 w-2.5" /> Cara
                 </span>
               )}
             </p>

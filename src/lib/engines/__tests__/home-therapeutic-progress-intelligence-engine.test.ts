@@ -597,8 +597,8 @@ describe("computeHomeTherapeuticProgress", () => {
     });
   });
 
-  // ── ARIA Insights ─────────────────────────────────────────────────
-  describe("ARIA insights", () => {
+  // ── Cara Insights ─────────────────────────────────────────────────
+  describe("Cara insights", () => {
     it("flags self-harm pattern", () => {
       const entries = Array.from({ length: 10 }, (_, i) =>
         makeBM({ id: `bm${i}`, child_id: `c${(i % 5) + 1}`, date: "2025-06-01", behaviour_type: i < 3 ? "self_harm" : "dysregulation" }),

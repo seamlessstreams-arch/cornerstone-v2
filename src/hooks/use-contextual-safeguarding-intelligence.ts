@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CONTEXTUAL SAFEGUARDING INTELLIGENCE HOOK
+// CARA — CONTEXTUAL SAFEGUARDING INTELLIGENCE HOOK
 // React Query wrapper for /api/v1/contextual-safeguarding-intelligence
 // ══════════════════════════════════════════════════════════════════════════════
 

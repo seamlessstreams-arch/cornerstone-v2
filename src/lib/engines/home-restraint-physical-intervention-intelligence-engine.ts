@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME RESTRAINT & PHYSICAL INTERVENTION INTELLIGENCE ENGINE
+// CARA — HOME RESTRAINT & PHYSICAL INTERVENTION INTELLIGENCE ENGINE
 // Home-level: analyses restraint records to assess de-escalation practice,
 // Team Teach compliance, child debriefs, review completion, documentation
 // quality, duration/injury monitoring, and identifies repeat patterns.

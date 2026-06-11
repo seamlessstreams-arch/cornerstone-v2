@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Workforce Intelligence Engine
+// Cara Workforce Intelligence Engine
 //
 // Deterministic engine for evaluating workforce compliance quality in
 // children's homes — DBS checks, qualifications, mandatory training,

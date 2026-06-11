@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Permission System — API Route Middleware
+// Cara Permission System — API Route Middleware
 //
 // Server-side permission guard for Next.js API routes. Wraps route handlers
 // with automatic:
@@ -258,7 +258,7 @@ function getDemoContext(): PermissionContext {
       safeguardingNeedToKnow: ["child-jordan", "child-sam"],
     },
     supabase: null,
-    rawUser: { id: "demo-manager", email: "demo@cornerstone.care" },
+    rawUser: { id: "demo-manager", email: "demo@cara.care" },
   };
 }
 

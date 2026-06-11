@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Staff Performance Intelligence Engine
+// Cara — Staff Performance Intelligence Engine
 //
 // Pure deterministic engine — no AI, no external calls.
 // Evaluates individual staff performance including:

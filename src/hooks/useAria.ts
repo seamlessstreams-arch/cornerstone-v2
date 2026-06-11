@@ -33,14 +33,14 @@ export function useAria(userId: string) {
 
       const json = await response.json();
       if (!response.ok) {
-        setState({ loading: false, error: json.error ?? "Aria failed.", aiRunId: null, output: null });
+        setState({ loading: false, error: json.error ?? "Cara failed.", aiRunId: null, output: null });
         return null;
       }
 
       setState({ loading: false, error: null, aiRunId: json.aiRunId, output: json.output });
       return json;
     } catch (err) {
-      setState({ loading: false, error: err instanceof Error ? err.message : "Aria failed.", aiRunId: null, output: null });
+      setState({ loading: false, error: err instanceof Error ? err.message : "Cara failed.", aiRunId: null, output: null });
       return null;
     }
   }

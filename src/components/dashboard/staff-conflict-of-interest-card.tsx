@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF CONFLICT OF INTEREST CARD
+// CARA — STAFF CONFLICT OF INTEREST CARD
 // Live data from useWorkforceIntelligence() — profile, DBS, training.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -105,13 +105,13 @@ export function StaffConflictOfInterestCard() {
           </div>
         </div>
 
-        {/* ── ARIA insights ───────────────────────────────────────────── */}
+        {/* ── Cara insights ───────────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Integrity Intelligence
+              Cara Integrity Intelligence
             </p>
             {intel.insights.slice(0, 2).map((insight, i) => (
               <div

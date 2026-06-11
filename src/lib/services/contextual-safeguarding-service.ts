@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CONTEXTUAL SAFEGUARDING & EXPLOITATION SERVICE
+// CARA — CONTEXTUAL SAFEGUARDING & EXPLOITATION SERVICE
 // Manages exploitation screening records, locality risk assessments, and
 // contextual safeguarding analytics. Reg 12 (protection from harm),
 // Reg 13 (leadership & management re safeguarding), Reg 34 (safeguarding),

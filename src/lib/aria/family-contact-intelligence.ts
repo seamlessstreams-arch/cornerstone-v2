@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — FAMILY CONTACT INTELLIGENCE
+// Cara — FAMILY CONTACT INTELLIGENCE
 //
 // Pure deterministic engine analysing family time/contact patterns:
 //   - Contact frequency vs care plan requirements

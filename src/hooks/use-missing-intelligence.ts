@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MISSING FROM CARE INTELLIGENCE HOOK
+// CARA — MISSING FROM CARE INTELLIGENCE HOOK
 // React Query wrapper for /api/v1/missing-intelligence
 // ══════════════════════════════════════════════════════════════════════════════
 

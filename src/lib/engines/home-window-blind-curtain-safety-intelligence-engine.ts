@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME WINDOW, BLIND & CURTAIN SAFETY INTELLIGENCE ENGINE
+// CARA — HOME WINDOW, BLIND & CURTAIN SAFETY INTELLIGENCE ENGINE
 // Monitors window restrictor checks, blind cord safety, curtain condition,
 // blackout provision, and child safety compliance across the home.
 // Measures window restrictor integrity, blind cord elimination/safety,

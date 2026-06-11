@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD VOICE & PARTICIPATION TRACKING INTELLIGENCE CARD
+// CARA — CHILD VOICE & PARTICIPATION TRACKING INTELLIGENCE CARD
 // Dashboard card for children's voice, participation, and engagement.
 // Powered by the Contact Engagement Intelligence Engine — live data.
 // CHR 2015 Reg 7. SCCIF: Voice of the Child.
@@ -171,13 +171,13 @@ export function ChildVoiceParticipationTrackingCard() {
           </div>
         )}
 
-        {/* ── ARIA Intelligence ───────────────────────────────────────── */}
+        {/* ── Cara Intelligence ───────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Voice Intelligence
+              Cara Voice Intelligence
             </p>
             {intel.insights.slice(0, 2).map((insight, i) => (
               <div

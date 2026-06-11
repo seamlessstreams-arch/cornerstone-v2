@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME BIRTHDAY & SPECIAL OCCASION CELEBRATION INTELLIGENCE API ROUTE
+// CARA -- HOME BIRTHDAY & SPECIAL OCCASION CELEBRATION INTELLIGENCE API ROUTE
 // GET /api/v1/home-birthday-special-occasion-celebration-intelligence
 // Cross-domain composite: birthdayPlanRecords + celebrationExecutionRecords +
 // giftProvisionRecords + memoryMakingRecords + childSatisfactionRecords

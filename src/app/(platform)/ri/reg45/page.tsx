@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — REGULATION 45 ENGINE
+// CARA — REGULATION 45 ENGINE
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState, useMemo } from "react";
@@ -351,7 +351,7 @@ function LiveEvidencePanel({ onUseContext }: { onUseContext: (text: string) => v
               onClick={buildContext}
             >
               <Copy className="h-3 w-3" />
-              Use {selected.size > 0 ? selected.size : ""} items as ARIA context
+              Use {selected.size > 0 ? selected.size : ""} items as Cara context
               <ChevronRight className="h-3 w-3" />
             </Button>
           </div>
@@ -359,7 +359,7 @@ function LiveEvidencePanel({ onUseContext }: { onUseContext: (text: string) => v
       </CardHeader>
         <CardContent className="pt-0 space-y-4">
           <p className="text-xs text-[var(--cs-text-muted)]">
-            Evidence auto-surfaced from completed training needs, resolved alerts, audits, and supervision — grouped by Reg 45 reporting standard. Select items to build ARIA context.
+            Evidence auto-surfaced from completed training needs, resolved alerts, audits, and supervision — grouped by Reg 45 reporting standard. Select items to build Cara context.
           </p>
           {items.length === 0 ? (
             <p className="text-sm text-[var(--cs-text-muted)] text-center py-4">No completed evidence items found yet.</p>
@@ -463,7 +463,7 @@ function GenerateForm({
     setGenerating(true);
     try {
       const res = await api.post<{ data: { parsed?: Record<string, unknown> } }>(
-        "/aria",
+        "/cara",
         {
           mode: "ri_reg45_generate",
           style: "reg_45_narrative",
@@ -511,7 +511,7 @@ function GenerateForm({
       <CardHeader className="pb-3">
         <CardTitle className="text-sm font-semibold flex items-center gap-2">
           <Sparkles className="h-4 w-4 text-blue-600" />
-          Generate New Reg 45 Report with ARIA
+          Generate New Reg 45 Report with Cara
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -549,7 +549,7 @@ function GenerateForm({
           <Textarea
             className="mt-1 text-sm"
             rows={3}
-            placeholder="Paste key evidence, themes, or context for ARIA to use when drafting…"
+            placeholder="Paste key evidence, themes, or context for Cara to use when drafting…"
             value={evidenceNotes}
             onChange={(e) => setEvidenceNotes(e.target.value)}
           />
@@ -561,12 +561,12 @@ function GenerateForm({
           size="sm"
         >
           <Sparkles className="h-3.5 w-3.5" />
-          {generating ? "Generating Reg 45 with ARIA…" : "Generate Reg 45 Draft"}
+          {generating ? "Generating Reg 45 with Cara…" : "Generate Reg 45 Draft"}
         </Button>
 
         {result && (
           <div className="space-y-3 border-t border-blue-100 pt-4">
-            <p className="text-xs font-semibold text-blue-700 uppercase tracking-wide">ARIA Draft — Review before saving</p>
+            <p className="text-xs font-semibold text-blue-700 uppercase tracking-wide">Cara Draft — Review before saving</p>
             {[
               { label: "Strengths", key: "strengths" },
               { label: "Weaknesses", key: "weaknesses" },
@@ -625,7 +625,7 @@ export default function Reg45Page() {
         <div className="rounded-xl border border-blue-100 bg-blue-50 p-4 flex items-start gap-3">
           <AlertTriangle className="h-4 w-4 text-blue-600 shrink-0 mt-0.5" />
           <p className="text-xs text-blue-800 leading-relaxed">
-            <strong>Regulation 45 reports</strong> must be completed at least once every 6 months by the RI under Reg 45 of the Children's Homes (England) Regulations 2015. ARIA drafts are a starting point — all content must be reviewed, edited and approved by the RI before submission.
+            <strong>Regulation 45 reports</strong> must be completed at least once every 6 months by the RI under Reg 45 of the Children's Homes (England) Regulations 2015. Cara drafts are a starting point — all content must be reviewed, edited and approved by the RI before submission.
           </p>
         </div>
 

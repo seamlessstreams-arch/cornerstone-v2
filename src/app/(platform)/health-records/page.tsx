@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HEALTH RECORDS
+// CARA — HEALTH RECORDS
 // Centralised health record for each young person: medical history,
 // allergies, immunisations, health assessments, and health action plans.
 // Supports Reg 7 (Health), Schedule 3 (Health Care), and Ofsted ILACS

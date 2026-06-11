@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — POSSESSIONS INTELLIGENCE ENGINE
+// CARA — POSSESSIONS INTELLIGENCE ENGINE
 // Pure deterministic engine for children's property and possessions analysis.
 // Analyses inventory completeness, photo compliance, insurance coverage,
-// missing/damaged items, and generates ARIA intelligence insights.
+// missing/damaged items, and generates Cara intelligence insights.
 // Reg 20: children's belongings must be safeguarded
 // SCCIF: evidence that children's property is respected and well-managed
 // Children Act 1989 s26: right to personal property

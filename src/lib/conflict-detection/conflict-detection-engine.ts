@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CONFLICT DETECTION ENGINE
+// CARA — CONFLICT DETECTION ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls, and NO
 // argless current-time calls. Accepts an injectable `today` (yyyy-mm-dd).
@@ -16,7 +16,7 @@
 //
 // SAFEGUARD CONTRACT (non-negotiable):
 //   Conflicts are SURFACED FOR A HUMAN TO RECONCILE and are NEVER auto-resolved.
-//   ARIA may *suggest* which record is more likely accurate — with its reasoning
+//   Cara may *suggest* which record is more likely accurate — with its reasoning
 //   and a confidence score — but it never edits either record, never hides the
 //   disagreement, and never silently picks a winner. Every finding carries
 //   status "needs_human_review" and auto_resolved: false.
@@ -54,9 +54,9 @@ export interface ConflictEventRef {
   risk_level: string;
 }
 
-/** ARIA's advisory view — never changes data, always carries uncertainty. */
+/** Cara's advisory view — never changes data, always carries uncertainty. */
 export interface AriaConflictAssessment {
-  /** Which record ARIA judges more likely accurate (advisory only). null = genuinely unclear. */
+  /** Which record Cara judges more likely accurate (advisory only). null = genuinely unclear. */
   likely_accurate_event_id: string | null;
   reasoning: string;
   confidence: number; // 0–1
@@ -471,7 +471,7 @@ function labelFor(category: ConflictCategory): string {
   }
 }
 
-// ── ARIA insights ─────────────────────────────────────────────────────────────
+// ── Cara insights ─────────────────────────────────────────────────────────────
 
 function buildInsights(overview: ConflictOverview, conflicts: ConflictFinding[]): AriaConflictInsight[] {
   const insights: AriaConflictInsight[] = [];
@@ -492,7 +492,7 @@ function buildInsights(overview: ConflictOverview, conflicts: ConflictFinding[])
   // Safeguard transparency statement — always present when conflicts exist.
   insights.push({
     severity: "warning",
-    text: `Every conflict here is flagged for human reconciliation and is never auto-resolved. ARIA may suggest which record is more likely accurate — with its reasoning and a confidence score — but it never edits either record, never hides the disagreement, and never silently picks a winner. The decision stays with a person.`,
+    text: `Every conflict here is flagged for human reconciliation and is never auto-resolved. Cara may suggest which record is more likely accurate — with its reasoning and a confidence score — but it never edits either record, never hides the disagreement, and never silently picks a winner. The decision stays with a person.`,
   });
 
   const missing = overview.by_category["present_while_missing"] ?? 0;

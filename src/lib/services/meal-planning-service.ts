@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- MEAL PLANNING & FOOD CHOICE SERVICE
+// CARA -- MEAL PLANNING & FOOD CHOICE SERVICE
 // Tracks meal planning, dietary needs, cooking participation, nutritional balance,
 // cultural/religious dietary requirements, allergy management, and food choice
 // for looked-after children. Ensures nutritious meals with genuine choice.

@@ -3,7 +3,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // AriaCommandPalette
 //
-// Keyboard-triggered command palette for quick access to ARIA commands.
+// Keyboard-triggered command palette for quick access to Cara commands.
 // Press Cmd/Ctrl+K to open from anywhere in the platform. Shows a
 // searchable list of available commands with category filtering.
 //
@@ -207,7 +207,7 @@ export function AriaCommandPalette({
             <input
               ref={inputRef}
               type="text"
-              placeholder="Search ARIA commands..."
+              placeholder="Search Cara commands..."
               value={search}
               onChange={(e) => {
                 setSearch(e.target.value);

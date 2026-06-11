@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME BEHAVIOUR MANAGEMENT INTELLIGENCE API ROUTE
+// CARA — HOME BEHAVIOUR MANAGEMENT INTELLIGENCE API ROUTE
 // GET /api/v1/home-behaviour-intelligence
 // Synthesises behaviour logs, sanctions/rewards, and consequence records to
 // produce behaviour management quality, reinforcement, and restorative practice

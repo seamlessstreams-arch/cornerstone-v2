@@ -560,7 +560,7 @@ export default function KeyWorkingPage() {
         days={28}
         defaultCollapsed
       />
-      <AriaPracticePanel sourceType="key_work" homeId="home_oak" title="Run ARIA on this session" />
+      <AriaPracticePanel sourceType="key_work" homeId="home_oak" title="Run Cara on this session" />
     </PageShell>
   );
 }

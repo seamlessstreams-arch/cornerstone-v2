@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — REGULATORY REPORTING SERVICE TESTS
+// CARA — REGULATORY REPORTING SERVICE TESTS
 // Pure-function tests for report generation, progress computation,
 // reporting schedule, and compliance calculations.
 // ══════════════════════════════════════════════════════════════════════════════

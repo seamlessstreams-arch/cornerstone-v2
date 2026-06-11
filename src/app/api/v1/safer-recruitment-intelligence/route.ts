@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SAFER RECRUITMENT INTELLIGENCE API ROUTE
+// CARA — SAFER RECRUITMENT INTELLIGENCE API ROUTE
 // GET /api/v1/safer-recruitment-intelligence
 // Returns pipeline health, candidate compliance, check completion, reference
-// verification status, SCR readiness, and ARIA recruitment insights.
+// verification status, SCR readiness, and Cara recruitment insights.
 // Reg 32/33/34, Schedule 2, SCCIF Leadership & Management.
 // ══════════════════════════════════════════════════════════════════════════════
 

@@ -1,5 +1,5 @@
 // ==============================================================================
-// Cornerstone -- Complaint Resolution Effectiveness Intelligence Engine
+// Cara -- Complaint Resolution Effectiveness Intelligence Engine
 //
 // Pure deterministic engine -- no AI, no external calls, no randomness, no
 // Date.now(). Evaluates how well a children's residential home handles

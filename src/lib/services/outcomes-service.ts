@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — OUTCOMES TRACKING SERVICE
+// CARA — OUTCOMES TRACKING SERVICE
 // Tracks young person outcomes against the Every Child Matters framework and
 // SCCIF inspection domains. Manages individual outcome targets, periodic
 // reviews, progress ratings, and home-level outcome analytics.

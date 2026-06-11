@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME STATEMENT OF PURPOSE & CHILDREN'S GUIDE INTELLIGENCE ENGINE
+// CARA — HOME STATEMENT OF PURPOSE & CHILDREN'S GUIDE INTELLIGENCE ENGINE
 // Monitors Statement of Purpose currency, Children's Guide accessibility,
 // review cycle compliance, young person involvement in updates, Ofsted
 // submission timeliness, and stakeholder awareness.

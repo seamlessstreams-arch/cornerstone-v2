@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Aria Intelligence — Mistral Provider Adapter
+// Cara Intelligence — Mistral Provider Adapter
 //
 // Used for: lower-cost document extraction, classification, summarisation,
 // tagging, non-critical admin support and European-friendly processing.

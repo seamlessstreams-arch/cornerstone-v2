@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — VOICE CAPTURE MODAL
+// CARA — VOICE CAPTURE MODAL
 // Quick-log what a young person said, expressed, or communicated.
 // Captures children's voice during key work, daily interactions, reviews, etc.
 // ══════════════════════════════════════════════════════════════════════════════

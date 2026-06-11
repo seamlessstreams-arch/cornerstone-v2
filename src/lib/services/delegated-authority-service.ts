@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DELEGATED AUTHORITY SERVICE
+// CARA — DELEGATED AUTHORITY SERVICE
 // Tracks delegated authority agreements for looked-after children,
 // recording which decisions staff can make day-to-day without
 // needing specific permission from the local authority or parents.

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ADVOCACY & CHILDREN'S RIGHTS INTELLIGENCE CARD
+// CARA — ADVOCACY & CHILDREN'S RIGHTS INTELLIGENCE CARD
 // Dashboard card powered by the Advocacy Intelligence Engine.
 // Reg 7 (wishes/feelings), Reg 14 (needs assessment), Reg 45 (QoC review),
 // Children Act 1989 s26 (advocacy for LAC).
@@ -211,13 +211,13 @@ export function AdvocacyCard() {
           </div>
         )}
 
-        {/* ── ARIA Advocacy Intelligence ──────────────────────────────── */}
+        {/* ── Cara Advocacy Intelligence ──────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Advocacy Intelligence
+              Cara Advocacy Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

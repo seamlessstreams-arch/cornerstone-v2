@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Critical Incident Review Intelligence Engine
+// Cara — Critical Incident Review Intelligence Engine
 //
 // Pure deterministic engine — no AI, no external calls.
 // Analyses how effectively the home reviews and learns from significant

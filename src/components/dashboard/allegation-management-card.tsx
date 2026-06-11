@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ALLEGATION MANAGEMENT INTELLIGENCE CARD
+// CARA — ALLEGATION MANAGEMENT INTELLIGENCE CARD
 // Live data from safeguarding intelligence engine.
 // CHR 2015 Reg 12, Reg 33; Working Together 2023.
 // SCCIF: Helped & Protected — "Allegations are managed swiftly."
@@ -98,12 +98,12 @@ export function AllegationManagementCard() {
           </div>
         </div>
 
-        {/* ARIA insights */}
+        {/* Cara insights */}
         {insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Allegation Intelligence
+              Cara Allegation Intelligence
             </p>
             {insights.map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Incident Pattern Analysis Intelligence Engine
+// Cara — Incident Pattern Analysis Intelligence Engine
 //
 // Pure deterministic engine — no AI, no external calls, no side-effects.
 // Analyses incident data across a children's residential home to identify

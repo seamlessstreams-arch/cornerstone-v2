@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MEETINGS & CHILDREN'S VOICE INTELLIGENCE ENGINE TESTS
+// CARA — MEETINGS & CHILDREN'S VOICE INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite for house meetings and participation analysis.
 // Reg 7, Reg 16, SCCIF.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -285,7 +285,7 @@ describe("Meetings Intelligence Engine", () => {
     });
   });
 
-  describe("ARIA insights", () => {
+  describe("Cara insights", () => {
     it("generates warning for children who never attended", () => {
       const result = run([
         makeMeeting({ children_present: ["yp_alex"], children_absent: [] }),

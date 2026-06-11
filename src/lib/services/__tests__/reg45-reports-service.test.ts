@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — REG 45 REPORTS SERVICE TESTS
+// CARA — REG 45 REPORTS SERVICE TESTS
 // Pure-function unit tests for Reg 45 quality of care report metrics,
 // compliance alert identification, constant validation, and CRUD fallbacks.
 // Covers report statuses, visit types, quality ratings, action priorities,

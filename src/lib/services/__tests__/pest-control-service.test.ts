@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PEST CONTROL SERVICE TESTS
+// CARA — PEST CONTROL SERVICE TESTS
 // Pure-function unit tests for pest control metrics computation, alert
 // identification, and constant validation.
 // CHR 2015 Reg 25 (premises — health and safety),

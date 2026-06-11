@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LIFE SKILLS & INDEPENDENCE INTELLIGENCE ENGINE
+// CARA — LIFE SKILLS & INDEPENDENCE INTELLIGENCE ENGINE
 // Pure deterministic engine for independence readiness analysis.
 // Reg 8 (enjoyment & achievement), Reg 9 (quality of care), Reg 14 (pathway
 // planning), SCCIF Experiences & Progress.
@@ -268,7 +268,7 @@ export function computeLifeSkillsIntelligence(input: EngineInput): LifeSkillsInt
     });
   }
 
-  // ── ARIA Insights ──────────────────────────────────────────────────────
+  // ── Cara Insights ──────────────────────────────────────────────────────
   const insights: AriaLifeSkillsInsight[] = [];
 
   // Warning: unassessed children

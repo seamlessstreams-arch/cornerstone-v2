@@ -1,8 +1,8 @@
 /* ──────────────────────────────────────────────────────────────
-   ARIA Learning Intelligence Engine
+   Cara Learning Intelligence Engine
 
    Pure deterministic engine for evaluating the quality and
-   compliance of ARIA agent learning, cost reduction, and
+   compliance of Cara agent learning, cost reduction, and
    organisational AI capability in children's residential care.
 
    Regulatory basis:
@@ -324,7 +324,7 @@ export function evaluateStaffAriaLearningReadiness(
   return { overallScore: score, totalStaff: n, agentManagementKnowledgeRate, costAnalysisSkillsRate, qualityAssuranceSkillsRate, dataInterpretationSkillsRate, performanceMonitoringSkillsRate, humanOversightCapabilityRate };
 }
 
-// ── Build Child ARIA Learning Profiles ──────────────────────────────────
+// ── Build Child Cara Learning Profiles ──────────────────────────────────
 
 export function buildChildAriaLearningProfiles(
   records: AriaLearningRecord[],
@@ -401,38 +401,38 @@ export function generateAriaLearningIntelligence(
   const rating = getRating(overallScore);
 
   const strengths: string[] = [];
-  if (overallScore >= 80) strengths.push("ARIA learning capability rated Outstanding (" + overallScore + "/100)");
-  else if (overallScore >= 60) strengths.push("ARIA learning capability rated Good (" + overallScore + "/100)");
-  if (qualityResult.overallScore >= 20) strengths.push("ARIA learning quality is strong (score " + qualityResult.overallScore + "/25)");
-  if (complianceResult.overallScore >= 20) strengths.push("ARIA learning compliance is strong (score " + complianceResult.overallScore + "/25)");
-  if (policyResult.overallScore >= 20) strengths.push("ARIA learning policy framework is robust (score " + policyResult.overallScore + "/25)");
-  if (staffResult.overallScore >= 20) strengths.push("Staff ARIA learning readiness is strong (score " + staffResult.overallScore + "/25)");
+  if (overallScore >= 80) strengths.push("Cara learning capability rated Outstanding (" + overallScore + "/100)");
+  else if (overallScore >= 60) strengths.push("Cara learning capability rated Good (" + overallScore + "/100)");
+  if (qualityResult.overallScore >= 20) strengths.push("Cara learning quality is strong (score " + qualityResult.overallScore + "/25)");
+  if (complianceResult.overallScore >= 20) strengths.push("Cara learning compliance is strong (score " + complianceResult.overallScore + "/25)");
+  if (policyResult.overallScore >= 20) strengths.push("Cara learning policy framework is robust (score " + policyResult.overallScore + "/25)");
+  if (staffResult.overallScore >= 20) strengths.push("Staff Cara learning readiness is strong (score " + staffResult.overallScore + "/25)");
   if (periodRecords.length > 0 && qualityResult.taskCompletedAccuratelyRate >= 90) strengths.push("Task completion accuracy at " + qualityResult.taskCompletedAccuratelyRate + "%");
   if (periodRecords.length > 0 && qualityResult.costEfficiencyMaintainedRate >= 90) strengths.push("Cost efficiency maintained at " + qualityResult.costEfficiencyMaintainedRate + "%");
 
   const areasForImprovement: string[] = [];
-  if (overallScore < 40) areasForImprovement.push("ARIA learning capability rated Inadequate (" + overallScore + "/100) — urgent systemic review required");
-  else if (overallScore < 60) areasForImprovement.push("ARIA learning capability Requires Improvement (" + overallScore + "/100)");
-  if (qualityResult.overallScore < 15) areasForImprovement.push("ARIA learning quality needs improvement (score " + qualityResult.overallScore + "/25)");
-  if (complianceResult.overallScore < 15) areasForImprovement.push("ARIA learning compliance needs improvement (score " + complianceResult.overallScore + "/25)");
-  if (policyResult.overallScore < 15) areasForImprovement.push("ARIA learning policy needs strengthening (score " + policyResult.overallScore + "/25)");
-  if (staffResult.overallScore < 15) areasForImprovement.push("Staff ARIA learning readiness needs improvement (score " + staffResult.overallScore + "/25)");
+  if (overallScore < 40) areasForImprovement.push("Cara learning capability rated Inadequate (" + overallScore + "/100) — urgent systemic review required");
+  else if (overallScore < 60) areasForImprovement.push("Cara learning capability Requires Improvement (" + overallScore + "/100)");
+  if (qualityResult.overallScore < 15) areasForImprovement.push("Cara learning quality needs improvement (score " + qualityResult.overallScore + "/25)");
+  if (complianceResult.overallScore < 15) areasForImprovement.push("Cara learning compliance needs improvement (score " + complianceResult.overallScore + "/25)");
+  if (policyResult.overallScore < 15) areasForImprovement.push("Cara learning policy needs strengthening (score " + policyResult.overallScore + "/25)");
+  if (staffResult.overallScore < 15) areasForImprovement.push("Staff Cara learning readiness needs improvement (score " + staffResult.overallScore + "/25)");
   if (periodRecords.length > 0 && qualityResult.costEfficiencyMaintainedRate < 80) areasForImprovement.push("Cost efficiency at " + qualityResult.costEfficiencyMaintainedRate + "% — must improve");
-  if (periodRecords.length === 0) areasForImprovement.push("No ARIA learning records — agent learning must be documented");
-  if (policy === null) areasForImprovement.push("No ARIA learning policy in place — governance requirement");
-  if (staff.length === 0) areasForImprovement.push("No staff ARIA learning training records — training required");
+  if (periodRecords.length === 0) areasForImprovement.push("No Cara learning records — agent learning must be documented");
+  if (policy === null) areasForImprovement.push("No Cara learning policy in place — governance requirement");
+  if (staff.length === 0) areasForImprovement.push("No staff Cara learning training records — training required");
 
   const actions: string[] = [];
-  if (policy === null || policyResult.overallScore === 0) actions.push("URGENT: No ARIA learning policy — develop and implement comprehensive agent governance framework immediately");
-  if (staff.length === 0) actions.push("URGENT: No staff ARIA learning training — schedule training for all care staff");
+  if (policy === null || policyResult.overallScore === 0) actions.push("URGENT: No Cara learning policy — develop and implement comprehensive agent governance framework immediately");
+  if (staff.length === 0) actions.push("URGENT: No staff Cara learning training — schedule training for all care staff");
   if (periodRecords.length > 0 && qualityResult.taskCompletedAccuratelyRate < 50) actions.push("HIGH: Task completion accuracy at " + qualityResult.taskCompletedAccuratelyRate + "% — review agent configuration and training data");
   if (periodRecords.length > 0 && qualityResult.costEfficiencyMaintainedRate < 50) actions.push("HIGH: Cost efficiency at " + qualityResult.costEfficiencyMaintainedRate + "% — review agent usage patterns and optimise");
   if (periodRecords.length > 0 && complianceResult.documentationCompleteRate < 50) actions.push("HIGH: Documentation rate at " + complianceResult.documentationCompleteRate + "% — all agent activities must be recorded");
   if (periodRecords.length > 0 && complianceResult.timelyRecordingRate < 50) actions.push("MEDIUM: Timely recording at " + complianceResult.timelyRecordingRate + "% — records must be completed promptly");
   if (staff.length > 0 && staffResult.agentManagementKnowledgeRate < 50) actions.push("MEDIUM: Agent management knowledge at " + staffResult.agentManagementKnowledgeRate + "% — schedule training");
   const lowScoreChildren = childProfiles.filter((p) => p.overallScore <= 3);
-  if (lowScoreChildren.length > 0) actions.push("MEDIUM: " + lowScoreChildren.length + " child(ren) with low ARIA learning engagement scores — review individual agent support plans");
-  if (actions.length === 0) actions.push("No immediate actions required. ARIA learning systems operating within expected standards.");
+  if (lowScoreChildren.length > 0) actions.push("MEDIUM: " + lowScoreChildren.length + " child(ren) with low Cara learning engagement scores — review individual agent support plans");
+  if (actions.length === 0) actions.push("No immediate actions required. Cara learning systems operating within expected standards.");
 
   const regulatoryLinks: string[] = [
     "CHR 2015 Reg 13 — Leadership and management",

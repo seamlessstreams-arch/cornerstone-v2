@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — GOVERNANCE MEETING MINUTES
+// CARA — GOVERNANCE MEETING MINUTES
 // Records of governance meetings between the Responsible Individual and
 // management team demonstrating oversight per Regulation 45 & Quality Standard 25.
 // ══════════════════════════════════════════════════════════════════════════════

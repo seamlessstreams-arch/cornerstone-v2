@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF CONFIDENCE INDICATOR SERVICE
+// CARA — STAFF CONFIDENCE INDICATOR SERVICE
 // Tracks staff confidence across key practice areas — identifying where staff
 // feel strong and where they need support. Confidence affects practice quality
-// and child outcomes. Part of the ARIA Staff Development, Support and Risk
+// and child outcomes. Part of the Cara Staff Development, Support and Risk
 // Intelligence layer.
 // CHR 2015 Reg 33 (monitoring the home), Reg 34 (employment of staff),
 // Reg 13 (leadership and management), Reg 35 (behaviour management).

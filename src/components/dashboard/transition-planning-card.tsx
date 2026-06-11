@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — TRANSITION PLANNING INTELLIGENCE CARD
+// CARA — TRANSITION PLANNING INTELLIGENCE CARD
 // Live data from useLeavingCareIntelligence() — overview, child readiness.
 // CHR 2015 Reg 44. SCCIF: Overall Experiences.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -119,13 +119,13 @@ export function TransitionPlanningCard() {
           </div>
         )}
 
-        {/* ── ARIA insights ───────────────────────────────────────────── */}
+        {/* ── Cara insights ───────────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Transition Intelligence
+              Cara Transition Intelligence
             </p>
             {intel.insights.slice(0, 2).map((insight, i) => (
               <div

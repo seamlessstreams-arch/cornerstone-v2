@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SHARED MARKETING HEADER
+// CARA — SHARED MARKETING HEADER
 // Used across /, /security, /about. Hash links are absolute (/#…) so they work
 // from any page. Server component; the mobile menu is the only client bit.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -22,9 +22,9 @@ export function MarketingHeader() {
       <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3.5">
         <Link href="/" className="flex items-center gap-2.5">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/icon-192.png" alt="Cornerstone" className="h-9 w-9 rounded-xl" />
+          <img src="/icon-192.png" alt="Cara" className="h-9 w-9 rounded-xl" />
           <span className="flex items-baseline gap-1.5">
-            <span className="text-lg font-extrabold tracking-tight text-[var(--cs-navy)]">Cornerstone</span>
+            <span className="text-lg font-extrabold tracking-tight text-[var(--cs-navy)]">Cara</span>
             <span className="rounded-md bg-[var(--cs-navy)]/5 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[var(--cs-teal-strong)]">Care OS</span>
           </span>
         </Link>

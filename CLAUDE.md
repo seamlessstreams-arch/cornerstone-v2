@@ -4,7 +4,7 @@
 
 ## CORE OUTCOME
 
-Cornerstone is the operational and compliance backbone of a children's home.
+Cara is the operational and compliance backbone of a children's home.
 
 It exists to protect children, support staff, strengthen management oversight, reduce duplication of recording, surface evidence automatically, keep Regulation 45 current, keep Annex A inspection-ready, and preserve a complete, tamper-evident audit trail.
 
@@ -18,7 +18,7 @@ The system must be safe enough for use in a real children's home today.
 
 This must be built as a production-ready live updating system, not a static prototype, demo-only feature or disconnected form builder.
 
-Cornerstone must update connected records, dashboards, reports and evidence banks in real time or near real time when verified information changes.
+Cara must update connected records, dashboards, reports and evidence banks in real time or near real time when verified information changes.
 
 When a staff member creates, submits, edits, verifies, returns, signs or locks a Care Event, the system must automatically and safely update all relevant connected areas, including:
 
@@ -232,7 +232,7 @@ Responsible Individual users must have oversight access according to their role.
 
 ### AI SAFETY
 
-ARIA suggestions must be stored separately from human-approved records.
+Cara suggestions must be stored separately from human-approved records.
 
 Use separate fields or tables for:
 

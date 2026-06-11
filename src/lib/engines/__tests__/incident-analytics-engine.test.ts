@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — INCIDENT ANALYTICS ENGINE TESTS
+// CARA — INCIDENT ANALYTICS ENGINE TESTS
 // Comprehensive test suite: unit + integration
 // ══════════════════════════════════════════════════════════════════════════════
 

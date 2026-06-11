@@ -141,6 +141,6 @@ describe("detectPatterns", () => {
 describe("summary + disclaimer", () => {
   it("summarises and stays calm when clear", () => {
     expect(oversightSummary([], [], 0).headline).toMatch(/Nothing needs your oversight/);
-    expect(OVERSIGHT_DISCLAIMER).toMatch(/ARIA never decides/);
+    expect(OVERSIGHT_DISCLAIMER).toMatch(/Cara never decides/);
   });
 });

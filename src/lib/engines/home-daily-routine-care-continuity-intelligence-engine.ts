@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME DAILY ROUTINE & CARE CONTINUITY INTELLIGENCE ENGINE
+// CARA — HOME DAILY ROUTINE & CARE CONTINUITY INTELLIGENCE ENGINE
 // Tracks daily routine personalisation, duty log completeness, shift note quality,
 // cleaning standards, and sleep-in arrangements to ensure consistent, high-quality care.
 // Pure deterministic engine. CHR 2015 Reg 9/40.

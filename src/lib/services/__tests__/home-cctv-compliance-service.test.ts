@@ -1,7 +1,7 @@
 // ==============================================================================
-// CORNERSTONE -- HOME CCTV COMPLIANCE SERVICE TESTS
+// CARA -- HOME CCTV COMPLIANCE SERVICE TESTS
 // Pure-function tests for CCTV compliance metrics, alert identification,
-// ARIA insights, constant validation, and edge cases.
+// Cara insights, constant validation, and edge cases.
 // ==============================================================================
 
 import { describe, it, expect } from "vitest";

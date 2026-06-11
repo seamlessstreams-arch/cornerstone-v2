@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SUBSTANCE MISUSE PREVENTION INTELLIGENCE API ROUTE
+// CARA — HOME SUBSTANCE MISUSE PREVENTION INTELLIGENCE API ROUTE
 // GET /api/v1/home-substance-misuse-prevention-intelligence
 // Cross-domain composite: substanceEducationRecords + substanceRiskAssessmentRecords +
 // earlyInterventionRecords + substanceReferralRecords + harmReductionRecords

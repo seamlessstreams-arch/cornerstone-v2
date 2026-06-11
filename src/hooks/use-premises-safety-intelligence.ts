@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PREMISES & SAFETY INTELLIGENCE HOOK
+// CARA — PREMISES & SAFETY INTELLIGENCE HOOK
 // React Query wrapper for /api/v1/premises-safety-intelligence
 // ══════════════════════════════════════════════════════════════════════════════
 

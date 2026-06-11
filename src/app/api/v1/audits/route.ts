@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — AUDITS BULK ENDPOINT (enriched meta)
+// CARA — AUDITS BULK ENDPOINT (enriched meta)
 //
 // Returns all audits with computed meta matching AuditsResponse:
 // total, completed, scheduled, in_progress, overdue counts.

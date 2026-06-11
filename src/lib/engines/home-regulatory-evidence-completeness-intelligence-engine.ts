@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME REGULATORY EVIDENCE COMPLETENESS INTELLIGENCE ENGINE
+// CARA — HOME REGULATORY EVIDENCE COMPLETENESS INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Cross-domain composite assessing whether the home has sufficient documented

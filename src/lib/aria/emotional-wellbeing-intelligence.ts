@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA Intelligence Engine — Emotional Wellbeing
+// Cara Intelligence Engine — Emotional Wellbeing
 //
 // Pure deterministic analysis of emotional/mental health for LAC.
 // Tracks:

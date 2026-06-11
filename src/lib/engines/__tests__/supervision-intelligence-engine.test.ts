@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SUPERVISION INTELLIGENCE ENGINE — TEST SUITE
+// CARA — SUPERVISION INTELLIGENCE ENGINE — TEST SUITE
 // Reg 33/32/29 — supervision, staff fitness, RM qualifications
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -520,7 +520,7 @@ describe("computeSupervisionIntelligence", () => {
     });
   });
 
-  describe("ARIA insights", () => {
+  describe("Cara insights", () => {
     it("generates critical insight for overdue supervision", () => {
       const staff = [makeStaff({ id: "staff_1" })];
       const supervisions: SupervisionInput[] = [
@@ -703,7 +703,7 @@ describe("computeSupervisionIntelligence", () => {
       // Training: 3/4 mandatory compliant (compliant + expiring_soon)
       expect(result.overview.mandatory_training_compliance).toBe(75);
 
-      // ARIA critical insight for overdue supervisions
+      // Cara critical insight for overdue supervisions
       expect(result.insights.some((i) => i.severity === "critical")).toBe(true);
 
       // Wellbeing

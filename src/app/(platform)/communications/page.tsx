@@ -110,7 +110,7 @@ const DEMO_DRAFTS = [
     status: "draft" as CommunicationStatus,
     child_id: null,
     aria_generated: true,
-    created_by: "ARIA",
+    created_by: "Cara",
     created_at: "2026-05-12T19:30:00Z",
     updated_at: "2026-05-12T19:30:00Z",
   },
@@ -166,7 +166,7 @@ export default function CommunicationsPage() {
   };
 
   return (
-    <PageShell title="Communications Centre" subtitle="Professional communication drafts with ARIA writing support">
+    <PageShell title="Communications Centre" subtitle="Professional communication drafts with Cara writing support">
       <div className="space-y-6">
         {/* Stats strip */}
         <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
@@ -174,7 +174,7 @@ export default function CommunicationsPage() {
           <StatCard label="In Progress" value={stats.drafts} icon={Edit3} color="text-gray-600 bg-gray-50" />
           <StatCard label="In Review" value={stats.inReview} icon={Eye} color="text-amber-600 bg-amber-50" />
           <StatCard label="Sent" value={stats.sent} icon={Send} color="text-emerald-600 bg-emerald-50" />
-          <StatCard label="ARIA-Generated" value={stats.ariaGenerated} icon={Sparkles} color="text-violet-600 bg-violet-50" />
+          <StatCard label="Cara-Generated" value={stats.ariaGenerated} icon={Sparkles} color="text-violet-600 bg-violet-50" />
         </div>
 
         {/* Actions bar */}
@@ -205,7 +205,7 @@ export default function CommunicationsPage() {
           <Card>
             <CardContent className="p-5">
               <h3 className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
-                <Sparkles className="h-4 w-4 text-violet-500" /> ARIA Communication Templates
+                <Sparkles className="h-4 w-4 text-violet-500" /> Cara Communication Templates
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                 {(Object.entries(COMMUNICATION_TEMPLATES) as [CommunicationType, typeof COMMUNICATION_TEMPLATES[CommunicationType]][]).map(([key, tmpl]) => {
@@ -272,7 +272,7 @@ export default function CommunicationsPage() {
                             <>
                               <span className="text-gray-300">|</span>
                               <span className="flex items-center gap-1 text-violet-600">
-                                <Sparkles className="h-3 w-3" /> ARIA
+                                <Sparkles className="h-3 w-3" /> Cara
                               </span>
                             </>
                           )}
@@ -339,7 +339,7 @@ export default function CommunicationsPage() {
                       <>
                         <span>|</span>
                         <span className="flex items-center gap-1 text-violet-600">
-                          <Sparkles className="h-3 w-3" /> ARIA-generated draft
+                          <Sparkles className="h-3 w-3" /> Cara-generated draft
                         </span>
                       </>
                     )}

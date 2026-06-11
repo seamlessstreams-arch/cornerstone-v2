@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Digital Literacy & Online Engagement — Components
+// Cara Digital Literacy & Online Engagement — Components
 // ══════════════════════════════════════════════════════════════════════════════
 
 export { DigitalLiteracyDashboardWidget } from "./DigitalLiteracyDashboardWidget";

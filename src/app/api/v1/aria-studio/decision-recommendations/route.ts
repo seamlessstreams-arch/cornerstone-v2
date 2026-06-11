@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// API — ARIA Decision Recommendation status updates
+// API — Cara Decision Recommendation status updates
 // PATCH → accept / modify / defer / reject / complete (RBAC: aria.approve_outputs)
 // ══════════════════════════════════════════════════════════════════════════════
 

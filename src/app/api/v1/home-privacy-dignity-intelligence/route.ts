@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME PRIVACY & DIGNITY INTELLIGENCE API ROUTE
+// CARA -- HOME PRIVACY & DIGNITY INTELLIGENCE API ROUTE
 // GET /api/v1/home-privacy-dignity-intelligence
 // Cross-domain composite: privacyAuditRecords + knockEntryRecords +
 // boundaryRespectRecords + confidentialityRecords + dignityCareRecords

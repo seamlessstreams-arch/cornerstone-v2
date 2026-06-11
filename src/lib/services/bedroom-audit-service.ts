@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — BEDROOM AUDIT SERVICE
+// CARA — BEDROOM AUDIT SERVICE
 // Tracks bedroom standards, personalisation, safety checks,
 // furniture condition, and children's living space quality.
 // CHR 2015 Reg 36 (fitness of premises — bedroom standards),

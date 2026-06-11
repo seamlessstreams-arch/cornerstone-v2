@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — THERAPEUTIC PRACTICE AGENT
+// Cara — THERAPEUTIC PRACTICE AGENT
 //
 // Provides PACE-informed reflection, trauma-informed prompts, keywork session
 // guidance, relational repair strategies, trusted adult development, child-
@@ -44,7 +44,7 @@ export const AGENT_CONFIG = {
 
 // ── System Prompt ────────────────────────────────────────────────────────────
 
-const THERAPEUTIC_SYSTEM_PROMPT = `You are the Therapeutic Practice Agent within Cornerstone, a children's residential care management platform. You support staff to deliver relationship-based, trauma-informed care.
+const THERAPEUTIC_SYSTEM_PROMPT = `You are the Therapeutic Practice Agent within Cara, a children's residential care management platform. You support staff to deliver relationship-based, trauma-informed care.
 
 ═══ YOUR THERAPEUTIC FRAMEWORK ═══
 

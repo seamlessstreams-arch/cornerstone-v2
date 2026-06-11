@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LAC HEALTH ASSESSMENT INTELLIGENCE CARD
+// CARA — LAC HEALTH ASSESSMENT INTELLIGENCE CARD
 // Live data from health & wellbeing engine.
 // CHR 2015 Reg 7/33. SCCIF: Health.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -121,12 +121,12 @@ export function LacHealthAssessmentCard() {
           </div>
         )}
 
-        {/* ARIA insights */}
+        {/* Cara insights */}
         {insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-emerald-700">
               <Brain className="h-3 w-3" />
-              ARIA Health Intelligence
+              Cara Health Intelligence
             </p>
             {insights.map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

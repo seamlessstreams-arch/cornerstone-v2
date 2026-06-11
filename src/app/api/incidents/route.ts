@@ -85,7 +85,7 @@ export async function GET(req: NextRequest) {
 
 // ── POST: Create a new incident ─────────────────────────────────────────────
 // This is the complete vertical slice entry point.
-// Form → API → Store → Audit → Timeline → Tasks → Automation → ARIA Context
+// Form → API → Store → Audit → Timeline → Tasks → Automation → Cara Context
 
 export async function POST(req: NextRequest) {
   let body: Record<string, unknown>;

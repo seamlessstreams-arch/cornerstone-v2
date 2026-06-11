@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DUPLICATE DETECTION (detail page)
+// CARA — DUPLICATE DETECTION (detail page)
 // Likely duplicate events surfaced so the same incident, log or medication record
 // is never captured twice. Capture once, link intelligently, never duplicate.
 // ══════════════════════════════════════════════════════════════════════════════

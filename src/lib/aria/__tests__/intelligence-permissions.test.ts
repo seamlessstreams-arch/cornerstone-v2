@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — INTELLIGENCE PERMISSIONS UNIT TESTS
+// Cara — INTELLIGENCE PERMISSIONS UNIT TESTS
 //
 // Tests for hasIntelligencePermission RBAC gating and the
 // ARIA_INTELLIGENCE_PERMISSIONS constant.

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PREMISES & SAFETY INTELLIGENCE CARD
+// CARA — PREMISES & SAFETY INTELLIGENCE CARD
 // Dashboard card powered by the Premises & Safety Intelligence Engine — live data.
 // Reg 25 (premises and safety), Reg 24 (accommodation), Schedule 5,
 // SCCIF: "Is the home safe?" Regulatory Reform (Fire Safety) Order 2005.
@@ -326,13 +326,13 @@ export function PremisesIntelligenceCard() {
           </div>
         )}
 
-        {/* ── ARIA Premises Intelligence ──────────────────────────────── */}
+        {/* ── Cara Premises Intelligence ──────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Premises Intelligence
+              Cara Premises Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

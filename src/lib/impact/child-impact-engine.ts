@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD IMPACT ENGINE
+// CARA — CHILD IMPACT ENGINE
 // Per-child engine computing a holistic impact view across 10 care domains.
 // Evaluates risk reduction, care plan progress, behaviour, education, health,
 // relationships, direct work, independence, voice, and safety/stability.

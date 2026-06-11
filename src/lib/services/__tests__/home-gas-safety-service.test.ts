@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME GAS SAFETY SERVICE TESTS
+// CARA — HOME GAS SAFETY SERVICE TESTS
 // Pure-function tests for gas safety metrics, alert identification,
-// ARIA insights, constant validation, and edge cases.
+// Cara insights, constant validation, and edge cases.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";

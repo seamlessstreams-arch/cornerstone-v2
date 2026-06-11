@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOMEWORK ACADEMIC SUPPORT SERVICE
+// CARA — HOMEWORK ACADEMIC SUPPORT SERVICE
 // Tracks homework completion, academic tutoring, school liaison,
 // learning support, and educational progress monitoring.
 // CHR 2015 Reg 8(2)(a) (education — academic achievement),

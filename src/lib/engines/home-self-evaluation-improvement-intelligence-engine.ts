@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SELF-EVALUATION & IMPROVEMENT INTELLIGENCE ENGINE
+// CARA — HOME SELF-EVALUATION & IMPROVEMENT INTELLIGENCE ENGINE
 // Pure deterministic engine: self-evaluation grades, evidence quality, action
 // completion, development areas addressed, and continuous improvement culture.
 // CHR 2015 Reg 45: "Review of quality of care." SCCIF: Quality & improvement.

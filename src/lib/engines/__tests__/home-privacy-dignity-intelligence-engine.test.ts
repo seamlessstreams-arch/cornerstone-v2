@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE -- HOME PRIVACY & DIGNITY INTELLIGENCE ENGINE TESTS
+// CARA -- HOME PRIVACY & DIGNITY INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite covering insufficient_data, inadequate floor,
 // all rating bands, each bonus/penalty in isolation, all 6 rates,
 // strengths, concerns, recommendations, insights, and edge cases.

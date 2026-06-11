@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Aria Intelligence — Cohere Provider Adapter
+// Cara Intelligence — Cohere Provider Adapter
 //
 // Used for: reranking, classification, enterprise search,
 // knowledge-base retrieval.

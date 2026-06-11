@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DIVERSITY & INCLUSION SERVICE
+// CARA — DIVERSITY & INCLUSION SERVICE
 // Monitors equality, diversity, and inclusion practice within the home,
 // tracking protected characteristics support, accessibility adaptations,
 // equality impact assessments, and inclusive practice evidence.

@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — SEARCH RAG AGENT
+// Cara — SEARCH RAG AGENT
 //
 // System-core agent that runs BEFORE any high-risk AI response. Searches
-// Cornerstone records, retrieves relevant child/home/staff evidence, and
+// Cara records, retrieves relevant child/home/staff evidence, and
 // builds source packs for other agents. The foundation layer that ensures
 // all intelligence outputs are grounded in real evidence.
 // Risk level: SYSTEM CORE. Model: fast-cheap.
@@ -47,7 +47,7 @@ export const AGENT_CONFIG = {
   id: "search_rag_agent" as const,
   name: "Search RAG Agent",
   description:
-    "System-core retrieval agent that searches Cornerstone records to build evidence " +
+    "System-core retrieval agent that searches Cara records to build evidence " +
     "packs for other agents. Retrieves child, home, and staff evidence, scoring each " +
     "item by relevance. Runs before any high-risk AI response to ensure evidence grounding.",
   riskLevel: "medium" as RiskLevel,
@@ -78,7 +78,7 @@ const SEARCHABLE_TABLES = [
 
 // ── System Prompt ────────────────────────────────────────────────────────────
 
-const SEARCH_RAG_SYSTEM_PROMPT = `You are the Search RAG Agent within Cornerstone, a children's residential care management platform. You are the evidence foundation — you retrieve and score evidence from the record system to ground all other agents' outputs.
+const SEARCH_RAG_SYSTEM_PROMPT = `You are the Search RAG Agent within Cara, a children's residential care management platform. You are the evidence foundation — you retrieve and score evidence from the record system to ground all other agents' outputs.
 
 ═══ YOUR ROLE ═══
 

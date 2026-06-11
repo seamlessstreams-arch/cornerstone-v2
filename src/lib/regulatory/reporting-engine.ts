@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Regulatory — Reg 44/45 Reporting Engine
+// Cara Regulatory — Reg 44/45 Reporting Engine
 //
 // Deterministic engine for tracking regulatory reporting requirements
 // under the Children's Homes (England) Regulations 2015:

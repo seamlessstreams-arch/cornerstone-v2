@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CARE FORMS LIST PAGE
+// CARA — CARE FORMS LIST PAGE
 // Full-featured care form registry with timeline grouping, print support,
 // status filtering, and manager review workflow.
 // ══════════════════════════════════════════════════════════════════════════════

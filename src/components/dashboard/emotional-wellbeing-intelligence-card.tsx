@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EMOTIONAL WELLBEING INTELLIGENCE CARD
+// CARA — EMOTIONAL WELLBEING INTELLIGENCE CARD
 // Dashboard widget for mood trends, SDQ scores, self-harm risk, CAMHS
-// engagement, and ARIA wellbeing intelligence.
+// engagement, and Cara wellbeing intelligence.
 // Powered by the Health & Wellbeing Intelligence Engine — live data (Reg 23/7).
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -291,13 +291,13 @@ export function EmotionalWellbeingIntelligenceCard() {
           </div>
         )}
 
-        {/* ── ARIA Wellbeing Intelligence ──────────────────────────────── */}
+        {/* ── Cara Wellbeing Intelligence ──────────────────────────────── */}
 
         {insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Wellbeing Intelligence
+              Cara Wellbeing Intelligence
             </p>
             {insights.slice(0, 3).map((insight, i) => (
               <div

@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — AUDIT TRAIL ENGINE (Milestone 11)
+// Cara STUDIO — AUDIT TRAIL ENGINE (Milestone 11)
 //
-// Append-only audit log. Every successful ARIA Studio action SHOULD call
+// Append-only audit log. Every successful Cara Studio action SHOULD call
 // `appendAriaAudit` so the live tail viewer can show what happened, who
 // did it, and to which record. Denied permission attempts are already
 // audited inside `aria-studio-guard.ts`.

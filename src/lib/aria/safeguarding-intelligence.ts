@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA Intelligence Engine — Safeguarding
+// Cara Intelligence Engine — Safeguarding
 //
 // Pure deterministic analysis of safeguarding for LAC in residential care.
 // Tracks:

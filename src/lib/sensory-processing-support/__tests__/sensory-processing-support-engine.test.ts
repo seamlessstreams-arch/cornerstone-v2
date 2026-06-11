@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Sensory Processing Support Intelligence Engine — Tests
+// Cara — Sensory Processing Support Intelligence Engine — Tests
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";

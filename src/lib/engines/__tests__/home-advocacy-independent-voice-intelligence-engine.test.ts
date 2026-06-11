@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ADVOCACY & INDEPENDENT VOICE INTELLIGENCE ENGINE TESTS
+// CARA — HOME ADVOCACY & INDEPENDENT VOICE INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite for advocacy access, independent advocate usage,
 // child voice capture, private sessions, and type variety scoring.
 // Covers CHR 2015 Reg 7 and SCCIF Voice requirements.

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MEDICATION INTELLIGENCE HOOK
+// CARA — MEDICATION INTELLIGENCE HOOK
 // React Query wrapper for /api/v1/medication-intelligence
 // ══════════════════════════════════════════════════════════════════════════════
 

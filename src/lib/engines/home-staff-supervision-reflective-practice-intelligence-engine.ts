@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME STAFF SUPERVISION & REFLECTIVE PRACTICE INTELLIGENCE ENGINE
+// CARA — HOME STAFF SUPERVISION & REFLECTIVE PRACTICE INTELLIGENCE ENGINE
 // Monitors the quality and compliance of staff supervision, reflective practice,
 // and professional development oversight. Tracks supervision timeliness, quality,
 // theme coverage, safeguarding supervision, and reflective practice engagement.

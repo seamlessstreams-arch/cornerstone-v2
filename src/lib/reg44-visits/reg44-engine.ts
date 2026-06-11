@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Reg 44/45 Independent Visits Engine
+// Cara Reg 44/45 Independent Visits Engine
 //
 // Deterministic engine for tracking independent person visits (Reg 44),
 // quality of visit reports, action tracking, and Ofsted reporting compliance.

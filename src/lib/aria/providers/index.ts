@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Aria Intelligence — Provider Registry
+// Cara Intelligence — Provider Registry
 // ══════════════════════════════════════════════════════════════════════════════
 
 import type { AriaProviderName } from "../core/types";

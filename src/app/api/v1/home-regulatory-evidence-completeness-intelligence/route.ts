@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME REGULATORY EVIDENCE COMPLETENESS INTELLIGENCE API ROUTE
+// CARA — HOME REGULATORY EVIDENCE COMPLETENESS INTELLIGENCE API ROUTE
 // GET /api/v1/home-regulatory-evidence-completeness-intelligence
 // Cross-domain: filingCabinet + documents + riskAssessments + incidents to
 // assess whether the home has sufficient evidence for inspection readiness.

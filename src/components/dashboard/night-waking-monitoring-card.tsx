@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — NIGHT WAKING MONITORING CARD
+// CARA — NIGHT WAKING MONITORING CARD
 // Dashboard card powered by the Night Monitoring Intelligence Engine.
 // CHR 2015 Reg 12/24/25. SCCIF: Overall Experiences — Night care.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -132,13 +132,13 @@ export function NightWakingMonitoringCard() {
           </div>
         )}
 
-        {/* ── ARIA Intelligence ───────────────────────────────────────── */}
+        {/* ── Cara Intelligence ───────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Night Intelligence
+              Cara Night Intelligence
             </p>
             {intel.insights.slice(0, 2).map((insight, i) => (
               <div

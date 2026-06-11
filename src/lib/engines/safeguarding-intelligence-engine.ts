@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SAFEGUARDING INTELLIGENCE ENGINE
+// CARA — SAFEGUARDING INTELLIGENCE ENGINE
 //
 // Pure deterministic engine that aggregates incidents, missing episodes,
 // restraints, risk assessments, and notifiable events to produce:
@@ -8,7 +8,7 @@
 // - Risk assessment overview (per-child, per-domain, review status)
 // - Missing episode analysis (patterns, contextual safeguarding)
 // - Notifiable event compliance (Reg 40 timeliness)
-// - Auto-generated ARIA safeguarding insights (deterministic)
+// - Auto-generated Cara safeguarding insights (deterministic)
 //
 // Key regulatory requirements:
 //   Reg 12 — Protection of children
@@ -397,7 +397,7 @@ export function computeSafeguardingIntelligence(
   }
   const childName = (id: string) => childNameMap.get(id) ?? "Unknown child";
 
-  // ── ARIA Safeguarding Intelligence Insights ───────────────────────────
+  // ── Cara Safeguarding Intelligence Insights ───────────────────────────
   const insights: AriaInsight[] = [];
 
   // 1. Pending Ofsted notifications (critical)

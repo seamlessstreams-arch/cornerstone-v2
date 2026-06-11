@@ -1,5 +1,5 @@
 // ==============================================================================
-// Cornerstone Religious & Spiritual Needs Intelligence Engine
+// Cara Religious & Spiritual Needs Intelligence Engine
 //
 // Evaluates how well the home identifies, records, and meets children's
 // religious, spiritual, and faith-related needs — including worship access,

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME POLICY COMPLIANCE INTELLIGENCE API ROUTE
+// CARA — HOME POLICY COMPLIANCE INTELLIGENCE API ROUTE
 // GET /api/v1/home-policy-compliance-intelligence
 // Synthesises home policy records to assess currency, staff acknowledgement,
 // regulatory coverage, and governance quality.

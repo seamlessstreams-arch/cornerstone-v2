@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- BUDGETING & FINANCIAL LITERACY SKILLS SERVICE
+// CARA -- BUDGETING & FINANCIAL LITERACY SKILLS SERVICE
 // Tracks financial literacy sessions, skill area coverage, competency
 // progression, practical exercises, bank account setup, savings habits,
 // budget creation, and pathway plan linkage for children and young people

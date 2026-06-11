@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA AI GATEWAY — Vercel AI SDK Integration
+// Cara AI GATEWAY — Vercel AI SDK Integration
 //
-// Unified AI provider for all ARIA intelligence features using Vercel AI Gateway.
+// Unified AI provider for all Cara intelligence features using Vercel AI Gateway.
 // Routes requests to OpenAI (management oversight) or Anthropic (operational)
 // based on the task domain.
 //
@@ -136,7 +136,7 @@ export async function generateViaGateway(request: GatewayRequest): Promise<Gatew
 
     return {
       content:
-        "ARIA was unable to generate content via AI Gateway. " +
+        "Cara was unable to generate content via AI Gateway. " +
         "The provider returned an error. Please retry or contact your administrator.",
       model: "unavailable",
       provider,
@@ -214,7 +214,7 @@ export async function runOversightAnalysis(
   const crossValidation = await generateViaGateway({
     provider: "anthropic",
     domain: request.domain,
-    systemPrompt: `You are ARIA, cross-validating a management oversight analysis. Review the analysis below and state whether you agree, partially agree, or disagree. Provide a brief rationale.\n\n${systemPrompt}`,
+    systemPrompt: `You are Cara, cross-validating a management oversight analysis. Review the analysis below and state whether you agree, partially agree, or disagree. Provide a brief rationale.\n\n${systemPrompt}`,
     userPrompt: `ORIGINAL ANALYSIS:\n${primaryAnalysis.content}\n\nORIGINAL CONTEXT:\n${request.context}`,
     maxOutputTokens: 1000,
     temperature: 0.2,

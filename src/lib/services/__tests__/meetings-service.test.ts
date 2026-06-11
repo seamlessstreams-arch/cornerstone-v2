@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILDREN'S MEETINGS & CONSULTATION SERVICE TESTS
+// CARA — CHILDREN'S MEETINGS & CONSULTATION SERVICE TESTS
 // Pure-function tests for meeting compliance, consultation metrics,
 // alert identification, and constant validation.
 // ══════════════════════════════════════════════════════════════════════════════

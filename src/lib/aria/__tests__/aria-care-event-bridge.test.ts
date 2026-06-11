@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA Care Event Bridge — engine tests (Milestone 12)
+// Cara Care Event Bridge — engine tests (Milestone 12)
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect, beforeEach } from "vitest";

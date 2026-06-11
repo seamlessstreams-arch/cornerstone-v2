@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SUBSTANCE MISUSE PREVENTION INTELLIGENCE ENGINE TESTS
+// CARA — HOME SUBSTANCE MISUSE PREVENTION INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite covering: insufficient_data, inadequate floor,
 // outstanding/good/adequate/inadequate scenarios, each bonus in isolation,
 // each penalty in isolation, all 6 rates, strengths/concerns/recommendations/

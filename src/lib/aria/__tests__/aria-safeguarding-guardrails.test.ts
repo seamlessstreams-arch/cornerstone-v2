@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Tests — ARIA Safeguarding Guardrails
+// Tests — Cara Safeguarding Guardrails
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";

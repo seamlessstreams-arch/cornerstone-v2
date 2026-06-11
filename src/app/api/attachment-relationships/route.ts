@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Attachment & Relationships API Route
+// Cara — Attachment & Relationships API Route
 //
 // GET  → returns Chamberlain House demo attachment/relationships intelligence
 // POST → accepts custom data for any home

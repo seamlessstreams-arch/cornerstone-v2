@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — REGULATION 45 EVIDENCE BANK + REPORT BUILDER
+// CARA — REGULATION 45 EVIDENCE BANK + REPORT BUILDER
 // Live-updating evidence queue from Care Event routing
 // Managers review, edit and approve suggested evidence for Reg 45 reports
 // Report Builder groups approved evidence by theme for narrative drafting
@@ -1059,7 +1059,7 @@ export default function Regulation45EvidencePage() {
 
       {/* Safety note */}
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-5 text-sm text-blue-800">
-        <span className="font-semibold">AI safety notice:</span> All evidence below was suggested by ARIA
+        <span className="font-semibold">AI safety notice:</span> All evidence below was suggested by Cara
         based on submitted Care Events. It must not enter the Regulation 45 report without manager approval.
         Review each item and approve, edit, or reject.
       </div>

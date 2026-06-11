@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILDREN'S POSSESSIONS & PROPERTY SERVICE
+// CARA — CHILDREN'S POSSESSIONS & PROPERTY SERVICE
 // Manages inventory of children's personal belongings, money records,
 // valuables, and property on admission/departure. Evidence for Reg 21
 // (privacy & access), Reg 36 (case records), and SCCIF Experiences.

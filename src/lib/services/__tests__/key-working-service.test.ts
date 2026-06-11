@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — KEY WORKING SERVICE TESTS
+// CARA — KEY WORKING SERVICE TESTS
 // Pure-function tests for session compliance, quality scoring, child progress
 // tracking, topic suggestions, and constant validation.
 // ══════════════════════════════════════════════════════════════════════════════

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — Test suite
+// Cara STUDIO — Test suite
 // Tests: quality check logic, status transitions, commit protection,
 //        gap detection, source gathering, filing path, stub provider.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -74,7 +74,7 @@ function seedArtifact(artifact: AriaArtifact): AriaArtifact {
 
 // ── Status transitions ─────────────────────────────────────────────────────────
 
-describe("ARIA Studio — status transitions", () => {
+describe("Cara Studio — status transitions", () => {
   it("draft → in_review via submit", () => {
     const art = seedArtifact(makeArtifact({ status: "draft" }));
     const updated = submitArtifactForReview(art.id, "staff_anna");
@@ -162,7 +162,7 @@ describe("ARIA Studio — status transitions", () => {
 
 // ── Editing and versioning ─────────────────────────────────────────────────────
 
-describe("ARIA Studio — editing and versioning", () => {
+describe("Cara Studio — editing and versioning", () => {
   it("creates a version snapshot on edit", () => {
     const art = seedArtifact(makeArtifact({ status: "draft" }));
     editArtifact(art.id, "staff_anna", "Updated content for the session.", "Added more detail");
@@ -189,7 +189,7 @@ describe("ARIA Studio — editing and versioning", () => {
 
 // ── Quality checks ─────────────────────────────────────────────────────────────
 
-describe("ARIA Studio — quality checks", () => {
+describe("Cara Studio — quality checks", () => {
   it("quality check passes for well-formed content", () => {
     const art = seedArtifact(makeArtifact({
       status: "approved",
@@ -239,7 +239,7 @@ describe("ARIA Studio — quality checks", () => {
 
 // ── Gap detection ─────────────────────────────────────────────────────────────
 
-describe("ARIA Studio — gap detection", () => {
+describe("Cara Studio — gap detection", () => {
   it("returns array of gaps (may be empty for well-covered home)", async () => {
     const gaps = await detectGapsForRequest({
       artifact_type: "keywork_session",
@@ -292,7 +292,7 @@ describe("ARIA Studio — gap detection", () => {
 
 // ── Source gathering ───────────────────────────────────────────────────────────
 
-describe("ARIA Studio — source gathering", () => {
+describe("Cara Studio — source gathering", () => {
   it("returns array of sources (may be empty)", async () => {
     const sources = await gatherSourcesForRequest({
       artifact_type: "keywork_session",
@@ -369,7 +369,7 @@ describe("ARIA Studio — source gathering", () => {
 
 // ── AI provider / stub ─────────────────────────────────────────────────────────
 
-describe("ARIA Studio — AI provider", () => {
+describe("Cara Studio — AI provider", () => {
   it("stub provider returns isStub=true when no API key configured", async () => {
     const result = await generateAriaStudioContent(
       {
@@ -378,7 +378,7 @@ describe("ARIA Studio — AI provider", () => {
         framework: "pace",
         tone: "professional",
         creativeMode: "balanced",
-        systemPrompt: "You are ARIA.",
+        systemPrompt: "You are Cara.",
         userPrompt: "Generate a brief test.",
       },
       { provider: "stub", model: "stub", configured: true, maxTokens: 4096, temperature: 0 }
@@ -396,7 +396,7 @@ describe("ARIA Studio — AI provider", () => {
         framework: "pace",
         tone: "professional",
         creativeMode: "balanced",
-        systemPrompt: "You are ARIA.",
+        systemPrompt: "You are Cara.",
         userPrompt: "Generate a keywork session note.",
       },
       { provider: "stub", model: "stub", configured: true, maxTokens: 4096, temperature: 0 }
@@ -404,7 +404,7 @@ describe("ARIA Studio — AI provider", () => {
     expect(result.content.length).toBeGreaterThan(50);
   });
 
-  it("stub provider content includes ARIA DEMO watermark", async () => {
+  it("stub provider content includes Cara DEMO watermark", async () => {
     const result = await generateAriaStudioContent(
       {
         artifactType: "keywork_session",
@@ -412,18 +412,18 @@ describe("ARIA Studio — AI provider", () => {
         framework: "pace",
         tone: "professional",
         creativeMode: "balanced",
-        systemPrompt: "You are ARIA.",
+        systemPrompt: "You are Cara.",
         userPrompt: "Write a test",
       },
       { provider: "stub", model: "stub", configured: true, maxTokens: 4096, temperature: 0 }
     );
-    expect(result.content.toUpperCase()).toContain("ARIA");
+    expect(result.content.toUpperCase()).toContain("CARA");
   });
 });
 
 // ── Store integrity ────────────────────────────────────────────────────────────
 
-describe("ARIA Studio — store integrity", () => {
+describe("Cara Studio — store integrity", () => {
   it("db.ariaArtifacts.findAll returns an array", () => {
     const result = db.ariaArtifacts.findAll();
     expect(Array.isArray(result)).toBe(true);

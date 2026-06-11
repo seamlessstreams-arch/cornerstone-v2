@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SCCIF SELF-EVALUATION INTELLIGENCE ENGINE
+// CARA — SCCIF SELF-EVALUATION INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses self-evaluation coverage across the three SCCIF judgment areas,

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Placement Stability & Continuity Intelligence — Engine Tests
+// Cara Placement Stability & Continuity Intelligence — Engine Tests
 //
 // Covers pct, getRating, label getters, all 4 evaluators, buildChildPlacementProfiles,
 // orchestrator — empty/perfect/partial/cap scenarios.

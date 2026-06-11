@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ACCESSIBILITY ASSESSMENT SERVICE TESTS
+// CARA — HOME ACCESSIBILITY ASSESSMENT SERVICE TESTS
 // Pure-function tests for accessibility metrics, alert identification,
-// ARIA insight generation, and edge cases.
+// Cara insight generation, and edge cases.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";

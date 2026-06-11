@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — Types
+// Cara STUDIO — Types
 //
 // Canonical type definitions for the governed AI content creation system.
 // ══════════════════════════════════════════════════════════════════════════════

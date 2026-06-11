@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD ONLINE SAFETY MONITORING CARD
+// CARA — CHILD ONLINE SAFETY MONITORING CARD
 // Live data from safeguarding intelligence engine.
 // CHR 2015 Reg 12, Reg 34. SCCIF: Helped & Protected.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -73,7 +73,7 @@ export function ChildOnlineSafetyMonitoringCard() {
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Online Safety Monitoring Intelligence
+              Cara Online Safety Monitoring Intelligence
             </p>
             {insights.slice(0, 2).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

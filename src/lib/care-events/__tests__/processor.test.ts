@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CARE EVENT PROCESSOR TESTS
+// CARA — CARE EVENT PROCESSOR TESTS
 // Tests: routing engine classification, dedup/idempotency, amendment versioning,
 // role permissions, retry behaviour, and filing cabinet auto-filing.
 // ══════════════════════════════════════════════════════════════════════════════

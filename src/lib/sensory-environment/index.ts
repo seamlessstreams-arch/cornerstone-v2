@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Sensory & Therapeutic Environment Intelligence — Public API
+// Cara Sensory & Therapeutic Environment Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

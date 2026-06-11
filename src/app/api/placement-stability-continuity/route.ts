@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Placement Stability & Continuity API Route
+// Cara — Placement Stability & Continuity API Route
 //
 // GET  → returns Chamberlain House demo placement stability intelligence
 // POST → accepts custom data for any home

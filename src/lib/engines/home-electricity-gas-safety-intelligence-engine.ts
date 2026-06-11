@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ELECTRICITY & GAS SAFETY INTELLIGENCE ENGINE
+// CARA — HOME ELECTRICITY & GAS SAFETY INTELLIGENCE ENGINE
 // Monitors PAT testing compliance, gas safety certificate currency, electrical
 // inspection schedules, carbon monoxide detector checks, child safety awareness,
 // and staff training in electrical and gas safety procedures.

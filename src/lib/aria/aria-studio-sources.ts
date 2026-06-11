@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — SOURCE GATHERING
+// Cara STUDIO — SOURCE GATHERING
 // Pulls verified evidence from existing store collections.
 // Only uses approved/verified records for source context.
 // ══════════════════════════════════════════════════════════════════════════════

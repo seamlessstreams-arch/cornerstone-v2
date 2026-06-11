@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — MEDICATION INTELLIGENCE
+// Cara — MEDICATION INTELLIGENCE
 //
 // Analyses medication administration records to surface:
 //   - Missed or late doses

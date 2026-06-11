@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from "vitest";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — APPROVAL WORKFLOW TESTS
+// Cara — APPROVAL WORKFLOW TESTS
 //
 // Note: In demo mode (null Supabase), fetchReport always returns a fresh
 // report with status "draft". Each workflow function calls fetchReport

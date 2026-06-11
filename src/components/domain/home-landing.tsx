@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME DOMAIN LANDING PAGE
+// CARA — HOME DOMAIN LANDING PAGE
 // The heartbeat of Chamberlain House. Shows what matters today: priorities, young
 // people, staff, actions, compliance, and positive progress — all at a glance.
 // ══════════════════════════════════════════════════════════════════════════════

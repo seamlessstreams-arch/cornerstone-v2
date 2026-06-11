@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MATCHING & REFERRAL INTELLIGENCE CARD
+// CARA — MATCHING & REFERRAL INTELLIGENCE CARD
 // Dashboard card for referral pipeline, impact assessment compliance,
-// decision analytics, and ARIA admission intelligence.
+// decision analytics, and Cara admission intelligence.
 // Powered by the Admission & Referral Intelligence Engine — live data (Reg 11/12).
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -195,13 +195,13 @@ export function MatchingReferralCard() {
           </div>
         )}
 
-        {/* ── ARIA Admission Intelligence ──────────────────────────────── */}
+        {/* ── Cara Admission Intelligence ──────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Matching Intelligence
+              Cara Matching Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — WORKFORCE PLANNING SERVICE
+// CARA — WORKFORCE PLANNING SERVICE
 // Manages staffing levels, ratios, succession planning, vacancy tracking,
 // and workforce modelling for the home.
 // CHR 2015 Reg 33 (employment of staff — sufficient numbers, suitable

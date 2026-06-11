@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — BEHAVIOUR LOG
+// CARA — BEHAVIOUR LOG
 // Records observed behaviours using the ABC model (Antecedent, Behaviour,
 // Consequence). Captures both positive and concerning behaviour to build
 // patterns and inform care planning. Supports Reg 11 (Positive Relationships)

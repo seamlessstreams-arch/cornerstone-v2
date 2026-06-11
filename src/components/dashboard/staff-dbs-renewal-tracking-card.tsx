@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF DBS RENEWAL TRACKING CARD
+// CARA — STAFF DBS RENEWAL TRACKING CARD
 // Dashboard card powered by the Workforce Intelligence Engine.
 // Tracks DBS compliance, expiry, and update service enrolment.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -107,13 +107,13 @@ export function StaffDbsRenewalTrackingCard() {
           </div>
         </div>
 
-        {/* ── ARIA Intelligence ───────────────────────────────────────── */}
+        {/* ── Cara Intelligence ───────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA DBS Intelligence
+              Cara DBS Intelligence
             </p>
             {intel.insights.slice(0, 2).map((insight, i) => (
               <div

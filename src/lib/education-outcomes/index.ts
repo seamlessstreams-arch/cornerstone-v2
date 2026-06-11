@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Education Attendance & Achievement Intelligence — Public API
+// Cara Education Attendance & Achievement Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

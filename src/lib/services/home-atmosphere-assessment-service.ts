@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ATMOSPHERE ASSESSMENT SERVICE
+// CARA — HOME ATMOSPHERE ASSESSMENT SERVICE
 // Manages regular assessments of home warmth, belonging, relationships,
 // sense of home, children feeling safe and cared for, and overall
 // environment quality within the residential setting.

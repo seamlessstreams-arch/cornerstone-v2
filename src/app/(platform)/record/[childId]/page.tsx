@@ -12,7 +12,7 @@ export default function UniversalRecordPage() {
       <div className="mb-6">
         <h1 className="text-lg font-bold text-[var(--cs-navy)]">Record for Child</h1>
         <p className="text-sm text-[var(--cs-text-muted)]">
-          Just write what happened. Cornerstone will figure out the type and route it everywhere.
+          Just write what happened. Cara will figure out the type and route it everywhere.
         </p>
       </div>
       <UniversalChildEntry

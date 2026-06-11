@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — Care Event Patterns  (Milestone 17)
+// CARA — Care Event Patterns  (Milestone 17)
 //
-// Cross-event pattern scan over the last N days. ARIA detected — requires
+// Cross-event pattern scan over the last N days. Cara detected — requires
 // manager review. Each pattern card lists the source events for full
 // transparency.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -69,7 +69,7 @@ export default function CareEventPatternsPage() {
   return (
     <PageShell
       title="Care Event Patterns"
-      subtitle="ARIA detected — requires manager review. Cross-event analysis of verified care entries to surface themes individual reviews would miss."
+      subtitle="Cara detected — requires manager review. Cross-event analysis of verified care entries to surface themes individual reviews would miss."
       actions={
         <div className="flex items-center gap-2">
           <Input

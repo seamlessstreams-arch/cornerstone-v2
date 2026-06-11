@@ -53,7 +53,7 @@ describe("conflict-detection integration (store → spine + intervals → engine
     expect(JSON.stringify(result)).toBe(JSON.stringify(again));
   });
 
-  it("always returns at least one ARIA insight with a valid severity", () => {
+  it("always returns at least one Cara insight with a valid severity", () => {
     expect(result.insights.length).toBeGreaterThan(0);
     for (const i of result.insights) {
       expect(["critical", "warning", "positive"]).toContain(i.severity);

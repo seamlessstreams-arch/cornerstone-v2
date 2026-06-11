@@ -404,7 +404,7 @@ export default function Reg45Page() {
                                 {isDraft && (
                                   <Button variant="outline" size="sm" className="text-xs gap-1.5 border-indigo-200 text-indigo-700 hover:bg-indigo-50">
                                     <Sparkles className="h-3 w-3" />
-                                    Request ARIA Draft
+                                    Request Cara Draft
                                   </Button>
                                 )}
                                 <span className="text-[10px] text-muted-foreground flex items-center gap-1">
@@ -420,7 +420,7 @@ export default function Reg45Page() {
                               {isDraft && (
                                 <Button variant="outline" size="sm" className="text-xs gap-1.5 border-indigo-200 text-indigo-700 hover:bg-indigo-50">
                                   <Sparkles className="h-3 w-3" />
-                                  Request ARIA Draft
+                                  Request Cara Draft
                                 </Button>
                               )}
                             </div>
@@ -483,7 +483,7 @@ export default function Reg45Page() {
                                 {isDraft && (
                                   <Button variant="outline" size="sm" className="text-xs gap-1.5 border-indigo-200 text-indigo-700 hover:bg-indigo-50">
                                     <Sparkles className="h-3 w-3" />
-                                    Request ARIA Draft
+                                    Request Cara Draft
                                   </Button>
                                 )}
                                 <span className="text-[10px] text-muted-foreground flex items-center gap-1">
@@ -499,7 +499,7 @@ export default function Reg45Page() {
                               {isDraft && (
                                 <Button variant="outline" size="sm" className="text-xs gap-1.5 border-indigo-200 text-indigo-700 hover:bg-indigo-50">
                                   <Sparkles className="h-3 w-3" />
-                                  Request ARIA Draft
+                                  Request Cara Draft
                                 </Button>
                               )}
                             </div>
@@ -540,7 +540,7 @@ export default function Reg45Page() {
                 </div>
                 <div className="mt-3 text-xs text-muted-foreground space-y-1">
                   <p><span className="font-medium">Draft:</span> Manager is building the review, adding content and evidence links.</p>
-                  <p><span className="font-medium">In Progress:</span> Actively being written with ARIA assistance and stakeholder input.</p>
+                  <p><span className="font-medium">In Progress:</span> Actively being written with Cara assistance and stakeholder input.</p>
                   <p><span className="font-medium">Submitted:</span> Manager has completed the review and submitted for RI approval.</p>
                   <p><span className="font-medium">Approved:</span> Responsible Individual has reviewed and approved the document.</p>
                   <p><span className="font-medium">Published:</span> Made available to Ofsted, placing authorities, and stakeholders.</p>
@@ -570,7 +570,7 @@ export default function Reg45Page() {
               <EmptyState
                 icon={Link2}
                 title="Evidence not loaded"
-                description="Click 'Pull Evidence' to see what evidence exists for this review period. ARIA can link evidence items to review sections automatically."
+                description="Click 'Pull Evidence' to see what evidence exists for this review period. Cara can link evidence items to review sections automatically."
                 actions={[{ label: "Pull Evidence", icon: Link2, onClick: () => setShowEvidence(true) }]}
               />
             ) : (
@@ -603,9 +603,9 @@ export default function Reg45Page() {
                   <div className="flex items-start gap-3">
                     <Sparkles className="h-5 w-5 text-indigo-600 shrink-0 mt-0.5" />
                     <div>
-                      <p className="text-sm font-medium text-indigo-800">ARIA Evidence Linking</p>
+                      <p className="text-sm font-medium text-indigo-800">Cara Evidence Linking</p>
                       <p className="text-xs text-indigo-700 mt-1 leading-relaxed">
-                        ARIA can automatically suggest evidence links for each section of the review based on the records from this period. Evidence items are tagged to relevant judgement areas (Quality of Care, Help &amp; Protection, Leadership &amp; Management) and linked to specific review sections.
+                        Cara can automatically suggest evidence links for each section of the review based on the records from this period. Evidence items are tagged to relevant judgement areas (Quality of Care, Help &amp; Protection, Leadership &amp; Management) and linked to specific review sections.
                       </p>
                       <Button size="sm" className="mt-3 gap-1.5 bg-[var(--cs-navy)] hover:bg-[var(--cs-navy)]/90 text-white">
                         <Sparkles className="h-3 w-3" />

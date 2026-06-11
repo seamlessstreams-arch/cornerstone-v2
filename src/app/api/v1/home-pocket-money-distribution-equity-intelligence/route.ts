@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME POCKET MONEY DISTRIBUTION EQUITY INTELLIGENCE API ROUTE
+// CARA -- HOME POCKET MONEY DISTRIBUTION EQUITY INTELLIGENCE API ROUTE
 // GET /api/v1/home-pocket-money-distribution-equity-intelligence
 // Cross-domain composite: pocketMoneyDistributionRecords +
 // ageAppropriatenessRecords + paymentTimelinessRecords +

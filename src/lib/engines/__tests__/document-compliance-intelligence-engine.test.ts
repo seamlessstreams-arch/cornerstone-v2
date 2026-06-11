@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DOCUMENT COMPLIANCE INTELLIGENCE ENGINE · TEST SUITE
+// CARA — DOCUMENT COMPLIANCE INTELLIGENCE ENGINE · TEST SUITE
 //
 // 55+ tests covering overview, document profiles, category analysis, alerts,
-// ARIA insights, and Chamberlain House integration.
+// Cara insights, and Chamberlain House integration.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";
@@ -411,9 +411,9 @@ describe("alerts", () => {
   });
 });
 
-// ── ARIA Insights ─────────────────────────────────────────────────────────
+// ── Cara Insights ─────────────────────────────────────────────────────────
 
-describe("ARIA insights", () => {
+describe("Cara insights", () => {
   it("critical: expired regulatory documents", () => {
     const d = makeDoc({ category: "policy", expiry_date: "2026-01-01" });
     const r = run({ documents: [d] });
@@ -604,7 +604,7 @@ describe("Chamberlain House integration scenario", () => {
     // Medium: doc_4 expiring in ~30 days
     expect(r.alerts.some((a) => a.severity === "medium" && a.message.includes("expiring within 30"))).toBe(true);
 
-    // ── ARIA Insights ─────────────────────────────────────────────────
+    // ── Cara Insights ─────────────────────────────────────────────────
     // Warning: low sign-off rate
     expect(r.insights.some((i) => i.severity === "warning" && i.text.includes("sign-off rate is 29%"))).toBe(true);
 

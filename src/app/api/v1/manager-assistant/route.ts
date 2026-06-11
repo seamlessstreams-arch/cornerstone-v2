@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — AI MANAGER ASSISTANT API (workforce slice 6, spec §13)
+// CARA — AI MANAGER ASSISTANT API (workforce slice 6, spec §13)
 // GET  /api/v1/manager-assistant → vacancies, candidates, tool metadata
 // POST /api/v1/manager-assistant
 //        { tool: "job_advert", vacancy_id }       → advert draft
@@ -7,7 +7,7 @@
 //        { tool: "action_plan", goal, context? }  → action-plan draft
 //
 // Every tool returns a DETERMINISTIC scaffold built only from recorded data,
-// plus an optional ARIA polish when an LLM key is configured (graceful without).
+// plus an optional Cara polish when an LLM key is configured (graceful without).
 // Drafts only — nothing is published or sent; every AI generation is audited.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -89,14 +89,14 @@ export async function POST(req: Request) {
 
   const result = await generateText({ systemPrompt, userPrompt: scaffold, temperature: 0.4, maxOutputTokens: 900 });
   const llmUsed = result.llmUsed && !!result.text?.trim();
-  audit(user_id, `${auditNote}${llmUsed ? " + ARIA polish" : " (deterministic only)"}`, child_id);
+  audit(user_id, `${auditNote}${llmUsed ? " + Cara polish" : " (deterministic only)"}`, child_id);
 
   return NextResponse.json({
     data: {
       scaffold,
       ai_draft: llmUsed ? result.text.trim() : null,
       llmUsed,
-      llm_message: llmUsed ? null : "ARIA's AI polish isn't configured in this environment — the structured draft below is assembled from your recorded data and is ready to edit.",
+      llm_message: llmUsed ? null : "Cara's AI polish isn't configured in this environment — the structured draft below is assembled from your recorded data and is ready to edit.",
       disclaimer: ASSISTANT_DISCLAIMER,
     },
   });

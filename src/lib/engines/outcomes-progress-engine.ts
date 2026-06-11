@@ -1,9 +1,9 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — OUTCOMES PROGRESS INTELLIGENCE ENGINE
+// CARA — OUTCOMES PROGRESS INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses outcome targets, reviews, domain progress, and review compliance.
-// Generates alerts and ARIA insights for stagnant/declining outcomes.
+// Generates alerts and Cara insights for stagnant/declining outcomes.
 //
 // Regulatory: Reg 7–14 (Individual care plans and outcomes for each child),
 // SCCIF Overall Experiences & Progress of children & young people.
@@ -440,7 +440,7 @@ export function computeOutcomesProgress(input: OutcomesProgressInput): OutcomesP
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
   const insights: AriaOutcomeInsight[] = [];
 
   // Critical: any child with declining outcomes and no recent review

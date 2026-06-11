@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — OUTCOMES PROGRESS CARD
+// CARA — OUTCOMES PROGRESS CARD
 // Dashboard widget showing young people's progress across care plan domains.
 // Ofsted ILACS primary focus: "Are children making progress?"
 // ══════════════════════════════════════════════════════════════════════════════

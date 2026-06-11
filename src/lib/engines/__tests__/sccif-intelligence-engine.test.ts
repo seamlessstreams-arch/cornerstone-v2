@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SCCIF SELF-EVALUATION INTELLIGENCE ENGINE — TEST SUITE
+// CARA — SCCIF SELF-EVALUATION INTELLIGENCE ENGINE — TEST SUITE
 // Social Care Common Inspection Framework — self-evaluation coverage,
 // strength ratios, action completion, evidence gaps, inspection readiness.
 // ══════════════════════════════════════════════════════════════════════════════

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — REPORT WRITER AGENT
+// Cara — REPORT WRITER AGENT
 //
 // Produces weekly child reports, review reports, Reg 45 drafts, management
 // summaries, home development plans, and child progress summaries. All outputs
@@ -84,7 +84,7 @@ const REPORT_TYPES = {
 
 // ── System Prompt ────────────────────────────────────────────────────────────
 
-const REPORT_WRITER_SYSTEM_PROMPT = `You are the Report Writer Agent within Cornerstone, a children's residential care management platform. You produce structured, evidence-grounded reports for children's residential care homes.
+const REPORT_WRITER_SYSTEM_PROMPT = `You are the Report Writer Agent within Cara, a children's residential care management platform. You produce structured, evidence-grounded reports for children's residential care homes.
 
 ═══ REPORT TYPES YOU PRODUCE ═══
 

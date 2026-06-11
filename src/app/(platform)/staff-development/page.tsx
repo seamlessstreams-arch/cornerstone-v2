@@ -304,7 +304,7 @@ export default function StaffDevelopmentPage() {
     return result;
   }, [profiles, filter, search, sortBy]);
 
-  // Build ARIA context from at-risk profiles
+  // Build Cara context from at-risk profiles
   const ariaContext = useMemo(() => {
     const atRisk = profiles.filter((p) => p.status === "at_risk");
     const attention = profiles.filter((p) => p.status === "attention");
@@ -344,7 +344,7 @@ export default function StaffDevelopmentPage() {
       }
     >
       <div id="staff-dev-content">
-      {/* ARIA Panel */}
+      {/* Cara Panel */}
       {showAria && (
         <div className="mb-6 relative">
           <button
@@ -455,7 +455,7 @@ export default function StaffDevelopmentPage() {
           onClick={() => setShowAria((v) => !v)}
         >
           <Sparkles className="h-3.5 w-3.5 text-violet-600" />
-          ARIA Team Analysis
+          Cara Team Analysis
         </Button>
       </div>
 

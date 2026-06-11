@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Sensory Environment Quality — Component Exports
+// Cara — Sensory Environment Quality — Component Exports
 // ══════════════════════════════════════════════════════════════════════════════
 
 export { default as SensoryEnvironmentQualityDashboardWidget } from "./SensoryEnvironmentQualityDashboardWidget";

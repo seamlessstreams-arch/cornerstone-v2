@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // API: /api/aria/reports/generate
 //
-// POST  — Generate a new child report via the ARIA report generation pipeline.
+// POST  — Generate a new child report via the Cara report generation pipeline.
 //         Validates the request body against reportGenerationRequestSchema,
 //         invokes generateChildReport, and returns the full result.
 // ══════════════════════════════════════════════════════════════════════════════

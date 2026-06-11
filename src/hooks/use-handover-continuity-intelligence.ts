@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HANDOVER CONTINUITY INTELLIGENCE HOOK
+// CARA — HANDOVER CONTINUITY INTELLIGENCE HOOK
 // React Query wrapper for /api/v1/handover-continuity-intelligence
 // ══════════════════════════════════════════════════════════════════════════════
 

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME REGISTRY
+// CARA — HOME REGISTRY
 //
 // Central registry of all children's homes in the organisation.
 // Provides lookup helpers and a module-level "current home" variable
@@ -42,7 +42,7 @@ export const HOMES: CornerstoneHome[] = [
     address: "12 Oakfield Road, Salford",
     postcode: "M6 8QP",
     phone: "0161 234 5678",
-    email: "manager@oakhouse.cornerstone.care",
+    email: "manager@oakhouse.cara.care",
     registered_manager: "Darren Laville",
     responsible_individual: "James Whitfield",
     capacity: 4,
@@ -60,7 +60,7 @@ export const HOMES: CornerstoneHome[] = [
     address: "7 Willow Lane, Eccles",
     postcode: "M30 0GN",
     phone: "0161 789 0123",
-    email: "manager@willowlodge.cornerstone.care",
+    email: "manager@willowlodge.cara.care",
     registered_manager: "Sarah Thornton",
     responsible_individual: "James Whitfield",
     capacity: 3,
@@ -78,7 +78,7 @@ export const HOMES: CornerstoneHome[] = [
     address: "34 Cedar Avenue, Worsley",
     postcode: "M28 3JH",
     phone: "0161 456 7890",
-    email: "manager@cedarcourt.cornerstone.care",
+    email: "manager@cedarcourt.cara.care",
     registered_manager: "Tom Hennessey",
     responsible_individual: "James Whitfield",
     capacity: 6,

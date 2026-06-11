@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LEAVE OVERVIEW WIDGET
+// CARA — LEAVE OVERVIEW WIDGET
 // Compact dashboard card showing staff absences and upcoming leave.
 // Essential for managers to maintain safe staffing levels.
 // ══════════════════════════════════════════════════════════════════════════════

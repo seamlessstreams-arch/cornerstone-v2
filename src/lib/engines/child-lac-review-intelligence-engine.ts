@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD LAC REVIEW INTELLIGENCE ENGINE
+// CARA — CHILD LAC REVIEW INTELLIGENCE ENGINE
 // Per-child engine analysing LAC review compliance, participation quality,
 // action completion rates, care plan updates, IRO consistency, and
 // review timeliness. Surfaces whether the statutory review process is
@@ -387,7 +387,7 @@ export function computeChildLACReview(
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
   const insights: ReviewInsight[] = [];
 
   if (compliance_rating === "inadequate") {

@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — COMMUNICATION INTELLIGENCE SERVICE
+// CARA — COMMUNICATION INTELLIGENCE SERVICE
 // Professional writing support: handover summaries, Reg 44/45 drafts,
 // social worker updates, multi-agency meeting prep, and shift briefings.
-// "ARIA suggests. Humans decide. Cornerstone evidences."
+// "Cara suggests. Humans decide. Cara evidences."
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { createServerClient, isSupabaseEnabled } from "@/lib/supabase/server";
@@ -50,7 +50,7 @@ export interface CommunicationDraft {
   updated_at: string;
 }
 
-// ── Communication templates (pure — for ARIA draft generation) ─────────────
+// ── Communication templates (pure — for Cara draft generation) ─────────────
 
 export const COMMUNICATION_TEMPLATES: Record<CommunicationType, {
   label: string;

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME THERAPEUTIC INTERVENTION EFFECTIVENESS INTELLIGENCE ENGINE
+// CARA — HOME THERAPEUTIC INTERVENTION EFFECTIVENESS INTELLIGENCE ENGINE
 // Evaluates the effectiveness of therapeutic interventions for children in care:
 // therapy session attendance, intervention outcome tracking, therapeutic progress
 // assessments, treatment plan adherence, and therapeutic relationship quality.

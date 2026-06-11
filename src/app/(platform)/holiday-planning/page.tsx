@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOLIDAY & TRIP PLANNING
+// CARA — HOLIDAY & TRIP PLANNING
 // Manages planned outings, day trips, holidays, and residential trips for young
 // people. Includes risk assessments, consent tracking, itineraries, staffing
 // ratios, and post-trip evaluations. Regulation 13 (engagement in activities)

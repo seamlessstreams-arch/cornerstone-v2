@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RECORDING QUALITY TREND (detail page)
+// CARA — RECORDING QUALITY TREND (detail page)
 // Weekly trajectory of recording quality and each dimension over time.
 // ══════════════════════════════════════════════════════════════════════════════
 

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — UNIVERSAL TIMELINE COMPONENT
+// CARA — UNIVERSAL TIMELINE COMPONENT
 //
 // Vertical timeline that captures every action across the system.
 // Date separators, colour-coded event cards, filter bar, search, pagination.

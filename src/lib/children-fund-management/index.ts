@@ -1,5 +1,5 @@
 // ==============================================================================
-// Cornerstone Children's Fund Management Intelligence -- Public API
+// Cara Children's Fund Management Intelligence -- Public API
 // ==============================================================================
 
 export {

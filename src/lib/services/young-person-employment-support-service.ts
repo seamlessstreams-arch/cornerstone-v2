@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — YOUNG PERSON EMPLOYMENT SUPPORT SERVICE
+// CARA — YOUNG PERSON EMPLOYMENT SUPPORT SERVICE
 // Work readiness assessment, employment applications, interview preparation,
 // apprenticeship support, supported employment. Helps care leavers prepare
 // for work and achieve economic wellbeing.

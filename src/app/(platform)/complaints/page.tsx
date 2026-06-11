@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — COMPLAINTS & REPRESENTATIONS REGISTER
+// CARA — COMPLAINTS & REPRESENTATIONS REGISTER
 // Statutory Guidance on Complaints in Children's Social Care (2016)
 // Children's Homes Quality Standards — Standard 3 (Rights & Responsibilities)
 // ══════════════════════════════════════════════════════════════════════════════
@@ -319,12 +319,12 @@ function ComplaintCard({
             </div>
           )}
 
-          {/* ARIA analysis */}
+          {/* Cara analysis */}
           {complaint.aria_summary ? (
             <div className="rounded-xl border border-teal-100 bg-teal-50/40 p-3">
               <div className="flex items-center gap-1.5 mb-1.5">
                 <Sparkles className="h-3.5 w-3.5 text-teal-600" />
-                <p className="text-[10px] font-semibold text-teal-700 uppercase tracking-widest">ARIA Analysis</p>
+                <p className="text-[10px] font-semibold text-teal-700 uppercase tracking-widest">Cara Analysis</p>
               </div>
               <p className="text-xs text-[var(--cs-text-secondary)]">{complaint.aria_summary}</p>
             </div>
@@ -335,8 +335,8 @@ function ComplaintCard({
               className="inline-flex items-center gap-1.5 text-xs text-teal-600 hover:text-teal-800 disabled:opacity-50"
             >
               {ariaBusy === complaint.id
-                ? <><Sparkles className="h-3.5 w-3.5 animate-spin" />ARIA analysing…</>
-                : <><Sparkles className="h-3.5 w-3.5" />Generate ARIA analysis</>}
+                ? <><Sparkles className="h-3.5 w-3.5 animate-spin" />Cara analysing…</>
+                : <><Sparkles className="h-3.5 w-3.5" />Generate Cara analysis</>}
             </button>
           )}
 
@@ -598,7 +598,7 @@ export default function ComplaintsPage() {
     setAriaError(null);
     try {
       const ypName = complaint.child_id ? getYPName(complaint.child_id) : "not specified";
-      const prompt = `You are ARIA, a regulatory compliance AI for a children's residential home. Analyse this complaint and provide a concise 2–3 sentence summary covering: nature and validity of the complaint, timeliness of response, outcome and learning. Note any quality standard implications. Be precise and child-rights focused.
+      const prompt = `You are Cara, a regulatory compliance AI for a children's residential home. Analyse this complaint and provide a concise 2–3 sentence summary covering: nature and validity of the complaint, timeliness of response, outcome and learning. Note any quality standard implications. Be precise and child-rights focused.
 
 Reference: ${complaint.reference}
 Complainant: ${COMPLAINANT_LABELS[complaint.complainant_type]} — ${complaint.complainant_name}
@@ -612,7 +612,7 @@ ${complaint.outcome_detail ? `Outcome detail: ${complaint.outcome_detail}` : ""}
 ${complaint.lessons_learned ? `Learning: ${complaint.lessons_learned}` : ""}`;
 
       const response = await api.post<{ choices: { message: { content: string } }[] }>(
-        "/aria/chat",
+        "/cara/chat",
         { messages: [{ role: "user", content: prompt }], context: "complaint_analysis" },
       );
 
@@ -622,7 +622,7 @@ ${complaint.lessons_learned ? `Learning: ${complaint.lessons_learned}` : ""}`;
 
       await updateComplaint.mutateAsync({ id: complaint.id, data: { aria_summary: summary } });
     } catch {
-      setAriaError("ARIA analysis failed — please try again");
+      setAriaError("Cara analysis failed — please try again");
     } finally {
       setAriaBusy(null);
     }

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PREMISES & SAFETY COMPLIANCE ENGINE (pure / deterministic)
+// CARA — PREMISES & SAFETY COMPLIANCE ENGINE (pure / deterministic)
 //
 // "Are all our statutory building-safety checks and certificates in date?" — the
 // single board that answers the classic inspector question (CHR 2015 Reg 31 /

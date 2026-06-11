@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — OFSTED ACTION PLAN
+// CARA — OFSTED ACTION PLAN
 // Tracks responses to inspection requirements, recommendations, and areas
 // for improvement identified during Ofsted inspections.
 // ══════════════════════════════════════════════════════════════════════════════

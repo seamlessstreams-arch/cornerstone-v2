@@ -1,5 +1,5 @@
 // ==============================================================================
-// Cornerstone Safeguarding Oversight Intelligence Engine
+// Cara Safeguarding Oversight Intelligence Engine
 //
 // Evaluates the quality and comprehensiveness of safeguarding arrangements,
 // including DBS compliance, training currency, referral management,

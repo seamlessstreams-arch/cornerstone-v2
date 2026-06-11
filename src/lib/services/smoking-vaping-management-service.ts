@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- SMOKING CESSATION & VAPING PREVENTION SERVICE
+// CARA -- SMOKING CESSATION & VAPING PREVENTION SERVICE
 // Tracks smoking cessation support, vaping prevention, NRT provision, education
 // sessions, GP and stop smoking service referrals, harm reduction discussions,
 // peer pressure support, and environmental compliance for looked-after children.

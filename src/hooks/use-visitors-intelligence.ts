@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — VISITORS INTELLIGENCE HOOK
+// CARA — VISITORS INTELLIGENCE HOOK
 // React Query wrapper for /api/v1/visitors-intelligence
 // ══════════════════════════════════════════════════════════════════════════════
 

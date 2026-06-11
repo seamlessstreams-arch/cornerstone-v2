@@ -3,7 +3,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // AriaInsightCard
 //
-// Displays a proactive ARIA insight — patterns detected, risk summaries,
+// Displays a proactive Cara insight — patterns detected, risk summaries,
 // compliance gaps, or positive trends. Each insight has a type, severity,
 // confidence level, and actionable recommendation.
 //
@@ -94,7 +94,7 @@ const DEMO_INSIGHTS: Insight[] = [
     relatedChildName: "Alex W",
     relatedModule: "incidents",
     detectedAt: "2026-05-12T08:00:00Z",
-    actionUrl: "/aria/review",
+    actionUrl: "/cara/review",
   },
   {
     id: "ins_002",
@@ -116,11 +116,11 @@ const DEMO_INSIGHTS: Insight[] = [
     severity: "medium",
     title: "Management oversight pending for 3 incidents",
     summary: "Three incidents from the past week have not yet received management oversight. Regulation 40 requires timely review of all incidents.",
-    recommendation: "Review and add management oversight to the outstanding incidents. ARIA has prepared draft oversight notes for your review.",
+    recommendation: "Review and add management oversight to the outstanding incidents. Cara has prepared draft oversight notes for your review.",
     confidence: 95,
     relatedModule: "incidents",
     detectedAt: "2026-05-12T07:30:00Z",
-    actionUrl: "/aria/review",
+    actionUrl: "/cara/review",
   },
   {
     id: "ins_004",
@@ -128,7 +128,7 @@ const DEMO_INSIGHTS: Insight[] = [
     severity: "medium",
     title: "Supervision overdue for 2 staff members",
     summary: "Two staff members have not had supervision within the required 4-week cycle. This is a Quality Standards requirement.",
-    recommendation: "Schedule supervision sessions within the next 5 working days. ARIA can generate supervision agenda templates.",
+    recommendation: "Schedule supervision sessions within the next 5 working days. Cara can generate supervision agenda templates.",
     confidence: 98,
     relatedModule: "supervision",
     detectedAt: "2026-05-12T06:00:00Z",
@@ -140,7 +140,7 @@ const DEMO_INSIGHTS: Insight[] = [
     severity: "low",
     title: "Missing child voice evidence — Jordan M",
     summary: "No key work session or wishes-and-feelings record found in the past 30 days. The child's voice should be visible in the evidence base.",
-    recommendation: "Schedule a key work session with Jordan. ARIA can suggest age-appropriate prompts for capturing wishes and feelings.",
+    recommendation: "Schedule a key work session with Jordan. Cara can suggest age-appropriate prompts for capturing wishes and feelings.",
     confidence: 88,
     relatedChildId: "demo-child-3",
     relatedChildName: "Jordan M",
@@ -249,7 +249,7 @@ export function AriaInsightCard({
             <div className="rounded-lg bg-[var(--cs-aria-gold-bg)] border border-[var(--cs-aria-gold-soft)] px-3 py-2 mb-2">
               <div className="flex items-center gap-1 mb-0.5">
                 <Sparkles className="h-2.5 w-2.5 text-[var(--cs-aria-gold)]" />
-                <span className="text-[9px] font-semibold text-[var(--cs-navy)]">ARIA recommendation</span>
+                <span className="text-[9px] font-semibold text-[var(--cs-navy)]">Cara recommendation</span>
               </div>
               <p className="text-[10px] text-[var(--cs-text-secondary)] leading-relaxed">
                 {insight.recommendation}
@@ -262,7 +262,7 @@ export function AriaInsightCard({
                 href={insight.actionUrl}
                 className="flex items-center gap-1 text-[10px] font-medium text-[var(--cs-aria-gold)] hover:text-[var(--cs-navy)] transition-colors"
               >
-                Review in ARIA
+                Review in Cara
                 <ChevronRight className="h-3 w-3" />
               </Link>
             )}

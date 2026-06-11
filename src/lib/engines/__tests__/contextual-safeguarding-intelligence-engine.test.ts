@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CONTEXTUAL SAFEGUARDING INTELLIGENCE ENGINE TESTS
+// CARA — CONTEXTUAL SAFEGUARDING INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite for exploitation screening coverage, child risk
 // profiles, locality risk mapping, safety plans, referral tracking,
-// screening currency, alerts, and ARIA contextual insights.
+// screening currency, alerts, and Cara contextual insights.
 // Covers Reg 12, Reg 13, Reg 34, SCCIF Helped & Protected.
 // ══════════════════════════════════════════════════════════════════════════════
 

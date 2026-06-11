@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA PRACTICE INTELLIGENCE — DASHBOARD AGGREGATOR TESTS
+// Cara PRACTICE INTELLIGENCE — DASHBOARD AGGREGATOR TESTS
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";

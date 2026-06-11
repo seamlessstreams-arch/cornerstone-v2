@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Staff Resilience Intelligence Engine
+// Cara Staff Resilience Intelligence Engine
 //
 // Deterministic engine for resilience metrics, burnout indicators, secondary
 // trauma awareness, supervision quality, and team health monitoring.

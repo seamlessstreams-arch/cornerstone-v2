@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD WELLBEING CHECK-IN SERVICE
+// CARA — CHILD WELLBEING CHECK-IN SERVICE
 // Tracks regular wellbeing check-ins with children including mood,
 // emotional state, physical health, and overall wellness indicators.
 // CHR 2015 Reg 12 (health and wellbeing — holistic wellbeing),

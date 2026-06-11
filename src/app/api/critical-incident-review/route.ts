@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Critical Incident Review Intelligence API Route
+// Cara — Critical Incident Review Intelligence API Route
 //
 // GET  → returns Chamberlain House demo critical incident review intelligence
 // POST → accepts custom data for any home

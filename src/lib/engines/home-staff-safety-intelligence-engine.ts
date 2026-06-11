@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME STAFF SAFETY INTELLIGENCE ENGINE
+// CARA — HOME STAFF SAFETY INTELLIGENCE ENGINE
 // Pure deterministic engine: lone working, debriefs, grievances, risk assessments.
 // HSW Act 1974, CHR 2015 Reg 33/34: "Employment of staff and fitness requirements."
 // ══════════════════════════════════════════════════════════════════════════════

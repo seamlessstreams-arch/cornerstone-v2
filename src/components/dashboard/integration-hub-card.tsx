@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — INTEGRATION HUB CARD
+// CARA — INTEGRATION HUB CARD
 // Adapter framework status: typed adapters (rota, payroll, HR/training, calendar,
 // notifications, document storage, external forms, LA reporting) each with secure
 // credentials, retry handling, idempotency keys, sync status and a manual override.
@@ -159,12 +159,12 @@ export function IntegrationHubCard() {
           </div>
         )}
 
-        {/* ── ARIA insights ────────────────────────────────────────────── */}
+        {/* ── Cara insights ────────────────────────────────────────────── */}
         {insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Integration Intelligence
+              Cara Integration Intelligence
             </p>
             {insights.slice(0, 2).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.positive)}>

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RECORDING QUALITY SCORE CARD
+// CARA — RECORDING QUALITY SCORE CARD
 // Scores the WRITING of the home's records across six Ofsted-relevant dimensions
 // (completeness, clarity, professional language, factuality, child-centredness,
 // risk relevance), with per-record suggestions. Powered by the Recording Quality
@@ -108,10 +108,10 @@ export function RecordingQualityScoreCard() {
           </div>
         )}
 
-        {/* ── ARIA insights ────────────────────────────────────────────── */}
+        {/* ── Cara insights ────────────────────────────────────────────── */}
         {insights.length > 0 && (
           <div className="space-y-1.5">
-            <p className="text-xs font-semibold flex items-center gap-1 text-purple-700"><Brain className="h-3 w-3" /> ARIA Recording Intelligence</p>
+            <p className="text-xs font-semibold flex items-center gap-1 text-purple-700"><Brain className="h-3 w-3" /> Cara Recording Intelligence</p>
             {insights.slice(0, 2).map((i, idx) => (
               <div key={idx} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[i.severity] ?? INSIGHT_STYLES.positive)}>{i.text}</div>
             ))}

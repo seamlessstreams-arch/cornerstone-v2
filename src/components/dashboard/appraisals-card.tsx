@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF APPRAISAL INTELLIGENCE CARD
+// CARA — STAFF APPRAISAL INTELLIGENCE CARD
 // Dashboard card powered by the Appraisal Intelligence Engine — live data.
 // CHR 2015 Reg 32 (fitness of workers), Reg 33 (employment of staff).
 // SCCIF: "Are staff competent, confident, and suitably trained?"
@@ -291,13 +291,13 @@ export function AppraisalsCard() {
           </div>
         )}
 
-        {/* ── ARIA Appraisal Intelligence ─────────────────────────────── */}
+        {/* ── Cara Appraisal Intelligence ─────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Workforce Intelligence
+              Cara Workforce Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

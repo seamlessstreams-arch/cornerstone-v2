@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME WASTE MANAGEMENT & RECYCLING SERVICE
+// CARA -- HOME WASTE MANAGEMENT & RECYCLING SERVICE
 // Tracks waste audits, recycling compliance, duty of care, waste transfer
 // documentation, carrier licensing, bin condition, contamination monitoring,
 // and young people's involvement in environmental education.

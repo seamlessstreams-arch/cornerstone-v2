@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA Intelligence Engine — Activities & Enrichment
+// Cara Intelligence Engine — Activities & Enrichment
 //
 // Pure deterministic analysis of activity participation and enrichment for LAC.
 // Tracks:

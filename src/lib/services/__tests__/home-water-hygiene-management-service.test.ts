@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME WATER HYGIENE MANAGEMENT SERVICE TESTS
+// CARA — HOME WATER HYGIENE MANAGEMENT SERVICE TESTS
 // Pure-function tests for water hygiene metrics, alert identification,
-// ARIA insights, constant validation, and edge cases.
+// Cara insights, constant validation, and edge cases.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";

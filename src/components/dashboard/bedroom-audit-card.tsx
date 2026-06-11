@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — BEDROOM AUDIT CARD
+// CARA — BEDROOM AUDIT CARD
 // Dashboard card powered by the Premises Safety Intelligence Engine.
 // CHR 2015 Reg 36, Reg 6, Reg 10.
 // SCCIF: Overall Experiences — "Children have personalised bedrooms."
@@ -141,13 +141,13 @@ export function BedroomAuditCard() {
           </div>
         )}
 
-        {/* ── ARIA Intelligence ──────────────────────────────────────── */}
+        {/* ── Cara Intelligence ──────────────────────────────────────── */}
 
         {insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Bedroom Intelligence
+              Cara Bedroom Intelligence
             </p>
             {insights.slice(0, 2).map((insight, i) => (
               <div

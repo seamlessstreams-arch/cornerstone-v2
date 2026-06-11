@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ALLERGY MANAGEMENT & FOOD SAFETY INTELLIGENCE API ROUTE
+// CARA — HOME ALLERGY MANAGEMENT & FOOD SAFETY INTELLIGENCE API ROUTE
 // GET /api/v1/home-allergy-management-food-safety-intelligence
 // Cross-domain composite: allergyPlanRecords + allergenAwarenessRecords +
 // epipenCheckRecords + foodLabellingRecords + emergencyResponseRecords

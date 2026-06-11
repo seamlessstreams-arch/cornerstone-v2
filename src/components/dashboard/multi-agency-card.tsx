@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MULTI-AGENCY WORKING INTELLIGENCE CARD
+// CARA — MULTI-AGENCY WORKING INTELLIGENCE CARD
 // Dashboard card powered by the Multi-Agency Intelligence Engine.
 // Reg 5 (engagement), Reg 13 (leadership),
 // Working Together to Safeguard Children 2018.
@@ -223,13 +223,13 @@ export function MultiAgencyCard() {
           </div>
         )}
 
-        {/* ── ARIA Multi-Agency Intelligence ──────────────────────────── */}
+        {/* ── Cara Multi-Agency Intelligence ──────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Multi-Agency Intelligence
+              Cara Multi-Agency Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

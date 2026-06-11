@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME MENSTRUATION & PUBERTY SUPPORT INTELLIGENCE API ROUTE
+// CARA -- HOME MENSTRUATION & PUBERTY SUPPORT INTELLIGENCE API ROUTE
 // GET /api/v1/home-menstruation-puberty-support-intelligence
 // Cross-domain composite: pubertyEducationRecords + menstruationSupportRecords +
 // productAvailabilityRecords + dignityCareRecords + bodyConfidenceRecords

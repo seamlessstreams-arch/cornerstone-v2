@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME TECHNOLOGY & DIGITAL INCLUSION INTELLIGENCE API ROUTE
+// CARA -- HOME TECHNOLOGY & DIGITAL INCLUSION INTELLIGENCE API ROUTE
 // GET /api/v1/home-technology-digital-inclusion-intelligence
 // Cross-domain composite: deviceAccessRecords + digitalSkillsRecords +
 // assistiveTechnologyRecords + internetSafetyRecords + technologyLearningRecords

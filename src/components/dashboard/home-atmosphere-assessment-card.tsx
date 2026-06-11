@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ATMOSPHERE ASSESSMENT CARD
+// CARA — HOME ATMOSPHERE ASSESSMENT CARD
 // Dashboard card powered by the Premises Safety Intelligence Engine.
 // CHR 2015 Reg 6, Reg 11, Reg 15.
 // SCCIF: Overall Experiences — "The home feels like a home."
@@ -139,13 +139,13 @@ export function HomeAtmosphereAssessmentCard() {
           </div>
         )}
 
-        {/* ── ARIA Intelligence ──────────────────────────────────────── */}
+        {/* ── Cara Intelligence ──────────────────────────────────────── */}
 
         {(d.insights ?? []).length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Atmosphere Intelligence
+              Cara Atmosphere Intelligence
             </p>
             {(d.insights ?? []).slice(0, 2).map((insight, i) => (
               <div

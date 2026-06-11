@@ -893,9 +893,9 @@ describe("computeHomeLivingEnvironment", () => {
     });
   });
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
 
-  describe("ARIA insights", () => {
+  describe("Cara insights", () => {
     it("generates positive insight for exemplary bedroom personalisation", () => {
       const r = computeHomeLivingEnvironment(baseInput({
         bedroom_profiles: [

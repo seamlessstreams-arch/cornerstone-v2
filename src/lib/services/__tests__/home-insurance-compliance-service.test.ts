@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME INSURANCE COMPLIANCE SERVICE TESTS
+// CARA — HOME INSURANCE COMPLIANCE SERVICE TESTS
 // Pure-function tests for insurance metrics, alert identification,
-// ARIA insight generation, and edge cases.
+// Cara insight generation, and edge cases.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";

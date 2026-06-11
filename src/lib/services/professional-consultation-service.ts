@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PROFESSIONAL CONSULTATION SERVICE
+// CARA — PROFESSIONAL CONSULTATION SERVICE
 // Tracks consultations with external professionals including therapists,
 // psychologists, social workers, IROs, LADOs, health visitors, and
 // other specialists involved in children's care.

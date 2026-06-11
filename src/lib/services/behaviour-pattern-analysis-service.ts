@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — BEHAVIOUR PATTERN ANALYSIS SERVICE
+// CARA — BEHAVIOUR PATTERN ANALYSIS SERVICE
 // Monitors behaviour trends, triggers, de-escalation effectiveness,
 // and proactive intervention strategies.
 // CHR 2015 Reg 19 (behaviour management — positive strategies),

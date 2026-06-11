@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD RESTRICTIVE PRACTICE INTELLIGENCE CARD
+// CARA — CHILD RESTRICTIVE PRACTICE INTELLIGENCE CARD
 // Per-child: restraint analysis — frequency, duration, compliance,
 // patterns, injuries, debrief rates.
 // CHR 2015 Reg 19, 20, 35. SCCIF: "Safety of children."
@@ -217,12 +217,12 @@ export function ChildRestrictivePracticeIntelligenceCard({ childId }: { childId:
           </div>
         )}
 
-        {/* ARIA Restrictive Practice Intelligence */}
+        {/* Cara Restrictive Practice Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Restrictive Practice Intelligence
+              Cara Restrictive Practice Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

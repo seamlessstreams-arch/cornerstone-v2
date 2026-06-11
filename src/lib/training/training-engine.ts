@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Training Intelligence Engine
+// Cara Training Intelligence Engine
 //
 // Deterministic engine for evaluating training management quality in
 // children's homes — completion rates, assessment outcomes, policy

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME MEDICATION SAFETY & COMPLIANCE INTELLIGENCE ENGINE
+// CARA — HOME MEDICATION SAFETY & COMPLIANCE INTELLIGENCE ENGINE
 // Monitors medication management safety across the home — administration
 // accuracy, error rates, audit compliance, storage standards, and emergency
 // medication readiness. Critical for Ofsted under CHR 2015 Reg 23 (Medicines)

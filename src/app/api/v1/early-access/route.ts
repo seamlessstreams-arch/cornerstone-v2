@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EARLY ACCESS / CONTACT FORM API
+// CARA — EARLY ACCESS / CONTACT FORM API
 // POST /api/v1/early-access
 //
 // Captures early-access / "book a conversation" enquiries from the public site.

@@ -3,7 +3,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // useAriaCommand
 //
-// Client hook for the universal ARIA command system. Talks to
+// Client hook for the universal Cara command system. Talks to
 // POST /api/aria/generate (invoke) and PATCH /api/aria/generate (decision).
 //
 // Usage:
@@ -138,7 +138,7 @@ export function useAriaCommand(): UseAriaCommandReturn {
       const data = await res.json();
 
       if (!res.ok) {
-        setError(data.error || "ARIA request failed");
+        setError(data.error || "Cara request failed");
         setProviderConfigured(data.providerConfigured ?? null);
         setLoading(false);
         return null;

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME GRIEF & BEREAVEMENT SUPPORT INTELLIGENCE API ROUTE
+// CARA — HOME GRIEF & BEREAVEMENT SUPPORT INTELLIGENCE API ROUTE
 // GET /api/v1/home-grief-bereavement-support-intelligence
 // Cross-domain composite: lossIdentificationRecords + counsellingAccessRecords +
 // memoryWorkRecords + griefInterventionRecords + anniversaryManagementRecords

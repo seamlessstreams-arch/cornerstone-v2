@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME CHILD'S VOICE & PARTICIPATION INTELLIGENCE ENGINE
+// CARA — HOME CHILD'S VOICE & PARTICIPATION INTELLIGENCE ENGINE
 // Home-level: assesses how effectively children's voices are heard and
 // their participation is enabled across the home. Tracks children's meeting
 // attendance, consultation effectiveness, feedback acted upon, child council

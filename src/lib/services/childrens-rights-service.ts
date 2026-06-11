@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILDREN'S RIGHTS SERVICE
+// CARA — CHILDREN'S RIGHTS SERVICE
 // Monitors and evidences children's rights within the home, tracking
 // rights awareness, rights-based practice, complaints empowerment,
 // and advocacy access.

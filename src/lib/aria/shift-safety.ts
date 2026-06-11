@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — SHIFT SAFETY CHECKER
+// Cara — SHIFT SAFETY CHECKER
 //
 // Analyses current shift context and identifies safety concerns before
 // they become incidents. Pure deterministic function — no AI calls.

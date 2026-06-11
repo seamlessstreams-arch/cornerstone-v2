@@ -1,10 +1,10 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — QUICK ACTION BUTTONS
+// Cara STUDIO — QUICK ACTION BUTTONS
 //
-// Contextual action buttons that surface across existing Cornerstone pages.
-// Each button deep-links into ARIA Studio with the right artifact type,
+// Contextual action buttons that surface across existing Cara pages.
+// Each button deep-links into Cara Studio with the right artifact type,
 // child context, and framework pre-selected.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -78,7 +78,7 @@ export function getComplianceActions(): QuickAction[] {
   ];
 }
 
-// ── Build ARIA Studio URL with pre-filled params ─────────────────────────────
+// ── Build Cara Studio URL with pre-filled params ─────────────────────────────
 
 function buildStudioUrl(action: QuickAction): string {
   const params = new URLSearchParams();
@@ -87,7 +87,7 @@ function buildStudioUrl(action: QuickAction): string {
   if (action.framework) params.set("framework", action.framework);
   if (action.tone) params.set("tone", action.tone);
   if (action.additionalContext) params.set("context", action.additionalContext);
-  return `/aria-studio?${params.toString()}`;
+  return `/cara-studio?${params.toString()}`;
 }
 
 // ── Quick Action Button ──────────────────────────────────────────────────────
@@ -125,7 +125,7 @@ export function AriaQuickActionButton({
 
 export function AriaQuickActionBar({
   actions,
-  title = "ARIA Studio",
+  title = "Cara Studio",
   className,
 }: {
   actions: QuickAction[];
@@ -160,7 +160,7 @@ export function AriaQuickActionBar({
 
 export function AriaQuickActionGrid({
   actions,
-  title = "Generate with ARIA Studio",
+  title = "Generate with Cara Studio",
   columns = 3,
   className,
 }: {

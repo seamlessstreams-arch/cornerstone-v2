@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SANCTIONS & REWARDS
+// CARA — SANCTIONS & REWARDS
 // Records positive reinforcement (rewards, praise, achievements) and
 // consequences (sanctions, boundaries) for each young person. Supports
 // Reg 11 (Positive Relationships), Reg 12 (Protection), and Quality

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Tests — ARIA Safe Context Builder
+// Tests — Cara Safe Context Builder
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect, vi, beforeEach } from "vitest";
@@ -218,7 +218,7 @@ describe("buildContextSnippet", () => {
       },
     ]);
 
-    expect(snippet).toContain("ADDITIONAL CONTEXT FROM CORNERSTONE RECORDS");
+    expect(snippet).toContain("ADDITIONAL CONTEXT FROM CARA RECORDS");
     expect(snippet).toContain("Daily Log Entries");
     expect(snippet).toContain("Incidents");
     expect(snippet).toContain("Log entry one");

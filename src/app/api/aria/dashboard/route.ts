@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // API: /api/aria/dashboard
 //
-// GET   — Fetch a summary of ARIA reporting metrics for a home. Returns
+// GET   — Fetch a summary of Cara reporting metrics for a home. Returns
 //         counts of reports, pending reviews, high-risk flags, outstanding
 //         actions, evidence gaps, and Reg 45 evidence items.
 // ══════════════════════════════════════════════════════════════════════════════

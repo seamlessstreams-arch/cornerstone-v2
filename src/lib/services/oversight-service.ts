@@ -1,6 +1,6 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MANAGEMENT OVERSIGHT SERVICE
-// ARIA-prompted reflective oversight for all record types. Generates quality
+// CARA — MANAGEMENT OVERSIGHT SERVICE
+// Cara-prompted reflective oversight for all record types. Generates quality
 // prompts, stores oversight notes, and links to tasks/evidence.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -18,7 +18,7 @@ function sb(): SB | null {
   return createServerClient() as unknown as SB;
 }
 
-// ── ARIA prompt generation ──────────────────────────────────────────────────
+// ── Cara prompt generation ──────────────────────────────────────────────────
 
 export interface OversightPromptContext {
   recordType: OversightRecordType;
@@ -30,7 +30,7 @@ export interface OversightPromptContext {
 }
 
 /**
- * Generate ARIA reflective prompts for management oversight.
+ * Generate Cara reflective prompts for management oversight.
  * These prompts guide managers through 5 quality dimensions.
  */
 export function generateOversightPrompts(ctx: OversightPromptContext): {

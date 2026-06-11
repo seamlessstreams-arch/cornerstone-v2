@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — Background Job Queue Status  (Milestone 26)
+// CARA — Background Job Queue Status  (Milestone 26)
 //
 // Surfaces the live state of every CareEventJob and CareEventRoute scoped to
 // the home, satisfying the CLAUDE.md requirement that the UI must show

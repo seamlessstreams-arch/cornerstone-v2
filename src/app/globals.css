@@ -45,13 +45,13 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* ── Cornerstone Calm Design Tokens ───────────────────────────────────────── */
+/* ── Cara Calm Design Tokens ───────────────────────────────────────── */
 :root {
   /* Font stack — Avenir with graceful fallback chain */
   --font-sans: "Avenir Next LT Pro", "Avenir Next", Avenir, ui-sans-serif,
     system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
-  /* ── Cornerstone Calm palette ─────────────────────────────────────────── */
+  /* ── Cara Calm palette ─────────────────────────────────────────── */
   --cs-bg:              #f7f3ec;
   --cs-surface:         #fffaf2;
   --cs-surface-elevated:#ffffff;
@@ -69,14 +69,14 @@
   --cs-text-muted:      #667085;
   --cs-text-gentle:     #94a3b8;
 
-  /* ARIA Intelligence accent — warm gold */
+  /* Cara Intelligence accent — warm gold */
   --cs-aria-gold:       #c89b3c;
   --cs-aria-gold-soft:  #f5e7c6;
   --cs-aria-gold-bg:    #fdf8ef;
   --cs-aria-glow:       rgba(200, 155, 60, 0.28);
   --cs-aria-shimmer:    linear-gradient(135deg, #f5e7c6 0%, #fdf8ef 50%, #f5e7c6 100%);
 
-  /* ── Cornerstone teal — signature brand accent (logo growth/plant tone) ── */
+  /* ── Cara teal — signature brand accent (logo growth/plant tone) ── */
   --cs-teal:            #119488;
   --cs-teal-strong:     #0c6b62;
   --cs-teal-soft:       #c9ece6;
@@ -183,7 +183,7 @@
   --border: var(--cs-border);
   --input: var(--cs-border);
   --ring: var(--cs-teal);
-  /* Charts — Cornerstone (teal, navy) + Avisaar (amber, coral, sage) */
+  /* Charts — Cara (teal, navy) + Avisaar (amber, coral, sage) */
   --chart-1: var(--cs-teal);
   --chart-2: var(--cs-navy-muted);
   --chart-3: var(--cs-avisaar-amber);
@@ -241,7 +241,7 @@
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
 
-  /* Cornerstone Calm — semantic colour classes */
+  /* Cara Calm — semantic colour classes */
   --color-cs-bg: var(--cs-bg);
   --color-cs-surface: var(--cs-surface);
   --color-cs-surface-elevated: var(--cs-surface-elevated);
@@ -344,7 +344,7 @@ body {
   animation: pulse-dot 2s ease-in-out infinite;
 }
 
-/* ── Aria drawer slide ────────────────────────────────────────────────────── */
+/* ── Cara drawer slide ────────────────────────────────────────────────────── */
 @keyframes drawerSlide {
   from { transform: translateX(100%); opacity: 0; }
   to   { transform: translateX(0);    opacity: 1; }
@@ -353,7 +353,7 @@ body {
   animation: drawerSlide 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* ── ARIA Magic Animations ────────────────────────────────────────────────── */
+/* ── Cara Magic Animations ────────────────────────────────────────────────── */
 @keyframes ariaShimmer {
   0%   { background-position: -200% center; }
   100% { background-position: 200% center; }
@@ -393,7 +393,7 @@ body {
   animation: gentleFadeUp 0.4s ease-out;
 }
 
-/* ── Cornerstone Calm Utility Classes ─────────────────────────────────────── */
+/* ── Cara Calm Utility Classes ─────────────────────────────────────── */
 .cs-card {
   background: var(--cs-surface-elevated);
   border: 1px solid var(--cs-border);
@@ -462,7 +462,7 @@ body {
   transition-timing-function: var(--cs-ease-default);
 }
 
-/* ARIA magic entrance — used when ARIA content appears */
+/* Cara magic entrance — used when Cara content appears */
 @keyframes ariaMagicIn {
   0%   { opacity: 0; transform: translateY(6px) scale(0.98); filter: blur(2px); }
   60%  { opacity: 1; filter: blur(0); }
@@ -472,7 +472,7 @@ body {
   animation: ariaMagicIn var(--cs-duration-aria) var(--cs-ease-default);
 }
 
-/* ARIA score reveal — staggered for Child Lens score bars */
+/* Cara score reveal — staggered for Child Lens score bars */
 @keyframes ariaScoreReveal {
   from { width: 0; opacity: 0; }
   to   { opacity: 1; }
@@ -496,7 +496,7 @@ body {
   }
 }
 
-/* ARIA badge — gold intelligence indicator */
+/* Cara badge — gold intelligence indicator */
 .cs-badge-aria {
   display: inline-flex;
   align-items: center;
@@ -568,8 +568,8 @@ body {
 }
 
 /* ══════════════════════════════════════════════════════════════════════════════
-   CORNERSTONE BESPOKE IDENTITY
-   Not a template. Not a default. Distinctly Cornerstone.
+   CARA BESPOKE IDENTITY
+   Not a template. Not a default. Distinctly Cara.
    ══════════════════════════════════════════════════════════════════════════════ */
 
 /* ── Custom scrollbars — warm, thin, unobtrusive ──────────────────────────── */
@@ -607,7 +607,7 @@ body {
   color: var(--cs-navy);
 }
 
-/* ── Cornerstone typography — distinctive letter-spacing and weight ──────────
+/* ── Cara typography — distinctive letter-spacing and weight ──────────
    Inside @layer base so Tailwind utilities (text-white, tracking-wider, …)
    can override these defaults; unlayered rules would beat every utility. */
 @layer base {
@@ -629,7 +629,7 @@ body {
   letter-spacing: 0.01em;
 }
 
-/* ── Cornerstone card elevation — warm floating effect ────────────────────── */
+/* ── Cara card elevation — warm floating effect ────────────────────── */
 .cs-card-float {
   transition: transform var(--cs-duration-normal) var(--cs-ease-default),
               box-shadow var(--cs-duration-normal) var(--cs-ease-default);
@@ -639,14 +639,14 @@ body {
   box-shadow: var(--cs-shadow-card);
 }
 
-/* ── Cornerstone button press — subtle tactile feedback ───────────────────── */
+/* ── Cara button press — subtle tactile feedback ───────────────────── */
 button:not(:disabled):active,
 [role="button"]:not(:disabled):active {
   transform: scale(0.98);
   transition: transform 80ms ease;
 }
 
-/* ── Cornerstone input focus — warm glow instead of harsh blue ────────────── */
+/* ── Cara input focus — warm glow instead of harsh blue ────────────── */
 input:focus,
 textarea:focus,
 select:focus,
@@ -656,7 +656,7 @@ select:focus,
   outline: none;
 }
 
-/* ── Cornerstone link style — navy with gold hover ────────────────────────── */
+/* ── Cara link style — navy with gold hover ────────────────────────── */
 a:not([class]) {
   color: var(--cs-navy-muted);
   text-decoration: underline;
@@ -669,7 +669,7 @@ a:not([class]):hover {
   text-decoration-color: var(--cs-aria-gold);
 }
 
-/* ── Cornerstone badge pill — rounded, warm ───────────────────────────────── */
+/* ── Cara badge pill — rounded, warm ───────────────────────────────── */
 .cs-pill {
   display: inline-flex;
   align-items: center;
@@ -682,7 +682,7 @@ a:not([class]):hover {
   letter-spacing: 0.02em;
 }
 
-/* ── Cornerstone page background texture — subtle warmth ──────────────────── */
+/* ── Cara page background texture — subtle warmth ──────────────────── */
 body::before {
   content: "";
   position: fixed;
@@ -694,13 +694,13 @@ body::before {
   z-index: -1;
 }
 
-/* ── Cornerstone sidebar — deep navy gradient ─────────────────────────────── */
+/* ── Cara sidebar — deep navy gradient ─────────────────────────────── */
 .cs-sidebar-gradient {
   /* Light, high-readability sidebar (was navy). */
   background: linear-gradient(180deg, #ffffff 0%, var(--cs-bg) 100%);
 }
 
-/* ── Cornerstone loading shimmer — gold warmth ────────────────────────────── */
+/* ── Cara loading shimmer — gold warmth ────────────────────────────── */
 @keyframes cornerstoneShimmer {
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }
@@ -716,7 +716,7 @@ body::before {
   animation: cornerstoneShimmer 2s infinite var(--cs-ease-default);
 }
 
-/* ── Cornerstone status dot — pulsing for live/active items ───────────────── */
+/* ── Cara status dot — pulsing for live/active items ───────────────── */
 @keyframes cornerstonePulse {
   0%, 100% { opacity: 1; transform: scale(1); }
   50% { opacity: 0.6; transform: scale(1.1); }

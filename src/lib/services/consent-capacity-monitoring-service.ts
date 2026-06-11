@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CONSENT & CAPACITY MONITORING SERVICE
+// CARA — CONSENT & CAPACITY MONITORING SERVICE
 // Tracks consent processes, capacity assessments, informed
 // decision-making, and Gillick competence evaluations.
 // CHR 2015 Reg 14 (care planning — child participation),

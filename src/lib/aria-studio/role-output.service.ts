@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — ROLE-BASED OUTPUT VERSIONS
+// Cara STUDIO — ROLE-BASED OUTPUT VERSIONS
 //
 // Generates different versions of the same content tailored to the reader:
 // a manager sees full detail + regulatory references; a care worker sees

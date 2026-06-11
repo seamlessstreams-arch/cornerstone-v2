@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RI GOVERNANCE SCORING ENGINE
+// CARA — RI GOVERNANCE SCORING ENGINE
 // Shared between RI Command Centre hub and RI Scorecard page
 // ══════════════════════════════════════════════════════════════════════════════
 

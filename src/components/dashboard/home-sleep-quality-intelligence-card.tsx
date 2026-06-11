@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SLEEP QUALITY INTELLIGENCE CARD
+// CARA — HOME SLEEP QUALITY INTELLIGENCE CARD
 // Sleep disturbances, check compliance, pattern analysis, handover quality.
 // CHR 2015 Reg 7/10: "Quality of care, positive relationships."
 // SCCIF: "Children get a good night's sleep and feel rested."
@@ -222,12 +222,12 @@ export function HomeSleepQualityIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Sleep Intelligence */}
+        {/* Cara Sleep Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Sleep Intelligence
+              Cara Sleep Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

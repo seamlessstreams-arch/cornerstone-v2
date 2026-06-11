@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Post-Incident Learning Intelligence API Route
+// Cara — Post-Incident Learning Intelligence API Route
 //
 // GET  → returns Chamberlain House demo post-incident learning intelligence
 // POST → accepts custom data for any home

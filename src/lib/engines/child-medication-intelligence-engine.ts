@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD MEDICATION INTELLIGENCE ENGINE
+// CARA — CHILD MEDICATION INTELLIGENCE ENGINE
 // Per-child: medication safety analysis — adherence rates, refusal patterns,
 // timeliness, witnessing compliance, PRN usage, stock management, errors.
 // CHR 2015 Reg 23 (Health), Reg 12 (Safe administration). SCCIF: "Health."
@@ -514,7 +514,7 @@ export function computeChildMedication(input: ChildMedicationInput): ChildMedica
   const insights: ChildMedicationResult["insights"] = [];
 
   if (errors30d.length > 0 || (highestSeverity && SEVERITY_ORDER[highestSeverity] >= 2)) {
-    insights.push({ severity: "critical", text: `ARIA detects ${errors90d.length} medication error(s) in 90 days${highestSeverity ? ` (highest severity: ${highestSeverity})` : ""}. Ofsted inspectors will scrutinise error management and learning — ensure remedial actions are documented.` });
+    insights.push({ severity: "critical", text: `Cara detects ${errors90d.length} medication error(s) in 90 days${highestSeverity ? ` (highest severity: ${highestSeverity})` : ""}. Ofsted inspectors will scrutinise error management and learning — ensure remedial actions are documented.` });
   }
   if (missed30d >= 2) {
     insights.push({ severity: "critical", text: `${missed30d} missed doses in 30 days. Under Reg 23, homes must ensure children receive prescribed medication. Missed doses represent a direct compliance risk.` });

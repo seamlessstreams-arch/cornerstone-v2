@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — GENERATION SERVICE
+// Cara STUDIO — GENERATION SERVICE
 // Orchestrates: source fetch → prompt build → AI call → persist → quality check
 // ══════════════════════════════════════════════════════════════════════════════
 

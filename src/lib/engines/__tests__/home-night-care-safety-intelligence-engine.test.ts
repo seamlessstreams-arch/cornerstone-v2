@@ -746,8 +746,8 @@ describe("computeHomeNightCareSafety", () => {
     });
   });
 
-  // ── ARIA Insights ─────────────────────────────────────────────────
-  describe("ARIA insights", () => {
+  // ── Cara Insights ─────────────────────────────────────────────────
+  describe("Cara insights", () => {
     it("flags high distressed rate", () => {
       const checks = Array.from({ length: 20 }, (_, i) =>
         makeNC({

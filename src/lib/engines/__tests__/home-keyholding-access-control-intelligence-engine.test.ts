@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME KEYHOLDING & ACCESS CONTROL INTELLIGENCE ENGINE TESTS
+// CARA — HOME KEYHOLDING & ACCESS CONTROL INTELLIGENCE ENGINE TESTS
 // Tests the pure deterministic engine for key register accuracy, access control
 // compliance, key issue/return tracking, security audit outcomes, and
 // child-safe area management.

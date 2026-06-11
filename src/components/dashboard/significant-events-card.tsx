@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHRONOLOGY INTELLIGENCE CARD
+// CARA — CHRONOLOGY INTELLIGENCE CARD
 // Dashboard card showing children's chronology patterns, event timelines,
-// category coverage, recording gaps, and ARIA chronology insights.
+// category coverage, recording gaps, and Cara chronology insights.
 // Powered by the Chronology Intelligence Engine — live data (Reg 36).
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -210,13 +210,13 @@ export function SignificantEventsCard() {
           </div>
         )}
 
-        {/* ── ARIA Chronology Intelligence ─────────────────────────────── */}
+        {/* ── Cara Chronology Intelligence ─────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Chronology Intelligence
+              Cara Chronology Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

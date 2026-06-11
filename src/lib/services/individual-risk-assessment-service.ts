@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — INDIVIDUAL RISK ASSESSMENT SERVICE
+// CARA — INDIVIDUAL RISK ASSESSMENT SERVICE
 // Tracks individual child risk assessments, covering safeguarding,
 // self-harm, absconding, exploitation, aggression, and vulnerability
 // risks specific to each child. Distinct from the organisational

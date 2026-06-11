@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD BEREAVEMENT SUPPORT SERVICE TESTS
+// CARA — CHILD BEREAVEMENT SUPPORT SERVICE TESTS
 // Pure-function unit tests for bereavement support metrics computation,
-// alert identification, and ARIA insight generation.
+// alert identification, and Cara insight generation.
 // CHR 2015 Reg 7 (individual child — understanding each child's needs),
 // CHR 2015 Reg 10 (health and wellbeing — emotional wellbeing),
 // CHR 2015 Reg 12 (protection of children — safeguarding vulnerable children).

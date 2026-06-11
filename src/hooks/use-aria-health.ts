@@ -1,7 +1,7 @@
 "use client";
 
 // ─────────────────────────────────────────────────────────────────────────────
-// useAriaHealth — client hook for ARIA diagnostics
+// useAriaHealth — client hook for Cara diagnostics
 //
 // Fetches from GET /api/v1/aria/health.
 // Results are stale after 5 minutes; refetch manually for deep tests.
@@ -97,7 +97,7 @@ async function fetchAriaHealth(deep = false): Promise<AriaHealthStatus> {
   });
 
   if (res.status === 403) {
-    throw new Error("Access denied: insufficient role for ARIA health diagnostics");
+    throw new Error("Access denied: insufficient role for Cara health diagnostics");
   }
   if (!res.ok) {
     const err = await res.json().catch(() => ({ error: "Health check failed" }));

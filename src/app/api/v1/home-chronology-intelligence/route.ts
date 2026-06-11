@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME CHRONOLOGY INTELLIGENCE API ROUTE
+// CARA — HOME CHRONOLOGY INTELLIGENCE API ROUTE
 // GET /api/v1/home-chronology-intelligence
 // Synthesises chronology event patterns, documentation quality, category
 // distribution, significance tracking, and incident linkage.

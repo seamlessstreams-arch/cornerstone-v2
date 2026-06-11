@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA Care Graph builder tests
+// Cara Care Graph builder tests
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect, beforeEach } from "vitest";

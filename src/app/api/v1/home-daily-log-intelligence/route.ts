@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME DAILY LOG INTELLIGENCE API ROUTE
+// CARA — HOME DAILY LOG INTELLIGENCE API ROUTE
 // GET /api/v1/home-daily-log-intelligence
 // Recording patterns, mood tracking, entry types, staff participation.
 // CHR 2015 Reg 36: "Records — maintain comprehensive records."

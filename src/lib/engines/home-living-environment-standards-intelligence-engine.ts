@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME LIVING ENVIRONMENT STANDARDS INTELLIGENCE ENGINE
+// CARA — HOME LIVING ENVIRONMENT STANDARDS INTELLIGENCE ENGINE
 // Cross-domain composite: assesses quality, safety, and personalisation of the
 // physical living environment — cleanliness, maintenance, kitchen hygiene,
 // bedroom personalisation, and room allocation suitability.

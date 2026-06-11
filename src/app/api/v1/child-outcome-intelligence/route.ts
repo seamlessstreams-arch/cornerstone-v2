@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD OUTCOME INTELLIGENCE API ROUTE
+// CARA — CHILD OUTCOME INTELLIGENCE API ROUTE
 // GET /api/v1/child-outcome-intelligence?childId=yp_alex
 // Per-child engine analysing outcome targets across all domains,
 // progress tracking, review compliance, YP participation, barriers.

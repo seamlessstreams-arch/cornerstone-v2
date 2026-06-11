@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — INTELLIGENCE LAYER IN-MEMORY STORE
+// CARA — INTELLIGENCE LAYER IN-MEMORY STORE
 //
 // Mutable in-memory collections for all intelligence entities.
 // Seeded with realistic Chamberlain House demo data.
@@ -63,7 +63,7 @@ const intelligenceStore = {
   homeClimate: [] as HomeClimateSnapshot[],
   docJobs: [] as DocumentIntelligenceJob[],
   actionOutcomes: [] as ActionOutcome[],
-  // ARIA Intelligence module
+  // Cara Intelligence module
   ariaAssessments: [] as AriaAssessment[],
   ariaOversight: [] as AriaOversight[],
   keyWorkSessions: [] as KeyWorkSession[],
@@ -259,7 +259,7 @@ intelligenceStore.patternAlerts = [
     alert_type: "regulation_deterioration",
     title: "Escalating dysregulation episodes — Alex",
     description:
-      "ARIA has identified three dysregulation episodes in a 7-day period, each occurring between 17:00–19:00. The pattern suggests a consistent trigger window, potentially linked to transition from school or contact-related anxiety. Without targeted intervention this pattern is likely to continue.",
+      "Cara has identified three dysregulation episodes in a 7-day period, each occurring between 17:00–19:00. The pattern suggests a consistent trigger window, potentially linked to transition from school or contact-related anxiety. Without targeted intervention this pattern is likely to continue.",
     severity: "high",
     status: "active",
     evidence_refs: [
@@ -311,7 +311,7 @@ intelligenceStore.patternAlerts = [
     alert_type: "staffing_continuity_risk",
     title: "Home-wide staffing continuity gap — peak evenings",
     description:
-      "ARIA has identified that Chamberlain House has had 6 agency staff shifts in the past 14 days, predominantly evening shifts. Three of the four dysregulation episodes in this period occurred during agency-covered shifts. Unfamiliar staff during vulnerable evening hours is a consistent risk factor for the current resident group.",
+      "Cara has identified that Chamberlain House has had 6 agency staff shifts in the past 14 days, predominantly evening shifts. Three of the four dysregulation episodes in this period occurred during agency-covered shifts. Unfamiliar staff during vulnerable evening hours is a consistent risk factor for the current resident group.",
     severity: "high",
     status: "active",
     evidence_refs: [
@@ -366,7 +366,7 @@ intelligenceStore.interventions = [
     description:
       "From 4:45pm each day, a consistent named staff member (Lackson where possible) will meet Alex informally — not in a structured way but with activity or company — to bridge the school-to-home transition. The aim is to reduce the activation that appears to occur at this time.",
     rationale:
-      "ARIA pattern alert identified consistent dysregulation between 17:00–19:00. Transition periods are known high-risk times for young people with a history of relational trauma. Proactive co-regulation before the window opens is more effective than reactive de-escalation.",
+      "Cara pattern alert identified consistent dysregulation between 17:00–19:00. Transition periods are known high-risk times for young people with a history of relational trauma. Proactive co-regulation before the window opens is more effective than reactive de-escalation.",
     started_at: "2026-04-10",
     review_date: "2026-04-24",
     ended_at: null,
@@ -1069,7 +1069,7 @@ intelligenceStore.actionOutcomes = [
   },
 ];
 
-// ── Seed: ARIA Assessments ────────────────────────────────────────────────────
+// ── Seed: Cara Assessments ────────────────────────────────────────────────────
 
 intelligenceStore.ariaAssessments = [
   {
@@ -1131,7 +1131,7 @@ intelligenceStore.keyWorkSessions = [
   },
 ];
 
-// ── Seed: ARIA Recommendations ─────────────────────────────────────────────────
+// ── Seed: Cara Recommendations ─────────────────────────────────────────────────
 
 intelligenceStore.ariaRecommendations = [
   {
@@ -1168,7 +1168,7 @@ intelligenceStore.ariaRecommendations = [
   },
 ];
 
-// ── Seed: ARIA Safeguarding Flags ──────────────────────────────────────────────
+// ── Seed: Cara Safeguarding Flags ──────────────────────────────────────────────
 
 intelligenceStore.ariaSafeguardingFlags = [
   {
@@ -2485,7 +2485,7 @@ intelligenceStore.contactArrangements = [
     court_order_reference: null,
     la_requirement: true,
     status: "under_review",
-    suspension_reason: "Pattern of post-contact distress — contact arrangement under review by social worker. ARIA pattern alert raised 18/04/2026.",
+    suspension_reason: "Pattern of post-contact distress — contact arrangement under review by social worker. Cara pattern alert raised 18/04/2026.",
     suspension_date: null,
     review_date: dFN(5),
     notes: "Key worker pre-contact check-in mandatory. 45-minute post-contact debrief with key worker. Do not schedule activities on contact day.",
@@ -2736,11 +2736,11 @@ intelligenceStore.contactLogs = [
     narrative: "Casey was reluctant to attend contact and required 20 minutes of encouragement from Jasmine before agreeing to go. Contact initially awkward — Casey did not engage with Patricia's attempts at conversation. Patricia brought a takeaway which Casey appreciated and the middle hour improved. Towards the end of the session Patricia began discussing a family holiday they had taken three years ago and became upset. Casey shut down and refused to speak for the final 30 minutes. Patricia left distressed. Casey required a 35-minute co-regulation session and went to her room. She refused dinner.",
     yp_voice: "The following morning Casey said to Jasmine 'I feel like seeing her makes everything worse. But I'd feel bad if I stopped seeing her.'",
     concerns_identified: true,
-    concerns_detail: "Second consecutive contact session ending in significant post-contact distress for Casey. Pattern emerging. ARIA pattern alert to be raised. Contact arrangement review needed.",
+    concerns_detail: "Second consecutive contact session ending in significant post-contact distress for Casey. Pattern emerging. Cara pattern alert to be raised. Contact arrangement review needed.",
     safeguarding_concern: false,
     safeguarding_detail: null,
     follow_up_required: true,
-    follow_up_detail: "RM to review contact arrangement. Social worker notified. ARIA analysis requested. Casey to have key work session on contact boundaries and her choices.",
+    follow_up_detail: "RM to review contact arrangement. Social worker notified. Cara analysis requested. Casey to have key work session on contact boundaries and her choices.",
     cancelled_reason: null,
     social_worker_notified: true,
     social_worker_notified_at: dFN(-20) + "T09:00:00Z",
@@ -2880,7 +2880,7 @@ intelligenceStore.trainingNeeds = [
     affected_roles: ["residential_care_worker", "senior_residential_care_worker"],
     status: "identified",
     linked_ri_alert_id: "ria_004",
-    aria_evidence: "3 physical interventions in 30 days (INC-2026-0038, 0041, 0043). ARIA analysis suggests earlier verbal de-escalation may have reduced risk of physical intervention in 2 of 3 incidents.",
+    aria_evidence: "3 physical interventions in 30 days (INC-2026-0038, 0041, 0043). Cara analysis suggests earlier verbal de-escalation may have reduced risk of physical intervention in 2 of 3 incidents.",
     deadline: "2026-05-10",
     created_by: "staff_darren",
     created_at: "2026-04-11T09:00:00Z",
@@ -2898,7 +2898,7 @@ intelligenceStore.trainingNeeds = [
     status: "learning_studio_sent",
     linked_ri_challenge_id: "ric_001",
     linked_ri_alert_id: "ria_001",
-    aria_evidence: "Multiple MFC episodes with contextual risk factors. Alex disclosing contact with unknown older males. MASH escalation pending. ARIA identified critical safeguarding awareness gap.",
+    aria_evidence: "Multiple MFC episodes with contextual risk factors. Alex disclosing contact with unknown older males. MASH escalation pending. Cara identified critical safeguarding awareness gap.",
     deadline: "2026-04-28",
     created_by: "staff_darren",
     created_at: "2026-04-14T10:30:00Z",
@@ -2915,7 +2915,7 @@ intelligenceStore.trainingNeeds = [
     affected_staff: ["staff_anna", "staff_ryan"],
     affected_roles: ["residential_care_worker"],
     status: "identified",
-    aria_evidence: "Casey is prescribed Fluoxetine for low mood and has had one medication refusal incident. Staff supervision notes indicate anxiety about responding to emotional crises. ARIA recommends MHFA training as a priority.",
+    aria_evidence: "Casey is prescribed Fluoxetine for low mood and has had one medication refusal incident. Staff supervision notes indicate anxiety about responding to emotional crises. Cara recommends MHFA training as a priority.",
     deadline: "2026-05-20",
     created_by: "staff_darren",
     created_at: "2026-04-10T14:00:00Z",
@@ -3242,7 +3242,7 @@ export const intelligenceDb = {
     },
   },
 
-  // ── ARIA Assessments ───────────────────────────────────────────────────────
+  // ── Cara Assessments ───────────────────────────────────────────────────────
   ariaAssessments: {
     findAll: (homeId: string): AriaAssessment[] =>
       intelligenceStore.ariaAssessments
@@ -3275,7 +3275,7 @@ export const intelligenceDb = {
     },
   },
 
-  // ── ARIA Oversight ─────────────────────────────────────────────────────────
+  // ── Cara Oversight ─────────────────────────────────────────────────────────
   ariaOversight: {
     findAll: (homeId: string): AriaOversight[] =>
       intelligenceStore.ariaOversight
@@ -3413,7 +3413,7 @@ export const intelligenceDb = {
     },
   },
 
-  // ── ARIA Audit Trail ───────────────────────────────────────────────────────
+  // ── Cara Audit Trail ───────────────────────────────────────────────────────
   ariaAuditTrail: {
     findAll: (homeId: string): AriaAuditEntry[] =>
       intelligenceStore.ariaAuditTrail
@@ -3446,7 +3446,7 @@ export const intelligenceDb = {
     },
   },
 
-  // ── ARIA Recommendations ───────────────────────────────────────────────────
+  // ── Cara Recommendations ───────────────────────────────────────────────────
   ariaRecommendations: {
     findAll: (homeId: string): AriaRecommendation[] =>
       intelligenceStore.ariaRecommendations
@@ -3479,7 +3479,7 @@ export const intelligenceDb = {
     },
   },
 
-  // ── ARIA Safeguarding Flags ────────────────────────────────────────────────
+  // ── Cara Safeguarding Flags ────────────────────────────────────────────────
   ariaSafeguardingFlags: {
     findAll: (homeId: string): AriaSafeguardingFlag[] =>
       intelligenceStore.ariaSafeguardingFlags

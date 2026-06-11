@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD LAC REVIEW INTELLIGENCE API ROUTE
+// CARA — CHILD LAC REVIEW INTELLIGENCE API ROUTE
 // GET /api/v1/child-lac-review-intelligence?childId=yp_alex
 // Per-child engine analysing LAC review compliance, participation quality,
 // action completion rates, care plan updates, IRO consistency, timeliness.

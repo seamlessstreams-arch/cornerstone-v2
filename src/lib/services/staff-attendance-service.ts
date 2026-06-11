@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF ATTENDANCE & TIMEKEEPING SERVICE
+// CARA — STAFF ATTENDANCE & TIMEKEEPING SERVICE
 // Tracks staff attendance records, punctuality, shift patterns,
 // overtime, and compliance with working time regulations.
 // CHR 2015 Reg 33 (employment — staffing requirements),

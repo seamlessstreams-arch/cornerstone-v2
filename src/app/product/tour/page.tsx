@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PRODUCT TOUR  (route: /product/tour)
+// CARA — PRODUCT TOUR  (route: /product/tour)
 //
 // A visual "see it in action" walkthrough using REAL screenshots of the live
-// platform (captured from cornerstone-v2-fresh.vercel.app, demo data). Each step
+// platform (captured from cara-os-fresh.vercel.app, demo data). Each step
 // links straight into the corresponding live page.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -17,17 +17,17 @@ import { MarketingFooter } from "@/components/marketing/marketing-footer";
 import { SectionEyebrow } from "@/components/marketing/ui";
 
 export const metadata: Metadata = {
-  title: "Product tour | Cornerstone Care OS",
+  title: "Product tour | Cara OS",
   description:
-    "See Cornerstone in action — real screens from the live platform: the Command Centre, Priority Briefing, Shift Briefing, ARIA Incident Mode, Plan Currency, Premises Compliance and Direction of Travel.",
+    "See Cara in action — real screens from the live platform: the Command Centre, Priority Briefing, Shift Briefing, Cara Incident Mode, Plan Currency, Premises Compliance and Direction of Travel.",
 };
 
 const STEPS = [
   {
     Icon: LayoutDashboard, eyebrow: "Command Centre", href: "/dashboard", img: "/tour/dashboard.jpg",
     title: "Your whole home, the moment you log in.",
-    body: "Open the platform to a calm, prioritised picture of the home — a handover prompt, the alerts that matter, and ARIA's read on what needs you today.",
-    points: ["Live handover prompt & alerts", "ARIA intelligence up top", "Everything one click away"],
+    body: "Open the platform to a calm, prioritised picture of the home — a handover prompt, the alerts that matter, and Cara's read on what needs you today.",
+    points: ["Live handover prompt & alerts", "Cara intelligence up top", "Everything one click away"],
   },
   {
     Icon: Radar, eyebrow: "Priority Briefing", href: "/priority-briefing", img: "/tour/priority-briefing.jpg",
@@ -42,9 +42,9 @@ const STEPS = [
     points: ["Who's on & what's due now", "Overnight incidents flagged", "Every item links to act"],
   },
   {
-    Icon: Siren, eyebrow: "Incident Mode", href: "/aria/incident-mode", img: "/tour/incident-mode.jpg",
+    Icon: Siren, eyebrow: "Incident Mode", href: "/cara/incident-mode", img: "/tour/incident-mode.jpg",
     title: "Live support while an incident is happening.",
-    body: "When things escalate, open a live session — pick the child, what's happening and the risk level, and ARIA stays alongside you: co-regulation prompts, the right workflow checklist, a timestamped timeline you can dictate to, and a quality-checked draft record at the end. ARIA suggests; staff decide; the manager reviews.",
+    body: "When things escalate, open a live session — pick the child, what's happening and the risk level, and Cara stays alongside you: co-regulation prompts, the right workflow checklist, a timestamped timeline you can dictate to, and a quality-checked draft record at the end. Cara suggests; staff decide; the manager reviews.",
     points: ["Guided start: who, what, risk level", "Live timeline with voice dictation", "Draft record held for manager review"],
   },
   {
@@ -74,7 +74,7 @@ function BrowserFrame({ img, alt, href }: { img: string; alt: string; href: stri
         <span className="h-2.5 w-2.5 rounded-full bg-red-300" />
         <span className="h-2.5 w-2.5 rounded-full bg-amber-300" />
         <span className="h-2.5 w-2.5 rounded-full bg-green-300" />
-        <span className="ml-2 hidden truncate rounded-md bg-white px-2.5 py-1 text-[11px] font-medium text-[var(--cs-text-muted)] sm:inline-block">cornerstone.app{href}</span>
+        <span className="ml-2 hidden truncate rounded-md bg-white px-2.5 py-1 text-[11px] font-medium text-[var(--cs-text-muted)] sm:inline-block">cara-os.app{href}</span>
         <span className="ml-auto inline-flex items-center gap-1 text-[11px] font-semibold text-[var(--cs-teal-strong)] opacity-0 transition-opacity group-hover:opacity-100">Open live <ArrowUpRight className="h-3 w-3" /></span>
       </div>
       {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -93,7 +93,7 @@ export default function TourPage() {
         <div className="pointer-events-none absolute inset-0 opacity-70" style={{ background: "radial-gradient(55% 50% at 50% 0%, var(--cs-teal-glow) 0%, transparent 60%)" }} />
         <div className="relative mx-auto max-w-3xl px-5 py-16 text-center lg:py-20">
           <SectionEyebrow>Product tour</SectionEyebrow>
-          <h1 className="mt-5 text-4xl font-extrabold leading-[1.1] tracking-tight text-[var(--cs-navy)] sm:text-5xl">See Cornerstone in action.</h1>
+          <h1 className="mt-5 text-4xl font-extrabold leading-[1.1] tracking-tight text-[var(--cs-navy)] sm:text-5xl">See Cara in action.</h1>
           <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-[var(--cs-text-secondary)]">
             Real screens from the live platform — running on a demo home&rsquo;s data. Every screenshot is a live page; click any one to step straight into it.
           </p>

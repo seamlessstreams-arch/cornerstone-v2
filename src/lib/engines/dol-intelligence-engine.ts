@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DEPRIVATION OF LIBERTY INTELLIGENCE ENGINE
+// CARA — DEPRIVATION OF LIBERTY INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses active DoL orders, restriction tracking, proportionality reviews,
@@ -319,7 +319,7 @@ export function computeDoLIntelligence(input: DoLIntelligenceInput): DoLIntellig
     }
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────────
   const insights: AriaDoLInsight[] = [];
 
   // Critical: DoL orders expiring imminently without renewal

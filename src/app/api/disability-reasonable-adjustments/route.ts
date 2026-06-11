@@ -1,5 +1,5 @@
 // ==============================================================================
-// Cornerstone -- Disability & Reasonable Adjustments Intelligence API Route
+// Cara -- Disability & Reasonable Adjustments Intelligence API Route
 //
 // GET  -> returns Chamberlain House demo disability & reasonable adjustments intelligence
 // POST -> accepts custom data for any home

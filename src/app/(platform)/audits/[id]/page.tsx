@@ -229,7 +229,7 @@ export default function AuditDetailPage({
       }
     >
       <div id="audit-detail-content">
-      {/* ARIA Panel */}
+      {/* Cara Panel */}
       {showAria && (
         <div className="mb-6 relative">
           <button
@@ -313,7 +313,7 @@ export default function AuditDetailPage({
                 onClick={() => setShowAria((v) => !v)}
               >
                 <Sparkles className="h-3.5 w-3.5 text-[var(--cs-aria-gold)]" />
-                ARIA Analysis
+                Cara Analysis
               </Button>
               {audit.status === "in_progress" && (
                 <Button

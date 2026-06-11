@@ -3,7 +3,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // OPERATIONS DASHBOARD — Manager+ governance command centre
 // Unified view: task overview, workflow status, oversight gaps, evidence
-// coverage, ARIA recommendations, and inspection readiness.
+// coverage, Cara recommendations, and inspection readiness.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState } from "react";
@@ -31,7 +31,7 @@ const TABS: { id: TabId; label: string; icon: React.ElementType }[] = [
   { id: "evidence", label: "Evidence", icon: FileCheck2 },
   { id: "oversight", label: "Oversight", icon: Eye },
   { id: "readiness", label: "Inspection Readiness", icon: Shield },
-  { id: "intelligence", label: "ARIA Intelligence", icon: Sparkles },
+  { id: "intelligence", label: "Cara Intelligence", icon: Sparkles },
   { id: "audit", label: "Audit Trail", icon: BookOpen },
 ];
 
@@ -114,7 +114,7 @@ function StatCard({ label, value, icon: Icon, colour, sub }: {
 function OverviewTab() {
   return (
     <div className="space-y-6">
-      {/* ARIA Intelligence */}
+      {/* Cara Intelligence */}
       <AriaDailyIntelligence />
 
       {/* Key Stats Grid */}
@@ -125,7 +125,7 @@ function OverviewTab() {
         <StatCard label="Needing Oversight" value={DEMO_OVERSIGHT_STATS.needing_oversight} icon={Eye} colour="bg-red-500" />
       </div>
 
-      {/* ARIA Pattern Intelligence */}
+      {/* Cara Pattern Intelligence */}
       <AriaPatternAlert homeId="home_oak" />
 
       {/* Quick Workflow Status */}
@@ -207,7 +207,7 @@ function TasksTab() {
     { ref: "CMP-B2L002", title: "Update Reg 45 evidence folder", category: "compliance", priority: "high", status: "not_started", due: "Tomorrow", assigned: "Darren L", riskScore: 55 },
     { ref: "MED-C3M003", title: "Medication stock check — monthly", category: "medication", priority: "medium", status: "awaiting_sign_off", due: "14 May", assigned: "James H", riskScore: 30 },
     { ref: "TRN-D4N004", title: "Book restraint refresher training", category: "training", priority: "high", status: "overdue", due: "10 May", assigned: "Unassigned", riskScore: 68 },
-    { ref: "ARA-E5O005", title: "ARIA: Pattern detected — weekend incident increase", category: "aria_generated", priority: "high", status: "not_started", due: "15 May", assigned: "Darren L", riskScore: 61 },
+    { ref: "ARA-E5O005", title: "Cara: Pattern detected — weekend incident increase", category: "aria_generated", priority: "high", status: "not_started", due: "15 May", assigned: "Darren L", riskScore: 61 },
   ];
 
   return (
@@ -236,7 +236,7 @@ function TasksTab() {
           <h3 className="text-sm font-semibold text-[var(--cs-navy)]">Task Explorer</h3>
           <div className="flex items-center gap-2">
             <span className="text-[10px] text-[var(--cs-text-muted)] bg-slate-100 px-2 py-0.5 rounded-full">
-              Sorted by ARIA risk score
+              Sorted by Cara risk score
             </span>
           </div>
         </div>
@@ -252,7 +252,7 @@ function TasksTab() {
                     </span>
                     {task.category === "aria_generated" && (
                       <span className="flex items-center gap-0.5 text-[10px] text-[var(--cs-aria-gold)]">
-                        <Sparkles className="h-2.5 w-2.5" /> ARIA
+                        <Sparkles className="h-2.5 w-2.5" /> Cara
                       </span>
                     )}
                     {task.status === "overdue" && (
@@ -267,7 +267,7 @@ function TasksTab() {
                     <span className="text-[10px] text-[var(--cs-text-muted)]">{task.assigned}</span>
                   </div>
                 </div>
-                {/* ARIA Risk Score */}
+                {/* Cara Risk Score */}
                 <div className="flex flex-col items-center shrink-0">
                   <div className={cn(
                     "w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold border-2",
@@ -457,7 +457,7 @@ function OversightTab() {
         <StatCard label="This Month" value={DEMO_OVERSIGHT_STATS.total_this_month} icon={Eye} colour="bg-purple-500" />
         <StatCard label="Avg Quality" value={`${DEMO_OVERSIGHT_STATS.avg_quality_score}/10`} icon={TrendingUp} colour="bg-emerald-500" />
         <StatCard label="Needing Oversight" value={DEMO_OVERSIGHT_STATS.needing_oversight} icon={AlertTriangle} colour="bg-red-500" />
-        <StatCard label="ARIA Assisted" value="67%" icon={Sparkles} colour="bg-[var(--cs-aria-gold)]" />
+        <StatCard label="Cara Assisted" value="67%" icon={Sparkles} colour="bg-[var(--cs-aria-gold)]" />
       </div>
 
       {/* Oversight by record type */}
@@ -565,11 +565,11 @@ function ReadinessTab() {
         </div>
       </div>
 
-      {/* ARIA note */}
+      {/* Cara note */}
       <div className="rounded-xl border border-[var(--cs-border)] bg-[var(--cs-aria-gold-bg)] p-3 flex items-start gap-2">
         <Sparkles className="h-4 w-4 text-[var(--cs-aria-gold)] shrink-0 mt-0.5" />
         <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed">
-          ARIA analyses your evidence coverage against each regulation and generates gap recommendations. Run a full scan to identify exactly which evidence is missing for each requirement.
+          Cara analyses your evidence coverage against each regulation and generates gap recommendations. Run a full scan to identify exactly which evidence is missing for each requirement.
         </p>
       </div>
     </div>
@@ -621,14 +621,14 @@ export default function OperationsPage() {
   );
 }
 
-// ── ARIA Intelligence Tab ──────────────────────────────────────────────────
+// ── Cara Intelligence Tab ──────────────────────────────────────────────────
 
 const DEMO_RECOMMENDATIONS = [
   {
     id: "r1", type: "missing_oversight", severity: "critical" as const,
     title: "4 records without management oversight",
     description: "4 significant records have been open for more than 48 hours without management oversight. 2 incidents, 1 safeguarding concern, 1 restraint. Ofsted expects timely, reflective management oversight of all significant events.",
-    suggested_action: "Prioritise providing written oversight for these records. Use ARIA's oversight quality prompts to ensure your oversight demonstrates reflective analysis, child focus, and clear actions.",
+    suggested_action: "Prioritise providing written oversight for these records. Use Cara's oversight quality prompts to ensure your oversight demonstrates reflective analysis, child focus, and clear actions.",
     data_points: 4, confidence: 0.98, status: "active" as const,
     created_at: "2026-05-12T08:00:00Z",
   },
@@ -710,13 +710,13 @@ function IntelligenceTab() {
 
   return (
     <div className="space-y-4">
-      {/* ARIA header */}
+      {/* Cara header */}
       <div className="flex items-start gap-3 px-4 py-3 rounded-xl bg-violet-50 border border-violet-100">
         <Sparkles className="h-5 w-5 text-violet-500 shrink-0 mt-0.5" />
         <div>
-          <h3 className="text-sm font-semibold text-violet-800">ARIA Operational Intelligence</h3>
+          <h3 className="text-sm font-semibold text-violet-800">Cara Operational Intelligence</h3>
           <p className="text-xs text-violet-600 mt-0.5">
-            ARIA analyses patterns across all modules — incidents, daily logs, staffing, training, oversight,
+            Cara analyses patterns across all modules — incidents, daily logs, staffing, training, oversight,
             and medication — to surface actionable intelligence. All recommendations require human review.
           </p>
         </div>
@@ -809,7 +809,7 @@ const DEMO_AUDIT_ENTRIES = [
   { id: "a8", action: "sign_off", entity_type: "task", entity_id: "tsk-074", reference: "MED-B2K074", performed_by: "Darren Laville", created_at: "2026-05-11T18:30:00Z", details: "Signed off medication audit task" },
   { id: "a9", action: "create", entity_type: "evidence_item", entity_id: "ev-019", reference: "EV-019", performed_by: "James Wilson", created_at: "2026-05-11T17:00:00Z", details: "Uploaded evidence: Fire drill log May 2026" },
   { id: "a10", action: "escalate", entity_type: "task", entity_id: "tsk-071", reference: "CMP-C3K071", performed_by: "Sarah Mitchell", created_at: "2026-05-11T16:15:00Z", details: "Escalated complaint task to Registered Manager" },
-  { id: "a11", action: "create", entity_type: "communication_draft", entity_id: "cd-007", reference: "CD-007", performed_by: "ARIA", created_at: "2026-05-11T15:30:00Z", details: "ARIA generated shift briefing draft for night shift" },
+  { id: "a11", action: "create", entity_type: "communication_draft", entity_id: "cd-007", reference: "CD-007", performed_by: "Cara", created_at: "2026-05-11T15:30:00Z", details: "Cara generated shift briefing draft for night shift" },
   { id: "a12", action: "update", entity_type: "young_person", entity_id: "yp-003", reference: "Tyler Robinson", performed_by: "Emily Chen", created_at: "2026-05-11T14:00:00Z", details: "Updated risk flags: Added substance experimentation" },
 ];
 
@@ -839,7 +839,7 @@ function AuditTab() {
         <BookOpen className="h-4 w-4 text-slate-500 shrink-0 mt-0.5" />
         <div>
           <h3 className="text-sm font-semibold text-slate-700">Immutable Audit Trail</h3>
-          <p className="text-xs text-slate-500">Every action in Cornerstone is immutably logged. Records cannot be edited or deleted. This trail provides evidence of due diligence for regulatory inspections.</p>
+          <p className="text-xs text-slate-500">Every action in Cara is immutably logged. Records cannot be edited or deleted. This trail provides evidence of due diligence for regulatory inspections.</p>
         </div>
       </div>
 

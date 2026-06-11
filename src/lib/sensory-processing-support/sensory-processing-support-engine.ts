@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Sensory Processing Support Intelligence Engine
+// Cara — Sensory Processing Support Intelligence Engine
 //
 // Pure deterministic engine — no AI, no external calls, no randomness.
 // Evaluates how effectively a children's home identifies, assesses, and

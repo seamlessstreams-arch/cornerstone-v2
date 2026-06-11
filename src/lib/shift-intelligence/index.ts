@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Shift Pattern & Staff Deployment Intelligence — Public API
+// Cara Shift Pattern & Staff Deployment Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — YOUNG PERSON PROFILE (redesigned)
+// CARA — YOUNG PERSON PROFILE (redesigned)
 // 15-tab profile grouped into Care · Wellbeing · Plans · Records · Intelligence
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -21,7 +21,7 @@ import {
   MessageSquare, HeartHandshake, Target, BookOpen, CheckSquare,
 } from "lucide-react";
 import { ChildExperienceTab } from "@/components/intelligence/child-experience-tab";
-import { AriaQuickActions } from "@/components/intelligence/aria-quick-actions";
+import { AriaQuickActions } from "@/components/intelligence/cara-quick-actions";
 import { useYoungPerson } from "@/hooks/use-young-people";
 import { useCreateTrainingNeed } from "@/hooks/use-ri-learning";
 import { PrintButton } from "@/components/common/print-button";
@@ -136,7 +136,7 @@ function EmptyTabState({ icon: Icon, label, description, action }: {
   );
 }
 
-// ── Aria tools (previously "Intelligence") ────────────────────────────────────
+// ── Cara tools (previously "Intelligence") ────────────────────────────────────
 
 function ChildVoiceSummarySection({ childId, childName }: { childId: string; childName: string }) {
   const [generating, setGenerating] = useState(false);
@@ -147,7 +147,7 @@ function ChildVoiceSummarySection({ childId, childName }: { childId: string; chi
     setGenerating(true);
     try {
       const res = await api.post<{ data: { response?: string; parsed?: { summary?: string }; text?: string } }>(
-        "/aria",
+        "/cara",
         { mode: "voice_summary", source_content: `Child profile: ${childName}. Generate voice summary from care records.` }
       );
       const text = res.data?.response || res.data?.parsed?.summary || res.data?.text;
@@ -162,7 +162,7 @@ function ChildVoiceSummarySection({ childId, childName }: { childId: string; chi
         <div className="flex items-center justify-between gap-3">
           <div>
             <div className="text-sm font-semibold text-emerald-900">Child Voice Summary</div>
-            <div className="text-xs text-emerald-700 mt-0.5">Aria synthesis of what {childName} has said, felt, and expressed</div>
+            <div className="text-xs text-emerald-700 mt-0.5">Cara synthesis of what {childName} has said, felt, and expressed</div>
           </div>
           <Button onClick={generate} disabled={generating} className="bg-emerald-600 hover:bg-emerald-700 shrink-0 gap-1.5" size="sm">
             {generating ? <><Loader2 className="h-3.5 w-3.5 animate-spin" />Generating…</> : <><Sparkles className="h-3.5 w-3.5" />Generate</>}
@@ -202,7 +202,7 @@ function WhatChangedSection({ childName, incidents, chronology, recentLog }: {
   async function generate() {
     setGenerating(true);
     try {
-      const res = await api.post<{ data: { response?: string; text?: string } }>("/aria", {
+      const res = await api.post<{ data: { response?: string; text?: string } }>("/cara", {
         mode: "what_changed",
         source_content: `Young person: ${childName}\n\nRecent incidents:\n${incidents.slice(0, 5).map((i) => `${i.date}: ${i.type} — ${i.description}`).join("\n") || "(none)"}\n\nChronology:\n${chronology.slice(0, 8).map((c) => `${c.date}: [${c.category}] ${c.title}`).join("\n") || "(none)"}\n\nDaily logs:\n${recentLog.slice(0, 5).map((l) => `${l.date} [${l.entry_type}]: ${l.content}`).join("\n") || "(none)"}`,
       });
@@ -218,7 +218,7 @@ function WhatChangedSection({ childName, incidents, chronology, recentLog }: {
         <div className="flex items-center justify-between gap-3">
           <div>
             <div className="text-sm font-semibold text-violet-900">What Has Changed?</div>
-            <div className="text-xs text-violet-700 mt-0.5">Aria analysis of progress, regression, risks and relationships over time</div>
+            <div className="text-xs text-violet-700 mt-0.5">Cara analysis of progress, regression, risks and relationships over time</div>
           </div>
           <Button onClick={generate} disabled={generating} className="bg-violet-600 hover:bg-violet-700 shrink-0 gap-1.5" size="sm">
             {generating ? <><Loader2 className="h-3.5 w-3.5 animate-spin" />Analysing…</> : <><Sparkles className="h-3.5 w-3.5" />Analyse</>}
@@ -399,7 +399,7 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
     {
       label: "Intelligence",
       tabs: [
-        { id: "aria", label: "Aria", icon: Sparkles },
+        { id: "aria", label: "Cara", icon: Sparkles },
       ],
     },
   ];
@@ -1013,9 +1013,9 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
                 <p className="text-xs text-slate-500 mt-0.5">Individual key work record for {displayName} — Reg 36 Children&apos;s Homes Regulations 2015</p>
               </div>
               <div className="flex items-center gap-2">
-                <Link href="/intelligence/aria/keywork">
+                <Link href="/intelligence/cara/keywork">
                   <Button variant="outline" size="sm" className="gap-1.5 text-xs">
-                    <Sparkles className="h-3.5 w-3.5 text-violet-500" />Aria Planner
+                    <Sparkles className="h-3.5 w-3.5 text-violet-500" />Cara Planner
                   </Button>
                 </Link>
                 <Button size="sm" className="gap-1.5 text-xs" onClick={() => setShowKWForm((p) => !p)}>
@@ -1090,11 +1090,11 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
               <EmptyTabState
                 icon={MessageCircle}
                 label="No key work sessions recorded"
-                description="Log sessions here or plan them using the Aria Key Work Builder."
+                description="Log sessions here or plan them using the Cara Key Work Builder."
                 action={
                   <div className="flex items-center justify-center gap-2">
                     <Button size="sm" variant="outline" onClick={() => setShowKWForm(true)} className="gap-1.5 text-xs"><Plus className="h-3.5 w-3.5" />Log Session</Button>
-                    <Link href="/intelligence/aria/keywork"><Button size="sm" variant="outline" className="gap-1.5 text-xs"><Sparkles className="h-3.5 w-3.5 text-violet-500" />Aria Planner</Button></Link>
+                    <Link href="/intelligence/cara/keywork"><Button size="sm" variant="outline" className="gap-1.5 text-xs"><Sparkles className="h-3.5 w-3.5 text-violet-500" />Cara Planner</Button></Link>
                   </div>
                 }
               />
@@ -1134,7 +1134,7 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
                       {session.staff_reflection && <div><p className="text-[10px] font-semibold text-slate-400 uppercase tracking-wide mb-0.5">Staff Reflection</p><p className="text-xs text-slate-600 leading-relaxed">{session.staff_reflection}</p></div>}
                       {session.aria_summary && (
                         <div className="rounded-xl border border-violet-100 bg-violet-50/40 px-3 py-2">
-                          <p className="text-[10px] font-semibold text-violet-600 uppercase tracking-wide mb-0.5 flex items-center gap-1"><Sparkles className="h-2.5 w-2.5" />Aria Summary</p>
+                          <p className="text-[10px] font-semibold text-violet-600 uppercase tracking-wide mb-0.5 flex items-center gap-1"><Sparkles className="h-2.5 w-2.5" />Cara Summary</p>
                           <p className="text-xs text-slate-700">{session.aria_summary}</p>
                         </div>
                       )}
@@ -1377,7 +1377,7 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
                 <div>
                   <p className="text-sm font-semibold text-indigo-900">Placement Outcomes</p>
                   <p className="text-xs text-indigo-700 mt-0.5">
-                    Outcomes are tracked against the care plan and pathway plan. Use Aria to generate a progress summary against stated outcomes.
+                    Outcomes are tracked against the care plan and pathway plan. Use Cara to generate a progress summary against stated outcomes.
                   </p>
                 </div>
               </div>
@@ -1467,7 +1467,7 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
               <EmptyTabState
                 icon={FileText}
                 label="No documents yet"
-                description="Upload placement plans, risk assessments, LAC reviews, and more — Aria will classify and extract intelligence automatically."
+                description="Upload placement plans, risk assessments, LAC reviews, and more — Cara will classify and extract intelligence automatically."
                 action={<SmartUploadButton variant="button" label="Upload First Document" linkedChildId={id} uploadContext={`${displayName} ${yp.last_name} — first document`} />}
               />
             ) : (
@@ -1505,7 +1505,7 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
           </div>
         )}
 
-        {/* ── Aria (Intelligence) ──────────────────────────────────────────── */}
+        {/* ── Cara (Intelligence) ──────────────────────────────────────────── */}
         {tab === "aria" && (
           <div className="space-y-5">
             <AriaQuickActions childId={yp.id} sourceType="young_person_profile" sourceId={yp.id} defaultOpen />

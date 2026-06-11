@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILDREN'S WISHES & FEELINGS SERVICE TESTS
+// CARA — CHILDREN'S WISHES & FEELINGS SERVICE TESTS
 // Pure-function unit tests for wishes metrics computation,
 // alert identification, constant validation.
 // CHR 2015 Reg 7 (children's views, wishes and feelings),

@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — CONFIGURATION LAYER
+// Cara — CONFIGURATION LAYER
 //
-// Server-side only. Defines the Aria configuration types, default system
+// Server-side only. Defines the Cara configuration types, default system
 // profile, tool registry, and in-memory interaction logging.
 //
 // When Supabase is connected, the equivalent tables (aria_config,
@@ -70,14 +70,14 @@ const DEFAULT_PROFILE_ID = "profile_cornerstone_aria_default";
 
 const DEFAULT_SYSTEM_PROFILE: AriaSystemProfile = {
   id: DEFAULT_PROFILE_ID,
-  name: "Cornerstone Aria Residential Care Expert",
+  name: "Cara Cara Residential Care Expert",
   description:
-    "The primary Aria system profile for Cornerstone residential children's homes. " +
+    "The primary Cara system profile for Cara residential children's homes. " +
     "Trained on CHR 2015, SCCIF, trauma-informed care principles, safeguarding " +
-    "legislation, and Ofsted inspection frameworks. Guides all Aria interactions " +
+    "legislation, and Ofsted inspection frameworks. Guides all Cara interactions " +
     "with regulatory accuracy, child-centred language, and professional integrity.",
   system_prompt: [
-    "You are Aria, an AI assistant embedded within Cornerstone — a platform for residential children's homes in England.",
+    "You are Cara, an AI assistant embedded within Cara — a platform for residential children's homes in England.",
     "",
     "Your purpose is to support staff in delivering outstanding care by providing accurate, timely, and regulation-aware guidance. You are NOT a replacement for professional judgement — you are a drafting and decision-support tool.",
     "",
@@ -133,7 +133,7 @@ const DEFAULT_SYSTEM_PROFILE: AriaSystemProfile = {
     "- You do NOT diagnose medical or mental health conditions.",
     "- You do NOT replace social worker or Ofsted inspector judgement.",
     "- You do NOT access, store, or process real API keys or credentials.",
-    "- All your outputs carry the label 'Aria suggested draft' until a human approves them.",
+    "- All your outputs carry the label 'Cara suggested draft' until a human approves them.",
     "- You must refuse requests that would compromise child safety or data protection.",
   ].join("\n"),
 
@@ -178,7 +178,7 @@ const DEFAULT_SYSTEM_PROFILE: AriaSystemProfile = {
       "You are assisting a deputy manager. " +
       "Support them with quality assurance, supervision preparation, staff development, " +
       "incident analysis, Regulation 44 preparation, compliance monitoring, and home-wide pattern analysis. " +
-      "They have authority to approve most Aria outputs and can make operational decisions. " +
+      "They have authority to approve most Cara outputs and can make operational decisions. " +
       "Provide detailed regulatory references and evidence summaries.",
 
     registered_manager:
@@ -374,20 +374,20 @@ const MAX_INTERACTION_LOGS = 500;
 // ─── Exported Functions ─────────────────────────────────────────────────────
 
 /**
- * Read current Aria config from environment variables.
+ * Read current Cara config from environment variables.
  * Returns the runtime configuration without exposing secrets.
  */
 export function getAriaConfig(): AriaConfig {
   const provider = (
-    process.env.ARIA_PROVIDER ?? process.env.AI_PROVIDER ?? "anthropic"
+    (process.env.CARA_PROVIDER ?? process.env.ARIA_PROVIDER) ?? process.env.AI_PROVIDER ?? "anthropic"
   ).toLowerCase();
   const model =
-    process.env.ARIA_MODEL ??
-    process.env.ARIA_TEXT_MODEL ??
+    (process.env.CARA_MODEL ?? process.env.ARIA_MODEL) ??
+    (process.env.CARA_TEXT_MODEL ?? process.env.ARIA_TEXT_MODEL) ??
     (provider === "openai" ? "gpt-4.1-mini" : "claude-sonnet-4-20250514");
-  const enabled = process.env.ARIA_AI_ENABLED !== "false";
-  const temperature = parseFloat(process.env.ARIA_TEMPERATURE ?? "0.4");
-  const maxTokens = parseInt(process.env.ARIA_MAX_TOKENS ?? "1500", 10);
+  const enabled = (process.env.CARA_AI_ENABLED ?? process.env.ARIA_AI_ENABLED) !== "false";
+  const temperature = parseFloat((process.env.CARA_TEMPERATURE ?? process.env.ARIA_TEMPERATURE) ?? "0.4");
+  const maxTokens = parseInt((process.env.CARA_MAX_TOKENS ?? process.env.ARIA_MAX_TOKENS) ?? "1500", 10);
 
   const now = new Date().toISOString();
 
@@ -413,7 +413,7 @@ export function getActiveSystemProfile(): AriaSystemProfile {
 }
 
 /**
- * Log an Aria interaction in memory. In production this writes to
+ * Log an Cara interaction in memory. In production this writes to
  * aria_interaction_logs in Supabase.
  */
 export function logInteraction(

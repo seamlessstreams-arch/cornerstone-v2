@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — HOME DYNAMICS SNAPSHOTTER
+// Cara — HOME DYNAMICS SNAPSHOTTER
 //
 // Builds a deterministic point-in-time picture of a home's operational and
 // relational climate from existing live records. The snapshot is a draft until
@@ -105,7 +105,7 @@ function buildNarrative(
         : `Home ${homeId} is operating within expected ranges in the last ${windowDays} days.`;
 
   if (concerns.length === 0) {
-    return `${headline} No indicators are currently flagged. ARIA draft — manager review required before relying on this summary.`;
+    return `${headline} No indicators are currently flagged. Cara draft — manager review required before relying on this summary.`;
   }
 
   const bullets = concerns
@@ -118,7 +118,7 @@ function buildNarrative(
     "Indicators requiring attention:",
     bullets,
     "",
-    "ARIA draft — manager review required before relying on this summary.",
+    "Cara draft — manager review required before relying on this summary.",
   ].join("\n");
 }
 

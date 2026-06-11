@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ACTIVITY LOG
+// CARA — ACTIVITY LOG
 // Home-wide timeline of all events: incidents, daily logs, medication,
 // tasks, handovers, shifts, safeguarding. Searchable, filterable, exportable.
 // Provides real-time awareness and a full audit trail for regulatory evidence.

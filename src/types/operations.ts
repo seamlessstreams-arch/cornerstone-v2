@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — OPERATIONS LAYER TYPES
+// CARA — OPERATIONS LAYER TYPES
 // Granular permissions, form governance, task explorer, workflows, evidence,
-// management oversight, ARIA intelligence, regulatory mapping, audit trail.
+// management oversight, Cara intelligence, regulatory mapping, audit trail.
 // ══════════════════════════════════════════════════════════════════════════════
 
 // ── Permissions ─────────────────────────────────────────────────────────────
@@ -427,7 +427,7 @@ export interface CsManagementOversightNote {
   created_at: string;
 }
 
-// ── ARIA Intelligence ───────────────────────────────────────────────────────
+// ── Cara Intelligence ───────────────────────────────────────────────────────
 
 export type AriaRecommendationType =
   | "overdue_form" | "missing_oversight" | "weak_recording"

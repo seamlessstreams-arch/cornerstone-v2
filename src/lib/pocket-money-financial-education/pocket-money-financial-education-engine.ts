@@ -1,5 +1,5 @@
 // ==============================================================================
-// Cornerstone -- Pocket Money & Financial Education Intelligence Engine
+// Cara -- Pocket Money & Financial Education Intelligence Engine
 //
 // Pure deterministic engine -- no AI, no external calls, no randomness,
 // no Date.now().

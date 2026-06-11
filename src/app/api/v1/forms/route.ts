@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — FORMS BULK ENDPOINT (enriched meta)
+// CARA — FORMS BULK ENDPOINT (enriched meta)
 //
 // Returns all care forms with computed meta matching FormsListResponse:
 // total, draft, pending_review, approved, overdue, urgent counts.

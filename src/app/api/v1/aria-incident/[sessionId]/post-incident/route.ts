@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ARIA INCIDENT MODE · POST-INCIDENT API (slice B)
+// CARA — Cara INCIDENT MODE · POST-INCIDENT API (slice B)
 // GET  /api/v1/aria-incident/[sessionId]/post-incident
 //        → templates + any restorative conversation / reflection for the session
 // POST /api/v1/aria-incident/[sessionId]/post-incident

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — KEYBOARD SHORTCUTS OVERLAY
+// CARA — KEYBOARD SHORTCUTS OVERLAY
 // Press '?' from anywhere to see available keyboard shortcuts.
 // Provides rapid navigation for power users — especially managers who
 // need to move quickly between pages during a busy shift.

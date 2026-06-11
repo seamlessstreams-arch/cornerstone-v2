@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // API: /api/aria/orchestrate/approve
 //
-// Handles approval decisions for Aria-generated drafts. Only users with
+// Handles approval decisions for Cara-generated drafts. Only users with
 // deputy_manager role or above can approve/reject/amend drafts.
 //
 // POST body: { sessionId, draftId, decision, notes?, commitTarget? }
@@ -85,7 +85,7 @@ export async function POST(req: NextRequest) {
 
   if (!APPROVAL_ROLES.includes(body.role)) {
     return NextResponse.json(
-      { error: "Insufficient permissions. Only deputy_manager or above can approve Aria drafts." },
+      { error: "Insufficient permissions. Only deputy_manager or above can approve Cara drafts." },
       { status: 403 },
     );
   }

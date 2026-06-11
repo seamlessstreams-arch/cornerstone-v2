@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PERSONAL HYGIENE SUPPORT SERVICE
+// CARA — PERSONAL HYGIENE SUPPORT SERVICE
 // Tracks personal hygiene support, self-care skill development, and
 // independence building for looked-after children.
 // CHR 2015 Reg 7 (welfare — physical and emotional wellbeing),

@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA REPORTS — ZOD VALIDATION SCHEMAS
+// Cara REPORTS — ZOD VALIDATION SCHEMAS
 //
-// Validates every boundary crossing in the ARIA Reports pipeline:
+// Validates every boundary crossing in the Cara Reports pipeline:
 // inbound generation requests, AI-produced sections, challenge outputs,
 // approval decisions, and suggested actions.
 //

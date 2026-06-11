@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD MEDICATION INTELLIGENCE API ROUTE
+// CARA — CHILD MEDICATION INTELLIGENCE API ROUTE
 // GET /api/v1/child-medication-intelligence?childId=yp_casey
 // Per-child engine analysing medication safety: adherence, witnessing,
 // timeliness, PRN usage, stock, errors.

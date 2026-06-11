@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — HR PROCESS GUARDIAN (UI)
+// Cara — HR PROCESS GUARDIAN (UI)
 // Manager-facing fairness gate for draft HR actions. Use before sending any
 // formal letter, suspension decision, or disciplinary outcome.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -259,12 +259,12 @@ export default function HrProcessGuardianPage() {
   const review = result?.review;
 
   return (
-    <PageShell title="ARIA — HR Process Guardian">
-      {/* ARIA draft banner */}
+    <PageShell title="Cara — HR Process Guardian">
+      {/* Cara draft banner */}
       <div className="mb-6 flex items-start gap-3 rounded-lg border border-[var(--cs-aria-gold-soft)] bg-[var(--cs-aria-gold-bg)] p-4 text-sm text-[var(--cs-navy)]">
         <Sparkles className="h-5 w-5 mt-0.5 text-[var(--cs-aria-gold)]" />
         <div>
-          <div className="font-semibold">ARIA suggested draft, never final</div>
+          <div className="font-semibold">Cara suggested draft, never final</div>
           <p className="text-[var(--cs-navy)]">
             Run a draft HR letter, suspension decision, or disciplinary outcome
             through the Process Guardian before sending. The Guardian checks
@@ -428,7 +428,7 @@ export default function HrProcessGuardianPage() {
             </Card>
             <Card>
               <CardContent className="p-4">
-                <div className="text-xs uppercase text-[var(--cs-text-muted)] mb-1">ARIA confidence</div>
+                <div className="text-xs uppercase text-[var(--cs-text-muted)] mb-1">Cara confidence</div>
                 <div className="text-3xl font-semibold text-[var(--cs-navy)]">{Math.round(review.ariaConfidence * 100)}%</div>
                 <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">{review.llmUsed ? "LLM-enhanced" : "Deterministic only"}</div>
               </CardContent>

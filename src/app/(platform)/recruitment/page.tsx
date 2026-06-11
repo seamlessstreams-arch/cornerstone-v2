@@ -819,7 +819,7 @@ export default function RecruitmentPage() {
           </div>
         </div>
 
-        {/* Tab content + Aria panel */}
+        {/* Tab content + Cara panel */}
         <div className="flex gap-6 items-start">
           <div className="flex-1 min-w-0">
             {activeTab === "pipeline" && (
@@ -835,7 +835,7 @@ export default function RecruitmentPage() {
             {activeTab === "reports" && <ReportsTab />}
           </div>
 
-          {/* Aria panel */}
+          {/* Cara panel */}
           <div className="w-72 shrink-0 sticky top-28">
             <AriaPanel
               pageContext="safer_recruitment"

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME POCKET MONEY & FINANCIAL LITERACY INTELLIGENCE API ROUTE
+// CARA — HOME POCKET MONEY & FINANCIAL LITERACY INTELLIGENCE API ROUTE
 // GET /api/v1/home-pocket-money-financial-literacy-intelligence
 // Cross-domain composite: pocketMoneyTransactions + ypSavingsAccountRecords +
 // moneyRecords + childBankAccounts + independenceSkillsRecords

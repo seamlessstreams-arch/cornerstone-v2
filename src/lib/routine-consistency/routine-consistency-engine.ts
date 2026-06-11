@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Routine & Consistency Intelligence Engine
+// Cara — Routine & Consistency Intelligence Engine
 //
 // Pure deterministic engine. No AI, no external calls, no side-effects.
 //

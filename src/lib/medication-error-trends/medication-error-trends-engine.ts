@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MEDICATION ERROR TREND & REPEAT-PATTERN INTELLIGENCE ENGINE
+// CARA — MEDICATION ERROR TREND & REPEAT-PATTERN INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 //
@@ -430,7 +430,7 @@ export function computeMedicationErrorTrends(input: MedErrorTrendInput): Medicat
     });
   }
 
-  // ── ARIA insights ──────────────────────────────────────────────────────
+  // ── Cara insights ──────────────────────────────────────────────────────
   const insights: AriaMedTrendInsight[] = [];
 
   if (harm_events > 0 || recurAfterLearningGroups.length > 0) {

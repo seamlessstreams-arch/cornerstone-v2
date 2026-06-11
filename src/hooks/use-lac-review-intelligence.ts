@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LAC REVIEW INTELLIGENCE HOOK
+// CARA — LAC REVIEW INTELLIGENCE HOOK
 // React Query wrapper for /api/v1/lac-review-intelligence
 // ══════════════════════════════════════════════════════════════════════════════
 

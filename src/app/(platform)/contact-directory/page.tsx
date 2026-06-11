@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CONTACT DIRECTORY
+// CARA — CONTACT DIRECTORY
 // Directory of all external professional contacts linked to the home and
 // individual children: social workers, IROs, GPs, CAMHS, schools, police,
 // Ofsted, local authority, advocates, and emergency contacts.

@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF WHISTLEBLOWING MANAGEMENT SERVICE TESTS
+// CARA — STAFF WHISTLEBLOWING MANAGEMENT SERVICE TESTS
 // Pure-function unit tests for whistleblowing disclosure metrics, alert
-// identification, and ARIA insight generation.
+// identification, and Cara insight generation.
 //
 // Public Interest Disclosure Act 1998 — whistleblower protection obligations.
 // CHR 2015 Reg 34 (employment practices — encouraging and protecting disclosures).

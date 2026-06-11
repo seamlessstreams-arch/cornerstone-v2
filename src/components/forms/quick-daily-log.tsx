@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — QUICK DAILY LOG FORM
+// CARA — QUICK DAILY LOG FORM
 // Demonstrates the "Record Once" pattern. Auto-fills child name, date, home,
 // and recording staff. Progressive disclosure: essential fields first, with
 // "Add more detail" expanding additional fields. Autosaves to localStorage.

@@ -3,7 +3,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // AriaCommandPanel
 //
-// Universal ARIA command panel. Replaces the older mode-based AriaPanel with
+// Universal Cara command panel. Replaces the older mode-based AriaPanel with
 // the typed command registry from aria-service.ts. Supports command selection,
 // context preview, dictation, generation, editing, approval/rejection, copy,
 // and insert-into-field.
@@ -226,7 +226,7 @@ interface AriaCommandPanelProps {
   sourceRecordId?: string;
   /** Source record type */
   sourceRecordType?: string;
-  /** Callback when user inserts ARIA text into a field */
+  /** Callback when user inserts Cara text into a field */
   onInsert?: (text: string) => void;
   /** Additional CSS */
   className?: string;
@@ -359,7 +359,7 @@ export function AriaCommandPanel({
             <Sparkles className="h-3.5 w-3.5 text-white" />
           </div>
           <div className="text-left">
-            <div className="text-sm font-bold text-[var(--cs-navy)]">ARIA</div>
+            <div className="text-sm font-bold text-[var(--cs-navy)]">Cara</div>
             <div className="text-[10px] text-[var(--cs-text-muted)]">
               {module ? `${module.replace(/_/g, " ")} assistant` : "AI assistant"}
             </div>
@@ -380,7 +380,7 @@ export function AriaCommandPanel({
               <div className="flex items-center gap-2 rounded-lg bg-amber-50 border border-amber-200 px-3 py-2">
                 <AlertTriangle className="h-3.5 w-3.5 text-amber-600 shrink-0" />
                 <span className="text-xs text-amber-800">
-                  ARIA suggested draft. Requires human review before use.
+                  Cara suggested draft. Requires human review before use.
                 </span>
                 <Badge className={cn("ml-auto text-[9px] rounded-full border-0", confidenceColor)}>
                   {aria.result.confidence} confidence
@@ -588,7 +588,7 @@ export function AriaCommandPanel({
                         onChange={(e) => setInputText(e.target.value)}
                         placeholder={sourceContent
                           ? "Add instructions (source text will be included automatically)..."
-                          : "Paste or type the source text for ARIA to work with..."
+                          : "Paste or type the source text for Cara to work with..."
                         }
                         rows={4}
                         className="text-xs pr-10"
@@ -610,7 +610,7 @@ export function AriaCommandPanel({
                   {/* Context indicator */}
                   {sourceContent && (
                     <div className="rounded-lg bg-[var(--cs-surface)] border border-[var(--cs-border)] px-3 py-2">
-                      <div className="text-[10px] text-[var(--cs-text-muted)] font-medium">ARIA will use</div>
+                      <div className="text-[10px] text-[var(--cs-text-muted)] font-medium">Cara will use</div>
                       <div className="flex flex-wrap gap-1.5 mt-1">
                         <Badge className="text-[9px] rounded-full bg-blue-100 text-blue-700 border-0">
                           Source record ({sourceContent.length.toLocaleString()} chars)
@@ -632,7 +632,7 @@ export function AriaCommandPanel({
                     size="sm"
                   >
                     {aria.loading ? (
-                      <><RefreshCw className="h-3.5 w-3.5 mr-2 animate-spin" />ARIA is thinking...</>
+                      <><RefreshCw className="h-3.5 w-3.5 mr-2 animate-spin" />Cara is thinking...</>
                     ) : (
                       <><Sparkles className="h-3.5 w-3.5 mr-2" />Generate</>
                     )}
@@ -648,7 +648,7 @@ export function AriaCommandPanel({
                     {aria.error}
                     {aria.providerConfigured === false && (
                       <div className="mt-2 rounded-lg border border-amber-200 bg-amber-50 p-3">
-                        <p className="text-xs font-medium text-amber-800">Aria is being set up by your administrator.</p>
+                        <p className="text-xs font-medium text-amber-800">Cara is being set up by your administrator.</p>
                         <p className="mt-0.5 text-[10px] text-amber-600">Intelligence features will be available once configuration is complete.</p>
                       </div>
                     )}

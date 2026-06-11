@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // API: /api/aria/pending
-// GET — returns ARIA outputs awaiting human review. Powers the approval
-// queue in the manager's ARIA review page.
+// GET — returns Cara outputs awaiting human review. Powers the approval
+// queue in the manager's Cara review page.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { NextRequest, NextResponse } from "next/server";

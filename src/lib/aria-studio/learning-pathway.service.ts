@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — STAFF LEARNING PATHWAY
+// Cara STUDIO — STAFF LEARNING PATHWAY
 //
 // Builds personalised learning pathways for staff based on practice themes,
-// incident patterns, supervision feedback, and training gaps. Links ARIA-
+// incident patterns, supervision feedback, and training gaps. Links Cara-
 // generated training content to real practice evidence and tracks progress.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -227,7 +227,7 @@ function buildObjectivesFromEvidence(
       objectives.push({
         id: `obj-${art.id}`,
         title: art.title,
-        description: "ARIA-generated training session — complete and evidence understanding.",
+        description: "Cara-generated training session — complete and evidence understanding.",
         priority: "medium",
         status: "completed",
         sourceEvidence: [],

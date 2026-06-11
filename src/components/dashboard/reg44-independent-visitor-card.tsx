@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — REG 44 INDEPENDENT VISITOR INTELLIGENCE CARD
+// CARA — REG 44 INDEPENDENT VISITOR INTELLIGENCE CARD
 // Dashboard widget for visit compliance, recommendation follow-through,
-// Ofsted reporting, and ARIA independent scrutiny intelligence.
+// Ofsted reporting, and Cara independent scrutiny intelligence.
 // Powered by the Reg 44 Intelligence Engine — live data (Reg 44).
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -227,13 +227,13 @@ export function Reg44IndependentVisitorCard() {
           </div>
         )}
 
-        {/* ── ARIA Reg 44 Intelligence ─────────────────────────────────── */}
+        {/* ── Cara Reg 44 Intelligence ─────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Governance Intelligence
+              Cara Governance Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Bereavement, Loss & Support Intelligence — Engine Tests
+// Cara Bereavement, Loss & Support Intelligence — Engine Tests
 //
 // Covers all evaluators, helpers, label getters, child profiles, and the
 // main orchestrator. 80+ tests covering empty, perfect, partial, and edge cases.

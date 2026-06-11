@@ -1,8 +1,8 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — TOP BAR (redesigned)
-// Global search · Create · Aria button · Notifications · User profile
+// CARA — TOP BAR (redesigned)
+// Global search · Create · Cara button · Notifications · User profile
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState, useEffect } from "react";
@@ -125,7 +125,7 @@ export function Header({ title, subtitle, actions, ariaContext }: HeaderProps) {
             {/* Global Create */}
             <GlobalCreateMenu />
 
-            {/* Aria button */}
+            {/* Cara button */}
             <button
               onClick={() => setAriaOpen((v) => !v)}
               className={cn(
@@ -134,10 +134,10 @@ export function Header({ title, subtitle, actions, ariaContext }: HeaderProps) {
                   ? "bg-[var(--cs-aria-gold)] text-[var(--cs-navy)] border-[var(--cs-aria-gold)] shadow-[var(--cs-shadow-glow-gold)]"
                   : "border-[var(--cs-aria-gold-soft)] text-[var(--cs-aria-gold)] hover:bg-[var(--cs-aria-gold-bg)] hover:border-[var(--cs-aria-gold)]",
               )}
-              title="Open ARIA"
+              title="Open Cara"
             >
               <Sparkles className={cn("h-3.5 w-3.5", ariaOpen && "aria-pulse")} />
-              <span className="hidden sm:inline">ARIA</span>
+              <span className="hidden sm:inline">Cara</span>
             </button>
 
             {/* Notification Centre */}
@@ -156,7 +156,7 @@ export function Header({ title, subtitle, actions, ariaContext }: HeaderProps) {
         )}
       </header>
 
-      {/* ── Aria Drawer ── */}
+      {/* ── Cara Drawer ── */}
       <AriaDrawer
         open={ariaOpen}
         onClose={() => setAriaOpen(false)}

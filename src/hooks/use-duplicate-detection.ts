@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DUPLICATE DETECTION HOOK
+// CARA — DUPLICATE DETECTION HOOK
 // React Query wrapper for /api/v1/duplicate-detection
 // ══════════════════════════════════════════════════════════════════════════════
 

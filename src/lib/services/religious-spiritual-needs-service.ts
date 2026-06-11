@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE — RELIGIOUS & SPIRITUAL NEEDS SERVICE
+// CARA — RELIGIOUS & SPIRITUAL NEEDS SERVICE
 // Tracks religious, spiritual, and faith-based support provided to
 // children in residential care, ensuring freedom of thought, conscience,
 // and religion is actively promoted and protected.

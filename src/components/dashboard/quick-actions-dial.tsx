@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — QUICK ACTIONS SPEED DIAL
+// CARA — QUICK ACTIONS SPEED DIAL
 // Floating action button that expands into the most common daily actions.
 // Positioned bottom-right on the dashboard for instant access.
 // ══════════════════════════════════════════════════════════════════════════════

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME COMPLAINTS INTELLIGENCE ENGINE
+// CARA — HOME COMPLAINTS INTELLIGENCE ENGINE
 // Home-level: analyses complaint records to assess response timeliness,
 // resolution quality, child voice, learning culture, and Ofsted notification.
 // CHR 2015 Reg 39. SCCIF: "Well-led and managed."

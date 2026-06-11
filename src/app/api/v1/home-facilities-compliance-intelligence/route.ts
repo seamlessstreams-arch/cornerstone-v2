@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME FACILITIES COMPLIANCE INTELLIGENCE API ROUTE
+// CARA — HOME FACILITIES COMPLIANCE INTELLIGENCE API ROUTE
 // GET /api/v1/home-facilities-compliance-intelligence
 // Synthesises fire equipment checks, water hygiene records, window restrictor
 // checks, and pest control to assess facilities compliance.

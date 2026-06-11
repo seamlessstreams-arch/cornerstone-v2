@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME NOTIFIABLE EVENTS INTELLIGENCE ENGINE
+// CARA — HOME NOTIFIABLE EVENTS INTELLIGENCE ENGINE
 // Home-level: synthesises notifiable events to assess notification compliance,
 // follow-up quality, lessons learned, multi-agency reporting, and patterns.
 // CHR 2015 Reg 40. SCCIF: "Safe", "Well-led and managed."

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME WELLBEING INTELLIGENCE API ROUTE
+// CARA — HOME WELLBEING INTELLIGENCE API ROUTE
 // GET /api/v1/home-wellbeing-intelligence
 // Home-level engine: aggregates mood trends, sleep quality, welfare checks,
 // incidents, and activity engagement across all children in the home.

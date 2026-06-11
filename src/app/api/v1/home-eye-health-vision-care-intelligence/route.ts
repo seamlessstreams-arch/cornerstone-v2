@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME EYE HEALTH & VISION CARE INTELLIGENCE API ROUTE
+// CARA — HOME EYE HEALTH & VISION CARE INTELLIGENCE API ROUTE
 // GET /api/v1/home-eye-health-vision-care-intelligence
 // Cross-domain composite: eyeTestRecords + prescriptionRecords +
 // opticianReferralRecords + visualAidRecords + childEngagementRecords

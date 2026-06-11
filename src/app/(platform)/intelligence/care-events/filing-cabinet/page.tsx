@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — Filing Cabinet Live Index  (Milestone 25)
+// CARA — Filing Cabinet Live Index  (Milestone 25)
 //
 // Inspection-grade index of every record auto-filed by the routing engine,
 // grouped by FilingCategory with verified vs unverified counts.

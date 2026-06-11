@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA Studio — Annex A Live Snapshot Generator
+// Cara Studio — Annex A Live Snapshot Generator
 //
 // Builds a point-in-time inspection-readiness snapshot from verified records.
 // Snapshots are created as drafts and can be locked by an authorised manager;

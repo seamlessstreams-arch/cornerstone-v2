@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME EMERGENCY PREPAREDNESS INTELLIGENCE CARD
+// CARA — HOME EMERGENCY PREPAREDNESS INTELLIGENCE CARD
 // Home-level: policy compliance, drill readiness, emergency plan coverage,
 // and staff acknowledgement rates.
 // CHR 2015 Reg 25, 22. SCCIF: "Safe", "Well-led and managed."
@@ -225,12 +225,12 @@ export function HomeEmergencyPreparednessIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Emergency Intelligence */}
+        {/* Cara Emergency Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Emergency Intelligence
+              Cara Emergency Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME DOCUMENT GOVERNANCE INTELLIGENCE ENGINE
+// CARA — HOME DOCUMENT GOVERNANCE INTELLIGENCE ENGINE
 // Home-level: analyses document management, expiry tracking, read receipt
 // compliance, version control, and categorisation to assess governance.
 // CHR 2015 Reg 13 (Leadership & Management). SCCIF: "Well-Led."

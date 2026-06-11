@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME DIVERSITY, INCLUSION & EQUALITY INTELLIGENCE ENGINE
+// CARA — HOME DIVERSITY, INCLUSION & EQUALITY INTELLIGENCE ENGINE
 // Home-level: aggregates LGBTQ+ support records, diversity events,
 // hate incidents, and cultural plans to assess inclusion practice.
 // CHR 2015 Reg 5: Quality of care — promoting equality and diversity.

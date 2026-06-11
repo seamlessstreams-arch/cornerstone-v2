@@ -1,5 +1,5 @@
 // ── GET /api/v1/branding/system ───────────────────────────────────────────────
-// Returns Cornerstone system branding. Readable by all authenticated users.
+// Returns Cara system branding. Readable by all authenticated users.
 // Writes restricted to super_admin.
 
 import { NextRequest, NextResponse } from "next/server";

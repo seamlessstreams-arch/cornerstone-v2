@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA REPORTS — HUMANISED WRITING SYSTEM
+// Cara REPORTS — HUMANISED WRITING SYSTEM
 //
-// Controls how ARIA writes for different audiences. Every report section
+// Controls how Cara writes for different audiences. Every report section
 // passes through this layer to ensure the output reads like an experienced
 // UK children's home professional wrote it, not an AI.
 //

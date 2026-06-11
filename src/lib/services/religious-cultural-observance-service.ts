@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RELIGIOUS & CULTURAL OBSERVANCE SERVICE
+// CARA — RELIGIOUS & CULTURAL OBSERVANCE SERVICE
 // Monitors support for children's religious practices, cultural
 // celebrations, dietary heritage, and identity expression.
 // CHR 2015 Reg 10 (religion, language, culture),

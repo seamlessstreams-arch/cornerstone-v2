@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EVENT ROUTING HOOK
+// CARA — EVENT ROUTING HOOK
 // React Query wrapper for /api/v1/event-routing
 // ══════════════════════════════════════════════════════════════════════════════
 

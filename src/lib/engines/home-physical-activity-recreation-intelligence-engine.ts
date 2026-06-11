@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME PHYSICAL ACTIVITY & RECREATION INTELLIGENCE ENGINE
+// CARA — HOME PHYSICAL ACTIVITY & RECREATION INTELLIGENCE ENGINE
 // Evaluates physical activity and recreation provision: exercise programme
 // engagement, recreational activity diversity, outdoor engagement, fitness
 // assessments, and activity accessibility.

@@ -5,9 +5,9 @@ import { Button } from "@/components/ui/button";
 import { useTrustNotice, useAcknowledgeTrustNotice } from "@/hooks/use-comms";
 
 const POINTS: Array<{ heading: string; body: string }> = [
-  { heading: "Why Cornerstone Comms replaces WhatsApp & personal email", body: "Keeping communication about children inside Cornerstone protects them, protects you, and keeps records safe, lawful and auditable. Personal apps are not safe places for information about children." },
-  { heading: "What Cornerstone records", body: "Messages, who read them, who acknowledged them, and any edits are kept with an audit trail so the home can show safe, professional practice." },
-  { heading: "Your location is not tracked", body: "Cornerstone does not continuously track where you are. Location is only ever checked at sign-in events (clock in/out, breaks) — never in the background." },
+  { heading: "Why Cara Comms replaces WhatsApp & personal email", body: "Keeping communication about children inside Cara protects them, protects you, and keeps records safe, lawful and auditable. Personal apps are not safe places for information about children." },
+  { heading: "What Cara records", body: "Messages, who read them, who acknowledged them, and any edits are kept with an audit trail so the home can show safe, professional practice." },
+  { heading: "Your location is not tracked", body: "Cara does not continuously track where you are. Location is only ever checked at sign-in events (clock in/out, breaks) — never in the background." },
   { heading: "Notifications stay private", body: "Push and in-app notifications never reveal child, incident, safeguarding, medication or HR details. They simply tell you to open the Comms Centre." },
   { heading: "Sensitive screens are protected", body: "Screenshot controls and watermarks apply only to sensitive screens, to protect confidential information about children." },
   { heading: "You can challenge inaccurate records", body: "If you think a record about you is wrong, you can raise it and ask a manager to review it. This is designed to be fair, not punitive." },
@@ -27,7 +27,7 @@ export function StaffTrustNoticePanel({ onAcknowledged, compact = false }: { onA
         </div>
         <div>
           <h2 className="text-lg font-bold text-[var(--cs-navy)]">Staff Trust Notice</h2>
-          <p className="text-xs text-[var(--cs-text-muted)]">A calm, plain-English summary of how Cornerstone Comms works.</p>
+          <p className="text-xs text-[var(--cs-text-muted)]">A calm, plain-English summary of how Cara Comms works.</p>
         </div>
       </div>
 

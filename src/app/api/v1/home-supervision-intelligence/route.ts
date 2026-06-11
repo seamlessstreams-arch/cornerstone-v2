@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SUPERVISION INTELLIGENCE API ROUTE
+// CARA — HOME SUPERVISION INTELLIGENCE API ROUTE
 // GET /api/v1/home-supervision-intelligence
 // Synthesises supervision, practice observation, and appraisal data to
 // produce workforce development quality, frequency, and compliance intelligence.

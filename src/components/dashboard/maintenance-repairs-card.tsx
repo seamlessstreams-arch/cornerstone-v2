@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MAINTENANCE & REPAIRS INTELLIGENCE CARD
+// CARA — MAINTENANCE & REPAIRS INTELLIGENCE CARD
 // Dashboard card powered by the Premises Safety Intelligence Engine.
 // CHR 2015 Reg 36, Reg 25, Reg 13.
 // SCCIF: Helped & Protected — "Premises are well maintained."
@@ -169,13 +169,13 @@ export function MaintenanceRepairsCard() {
           </div>
         )}
 
-        {/* ── ARIA Intelligence ──────────────────────────────────────── */}
+        {/* ── Cara Intelligence ──────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Maintenance Intelligence
+              Cara Maintenance Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

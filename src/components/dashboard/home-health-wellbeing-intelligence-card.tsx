@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME HEALTH & WELLBEING INTELLIGENCE CARD
+// CARA — HOME HEALTH & WELLBEING INTELLIGENCE CARD
 // Home-level: health records, medication compliance, dental/optical/MH coverage,
 // follow-up compliance, outcome documentation.
 // CHR 2015 Reg 10. SCCIF: "Health", "Experiences and progress."
@@ -213,12 +213,12 @@ export function HomeHealthWellbeingIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Health Intelligence */}
+        {/* Cara Health Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Health Intelligence
+              Cara Health Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

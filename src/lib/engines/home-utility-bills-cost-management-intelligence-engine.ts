@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME UTILITY BILLS & COST MANAGEMENT INTELLIGENCE ENGINE
+// CARA — HOME UTILITY BILLS & COST MANAGEMENT INTELLIGENCE ENGINE
 // Monitors how well the home manages utility costs, energy efficiency,
 // bill payment timeliness, budget adherence, and sustainability awareness.
 // Measures utility cost monitoring, energy efficiency tracking, bill payment

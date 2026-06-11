@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — AUDIT TRAIL
+// CARA — AUDIT TRAIL
 // Tamper-evident log of all Care Event actions — complete chronological record
 // ══════════════════════════════════════════════════════════════════════════════
 

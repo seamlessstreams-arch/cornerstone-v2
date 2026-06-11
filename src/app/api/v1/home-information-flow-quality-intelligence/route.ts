@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME INFORMATION FLOW QUALITY INTELLIGENCE API ROUTE
+// CARA — HOME INFORMATION FLOW QUALITY INTELLIGENCE API ROUTE
 // GET /api/v1/home-information-flow-quality-intelligence
 // Cross-cutting: handovers + dailyLog + careEvents + notifications to assess
 // whether important information flows effectively through the home.

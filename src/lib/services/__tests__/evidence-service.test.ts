@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EVIDENCE SERVICE TESTS
+// CARA — EVIDENCE SERVICE TESTS
 // Pure-function tests for inspection readiness computation, grade boundaries,
 // module scoring, gap/strength detection, and weighted overall scoring.
 // ══════════════════════════════════════════════════════════════════════════════

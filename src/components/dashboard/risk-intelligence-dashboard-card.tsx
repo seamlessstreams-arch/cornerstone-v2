@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RISK INTELLIGENCE DASHBOARD CARD
+// CARA — RISK INTELLIGENCE DASHBOARD CARD
 // Home-level cross-cutting risk landscape. Aggregates risk assessments,
 // exploitation screenings, missing episodes, incidents, and restraints.
 // CHR 2015 Reg 12, 13, 34, 35, 40. SCCIF: How well children are helped
@@ -279,12 +279,12 @@ export function RiskIntelligenceDashboardCard() {
           </div>
         )}
 
-        {/* ARIA Insights */}
+        {/* Cara Insights */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Risk Intelligence
+              Cara Risk Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

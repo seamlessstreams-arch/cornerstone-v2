@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA PRACTICE INTELLIGENCE — DRAFTING ENGINE TESTS (deterministic scaffold)
+// Cara PRACTICE INTELLIGENCE — DRAFTING ENGINE TESTS (deterministic scaffold)
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";
@@ -14,7 +14,7 @@ function headings(r: ReturnType<typeof buildDraftScaffold>): string[] {
   return r.sections.map((s) => s.heading.toLowerCase());
 }
 
-describe("ARIA draft scaffold — common contract", () => {
+describe("Cara draft scaffold — common contract", () => {
   const types: AriaDraftType[] = [
     "professional_record", "child_friendly_explanation", "manager_threshold_summary",
     "supervision_reflection", "care_plan_impact_statement", "protective_factor_rewrite", "livers_analysis",

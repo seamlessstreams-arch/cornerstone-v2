@@ -3,8 +3,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // useAriaActivity
 //
-// Client hook for fetching ARIA activity statistics. Powers dashboard widgets
-// and the management ARIA page.
+// Client hook for fetching Cara activity statistics. Powers dashboard widgets
+// and the management Cara page.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { useQuery } from "@tanstack/react-query";
@@ -33,7 +33,7 @@ export function useAriaActivity(params?: { homeId?: string; days?: number }) {
     queryKey: ["aria-activity", params],
     queryFn: async () => {
       const res = await fetch(`/api/aria/activity?${query}`);
-      if (!res.ok) throw new Error("Failed to fetch ARIA activity");
+      if (!res.ok) throw new Error("Failed to fetch Cara activity");
       const data = await res.json();
       return data.data as AriaActivityStats;
     },

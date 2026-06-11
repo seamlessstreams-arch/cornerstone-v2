@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME BEHAVIOUR SUPPORT PLAN INTELLIGENCE ENGINE
+// CARA — HOME BEHAVIOUR SUPPORT PLAN INTELLIGENCE ENGINE
 // Pure deterministic engine: BSP coverage, active plan currency, trigger
 // analysis, de-escalation quality, positive strategy effectiveness,
 // restrictive intervention governance, child voice, and review compliance.

@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — GOVERNANCE SETTINGS
+// Cara — GOVERNANCE SETTINGS
 //
-// Management page for configuring ARIA's behaviour at the home level.
+// Management page for configuring Cara's behaviour at the home level.
 // Controls report approval requirements, AI generation policies, challenge
 // mode settings, and per-agent access toggles.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -130,7 +130,7 @@ export default function AriaGovernancePage() {
   }
 
   return (
-    <PageShell title="ARIA Governance Settings">
+    <PageShell title="Cara Governance Settings">
       {/* Header */}
       <div className="mb-6 flex items-center justify-between">
         <div className="flex items-center gap-3">
@@ -142,10 +142,10 @@ export default function AriaGovernancePage() {
           </div>
           <div>
             <h1 className="text-xl font-semibold" style={{ color: "var(--cs-navy)" }}>
-              ARIA Governance Settings
+              Cara Governance Settings
             </h1>
             <p className="text-sm" style={{ color: "var(--cs-text-muted)" }}>
-              Configure how ARIA operates within this home
+              Configure how Cara operates within this home
             </p>
           </div>
         </div>
@@ -162,7 +162,7 @@ export default function AriaGovernancePage() {
         </div>
       )}
 
-      {/* ARIA Activity & Feedback */}
+      {/* Cara Activity & Feedback */}
       <div className="grid gap-6 lg:grid-cols-2 mb-6">
         <AriaActivityCard days={30} />
         <AriaFeedbackStats days={30} />
@@ -218,7 +218,7 @@ export default function AriaGovernancePage() {
               value={allowAutoGeneration}
               onChange={setAllowAutoGeneration}
               label="Allow automatic report generation"
-              description="ARIA can automatically generate reports on a schedule without manual triggering."
+              description="Cara can automatically generate reports on a schedule without manual triggering."
             />
             <ToggleSwitch
               value={allowScheduledGeneration}
@@ -230,7 +230,7 @@ export default function AriaGovernancePage() {
               value={auditAllRuns}
               onChange={setAuditAllRuns}
               label="Audit all agent runs"
-              description="Log every ARIA agent execution for the full audit trail."
+              description="Log every Cara agent execution for the full audit trail."
             />
             <div className="pt-2">
               <Label className="text-sm">Minimum Confidence Score</Label>
@@ -276,7 +276,7 @@ export default function AriaGovernancePage() {
               value={challengeEnabled}
               onChange={setChallengeEnabled}
               label="Enable challenge mode"
-              description="ARIA runs quality checks against every draft before submission."
+              description="Cara runs quality checks against every draft before submission."
             />
             <div className="pt-2">
               <Label className="text-sm">Severity Threshold</Label>
@@ -318,7 +318,7 @@ export default function AriaGovernancePage() {
           </CardHeader>
           <CardContent>
             <p className="text-xs mb-3" style={{ color: "var(--cs-text-muted)" }}>
-              Disable specific agents to prevent ARIA from using them in this home.
+              Disable specific agents to prevent Cara from using them in this home.
             </p>
             <div className="space-y-1">
               {ALL_AGENTS.map((agentId) => (

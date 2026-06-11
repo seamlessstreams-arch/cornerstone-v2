@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — VISITOR MANAGEMENT INTELLIGENCE CARD
+// CARA — VISITOR MANAGEMENT INTELLIGENCE CARD
 // Dashboard card for visitor logs, DBS verification, and safeguarding checks.
 // CHR 2015 Reg 22, Reg 12, Reg 36.
 // SCCIF: Helped & Protected — "Visitors are appropriately vetted."
@@ -178,13 +178,13 @@ export function VisitorManagementCard() {
           </div>
         )}
 
-        {/* ── ARIA insights ────────────────────────────────────────────── */}
+        {/* ── Cara insights ────────────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Visitor Intelligence
+              Cara Visitor Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — WORKFORCE INTELLIGENCE ENGINE
+// CARA — WORKFORCE INTELLIGENCE ENGINE
 //
 // Pure deterministic engine that aggregates staff records, training, shifts,
 // supervisions, leave, and DBS data to produce:
@@ -9,7 +9,7 @@
 // - Staffing coverage analysis (rota gaps, overtime patterns)
 // - DBS / safer recruitment compliance
 // - Sickness and absence patterns
-// - Auto-generated ARIA workforce intelligence insights (deterministic)
+// - Auto-generated Cara workforce intelligence insights (deterministic)
 //
 // Key regulatory requirements:
 //   Reg 32 — Fitness of workers (DBS, training, references)
@@ -527,7 +527,7 @@ export function computeWorkforceIntelligence(input: WorkforceEngineInput): Workf
     average_tenure_months: avgTenureMonths,
   };
 
-  // ── ARIA Intelligence Insights (deterministic) ─────────────────────────
+  // ── Cara Intelligence Insights (deterministic) ─────────────────────────
   const insights: AriaInsight[] = [];
 
   // Training compliance

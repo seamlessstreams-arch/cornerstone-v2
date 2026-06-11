@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — FINANCE INTELLIGENCE ENGINE TESTS
+// CARA — FINANCE INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite: unit + integration
 // ══════════════════════════════════════════════════════════════════════════════
 

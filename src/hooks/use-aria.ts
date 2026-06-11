@@ -24,7 +24,7 @@ export function useAria() {
   return useMutation({
     mutationFn: (payload: AriaRequestPayload) =>
       api.post<{ data: { response: string; mode: AriaMode; style: AriaStyle } }>(
-        "/aria",
+        "/cara",
         { ...payload, user_role: payload.user_role || "registered_manager" }
       ),
   });

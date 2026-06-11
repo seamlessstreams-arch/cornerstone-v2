@@ -145,7 +145,7 @@ export function loadNotifications(homeId: string): NotificationStream {
       title: `Reg 40 triage pending: ${t.suggested_category.replace(/_/g, " ")}`,
       body: t.reasoning?.slice(0, 160) ?? "Awaiting manager decision.",
       created_at: t.created_at,
-      link_href: `/aria-studio/reg40-triage`,
+      link_href: `/cara-studio/reg40-triage`,
     });
   }
 

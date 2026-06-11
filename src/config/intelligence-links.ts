@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — INTELLIGENCE ENGINE → ACTION PAGE LINKS
+// CARA — INTELLIGENCE ENGINE → ACTION PAGE LINKS
 //
 // Maps a `home-*-intelligence` engine route slug to the platform page where a
 // manager would go to ACT on its signals. Used by the Manager Priority Briefing

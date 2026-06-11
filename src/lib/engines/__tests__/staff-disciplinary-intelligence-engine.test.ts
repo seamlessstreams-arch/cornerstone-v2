@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF DISCIPLINARY INTELLIGENCE ENGINE TESTS
+// CARA — STAFF DISCIPLINARY INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite for staff disciplinary case analysis.
 // Covers Reg 33 fitness of staff, Reg 34 employment of staff,
 // Reg 21 supervision (Schedule 4), SCCIF Leadership & Management.

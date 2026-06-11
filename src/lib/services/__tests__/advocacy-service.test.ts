@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ADVOCACY & CHILDREN'S RIGHTS SERVICE TESTS
+// CARA — ADVOCACY & CHILDREN'S RIGHTS SERVICE TESTS
 // Pure-function unit tests for advocacy metrics computation,
 // alert identification, constant validation, and CRUD fallback behaviour
 // (Supabase disabled). CHR 2015 Reg 7 (quality of care),

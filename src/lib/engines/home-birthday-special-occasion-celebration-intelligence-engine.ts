@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME BIRTHDAY & SPECIAL OCCASION CELEBRATION INTELLIGENCE ENGINE
+// CARA -- HOME BIRTHDAY & SPECIAL OCCASION CELEBRATION INTELLIGENCE ENGINE
 // Monitors birthday planning personalisation, celebration execution quality,
 // gift provision adequacy, memory-making activities, and child satisfaction
 // with celebrations. Ensures every child feels valued and celebrated.

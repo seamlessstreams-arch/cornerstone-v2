@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ACCESSIBILITY ASSESSMENT SERVICE
+// CARA — HOME ACCESSIBILITY ASSESSMENT SERVICE
 // Manages disability access assessments, reasonable adjustments, mobility aids,
 // sensory needs accommodation, and DDA/Equality Act compliance within
 // the residential home setting.

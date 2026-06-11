@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LEAVING CARE INTELLIGENCE ENGINE
+// CARA — LEAVING CARE INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses pathway plan completeness, independence skills readiness,

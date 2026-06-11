@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Positive Behaviour Support Intelligence Engine — Tests
+// Cara — Positive Behaviour Support Intelligence Engine — Tests
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";

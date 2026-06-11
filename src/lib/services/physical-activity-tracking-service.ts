@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PHYSICAL ACTIVITY TRACKING SERVICE
+// CARA — PHYSICAL ACTIVITY TRACKING SERVICE
 // Monitors physical activity, exercise, sports participation,
 // and active lifestyle support for children in care.
 // CHR 2015 Reg 12 (health and wellbeing — physical health),

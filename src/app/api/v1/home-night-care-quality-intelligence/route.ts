@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME NIGHT CARE QUALITY INTELLIGENCE API ROUTE
+// CARA — HOME NIGHT CARE QUALITY INTELLIGENCE API ROUTE
 // GET /api/v1/home-night-care-quality-intelligence
 // Night checks + night logs + handovers + sleep assessments + anxiety support
 // ══════════════════════════════════════════════════════════════════════════════

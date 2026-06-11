@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME BEHAVIOUR MANAGEMENT INTELLIGENCE CARD
+// CARA — HOME BEHAVIOUR MANAGEMENT INTELLIGENCE CARD
 // Home-level: behaviour management quality, positive reinforcement,
 // restorative approaches, ABC documentation, and proportionality.
 // CHR 2015 Reg 19, 20. SCCIF: "Effective", "Safe."
@@ -220,12 +220,12 @@ export function HomeBehaviourIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Behaviour Intelligence */}
+        {/* Cara Behaviour Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Behaviour Intelligence
+              Cara Behaviour Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

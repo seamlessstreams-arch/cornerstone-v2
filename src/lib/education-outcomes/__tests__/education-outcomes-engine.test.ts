@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Education Attendance & Achievement Intelligence — Engine Tests
+// Cara Education Attendance & Achievement Intelligence — Engine Tests
 //
 // Covers all 6 core functions, scoring logic, and edge cases.
 // Demo data: Chamberlain House — Alex (14), Jordan (13), Morgan (15)

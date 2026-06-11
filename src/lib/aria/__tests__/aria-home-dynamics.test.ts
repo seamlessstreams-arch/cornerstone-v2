@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA Home Dynamics snapshotter tests
+// Cara Home Dynamics snapshotter tests
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect, beforeEach } from "vitest";

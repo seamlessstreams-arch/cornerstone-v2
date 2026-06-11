@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RESTRAINT SERVICE TESTS
+// CARA — RESTRAINT SERVICE TESTS
 // Pure-function tests for restraint analysis computation, alert identification,
 // and exported constants (types, techniques, de-escalation strategies, body
 // locations). Covers Reg 19/20/35 compliance metrics and pattern detection.

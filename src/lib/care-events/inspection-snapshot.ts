@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — Inspection Snapshot Bundle  (Milestone 30)
+// CARA — Inspection Snapshot Bundle  (Milestone 30)
 //
 // Generates a single immutable point-in-time bundle of every live signal an
 // inspector or Responsible Individual would ask for. Stateless: each call

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — NOTIFIABLE EVENTS INTELLIGENCE HOOK
+// CARA — NOTIFIABLE EVENTS INTELLIGENCE HOOK
 // React Query wrapper for /api/v1/notifiable-events-intelligence
 // ══════════════════════════════════════════════════════════════════════════════
 

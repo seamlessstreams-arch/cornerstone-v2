@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Advocacy & Representation Intelligence Engine Tests
+// Cara — Advocacy & Representation Intelligence Engine Tests
 // 100+ tests covering all functions, scoring, labels, edge cases
 // ══════════════════════════════════════════════════════════════════════════════
 

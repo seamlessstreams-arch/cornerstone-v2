@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — IMMUTABLE AUDIT TRAIL SERVICE
+// CARA — IMMUTABLE AUDIT TRAIL SERVICE
 // INSERT-only audit log. No UPDATE, no DELETE — ever.
 // Every significant action in the system is recorded with full context.
 // ══════════════════════════════════════════════════════════════════════════════

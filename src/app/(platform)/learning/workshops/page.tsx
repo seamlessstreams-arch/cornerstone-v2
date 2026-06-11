@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LEARNING STUDIO: WORKSHOP PLANNER
+// CARA — LEARNING STUDIO: WORKSHOP PLANNER
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState } from "react";
@@ -274,7 +274,7 @@ export default function WorkshopPlannerPage() {
     setSaved(false);
     try {
       const res = await api.post<{ data: { parsed?: WorkshopResult } }>(
-        "/aria",
+        "/cara",
         {
           mode: "learning_workshop_plan",
           style: pathway === "child" ? "child_friendly" : "professional_formal",
@@ -317,7 +317,7 @@ export default function WorkshopPlannerPage() {
   return (
     <PageShell
       title="Workshop Planner"
-      subtitle="Plan structured learning workshops with ARIA"
+      subtitle="Plan structured learning workshops with Cara"
       ariaContext={{ pageTitle: "Learning Workshops", sourceType: "document" }}
       showQuickCreate={false}
       actions={

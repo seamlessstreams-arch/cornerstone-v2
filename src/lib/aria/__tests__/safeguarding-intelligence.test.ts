@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Tests — ARIA Safeguarding Intelligence
+// Tests — Cara Safeguarding Intelligence
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ENVIRONMENTAL SAFETY INTELLIGENCE CARD
+// CARA — ENVIRONMENTAL SAFETY INTELLIGENCE CARD
 // Dashboard card powered by the Premises Safety Intelligence Engine.
 // CHR 2015 Reg 25 (premises safety), Reg 44 (fire safety),
 // Health and Safety at Work Act 1974. SCCIF: Well-Led.
@@ -139,13 +139,13 @@ export function EnvironmentalSafetyCard() {
           </div>
         )}
 
-        {/* ── ARIA Intelligence ──────────────────────────────────────── */}
+        {/* ── Cara Intelligence ──────────────────────────────────────── */}
 
         {(d.insights ?? []).length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Safety Intelligence
+              Cara Safety Intelligence
             </p>
             {(d.insights ?? []).slice(0, 2).map((insight, i) => (
               <div

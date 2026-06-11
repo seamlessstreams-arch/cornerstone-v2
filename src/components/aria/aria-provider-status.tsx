@@ -3,8 +3,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // AriaProviderStatus
 //
-// Small indicator showing whether the ARIA AI provider is configured and
-// operational. Appears in the ARIA dashboard and governance page.
+// Small indicator showing whether the Cara AI provider is configured and
+// operational. Appears in the Cara dashboard and governance page.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState, useEffect } from "react";
@@ -84,7 +84,7 @@ export function AriaProviderStatus({ className }: AriaProviderStatusProps) {
     },
     unavailable: {
       icon: XCircle,
-      label: "ARIA service unavailable",
+      label: "Cara service unavailable",
       color: "text-red-500",
       bg: "bg-red-50",
       border: "border-red-200",

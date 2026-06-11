@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EVENT PROJECTOR (canonical event stream)
+// CARA — EVENT PROJECTOR (canonical event stream)
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 //
@@ -7,7 +7,7 @@
 // episodes, medication errors, restraints, key-working, education, supervision)
 // into a single normalised CornerstoneEvent stream. Each projection derives a
 // consistent risk level, approval routing, structured tags, cross-links and a
-// rule-based ARIA analysis — so one timeline and one set of intelligence can
+// rule-based Cara analysis — so one timeline and one set of intelligence can
 // reason across everything. "Capture once, surface everywhere."
 //
 // The projector is extensible: adding a new source mapper is all that's needed

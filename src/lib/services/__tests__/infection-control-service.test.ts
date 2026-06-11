@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — INFECTION CONTROL SERVICE TESTS
+// CARA — INFECTION CONTROL SERVICE TESTS
 // Pure-function unit tests for infection control metrics computation, alert
 // identification, and constant validation.
 // CHR 2015 Reg 25 (health and safety — infection prevention),

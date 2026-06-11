@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — INDEPENDENCE PREPARATION SERVICE
+// CARA — INDEPENDENCE PREPARATION SERVICE
 // Tracks preparation for independence — practical life skills assessment,
 // readiness tracking, and preparation milestones for young people
 // approaching independence (distinct from leaving care which covers

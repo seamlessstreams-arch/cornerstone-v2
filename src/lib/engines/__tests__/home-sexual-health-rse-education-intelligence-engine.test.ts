@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SEXUAL HEALTH & RSE EDUCATION INTELLIGENCE ENGINE TESTS
+// CARA — HOME SEXUAL HEALTH & RSE EDUCATION INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite: unit + integration
 // ══════════════════════════════════════════════════════════════════════════════
 

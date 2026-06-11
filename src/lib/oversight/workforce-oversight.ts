@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — Workforce Oversight & Evidence (Phase 8)
+// CARA — Workforce Oversight & Evidence (Phase 8)
 //
 // Read-only aggregation that turns what the workforce engine captured (sign-in /
 // presence — Phases 3/5, shift access — Phase 4, message governance — Phase 2,

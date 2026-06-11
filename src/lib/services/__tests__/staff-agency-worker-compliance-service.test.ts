@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF AGENCY WORKER COMPLIANCE SERVICE TESTS
+// CARA — STAFF AGENCY WORKER COMPLIANCE SERVICE TESTS
 // Pure-function unit tests for agency worker compliance metrics, alert
-// identification, and ARIA insight generation.
+// identification, and Cara insight generation.
 //
 // CHR 2015 Reg 32 (fitness of workers — agency staff requirements),
 // CHR 2015 Sch 2 (information in respect of persons seeking to carry on,

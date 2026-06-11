@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME RADON TESTING SERVICE TESTS
+// CARA — HOME RADON TESTING SERVICE TESTS
 // Pure-function tests for radon testing metrics, alert identification,
-// ARIA insight generation, constant validation, and edge cases.
+// Cara insight generation, constant validation, and edge cases.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME COMPLAINTS INTELLIGENCE API ROUTE
+// CARA — HOME COMPLAINTS INTELLIGENCE API ROUTE
 // GET /api/v1/home-complaints-intelligence
 // Synthesises complaint records to assess response timeliness, resolution
 // quality, learning culture, and child voice in the complaints process.

@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // POST /api/aria/feedback
 //
-// Records user feedback on an ARIA output (thumbs up/down, optional tags and
+// Records user feedback on an Cara output (thumbs up/down, optional tags and
 // free-text note). Stored in aria_feedback for quality improvement analytics.
 //
 // Body: { outputId, commandId, rating, note?, tags? }

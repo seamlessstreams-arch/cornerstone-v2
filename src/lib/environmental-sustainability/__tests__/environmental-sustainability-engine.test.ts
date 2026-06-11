@@ -1,5 +1,5 @@
 // ==============================================================================
-// Cornerstone Environmental Sustainability Intelligence — Engine Tests
+// Cara Environmental Sustainability Intelligence — Engine Tests
 // ==============================================================================
 
 import { describe, it, expect } from "vitest";

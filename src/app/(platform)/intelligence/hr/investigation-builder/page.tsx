@@ -10,9 +10,9 @@
 //   3. Witness Interviews — structured questions, key points, notes
 //   4. Evidence Log — documents, CCTV, records, statements
 //   5. Findings — analysis against each allegation, on balance of probability
-//   6. Report — ARIA drafts the investigation report
+//   6. Report — Cara drafts the investigation report
 //
-// Aria supports at every stage but the investigating officer remains the
+// Cara supports at every stage but the investigating officer remains the
 // decision-maker. All outputs are labelled as drafts requiring review.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -311,7 +311,7 @@ export default function InvestigationBuilderPage() {
       .map((e) => `- [${EVIDENCE_TYPES.find((t) => t.value === e.type)?.label ?? e.type}] ${e.description} — Source: ${e.source}. Relevance: ${e.relevance}`)
       .join("\n");
 
-    return `ARIA suggested draft — requires investigating officer review before finalising.
+    return `Cara suggested draft — requires investigating officer review before finalising.
 
 ═══════════════════════════════════════════════════════════════
 INVESTIGATION REPORT
@@ -376,7 +376,7 @@ The following should be appended to the final report:
 - Any correspondence with the staff member
 
 ═══════════════════════════════════════════════════════════════
-This report was drafted with support from ARIA. The investigating
+This report was drafted with support from Cara. The investigating
 officer is responsible for the accuracy and completeness of the
 content and for ensuring that findings are based on the evidence
 gathered during the investigation.
@@ -624,7 +624,7 @@ gathered during the investigation.
         <div className="rounded-2xl bg-blue-50 border border-blue-200 px-4 py-3 flex items-start gap-3 text-sm text-blue-800">
           <Sparkles className="h-4 w-4 shrink-0 mt-0.5 text-blue-500" />
           <div>
-            <strong>ARIA guidance.</strong> Consider whether you need to interview the subject of the investigation.
+            <strong>Cara guidance.</strong> Consider whether you need to interview the subject of the investigation.
             Best practice is to interview the subject last, after all other evidence has been gathered, so that
             you can put specific points to them. Ensure the subject is offered the right to be accompanied.
           </div>
@@ -862,7 +862,7 @@ gathered during the investigation.
             className="gap-1.5 bg-[var(--cs-navy)] hover:bg-[var(--cs-navy)]/90"
           >
             {generating ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Sparkles className="h-3.5 w-3.5" />}
-            {generating ? "Generating..." : reportDraft ? "Regenerate with ARIA" : "Generate Report with ARIA"}
+            {generating ? "Generating..." : reportDraft ? "Regenerate with Cara" : "Generate Report with Cara"}
           </Button>
         </div>
 
@@ -870,7 +870,7 @@ gathered during the investigation.
           <div className="rounded-2xl border border-[var(--cs-border)] p-8 text-center">
             <ScrollText className="h-8 w-8 text-[var(--cs-text-gentle)] mx-auto mb-3" />
             <p className="text-sm text-[var(--cs-text-muted)]">
-              Complete the previous stages, then click &ldquo;Generate Report with ARIA&rdquo; to produce a structured
+              Complete the previous stages, then click &ldquo;Generate Report with Cara&rdquo; to produce a structured
               investigation report draft. You can edit the draft before finalising.
             </p>
           </div>
@@ -880,7 +880,7 @@ gathered during the investigation.
           <Card>
             <CardHeader className="pb-3">
               <div className="flex items-center gap-2">
-                <Badge className="bg-[var(--cs-aria-gold-bg)] text-[var(--cs-navy)] text-[10px]">ARIA suggested draft</Badge>
+                <Badge className="bg-[var(--cs-aria-gold-bg)] text-[var(--cs-navy)] text-[10px]">Cara suggested draft</Badge>
                 <span className="text-xs text-[var(--cs-text-muted)]">Requires investigating officer review before finalising</span>
               </div>
             </CardHeader>
@@ -903,10 +903,10 @@ gathered during the investigation.
   return (
     <PageShell
       title="Investigation Builder"
-      subtitle="Structured HR investigation tool — guided by ARIA"
+      subtitle="Structured HR investigation tool — guided by Cara"
       actions={
         <Badge className="bg-[var(--cs-aria-gold-bg)] text-[var(--cs-navy)] border-[var(--cs-aria-gold-soft)]">
-          <Sparkles className="h-3 w-3 mr-1" />ARIA Guided
+          <Sparkles className="h-3 w-3 mr-1" />Cara Guided
         </Badge>
       }
     >

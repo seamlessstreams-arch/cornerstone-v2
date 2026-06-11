@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME NOISE & SOUND MANAGEMENT INTELLIGENCE ENGINE TESTS
+// CARA — HOME NOISE & SOUND MANAGEMENT INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite covering scoring, rates, strengths, concerns,
 // recommendations, insights, edge cases, bonuses, and penalties.
 // CHR 2015 Reg 25, Reg 5; SCCIF Experiences/progress, Living in the home.

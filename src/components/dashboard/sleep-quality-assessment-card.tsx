@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SLEEP QUALITY ASSESSMENT INTELLIGENCE CARD
+// CARA — SLEEP QUALITY ASSESSMENT INTELLIGENCE CARD
 // Dashboard card powered by the Night Monitoring Engine.
 // CHR 2015 Reg 12, Reg 25, Reg 34.
 // SCCIF: Helped & Protected — "Children's health and wellbeing needs are met."
@@ -193,13 +193,13 @@ export function SleepQualityAssessmentCard() {
           </div>
         )}
 
-        {/* ── ARIA Intelligence ──────────────────────────────────────── */}
+        {/* ── Cara Intelligence ──────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Sleep Intelligence
+              Cara Sleep Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

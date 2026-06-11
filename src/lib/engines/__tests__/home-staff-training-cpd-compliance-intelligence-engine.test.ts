@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME STAFF TRAINING & CPD COMPLIANCE INTELLIGENCE ENGINE
+// CARA — HOME STAFF TRAINING & CPD COMPLIANCE INTELLIGENCE ENGINE
 // TEST SUITE — 170+ deterministic tests covering insufficient data, inadequate
 // baseline, each bonus individually (all tiers), all bonuses combined, each
 // penalty individually, penalty guards, rating boundaries, metric calculations,

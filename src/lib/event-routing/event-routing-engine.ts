@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EVENT ROUTING ENGINE
+// CARA — EVENT ROUTING ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls, and
 // crucially NO external calls. It computes a routing PLAN for each CornerstoneEvent

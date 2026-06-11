@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — UNIVERSAL TIMELINE HOOKS
+// CARA — UNIVERSAL TIMELINE HOOKS
 //
 // React Query hooks for the universal timeline.
 // Uses the same api helper and refetch pattern as use-dashboard.

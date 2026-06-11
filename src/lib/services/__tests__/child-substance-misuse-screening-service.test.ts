@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD SUBSTANCE MISUSE SCREENING SERVICE TESTS
+// CARA — CHILD SUBSTANCE MISUSE SCREENING SERVICE TESTS
 // Pure-function unit tests for substance misuse screening metrics computation,
-// alert identification, and ARIA insight generation.
+// alert identification, and Cara insight generation.
 // CHR 2015 Reg 10 (health and wellbeing),
 // CHR 2015 Reg 12 (protection of children),
 // CHR 2015 Reg 34 (placement plans — risk assessment).

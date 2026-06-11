@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Permission System — Core Types
+// Cara Permission System — Core Types
 //
 // RBAC + ABAC permission model for children's residential care.
 // Roles define baseline access; attributes refine it contextually.

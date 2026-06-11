@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME RECRUITMENT AUDIT TRAIL INTELLIGENCE ENGINE
+// CARA — HOME RECRUITMENT AUDIT TRAIL INTELLIGENCE ENGINE
 // Home-level: aggregates recruitment audit trail entries, conditional offers,
 // candidate profiles, and vacancies to assess quality and completeness of the
 // home's recruitment audit trail — critical for Ofsted inspection of safer

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF LONE WORKING RISK CARD
+// CARA — STAFF LONE WORKING RISK CARD
 // Live data from useWorkforceIntelligence() — staffing, DBS, profile.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -98,13 +98,13 @@ export function StaffLoneWorkingRiskCard() {
           </div>
         </div>
 
-        {/* ── ARIA insights ───────────────────────────────────────────── */}
+        {/* ── Cara insights ───────────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Risk Intelligence
+              Cara Risk Intelligence
             </p>
             {intel.insights.slice(0, 2).map((insight, i) => (
               <div

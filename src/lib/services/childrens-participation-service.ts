@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILDREN'S PARTICIPATION SERVICE
+// CARA — CHILDREN'S PARTICIPATION SERVICE
 // Manages children's participation in house meetings, children's councils,
 // feedback sessions, and consultation processes. CHR 2015 Reg 7 (children's
 // views, wishes and feelings), Reg 16(2)(c) (guide — how to find out rights),

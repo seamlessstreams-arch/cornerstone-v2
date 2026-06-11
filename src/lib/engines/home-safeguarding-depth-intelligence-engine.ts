@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SAFEGUARDING DEPTH INTELLIGENCE ENGINE
+// CARA — HOME SAFEGUARDING DEPTH INTELLIGENCE ENGINE
 // Aggregates body maps, disclosures, escalations, LADO referrals,
 // safeguarding supervision, safe-touch protocols, and substance screenings.
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
@@ -544,7 +544,7 @@ export function computeHomeSafeguardingDepth(
     recommendations.push({ rank: ++rank, recommendation: "Develop and document safe touch protocols for all children in placement.", urgency: "soon", regulatory_ref: "CHR 2015 Reg 12" });
   }
 
-  // ── ARIA Insights ──────────────────────────────────────────────────
+  // ── Cara Insights ──────────────────────────────────────────────────
   if (safeguarding_depth_rating === "outstanding") {
     insights.push({ text: `Safeguarding depth is outstanding (${score}%). Body maps, disclosures, escalations, LADO referrals, and supervision all evidence excellent practice. This would be viewed very favourably at inspection.`, severity: "positive" });
   }

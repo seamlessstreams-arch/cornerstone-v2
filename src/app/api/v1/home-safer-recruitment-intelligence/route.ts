@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SAFER RECRUITMENT INTELLIGENCE API ROUTE
+// CARA — HOME SAFER RECRUITMENT INTELLIGENCE API ROUTE
 // GET /api/v1/home-safer-recruitment-intelligence
 // Synthesises vacancy management, candidate pipeline, pre-employment checks,
 // reference verification, and DBS compliance to assess recruitment safety.

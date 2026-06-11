@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EMERGENCY DRILL SERVICE TESTS
+// CARA — EMERGENCY DRILL SERVICE TESTS
 // Pure-function tests for drill metrics computation, alert identification,
 // constant validation, and edge cases.
 // ══════════════════════════════════════════════════════════════════════════════

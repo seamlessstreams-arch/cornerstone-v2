@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — OFSTED INSPECTION READINESS SERVICE TESTS
+// CARA — OFSTED INSPECTION READINESS SERVICE TESTS
 // Pure-function tests for inspection readiness metrics, alert identification,
-// ARIA insight generation, and edge cases.
+// Cara insight generation, and edge cases.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";

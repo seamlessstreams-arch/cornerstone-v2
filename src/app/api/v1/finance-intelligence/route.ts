@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — FINANCE INTELLIGENCE API ROUTE
+// CARA — FINANCE INTELLIGENCE API ROUTE
 // GET /api/v1/finance-intelligence
 // Returns pocket money, savings, and spending intelligence from the engine.
 // ══════════════════════════════════════════════════════════════════════════════

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — UNIVERSAL TIMELINE SERVICE
+// CARA — UNIVERSAL TIMELINE SERVICE
 //
 // Aggregates events from every store collection into a unified TimelineEvent
 // stream. Uses the in-memory store pattern (reads from getStore()).

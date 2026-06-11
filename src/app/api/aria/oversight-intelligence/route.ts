@@ -181,7 +181,7 @@ export async function GET() {
     gateway: "vercel-ai-sdk",
     providers: {
       anthropic: {
-        role: "Oversight & Operational Intelligence (ARIA)",
+        role: "Oversight & Operational Intelligence (Cara)",
         model: resolveModel("anthropic"),
         domains: ALL_OVERSIGHT_DOMAINS,
       },

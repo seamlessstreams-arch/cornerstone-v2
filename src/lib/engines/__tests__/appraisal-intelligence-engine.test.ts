@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — APPRAISAL INTELLIGENCE ENGINE — TEST SUITE
+// CARA — APPRAISAL INTELLIGENCE ENGINE — TEST SUITE
 // 50+ deterministic tests covering helpers, overview, rating breakdown,
-// competency analysis, staff profiles, risk flags, alerts, ARIA insights,
+// competency analysis, staff profiles, risk flags, alerts, Cara insights,
 // and an Chamberlain House integration scenario.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -485,9 +485,9 @@ describe("alerts", () => {
   });
 });
 
-// ── ARIA Insights ───────────────────────────────────────────────────────────
+// ── Cara Insights ───────────────────────────────────────────────────────────
 
-describe("ARIA insights", () => {
+describe("Cara insights", () => {
   it("critical insight for overdue appraisals", () => {
     const r = run([
       makeAppraisal({ id: "a1", status: "overdue", overall_rating: null, competency_scores: {}, signed_by_staff: false }),

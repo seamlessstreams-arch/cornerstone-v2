@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME DIGITAL SAFETY & ONLINE PROTECTION INTELLIGENCE API ROUTE
+// CARA — HOME DIGITAL SAFETY & ONLINE PROTECTION INTELLIGENCE API ROUTE
 // GET /api/v1/home-digital-safety-online-protection-intelligence
 // Cross-domain composite: esafetyTrainingRecords + internetUsageLogs +
 // socialMediaAssessments + onlineAccessAgreements + digitalLiteracyRecords

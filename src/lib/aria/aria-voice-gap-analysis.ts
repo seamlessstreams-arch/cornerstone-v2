@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA V2 — CHILD VOICE GAP ANALYSIS
+// Cara V2 — CHILD VOICE GAP ANALYSIS
 //
 // Analyses records to identify children whose voice is missing, thin, or
 // at risk of becoming invisible. Ofsted expects "the voice of the child
@@ -13,7 +13,7 @@
 //   - Voice present but single-theme (not covering wellbeing holistically)
 //   - Child not asked about recent changes/events
 //
-// All outputs are "Aria identified gap — requires manager review."
+// All outputs are "Cara identified gap — requires manager review."
 // ══════════════════════════════════════════════════════════════════════════════
 
 export interface ChildRecord {

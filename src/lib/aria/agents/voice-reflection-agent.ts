@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — VOICE REFLECTION AGENT
+// Cara — VOICE REFLECTION AGENT
 //
 // Handles manager dictation, staff reflection transcription, supervision
 // preparation, and handover capture. Transcribes voice input, structures it
@@ -51,7 +51,7 @@ const SAFEGUARDING_TRIGGERS = [
 
 // ── System Prompt ────────────────────────────────────────────────────────────
 
-const VOICE_REFLECTION_SYSTEM_PROMPT = `You are the Voice Reflection Agent within Cornerstone, a children's residential care management platform. You process spoken input from staff and managers, structuring it into clear, usable records.
+const VOICE_REFLECTION_SYSTEM_PROMPT = `You are the Voice Reflection Agent within Cara, a children's residential care management platform. You process spoken input from staff and managers, structuring it into clear, usable records.
 
 ═══ YOUR CAPABILITIES ═══
 

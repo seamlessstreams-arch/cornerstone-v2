@@ -1,8 +1,8 @@
 // ==============================================================================
-// CORNERSTONE -- WHISTLEBLOWING INTELLIGENCE API ROUTE
+// CARA -- WHISTLEBLOWING INTELLIGENCE API ROUTE
 // GET /api/v1/whistleblowing-intelligence
 // Returns whistleblowing disclosure analysis: investigation progress,
-// protection compliance, PIDA adherence, and ARIA intelligence.
+// protection compliance, PIDA adherence, and Cara intelligence.
 // Reg 41: whistleblowing -- Public Interest Disclosure Act 1998 (PIDA)
 // ==============================================================================
 

@@ -17,7 +17,7 @@ export default function InterviewBuilderPage() {
   const [candidateId, setCandidateId] = useState<string>("");
   const { data, isLoading } = useInterviewPack(role, candidateId || null);
 
-  // ARIA extra-questions (optional, human-in-the-loop)
+  // Cara extra-questions (optional, human-in-the-loop)
   const [aiState, setAiState] = useState<"idle" | "loading" | "done">("idle");
   const [aiQuestions, setAiQuestions] = useState<string[]>([]);
   const [aiMessage, setAiMessage] = useState<string | null>(null);
@@ -33,7 +33,7 @@ export default function InterviewBuilderPage() {
       setAiQuestions(json.questions || []);
       setAiMessage(json.message || null);
     } catch {
-      setAiMessage("Couldn't reach ARIA. The structured pack is complete on its own.");
+      setAiMessage("Couldn't reach Cara. The structured pack is complete on its own.");
     }
     setAiState("done");
   }
@@ -120,11 +120,11 @@ export default function InterviewBuilderPage() {
               </Card>
             ))}
 
-            {/* ARIA extra questions */}
+            {/* Cara extra questions */}
             <Card className="print:hidden">
               <CardContent className="py-4">
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                  <p className="flex items-center gap-1.5 text-sm font-bold text-[var(--cs-navy)]"><Sparkles className="h-4 w-4 text-[var(--cs-aria-gold)]" /> Extra questions with ARIA</p>
+                  <p className="flex items-center gap-1.5 text-sm font-bold text-[var(--cs-navy)]"><Sparkles className="h-4 w-4 text-[var(--cs-aria-gold)]" /> Extra questions with Cara</p>
                   <button onClick={suggestQuestions} disabled={aiState === "loading"} className="inline-flex items-center gap-1.5 rounded-lg bg-[var(--cs-navy)] px-3.5 py-1.5 text-xs font-semibold text-white hover:bg-[var(--cs-navy-soft)] disabled:opacity-50">
                     {aiState === "loading" ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Sparkles className="h-3.5 w-3.5" />} Suggest questions
                   </button>

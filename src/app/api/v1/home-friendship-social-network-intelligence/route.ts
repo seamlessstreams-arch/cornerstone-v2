@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME FRIENDSHIP & SOCIAL NETWORK INTELLIGENCE API ROUTE
+// CARA — HOME FRIENDSHIP & SOCIAL NETWORK INTELLIGENCE API ROUTE
 // GET /api/v1/home-friendship-social-network-intelligence
 // Cross-domain composite: friendshipMappingRecords + socialNetworkRecords +
 // peerSupportRecords + isolationPreventionRecords + childSatisfactionRecords

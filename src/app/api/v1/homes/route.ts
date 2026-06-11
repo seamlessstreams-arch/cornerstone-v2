@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOMES ENDPOINT
+// CARA — HOMES ENDPOINT
 //
 // GET /api/v1/homes
 // Returns all active homes with summary statistics per home.

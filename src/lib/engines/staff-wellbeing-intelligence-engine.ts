@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF WELLBEING INTELLIGENCE ENGINE
+// CARA — STAFF WELLBEING INTELLIGENCE ENGINE
 // Per-staff burnout risk, wellbeing trends, and home-level workforce resilience.
 // Pure deterministic. No LLM calls, no DB access.
 // CHR 2015 Reg 33 (employment of staff), Reg 34 (leadership qualities).

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME HEALTH & WELLBEING OVERSIGHT INTELLIGENCE ENGINE
+// CARA — HOME HEALTH & WELLBEING OVERSIGHT INTELLIGENCE ENGINE
 // Aggregates across all health-related data at the home level to assess whether
 // children's physical health, dental, and ongoing medical needs are being met.
 // Measures LAC health assessment compliance, dental/optical check timeliness,

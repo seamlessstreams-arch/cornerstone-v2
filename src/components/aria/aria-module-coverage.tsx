@@ -3,8 +3,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // AriaModuleCoverage
 //
-// Widget showing ARIA adoption across Cornerstone modules. Helps managers
-// see which areas of the platform are leveraging ARIA and where adoption
+// Widget showing Cara adoption across Cara modules. Helps managers
+// see which areas of the platform are leveraging Cara and where adoption
 // could improve.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -216,12 +216,12 @@ export function AriaModuleCoverage({
         <div className="text-[10px] text-[var(--cs-text-muted)]">
           {activeCount === totalModules ? (
             <span className="text-green-600 font-medium">
-              Full coverage — all modules using ARIA
+              Full coverage — all modules using Cara
             </span>
           ) : (
             <>
               {totalModules - activeCount} module
-              {totalModules - activeCount !== 1 ? "s" : ""} not yet using ARIA
+              {totalModules - activeCount !== 1 ? "s" : ""} not yet using Cara
               in the last {days} days
             </>
           )}

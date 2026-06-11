@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ROLE DASHBOARD SHELL
+// CARA — ROLE DASHBOARD SHELL
 // Common shell for the named role dashboards: PageShell + an "all computed from
 // the event spine" note + a responsive grid of spine-derived cards.
 // ══════════════════════════════════════════════════════════════════════════════

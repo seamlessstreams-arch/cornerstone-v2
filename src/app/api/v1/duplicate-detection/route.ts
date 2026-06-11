@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DUPLICATE DETECTION API ROUTE
+// CARA — DUPLICATE DETECTION API ROUTE
 // GET /api/v1/duplicate-detection
 //
 // The "never duplicate" pillar: projects the store into the canonical event

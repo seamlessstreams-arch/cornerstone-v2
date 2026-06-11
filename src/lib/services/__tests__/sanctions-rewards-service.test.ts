@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SANCTIONS, REWARDS & CONSEQUENCE FRAMEWORK SERVICE TESTS
+// CARA — SANCTIONS, REWARDS & CONSEQUENCE FRAMEWORK SERVICE TESTS
 // Pure-function tests for sanction/reward metrics computation, behaviour
 // management alert identification, and constant validation. CHR 2015 Reg 19
 // (behaviour management), Reg 20 (restraint), Reg 35 (behaviour management

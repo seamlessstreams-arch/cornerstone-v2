@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA Agent Learning & Cost Reduction — API Route
+// Cara Agent Learning & Cost Reduction — API Route
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { NextRequest, NextResponse } from "next/server";

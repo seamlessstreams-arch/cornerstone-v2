@@ -9,7 +9,7 @@
 // surfaces alternatives to suspension and forces written reasons where the
 // manager chooses to proceed.
 //
-// Output is "Aria suggested draft" until a human approves it. The Process
+// Output is "Cara suggested draft" until a human approves it. The Process
 // Guardian (src/lib/aria/hrProcessGuardian.ts) is run separately on the
 // suspension letter itself — this tool sits one step earlier in the workflow.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -80,7 +80,7 @@ export interface SuspensionDecisionInput {
 export interface SuspensionDecisionAnalysis {
   generatedAt: string;
   status: "draft";
-  ariaLabel: "Aria suggested draft";
+  ariaLabel: "Cara suggested draft";
 
   overallRiskGrade: SuspensionRiskRating;
   highestRiskFactor: SuspensionRiskFactor;
@@ -466,7 +466,7 @@ function buildWrittenReasonsDraft(
 ): string {
   if (input.proposedDecision === "do_not_suspend") {
     return [
-      `Aria suggested draft. Written reasons for decision not to suspend.`,
+      `Cara suggested draft. Written reasons for decision not to suspend.`,
       ``,
       `Following the concerns raised on [date] regarding ${input.concernSummary}, a decision has been taken not to suspend ${input.staffId}.`,
       ``,
@@ -474,25 +474,25 @@ function buildWrittenReasonsDraft(
       ``,
       `HR advice was [sought / not sought]. ${input.ladoAdviceSought ? "LADO was consulted." : "LADO consultation was [considered / not required]."} The case file records the advice received.`,
       ``,
-      `This wording is an Aria suggested draft. The Registered Manager remains the author and the decision-maker. Edit before signing.`,
+      `This wording is an Cara suggested draft. The Registered Manager remains the author and the decision-maker. Edit before signing.`,
     ].join("\n\n");
   }
 
   if (input.proposedDecision === "alternative_arrangement") {
     return [
-      `Aria suggested draft. Written reasons for alternative arrangement in place of suspension.`,
+      `Cara suggested draft. Written reasons for alternative arrangement in place of suspension.`,
       ``,
       `Following the concerns raised on [date] regarding ${input.concernSummary}, a decision has been taken to put an alternative arrangement in place rather than suspending ${input.staffId}.`,
       ``,
       `The arrangement is: ${input.alternativeArrangementDescription || "[describe arrangement]"}. The aggregate risk has been graded as ${overallRisk}. The arrangement will be reviewed on or before ${input.firstReviewDate || "[review date]"} and the welfare contact will be ${input.welfareSinglePointOfContact || "[name]"}.`,
       ``,
-      `This wording is an Aria suggested draft. The Registered Manager remains the author and the decision-maker. Edit before signing.`,
+      `This wording is an Cara suggested draft. The Registered Manager remains the author and the decision-maker. Edit before signing.`,
     ].join("\n\n");
   }
 
   // suspend
   return [
-    `Aria suggested draft. Written reasons for suspension.`,
+    `Cara suggested draft. Written reasons for suspension.`,
     ``,
     `Following the concerns raised on [date] regarding ${input.concernSummary}, a decision has been taken to suspend ${input.staffId} with effect from ${input.effectiveFromDate || "[effective date]"}. This suspension is a neutral act and is not a disciplinary sanction. It is in place to allow a fair and proportionate investigation to take place.`,
     ``,
@@ -504,7 +504,7 @@ function buildWrittenReasonsDraft(
     ``,
     `Proportionality: this decision has been considered against the available alternatives and graded as ${proportionality} on the evidence and the assessed risk.`,
     ``,
-    `This wording is an Aria suggested draft. The Registered Manager remains the author and the decision-maker. The suspension letter itself must be drafted separately and run through the HR Process Guardian before sending.`,
+    `This wording is an Cara suggested draft. The Registered Manager remains the author and the decision-maker. The suspension letter itself must be drafted separately and run through the HR Process Guardian before sending.`,
   ].join("\n\n");
 }
 
@@ -548,7 +548,7 @@ export function analyseSuspensionDecision(
   return {
     generatedAt: new Date().toISOString(),
     status: "draft",
-    ariaLabel: "Aria suggested draft",
+    ariaLabel: "Cara suggested draft",
     overallRiskGrade: overall,
     highestRiskFactor: factor,
     rationaleSummary,

@@ -3,7 +3,7 @@
 //
 // Single endpoint for creating ANY record type with full side effects.
 // Delegates to the universal-record-orchestrator which handles:
-//   Store → Audit → Timeline → Tasks → Alerts → ARIA
+//   Store → Audit → Timeline → Tasks → Alerts → Cara
 //
 // "Enter once. Use everywhere."
 // ══════════════════════════════════════════════════════════════════════════════

@@ -1,9 +1,9 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // API: /api/aria/orchestrate/search
 //
-// Searches across Cornerstone evidence tables and returns ranked results with
+// Searches across Cara evidence tables and returns ranked results with
 // excerpts and confidence scores. Used by the orchestrator UI to let users
-// browse relevant evidence before or after an Aria query.
+// browse relevant evidence before or after an Cara query.
 //
 // POST body: { query, homeId, childId?, recordTypes?, dateRange? }
 // dateRange: { from?: string, to?: string } (ISO date strings)

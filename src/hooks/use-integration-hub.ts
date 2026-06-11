@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — INTEGRATION HUB HOOK
+// CARA — INTEGRATION HUB HOOK
 // React Query wrapper for /api/v1/integration-hub
 // ══════════════════════════════════════════════════════════════════════════════
 

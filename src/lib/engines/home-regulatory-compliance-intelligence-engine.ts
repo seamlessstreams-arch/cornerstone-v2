@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME REGULATORY COMPLIANCE INTELLIGENCE ENGINE
+// CARA — HOME REGULATORY COMPLIANCE INTELLIGENCE ENGINE
 // Home-level: synthesises Reg 44 independent visitor reports, quality audits,
 // Ofsted notifiable events, inspection history, and policy review status to
 // produce an overall regulatory-compliance health score.

@@ -1,9 +1,9 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — OUTCOME LOOP CAPTURE
+// Cara STUDIO — OUTCOME LOOP CAPTURE
 //
-// Tracks whether ARIA's outputs lead to real outcomes: did the action plan
+// Tracks whether Cara's outputs lead to real outcomes: did the action plan
 // get completed? Did the risk review result in an updated assessment?
-// Did the key work session plan actually get used? Feeds back into ARIA's
+// Did the key work session plan actually get used? Feeds back into Cara's
 // evidence confidence and helps managers see impact over time.
 // ══════════════════════════════════════════════════════════════════════════════
 

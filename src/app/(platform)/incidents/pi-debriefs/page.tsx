@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PHYSICAL INTERVENTION DEBRIEF REGISTER
+// CARA — PHYSICAL INTERVENTION DEBRIEF REGISTER
 // Reg 20, Children's Homes (England) Regulations 2015
 import { AriaPanel } from "@/components/aria/aria-panel";
 import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
@@ -377,12 +377,12 @@ function PIDebriefCard({
             </div>
           )}
 
-          {/* ARIA analysis */}
+          {/* Cara analysis */}
           {debrief.aria_analysis ? (
             <div className="rounded-xl border border-teal-100 bg-teal-50/40 p-3">
               <div className="flex items-center gap-1.5 mb-1.5">
                 <Sparkles className="h-3.5 w-3.5 text-teal-600" />
-                <p className="text-[10px] font-semibold text-teal-700 uppercase tracking-widest">ARIA Analysis</p>
+                <p className="text-[10px] font-semibold text-teal-700 uppercase tracking-widest">Cara Analysis</p>
               </div>
               <p className="text-xs text-[var(--cs-text-secondary)]">{debrief.aria_analysis}</p>
             </div>
@@ -393,9 +393,9 @@ function PIDebriefCard({
               className="inline-flex items-center gap-1.5 text-xs text-teal-600 hover:text-teal-800 disabled:opacity-50"
             >
               {ariaBusy === debrief.id ? (
-                <><Sparkles className="h-3.5 w-3.5 animate-spin" />ARIA analysing…</>
+                <><Sparkles className="h-3.5 w-3.5 animate-spin" />Cara analysing…</>
               ) : (
-                <><Sparkles className="h-3.5 w-3.5" />Generate ARIA analysis</>
+                <><Sparkles className="h-3.5 w-3.5" />Generate Cara analysis</>
               )}
             </button>
           )}
@@ -453,7 +453,7 @@ export default function PIDebriefsPage() {
   const [viewTab, setViewTab]     = useState<"pending" | "completed" | "all">("pending");
   const [sortBy, setSortBy]       = useState<"date" | "duration" | "technique" | "status">("date");
 
-  // ARIA analysis
+  // Cara analysis
   const [ariaBusy, setAriaBusy]   = useState<string | null>(null);
   const [ariaError, setAriaError] = useState<string | null>(null);
 
@@ -489,7 +489,7 @@ export default function PIDebriefsPage() {
         ? debrief.injuries.map((i) => `${i.person_type}: ${i.description}${i.riddor_reportable ? " (RIDDOR reportable)" : ""}`).join("; ")
         : "None";
 
-      const prompt = `You are ARIA, a regulatory compliance AI for a children's residential home. Analyse this physical intervention debrief and provide a concise 2–3 sentence regulatory assessment covering: proportionality of the intervention, completeness of the debrief process, any outstanding compliance concerns, and any patterns or learning identified. Be precise and focused on Reg 20 compliance.
+      const prompt = `You are Cara, a regulatory compliance AI for a children's residential home. Analyse this physical intervention debrief and provide a concise 2–3 sentence regulatory assessment covering: proportionality of the intervention, completeness of the debrief process, any outstanding compliance concerns, and any patterns or learning identified. Be precise and focused on Reg 20 compliance.
 
 Incident: ${incident?.reference ?? debrief.incident_id} — ${incident?.date ?? "unknown date"}
 Young Person: ${incident ? getYPName(incident.child_id) : "unknown"}
@@ -504,7 +504,7 @@ Trigger: ${debrief.trigger_identified ?? "Not yet identified"}
 Ofsted notification required: ${debrief.ofsted_notification_required ? "Yes" : "No"}`;
 
       const response = await api.post<{ choices: { message: { content: string } }[] }>(
-        "/aria/chat",
+        "/cara/chat",
         { messages: [{ role: "user", content: prompt }], context: "pi_debrief_analysis" },
       );
 
@@ -514,7 +514,7 @@ Ofsted notification required: ${debrief.ofsted_notification_required ? "Yes" : "
 
       await updateDebrief.mutateAsync({ id: debrief.id, data: { aria_analysis: analysis } });
     } catch {
-      setAriaError("ARIA analysis failed — please try again");
+      setAriaError("Cara analysis failed — please try again");
     } finally {
       setAriaBusy(null);
     }

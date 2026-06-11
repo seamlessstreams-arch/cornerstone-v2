@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — WORK EXPERIENCE EMPLOYMENT CARD
+// CARA — WORK EXPERIENCE EMPLOYMENT CARD
 // Live data from education intelligence engine.
 // CHR 2015 Reg 12, Reg 34. SCCIF: Helped & Protected.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -95,7 +95,7 @@ export function WorkExperienceEmploymentCard() {
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Work Experience Intelligence
+              Cara Work Experience Intelligence
             </p>
             {insights.slice(0, 2).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME CLOTHING & PERSONAL POSSESSIONS INTELLIGENCE API ROUTE
+// CARA — HOME CLOTHING & PERSONAL POSSESSIONS INTELLIGENCE API ROUTE
 // GET /api/v1/home-clothing-personal-possessions-intelligence
 // Cross-domain composite: clothingAllowanceRecords + wardrobeReviewRecords +
 // personalInventoryRecords + clothingRequestRecords + possessionSafeguardingRecords

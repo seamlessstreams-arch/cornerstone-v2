@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF RETENTION & PROFILE INTELLIGENCE CARD
+// CARA — STAFF RETENTION & PROFILE INTELLIGENCE CARD
 // Dashboard card for turnover, vacancies, and workforce profile breakdown.
 // Powered by the Workforce Intelligence Engine — live data.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -139,13 +139,13 @@ export function StaffRetentionExitAnalysisCard() {
           )}
         </div>
 
-        {/* ── ARIA insights ───────────────────────────────────────────── */}
+        {/* ── Cara insights ───────────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Retention Intelligence
+              Cara Retention Intelligence
             </p>
             {intel.insights.map((insight, i) => (
               <div

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Delegated Authority Intelligence — Public API
+// Cara Delegated Authority Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

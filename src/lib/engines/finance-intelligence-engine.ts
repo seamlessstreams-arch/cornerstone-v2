@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — FINANCE INTELLIGENCE ENGINE
+// CARA — FINANCE INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses pocket money, clothing allowances, savings, and spending patterns

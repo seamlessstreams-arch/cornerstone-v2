@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME LEAVING CARE / TRANSITION INTELLIGENCE ENGINE
+// CARA — HOME LEAVING CARE / TRANSITION INTELLIGENCE ENGINE
 // Pure deterministic engine: pathway plan coverage, goal achievement,
 // aspiration engagement, independent travel readiness, financial readiness,
 // and pathway plan quality for children approaching independence.

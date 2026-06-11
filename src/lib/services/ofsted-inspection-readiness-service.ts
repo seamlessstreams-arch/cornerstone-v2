@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — OFSTED INSPECTION READINESS SERVICE
+// CARA — OFSTED INSPECTION READINESS SERVICE
 // Pre-inspection readiness checks, evidence gathering, action tracking,
 // mock inspection outcomes, inspector focus areas. Helps managers prepare
 // for inspections proactively.

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD SUBSTANCE MISUSE SCREENING SERVICE
+// CARA — CHILD SUBSTANCE MISUSE SCREENING SERVICE
 // Tracks substance misuse screenings, interventions, and referrals
 // for children in residential care. Monitors risk levels, safety
 // planning, and multi-agency coordination.

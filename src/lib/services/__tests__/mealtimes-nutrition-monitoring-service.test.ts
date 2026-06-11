@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MEALTIMES & NUTRITION MONITORING SERVICE TESTS
+// CARA — MEALTIMES & NUTRITION MONITORING SERVICE TESTS
 // Pure-function tests for meal metrics, alert identification,
 // constant validation, and edge cases.
 // ══════════════════════════════════════════════════════════════════════════════

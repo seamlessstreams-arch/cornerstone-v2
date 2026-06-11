@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME STATUTORY NOTIFICATION COMPLIANCE INTELLIGENCE ENGINE
+// CARA — HOME STATUTORY NOTIFICATION COMPLIANCE INTELLIGENCE ENGINE
 // Home-level: assesses statutory notification compliance across timeliness,
 // completeness, documentation quality, follow-up, acknowledgement tracking,
 // and regulatory accuracy. CHR 2015 Reg 40/41, Schedule 5, SCCIF: "Safe",

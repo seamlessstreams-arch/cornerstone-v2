@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME DOCUMENT GOVERNANCE INTELLIGENCE CARD
+// CARA — HOME DOCUMENT GOVERNANCE INTELLIGENCE CARD
 // Home-level: document management, expiry tracking, read receipt compliance,
 // and version control.
 // CHR 2015 Reg 13. SCCIF: "Well-Led."
@@ -218,12 +218,12 @@ export function HomeDocumentGovernanceIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Document Intelligence */}
+        {/* Cara Document Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Document Intelligence
+              Cara Document Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

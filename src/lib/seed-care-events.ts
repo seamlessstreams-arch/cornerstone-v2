@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CARE EVENT SEED DATA
+// CARA — CARE EVENT SEED DATA
 // Realistic demo data for the care event routing pipeline.
 // Populates: care events, routes, audit log, reg45 queue, annex A queue,
 //            child daily summaries, filing cabinet, saved time metrics.

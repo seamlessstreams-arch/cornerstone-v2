@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME COMMUNITY INTEGRATION & VOLUNTEERING INTELLIGENCE ENGINE
+// CARA — HOME COMMUNITY INTEGRATION & VOLUNTEERING INTELLIGENCE ENGINE
 // Home-level engine measuring community integration quality — community
 // activity participation, volunteering opportunities, social inclusion
 // programmes, neighbourhood relations, and local service engagement.

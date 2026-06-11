@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — QUALITY ASSURANCE & INTERNAL AUDIT SERVICE
+// CARA — QUALITY ASSURANCE & INTERNAL AUDIT SERVICE
 // Manages internal quality audits, regulatory self-assessments, improvement
 // plans, and quality monitoring schedules. Evidence base for Reg 45
 // (review of quality of care) and SCCIF Leadership & Management judgment.

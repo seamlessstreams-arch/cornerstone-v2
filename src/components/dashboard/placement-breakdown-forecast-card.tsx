@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PLACEMENT BREAKDOWN FORECAST CARD
+// CARA — PLACEMENT BREAKDOWN FORECAST CARD
 // Forward-looking early-warning widget: per-child breakdown risk, trajectory,
 // and projected days-to-critical. Powered by the Placement Breakdown Forecast
 // Engine — live data (Reg 11 placement stability / Reg 12 / Reg 8).
@@ -183,13 +183,13 @@ export function PlacementBreakdownForecastCard() {
           </div>
         )}
 
-        {/* ── ARIA Placement Stability Intelligence ────────────────────── */}
+        {/* ── Cara Placement Stability Intelligence ────────────────────── */}
 
         {insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Placement Stability Intelligence
+              Cara Placement Stability Intelligence
             </p>
             {insights.slice(0, 3).map((insight, i) => (
               <div

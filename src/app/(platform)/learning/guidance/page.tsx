@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — GUIDANCE NOTES GENERATOR
+// CARA — GUIDANCE NOTES GENERATOR
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState } from "react";
@@ -159,7 +159,7 @@ export default function GuidanceNotesPage() {
     setResult(null);
     try {
       const res = await api.post<{ data: { parsed?: GuidanceResult } }>(
-        "/aria",
+        "/cara",
         {
           mode: "learning_guidance_note",
           style: "professional_formal",
@@ -217,7 +217,7 @@ export default function GuidanceNotesPage() {
           <CardHeader className="pb-3">
             <CardTitle className="text-sm font-semibold flex items-center gap-2">
               <Sparkles className="h-4 w-4 text-blue-600" />
-              Generate Guidance Note with ARIA
+              Generate Guidance Note with Cara
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">

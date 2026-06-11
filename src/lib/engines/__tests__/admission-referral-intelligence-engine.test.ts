@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ADMISSION & REFERRAL INTELLIGENCE ENGINE — TEST SUITE
+// CARA — ADMISSION & REFERRAL INTELLIGENCE ENGINE — TEST SUITE
 // Reg 11/12/14 — referral pipeline, impact assessments, matching decisions,
-// occupancy management, and ARIA admission intelligence.
+// occupancy management, and Cara admission intelligence.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";
@@ -431,10 +431,10 @@ describe("Admission Referral Engine — Alerts", () => {
 });
 
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA INSIGHTS
+// Cara INSIGHTS
 // ══════════════════════════════════════════════════════════════════════════════
 
-describe("Admission Referral Engine — ARIA Insights", () => {
+describe("Admission Referral Engine — Cara Insights", () => {
   it("generates critical insight for full capacity with active pipeline", () => {
     const result = computeAdmissionReferralIntelligence({
       referrals: [

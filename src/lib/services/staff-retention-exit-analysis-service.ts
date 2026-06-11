@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF RETENTION & EXIT ANALYSIS SERVICE
+// CARA — STAFF RETENTION & EXIT ANALYSIS SERVICE
 // Tracks staff turnover patterns, exit reasons, retention strategies,
 // length of service analysis. Helps managers understand why staff leave
 // and plan retention.

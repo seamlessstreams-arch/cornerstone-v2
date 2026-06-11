@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF PATTERN INTELLIGENCE CARD
+// CARA — STAFF PATTERN INTELLIGENCE CARD
 // Live data from useWorkforceIntelligence() — staffing, sickness, profile.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -102,13 +102,13 @@ export function StaffPatternIntelligenceCard() {
           </div>
         </div>
 
-        {/* ── ARIA insights ───────────────────────────────────────────── */}
+        {/* ── Cara insights ───────────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Pattern Intelligence
+              Cara Pattern Intelligence
             </p>
             {intel.insights.slice(0, 2).map((insight, i) => (
               <div

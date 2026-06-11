@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — QUICK INCIDENT FORM
+// CARA — QUICK INCIDENT FORM
 // Calm, progressive incident recording for stressful situations.
 // Auto-fills child name, date/time, location, recording staff.
 // 5-step progressive flow. Large text, simple choices.

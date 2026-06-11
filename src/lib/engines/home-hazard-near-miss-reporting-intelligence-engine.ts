@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME HAZARD IDENTIFICATION & NEAR MISS REPORTING INTELLIGENCE ENGINE
+// CARA — HOME HAZARD IDENTIFICATION & NEAR MISS REPORTING INTELLIGENCE ENGINE
 // Monitors safety reporting culture — hazard identification and reporting rates,
 // near-miss tracking, corrective action effectiveness, safety walk compliance,
 // and learning from incidents.

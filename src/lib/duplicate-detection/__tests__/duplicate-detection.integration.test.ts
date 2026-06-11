@@ -65,7 +65,7 @@ describe("duplicate-detection integration (store → projector → engine)", () 
     expect(JSON.stringify(result)).toBe(JSON.stringify(again));
   });
 
-  it("always returns at least one ARIA insight", () => {
+  it("always returns at least one Cara insight", () => {
     expect(result.insights.length).toBeGreaterThan(0);
     for (const i of result.insights) {
       expect(["critical", "warning", "positive"]).toContain(i.severity);

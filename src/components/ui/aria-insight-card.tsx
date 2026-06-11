@@ -70,7 +70,7 @@ export function AriaInsightCard({
         className,
       )}
     >
-      {/* ARIA shimmer accent */}
+      {/* Cara shimmer accent */}
       <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none overflow-hidden">
         <div className="absolute inset-0 aria-shimmer" />
       </div>
@@ -87,7 +87,7 @@ export function AriaInsightCard({
           <div className="flex items-center gap-2 mb-1">
             <Sparkles className="h-3 w-3 text-[var(--cs-aria-gold)]" />
             <span className="text-[10px] font-semibold uppercase tracking-wider text-[var(--cs-aria-gold)]">
-              ARIA Insight
+              Cara Insight
             </span>
           </div>
 

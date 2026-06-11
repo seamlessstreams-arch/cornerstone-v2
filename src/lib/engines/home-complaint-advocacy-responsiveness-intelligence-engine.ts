@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME COMPLAINT & ADVOCACY RESPONSIVENESS INTELLIGENCE ENGINE
+// CARA — HOME COMPLAINT & ADVOCACY RESPONSIVENESS INTELLIGENCE ENGINE
 // Monitors how well the home responds to complaints, ensures children have
 // access to advocacy, and tracks the quality of complaint resolution.
 // Measures complaint handling timeliness, advocacy access, child participation,

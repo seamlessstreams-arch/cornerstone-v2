@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — COMPLAINTS & NOTIFICATIONS INTELLIGENCE ENGINE
+// CARA — COMPLAINTS & NOTIFICATIONS INTELLIGENCE ENGINE
 // Pure deterministic engine for complaints handling analysis.
 // Analyses response times, satisfaction, theme patterns, Reg 40 notification
-// compliance, and generates ARIA intelligence insights.
+// compliance, and generates Cara intelligence insights.
 // Reg 39: complaints procedure — Reg 40: notification of significant events
 // ══════════════════════════════════════════════════════════════════════════════
 

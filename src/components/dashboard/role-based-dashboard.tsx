@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ROLE-BASED DASHBOARD
+// CARA — ROLE-BASED DASHBOARD
 // Renders a different dashboard layout per user role. Each view surfaces the
 // information that role needs most, in calm, spacious cards. Uses existing
 // store data via the useDashboard() hook and derives role-specific metrics.

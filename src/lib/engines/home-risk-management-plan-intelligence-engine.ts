@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME RISK MANAGEMENT PLAN INTELLIGENCE ENGINE
+// CARA — HOME RISK MANAGEMENT PLAN INTELLIGENCE ENGINE
 // Pure deterministic engine: risk plan coverage, risk level governance,
 // trigger identification, strategy effectiveness, emergency planning,
 // multi-agency input, child voice, review compliance, and approval governance.

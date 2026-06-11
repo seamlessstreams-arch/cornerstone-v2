@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — INFECTION CONTROL INTELLIGENCE CARD
+// CARA — INFECTION CONTROL INTELLIGENCE CARD
 // Dashboard card powered by the Premises Safety Intelligence Engine.
 // CHR 2015 Reg 25, Reg 12, Reg 36.
 // SCCIF: Helped & Protected — "Infection control measures protect children."
@@ -139,13 +139,13 @@ export function InfectionControlCard() {
           </div>
         )}
 
-        {/* ── ARIA Intelligence ──────────────────────────────────────── */}
+        {/* ── Cara Intelligence ──────────────────────────────────────── */}
 
         {(d.insights ?? []).length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Infection Intelligence
+              Cara Infection Intelligence
             </p>
             {(d.insights ?? []).slice(0, 2).map((insight, i) => (
               <div

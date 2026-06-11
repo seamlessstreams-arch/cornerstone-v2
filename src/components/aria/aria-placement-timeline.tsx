@@ -3,7 +3,7 @@
 //
 // Displays a chronological timeline of significant placement events for a
 // young person: placement starts, LAC reviews, incidents, achievements,
-// risk assessment changes, care plan updates, and key milestones. ARIA
+// risk assessment changes, care plan updates, and key milestones. Cara
 // highlights patterns and adds contextual annotations.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -142,7 +142,7 @@ function getDemoPlacementTimeline(): PlacementTimelineData {
         title: "Incident — refusal and property damage",
         detail: "Refused to attend school. Kicked bedroom door causing minor damage.",
         significance: "high",
-        ariaNarrative: "Second incident within 7 days — ARIA flags escalation pattern for risk review.",
+        ariaNarrative: "Second incident within 7 days — Cara flags escalation pattern for risk review.",
       },
       {
         id: "pe_010", type: "risk_change", date: "2026-05-06",
@@ -200,7 +200,7 @@ export function AriaPlacementTimeline() {
         </div>
       </div>
 
-      {/* ARIA overview */}
+      {/* Cara overview */}
       <div className="px-4 py-3 border-b border-[var(--cs-border)] bg-[var(--cs-aria-gold-bg)]/30">
         <div className="flex items-start gap-2">
           <Sparkles className="h-3.5 w-3.5 text-[var(--cs-aria-gold)] mt-0.5 shrink-0" />
@@ -250,7 +250,7 @@ export function AriaPlacementTimeline() {
                     <div className="mt-1.5 rounded-lg bg-[var(--cs-aria-gold-bg)] border border-[var(--cs-aria-gold-soft)] px-2.5 py-1.5">
                       <div className="flex items-center gap-1 mb-0.5">
                         <Sparkles className="h-2.5 w-2.5 text-[var(--cs-aria-gold)]" />
-                        <span className="text-[9px] font-semibold text-[var(--cs-navy)]">ARIA</span>
+                        <span className="text-[9px] font-semibold text-[var(--cs-navy)]">Cara</span>
                       </div>
                       <p className="text-[10px] text-[var(--cs-text-secondary)]">{event.ariaNarrative}</p>
                     </div>
@@ -276,7 +276,7 @@ export function AriaPlacementTimeline() {
       {/* Footer */}
       <div className="px-4 py-2.5 border-t border-[var(--cs-border)] bg-slate-50/50">
         <p className="text-[10px] text-[var(--cs-text-muted)] text-center">
-          Timeline curated from care records. ARIA annotations highlight patterns — always verify with professional judgement.
+          Timeline curated from care records. Cara annotations highlight patterns — always verify with professional judgement.
         </p>
       </div>
     </div>

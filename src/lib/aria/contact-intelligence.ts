@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA Intelligence Engine — Contact & Relationships
+// Cara Intelligence Engine — Contact & Relationships
 //
 // Pure deterministic analysis of family/significant person contact for LAC.
 // Tracks:

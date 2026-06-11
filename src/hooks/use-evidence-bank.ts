@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EVIDENCE BANK HOOK
+// CARA — EVIDENCE BANK HOOK
 // React Query wrapper for /api/v1/evidence-bank
 // ══════════════════════════════════════════════════════════════════════════════
 

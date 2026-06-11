@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF–CHILD CONTINUITY OF CARE (detail page)
+// CARA — STAFF–CHILD CONTINUITY OF CARE (detail page)
 // Relational continuity per child — consistent, trusted adults.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -78,11 +78,11 @@ export default function StaffChildContinuityPage() {
             <OverviewStat label="Key worker left" value={intel.overview.inactive_key_worker_count} tone={intel.overview.inactive_key_worker_count > 0 ? "red" : "green"} />
           </div>
 
-          {/* ── ARIA insights ────────────────────────────────────────────── */}
+          {/* ── Cara insights ────────────────────────────────────────────── */}
           {(intel.insights ?? []).length > 0 && (
             <div className="space-y-2">
               <h2 className="text-sm font-semibold flex items-center gap-1.5 text-purple-700">
-                <Brain className="h-4 w-4" /> ARIA Relationship Continuity Intelligence
+                <Brain className="h-4 w-4" /> Cara Relationship Continuity Intelligence
               </h2>
               {(intel.insights ?? []).map((insight, i) => (
                 <div key={i} className={cn("rounded-xl border p-3 text-sm leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.positive)}>

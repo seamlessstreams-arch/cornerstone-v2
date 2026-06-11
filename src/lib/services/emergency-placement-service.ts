@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EMERGENCY PLACEMENT SERVICE
+// CARA — EMERGENCY PLACEMENT SERVICE
 // Manages emergency and unplanned admissions, out-of-hours placements,
 // emergency protocols, and rapid response arrangements.
 // CHR 2015 Reg 22 (arrangements when child is absent/goes missing),

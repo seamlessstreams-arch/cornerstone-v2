@@ -238,11 +238,11 @@ export default function IncidentLearningReviewPage() {
                       />
                     </div>
 
-                    {/* ARIA Analysis */}
+                    {/* Cara Analysis */}
                     <div className="space-y-2">
                       <h4 className="text-sm font-medium flex items-center gap-2">
                         <Sparkles className="h-4 w-4 text-indigo-500" />
-                        ARIA Analysis
+                        Cara Analysis
                       </h4>
                       {!showAria ? (
                         <Button
@@ -253,12 +253,12 @@ export default function IncidentLearningReviewPage() {
                           }
                         >
                           <Sparkles className="h-4 w-4 mr-1" />
-                          Request ARIA Analysis
+                          Request Cara Analysis
                         </Button>
                       ) : (
                         <div className="bg-indigo-50 border border-indigo-100 rounded-lg p-4 space-y-3">
                           <Badge className="bg-indigo-100 text-indigo-800 text-xs">
-                            ARIA suggested analysis
+                            Cara suggested analysis
                           </Badge>
                           <div className="space-y-3">
                             <div>

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD INDEPENDENCE & LIFE SKILLS INTELLIGENCE CARD
+// CARA — CHILD INDEPENDENCE & LIFE SKILLS INTELLIGENCE CARD
 // Per-child independence analysis: life skills proficiency, pathway plan
 // compliance, transition readiness, and leaving care preparation.
 // Children (Leaving Care) Act 2000, CSWA 2017, CHR 2015 Reg 5, 14.
@@ -278,12 +278,12 @@ export function ChildIndependenceIntelligenceCard({ childId }: { childId: string
           </div>
         )}
 
-        {/* ARIA Independence Insights */}
+        {/* Cara Independence Insights */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Independence Intelligence
+              Cara Independence Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

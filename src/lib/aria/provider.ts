@@ -1,9 +1,9 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA INTELLIGENCE — PROVIDER ADAPTER
+// Cara INTELLIGENCE — PROVIDER ADAPTER
 //
 // JSON generation for the intelligence engine. Claude (Anthropic) is the only LLM
 // provider; anything else falls back to stub/demo mode. OpenAI has been removed —
-// ARIA resolves rules → learned cache → Claude (last resort).
+// Cara resolves rules → learned cache → Claude (last resort).
 // Server-side only — never import in client components.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -48,7 +48,7 @@ async function generateViaAnthropic(input: GenerateJsonInput): Promise<unknown> 
   const userMessages = input.messages.filter((m) => m.role !== "system");
 
   const response = await client.messages.create({
-    model: input.model ?? process.env.ARIA_MODEL ?? "claude-sonnet-4-20250514",
+    model: input.model ?? (process.env.CARA_MODEL ?? process.env.ARIA_MODEL) ?? "claude-sonnet-4-20250514",
     max_tokens: 4096,
     temperature: input.temperature ?? 0.2,
     system: systemMessage + "\n\nYou MUST respond with valid JSON only. No markdown, no explanation, just JSON.",
@@ -67,7 +67,7 @@ async function generateViaAnthropic(input: GenerateJsonInput): Promise<unknown> 
 
 function generateStub(_input: GenerateJsonInput): unknown {
   return {
-    answer: "Aria is running in demo mode. Configure AI_PROVIDER in your environment to enable live intelligence. This stub response ensures the system works end-to-end without an API key.",
+    answer: "Cara is running in demo mode. Configure AI_PROVIDER in your environment to enable live intelligence. This stub response ensures the system works end-to-end without an API key.",
     executiveSummary: "Demo mode — no AI provider configured.",
     childVoiceProtected: true,
     confidence: 25,
@@ -78,13 +78,13 @@ function generateStub(_input: GenerateJsonInput): unknown {
     managementOversightRequired: false,
     regulatoryRefs: [],
     qualityStandardRefs: [],
-    practicePrompts: ["Configure AI_PROVIDER=anthropic to enable live Aria intelligence."],
+    practicePrompts: ["Configure AI_PROVIDER=anthropic to enable live Cara intelligence."],
     nextBestActions: [
       {
         title: "Configure AI provider",
         ownerRole: "System Administrator",
         duePriority: "this_week",
-        rationale: "Aria intelligence requires a configured AI provider to analyse evidence and generate insights.",
+        rationale: "Cara intelligence requires a configured AI provider to analyse evidence and generate insights.",
       },
     ],
   };

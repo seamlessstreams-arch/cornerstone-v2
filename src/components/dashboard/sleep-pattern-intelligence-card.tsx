@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SLEEP PATTERN INTELLIGENCE CARD
+// CARA — SLEEP PATTERN INTELLIGENCE CARD
 // Dashboard card powered by the Night Monitoring Intelligence Engine.
 // CHR 2015 Reg 12/24/25. SCCIF: Overall Experiences — Night care.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -177,13 +177,13 @@ export function SleepPatternIntelligenceCard() {
           </div>
         )}
 
-        {/* ── ARIA Night Intelligence ─────────────────────────────────── */}
+        {/* ── Cara Night Intelligence ─────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Night Intelligence
+              Cara Night Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

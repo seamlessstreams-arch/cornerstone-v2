@@ -4,7 +4,7 @@ import { requireAriaStudioPermission } from "@/lib/aria/aria-studio-guard";
 import type { AriaGenerationRequest } from "@/types/aria-studio";
 
 // POST /api/v1/aria-studio/generate
-// Generates a new ARIA Studio artifact using the configured AI provider.
+// Generates a new Cara Studio artifact using the configured AI provider.
 export async function POST(req: NextRequest) {
   let body: Record<string, unknown>;
   try {

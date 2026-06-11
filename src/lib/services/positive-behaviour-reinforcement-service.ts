@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — POSITIVE BEHAVIOUR REINFORCEMENT SERVICE
+// CARA — POSITIVE BEHAVIOUR REINFORCEMENT SERVICE
 // Tracks positive reinforcement practices, praise frequency,
 // reward consistency, and child response to encouragement.
 // CHR 2015 Reg 19(2)(a) (promoting positive behaviour through praise),

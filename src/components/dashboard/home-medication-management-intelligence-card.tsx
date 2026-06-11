@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME MEDICATION MANAGEMENT INTELLIGENCE CARD
+// CARA — HOME MEDICATION MANAGEMENT INTELLIGENCE CARD
 // Administration compliance, witnessing, stock, errors, PRN usage.
 // CHR 2015 Reg 23: "Health needs — including medication."
 // SCCIF: "Children's medication is managed safely."
@@ -218,12 +218,12 @@ export function HomeMedicationManagementIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Medication Intelligence */}
+        {/* Cara Medication Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Medication Intelligence
+              Cara Medication Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

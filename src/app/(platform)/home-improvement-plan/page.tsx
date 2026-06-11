@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME IMPROVEMENT PLAN
+// CARA — HOME IMPROVEMENT PLAN
 // Post-inspection actions, quality improvement objectives, Reg 45
 // recommendations, and self-identified development goals.
 // ══════════════════════════════════════════════════════════════════════════════

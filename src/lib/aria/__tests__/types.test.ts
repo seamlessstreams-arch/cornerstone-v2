@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — TYPE SYSTEM INTEGRITY TESTS
+// Cara — TYPE SYSTEM INTEGRITY TESTS
 // ══════════════════════════════════════════════════════════════════════════════
 
 import {

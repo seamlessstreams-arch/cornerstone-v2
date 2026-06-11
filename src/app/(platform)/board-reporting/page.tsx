@@ -149,7 +149,7 @@ export default function BoardReportingPage() {
 
   if (isLoading) {
     return (
-      <PageShell title="Board Reporting" subtitle="Formal reports submitted to the Responsible Individual and Cornerstone Care Group Board — required by Quality Standard 13 and Regulation 45">
+      <PageShell title="Board Reporting" subtitle="Formal reports submitted to the Responsible Individual and Cara Care Group Board — required by Quality Standard 13 and Regulation 45">
         <div className="flex items-center justify-center py-20">
           <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
         </div>
@@ -178,7 +178,7 @@ export default function BoardReportingPage() {
   return (
     <PageShell
       title="Board Reporting"
-      subtitle="Formal reports submitted to the Responsible Individual and Cornerstone Care Group Board — required by Quality Standard 13 and Regulation 45"
+      subtitle="Formal reports submitted to the Responsible Individual and Cara Care Group Board — required by Quality Standard 13 and Regulation 45"
       ariaContext={{ pageTitle: "Board Reporting", sourceType: "general" }}
       actions={
         <div className="flex items-center gap-2">

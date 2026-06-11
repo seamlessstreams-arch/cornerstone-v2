@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — NOTIFIABLE EVENTS INTELLIGENCE ENGINE
+// CARA — NOTIFIABLE EVENTS INTELLIGENCE ENGINE
 // Pure deterministic engine for Reg 40 notifiable events analysis.
 // Analyses notification compliance, event distribution, per-child frequency,
-// and generates ARIA intelligence insights.
+// and generates Cara intelligence insights.
 // ══════════════════════════════════════════════════════════════════════════════
 
 export interface NotifiableEventInput {
@@ -293,7 +293,7 @@ export function computeNotifiableEventsIntelligence(input: EngineInput): Notifia
     });
   }
 
-  // ── ARIA Insights ──────────────────────────────────────────────────────
+  // ── Cara Insights ──────────────────────────────────────────────────────
   const insights: AriaNotifiableInsight[] = [];
 
   // Critical: pending notifications

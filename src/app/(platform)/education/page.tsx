@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EDUCATION TRACKER
+// CARA — EDUCATION TRACKER
 // Tracks school attendance, exclusions, PEP meetings, attainment, and
 // education placement for each young person. Supports Reg 8 (Education),
 // the Virtual School Head relationship, and Ofsted ILACS evidence.

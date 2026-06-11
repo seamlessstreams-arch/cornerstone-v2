@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF PAYROLL COMPLIANCE SERVICE TESTS
+// CARA — STAFF PAYROLL COMPLIANCE SERVICE TESTS
 // Pure-function unit tests for payroll compliance metrics, alert
-// identification, and ARIA insight generation.
+// identification, and Cara insight generation.
 //
 // CHR 2015 Reg 32 (fitness of workers — employment verification),
 // CHR 2015 Reg 33 (employment of staff — payroll & contract requirements).

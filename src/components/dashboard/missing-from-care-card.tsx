@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MISSING FROM CARE INTELLIGENCE CARD
+// CARA — MISSING FROM CARE INTELLIGENCE CARD
 // Dashboard card for missing episode tracking, return interviews,
-// push/pull factors, and ARIA missing intelligence (Reg 34).
+// push/pull factors, and Cara missing intelligence (Reg 34).
 // Powered by the Missing From Care Intelligence Engine — live data.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -217,13 +217,13 @@ export function MissingFromCareCard() {
           </div>
         )}
 
-        {/* ── ARIA insights ────────────────────────────────────────────── */}
+        {/* ── Cara insights ────────────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Missing Intelligence
+              Cara Missing Intelligence
             </p>
             {intel.insights.map((insight, i) => (
               <div

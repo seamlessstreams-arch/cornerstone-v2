@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF TEAM MEETINGS SERVICE TESTS
+// CARA — STAFF TEAM MEETINGS SERVICE TESTS
 // Pure-function unit tests for team meeting metrics computation,
 // alert identification, constant validation.
 // CHR 2015 Reg 13 (leadership — team communication),

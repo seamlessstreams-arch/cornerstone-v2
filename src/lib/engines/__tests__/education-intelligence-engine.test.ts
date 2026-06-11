@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EDUCATION INTELLIGENCE ENGINE TESTS
+// CARA — EDUCATION INTELLIGENCE ENGINE TESTS
 // Comprehensive unit + integration tests for Education Intelligence.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -650,7 +650,7 @@ describe("Education Intelligence Engine — Alerts", () => {
 // INTEGRATION TESTS — INSIGHTS
 // ══════════════════════════════════════════════════════════════════════════════
 
-describe("Education Intelligence Engine — ARIA Insights", () => {
+describe("Education Intelligence Engine — Cara Insights", () => {
   it("generates NEET critical insight", () => {
     const child = makeChild();
     const result = computeEducationIntelligence(makeInput({

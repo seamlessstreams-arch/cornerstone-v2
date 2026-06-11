@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MEETINGS & CHILDREN'S VOICE INTELLIGENCE ENGINE
+// CARA — MEETINGS & CHILDREN'S VOICE INTELLIGENCE ENGINE
 // Pure deterministic engine for house meetings and children's participation.
 // Reg 7 (wishes & feelings), Reg 16 (consultation with children), SCCIF
 // Experiences & Progress, Leadership & Management.
@@ -298,7 +298,7 @@ export function computeMeetingsIntelligence(input: EngineInput): MeetingsIntelli
     });
   }
 
-  // ── ARIA Insights ──────────────────────────────────────────────────────
+  // ── Cara Insights ──────────────────────────────────────────────────────
   const insights: AriaMeetingsInsight[] = [];
 
   // Warning: children never attended

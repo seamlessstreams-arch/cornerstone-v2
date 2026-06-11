@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME RESTRICTIVE PRACTICE INTELLIGENCE API ROUTE
+// CARA — HOME RESTRICTIVE PRACTICE INTELLIGENCE API ROUTE
 // GET /api/v1/home-restrictive-practice-intelligence
 // Synthesises restraint data to assess frequency, proportionality,
 // de-escalation quality, debrief completion, review compliance, and training.

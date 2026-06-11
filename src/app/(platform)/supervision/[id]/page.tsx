@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SUPERVISION RECORD DETAIL
+// CARA — SUPERVISION RECORD DETAIL
 // Full view of a single supervision record: discussion, actions, signatures,
-// wellbeing, ARIA analysis. Print-ready for Ofsted inspection.
+// wellbeing, Cara analysis. Print-ready for Ofsted inspection.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState, use } from "react";
@@ -293,7 +293,7 @@ export default function SupervisionDetailPage({
             onClick={() => setShowAria((p) => !p)}
           >
             <Sparkles className="h-3.5 w-3.5" />
-            ARIA
+            Cara
           </Button>
         </div>
       }
@@ -392,7 +392,7 @@ export default function SupervisionDetailPage({
                   </div>
                 )}
 
-                {/* ARIA Oversight Quality Check */}
+                {/* Cara Oversight Quality Check */}
                 {sup.discussion_points && (
                   <AriaOversightQuality
                     oversightText={sup.discussion_points}
@@ -438,7 +438,7 @@ export default function SupervisionDetailPage({
               </CardContent>
             </Card>
 
-            {/* ARIA panel */}
+            {/* Cara panel */}
             {showAria && (
               <div className="relative">
                 <div className="absolute top-2 right-2 z-10">

@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — SAFEGUARDING PATTERN ENGINE
+// Cara STUDIO — SAFEGUARDING PATTERN ENGINE
 //
 // Scans evidence for escalation patterns, exploitation indicators, and
-// concerning trends. Generates alerts that require human review — ARIA never
+// concerning trends. Generates alerts that require human review — Cara never
 // makes safeguarding decisions, only surfaces possible indicators.
 // ══════════════════════════════════════════════════════════════════════════════
 

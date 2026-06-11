@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME FOOD, NUTRITION, HYGIENE & SAFETY INTELLIGENCE ENGINE
+// CARA — HOME FOOD, NUTRITION, HYGIENE & SAFETY INTELLIGENCE ENGINE
 // Home-level: aggregates food budgets, hygiene checks, meal plans,
 // scratch cooking, cultural/sensory inclusion, and action completion.
 // CHR 2015 Reg 9: "Promoting good health — including nutrition."

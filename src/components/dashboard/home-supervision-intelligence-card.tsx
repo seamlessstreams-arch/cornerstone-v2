@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SUPERVISION INTELLIGENCE CARD
+// CARA — HOME SUPERVISION INTELLIGENCE CARD
 // Home-level: supervision frequency, practice observation quality,
 // appraisal compliance, action follow-through, and staff wellbeing.
 // CHR 2015 Reg 33. SCCIF: "Well-led and managed."
@@ -219,12 +219,12 @@ export function HomeSupervisionIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Supervision Intelligence */}
+        {/* Cara Supervision Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Supervision Intelligence
+              Cara Supervision Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

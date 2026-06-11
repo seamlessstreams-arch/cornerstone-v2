@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PLACEMENT STABILITY INTELLIGENCE CARD
+// CARA — PLACEMENT STABILITY INTELLIGENCE CARD
 // Dashboard card showing placement stability scores, child risk profiles,
-// disruption indicators, and ARIA stability intelligence.
+// disruption indicators, and Cara stability intelligence.
 // Powered by the Placement Stability Engine — live data (Reg 11/12/14).
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -200,13 +200,13 @@ export function PlacementIntelligenceCard() {
           </div>
         )}
 
-        {/* ── ARIA Stability Intelligence ──────────────────────────────── */}
+        {/* ── Cara Stability Intelligence ──────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Stability Intelligence
+              Cara Stability Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

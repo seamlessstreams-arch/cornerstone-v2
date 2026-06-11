@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PARENTAL RESPONSIBILITY SERVICE TESTS
+// CARA — PARENTAL RESPONSIBILITY SERVICE TESTS
 // Pure-function unit tests for PR metrics computation, alert identification,
 // constant validation. CHR 2015 Reg 14 (care planning — PR arrangements),
 // Reg 21 (privacy and access — parental involvement),

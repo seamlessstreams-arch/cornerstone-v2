@@ -3,8 +3,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // useAriaHistory
 //
-// Client hook for fetching a user's past ARIA interactions. Powers the
-// "My ARIA History" view and timeline components.
+// Client hook for fetching a user's past Cara interactions. Powers the
+// "My Cara History" view and timeline components.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { useQuery } from "@tanstack/react-query";
@@ -37,7 +37,7 @@ export function useAriaHistory(params?: {
     queryKey: ["aria-history", params],
     queryFn: async () => {
       const res = await fetch(`/api/aria/history?${query}`);
-      if (!res.ok) throw new Error("Failed to fetch ARIA history");
+      if (!res.ok) throw new Error("Failed to fetch Cara history");
       const data = await res.json();
       return data.data as HistoryEntry[];
     },

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Service Worker (offline support)
+// Cara — Service Worker (offline support)
 //
 // SAFETY-FIRST caching for a children's-home care platform:
 //   • App SHELL (navigations) → network-first, falling back to a clear offline page.
@@ -13,7 +13,7 @@
 // Bump VERSION to invalidate caches on a breaking change.
 // ══════════════════════════════════════════════════════════════════════════════
 
-const VERSION = "v2"; // bumped: added push + notificationclick handlers
+const VERSION = "v3"; // bumped: Cara OS rebrand — invalidate all pre-rebrand caches
 const SHELL_CACHE = `cs-shell-${VERSION}`;
 const STATIC_CACHE = `cs-static-${VERSION}`;
 const OFFLINE_URL = "/offline.html";
@@ -99,7 +99,7 @@ self.addEventListener("push", (event) => {
   let payload = {};
   try { payload = event.data ? event.data.json() : {}; }
   catch { payload = { body: event.data ? event.data.text() : "" }; }
-  const title = payload.title || "Cornerstone";
+  const title = payload.title || "Cara";
   event.waitUntil(
     self.registration.showNotification(title, {
       body: payload.body || "",

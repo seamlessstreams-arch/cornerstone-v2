@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD NUTRITION & WEIGHT MONITORING SERVICE
+// CARA — CHILD NUTRITION & WEIGHT MONITORING SERVICE
 // BMI tracking, dietary needs, weight management plans,
 // nutritional assessments, growth monitoring.
 // CHR 2015 Reg 10 (health and wellbeing),

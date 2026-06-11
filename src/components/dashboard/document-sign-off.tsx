@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DOCUMENT SIGN-OFF TRACKER
+// CARA — DOCUMENT SIGN-OFF TRACKER
 // Dashboard widget showing documents requiring staff to read and sign.
 // Critical for compliance — policies, procedures, and risk assessments
 // must have evidence that all staff have read them.

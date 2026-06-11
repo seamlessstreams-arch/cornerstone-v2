@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — GAP DETECTION SERVICE
+// Cara STUDIO — GAP DETECTION SERVICE
 // Identifies missing evidence, overdue actions, and recording gaps.
 // ══════════════════════════════════════════════════════════════════════════════
 

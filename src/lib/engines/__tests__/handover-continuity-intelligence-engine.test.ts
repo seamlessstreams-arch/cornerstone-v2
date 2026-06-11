@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HANDOVER CONTINUITY INTELLIGENCE ENGINE — TESTS
+// CARA — HANDOVER CONTINUITY INTELLIGENCE ENGINE — TESTS
 //
 // Comprehensive test suite for the handover continuity intelligence engine.
 // Reg 34(1)(b), SCCIF shift communication, Quality Standards continuity.
@@ -452,9 +452,9 @@ describe("alerts", () => {
   });
 });
 
-// ── ARIA Insights ───────────────────────────────────────────────────────────
+// ── Cara Insights ───────────────────────────────────────────────────────────
 
-describe("ARIA insights", () => {
+describe("Cara insights", () => {
   it("critical: incomplete handovers", () => {
     const r = run([makeHandover({ completed_at: null })]);
     const critical = r.insights.filter((i) => i.severity === "critical");
@@ -646,7 +646,7 @@ describe("Chamberlain House integration", () => {
     expect(flagMed).toHaveLength(1);
   });
 
-  it("fires expected ARIA insights for Chamberlain House data", () => {
+  it("fires expected Cara insights for Chamberlain House data", () => {
     const r = run(oakHandovers, STAFF, CHILDREN);
 
     // Critical: incomplete

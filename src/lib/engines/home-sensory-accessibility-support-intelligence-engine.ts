@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SENSORY & ACCESSIBILITY SUPPORT INTELLIGENCE ENGINE
+// CARA — HOME SENSORY & ACCESSIBILITY SUPPORT INTELLIGENCE ENGINE
 // Monitors how well the home identifies, assesses, and responds to children's
 // sensory needs, ensures accessibility adaptations are in place and effective,
 // tracks sensory room usage and equipment maintenance, and evaluates the

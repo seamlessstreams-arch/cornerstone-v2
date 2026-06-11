@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME WATER SAFETY & HYDRATION INTELLIGENCE ENGINE
+// CARA — HOME WATER SAFETY & HYDRATION INTELLIGENCE ENGINE
 // Tracks water safety and hydration management — water temperature checks,
 // legionella risk assessments, hydration monitoring, swimming competency
 // assessments, and water activity safety.

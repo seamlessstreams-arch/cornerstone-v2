@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — GOVERNANCE SCORE WIDGET
+// CARA — GOVERNANCE SCORE WIDGET
 // Dashboard card showing the live RI governance score at a glance.
 // Displays overall score, risk level, category breakdown, and RAG status.
 // ══════════════════════════════════════════════════════════════════════════════

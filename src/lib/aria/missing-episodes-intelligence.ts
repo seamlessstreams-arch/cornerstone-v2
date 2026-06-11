@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA Intelligence Engine — Missing Episodes Analysis
+// Cara Intelligence Engine — Missing Episodes Analysis
 //
 // Pure deterministic analysis of missing/absent episodes for LAC.
 // Tracks:

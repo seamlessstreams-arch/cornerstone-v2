@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME KEY WORKING INTELLIGENCE CARD
+// CARA — HOME KEY WORKING INTELLIGENCE CARD
 // Home-level: key working sessions, child voice, mood tracking, coverage —
 // holistic key working intelligence view for the home dashboard.
 // CHR 2015 Reg 14, 44. SCCIF: "Experiences and progress of children."
@@ -244,12 +244,12 @@ export function HomeKeyWorkingIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Key Working Intelligence */}
+        {/* Cara Key Working Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Key Working Intelligence
+              Cara Key Working Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MISSING FROM CARE INTELLIGENCE API
+// CARA — MISSING FROM CARE INTELLIGENCE API
 //
 // Returns aggregated missing from care intelligence for the dashboard card:
-// profile stats, recent episodes, push/pull factor analysis, ARIA insights.
+// profile stats, recent episodes, push/pull factor analysis, Cara insights.
 //
 // GET /api/v1/missing-intelligence?home_id=home_oak
 // ══════════════════════════════════════════════════════════════════════════════

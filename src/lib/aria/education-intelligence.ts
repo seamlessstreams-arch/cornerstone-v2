@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA Intelligence Engine — Education
+// Cara Intelligence Engine — Education
 //
 // Pure deterministic analysis of educational engagement and progress for LAC.
 // Tracks:

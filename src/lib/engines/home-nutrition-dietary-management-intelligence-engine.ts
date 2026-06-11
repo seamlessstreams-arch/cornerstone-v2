@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME NUTRITION & DIETARY MANAGEMENT INTELLIGENCE ENGINE
+// CARA — HOME NUTRITION & DIETARY MANAGEMENT INTELLIGENCE ENGINE
 // Evaluates nutrition and dietary management: meal planning compliance,
 // dietary requirement tracking, nutrition assessments, food hygiene standards,
 // and special diet management for children in care.

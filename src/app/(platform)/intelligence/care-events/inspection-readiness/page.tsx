@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — Inspection Readiness Dashboard  (Milestone 22)
+// CARA — Inspection Readiness Dashboard  (Milestone 22)
 //
 // Live readiness score with the categories blocking the home from being
 // inspection-ready right now. All numbers come from the live store.

@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF SECONDMENT MANAGEMENT SERVICE TESTS
+// CARA — STAFF SECONDMENT MANAGEMENT SERVICE TESTS
 // Pure-function unit tests for staff secondment management metrics, alert
-// identification, and ARIA insight generation.
+// identification, and Cara insight generation.
 //
 // CHR 2015 Reg 32 (fitness of workers — secondment arrangements),
 // CHR 2015 Reg 33 (employment of staff — temporary staffing arrangements).

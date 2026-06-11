@@ -194,7 +194,7 @@ export function AriaSupervisionIntelligence({ homeId = "home_oak" }: { homeId?: 
             </div>
           )}
 
-          {/* ARIA suggestions */}
+          {/* Cara suggestions */}
           {data.concerns.length > 0 && (
             <div className="px-5 py-2.5 border-b border-[var(--cs-border)]">
               {data.concerns.map((concern, i) => (

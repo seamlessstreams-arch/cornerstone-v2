@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME PARTICIPATION & ENGAGEMENT INTELLIGENCE ENGINE
+// CARA — HOME PARTICIPATION & ENGAGEMENT INTELLIGENCE ENGINE
 // Home-level: synthesises house meeting data to assess children's participation,
 // attendance, topic diversity, action completion, and voice-in-care practice.
 // CHR 2015 Reg 7, 9. SCCIF: "Overall experiences", "Experiences and progress."

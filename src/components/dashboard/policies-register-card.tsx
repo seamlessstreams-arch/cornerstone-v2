@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — POLICIES & PROCEDURES INTELLIGENCE CARD
+// CARA — POLICIES & PROCEDURES INTELLIGENCE CARD
 // Dashboard card powered by the Policies Intelligence Engine.
 // Reg 38 (policies and procedures), Reg 13 (leadership & management).
 // ══════════════════════════════════════════════════════════════════════════════
@@ -210,13 +210,13 @@ export function PoliciesRegisterCard() {
           </div>
         )}
 
-        {/* ── ARIA Policy Intelligence ────────────────────────────────── */}
+        {/* ── Cara Policy Intelligence ────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Policy Intelligence
+              Cara Policy Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

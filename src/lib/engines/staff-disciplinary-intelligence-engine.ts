@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF DISCIPLINARY INTELLIGENCE ENGINE
+// CARA — STAFF DISCIPLINARY INTELLIGENCE ENGINE
 // Pure deterministic engine for staff disciplinary case analysis.
 // Analyses active cases, investigation timelines, outcome distribution,
 // patterns by category, staff support measures, and LADO referrals.

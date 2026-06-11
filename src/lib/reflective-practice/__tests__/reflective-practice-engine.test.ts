@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Professional Development & Reflective Practice Intelligence — Tests
+// Cara — Professional Development & Reflective Practice Intelligence — Tests
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";

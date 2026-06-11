@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Peer Relationship Dynamics Intelligence — Public API
+// Cara Peer Relationship Dynamics Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

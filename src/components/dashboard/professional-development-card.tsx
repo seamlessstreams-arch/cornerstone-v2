@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PROFESSIONAL DEVELOPMENT INTELLIGENCE CARD
+// CARA — PROFESSIONAL DEVELOPMENT INTELLIGENCE CARD
 // Dashboard card for training categories, compliance rates, and supervision.
 // Powered by the Workforce Intelligence Engine — live data.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -154,13 +154,13 @@ export function ProfessionalDevelopmentCard() {
           )}
         </div>
 
-        {/* ── ARIA insights ───────────────────────────────────────────── */}
+        {/* ── Cara insights ───────────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Development Intelligence
+              Cara Development Intelligence
             </p>
             {intel.insights.map((insight, i) => (
               <div

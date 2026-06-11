@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LEARNING STUDIO: FLASHCARD SETS
+// CARA — LEARNING STUDIO: FLASHCARD SETS
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState } from "react";
@@ -156,7 +156,7 @@ export default function FlashcardsPage() {
     setSaved(false);
     try {
       const res = await api.post<{ data: { parsed?: FlashcardSet } }>(
-        "/aria",
+        "/cara",
         {
           mode: "learning_flashcards",
           style: pathway === "child" ? "child_friendly" : "professional_formal",

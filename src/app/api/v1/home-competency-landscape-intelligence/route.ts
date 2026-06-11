@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME COMPETENCY LANDSCAPE INTELLIGENCE API ROUTE
+// CARA — HOME COMPETENCY LANDSCAPE INTELLIGENCE API ROUTE
 // GET /api/v1/home-competency-landscape-intelligence
 // Combines competencyProfiles + developmentPlans for workforce capability.
 // CHR 2015 Reg 32, Reg 33. SCCIF: "The effectiveness of leaders and managers."

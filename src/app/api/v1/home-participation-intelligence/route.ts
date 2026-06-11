@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME PARTICIPATION & ENGAGEMENT INTELLIGENCE API ROUTE
+// CARA — HOME PARTICIPATION & ENGAGEMENT INTELLIGENCE API ROUTE
 // GET /api/v1/home-participation-intelligence
 // Synthesises house meeting data to produce participation, attendance,
 // child voice, and action completion intelligence.

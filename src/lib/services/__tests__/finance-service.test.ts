@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — FINANCIAL MANAGEMENT SERVICE TESTS
+// CARA — FINANCIAL MANAGEMENT SERVICE TESTS
 // Pure-function unit tests for child financial summary computation, home
 // financial overview aggregation, financial alert identification, and constant
 // validation (CHR 2015 Reg 39 — financial arrangements).

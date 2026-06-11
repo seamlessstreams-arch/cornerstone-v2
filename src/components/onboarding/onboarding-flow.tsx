@@ -11,7 +11,7 @@ const STEPS = [
     icon: Heart,
     iconColor: "text-[var(--cs-aria-gold)]",
     iconBg: "bg-[var(--cs-aria-gold-bg)]",
-    title: "Welcome to Cornerstone",
+    title: "Welcome to Cara",
     subtitle: "The operating system for children's residential care.",
     body: "Let's show you around — this takes about 30 seconds.",
   },
@@ -29,15 +29,15 @@ const STEPS = [
     iconBg: "bg-emerald-50",
     title: "Record Once, Use Everywhere",
     subtitle: "Press Cmd+K or tap + Create to record anything.",
-    body: "Your entry automatically:\n• Creates follow-up tasks\n• Updates the timeline\n• Generates inspection evidence\n• Makes data available to ARIA intelligence\n\nNo duplicate recording. Ever.",
+    body: "Your entry automatically:\n• Creates follow-up tasks\n• Updates the timeline\n• Generates inspection evidence\n• Makes data available to Cara intelligence\n\nNo duplicate recording. Ever.",
   },
   {
     icon: Sparkles,
     iconColor: "text-[var(--cs-aria-gold)]",
     iconBg: "bg-[var(--cs-aria-gold-bg)]",
-    title: "Meet ARIA",
+    title: "Meet Cara",
     subtitle: "Your practice intelligence layer.",
-    body: "ARIA helps with:\n• Checking your writing tone\n• Identifying missing information\n• Spotting risk patterns\n• Preparing for inspections\n\nARIA suggests — you decide. Always.",
+    body: "Cara helps with:\n• Checking your writing tone\n• Identifying missing information\n• Spotting risk patterns\n• Preparing for inspections\n\nARIA suggests — you decide. Always.",
   },
 ];
 

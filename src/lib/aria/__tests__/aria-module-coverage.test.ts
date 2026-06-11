@@ -66,7 +66,7 @@ describe("MODULE_MAP", () => {
     }
   });
 
-  it("covers key Cornerstone modules", () => {
+  it("covers key Cara modules", () => {
     expect(MODULE_MAP).toHaveProperty("daily_log");
     expect(MODULE_MAP).toHaveProperty("incident");
     expect(MODULE_MAP).toHaveProperty("supervision");

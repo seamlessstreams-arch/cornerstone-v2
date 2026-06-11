@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SENSORY & ACCESSIBILITY SUPPORT INTELLIGENCE ENGINE TESTS
+// CARA — HOME SENSORY & ACCESSIBILITY SUPPORT INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite for sensory and accessibility analysis.
 // Covers CHR 2015 Reg 6 (Quality and purpose of care), Reg 10 (Health &
 // wellbeing), Reg 25 (Premises and safety), and SCCIF individual needs.

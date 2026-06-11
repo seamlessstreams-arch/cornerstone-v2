@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Permission System — Break-Glass Emergency Access
+// Cara Permission System — Break-Glass Emergency Access
 //
 // Emergency override mechanism for situations where normal access controls
 // must be bypassed for child safety or regulatory requirements.

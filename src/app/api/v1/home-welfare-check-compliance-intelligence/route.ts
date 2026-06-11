@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME WELFARE CHECK COMPLIANCE INTELLIGENCE API ROUTE
+// CARA — HOME WELFARE CHECK COMPLIANCE INTELLIGENCE API ROUTE
 // GET /api/v1/home-welfare-check-compliance-intelligence
 // Synthesises welfare check rounds to assess check completion, building
 // security, distress response, fire exit compliance, environmental safety,

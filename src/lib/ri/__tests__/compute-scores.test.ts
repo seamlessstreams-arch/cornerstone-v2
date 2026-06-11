@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RI Governance Scoring Engine Tests
+// CARA — RI Governance Scoring Engine Tests
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";

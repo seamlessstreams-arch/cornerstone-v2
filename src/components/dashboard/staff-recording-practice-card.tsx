@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF RECORDING PRACTICE CARD
+// CARA — STAFF RECORDING PRACTICE CARD
 // Whose recording is strong and whose needs coaching — record quality rolled up
 // by staff member. Powered by the Staff Recording Practice engine (Reg 33/36/13).
 // ══════════════════════════════════════════════════════════════════════════════
@@ -95,7 +95,7 @@ export function StaffRecordingPracticeCard() {
 
         {insights.length > 0 && (
           <div className="space-y-1.5">
-            <p className="text-xs font-semibold flex items-center gap-1 text-purple-700"><Brain className="h-3 w-3" /> ARIA Practice Intelligence</p>
+            <p className="text-xs font-semibold flex items-center gap-1 text-purple-700"><Brain className="h-3 w-3" /> Cara Practice Intelligence</p>
             {insights.slice(0, 2).map((i, idx) => (
               <div key={idx} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[i.severity] ?? INSIGHT_STYLES.positive)}>{i.text}</div>
             ))}

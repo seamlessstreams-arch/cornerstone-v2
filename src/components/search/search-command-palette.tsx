@@ -1,7 +1,7 @@
 "use client";
 
 // ==============================================================================
-// CORNERSTONE — SEARCH COMMAND PALETTE
+// CARA — SEARCH COMMAND PALETTE
 //
 // Full-screen search overlay opened with Cmd+K or from the TopBar.
 // Real-time results grouped by type with keyboard navigation,
@@ -372,7 +372,7 @@ export function SearchCommandPalette({ externalOpen, onClose }: SearchCommandPal
       {/* Panel */}
       <div
         role="dialog"
-        aria-label="Search Cornerstone"
+        aria-label="Search Cara"
         aria-modal="true"
         className={cn(
           "relative z-10 w-full max-w-2xl mx-4",
@@ -392,7 +392,7 @@ export function SearchCommandPalette({ externalOpen, onClose }: SearchCommandPal
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search across children, incidents, tasks, staff, and more..."
-              aria-label="Search Cornerstone"
+              aria-label="Search Cara"
               className={cn(
                 "w-full rounded-xl border border-gray-200 bg-gray-50 py-3 pl-10 pr-4 text-sm",
                 "text-gray-900 placeholder:text-gray-400",

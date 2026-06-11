@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOLIDAY & TRIP PLANNING SERVICE
+// CARA -- HOLIDAY & TRIP PLANNING SERVICE
 // Tracks day trips, overnight stays, holidays, educational visits, cultural outings,
 // sporting events, and other trips for looked-after children. Covers risk assessments,
 // parental/social worker consent, passport checks, insurance, emergency contacts,

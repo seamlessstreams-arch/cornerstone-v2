@@ -1,10 +1,10 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — WORKFLOW ORCHESTRATION API ROUTE
+// CARA — WORKFLOW ORCHESTRATION API ROUTE
 // GET /api/v1/workflow-orchestration
 //
 // Processes the canonical event stream against the configurable workflow rules and
 // returns the concrete actions generated — approval tasks, debriefs, key-working
-// follow-ups, evidence additions, ARIA summaries and human-gated notification
+// follow-ups, evidence additions, Cara summaries and human-gated notification
 // drafts — with deadlines and escalation. CHR 2015 Reg 13.
 // ══════════════════════════════════════════════════════════════════════════════
 

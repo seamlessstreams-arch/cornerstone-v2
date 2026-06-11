@@ -578,7 +578,7 @@ describe("generateAriaLearningIntelligence()", () => {
     });
 
     expect(result.ariaLearningPolicy.overallScore).toBe(0);
-    expect(result.areasForImprovement.some((a) => a.includes("No ARIA learning policy"))).toBe(true);
+    expect(result.areasForImprovement.some((a) => a.includes("No Cara learning policy"))).toBe(true);
   });
 
   it("filters records by date range", () => {
@@ -680,7 +680,7 @@ describe("generateAriaLearningIntelligence()", () => {
       staff: [fullStaff()],
     });
 
-    expect(result.actions).toContain("No immediate actions required. ARIA learning systems operating within expected standards.");
+    expect(result.actions).toContain("No immediate actions required. Cara learning systems operating within expected standards.");
   });
 
   it("includes regulatory links", () => {

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Therapeutic Care Intelligence Engine
+// Cara Therapeutic Care Intelligence Engine
 //
 // Evaluates quality and effectiveness of therapeutic interventions for
 // looked-after children in residential care settings.

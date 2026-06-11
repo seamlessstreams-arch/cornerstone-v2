@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF DEVELOPMENT INTELLIGENCE ENGINE
+// CARA — STAFF DEVELOPMENT INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses appraisals, competency profiles, development plans, qualifications,
@@ -521,7 +521,7 @@ export function computeStaffDevelopmentIntelligence(
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
   const insights: AriaDevelopmentInsight[] = [];
 
   // Critical: overdue appraisals

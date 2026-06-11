@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — UNIFIED EVENT STREAM (detail page)
+// CARA — UNIFIED EVENT STREAM (detail page)
 // One normalised, filterable timeline of everything that happens in the home.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -56,9 +56,9 @@ export default function EventStreamPage() {
           <div className="rounded-2xl border border-[var(--cs-border)] bg-[var(--cs-bg)] p-4 flex gap-3">
             <Info className="h-4 w-4 text-[var(--cs-text-muted)] shrink-0 mt-0.5" />
             <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed">
-              Every record in Cornerstone is projected into one canonical event shape — so this single timeline shows
+              Every record in Cara is projected into one canonical event shape — so this single timeline shows
               everything that happens in the home, each with a consistent risk level, the sign-off it needs, its links,
-              and a rule-based ARIA reading (themes, actions, compliance flags). <strong>Capture once, surface
+              and a rule-based Cara reading (themes, actions, compliance flags). <strong>Capture once, surface
               everywhere.</strong>
             </p>
           </div>
@@ -133,7 +133,7 @@ export default function EventStreamPage() {
                     )}
                     {e.ariaAnalysis && (
                       <div className="rounded-lg bg-[var(--cs-bg)] p-2.5 text-[11px] space-y-1">
-                        <p className="font-semibold text-purple-700 flex items-center gap-1"><Brain className="h-3 w-3" /> ARIA · confidence {Math.round(e.ariaAnalysis.confidenceScore * 100)}%</p>
+                        <p className="font-semibold text-purple-700 flex items-center gap-1"><Brain className="h-3 w-3" /> Cara · confidence {Math.round(e.ariaAnalysis.confidenceScore * 100)}%</p>
                         {e.ariaAnalysis.themes.length > 0 && <p className="text-[var(--cs-text-muted)]">Themes: {e.ariaAnalysis.themes.join(", ")}</p>}
                         {e.ariaAnalysis.complianceFlags.map((f, i) => (
                           <p key={i} className="text-amber-700 flex items-center gap-1"><AlertTriangle className="h-3 w-3 shrink-0" />{f}</p>

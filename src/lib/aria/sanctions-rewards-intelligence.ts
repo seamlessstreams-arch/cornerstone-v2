@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA Intelligence Engine — Sanctions & Rewards Analysis
+// Cara Intelligence Engine — Sanctions & Rewards Analysis
 //
 // Pure deterministic analysis of behaviour management for LAC.
 // Tracks:

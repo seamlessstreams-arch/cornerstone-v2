@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RECORDING QUALITY ENGINE
+// CARA — RECORDING QUALITY ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 //

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DASHBOARD CARD REGISTRY
+// CARA — DASHBOARD CARD REGISTRY
 // Shared dynamic imports of the spine-derived intelligence cards, so the named
 // role dashboards compose them without duplicating summaries. Every card here
 // computes from the Event Spine / its engine (not hand-maintained data).

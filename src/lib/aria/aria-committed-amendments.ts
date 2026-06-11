@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — COMMITTED RECORD AMENDMENTS  (Milestone 13)
+// Cara STUDIO — COMMITTED RECORD AMENDMENTS  (Milestone 13)
 //
 // Committed records are immutable. The only safe way to change a
 // committed record is a formal amendment that:
@@ -12,7 +12,7 @@
 //   5. Updates the parent suggestion's committed_record_id to the new
 //      head so consumers always link to the current version.
 //
-// Spec invariant: ARIA drafts. Humans decide. The original verified
+// Spec invariant: Cara drafts. Humans decide. The original verified
 // record is never overwritten — every version is preserved.
 // ══════════════════════════════════════════════════════════════════════════════
 

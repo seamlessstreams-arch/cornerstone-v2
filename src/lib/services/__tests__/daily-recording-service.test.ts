@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DAILY RECORDING SERVICE TESTS
+// CARA — DAILY RECORDING SERVICE TESTS
 // Pure-function tests for recording quality assessment, compliance computation,
 // staff profiles, gap identification, and constant validation.
 // ══════════════════════════════════════════════════════════════════════════════

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CORRESPONDENCE LOG
+// CARA — CORRESPONDENCE LOG
 // Tracks all incoming and outgoing professional correspondence: emails,
 // letters, phone calls, and formal notices from social workers, IROs,
 // local authorities, Ofsted, courts, and other external stakeholders.

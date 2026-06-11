@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RISK ASSESSMENT INTELLIGENCE API ROUTE
+// CARA — RISK ASSESSMENT INTELLIGENCE API ROUTE
 // GET /api/v1/risk-assessment-intelligence
 // Returns risk levels, trends, mitigation effectiveness, child voice rates,
-// domain analysis, and ARIA risk intelligence.
+// domain analysis, and Cara risk intelligence.
 // Reg 12 — risk assessments, Reg 34 — missing children risk, Reg 11 — voice.
 // ══════════════════════════════════════════════════════════════════════════════
 

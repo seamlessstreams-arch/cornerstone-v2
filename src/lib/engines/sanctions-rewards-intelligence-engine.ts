@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SANCTIONS & REWARDS INTELLIGENCE ENGINE
+// CARA — SANCTIONS & REWARDS INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses behaviour management: sanction/reward ratios, proportionality,
@@ -291,7 +291,7 @@ export function computeSanctionsRewardsIntelligence(
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
   const insights: AriaSRInsight[] = [];
 
   // Critical: disproportionate entries

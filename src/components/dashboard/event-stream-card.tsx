@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — UNIFIED EVENT STREAM CARD
+// CARA — UNIFIED EVENT STREAM CARD
 // One normalised timeline of everything that happens in the home — incidents,
 // logs, missing episodes, medication, restraint, key-working, education,
 // supervision — projected into the canonical CornerstoneEvent model.

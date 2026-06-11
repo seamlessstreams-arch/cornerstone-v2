@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // API: /api/aria/activity
-// GET — returns ARIA activity statistics for the current home. Powers the
-// ARIA activity widget on dashboards and the management ARIA page.
+// GET — returns Cara activity statistics for the current home. Powers the
+// Cara activity widget on dashboards and the management Cara page.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { NextRequest, NextResponse } from "next/server";

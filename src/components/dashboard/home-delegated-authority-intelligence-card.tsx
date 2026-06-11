@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME DELEGATED AUTHORITY INTELLIGENCE CARD
+// CARA — HOME DELEGATED AUTHORITY INTELLIGENCE CARD
 // Delegated authority completeness, review compliance, category coverage.
 // CHR 2015 Reg 22: "Arrangements for the delegation of authority."
 // SCCIF: "Staff understand what decisions they can make day to day."
@@ -221,12 +221,12 @@ export function HomeDelegatedAuthorityIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Authority Intelligence */}
+        {/* Cara Authority Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Authority Intelligence
+              Cara Authority Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

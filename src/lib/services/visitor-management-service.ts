@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — VISITOR MANAGEMENT SERVICE
+// CARA — VISITOR MANAGEMENT SERVICE
 // Tracks visitor registration, DBS verification, purpose of visits,
 // safeguarding checks, and visitor impact on children.
 // CHR 2015 Reg 22 (contact and access — visitor management),

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME CHRONOLOGY INTELLIGENCE ENGINE
+// CARA — HOME CHRONOLOGY INTELLIGENCE ENGINE
 // Home-level: analyses chronology event patterns, documentation quality,
 // category distribution, significance tracking, and incident linkage
 // across all children at the home.

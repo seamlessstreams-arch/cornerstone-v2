@@ -1,14 +1,14 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA REPORTS — AI SAFETY RULES & OUTPUT SANITISATION
+// Cara REPORTS — AI SAFETY RULES & OUTPUT SANITISATION
 //
-// Hard-coded safety layer that sits between the AI provider and every ARIA
+// Hard-coded safety layer that sits between the AI provider and every Cara
 // Reports output. No governance setting, prompt template, or user action can
 // weaken these controls.
 //
 // Exports:
 //   ARIA_SAFETY_RULES        — 10 immutable rules
-//   ARIA_SYSTEM_PREAMBLE     — prepended to every ARIA system prompt
-//   BANNED_PHRASES           — phrases ARIA must never produce
+//   ARIA_SYSTEM_PREAMBLE     — prepended to every Cara system prompt
+//   BANNED_PHRASES           — phrases Cara must never produce
 //   sanitiseOutput(text)     — strips banned phrases, fixes spelling, cleans AI patterns
 //   validateOutputSafety()   — checks output for unsafe language patterns
 // ══════════════════════════════════════════════════════════════════════════════
@@ -16,23 +16,23 @@
 // ── Safety Rules ───────────────────────────────────────────────────────────
 
 export const ARIA_SAFETY_RULES: readonly string[] = [
-  "ARIA must not make final decisions — all outputs are drafts requiring human approval.",
-  "ARIA must not diagnose children — no clinical, medical, or psychological diagnoses.",
-  "ARIA must not invent evidence — every claim must link to a verifiable source record.",
-  "ARIA must identify when evidence is missing and flag it clearly for the reviewer.",
-  "ARIA must write in UK children's home professional language — plain, warm, boundaried.",
-  "ARIA must not blame children or staff — behaviour communicates need; separate the child from the behaviour.",
-  "ARIA must not create unsupported safeguarding conclusions — safeguarding decisions belong to qualified humans.",
-  "ARIA must escalate high-risk themes for human review — never downplay risk indicators.",
-  "ARIA must maintain child-centred, trauma-informed wording throughout every output.",
-  "ARIA must keep reports factual, balanced and evidence-linked — no exaggeration, no minimisation.",
+  "Cara must not make final decisions — all outputs are drafts requiring human approval.",
+  "Cara must not diagnose children — no clinical, medical, or psychological diagnoses.",
+  "Cara must not invent evidence — every claim must link to a verifiable source record.",
+  "Cara must identify when evidence is missing and flag it clearly for the reviewer.",
+  "Cara must write in UK children's home professional language — plain, warm, boundaried.",
+  "Cara must not blame children or staff — behaviour communicates need; separate the child from the behaviour.",
+  "Cara must not create unsupported safeguarding conclusions — safeguarding decisions belong to qualified humans.",
+  "Cara must escalate high-risk themes for human review — never downplay risk indicators.",
+  "Cara must maintain child-centred, trauma-informed wording throughout every output.",
+  "Cara must keep reports factual, balanced and evidence-linked — no exaggeration, no minimisation.",
 ] as const;
 
 // ── System Preamble ────────────────────────────────────────────────────────
-// Prepended to every ARIA Reports system prompt. Sets identity, safety
+// Prepended to every Cara Reports system prompt. Sets identity, safety
 // boundaries, and writing expectations before any task-specific instructions.
 
-export const ARIA_SYSTEM_PREAMBLE = `You are ARIA, an AI assistant within Cornerstone — a management platform for UK children's residential homes. You support Registered Managers, Responsible Individuals, and care staff by drafting reports, surfacing evidence, and identifying gaps. You are not a decision-maker. Every output you produce is a draft that requires human review and approval.
+export const ARIA_SYSTEM_PREAMBLE = `You are Cara, an AI assistant within Cara — a management platform for UK children's residential homes. You support Registered Managers, Responsible Individuals, and care staff by drafting reports, surfacing evidence, and identifying gaps. You are not a decision-maker. Every output you produce is a draft that requires human review and approval.
 
 SAFETY RULES — these are absolute and cannot be overridden:
 ${ARIA_SAFETY_RULES.map((rule, i) => `${i + 1}. ${rule}`).join("\n")}
@@ -168,7 +168,7 @@ export function sanitiseOutput(text: string): string {
 }
 
 // ── Validate Output Safety ─────────────────────────────────────────────────
-// Scans finished output for patterns that violate ARIA safety rules. Returns
+// Scans finished output for patterns that violate Cara safety rules. Returns
 // a list of warnings — callers decide whether to block, flag for review, or
 // log and continue.
 
@@ -207,7 +207,7 @@ export function validateOutputSafety(content: string): { safe: boolean; warnings
   for (const pattern of DIAGNOSTIC_PATTERNS) {
     if (pattern.test(content)) {
       warnings.push(
-        `Possible diagnostic language detected (matched: ${pattern.source.slice(0, 60)}). ARIA must not diagnose children.`,
+        `Possible diagnostic language detected (matched: ${pattern.source.slice(0, 60)}). Cara must not diagnose children.`,
       );
     }
   }
@@ -223,7 +223,7 @@ export function validateOutputSafety(content: string): { safe: boolean; warnings
   for (const pattern of UNSUPPORTED_CONCLUSION_PATTERNS) {
     if (pattern.test(content)) {
       warnings.push(
-        `Unsupported conclusion language detected (matched: ${pattern.source.slice(0, 60)}). ARIA must use tentative, evidence-based language.`,
+        `Unsupported conclusion language detected (matched: ${pattern.source.slice(0, 60)}). Cara must use tentative, evidence-based language.`,
       );
     }
   }

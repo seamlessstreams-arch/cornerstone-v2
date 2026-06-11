@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SUPERVISION TRACKER WIDGET
+// CARA — SUPERVISION TRACKER WIDGET
 // Dashboard card showing the supervision status for all staff.
 // Highlights overdue and upcoming supervisions for management oversight.
 // Reg 33 visits require evidence of regular supervision — this makes it visible.

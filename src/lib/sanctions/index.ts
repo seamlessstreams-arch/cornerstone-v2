@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Sanctions Intelligence — Public API
+// Cara Sanctions Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

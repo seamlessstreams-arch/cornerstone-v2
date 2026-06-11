@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME HEALTH MONITORING INTELLIGENCE ENGINE — TESTS
+// CARA — HOME HEALTH MONITORING INTELLIGENCE ENGINE — TESTS
 // CHR 2015 Reg 10/15: Health & Wellbeing monitoring for looked-after children.
 // ══════════════════════════════════════════════════════════════════════════════
 

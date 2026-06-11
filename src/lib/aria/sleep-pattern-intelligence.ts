@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA Intelligence Engine — Sleep Pattern Analysis
+// Cara Intelligence Engine — Sleep Pattern Analysis
 //
 // Pure deterministic analysis of sleep data for looked-after children.
 // Identifies:

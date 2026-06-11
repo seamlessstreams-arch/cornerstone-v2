@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF CODE OF CONDUCT COMPLIANCE SERVICE TESTS
+// CARA — STAFF CODE OF CONDUCT COMPLIANCE SERVICE TESTS
 // Pure-function tests for code of conduct metrics, alert identification,
-// ARIA insight generation, and edge cases.
+// Cara insight generation, and edge cases.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";

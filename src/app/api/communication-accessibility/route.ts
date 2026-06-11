@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Communication & Accessibility Intelligence API Route
+// Cara — Communication & Accessibility Intelligence API Route
 //
 // GET  → returns Chamberlain House demo communication & accessibility intelligence
 // POST → accepts custom data for any home

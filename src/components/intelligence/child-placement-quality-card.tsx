@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD PLACEMENT QUALITY INTELLIGENCE CARD
+// CARA — CHILD PLACEMENT QUALITY INTELLIGENCE CARD
 // Per-child placement quality: mood trajectory, daily log engagement,
-// key work profile, welfare checks, activities, stability, and ARIA insights.
+// key work profile, welfare checks, activities, stability, and Cara insights.
 // CHR 2015 Reg 5, 6, 7, 9. SCCIF: "Experiences and progress of children."
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -266,12 +266,12 @@ export function ChildPlacementQualityCard({ childId }: { childId: string }) {
           </div>
         )}
 
-        {/* ARIA Placement Insights */}
+        {/* Cara Placement Insights */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Placement Intelligence
+              Cara Placement Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

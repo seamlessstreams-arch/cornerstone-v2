@@ -3,7 +3,7 @@
 //
 // Analyses incident data to identify patterns: time-of-day clustering,
 // common triggers, escalation trends, young person correlation, and
-// staff-on-shift patterns. Provides ARIA-generated insights for prevention.
+// staff-on-shift patterns. Provides Cara-generated insights for prevention.
 // ══════════════════════════════════════════════════════════════════════════════
 
 "use client";
@@ -280,14 +280,14 @@ export function AriaIncidentAnalytics() {
         )}
       </div>
 
-      {/* ARIA insights */}
+      {/* Cara insights */}
       <div>
         <button
           className="w-full px-4 py-2.5 flex items-center gap-1.5 text-xs text-[var(--cs-text-secondary)] hover:text-[var(--cs-navy)] transition-colors border-b border-[var(--cs-border)]"
           onClick={() => setShowInsights(!showInsights)}
         >
           <Sparkles className="h-3.5 w-3.5 text-[var(--cs-aria-gold)]" />
-          <span className="font-medium">ARIA Insights</span>
+          <span className="font-medium">Cara Insights</span>
           <span className="text-[var(--cs-text-muted)]">({data.ariaInsights.length})</span>
           {showInsights ? <ChevronUp className="h-3.5 w-3.5 ml-auto" /> : <ChevronDown className="h-3.5 w-3.5 ml-auto" />}
         </button>

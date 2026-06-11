@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF BULK ENDPOINT (enriched)
+// CARA — STAFF BULK ENDPOINT (enriched)
 //
 // Returns all staff with computed fields matching StaffEnriched interface:
 // supervision status, training counts, shift status, leave, tasks.

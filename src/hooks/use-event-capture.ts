@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EVENT CAPTURE (write-path) HOOK
+// CARA — EVENT CAPTURE (write-path) HOOK
 // React Query wrapper for /api/v1/event-capture
 // ══════════════════════════════════════════════════════════════════════════════
 

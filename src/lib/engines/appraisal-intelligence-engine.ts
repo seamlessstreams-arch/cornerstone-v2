@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — APPRAISAL INTELLIGENCE ENGINE
+// CARA — APPRAISAL INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses staff appraisal compliance: completion rates, competency scores,
@@ -394,7 +394,7 @@ export function computeAppraisalIntelligence(
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
   const insights: AriaAppraisalInsight[] = [];
 
   // Critical: overdue

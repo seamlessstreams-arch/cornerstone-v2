@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — BEHAVIOUR PATTERN ANALYSIS INTELLIGENCE CARD
+// CARA — BEHAVIOUR PATTERN ANALYSIS INTELLIGENCE CARD
 // Dashboard card powered by the Behaviour Intelligence Engine.
 // Analyses time patterns, categories, and trajectories.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -160,13 +160,13 @@ export function BehaviourPatternAnalysisCard() {
           </div>
         )}
 
-        {/* ── ARIA Behaviour Intelligence ─────────────────────────────── */}
+        {/* ── Cara Behaviour Intelligence ─────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Behaviour Intelligence
+              Cara Behaviour Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

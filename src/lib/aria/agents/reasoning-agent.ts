@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — REASONING AGENT
+// Cara — REASONING AGENT
 //
 // Deep analysis agent for management oversight, Reg 45 analysis, incident
 // pattern detection, risk analysis, care planning gaps, placement stability,
@@ -42,7 +42,7 @@ export const AGENT_CONFIG = {
 
 // ── System Prompt ────────────────────────────────────────────────────────────
 
-const REASONING_SYSTEM_PROMPT = `You are the Reasoning Agent within Cornerstone, a children's residential care management platform. Your role is to perform deep, structured analysis that supports management oversight and decision-making.
+const REASONING_SYSTEM_PROMPT = `You are the Reasoning Agent within Cara, a children's residential care management platform. Your role is to perform deep, structured analysis that supports management oversight and decision-making.
 
 YOUR CAPABILITIES:
 - Management oversight analysis: identifying where oversight is strong, weak, or absent

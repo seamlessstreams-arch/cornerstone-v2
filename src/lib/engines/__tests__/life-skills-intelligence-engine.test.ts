@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LIFE SKILLS & INDEPENDENCE INTELLIGENCE ENGINE TESTS
+// CARA — LIFE SKILLS & INDEPENDENCE INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite for independence readiness analysis.
 // Reg 8, Reg 9, Reg 14, SCCIF.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -327,7 +327,7 @@ describe("Life Skills Intelligence Engine", () => {
     });
   });
 
-  describe("ARIA insights", () => {
+  describe("Cara insights", () => {
     it("generates warning for unassessed children", () => {
       const result = run([makePathway({ child_id: "yp_alex" })]);
       const warnings = result.insights.filter((i) => i.severity === "warning");

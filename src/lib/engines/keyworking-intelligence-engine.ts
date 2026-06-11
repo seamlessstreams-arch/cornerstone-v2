@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — KEYWORKING INTELLIGENCE ENGINE
+// CARA — KEYWORKING INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses key working session frequency, quality, mood impact, therapeutic
@@ -338,7 +338,7 @@ export function computeKeyworkingIntelligence(input: KeyworkingIntelligenceInput
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
   const insights: AriaKeyworkingInsight[] = [];
 
   // Critical: overdue children

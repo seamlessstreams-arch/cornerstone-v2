@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME COMPLAINT & ADVOCACY RESPONSIVENESS INTELLIGENCE API ROUTE
+// CARA — HOME COMPLAINT & ADVOCACY RESPONSIVENESS INTELLIGENCE API ROUTE
 // GET /api/v1/home-complaint-advocacy-responsiveness-intelligence
 // Cross-domain composite: complaintOutcomeRecords + complaintTrends +
 // advocacyRecords + childFeedbackLoops + participationEntries

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME QUALITY OF CARE REVIEW INTELLIGENCE ENGINE
+// CARA — HOME QUALITY OF CARE REVIEW INTELLIGENCE ENGINE
 // Pure deterministic engine: quality of care reviews, domain assessments,
 // action completion, timeliness, and improvement tracking.
 // CHR 2015 Reg 45/46: Quality of care reviews. SCCIF: Quality & improvement.

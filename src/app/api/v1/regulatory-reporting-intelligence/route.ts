@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — REGULATORY REPORTING INTELLIGENCE API ROUTE
+// CARA — REGULATORY REPORTING INTELLIGENCE API ROUTE
 // GET /api/v1/regulatory-reporting-intelligence
 // Returns Reg 44 visit schedule compliance, Reg 45 quality of care review
 // status, Reg 40 statutory notification compliance, recommendation tracking,

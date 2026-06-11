@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — TYPE SYSTEM
+// CARA — TYPE SYSTEM
 // Every entity is typed. Every relationship is explicit.
 // ══════════════════════════════════════════════════════════════════════════════
 

@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA ORCHESTRATOR — SAFETY GOVERNOR
+// Cara ORCHESTRATOR — SAFETY GOVERNOR
 //
-// The final gate before any Aria output is returned to the user. Checks EVERY
-// response for violations of Aria's safety principles:
+// The final gate before any Cara output is returned to the user. Checks EVERY
+// response for violations of Cara's safety principles:
 //
 // - Does it make a decision instead of supporting judgement?
 // - Does it minimise safeguarding risk?
@@ -27,54 +27,54 @@ import { validateOutputSafety, sanitiseOutput, BANNED_PHRASES } from "../ai/safe
 import type { EvidenceItem, RiskLevel, SafetyReview } from "./types";
 
 // ── Decision-Making Language ──────��───────────────────────────────────────
-// Aria must not present itself as making statutory or professional decisions.
+// Cara must not present itself as making statutory or professional decisions.
 
 const DECISION_MAKING_PATTERNS: Array<{ pattern: RegExp; message: string }> = [
   {
     pattern: /\bI (?:have decided|am deciding|decide|will decide|recommend we immediately)\b/i,
-    message: "Aria appears to be making a decision rather than supporting judgement.",
+    message: "Cara appears to be making a decision rather than supporting judgement.",
   },
   {
     pattern: /\byou (?:must|should) immediately (?:remove|dismiss|suspend|exclude|restrain)\b/i,
-    message: "Aria is directing a statutory or disciplinary action rather than suggesting review.",
+    message: "Cara is directing a statutory or disciplinary action rather than suggesting review.",
   },
   {
     pattern: /\b(?:this child needs to be|the child should be) (?:removed|excluded|restrained|sectioned|medicated)\b/i,
-    message: "Aria is directing a decision about a child's liberty, placement, or medical treatment.",
+    message: "Cara is directing a decision about a child's liberty, placement, or medical treatment.",
   },
   {
     pattern: /\bI (?:have|am) (?:conclud(?:ed|ing)|determin(?:ed|ing)) that\b/i,
-    message: "Aria is presenting a conclusion as its own determination.",
+    message: "Cara is presenting a conclusion as its own determination.",
   },
   {
     pattern: /\b(?:my assessment is|my professional view is|in my professional opinion)\b/i,
-    message: "Aria is claiming a professional opinion — it is not a qualified professional.",
+    message: "Cara is claiming a professional opinion — it is not a qualified professional.",
   },
   {
     pattern: /\bno safeguarding concern(?:s)?\b/i,
-    message: "Aria is dismissing safeguarding concerns — only qualified humans can make this determination.",
+    message: "Cara is dismissing safeguarding concerns — only qualified humans can make this determination.",
   },
 ];
 
 // ── Minimisation Patterns ───────���─────────────────────────────────────────
-// Aria must not downplay or minimise safeguarding indicators.
+// Cara must not downplay or minimise safeguarding indicators.
 
 const MINIMISATION_PATTERNS: Array<{ pattern: RegExp; message: string }> = [
   {
     pattern: /\b(?:nothing to worry about|no cause for concern|not a safeguarding issue)\b/i,
-    message: "Aria is minimising a potential safeguarding concern.",
+    message: "Cara is minimising a potential safeguarding concern.",
   },
   {
     pattern: /\b(?:probably just|most likely just|it's just|only a minor)\b/i,
-    message: "Aria may be minimising the significance of indicators.",
+    message: "Cara may be minimising the significance of indicators.",
   },
   {
     pattern: /\b(?:normal behaviour for|typical teenage|just attention)\b/i,
-    message: "Aria is normalising behaviour that may indicate unmet need or risk.",
+    message: "Cara is normalising behaviour that may indicate unmet need or risk.",
   },
   {
     pattern: /\b(?:overreacting|making too much|blowing .* out of proportion)\b/i,
-    message: "Aria is suggesting professionals are overreacting to indicators.",
+    message: "Cara is suggesting professionals are overreacting to indicators.",
   },
 ];
 
@@ -83,15 +83,15 @@ const MINIMISATION_PATTERNS: Array<{ pattern: RegExp; message: string }> = [
 const BLAME_PATTERNS: Array<{ pattern: RegExp; message: string }> = [
   {
     pattern: /\b(?:the child is|this child is|they are) (?:manipulative|attention.seeking|naughty|deliberately difficult|non.compliant|defiant)\b/i,
-    message: "Aria is using blame language that labels the child negatively.",
+    message: "Cara is using blame language that labels the child negatively.",
   },
   {
     pattern: /\b(?:chose to|decided to|wanted to) (?:be disruptive|misbehave|cause trouble|be difficult)\b/i,
-    message: "Aria is attributing blame/agency for distressed behaviour.",
+    message: "Cara is attributing blame/agency for distressed behaviour.",
   },
   {
     pattern: /\b(?:refusing to engage|won't cooperate|deliberately ignoring)\b/i,
-    message: "Aria is framing a child's response as deliberate non-cooperation rather than communication.",
+    message: "Cara is framing a child's response as deliberate non-cooperation rather than communication.",
   },
 ];
 
@@ -100,11 +100,11 @@ const BLAME_PATTERNS: Array<{ pattern: RegExp; message: string }> = [
 const DIAGNOSTIC_PATTERNS: Array<{ pattern: RegExp; message: string }> = [
   {
     pattern: /\b(?:the child has|this child has|they have|diagnosed with|presenting with|symptoms of|suffers from)\s+(?:ADHD|ASD|autism|attachment disorder|ODD|conduct disorder|personality disorder|PTSD|anxiety disorder|depression)\b/i,
-    message: "Aria is applying a clinical diagnosis — only qualified clinicians can diagnose.",
+    message: "Cara is applying a clinical diagnosis — only qualified clinicians can diagnose.",
   },
   {
     pattern: /\b(?:the child is|this child is)\s+(?:autistic|ADHD|bipolar|schizophrenic|psychotic)\b/i,
-    message: "Aria is labelling a child with a clinical diagnosis.",
+    message: "Cara is labelling a child with a clinical diagnosis.",
   },
 ];
 
@@ -147,15 +147,15 @@ const INSTITUTIONAL_PATTERNS: Array<{ pattern: RegExp; message: string }> = [
 const UNLAWFUL_PATTERNS: Array<{ pattern: RegExp; message: string }> = [
   {
     pattern: /\b(?:restrain.*without|lock.*in.*room|remove.*belongings.*as punishment|withhold.*food|withhold.*contact)\b/i,
-    message: "Aria may be recommending an action that could be unlawful or disproportionate.",
+    message: "Cara may be recommending an action that could be unlawful or disproportionate.",
   },
   {
     pattern: /\b(?:search.*without consent|read.*diary|monitor.*phone.*without)\b/i,
-    message: "Aria may be recommending a privacy intrusion without proper authority.",
+    message: "Cara may be recommending a privacy intrusion without proper authority.",
   },
   {
     pattern: /\b(?:do not inform|don't tell|keep.*from.*social worker|hide.*from.*parents)\b/i,
-    message: "Aria may be recommending concealment of information from entitled parties.",
+    message: "Cara may be recommending concealment of information from entitled parties.",
   },
 ];
 
@@ -238,7 +238,7 @@ export function reviewSafety(input: {
       warnings.push(message);
       // Blame language is always blocked regardless of risk level
       blocked = true;
-      blockReason = `Blocked: ${message} Aria must never blame children.`;
+      blockReason = `Blocked: ${message} Cara must never blame children.`;
     }
   }
 
@@ -352,7 +352,7 @@ export function reviewSafety(input: {
 
 export function buildBlockedResponse(review: SafetyReview, riskLevel: RiskLevel): string {
   const parts: string[] = [
-    "Aria has blocked this response because it did not meet safety standards.",
+    "Cara has blocked this response because it did not meet safety standards.",
     "",
     `Reason: ${review.blockReason ?? "Safety check failed."}`,
     "",
@@ -379,7 +379,7 @@ export function buildBlockedResponse(review: SafetyReview, riskLevel: RiskLevel)
 
   if (riskLevel === "critical") {
     parts.push("");
-    parts.push("IMPORTANT: If a child is at immediate risk of harm, follow your home's emergency safeguarding procedures now. Do not wait for Aria.");
+    parts.push("IMPORTANT: If a child is at immediate risk of harm, follow your home's emergency safeguarding procedures now. Do not wait for Cara.");
   }
 
   return parts.join("\n");

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — AUTH CONTEXT
+// CARA — AUTH CONTEXT
 // Provides the current user and role throughout the application.
 // In production, replace the localStorage stub with NextAuth / Clerk session.
 // ══════════════════════════════════════════════════════════════════════════════

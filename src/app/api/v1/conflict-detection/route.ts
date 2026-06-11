@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CONFLICT DETECTION API ROUTE
+// CARA — CONFLICT DETECTION API ROUTE
 // GET /api/v1/conflict-detection
 //
 // The complement to duplicate detection and the last automation safeguard:

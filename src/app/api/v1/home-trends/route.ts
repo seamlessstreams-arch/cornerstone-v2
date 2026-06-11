@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME TRENDS / "DIRECTION OF TRAVEL" API ROUTE
+// CARA — HOME TRENDS / "DIRECTION OF TRAVEL" API ROUTE
 // GET /api/v1/home-trends
 // Composes the home's key safety & wellbeing signals over time (weekly buckets)
 // and reports the direction of travel for each. CHR 2015 Reg 13 (leaders driving

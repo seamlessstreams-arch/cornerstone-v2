@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME IT EQUIPMENT & CONNECTIVITY INTELLIGENCE API ROUTE
+// CARA — HOME IT EQUIPMENT & CONNECTIVITY INTELLIGENCE API ROUTE
 // GET /api/v1/home-it-equipment-connectivity-intelligence
 // Cross-domain composite: wifiRecords + deviceRecords + printerRecords +
 // softwareRecords + digitalAccessRecords

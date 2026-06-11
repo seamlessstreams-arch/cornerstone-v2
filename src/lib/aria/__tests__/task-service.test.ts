@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Tests: Task Service — reference generation, ARIA risk scoring
+// Tests: Task Service — reference generation, Cara risk scoring
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";
@@ -104,7 +104,7 @@ describe("Task Service", () => {
     });
   });
 
-  // ── ARIA risk scoring ─────────────────────────────────────────────────
+  // ── Cara risk scoring ─────────────────────────────────────────────────
   describe("computeTaskRiskScore", () => {
     it("low-priority unblocked task has low risk", () => {
       const result = computeTaskRiskScore(makeTask({ priority: "low" }));

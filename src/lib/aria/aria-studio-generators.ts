@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — PROMPT GENERATORS
+// Cara STUDIO — PROMPT GENERATORS
 // Builds the specific user prompt for each artifact type.
 // ══════════════════════════════════════════════════════════════════════════════
 

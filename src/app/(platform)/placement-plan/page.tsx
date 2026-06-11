@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PLACEMENT PLANS
+// CARA — PLACEMENT PLANS
 // Tracks each child's placement plan with objectives, targets, responsible
 // persons, and progress. Supports Reg 14 (Placement Plan) and Schedule 2
 // (Information in Respect of Children in Children's Homes).

@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME RELIGIOUS & SPIRITUAL WELLBEING INTELLIGENCE ENGINE TESTS
+// CARA -- HOME RELIGIOUS & SPIRITUAL WELLBEING INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite: 170+ tests covering insufficient data, inadequate
 // baseline, each bonus individually (all tiers), all bonuses combined, each
 // penalty individually, penalty guards, rating boundaries, metric calculations,

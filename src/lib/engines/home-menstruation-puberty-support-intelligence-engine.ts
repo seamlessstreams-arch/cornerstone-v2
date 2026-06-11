@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME MENSTRUATION & PUBERTY SUPPORT INTELLIGENCE ENGINE
+// CARA -- HOME MENSTRUATION & PUBERTY SUPPORT INTELLIGENCE ENGINE
 // Monitors puberty education delivery, menstruation support provision,
 // product availability, dignity in puberty care, and age-appropriate body
 // confidence building across the home.

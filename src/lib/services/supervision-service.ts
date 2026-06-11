@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF SUPERVISION SERVICE
+// CARA — STAFF SUPERVISION SERVICE
 // Manages formal and informal supervision sessions, tracks compliance against
 // Reg 33 frequencies, computes quality metrics, and flags overdue staff.
 // ══════════════════════════════════════════════════════════════════════════════

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA LEARNED-ANSWER CACHE — tier 2 of the intelligence chain
+// Cara LEARNED-ANSWER CACHE — tier 2 of the intelligence chain
 //
 // The chain: (1) deterministic RULES (rules-engine.ts, ~60% of commands, £0) →
 // (2) this LEARNED CACHE (replay a near-identical past answer, £0) → (3) Claude,

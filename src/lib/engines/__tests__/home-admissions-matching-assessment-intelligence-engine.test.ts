@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ADMISSIONS & MATCHING ASSESSMENT INTELLIGENCE ENGINE
+// CARA — HOME ADMISSIONS & MATCHING ASSESSMENT INTELLIGENCE ENGINE
 // TEST SUITE — Reg 36 / SCCIF compliance scoring
 // ══════════════════════════════════════════════════════════════════════════════
 

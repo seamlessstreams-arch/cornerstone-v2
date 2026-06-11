@@ -1,5 +1,5 @@
 // ==============================================================================
-// Cornerstone -- Statement of Purpose Alignment Intelligence Engine Tests
+// Cara -- Statement of Purpose Alignment Intelligence Engine Tests
 // 80+ tests covering all functions, scoring, labels, edge cases
 // ==============================================================================
 

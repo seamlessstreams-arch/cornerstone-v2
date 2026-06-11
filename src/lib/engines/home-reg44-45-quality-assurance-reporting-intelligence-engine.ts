@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME REG 44/45 QUALITY ASSURANCE REPORTING INTELLIGENCE ENGINE
+// CARA — HOME REG 44/45 QUALITY ASSURANCE REPORTING INTELLIGENCE ENGINE
 // Monitors the quality and timeliness of the home's Regulation 44 independent
 // visitor reports, Regulation 45 quality-of-care reviews, action plan tracking
 // and closure, quality improvement cycle effectiveness, Ofsted notification

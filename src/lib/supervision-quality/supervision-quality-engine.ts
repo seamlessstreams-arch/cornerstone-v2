@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Supervision Quality Intelligence Engine
+// Cara — Supervision Quality Intelligence Engine
 //
 // Pure deterministic engine — no AI, no external calls.
 // Evaluates supervision quality across:

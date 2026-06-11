@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Tests — ARIA Education Intelligence
+// Tests — Cara Education Intelligence
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";

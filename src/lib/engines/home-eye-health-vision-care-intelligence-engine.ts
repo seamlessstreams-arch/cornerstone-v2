@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME EYE HEALTH & VISION CARE INTELLIGENCE ENGINE
+// CARA — HOME EYE HEALTH & VISION CARE INTELLIGENCE ENGINE
 // Monitors how well the home manages children's eye health — eye test
 // compliance, prescription management, optician referral tracking,
 // visual aid provision, and child engagement with eye care.

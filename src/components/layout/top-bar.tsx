@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — TOP BAR (AppShell variant)
+// CARA — TOP BAR (AppShell variant)
 // Minimal persistent bar: home name, search trigger, role badge, bell, avatar.
 // Sits above the main content area alongside the sidebar.
 // ══════════════════════════════════════════════════════════════════════════════

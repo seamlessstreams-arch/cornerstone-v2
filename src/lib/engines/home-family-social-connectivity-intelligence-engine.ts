@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME FAMILY & SOCIAL CONNECTIVITY INTELLIGENCE ENGINE
+// CARA — HOME FAMILY & SOCIAL CONNECTIVITY INTELLIGENCE ENGINE
 // Cross-domain composite engine: analyses family contact, social connections,
 // and partnership quality for children in the home. Aggregates data from
 // familyTimeSessions, contactPlans, parentPartnershipRecords,

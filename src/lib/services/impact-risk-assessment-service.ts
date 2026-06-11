@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — IMPACT & RISK ASSESSMENT SERVICE
+// CARA — IMPACT & RISK ASSESSMENT SERVICE
 // Manages placement impact risk assessments, compatibility assessments,
 // and admission risk evaluations for new placements.
 // CHR 2015 Reg 12 (children receive care from appropriate staff),

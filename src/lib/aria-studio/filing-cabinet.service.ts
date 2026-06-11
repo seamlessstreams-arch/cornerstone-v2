@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — FILING CABINET INTEGRATION
+// Cara STUDIO — FILING CABINET INTEGRATION
 //
 // When an artifact is committed, this service files it into the correct
-// location in Cornerstone's filing cabinet structure — linking the
+// location in Cara's filing cabinet structure — linking the
 // generated record to the child, the regulation area, and the date.
 // ══════════════════════════════════════════════════════════════════════════════
 

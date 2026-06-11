@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — INTERVENTION ADD MODAL
+// CARA — INTERVENTION ADD MODAL
 // Quick-log a new intervention for a child.
 // ══════════════════════════════════════════════════════════════════════════════
 

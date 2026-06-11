@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Menu Planning & Nutrition Intelligence Engine
+// Cara Menu Planning & Nutrition Intelligence Engine
 //
 // Evaluates weekly menu quality, child satisfaction with meals, child
 // involvement in food-related activities, and nutrition audit compliance

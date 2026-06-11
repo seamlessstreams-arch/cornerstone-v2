@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — Safety Layer
+// Cara STUDIO — Safety Layer
 //
 // Pre-generation and post-generation safety checks.
 //
@@ -47,7 +47,7 @@ export function preGenerationCheck(params: {
   ];
   for (const pattern of piiPatterns) {
     if (pattern.test(params.brief)) {
-      blockers.push("Request appears to seek personally identifiable information (PII). ARIA Studio cannot generate content containing PII.");
+      blockers.push("Request appears to seek personally identifiable information (PII). Cara Studio cannot generate content containing PII.");
       flags.push({ code: "PII_REQUEST", severity: "critical", message: "PII extraction attempt detected" });
     }
   }
@@ -55,8 +55,8 @@ export function preGenerationCheck(params: {
   // Harmful content patterns
   const harmfulPatterns = [
     { pattern: /restraint.*technique/i, message: "Restraint technique generation is not permitted — refer to approved physical intervention training" },
-    { pattern: /medication.*dos(?:age|ing)/i, message: "ARIA Studio cannot provide medication dosing guidance — refer to prescriber" },
-    { pattern: /diagnos/i, message: "ARIA Studio cannot diagnose — refer to clinical professionals" },
+    { pattern: /medication.*dos(?:age|ing)/i, message: "Cara Studio cannot provide medication dosing guidance — refer to prescriber" },
+    { pattern: /diagnos/i, message: "Cara Studio cannot diagnose — refer to clinical professionals" },
   ];
   for (const { pattern, message } of harmfulPatterns) {
     if (pattern.test(params.brief)) {
@@ -190,7 +190,7 @@ export function postGenerationCheck(
   ];
   for (const pattern of punitivePatterns) {
     if (pattern.test(allContent)) {
-      warnings.push("Output may contain punitive language. ARIA Studio content must be non-punitive and strengths-based.");
+      warnings.push("Output may contain punitive language. Cara Studio content must be non-punitive and strengths-based.");
       flags.push({ code: "PUNITIVE_LANGUAGE", severity: "warning", message: "Potentially punitive language detected" });
       break;
     }

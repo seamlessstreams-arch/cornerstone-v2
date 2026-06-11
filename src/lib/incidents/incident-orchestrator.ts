@@ -370,7 +370,7 @@ export function createIncident(input: CreateIncidentInput): IncidentOrchestratio
     }
   }
 
-  // ── 6. Log to ARIA interaction system (for context awareness) ──────────────
+  // ── 6. Log to Cara interaction system (for context awareness) ──────────────
   logInteraction({
     user_id: input.reported_by,
     child_id: input.child_id,

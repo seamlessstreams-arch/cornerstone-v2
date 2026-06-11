@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME INFORMATION FLOW QUALITY INTELLIGENCE ENGINE
+// CARA — HOME INFORMATION FLOW QUALITY INTELLIGENCE ENGINE
 // Cross-cutting composite: assesses whether important information flows
 // effectively through the home — combining handovers, daily logs, care events,
 // and notifications to identify communication gaps.

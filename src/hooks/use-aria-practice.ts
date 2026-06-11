@@ -1,6 +1,6 @@
 "use client";
 
-// React-Query hooks for the ARIA Practice Intelligence API. These routes live at
+// React-Query hooks for the Cara Practice Intelligence API. These routes live at
 // /api/aria/practice-intelligence/* (NOT under /api/v1), so we use a small local
 // fetch helper that still forwards the demo x-user-id identity header.
 
@@ -24,7 +24,7 @@ async function practiceFetch<T>(path: string, options?: RequestInit): Promise<T>
   });
   if (!res.ok) {
     const err = await res.json().catch(() => ({ error: "Request failed" }));
-    throw new Error(err.error || `ARIA error ${res.status}`);
+    throw new Error(err.error || `Cara error ${res.status}`);
   }
   return res.json();
 }

@@ -3,7 +3,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // AriaGlobalFab
 //
-// Floating action button that provides global ARIA access across the platform.
+// Floating action button that provides global Cara access across the platform.
 // Appears at the bottom-right of every page. Opens a slide-out drawer with
 // the AriaCommandPanel. Permission-controlled: hidden for users without
 // aria.use.
@@ -103,7 +103,7 @@ export function AriaGlobalFab() {
             ? "bg-[var(--cs-text-secondary)] text-white rotate-45"
             : "bg-[var(--cs-navy)] text-white hover:scale-105",
         )}
-        aria-label={open ? "Close ARIA" : "Open ARIA assistant"}
+        aria-label={open ? "Close Cara" : "Open Cara assistant"}
       >
         {open ? (
           <X className="h-5 w-5 md:h-6 md:w-6" />

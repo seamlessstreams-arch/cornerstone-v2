@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Aria Intelligence — Error Types
+// Cara Intelligence — Error Types
 // ══════════════════════════════════════════════════════════════════════════════
 
 export class AriaError extends Error {

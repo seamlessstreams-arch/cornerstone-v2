@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME REG 44/45 EVIDENCE INTELLIGENCE ENGINE
+// CARA — HOME REG 44/45 EVIDENCE INTELLIGENCE ENGINE
 // Aggregates Reg 44 visits, reports, actions; Reg 45 evidence; Reg 46 reviews;
 // and Annex A evidence readiness.
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.

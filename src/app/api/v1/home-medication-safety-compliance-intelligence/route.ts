@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME MEDICATION SAFETY & COMPLIANCE INTELLIGENCE API ROUTE
+// CARA — HOME MEDICATION SAFETY & COMPLIANCE INTELLIGENCE API ROUTE
 // GET /api/v1/home-medication-safety-compliance-intelligence
 // Cross-domain composite: medicationAdministrations + medicationErrors +
 // medicationAuditRecords + medicationStorageAudits + emergencyMedicationProtocols

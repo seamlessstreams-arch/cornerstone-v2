@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ALLEGATIONS & INVESTIGATIONS MANAGEMENT API ROUTE
+// CARA — HOME ALLEGATIONS & INVESTIGATIONS MANAGEMENT API ROUTE
 // GET /api/v1/home-allegations-investigations-management-intelligence
 // Cross-domain composite: allegationRecords + ladoReferralRecords +
 // investigationRecords + outcomeRecords + safeguardingResponseRecords

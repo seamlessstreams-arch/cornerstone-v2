@@ -1,9 +1,9 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — UNIVERSAL PERMISSION MODEL
+// Cara — UNIVERSAL PERMISSION MODEL
 //
-// One source of truth for who can do what across every Aria-driven feature.
+// One source of truth for who can do what across every Cara-driven feature.
 // Maps onto the spec's Phase 12 role list (RM, RI, deputy, team leader, RSW,
-// HR/admin, auditor) with the Aria permission ids the spec calls out.
+// HR/admin, auditor) with the Cara permission ids the spec calls out.
 //
 // Server routes must enforce these; UI hiding is not enough.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -151,7 +151,7 @@ export interface AriaAccessDecision {
 }
 
 /**
- * Application-layer Aria access check. Combines the role grant matrix with
+ * Application-layer Cara access check. Combines the role grant matrix with
  * per-record scoping (organisation, home, staff-self). Always returns a
  * reason on denial so the audit stream captures it.
  */
@@ -220,7 +220,7 @@ export function checkAriaAccess(
 export const ARIA_ALL_PERMISSIONS: ReadonlyArray<AriaPermission> = ALL;
 
 // ─── Adapter from AppRole to AriaRole ────────────────────────────────────────
-// The wider Cornerstone codebase uses an AppRole enum (defined in
+// The wider Cara codebase uses an AppRole enum (defined in
 // src/lib/permissions.ts) that does not 1:1 match AriaRole. Live forms can
 // pass their currentRole straight through this adapter.
 
@@ -243,8 +243,8 @@ export function appRoleToAriaRole(appRole: string | null | undefined): AriaRole 
     case "auditor":
       return "auditor";
     case "super_admin":
-      // Super admin is not granted Aria automatically. Map to registered_manager
-      // so they can see Aria features when impersonating; production should
+      // Super admin is not granted Cara automatically. Map to registered_manager
+      // so they can see Cara features when impersonating; production should
       // prefer mapping super_admin to a more specific role.
       return "registered_manager";
     case "therapist":

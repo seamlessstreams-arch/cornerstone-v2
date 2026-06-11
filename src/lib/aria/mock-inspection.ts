@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA INTELLIGENCE — MOCK INSPECTION SIMULATOR
+// Cara INTELLIGENCE — MOCK INSPECTION SIMULATOR
 //
 // Generates realistic mock Ofsted inspection questions based on focus areas.
 // Uses the AI provider to create challenging questions, then stores them
@@ -28,7 +28,7 @@ export async function startMockInspection(input: {
   ];
 
   const raw = await generateAriaJson({
-    model: process.env.ARIA_REVIEW_MODEL ?? process.env.ARIA_MODEL,
+    model: (process.env.CARA_REVIEW_MODEL ?? process.env.ARIA_REVIEW_MODEL) ?? (process.env.CARA_MODEL ?? process.env.ARIA_MODEL),
     temperature: 0.2,
     messages: [
       {

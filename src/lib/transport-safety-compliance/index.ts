@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Transport Safety Compliance Intelligence — Public API
+// Cara Transport Safety Compliance Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

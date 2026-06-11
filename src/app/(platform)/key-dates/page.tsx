@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — KEY DATES
+// CARA — KEY DATES
 // Unified statutory & operational deadline timeline — next 90 days.
 // Sources: LAC reviews · Reg 44 visits · Supervisions · Appraisals ·
 //          Training/qualification renewals

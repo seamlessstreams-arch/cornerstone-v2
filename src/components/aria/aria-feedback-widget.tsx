@@ -3,7 +3,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // AriaFeedbackWidget
 //
-// Lightweight inline widget that lets staff rate an ARIA output (thumbs up /
+// Lightweight inline widget that lets staff rate an Cara output (thumbs up /
 // thumbs down) and optionally leave a short note explaining why. Feedback is
 // sent to /api/aria/feedback and stored for continuous quality improvement.
 //
@@ -18,7 +18,7 @@ import { ThumbsUp, ThumbsDown, MessageSquare, Send, Loader2, Check } from "lucid
 type Rating = "positive" | "negative" | null;
 
 interface AriaFeedbackWidgetProps {
-  /** The ARIA output being rated */
+  /** The Cara output being rated */
   outputId: string;
   /** The command that generated this output */
   commandId: string;

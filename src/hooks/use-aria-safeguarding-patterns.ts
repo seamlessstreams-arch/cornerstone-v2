@@ -40,7 +40,7 @@ export function useSafeguardingPatterns(homeId?: string, status?: string) {
     queryKey: ["aria-safeguarding-patterns", homeId ?? null, status ?? null],
     queryFn: () =>
       api.get<PatternListResponse>(
-        `/aria-studio/safeguarding-patterns${qs ? `?${qs}` : ""}`,
+        `/cara-studio/safeguarding-patterns${qs ? `?${qs}` : ""}`,
       ),
     refetchInterval: 60000,
   });
@@ -55,7 +55,7 @@ export function useEarlyWarnings(homeId?: string, status?: string) {
     queryKey: ["aria-early-warnings", homeId ?? null, status ?? null],
     queryFn: () =>
       api.get<WarningListResponse>(
-        `/aria-studio/early-warnings${qs ? `?${qs}` : ""}`,
+        `/cara-studio/early-warnings${qs ? `?${qs}` : ""}`,
       ),
     refetchInterval: 60000,
   });
@@ -73,7 +73,7 @@ export function useRunSafeguardingScan() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (input: ScanInput) =>
-      api.post<ScanResponse>("/aria-studio/safeguarding-patterns", input),
+      api.post<ScanResponse>("/cara-studio/safeguarding-patterns", input),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["aria-safeguarding-patterns"] });
       qc.invalidateQueries({ queryKey: ["aria-early-warnings"] });
@@ -94,7 +94,7 @@ export function useUpdateSafeguardingPattern() {
   return useMutation({
     mutationFn: (input: PatternUpdateInput) =>
       api.patch<{ data: AriaSafeguardingPattern }>(
-        "/aria-studio/safeguarding-patterns",
+        "/cara-studio/safeguarding-patterns",
         input,
       ),
     onSuccess: () => {
@@ -116,7 +116,7 @@ export function useUpdateEarlyWarning() {
   return useMutation({
     mutationFn: (input: WarningUpdateInput) =>
       api.patch<{ data: AriaEarlyWarning }>(
-        "/aria-studio/early-warnings",
+        "/cara-studio/early-warnings",
         input,
       ),
     onSuccess: () => {

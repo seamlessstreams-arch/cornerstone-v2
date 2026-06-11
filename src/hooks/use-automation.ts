@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — AUTOMATION ENGINE HOOKS
+// CARA — AUTOMATION ENGINE HOOKS
 // React Query hooks for the centralized automation system.
 // useAutomationRules  — fetches all rules with summary stats
 // useEvaluateAutomation — evaluates what actions would fire for a trigger

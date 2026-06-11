@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME POCKET MONEY & FINANCIAL LITERACY INTELLIGENCE ENGINE
+// CARA — HOME POCKET MONEY & FINANCIAL LITERACY INTELLIGENCE ENGINE
 // Monitors how well the home manages pocket money, supports savings programmes,
 // delivers financial literacy education, facilitates age-appropriate budgeting,
 // and maintains money handling accountability.

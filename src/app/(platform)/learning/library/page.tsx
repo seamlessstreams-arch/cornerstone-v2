@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LEARNING STUDIO: RESOURCE LIBRARY
+// CARA — LEARNING STUDIO: RESOURCE LIBRARY
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState, useMemo } from "react";

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF RECORDING PRACTICE ENGINE
+// CARA — STAFF RECORDING PRACTICE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 //

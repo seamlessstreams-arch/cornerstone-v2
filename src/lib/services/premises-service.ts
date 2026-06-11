@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PREMISES & MAINTENANCE SERVICE
+// CARA — PREMISES & MAINTENANCE SERVICE
 // Manages premises safety checks (CHR 2015 Reg 25), fire safety compliance,
 // maintenance requests, and statutory inspection tracking.
 // ══════════════════════════════════════════════════════════════════════════════

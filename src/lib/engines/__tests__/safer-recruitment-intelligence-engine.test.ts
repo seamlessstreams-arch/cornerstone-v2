@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SAFER RECRUITMENT INTELLIGENCE ENGINE — TESTS
+// CARA — SAFER RECRUITMENT INTELLIGENCE ENGINE — TESTS
 // 40+ tests covering helpers, overview, candidate profiles, check analysis,
-// alerts, ARIA insights, and full Chamberlain House integration scenario.
+// alerts, Cara insights, and full Chamberlain House integration scenario.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";
@@ -603,9 +603,9 @@ describe("alerts", () => {
   });
 });
 
-// ── ARIA Insights ───────────────────────────────────────────────────────────
+// ── Cara Insights ───────────────────────────────────────────────────────────
 
-describe("ARIA insights", () => {
+describe("Cara insights", () => {
   it("generates critical insight for advanced stage without full checks", () => {
     const result = run({
       candidates: [makeCandidate({ id: "c1", current_stage: "pre_start_checks" })],

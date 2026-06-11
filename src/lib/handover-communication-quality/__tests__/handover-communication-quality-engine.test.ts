@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Handover & Communication Quality Intelligence Engine Tests
+// Cara — Handover & Communication Quality Intelligence Engine Tests
 // 100+ tests covering all functions, scoring, labels, edge cases
 // ══════════════════════════════════════════════════════════════════════════════
 

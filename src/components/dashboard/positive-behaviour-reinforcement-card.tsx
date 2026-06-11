@@ -1,7 +1,7 @@
 "use client";
 
 // ��═════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — POSITIVE BEHAVIOUR REINFORCEMENT CARD
+// CARA — POSITIVE BEHAVIOUR REINFORCEMENT CARD
 // Live data from useBehaviourIntelligence() — rewards, profile, categories.
 // CHR 2015 Reg 11/12. SCCIF: Overall Experiences.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -113,13 +113,13 @@ export function PositiveBehaviourReinforcementCard() {
           </div>
         )}
 
-        {/* ── ARIA insights ────────────────────────────────���──────────── */}
+        {/* ── Cara insights ────────────────────────────────���──────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Behaviour Intelligence
+              Cara Behaviour Intelligence
             </p>
             {intel.insights.slice(0, 2).map((insight, i) => (
               <div

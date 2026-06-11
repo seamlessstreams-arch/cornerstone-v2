@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — AUDIT SERVICE TESTS
+// CARA — AUDIT SERVICE TESTS
 // Pure-function tests for change computation and entity type constants.
 // ══════════════════════════════════════════════════════════════════════════════
 

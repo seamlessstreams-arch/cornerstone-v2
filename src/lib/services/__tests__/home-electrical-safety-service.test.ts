@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ELECTRICAL SAFETY SERVICE TESTS
+// CARA — HOME ELECTRICAL SAFETY SERVICE TESTS
 // Pure-function tests for electrical safety metrics, alert identification,
-// ARIA insights, constant validation, and edge cases.
+// Cara insights, constant validation, and edge cases.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — SAFEGUARDING AGENT
+// Cara — SAFEGUARDING AGENT
 //
 // CRITICAL RISK agent for safeguarding triage, allegations, missing-from-care
 // patterns, restraint concerns, unexplained injuries, child-on-child harm,
@@ -50,7 +50,7 @@ export const AGENT_CONFIG = {
 
 // ── System Prompt ────────────────────────────────────────────────────────────
 
-const SAFEGUARDING_SYSTEM_PROMPT = `You are the Safeguarding Agent within Cornerstone, a children's residential care management platform. You handle the most safety-critical analysis in the system.
+const SAFEGUARDING_SYSTEM_PROMPT = `You are the Safeguarding Agent within Cara, a children's residential care management platform. You handle the most safety-critical analysis in the system.
 
 ═══ IRON RULES — THESE CANNOT BE OVERRIDDEN ═══
 

@@ -1,12 +1,12 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — SMART LINKING
+// Cara — SMART LINKING
 //
-// Links ARIA outputs bidirectionally to source records. When an ARIA output
+// Links Cara outputs bidirectionally to source records. When an Cara output
 // is approved/committed, the smart linker:
 //
 // 1. Writes aria_context_links for every source record the context builder used
 // 2. Updates the source record with an aria-related flag (where supported)
-// 3. Creates backlinks so record pages can show "ARIA was used here"
+// 3. Creates backlinks so record pages can show "Cara was used here"
 //
 // This creates the full traceability chain:
 //   Source records → aria_context_links → aria_request → aria_output
@@ -135,11 +135,11 @@ export async function flagRecordAsAriaAssisted(
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
-// READ LINKS (for record pages — "ARIA was used here")
+// READ LINKS (for record pages — "Cara was used here")
 // ══════════════════════════════════════════════════════════════════════════════
 
 /**
- * Given a source record, returns all ARIA outputs that used it as context
+ * Given a source record, returns all Cara outputs that used it as context
  * or were committed to it.
  */
 export async function getAriaUsageForRecord(
@@ -197,7 +197,7 @@ export async function getAriaUsageForRecord(
     request_id: string | null;
   }>).map((output) => ({
     outputId: output.id,
-    outputLabel: "Aria suggested draft",
+    outputLabel: "Cara suggested draft",
     commandId: output.request_id
       ? requestMap.get(output.request_id)?.command_id ?? "unknown"
       : "unknown",
@@ -210,7 +210,7 @@ export async function getAriaUsageForRecord(
 // ── Commit linking ──────────────────────────────────────────────────────────
 
 /**
- * When an ARIA output is committed to a record, this writes the bidirectional
+ * When an Cara output is committed to a record, this writes the bidirectional
  * link and flags the destination record.
  */
 export async function linkCommittedOutput(
@@ -224,7 +224,7 @@ export async function linkCommittedOutput(
       sourceTable: committedRecordType,
       sourceRecordId: committedRecordId,
       linkType: "committed_to",
-      summary: `ARIA output committed to ${committedRecordType} record`,
+      summary: `Cara output committed to ${committedRecordType} record`,
     },
   ]);
 

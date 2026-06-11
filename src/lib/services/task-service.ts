@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — TASK EXPLORER SERVICE
+// CARA — TASK EXPLORER SERVICE
 // Full task lifecycle: create → assign → track → escalate → sign off.
-// Supports ARIA risk scoring, dependencies, recurrence, and delegation.
+// Supports Cara risk scoring, dependencies, recurrence, and delegation.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { createServerClient, isSupabaseEnabled } from "@/lib/supabase/server";
@@ -404,7 +404,7 @@ export async function getEscalationRules(
   return { ok: true, data: data ?? [] };
 }
 
-// ── ARIA risk scoring ───────────────────────────────────────────────────────
+// ── Cara risk scoring ───────────────────────────────────────────────────────
 
 export interface TaskRiskAssessment {
   score: number;
@@ -413,7 +413,7 @@ export interface TaskRiskAssessment {
 }
 
 /**
- * Compute an ARIA risk score for a task based on multiple factors.
+ * Compute an Cara risk score for a task based on multiple factors.
  * Score is 0-100 where higher = higher risk of overdue/failure.
  */
 export function computeTaskRiskScore(task: CsTask): TaskRiskAssessment {

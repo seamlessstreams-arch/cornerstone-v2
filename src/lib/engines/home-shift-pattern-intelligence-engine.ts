@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SHIFT PATTERN INTELLIGENCE ENGINE
+// CARA — HOME SHIFT PATTERN INTELLIGENCE ENGINE
 // Staffing patterns: coverage, punctuality, overtime, workload fairness.
 // CHR 2015 Reg 33(4)(c). SCCIF: "Staffing arrangements."
 // Cross-cutting: shifts × shiftSwaps.

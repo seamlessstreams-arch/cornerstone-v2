@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EVENT TYPE ICONS
+// CARA — EVENT TYPE ICONS
 // Per-CornerstoneEvent-type lucide icon, so the unified timeline is scannable by
 // domain (it already colours by risk). Exhaustive Record so a new event type is
 // forced to declare an icon. Pure data module (no JSX) — call sites render the

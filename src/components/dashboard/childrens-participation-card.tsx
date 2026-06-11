@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILDREN'S PARTICIPATION INTELLIGENCE CARD
+// CARA — CHILDREN'S PARTICIPATION INTELLIGENCE CARD
 // Dashboard card for participation, consultations, children's voice.
 // Powered by the Contact Engagement Intelligence Engine — live data.
 // CHR 2015 Reg 7. UNCRC Article 12. SCCIF: Children's Experiences.
@@ -169,13 +169,13 @@ export function ChildrensParticipationCard() {
           </div>
         )}
 
-        {/* ── ARIA Participation Intelligence ─────────────────────────── */}
+        {/* ── Cara Participation Intelligence ─────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Participation Intelligence
+              Cara Participation Intelligence
             </p>
             {intel.insights.slice(0, 2).map((insight, i) => (
               <div

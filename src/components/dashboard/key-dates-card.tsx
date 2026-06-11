@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — KEY DATES WIDGET
+// CARA — KEY DATES WIDGET
 // Dashboard card showing upcoming important dates: birthdays, training expiry,
 // supervision due dates, probation reviews, care plan reviews.
 // Ensures nothing falls through the cracks — key Ofsted requirement.

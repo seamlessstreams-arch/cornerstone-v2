@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — SAFEGUARDING PATTERN ENGINE + EARLY WARNINGS
+// Cara — SAFEGUARDING PATTERN ENGINE + EARLY WARNINGS
 //
 // Scans live records (incidents, missing episodes, restraints) for safeguarding
 // patterns that a human reviewer might miss across siloed views. Produces:

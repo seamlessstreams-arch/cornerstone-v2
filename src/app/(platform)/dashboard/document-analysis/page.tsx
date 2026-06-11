@@ -548,7 +548,7 @@ export default function DocumentAnalysisPage() {
       }
 
       setTaskCreationMessage(
-        `${result.extractedActions.length} task(s) sent to ARIA for creation. Check your task board for the new items.`,
+        `${result.extractedActions.length} task(s) sent to Cara for creation. Check your task board for the new items.`,
       );
     } catch (err) {
       console.error("[document-analysis] Task creation error:", err);
@@ -658,7 +658,7 @@ export default function DocumentAnalysisPage() {
             Document Input
           </CardTitle>
           <CardDescription>
-            Select the document type, paste the content, and describe what you want ARIA to analyse.
+            Select the document type, paste the content, and describe what you want Cara to analyse.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -743,7 +743,7 @@ export default function DocumentAnalysisPage() {
           {/* Query field */}
           <div className="space-y-1.5">
             <label className="text-xs font-medium text-[var(--cs-text-secondary)]">
-              What would you like ARIA to analyse?
+              What would you like Cara to analyse?
             </label>
             <Input
               value={query}

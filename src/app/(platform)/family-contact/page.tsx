@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — FAMILY CONTACT & CONTACT LOG REGISTER
+// CARA — FAMILY CONTACT & CONTACT LOG REGISTER
 // Children's Homes Regulations 2015, Reg 13 (Contact)
 // Quality Standards — Standard 2 (Care Planning) & Standard 5 (Relationships)
 // ══════════════════════════════════════════════════════════════════════════════
@@ -322,11 +322,11 @@ Safeguarding concern: ${log.safeguarding_concern ? log.safeguarding_detail : "no
             </div>
           )}
 
-          {/* ARIA analysis */}
+          {/* Cara analysis */}
           {log.aria_analysis && (
             <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-3">
               <p className="text-xs font-semibold text-indigo-600 mb-1 flex items-center gap-1">
-                ✦ ARIA analysis
+                ✦ Cara analysis
               </p>
               <p className="text-sm text-indigo-900 leading-relaxed">{log.aria_analysis}</p>
             </div>
@@ -359,7 +359,7 @@ Safeguarding concern: ${log.safeguarding_concern ? log.safeguarding_detail : "no
                 disabled={ariaBusy}
                 className="h-8 text-xs text-indigo-600 border-indigo-200 hover:bg-indigo-50"
               >
-                {ariaBusy ? "Analysing…" : "✦ ARIA analysis"}
+                {ariaBusy ? "Analysing…" : "✦ Cara analysis"}
               </Button>
             )}
 

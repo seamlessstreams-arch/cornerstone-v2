@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILDREN'S GUIDE SERVICE TESTS
+// CARA — CHILDREN'S GUIDE SERVICE TESTS
 // Pure-function unit tests for children's guide metrics computation,
 // alert identification, constant validation, and CRUD fallback behaviour
 // (Supabase disabled). CHR 2015 Reg 16(2)–(3) requires a children's guide

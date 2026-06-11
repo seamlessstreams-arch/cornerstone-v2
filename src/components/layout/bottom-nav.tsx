@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MOBILE BOTTOM NAV
+// CARA — MOBILE BOTTOM NAV
 // Fixed bottom bar shown on mobile only (hidden md:). 5 destinations + More
 // overlay for full navigation access.
 // ══════════════════════════════════════════════════════════════════════════════

@@ -669,8 +669,8 @@ describe("Home Mental Health Intelligence Engine", () => {
     });
   });
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
-  describe("ARIA insights", () => {
+  // ── Cara Insights ─────────────────────────────────────────────────────
+  describe("Cara insights", () => {
     it("produces positive insight when monitoring is exemplary", () => {
       const r = computeHomeMentalHealth(baseInput());
       expect(r.insights.some(i => i.severity === "positive" && i.text.includes("exemplary"))).toBe(true);

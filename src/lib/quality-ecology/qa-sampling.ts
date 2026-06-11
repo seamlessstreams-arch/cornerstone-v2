@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Quality Ecology — QA Sampling Engine
+// Cara Quality Ecology — QA Sampling Engine
 //
 // Random sampling of approved/filed records for quality assurance review.
 // Ensures consistent quality without reviewing every single record.

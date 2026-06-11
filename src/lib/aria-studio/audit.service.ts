@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — AUDIT SERVICE
+// Cara STUDIO — AUDIT SERVICE
 // Immutable audit trail for every AI action. Append-only.
 // ══════════════════════════════════════════════════════════════════════════════
 

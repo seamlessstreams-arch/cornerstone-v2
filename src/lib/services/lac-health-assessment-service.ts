@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LAC HEALTH ASSESSMENT SERVICE
+// CARA — LAC HEALTH ASSESSMENT SERVICE
 // Manages Looked After Child (LAC) Health Assessments — initial and review
 // health assessments, statutory health review compliance, health action plans,
 // and specialist referral tracking.

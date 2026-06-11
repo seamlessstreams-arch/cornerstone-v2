@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Quality Ecology — Lifecycle Engine
+// Cara Quality Ecology — Lifecycle Engine
 //
 // Pure deterministic state machine for task/form lifecycle management.
 // Determines valid transitions, checks permission for transitions,

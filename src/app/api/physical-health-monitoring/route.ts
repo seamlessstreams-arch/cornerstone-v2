@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Physical Health Monitoring API Route
+// Cara — Physical Health Monitoring API Route
 //
 // GET  → returns Chamberlain House demo physical health intelligence
 // POST → accepts custom data for any home

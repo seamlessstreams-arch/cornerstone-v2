@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — COMPLAINTS CLOCK ENGINE
+// CARA — COMPLAINTS CLOCK ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 //

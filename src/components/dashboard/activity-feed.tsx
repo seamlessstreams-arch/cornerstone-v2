@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LIVE ACTIVITY FEED
+// CARA — LIVE ACTIVITY FEED
 // Real-time stream of events across the home. Shows on the dashboard as a
 // scrollable timeline of what's been happening — incidents, tasks, meds, logs.
 // ══════════════════════════════════════════════════════════════════════════════

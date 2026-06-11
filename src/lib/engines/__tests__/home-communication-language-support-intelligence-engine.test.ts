@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME COMMUNICATION & LANGUAGE SUPPORT INTELLIGENCE ENGINE TESTS
+// CARA — HOME COMMUNICATION & LANGUAGE SUPPORT INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite covering communication assessments, speech therapy
 // engagement, communication aid provision, inclusive communication practices,
 // staff communication training, and scoring logic.

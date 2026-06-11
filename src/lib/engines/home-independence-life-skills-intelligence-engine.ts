@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME INDEPENDENCE & LIFE SKILLS INTELLIGENCE ENGINE
+// CARA — HOME INDEPENDENCE & LIFE SKILLS INTELLIGENCE ENGINE
 // Home-level: aggregates independence living assessments, cooking & baking,
 // laundry & self-care, money management, and household tasks across all
 // children to evaluate life skills readiness and development quality.
@@ -597,7 +597,7 @@ export function computeHomeIndependenceLifeSkills(
     recommendations.push({ rank: ++rank, recommendation: "Review household task expectations and motivation strategies — completion rates are low.", urgency: "soon", regulatory_ref: null });
   }
 
-  // ── ARIA Insights ────────────────────────────────────────────────────
+  // ── Cara Insights ────────────────────────────────────────────────────
   // Cross-domain skill gaps
   if (independence_assessments.length > 0) {
     const notReady = independence_assessments.filter(a => a.overall_readiness === "not_ready").length;

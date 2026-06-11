@@ -77,7 +77,7 @@ describe("compliance-rules integration (real seed data)", () => {
     expect(result.alerts.length).toBe(failingHighCrit);
   });
 
-  it("always returns at least one ARIA-style insight", () => {
+  it("always returns at least one Cara-style insight", () => {
     expect(result.insights.length).toBeGreaterThan(0);
     for (const i of result.insights) expect(["critical", "warning", "positive"]).toContain(i.severity);
   });

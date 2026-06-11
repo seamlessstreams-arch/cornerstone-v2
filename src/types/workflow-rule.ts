@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — WORKFLOW ORCHESTRATION RULES
+// CARA — WORKFLOW ORCHESTRATION RULES
 //
 // Configurable rules that turn an event into a set of concrete ACTIONS — approval
-// tasks, staff debriefs, key-working follow-ups, evidence-bank additions, ARIA
+// tasks, staff debriefs, key-working follow-ups, evidence-bank additions, Cara
 // summaries, trend updates and (human-gated) notification drafts — with deadlines
 // and escalation. The orchestration layer above routing: routing decides WHERE an
 // event surfaces; workflow decides WHAT WORK it generates.

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RECORDING QUALITY INTELLIGENCE ENGINE — TESTS
+// CARA — RECORDING QUALITY INTELLIGENCE ENGINE — TESTS
 //
 // Comprehensive test suite for recording compliance, quality scoring,
 // staff recording profiles, and child mention coverage.

@@ -64,7 +64,7 @@ export function AriaStudioQuickActionButton({
     if (context.child_id) params.set("child_id", context.child_id);
     if (context.home_id) params.set("home_id", context.home_id);
     setOpen(false);
-    router.push(`/intelligence/aria/studio?${params.toString()}`);
+    router.push(`/intelligence/cara/studio?${params.toString()}`);
   };
 
   return (
@@ -76,7 +76,7 @@ export function AriaStudioQuickActionButton({
         onClick={() => setOpen(true)}
       >
         <Wand2 className="h-3.5 w-3.5 text-violet-600" />
-        <span>Generate with ARIA</span>
+        <span>Generate with Cara</span>
       </Button>
 
       <Dialog open={open} onOpenChange={setOpen}>
@@ -100,11 +100,11 @@ export function AriaStudioQuickActionButton({
             ))}
             <div className="border-t mt-2 pt-2">
               <button
-                onClick={() => { setOpen(false); router.push("/intelligence/aria/studio"); }}
+                onClick={() => { setOpen(false); router.push("/intelligence/cara/studio"); }}
                 className="flex items-center gap-2 text-xs text-muted-foreground hover:text-foreground w-full px-3 py-2 rounded-md hover:bg-muted/50"
               >
                 <Layers className="h-3.5 w-3.5" />
-                Open ARIA Studio
+                Open Cara Studio
               </button>
             </div>
           </div>

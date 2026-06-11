@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EVENT ROUTING CARD
+// CARA — EVENT ROUTING CARD
 // Where each event flows (the "link intelligently" layer) — and the safety-gated
 // queue of external notifications (Ofsted / Police / LADO) that are planned but
 // never auto-sent. Powered by the Event Routing Engine.
@@ -110,12 +110,12 @@ export function EventRoutingCard() {
           </div>
         )}
 
-        {/* ── ARIA insights ────────────────────────────────────────────── */}
+        {/* ── Cara insights ────────────────────────────────────────────── */}
         {insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Routing Intelligence
+              Cara Routing Intelligence
             </p>
             {insights.slice(0, 2).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.positive)}>

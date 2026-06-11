@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME STAFF WELLBEING & RETENTION INTELLIGENCE ENGINE
+// CARA — HOME STAFF WELLBEING & RETENTION INTELLIGENCE ENGINE
 // Tracks staff wellbeing, morale, sickness absence patterns, turnover rates,
 // wellbeing support provision, and retention effectiveness across the home.
 // Pure deterministic engine — no imports, no LLM, no external deps.

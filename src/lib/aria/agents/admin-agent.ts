@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — ADMIN AGENT
+// Cara — ADMIN AGENT
 //
 // Handles low-risk administrative tasks: summarising logs, drafting emails,
 // creating simple tasks, rewording notes, formatting records, extracting
@@ -42,7 +42,7 @@ export const AGENT_CONFIG = {
 
 // ── System Prompt ────────────────────────────────────────────────────────────
 
-const ADMIN_SYSTEM_PROMPT = `You are an administrative assistant within a children's residential care home management system called Cornerstone.
+const ADMIN_SYSTEM_PROMPT = `You are an administrative assistant within a children's residential care home management system called Cara.
 
 YOUR ROLE:
 - Summarise logs and notes clearly and concisely

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MEALTIMES & NUTRITION MONITORING SERVICE
+// CARA — MEALTIMES & NUTRITION MONITORING SERVICE
 // Tracks meal planning, dietary requirements, food preparation,
 // mealtime experiences, and nutritional compliance.
 // CHR 2015 Reg 9 (children's plans — dietary needs),

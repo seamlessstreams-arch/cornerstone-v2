@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PRICING PAGE  (route: /pricing)
+// CARA — PRICING PAGE  (route: /pricing)
 //
 // Standalone pricing page: tiers, a full feature-comparison table, and a pricing
 // FAQ. Static server component. Honest copy — pricing is "Custom / book a quote"
@@ -17,7 +17,7 @@ import { MarketingFooter } from "@/components/marketing/marketing-footer";
 import { SectionEyebrow } from "@/components/marketing/ui";
 
 export const metadata: Metadata = {
-  title: "Pricing | Cornerstone Care OS",
+  title: "Pricing | Cara OS",
   description:
     "Pricing that scales with your homes. Every plan includes the full platform, onboarding and support — book a walkthrough for a quote tailored to your service.",
 };
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 const TIERS = [
   {
     Icon: Home, name: "Single home", who: "For one registered children's home.", featured: false, cta: "Book a demo",
-    points: ["Full practice intelligence & RAG ratings", "Ofsted readiness & self-evaluation", "Priority briefing, trends & reports", "Workforce, comms & safe access", "ARIA assistant (human-in-the-loop)", "Mobile, installable & offline-ready"],
+    points: ["Full practice intelligence & RAG ratings", "Ofsted readiness & self-evaluation", "Priority briefing, trends & reports", "Workforce, comms & safe access", "Cara assistant (human-in-the-loop)", "Mobile, installable & offline-ready"],
   },
   {
     Icon: Building2, name: "Group", who: "For providers running several homes.", featured: true, cta: "Book a demo",
@@ -45,8 +45,8 @@ const COMPARISON: { group: string; rows: { label: string; v: (boolean | string)[
       { label: "Priority briefing, trends & reports", v: [true, true, true] },
       { label: "Plan currency, premises & shift briefing", v: [true, true, true] },
       { label: "Workforce & safe access", v: [true, true, true] },
-      { label: "ARIA assistant (human-in-the-loop)", v: [true, true, true] },
-      { label: "ARIA Practice Assistant — incident support & recording quality", v: [true, true, true] },
+      { label: "Cara assistant (human-in-the-loop)", v: [true, true, true] },
+      { label: "Cara Practice Assistant — incident support & recording quality", v: [true, true, true] },
       { label: "Mobile, installable & offline-ready", v: [true, true, true] },
     ],
   },
@@ -76,7 +76,7 @@ const COMPARISON: { group: string; rows: { label: string; v: (boolean | string)[
 ];
 
 const FAQ = [
-  { q: "How is Cornerstone priced?", a: "Pricing is tailored to your service — the number of homes and how you roll out. Every plan includes the full platform, onboarding and support, so there's no feature paywall. Book a walkthrough and we'll put together a quote for your service." },
+  { q: "How is Cara priced?", a: "Pricing is tailored to your service — the number of homes and how you roll out. Every plan includes the full platform, onboarding and support, so there's no feature paywall. Book a walkthrough and we'll put together a quote for your service." },
   { q: "Do you charge per user?", a: "No — plans are scoped to your service rather than your headcount, so your whole team is included. No per-seat surprises as you grow your staff." },
   { q: "Can we start with one home and grow?", a: "Yes. Start on the Single home plan and move to Group when you add services — your data and set-up come with you." },
   { q: "What does onboarding involve?", a: "Every plan includes onboarding and support to get your home set up and your team confident. Group plans get priority onboarding, and Enterprise gets a dedicated onboarding and success manager." },
@@ -215,7 +215,7 @@ export default function PricingPage() {
             <h2 className="mx-auto max-w-2xl text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Let&rsquo;s build a quote that fits.</h2>
             <p className="mx-auto mt-4 max-w-xl text-lg text-white/75">Tell us about your service and we&rsquo;ll tailor a plan and price — or step into the live demo first.</p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <Link href="mailto:hello@cornerstonecare.app?subject=Cornerstone%20Care%20OS%20quote" className="inline-flex items-center justify-center gap-2 rounded-xl bg-white px-6 py-3.5 text-sm font-bold text-[var(--cs-navy)] transition-transform hover:-translate-y-0.5">Book a walkthrough <ArrowRight className="h-4 w-4" /></Link>
+              <Link href="/contact" className="inline-flex items-center justify-center gap-2 rounded-xl bg-white px-6 py-3.5 text-sm font-bold text-[var(--cs-navy)] transition-transform hover:-translate-y-0.5">Book a walkthrough <ArrowRight className="h-4 w-4" /></Link>
               <Link href="/product/tour" className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/25 bg-white/5 px-6 py-3.5 text-sm font-bold text-white transition-colors hover:bg-white/10">See the product tour</Link>
             </div>
           </div>

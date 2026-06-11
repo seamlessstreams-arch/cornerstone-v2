@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SAFEGUARDING SERVICE
+// CARA — SAFEGUARDING SERVICE
 // Manages safeguarding referrals, LADO notifications, multi-agency tracking,
 // and compliance analytics. Reg 34/35 and Working Together 2023.
 // ══════════════════════════════════════════════════════════════════════════════

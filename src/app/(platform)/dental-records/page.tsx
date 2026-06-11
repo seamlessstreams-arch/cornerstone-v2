@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DENTAL RECORDS
+// CARA — DENTAL RECORDS
 // Tracks dental care for each child: registrations, check-ups, treatments,
 // daily oral hygiene, anxiety, reasonable adjustments, and recall intervals.
 // Required by Quality Standard 7 (Health & Wellbeing) and NICE oral health

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DOCUMENT EXPIRY TRACKER
+// CARA — DOCUMENT EXPIRY TRACKER
 // Tracks expiry dates for all critical documents — DBS checks, training
 // certificates, insurance, vehicle MOTs, policy review dates, fire equipment
 // servicing, etc. Ensures the home maintains compliance with Regulation 40

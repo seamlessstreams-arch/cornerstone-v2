@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME EDUCATION ENGAGEMENT INTELLIGENCE ENGINE
+// CARA — HOME EDUCATION ENGAGEMENT INTELLIGENCE ENGINE
 // Home-level: aggregates attendance, PEP compliance, EHCP reviews,
 // school engagement, tutoring support, and homework tracking.
 // CHR 2015 Reg 8: "The education standard."
@@ -483,7 +483,7 @@ export function computeHomeEducationEngagement(
     recommendations.push({ rank: ++rank, recommendation: "Consider tutoring provision — Pupil Premium Plus funding may be available for additional learning support.", urgency: "planned", regulatory_ref: "CHR 2015 Reg 8" });
   }
 
-  // ARIA Insights
+  // Cara Insights
   if (attendanceRate >= 95 && completionRate >= 90 && currentPeps > 0 && pct(currentPeps, total_children) >= 90 && total_children > 0 && ehcpOverdue === 0) {
     insights.push({ text: "Educational engagement is exemplary. Attendance, homework completion, PEP compliance, and EHCP governance all exceed thresholds. Ofsted will recognise this as outstanding educational support.", severity: "positive" });
   }
@@ -500,7 +500,7 @@ export function computeHomeEducationEngagement(
     insights.push({ text: `${highMotivationRate}% high motivation rate among tutored children — tutoring arrangements are well-matched and effective.`, severity: "positive" });
   }
   if (activeTutors.length > 0 && dbsComplianceRate < 100) {
-    insights.push({ text: `ARIA detects DBS compliance gap — ${100 - dbsComplianceRate}% of active tutors may have lapsed DBS checks. This is a safeguarding priority.`, severity: "critical" });
+    insights.push({ text: `Cara detects DBS compliance gap — ${100 - dbsComplianceRate}% of active tutors may have lapsed DBS checks. This is a safeguarding priority.`, severity: "critical" });
   }
 
   // ── Headline ──────────────────────────────────────────────────────────

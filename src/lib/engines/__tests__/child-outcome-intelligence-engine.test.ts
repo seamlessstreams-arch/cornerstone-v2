@@ -407,7 +407,7 @@ describe("Child Outcome Intelligence Engine", () => {
     expect(r.recommendations.some((rec) => rec.urgency === "immediate")).toBe(true);
   });
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
 
   it("generates critical insight for inadequate progress", () => {
     const r = computeChildOutcome(baseInput({

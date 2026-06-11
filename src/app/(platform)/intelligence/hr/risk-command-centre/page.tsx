@@ -602,7 +602,7 @@ export default function HrRiskCommandCentrePage() {
                   <div className="flex items-start gap-2">
                     <Sparkles className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
                     <div className="text-muted-foreground">
-                      <span className="font-medium text-foreground">ARIA suggested review:</span>{" "}
+                      <span className="font-medium text-foreground">Cara suggested review:</span>{" "}
                       Suspension has been in place for {c.daysSinceOpened} days. Regulation and ACAS guidance
                       require that suspensions are reviewed regularly and are not left open-ended.
                       The manager should confirm: is the investigation progressing? Has a welfare
@@ -611,7 +611,7 @@ export default function HrRiskCommandCentrePage() {
                     </div>
                   </div>
                   <p className="text-xs text-muted-foreground mt-2 italic">
-                    ARIA suggested draft — the Registered Manager confirms the review.
+                    Cara suggested draft — the Registered Manager confirms the review.
                   </p>
                 </div>
               </div>
@@ -620,12 +620,12 @@ export default function HrRiskCommandCentrePage() {
         </Card>
       )}
 
-      {/* ── ARIA professional insight ────────────────────────────────────── */}
+      {/* ── Cara professional insight ────────────────────────────────────── */}
       <Card className="border-blue-200 dark:border-blue-900">
         <CardHeader className="pb-3">
           <CardTitle className="flex items-center gap-2 text-base">
             <Sparkles className="h-5 w-5 text-blue-600" />
-            ARIA — command centre insight
+            Cara — command centre insight
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -668,7 +668,7 @@ export default function HrRiskCommandCentrePage() {
               </p>
             </div>
             <p className="text-xs italic">
-              ARIA suggested draft — the Registered Manager reviews and takes action as they see fit.
+              Cara suggested draft — the Registered Manager reviews and takes action as they see fit.
             </p>
           </div>
         </CardContent>

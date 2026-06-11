@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — GENERATE NEW REPORT (CHILD-SCOPED)
+// Cara — GENERATE NEW REPORT (CHILD-SCOPED)
 //
 // Report generation form pre-scoped to a specific child. The child is locked
 // and cannot be changed. Otherwise behaves identically to /aria/reports/new.
@@ -103,7 +103,7 @@ export default function ChildNewReportPage({
         return;
       }
 
-      router.push(`/aria/reports/${data.report.id}`);
+      router.push(`/cara/reports/${data.report.id}`);
     } catch {
       setError("Network error. Please try again.");
       setLoading(false);
@@ -131,7 +131,7 @@ export default function ChildNewReportPage({
               Generate Report for {childName}
             </h1>
             <p className="text-sm" style={{ color: "var(--cs-text-muted)" }}>
-              ARIA will gather evidence and draft a report for review
+              Cara will gather evidence and draft a report for review
             </p>
           </div>
         </div>

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD KEYWORKING INTELLIGENCE CARD
+// CARA — CHILD KEYWORKING INTELLIGENCE CARD
 // Per-child: keyworking session frequency, quality, mood impact,
 // thematic coverage, follow-up completion, key worker consistency.
 // CHR 2015 Reg 5, 6, 7, 10. SCCIF: "Quality of care."
@@ -213,12 +213,12 @@ export function ChildKeyworkingIntelligenceCard({ childId }: { childId: string }
           </div>
         )}
 
-        {/* ARIA Keyworking Intelligence */}
+        {/* Cara Keyworking Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Keyworking Intelligence
+              Cara Keyworking Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

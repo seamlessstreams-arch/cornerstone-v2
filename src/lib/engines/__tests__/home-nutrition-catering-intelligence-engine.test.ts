@@ -764,9 +764,9 @@ describe("computeHomeNutritionCatering", () => {
     });
   });
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
 
-  describe("ARIA insights", () => {
+  describe("Cara insights", () => {
     it("generates positive insight for exemplary nutrition", () => {
       const r = computeHomeNutritionCatering(baseInput());
       expect(r.insights.some(i => i.severity === "positive" && i.text.includes("exemplary"))).toBe(true);

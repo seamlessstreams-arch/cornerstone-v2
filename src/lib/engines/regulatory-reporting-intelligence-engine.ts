@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — REGULATORY REPORTING INTELLIGENCE ENGINE
+// CARA — REGULATORY REPORTING INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses Reg 44 visit schedule compliance, Reg 45 quality of care reviews,

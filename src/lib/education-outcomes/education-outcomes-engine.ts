@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Education Attendance & Achievement Intelligence — Engine
+// Cara Education Attendance & Achievement Intelligence — Engine
 //
 // Deep-dive engine for attendance tracking, exclusion analysis, PEP quality,
 // SEND support effectiveness, and achievement tracking across the home.

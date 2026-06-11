@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME WORKFORCE PLANNING INTELLIGENCE CARD
+// CARA — HOME WORKFORCE PLANNING INTELLIGENCE CARD
 // Home-level: staff composition, succession readiness, vacancy coverage,
 // induction completion, workforce stability.
 // CHR 2015 Reg 33. SCCIF: "Well-Led."
@@ -222,12 +222,12 @@ export function HomeWorkforcePlanningIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Workforce Intelligence */}
+        {/* Cara Workforce Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Workforce Intelligence
+              Cara Workforce Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ADMISSION & REFERRAL INTELLIGENCE ENGINE
+// CARA — ADMISSION & REFERRAL INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses referral pipeline, impact assessments, matching decisions,
@@ -303,7 +303,7 @@ export function computeAdmissionReferralIntelligence(
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
   const insights: AriaAdmissionInsight[] = [];
 
   // Critical: no beds but active pipeline

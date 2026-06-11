@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MANAGER PRIORITY BRIEFING API ROUTE
+// CARA — MANAGER PRIORITY BRIEFING API ROUTE
 // GET /api/v1/manager-priority-briefing
 //
 // Broad critical-signal SWEEP across the fleet of home-*-intelligence engines.

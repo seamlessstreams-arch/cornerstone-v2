@@ -1,7 +1,7 @@
 "use client";
 
 // ==============================================================================
-// CORNERSTONE -- BEHAVIOUR SUPPORT PLANS
+// CARA -- BEHAVIOUR SUPPORT PLANS
 // Formal, structured plans for supporting children with challenging behaviour.
 // Covers triggers, de-escalation (traffic-light model), positive strategies,
 // safety plans, restrictive interventions, and multi-agency professional input.

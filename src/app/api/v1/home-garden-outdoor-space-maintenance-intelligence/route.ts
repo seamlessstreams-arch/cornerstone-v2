@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME GARDEN & OUTDOOR SPACE MAINTENANCE INTELLIGENCE API ROUTE
+// CARA — HOME GARDEN & OUTDOOR SPACE MAINTENANCE INTELLIGENCE API ROUTE
 // GET /api/v1/home-garden-outdoor-space-maintenance-intelligence
 // Cross-domain composite: gardenConditionRecords + equipmentSafetyRecords +
 // spaceUtilisationRecords + childInvolvementRecords + environmentalQualityRecords

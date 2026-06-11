@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Professional Boundary Compliance Intelligence — Public API
+// Cara Professional Boundary Compliance Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

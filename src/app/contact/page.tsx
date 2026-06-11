@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CONTACT / EARLY ACCESS  (route: /contact)
+// CARA — CONTACT / EARLY ACCESS  (route: /contact)
 // ══════════════════════════════════════════════════════════════════════════════
 
 import type { Metadata } from "next";
@@ -10,9 +10,9 @@ import { SectionEyebrow } from "@/components/marketing/ui";
 import { EarlyAccessForm } from "@/components/marketing/early-access-form";
 
 export const metadata: Metadata = {
-  title: "Request early access | Cornerstone Care OS",
+  title: "Request early access | Cara OS",
   description:
-    "Request early access to Cornerstone Care OS, or book a conversation — the workforce, recruitment, supervision and practice-intelligence layer for children's homes.",
+    "Request early access to Cara OS, or book a conversation — the workforce, recruitment, supervision and practice-intelligence layer for children's homes.",
 };
 
 export default function ContactPage() {
@@ -36,9 +36,9 @@ export default function ContactPage() {
 
             <div className="space-y-4">
               {[
-                { Icon: Mail, t: "Prefer email?", d: <>Write to us at <a className="font-semibold text-[var(--cs-teal-strong)] hover:underline" href="mailto:hello@cornerstonecare.app">hello@cornerstonecare.app</a> and we&rsquo;ll reply personally.</> },
+                { Icon: Mail, t: "A personal reply", d: <>Every message comes straight to the team — we read and reply personally, usually within one working day.</> },
                 { Icon: Clock, t: "What happens next", d: <>A short, no-pressure conversation to understand your service — then a walkthrough on relevant, realistic examples.</> },
-                { Icon: ShieldCheck, t: "Your details are safe", d: <>We only use what you share to talk to you about Cornerstone Care OS. See our <a className="font-semibold text-[var(--cs-teal-strong)] hover:underline" href="/privacy">privacy summary</a>.</> },
+                { Icon: ShieldCheck, t: "Your details are safe", d: <>We only use what you share to talk to you about Cara OS. See our <a className="font-semibold text-[var(--cs-teal-strong)] hover:underline" href="/privacy">privacy summary</a>.</> },
               ].map((c, i) => (
                 <div key={i} className="rounded-2xl border border-[var(--cs-border)] bg-white p-5 shadow-[var(--cs-shadow-card)]">
                   <c.Icon className="h-6 w-6 text-[var(--cs-teal-strong)]" />

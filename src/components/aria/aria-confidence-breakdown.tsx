@@ -3,8 +3,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // AriaConfidenceBreakdown
 //
-// Widget showing the distribution of ARIA output confidence levels across
-// a time period. Helps managers identify if ARIA is producing reliable
+// Widget showing the distribution of Cara output confidence levels across
+// a time period. Helps managers identify if Cara is producing reliable
 // outputs or needs configuration adjustment.
 // ══════════════════════════════════════════════════════════════════════════════
 

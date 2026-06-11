@@ -1,7 +1,7 @@
 "use client";
 
 // ═══════════════��═══════════════════════���════════════════════════════════════��═
-// CORNERSTONE — ROTA INTELLIGENCE HOOK
+// CARA — ROTA INTELLIGENCE HOOK
 // React Query wrapper for /api/v1/rota-intelligence
 // ═════════════��═════════════���═══════════════════════════════════════��══════════
 

@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME SHARPS DISPOSAL & HAZARDOUS WASTE INTELLIGENCE API ROUTE
+// CARA -- HOME SHARPS DISPOSAL & HAZARDOUS WASTE INTELLIGENCE API ROUTE
 // GET /api/v1/home-sharps-disposal-hazardous-waste-intelligence
 // Cross-domain composite: sharpsBinRecords + hazardousWasteRecords +
 // coshhRecords + clinicalWasteRecords + childSafetyRecords

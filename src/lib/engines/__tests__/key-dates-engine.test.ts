@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — KEY DATES ENGINE TESTS
+// CARA — KEY DATES ENGINE TESTS
 // Comprehensive test suite covering all date aggregation, severity calculation,
 // and edge cases. 100% deterministic — all dates injected via `today` param.
 // ══════════════════════════════════════════════════════════════════════════════

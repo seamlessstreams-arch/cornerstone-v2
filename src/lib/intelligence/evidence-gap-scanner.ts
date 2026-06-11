@@ -239,7 +239,7 @@ export function scanEvidenceGaps(input: EvidenceGapScanInput): EvidenceGapScanRe
       gaps.push({
         type: "repeated_pattern_no_review",
         title: "Pattern detected without learning review",
-        description: "ARIA has detected a repeated pattern that has no associated learning review.",
+        description: "Cara has detected a repeated pattern that has no associated learning review.",
         severity: "medium",
         sourceRecordType: "pattern",
         sourceRecordId: p.id,

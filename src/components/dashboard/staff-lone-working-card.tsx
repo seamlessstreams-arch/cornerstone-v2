@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF LONE WORKING CARD
+// CARA — STAFF LONE WORKING CARD
 // Live data from useWorkforceIntelligence() — staffing, profile.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -101,13 +101,13 @@ export function StaffLoneWorkingCard() {
           </div>
         </div>
 
-        {/* ── ARIA insights ───────────────────────────────────────────── */}
+        {/* ── Cara insights ───────────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Lone Working Intelligence
+              Cara Lone Working Intelligence
             </p>
             {intel.insights.slice(0, 2).map((insight, i) => (
               <div

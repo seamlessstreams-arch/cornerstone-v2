@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — CHILD VOICE DETECTION UNIT TESTS
+// Cara — CHILD VOICE DETECTION UNIT TESTS
 //
 // Tests for detectChildVoice which scans free-text for direct child quotes
 // and warns when the child's voice is missing.

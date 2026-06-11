@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME STAFF RECOGNITION & MORALE INTELLIGENCE ENGINE — TESTS
+// CARA — HOME STAFF RECOGNITION & MORALE INTELLIGENCE ENGINE — TESTS
 // CHR 2015 Reg 33: fitness of workers. SCCIF: well-led and managed.
 // ══════════════════════════════════════════════════════════════════════════════
 

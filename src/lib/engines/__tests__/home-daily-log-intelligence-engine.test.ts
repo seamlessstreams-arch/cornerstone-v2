@@ -508,7 +508,7 @@ describe("computeHomeDailyLog", () => {
     });
   });
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
   describe("insights", () => {
     it("generates positive insight for exemplary recording", () => {
       const entries = [

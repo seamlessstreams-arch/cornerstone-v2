@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME HOLISTIC CHILD PROGRESS COMPOSITE INTELLIGENCE API ROUTE
+// CARA — HOME HOLISTIC CHILD PROGRESS COMPOSITE INTELLIGENCE API ROUTE
 // GET /api/v1/home-holistic-child-progress-intelligence
 // Cross-domain composite: outcomeReviews + educationRecords + keyWorkingSessions
 // + independenceSkillsRecords for holistic child progress assessment.

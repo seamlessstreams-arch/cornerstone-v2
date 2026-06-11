@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD IMPACT VIEW TYPES
+// CARA — CHILD IMPACT VIEW TYPES
 // Defines the shape of the per-child impact assessment: 10 care domains,
 // overall progress summary, achievements, actions, risks, goals, and narrative.
 //

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD PLACEMENT QUALITY INTELLIGENCE API ROUTE
+// CARA — CHILD PLACEMENT QUALITY INTELLIGENCE API ROUTE
 // GET /api/v1/child-placement-quality?childId=yp_alex
 // Per-child engine measuring placement experience quality: mood trajectory,
 // daily log engagement, key work, welfare checks, activities, stability.

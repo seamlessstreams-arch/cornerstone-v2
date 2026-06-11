@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RECORDING QUALITY INTELLIGENCE ENGINE
+// CARA — RECORDING QUALITY INTELLIGENCE ENGINE
 //
 // Pure deterministic engine that analyses daily log recording compliance,
 // quality scores, staff recording profiles, and child mention coverage.

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PROFESSIONAL NETWORK DIRECTORY SERVICE
+// CARA — PROFESSIONAL NETWORK DIRECTORY SERVICE
 // Tracks all professionals involved with each child — social worker, IRO,
 // CAMHS therapist, guardian, advocate, health visitor, education link,
 // YOT worker, and more. Ensures multi-agency communication is effective

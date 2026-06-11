@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PLACEMENT STABILITY ENGINE TESTS
+// CARA — PLACEMENT STABILITY ENGINE TESTS
 // Comprehensive test suite: unit + integration
 // ══════════════════════════════════════════════════════════════════════════════
 

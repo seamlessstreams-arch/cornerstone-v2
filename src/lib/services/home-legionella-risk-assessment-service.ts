@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME LEGIONELLA RISK ASSESSMENT SERVICE
+// CARA — HOME LEGIONELLA RISK ASSESSMENT SERVICE
 // Tracks legionella risk assessments, water system testing, temperature
 // monitoring, flushing regimes, water treatment, and compliance for the
 // residential home.

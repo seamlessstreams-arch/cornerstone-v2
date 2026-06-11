@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME LIVING ENVIRONMENT INTELLIGENCE API ROUTE
+// CARA — HOME LIVING ENVIRONMENT INTELLIGENCE API ROUTE
 // GET /api/v1/home-living-environment-intelligence
 // Bedrooms, pets, gardens, outdoor activities, environmental risks.
 // CHR 2015 Reg 15.

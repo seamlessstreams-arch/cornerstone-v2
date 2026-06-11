@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ASTHMA & RESPIRATORY MANAGEMENT INTELLIGENCE ENGINE TESTS
+// CARA — HOME ASTHMA & RESPIRATORY MANAGEMENT INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite for respiratory health management analysis.
 // Covers CHR 2015 Reg 14 (Health care), Reg 5 (Engaging and effective leadership).
 // SCCIF: "Health and wellbeing".

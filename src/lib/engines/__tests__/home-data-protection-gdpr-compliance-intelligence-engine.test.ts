@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME DATA PROTECTION & GDPR COMPLIANCE INTELLIGENCE ENGINE — TESTS
+// CARA — HOME DATA PROTECTION & GDPR COMPLIANCE INTELLIGENCE ENGINE — TESTS
 // UK GDPR 2018, CHR 2015 Reg 21, SCCIF Leadership and management.
 // Covers policy compliance, SAR handling, breach management, privacy notices,
 // staff GDPR training, record security, scoring, bonuses, penalties, and edges.

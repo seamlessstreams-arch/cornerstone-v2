@@ -4,7 +4,7 @@
 // AriaWeeklyDigest
 //
 // Compact weekly overview card for the staff dashboard. Shows key stats,
-// outstanding items, and top ARIA recommendations for the coming week.
+// outstanding items, and top Cara recommendations for the coming week.
 // Refreshes every Monday or on demand.
 //
 // Usage:
@@ -77,7 +77,7 @@ function getDemoDigest(): WeeklyDigest {
         label: "3 incidents awaiting management oversight",
         description: "Review and add oversight notes to maintain Regulation 40 compliance.",
         priority: "high",
-        actionUrl: "/aria/review",
+        actionUrl: "/cara/review",
       },
       {
         id: "da_002",
@@ -91,9 +91,9 @@ function getDemoDigest(): WeeklyDigest {
         id: "da_003",
         icon: FileText,
         label: "Reg 45 report due in 18 days",
-        description: "ARIA has collected 34 evidence items. 3 gaps identified for review.",
+        description: "Cara has collected 34 evidence items. 3 gaps identified for review.",
         priority: "medium",
-        actionUrl: "/aria/reg45",
+        actionUrl: "/cara/reg45",
       },
       {
         id: "da_004",
@@ -101,11 +101,11 @@ function getDemoDigest(): WeeklyDigest {
         label: "Risk assessment review recommended",
         description: "Alex W's risk assessment may need updating following the recent incident pattern.",
         priority: "medium",
-        actionUrl: "/aria/review",
+        actionUrl: "/cara/review",
       },
     ],
     achievements: [
-      "11 of 14 ARIA outputs approved — 79% acceptance rate",
+      "11 of 14 Cara outputs approved — 79% acceptance rate",
       "All daily logs completed on time this week",
       "Positive trend noted for Casey T — 3 weeks incident-free",
     ],

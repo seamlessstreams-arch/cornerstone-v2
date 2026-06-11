@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Governance & Leadership — Public API
+// Cara Governance & Leadership — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

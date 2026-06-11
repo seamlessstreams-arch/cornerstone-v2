@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA INTELLIGENCE — CHILD VOICE PROTECTION
+// Cara INTELLIGENCE — CHILD VOICE PROTECTION
 //
 // Detects and preserves child direct quotes, wishes, and feelings from
 // free-text records. Ensures the child's voice is never polished away

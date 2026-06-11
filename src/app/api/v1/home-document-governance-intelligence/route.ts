@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME DOCUMENT GOVERNANCE INTELLIGENCE API ROUTE
+// CARA — HOME DOCUMENT GOVERNANCE INTELLIGENCE API ROUTE
 // GET /api/v1/home-document-governance-intelligence
 // Synthesises document management, expiry tracking, read receipt compliance,
 // and version control to assess document governance.

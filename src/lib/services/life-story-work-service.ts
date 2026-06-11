@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LIFE STORY WORK SERVICE
+// CARA — LIFE STORY WORK SERVICE
 // Tracks life story work sessions with children to help them understand
 // their history, identity, and journey through care. Essential for
 // emotional wellbeing, identity formation, and sense of belonging.

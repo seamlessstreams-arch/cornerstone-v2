@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — COMMUNICATION INTELLIGENCE TESTS
+// CARA — COMMUNICATION INTELLIGENCE TESTS
 // Pure-function unit tests for draft generators and template constants.
 // ══════════════════════════════════════════════════════════════════════════════
 

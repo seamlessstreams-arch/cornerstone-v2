@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME IMPROVEMENT SERVICE
+// CARA — HOME IMPROVEMENT SERVICE
 // Tracks renovation projects, accessibility modifications, room
 // personalisation, environmental upgrades, and capital works.
 // CHR 2015 Reg 25 (premises — maintained in good repair),

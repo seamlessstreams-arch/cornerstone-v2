@@ -1,8 +1,8 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DOCUMENT INTELLIGENCE WIZARD
-// Upload · Classify · Review · Place — powered by ARIA
+// CARA — DOCUMENT INTELLIGENCE WIZARD
+// Upload · Classify · Review · Place — powered by Cara
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useRef, useState } from "react";
@@ -208,16 +208,16 @@ export default function DocumentWizardPage() {
         body: JSON.stringify({ mode: "document_classify", document_text: text, stream: false }),
       });
 
-      if (!res.ok) throw new Error(`ARIA returned ${res.status}`);
+      if (!res.ok) throw new Error(`Cara returned ${res.status}`);
 
       const json = await res.json();
-      // ARIA route pre-parses JSON for document_classify — use parsed directly
+      // Cara route pre-parses JSON for document_classify — use parsed directly
       const parsed: ClassificationResult = json?.data?.parsed ?? { summary: json?.data?.response ?? "" };
 
       setClassification(parsed);
       setStage("classified");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "ARIA could not classify the document.");
+      setError(err instanceof Error ? err.message : "Cara could not classify the document.");
       setStage("upload");
     }
   };
@@ -235,16 +235,16 @@ export default function DocumentWizardPage() {
         body: JSON.stringify({ mode: "document_to_form", document_text: text, stream: false }),
       });
 
-      if (!res.ok) throw new Error(`ARIA returned ${res.status}`);
+      if (!res.ok) throw new Error(`Cara returned ${res.status}`);
 
       const json = await res.json();
-      // ARIA route pre-parses JSON for document_to_form — use parsed directly
+      // Cara route pre-parses JSON for document_to_form — use parsed directly
       const parsed: FormResult = json?.data?.parsed ?? { aria_notes: json?.data?.response ?? "" };
 
       setFormResult(parsed);
       setStage("form_created");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "ARIA could not create a form from this document.");
+      setError(err instanceof Error ? err.message : "Cara could not create a form from this document.");
     }
   };
 
@@ -317,7 +317,7 @@ export default function DocumentWizardPage() {
             <div>
               <h2 className="text-base font-bold text-[var(--cs-navy)]">Upload a document</h2>
               <p className="text-sm text-[var(--cs-text-muted)] mt-0.5">
-                ARIA will read, classify, and extract key information automatically.
+                Cara will read, classify, and extract key information automatically.
               </p>
             </div>
 
@@ -441,7 +441,7 @@ export default function DocumentWizardPage() {
               }
             >
               <Sparkles className="h-4 w-4 mr-2" />
-              Analyse with ARIA
+              Analyse with Cara
             </Button>
           </div>
         )}
@@ -453,7 +453,7 @@ export default function DocumentWizardPage() {
               <Loader2 className="h-8 w-8 text-[var(--cs-aria-gold)] animate-spin" />
             </div>
             <div className="text-center">
-              <p className="text-base font-bold text-[var(--cs-navy)]">ARIA is reading your document...</p>
+              <p className="text-base font-bold text-[var(--cs-navy)]">Cara is reading your document...</p>
               <p className="text-sm text-[var(--cs-text-muted)] mt-1">
                 Classifying type · Extracting facts · Identifying risks
               </p>
@@ -484,11 +484,11 @@ export default function DocumentWizardPage() {
               <div className="flex items-start justify-between">
                 <div>
                   <h2 className="text-base font-bold text-[var(--cs-navy)]">Classification result</h2>
-                  <p className="text-sm text-[var(--cs-text-muted)] mt-0.5">ARIA has read your document</p>
+                  <p className="text-sm text-[var(--cs-text-muted)] mt-0.5">Cara has read your document</p>
                 </div>
                 <Badge className="bg-[var(--cs-aria-gold-bg)] text-[var(--cs-aria-gold)] border-0 text-xs rounded-full">
                   <Sparkles className="h-3 w-3 mr-1" />
-                  ARIA
+                  Cara
                 </Badge>
               </div>
 
@@ -643,7 +643,7 @@ export default function DocumentWizardPage() {
               {/* Summary fallback */}
               {classification.summary && !classification.document_type && (
                 <div className="rounded-xl bg-slate-50 border border-[var(--cs-border)] px-4 py-3">
-                  <SectionLabel>ARIA analysis</SectionLabel>
+                  <SectionLabel>Cara analysis</SectionLabel>
                   <p className="text-sm text-[var(--cs-text-secondary)] whitespace-pre-wrap">{classification.summary}</p>
                 </div>
               )}
@@ -732,10 +732,10 @@ export default function DocumentWizardPage() {
                 </div>
               )}
 
-              {/* ARIA notes */}
+              {/* Cara notes */}
               {formResult.aria_notes && (
                 <div className="rounded-xl bg-slate-50 border border-[var(--cs-border)] px-4 py-3">
-                  <SectionLabel>ARIA notes</SectionLabel>
+                  <SectionLabel>Cara notes</SectionLabel>
                   <p className="text-xs text-[var(--cs-text-secondary)] whitespace-pre-wrap">{formResult.aria_notes}</p>
                 </div>
               )}

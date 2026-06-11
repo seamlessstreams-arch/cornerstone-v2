@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Restraint Analysis Intelligence Engine
+// Cara — Restraint Analysis Intelligence Engine
 //
 // Pure deterministic engine — no AI, no external calls.
 // Analyses physical intervention/restraint practice including:

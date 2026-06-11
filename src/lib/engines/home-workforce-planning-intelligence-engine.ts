@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME WORKFORCE PLANNING INTELLIGENCE ENGINE
+// CARA — HOME WORKFORCE PLANNING INTELLIGENCE ENGINE
 // Home-level: analyses staff composition, succession readiness, vacancy
 // coverage, induction completion, and workforce stability.
 // CHR 2015 Reg 33 (Employment of Staff) + Reg 32. SCCIF: "Well-Led."
@@ -388,7 +388,7 @@ export function computeHomeWorkforcePlanning(
     insights.push({ text: `${overdueInductions.length} induction${overdueInductions.length > 1 ? "s are" : " is"} overdue. Staff without completed inductions may not have the knowledge and skills to keep children safe. Regulation 33 requires that staff are suitably trained before undertaking responsibilities.`, severity: "critical" });
   }
   if (urgentPlans.length > 0 && readyNow.length === 0) {
-    insights.push({ text: `${urgentPlans.length} succession plan${urgentPlans.length > 1 ? "s require" : " requires"} cover within 6 months, but no candidates are ready now. If a key role becomes vacant unexpectedly, the home would be reliant on external recruitment. ARIA recommends accelerating development plans for the most promising candidates.`, severity: "warning" });
+    insights.push({ text: `${urgentPlans.length} succession plan${urgentPlans.length > 1 ? "s require" : " requires"} cover within 6 months, but no candidates are ready now. If a key role becomes vacant unexpectedly, the home would be reliant on external recruitment. Cara recommends accelerating development plans for the most promising candidates.`, severity: "warning" });
   }
 
   // ── Headline ──────────────────────────────────────────────────────

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// API — ARIA Management Oversight Queue  (Milestone 14)
+// API — Cara Management Oversight Queue  (Milestone 14)
 //
 // GET    ?home_id=… → live oversight queue (pending suggestions + amendment
 //                     reviews + recently returned items, sorted by severity)

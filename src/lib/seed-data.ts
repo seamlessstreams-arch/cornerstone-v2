@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SEED DATA
+// CARA — SEED DATA
 // Anonymised demo staff data, realistic care home scenarios
 // ══════════════════════════════════════════════════════════════════════════════
 

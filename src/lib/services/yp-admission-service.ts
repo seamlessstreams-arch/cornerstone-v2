@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — YOUNG PERSON ADMISSION WORKFLOW SERVICE
+// CARA — YOUNG PERSON ADMISSION WORKFLOW SERVICE
 // Full referral-to-placement workflow: intake, screening, impact assessment,
 // matching panel, pre-admission, admission planning, and profile creation.
-// Follows: "ARIA suggests. Humans decide. Cornerstone evidences."
+// Follows: "Cara suggests. Humans decide. Cara evidences."
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { createServerClient, isSupabaseEnabled } from "@/lib/supabase/server";
@@ -668,7 +668,7 @@ export function computeMatchingScore(factors: MatchingFactor[]): {
   };
 }
 
-// ── ARIA matching intelligence (pure) ──────────────────────────────────────
+// ── Cara matching intelligence (pure) ──────────────────────────────────────
 
 export interface AriaMatchingInput {
   incomingChild: {
@@ -771,7 +771,7 @@ export function generateAriaMatchingFactors(input: AriaMatchingInput): {
   const overallRisk = highRiskFactors >= 2 ? "high" : highRiskFactors === 1 || factors.some((f) => f.riskLevel === "medium") ? "medium" : "low";
 
   const avgScore = factors.reduce((sum, f) => sum + f.score, 0) / factors.length;
-  const summary = `ARIA matching analysis: ${factors.length} factors assessed, overall score ${avgScore.toFixed(1)}/10. ${highRiskFactors > 0 ? `${highRiskFactors} high-risk factor${highRiskFactors > 1 ? "s" : ""} identified requiring mitigation.` : "No high-risk factors identified."} ${overallRisk === "high" ? "Enhanced risk management and close monitoring recommended." : overallRisk === "medium" ? "Standard risk management with targeted monitoring." : "Standard care arrangements should be appropriate."}`;
+  const summary = `Cara matching analysis: ${factors.length} factors assessed, overall score ${avgScore.toFixed(1)}/10. ${highRiskFactors > 0 ? `${highRiskFactors} high-risk factor${highRiskFactors > 1 ? "s" : ""} identified requiring mitigation.` : "No high-risk factors identified."} ${overallRisk === "high" ? "Enhanced risk management and close monitoring recommended." : overallRisk === "medium" ? "Standard risk management with targeted monitoring." : "Standard care arrangements should be appropriate."}`;
 
   return { factors, overallRisk, summary };
 }

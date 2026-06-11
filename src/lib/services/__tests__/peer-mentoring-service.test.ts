@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PEER MENTORING SERVICE TESTS
+// CARA — PEER MENTORING SERVICE TESTS
 // Pure-function unit tests for peer mentoring metrics computation,
 // alert identification, constant validation, and CRUD fallback behaviour
 // (Supabase disabled). CHR 2015 Reg 5 (engaging with the wider community —

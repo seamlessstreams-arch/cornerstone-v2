@@ -3,7 +3,7 @@
 //
 // Tracks policy documents, certificates, and key paperwork. Identifies
 // expiry dates, missing documents, policy gaps, and review cycles.
-// Provides ARIA suggestions for document management compliance.
+// Provides Cara suggestions for document management compliance.
 // ══════════════════════════════════════════════════════════════════════════════
 
 "use client";
@@ -100,7 +100,7 @@ function getDemoDocuments(): TrackedDocument[] {
     {
       id: "doc_008", category: "training_record", name: "Team Training Matrix", status: "review_due",
       lastReviewed: "2026-02-01", reviewCycleDays: 90, owner: "Darren L (RM)",
-      ariaNotes: "Quarterly review due. 2 staff members have training gaps flagged by ARIA.",
+      ariaNotes: "Quarterly review due. 2 staff members have training gaps flagged by Cara.",
     },
     {
       id: "doc_009", category: "care_document", name: "Statement of Purpose", status: "current",
@@ -149,7 +149,7 @@ export function AriaDocumentIntelligence() {
             </div>
             <div>
               <h3 className="text-sm font-semibold text-[var(--cs-navy)]">Document Intelligence</h3>
-              <p className="text-[10px] text-[var(--cs-text-muted)]">ARIA-tracked policies, certificates & compliance documents</p>
+              <p className="text-[10px] text-[var(--cs-text-muted)]">Cara-tracked policies, certificates & compliance documents</p>
             </div>
           </div>
           {alertCount > 0 && (
@@ -218,7 +218,7 @@ export function AriaDocumentIntelligence() {
                   <div className="mt-1.5 rounded-lg bg-[var(--cs-aria-gold-bg)] border border-[var(--cs-aria-gold-soft)] px-2.5 py-1.5">
                     <div className="flex items-center gap-1 mb-0.5">
                       <Sparkles className="h-2.5 w-2.5 text-[var(--cs-aria-gold)]" />
-                      <span className="text-[9px] font-semibold text-[var(--cs-navy)]">ARIA</span>
+                      <span className="text-[9px] font-semibold text-[var(--cs-navy)]">Cara</span>
                     </div>
                     <p className="text-[10px] text-[var(--cs-text-secondary)]">{doc.ariaNotes}</p>
                   </div>
@@ -237,7 +237,7 @@ export function AriaDocumentIntelligence() {
       {/* Footer */}
       <div className="px-4 py-2.5 border-t border-[var(--cs-border)] bg-slate-50/50">
         <p className="text-[10px] text-[var(--cs-text-muted)] text-center">
-          ARIA tracks document expiry, review cycles, and regulatory requirements. Maintain all policies per your Statement of Purpose.
+          Cara tracks document expiry, review cycles, and regulatory requirements. Maintain all policies per your Statement of Purpose.
         </p>
       </div>
     </div>

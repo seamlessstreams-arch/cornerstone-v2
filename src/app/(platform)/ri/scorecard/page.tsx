@@ -157,7 +157,7 @@ export default function ScorecardPage() {
     setLoading(true);
     try {
       const res = await api.post<{ data: { parsed?: StrategicResult } }>(
-        "/aria",
+        "/cara",
         {
           mode: "ri_strategic_analysis",
           style: "provider_summary",
@@ -188,7 +188,7 @@ export default function ScorecardPage() {
           <SmartUploadButton variant="inline" label="Upload Evidence" uploadContext="RI Scorecard — governance evidence upload" />
           <Button size="sm" className="gap-1.5 bg-[var(--cs-navy)] hover:bg-[var(--cs-navy)]/90 text-white" onClick={generateStrategic} disabled={loading}>
             <Sparkles className="h-3.5 w-3.5" />
-            {loading ? "Analysing…" : "ARIA Strategic Analysis"}
+            {loading ? "Analysing…" : "Cara Strategic Analysis"}
           </Button>
           <AriaStudioQuickActionButton context={{ record_type: "management_oversight", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
@@ -284,13 +284,13 @@ export default function ScorecardPage() {
           })}
         </div>
 
-        {/* ARIA strategic analysis */}
+        {/* Cara strategic analysis */}
         {aria && (
           <div className="space-y-4">
             <div className="rounded-2xl border border-indigo-100 bg-indigo-50 p-5 space-y-3">
               <div className="flex items-center gap-2">
                 <Sparkles className="h-4 w-4 text-indigo-600" />
-                <p className="text-sm font-semibold text-indigo-900">ARIA Strategic Analysis</p>
+                <p className="text-sm font-semibold text-indigo-900">Cara Strategic Analysis</p>
               </div>
               <p className="text-sm text-indigo-800 leading-relaxed">{aria.overall_governance_narrative}</p>
             </div>

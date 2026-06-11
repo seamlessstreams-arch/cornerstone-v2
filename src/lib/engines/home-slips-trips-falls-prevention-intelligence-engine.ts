@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME SLIPS, TRIPS & FALLS PREVENTION INTELLIGENCE ENGINE
+// CARA -- HOME SLIPS, TRIPS & FALLS PREVENTION INTELLIGENCE ENGINE
 // Measures slip/trip risk assessments, flooring condition audits, wet floor
 // protocol compliance, stairway safety checks, and incident tracking/learning.
 // Pure deterministic engine -- no imports, no LLM, no external deps.

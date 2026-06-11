@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — THERAPEUTIC INTERVENTIONS SERVICE TESTS
+// CARA — THERAPEUTIC INTERVENTIONS SERVICE TESTS
 // Pure-function unit tests for therapy metrics computation, alert identification,
 // constant validation, and CRUD fallback behaviour.
 // ══════════════════════════════════════════════════════════════════════════════

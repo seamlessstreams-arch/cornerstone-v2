@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME RISK ASSESSMENT INTELLIGENCE ENGINE
+// CARA — HOME RISK ASSESSMENT INTELLIGENCE ENGINE
 // Home-level: synthesises risk assessments and behaviour support plans across
 // all children to assess risk management quality, trend analysis, review
 // compliance, and mitigation effectiveness.

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME INDEPENDENCE & TRANSITION INTELLIGENCE API ROUTE
+// CARA — HOME INDEPENDENCE & TRANSITION INTELLIGENCE API ROUTE
 // GET /api/v1/home-independence-intelligence
 // Synthesises independence pathway assessments across all children to produce
 // readiness analysis, domain gap reporting, and transition preparation quality.

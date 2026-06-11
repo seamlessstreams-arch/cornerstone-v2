@@ -3,8 +3,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // AriaShortcutsGuide
 //
-// Help panel showing available ARIA keyboard shortcuts and quick access
-// methods. Triggered from the ARIA FAB menu or via Cmd+Shift+A.
+// Help panel showing available Cara keyboard shortcuts and quick access
+// methods. Triggered from the Cara FAB menu or via Cmd+Shift+A.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState, useEffect } from "react";
@@ -32,12 +32,12 @@ interface Shortcut {
 
 const SHORTCUTS: Shortcut[] = [
   // Global
-  { keys: ["⌘", "K"], description: "Open ARIA command palette", category: "Global" },
+  { keys: ["⌘", "K"], description: "Open Cara command palette", category: "Global" },
   { keys: ["⌘", "⇧", "A"], description: "Toggle this shortcuts guide", category: "Global" },
-  { keys: ["Esc"], description: "Close any ARIA overlay", category: "Global" },
+  { keys: ["Esc"], description: "Close any Cara overlay", category: "Global" },
 
   // Command panel
-  { keys: ["⌘", "Enter"], description: "Generate with ARIA", category: "Command Panel" },
+  { keys: ["⌘", "Enter"], description: "Generate with Cara", category: "Command Panel" },
   { keys: ["Tab"], description: "Cycle through commands", category: "Command Panel" },
   { keys: ["⌘", "⇧", "C"], description: "Copy generated text", category: "Command Panel" },
 
@@ -100,7 +100,7 @@ export function AriaShortcutsGuide({ className }: AriaShortcutsGuideProps) {
           </div>
           <div className="flex-1">
             <div className="text-sm font-bold text-[var(--cs-navy)]">
-              ARIA Shortcuts
+              Cara Shortcuts
             </div>
             <div className="text-[10px] text-[var(--cs-text-muted)]">
               Keyboard shortcuts for quick access
@@ -156,7 +156,7 @@ export function AriaShortcutsGuide({ className }: AriaShortcutsGuideProps) {
               <kbd className="rounded border border-gray-300 bg-gray-100 px-1 py-0.5 text-[9px] font-mono">
                 ⌘K
               </kbd>{" "}
-              to quickly access any ARIA command
+              to quickly access any Cara command
             </span>
           </div>
         </div>

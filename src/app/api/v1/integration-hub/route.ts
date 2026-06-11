@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — INTEGRATION HUB API ROUTE
+// CARA — INTEGRATION HUB API ROUTE
 // GET /api/v1/integration-hub
 //
 // Returns the integration adapter registry: status of each typed adapter (rota,

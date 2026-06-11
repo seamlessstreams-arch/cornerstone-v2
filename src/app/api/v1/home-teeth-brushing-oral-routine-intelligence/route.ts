@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME TEETH BRUSHING & ORAL ROUTINE INTELLIGENCE API ROUTE
+// CARA — HOME TEETH BRUSHING & ORAL ROUTINE INTELLIGENCE API ROUTE
 // GET /api/v1/home-teeth-brushing-oral-routine-intelligence
 // Cross-domain composite: brushingScheduleRecords + fluorideUseRecords +
 // supervisionRecords + toothbrushReplacementRecords + independenceRecords

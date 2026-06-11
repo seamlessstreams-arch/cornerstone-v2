@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — BUSINESS CONTINUITY INTELLIGENCE CARD
+// CARA — BUSINESS CONTINUITY INTELLIGENCE CARD
 // Dashboard card powered by the Quality Assurance Intelligence Engine.
 // CHR 2015 Reg 29 (business continuity), Reg 12 (protection from harm).
 // SCCIF: Leadership & Management.
@@ -96,7 +96,7 @@ export function BusinessContinuityCard() {
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA BCP Intelligence
+              Cara BCP Intelligence
             </p>
             {insights.slice(0, 2).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.positive)}>

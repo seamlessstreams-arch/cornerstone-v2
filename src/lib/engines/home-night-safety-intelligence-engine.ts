@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME NIGHT SAFETY INTELLIGENCE ENGINE
+// CARA — HOME NIGHT SAFETY INTELLIGENCE ENGINE
 // Home-level engine aggregating overnight safety: welfare check completion
 // rates, night disturbances, overnight incidents, security compliance,
 // staffing coverage, and children's sleep quality patterns.
@@ -452,7 +452,7 @@ export function computeHomeNightSafety(
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
   const insights: NightSafetyInsight[] = [];
 
   if (night_safety_rating === "inadequate") {

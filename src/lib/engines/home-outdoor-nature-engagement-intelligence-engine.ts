@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME OUTDOOR & NATURE ENGAGEMENT INTELLIGENCE ENGINE
+// CARA -- HOME OUTDOOR & NATURE ENGAGEMENT INTELLIGENCE ENGINE
 // Tracks outdoor activity quality -- outdoor activity frequency, nature-based
 // learning, garden/allotment projects, environmental exploration, and outdoor
 // safety management. Critical for Ofsted under Children's Homes Regulations

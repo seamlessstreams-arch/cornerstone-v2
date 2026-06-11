@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME STAFF TRAINING & CPD COMPLIANCE INTELLIGENCE API ROUTE
+// CARA — HOME STAFF TRAINING & CPD COMPLIANCE INTELLIGENCE API ROUTE
 // GET /api/v1/home-staff-training-cpd-compliance-intelligence
 // Synthesises mandatory training, CPD, training needs, qualifications, and
 // development plan records to produce an overall training compliance score.

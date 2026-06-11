@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Community Integration Intelligence — Public API
+// Cara Community Integration Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

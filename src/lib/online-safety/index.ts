@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Online Safety & Digital Wellbeing — Public API
+// Cara Online Safety & Digital Wellbeing — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

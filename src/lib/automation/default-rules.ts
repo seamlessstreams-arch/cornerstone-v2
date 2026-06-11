@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DEFAULT AUTOMATION RULES
+// CARA — DEFAULT AUTOMATION RULES
 // Built-in rules covering the core children's-home operational scenarios.
 // Each rule maps a domain trigger to one or more deterministic actions.
 // CHR 2015 Reg 12 (protection), Reg 13 (missing), Reg 20 (restraint),

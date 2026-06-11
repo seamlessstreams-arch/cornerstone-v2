@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SAFEGUARDING PARTNERSHIP INTELLIGENCE SERVICE TESTS
+// CARA — SAFEGUARDING PARTNERSHIP INTELLIGENCE SERVICE TESTS
 // Pure-function tests for safeguarding partnership metrics, alert identification,
-// ARIA insight generation, and edge cases.
+// Cara insight generation, and edge cases.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";

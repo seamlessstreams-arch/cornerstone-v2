@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF EXIT INTERVIEWS SERVICE
+// CARA — STAFF EXIT INTERVIEWS SERVICE
 // Tracks exit interviews for departing staff, capturing reasons for leaving,
 // feedback on the home, and intelligence for workforce retention.
 // CHR 2015 Reg 33 (employment and fitness of staff),

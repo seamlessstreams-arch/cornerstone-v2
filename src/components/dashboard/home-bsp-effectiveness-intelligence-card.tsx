@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME BSP EFFECTIVENESS INTELLIGENCE CARD
+// CARA — HOME BSP EFFECTIVENESS INTELLIGENCE CARD
 // Cross-cutting analysis: behaviour support plans × behaviour log × restraints.
 // CHR 2015 Reg 19, Reg 20. SCCIF: "How well children are helped and protected."
 // ══════════════════════════════════════════════════════════════════════════════
@@ -234,12 +234,12 @@ export function HomeBSPEffectivenessIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA BSP Intelligence */}
+        {/* Cara BSP Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA BSP Intelligence
+              Cara BSP Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

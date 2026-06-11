@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — COMMUNAL AREA AUDIT SERVICE TESTS
+// CARA — COMMUNAL AREA AUDIT SERVICE TESTS
 // Pure-function tests for communal area audit metrics, alert identification,
 // and edge cases.
 // ══════════════════════════════════════════════════════════════════════════════

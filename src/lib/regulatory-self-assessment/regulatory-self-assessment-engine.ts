@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Regulatory Self-Assessment Intelligence Engine
+// Cara Regulatory Self-Assessment Intelligence Engine
 //
 // Deterministic engine for analysing how effectively a children's home
 // self-assesses compliance against the Children's Homes (England)

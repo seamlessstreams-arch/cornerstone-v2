@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — CHILD VOICE ENGINE
+// Cara STUDIO — CHILD VOICE ENGINE
 //
 // Extracts, indexes, and surfaces the voice of the child from across all
 // evidence sources. Ensures young people's wishes, feelings, direct quotes,

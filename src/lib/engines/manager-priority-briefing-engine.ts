@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MANAGER PRIORITY BRIEFING ENGINE
+// CARA — MANAGER PRIORITY BRIEFING ENGINE
 //
 // Pure deterministic meta-engine — no DB calls, no side effects, no LLM calls.
 //

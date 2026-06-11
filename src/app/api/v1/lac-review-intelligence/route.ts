@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LAC REVIEW INTELLIGENCE API ROUTE
+// CARA — LAC REVIEW INTELLIGENCE API ROUTE
 // GET /api/v1/lac-review-intelligence
 // Returns LAC review compliance, action tracking, child participation,
-// placement stability, and ARIA permanence intelligence.
+// placement stability, and Cara permanence intelligence.
 // Reg 36, Care Planning Regulations 2010, IRO Handbook.
 // ══════════════════════════════════════════════════════════════════════════════
 

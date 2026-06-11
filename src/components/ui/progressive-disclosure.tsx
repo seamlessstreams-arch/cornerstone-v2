@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PROGRESSIVE DISCLOSURE SECTION
+// CARA — PROGRESSIVE DISCLOSURE SECTION
 // Shows title + summary by default, chevron toggle reveals children.
 // Smooth animation, optional badge count.
 // ══════════════════════════════════════════════════════════════════════════════

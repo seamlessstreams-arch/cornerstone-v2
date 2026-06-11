@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ARIA INCIDENT MODE · SERVICE LAYER (server-side only)
+// CARA — Cara INCIDENT MODE · SERVICE LAYER (server-side only)
 //
 // Session lifecycle, timeline writes, the GET bundle, and audit logging. All AI
 // calls stay server-side (generateText). Audit entries are GDPR-light: they

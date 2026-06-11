@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — INDEPENDENCE PREPARATION INTELLIGENCE CARD
+// CARA — INDEPENDENCE PREPARATION INTELLIGENCE CARD
 // Dashboard widget for practical life skills assessment and readiness tracking.
 // Shows independence score, skills summary, pathway plan compliance, and alerts.
 // Powered by the Leaving Care Intelligence Engine — live data (Reg 5/6/7).
@@ -163,13 +163,13 @@ export function IndependencePreparationCard() {
           </div>
         )}
 
-        {/* ── ARIA Independence Intelligence ───────────────────────────── */}
+        {/* ── Cara Independence Intelligence ───────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Independence Intelligence
+              Cara Independence Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — COMPLAINTS INTELLIGENCE API ROUTE
+// CARA — COMPLAINTS INTELLIGENCE API ROUTE
 // GET /api/v1/complaints-intelligence
 // Returns complaints handling analysis: response times, satisfaction,
-// theme patterns, Reg 39/40 compliance, and ARIA intelligence.
+// theme patterns, Reg 39/40 compliance, and Cara intelligence.
 // ══════════════════════════════════════════════════════════════════════════════
 
 export const dynamic = "force-dynamic";

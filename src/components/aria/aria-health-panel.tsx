@@ -3,7 +3,7 @@
 // ═════════════════════════════════════════════════════════════════════════════
 // AriaHealthPanel
 //
-// Displays full ARIA health diagnostics for managers.
+// Displays full Cara health diagnostics for managers.
 // Shows provider status, Supabase connectivity, approval queue depth,
 // audit log health, command registry coverage, and actionable recommendations.
 //
@@ -167,7 +167,7 @@ function ProviderCard({
 // ─── Main component ──────────────────────────────────────────────────────────
 
 interface AriaHealthPanelProps {
-  /** The current user's ARIA role — gating visibility. */
+  /** The current user's Cara role — gating visibility. */
   userRole: string;
   /** The current user's ID — required for auth headers. */
   userId: string;
@@ -198,7 +198,7 @@ export function AriaHealthPanel({
       return (
         <div className={cn("flex items-center gap-1.5 text-xs text-slate-400", className)}>
           <RefreshCw className="h-3 w-3 animate-spin" />
-          Checking ARIA…
+          Checking Cara…
         </div>
       );
     }
@@ -219,7 +219,7 @@ export function AriaHealthPanel({
       >
         <span className={cn("h-2 w-2 rounded-full shrink-0", meta.dot)} />
         <Icon className="h-3 w-3" />
-        ARIA {meta.label}
+        Cara {meta.label}
         {health.approvals.overdueCount > 0 && (
           <span className="ml-1 rounded-full bg-red-500 text-white text-[10px] px-1.5 leading-4">
             {health.approvals.overdueCount}
@@ -246,7 +246,7 @@ export function AriaHealthPanel({
             <div className="flex items-center gap-3">
               <Sparkles className="h-5 w-5" />
               <div>
-                <CardTitle className="text-base">ARIA Intelligence Health</CardTitle>
+                <CardTitle className="text-base">Cara Intelligence Health</CardTitle>
                 {health?.lastCheckedAt && (
                   <p className="text-xs opacity-70 mt-0.5">
                     Last checked {new Date(health.lastCheckedAt).toLocaleString("en-GB")}
@@ -390,7 +390,7 @@ export function AriaHealthPanel({
                       <span className={health.supabase.connected ? "text-emerald-700" : "text-red-600"}>
                         {health.supabase.connected ? "Connected" : "Not connected"}
                       </span>
-                      <span className="text-slate-400">ARIA tables</span>
+                      <span className="text-slate-400">Cara tables</span>
                       <span className={health.supabase.tablesPresent ? "text-emerald-700" : "text-red-600"}>
                         {health.supabase.tablesPresent ? "All present" : `Missing: ${health.supabase.missingTables.join(", ")}`}
                       </span>

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import { AriaQuickActions } from "@/components/intelligence/aria-quick-actions";
+import { AriaQuickActions } from "@/components/intelligence/cara-quick-actions";
 import { AriaPanel } from "@/components/aria/aria-panel";
 import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
 import { PageShell } from "@/components/layout/page-shell";
@@ -77,7 +77,7 @@ function MoodIcon({ score }: { score: number | null }) {
   return <Frown className="h-3 w-3" />;
 }
 
-// ── Handover child entry with ARIA toggle ─────────────────────────────────────
+// ── Handover child entry with Cara toggle ─────────────────────────────────────
 
 function HandoverChildCard({ cu }: { cu: HandoverChildUpdate }) {
   const [showAria, setShowAria] = useState(false);
@@ -102,7 +102,7 @@ function HandoverChildCard({ cu }: { cu: HandoverChildUpdate }) {
                 : "bg-white text-slate-500 border-slate-200 hover:bg-violet-50 hover:text-violet-600 hover:border-violet-200"
             )}
           >
-            <Sparkles className="h-2.5 w-2.5" />Ask ARIA
+            <Sparkles className="h-2.5 w-2.5" />Ask Cara
           </button>
         </div>
       </div>
@@ -538,7 +538,7 @@ function WriteHandoverForm({ youngPeople, onClose, onSuccess }: WriteFormProps) 
               {ariaGenerating ? (
                 <><Loader2 className="h-3.5 w-3.5 animate-spin mr-1" />Generating...</>
               ) : (
-                <><Sparkles className="h-3.5 w-3.5 mr-1" />Generate with ARIA</>
+                <><Sparkles className="h-3.5 w-3.5 mr-1" />Generate with Cara</>
               )}
             </Button>
             <button onClick={onClose} className="text-slate-400 hover:text-slate-600">
@@ -916,7 +916,7 @@ export default function HandoverPage() {
       </div>
       <div id="handover-auto-notes" className="hidden" />
 
-      {/* ARIA Handover Builder — personalised context per incoming staff */}
+      {/* Cara Handover Builder — personalised context per incoming staff */}
       {!isLoading && (
         <div className="mb-6">
           <AriaHandoverBuilder
@@ -1180,7 +1180,7 @@ export default function HandoverPage() {
           </Card>
         </div>
       </div>
-      {/* Print-only: ARIA personalised context for each incoming staff member */}
+      {/* Print-only: Cara personalised context for each incoming staff member */}
       {latest && (
         <HandoverPrintContext incomingStaffIds={latest.incoming_staff} />
       )}

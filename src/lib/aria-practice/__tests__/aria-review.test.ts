@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA PRACTICE INTELLIGENCE — REVIEW / RESOLUTION TESTS
+// Cara PRACTICE INTELLIGENCE — REVIEW / RESOLUTION TESTS
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";

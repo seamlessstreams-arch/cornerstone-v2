@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LEARNING STUDIO: KNOWLEDGE QUIZZES
+// CARA — LEARNING STUDIO: KNOWLEDGE QUIZZES
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState } from "react";
@@ -316,7 +316,7 @@ export default function QuizzesPage() {
     setSaved(false);
     try {
       const res = await api.post<{ data: { parsed?: QuizResult } }>(
-        "/aria",
+        "/cara",
         {
           mode: "learning_quiz",
           style: pathway === "child" ? "child_friendly" : "professional_formal",
@@ -359,7 +359,7 @@ export default function QuizzesPage() {
   return (
     <PageShell
       title="Knowledge Quizzes"
-      subtitle="Generate interactive knowledge quizzes with ARIA"
+      subtitle="Generate interactive knowledge quizzes with Cara"
       ariaContext={{ pageTitle: "Staff Knowledge Quizzes", sourceType: "staff" }}
       showQuickCreate={false}
       actions={

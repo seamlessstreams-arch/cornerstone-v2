@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SUMMARY REPORT ENGINE
+// CARA — HOME SUMMARY REPORT ENGINE
 //
 // Pure deterministic meta-engine — no DB calls, no side effects, no LLM calls.
 //

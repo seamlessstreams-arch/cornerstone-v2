@@ -141,7 +141,7 @@ export default function PracticeObservationsPage() {
             onClick={() => setShowAria((p) => !p)}
           >
             <Sparkles className="h-3.5 w-3.5 text-indigo-500" />
-            ARIA Summary
+            Cara Summary
           </Button>
           <Button size="sm" className="gap-1.5">
             <Plus className="h-3.5 w-3.5" />
@@ -375,10 +375,10 @@ export default function PracticeObservationsPage() {
                     )}
                   </div>
 
-                  {/* ARIA summary */}
+                  {/* Cara summary */}
                   {obs.aria_summary && (
                     <div className="rounded-xl border border-indigo-100 bg-indigo-50/50 px-3 py-2.5">
-                      <p className="text-[10px] font-semibold text-indigo-600 mb-1">ARIA Observation Intelligence</p>
+                      <p className="text-[10px] font-semibold text-indigo-600 mb-1">Cara Observation Intelligence</p>
                       <p className="text-xs text-indigo-800 leading-relaxed">{obs.aria_summary}</p>
                     </div>
                   )}

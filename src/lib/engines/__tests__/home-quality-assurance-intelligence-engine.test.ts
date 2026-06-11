@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME QUALITY ASSURANCE INTELLIGENCE ENGINE TESTS
+// CARA — HOME QUALITY ASSURANCE INTELLIGENCE ENGINE TESTS
 // Tests the pure deterministic engine for QA audit coverage, ratings,
 // action plan completion, and improvement culture.
 // ══════════════════════════════════════════════════════════════════════════════

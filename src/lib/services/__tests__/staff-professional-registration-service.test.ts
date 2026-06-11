@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF PROFESSIONAL REGISTRATION SERVICE TESTS
+// CARA — STAFF PROFESSIONAL REGISTRATION SERVICE TESTS
 // Pure-function unit tests for professional registration metrics, alert
-// identification, and ARIA insight generation.
+// identification, and Cara insight generation.
 //
 // CHR 2015 Reg 32 (fitness of workers),
 // CHR 2015 Sch 2 (information in respect of persons seeking to carry on,

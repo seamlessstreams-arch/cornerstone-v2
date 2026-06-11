@@ -1,12 +1,12 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA PRACTICE INTELLIGENCE — DETERMINISTIC RULE ENGINE
+// Cara PRACTICE INTELLIGENCE — DETERMINISTIC RULE ENGINE
 //
 // Pure, deterministic, no DB calls, no LLM. Works fully before any AI provider is
 // connected. It DRAFTS prompts, ADVISES with reflective/threshold questions, and
 // RECOGNISES weak recording, developmental gaps, overstated protective factors,
 // safeguarding threshold + LADO concerns, relationship depth, and staff wellbeing.
 //
-// SAFETY: ARIA advises; managers decide. The engine never makes a final statutory
+// SAFETY: Cara advises; managers decide. The engine never makes a final statutory
 // decision, never blames a child, never treats wellbeing as disciplinary evidence,
 // and always advises emergency action where immediate danger is described.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -271,7 +271,7 @@ function buildThreshold(
       "Current intervention is / is not sufficient because: <rationale>",
       "The immediate risk if we do not escalate is: <risk>",
       "The most proportionate next step is: <next step>",
-      "I believe the threshold for a strategy discussion is / is not met because: <manager judgement — ARIA does not decide this>",
+      "I believe the threshold for a strategy discussion is / is not met because: <manager judgement — Cara does not decide this>",
     ].join("\n"),
   };
 }
@@ -420,7 +420,7 @@ export function analyzePractice(input: AriaPracticeInput): AriaPracticeOutput {
     questions.push(...protective[0].questions.map((q) => ({ domain: "protective_factor", question: q })));
     recommendations.push({
       title: "Rewrite the protective factor",
-      detail: "Use ARIA's protective-factor rewrite to test reliability, proximity, strength and durability.",
+      detail: "Use Cara's protective-factor rewrite to test reliability, proximity, strength and durability.",
       urgency: "planned",
     });
   }
@@ -436,7 +436,7 @@ export function analyzePractice(input: AriaPracticeInput): AriaPracticeOutput {
       severity: sev,
       title: immediate ? "Possible immediate safeguarding risk" : "Possible safeguarding threshold concern",
       description:
-        "The record contains disclosure or harm language that may meet a safeguarding threshold. ARIA advises a manager review and a structured threshold consultation. ARIA does not make the statutory decision.",
+        "The record contains disclosure or harm language that may meet a safeguarding threshold. Cara advises a manager review and a structured threshold consultation. Cara does not make the statutory decision.",
       evidence: safeguardingHits,
       recommendedAction: immediate
         ? "Ensure the child is safe NOW — take emergency action first, then consult. Manager to lead a threshold consultation and consider a strategy discussion."
@@ -460,11 +460,11 @@ export function analyzePractice(input: AriaPracticeInput): AriaPracticeOutput {
     questions.push(
       { domain: "threshold", question: threshold.immediateSafetyQuestion },
       { domain: "threshold", question: "What is the evidence of harm, and what challenges or complicates it?" },
-      { domain: "threshold", question: "Is the threshold for a strategy discussion met? (Manager decision — ARIA advises only.)" },
+      { domain: "threshold", question: "Is the threshold for a strategy discussion met? (Manager decision — Cara advises only.)" },
     );
     recommendations.push({
       title: "Manager threshold consultation",
-      detail: "Use ARIA's threshold tool to structure the consultation; consider a strategy discussion.",
+      detail: "Use Cara's threshold tool to structure the consultation; consider a strategy discussion.",
       urgency: immediate ? "immediate" : "soon",
     });
   }
@@ -477,7 +477,7 @@ export function analyzePractice(input: AriaPracticeInput): AriaPracticeOutput {
       severity: "high",
       title: "Possible LADO consultation required",
       description:
-        "The record may describe a concern about an adult who works with or cares for children. ARIA advises a manager/RI review and consideration of a LADO consultation. ARIA never decides the outcome.",
+        "The record may describe a concern about an adult who works with or cares for children. Cara advises a manager/RI review and consideration of a LADO consultation. Cara never decides the outcome.",
       evidence: ladoHits,
       recommendedAction:
         "Put the child's welfare first. Consider a LADO consultation, avoid a premature internal investigation, record the rationale, and notify the appropriate manager/RI.",
@@ -530,7 +530,7 @@ export function analyzePractice(input: AriaPracticeInput): AriaPracticeOutput {
         severity: "low",
         title: `Relationship at ${relationship.stageLabel.split(" —")[0]} stage`,
         description:
-          "The record describes contact or cooperation. ARIA does not assume this is trust. Evidence of emotional safety is not yet clear.",
+          "The record describes contact or cooperation. Cara does not assume this is trust. Evidence of emotional safety is not yet clear.",
         evidence: [relationship.stageLabel],
         recommendedAction: relationship.nextRelationalStep,
         requiresManagerReview: false,
@@ -560,7 +560,7 @@ export function analyzePractice(input: AriaPracticeInput): AriaPracticeOutput {
     nextBestActions.push("Draft a L.I.V.E.R.S. analysis and a final formulation for this case.");
   }
 
-  // If nothing recognised, ARIA still advises a reflective improvement prompt.
+  // If nothing recognised, Cara still advises a reflective improvement prompt.
   if (flags.length === 0) {
     questions.push({
       domain: "reflective",
@@ -598,13 +598,13 @@ export function analyzePractice(input: AriaPracticeInput): AriaPracticeOutput {
 
 function buildSummary(flags: AriaFlag[], scores: AriaPracticeScores, immediate: boolean): string {
   if (immediate) {
-    return "ARIA has detected possible immediate danger. Make the child safe now, then consult. ARIA advises; the manager decides.";
+    return "Cara has detected possible immediate danger. Make the child safe now, then consult. Cara advises; the manager decides.";
   }
   if (flags.length === 0) {
-    return `No practice concerns detected. Overall practice-quality score ${scores.overall}. ARIA still asks: what has become different for the child?`;
+    return `No practice concerns detected. Overall practice-quality score ${scores.overall}. Cara still asks: what has become different for the child?`;
   }
   const parts = flags.map((f) => f.title.toLowerCase());
-  return `ARIA recognised ${flags.length} practice signal(s): ${parts.join("; ")}. Overall practice-quality score ${scores.overall}. ARIA advises — the manager decides, and the child's lived experience remains the measure of quality.`;
+  return `Cara recognised ${flags.length} practice signal(s): ${parts.join("; ")}. Overall practice-quality score ${scores.overall}. Cara advises — the manager decides, and the child's lived experience remains the measure of quality.`;
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -650,7 +650,7 @@ export const ARIA_GUIDANCE_RULES: Omit<AriaGuidanceRule, "id" | "created_at">[] 
     title: "LADO consultation prompt",
     domain: "lado",
     trigger_conditions: { anyOf: ["staff member", "inappropriate contact", "allegation against staff", "professional boundary", "carer allegation"] },
-    advice: "Where an adult's conduct toward a child may meet threshold, consider a LADO consultation. ARIA never decides the outcome.",
+    advice: "Where an adult's conduct toward a child may meet threshold, consider a LADO consultation. Cara never decides the outcome.",
     challenge_questions: ["Does this relate to an adult's conduct toward a child?", "What protects the child's welfare now?"],
     recommended_actions: ["Consider LADO consultation", "Notify manager/RI", "Record rationale"],
     severity: "high",
@@ -661,7 +661,7 @@ export const ARIA_GUIDANCE_RULES: Omit<AriaGuidanceRule, "id" | "created_at">[] 
     title: "Safeguarding threshold prompt",
     domain: "safeguarding",
     trigger_conditions: { anyOf: ["disclosed", "hit by", "scared to return", "abuse", "harmed by"] },
-    advice: "Support a structured threshold consultation. ARIA advises a manager review and does not make the statutory decision.",
+    advice: "Support a structured threshold consultation. Cara advises a manager review and does not make the statutory decision.",
     challenge_questions: ["Is the child safe now?", "Is the threshold for a strategy discussion met?"],
     recommended_actions: ["Manager threshold consultation", "Consider strategy discussion"],
     severity: "high",

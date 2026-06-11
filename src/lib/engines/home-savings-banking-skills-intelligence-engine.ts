@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SAVINGS & BANKING SKILLS INTELLIGENCE ENGINE
+// CARA — HOME SAVINGS & BANKING SKILLS INTELLIGENCE ENGINE
 // Home-level: assesses savings account management, banking skills development,
 // financial goal tracking, money confidence building, and age-appropriate
 // financial independence across all children on placement.

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — REPORT APPROVAL WORKFLOW
+// Cara — REPORT APPROVAL WORKFLOW
 //
 // Manages the status lifecycle of a child report:
 //   draft → pending_review → approved → locked → archived

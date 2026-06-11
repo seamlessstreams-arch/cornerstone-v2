@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME TEETH BRUSHING & ORAL ROUTINE INTELLIGENCE ENGINE
+// CARA — HOME TEETH BRUSHING & ORAL ROUTINE INTELLIGENCE ENGINE
 // Monitors oral hygiene routine quality — brushing schedule adherence, fluoride
 // product use, staff supervision of brushing, toothbrush replacement tracking,
 // and child independence in oral care.

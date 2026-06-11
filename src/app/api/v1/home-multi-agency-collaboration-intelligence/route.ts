@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME MULTI-AGENCY COLLABORATION INTELLIGENCE API ROUTE
+// CARA — HOME MULTI-AGENCY COLLABORATION INTELLIGENCE API ROUTE
 // GET /api/v1/home-multi-agency-collaboration-intelligence
 // Cross-domain composite: lacReviewRecords + socialWorkerVisitRecords +
 // therapeuticServiceRecords + educationLiaisonRecords + informationSharingRecords

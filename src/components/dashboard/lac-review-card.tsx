@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LAC REVIEW INTELLIGENCE CARD
+// CARA — LAC REVIEW INTELLIGENCE CARD
 // Dashboard widget for LAC review compliance, child participation,
-// action tracking, placement stability, and ARIA permanence intelligence.
+// action tracking, placement stability, and Cara permanence intelligence.
 // Powered by the LAC Review Engine — live data (Reg 36, CPR 2010).
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -201,13 +201,13 @@ export function LACReviewCard() {
           </div>
         )}
 
-        {/* ── ARIA LAC Review Intelligence ─────────────────────────────── */}
+        {/* ── Cara LAC Review Intelligence ─────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Review Intelligence
+              Cara Review Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

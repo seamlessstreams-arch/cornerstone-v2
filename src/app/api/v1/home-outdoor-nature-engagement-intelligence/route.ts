@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME OUTDOOR & NATURE ENGAGEMENT INTELLIGENCE API ROUTE
+// CARA -- HOME OUTDOOR & NATURE ENGAGEMENT INTELLIGENCE API ROUTE
 // GET /api/v1/home-outdoor-nature-engagement-intelligence
 // Cross-domain composite: outdoorActivityRecords + natureLearningRecords +
 // gardenProjectRecords + explorationRecords + outdoorSafetyRecords

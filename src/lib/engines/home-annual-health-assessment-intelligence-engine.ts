@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ANNUAL HEALTH ASSESSMENT INTELLIGENCE ENGINE
+// CARA — HOME ANNUAL HEALTH ASSESSMENT INTELLIGENCE ENGINE
 // Pure deterministic engine: assessment completion timeliness, health domain
 // coverage, immunisation/dental/optical checks, child contribution, and
 // report sharing with professionals.

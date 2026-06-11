@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME BEHAVIOUR SUPPORT PLAN EFFECTIVENESS INTELLIGENCE API ROUTE
+// CARA -- HOME BEHAVIOUR SUPPORT PLAN EFFECTIVENESS INTELLIGENCE API ROUTE
 // GET /api/v1/home-behaviour-support-plan-effectiveness-intelligence
 // Cross-domain composite: behaviourSupportPlans + interventionRecords +
 // deescalationRecords + positiveReinforcementRecords + restrictivePracticeRecords

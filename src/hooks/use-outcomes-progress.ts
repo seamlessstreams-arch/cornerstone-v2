@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — OUTCOMES PROGRESS INTELLIGENCE HOOK
+// CARA — OUTCOMES PROGRESS INTELLIGENCE HOOK
 // React Query wrapper for /api/v1/outcomes-progress
 // ══════════════════════════════════════════════════════════════════════════════
 

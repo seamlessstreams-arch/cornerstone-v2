@@ -60,7 +60,7 @@ export default function PlatformError({
         </h1>
         <p className="text-sm text-[var(--cs-text-muted)] mb-5">
           {chunk
-            ? "A newer version of Cornerstone is available. Reloading to pick it up…"
+            ? "A newer version of Cara is available. Reloading to pick it up…"
             : "Something went wrong loading this page. Your data is safe — try again, or head back to the dashboard."}
         </p>
         {error?.digest && (

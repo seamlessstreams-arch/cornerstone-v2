@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME STAFF SAFETY INTELLIGENCE CARD
+// CARA — HOME STAFF SAFETY INTELLIGENCE CARD
 // Lone working, debriefs, grievances, risk assessments.
 // HSW Act 1974, CHR 2015 Reg 33/34: "Employment of staff and fitness requirements."
 // ══════════════════════════════════════════════════════════════════════════════
@@ -227,12 +227,12 @@ export function HomeStaffSafetyIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Staff Safety Intelligence */}
+        {/* Cara Staff Safety Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Staff Safety Intelligence
+              Cara Staff Safety Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

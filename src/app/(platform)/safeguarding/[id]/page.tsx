@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SAFEGUARDING CONCERN DETAIL
+// CARA — SAFEGUARDING CONCERN DETAIL
 // Full record for a single safeguarding concern: disclosure, notifications,
 // multi-agency actions, oversight, linked documents, and training loop.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -245,7 +245,7 @@ export default function SafeguardingConcernPage({ params }: { params: Promise<{ 
             onClick={() => setShowAria((p) => !p)}
           >
             <Sparkles className="h-4 w-4 text-[var(--cs-aria-gold)]" />
-            ARIA Analysis
+            Cara Analysis
           </Button>
           <Button variant="outline" size="sm" onClick={() => router.push("/safeguarding")}>
             <ArrowLeft className="h-3.5 w-3.5 mr-1" />All Concerns
@@ -255,7 +255,7 @@ export default function SafeguardingConcernPage({ params }: { params: Promise<{ 
     >
       <div id="safeguarding-detail-content" className="max-w-3xl space-y-5 animate-fade-in">
 
-        {/* ── ARIA Panel ────────────────────────────────────────────────────── */}
+        {/* ── Cara Panel ────────────────────────────────────────────────────── */}
         {showAria && (
           <div className="relative">
             <button
@@ -271,7 +271,7 @@ export default function SafeguardingConcernPage({ params }: { params: Promise<{ 
           </div>
         )}
 
-        {/* ── ARIA Context Links ─────────────────────────────────────────── */}
+        {/* ── Cara Context Links ─────────────────────────────────────────── */}
         <AriaContextLinker sourceTable="safeguarding_concerns" recordId={concern.id} className="mb-4" />
 
         {/* ── Write to Child — safeguarding ────────────────────────────────── */}
@@ -456,7 +456,7 @@ export default function SafeguardingConcernPage({ params }: { params: Promise<{ 
             </div>
             <p className="text-sm text-[var(--cs-text-secondary)] leading-relaxed whitespace-pre-line">{concern.oversight_note}</p>
 
-            {/* ARIA Oversight Quality Check */}
+            {/* Cara Oversight Quality Check */}
             {concern.oversight_note && (
               <AriaOversightQuality
                 oversightText={concern.oversight_note}
@@ -494,7 +494,7 @@ export default function SafeguardingConcernPage({ params }: { params: Promise<{ 
             <span className="text-sm font-semibold text-[var(--cs-navy)]">Training Intelligence Loop</span>
           </div>
           <p className="text-xs text-[var(--cs-aria-gold)]">
-            Create a safeguarding training need from this concern. ARIA will generate targeted
+            Create a safeguarding training need from this concern. Cara will generate targeted
             learning resources and the evidence feeds directly into your Reg 45 and governance loop.
           </p>
           {!needCreated ? (

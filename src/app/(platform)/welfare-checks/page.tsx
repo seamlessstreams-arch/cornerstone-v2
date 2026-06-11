@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — WELFARE CHECKS
+// CARA — WELFARE CHECKS
 // Night-time welfare checks for every young person in the home.
 // Compliance: Quality Standards 6.3, Reg 34 (supervision), ILACS safe care.
 // Every residential children's home must demonstrate regular welfare checks

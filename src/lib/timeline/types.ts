@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — UNIVERSAL TIMELINE TYPES
+// CARA — UNIVERSAL TIMELINE TYPES
 //
 // Defines the type system for the Universal Timeline Engine.
 // Every action across the platform maps to a TimelineEvent.

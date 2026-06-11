@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME DEPRIVATION OF LIBERTY INTELLIGENCE ENGINE
+// CARA — HOME DEPRIVATION OF LIBERTY INTELLIGENCE ENGINE
 // Home-level: synthesises DoL restriction data across all children to assess
 // proportionality, consultation quality, professional oversight, review
 // timeliness, alternatives documentation, and legal framework compliance.

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD PRIORITY (UNIFIED RISK) INTELLIGENCE ENGINE
+// CARA — CHILD PRIORITY (UNIFIED RISK) INTELLIGENCE ENGINE
 //
 // Pure deterministic META-engine — no DB calls, no side effects, no LLM calls.
 //

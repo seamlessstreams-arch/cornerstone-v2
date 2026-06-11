@@ -19,7 +19,7 @@ import { cn } from "@/lib/utils";
 // ══════════════════════════════════════════════════════════════════════════════
 // AriaAgentBadge — shows which specialist agent handled a query
 //
-// Each agent type has a distinct icon so staff can understand how Aria routed
+// Each agent type has a distinct icon so staff can understand how Cara routed
 // their request and which domain expertise was applied.
 // ══════════════════════════════════════════════════════════════════════════════
 

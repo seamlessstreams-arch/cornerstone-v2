@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA STUDIO — APPROVAL WORKFLOW SERVICE
+// Cara STUDIO — APPROVAL WORKFLOW SERVICE
 // draft → in_review → approved → committed (or rejected / changes_requested)
 // ══════════════════════════════════════════════════════════════════════════════
 

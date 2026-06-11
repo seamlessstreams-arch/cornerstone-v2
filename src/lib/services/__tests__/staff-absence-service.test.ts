@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF ABSENCE SERVICE TESTS
+// CARA — STAFF ABSENCE SERVICE TESTS
 // Pure-function tests for absence metrics, alert identification, constant
 // validation, and CRUD fallback behaviour.
 // CHR 2015 Reg 33/34 compliance — staffing fitness and sufficiency.

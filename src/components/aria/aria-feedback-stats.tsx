@@ -4,7 +4,7 @@
 // AriaFeedbackStats
 //
 // Shows aggregated feedback analytics — overall satisfaction rate, common
-// negative tags, and per-command ratings. Used on the ARIA management and
+// negative tags, and per-command ratings. Used on the Cara management and
 // governance pages to track output quality over time.
 //
 // Usage:
@@ -128,7 +128,7 @@ export function AriaFeedbackStats({
       <div className="px-5 pt-5 pb-3 flex items-center gap-2">
         <BarChart3 className="h-4 w-4 text-[var(--cs-aria-gold)]" />
         <h3 className="text-sm font-bold text-[var(--cs-navy)]">
-          ARIA Feedback Analytics
+          Cara Feedback Analytics
         </h3>
         <span className="text-[10px] text-[var(--cs-text-muted)]">
           Last {days} days

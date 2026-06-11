@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME HOBBIES & INTERESTS DEVELOPMENT INTELLIGENCE API ROUTE
+// CARA — HOME HOBBIES & INTERESTS DEVELOPMENT INTELLIGENCE API ROUTE
 // GET /api/v1/home-hobbies-interests-development-intelligence
 // Cross-domain composite: hobbyParticipationRecords + interestExplorationRecords +
 // talentDevelopmentRecords + creativeExpressionRecords + childLedActivityRecords

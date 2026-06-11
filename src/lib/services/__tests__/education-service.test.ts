@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- EDUCATION & ACTIVITIES SERVICE TESTS
+// CARA -- EDUCATION & ACTIVITIES SERVICE TESTS
 // Pure-function tests for attendance stats, education profiles,
 // activity engagement, education alerts, and constant validation.
 // ==============================================================================

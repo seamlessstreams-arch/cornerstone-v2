@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE COMMS CENTRE — types (Phase 1)
+// CARA COMMS CENTRE — types (Phase 1)
 //
 // Secure internal messaging to replace WhatsApp / personal email. Role-based,
 // home-based, shift-aware, auditable. Messages can later be converted into

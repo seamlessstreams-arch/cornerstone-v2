@@ -328,7 +328,7 @@ export default function CandidateDetailPage() {
               onClick={() => setShowAria(s => !s)}
             >
               <Sparkles className="h-3.5 w-3.5 mr-1.5" />
-              Aria
+              Cara
             </Button>
           </div>
         </div>

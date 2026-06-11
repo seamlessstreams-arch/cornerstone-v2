@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LINKED UPDATES ENGINE
+// CARA — LINKED UPDATES ENGINE
 //
 // "Record once, update everywhere."
 //
@@ -29,7 +29,7 @@ const TIME_SAVED = {
   auto_task_creation: 5,     // minutes saved vs manually creating oversight task
   auto_handover: 10,         // minutes saved vs manually updating handover
   auto_notification: 3,      // minutes saved vs manually notifying
-  aria_draft: 15,            // minutes saved per Aria-assisted draft
+  aria_draft: 15,            // minutes saved per Cara-assisted draft
   linked_record_display: 4,  // minutes saved per linked record surfacing
 };
 

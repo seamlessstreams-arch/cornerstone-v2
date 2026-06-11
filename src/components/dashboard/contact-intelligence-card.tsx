@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CONTACT & ENGAGEMENT INTELLIGENCE CARD
+// CARA — CONTACT & ENGAGEMENT INTELLIGENCE CARD
 // Dashboard card for contact compliance, family time, child profiles,
-// mood impact, and ARIA contact intelligence.
+// mood impact, and Cara contact intelligence.
 // Powered by the Contact Engagement Engine — live data.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -214,13 +214,13 @@ export function ContactIntelligenceCard() {
           </div>
         )}
 
-        {/* ── ARIA insights ────────────────────────────────────────────── */}
+        {/* ── Cara insights ────────────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Contact Intelligence
+              Cara Contact Intelligence
             </p>
             {intel.insights.map((insight, i) => (
               <div

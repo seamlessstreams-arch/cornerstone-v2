@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Multi-Agency Partnership Intelligence — Public API
+// Cara Multi-Agency Partnership Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

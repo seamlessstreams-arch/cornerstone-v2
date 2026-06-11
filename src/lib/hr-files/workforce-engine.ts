@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone HR Files — Workforce & Training Compliance Engine
+// Cara HR Files — Workforce & Training Compliance Engine
 //
 // Deterministic engine for tracking staff training compliance, supervision
 // schedules, workforce analytics, and CHR 2015 staffing requirements.

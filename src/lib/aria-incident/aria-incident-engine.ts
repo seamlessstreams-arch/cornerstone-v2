@@ -1,13 +1,13 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ARIA INCIDENT MODE ENGINE (pure / deterministic)
+// CARA — Cara INCIDENT MODE ENGINE (pure / deterministic)
 //
-// The live-incident core of the Aria Practice Assistant: incident types, per-type
+// The live-incident core of the Cara Practice Assistant: incident types, per-type
 // workflow checklists, the co-regulation prompt bank, child-voice prompts, the
 // pre-save quality gate, and a deterministic draft-record assembler (the no-LLM
 // fallback that NEVER invents facts — it only re-presents what staff recorded).
 //
 // Design principle (hard contract): AI suggests. Staff decide. Manager reviews.
-// System audits. ARIA never replaces professional judgement, never makes
+// System audits. Cara never replaces professional judgement, never makes
 // safeguarding decisions, and never states that a Regulation 40 notification is
 // definitely required — only that the manager should consider it.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -15,7 +15,7 @@
 import { scoreProfessionalLanguage } from "@/lib/recording-quality/recording-quality-engine";
 
 export const INCIDENT_DISCLAIMER =
-  "ARIA suggests — staff decide, the manager reviews, the system audits. ARIA supports recording and practice; it never replaces professional judgement and never makes safeguarding decisions.";
+  "Cara suggests — staff decide, the manager reviews, the system audits. Cara supports recording and practice; it never replaces professional judgement and never makes safeguarding decisions.";
 
 export const REG40_WORDING =
   "The manager should consider whether a Regulation 40 notification is required.";
@@ -322,7 +322,7 @@ export function computeIncidentQualityGate(input: {
     { key: "manager", label: "Manager notified or review requested", ok: session.manager_notified || has("manager_notification"), detail: "Notify the manager, or record why notification was not needed." },
     { key: "outcome", label: "Outcome recorded (incident ended)", ok: !!session.ended_at, detail: "End the incident to record the outcome." },
     { key: "follow_up", label: "Follow-up identified", ok: has("restorative_action"), detail: "Plan the restorative conversation or follow-up support." },
-    { key: "language", label: "Language professional and non-blaming", ok: languageOk, detail: "Some wording may be judgemental — ARIA can suggest a factual rewrite." },
+    { key: "language", label: "Language professional and non-blaming", ok: languageOk, detail: "Some wording may be judgemental — Cara can suggest a factual rewrite." },
   ];
 
   const missing = checks.filter((c) => !c.ok).map((c) => c.label);
@@ -393,8 +393,8 @@ export function defaultPromptBank(): PromptBankEntry[] {
   return rows;
 }
 
-// ── Central ARIA system prompt (server-side LLM rewrite) ────────────────────────
-export const ARIA_INCIDENT_SYSTEM_PROMPT = `You are ARIA, the AI practice assistant inside Cornerstone Care OS, supporting residential childcare staff with therapeutic, restorative, trauma-informed, safeguarding-aware and professionally written recording.
+// ── Central Cara system prompt (server-side LLM rewrite) ────────────────────────
+export const ARIA_INCIDENT_SYSTEM_PROMPT = `You are Cara, the AI practice assistant inside Cara OS, supporting residential childcare staff with therapeutic, restorative, trauma-informed, safeguarding-aware and professionally written recording.
 You must: use factual language; avoid judgemental language and labels; support co-regulation; help staff consider the child's lived experience; prompt for the child's voice; preserve the meaning of the staff member's original notes; NEVER invent facts; NEVER diagnose children; NEVER make safeguarding decisions; NEVER state that a Regulation 40 notification is definitely required — instead say "the manager should consider whether notification is required"; always recommend manager review where risk is present; always separate fact, interpretation and suggested action.
 Use phrases such as "staff observed", "the young person appeared", "the young person stated", "staff offered", "staff supported". Avoid certainty where there is uncertainty. Tone: calm, professional, trauma-informed, non-blaming, concise, relational, restorative.
 Output EXACTLY these five numbered sections:

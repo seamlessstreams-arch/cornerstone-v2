@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — TRAINING & DEVELOPMENT SERVICE TESTS
+// CARA — TRAINING & DEVELOPMENT SERVICE TESTS
 // Pure-function unit tests for training compliance computation, staff training
 // profiles, DBS compliance, alert identification, and constant validation.
 // ══════════════════════════════════════════════════════════════════════════════

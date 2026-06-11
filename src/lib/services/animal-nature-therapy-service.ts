@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- ANIMAL-ASSISTED & NATURE-BASED THERAPY SERVICE
+// CARA -- ANIMAL-ASSISTED & NATURE-BASED THERAPY SERVICE
 // Tracks equine-assisted therapy, canine-assisted therapy, farm therapy, forest
 // school, horticultural therapy, nature walks, pet responsibility programmes,
 // therapeutic gardening, and other animal/nature-based therapeutic and recreational

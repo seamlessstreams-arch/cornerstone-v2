@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// API — ARIA Reg 40 Triage  (Milestone 15)
+// API — Cara Reg 40 Triage  (Milestone 15)
 //
 // GET    ?home_id=&status= → triage queue (optionally filter by status)
 // POST   { home_id, action: "scan" } → scan candidates and create pending rows

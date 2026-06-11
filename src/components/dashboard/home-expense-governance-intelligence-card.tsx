@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME EXPENSE GOVERNANCE INTELLIGENCE CARD
+// CARA — HOME EXPENSE GOVERNANCE INTELLIGENCE CARD
 // Financial stewardship: expense approval, receipt compliance, oversight.
 // CHR 2015 Reg 36. SCCIF: "The arrangements for the financial management."
 // ══════════════════════════════════════════════════════════════════════════════
@@ -226,12 +226,12 @@ export function HomeExpenseGovernanceIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Expense Intelligence */}
+        {/* Cara Expense Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Expense Intelligence
+              Cara Expense Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

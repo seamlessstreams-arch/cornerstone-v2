@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME EDUCATION ACHIEVEMENT INTELLIGENCE API ROUTE
+// CARA — HOME EDUCATION ACHIEVEMENT INTELLIGENCE API ROUTE
 // GET /api/v1/home-education-achievement-intelligence
 // Synthesises education records across all children to produce an overall
 // education engagement and achievement intelligence score.

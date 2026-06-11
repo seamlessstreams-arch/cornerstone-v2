@@ -5,7 +5,7 @@
 //
 // Regulation 45 requires Registered Managers to produce a monthly report
 // covering safeguarding, complaints, significant events, medication errors,
-// staffing, education, and quality of care. This widget shows ARIA's
+// staffing, education, and quality of care. This widget shows Cara's
 // automatic evidence collection progress for the current month.
 //
 // Usage:
@@ -240,7 +240,7 @@ export function AriaReg45Evidence({
           </h3>
         </div>
         <Link
-          href="/aria/reg45"
+          href="/cara/reg45"
           className="text-[10px] font-medium text-[var(--cs-aria-gold)] hover:text-[var(--cs-navy)] transition-colors flex items-center gap-0.5"
         >
           Full report <ChevronRight className="h-3 w-3" />
@@ -309,10 +309,10 @@ export function AriaReg45Evidence({
         })}
       </div>
 
-      {/* ARIA note */}
+      {/* Cara note */}
       <div className="px-5 py-2 bg-[var(--cs-aria-gold-bg)] text-[9px] text-[var(--cs-text-muted)] flex items-center gap-1">
         <Sparkles className="h-2.5 w-2.5 text-[var(--cs-aria-gold)]" />
-        ARIA automatically collects evidence from daily operations. Gaps flagged above need manual review.
+        Cara automatically collects evidence from daily operations. Gaps flagged above need manual review.
       </div>
     </div>
   );

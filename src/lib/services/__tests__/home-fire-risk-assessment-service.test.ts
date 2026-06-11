@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME FIRE RISK ASSESSMENT SERVICE TESTS
+// CARA — HOME FIRE RISK ASSESSMENT SERVICE TESTS
 // Pure-function tests for fire risk metrics, alert identification,
-// ARIA insight generation, constant validation, and edge cases.
+// Cara insight generation, constant validation, and edge cases.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME STATUTORY VISIT COMPLIANCE INTELLIGENCE ENGINE
+// CARA — HOME STATUTORY VISIT COMPLIANCE INTELLIGENCE ENGINE
 // Tracks social worker visits, statutory visiting schedules, unannounced visits,
 // Reg 22 records, and IRO contact to ensure children's statutory entitlements.
 // Pure deterministic engine. CHR 2015 Reg 22/44/45 / IRO Handbook.

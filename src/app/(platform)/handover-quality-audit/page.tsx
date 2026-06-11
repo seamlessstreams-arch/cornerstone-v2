@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HANDOVER QUALITY AUDIT
+// CARA — HANDOVER QUALITY AUDIT
 // Observation-based audits of shift handovers. Scoring across information,
 // safeguarding coverage, child voice, action handovers and professionalism.
 // Required by Quality Standard 13 (Leadership & Management) and Reg 33.

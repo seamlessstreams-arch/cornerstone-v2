@@ -1,9 +1,9 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CROSS-HOME INTELLIGENCE SERVICE
+// CARA — CROSS-HOME INTELLIGENCE SERVICE
 //
 // Aggregates intelligence across all homes in an organisation for
 // Responsible Individuals, Operations Directors, and Regional Managers.
-// Provides snapshots, trends, comparisons, and ARIA-powered alerts.
+// Provides snapshots, trends, comparisons, and Cara-powered alerts.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { createServerClient, isSupabaseEnabled } from "@/lib/supabase/server";
@@ -468,7 +468,7 @@ export async function getAlerts(
   const alerts: CrossHomeAlert[] = [];
 
   for (const home of snapshots.data) {
-    // Add ARIA alerts from snapshot
+    // Add Cara alerts from snapshot
     for (const alert of home.aria_alerts) {
       alerts.push({
         ...alert,

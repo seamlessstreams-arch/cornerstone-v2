@@ -251,12 +251,12 @@ export function AriaHandoverQuality() {
         </div>
       </div>
 
-      {/* ARIA suggestion */}
+      {/* Cara suggestion */}
       {data.suggestion && (
         <div className="mx-4 mt-3 rounded-xl bg-[var(--cs-aria-gold-bg)] border border-[var(--cs-aria-gold-soft)] p-3">
           <div className="flex items-center gap-1.5 mb-1">
             <Sparkles className="h-3 w-3 text-[var(--cs-aria-gold)]" />
-            <span className="text-[10px] font-semibold text-[var(--cs-navy)]">ARIA Suggestion</span>
+            <span className="text-[10px] font-semibold text-[var(--cs-navy)]">Cara Suggestion</span>
           </div>
           <p className="text-[11px] text-[var(--cs-text-secondary)]">{data.suggestion}</p>
         </div>

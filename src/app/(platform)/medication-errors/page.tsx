@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MEDICATION ERRORS & NEAR-MISSES REGISTER
+// CARA — MEDICATION ERRORS & NEAR-MISSES REGISTER
 // Tracks medication administration errors, near-misses, and adverse drug
 // reactions. Regulatory requirement under Regulation 23 (health) following
 // NICE guidelines for medication error reporting in care settings.

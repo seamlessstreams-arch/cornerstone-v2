@@ -387,7 +387,7 @@ export function useUpdateDocumentJob() {
 }
 
 /**
- * POST a new home climate snapshot (computed by ARIA).
+ * POST a new home climate snapshot (computed by Cara).
  */
 export function useCreateHomeClimate() {
   const qc = useQueryClient();
@@ -401,7 +401,7 @@ export function useCreateHomeClimate() {
 }
 
 /**
- * Create a new pattern alert (e.g. from an ARIA pattern scan).
+ * Create a new pattern alert (e.g. from an Cara pattern scan).
  */
 export function useCreatePatternAlert() {
   const qc = useQueryClient();
@@ -429,7 +429,7 @@ export function useCreateRelationalRecord() {
 }
 
 /**
- * POST a new child experience snapshot (typically computed by ARIA).
+ * POST a new child experience snapshot (typically computed by Cara).
  * Invalidates the child's experience query so the UI refreshes.
  */
 export function useCreateChildExperienceSnapshot() {
@@ -443,7 +443,7 @@ export function useCreateChildExperienceSnapshot() {
   });
 }
 
-// ── ARIA Intelligence hooks ───────────────────────────────────────────────────
+// ── Cara Intelligence hooks ───────────────────────────────────────────────────
 
 // ── Assessments ───────────────────────────────────────────────────────────────
 
@@ -454,7 +454,7 @@ export function useAriaAssessments(params?: { childId?: string; homeId?: string 
   return useQuery({
     queryKey: ["aria-intelligence", "assessments", params],
     queryFn: () =>
-      api.get<ListResponse<AriaAssessment>>(`/aria-intelligence/assessments?${query}`),
+      api.get<ListResponse<AriaAssessment>>(`/cara-intelligence/assessments?${query}`),
   });
 }
 
@@ -462,7 +462,7 @@ export function useCreateAriaAssessment() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (data: Partial<AriaAssessment>) =>
-      api.post<SingleResponse<AriaAssessment>>("/aria-intelligence/assessments", data),
+      api.post<SingleResponse<AriaAssessment>>("/cara-intelligence/assessments", data),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["aria-intelligence", "assessments"] });
       qc.invalidateQueries({ queryKey: ["aria-intelligence", "audit"] });
@@ -474,7 +474,7 @@ export function useUpdateAriaAssessment() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: ({ id, ...data }: { id: string } & Partial<AriaAssessment>) =>
-      api.patch<SingleResponse<AriaAssessment>>(`/aria-intelligence/assessments/${id}`, data),
+      api.patch<SingleResponse<AriaAssessment>>(`/cara-intelligence/assessments/${id}`, data),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["aria-intelligence", "assessments"] });
       qc.invalidateQueries({ queryKey: ["aria-intelligence", "audit"] });
@@ -491,7 +491,7 @@ export function useAriaOversight(params?: { childId?: string; homeId?: string })
   return useQuery({
     queryKey: ["aria-intelligence", "oversight", params],
     queryFn: () =>
-      api.get<ListResponse<AriaOversight>>(`/aria-intelligence/oversight?${query}`),
+      api.get<ListResponse<AriaOversight>>(`/cara-intelligence/oversight?${query}`),
   });
 }
 
@@ -499,7 +499,7 @@ export function useCreateAriaOversight() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (data: Partial<AriaOversight>) =>
-      api.post<SingleResponse<AriaOversight>>("/aria-intelligence/oversight", data),
+      api.post<SingleResponse<AriaOversight>>("/cara-intelligence/oversight", data),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["aria-intelligence", "oversight"] });
       qc.invalidateQueries({ queryKey: ["aria-intelligence", "audit"] });
@@ -511,7 +511,7 @@ export function useUpdateAriaOversight() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: ({ id, ...data }: { id: string } & Partial<AriaOversight>) =>
-      api.patch<SingleResponse<AriaOversight>>(`/aria-intelligence/oversight/${id}`, data),
+      api.patch<SingleResponse<AriaOversight>>(`/cara-intelligence/oversight/${id}`, data),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["aria-intelligence", "oversight"] });
     },
@@ -528,7 +528,7 @@ export function useKeyWorkSessions(params?: { childId?: string; homeId?: string;
   return useQuery({
     queryKey: ["aria-intelligence", "keywork", params],
     queryFn: () =>
-      api.get<ListResponse<KeyWorkSession>>(`/aria-intelligence/keywork?${query}`),
+      api.get<ListResponse<KeyWorkSession>>(`/cara-intelligence/keywork?${query}`),
   });
 }
 
@@ -536,7 +536,7 @@ export function useCreateKeyWorkSession() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (data: Partial<KeyWorkSession>) =>
-      api.post<SingleResponse<KeyWorkSession>>("/aria-intelligence/keywork", data),
+      api.post<SingleResponse<KeyWorkSession>>("/cara-intelligence/keywork", data),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["aria-intelligence", "keywork"] });
       qc.invalidateQueries({ queryKey: ["aria-intelligence", "audit"] });
@@ -548,7 +548,7 @@ export function useUpdateKeyWorkSession() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: ({ id, ...data }: { id: string } & Partial<KeyWorkSession>) =>
-      api.patch<SingleResponse<KeyWorkSession>>(`/aria-intelligence/keywork/${id}`, data),
+      api.patch<SingleResponse<KeyWorkSession>>(`/cara-intelligence/keywork/${id}`, data),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["aria-intelligence", "keywork"] });
     },
@@ -565,7 +565,7 @@ export function useChildResources(params?: { childId?: string; homeId?: string; 
   return useQuery({
     queryKey: ["aria-intelligence", "resources", params],
     queryFn: () =>
-      api.get<ListResponse<ChildResource>>(`/aria-intelligence/resources?${query}`),
+      api.get<ListResponse<ChildResource>>(`/cara-intelligence/resources?${query}`),
   });
 }
 
@@ -573,7 +573,7 @@ export function useCreateChildResource() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (data: Partial<ChildResource>) =>
-      api.post<SingleResponse<ChildResource>>("/aria-intelligence/resources", data),
+      api.post<SingleResponse<ChildResource>>("/cara-intelligence/resources", data),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["aria-intelligence", "resources"] });
       qc.invalidateQueries({ queryKey: ["aria-intelligence", "audit"] });
@@ -585,7 +585,7 @@ export function useUpdateChildResource() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: ({ id, ...data }: { id: string } & Partial<ChildResource>) =>
-      api.patch<SingleResponse<ChildResource>>(`/aria-intelligence/resources/${id}`, data),
+      api.patch<SingleResponse<ChildResource>>(`/cara-intelligence/resources/${id}`, data),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["aria-intelligence", "resources"] });
     },
@@ -599,7 +599,7 @@ export function useInteractiveSessions(childId: string) {
     queryKey: ["aria-intelligence", "interactive", childId],
     queryFn: () =>
       api.get<ListResponse<InteractiveSession>>(
-        `/aria-intelligence/interactive?child_id=${childId}`
+        `/cara-intelligence/interactive?child_id=${childId}`
       ),
     enabled: !!childId,
   });
@@ -609,7 +609,7 @@ export function useCreateInteractiveSession() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (data: Partial<InteractiveSession>) =>
-      api.post<SingleResponse<InteractiveSession>>("/aria-intelligence/interactive", data),
+      api.post<SingleResponse<InteractiveSession>>("/cara-intelligence/interactive", data),
     onSuccess: (_, vars) => {
       qc.invalidateQueries({ queryKey: ["aria-intelligence", "interactive", vars.child_id] });
     },
@@ -620,7 +620,7 @@ export function useUpdateInteractiveSession() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: ({ id, childId, ...data }: { id: string; childId: string } & Partial<InteractiveSession>) =>
-      api.patch<SingleResponse<InteractiveSession>>(`/aria-intelligence/interactive/${id}`, data),
+      api.patch<SingleResponse<InteractiveSession>>(`/cara-intelligence/interactive/${id}`, data),
     onSuccess: (_, vars) => {
       qc.invalidateQueries({ queryKey: ["aria-intelligence", "interactive", vars.childId] });
       qc.invalidateQueries({ queryKey: ["aria-intelligence", "audit"] });
@@ -637,7 +637,7 @@ export function useAriaAuditTrail(params?: { childId?: string; homeId?: string }
   return useQuery({
     queryKey: ["aria-intelligence", "audit", params],
     queryFn: () =>
-      api.get<ListResponse<AriaAuditEntry>>(`/aria-intelligence/audit?${query}`),
+      api.get<ListResponse<AriaAuditEntry>>(`/cara-intelligence/audit?${query}`),
   });
 }
 
@@ -645,7 +645,7 @@ export function useCreateAriaAuditEntry() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (data: Partial<AriaAuditEntry>) =>
-      api.post<SingleResponse<AriaAuditEntry>>("/aria-intelligence/audit", data),
+      api.post<SingleResponse<AriaAuditEntry>>("/cara-intelligence/audit", data),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["aria-intelligence", "audit"] });
     },
@@ -662,7 +662,7 @@ export function useAriaRecommendations(params?: { childId?: string; homeId?: str
   return useQuery({
     queryKey: ["aria-intelligence", "recommendations", params],
     queryFn: () =>
-      api.get<ListResponse<AriaRecommendation>>(`/aria-intelligence/recommendations?${query}`),
+      api.get<ListResponse<AriaRecommendation>>(`/cara-intelligence/recommendations?${query}`),
   });
 }
 
@@ -670,7 +670,7 @@ export function useCreateAriaRecommendation() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (data: Partial<AriaRecommendation>) =>
-      api.post<SingleResponse<AriaRecommendation>>("/aria-intelligence/recommendations", data),
+      api.post<SingleResponse<AriaRecommendation>>("/cara-intelligence/recommendations", data),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["aria-intelligence", "recommendations"] });
     },
@@ -681,7 +681,7 @@ export function useUpdateAriaRecommendation() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: ({ id, ...data }: { id: string } & Partial<AriaRecommendation>) =>
-      api.patch<SingleResponse<AriaRecommendation>>(`/aria-intelligence/recommendations/${id}`, data),
+      api.patch<SingleResponse<AriaRecommendation>>(`/cara-intelligence/recommendations/${id}`, data),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["aria-intelligence", "recommendations"] });
     },
@@ -699,7 +699,7 @@ export function useAriaSafeguardingFlags(params?: { childId?: string; homeId?: s
     queryKey: ["aria-intelligence", "safeguarding-flags", params],
     queryFn: () =>
       api.get<ListResponse<AriaSafeguardingFlag> & { meta: { open: number; critical: number } }>(
-        `/aria-intelligence/safeguarding-flags?${query}`
+        `/cara-intelligence/safeguarding-flags?${query}`
       ),
   });
 }
@@ -708,7 +708,7 @@ export function useCreateAriaSafeguardingFlag() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (data: Partial<AriaSafeguardingFlag>) =>
-      api.post<SingleResponse<AriaSafeguardingFlag>>("/aria-intelligence/safeguarding-flags", data),
+      api.post<SingleResponse<AriaSafeguardingFlag>>("/cara-intelligence/safeguarding-flags", data),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["aria-intelligence", "safeguarding-flags"] });
       qc.invalidateQueries({ queryKey: ["aria-intelligence", "recommendations"] });
@@ -721,7 +721,7 @@ export function useUpdateAriaSafeguardingFlag() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: ({ id, ...data }: { id: string } & Partial<AriaSafeguardingFlag>) =>
-      api.patch<SingleResponse<AriaSafeguardingFlag>>(`/aria-intelligence/safeguarding-flags/${id}`, data),
+      api.patch<SingleResponse<AriaSafeguardingFlag>>(`/cara-intelligence/safeguarding-flags/${id}`, data),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["aria-intelligence", "safeguarding-flags"] });
       qc.invalidateQueries({ queryKey: ["aria-intelligence", "audit"] });

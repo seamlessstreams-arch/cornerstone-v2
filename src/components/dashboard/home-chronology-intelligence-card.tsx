@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME CHRONOLOGY INTELLIGENCE CARD
+// CARA — HOME CHRONOLOGY INTELLIGENCE CARD
 // Home-level: chronology event patterns, documentation quality, category
 // distribution, significance tracking, incident linkage.
 // CHR 2015 Reg 36. SCCIF: "Well-Led."
@@ -217,12 +217,12 @@ export function HomeChronologyIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Chronology Intelligence */}
+        {/* Cara Chronology Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Chronology Intelligence
+              Cara Chronology Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

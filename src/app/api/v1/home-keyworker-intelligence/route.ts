@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME KEYWORKER INTELLIGENCE API ROUTE
+// CARA — HOME KEYWORKER INTELLIGENCE API ROUTE
 // GET /api/v1/home-keyworker-intelligence
 // Synthesises keyworker session coverage, therapeutic quality,
 // child engagement, mood improvement, follow-through, and theme diversity.

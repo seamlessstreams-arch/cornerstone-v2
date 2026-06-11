@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Incident Pattern Analysis Intelligence Engine Tests
+// Cara — Incident Pattern Analysis Intelligence Engine Tests
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";

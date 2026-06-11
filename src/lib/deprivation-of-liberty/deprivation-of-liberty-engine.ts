@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Deprivation of Liberty Intelligence Engine
+// Cara Deprivation of Liberty Intelligence Engine
 //
 // Evaluates DoLS/LPS compliance, proportionality of restrictions, safeguards,
 // review timeliness, and rights-based practice within children's residential care.

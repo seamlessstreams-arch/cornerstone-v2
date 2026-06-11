@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME PLACEMENT STABILITY INTELLIGENCE API ROUTE
+// CARA — HOME PLACEMENT STABILITY INTELLIGENCE API ROUTE
 // GET /api/v1/home-placement-stability-intelligence
 // Synthesises placement tenure, incident patterns, missing episode trends,
 // return interview compliance, and overall stability across all children.

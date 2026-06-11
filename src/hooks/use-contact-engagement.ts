@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CONTACT & FAMILY ENGAGEMENT HOOK
+// CARA — CONTACT & FAMILY ENGAGEMENT HOOK
 // React Query wrapper for /api/v1/contact-engagement
 // ══════════════════════════════════════════════════════════════════════════════
 

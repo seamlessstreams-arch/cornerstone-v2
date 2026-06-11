@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF–CHILD CONTINUITY OF CARE INTELLIGENCE ENGINE
+// CARA — STAFF–CHILD CONTINUITY OF CARE INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 //
@@ -335,7 +335,7 @@ function buildAlerts(children: ChildContinuity[]): ContinuityAlert[] {
   return alerts;
 }
 
-// ── ARIA insights builder ───────────────────────────────────────────────────
+// ── Cara insights builder ───────────────────────────────────────────────────
 
 function buildInsights(children: ChildContinuity[], overview: ContinuityOverview): AriaContinuityInsight[] {
   const insights: AriaContinuityInsight[] = [];

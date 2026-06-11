@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// API — ARIA Care Graph
+// API — Cara Care Graph
 // GET  → load current persisted graph (filterable by child_id)
 // POST → rebuild graph (RBAC: aria.generate_drafts)
 // ══════════════════════════════════════════════════════════════════════════════

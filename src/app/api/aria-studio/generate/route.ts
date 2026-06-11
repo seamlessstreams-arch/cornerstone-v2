@@ -2,7 +2,7 @@
 // API: /api/aria-studio/generate — Governed AI Content Generation
 //
 // Safety-checked, profile-aware generation pipeline.
-// ARIA drafts. Humans decide. Only authorised humans approve and commit.
+// Cara drafts. Humans decide. Only authorised humans approve and commit.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { NextRequest, NextResponse } from "next/server";

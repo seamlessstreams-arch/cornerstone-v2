@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LAC REVIEW & PERMANENCE INTELLIGENCE ENGINE
+// CARA — LAC REVIEW & PERMANENCE INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses LAC (Looked-After Children) review timeliness, child participation,
@@ -312,7 +312,7 @@ export function computeLACReviewIntelligence(input: LACReviewEngineInput): LACRe
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
   const insights: AriaLACReviewInsight[] = [];
 
   // Critical: overdue reviews

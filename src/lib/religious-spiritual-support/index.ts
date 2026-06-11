@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Religious & Spiritual Support Intelligence — Public API
+// Cara Religious & Spiritual Support Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

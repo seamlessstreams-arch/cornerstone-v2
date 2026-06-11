@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LIFE SKILLS & INDEPENDENCE INTELLIGENCE API ROUTE
+// CARA — LIFE SKILLS & INDEPENDENCE INTELLIGENCE API ROUTE
 // GET /api/v1/life-skills-intelligence
 // Returns independence readiness analysis: pathway assessments, domain
-// averages, per-child readiness profiles, and ARIA intelligence.
+// averages, per-child readiness profiles, and Cara intelligence.
 // Reg 8, Reg 9, Reg 14, SCCIF.
 // ══════════════════════════════════════════════════════════════════════════════
 

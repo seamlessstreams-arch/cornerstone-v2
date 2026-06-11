@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME TRANSPORT & VEHICLE SAFETY INTELLIGENCE ENGINE
+// CARA — HOME TRANSPORT & VEHICLE SAFETY INTELLIGENCE ENGINE
 // Monitors transport safety for children across the home — vehicle maintenance
 // compliance, pre-use checks, driver qualification tracking, journey risk
 // assessments, and transport log quality.

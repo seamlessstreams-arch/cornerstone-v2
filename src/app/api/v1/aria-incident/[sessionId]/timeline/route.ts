@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ARIA INCIDENT MODE · TIMELINE API
+// CARA — Cara INCIDENT MODE · TIMELINE API
 // POST /api/v1/aria-incident/[sessionId]/timeline  { entry_type, raw_text }
 // ══════════════════════════════════════════════════════════════════════════════
 

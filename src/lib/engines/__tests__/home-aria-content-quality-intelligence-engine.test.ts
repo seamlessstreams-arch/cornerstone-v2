@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ARIA CONTENT QUALITY INTELLIGENCE ENGINE — TESTS
+// CARA — HOME Cara CONTENT QUALITY INTELLIGENCE ENGINE — TESTS
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";
@@ -49,7 +49,7 @@ function baseInput(overrides: Partial<AriaContentQualityInput> = {}): AriaConten
 
 // ── Structure / Shape ───────────────────────────────────────────────────────
 
-describe("Home ARIA Content Quality Intelligence Engine", () => {
+describe("Home Cara Content Quality Intelligence Engine", () => {
   describe("structure and shape", () => {
     it("returns all expected result fields", () => {
       const r = computeAriaContentQuality(baseInput({ artifacts: [makeArtifact()] }));
@@ -176,9 +176,9 @@ describe("Home ARIA Content Quality Intelligence Engine", () => {
       expect(r.content_score).toBe(72);
     });
 
-    it("0 artifacts active home has ARIA not yet adopted headline", () => {
+    it("0 artifacts active home has Cara not yet adopted headline", () => {
       const r = computeAriaContentQuality(baseInput({ artifacts: [] }));
-      expect(r.headline).toContain("ARIA not yet adopted");
+      expect(r.headline).toContain("Cara not yet adopted");
     });
 
     it("0 artifacts active home has a planned recommendation", () => {
@@ -1062,7 +1062,7 @@ describe("Home ARIA Content Quality Intelligence Engine", () => {
 
     it("not-yet-adopted headline for active home with no artifacts", () => {
       const r = computeAriaContentQuality(baseInput({ artifacts: [] }));
-      expect(r.headline).toBe("ARIA not yet adopted — no AI-assisted content generated");
+      expect(r.headline).toBe("Cara not yet adopted — no AI-assisted content generated");
     });
   });
 
@@ -1988,7 +1988,7 @@ describe("Home ARIA Content Quality Intelligence Engine", () => {
       expect(r.insights.some(i => i.severity === "critical")).toBe(true);
     });
 
-    it("home with excellent ARIA adoption", () => {
+    it("home with excellent Cara adoption", () => {
       const children = ["c1", "c2", "c3", "c4"];
       const arts = children.flatMap((cid, i) => [
         makeArtifact({ id: `a_${i}_1`, child_id: cid, artifact_type: "keywork_session", quality_score: 92, evidence_confidence_score: 88, framework: "pace", source_ids_count: 5, status: "approved", submitted_for_review_at: "2026-05-20T09:00:00Z", reviewed_at: "2026-05-20T11:00:00Z" }),

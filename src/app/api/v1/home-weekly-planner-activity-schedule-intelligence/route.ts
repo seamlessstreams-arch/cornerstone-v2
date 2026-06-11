@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME WEEKLY PLANNER & ACTIVITY SCHEDULE INTELLIGENCE API ROUTE
+// CARA -- HOME WEEKLY PLANNER & ACTIVITY SCHEDULE INTELLIGENCE API ROUTE
 // GET /api/v1/home-weekly-planner-activity-schedule-intelligence
 // Cross-domain composite: scheduleCreationRecords + activityVarietyRecords +
 // childInputRecords + communicationRecords + adherenceRecords

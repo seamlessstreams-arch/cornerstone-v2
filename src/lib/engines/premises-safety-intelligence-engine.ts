@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PREMISES & SAFETY INTELLIGENCE ENGINE
+// CARA — PREMISES & SAFETY INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses buildings, building checks, maintenance items, vehicles and vehicle
@@ -555,10 +555,10 @@ export function computePremisesSafetyIntelligence(
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
   const insights: AriaPremisesInsight[] = [];
 
-  // Critical: any critical alert triggers ARIA critical
+  // Critical: any critical alert triggers Cara critical
   if (certificationsExpired > 0) {
     insights.push({
       severity: "critical",

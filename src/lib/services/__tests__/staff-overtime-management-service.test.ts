@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF OVERTIME MANAGEMENT SERVICE TESTS
+// CARA — STAFF OVERTIME MANAGEMENT SERVICE TESTS
 // Pure-function unit tests for overtime management metrics, alert
-// identification, and ARIA insight generation.
+// identification, and Cara insight generation.
 //
 // Working Time Regulations 1998 — 48-hour weekly limit, rest breaks,
 // night worker protections, opt-out provisions.

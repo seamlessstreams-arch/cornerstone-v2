@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MATCHING & REFERRAL SERVICE
+// CARA — MATCHING & REFERRAL SERVICE
 // Manages referral intake, matching assessments, and admission decisions.
 // CHR 2015 Reg 8 (placement plans — matching considerations),
 // Reg 9 (quality of care — matching),

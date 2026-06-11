@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME STAFF INDUCTION & ONBOARDING INTELLIGENCE ENGINE
+// CARA — HOME STAFF INDUCTION & ONBOARDING INTELLIGENCE ENGINE
 // Cross-domain composite: assesses the quality and completeness of the home's
 // staff induction and onboarding processes, including permanent staff, agency
 // staff, and shadowing compliance.

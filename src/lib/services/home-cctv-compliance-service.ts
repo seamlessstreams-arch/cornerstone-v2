@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME CCTV COMPLIANCE SERVICE
+// CARA -- HOME CCTV COMPLIANCE SERVICE
 // Tracks CCTV camera compliance reviews including DPIA completion, signage,
 // data retention, encryption, access logging, SAR handling, and privacy
 // zone configuration for children's residential homes.

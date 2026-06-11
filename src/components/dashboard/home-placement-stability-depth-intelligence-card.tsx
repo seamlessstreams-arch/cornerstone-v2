@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME PLACEMENT STABILITY DEPTH INTELLIGENCE CARD
+// CARA — HOME PLACEMENT STABILITY DEPTH INTELLIGENCE CARD
 // Disruption prevention, stability records, impact assessments, matching.
 // CHR 2015 Reg 36.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -191,12 +191,12 @@ export function HomePlacementStabilityDepthIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Insights */}
+        {/* Cara Insights */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Stability Depth Intelligence
+              Cara Stability Depth Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

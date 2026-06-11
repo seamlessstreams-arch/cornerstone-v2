@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD EMOTIONAL WELLBEING INTELLIGENCE CARD
+// CARA — CHILD EMOTIONAL WELLBEING INTELLIGENCE CARD
 // Per-child: synthesised mood trajectory, behaviour patterns, engagement,
 // sanctions/rewards balance — holistic emotional health view.
 // CHR 2015 Reg 7, 10. SCCIF: "Experiences and progress."
@@ -234,12 +234,12 @@ export function ChildEmotionalWellbeingIntelligenceCard({ childId }: { childId: 
           </div>
         )}
 
-        {/* ARIA Emotional Wellbeing Intelligence */}
+        {/* Cara Emotional Wellbeing Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Emotional Wellbeing Intelligence
+              Cara Emotional Wellbeing Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

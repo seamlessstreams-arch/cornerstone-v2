@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Notification Timeliness Intelligence — Public API
+// Cara Notification Timeliness Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME AUTOMATION ROI INTELLIGENCE ENGINE — TESTS
+// CARA — HOME AUTOMATION ROI INTELLIGENCE ENGINE — TESTS
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";

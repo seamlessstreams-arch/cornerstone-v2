@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME EMERGENCY PREPAREDNESS INTELLIGENCE API ROUTE
+// CARA — HOME EMERGENCY PREPAREDNESS INTELLIGENCE API ROUTE
 // GET /api/v1/home-emergency-preparedness-intelligence
 // Synthesises home policies, protocol drills, and emergency plans to assess
 // policy compliance, drill readiness, and emergency plan coverage.

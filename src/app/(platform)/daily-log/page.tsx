@@ -22,7 +22,7 @@ import { useDailyLog, useCreateDailyLog } from "@/hooks/use-daily-log";
 import { useAuthContext } from "@/contexts/auth-context";
 import { useYoungPeople } from "@/hooks/use-young-people";
 import { useCreateTrainingNeed } from "@/hooks/use-ri-learning";
-import { AriaQuickActions } from "@/components/intelligence/aria-quick-actions";
+import { AriaQuickActions } from "@/components/intelligence/cara-quick-actions";
 import { AriaCompose } from "@/components/aria/aria-compose";
 import { appRoleToAriaRole } from "@/lib/aria/aria-permissions";
 import { api } from "@/hooks/use-api";
@@ -298,7 +298,7 @@ function LogEntryCard({ entry }: { entry: DailyLogEntry }) {
                   {entry.mood_score}/10
                 </span>
               )}
-              {/* ARIA quick-action toggle */}
+              {/* Cara quick-action toggle */}
               <button
                 onClick={() => setShowAria((v) => !v)}
                 className={cn(
@@ -308,7 +308,7 @@ function LogEntryCard({ entry }: { entry: DailyLogEntry }) {
                     : "bg-white text-slate-500 border-slate-200 hover:bg-violet-50 hover:text-violet-600 hover:border-violet-200"
                 )}
               >
-                <Sparkles className="h-2.5 w-2.5" />Ask ARIA
+                <Sparkles className="h-2.5 w-2.5" />Ask Cara
               </button>
             </div>
             <p className="text-sm text-slate-700 mt-2 leading-relaxed">{entry.content}</p>
@@ -324,7 +324,7 @@ function LogEntryCard({ entry }: { entry: DailyLogEntry }) {
               </Link>
             )}
 
-            {/* Inline ARIA actions */}
+            {/* Inline Cara actions */}
             {showAria && (
               <div className="mt-3">
                 <AriaQuickActions
@@ -342,7 +342,7 @@ function LogEntryCard({ entry }: { entry: DailyLogEntry }) {
   );
 }
 
-// ── ARIA Pattern Scanner ──────────────────────────────────────────────────────
+// ── Cara Pattern Scanner ──────────────────────────────────────────────────────
 type DetectedPattern = {
   need_type: string;
   title: string;
@@ -371,7 +371,7 @@ function AriaPatternScanner({ entries }: { entries: DailyLogEntry[] }) {
         .slice(0, 20)
         .map((e) => `[${e.entry_type}] ${getYPName(e.child_id)}: ${e.content.slice(0, 120)}`)
         .join("\n");
-      const res = await api.post<{ data: { parsed?: { needs?: DetectedPattern[] } } }>("/aria", {
+      const res = await api.post<{ data: { parsed?: { needs?: DetectedPattern[] } } }>("/cara", {
         mode: "training_needs_analysis",
         source_content: summary,
         page_context: "daily_log",
@@ -380,7 +380,7 @@ function AriaPatternScanner({ entries }: { entries: DailyLogEntry[] }) {
       });
       setPatterns(res.data?.parsed?.needs ?? []);
     } catch {
-      setScanError("ARIA could not analyse the entries. Please try again.");
+      setScanError("Cara could not analyse the entries. Please try again.");
     } finally {
       setScanning(false);
     }
@@ -396,7 +396,7 @@ function AriaPatternScanner({ entries }: { entries: DailyLogEntry[] }) {
       priority: p.priority,
       affected_roles: ["residential_care_worker", "senior_residential_care_worker"],
       status: "identified",
-      aria_evidence: `Detected by ARIA from ${entries.length} daily log entries`,
+      aria_evidence: `Detected by Cara from ${entries.length} daily log entries`,
       created_by: currentUser?.id ?? "staff_darren",
     });
     setCreated((prev) => new Set(prev).add(idx));
@@ -409,7 +409,7 @@ function AriaPatternScanner({ entries }: { entries: DailyLogEntry[] }) {
           <Brain className="h-4 w-4 text-violet-600" />
         </div>
         <div className="flex-1">
-          <p className="text-sm font-semibold text-slate-900">ARIA Pattern Analysis</p>
+          <p className="text-sm font-semibold text-slate-900">Cara Pattern Analysis</p>
           <p className="text-xs text-slate-500">Scan current entries for staff training patterns</p>
         </div>
         <Button
@@ -614,7 +614,7 @@ export default function DailyLogPage() {
           </div>
         )}
 
-        {/* ARIA Pattern Scanner */}
+        {/* Cara Pattern Scanner */}
         <AriaPatternScanner entries={entries} />
 
         {/* New entry form */}
@@ -801,7 +801,7 @@ export default function DailyLogPage() {
           className="mt-2"
         />
       </div>
-      <AriaPracticePanel sourceType="daily_record" homeId="home_oak" title="Run ARIA on this log" />
+      <AriaPracticePanel sourceType="daily_record" homeId="home_oak" title="Run Cara on this log" />
     </PageShell>
   );
 }

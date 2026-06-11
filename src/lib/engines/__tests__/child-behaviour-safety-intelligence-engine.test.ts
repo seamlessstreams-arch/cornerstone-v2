@@ -603,7 +603,7 @@ describe("computeChildBehaviourSafety", () => {
     expect(result.headline).toContain("1 missing episode");
   });
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
 
   it("generates critical insight for high behaviours + restraints", () => {
     const result = computeChildBehaviourSafety(baseInput({

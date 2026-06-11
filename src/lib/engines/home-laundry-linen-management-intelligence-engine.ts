@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME LAUNDRY & LINEN MANAGEMENT INTELLIGENCE ENGINE
+// CARA — HOME LAUNDRY & LINEN MANAGEMENT INTELLIGENCE ENGINE
 // Monitors laundry service timeliness, linen adequacy and condition, personal
 // clothing care respect, hygiene compliance, and child satisfaction across the
 // home. Ensures every child experiences clean, well-maintained clothing and

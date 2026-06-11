@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA Agent Learning & Cost Reduction Layer — Tests
+// Cara Agent Learning & Cost Reduction Layer — Tests
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";
@@ -293,7 +293,7 @@ describe("Label helpers", () => {
   });
 
   it("getResolutionTierLabel returns readable labels", () => {
-    expect(getResolutionTierLabel("cornerstone_finetuned")).toBe("Cornerstone Fine-tuned");
+    expect(getResolutionTierLabel("cornerstone_finetuned")).toBe("Cara Fine-tuned");
     expect(getResolutionTierLabel("human_review_only")).toBe("Human Review Only");
   });
 

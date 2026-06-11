@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PLACEMENT BREAKDOWN FORECAST (detail page)
+// CARA — PLACEMENT BREAKDOWN FORECAST (detail page)
 // Forward-looking early-warning view of placement stability across the home.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -93,11 +93,11 @@ export default function PlacementBreakdownForecastPage() {
             />
           </div>
 
-          {/* ── ARIA insights ────────────────────────────────────────────── */}
+          {/* ── Cara insights ────────────────────────────────────────────── */}
           {(intel.insights ?? []).length > 0 && (
             <div className="space-y-2">
               <h2 className="text-sm font-semibold flex items-center gap-1.5 text-purple-700">
-                <Brain className="h-4 w-4" /> ARIA Placement Stability Intelligence
+                <Brain className="h-4 w-4" /> Cara Placement Stability Intelligence
               </h2>
               {(intel.insights ?? []).map((insight, i) => (
                 <div key={i} className={cn("rounded-xl border p-3 text-sm leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.positive)}>

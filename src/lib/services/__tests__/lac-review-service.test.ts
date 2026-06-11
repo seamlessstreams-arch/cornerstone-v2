@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LAC REVIEW SERVICE TESTS
+// CARA — LAC REVIEW SERVICE TESTS
 // Pure-function unit tests for LAC review metrics computation,
 // alert identification, constant validation, and CRUD fallback behaviour
 // (Supabase disabled). CHR 2015 Reg 45 (review of quality of care),
