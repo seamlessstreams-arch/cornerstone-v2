@@ -246,7 +246,7 @@ function ExperienceScoresPanel({ childId }: { childId: string }) {
       const childContext = lines.join("\n");
 
       // Call Cara in compute_experience_snapshot mode (non-streaming JSON mode)
-      const res = await fetch("/api/v1/aria", {
+      const res = await fetch("/api/v1/cara", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -1026,7 +1026,7 @@ function AriaChildPanel({ childId, childName }: AriaChildPanelProps) {
         source_content: childContext,
       };
 
-      const res = await fetch("/api/v1/aria", {
+      const res = await fetch("/api/v1/cara", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

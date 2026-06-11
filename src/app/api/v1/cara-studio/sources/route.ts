@@ -3,7 +3,7 @@ import { db } from "@/lib/db/store";
 
 const HOME_ID = "home_oak";
 
-// GET /api/v1/aria-studio/sources
+// GET /api/v1/cara-studio/sources
 // Query params: home_id, child_id, source_type, limit
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);

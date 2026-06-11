@@ -4,7 +4,7 @@ import { requireAriaStudioPermission } from "@/lib/aria/aria-studio-guard";
 
 const HOME_ID = "home_oak";
 
-// GET /api/v1/aria-studio/artifacts
+// GET /api/v1/cara-studio/artifacts
 // Query params: status, artifact_type, child_id, home_id, limit, offset
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
@@ -40,7 +40,7 @@ export async function GET(req: NextRequest) {
   });
 }
 
-// POST /api/v1/aria-studio/artifacts
+// POST /api/v1/cara-studio/artifacts
 // Creates a blank draft artifact (without AI generation)
 export async function POST(req: NextRequest) {
   let body: Record<string, unknown>;

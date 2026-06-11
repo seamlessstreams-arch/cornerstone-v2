@@ -1,5 +1,5 @@
 // ═════════════════════════════════════════════════════════════════════════════
-// API: GET /api/v1/aria/health
+// API: GET /api/v1/cara/health
 //
 // Returns the full AriaHealthStatus diagnostic object.
 //

@@ -606,7 +606,7 @@ export default function SituationReviewPage() {
     setError(null);
     setResult(null);
     try {
-      const res = await fetch("/api/v1/aria", {
+      const res = await fetch("/api/v1/cara", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

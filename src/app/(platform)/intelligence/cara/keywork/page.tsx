@@ -149,7 +149,7 @@ function BuilderForm({ onClose, initialChildId = "" }: { onClose: () => void; in
 
     try {
       const childName = youngPeople.find((y) => y.id === childId)?.name ?? "Child";
-      const res = await fetch("/api/v1/aria", {
+      const res = await fetch("/api/v1/cara", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

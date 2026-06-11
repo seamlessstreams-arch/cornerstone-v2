@@ -34,7 +34,7 @@ export function useAria() {
  * Streaming variant of useAria.
  *
  * Sends the request with `stream: true` and processes the SSE response from
- * POST /api/v1/aria. Calls onChunk with the accumulated text as each delta
+ * POST /api/v1/cara. Calls onChunk with the accumulated text as each delta
  * arrives, then calls onDone when the stream closes.
  *
  * Supports abort so callers can cancel mid-stream (e.g. component unmount).
@@ -56,7 +56,7 @@ export function useAriaStream() {
       setIsStreaming(true);
 
       try {
-        const res = await fetch("/api/v1/aria", {
+        const res = await fetch("/api/v1/cara", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

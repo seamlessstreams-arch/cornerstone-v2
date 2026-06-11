@@ -296,7 +296,7 @@ export function AriaDrawer({ open, onClose, context = {} }: AriaDrawerProps) {
     ].filter(Boolean).join(". ");
 
     try {
-      const res = await fetch("/api/v1/aria/chat", {
+      const res = await fetch("/api/v1/cara/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

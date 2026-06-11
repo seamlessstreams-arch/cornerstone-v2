@@ -26,7 +26,7 @@ export function useCommittedVersionHistory(recordId: string | null) {
     queryKey: ["aria-committed-versions", recordId],
     queryFn: () =>
       api.get<ListResponse<AriaCommittedRecord>>(
-        `/api/v1/aria-studio/committed-amendments?record_id=${encodeURIComponent(
+        `/api/v1/cara-studio/committed-amendments?record_id=${encodeURIComponent(
           recordId ?? "",
         )}`,
       ),

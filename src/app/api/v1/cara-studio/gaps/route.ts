@@ -5,7 +5,7 @@ import { requireAriaStudioPermission } from "@/lib/aria/aria-studio-guard";
 
 const HOME_ID = "home_oak";
 
-// GET /api/v1/aria-studio/gaps
+// GET /api/v1/cara-studio/gaps
 // Returns detected evidence gaps. Persists new gaps found.
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
@@ -51,7 +51,7 @@ export async function GET(req: NextRequest) {
   });
 }
 
-// PATCH /api/v1/aria-studio/gaps
+// PATCH /api/v1/cara-studio/gaps
 // Update gap status (acknowledge, resolve, assign)
 export async function PATCH(req: NextRequest) {
   let body: Record<string, unknown>;

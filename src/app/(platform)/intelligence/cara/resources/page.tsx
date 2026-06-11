@@ -267,7 +267,7 @@ function CreateForm({
 
     try {
       const typeInfo = RESOURCE_TYPES.find((t) => t.value === resourceType);
-      const res = await fetch("/api/v1/aria", {
+      const res = await fetch("/api/v1/cara", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

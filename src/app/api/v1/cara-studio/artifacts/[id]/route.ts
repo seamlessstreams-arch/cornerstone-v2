@@ -30,7 +30,7 @@ function permissionForAction(action: string): AriaPermission {
   }
 }
 
-// GET /api/v1/aria-studio/artifacts/[id]
+// GET /api/v1/cara-studio/artifacts/[id]
 export async function GET(_req: NextRequest, { params }: Params) {
   const { id } = await params;
   const artifact = db.ariaArtifacts.findById(id);
@@ -49,7 +49,7 @@ export async function GET(_req: NextRequest, { params }: Params) {
   });
 }
 
-// PATCH /api/v1/aria-studio/artifacts/[id]
+// PATCH /api/v1/cara-studio/artifacts/[id]
 // Handles: edit, submit, approve, changes_requested, reject, commit, archive, quality_check
 export async function PATCH(req: NextRequest, { params }: Params) {
   const { id } = await params;
@@ -196,7 +196,7 @@ export async function PATCH(req: NextRequest, { params }: Params) {
   return NextResponse.json({ data: updated });
 }
 
-// DELETE /api/v1/aria-studio/artifacts/[id]
+// DELETE /api/v1/cara-studio/artifacts/[id]
 // Soft delete — marks as deleted_recoverable
 export async function DELETE(req: NextRequest, { params }: Params) {
   const { id } = await params;
