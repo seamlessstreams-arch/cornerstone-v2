@@ -13,7 +13,7 @@
 // Bump VERSION to invalidate caches on a breaking change.
 // ══════════════════════════════════════════════════════════════════════════════
 
-const VERSION = "v3"; // bumped: Cara OS rebrand — invalidate all pre-rebrand caches
+const VERSION = "v4"; // bumped: PWA update — manifest served network-first, shortcuts + screenshots added
 const SHELL_CACHE = `cs-shell-${VERSION}`;
 const STATIC_CACHE = `cs-static-${VERSION}`;
 const OFFLINE_URL = "/offline.html";
@@ -41,9 +41,11 @@ self.addEventListener("activate", (event) => {
 });
 
 function isStaticAsset(url) {
+  // NOTE: the web-app manifest is deliberately NOT cache-first — app identity
+  // (name, shortcuts, screenshots) must propagate without a cache-version bump.
   return (
     url.pathname.startsWith("/_next/static/") ||
-    /\.(?:js|css|woff2?|ttf|png|jpg|jpeg|svg|ico|webp|webmanifest)$/.test(url.pathname)
+    /\.(?:js|css|woff2?|ttf|png|jpg|jpeg|svg|ico|webp)$/.test(url.pathname)
   );
 }
 

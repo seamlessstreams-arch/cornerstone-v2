@@ -19,7 +19,7 @@ function ensureConfigured(): boolean {
   if (configured !== null) return configured;
   const pub = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY ?? process.env.VAPID_PUBLIC_KEY;
   const priv = process.env.VAPID_PRIVATE_KEY;
-  const subject = process.env.VAPID_SUBJECT ?? "mailto:notifications@cornerstone.app";
+  const subject = process.env.VAPID_SUBJECT ?? "mailto:notifications@cara-os.app";
   if (!pub || !priv || pub.includes("placeholder") || priv.includes("placeholder")) {
     configured = false;
     return false;
