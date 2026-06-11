@@ -14,6 +14,11 @@ import "server-only";
 import type { z } from "zod";
 import { db, getStore } from "@/lib/db/store";
 import { generateId } from "@/lib/utils";
+import {
+  persistCaraStudioOutput,
+  persistCaraAiRun,
+  persistCaraGuardrailEvent,
+} from "@/lib/supabase/cara-persist";
 import { buildChildContext, type CaraChildContext } from "./cara-context-builder";
 import { runCaraGuardrails } from "./cara-guardrails";
 import type {
@@ -133,9 +138,10 @@ export function persistCaraOutput<T>(params: PersistParams<T>): PersistResult<T>
     updated_at: now,
   };
   db.caraStudioOutputs.create(saved as CaraSavedOutput);
+  void persistCaraStudioOutput(saved as CaraSavedOutput); // durable when Supabase is on
 
   // 4. Audit: the AI run, always.
-  db.caraAiRuns.create({
+  const run = db.caraAiRuns.create({
     id: generateId("crun"),
     user_id: params.actor.userId,
     child_id: params.childId,
@@ -149,10 +155,11 @@ export function persistCaraOutput<T>(params: PersistParams<T>): PersistResult<T>
     human_review_required: reviewRequired,
     created_at: now,
   });
+  void persistCaraAiRun(run);
 
   // 5. Audit: each guardrail flag as an event.
   for (const f of guardrails.flags) {
-    db.caraGuardrailEvents.create({
+    const event = db.caraGuardrailEvents.create({
       id: generateId("cge"),
       user_id: params.actor.userId,
       child_id: params.childId,
@@ -163,6 +170,7 @@ export function persistCaraOutput<T>(params: PersistParams<T>): PersistResult<T>
       action_taken: blocked ? "blocked_pending_review" : "flagged_for_review",
       created_at: now,
     });
+    void persistCaraGuardrailEvent(event);
   }
 
   return { saved, guardrails, blocked };
