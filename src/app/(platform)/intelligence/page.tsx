@@ -9,6 +9,7 @@
 import React, { useMemo, useState } from "react";
 import Link from "next/link";
 import { PageShell } from "@/components/layout/page-shell";
+import { FiveLayersStrip } from "@/components/intelligence/five-layers-strip";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -1194,6 +1195,8 @@ export default function IntelligenceHubPage() {
       actions={<SmartUploadButton variant="inline" label="Upload Intelligence Document" uploadContext="Intelligence Hub — intelligence or evidence document upload" />}
     >
       <div className="space-y-8 animate-fade-in">
+        <FiveLayersStrip />
+
         <HomeClimateSection />
 
         <div className="grid gap-5 lg:grid-cols-2">
