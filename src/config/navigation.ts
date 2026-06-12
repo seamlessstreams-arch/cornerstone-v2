@@ -734,6 +734,19 @@ export const DOMAIN_NAV: NavGroup[] = [
       { label: "Cara Intelligence", href: "/intelligence", icon: "Sparkles", module: "aria" },
     ],
   },
+  // Platform owner — metadata-only cockpit (boundary stated on every HQ page)
+  {
+    id: "hq",
+    label: "Cara HQ",
+    icon: "Building2",
+    href: "/hq",
+    module: "dashboard",
+    children: [
+      { label: "Overview", href: "/hq", icon: "LayoutDashboard", module: "dashboard" },
+      { label: "Customers", href: "/hq/customers", icon: "Building2", module: "dashboard" },
+      { label: "AI Usage & Cost", href: "/hq/ai-usage", icon: "Activity", module: "dashboard" },
+    ],
+  },
 ];
 
 // ── Global Create menu items ───────────────────────────────────────────────────
