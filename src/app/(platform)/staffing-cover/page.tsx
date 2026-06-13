@@ -4,14 +4,29 @@
 // Day-by-day, day/night cover vs the home policy — under, over (with/without a
 // reason), no-waking-night and phantom (scheduled-but-off) gaps, worst-first.
 
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { PageShell } from "@/components/layout/page-shell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CardErrorBoundary } from "@/components/dashboard/card-error-boundary";
 import { PrintButton } from "@/components/common/print-button";
-import { useStaffingCover } from "@/hooks/use-staffing-cover";
-import { CalendarRange, AlertTriangle, CheckCircle2, Sun, Moon, Users } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useStaffingCover, useLogCoverReason } from "@/hooks/use-staffing-cover";
+import { CalendarRange, AlertTriangle, CheckCircle2, Sun, Moon, Users, PlusCircle } from "lucide-react";
 import type { CoverSeverity, CoverStatus, PeriodCover } from "@/lib/rota/staffing-cover-engine";
+
+const COVER_REASONS: { value: string; label: string }[] = [
+  { value: "shadow_shift", label: "Shadow shift" },
+  { value: "induction", label: "Induction" },
+  { value: "training", label: "Training" },
+  { value: "child_plan_adjustment", label: "Adjustment in a child's plan" },
+  { value: "extra_support", label: "Extra support" },
+  { value: "higher_ratio", label: "Higher staffing ratio" },
+  { value: "other", label: "Other" },
+];
 
 const SEV_BAR: Record<CoverSeverity, string> = {
   critical: "border-l-[var(--cs-risk)]",
@@ -38,7 +53,7 @@ function fmtDate(d: string): string {
   return new Date(`${d}T00:00:00`).toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" });
 }
 
-function PeriodRow({ p, showDate }: { p: PeriodCover; showDate?: boolean }) {
+function PeriodRow({ p, showDate, onAddReason }: { p: PeriodCover; showDate?: boolean; onAddReason?: (p: PeriodCover) => void }) {
   const Icon = p.period === "night" ? Moon : Sun;
   return (
     <div className={`rounded-lg border border-[var(--cs-border-subtle)] bg-[var(--cs-surface-elevated)] p-2.5 border-l-4 ${SEV_BAR[p.severity]}`}>
@@ -49,6 +64,18 @@ function PeriodRow({ p, showDate }: { p: PeriodCover; showDate?: boolean }) {
             {showDate && <p className="text-xs font-semibold text-[var(--cs-navy)]">{fmtDate(p.date)} · {p.period}</p>}
             <p className="text-xs text-[var(--cs-text-secondary)]">{p.message}</p>
             {p.phantom > 0 && <p className="mt-0.5 text-[11px] text-[var(--cs-warning)]">Scheduled but off: {p.phantom_names.join(", ")}</p>}
+            {p.status === "over_explained" && p.reason && (
+              <p className="mt-0.5 text-[11px] text-[var(--cs-text-muted)]">Reason logged: {p.reason.replace(/_/g, " ")}</p>
+            )}
+            {p.status === "over_unexplained" && onAddReason && (
+              <button
+                type="button"
+                onClick={() => onAddReason(p)}
+                className="mt-1 inline-flex items-center gap-1 rounded-md bg-[var(--cs-teal-bg)] px-2 py-0.5 text-[11px] font-semibold text-[var(--cs-teal)] transition-colors hover:bg-[var(--cs-teal)] hover:text-white print:hidden"
+              >
+                <PlusCircle className="h-3 w-3" /> Add a reason
+              </button>
+            )}
           </div>
         </div>
         <span className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-semibold ${STATUS_CHIP[p.status]}`}>{STATUS_LABEL[p.status]}</span>
@@ -60,6 +87,20 @@ function PeriodRow({ p, showDate }: { p: PeriodCover; showDate?: boolean }) {
 export default function StaffingCoverPage() {
   const { data: resp, isLoading, error } = useStaffingCover();
   const o = resp?.data;
+
+  const logReason = useLogCoverReason();
+  const [target, setTarget] = useState<PeriodCover | null>(null);
+  const [reason, setReason] = useState("");
+  const [comment, setComment] = useState("");
+
+  const openReason = (p: PeriodCover) => { setTarget(p); setReason(""); setComment(""); logReason.reset(); };
+  const submitReason = () => {
+    if (!target || !reason) return;
+    logReason.mutate(
+      { date: target.date, period: target.period, reason, comment },
+      { onSuccess: () => setTarget(null) },
+    );
+  };
 
   const byDate = useMemo(() => {
     const m = new Map<string, PeriodCover[]>();
@@ -117,7 +158,7 @@ export default function StaffingCoverPage() {
                     <p className="flex items-center gap-2 py-1 text-sm text-[var(--cs-text-secondary)]"><CheckCircle2 className="h-4 w-4 text-[var(--cs-success)]" /> Cover is complete across the fortnight — minimums met, waking-night in place, no unexplained extra.</p>
                   ) : (
                     <div className="space-y-1.5">
-                      {o.attention.map((p) => <PeriodRow key={`${p.date}-${p.period}`} p={p} showDate />)}
+                      {o.attention.map((p) => <PeriodRow key={`${p.date}-${p.period}`} p={p} showDate onAddReason={openReason} />)}
                     </div>
                   )}
                 </CardContent>
@@ -136,7 +177,7 @@ export default function StaffingCoverPage() {
                     <div key={date}>
                       <p className="mb-1 text-xs font-bold uppercase tracking-wide text-[var(--cs-text-muted)]">{fmtDate(date)}</p>
                       <div className="grid gap-1.5 sm:grid-cols-2">
-                        {periods.map((p) => <PeriodRow key={p.period} p={p} />)}
+                        {periods.map((p) => <PeriodRow key={p.period} p={p} onAddReason={openReason} />)}
                       </div>
                     </div>
                   ))}
@@ -151,6 +192,40 @@ export default function StaffingCoverPage() {
           </div>
         )}
       </div>
+
+      {/* Add-a-reason dialog — explains extra cover above the norm */}
+      <Dialog open={!!target} onOpenChange={(v) => { if (!v) setTarget(null); }}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Reason for extra cover</DialogTitle>
+            <DialogDescription>
+              {target ? `${fmtDate(target.date)} · ${target.period} — ${target.effective} on shift vs a norm of ${target.expected}. Recording why keeps the rota honest rather than raising a false alarm.` : ""}
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-3">
+            <div>
+              <Label className="text-xs">Reason</Label>
+              <Select value={reason} onValueChange={setReason}>
+                <SelectTrigger className="mt-1"><SelectValue placeholder="Choose a reason…" /></SelectTrigger>
+                <SelectContent>
+                  {COVER_REASONS.map((r) => <SelectItem key={r.value} value={r.value}>{r.label}</SelectItem>)}
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <Label className="text-xs">Comment (optional)</Label>
+              <Textarea value={comment} onChange={(e) => setComment(e.target.value)} rows={3} placeholder="e.g. Shadowing a new starter on days this week." className="mt-1 text-sm" />
+            </div>
+            {logReason.isError && <p className="text-xs text-[var(--cs-risk)]">Couldn&apos;t log that just now — please try again.</p>}
+          </div>
+          <DialogFooter>
+            <Button variant="ghost" onClick={() => setTarget(null)}>Cancel</Button>
+            <Button onClick={submitReason} disabled={!reason || logReason.isPending}>
+              {logReason.isPending ? "Logging…" : "Log reason"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </PageShell>
   );
 }
