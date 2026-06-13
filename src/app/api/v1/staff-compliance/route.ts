@@ -31,6 +31,8 @@ export async function GET() {
       course_name: String(t.course_name ?? "Training"),
       expiry_date: t.expiry_date ? String(t.expiry_date).slice(0, 10) : null,
       is_mandatory: !!t.is_mandatory,
+      completed_date: t.completed_date ? String(t.completed_date).slice(0, 10) : null,
+      status: t.status ?? null,
     })),
   });
 
