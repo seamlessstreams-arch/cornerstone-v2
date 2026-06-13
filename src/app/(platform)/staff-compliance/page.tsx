@@ -46,7 +46,7 @@ function StaffRow({ r }: { r: StaffComplianceRow }) {
           <div className="mt-1.5 flex flex-wrap gap-x-4 gap-y-1">
             <Metric icon={MessageCircle} label="Supervision" value={r.supervision.text} bad={r.supervision.overdue || r.supervision.due === null} />
             <Metric icon={Star} label="Appraisal" value={r.appraisal.text} bad={r.appraisal.overdue} />
-            <Metric icon={GraduationCap} label="Training" value={r.training.text} bad={r.training.expired > 0 || r.training.mandatory_total === 0} />
+            <Metric icon={GraduationCap} label="Training" value={r.training.text} bad={r.training.expired > 0 || r.training.outstanding > 0 || r.training.mandatory_total === 0} />
             <Metric icon={Fingerprint} label="DBS" value={r.dbs.text} bad={r.dbs.due_for_renewal || !r.dbs.issue_date} />
           </div>
           {r.flags.length > 0 && (

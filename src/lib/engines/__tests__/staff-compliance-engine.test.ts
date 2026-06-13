@@ -74,6 +74,29 @@ describe("computeStaffCompliance — honesty of empty/null", () => {
     expect(r.rows[0].training.text).toBe("None recorded");
     expect(r.rows[0].flags.some((f) => f.text.includes("No mandatory training"))).toBe(true);
   });
+
+  it("a not-started mandatory course (no expiry, not completed) is OUTSTANDING, not compliant", () => {
+    // The exact prod case (new starter): null expiry, null completed, status not_started.
+    const r = computeStaffCompliance(input({
+      staff: [staff()],
+      training: [{ staff_id: "s1", course_name: "Safeguarding L3", expiry_date: null, is_mandatory: true, completed_date: null, status: "not_started" }],
+    }));
+    expect(r.rows[0].level).toBe("attention");
+    expect(r.rows[0].training.outstanding).toBe(1);
+    expect(r.rows[0].training.text).toBe("1 outstanding");
+    expect(r.rows[0].training.pct).toBe(0);
+    expect(r.rows[0].flags.some((f) => f.text.includes("outstanding"))).toBe(true);
+  });
+
+  it("a completed course with no expiry (lifetime) counts as current", () => {
+    const r = computeStaffCompliance(input({
+      staff: [staff()],
+      training: [{ staff_id: "s1", course_name: "Induction H&S", expiry_date: null, is_mandatory: true, completed_date: "2025-01-01", status: "compliant" }],
+    }));
+    expect(r.rows[0].level).toBe("compliant");
+    expect(r.rows[0].training.outstanding).toBe(0);
+    expect(r.rows[0].training.pct).toBe(100);
+  });
 });
 
 describe("computeStaffCompliance — DBS & probation", () => {

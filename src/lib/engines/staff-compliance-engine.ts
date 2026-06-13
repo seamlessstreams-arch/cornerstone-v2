@@ -29,6 +29,8 @@ export interface TrainingLite {
   course_name: string;
   expiry_date: string | null;
   is_mandatory: boolean;
+  completed_date?: string | null;
+  status?: string | null;
 }
 
 export interface StaffComplianceFlag {
@@ -43,7 +45,7 @@ export interface StaffComplianceRow {
   level: StaffComplianceLevel;
   supervision: { due: string | null; overdue: boolean; days_overdue: number; text: string };
   appraisal: { due: string | null; overdue: boolean; text: string };
-  training: { mandatory_total: number; expired: number; expiring: number; compliant: number; pct: number | null; text: string; expired_courses: string[]; expiring_courses: string[] };
+  training: { mandatory_total: number; expired: number; expiring: number; outstanding: number; compliant: number; pct: number | null; text: string; expired_courses: string[]; expiring_courses: string[]; outstanding_courses: string[] };
   dbs: { issue_date: string | null; age_years: number | null; on_update_service: boolean; due_for_renewal: boolean; text: string };
   probation: { end_date: string; ending_soon: boolean; text: string } | null;
   flags: StaffComplianceFlag[];
@@ -115,13 +117,29 @@ export function computeStaffCompliance(input: StaffComplianceInput): StaffCompli
       if (appOverdue) flags.push({ severity: "attention", text: "Appraisal overdue" });
 
       // ── Training (mandatory) ──
+      // A course is current if it has a future expiry beyond the grace window,
+      // OR it's completed with no expiry (lifetime), OR explicitly marked
+      // compliant. Anything else with no/expired evidence is outstanding —
+      // so a "not_started" mandatory course is never silently counted current.
       const mand = (trainingByStaff.get(s.id) ?? []).filter((t) => t.is_mandatory);
-      const expired = mand.filter((t) => t.expiry_date && t.expiry_date < today);
-      const expiring = mand.filter((t) => t.expiry_date && t.expiry_date >= today && daysBetween(today, t.expiry_date) <= expiringDays);
-      const compliant = mand.filter((t) => t.expiry_date && daysBetween(today, t.expiry_date) > expiringDays);
-      const pct = mand.length === 0 ? null : Math.round((compliant.length / mand.length) * 100);
-      const trainText = mand.length === 0 ? "None recorded" : expired.length ? `${expired.length} expired` : expiring.length ? `${expiring.length} expiring` : `${pct}% current`;
+      const isExpired = (t: TrainingLite) => !!t.expiry_date && t.expiry_date < today;
+      const isExpiring = (t: TrainingLite) => !!t.expiry_date && t.expiry_date >= today && daysBetween(today, t.expiry_date) <= expiringDays;
+      const isCurrent = (t: TrainingLite) =>
+        (!!t.expiry_date && daysBetween(today, t.expiry_date) > expiringDays) ||
+        (!t.expiry_date && (!!t.completed_date || t.status === "compliant"));
+      const expired = mand.filter(isExpired);
+      const expiring = mand.filter((t) => !isExpired(t) && isExpiring(t));
+      const current = mand.filter((t) => !isExpired(t) && !isExpiring(t) && isCurrent(t));
+      const outstanding = mand.filter((t) => !isExpired(t) && !isExpiring(t) && !isCurrent(t)); // not_started / no evidence
+      const pct = mand.length === 0 ? null : Math.round((current.length / mand.length) * 100);
+      const trainText =
+        mand.length === 0 ? "None recorded"
+        : expired.length ? `${expired.length} expired`
+        : outstanding.length ? `${outstanding.length} outstanding`
+        : expiring.length ? `${expiring.length} expiring`
+        : `${pct}% current`;
       if (expired.length) flags.push({ severity: "critical", text: `${expired.length} mandatory training expired` });
+      else if (outstanding.length) flags.push({ severity: "attention", text: `${outstanding.length} mandatory training outstanding` });
       else if (expiring.length) flags.push({ severity: "attention", text: `${expiring.length} training expiring soon` });
       else if (mand.length === 0) flags.push({ severity: "attention", text: "No mandatory training recorded" });
 
@@ -160,11 +178,13 @@ export function computeStaffCompliance(input: StaffComplianceInput): StaffCompli
           mandatory_total: mand.length,
           expired: expired.length,
           expiring: expiring.length,
-          compliant: compliant.length,
+          outstanding: outstanding.length,
+          compliant: current.length,
           pct,
           text: trainText,
           expired_courses: expired.map((t) => t.course_name),
           expiring_courses: expiring.map((t) => t.course_name),
+          outstanding_courses: outstanding.map((t) => t.course_name),
         },
         dbs: { issue_date: s.dbs_issue_date, age_years: dbsAge, on_update_service: s.dbs_update_service, due_for_renewal: dbsDue, text: dbsText },
         probation,
