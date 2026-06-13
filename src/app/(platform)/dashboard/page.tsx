@@ -40,6 +40,7 @@ const HomeSummaryReportCard = dynamic(() => import("@/components/dashboard/home-
 const ChildReviewPackCard = dynamic(() => import("@/components/dashboard/child-review-pack-card").then(m => ({ default: m.ChildReviewPackCard })), { ssr: false });
 const HomeTrendsCard = dynamic(() => import("@/components/dashboard/home-trends-card").then(m => ({ default: m.HomeTrendsCard })), { ssr: false });
 const UpcomingWeekCard = dynamic(() => import("@/components/dashboard/upcoming-week-card").then(m => ({ default: m.UpcomingWeekCard })), { ssr: false });
+const PlanTodayCard = dynamic(() => import("@/components/dashboard/plan-today-card").then(m => ({ default: m.PlanTodayCard })), { ssr: false });
 const ActionsRegisterCard = dynamic(() => import("@/components/dashboard/actions-register-card").then(m => ({ default: m.ActionsRegisterCard })), { ssr: false });
 const ComplaintsClockCard = dynamic(() => import("@/components/dashboard/complaints-clock-card").then(m => ({ default: m.ComplaintsClockCard })), { ssr: false });
 const PlanCurrencyCard = dynamic(() => import("@/components/dashboard/plan-currency-card").then(m => ({ default: m.PlanCurrencyCard })), { ssr: false });
@@ -1291,6 +1292,11 @@ export default function DashboardPage() {
           {/* Action SLA breaches — overdue deadline-bound tasks from recorded events */}
           <div className="mt-3">
             <TaskSlaCard />
+          </div>
+
+          {/* Your plan today — the timed running order, surfaced where the day starts */}
+          <div className="mt-3">
+            <PlanTodayCard />
           </div>
 
           {/* This week — the next 7 days from the unified calendar (plan the day) */}
