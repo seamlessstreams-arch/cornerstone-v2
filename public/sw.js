@@ -13,7 +13,7 @@
 // Bump VERSION to invalidate caches on a breaking change.
 // ══════════════════════════════════════════════════════════════════════════════
 
-const VERSION = "v4"; // bumped: PWA update — manifest served network-first, shortcuts + screenshots added
+const VERSION = "v5"; // bumped: refresh installed apps to the latest build (planning, rota patterns, safeguarding, practice frameworks, compliance docs)
 const SHELL_CACHE = `cs-shell-${VERSION}`;
 const STATIC_CACHE = `cs-static-${VERSION}`;
 const OFFLINE_URL = "/offline.html";
