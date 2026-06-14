@@ -70,7 +70,7 @@ export async function GET() {
   const result = computeHomePlacementJourney({
     today, pre_admission_checklists, warm_welcome_packs, welcome_tours,
     return_interviews, placement_objectives, placement_anniversaries,
-    total_children: store.children?.length ?? 0,
+    total_children: store.youngPeople?.length ?? 0,
   });
 
   return NextResponse.json({ data: result });

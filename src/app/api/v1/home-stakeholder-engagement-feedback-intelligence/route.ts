@@ -19,7 +19,7 @@ const ENGAGEMENT_MAP: Record<string, string> = {
 
 export async function GET() {
   const store = getStore();
-  const children = store.children ?? store.youngPeople ?? [];
+  const children = store.youngPeople ?? [];
   const today = new Date().toISOString().slice(0, 10);
 
   // Stakeholder feedback records

@@ -168,7 +168,7 @@ export async function GET() {
     physio_ot_plans,
     menstrual_health_plans,
     occupational_therapy_records,
-    total_children: store.children?.length ?? 0,
+    total_children: store.youngPeople?.length ?? 0,
   });
 
   return NextResponse.json({ data: result });
