@@ -61,6 +61,7 @@ export type AriaFlagType =
   | "developmental_gap"
   | "overstated_protective_factor"
   | "safeguarding_threshold"
+  | "extra_familial_harm"
   | "immediate_safety"
   | "lado_consideration"
   | "staff_wellbeing"

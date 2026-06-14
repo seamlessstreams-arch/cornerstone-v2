@@ -491,5 +491,19 @@ function computeInsights(
     });
   }
 
+  // Practice grounding — contextual safeguarding (Carlene Firmin) + the
+  // guardianship-not-surveillance ethic. Wherever extra-familial risk is held as
+  // data, frame it as protection: this is the discipline that stops a risk
+  // picture hardening into a watch-list. Surfaces alongside any held risk.
+  const hasHeldRisk =
+    overview.high_risk_locations > 0 ||
+    childRiskProfiles.some((p) => p.highest_risk_level === "high" || p.highest_risk_level === "moderate");
+  if (hasHeldRisk) {
+    insights.push({
+      severity: "positive",
+      text: "Apply the contextual-safeguarding lens: assess and disrupt the contexts of harm (peers, places, transport, online), not the child. Treat a young person's survival strategies as constrained choices to understand — and use this risk picture for guardianship (trusted adults, safer spaces), never as surveillance, a watch-list or grounds to criminalise a child. Share contexts, not children's identities, with non-traditional partners.",
+    });
+  }
+
   return insights;
 }

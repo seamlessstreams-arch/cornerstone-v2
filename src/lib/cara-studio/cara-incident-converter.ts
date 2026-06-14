@@ -12,6 +12,7 @@ import type { CaraChildContext } from "./cara-context-builder";
 import { PACE_OPENINGS, PACE_VALIDATIONS, RECORDING_PROMPTS } from "./cara-prompt-library";
 import { computeManagerReview, type ManagerReviewDecision } from "./cara-guardrails";
 import { BEHAVIOUR_DRIVERS } from "@/lib/aria/practice-frameworks";
+import { efhSignSpotting } from "@/lib/aria/contextual-safeguarding";
 
 export interface IncidentLearningInput {
   ctx: CaraChildContext;
@@ -114,6 +115,14 @@ export function convertIncidentToLearning(input: IncidentLearningInput): { outpu
     outputText: input.incidentSummary,
   });
 
+  // Contextual safeguarding — spot extra-familial markers in the summary so the
+  // learning work stays aware that the harm may sit in a context (peer group,
+  // neighbourhood, transport, online), not in the child.
+  const efhSigns = efhSignSpotting(input.incidentSummary);
+  const efhContextNote = efhSigns.length
+    ? ` Contextual safeguarding: this record mentions ${efhSigns.map((s) => `${s.context.toLowerCase()} ("${s.cue}")`).join(", ")} — consider the extra-familial context, not only ${name}'s behaviour, and whether exploitation screening or a contextual referral is warranted (the manager decides).`
+    : "";
+
   const output: CaraIncidentLearningOutput = {
     learningTheme: input.desiredLearning || rule.theme,
     nonShamingReframe: rule.reframe(name),
@@ -150,9 +159,10 @@ export function convertIncidentToLearning(input: IncidentLearningInput): { outpu
       ctx.profile?.learning_style?.low_literacy ? "Keep everything verbal/visual — no written accounts from the child." : "Offer drawing or talking — never a written 'statement'.",
       "Shame-sensitive by default: externalise (the situation, the build-up) rather than 'your behaviour'.",
     ],
-    safeguardingNotes: rule.serious
+    safeguardingNotes: (rule.serious
       ? "This incident class carries safeguarding weight. Complete the formal safeguarding steps FIRST; this learning work follows them and never replaces them. Manager review required before use."
-      : "If new information emerges during the learning conversation, record it and follow the safeguarding procedure.",
+      : "If new information emerges during the learning conversation, record it and follow the safeguarding procedure.")
+      + efhContextNote,
     signsToPause: ["Re-living rather than reflecting (breathing change, glazing)", "Defensiveness escalating — you've become the prosecutor, reset", "Shame spiral ('I'm just bad') — stop the content, repair the moment"],
     followUpActions: [
       "Link this plan to the incident record",
