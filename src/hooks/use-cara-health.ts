@@ -90,8 +90,10 @@ async function fetchCaraHealth(deep = false): Promise<CaraHealthStatus> {
     headers: {
       // These headers are populated from the auth context in the UI wrapper.
       // The component must pass them or the route returns 403.
-      "x-cara-role": sessionStorage.getItem("aria_role") ?? "",
-      "x-cara-user-id": sessionStorage.getItem("aria_user_id") ?? "",
+      // Read the cara_* keys; fall back to the legacy aria_* keys for any
+      // session that set them before the rename (graceful, transient).
+      "x-cara-role": sessionStorage.getItem("cara_role") ?? sessionStorage.getItem("aria_role") ?? "",
+      "x-cara-user-id": sessionStorage.getItem("cara_user_id") ?? sessionStorage.getItem("aria_user_id") ?? "",
     },
     cache: "no-store",
   });
@@ -110,8 +112,8 @@ async function fetchCaraHealth(deep = false): Promise<CaraHealthStatus> {
 export function useCaraHealth(role?: string, userId?: string) {
   // Store credentials so the fetch helper can read them
   if (typeof window !== "undefined" && role && userId) {
-    sessionStorage.setItem("aria_role", role);
-    sessionStorage.setItem("aria_user_id", userId);
+    sessionStorage.setItem("cara_role", role);
+    sessionStorage.setItem("cara_user_id", userId);
   }
 
   return useQuery({
