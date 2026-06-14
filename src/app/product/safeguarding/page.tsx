@@ -10,6 +10,7 @@ import Link from "next/link";
 import {
   ShieldAlert, MapPin, Users, Wifi, Siren, ArrowRight, CheckCircle2, Radar,
   Footprints, HeartHandshake, Eye, LineChart, Bell, ScrollText,
+  Compass, ShieldCheck, Scale, PenLine,
 } from "lucide-react";
 import { MarketingHeader } from "@/components/marketing/marketing-header";
 import { MarketingFooter } from "@/components/marketing/marketing-footer";
@@ -56,6 +57,23 @@ export default function SafeguardingPage() {
           <FeatureCard accent="teal" Icon={MapPin} title="Location risks" body="The places that keep appearing in episodes and concerns, building a contextual picture over time." />
           <FeatureCard accent="navy" Icon={Wifi} title="Online risk" body="Pressure, contact and content concerns connected to the wider picture — because exploitation rarely stays offline." />
           <FeatureCard accent="gold" Icon={LineChart} title="Escalation & de-escalation" body="Direction of travel per child and per risk theme — improving, worsening or stable, called honestly either way." />
+        </div>
+      </section>
+
+      {/* Grounded in trusted practice */}
+      <section className="border-y border-[var(--cs-border)] bg-white">
+        <div className="mx-auto max-w-7xl px-5 py-20">
+          <div className="mx-auto max-w-2xl text-center">
+            <SectionEyebrow>Grounded in the practice the sector trusts</SectionEyebrow>
+            <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-[var(--cs-navy)] sm:text-4xl">Not just risk-spotting &mdash; the frameworks behind it.</h2>
+            <p className="mt-4 text-lg text-[var(--cs-text-secondary)]">Cara&rsquo;s safeguarding intelligence is built on the models residential childcare relies on &mdash; so it challenges practice the way a great safeguarding lead would, and keeps a child a child.</p>
+          </div>
+          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            <FeatureCard accent="navy" Icon={Compass} title="Contextual Safeguarding" body="Carlene Firmin's model, built in: harm beyond the front door — peers, places, transport and online. Cara frames guardianship, never surveillance, and treats a young person's survival strategies as something to understand, not to criminalise." />
+            <FeatureCard accent="teal" Icon={ShieldCheck} title="Safety planning" body="Co-created WITH the young person, never done to them — across physical, emotional, financial and community safety, with a trauma-informed lens and components that actually keep them safer." />
+            <FeatureCard accent="gold" Icon={Scale} title="Modern slavery & the NRM" body="Recognises trafficking and exploitation indicators and prompts the manager to consider a National Referral Mechanism referral. A child who is exploited is a victim, not an offender (Section 45). Cara advises; the DSL decides." />
+            <FeatureCard accent="navy" Icon={PenLine} title="Writing to the Child" body="Records written as evidence for professionals and memory for the child — flagging shaming or institutional language and offering careful, child-readable wording that keeps the risk clear." />
+          </div>
         </div>
       </section>
 
