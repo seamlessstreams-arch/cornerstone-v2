@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { PageShell } from "@/components/layout/page-shell";
 import { CaraPracticePanel } from "@/components/cara-practice/cara-practice-panel";
+import { WritingToChildPanel } from "@/components/writing-to-child/writing-to-child-panel";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -1319,6 +1320,9 @@ export default function IncidentsPage() {
         />
       </div>
       <CaraPracticePanel sourceType="incident" homeId="home_oak" title="Run Cara on this incident" />
+      <div className="mt-4">
+        <WritingToChildPanel defaultRecordType="incident" showRecordTypeSelect={false} showAdvanced={false} title="Writing to the Child — check this incident record" />
+      </div>
     </PageShell>
   );
 }

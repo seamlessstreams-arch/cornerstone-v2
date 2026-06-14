@@ -3,6 +3,7 @@
 import React, { useState, useMemo, useRef } from "react";
 import { PageShell } from "@/components/layout/page-shell";
 import { CaraPracticePanel } from "@/components/cara-practice/cara-practice-panel";
+import { WritingToChildPanel } from "@/components/writing-to-child/writing-to-child-panel";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -561,6 +562,9 @@ export default function KeyWorkingPage() {
         defaultCollapsed
       />
       <CaraPracticePanel sourceType="key_work" homeId="home_oak" title="Run Cara on this session" />
+      <div className="mt-4">
+        <WritingToChildPanel defaultRecordType="key_work" showRecordTypeSelect={false} showAdvanced={false} title="Writing to the Child — check this session record" />
+      </div>
     </PageShell>
   );
 }
