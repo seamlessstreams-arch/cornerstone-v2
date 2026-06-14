@@ -4,6 +4,7 @@ import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import { PageShell } from "@/components/layout/page-shell";
 import { CaraPracticePanel } from "@/components/cara-practice/cara-practice-panel";
+import { WritingToChildPanel } from "@/components/writing-to-child/writing-to-child-panel";
 import { CaraPanel } from "@/components/cara/cara-panel";
 import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -802,6 +803,9 @@ export default function DailyLogPage() {
         />
       </div>
       <CaraPracticePanel sourceType="daily_record" homeId="home_oak" title="Run Cara on this log" />
+      <div className="mt-4">
+        <WritingToChildPanel defaultRecordType="daily_log" showRecordTypeSelect={false} showAdvanced={false} title="Writing to the Child — check this log entry" />
+      </div>
     </PageShell>
   );
 }
