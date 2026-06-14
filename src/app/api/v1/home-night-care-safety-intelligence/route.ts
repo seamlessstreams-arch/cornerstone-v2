@@ -86,7 +86,7 @@ export async function GET() {
     night_anxiety_support_records,
     bedtime_routines,
     wake_up_routines,
-    total_children: store.children?.length ?? 0,
+    total_children: store.youngPeople?.length ?? 0,
   });
 
   return NextResponse.json({ data: result });

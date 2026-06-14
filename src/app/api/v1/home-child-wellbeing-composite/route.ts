@@ -10,7 +10,7 @@ export const dynamic = "force-dynamic";
 export async function GET() {
   const store = getStore();
   const today = new Date().toISOString().slice(0, 10);
-  const children = store.children ?? [];
+  const children = store.youngPeople ?? [];
 
   const child_snapshots: ChildWellbeingSnapshot[] = children.map((child: any) => {
     const childId = child.id;

@@ -109,7 +109,7 @@ export async function GET() {
     placement_ends,
     impact_assessments,
     matching_referrals,
-    total_children: store.children?.length ?? 0,
+    total_children: store.youngPeople?.length ?? 0,
   });
 
   return NextResponse.json({ data: result });

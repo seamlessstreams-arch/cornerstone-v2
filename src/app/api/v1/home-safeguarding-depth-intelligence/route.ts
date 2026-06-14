@@ -101,7 +101,7 @@ export async function GET() {
     safeguarding_supervisions,
     safe_touch_protocols,
     substance_screenings,
-    total_children: store.children?.length ?? 0,
+    total_children: store.youngPeople?.length ?? 0,
     total_staff: store.staff?.length ?? 0,
   });
 

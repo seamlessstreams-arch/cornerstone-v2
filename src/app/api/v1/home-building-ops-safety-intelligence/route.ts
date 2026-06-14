@@ -68,7 +68,7 @@ export async function GET() {
   const result = computeHomeBuildingOpsSafety({
     today, evacuation_plans, grab_bags, asbestos_records,
     secure_storage, room_searches, fire_risk_items,
-    total_children: store.children?.length ?? 0,
+    total_children: store.youngPeople?.length ?? 0,
   });
 
   return NextResponse.json({ data: result });

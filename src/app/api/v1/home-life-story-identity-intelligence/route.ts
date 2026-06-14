@@ -76,7 +76,7 @@ export async function GET() {
   const result = computeHomeLifeStoryIdentity({
     today, life_story_entries, personal_passports, friendship_maps,
     aspirations, lgbtq_inclusions, style_identities,
-    total_children: store.children?.length ?? 0,
+    total_children: store.youngPeople?.length ?? 0,
   });
 
   return NextResponse.json({ data: result });

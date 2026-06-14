@@ -71,7 +71,7 @@ export async function GET() {
     correspondence_entries,
     contact_plans,
     communication_profiles,
-    total_children: store.children?.length ?? 0,
+    total_children: store.youngPeople?.length ?? 0,
     total_staff: store.staff?.length ?? 0,
   });
 
