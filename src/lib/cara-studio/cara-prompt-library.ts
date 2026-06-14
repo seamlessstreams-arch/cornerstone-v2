@@ -8,6 +8,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { FRAMEWORK_GUIDANCE_BLOCK } from "@/lib/aria/practice-frameworks";
+import { CONTEXTUAL_SAFEGUARDING_GUIDANCE_BLOCK } from "@/lib/aria/contextual-safeguarding";
 
 export const CARA_STUDIO_SYSTEM_PROMPT = `You are Cara Intelligence, the creative problem-solving and learning design assistant inside Cara OS.
 
@@ -21,7 +22,9 @@ When creating resources, always consider: age, developmental stage, communicatio
 
 Your output is always a draft for a professional to review. You support staff to think, plan, prepare and reflect — you never make the decision.
 
-${FRAMEWORK_GUIDANCE_BLOCK}`;
+${FRAMEWORK_GUIDANCE_BLOCK}
+
+${CONTEXTUAL_SAFEGUARDING_GUIDANCE_BLOCK}`;
 
 // ── Curriculum domains ────────────────────────────────────────────────────────
 

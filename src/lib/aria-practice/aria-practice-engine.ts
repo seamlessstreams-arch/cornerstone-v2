@@ -27,6 +27,7 @@ import {
   AriaGuidanceRule,
 } from "./types";
 import { BEHAVIOUR_DRIVERS } from "@/lib/aria/practice-frameworks";
+import { efhSignSpotting } from "@/lib/aria/contextual-safeguarding";
 
 // ── Lexicons ──────────────────────────────────────────────────────────────────
 
@@ -480,6 +481,35 @@ export function analyzePractice(input: AriaPracticeInput): AriaPracticeOutput {
       title: "Manager threshold consultation",
       detail: "Use Cara's threshold tool to structure the consultation; consider a strategy discussion.",
       urgency: immediate ? "immediate" : "soon",
+    });
+  }
+
+  // 4b. Extra-familial harm / contextual safeguarding
+  // Spot markers that the harm may sit in a context beyond the home (peer group,
+  // school, neighbourhood, transport, online). Advises the contextual lens — it
+  // never criminalises the child or blames the parents for an extra-familial risk.
+  const efhSigns = efhSignSpotting(text);
+  if (efhSigns.length > 0) {
+    modes.add("recognises");
+    flags.push({
+      flagType: "extra_familial_harm",
+      severity: "high",
+      title: "Possible extra-familial harm — apply the contextual-safeguarding lens",
+      description:
+        "The record mentions risks that may sit in a context beyond the home (" +
+        efhSigns.map((s) => s.context.toLowerCase()).join(", ") +
+        "). Contextual safeguarding asks us to assess and disrupt the context — not to reduce the harm to the child's choice or the parents' care. Survival strategies inside an unsafe context are constrained choices to understand, never grounds to criminalise. Cara advises; the manager decides on screening or referral.",
+      evidence: efhSigns.map((s) => `${s.context}: "${s.cue}"`),
+      recommendedAction:
+        "Record where the harm is happening (locations, peers, online), consider exploitation screening, and whether the manager should make a contextual or multi-agency referral. Keep child-level data out of any context-sharing with non-traditional partners.",
+      requiresManagerReview: true,
+      requiresRiReview: false,
+    });
+    questions.push(...efhSigns.map((s) => ({ domain: "contextual_safeguarding", question: `${s.context}: ${s.reflection}` })));
+    recommendations.push({
+      title: "Apply the contextual-safeguarding lens",
+      detail: "Map the context(s) of harm, consider exploitation screening, and treat survival strategies as safeguarding concerns, not offences.",
+      urgency: "soon",
     });
   }
 
