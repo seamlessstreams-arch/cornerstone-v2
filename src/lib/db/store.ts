@@ -412,6 +412,8 @@ import type {
   HealthRecordEntry,
 } from "@/types/extended";
 import { generateId, todayStr, daysFromNow } from "@/lib/utils";
+import type { WritingAssistantSettings, WritingAuditEvent } from "@/lib/writing-assistant/types";
+import { DEFAULT_WA_SETTINGS } from "@/lib/writing-assistant/types";
 import type {
   CareEvent, CareEventRoute, CareEventJob, CareEventAuditLog,
   Reg45EvidenceItem, AnnexAEvidenceItem, ChildDailySummary,
@@ -643,6 +645,9 @@ const store = {
   // Canonical persisted event spine (forms-as-views write path). Empty by default —
   // the read-only projection of domain collections is unchanged until events are captured here.
   cornerstoneEvents: [] as CornerstoneEvent[],
+  // ── Writing Assistant ─────────────────────────────────────────────────────
+  writingAssistantSettings: {} as Record<string, WritingAssistantSettings>,
+  writingAssistantAuditEvents: [] as WritingAuditEvent[],
   chronology: [] as ChronologyEntry[],
   handovers: [] as HandoverEntry[],
   // ── Comms Centre (Phase 1) ────────────────────────────────────────────────
@@ -11000,6 +11005,57 @@ export const db = {
     findAll: () => store.youngPeople,
     findById: (id: string) => store.youngPeople.find((yp) => yp.id === id),
     findCurrent: () => store.youngPeople.filter((yp) => yp.status === "current"),
+  },
+
+  // ── Writing Assistant settings + audit ───────────────────────────────────
+  writingAssistant: {
+    getSettings: (userId: string): WritingAssistantSettings =>
+      store.writingAssistantSettings[userId] ?? { ...DEFAULT_WA_SETTINGS, updated_at: new Date().toISOString() },
+
+    updateSettings: (userId: string, patch: Partial<WritingAssistantSettings>): WritingAssistantSettings => {
+      const current = store.writingAssistantSettings[userId] ?? { ...DEFAULT_WA_SETTINGS };
+      const next: WritingAssistantSettings = {
+        ...current,
+        ...patch,
+        categories: { ...current.categories, ...(patch.categories ?? {}) },
+        updated_at: new Date().toISOString(),
+      };
+      store.writingAssistantSettings[userId] = next;
+      return next;
+    },
+
+    addToDictionary: (userId: string, word: string): void => {
+      const current = store.writingAssistantSettings[userId] ?? { ...DEFAULT_WA_SETTINGS };
+      const trimmed = word.trim().toLowerCase();
+      if (!trimmed || current.dictionary.includes(trimmed)) return;
+      store.writingAssistantSettings[userId] = {
+        ...current,
+        dictionary: [...current.dictionary, trimmed],
+        updated_at: new Date().toISOString(),
+      };
+    },
+
+    removeFromDictionary: (userId: string, word: string): void => {
+      const current = store.writingAssistantSettings[userId];
+      if (!current) return;
+      store.writingAssistantSettings[userId] = {
+        ...current,
+        dictionary: current.dictionary.filter((w) => w !== word.toLowerCase()),
+        updated_at: new Date().toISOString(),
+      };
+    },
+
+    logAudit: (event: Omit<WritingAuditEvent, "id" | "created_at">): WritingAuditEvent => {
+      const rec: WritingAuditEvent = { ...event, id: generateId("waud"), created_at: new Date().toISOString() };
+      store.writingAssistantAuditEvents.push(rec);
+      return rec;
+    },
+
+    getAuditEvents: (userId: string, limit = 100): WritingAuditEvent[] =>
+      store.writingAssistantAuditEvents
+        .filter((e) => e.user_id === userId)
+        .sort((a, b) => b.created_at.localeCompare(a.created_at))
+        .slice(0, limit),
   },
 
   // ── Cara Events (canonical persisted spine — capture-once write path) ─

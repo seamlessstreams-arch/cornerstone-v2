@@ -103,6 +103,63 @@ export interface WritingCheckProvider {
 
 export const WRITING_ASSISTANT_VERSION = "1.0.0";
 
+// ── Settings ──────────────────────────────────────────────────────────────────
+
+/** Logical categories used in the per-user settings panel. */
+export type WACategory =
+  | "spelling"
+  | "grammar"
+  | "safeguarding"
+  | "tone"
+  | "clarity";
+
+/** Maps each WACategory to the IssueTypes it covers. */
+export const WA_CATEGORY_ISSUE_TYPES: Record<WACategory, IssueType[]> = {
+  spelling:    ["spelling"],
+  grammar:     ["grammar", "punctuation"],
+  safeguarding: ["safeguarding-quality", "chronology", "writing-to-child"],
+  tone:        ["tone", "professional-language"],
+  clarity:     ["clarity", "policy-language"],
+};
+
+/** Human-readable labels for the settings panel. */
+export const WA_CATEGORY_LABELS: Record<WACategory, string> = {
+  spelling:    "Spelling",
+  grammar:     "Grammar & Punctuation",
+  safeguarding: "Safeguarding Quality",
+  tone:        "Tone & Language",
+  clarity:     "Clarity & Policy",
+};
+
+export interface WritingAssistantSettings {
+  enabled: boolean;
+  categories: Record<WACategory, boolean>;
+  /** Words added to the user's personal dictionary — suppressed from spelling checks. */
+  dictionary: string[];
+  updated_at: string;
+}
+
+export const DEFAULT_WA_SETTINGS: WritingAssistantSettings = {
+  enabled: true,
+  categories: { spelling: true, grammar: true, safeguarding: true, tone: true, clarity: true },
+  dictionary: [],
+  updated_at: "",
+};
+
+/** One line in the writing-assistant audit trail (accept / ignore). */
+export interface WritingAuditEvent {
+  id: string;
+  user_id: string;
+  record_type?: string;
+  field_name?: string;
+  child_id?: string;
+  issue_type: IssueType;
+  action: "accepted" | "ignored";
+  original_text: string;
+  replacement_text?: string;
+  created_at: string;
+}
+
 /** Below this length the text is too short to check meaningfully. */
 export const MIN_CHECK_LENGTH = 20;
 /** Hard cap per check to protect the server. */
