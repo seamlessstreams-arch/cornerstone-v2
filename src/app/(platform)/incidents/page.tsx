@@ -1136,6 +1136,14 @@ function LogIncidentTab({ onSuccess }: { onSuccess?: () => void }) {
           placeholder="What steps were taken immediately, who was informed, what support was provided."
           rows={3}
         />
+        <WritingAssistantInline
+          value={form.immediate_action}
+          onApplyText={(text) => setForm((p) => ({ ...p, immediate_action: text }))}
+          recordType="incident"
+          fieldName="immediate_action"
+          childId={form.child_id || undefined}
+          mode="standard"
+        />
       </div>
 
       {/* Notifications */}

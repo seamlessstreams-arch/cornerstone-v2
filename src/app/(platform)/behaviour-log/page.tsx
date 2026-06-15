@@ -28,6 +28,7 @@ import { ExportButton, type ExportColumn } from "@/components/common/export-butt
 import { getStaffName, getYPName } from "@/lib/seed-data";
 import { toast } from "sonner";
 import { useBehaviourLog, useCreateBehaviourEntry } from "@/hooks/use-behaviour-log";
+import { WritingAssistantInline } from "@/components/writing-assistant/writing-assistant-inline";
 import { InlinePracticeReasoning } from "@/components/cara-reasoning/inline-practice-reasoning";
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import type { BehaviourEntry, BehaviourDirection, BehaviourIntensity } from "@/types/extended";
@@ -470,6 +471,7 @@ export default function BehaviourLogPage() {
             <div>
               <label className="text-sm font-medium mb-1 block">B — Behaviour *</label>
               <Textarea placeholder="What the child did..." value={nBehaviour} onChange={e => setNBehaviour(e.target.value)} rows={2} />
+              <WritingAssistantInline value={nBehaviour} onApplyText={setNBehaviour} recordType="behaviour_log" fieldName="behaviour" childId={nChild || undefined} mode="standard" />
             </div>
             <div>
               <label className="text-sm font-medium mb-1 block">C — Consequence</label>
