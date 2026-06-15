@@ -102,7 +102,7 @@ interface RecordListResponse {
   data: { records: OversightRecordOption[] };
 }
 export interface FromRecordPayload {
-  record: { id: string; reference: string; type: string; severity: string; date: string; childName: string };
+  record: { id: string; childId: string; reference: string; type: string; severity: string; date: string; childName: string };
   input: OversightInput;
   result: OversightResult;
   disclaimer: string;
