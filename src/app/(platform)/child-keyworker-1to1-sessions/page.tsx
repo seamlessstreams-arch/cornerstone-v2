@@ -16,6 +16,7 @@ import { Users, Clock, MessageCircle, ChevronUp, ChevronDown, ArrowUpDown, Searc
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { useKeyworkSessions, useCreateKeyworkSession, type KeyworkSession } from "@/hooks/use-keywork-sessions";
+import { WritingAssistantInline } from "@/components/writing-assistant/writing-assistant-inline";
 import { InlinePracticeReasoning } from "@/components/cara-reasoning/inline-practice-reasoning";
 import { type KeyworkerSessionFormat, KEYWORKER_SESSION_FORMAT_LABEL } from "@/types/extended";
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
@@ -335,6 +336,7 @@ export default function ChildKeyworker1to1SessionsPage() {
             <div>
               <Label htmlFor="session-child-brought-up">What child brought up</Label>
               <Textarea id="session-child-brought-up" placeholder="Record what the child raised..." value={nChildBroughtUp} onChange={e => setNChildBroughtUp(e.target.value)} rows={3} />
+              <WritingAssistantInline value={nChildBroughtUp} onApplyText={setNChildBroughtUp} recordType="key_work" fieldName="child_brought_up" childId={nChild || undefined} mode="standard" />
             </div>
             <div>
               <Label htmlFor="session-staff-brought-up">What staff brought up</Label>
