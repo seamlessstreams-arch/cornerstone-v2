@@ -12,13 +12,12 @@
 
 import React, { useCallback } from "react";
 import { useWritingAssistant } from "@/hooks/use-writing-assistant";
+import { useWritingAssistantSettings, enabledIssueTypes } from "@/hooks/use-writing-assistant-settings";
 import { InlineSuggestions } from "./inline-suggestions";
 import type { WritingIssue, WritingMode, WritingSuggestion } from "@/lib/writing-assistant/types";
 
 export interface WritingAssistantInlineProps {
-  /** Current field text. */
   value: string;
-  /** Apply an accepted literal fix back to the field. */
   onApplyText: (next: string) => void;
   recordType?: string;
   fieldName?: string;
@@ -40,31 +39,55 @@ export function WritingAssistantInline({
   knownNames,
   enabled = true,
 }: WritingAssistantInlineProps) {
-  const { issues, result, loading, ignore, recheck } = useWritingAssistant({
+  const { settings, toggleCategory, addToDictionary, logAudit } = useWritingAssistantSettings();
+
+  // Merge caller-supplied knownNames with the user's personal dictionary.
+  const allKnownNames = [...(knownNames ?? []), ...settings.dictionary];
+
+  const { issues: rawIssues, result, loading, ignore, recheck } = useWritingAssistant({
     text: value,
     recordType,
     fieldName,
     childId,
     workflowId,
     mode,
-    knownNames,
-    enabled,
+    knownNames: allKnownNames.length > 0 ? allKnownNames : undefined,
+    enabled: enabled && settings.enabled,
   });
+
+  // Apply category toggles client-side so toggling is instant.
+  const allowed = enabledIssueTypes(settings);
+  const issues = rawIssues.filter((i) => allowed.includes(i.type));
 
   const apply = useCallback(
     (issue: WritingIssue, suggestion: WritingSuggestion) => {
-      // Offset safety: only replace if the original text still sits exactly here.
       const current = value.slice(issue.start, issue.end);
-      if (current.toLowerCase() !== issue.originalText.toLowerCase()) {
-        recheck();
-        return;
-      }
+      if (current.toLowerCase() !== issue.originalText.toLowerCase()) { recheck(); return; }
       onApplyText(value.slice(0, issue.start) + suggestion.replacementText + value.slice(issue.end));
       ignore(issue.id);
     },
     [value, onApplyText, ignore, recheck],
   );
 
+  const handleAudit = useCallback(
+    (action: "accepted" | "ignored", issue: WritingIssue) => {
+      logAudit({ action, issue_type: issue.type, original_text: issue.originalText, record_type: recordType, field_name: fieldName, child_id: childId });
+    },
+    [logAudit, recordType, fieldName, childId],
+  );
+
   if (!enabled) return null;
-  return <InlineSuggestions issues={issues} score={result?.score} loading={loading} onApply={apply} onIgnore={ignore} />;
+  return (
+    <InlineSuggestions
+      issues={issues}
+      score={result?.score}
+      loading={loading}
+      settings={settings}
+      onApply={apply}
+      onIgnore={ignore}
+      onToggleCategory={toggleCategory}
+      onAddToDictionary={addToDictionary}
+      onAudit={handleAudit}
+    />
+  );
 }

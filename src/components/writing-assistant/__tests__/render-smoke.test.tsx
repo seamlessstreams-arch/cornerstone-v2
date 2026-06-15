@@ -104,20 +104,19 @@ describe("writing-assistant UI render smoke", () => {
     expect(html).toBe("");
   });
 
-  it("InlineSuggestions highlights the active issue card", () => {
+  it("InlineSuggestions renders settings gear when onToggleCategory is provided", () => {
     const result = checkWriting({ text: "Child kicked off and didnt settle. Their behavior was challenging." }, "x");
-    const firstId = result.issues[0]?.id;
     const html = r(
       React.createElement(InlineSuggestions, {
         issues: result.issues,
         score: result.score,
         onApply: () => {},
         onIgnore: () => {},
-        activeIssueId: firstId,
+        onToggleCategory: () => {},
       }),
     );
-    // Active card gets a ring-2 class
-    expect(html).toContain("ring-2");
+    // Settings gear button is present
+    expect(html).toContain("aria-label=\"Writing assistant settings\"");
   });
 
   it("CaraWritingField mounts (textarea only until a check returns) without throwing", () => {
