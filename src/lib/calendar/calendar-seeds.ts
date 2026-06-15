@@ -65,6 +65,26 @@ export function seedCalendarEvents(): CalendarEvent[] {
   };
 
   return [
+    // ── Today (relative to now) — gives the shift plan's running order and the
+    // calendar real content for the current day, every day the demo is opened. ──
+    make("cal_seed_keywork_today", "Key-working session — Alex", 0, "11:00", 45, {
+      event_type: "meeting",
+      location: "Quiet lounge",
+      description: "Planned 1:1 key-working session. Check in on goals and how Alex is feeling.",
+      child_id: "yp_alex",
+    }),
+    make("cal_seed_appt_today", "CAMHS appointment — Jordan", 0, "14:30", 60, {
+      event_type: "appointment",
+      location: "CAMHS clinic",
+      description: "Routine CAMHS review. Staff to support transport and attend.",
+      child_id: "yp_jordan",
+    }),
+    make("cal_seed_contact_today", "Family time — Casey", 0, "16:30", 90, {
+      event_type: "visit",
+      location: "Contact centre",
+      description: "Supervised family contact session. Record observations afterwards.",
+      child_id: "yp_casey",
+    }),
     make("cal_seed_team", "Weekly team meeting", 2, "10:00", 60, {
       event_type: "meeting",
       location: "Staff room",

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createServerClient, isSupabaseEnabled } from "@/lib/supabase/server";
 import { writeIntelligenceAudit } from "@/lib/intelligence/audit";
-import { staffPassportRecords } from "@/lib/intelligence/fallback-store";
+import { staffPassportRecords, staffPassportToFlatRecord } from "@/lib/intelligence/fallback-store";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type LooseSupabase = any;
@@ -14,7 +14,15 @@ export async function GET(request: NextRequest) {
   if (!isSupabaseEnabled()) {
     let rows = [...staffPassportRecords];
     if (staffId) rows = rows.filter((r) => r.id === staffId);
-    return NextResponse.json({ ok: true, records: [], richRecords: rows, persisted: true });
+    // `records` = flat shape for dashboard/compliance metrics; `richRecords` =
+    // nested passport shape for the Staff Passport page. Both derived from the
+    // same seed so they never disagree.
+    return NextResponse.json({
+      ok: true,
+      records: rows.map(staffPassportToFlatRecord),
+      richRecords: rows,
+      persisted: true,
+    });
   }
 
   const supabase = createServerClient() as unknown as LooseSupabase;
