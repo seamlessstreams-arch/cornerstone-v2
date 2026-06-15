@@ -59,6 +59,33 @@ describe("computeShiftPlan — running order", () => {
     );
     expect(r.running_order.map((x) => x.id)).toEqual(["n1", "n2"]);
   });
+
+  it("surfaces date-only / all-day events on the day shift (top, labelled), not just timed ones", () => {
+    const r = computeShiftPlan(
+      input({
+        events: [
+          { id: "kw", start: "2026-06-15T00:00:00", title: "Key-working session", child_name: "Alex", kind: "key_working" }, // date-only
+          { id: "lac", start: "2026-06-15", title: "LAC review", child_name: "Casey", kind: "lac_review" }, // bare date
+          { id: "appt", start: "2026-06-15T10:00:00", title: "GP appt", kind: "appointment" }, // timed
+        ],
+      }),
+    );
+    // all-day items lead (in input order), then timed items; none dropped
+    expect(r.running_order.map((x) => x.id)).toEqual(["kw", "lac", "appt"]);
+    expect(r.running_order[0].time).toBe("All day");
+    expect(r.running_order[2].time).toBe("10:00");
+    expect(r.counts.scheduled).toBe(3);
+  });
+
+  it("does NOT surface a date's all-day events on its night shift", () => {
+    const r = computeShiftPlan(
+      input({
+        period: "night",
+        events: [{ id: "kw", start: "2026-06-15T00:00:00", title: "Key-working session", kind: "key_working" }],
+      }),
+    );
+    expect(r.running_order).toHaveLength(0);
+  });
 });
 
 describe("computeShiftPlan — must-do & meds", () => {

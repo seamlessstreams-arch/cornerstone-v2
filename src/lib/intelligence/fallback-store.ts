@@ -1043,6 +1043,52 @@ export const staffPassportRecords: IntelligenceStaffPassportRecord[] = [
   },
 ];
 
+// The Manager Control Centre (and any flat-schema consumer) reads the staff
+// competence records in the flat snake_case shape the Supabase table uses. When
+// Supabase is disabled we only exposed the rich `richRecords` shape, leaving the
+// flat `records` array empty — so the dashboard's compliance metrics read zero.
+// This derives a faithful flat record from the rich passport (no fabrication:
+// "valid" passport entries map to complete/true, anything else to incomplete).
+export function staffPassportToFlatRecord(
+  rich: IntelligenceStaffPassportRecord,
+): Record<string, unknown> {
+  const passport: { label?: string; status?: string }[] = rich?.passport ?? [];
+  const flags: { label?: string; granted?: boolean }[] = rich?.competencyFlags ?? [];
+  const statusOf = (label: string) => passport.find((p) => p?.label === label)?.status;
+  const isValid = (label: string) => statusOf(label) === "valid";
+  const grantedOf = (label: string) => flags.some((f) => f?.label === label && f?.granted === true);
+  const dbs = statusOf("DBS Status");
+  const level3 = statusOf("Level 3 Diploma");
+  const probation = statusOf("Probation");
+  return {
+    id: rich?.id,
+    staff_id: rich?.id,
+    staff_name: rich?.name ?? null,
+    role: rich?.role ?? null,
+    start_date: rich?.startDate ?? null,
+    safer_recruitment_complete: isValid("DBS Status") && isValid("References") && isValid("Right to Work"),
+    dbs_status: dbs === "valid" ? "clear" : dbs === "expiring" ? "expiring" : dbs ?? "not_started",
+    references_received: isValid("References"),
+    right_to_work: isValid("Right to Work"),
+    induction_complete: isValid("Induction"),
+    probation_status: probation === "valid" ? "passed" : probation ?? "not_started",
+    level3_status: level3 === "valid" ? "complete" : level3 ?? "not_started",
+    mandatory_training_complete: isValid("Mandatory Training"),
+    safeguarding_training_current: isValid("Safeguarding Training"),
+    medication_competency: isValid("Medication Competency"),
+    physical_intervention_trained: isValid("Physical Intervention"),
+    supervision_current: isValid("Last Supervision"),
+    appraisal_current: isValid("Last Appraisal"),
+    can_lead_shift: grantedOf("Can Lead Shift"),
+    can_administer_medication: grantedOf("Can Administer Medication"),
+    can_lone_work: grantedOf("Can Lone Work"),
+    can_supervise_others: grantedOf("Can Supervise Others"),
+    warnings_count: (rich?.warnings ?? []).length,
+    restrictions: rich?.restrictions ?? [],
+    compliments_count: (rich?.compliments ?? []).length,
+  };
+}
+
 // ─── Provider oversight (rich provider/home summaries + oversight log) ─────
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

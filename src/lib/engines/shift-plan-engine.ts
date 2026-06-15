@@ -120,10 +120,23 @@ export function computeShiftPlan(input: ShiftPlanInput): ShiftPlanResult {
   const win = shiftWindow(input.date, input.period);
 
   // ── Running order: events that fall inside the shift window ──
-  const running_order: ShiftPlanRunItem[] = input.events
-    .filter((e) => e.start >= win.startIso && e.start < win.endIso)
-    .sort((a, b) => (a.start < b.start ? -1 : a.start > b.start ? 1 : 0))
-    .map((e) => ({ id: e.id, time: timeOf(e.start), title: e.title, child_name: e.child_name ?? null, kind: e.kind }));
+  // All-day / date-only events (start at midnight on the shift date) carry no
+  // clock time, so they never satisfy the timed-window check below. They are
+  // still part of the day's plan — key-working sessions, LAC reviews and
+  // supervisions are projected date-only — so surface them on the day shift
+  // labelled "All day" rather than dropping them silently from every shift.
+  const isAllDayOnDate = (start: string) =>
+    start === input.date || start === `${input.date}T00:00:00`;
+  const allDayItems = input.period === "day" ? input.events.filter((e) => isAllDayOnDate(e.start)) : [];
+  const timedItems = input.events.filter(
+    (e) => !isAllDayOnDate(e.start) && e.start >= win.startIso && e.start < win.endIso,
+  );
+  const running_order: ShiftPlanRunItem[] = [
+    ...allDayItems.map((e) => ({ id: e.id, time: "All day", title: e.title, child_name: e.child_name ?? null, kind: e.kind })),
+    ...timedItems
+      .sort((a, b) => (a.start < b.start ? -1 : a.start > b.start ? 1 : 0))
+      .map((e) => ({ id: e.id, time: timeOf(e.start), title: e.title, child_name: e.child_name ?? null, kind: e.kind })),
+  ];
 
   // ── Must-do: overdue + due-today tasks, ranked ──
   const open = input.tasks.filter((t) => t.status !== "completed" && t.status !== "cancelled");

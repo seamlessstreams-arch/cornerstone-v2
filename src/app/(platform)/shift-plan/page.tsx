@@ -120,7 +120,7 @@ export default function ShiftPlanPage() {
                     <div className="space-y-1.5">
                       {plan.running_order.map((r) => (
                         <div key={r.id} className="flex items-center gap-3 rounded-lg px-2 py-1.5">
-                          <span className="w-12 shrink-0 text-xs font-semibold tabular-nums text-[var(--cs-text-gentle)]">{r.time}</span>
+                          <span className="w-16 shrink-0 text-xs font-semibold tabular-nums text-[var(--cs-text-gentle)]">{r.time}</span>
                           <span className="flex-1 truncate text-sm text-[var(--cs-navy)]">{r.title}</span>
                           {r.child_name && <span className="shrink-0 text-xs text-[var(--cs-text-muted)]">{r.child_name}</span>}
                         </div>
