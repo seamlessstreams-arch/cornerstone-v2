@@ -86,6 +86,7 @@ export async function GET(req: NextRequest) {
       data: {
         record: {
           id: incident.id,
+          childId: incident.child_id,
           reference: incident.reference ?? incident.id,
           type: incident.type,
           severity: incident.severity,

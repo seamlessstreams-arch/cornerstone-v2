@@ -136,6 +136,7 @@ export default function OversightWorkflowPage() {
             input={payload.input}
             result={payload.result}
             recordId={recordMeta?.id}
+            childId={recordMeta?.childId}
           />
         </div>
       )}

@@ -28,6 +28,7 @@ import { OversightRecordingGaps } from "./oversight-recording-gaps";
 import { OversightTaskList } from "./oversight-task-list";
 import { ChildAddressedPreview } from "./child-addressed-preview";
 import { OversightSignOffPanel } from "./oversight-sign-off-panel";
+import { InlinePracticeReasoning } from "@/components/cara-reasoning/inline-practice-reasoning";
 import type { OversightInput, OversightResult, OversightAction } from "@/lib/oversight/types";
 
 function FindingGroup({ title, items }: { title: string; items: string[] }) {
@@ -110,10 +111,12 @@ export function OversightWorkflowPanel({
   input,
   result,
   recordId,
+  childId,
 }: {
   input?: OversightInput;
   result: OversightResult;
   recordId?: string;
+  childId?: string;
 }) {
   const [professional, setProfessional] = useState(result.professionalOversight ?? "");
   const [childText, setChildText] = useState(result.childAddressedOversight ?? "");
@@ -140,6 +143,9 @@ export function OversightWorkflowPanel({
       <SectionCard icon={ShieldCheck} title="Oversight summary" description="Deterministic assurance across the whole workflow.">
         <OversightScoreBar result={result} />
       </SectionCard>
+
+      {/* Practice reasoning for this child — the engine heart, at the point of oversight */}
+      {childId && <InlinePracticeReasoning childId={childId} childName={input?.childName} />}
 
       {/* Recording gaps */}
       <SectionCard
