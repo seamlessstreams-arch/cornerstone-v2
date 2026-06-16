@@ -107,9 +107,12 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ data: { available: true, blocked: false, rewrittenText } });
   } catch (error) {
-    const msg = String(error).slice(0, 300);
-    console.error("[writing-assistant] rewrite failed", { length: text.length, message: msg });
-    // Surface enough detail in non-sensitive error so we can debug without log access.
-    return NextResponse.json({ error: "Rewrite failed", detail: msg }, { status: 500 });
+    const msg = String(error);
+    // Credit balance exhausted → degrade gracefully (same shape as no API key set).
+    if (msg.includes("credit balance") || msg.includes("credit_balance_too_low")) {
+      return NextResponse.json({ data: { available: false } });
+    }
+    console.error("[writing-assistant] rewrite failed", { length: text.length, message: msg.slice(0, 200) });
+    return NextResponse.json({ error: "Rewrite failed" }, { status: 500 });
   }
 }
