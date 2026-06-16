@@ -649,6 +649,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: "Voice of the Child",  href: "/intelligence/cara/voice-of-child",     icon: "Quote",       module: "young-people" },
       { label: "Cara Compose",        href: "/intelligence/cara/compose",            icon: "Sparkles",    module: "dashboard"    },
       { label: "Staff Compliance Timeline", href: "/intelligence/cara/staff-compliance-timeline", icon: "CalendarDays", module: "staff" },
+      { label: "Staff Wellbeing & Supervision", href: "/intelligence/cara/staff-wellbeing-supervision", icon: "HeartHandshake", module: "staff" },
       { label: "HR Risk Command Centre", href: "/intelligence/hr/risk-command-centre", icon: "Activity",    module: "staff"        },
       { label: "HR Process Guardian", href: "/intelligence/hr/process-guardian",     icon: "Gavel",       module: "staff"        },
       { label: "HR Investigation Builder", href: "/intelligence/hr/investigation-builder", icon: "FileSearch", module: "staff"    },
