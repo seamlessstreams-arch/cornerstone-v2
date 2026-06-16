@@ -20,16 +20,16 @@ import { useSafeguardingIntelligence } from "@/hooks/use-safeguarding-intelligen
 // ── Styling maps ────────────────────────────────────────────────────────────
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const RISK_LEVEL_STYLES: Record<string, string> = {
-  very_high: "bg-red-100 text-red-700",
-  high: "bg-orange-100 text-orange-700",
-  medium: "bg-amber-100 text-amber-700",
-  low: "bg-green-100 text-green-700",
+  very_high: "bg-[--cs-risk-bg] text-[--cs-risk]",
+  high: "bg-[--cs-warning-soft] text-[--cs-warning]",
+  medium: "bg-[--cs-warning-bg] text-[--cs-warning]",
+  low: "bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const TREND_ICONS: Record<string, React.ReactNode> = {
@@ -126,16 +126,16 @@ export function SafeguardingIntelligenceCard() {
             </div>
           </div>
           {ne.pending_notification > 0 ? (
-            <Badge className="text-[10px] bg-red-100 text-red-700">
+            <Badge className="text-[10px] bg-[--cs-risk-bg] text-[--cs-risk]">
               <AlertTriangle className="h-2.5 w-2.5 mr-0.5" />
               {ne.pending_notification} pending
             </Badge>
           ) : ne.notified_late > 0 ? (
-            <Badge className="text-[10px] bg-amber-100 text-amber-700">
+            <Badge className="text-[10px] bg-[--cs-warning-bg] text-[--cs-warning]">
               {ne.notified_late} late
             </Badge>
           ) : (
-            <Badge className="text-[10px] bg-green-100 text-green-700">
+            <Badge className="text-[10px] bg-[--cs-success-bg] text-[--cs-success]">
               <CheckCircle2 className="h-3 w-3 mr-1" />
               Compliant
             </Badge>
@@ -156,11 +156,11 @@ export function SafeguardingIntelligenceCard() {
               </div>
             </div>
             {r.injuries_during_restraint > 0 ? (
-              <Badge className="text-[10px] bg-red-100 text-red-700">
+              <Badge className="text-[10px] bg-[--cs-risk-bg] text-[--cs-risk]">
                 {r.injuries_during_restraint} injury
               </Badge>
             ) : (
-              <Badge className="text-[10px] bg-green-100 text-green-700">
+              <Badge className="text-[10px] bg-[--cs-success-bg] text-[--cs-success]">
                 No injuries
               </Badge>
             )}
@@ -181,15 +181,15 @@ export function SafeguardingIntelligenceCard() {
               </div>
             </div>
             {m.repeat_missing_children > 0 ? (
-              <Badge className="text-[10px] bg-red-100 text-red-700">
+              <Badge className="text-[10px] bg-[--cs-risk-bg] text-[--cs-risk]">
                 {m.repeat_missing_children} repeat
               </Badge>
             ) : m.contextual_safeguarding_flagged > 0 ? (
-              <Badge className="text-[10px] bg-amber-100 text-amber-700">
+              <Badge className="text-[10px] bg-[--cs-warning-bg] text-[--cs-warning]">
                 {m.contextual_safeguarding_flagged} CS risk
               </Badge>
             ) : (
-              <Badge className="text-[10px] bg-green-100 text-green-700">
+              <Badge className="text-[10px] bg-[--cs-success-bg] text-[--cs-success]">
                 <CheckCircle2 className="h-3 w-3 mr-1" />
                 Managed
               </Badge>
@@ -210,25 +210,25 @@ export function SafeguardingIntelligenceCard() {
             </div>
           </div>
           {ra.overdue_reviews > 0 ? (
-            <Badge className="text-[10px] bg-amber-100 text-amber-700">
+            <Badge className="text-[10px] bg-[--cs-warning-bg] text-[--cs-warning]">
               {ra.overdue_reviews} overdue
             </Badge>
           ) : (
-            <Badge className="text-[10px] bg-green-100 text-green-700">
+            <Badge className="text-[10px] bg-[--cs-success-bg] text-[--cs-success]">
               <CheckCircle2 className="h-3 w-3 mr-1" />
               Current
             </Badge>
           )}
         </div>
 
-        {/* ── Risk domains (top 3) ───────────────────────────────────── */}
+        {/* ── Risk domains (top 4) — compact chips ──────────────────── */}
 
         {ra.by_domain.length > 0 && (
           <div className="flex flex-wrap gap-1.5">
             {(ra.by_domain ?? []).slice(0, 4).map((d) => (
               <Badge
                 key={d.domain}
-                className={cn("text-[10px]", RISK_LEVEL_STYLES[d.highest_level] ?? "bg-gray-100 text-gray-600")}
+                className={cn("text-[10px]", RISK_LEVEL_STYLES[d.highest_level] ?? "bg-[--cs-bg] text-[--cs-text-secondary]")}
               >
                 {d.domain.replace(/_/g, " ")} ({d.highest_level.replace(/_/g, " ")})
               </Badge>

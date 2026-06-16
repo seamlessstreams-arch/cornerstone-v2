@@ -19,16 +19,16 @@ import { useHealthWellbeing } from "@/hooks/use-health-wellbeing";
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high: "border-red-200 bg-red-50 text-red-800",
-  medium: "border-amber-200 bg-amber-50 text-amber-800",
-  low: "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Compliance bar sub-component ────────────────────────────────────────────
@@ -173,42 +173,40 @@ export function HealthIntelligenceCard() {
               Child Health Profiles
             </p>
             {child_profiles.slice(0, 4).map((profile) => {
-              const allCurrent = profile.health_assessment_current && profile.dental_up_to_date &&
-                profile.optician_up_to_date && profile.immunisation_up_to_date;
+              const gaps = [
+                !profile.health_assessment_current,
+                !profile.dental_up_to_date,
+                !profile.optician_up_to_date,
+                !profile.immunisation_up_to_date,
+              ].filter(Boolean).length;
+              const gapMeta = [
+                !profile.health_assessment_current && "RHA",
+                !profile.dental_up_to_date && "Dental",
+                !profile.optician_up_to_date && "Optical",
+                !profile.immunisation_up_to_date && "Immun.",
+              ].filter(Boolean).join(" · ");
               return (
                 <div key={profile.child_id} className="rounded-lg border p-3 text-xs">
                   <div className="flex items-center justify-between">
                     <span className="font-medium">{profile.child_name}</span>
-                    {allCurrent ? (
-                      <Badge className="text-[10px] bg-green-100 text-green-700">All current</Badge>
+                    {gaps === 0 ? (
+                      <Badge className="text-[10px] bg-[--cs-success-bg] text-[--cs-success]">
+                        <CheckCircle2 className="h-2.5 w-2.5 mr-0.5" />All current
+                      </Badge>
                     ) : (
-                      <Badge className="text-[10px] bg-amber-100 text-amber-700">Gaps</Badge>
-                    )}
-                  </div>
-                  <div className="flex items-center gap-2 mt-1.5 flex-wrap">
-                    {!profile.health_assessment_current && (
-                      <Badge className="text-[9px] bg-red-100 text-red-700">RHA overdue</Badge>
-                    )}
-                    {!profile.dental_up_to_date && (
-                      <Badge className="text-[9px] bg-amber-100 text-amber-700">Dental</Badge>
-                    )}
-                    {!profile.optician_up_to_date && (
-                      <Badge className="text-[9px] bg-amber-100 text-amber-700">Optical</Badge>
-                    )}
-                    {!profile.immunisation_up_to_date && (
-                      <Badge className="text-[9px] bg-red-100 text-red-700">Immun.</Badge>
-                    )}
-                    {profile.camhs_status && (
-                      <Badge className="text-[9px] bg-purple-100 text-purple-700">
-                        CAMHS: {profile.camhs_status.replace(/_/g, " ")}
+                      <Badge className={cn("text-[10px]", gaps >= 3 ? "bg-[--cs-risk-bg] text-[--cs-risk]" : "bg-[--cs-warning-bg] text-[--cs-warning]")}>
+                        {gaps} gap{gaps > 1 ? "s" : ""}
                       </Badge>
                     )}
-                    {profile.appointments_missed_90d > 0 && (
-                      <span className="text-[10px] text-muted-foreground">
-                        {profile.appointments_missed_90d} missed appt{profile.appointments_missed_90d > 1 ? "s" : ""}
-                      </span>
-                    )}
                   </div>
+                  {(gapMeta || profile.camhs_status || profile.appointments_missed_90d > 0) && (
+                    <p className="text-[10px] text-muted-foreground mt-1">
+                      {gapMeta}
+                      {gapMeta && profile.camhs_status ? " · " : ""}
+                      {profile.camhs_status ? `CAMHS: ${profile.camhs_status.replace(/_/g, " ")}` : ""}
+                      {profile.appointments_missed_90d > 0 ? ` · ${profile.appointments_missed_90d} missed appt${profile.appointments_missed_90d > 1 ? "s" : ""}` : ""}
+                    </p>
+                  )}
                 </div>
               );
             })}
@@ -218,22 +216,28 @@ export function HealthIntelligenceCard() {
         {/* ── CAMHS summary ───────────────────────────────────────────── */}
 
         {camhs.active_referrals > 0 && (
-          <div className="rounded-lg border p-3 text-xs space-y-1">
-            <p className="font-semibold text-muted-foreground">CAMHS Summary</p>
-            <div className="flex items-center gap-3 flex-wrap">
-              <span>{camhs.active_referrals} active referral{camhs.active_referrals > 1 ? "s" : ""}</span>
-              {camhs.waiting_list > 0 && (
-                <Badge className="text-[9px] bg-amber-100 text-amber-700">
-                  {camhs.waiting_list} waiting (avg {camhs.avg_waiting_weeks}wk)
-                </Badge>
-              )}
-              {camhs.disengaged_count > 0 && (
-                <Badge className="text-[9px] bg-red-100 text-red-700">
-                  {camhs.disengaged_count} disengaged
-                </Badge>
-              )}
-              <span className="text-muted-foreground">{camhs.total_sessions_held} sessions held</span>
+          <div className="flex items-center justify-between rounded-lg border p-3 text-xs">
+            <div>
+              <p className="font-semibold text-muted-foreground">CAMHS</p>
+              <p className="text-muted-foreground">
+                {camhs.active_referrals} referral{camhs.active_referrals > 1 ? "s" : ""} · {camhs.total_sessions_held} sessions
+                {camhs.waiting_list > 0 ? ` · ${camhs.waiting_list} waiting (avg ${camhs.avg_waiting_weeks}wk)` : ""}
+                {camhs.disengaged_count > 0 ? ` · ${camhs.disengaged_count} disengaged` : ""}
+              </p>
             </div>
+            {camhs.disengaged_count > 0 ? (
+              <Badge className="text-[10px] bg-[--cs-risk-bg] text-[--cs-risk]">
+                {camhs.disengaged_count} disengaged
+              </Badge>
+            ) : camhs.waiting_list > 0 ? (
+              <Badge className="text-[10px] bg-[--cs-warning-bg] text-[--cs-warning]">
+                {camhs.waiting_list} waiting
+              </Badge>
+            ) : (
+              <Badge className="text-[10px] bg-[--cs-success-bg] text-[--cs-success]">
+                Active
+              </Badge>
+            )}
           </div>
         )}
 
