@@ -13,6 +13,7 @@
 import React, { useCallback } from "react";
 import { useWritingAssistant } from "@/hooks/use-writing-assistant";
 import { useWritingAssistantSettings, enabledIssueTypes } from "@/hooks/use-writing-assistant-settings";
+import { useRewrite } from "@/hooks/use-rewrite";
 import { InlineSuggestions } from "./inline-suggestions";
 import { applyAutoFixes } from "@/lib/writing-assistant/rewrite-engine";
 import type { WritingIssue, WritingMode, WritingSuggestion } from "@/lib/writing-assistant/types";
@@ -44,6 +45,8 @@ export function WritingAssistantInline({
 
   // Merge caller-supplied knownNames with the user's personal dictionary.
   const allKnownNames = [...(knownNames ?? []), ...settings.dictionary];
+
+  const { rewrite, rewriting, result: rewriteResult, discard: discardRewrite } = useRewrite(value, mode);
 
   const { issues: rawIssues, result, loading, ignore, recheck } = useWritingAssistant({
     text: value,
@@ -87,6 +90,12 @@ export function WritingAssistantInline({
     });
   }, [value, issues, onApplyText, ignore, logAudit, recordType, fieldName, childId]);
 
+  const acceptRewrite = useCallback((text: string) => {
+    onApplyText(text);
+    discardRewrite();
+    logAudit({ action: "accepted", issue_type: "clarity", original_text: value, record_type: recordType, field_name: fieldName, child_id: childId });
+  }, [value, onApplyText, discardRewrite, logAudit, recordType, fieldName, childId]);
+
   if (!enabled) return null;
   return (
     <InlineSuggestions
@@ -97,6 +106,12 @@ export function WritingAssistantInline({
       onApply={apply}
       onIgnore={ignore}
       onApplyAll={applyAll}
+      rewriteAvailable={result?.rewriteAvailable}
+      onRewrite={rewrite}
+      rewriting={rewriting}
+      rewriteResult={rewriteResult}
+      onAcceptRewrite={acceptRewrite}
+      onDiscardRewrite={discardRewrite}
       onToggleCategory={toggleCategory}
       onAddToDictionary={addToDictionary}
       onAudit={handleAudit}

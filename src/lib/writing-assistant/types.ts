@@ -93,6 +93,8 @@ export interface WritingCheckResult {
   textHash: string;
   engineVersion: string;
   generatedAt: string;
+  /** True when the AI rewrite feature is available in this environment (ANTHROPIC_API_KEY set). */
+  rewriteAvailable?: boolean;
 }
 
 /** Provider abstraction — the engine is the default `rule-engine` provider. */

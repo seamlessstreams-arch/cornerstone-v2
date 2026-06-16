@@ -23,6 +23,7 @@ import {
   WA_CATEGORY_LABELS,
 } from "@/lib/writing-assistant/types";
 import { countAutoFixes } from "@/lib/writing-assistant/rewrite-engine";
+import type { RewriteApiResult } from "@/hooks/use-rewrite";
 
 // Colour is never the only signal — every row carries the type label + an icon.
 const TYPE_STYLE: Record<IssueType, { label: string; cls: string }> = {
@@ -55,6 +56,12 @@ export function InlineSuggestions({
   onApply,
   onIgnore,
   onApplyAll,
+  rewriteAvailable,
+  onRewrite,
+  rewriting,
+  rewriteResult,
+  onAcceptRewrite,
+  onDiscardRewrite,
   onToggleCategory,
   onAddToDictionary,
   onAudit,
@@ -67,6 +74,13 @@ export function InlineSuggestions({
   onIgnore: (id: string) => void;
   /** Called to apply all auto-fixable issues in one click. */
   onApplyAll?: () => void;
+  /** When true, the AI rewrite button is shown. */
+  rewriteAvailable?: boolean;
+  onRewrite?: () => void;
+  rewriting?: boolean;
+  rewriteResult?: RewriteApiResult | null;
+  onAcceptRewrite?: (text: string) => void;
+  onDiscardRewrite?: () => void;
   onToggleCategory?: (cat: WACategory, enabled: boolean) => void;
   onAddToDictionary?: (word: string) => void;
   onAudit?: (action: "accepted" | "ignored", issue: WritingIssue) => void;
@@ -74,8 +88,8 @@ export function InlineSuggestions({
   const [showSettings, setShowSettings] = useState(false);
   const autoFixCount = countAutoFixes(issues);
 
-  // Only appear if there is something to say (or the settings panel is open).
-  if (!loading && issues.length === 0 && !showSettings) return null;
+  // Only appear if there is something to say (or settings panel / rewrite panel is open).
+  if (!loading && issues.length === 0 && !showSettings && !rewriteResult && !rewriting) return null;
 
   return (
     <div className="mt-2 rounded-xl border border-[var(--cs-border-subtle)] bg-[var(--cs-surface)] p-3" role="region" aria-label="Cara writing suggestions">
@@ -240,6 +254,73 @@ export function InlineSuggestions({
             );
           })}
         </ul>
+      )}
+
+      {/* AI rewrite — only when ANTHROPIC_API_KEY is set in this environment */}
+      {rewriteAvailable && !rewriteResult && issues.length > 0 && (
+        <div className="mt-3 flex justify-end border-t border-[var(--cs-border-subtle)] pt-2">
+          <button
+            onClick={onRewrite}
+            disabled={rewriting}
+            aria-label="Rewrite with Cara AI"
+            className="inline-flex items-center gap-1 text-xs text-[var(--cs-text-muted)] hover:text-[var(--cs-navy)] disabled:opacity-50"
+          >
+            {rewriting ? (
+              <Loader2 className="h-3 w-3 animate-spin" />
+            ) : (
+              <Wand2 className="h-3 w-3 text-[var(--cs-teal,#0d9488)]" />
+            )}
+            {rewriting ? "Rewriting…" : "Rewrite with Cara"}
+          </button>
+        </div>
+      )}
+
+      {/* Rewrite result panel */}
+      {rewriteResult && (
+        <div className="mt-3 rounded-xl border border-[var(--cs-border-subtle)] bg-[var(--cs-surface-elevated)] p-3">
+          {"blocked" in rewriteResult && rewriteResult.blocked ? (
+            <div className="flex items-start gap-2">
+              <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0 text-amber-600" aria-hidden />
+              <div>
+                <p className="text-sm font-medium text-amber-800">Cannot rewrite this text</p>
+                <p className="mt-0.5 text-xs text-amber-700">{rewriteResult.reason}</p>
+                <button
+                  onClick={onDiscardRewrite}
+                  className="mt-2 text-xs text-[var(--cs-text-muted)] underline hover:text-[var(--cs-navy)]"
+                >
+                  Dismiss
+                </button>
+              </div>
+            </div>
+          ) : "rewrittenText" in rewriteResult ? (
+            <div>
+              <p className="mb-2 text-xs font-semibold text-[var(--cs-text-secondary)]">
+                Cara&apos;s suggested rewrite
+              </p>
+              <p className="rounded-lg bg-[var(--cs-surface)] p-2.5 text-sm leading-relaxed text-[var(--cs-text)]">
+                {rewriteResult.rewrittenText}
+              </p>
+              <div className="mt-3 flex flex-wrap items-center gap-2">
+                <button
+                  onClick={() => onAcceptRewrite?.(rewriteResult.rewrittenText)}
+                  className="inline-flex items-center gap-1 rounded-lg bg-[var(--cs-teal,#0d9488)] px-2.5 py-1 text-xs font-medium text-white hover:opacity-90"
+                >
+                  <Check className="h-3.5 w-3.5" />
+                  Accept rewrite
+                </button>
+                <button
+                  onClick={onDiscardRewrite}
+                  className="rounded-lg border border-[var(--cs-border-subtle)] px-2.5 py-1 text-xs text-[var(--cs-text-muted)] hover:bg-[var(--cs-surface)]"
+                >
+                  Discard
+                </button>
+              </div>
+              <p className="mt-2 text-[11px] text-[var(--cs-text-muted)]">
+                Cara suggests — you decide. Review carefully before accepting.
+              </p>
+            </div>
+          ) : null}
+        </div>
       )}
     </div>
   );
