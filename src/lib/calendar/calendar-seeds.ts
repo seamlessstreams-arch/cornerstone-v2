@@ -85,6 +85,17 @@ export function seedCalendarEvents(): CalendarEvent[] {
       description: "Supervised family contact session. Record observations afterwards.",
       child_id: "yp_casey",
     }),
+    // ── Tonight / early morning — populates the night shift running order ──
+    make("cal_seed_night_bedtime", "Bedtime routines and welfare check", 0, "21:30", 30, {
+      event_type: "meeting",
+      location: "Each bedroom",
+      description: "Settle-down check for all young people. Record welfare observations and any overnight concerns.",
+    }),
+    make("cal_seed_night_morning_meds", "Morning medication prep and review", 1, "07:00", 30, {
+      event_type: "meeting",
+      location: "Office",
+      description: "Prepare morning MAR rounds. Check PRN records from overnight and brief incoming day shift.",
+    }),
     make("cal_seed_team", "Weekly team meeting", 2, "10:00", 60, {
       event_type: "meeting",
       location: "Staff room",
