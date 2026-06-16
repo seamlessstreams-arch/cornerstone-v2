@@ -19,22 +19,22 @@ import { useHealthWellbeing } from "@/hooks/use-health-wellbeing";
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high: "border-red-200 bg-red-50 text-red-800",
-  medium: "border-amber-200 bg-amber-50 text-amber-800",
-  low: "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const TREND_STYLES: Record<string, { icon: React.ReactNode; text: string; label: string }> = {
   improving: {
     icon: <TrendingUp className="h-3.5 w-3.5" />,
-    text: "text-green-600",
+    text: "text-[--cs-success]",
     label: "Improving",
   },
   stable: {
@@ -44,7 +44,7 @@ const TREND_STYLES: Record<string, { icon: React.ReactNode; text: string; label:
   },
   declining: {
     icon: <TrendingDown className="h-3.5 w-3.5" />,
-    text: "text-red-600",
+    text: "text-[--cs-risk]",
     label: "Declining",
   },
   unknown: {
@@ -71,10 +71,10 @@ function moodLabel(score: number): string {
 }
 
 function moodColor(score: number): string {
-  if (score >= 8) return "text-green-600";
+  if (score >= 8) return "text-[--cs-success]";
   if (score >= 6) return "text-blue-600";
-  if (score >= 4) return "text-amber-600";
-  return "text-red-600";
+  if (score >= 4) return "text-[--cs-warning]";
+  return "text-[--cs-risk]";
 }
 
 // ── Component ────────────────────────────────────────────────────────────────
@@ -159,7 +159,7 @@ export function EmotionalWellbeingIntelligenceCard() {
 
           {/* SDQ */}
           <div className={cn("text-center rounded-lg p-2.5", abnormalSdq > 0 ? "bg-red-50" : borderlineSdq > 0 ? "bg-amber-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", abnormalSdq > 0 ? "text-red-600" : borderlineSdq > 0 ? "text-amber-600" : "text-green-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", abnormalSdq > 0 ? "text-[--cs-risk]" : borderlineSdq > 0 ? "text-[--cs-warning]" : "text-[--cs-success]")}>
               {profilesWithSdq.length > 0 ? profilesWithSdq.length : "N/A"}
             </p>
             <p className="text-[10px] text-muted-foreground">SDQ Scored</p>
@@ -234,8 +234,8 @@ export function EmotionalWellbeingIntelligenceCard() {
         {/* ── Self-harm risk section ──────────────────────────────────── */}
 
         {selfHarmAlerts.length > 0 && (
-          <div className="rounded-lg border border-red-200 bg-red-50 p-3 text-xs space-y-1">
-            <p className="font-semibold text-red-800 flex items-center gap-1">
+          <div className="rounded-lg border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-3 text-xs space-y-1">
+            <p className="font-semibold text-[--cs-risk] flex items-center gap-1">
               <ShieldAlert className="h-3.5 w-3.5" />
               Self-Harm Risk
             </p>
@@ -255,12 +255,12 @@ export function EmotionalWellbeingIntelligenceCard() {
             <div className="flex items-center gap-3 flex-wrap">
               <span>{camhs.active_referrals} active referral{camhs.active_referrals > 1 ? "s" : ""}</span>
               {camhs.waiting_list > 0 && (
-                <Badge className="text-[9px] bg-amber-100 text-amber-700">
+                <Badge className="text-[9px] bg-[--cs-warning-bg] text-[--cs-warning]">
                   {camhs.waiting_list} waiting (avg {camhs.avg_waiting_weeks}wk)
                 </Badge>
               )}
               {camhs.disengaged_count > 0 && (
-                <Badge className="text-[9px] bg-red-100 text-red-700">
+                <Badge className="text-[9px] bg-[--cs-risk-bg] text-[--cs-risk]">
                   {camhs.disengaged_count} disengaged
                 </Badge>
               )}

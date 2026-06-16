@@ -20,16 +20,16 @@ import { useMedicationIntelligence } from "@/hooks/use-medication-intelligence";
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high:     "border-red-200 bg-red-50 text-red-800",
-  medium:   "border-amber-200 bg-amber-50 text-amber-800",
-  low:      "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high:     "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium:   "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low:      "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -91,7 +91,7 @@ export function MedicationErrorsCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.missed_rate === 0 ? "text-green-600" : o.missed_rate <= 3 ? "text-amber-600" : "text-red-600",
+              o.missed_rate === 0 ? "text-[--cs-success]" : o.missed_rate <= 3 ? "text-[--cs-warning]" : "text-[--cs-risk]",
             )}>
               {o.missed_rate}%
             </p>
@@ -103,7 +103,7 @@ export function MedicationErrorsCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.refusal_rate === 0 ? "text-green-600" : o.refusal_rate <= 5 ? "text-amber-600" : "text-red-600",
+              o.refusal_rate === 0 ? "text-[--cs-success]" : o.refusal_rate <= 5 ? "text-[--cs-warning]" : "text-[--cs-risk]",
             )}>
               {o.refusal_rate}%
             </p>
@@ -115,7 +115,7 @@ export function MedicationErrorsCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              totalMissed === 0 ? "text-green-600" : "text-amber-600",
+              totalMissed === 0 ? "text-[--cs-success]" : "text-[--cs-warning]",
             )}>
               {totalMissed}
             </p>
@@ -127,7 +127,7 @@ export function MedicationErrorsCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              totalRefusals === 0 ? "text-green-600" : "text-red-600",
+              totalRefusals === 0 ? "text-[--cs-success]" : "text-[--cs-risk]",
             )}>
               {totalRefusals}
             </p>

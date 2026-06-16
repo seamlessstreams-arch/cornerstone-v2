@@ -68,7 +68,7 @@ export function TaskSlaCard({ className }: { className?: string }) {
                 </span>
               )}
               {summary.statutory_overdue > 0 && (
-                <span className="inline-flex items-center gap-1 rounded-full border border-red-300 bg-red-100 px-2.5 py-0.5 text-[11px] font-semibold text-red-800">
+                <span className="inline-flex items-center gap-1 rounded-full border border-red-300 bg-red-100 px-2.5 py-0.5 text-[11px] font-semibold text-[--cs-risk]">
                   {summary.statutory_overdue} statutory
                 </span>
               )}

@@ -20,16 +20,16 @@ import { usePremisesSafetyIntelligence } from "@/hooks/use-premises-safety-intel
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high: "border-red-200 bg-red-50 text-red-800",
-  medium: "border-amber-200 bg-amber-50 text-amber-800",
-  low: "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 function formatCheckType(ct: string): string {
@@ -86,7 +86,7 @@ export function PremisesIntelligenceCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.check_completion_rate >= 80 ? "text-green-600" : o.check_completion_rate >= 50 ? "text-amber-600" : "text-red-600",
+              o.check_completion_rate >= 80 ? "text-[--cs-success]" : o.check_completion_rate >= 50 ? "text-[--cs-warning]" : "text-[--cs-risk]",
             )}>
               {o.check_completion_rate}%
             </p>
@@ -98,7 +98,7 @@ export function PremisesIntelligenceCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.checks_overdue === 0 ? "text-green-600" : "text-red-600",
+              o.checks_overdue === 0 ? "text-[--cs-success]" : "text-[--cs-risk]",
             )}>
               {o.checks_overdue}
             </p>
@@ -110,7 +110,7 @@ export function PremisesIntelligenceCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.maintenance_urgent === 0 ? "text-green-600" : "text-red-600",
+              o.maintenance_urgent === 0 ? "text-[--cs-success]" : "text-[--cs-risk]",
             )}>
               {o.maintenance_urgent}
             </p>
@@ -122,7 +122,7 @@ export function PremisesIntelligenceCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.fire_safety_compliant ? "text-green-600" : "text-red-600",
+              o.fire_safety_compliant ? "text-[--cs-success]" : "text-[--cs-risk]",
             )}>
               {o.fire_safety_compliant ? (
                 <Flame className="h-5 w-5 mx-auto" />
@@ -140,19 +140,19 @@ export function PremisesIntelligenceCard() {
 
         <div className="grid grid-cols-3 gap-2 text-center text-xs">
           <div>
-            <p className={cn("font-bold tabular-nums", o.maintenance_open > 5 ? "text-amber-600" : "text-slate-700")}>
+            <p className={cn("font-bold tabular-nums", o.maintenance_open > 5 ? "text-[--cs-warning]" : "text-slate-700")}>
               {o.maintenance_open}
             </p>
             <p className="text-[10px] text-muted-foreground">Open Jobs</p>
           </div>
           <div>
-            <p className={cn("font-bold tabular-nums", o.certifications_expired > 0 ? "text-red-600" : o.certifications_expiring_soon > 0 ? "text-amber-600" : "text-green-600")}>
+            <p className={cn("font-bold tabular-nums", o.certifications_expired > 0 ? "text-[--cs-risk]" : o.certifications_expiring_soon > 0 ? "text-[--cs-warning]" : "text-[--cs-success]")}>
               {o.certifications_expired > 0 ? `${o.certifications_expired} expired` : o.certifications_expiring_soon > 0 ? `${o.certifications_expiring_soon} expiring` : "Current"}
             </p>
             <p className="text-[10px] text-muted-foreground">Certs</p>
           </div>
           <div>
-            <p className={cn("font-bold tabular-nums", o.vehicles_roadworthy === o.total_vehicles ? "text-green-600" : "text-amber-600")}>
+            <p className={cn("font-bold tabular-nums", o.vehicles_roadworthy === o.total_vehicles ? "text-[--cs-success]" : "text-[--cs-warning]")}>
               {o.vehicles_roadworthy}/{o.total_vehicles}
             </p>
             <p className="text-[10px] text-muted-foreground">Fleet Ready</p>
@@ -200,9 +200,9 @@ export function PremisesIntelligenceCard() {
                   <span className="font-medium">{bp.building_name}</span>
                   <Badge className={cn(
                     "text-[9px]",
-                    bp.status === "operational" ? "bg-green-100 text-green-700"
-                      : bp.status === "restricted" ? "bg-amber-100 text-amber-700"
-                      : "bg-gray-100 text-gray-600",
+                    bp.status === "operational" ? "bg-[--cs-success-bg] text-[--cs-success]"
+                      : bp.status === "restricted" ? "bg-[--cs-warning-bg] text-[--cs-warning]"
+                      : "bg-[--cs-bg] text-[--cs-text-secondary]",
                   )}>
                     {bp.status}
                   </Badge>
@@ -219,7 +219,7 @@ export function PremisesIntelligenceCard() {
                 {(bp.risk_flags?.length ?? 0) > 0 && (
                   <div className="flex flex-wrap gap-1 mt-1.5">
                     {(bp.risk_flags ?? []).map((flag, i) => (
-                      <Badge key={i} className="text-[9px] bg-red-100 text-red-700">
+                      <Badge key={i} className="text-[9px] bg-[--cs-risk-bg] text-[--cs-risk]">
                         <FileWarning className="h-2.5 w-2.5 mr-0.5" />{flag}
                       </Badge>
                     ))}
@@ -246,9 +246,9 @@ export function PremisesIntelligenceCard() {
                     {vp.latest_check_result && (
                       <Badge className={cn(
                         "text-[9px]",
-                        vp.latest_check_result === "pass" ? "bg-green-100 text-green-700"
-                          : vp.latest_check_result === "advisory" ? "bg-amber-100 text-amber-700"
-                          : "bg-red-100 text-red-700",
+                        vp.latest_check_result === "pass" ? "bg-[--cs-success-bg] text-[--cs-success]"
+                          : vp.latest_check_result === "advisory" ? "bg-[--cs-warning-bg] text-[--cs-warning]"
+                          : "bg-[--cs-risk-bg] text-[--cs-risk]",
                       )}>
                         {vp.latest_check_result}
                       </Badge>
@@ -267,7 +267,7 @@ export function PremisesIntelligenceCard() {
                 {(vp.risk_flags?.length ?? 0) > 0 && (
                   <div className="flex flex-wrap gap-1 mt-1.5">
                     {(vp.risk_flags ?? []).map((flag, i) => (
-                      <Badge key={i} className="text-[9px] bg-red-100 text-red-700">
+                      <Badge key={i} className="text-[9px] bg-[--cs-risk-bg] text-[--cs-risk]">
                         <FileWarning className="h-2.5 w-2.5 mr-0.5" />{flag}
                       </Badge>
                     ))}
@@ -291,7 +291,7 @@ export function PremisesIntelligenceCard() {
                 <span className="capitalize text-muted-foreground">{ma.category.replace(/_/g, " ")}</span>
                 <div className="flex items-center gap-2">
                   {ma.urgent_count > 0 && (
-                    <Badge className="text-[9px] bg-red-100 text-red-700">
+                    <Badge className="text-[9px] bg-[--cs-risk-bg] text-[--cs-risk]">
                       {ma.urgent_count} urgent
                     </Badge>
                   )}

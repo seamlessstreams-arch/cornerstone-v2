@@ -15,9 +15,9 @@ import { cn } from "@/lib/utils";
 import { useDuplicateDetection } from "@/hooks/use-duplicate-detection";
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 export function DuplicateDetectionCard() {
@@ -69,11 +69,11 @@ export function DuplicateDetectionCard() {
             <p className="text-[10px] text-[var(--cs-text-muted)]">Events</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", clean ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", clean ? "text-green-600" : "text-amber-600")}>{o.suspected_duplicates}</p>
+            <p className={cn("text-lg font-bold tabular-nums", clean ? "text-[--cs-success]" : "text-[--cs-warning]")}>{o.suspected_duplicates}</p>
             <p className="text-[10px] text-[var(--cs-text-muted)]">Suspected</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", o.clusters > 0 ? "bg-red-50" : "bg-gray-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.clusters > 0 ? "text-red-600" : "text-gray-500")}>{o.clusters}</p>
+            <p className={cn("text-lg font-bold tabular-nums", o.clusters > 0 ? "text-[--cs-risk]" : "text-gray-500")}>{o.clusters}</p>
             <p className="text-[10px] text-[var(--cs-text-muted)]">Clusters</p>
           </div>
         </div>
@@ -91,7 +91,7 @@ export function DuplicateDetectionCard() {
                     <Badge className="text-[9px] bg-[var(--cs-bg)] text-[var(--cs-text-secondary)] border">{d.event_type.replace(/_/g, " ")}</Badge>
                     <span className="truncate text-[var(--cs-text-secondary)]">{d.child_name}</span>
                   </div>
-                  <Badge className="text-[9px] shrink-0 bg-amber-100 text-amber-700 border-amber-200">{Math.round(d.similarity * 100)}% match</Badge>
+                  <Badge className="text-[9px] shrink-0 bg-[--cs-warning-bg] text-[--cs-warning] border-amber-200">{Math.round(d.similarity * 100)}% match</Badge>
                 </div>
                 <p className="text-[11px] text-[var(--cs-text-muted)] flex items-start gap-1">
                   <Link2 className="h-3 w-3 mt-0.5 shrink-0 text-brand" />
@@ -101,7 +101,7 @@ export function DuplicateDetectionCard() {
             ))}
           </div>
         ) : (
-          <div className="rounded-lg border border-green-200 bg-green-50/50 p-2.5 text-xs text-green-700">
+          <div className="rounded-lg border border-[--cs-success-soft] bg-[--cs-success-bg]/50 p-2.5 text-xs text-green-700">
             No likely duplicates — capture-once is holding across the record.
           </div>
         )}

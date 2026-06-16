@@ -29,9 +29,9 @@ const LEVEL_STYLES: Record<string, { bg: string; text: string }> = {
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const TREND_ICONS: Record<string, React.ReactNode> = {
@@ -86,7 +86,7 @@ export function PlacementStabilityCard() {
 
         <div className="grid grid-cols-4 gap-2">
           <div className="text-center rounded-lg p-2" style={{ background: m.average_stability_score >= 65 ? "hsl(var(--chart-2) / 0.1)" : "hsl(var(--destructive) / 0.08)" }}>
-            <p className={cn("text-lg font-bold tabular-nums", m.average_stability_score >= 65 ? "text-green-600" : "text-amber-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", m.average_stability_score >= 65 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
               {m.average_stability_score}
             </p>
             <p className="text-[10px] text-muted-foreground">Stability</p>
@@ -98,7 +98,7 @@ export function PlacementStabilityCard() {
             <p className="text-[10px] text-muted-foreground">Children</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", m.children_at_risk + m.children_critical > 0 ? "bg-red-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", m.children_at_risk + m.children_critical > 0 ? "text-red-600" : "text-green-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", m.children_at_risk + m.children_critical > 0 ? "text-[--cs-risk]" : "text-[--cs-success]")}>
               {m.children_at_risk + m.children_critical}
             </p>
             <p className="text-[10px] text-muted-foreground">At Risk</p>
@@ -158,8 +158,8 @@ export function PlacementStabilityCard() {
                 className={cn(
                   "rounded border p-2.5 text-xs leading-relaxed",
                   di.severity === "high"
-                    ? "border-red-200 bg-red-50 text-red-800"
-                    : "border-amber-200 bg-amber-50 text-amber-800",
+                    ? "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]"
+                    : "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
                 )}
               >
                 <span className="font-medium">{di.child_name}</span>{" "}
@@ -172,7 +172,7 @@ export function PlacementStabilityCard() {
         {/* ── All clear state ────────────────────────────────────────── */}
 
         {intel.disruption_indicators.length === 0 && intel.children.length > 0 && (
-          <div className="flex items-center gap-2 rounded-lg border border-green-200 bg-green-50 p-3">
+          <div className="flex items-center gap-2 rounded-lg border border-[--cs-success-soft] bg-[--cs-success-bg] p-3">
             <CheckCircle2 className="h-4 w-4 text-green-600" />
             <span className="text-xs text-green-700">
               No disruption indicators. All placements stable.

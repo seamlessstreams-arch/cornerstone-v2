@@ -18,9 +18,9 @@ import { useWorkforceIntelligence } from "@/hooks/use-workforce-intelligence";
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -68,7 +68,7 @@ export function StaffDbsRenewalTrackingCard() {
 
         <div className="grid grid-cols-4 gap-2">
           <div className={cn("text-center rounded-lg p-2.5", d.compliance_rate >= 100 ? "bg-green-50" : d.compliance_rate >= 90 ? "bg-amber-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", d.compliance_rate >= 100 ? "text-green-600" : d.compliance_rate >= 90 ? "text-amber-600" : "text-red-600")}>{d.compliance_rate}%</p>
+            <p className={cn("text-lg font-bold tabular-nums", d.compliance_rate >= 100 ? "text-[--cs-success]" : d.compliance_rate >= 90 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>{d.compliance_rate}%</p>
             <p className="text-[10px] text-muted-foreground">Compliance</p>
           </div>
           <div className="text-center rounded-lg bg-blue-50 p-2.5">
@@ -76,7 +76,7 @@ export function StaffDbsRenewalTrackingCard() {
             <p className="text-[10px] text-muted-foreground">Valid</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", d.expired_or_missing === 0 ? "bg-green-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", d.expired_or_missing === 0 ? "text-green-600" : "text-red-600")}>{d.expired_or_missing}</p>
+            <p className={cn("text-lg font-bold tabular-nums", d.expired_or_missing === 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>{d.expired_or_missing}</p>
             <p className="text-[10px] text-muted-foreground">Expired</p>
           </div>
           <div className="text-center rounded-lg bg-blue-50 p-2.5">

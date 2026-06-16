@@ -28,15 +28,15 @@ const RATING_STYLES: Record<StaffLifecycleRating, { bg: string; text: string; bo
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const REC_STYLES: Record<string, string> = {
-  immediate: "border-red-200 bg-red-50 text-red-800",
-  soon: "border-amber-200 bg-amber-50 text-amber-800",
-  planned: "border-blue-200 bg-blue-50 text-blue-800",
+  immediate: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  soon: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  planned: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -82,7 +82,7 @@ export function HomeStaffLifecycleIntelligenceCard() {
       <CardHeader className={cn("pb-3", isAlert ? "bg-red-50" : "bg-slate-50/50")}>
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm flex items-center gap-2">
-            <UserCog className={cn("h-4 w-4", isAlert ? "text-red-600" : "text-sky-500")} />
+            <UserCog className={cn("h-4 w-4", isAlert ? "text-[--cs-risk]" : "text-sky-500")} />
             <span className="text-slate-900">Staff Lifecycle</span>
             <span className={cn("text-[10px] font-bold px-2 py-0.5 rounded-full border", ratingStyle.bg, ratingStyle.text, ratingStyle.border)}>
               {ratingStyle.label}
@@ -105,8 +105,8 @@ export function HomeStaffLifecycleIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <ClipboardCheck className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.induction.overdue_count === 0 ? "text-green-600" :
-                  d.induction.overdue_count <= 2 ? "text-amber-600" : "text-red-600"
+                  d.induction.overdue_count === 0 ? "text-[--cs-success]" :
+                  d.induction.overdue_count <= 2 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.induction.completed_count}/{d.induction.total_records}
                 </p>
@@ -119,8 +119,8 @@ export function HomeStaffLifecycleIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Thermometer className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.sickness.absence_rate <= 2 ? "text-green-600" :
-                  d.sickness.absence_rate <= 4 ? "text-amber-600" : "text-red-600"
+                  d.sickness.absence_rate <= 2 ? "text-[--cs-success]" :
+                  d.sickness.absence_rate <= 4 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.sickness.absence_rate}%
                 </p>
@@ -133,8 +133,8 @@ export function HomeStaffLifecycleIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <DoorOpen className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.exit_interviews.avg_rating >= 4 ? "text-green-600" :
-                  d.exit_interviews.avg_rating >= 3 ? "text-amber-600" : "text-red-600"
+                  d.exit_interviews.avg_rating >= 4 ? "text-[--cs-success]" :
+                  d.exit_interviews.avg_rating >= 3 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.exit_interviews.avg_rating > 0 ? `${d.exit_interviews.avg_rating}/5` : "—"}
                 </p>
@@ -147,8 +147,8 @@ export function HomeStaffLifecycleIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Award className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.recognition.events_per_staff >= 0.5 ? "text-green-600" :
-                  d.recognition.events_per_staff > 0 ? "text-amber-600" : "text-red-600"
+                  d.recognition.events_per_staff >= 0.5 ? "text-[--cs-success]" :
+                  d.recognition.events_per_staff > 0 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.recognition.total_events_90d}
                 </p>
@@ -166,7 +166,7 @@ export function HomeStaffLifecycleIntelligenceCard() {
               <div className="space-y-0.5 text-[10px] text-muted-foreground">
                 <p>Completed: <span className="font-medium text-slate-600">{d.induction.completed_count}</span></p>
                 <p>Overdue: <span className={cn("font-medium",
-                  d.induction.overdue_count === 0 ? "text-green-600" : "text-red-600"
+                  d.induction.overdue_count === 0 ? "text-[--cs-success]" : "text-[--cs-risk]"
                 )}>{d.induction.overdue_count}</span></p>
                 <p>Task depth: <span className="font-medium text-slate-600">{d.induction.avg_task_completion}%</span></p>
               </div>
@@ -177,7 +177,7 @@ export function HomeStaffLifecycleIntelligenceCard() {
                 <p>Episodes (90d): <span className="font-medium text-slate-600">{d.sickness.total_episodes_90d}</span></p>
                 <p>Days lost: <span className="font-medium text-slate-600">{d.sickness.total_days_90d}</span></p>
                 <p>Active: <span className={cn("font-medium",
-                  d.sickness.active_episodes === 0 ? "text-green-600" : "text-amber-600"
+                  d.sickness.active_episodes === 0 ? "text-[--cs-success]" : "text-[--cs-warning]"
                 )}>{d.sickness.active_episodes}</span></p>
               </div>
             </div>
@@ -192,7 +192,7 @@ export function HomeStaffLifecycleIntelligenceCard() {
               Strengths ({d.strengths.length})
             </p>
             {d.strengths.slice(0, 3).map((s, i) => (
-              <div key={i} className="rounded border border-green-200 bg-green-50 p-2.5 text-xs text-green-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-success-soft] bg-[--cs-success-bg] p-2.5 text-xs text-[--cs-success] leading-relaxed">
                 {s}
               </div>
             ))}
@@ -207,7 +207,7 @@ export function HomeStaffLifecycleIntelligenceCard() {
               Concerns ({d.concerns.length})
             </p>
             {d.concerns.slice(0, 3).map((c, i) => (
-              <div key={i} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs text-red-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs text-[--cs-risk] leading-relaxed">
                 {c}
               </div>
             ))}

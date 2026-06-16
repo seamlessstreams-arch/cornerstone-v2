@@ -30,15 +30,15 @@ const RATING_STYLES: Record<RegulatoryComplianceRating, { bg: string; text: stri
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const REC_STYLES: Record<string, string> = {
-  immediate: "border-red-200 bg-red-50 text-red-800",
-  soon: "border-amber-200 bg-amber-50 text-amber-800",
-  planned: "border-blue-200 bg-blue-50 text-blue-800",
+  immediate: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  soon: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  planned: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const TREND_ICON = {
@@ -49,9 +49,9 @@ const TREND_ICON = {
 };
 
 const TREND_COLOR: Record<string, string> = {
-  improving: "text-green-600",
+  improving: "text-[--cs-success]",
   stable: "text-slate-500",
-  declining: "text-red-600",
+  declining: "text-[--cs-risk]",
   insufficient_data: "text-slate-400",
 };
 
@@ -104,7 +104,7 @@ export function HomeRegulatoryComplianceIntelligenceCard() {
       <CardHeader className={cn("pb-3", isAlert ? "bg-red-50" : "bg-slate-50/50")}>
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm flex items-center gap-2">
-            <ShieldCheck className={cn("h-4 w-4", isAlert ? "text-red-600" : "text-indigo-500")} />
+            <ShieldCheck className={cn("h-4 w-4", isAlert ? "text-[--cs-risk]" : "text-indigo-500")} />
             <span className="text-slate-900">Regulatory Compliance</span>
             <span className={cn("text-[10px] font-bold px-2 py-0.5 rounded-full border", ratingStyle.bg, ratingStyle.text, ratingStyle.border)}>
               {ratingStyle.label}
@@ -126,7 +126,7 @@ export function HomeRegulatoryComplianceIntelligenceCard() {
             <div className="text-center rounded-lg bg-slate-50 p-2">
               <div className="flex items-center justify-center gap-1">
                 <Eye className="h-3.5 w-3.5 text-slate-400" />
-                <p className={cn("text-lg font-bold tabular-nums", d.reg44.total_visits_12m >= 11 ? "text-green-600" : d.reg44.total_visits_12m >= 9 ? "text-amber-600" : "text-red-600")}>
+                <p className={cn("text-lg font-bold tabular-nums", d.reg44.total_visits_12m >= 11 ? "text-[--cs-success]" : d.reg44.total_visits_12m >= 9 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>
                   {d.reg44.total_visits_12m}
                 </p>
                 {d.reg44.trend !== "insufficient_data" && (
@@ -140,7 +140,7 @@ export function HomeRegulatoryComplianceIntelligenceCard() {
             <div className="text-center rounded-lg bg-slate-50 p-2">
               <div className="flex items-center justify-center gap-1">
                 <ClipboardCheck className="h-3.5 w-3.5 text-slate-400" />
-                <p className={cn("text-lg font-bold tabular-nums", d.audits.avg_score !== null && d.audits.avg_score >= 85 ? "text-green-600" : d.audits.avg_score !== null && d.audits.avg_score >= 70 ? "text-amber-600" : "text-red-600")}>
+                <p className={cn("text-lg font-bold tabular-nums", d.audits.avg_score !== null && d.audits.avg_score >= 85 ? "text-[--cs-success]" : d.audits.avg_score !== null && d.audits.avg_score >= 70 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>
                   {d.audits.avg_score ?? "—"}%
                 </p>
                 {d.audits.trend !== "insufficient_data" && (
@@ -152,7 +152,7 @@ export function HomeRegulatoryComplianceIntelligenceCard() {
 
             {/* Pending Notifications */}
             <div className="text-center rounded-lg bg-slate-50 p-2">
-              <p className={cn("text-lg font-bold tabular-nums", d.notifiable_events.pending_count === 0 ? "text-green-600" : "text-red-600")}>
+              <p className={cn("text-lg font-bold tabular-nums", d.notifiable_events.pending_count === 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>
                 {d.notifiable_events.pending_count}
               </p>
               <p className="text-[10px] text-muted-foreground">Pending NEs</p>
@@ -160,7 +160,7 @@ export function HomeRegulatoryComplianceIntelligenceCard() {
 
             {/* Overdue Policies */}
             <div className="text-center rounded-lg bg-slate-50 p-2">
-              <p className={cn("text-lg font-bold tabular-nums", d.policies.overdue_count === 0 ? "text-green-600" : d.policies.overdue_count <= 1 ? "text-amber-600" : "text-red-600")}>
+              <p className={cn("text-lg font-bold tabular-nums", d.policies.overdue_count === 0 ? "text-[--cs-success]" : d.policies.overdue_count <= 1 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>
                 {d.policies.overdue_count}
               </p>
               <p className="text-[10px] text-muted-foreground">Overdue Policies</p>
@@ -178,11 +178,11 @@ export function HomeRegulatoryComplianceIntelligenceCard() {
                 Reg 44 Visits
               </p>
               <div className="space-y-0.5 text-[10px] text-muted-foreground">
-                <p>Open recs: <span className={cn("font-medium", d.reg44.open_recommendations > 0 ? "text-amber-600" : "text-green-600")}>{d.reg44.open_recommendations}</span>
+                <p>Open recs: <span className={cn("font-medium", d.reg44.open_recommendations > 0 ? "text-[--cs-warning]" : "text-[--cs-success]")}>{d.reg44.open_recommendations}</span>
                   {d.reg44.high_priority_open > 0 && <span className="text-red-600 font-medium"> ({d.reg44.high_priority_open} high)</span>}
                 </p>
-                <p>Completion: <span className={cn("font-medium", d.reg44.recommendation_completion_rate >= 90 ? "text-green-600" : "text-amber-600")}>{d.reg44.recommendation_completion_rate}%</span></p>
-                <p>Sent Ofsted: <span className={cn("font-medium", d.reg44.reports_sent_to_ofsted_rate === 100 ? "text-green-600" : "text-amber-600")}>{d.reg44.reports_sent_to_ofsted_rate}%</span></p>
+                <p>Completion: <span className={cn("font-medium", d.reg44.recommendation_completion_rate >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{d.reg44.recommendation_completion_rate}%</span></p>
+                <p>Sent Ofsted: <span className={cn("font-medium", d.reg44.reports_sent_to_ofsted_rate === 100 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{d.reg44.reports_sent_to_ofsted_rate}%</span></p>
               </div>
             </div>
 
@@ -198,7 +198,7 @@ export function HomeRegulatoryComplianceIntelligenceCard() {
                     <GradeTrendIcon className={cn("inline h-3 w-3 ml-1", TREND_COLOR[d.inspection.grade_trend])} />
                   )}
                 </p>
-                <p>Actions: <span className={cn("font-medium", d.inspection.action_completion_rate === 100 ? "text-green-600" : "text-amber-600")}>{d.inspection.total_actions_completed}/{d.inspection.total_actions_required}</span></p>
+                <p>Actions: <span className={cn("font-medium", d.inspection.action_completion_rate === 100 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{d.inspection.total_actions_completed}/{d.inspection.total_actions_required}</span></p>
                 <p>Last: <span className="font-medium text-slate-600">{d.inspection.months_since_last_inspection}m ago</span></p>
               </div>
             </div>
@@ -211,8 +211,8 @@ export function HomeRegulatoryComplianceIntelligenceCard() {
               </p>
               <div className="space-y-0.5 text-[10px] text-muted-foreground">
                 <p>90d: <span className="font-medium text-slate-600">{d.notifiable_events.total_90d}</span> · 12m: <span className="font-medium text-slate-600">{d.notifiable_events.total_12m}</span></p>
-                <p>On-time: <span className={cn("font-medium", d.notifiable_events.notified_within_24h_rate === 100 ? "text-green-600" : d.notifiable_events.notified_within_24h_rate >= 80 ? "text-amber-600" : "text-red-600")}>{d.notifiable_events.notified_within_24h_rate}%</span></p>
-                <p>Follow-up: <span className={cn("font-medium", d.notifiable_events.follow_up_rate === 100 ? "text-green-600" : "text-amber-600")}>{d.notifiable_events.follow_up_rate}%</span></p>
+                <p>On-time: <span className={cn("font-medium", d.notifiable_events.notified_within_24h_rate === 100 ? "text-[--cs-success]" : d.notifiable_events.notified_within_24h_rate >= 80 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>{d.notifiable_events.notified_within_24h_rate}%</span></p>
+                <p>Follow-up: <span className={cn("font-medium", d.notifiable_events.follow_up_rate === 100 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{d.notifiable_events.follow_up_rate}%</span></p>
               </div>
             </div>
 
@@ -223,8 +223,8 @@ export function HomeRegulatoryComplianceIntelligenceCard() {
                 Policies
               </p>
               <div className="space-y-0.5 text-[10px] text-muted-foreground">
-                <p>Total: <span className="font-medium text-slate-600">{d.policies.total_policies}</span> · Current: <span className={cn("font-medium", d.policies.current_count === d.policies.total_policies ? "text-green-600" : "text-amber-600")}>{d.policies.current_count}</span></p>
-                <p>Ack rate: <span className={cn("font-medium", d.policies.avg_acknowledgement_rate === 100 ? "text-green-600" : "text-amber-600")}>{d.policies.avg_acknowledgement_rate}%</span></p>
+                <p>Total: <span className="font-medium text-slate-600">{d.policies.total_policies}</span> · Current: <span className={cn("font-medium", d.policies.current_count === d.policies.total_policies ? "text-[--cs-success]" : "text-[--cs-warning]")}>{d.policies.current_count}</span></p>
+                <p>Ack rate: <span className={cn("font-medium", d.policies.avg_acknowledgement_rate === 100 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{d.policies.avg_acknowledgement_rate}%</span></p>
                 {d.policies.review_due_within_30d > 0 && (
                   <p className="text-amber-600 font-medium">{d.policies.review_due_within_30d} due within 30d</p>
                 )}
@@ -269,7 +269,7 @@ export function HomeRegulatoryComplianceIntelligenceCard() {
               Strengths ({d.strengths.length})
             </p>
             {d.strengths.slice(0, 3).map((s, i) => (
-              <div key={i} className="rounded border border-green-200 bg-green-50 p-2.5 text-xs text-green-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-success-soft] bg-[--cs-success-bg] p-2.5 text-xs text-[--cs-success] leading-relaxed">
                 {s}
               </div>
             ))}
@@ -284,7 +284,7 @@ export function HomeRegulatoryComplianceIntelligenceCard() {
               Concerns ({d.concerns.length})
             </p>
             {d.concerns.slice(0, 3).map((c, i) => (
-              <div key={i} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs text-red-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs text-[--cs-risk] leading-relaxed">
                 {c}
               </div>
             ))}

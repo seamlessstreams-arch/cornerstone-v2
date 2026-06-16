@@ -15,9 +15,9 @@ import { cn } from "@/lib/utils";
 import { useWorkforceIntelligence } from "@/hooks/use-workforce-intelligence";
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 export function StaffLoneWorkingRiskCard() {
@@ -61,15 +61,15 @@ export function StaffLoneWorkingRiskCard() {
 
         <div className="grid grid-cols-4 gap-2">
           <div className={cn("text-center rounded-lg p-2.5", staffing.shifts_unfilled === 0 ? "bg-green-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", staffing.shifts_unfilled === 0 ? "text-green-600" : "text-red-600")}>{staffing.shifts_unfilled}</p>
+            <p className={cn("text-lg font-bold tabular-nums", staffing.shifts_unfilled === 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>{staffing.shifts_unfilled}</p>
             <p className="text-[10px] text-muted-foreground">Unfilled</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", staffing.no_shows_this_month === 0 ? "bg-green-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", staffing.no_shows_this_month === 0 ? "text-green-600" : "text-red-600")}>{staffing.no_shows_this_month}</p>
+            <p className={cn("text-lg font-bold tabular-nums", staffing.no_shows_this_month === 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>{staffing.no_shows_this_month}</p>
             <p className="text-[10px] text-muted-foreground">No Shows</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", dbs.expired_or_missing === 0 ? "bg-green-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", dbs.expired_or_missing === 0 ? "text-green-600" : "text-red-600")}>{dbs.expired_or_missing}</p>
+            <p className={cn("text-lg font-bold tabular-nums", dbs.expired_or_missing === 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>{dbs.expired_or_missing}</p>
             <p className="text-[10px] text-muted-foreground">DBS Gap</p>
           </div>
           <div className="text-center rounded-lg bg-blue-50 p-2.5">
@@ -84,16 +84,16 @@ export function StaffLoneWorkingRiskCard() {
           <p className="text-xs font-semibold">Risk Indicators</p>
           <div className="space-y-1">
             {staffing.shifts_unfilled > 0 && (
-              <Badge className="text-[10px] bg-red-100 text-red-700 mr-1">{staffing.shifts_unfilled} unfilled shifts</Badge>
+              <Badge className="text-[10px] bg-[--cs-risk-bg] text-[--cs-risk] mr-1">{staffing.shifts_unfilled} unfilled shifts</Badge>
             )}
             {staffing.no_shows_this_month > 0 && (
-              <Badge className="text-[10px] bg-red-100 text-red-700 mr-1">{staffing.no_shows_this_month} no-shows this month</Badge>
+              <Badge className="text-[10px] bg-[--cs-risk-bg] text-[--cs-risk] mr-1">{staffing.no_shows_this_month} no-shows this month</Badge>
             )}
             {dbs.expired_or_missing > 0 && (
-              <Badge className="text-[10px] bg-amber-100 text-amber-700 mr-1">{dbs.expired_or_missing} DBS expired/missing</Badge>
+              <Badge className="text-[10px] bg-[--cs-warning-bg] text-[--cs-warning] mr-1">{dbs.expired_or_missing} DBS expired/missing</Badge>
             )}
             {staffing.shifts_unfilled === 0 && staffing.no_shows_this_month === 0 && dbs.expired_or_missing === 0 && (
-              <Badge className="text-[10px] bg-green-100 text-green-700">All clear — low risk</Badge>
+              <Badge className="text-[10px] bg-[--cs-success-bg] text-[--cs-success]">All clear — low risk</Badge>
             )}
           </div>
         </div>

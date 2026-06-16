@@ -15,9 +15,9 @@ import { cn } from "@/lib/utils";
 import { useWorkforceIntelligence } from "@/hooks/use-workforce-intelligence";
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 export function StaffPerformanceDipCard() {
@@ -65,19 +65,19 @@ export function StaffPerformanceDipCard() {
 
         <div className="grid grid-cols-4 gap-2">
           <div className={cn("text-center rounded-lg p-2.5", profile.training_compliance_rate >= 90 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", profile.training_compliance_rate >= 90 ? "text-green-600" : "text-amber-600")}>{profile.training_compliance_rate}%</p>
+            <p className={cn("text-lg font-bold tabular-nums", profile.training_compliance_rate >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{profile.training_compliance_rate}%</p>
             <p className="text-[10px] text-muted-foreground">Training</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", supervisionRate >= 90 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", supervisionRate >= 90 ? "text-green-600" : "text-amber-600")}>{supervisionRate}%</p>
+            <p className={cn("text-lg font-bold tabular-nums", supervisionRate >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{supervisionRate}%</p>
             <p className="text-[10px] text-muted-foreground">Supervision</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", expiredTraining === 0 ? "bg-green-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", expiredTraining === 0 ? "text-green-600" : "text-red-600")}>{expiredTraining}</p>
+            <p className={cn("text-lg font-bold tabular-nums", expiredTraining === 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>{expiredTraining}</p>
             <p className="text-[10px] text-muted-foreground">Expired</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", supervision.overdue === 0 ? "bg-green-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", supervision.overdue === 0 ? "text-green-600" : "text-red-600")}>{supervision.overdue}</p>
+            <p className={cn("text-lg font-bold tabular-nums", supervision.overdue === 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>{supervision.overdue}</p>
             <p className="text-[10px] text-muted-foreground">Overdue</p>
           </div>
         </div>
@@ -90,7 +90,7 @@ export function StaffPerformanceDipCard() {
             {supervision.staff_overdue.slice(0, 3).map((s) => (
               <div key={s.staff_id} className="flex items-center justify-between rounded border p-2.5 text-xs">
                 <span className="font-medium">{s.staff_name}</span>
-                <Badge className="text-[9px] bg-red-100 text-red-700">supervision {s.days_overdue}d late</Badge>
+                <Badge className="text-[9px] bg-[--cs-risk-bg] text-[--cs-risk]">supervision {s.days_overdue}d late</Badge>
               </div>
             ))}
           </div>

@@ -30,9 +30,9 @@ const DOMAIN_STYLES: Record<string, { bg: string; text: string; label: string }>
   continuity: { bg: "bg-teal-50", text: "text-teal-700", label: "Continuity" },
 };
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 export function ChildPriorityCard() {
@@ -83,15 +83,15 @@ export function ChildPriorityCard() {
             <p className="text-[10px] text-muted-foreground">Children</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", o.critical_count > 0 ? "bg-red-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.critical_count > 0 ? "text-red-600" : "text-green-600")}>{o.critical_count}</p>
+            <p className={cn("text-lg font-bold tabular-nums", o.critical_count > 0 ? "text-[--cs-risk]" : "text-[--cs-success]")}>{o.critical_count}</p>
             <p className="text-[10px] text-muted-foreground">Critical</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", o.high_count > 0 ? "bg-amber-50" : "bg-gray-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.high_count > 0 ? "text-amber-600" : "text-gray-500")}>{o.high_count}</p>
+            <p className={cn("text-lg font-bold tabular-nums", o.high_count > 0 ? "text-[--cs-warning]" : "text-gray-500")}>{o.high_count}</p>
             <p className="text-[10px] text-muted-foreground">High</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", o.multi_domain_count > 0 ? "bg-red-50" : "bg-gray-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.multi_domain_count > 0 ? "text-red-600" : "text-gray-500")}>{o.multi_domain_count}</p>
+            <p className={cn("text-lg font-bold tabular-nums", o.multi_domain_count > 0 ? "text-[--cs-risk]" : "text-gray-500")}>{o.multi_domain_count}</p>
             <p className="text-[10px] text-muted-foreground">Multi-stream</p>
           </div>
         </div>

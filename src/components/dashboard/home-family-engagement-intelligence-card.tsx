@@ -29,15 +29,15 @@ const RATING_STYLES: Record<FamilyEngagementRating, { bg: string; text: string; 
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const REC_STYLES: Record<string, string> = {
-  immediate: "border-red-200 bg-red-50 text-red-800",
-  soon: "border-amber-200 bg-amber-50 text-amber-800",
-  planned: "border-blue-200 bg-blue-50 text-blue-800",
+  immediate: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  soon: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  planned: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -85,7 +85,7 @@ export function HomeFamilyEngagementIntelligenceCard() {
       <CardHeader className={cn("pb-3", isAlert ? "bg-red-50" : "bg-slate-50/50")}>
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm flex items-center gap-2">
-            <Heart className={cn("h-4 w-4", isAlert ? "text-red-600" : "text-pink-500")} />
+            <Heart className={cn("h-4 w-4", isAlert ? "text-[--cs-risk]" : "text-pink-500")} />
             <span className="text-slate-900">Family Engagement</span>
             <span className={cn("text-[10px] font-bold px-2 py-0.5 rounded-full border", ratingStyle.bg, ratingStyle.text, ratingStyle.border)}>
               {ratingStyle.label}
@@ -108,8 +108,8 @@ export function HomeFamilyEngagementIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Users className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.contact_profile.contact_coverage >= 80 ? "text-green-600" :
-                  d.contact_profile.contact_coverage >= 60 ? "text-amber-600" : "text-red-600"
+                  d.contact_profile.contact_coverage >= 80 ? "text-[--cs-success]" :
+                  d.contact_profile.contact_coverage >= 60 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.contact_profile.contact_coverage}%
                 </p>
@@ -122,8 +122,8 @@ export function HomeFamilyEngagementIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <MessageCircle className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.child_voice_profile.voice_capture_rate >= 80 ? "text-green-600" :
-                  d.child_voice_profile.voice_capture_rate >= 60 ? "text-amber-600" : "text-red-600"
+                  d.child_voice_profile.voice_capture_rate >= 80 ? "text-[--cs-success]" :
+                  d.child_voice_profile.voice_capture_rate >= 60 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.child_voice_profile.voice_capture_rate}%
                 </p>
@@ -136,7 +136,7 @@ export function HomeFamilyEngagementIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Shield className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.contact_profile.safety_rate === 100 ? "text-green-600" : "text-red-600"
+                  d.contact_profile.safety_rate === 100 ? "text-[--cs-success]" : "text-[--cs-risk]"
                 )}>
                   {d.contact_profile.safety_rate}%
                 </p>
@@ -149,8 +149,8 @@ export function HomeFamilyEngagementIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <TrendingUp className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.relationship_profile.avg_quality_score >= 7 ? "text-green-600" :
-                  d.relationship_profile.avg_quality_score >= 5 ? "text-amber-600" : "text-red-600"
+                  d.relationship_profile.avg_quality_score >= 7 ? "text-[--cs-success]" :
+                  d.relationship_profile.avg_quality_score >= 5 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.relationship_profile.avg_quality_score}
                 </p>
@@ -179,7 +179,7 @@ export function HomeFamilyEngagementIntelligenceCard() {
             <div className="rounded border p-2 text-xs">
               <p className="font-medium text-slate-700 mb-1">Relationships</p>
               <div className="space-y-0.5 text-[10px] text-muted-foreground">
-                <p>Assessed: <span className={cn("font-medium", d.relationship_profile.assessment_coverage >= 80 ? "text-green-600" : "text-amber-600")}>{d.relationship_profile.children_assessed.length}/{d.relationship_profile.children_assessed.length + d.relationship_profile.children_not_assessed.length}</span></p>
+                <p>Assessed: <span className={cn("font-medium", d.relationship_profile.assessment_coverage >= 80 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{d.relationship_profile.children_assessed.length}/{d.relationship_profile.children_assessed.length + d.relationship_profile.children_not_assessed.length}</span></p>
                 {d.relationship_profile.improving_count > 0 && (
                   <p>Improving: <span className="font-medium text-green-600">{d.relationship_profile.improving_count}</span></p>
                 )}
@@ -202,7 +202,7 @@ export function HomeFamilyEngagementIntelligenceCard() {
               Strengths ({d.strengths.length})
             </p>
             {d.strengths.slice(0, 3).map((s, i) => (
-              <div key={i} className="rounded border border-green-200 bg-green-50 p-2.5 text-xs text-green-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-success-soft] bg-[--cs-success-bg] p-2.5 text-xs text-[--cs-success] leading-relaxed">
                 {s}
               </div>
             ))}
@@ -217,7 +217,7 @@ export function HomeFamilyEngagementIntelligenceCard() {
               Concerns ({d.concerns.length})
             </p>
             {d.concerns.slice(0, 3).map((c, i) => (
-              <div key={i} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs text-red-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs text-[--cs-risk] leading-relaxed">
                 {c}
               </div>
             ))}

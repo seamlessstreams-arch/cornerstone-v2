@@ -19,16 +19,16 @@ import { useQualityAssuranceIntelligence } from "@/hooks/use-quality-assurance-i
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high:     "border-red-200 bg-red-50 text-red-800",
-  medium:   "border-amber-200 bg-amber-50 text-amber-800",
-  low:      "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high:     "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium:   "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low:      "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -90,7 +90,7 @@ export function OfstedActionPlanCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.actions_completed > 0 ? "text-green-600" : "text-gray-600",
+              o.actions_completed > 0 ? "text-[--cs-success]" : "text-gray-600",
             )}>
               {o.actions_completed}
             </p>
@@ -102,7 +102,7 @@ export function OfstedActionPlanCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.actions_overdue === 0 ? "text-green-600" : "text-red-600",
+              o.actions_overdue === 0 ? "text-[--cs-success]" : "text-[--cs-risk]",
             )}>
               {o.actions_overdue}
             </p>
@@ -114,7 +114,7 @@ export function OfstedActionPlanCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.improvement_rate >= 80 ? "text-green-600" : o.improvement_rate >= 60 ? "text-amber-600" : "text-red-600",
+              o.improvement_rate >= 80 ? "text-[--cs-success]" : o.improvement_rate >= 60 ? "text-[--cs-warning]" : "text-[--cs-risk]",
             )}>
               {o.improvement_rate}%
             </p>
@@ -154,10 +154,10 @@ export function OfstedActionPlanCard() {
               Overdue Actions
             </p>
             {intel.overdue_actions.slice(0, 4).map((a, i) => (
-              <div key={i} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs">
+              <div key={i} className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs">
                 <div className="flex items-center justify-between">
-                  <span className="font-medium text-red-800 truncate flex-1">{a.action}</span>
-                  <Badge className="text-[10px] bg-red-100 text-red-700 ml-1">{a.days_overdue}d</Badge>
+                  <span className="font-medium text-[--cs-risk] truncate flex-1">{a.action}</span>
+                  <Badge className="text-[10px] bg-[--cs-risk-bg] text-[--cs-risk] ml-1">{a.days_overdue}d</Badge>
                 </div>
                 <p className="text-red-700 text-[10px] mt-0.5">
                   {a.audit_title} · Owner: {a.owner}

@@ -8,16 +8,16 @@ import { cn } from "@/lib/utils";
 import { useEducationIntelligence } from "@/hooks/use-education-intelligence";
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high: "border-red-200 bg-red-50 text-red-800",
-  medium: "border-amber-200 bg-amber-50 text-amber-800",
-  low: "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 export function EducationAttendanceTrackingCard() {
@@ -70,7 +70,7 @@ export function EducationAttendanceTrackingCard() {
             <p
               className={cn(
                 "text-lg font-bold tabular-nums",
-                overview.avg_attendance_pct >= 95 ? "text-green-600" : "text-amber-600"
+                overview.avg_attendance_pct >= 95 ? "text-[--cs-success]" : "text-[--cs-warning]"
               )}
             >
               {overview.avg_attendance_pct}%
@@ -87,7 +87,7 @@ export function EducationAttendanceTrackingCard() {
             <p
               className={cn(
                 "text-lg font-bold tabular-nums",
-                overview.excluded_count === 0 ? "text-green-600" : "text-red-600"
+                overview.excluded_count === 0 ? "text-[--cs-success]" : "text-[--cs-risk]"
               )}
             >
               {overview.excluded_count}
@@ -104,7 +104,7 @@ export function EducationAttendanceTrackingCard() {
             <p
               className={cn(
                 "text-lg font-bold tabular-nums",
-                overview.pep_overdue_count === 0 ? "text-green-600" : "text-amber-600"
+                overview.pep_overdue_count === 0 ? "text-[--cs-success]" : "text-[--cs-warning]"
               )}
             >
               {overview.pep_current_count}/{overview.pep_current_count + overview.pep_overdue_count}
@@ -188,7 +188,7 @@ export function EducationAttendanceTrackingCard() {
 
         {/* Exclusion events */}
         {overview.exclusion_events_90d > 0 && (
-          <div className="rounded border border-red-200 bg-red-50 p-2.5 text-xs text-red-800">
+          <div className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs text-[--cs-risk]">
             <span className="font-medium">{overview.exclusion_events_90d}</span> exclusion event{overview.exclusion_events_90d !== 1 ? "s" : ""} in the last 90 days
           </div>
         )}

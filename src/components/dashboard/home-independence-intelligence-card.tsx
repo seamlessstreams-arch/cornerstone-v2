@@ -29,15 +29,15 @@ const RATING_STYLES: Record<IndependenceRating, { bg: string; text: string; bord
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const REC_STYLES: Record<string, string> = {
-  immediate: "border-red-200 bg-red-50 text-red-800",
-  soon: "border-amber-200 bg-amber-50 text-amber-800",
-  planned: "border-blue-200 bg-blue-50 text-blue-800",
+  immediate: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  soon: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  planned: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -86,7 +86,7 @@ export function HomeIndependenceIntelligenceCard() {
       <CardHeader className={cn("pb-3", isAlert ? "bg-red-50" : "bg-slate-50/50")}>
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm flex items-center gap-2">
-            <GraduationCap className={cn("h-4 w-4", isAlert ? "text-red-600" : "text-teal-500")} />
+            <GraduationCap className={cn("h-4 w-4", isAlert ? "text-[--cs-risk]" : "text-teal-500")} />
             <span className="text-slate-900">Independence & Transition</span>
             <span className={cn("text-[10px] font-bold px-2 py-0.5 rounded-full border", ratingStyle.bg, ratingStyle.text, ratingStyle.border)}>
               {ratingStyle.label}
@@ -108,7 +108,7 @@ export function HomeIndependenceIntelligenceCard() {
             <div className="text-center rounded-lg bg-slate-50 p-2">
               <div className="flex items-center justify-center gap-1">
                 <Users className="h-3.5 w-3.5 text-slate-400" />
-                <p className={cn("text-lg font-bold tabular-nums", d.independence_profile.children_without_assessments.length === 0 ? "text-green-600" : "text-red-600")}>
+                <p className={cn("text-lg font-bold tabular-nums", d.independence_profile.children_without_assessments.length === 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>
                   {d.independence_profile.total_assessments}
                 </p>
               </div>
@@ -120,8 +120,8 @@ export function HomeIndependenceIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Target className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.independence_profile.avg_readiness >= 60 ? "text-green-600" :
-                  d.independence_profile.avg_readiness >= 40 ? "text-amber-600" : "text-red-600"
+                  d.independence_profile.avg_readiness >= 60 ? "text-[--cs-success]" :
+                  d.independence_profile.avg_readiness >= 40 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.independence_profile.avg_readiness}%
                 </p>
@@ -134,7 +134,7 @@ export function HomeIndependenceIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <CheckCheck className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.independence_profile.on_track_count === d.independence_profile.total_assessments ? "text-green-600" : "text-amber-600"
+                  d.independence_profile.on_track_count === d.independence_profile.total_assessments ? "text-[--cs-success]" : "text-[--cs-warning]"
                 )}>
                   {d.independence_profile.on_track_count}/{d.independence_profile.total_assessments}
                 </p>
@@ -147,8 +147,8 @@ export function HomeIndependenceIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <GraduationCap className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.domain_analysis.avg_domain_score >= 6 ? "text-green-600" :
-                  d.domain_analysis.avg_domain_score >= 4 ? "text-amber-600" : "text-red-600"
+                  d.domain_analysis.avg_domain_score >= 6 ? "text-[--cs-success]" :
+                  d.domain_analysis.avg_domain_score >= 4 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.domain_analysis.avg_domain_score}/10
                 </p>
@@ -165,8 +165,8 @@ export function HomeIndependenceIntelligenceCard() {
             <div className="rounded border p-2 text-xs">
               <p className="font-medium text-slate-700 mb-1">Pathways</p>
               <div className="space-y-0.5 text-[10px] text-muted-foreground">
-                <p>Linked to plan: <span className={cn("font-medium", d.independence_profile.pathway_plan_linkage_rate === 100 ? "text-green-600" : "text-amber-600")}>{d.independence_profile.pathway_plan_linkage_rate}%</span></p>
-                <p>Evidence quality: <span className={cn("font-medium", d.independence_profile.evidence_rate === 100 ? "text-green-600" : "text-amber-600")}>{d.independence_profile.evidence_rate}%</span></p>
+                <p>Linked to plan: <span className={cn("font-medium", d.independence_profile.pathway_plan_linkage_rate === 100 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{d.independence_profile.pathway_plan_linkage_rate}%</span></p>
+                <p>Evidence quality: <span className={cn("font-medium", d.independence_profile.evidence_rate === 100 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{d.independence_profile.evidence_rate}%</span></p>
                 {d.independence_profile.children_without_assessments.length > 0 && <p>No assessment: <span className="font-medium text-red-600">{d.independence_profile.children_without_assessments.length} children</span></p>}
                 {d.independence_profile.overdue_reviews > 0 && <p>Overdue reviews: <span className="font-medium text-red-600">{d.independence_profile.overdue_reviews}</span></p>}
               </div>
@@ -193,7 +193,7 @@ export function HomeIndependenceIntelligenceCard() {
               Strengths ({d.strengths.length})
             </p>
             {d.strengths.slice(0, 3).map((s, i) => (
-              <div key={i} className="rounded border border-green-200 bg-green-50 p-2.5 text-xs text-green-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-success-soft] bg-[--cs-success-bg] p-2.5 text-xs text-[--cs-success] leading-relaxed">
                 {s}
               </div>
             ))}
@@ -208,7 +208,7 @@ export function HomeIndependenceIntelligenceCard() {
               Concerns ({d.concerns.length})
             </p>
             {d.concerns.slice(0, 3).map((c, i) => (
-              <div key={i} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs text-red-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs text-[--cs-risk] leading-relaxed">
                 {c}
               </div>
             ))}

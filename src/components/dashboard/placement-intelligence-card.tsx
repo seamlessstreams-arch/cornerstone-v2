@@ -20,23 +20,23 @@ import { usePlacementStability } from "@/hooks/use-placement-stability";
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const STABILITY_COLOURS: Record<string, string> = {
-  excellent: "bg-green-100 text-green-700",
+  excellent: "bg-[--cs-success-bg] text-[--cs-success]",
   good: "bg-green-50 text-green-600",
-  moderate: "bg-amber-100 text-amber-700",
-  at_risk: "bg-red-100 text-red-700",
+  moderate: "bg-[--cs-warning-bg] text-[--cs-warning]",
+  at_risk: "bg-[--cs-risk-bg] text-[--cs-risk]",
   critical: "bg-red-600 text-white",
 };
 
 const DISRUPTION_STYLES: Record<string, string> = {
-  high: "border-red-200 bg-red-50 text-red-800",
-  medium: "border-amber-200 bg-amber-50 text-amber-800",
-  low: "border-blue-200 bg-blue-50 text-blue-800",
+  high: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const MOOD_ICON: Record<string, typeof TrendingUp> = {
@@ -95,13 +95,13 @@ export function PlacementIntelligenceCard() {
             <p className="text-[10px] text-muted-foreground">Children</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", m.average_stability_score >= 70 ? "bg-green-50" : m.average_stability_score >= 50 ? "bg-amber-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", m.average_stability_score >= 70 ? "text-green-600" : m.average_stability_score >= 50 ? "text-amber-600" : "text-red-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", m.average_stability_score >= 70 ? "text-[--cs-success]" : m.average_stability_score >= 50 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>
               {Math.round(m.average_stability_score)}
             </p>
             <p className="text-[10px] text-muted-foreground">Stability</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", m.children_at_risk === 0 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", m.children_at_risk === 0 ? "text-green-600" : "text-amber-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", m.children_at_risk === 0 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
               {m.children_at_risk}
             </p>
             <p className="text-[10px] text-muted-foreground">At Risk</p>

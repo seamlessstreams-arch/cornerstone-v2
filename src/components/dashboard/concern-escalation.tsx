@@ -117,7 +117,7 @@ export function ConcernEscalation() {
             Open Concerns
           </CardTitle>
           {concerns.length > 0 && (
-            <Badge className="bg-red-100 text-red-700 border-0 text-[10px] rounded-full animate-pulse">
+            <Badge className="bg-[--cs-risk-bg] text-[--cs-risk] border-0 text-[10px] rounded-full animate-pulse">
               {concerns.length} active
             </Badge>
           )}

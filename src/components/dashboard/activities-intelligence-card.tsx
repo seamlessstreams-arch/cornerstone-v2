@@ -119,13 +119,13 @@ export function ActivitiesIntelligenceCard({ childId }: ActivitiesIntelligenceCa
             <p className="text-[9px] text-[var(--cs-text-muted)]">Categories</p>
           </div>
           <div className="rounded-lg bg-gray-50 p-2">
-            <span className={cn("text-xs font-bold", data.communityRate >= 0.5 ? "text-emerald-600" : data.communityRate >= 0.3 ? "text-amber-600" : "text-red-600")}>
+            <span className={cn("text-xs font-bold", data.communityRate >= 0.5 ? "text-emerald-600" : data.communityRate >= 0.3 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>
               {Math.round(data.communityRate * 100)}%
             </span>
             <p className="text-[9px] text-[var(--cs-text-muted)]">Community</p>
           </div>
           <div className="rounded-lg bg-gray-50 p-2">
-            <span className={cn("text-xs font-bold", data.childChoiceRate >= 0.7 ? "text-emerald-600" : data.childChoiceRate >= 0.4 ? "text-amber-600" : "text-red-600")}>
+            <span className={cn("text-xs font-bold", data.childChoiceRate >= 0.7 ? "text-emerald-600" : data.childChoiceRate >= 0.4 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>
               {Math.round(data.childChoiceRate * 100)}%
             </span>
             <p className="text-[9px] text-[var(--cs-text-muted)]">Child Choice</p>
@@ -175,7 +175,7 @@ export function ActivitiesIntelligenceCard({ childId }: ActivitiesIntelligenceCa
                 )}>
                   <AlertTriangle className={cn(
                     "h-3.5 w-3.5 shrink-0 mt-0.5",
-                    isHigh ? "text-red-600" : "text-amber-600",
+                    isHigh ? "text-[--cs-risk]" : "text-[--cs-warning]",
                   )} />
                   <span className={isHigh ? "text-red-700" : "text-amber-700"}>
                     {concern.description}
@@ -194,8 +194,8 @@ export function ActivitiesIntelligenceCard({ childId }: ActivitiesIntelligenceCa
                 key={i}
                 className={cn(
                   "text-[9px]",
-                  flag.status === "not_met" ? "bg-red-100 text-red-700 border-red-200" :
-                  "bg-amber-100 text-amber-700 border-amber-200",
+                  flag.status === "not_met" ? "bg-[--cs-risk-bg] text-[--cs-risk] border-red-200" :
+                  "bg-[--cs-warning-bg] text-[--cs-warning] border-amber-200",
                 )}
                 title={flag.detail}
               >
@@ -222,7 +222,7 @@ export function ActivitiesIntelligenceCard({ childId }: ActivitiesIntelligenceCa
 // ── Sub-component ───────────────────────────────────────────────────────────
 
 function MiniScore({ label, score }: { label: string; score: number }) {
-  const color = score >= 75 ? "text-emerald-600" : score >= 50 ? "text-amber-600" : "text-red-600";
+  const color = score >= 75 ? "text-emerald-600" : score >= 50 ? "text-[--cs-warning]" : "text-[--cs-risk]";
   return (
     <div className="text-center">
       <span className={cn("text-sm font-bold", color)}>{score}</span>

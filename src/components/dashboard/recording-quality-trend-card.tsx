@@ -13,15 +13,15 @@ import { cn } from "@/lib/utils";
 import { useRecordingQualityTrend } from "@/hooks/use-recording-quality-trend";
 
 const TREND_META: Record<string, { icon: React.ReactNode; cls: string; label: string }> = {
-  improving: { icon: <TrendingUp className="h-3.5 w-3.5" />, cls: "text-green-600", label: "improving" },
-  declining: { icon: <TrendingDown className="h-3.5 w-3.5" />, cls: "text-red-600", label: "declining" },
+  improving: { icon: <TrendingUp className="h-3.5 w-3.5" />, cls: "text-[--cs-success]", label: "improving" },
+  declining: { icon: <TrendingDown className="h-3.5 w-3.5" />, cls: "text-[--cs-risk]", label: "declining" },
   stable: { icon: <Minus className="h-3.5 w-3.5" />, cls: "text-gray-500", label: "stable" },
   insufficient_data: { icon: <Minus className="h-3.5 w-3.5" />, cls: "text-gray-400", label: "—" },
 };
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 function barColor(v: number) { return v >= 85 ? "bg-green-400" : v >= 70 ? "bg-blue-400" : v >= 50 ? "bg-amber-400" : "bg-red-400"; }
 

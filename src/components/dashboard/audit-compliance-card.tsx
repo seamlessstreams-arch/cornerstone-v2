@@ -21,16 +21,16 @@ import { useAuditQualityIntelligence } from "@/hooks/use-audit-quality-intellige
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high: "border-red-200 bg-red-50 text-red-800",
-  medium: "border-amber-200 bg-amber-50 text-amber-800",
-  low: "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 function formatCategory(cat: string): string {
@@ -87,7 +87,7 @@ export function AuditComplianceCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.avg_compliance_score >= 85 ? "text-green-600" : o.avg_compliance_score >= 70 ? "text-amber-600" : "text-red-600",
+              o.avg_compliance_score >= 85 ? "text-[--cs-success]" : o.avg_compliance_score >= 70 ? "text-[--cs-warning]" : "text-[--cs-risk]",
             )}>
               {o.avg_compliance_score}%
             </p>
@@ -103,7 +103,7 @@ export function AuditComplianceCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.overdue_count === 0 ? "text-green-600" : "text-red-600",
+              o.overdue_count === 0 ? "text-[--cs-success]" : "text-[--cs-risk]",
             )}>
               {o.overdue_count}
             </p>
@@ -125,7 +125,7 @@ export function AuditComplianceCard() {
           <div>
             <p className={cn(
               "font-bold tabular-nums",
-              o.unresolved_findings === 0 ? "text-green-600" : "text-amber-600",
+              o.unresolved_findings === 0 ? "text-[--cs-success]" : "text-[--cs-warning]",
             )}>
               {o.unresolved_findings}
             </p>
@@ -188,16 +188,16 @@ export function AuditComplianceCard() {
                       {ap.status === "completed" ? (
                         <Badge className={cn(
                           "text-[9px]",
-                          ap.compliance_pct >= 85 ? "bg-green-100 text-green-700"
-                            : ap.compliance_pct >= 70 ? "bg-amber-100 text-amber-700"
-                            : "bg-red-100 text-red-700",
+                          ap.compliance_pct >= 85 ? "bg-[--cs-success-bg] text-[--cs-success]"
+                            : ap.compliance_pct >= 70 ? "bg-[--cs-warning-bg] text-[--cs-warning]"
+                            : "bg-[--cs-risk-bg] text-[--cs-risk]",
                         )}>
                           {ap.compliance_pct}%
                         </Badge>
                       ) : (
                         <Badge className={cn(
                           "text-[9px]",
-                          ap.is_overdue ? "bg-red-100 text-red-700" : "bg-blue-100 text-blue-700",
+                          ap.is_overdue ? "bg-[--cs-risk-bg] text-[--cs-risk]" : "bg-[--cs-info-bg] text-[--cs-info]",
                         )}>
                           {ap.is_overdue ? "Overdue" : ap.status === "scheduled" ? "Scheduled" : "In Progress"}
                         </Badge>
@@ -210,7 +210,7 @@ export function AuditComplianceCard() {
                     )}
                     <span className={cn(
                       "text-[10px]",
-                      ap.days_since_or_until < 0 && ap.status !== "completed" ? "text-red-600" : "",
+                      ap.days_since_or_until < 0 && ap.status !== "completed" ? "text-[--cs-risk]" : "",
                     )}>
                       {ap.days_since_or_until < 0
                         ? `${Math.abs(ap.days_since_or_until)}d ago`
@@ -227,7 +227,7 @@ export function AuditComplianceCard() {
                   {(ap.risk_flags?.length ?? 0) > 0 && (
                     <div className="flex flex-wrap gap-1 mt-1.5">
                       {(ap.risk_flags ?? []).slice(0, 3).map((flag, i) => (
-                        <Badge key={i} className="text-[9px] bg-red-100 text-red-700">
+                        <Badge key={i} className="text-[9px] bg-[--cs-risk-bg] text-[--cs-risk]">
                           <FileWarning className="h-2.5 w-2.5 mr-0.5" />
                           {flag.replace(/_/g, " ")}
                         </Badge>

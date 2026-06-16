@@ -29,15 +29,15 @@ const RATING_STYLES: Record<CulturalIdentityRating, { bg: string; text: string; 
 };
 
 const REC_STYLES: Record<string, string> = {
-  immediate: "border-red-200 bg-red-50 text-red-800",
-  soon: "border-amber-200 bg-amber-50 text-amber-800",
-  planned: "border-blue-200 bg-blue-50 text-blue-800",
+  immediate: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  soon: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  planned: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -83,7 +83,7 @@ export function HomeCulturalIdentityIntelligenceCard() {
       <CardHeader className={cn("pb-3", isAlert ? "bg-red-50" : "bg-slate-50/50")}>
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm flex items-center gap-2">
-            <Globe2 className={cn("h-4 w-4", isAlert ? "text-red-600" : "text-violet-500")} />
+            <Globe2 className={cn("h-4 w-4", isAlert ? "text-[--cs-risk]" : "text-violet-500")} />
             <span className="text-slate-900">Cultural Identity & Heritage</span>
             <span className={cn("text-[10px] font-bold px-2 py-0.5 rounded-full border", ratingStyle.bg, ratingStyle.text, ratingStyle.border)}>
               {ratingStyle.label}
@@ -106,8 +106,8 @@ export function HomeCulturalIdentityIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <BookOpen className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.identity_plans.child_coverage >= 90 ? "text-green-600" :
-                  d.identity_plans.child_coverage >= 70 ? "text-blue-600" : "text-red-600"
+                  d.identity_plans.child_coverage >= 90 ? "text-[--cs-success]" :
+                  d.identity_plans.child_coverage >= 70 ? "text-blue-600" : "text-[--cs-risk]"
                 )}>
                   {d.identity_plans.total_plans > 0 ? `${d.identity_plans.child_coverage}%` : "—"}
                 </p>
@@ -120,8 +120,8 @@ export function HomeCulturalIdentityIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Globe2 className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.cultural_visits.total_visits_90d >= 4 ? "text-green-600" :
-                  d.cultural_visits.total_visits_90d >= 2 ? "text-blue-600" : "text-amber-600"
+                  d.cultural_visits.total_visits_90d >= 4 ? "text-[--cs-success]" :
+                  d.cultural_visits.total_visits_90d >= 2 ? "text-blue-600" : "text-[--cs-warning]"
                 )}>
                   {d.cultural_visits.total_visits_90d}
                 </p>
@@ -134,8 +134,8 @@ export function HomeCulturalIdentityIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Church className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.religious_observance.child_coverage >= 80 ? "text-green-600" :
-                  d.religious_observance.child_coverage >= 50 ? "text-amber-600" : "text-slate-500"
+                  d.religious_observance.child_coverage >= 80 ? "text-[--cs-success]" :
+                  d.religious_observance.child_coverage >= 50 ? "text-[--cs-warning]" : "text-slate-500"
                 )}>
                   {d.religious_observance.total_records > 0 ? `${d.religious_observance.child_coverage}%` : "—"}
                 </p>
@@ -148,8 +148,8 @@ export function HomeCulturalIdentityIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Languages className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.heritage_language.home_support_rate >= 80 ? "text-green-600" :
-                  d.heritage_language.home_support_rate >= 50 ? "text-amber-600" : "text-slate-500"
+                  d.heritage_language.home_support_rate >= 80 ? "text-[--cs-success]" :
+                  d.heritage_language.home_support_rate >= 50 ? "text-[--cs-warning]" : "text-slate-500"
                 )}>
                   {d.heritage_language.total_records > 0 ? `${d.heritage_language.home_support_rate}%` : "—"}
                 </p>
@@ -167,7 +167,7 @@ export function HomeCulturalIdentityIntelligenceCard() {
               Strengths ({d.strengths.length})
             </p>
             {d.strengths.slice(0, 3).map((s, i) => (
-              <div key={i} className="rounded border border-green-200 bg-green-50 p-2.5 text-xs text-green-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-success-soft] bg-[--cs-success-bg] p-2.5 text-xs text-[--cs-success] leading-relaxed">
                 {s}
               </div>
             ))}
@@ -182,7 +182,7 @@ export function HomeCulturalIdentityIntelligenceCard() {
               Concerns ({d.concerns.length})
             </p>
             {d.concerns.slice(0, 3).map((c, i) => (
-              <div key={i} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs text-red-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs text-[--cs-risk] leading-relaxed">
                 {c}
               </div>
             ))}

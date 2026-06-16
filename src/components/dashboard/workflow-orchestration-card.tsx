@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils";
 import { useWorkflowOrchestration } from "@/hooks/use-workflow-orchestration";
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800", warning: "border-amber-200 bg-amber-50 text-amber-800", positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]", warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]", positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 const TYPE_LABEL: Record<string, string> = {
   create_approval_task: "Approval", create_task: "Task", create_debrief_task: "Debrief", suggest_keywork: "Key-work",
@@ -52,8 +52,8 @@ export function WorkflowOrchestrationCard() {
         <div className="grid grid-cols-4 gap-2">
           <div className="text-center rounded-lg bg-gray-50 p-2.5"><p className="text-lg font-bold tabular-nums">{o.rules_fired}</p><p className="text-[10px] text-muted-foreground">Fired</p></div>
           <div className="text-center rounded-lg bg-blue-50 p-2.5"><p className="text-lg font-bold tabular-nums text-blue-600">{o.actions_generated}</p><p className="text-[10px] text-muted-foreground">Actions</p></div>
-          <div className={cn("text-center rounded-lg p-2.5", o.notifications_drafted > 0 ? "bg-red-50" : "bg-gray-50")}><p className={cn("text-lg font-bold tabular-nums", o.notifications_drafted > 0 ? "text-red-600" : "text-gray-500")}>{o.notifications_drafted}</p><p className="text-[10px] text-muted-foreground">Notif drafts</p></div>
-          <div className={cn("text-center rounded-lg p-2.5", o.escalations_pending > 0 ? "bg-red-50" : "bg-green-50")}><p className={cn("text-lg font-bold tabular-nums", o.escalations_pending > 0 ? "text-red-600" : "text-green-600")}>{o.escalations_pending}</p><p className="text-[10px] text-muted-foreground">Escalating</p></div>
+          <div className={cn("text-center rounded-lg p-2.5", o.notifications_drafted > 0 ? "bg-red-50" : "bg-gray-50")}><p className={cn("text-lg font-bold tabular-nums", o.notifications_drafted > 0 ? "text-[--cs-risk]" : "text-gray-500")}>{o.notifications_drafted}</p><p className="text-[10px] text-muted-foreground">Notif drafts</p></div>
+          <div className={cn("text-center rounded-lg p-2.5", o.escalations_pending > 0 ? "bg-red-50" : "bg-green-50")}><p className={cn("text-lg font-bold tabular-nums", o.escalations_pending > 0 ? "text-[--cs-risk]" : "text-[--cs-success]")}>{o.escalations_pending}</p><p className="text-[10px] text-muted-foreground">Escalating</p></div>
         </div>
 
         {types.length > 0 && (

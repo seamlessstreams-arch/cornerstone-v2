@@ -19,22 +19,22 @@ import { useNightMonitoring } from "@/hooks/use-night-monitoring";
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high:     "border-red-200 bg-red-50 text-red-800",
-  medium:   "border-amber-200 bg-amber-50 text-amber-800",
-  low:      "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high:     "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium:   "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low:      "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const PATTERN_STYLES: Record<string, string> = {
-  settled:  "bg-green-100 text-green-700",
-  variable: "bg-amber-100 text-amber-700",
-  disturbed: "bg-red-100 text-red-700",
+  settled:  "bg-[--cs-success-bg] text-[--cs-success]",
+  variable: "bg-[--cs-warning-bg] text-[--cs-warning]",
+  disturbed: "bg-[--cs-risk-bg] text-[--cs-risk]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -83,7 +83,7 @@ export function SleepPatternIntelligenceCard() {
 
         <div className="grid grid-cols-4 gap-2">
           <div className={cn("text-center rounded-lg p-2.5", o.all_children_checked_rate >= 100 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.all_children_checked_rate >= 100 ? "text-green-600" : "text-amber-600")}>{o.all_children_checked_rate}%</p>
+            <p className={cn("text-lg font-bold tabular-nums", o.all_children_checked_rate >= 100 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{o.all_children_checked_rate}%</p>
             <p className="text-[10px] text-muted-foreground">Checks</p>
           </div>
           <div className="text-center rounded-lg bg-blue-50 p-2.5">
@@ -91,11 +91,11 @@ export function SleepPatternIntelligenceCard() {
             <p className="text-[10px] text-muted-foreground">Rounds/7d</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", o.concern_count_7d === 0 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.concern_count_7d === 0 ? "text-green-600" : "text-amber-600")}>{o.concern_count_7d}</p>
+            <p className={cn("text-lg font-bold tabular-nums", o.concern_count_7d === 0 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{o.concern_count_7d}</p>
             <p className="text-[10px] text-muted-foreground">Concerns</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", o.building_secure_rate >= 100 ? "bg-green-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.building_secure_rate >= 100 ? "text-green-600" : "text-red-600")}>{o.building_secure_rate}%</p>
+            <p className={cn("text-lg font-bold tabular-nums", o.building_secure_rate >= 100 ? "text-[--cs-success]" : "text-[--cs-risk]")}>{o.building_secure_rate}%</p>
             <p className="text-[10px] text-muted-foreground">Secure</p>
           </div>
         </div>
@@ -137,7 +137,7 @@ export function SleepPatternIntelligenceCard() {
           </p>
           <div className="grid grid-cols-3 gap-2 text-center text-xs">
             <div>
-              <p className={cn("font-bold tabular-nums", sec.overall_compliance_rate >= 100 ? "text-green-600" : "text-amber-600")}>
+              <p className={cn("font-bold tabular-nums", sec.overall_compliance_rate >= 100 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
                 {sec.overall_compliance_rate}%
               </p>
               <p className="text-[10px] text-muted-foreground">Compliance</p>
@@ -147,7 +147,7 @@ export function SleepPatternIntelligenceCard() {
               <p className="text-[10px] text-muted-foreground">Rounds</p>
             </div>
             <div>
-              <p className={cn("font-bold tabular-nums", sec.rounds_with_doors_locked === sec.total_rounds ? "text-green-600" : "text-red-600")}>
+              <p className={cn("font-bold tabular-nums", sec.rounds_with_doors_locked === sec.total_rounds ? "text-[--cs-success]" : "text-[--cs-risk]")}>
                 {sec.rounds_with_doors_locked}/{sec.total_rounds}
               </p>
               <p className="text-[10px] text-muted-foreground">Locked</p>

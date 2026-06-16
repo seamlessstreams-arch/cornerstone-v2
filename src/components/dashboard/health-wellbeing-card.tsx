@@ -98,25 +98,25 @@ export function HealthWellbeingCard() {
 
         <div className="grid grid-cols-4 gap-2">
           <div className={cn("text-center rounded-lg p-2", c.immunisation_up_to_date === c.total_children ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", c.immunisation_up_to_date === c.total_children ? "text-green-600" : "text-amber-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", c.immunisation_up_to_date === c.total_children ? "text-[--cs-success]" : "text-[--cs-warning]")}>
               {c.immunisation_up_to_date}/{c.total_children}
             </p>
             <p className="text-[10px] text-muted-foreground">Immunised</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", c.dental_up_to_date === c.total_children ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", c.dental_up_to_date === c.total_children ? "text-green-600" : "text-amber-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", c.dental_up_to_date === c.total_children ? "text-[--cs-success]" : "text-[--cs-warning]")}>
               {c.dental_up_to_date}/{c.total_children}
             </p>
             <p className="text-[10px] text-muted-foreground">Dental</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", c.health_assessment_current === c.total_children ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", c.health_assessment_current === c.total_children ? "text-green-600" : "text-amber-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", c.health_assessment_current === c.total_children ? "text-[--cs-success]" : "text-[--cs-warning]")}>
               {c.health_assessment_current}/{c.total_children}
             </p>
             <p className="text-[10px] text-muted-foreground">Health Assess.</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", intel.appointments.dna_rate <= 10 ? "bg-green-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", intel.appointments.dna_rate <= 10 ? "text-green-600" : "text-red-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", intel.appointments.dna_rate <= 10 ? "text-[--cs-success]" : "text-[--cs-risk]")}>
               {intel.appointments.dna_rate}%
             </p>
             <p className="text-[10px] text-muted-foreground">DNA Rate</p>
@@ -184,13 +184,13 @@ export function HealthWellbeingCard() {
                     )}
                   </div>
                   <div className="flex items-center gap-2 text-muted-foreground">
-                    <span className={child.dental_up_to_date ? "text-green-600" : "text-amber-600"}>
+                    <span className={child.dental_up_to_date ? "text-[--cs-success]" : "text-[--cs-warning]"}>
                       {child.dental_up_to_date ? "✓" : "✗"} Dental
                     </span>
-                    <span className={child.optician_up_to_date ? "text-green-600" : "text-amber-600"}>
+                    <span className={child.optician_up_to_date ? "text-[--cs-success]" : "text-[--cs-warning]"}>
                       {child.optician_up_to_date ? "✓" : "✗"} Optician
                     </span>
-                    <span className={child.immunisation_up_to_date ? "text-green-600" : "text-amber-600"}>
+                    <span className={child.immunisation_up_to_date ? "text-[--cs-success]" : "text-[--cs-warning]"}>
                       {child.immunisation_up_to_date ? "✓" : "✗"} Immunised
                     </span>
                   </div>

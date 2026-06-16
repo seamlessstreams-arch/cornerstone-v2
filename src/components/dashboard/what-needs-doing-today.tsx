@@ -440,10 +440,10 @@ export function WhatNeedsDoingToday({
                         <span className={cn(
                           "inline-flex items-center gap-1 rounded-lg px-2 py-1 text-[11px] font-medium transition-colors",
                           urgency === "urgent"
-                            ? "bg-red-100 text-red-700 hover:bg-red-200"
+                            ? "bg-[--cs-risk-bg] text-[--cs-risk] hover:bg-red-200"
                             : urgency === "due_today"
-                              ? "bg-amber-100 text-amber-700 hover:bg-amber-200"
-                              : "bg-blue-100 text-blue-700 hover:bg-blue-200",
+                              ? "bg-[--cs-warning-bg] text-[--cs-warning] hover:bg-amber-200"
+                              : "bg-[--cs-info-bg] text-[--cs-info] hover:bg-blue-200",
                         )}>
                           {item.actionLabel}
                           <ChevronRight className="h-3 w-3" />

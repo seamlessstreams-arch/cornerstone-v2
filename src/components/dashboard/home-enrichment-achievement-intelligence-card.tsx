@@ -28,15 +28,15 @@ const RATING_STYLES: Record<EnrichmentRating, { bg: string; text: string; border
 };
 
 const REC_STYLES: Record<string, string> = {
-  immediate: "border-red-200 bg-red-50 text-red-800",
-  soon: "border-amber-200 bg-amber-50 text-amber-800",
-  planned: "border-blue-200 bg-blue-50 text-blue-800",
+  immediate: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  soon: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  planned: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -82,7 +82,7 @@ export function HomeEnrichmentAchievementIntelligenceCard() {
       <CardHeader className={cn("pb-3", isAlert ? "bg-red-50" : "bg-slate-50/50")}>
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm flex items-center gap-2">
-            <Trophy className={cn("h-4 w-4", isAlert ? "text-red-600" : "text-yellow-500")} />
+            <Trophy className={cn("h-4 w-4", isAlert ? "text-[--cs-risk]" : "text-yellow-500")} />
             <span className="text-slate-900">Enrichment & Achievement</span>
             <span className={cn("text-[10px] font-bold px-2 py-0.5 rounded-full border", ratingStyle.bg, ratingStyle.text, ratingStyle.border)}>
               {ratingStyle.label}
@@ -105,8 +105,8 @@ export function HomeEnrichmentAchievementIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Palette className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.creative_projects.child_coverage >= 80 ? "text-green-600" :
-                  d.creative_projects.child_coverage >= 50 ? "text-blue-600" : "text-red-600"
+                  d.creative_projects.child_coverage >= 80 ? "text-[--cs-success]" :
+                  d.creative_projects.child_coverage >= 50 ? "text-blue-600" : "text-[--cs-risk]"
                 )}>
                   {d.creative_projects.total_projects > 0 ? `${d.creative_projects.child_coverage}%` : "—"}
                 </p>
@@ -119,8 +119,8 @@ export function HomeEnrichmentAchievementIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Users2 className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.clubs.child_coverage >= 80 ? "text-green-600" :
-                  d.clubs.child_coverage >= 50 ? "text-blue-600" : "text-red-600"
+                  d.clubs.child_coverage >= 80 ? "text-[--cs-success]" :
+                  d.clubs.child_coverage >= 50 ? "text-blue-600" : "text-[--cs-risk]"
                 )}>
                   {d.clubs.total_clubs > 0 ? `${d.clubs.child_coverage}%` : "—"}
                 </p>
@@ -133,8 +133,8 @@ export function HomeEnrichmentAchievementIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Star className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.achievements.total_achievements_90d >= 5 ? "text-green-600" :
-                  d.achievements.total_achievements_90d >= 2 ? "text-blue-600" : "text-amber-600"
+                  d.achievements.total_achievements_90d >= 5 ? "text-[--cs-success]" :
+                  d.achievements.total_achievements_90d >= 2 ? "text-blue-600" : "text-[--cs-warning]"
                 )}>
                   {d.achievements.total_achievements_90d}
                 </p>
@@ -147,8 +147,8 @@ export function HomeEnrichmentAchievementIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Trophy className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.reward_sanctions.reward_ratio >= 70 ? "text-green-600" :
-                  d.reward_sanctions.reward_ratio >= 50 ? "text-amber-600" : "text-red-600"
+                  d.reward_sanctions.reward_ratio >= 70 ? "text-[--cs-success]" :
+                  d.reward_sanctions.reward_ratio >= 50 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.reward_sanctions.total_90d > 0 ? `${d.reward_sanctions.reward_ratio}%` : "—"}
                 </p>
@@ -166,7 +166,7 @@ export function HomeEnrichmentAchievementIntelligenceCard() {
               Strengths ({d.strengths.length})
             </p>
             {d.strengths.slice(0, 3).map((s, i) => (
-              <div key={i} className="rounded border border-green-200 bg-green-50 p-2.5 text-xs text-green-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-success-soft] bg-[--cs-success-bg] p-2.5 text-xs text-[--cs-success] leading-relaxed">
                 {s}
               </div>
             ))}
@@ -181,7 +181,7 @@ export function HomeEnrichmentAchievementIntelligenceCard() {
               Concerns ({d.concerns.length})
             </p>
             {d.concerns.slice(0, 3).map((c, i) => (
-              <div key={i} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs text-red-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs text-[--cs-risk] leading-relaxed">
                 {c}
               </div>
             ))}

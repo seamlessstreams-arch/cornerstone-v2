@@ -19,15 +19,15 @@ import { cn } from "@/lib/utils";
 import { useIntegrationHub } from "@/hooks/use-integration-hub";
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high: "border-red-200 bg-red-50 text-red-800",
-  medium: "border-amber-200 bg-amber-50 text-amber-800",
-  low: "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 const STATUS_STYLES: Record<string, { bg: string; text: string }> = {
   connected: { bg: "bg-green-100", text: "text-green-700" },
@@ -104,7 +104,7 @@ export function IntegrationHubCard() {
             <p className="text-[10px] text-[var(--cs-text-muted)]">Connected</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", o.errors > 0 ? "bg-red-50" : "bg-gray-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.errors > 0 ? "text-red-600" : "text-gray-500")}>{o.errors}</p>
+            <p className={cn("text-lg font-bold tabular-nums", o.errors > 0 ? "text-[--cs-risk]" : "text-gray-500")}>{o.errors}</p>
             <p className="text-[10px] text-[var(--cs-text-muted)]">Errors</p>
           </div>
         </div>
@@ -113,7 +113,7 @@ export function IntegrationHubCard() {
         <div className="flex items-center gap-2 rounded-lg border p-2.5 text-xs">
           <Lock className="h-3.5 w-3.5 text-brand shrink-0" />
           <span className="text-[var(--cs-text-muted)]">Secure credentials, retries, idempotency &amp; audit on every adapter</span>
-          <Badge className="text-[9px] bg-gray-100 text-gray-600 ml-auto shrink-0">{o.not_configured} to set up</Badge>
+          <Badge className="text-[9px] bg-[--cs-bg] text-[--cs-text-secondary] ml-auto shrink-0">{o.not_configured} to set up</Badge>
         </div>
 
         {/* ── Adapter list with status chips ───────────────────────────── */}

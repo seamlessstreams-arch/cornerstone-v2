@@ -19,16 +19,16 @@ import { usePoliciesIntelligence } from "@/hooks/use-policies-intelligence";
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high:     "border-red-200 bg-red-50 text-red-800",
-  medium:   "border-amber-200 bg-amber-50 text-amber-800",
-  low:      "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high:     "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium:   "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low:      "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -85,7 +85,7 @@ export function PoliciesRegisterCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.overdue_reviews === 0 ? "text-green-600" : "text-red-600",
+              o.overdue_reviews === 0 ? "text-[--cs-success]" : "text-[--cs-risk]",
             )}>
               {o.overdue_reviews}
             </p>
@@ -97,7 +97,7 @@ export function PoliciesRegisterCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.acknowledgement_rate >= 95 ? "text-green-600" : o.acknowledgement_rate >= 80 ? "text-amber-600" : "text-red-600",
+              o.acknowledgement_rate >= 95 ? "text-[--cs-success]" : o.acknowledgement_rate >= 80 ? "text-[--cs-warning]" : "text-[--cs-risk]",
             )}>
               {o.acknowledgement_rate}%
             </p>
@@ -109,7 +109,7 @@ export function PoliciesRegisterCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.categories_covered >= o.total_categories_required ? "text-green-600" : "text-amber-600",
+              o.categories_covered >= o.total_categories_required ? "text-[--cs-success]" : "text-[--cs-warning]",
             )}>
               {o.categories_covered}/{o.total_categories_required}
             </p>
@@ -131,11 +131,11 @@ export function PoliciesRegisterCard() {
                   <span className="truncate flex-1 text-[11px]">{c.category_label}</span>
                   <div className="flex items-center gap-1 ml-1">
                     {c.overdue_count > 0 ? (
-                      <Badge className="text-[9px] bg-red-100 text-red-700 px-1">{c.overdue_count} due</Badge>
+                      <Badge className="text-[9px] bg-[--cs-risk-bg] text-[--cs-risk] px-1">{c.overdue_count} due</Badge>
                     ) : c.has_coverage ? (
                       <CheckCircle className="h-3 w-3 text-green-500" />
                     ) : (
-                      <Badge className="text-[9px] bg-red-100 text-red-700 px-1">Missing</Badge>
+                      <Badge className="text-[9px] bg-[--cs-risk-bg] text-[--cs-risk] px-1">Missing</Badge>
                     )}
                   </div>
                 </div>
@@ -153,10 +153,10 @@ export function PoliciesRegisterCard() {
               Overdue Reviews
             </p>
             {intel.overdue_policies.slice(0, 3).map((p) => (
-              <div key={p.policy_id} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs space-y-1">
+              <div key={p.policy_id} className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs space-y-1">
                 <div className="flex items-center justify-between">
-                  <span className="font-semibold text-red-800">{p.title}</span>
-                  <Badge className="text-[10px] bg-red-100 text-red-700">{p.days_overdue}d overdue</Badge>
+                  <span className="font-semibold text-[--cs-risk]">{p.title}</span>
+                  <Badge className="text-[10px] bg-[--cs-risk-bg] text-[--cs-risk]">{p.days_overdue}d overdue</Badge>
                 </div>
                 <p className="text-red-700 text-[10px]">
                   Owner: {p.owner_name}
@@ -176,7 +176,7 @@ export function PoliciesRegisterCard() {
           <div>
             <p className={cn(
               "font-bold tabular-nums",
-              o.due_within_30_days > 0 ? "text-amber-600" : "text-green-600",
+              o.due_within_30_days > 0 ? "text-[--cs-warning]" : "text-[--cs-success]",
             )}>
               {o.due_within_30_days}
             </p>

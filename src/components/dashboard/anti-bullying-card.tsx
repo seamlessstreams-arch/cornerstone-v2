@@ -16,9 +16,9 @@ import { cn } from "@/lib/utils";
 import { useSafeguardingIntelligence } from "@/hooks/use-safeguarding-intelligence";
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 export function AntiBullyingCard() {
@@ -60,11 +60,11 @@ export function AntiBullyingCard() {
             <p className="text-[10px] text-muted-foreground">Incidents 90d</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", (profile?.child_count_affected ?? 0) > 0 ? "bg-amber-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", (profile?.child_count_affected ?? 0) > 0 ? "text-amber-600" : "text-green-600")}>{profile?.child_count_affected ?? 0}</p>
+            <p className={cn("text-lg font-bold tabular-nums", (profile?.child_count_affected ?? 0) > 0 ? "text-[--cs-warning]" : "text-[--cs-success]")}>{profile?.child_count_affected ?? 0}</p>
             <p className="text-[10px] text-muted-foreground">Children</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", (profile?.escalation_rate ?? 0) > 20 ? "bg-red-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", (profile?.escalation_rate ?? 0) > 20 ? "text-red-600" : "text-green-600")}>{profile?.escalation_rate ?? 0}%</p>
+            <p className={cn("text-lg font-bold tabular-nums", (profile?.escalation_rate ?? 0) > 20 ? "text-[--cs-risk]" : "text-[--cs-success]")}>{profile?.escalation_rate ?? 0}%</p>
             <p className="text-[10px] text-muted-foreground">Escalation</p>
           </div>
           <div className="text-center rounded-lg bg-emerald-50 p-2">

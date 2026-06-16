@@ -29,15 +29,15 @@ const RATING_STYLES: Record<DailyLogRating, { bg: string; text: string; border: 
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const REC_STYLES: Record<string, string> = {
-  immediate: "border-red-200 bg-red-50 text-red-800",
-  soon: "border-amber-200 bg-amber-50 text-amber-800",
-  planned: "border-blue-200 bg-blue-50 text-blue-800",
+  immediate: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  soon: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  planned: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -83,7 +83,7 @@ export function HomeDailyLogIntelligenceCard() {
       <CardHeader className={cn("pb-3", isAlert ? "bg-red-50" : "bg-slate-50/50")}>
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm flex items-center gap-2">
-            <BookOpen className={cn("h-4 w-4", isAlert ? "text-red-600" : "text-cyan-500")} />
+            <BookOpen className={cn("h-4 w-4", isAlert ? "text-[--cs-risk]" : "text-cyan-500")} />
             <span className="text-slate-900">Daily Log Quality</span>
             <span className={cn("text-[10px] font-bold px-2 py-0.5 rounded-full border", ratingStyle.bg, ratingStyle.text, ratingStyle.border)}>
               {ratingStyle.label}
@@ -106,8 +106,8 @@ export function HomeDailyLogIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <BookOpen className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.frequency.total_entries_14d >= 30 ? "text-green-600" :
-                  d.frequency.total_entries_14d >= 15 ? "text-blue-600" : "text-red-600"
+                  d.frequency.total_entries_14d >= 30 ? "text-[--cs-success]" :
+                  d.frequency.total_entries_14d >= 15 ? "text-blue-600" : "text-[--cs-risk]"
                 )}>
                   {d.frequency.total_entries_14d}
                 </p>
@@ -120,8 +120,8 @@ export function HomeDailyLogIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <CalendarDays className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.frequency.days_with_entries_14d >= 12 ? "text-green-600" :
-                  d.frequency.days_with_entries_14d >= 8 ? "text-amber-600" : "text-red-600"
+                  d.frequency.days_with_entries_14d >= 12 ? "text-[--cs-success]" :
+                  d.frequency.days_with_entries_14d >= 8 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.frequency.days_with_entries_14d}/14
                 </p>
@@ -134,8 +134,8 @@ export function HomeDailyLogIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <SmilePlus className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.mood.avg_mood_score >= 7 ? "text-green-600" :
-                  d.mood.avg_mood_score >= 5 ? "text-amber-600" : "text-red-600"
+                  d.mood.avg_mood_score >= 7 ? "text-[--cs-success]" :
+                  d.mood.avg_mood_score >= 5 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.mood.avg_mood_score || "—"}
                 </p>
@@ -148,8 +148,8 @@ export function HomeDailyLogIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Users className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.staff.staff_participation_rate >= 70 ? "text-green-600" :
-                  d.staff.staff_participation_rate >= 40 ? "text-amber-600" : "text-red-600"
+                  d.staff.staff_participation_rate >= 70 ? "text-[--cs-success]" :
+                  d.staff.staff_participation_rate >= 40 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.staff.unique_staff_14d}
                 </p>
@@ -168,7 +168,7 @@ export function HomeDailyLogIntelligenceCard() {
                 <p>Per child/day: <span className="font-medium text-slate-600">{d.frequency.entries_per_child_per_day_avg}</span></p>
                 <p>Types used: <span className="font-medium text-slate-600">{d.entry_types.types_used.length}/{d.entry_types.types_used.length + d.entry_types.types_missing.length}</span></p>
                 <p>Mood tracked: <span className={cn("font-medium",
-                  d.mood.mood_tracking_rate >= 80 ? "text-green-600" : "text-amber-600"
+                  d.mood.mood_tracking_rate >= 80 ? "text-[--cs-success]" : "text-[--cs-warning]"
                 )}>{d.mood.mood_tracking_rate}%</span></p>
                 <p>Significant: <span className="font-medium text-slate-600">{d.quality.significant_entries}</span></p>
               </div>
@@ -177,11 +177,11 @@ export function HomeDailyLogIntelligenceCard() {
               <p className="font-medium text-slate-700 mb-1">Coverage</p>
               <div className="space-y-0.5 text-[10px] text-muted-foreground">
                 <p>Children: <span className={cn("font-medium",
-                  d.child_coverage.child_coverage_rate >= 100 ? "text-green-600" : "text-amber-600"
+                  d.child_coverage.child_coverage_rate >= 100 ? "text-[--cs-success]" : "text-[--cs-warning]"
                 )}>{d.child_coverage.children_with_entries_14d}/{d.child_coverage.children_with_entries_14d + d.child_coverage.children_without}</span></p>
                 <p>Low mood: <span className={cn("font-medium",
-                  d.mood.low_mood_count === 0 ? "text-green-600" :
-                  d.mood.low_mood_count <= 3 ? "text-amber-600" : "text-red-600"
+                  d.mood.low_mood_count === 0 ? "text-[--cs-success]" :
+                  d.mood.low_mood_count <= 3 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>{d.mood.low_mood_count}</span></p>
                 <p>High mood: <span className="font-medium text-green-600">{d.mood.high_mood_count}</span></p>
                 <p>Avg length: <span className="font-medium text-slate-600">{d.quality.avg_content_length}</span></p>
@@ -198,7 +198,7 @@ export function HomeDailyLogIntelligenceCard() {
               Strengths ({d.strengths.length})
             </p>
             {d.strengths.slice(0, 3).map((s, i) => (
-              <div key={i} className="rounded border border-green-200 bg-green-50 p-2.5 text-xs text-green-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-success-soft] bg-[--cs-success-bg] p-2.5 text-xs text-[--cs-success] leading-relaxed">
                 {s}
               </div>
             ))}
@@ -213,7 +213,7 @@ export function HomeDailyLogIntelligenceCard() {
               Concerns ({d.concerns.length})
             </p>
             {d.concerns.slice(0, 3).map((c, i) => (
-              <div key={i} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs text-red-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs text-[--cs-risk] leading-relaxed">
                 {c}
               </div>
             ))}

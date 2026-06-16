@@ -25,15 +25,15 @@ const RATING_STYLES: Record<SafeguardingDepthRating, { bg: string; text: string;
 };
 
 const REC_STYLES: Record<string, string> = {
-  immediate: "border-red-200 bg-red-50 text-red-800",
-  soon: "border-amber-200 bg-amber-50 text-amber-800",
-  planned: "border-blue-200 bg-blue-50 text-blue-800",
+  immediate: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  soon: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  planned: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 export function HomeSafeguardingDepthIntelligenceCard() {
@@ -77,7 +77,7 @@ export function HomeSafeguardingDepthIntelligenceCard() {
       <CardHeader className={cn("pb-3", isAlert ? "bg-red-50" : "bg-slate-50/50")}>
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm flex items-center gap-2">
-            <ShieldAlert className={cn("h-4 w-4", isAlert ? "text-red-600" : "text-red-600")} />
+            <ShieldAlert className={cn("h-4 w-4", isAlert ? "text-[--cs-risk]" : "text-[--cs-risk]")} />
             <span className="text-slate-900">Safeguarding Depth</span>
             <span className={cn("text-[10px] font-bold px-2 py-0.5 rounded-full border", ratingStyle.bg, ratingStyle.text, ratingStyle.border)}>
               {ratingStyle.label}
@@ -96,8 +96,8 @@ export function HomeSafeguardingDepthIntelligenceCard() {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
             <div className="text-center rounded-lg bg-slate-50 p-2">
               <p className={cn("text-lg font-bold tabular-nums",
-                d.body_maps.manager_reviewed_rate >= 90 ? "text-green-600" :
-                d.body_maps.manager_reviewed_rate >= 50 ? "text-blue-600" : "text-red-600"
+                d.body_maps.manager_reviewed_rate >= 90 ? "text-[--cs-success]" :
+                d.body_maps.manager_reviewed_rate >= 50 ? "text-blue-600" : "text-[--cs-risk]"
               )}>
                 {d.body_maps.total > 0 ? `${d.body_maps.manager_reviewed_rate}%` : "—"}
               </p>
@@ -105,8 +105,8 @@ export function HomeSafeguardingDepthIntelligenceCard() {
             </div>
             <div className="text-center rounded-lg bg-slate-50 p-2">
               <p className={cn("text-lg font-bold tabular-nums",
-                d.disclosures.response_within_1h_rate >= 90 ? "text-green-600" :
-                d.disclosures.response_within_1h_rate >= 50 ? "text-blue-600" : "text-red-600"
+                d.disclosures.response_within_1h_rate >= 90 ? "text-[--cs-success]" :
+                d.disclosures.response_within_1h_rate >= 50 ? "text-blue-600" : "text-[--cs-risk]"
               )}>
                 {d.disclosures.total > 0 ? `${d.disclosures.response_within_1h_rate}%` : "—"}
               </p>
@@ -114,8 +114,8 @@ export function HomeSafeguardingDepthIntelligenceCard() {
             </div>
             <div className="text-center rounded-lg bg-slate-50 p-2">
               <p className={cn("text-lg font-bold tabular-nums",
-                d.lado.referred_timely_rate >= 90 ? "text-green-600" :
-                d.lado.referred_timely_rate >= 50 ? "text-blue-600" : "text-red-600"
+                d.lado.referred_timely_rate >= 90 ? "text-[--cs-success]" :
+                d.lado.referred_timely_rate >= 50 ? "text-blue-600" : "text-[--cs-risk]"
               )}>
                 {d.lado.total > 0 ? `${d.lado.referred_timely_rate}%` : "—"}
               </p>
@@ -123,8 +123,8 @@ export function HomeSafeguardingDepthIntelligenceCard() {
             </div>
             <div className="text-center rounded-lg bg-slate-50 p-2">
               <p className={cn("text-lg font-bold tabular-nums",
-                d.supervision.staff_coverage >= 80 ? "text-green-600" :
-                d.supervision.staff_coverage >= 50 ? "text-blue-600" : "text-red-600"
+                d.supervision.staff_coverage >= 80 ? "text-[--cs-success]" :
+                d.supervision.staff_coverage >= 50 ? "text-blue-600" : "text-[--cs-risk]"
               )}>
                 {d.supervision.total_sessions > 0 ? `${d.supervision.staff_coverage}%` : "—"}
               </p>
@@ -139,7 +139,7 @@ export function HomeSafeguardingDepthIntelligenceCard() {
               <Sparkles className="h-3 w-3" /> Strengths ({d.strengths.length})
             </p>
             {d.strengths.slice(0, 3).map((s, i) => (
-              <div key={i} className="rounded border border-green-200 bg-green-50 p-2.5 text-xs text-green-800 leading-relaxed">{s}</div>
+              <div key={i} className="rounded border border-[--cs-success-soft] bg-[--cs-success-bg] p-2.5 text-xs text-[--cs-success] leading-relaxed">{s}</div>
             ))}
           </div>
         )}
@@ -150,7 +150,7 @@ export function HomeSafeguardingDepthIntelligenceCard() {
               <AlertCircle className="h-3 w-3" /> Concerns ({d.concerns.length})
             </p>
             {d.concerns.slice(0, 3).map((c, i) => (
-              <div key={i} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs text-red-800 leading-relaxed">{c}</div>
+              <div key={i} className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs text-[--cs-risk] leading-relaxed">{c}</div>
             ))}
           </div>
         )}

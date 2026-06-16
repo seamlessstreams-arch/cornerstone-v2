@@ -19,9 +19,9 @@ import { useWorkforceIntelligence } from "@/hooks/use-workforce-intelligence";
 // ── Insight styling ──────────────────────────────────────────────────────────
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ────────────────────────────────────────────────────────────────
@@ -77,7 +77,7 @@ export function StaffRetentionExitAnalysisCard() {
             <p className="text-[10px] text-muted-foreground">Active</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", p.bank_agency === 0 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", p.bank_agency === 0 ? "text-green-600" : "text-amber-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", p.bank_agency === 0 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
               {p.bank_agency}
             </p>
             <p className="text-[10px] text-muted-foreground">Bank/Agency</p>

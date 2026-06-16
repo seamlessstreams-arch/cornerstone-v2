@@ -97,7 +97,7 @@ export function StaffDevelopmentPlanCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.appraisal_completion_rate >= 80 ? "text-green-600" : o.appraisal_completion_rate >= 50 ? "text-amber-600" : "text-red-600",
+              o.appraisal_completion_rate >= 80 ? "text-[--cs-success]" : o.appraisal_completion_rate >= 50 ? "text-[--cs-warning]" : "text-[--cs-risk]",
             )}>
               {o.appraisal_completion_rate}%
             </p>
@@ -109,7 +109,7 @@ export function StaffDevelopmentPlanCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.mandatory_qual_compliance_rate >= 80 ? "text-green-600" : o.mandatory_qual_compliance_rate >= 50 ? "text-amber-600" : "text-red-600",
+              o.mandatory_qual_compliance_rate >= 80 ? "text-[--cs-success]" : o.mandatory_qual_compliance_rate >= 50 ? "text-[--cs-warning]" : "text-[--cs-risk]",
             )}>
               {o.mandatory_qual_compliance_rate}%
             </p>
@@ -121,7 +121,7 @@ export function StaffDevelopmentPlanCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.appraisals_overdue === 0 ? "text-green-600" : "text-red-600",
+              o.appraisals_overdue === 0 ? "text-[--cs-success]" : "text-[--cs-risk]",
             )}>
               {o.appraisals_overdue}
             </p>
@@ -141,7 +141,7 @@ export function StaffDevelopmentPlanCard() {
             <p className="text-[10px] text-muted-foreground">Avg Readiness</p>
           </div>
           <div>
-            <p className={cn("font-bold tabular-nums", o.qualifications_expiring_soon > 0 ? "text-amber-600" : "text-green-600")}>
+            <p className={cn("font-bold tabular-nums", o.qualifications_expiring_soon > 0 ? "text-[--cs-warning]" : "text-[--cs-success]")}>
               {o.qualifications_expiring_soon}
             </p>
             <p className="text-[10px] text-muted-foreground">Quals Expiring</p>

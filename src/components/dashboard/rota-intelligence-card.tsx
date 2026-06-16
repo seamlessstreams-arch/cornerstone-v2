@@ -19,16 +19,16 @@ import { useRotaIntelligence } from "@/hooks/use-rota-intelligence";
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high:     "border-red-200 bg-red-50 text-red-800",
-  medium:   "border-amber-200 bg-amber-50 text-amber-800",
-  low:      "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high:     "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium:   "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low:      "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -87,7 +87,7 @@ export function RotaIntelligenceCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.completion_rate >= 95 ? "text-green-600" : o.completion_rate >= 85 ? "text-amber-600" : "text-red-600",
+              o.completion_rate >= 95 ? "text-[--cs-success]" : o.completion_rate >= 85 ? "text-[--cs-warning]" : "text-[--cs-risk]",
             )}>
               {o.completion_rate}%
             </p>
@@ -99,7 +99,7 @@ export function RotaIntelligenceCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.open_shifts_7_days === 0 ? "text-green-600" : "text-amber-600",
+              o.open_shifts_7_days === 0 ? "text-[--cs-success]" : "text-[--cs-warning]",
             )}>
               {o.open_shifts_7_days}
             </p>
@@ -125,12 +125,12 @@ export function RotaIntelligenceCard() {
               {intel.shift_coverage.map((sc) => (
                 <div key={sc.shift_type} className={cn(
                   "rounded-lg border p-2 text-xs flex items-center justify-between",
-                  sc.is_covered ? "border-green-200" : "border-red-200 bg-red-50",
+                  sc.is_covered ? "border-green-200" : "border-[--cs-risk-soft] bg-[--cs-risk-bg]",
                 )}>
                   <span className="text-muted-foreground">{sc.shift_label}</span>
                   <Badge className={cn(
                     "text-[10px]",
-                    sc.is_covered ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700",
+                    sc.is_covered ? "bg-[--cs-success-bg] text-[--cs-success]" : "bg-[--cs-risk-bg] text-[--cs-risk]",
                   )}>
                     {sc.staff_count} staff
                   </Badge>
@@ -151,12 +151,12 @@ export function RotaIntelligenceCard() {
                 <div className="flex items-center gap-2">
                   <span className={cn(
                     "tabular-nums font-bold",
-                    sh.exceeds_48h ? "text-red-600" : "text-slate-600",
+                    sh.exceeds_48h ? "text-[--cs-risk]" : "text-slate-600",
                   )}>
                     {Math.round(sh.hours_this_week)}h
                   </span>
                   {sh.exceeds_48h && (
-                    <Badge className="text-[10px] bg-red-100 text-red-700">&gt;48h</Badge>
+                    <Badge className="text-[10px] bg-[--cs-risk-bg] text-[--cs-risk]">&gt;48h</Badge>
                   )}
                   {sh.overtime_this_week > 0 && !sh.exceeds_48h && (
                     <Badge variant="outline" className="text-[10px] tabular-nums">
@@ -178,7 +178,7 @@ export function RotaIntelligenceCard() {
               Upcoming Gaps
             </p>
             {intel.upcoming_gaps.slice(0, 3).map((gap, i) => (
-              <div key={i} className="rounded-lg border border-amber-200 bg-amber-50 p-2.5 text-xs flex items-center justify-between">
+              <div key={i} className="rounded-lg border border-[--cs-warning-soft] bg-[--cs-warning-bg] p-2.5 text-xs flex items-center justify-between">
                 <div>
                   <span className="font-medium">{gap.date}</span>
                   <span className="text-muted-foreground ml-2">{gap.shift_label}</span>

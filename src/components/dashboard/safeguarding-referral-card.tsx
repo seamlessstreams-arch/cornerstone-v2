@@ -17,9 +17,9 @@ import { useSafeguardingIntelligence } from "@/hooks/use-safeguarding-intelligen
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -74,15 +74,15 @@ export function SafeguardingReferralCard() {
             <p className="text-[10px] text-muted-foreground">Incidents 90d</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", p.safeguarding_incidents_90d === 0 ? "bg-green-50" : p.safeguarding_incidents_90d <= 3 ? "bg-amber-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", p.safeguarding_incidents_90d === 0 ? "text-green-600" : p.safeguarding_incidents_90d <= 3 ? "text-amber-600" : "text-red-600")}>{p.safeguarding_incidents_90d}</p>
+            <p className={cn("text-lg font-bold tabular-nums", p.safeguarding_incidents_90d === 0 ? "text-[--cs-success]" : p.safeguarding_incidents_90d <= 3 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>{p.safeguarding_incidents_90d}</p>
             <p className="text-[10px] text-muted-foreground">SG Referrals</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", p.open_incidents === 0 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", p.open_incidents === 0 ? "text-green-600" : "text-amber-600")}>{p.open_incidents}</p>
+            <p className={cn("text-lg font-bold tabular-nums", p.open_incidents === 0 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{p.open_incidents}</p>
             <p className="text-[10px] text-muted-foreground">Open</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", p.incidents_needing_oversight === 0 ? "bg-green-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", p.incidents_needing_oversight === 0 ? "text-green-600" : "text-red-600")}>{p.incidents_needing_oversight}</p>
+            <p className={cn("text-lg font-bold tabular-nums", p.incidents_needing_oversight === 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>{p.incidents_needing_oversight}</p>
             <p className="text-[10px] text-muted-foreground">Need Oversight</p>
           </div>
         </div>
@@ -93,19 +93,19 @@ export function SafeguardingReferralCard() {
           <p className="text-xs font-semibold text-muted-foreground">Incident & Risk Detail</p>
           <div className="grid grid-cols-4 gap-2 text-center">
             <div>
-              <p className={cn("text-sm font-bold tabular-nums", m.children_with_episodes === 0 ? "text-green-600" : "text-amber-600")}>{m.children_with_episodes}</p>
+              <p className={cn("text-sm font-bold tabular-nums", m.children_with_episodes === 0 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{m.children_with_episodes}</p>
               <p className="text-[10px] text-muted-foreground">Children</p>
             </div>
             <div>
-              <p className={cn("text-sm font-bold tabular-nums", ra.high_or_very_high === 0 ? "text-green-600" : "text-red-600")}>{ra.high_or_very_high}</p>
+              <p className={cn("text-sm font-bold tabular-nums", ra.high_or_very_high === 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>{ra.high_or_very_high}</p>
               <p className="text-[10px] text-muted-foreground">High Risk</p>
             </div>
             <div>
-              <p className={cn("text-sm font-bold tabular-nums", ra.overdue_reviews === 0 ? "text-green-600" : "text-red-600")}>{ra.overdue_reviews}</p>
+              <p className={cn("text-sm font-bold tabular-nums", ra.overdue_reviews === 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>{ra.overdue_reviews}</p>
               <p className="text-[10px] text-muted-foreground">Overdue</p>
             </div>
             <div>
-              <p className={cn("text-sm font-bold tabular-nums", ra.worsening_trend === 0 ? "text-green-600" : "text-red-600")}>{ra.worsening_trend}</p>
+              <p className={cn("text-sm font-bold tabular-nums", ra.worsening_trend === 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>{ra.worsening_trend}</p>
               <p className="text-[10px] text-muted-foreground">Worsening</p>
             </div>
           </div>
@@ -117,15 +117,15 @@ export function SafeguardingReferralCard() {
           <p className="text-xs font-semibold text-muted-foreground">Compliance</p>
           <div className="grid grid-cols-3 gap-2 text-center">
             <div>
-              <p className={cn("text-sm font-bold tabular-nums", r.debrief_completion_rate >= 100 ? "text-green-600" : r.debrief_completion_rate >= 80 ? "text-amber-600" : "text-red-600")}>{r.debrief_completion_rate}%</p>
+              <p className={cn("text-sm font-bold tabular-nums", r.debrief_completion_rate >= 100 ? "text-[--cs-success]" : r.debrief_completion_rate >= 80 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>{r.debrief_completion_rate}%</p>
               <p className="text-[10px] text-muted-foreground">Debrief Rate</p>
             </div>
             <div>
-              <p className={cn("text-sm font-bold tabular-nums", r.review_completion_rate >= 100 ? "text-green-600" : r.review_completion_rate >= 80 ? "text-amber-600" : "text-red-600")}>{r.review_completion_rate}%</p>
+              <p className={cn("text-sm font-bold tabular-nums", r.review_completion_rate >= 100 ? "text-[--cs-success]" : r.review_completion_rate >= 80 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>{r.review_completion_rate}%</p>
               <p className="text-[10px] text-muted-foreground">Review Done</p>
             </div>
             <div>
-              <p className={cn("text-sm font-bold tabular-nums", m.return_interview_rate >= 100 ? "text-green-600" : m.return_interview_rate >= 80 ? "text-amber-600" : "text-red-600")}>{m.return_interview_rate}%</p>
+              <p className={cn("text-sm font-bold tabular-nums", m.return_interview_rate >= 100 ? "text-[--cs-success]" : m.return_interview_rate >= 80 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>{m.return_interview_rate}%</p>
               <p className="text-[10px] text-muted-foreground">RI Rate</p>
             </div>
           </div>

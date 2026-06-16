@@ -20,16 +20,16 @@ import { useEmergencyIntelligence } from "@/hooks/use-emergency-intelligence";
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high:     "border-red-200 bg-red-50 text-red-800",
-  medium:   "border-amber-200 bg-amber-50 text-amber-800",
-  low:      "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high:     "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium:   "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low:      "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -85,7 +85,7 @@ export function HomeFireRiskAssessmentCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              pc.coverage_rate >= 90 ? "text-green-600" : "text-amber-600",
+              pc.coverage_rate >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]",
             )}>
               {pc.coverage_rate}%
             </p>
@@ -103,7 +103,7 @@ export function HomeFireRiskAssessmentCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              pc.plans_review_due > 0 ? "text-amber-600" : "text-green-600",
+              pc.plans_review_due > 0 ? "text-[--cs-warning]" : "text-[--cs-success]",
             )}>
               {pc.plans_review_due}
             </p>
@@ -130,7 +130,7 @@ export function HomeFireRiskAssessmentCard() {
               <p className="text-[10px] text-muted-foreground">Types Required</p>
             </div>
             <div>
-              <p className={cn("font-bold tabular-nums", pc.plan_types_covered >= pc.plan_types_required ? "text-green-600" : "text-amber-600")}>{pc.plan_types_covered}</p>
+              <p className={cn("font-bold tabular-nums", pc.plan_types_covered >= pc.plan_types_required ? "text-[--cs-success]" : "text-[--cs-warning]")}>{pc.plan_types_covered}</p>
               <p className="text-[10px] text-muted-foreground">Types Covered</p>
             </div>
           </div>
@@ -152,7 +152,7 @@ export function HomeFireRiskAssessmentCard() {
                 </div>
                 <div className="flex items-center gap-1.5 ml-2">
                   {dt.is_overdue ? (
-                    <Badge className="text-[10px] bg-red-100 text-red-700">Overdue</Badge>
+                    <Badge className="text-[10px] bg-[--cs-risk-bg] text-[--cs-risk]">Overdue</Badge>
                   ) : (
                     <Badge variant="outline" className="text-[10px] text-green-700 bg-green-50 border-green-200">On track</Badge>
                   )}

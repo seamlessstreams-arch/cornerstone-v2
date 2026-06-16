@@ -185,8 +185,8 @@ export function ApprovalQueueCard({ homeId }: { homeId?: string }) {
           </div>
           <span className={cn(
             "text-sm font-bold",
-            compliance.qaPassRate >= 80 ? "text-green-600" :
-            compliance.qaPassRate >= 60 ? "text-amber-600" : "text-red-600",
+            compliance.qaPassRate >= 80 ? "text-[--cs-success]" :
+            compliance.qaPassRate >= 60 ? "text-[--cs-warning]" : "text-[--cs-risk]",
           )}>
             {compliance.qaPassRate}%
           </span>
@@ -235,9 +235,9 @@ export function ApprovalQueueCard({ homeId }: { homeId?: string }) {
 // ── Sub-components ─────────────────────────────────────────────────────────
 
 function ComplianceBadge({ rate }: { rate: number }) {
-  const color = rate >= 90 ? "bg-green-100 text-green-700" :
-                rate >= 75 ? "bg-amber-100 text-amber-700" :
-                "bg-red-100 text-red-700";
+  const color = rate >= 90 ? "bg-[--cs-success-bg] text-[--cs-success]" :
+                rate >= 75 ? "bg-[--cs-warning-bg] text-[--cs-warning]" :
+                "bg-[--cs-risk-bg] text-[--cs-risk]";
   return (
     <span className={cn("px-2.5 py-0.5 rounded-full text-xs font-bold", color)}>
       {rate}% Compliant
@@ -260,7 +260,7 @@ function MetricCell({
     <div className={cn("p-3 text-center", alert && "bg-red-50")}>
       <div className="flex items-center justify-center gap-1">
         {icon}
-        <span className={cn("text-lg font-bold", alert && "text-red-600")}>
+        <span className={cn("text-lg font-bold", alert && "text-[--cs-risk]")}>
           {value}
         </span>
       </div>
@@ -270,9 +270,9 @@ function MetricCell({
 }
 
 function PendingRow({ item }: { item: PendingItem }) {
-  const levelColor = item.approvalLevel >= 2 ? "bg-purple-100 text-purple-700" :
-                     item.approvalLevel === 1 ? "bg-blue-100 text-blue-700" :
-                     "bg-gray-100 text-gray-600";
+  const levelColor = item.approvalLevel >= 2 ? "bg-[--cs-oversight-bg] text-[--cs-oversight]" :
+                     item.approvalLevel === 1 ? "bg-[--cs-info-bg] text-[--cs-info]" :
+                     "bg-[--cs-bg] text-[--cs-text-secondary]";
   const statusLabel = item.status === "submitted" ? "Needs Check" :
                       item.status === "checked" ? "Needs Approval" :
                       "Resubmitted";
@@ -294,8 +294,8 @@ function PendingRow({ item }: { item: PendingItem }) {
 }
 
 function OverdueRow({ item }: { item: OverdueItem }) {
-  const severity = item.escalationLevel >= 2 ? "text-red-700 bg-red-100" :
-                   item.escalationLevel === 1 ? "text-amber-700 bg-amber-100" :
+  const severity = item.escalationLevel >= 2 ? "bg-[--cs-risk-bg] text-[--cs-risk]" :
+                   item.escalationLevel === 1 ? "bg-[--cs-warning-bg] text-[--cs-warning]" :
                    "text-gray-700 bg-gray-100";
   const statusLabel = item.status === "escalated" ? "ESCALATED" :
                       item.status === "missed" ? "MISSED" : "OVERDUE";

@@ -19,16 +19,16 @@ import { useWhistleblowingIntelligence } from "@/hooks/use-whistleblowing-intell
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high:     "border-red-200 bg-red-50 text-red-800",
-  medium:   "border-amber-200 bg-amber-50 text-amber-800",
-  low:      "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high:     "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium:   "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low:      "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -87,7 +87,7 @@ export function WhistleblowingCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.open_reports === 0 ? "text-green-600" : "text-amber-600",
+              o.open_reports === 0 ? "text-[--cs-success]" : "text-[--cs-warning]",
             )}>
               {o.open_reports}
             </p>
@@ -105,7 +105,7 @@ export function WhistleblowingCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.protection_measures_rate >= 90 ? "text-green-600" : o.protection_measures_rate >= 70 ? "text-amber-600" : "text-red-600",
+              o.protection_measures_rate >= 90 ? "text-[--cs-success]" : o.protection_measures_rate >= 70 ? "text-[--cs-warning]" : "text-[--cs-risk]",
             )}>
               {o.protection_measures_rate}%
             </p>
@@ -127,7 +127,7 @@ export function WhistleblowingCard() {
                 <div className="flex items-center gap-1.5 ml-2">
                   <Badge variant="outline" className="text-[10px] tabular-nums">{c.count}</Badge>
                   {c.open_count > 0 && (
-                    <Badge className="text-[10px] bg-amber-100 text-amber-700">{c.open_count} open</Badge>
+                    <Badge className="text-[10px] bg-[--cs-warning-bg] text-[--cs-warning]">{c.open_count} open</Badge>
                   )}
                 </div>
               </div>
@@ -144,14 +144,14 @@ export function WhistleblowingCard() {
               Active Investigations
             </p>
             {intel.open_cases.slice(0, 3).map((c) => (
-              <div key={c.case_id} className="rounded border border-amber-200 bg-amber-50 p-2.5 text-xs space-y-1">
+              <div key={c.case_id} className="rounded border border-[--cs-warning-soft] bg-[--cs-warning-bg] p-2.5 text-xs space-y-1">
                 <div className="flex items-center justify-between">
-                  <span className="font-semibold text-amber-800">{c.category_label}</span>
+                  <span className="font-semibold text-[--cs-warning]">{c.category_label}</span>
                   <Badge className={cn(
                     "text-[10px]",
                     c.severity === "critical" || c.severity === "high"
-                      ? "bg-red-100 text-red-700"
-                      : "bg-amber-100 text-amber-700",
+                      ? "bg-[--cs-risk-bg] text-[--cs-risk]"
+                      : "bg-[--cs-warning-bg] text-[--cs-warning]",
                   )}>
                     {c.severity}
                   </Badge>
@@ -176,7 +176,7 @@ export function WhistleblowingCard() {
             <div>
               <p className={cn(
                 "font-bold tabular-nums",
-                o.lessons_recorded_rate >= 90 ? "text-green-600" : "text-amber-600",
+                o.lessons_recorded_rate >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]",
               )}>
                 {o.lessons_recorded_rate}%
               </p>

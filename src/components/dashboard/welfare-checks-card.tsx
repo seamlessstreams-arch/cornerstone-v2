@@ -121,7 +121,7 @@ export function WelfareChecksCard() {
             <span className="text-[var(--cs-text-muted)]">Today&apos;s Rounds</span>
             <span className={cn(
               "font-bold tabular-nums",
-              completionPct >= 100 ? "text-emerald-600" : completionPct >= 66 ? "text-cyan-600" : "text-amber-600",
+              completionPct >= 100 ? "text-emerald-600" : completionPct >= 66 ? "text-cyan-600" : "text-[--cs-warning]",
             )}>
               {todayRounds}/3 target
             </span>

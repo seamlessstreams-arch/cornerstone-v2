@@ -30,15 +30,15 @@ const RATING_STYLES: Record<MedicationGovernanceRating, { bg: string; text: stri
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const REC_STYLES: Record<string, string> = {
-  immediate: "border-red-200 bg-red-50 text-red-800",
-  soon: "border-amber-200 bg-amber-50 text-amber-800",
-  planned: "border-blue-200 bg-blue-50 text-blue-800",
+  immediate: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  soon: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  planned: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -84,7 +84,7 @@ export function HomeMedicationGovernanceIntelligenceCard() {
       <CardHeader className={cn("pb-3", isAlert ? "bg-red-50" : "bg-slate-50/50")}>
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm flex items-center gap-2">
-            <Pill className={cn("h-4 w-4", isAlert ? "text-red-600" : "text-rose-500")} />
+            <Pill className={cn("h-4 w-4", isAlert ? "text-[--cs-risk]" : "text-rose-500")} />
             <span className="text-slate-900">Medication Governance</span>
             <span className={cn("text-[10px] font-bold px-2 py-0.5 rounded-full border", ratingStyle.bg, ratingStyle.text, ratingStyle.border)}>
               {ratingStyle.label}
@@ -107,8 +107,8 @@ export function HomeMedicationGovernanceIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <ClipboardCheck className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.audit.pass_rate >= 90 ? "text-green-600" :
-                  d.audit.pass_rate >= 75 ? "text-amber-600" : "text-red-600"
+                  d.audit.pass_rate >= 90 ? "text-[--cs-success]" :
+                  d.audit.pass_rate >= 75 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.audit.total_audits > 0 ? `${d.audit.pass_rate}%` : "—"}
                 </p>
@@ -121,8 +121,8 @@ export function HomeMedicationGovernanceIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Thermometer className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.storage.pass_rate >= 90 ? "text-green-600" :
-                  d.storage.pass_rate >= 70 ? "text-amber-600" : "text-red-600"
+                  d.storage.pass_rate >= 90 ? "text-[--cs-success]" :
+                  d.storage.pass_rate >= 70 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.storage.total_audits > 0 ? `${d.storage.pass_rate}%` : "—"}
                 </p>
@@ -135,8 +135,8 @@ export function HomeMedicationGovernanceIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <ShieldCheck className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.stock.balanced_rate >= 90 ? "text-green-600" :
-                  d.stock.balanced_rate >= 75 ? "text-amber-600" : "text-red-600"
+                  d.stock.balanced_rate >= 90 ? "text-[--cs-success]" :
+                  d.stock.balanced_rate >= 75 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.stock.total_checks > 0 ? `${d.stock.balanced_rate}%` : "—"}
                 </p>
@@ -149,8 +149,8 @@ export function HomeMedicationGovernanceIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Siren className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.errors.total_errors === 0 ? "text-green-600" :
-                  d.errors.major_harm_count === 0 ? "text-amber-600" : "text-red-600"
+                  d.errors.total_errors === 0 ? "text-[--cs-success]" :
+                  d.errors.major_harm_count === 0 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.errors.total_errors}
                 </p>
@@ -167,14 +167,14 @@ export function HomeMedicationGovernanceIntelligenceCard() {
               <p className="font-medium text-slate-700 mb-1">Audits & Errors</p>
               <div className="space-y-0.5 text-[10px] text-muted-foreground">
                 <p>Audits: <span className="font-medium text-slate-600">{d.audit.total_audits}</span> ({d.audit.pass_count} pass, {d.audit.fail_count} fail)</p>
-                <p>Errors: <span className={cn("font-medium", d.errors.total_errors === 0 ? "text-green-600" : "text-red-600")}>{d.errors.total_errors}</span>
+                <p>Errors: <span className={cn("font-medium", d.errors.total_errors === 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>{d.errors.total_errors}</span>
                   {d.errors.total_errors > 0 && <span> ({d.errors.open_investigations} open)</span>}
                 </p>
                 <p>Near misses: <span className="font-medium text-slate-600">{d.nearMisses.total_near_misses}</span>
-                  {d.nearMisses.high_critical_count > 0 && <span className="text-red-600"> ({d.nearMisses.high_critical_count} high/crit)</span>}
+                  {d.nearMisses.high_critical_count > 0 && <span className="text-[--cs-risk]"> ({d.nearMisses.high_critical_count} high/crit)</span>}
                 </p>
                 <p>Debrief rate: <span className={cn("font-medium",
-                  d.errors.debrief_rate >= 90 ? "text-green-600" : d.errors.debrief_rate >= 70 ? "text-amber-600" : "text-red-600"
+                  d.errors.debrief_rate >= 90 ? "text-[--cs-success]" : d.errors.debrief_rate >= 70 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>{d.errors.total_errors > 0 ? `${d.errors.debrief_rate}%` : "—"}</span></p>
               </div>
             </div>
@@ -183,14 +183,14 @@ export function HomeMedicationGovernanceIntelligenceCard() {
               <div className="space-y-0.5 text-[10px] text-muted-foreground">
                 <p>Stock checks: <span className="font-medium text-slate-600">{d.stock.total_checks}</span> ({d.stock.balanced_count} balanced)</p>
                 <p>Storage audits: <span className="font-medium text-slate-600">{d.storage.total_audits}</span>
-                  {d.storage.fail_count > 0 && <span className="text-red-600"> ({d.storage.fail_count} fail)</span>}
+                  {d.storage.fail_count > 0 && <span className="text-[--cs-risk]"> ({d.storage.fail_count} fail)</span>}
                 </p>
                 <p>Emergency protocols: <span className="font-medium text-slate-600">{d.emergencyProtocols.total_protocols}</span>
-                  {d.emergencyProtocols.overdue_reviews > 0 && <span className="text-red-600"> ({d.emergencyProtocols.overdue_reviews} overdue)</span>}
+                  {d.emergencyProtocols.overdue_reviews > 0 && <span className="text-[--cs-risk]"> ({d.emergencyProtocols.overdue_reviews} overdue)</span>}
                 </p>
                 <p>CD governance: <span className={cn("font-medium",
-                  d.storage.controlled_drugs_correct_rate >= 100 ? "text-green-600" :
-                  d.storage.controlled_drugs_correct_rate >= 90 ? "text-amber-600" : "text-red-600"
+                  d.storage.controlled_drugs_correct_rate >= 100 ? "text-[--cs-success]" :
+                  d.storage.controlled_drugs_correct_rate >= 90 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>{d.storage.total_audits > 0 ? `${d.storage.controlled_drugs_correct_rate}%` : "—"}</span></p>
               </div>
             </div>
@@ -205,7 +205,7 @@ export function HomeMedicationGovernanceIntelligenceCard() {
               Strengths ({d.strengths.length})
             </p>
             {d.strengths.slice(0, 3).map((s, i) => (
-              <div key={i} className="rounded border border-green-200 bg-green-50 p-2.5 text-xs text-green-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-success-soft] bg-[--cs-success-bg] p-2.5 text-xs text-[--cs-success] leading-relaxed">
                 {s}
               </div>
             ))}
@@ -220,7 +220,7 @@ export function HomeMedicationGovernanceIntelligenceCard() {
               Concerns ({d.concerns.length})
             </p>
             {d.concerns.slice(0, 3).map((c, i) => (
-              <div key={i} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs text-red-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs text-[--cs-risk] leading-relaxed">
                 {c}
               </div>
             ))}

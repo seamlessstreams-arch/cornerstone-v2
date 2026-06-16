@@ -19,16 +19,16 @@ import { useContactEngagement } from "@/hooks/use-contact-engagement";
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high:     "border-red-200 bg-red-50 text-red-800",
-  medium:   "border-amber-200 bg-amber-50 text-amber-800",
-  low:      "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high:     "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium:   "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low:      "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -85,11 +85,11 @@ export function FamilyEngagementCard() {
             <p className="text-[10px] text-muted-foreground">Sibling</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", c.overall_completion_rate >= 90 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", c.overall_completion_rate >= 90 ? "text-green-600" : "text-amber-600")}>{c.overall_completion_rate}%</p>
+            <p className={cn("text-lg font-bold tabular-nums", c.overall_completion_rate >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{c.overall_completion_rate}%</p>
             <p className="text-[10px] text-muted-foreground">Completion</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", ft.concern_sessions === 0 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", ft.concern_sessions === 0 ? "text-green-600" : "text-amber-600")}>{ft.concern_sessions}</p>
+            <p className={cn("text-lg font-bold tabular-nums", ft.concern_sessions === 0 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{ft.concern_sessions}</p>
             <p className="text-[10px] text-muted-foreground">Concerns</p>
           </div>
         </div>
@@ -124,8 +124,8 @@ export function FamilyEngagementCard() {
                   <span className="text-[10px] text-muted-foreground">{cp.sessions_30d} sessions/30d</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  {!cp.has_active_plan && <Badge className="text-[9px] bg-red-100 text-red-700">no plan</Badge>}
-                  {!cp.plan_review_current && cp.has_active_plan && <Badge className="text-[9px] bg-amber-100 text-amber-700">review due</Badge>}
+                  {!cp.has_active_plan && <Badge className="text-[9px] bg-[--cs-risk-bg] text-[--cs-risk]">no plan</Badge>}
+                  {!cp.plan_review_current && cp.has_active_plan && <Badge className="text-[9px] bg-[--cs-warning-bg] text-[--cs-warning]">review due</Badge>}
                 </div>
               </div>
             ))}

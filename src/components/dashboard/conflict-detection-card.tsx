@@ -15,16 +15,16 @@ import { cn } from "@/lib/utils";
 import { useConflictDetection } from "@/hooks/use-conflict-detection";
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const SEV_BADGE: Record<string, string> = {
-  critical: "bg-red-100 text-red-700 border-red-200",
-  high: "bg-orange-100 text-orange-700 border-orange-200",
-  medium: "bg-amber-100 text-amber-700 border-amber-200",
-  low: "bg-gray-100 text-gray-600 border-gray-200",
+  critical: "bg-[--cs-risk-bg] text-[--cs-risk] border-red-200",
+  high: "bg-[--cs-warning-soft] text-[--cs-warning] border-orange-200",
+  medium: "bg-[--cs-warning-bg] text-[--cs-warning] border-amber-200",
+  low: "bg-[--cs-bg] text-[--cs-text-secondary] border-gray-200",
 };
 
 const CATEGORY_LABEL: Record<string, string> = {
@@ -83,11 +83,11 @@ export function ConflictDetectionCard() {
             <p className="text-[10px] text-[var(--cs-text-muted)]">Events</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", clean ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", clean ? "text-green-600" : "text-amber-600")}>{o.conflicts_found}</p>
+            <p className={cn("text-lg font-bold tabular-nums", clean ? "text-[--cs-success]" : "text-[--cs-warning]")}>{o.conflicts_found}</p>
             <p className="text-[10px] text-[var(--cs-text-muted)]">Conflicts</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", o.critical_or_high > 0 ? "bg-red-50" : "bg-gray-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.critical_or_high > 0 ? "text-red-600" : "text-gray-500")}>{o.critical_or_high}</p>
+            <p className={cn("text-lg font-bold tabular-nums", o.critical_or_high > 0 ? "text-[--cs-risk]" : "text-gray-500")}>{o.critical_or_high}</p>
             <p className="text-[10px] text-[var(--cs-text-muted)]">High/Critical</p>
           </div>
         </div>
@@ -111,7 +111,7 @@ export function ConflictDetectionCard() {
             ))}
           </div>
         ) : (
-          <div className="rounded-lg border border-green-200 bg-green-50/50 p-2.5 text-xs text-green-700 flex items-start gap-1.5">
+          <div className="rounded-lg border border-[--cs-success-soft] bg-[--cs-success-bg]/50 p-2.5 text-xs text-green-700 flex items-start gap-1.5">
             <CheckCircle2 className="h-3.5 w-3.5 mt-0.5 shrink-0" />
             No contradictions — the record is internally consistent.
           </div>

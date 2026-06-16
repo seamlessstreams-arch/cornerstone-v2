@@ -29,15 +29,15 @@ const RATING_STYLES: Record<Reg44Rating, { bg: string; text: string; border: str
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const REC_STYLES: Record<string, string> = {
-  immediate: "border-red-200 bg-red-50 text-red-800",
-  soon: "border-amber-200 bg-amber-50 text-amber-800",
-  planned: "border-blue-200 bg-blue-50 text-blue-800",
+  immediate: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  soon: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  planned: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -85,7 +85,7 @@ export function HomeReg44IntelligenceCard() {
       <CardHeader className={cn("pb-3", isAlert ? "bg-red-50" : "bg-slate-50/50")}>
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm flex items-center gap-2">
-            <UserCheck className={cn("h-4 w-4", isAlert ? "text-red-600" : "text-teal-500")} />
+            <UserCheck className={cn("h-4 w-4", isAlert ? "text-[--cs-risk]" : "text-teal-500")} />
             <span className="text-slate-900">Reg 44 Visits</span>
             <span className={cn("text-[10px] font-bold px-2 py-0.5 rounded-full border", ratingStyle.bg, ratingStyle.text, ratingStyle.border)}>
               {ratingStyle.label}
@@ -108,8 +108,8 @@ export function HomeReg44IntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <CalendarCheck className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.visit_frequency_profile.total_visits_12m >= 12 ? "text-green-600" :
-                  d.visit_frequency_profile.total_visits_12m >= 10 ? "text-amber-600" : "text-red-600"
+                  d.visit_frequency_profile.total_visits_12m >= 12 ? "text-[--cs-success]" :
+                  d.visit_frequency_profile.total_visits_12m >= 10 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.visit_frequency_profile.total_visits_12m}/12
                 </p>
@@ -122,8 +122,8 @@ export function HomeReg44IntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <CheckCircle className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.recommendation_profile.completion_rate >= 80 ? "text-green-600" :
-                  d.recommendation_profile.completion_rate >= 60 ? "text-amber-600" : "text-red-600"
+                  d.recommendation_profile.completion_rate >= 80 ? "text-[--cs-success]" :
+                  d.recommendation_profile.completion_rate >= 60 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.recommendation_profile.completion_rate}%
                 </p>
@@ -136,8 +136,8 @@ export function HomeReg44IntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <ClipboardList className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.quality_profile.ofsted_notification_rate === 100 ? "text-green-600" :
-                  d.quality_profile.ofsted_notification_rate >= 80 ? "text-amber-600" : "text-red-600"
+                  d.quality_profile.ofsted_notification_rate === 100 ? "text-[--cs-success]" :
+                  d.quality_profile.ofsted_notification_rate >= 80 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.quality_profile.ofsted_notification_rate}%
                 </p>
@@ -150,8 +150,8 @@ export function HomeReg44IntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <TrendingUp className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.quality_profile.judgement_trend === "improving" ? "text-green-600" :
-                  d.quality_profile.judgement_trend === "stable" ? "text-blue-600" : "text-red-600"
+                  d.quality_profile.judgement_trend === "improving" ? "text-[--cs-success]" :
+                  d.quality_profile.judgement_trend === "stable" ? "text-blue-600" : "text-[--cs-risk]"
                 )}>
                   {d.quality_profile.judgement_trend === "improving" ? "↑" :
                    d.quality_profile.judgement_trend === "declining" ? "↓" : "→"}
@@ -169,8 +169,8 @@ export function HomeReg44IntelligenceCard() {
               <p className="font-medium text-slate-700 mb-1">Frequency</p>
               <div className="space-y-0.5 text-[10px] text-muted-foreground">
                 <p>Last 90d: <span className="font-medium text-slate-600">{d.visit_frequency_profile.visits_90d} visits</span></p>
-                <p>Largest gap: <span className={cn("font-medium", d.visit_frequency_profile.gap_days_largest <= 35 ? "text-green-600" : "text-amber-600")}>{d.visit_frequency_profile.gap_days_largest}d</span></p>
-                <p>Monthly: <span className={cn("font-medium", d.visit_frequency_profile.monthly_compliance ? "text-green-600" : "text-red-600")}>{d.visit_frequency_profile.monthly_compliance ? "Yes" : "No"}</span></p>
+                <p>Largest gap: <span className={cn("font-medium", d.visit_frequency_profile.gap_days_largest <= 35 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{d.visit_frequency_profile.gap_days_largest}d</span></p>
+                <p>Monthly: <span className={cn("font-medium", d.visit_frequency_profile.monthly_compliance ? "text-[--cs-success]" : "text-[--cs-risk]")}>{d.visit_frequency_profile.monthly_compliance ? "Yes" : "No"}</span></p>
               </div>
             </div>
             <div className="rounded border p-2 text-xs">
@@ -197,7 +197,7 @@ export function HomeReg44IntelligenceCard() {
             <p className="font-medium text-slate-700 mb-1">Visit Quality</p>
             <div className="grid grid-cols-3 gap-2 text-[10px] text-muted-foreground">
               <p>Duration: <span className="font-medium text-slate-600">{d.quality_profile.avg_duration_hours}h avg</span></p>
-              <p>Children: <span className={cn("font-medium", d.quality_profile.child_voice_every_visit ? "text-green-600" : "text-amber-600")}>{d.quality_profile.avg_children_spoken_pct}%</span></p>
+              <p>Children: <span className={cn("font-medium", d.quality_profile.child_voice_every_visit ? "text-[--cs-success]" : "text-[--cs-warning]")}>{d.quality_profile.avg_children_spoken_pct}%</span></p>
               <p>Records: <span className="font-medium text-slate-600">{d.quality_profile.avg_records_reviewed} avg</span></p>
             </div>
           </div>
@@ -211,7 +211,7 @@ export function HomeReg44IntelligenceCard() {
               Strengths ({d.strengths.length})
             </p>
             {d.strengths.slice(0, 3).map((s, i) => (
-              <div key={i} className="rounded border border-green-200 bg-green-50 p-2.5 text-xs text-green-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-success-soft] bg-[--cs-success-bg] p-2.5 text-xs text-[--cs-success] leading-relaxed">
                 {s}
               </div>
             ))}
@@ -226,7 +226,7 @@ export function HomeReg44IntelligenceCard() {
               Concerns ({d.concerns.length})
             </p>
             {d.concerns.slice(0, 3).map((c, i) => (
-              <div key={i} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs text-red-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs text-[--cs-risk] leading-relaxed">
                 {c}
               </div>
             ))}

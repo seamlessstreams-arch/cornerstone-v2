@@ -40,7 +40,7 @@ function useGovernanceScore() {
 }
 
 const CATEGORY_CONFIG = [
-  { key: "safeguarding" as const,  label: "Safeguarding", icon: Shield,    colour: "text-red-600" },
+  { key: "safeguarding" as const,  label: "Safeguarding", icon: Shield,    colour: "text-[--cs-risk]" },
   { key: "workforce" as const,     label: "Workforce",    icon: Users,     colour: "text-blue-600" },
   { key: "care_quality" as const,  label: "Care Quality", icon: Heart,     colour: "text-[var(--cs-cara-gold)]" },
   { key: "governance" as const,    label: "Governance",   icon: FileCheck, colour: "text-emerald-600" },
@@ -48,9 +48,9 @@ const CATEGORY_CONFIG = [
 
 const RISK_COLOUR: Record<string, string> = {
   low:      "text-emerald-700 bg-emerald-100",
-  medium:   "text-amber-700 bg-amber-100",
+  medium:   "bg-[--cs-warning-bg] text-[--cs-warning]",
   high:     "text-orange-700 bg-orange-100",
-  critical: "text-red-700 bg-red-100",
+  critical: "bg-[--cs-risk-bg] text-[--cs-risk]",
 };
 
 export function GovernanceScore() {
@@ -78,7 +78,7 @@ export function GovernanceScore() {
   if (!meta) return null;
 
   const overall = meta.overall;
-  const overallColour = overall >= 80 ? "text-emerald-600" : overall >= 65 ? "text-amber-600" : "text-red-600";
+  const overallColour = overall >= 80 ? "text-emerald-600" : overall >= 65 ? "text-[--cs-warning]" : "text-[--cs-risk]";
   const barColour     = overall >= 80 ? "bg-emerald-400" : overall >= 65 ? "bg-amber-400" : "bg-red-400";
 
   return (
@@ -136,7 +136,7 @@ export function GovernanceScore() {
         {CATEGORY_CONFIG.map(({ key, label, icon: Icon, colour }) => {
           const score = meta.categories[key];
           const catBar = score >= 80 ? "bg-emerald-400" : score >= 65 ? "bg-amber-300" : "bg-red-400";
-          const catText = score >= 80 ? "text-emerald-600" : score >= 65 ? "text-amber-600" : "text-red-600";
+          const catText = score >= 80 ? "text-emerald-600" : score >= 65 ? "text-[--cs-warning]" : "text-[--cs-risk]";
           return (
             <Link key={key} href="/ri/scorecard">
               <div className="flex items-center gap-2 rounded-lg px-1.5 py-1 hover:bg-[var(--cs-surface)] transition-colors">

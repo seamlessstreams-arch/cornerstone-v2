@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils";
 
 const DEPTH_BADGE = {
   brief: { label: "Up to date", color: "bg-emerald-100 text-emerald-700" },
-  standard: { label: "Catch up", color: "bg-blue-100 text-blue-700" },
+  standard: { label: "Catch up", color: "bg-[--cs-info-bg] text-[--cs-info]" },
   comprehensive: { label: "Extended catch up", color: "bg-[var(--cs-cara-gold-bg)] text-[var(--cs-cara-gold)]" },
 };
 

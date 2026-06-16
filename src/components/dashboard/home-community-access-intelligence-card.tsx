@@ -29,21 +29,21 @@ const RATING_STYLES: Record<CommunityAccessRating, { bg: string; text: string; b
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const REC_STYLES: Record<string, string> = {
-  immediate: "border-red-200 bg-red-50 text-red-800",
-  soon: "border-amber-200 bg-amber-50 text-amber-800",
-  planned: "border-blue-200 bg-blue-50 text-blue-800",
+  immediate: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  soon: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  planned: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 function scoreColor(score: number): string {
-  if (score >= 65) return "text-green-600";
-  if (score >= 45) return "text-amber-600";
-  return "text-red-600";
+  if (score >= 65) return "text-[--cs-success]";
+  if (score >= 45) return "text-[--cs-warning]";
+  return "text-[--cs-risk]";
 }
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -176,7 +176,7 @@ export function HomeCommunityAccessIntelligenceCard() {
 
         {/* Independent Travel Detail */}
         {d.independent_travel.total_records > 0 && (
-          <div className="rounded border border-purple-200 bg-purple-50 p-2 text-xs">
+          <div className="rounded border border-[--cs-oversight-soft] bg-[--cs-oversight-bg] p-2 text-xs">
             <p className="font-medium text-purple-700 flex items-center gap-1 mb-1.5">
               <Route className="h-3 w-3" />
               Independent Travel
@@ -206,7 +206,7 @@ export function HomeCommunityAccessIntelligenceCard() {
               Strengths ({d.strengths.length})
             </p>
             {d.strengths.slice(0, 3).map((s, i) => (
-              <div key={i} className="rounded border border-green-200 bg-green-50 p-2.5 text-xs text-green-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-success-soft] bg-[--cs-success-bg] p-2.5 text-xs text-[--cs-success] leading-relaxed">
                 {s}
               </div>
             ))}
@@ -221,7 +221,7 @@ export function HomeCommunityAccessIntelligenceCard() {
               Concerns ({d.concerns.length})
             </p>
             {d.concerns.slice(0, 3).map((c, i) => (
-              <div key={i} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs text-red-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs text-[--cs-risk] leading-relaxed">
                 {c}
               </div>
             ))}

@@ -20,16 +20,16 @@ import { useStaffDisciplinaryIntelligence } from "@/hooks/use-staff-disciplinary
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high:     "border-red-200 bg-red-50 text-red-800",
-  medium:   "border-amber-200 bg-amber-50 text-amber-800",
-  low:      "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high:     "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium:   "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low:      "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -82,7 +82,7 @@ export function StaffDisciplinaryCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.open_cases === 0 ? "text-green-600" : "text-amber-600",
+              o.open_cases === 0 ? "text-[--cs-success]" : "text-[--cs-warning]",
             )}>
               {o.open_cases}
             </p>
@@ -106,7 +106,7 @@ export function StaffDisciplinaryCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.suspensions_active === 0 ? "text-green-600" : "text-red-600",
+              o.suspensions_active === 0 ? "text-[--cs-success]" : "text-[--cs-risk]",
             )}>
               {o.suspensions_active}
             </p>
@@ -128,7 +128,7 @@ export function StaffDisciplinaryCard() {
                 <div className="flex items-center gap-1.5 ml-2">
                   <Badge variant="outline" className="text-[10px] tabular-nums">{c.count}</Badge>
                   {c.open_count > 0 && (
-                    <Badge className="text-[10px] bg-amber-100 text-amber-700">{c.open_count} open</Badge>
+                    <Badge className="text-[10px] bg-[--cs-warning-bg] text-[--cs-warning]">{c.open_count} open</Badge>
                   )}
                 </div>
               </div>
@@ -145,12 +145,12 @@ export function StaffDisciplinaryCard() {
               Active Cases
             </p>
             {intel.open_cases.slice(0, 3).map((c) => (
-              <div key={c.case_id} className="rounded border border-amber-200 bg-amber-50 p-2.5 text-xs space-y-1">
+              <div key={c.case_id} className="rounded border border-[--cs-warning-soft] bg-[--cs-warning-bg] p-2.5 text-xs space-y-1">
                 <div className="flex items-center justify-between">
-                  <span className="font-semibold text-amber-800">{c.staff_name}</span>
+                  <span className="font-semibold text-[--cs-warning]">{c.staff_name}</span>
                   <Badge className={cn(
                     "text-[10px]",
-                    c.lado_referral ? "bg-red-100 text-red-700" : "bg-amber-100 text-amber-700",
+                    c.lado_referral ? "bg-[--cs-risk-bg] text-[--cs-risk]" : "bg-[--cs-warning-bg] text-[--cs-warning]",
                   )}>
                     {c.category_label}
                   </Badge>
@@ -173,7 +173,7 @@ export function StaffDisciplinaryCard() {
           </p>
           <div className="grid grid-cols-3 gap-2 text-center text-xs">
             <div>
-              <p className={cn("font-bold tabular-nums", o.support_offered_rate >= 90 ? "text-green-600" : "text-amber-600")}>
+              <p className={cn("font-bold tabular-nums", o.support_offered_rate >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
                 {o.support_offered_rate}%
               </p>
               <p className="text-[10px] text-muted-foreground">Support</p>

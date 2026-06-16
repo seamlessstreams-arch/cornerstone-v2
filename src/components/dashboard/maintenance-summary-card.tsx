@@ -58,7 +58,7 @@ export function MaintenanceSummaryCard() {
             Maintenance
           </CardTitle>
           <Link href="/maintenance">
-            <Badge className="text-[9px] bg-amber-100 text-amber-700 border-0 rounded-full hover:bg-amber-200 cursor-pointer">
+            <Badge className="text-[9px] bg-[--cs-warning-bg] text-[--cs-warning] border-0 rounded-full hover:bg-amber-200 cursor-pointer">
               View all
             </Badge>
           </Link>

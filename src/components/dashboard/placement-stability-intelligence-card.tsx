@@ -19,20 +19,20 @@ import { usePlacementStability } from "@/hooks/use-placement-stability";
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const STABILITY_STYLES: Record<string, string> = {
-  excellent: "bg-green-100 text-green-700",
-  good:      "bg-blue-100 text-blue-700",
-  moderate:  "bg-amber-100 text-amber-700",
-  poor:      "bg-red-100 text-red-700",
+  excellent: "bg-[--cs-success-bg] text-[--cs-success]",
+  good:      "bg-[--cs-info-bg] text-[--cs-info]",
+  moderate:  "bg-[--cs-warning-bg] text-[--cs-warning]",
+  poor:      "bg-[--cs-risk-bg] text-[--cs-risk]",
 };
 
 const MOOD_ICON = { improving: TrendingUp, stable: Minus, declining: TrendingDown };
-const MOOD_COLOUR = { improving: "text-green-600", stable: "text-blue-600", declining: "text-red-600" };
+const MOOD_COLOUR = { improving: "text-[--cs-success]", stable: "text-blue-600", declining: "text-[--cs-risk]" };
 
 // ── Component ───────────────────────────────────────────────────────────────
 
@@ -79,7 +79,7 @@ export function PlacementStabilityIntelligenceCard() {
 
         <div className="grid grid-cols-4 gap-2">
           <div className={cn("text-center rounded-lg p-2.5", hm.average_stability_score >= 70 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", hm.average_stability_score >= 70 ? "text-green-600" : "text-amber-600")}>{hm.average_stability_score}</p>
+            <p className={cn("text-lg font-bold tabular-nums", hm.average_stability_score >= 70 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{hm.average_stability_score}</p>
             <p className="text-[10px] text-muted-foreground">Stability</p>
           </div>
           <div className="text-center rounded-lg bg-blue-50 p-2.5">
@@ -87,11 +87,11 @@ export function PlacementStabilityIntelligenceCard() {
             <p className="text-[10px] text-muted-foreground">Children</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", hm.avg_mood_home >= 7 ? "bg-green-50" : hm.avg_mood_home >= 5 ? "bg-amber-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", hm.avg_mood_home >= 7 ? "text-green-600" : hm.avg_mood_home >= 5 ? "text-amber-600" : "text-red-600")}>{hm.avg_mood_home}</p>
+            <p className={cn("text-lg font-bold tabular-nums", hm.avg_mood_home >= 7 ? "text-[--cs-success]" : hm.avg_mood_home >= 5 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>{hm.avg_mood_home}</p>
             <p className="text-[10px] text-muted-foreground">Avg Mood</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", hm.children_at_risk === 0 ? "bg-green-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", hm.children_at_risk === 0 ? "text-green-600" : "text-red-600")}>{hm.children_at_risk}</p>
+            <p className={cn("text-lg font-bold tabular-nums", hm.children_at_risk === 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>{hm.children_at_risk}</p>
             <p className="text-[10px] text-muted-foreground">At Risk</p>
           </div>
         </div>
@@ -140,7 +140,7 @@ export function PlacementStabilityIntelligenceCard() {
                 key={i}
                 className={cn(
                   "rounded border p-2.5 text-xs leading-relaxed",
-                  di.severity === "high" || di.severity === "critical" ? "border-red-200 bg-red-50 text-red-800" : "border-amber-200 bg-amber-50 text-amber-800",
+                  di.severity === "high" || di.severity === "critical" ? "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]" : "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
                 )}
               >
                 <span className="font-medium">{di.child_name}:</span> {di.detail}

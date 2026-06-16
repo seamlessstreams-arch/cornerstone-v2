@@ -19,16 +19,16 @@ import { useBehaviourIntelligence } from "@/hooks/use-behaviour-intelligence";
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high:     "border-red-200 bg-red-50 text-red-800",
-  medium:   "border-amber-200 bg-amber-50 text-amber-800",
-  low:      "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high:     "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium:   "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low:      "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -77,7 +77,7 @@ export function BehaviourPatternAnalysisCard() {
 
         <div className="grid grid-cols-4 gap-2">
           <div className={cn("text-center rounded-lg p-2.5", p.pi_count === 0 ? "bg-green-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", p.pi_count === 0 ? "text-green-600" : "text-red-600")}>{p.pi_count}</p>
+            <p className={cn("text-lg font-bold tabular-nums", p.pi_count === 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>{p.pi_count}</p>
             <p className="text-[10px] text-muted-foreground">Restraints</p>
           </div>
           <div className="text-center rounded-lg bg-blue-50 p-2.5">
@@ -85,7 +85,7 @@ export function BehaviourPatternAnalysisCard() {
             <p className="text-[10px] text-muted-foreground">Concerning</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", p.de_escalation_success_rate >= 80 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", p.de_escalation_success_rate >= 80 ? "text-green-600" : "text-amber-600")}>{p.de_escalation_success_rate}%</p>
+            <p className={cn("text-lg font-bold tabular-nums", p.de_escalation_success_rate >= 80 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{p.de_escalation_success_rate}%</p>
             <p className="text-[10px] text-muted-foreground">De-escal.</p>
           </div>
           <div className="text-center rounded-lg bg-blue-50 p-2.5">

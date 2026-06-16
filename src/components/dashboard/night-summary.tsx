@@ -100,7 +100,7 @@ export function NightSummary() {
           </CardTitle>
           <div className="flex items-center gap-2">
             {hasConcerns && (
-              <Badge className="bg-red-100 text-red-700 border-0 text-[10px] rounded-full">
+              <Badge className="bg-[--cs-risk-bg] text-[--cs-risk] border-0 text-[10px] rounded-full">
                 Concerns
               </Badge>
             )}
@@ -135,7 +135,7 @@ export function NightSummary() {
               )}
               <span className={cn(
                 "flex items-center gap-1",
-                allSecure ? "text-emerald-600" : "text-red-600",
+                allSecure ? "text-emerald-600" : "text-[--cs-risk]",
               )}>
                 <Shield className="h-3 w-3" />
                 {allSecure ? "Secure" : "Issue"}
@@ -166,7 +166,7 @@ export function NightSummary() {
                       </span>
                     )}
                     {cs.hadConcern && (
-                      <Badge className="bg-red-100 text-red-700 border-0 text-[9px] rounded-full shrink-0">
+                      <Badge className="bg-[--cs-risk-bg] text-[--cs-risk] border-0 text-[9px] rounded-full shrink-0">
                         Concern
                       </Badge>
                     )}

@@ -19,13 +19,13 @@ import { useWorkforceIntelligence } from "@/hooks/use-workforce-intelligence";
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const TREND_ICON = { increasing: TrendingUp, stable: Minus, decreasing: TrendingDown };
-const TREND_COLOUR = { increasing: "text-red-600", stable: "text-blue-600", decreasing: "text-green-600" };
+const TREND_COLOUR = { increasing: "text-[--cs-risk]", stable: "text-blue-600", decreasing: "text-[--cs-success]" };
 
 // ── Component ───────────────────────────────────────────────────────────────
 
@@ -73,7 +73,7 @@ export function StaffSicknessManagementCard() {
 
         <div className="grid grid-cols-4 gap-2">
           <div className={cn("text-center rounded-lg p-2.5", s.total_sick_days_this_month === 0 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", s.total_sick_days_this_month === 0 ? "text-green-600" : "text-amber-600")}>{s.total_sick_days_this_month}</p>
+            <p className={cn("text-lg font-bold tabular-nums", s.total_sick_days_this_month === 0 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{s.total_sick_days_this_month}</p>
             <p className="text-[10px] text-muted-foreground">Days/Month</p>
           </div>
           <div className="text-center rounded-lg bg-blue-50 p-2.5">
@@ -81,7 +81,7 @@ export function StaffSicknessManagementCard() {
             <p className="text-[10px] text-muted-foreground">Staff Sick</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", (s.bradford_factor_alerts?.length ?? 0) === 0 ? "bg-green-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", (s.bradford_factor_alerts?.length ?? 0) === 0 ? "text-green-600" : "text-red-600")}>{(s.bradford_factor_alerts?.length ?? 0)}</p>
+            <p className={cn("text-lg font-bold tabular-nums", (s.bradford_factor_alerts?.length ?? 0) === 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>{(s.bradford_factor_alerts?.length ?? 0)}</p>
             <p className="text-[10px] text-muted-foreground">Bradford</p>
           </div>
           <div className="text-center rounded-lg bg-gray-50 p-2.5">
@@ -119,7 +119,7 @@ export function StaffSicknessManagementCard() {
                 <span className="font-medium">{bf.staff_name}</span>
                 <div className="flex items-center gap-1.5">
                   <span className="text-muted-foreground">{bf.instances} instances · {bf.days}d</span>
-                  <Badge className={cn("text-[10px]", bf.factor >= 500 ? "bg-red-100 text-red-700" : "bg-amber-100 text-amber-700")}>
+                  <Badge className={cn("text-[10px]", bf.factor >= 500 ? "bg-[--cs-risk-bg] text-[--cs-risk]" : "bg-[--cs-warning-bg] text-[--cs-warning]")}>
                     BF: {bf.factor}
                   </Badge>
                 </div>

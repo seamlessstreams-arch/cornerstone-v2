@@ -16,16 +16,16 @@ import { cn } from "@/lib/utils";
 import { useHealthWellbeing } from "@/hooks/use-health-wellbeing";
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high: "border-red-200 bg-red-50 text-red-800",
-  medium: "border-amber-200 bg-amber-50 text-amber-800",
-  low: "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 export function LacHealthAssessmentCard() {
@@ -65,15 +65,15 @@ export function LacHealthAssessmentCard() {
         {/* Summary strip */}
         <div className="grid grid-cols-4 gap-2">
           <div className={cn("text-center rounded-lg p-2", (compliance?.health_assessment_current ?? 0) === (compliance?.total_children ?? 0) ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", (compliance?.health_assessment_current ?? 0) === (compliance?.total_children ?? 0) ? "text-green-600" : "text-amber-600")}>{compliance?.health_assessment_current ?? 0}</p>
+            <p className={cn("text-lg font-bold tabular-nums", (compliance?.health_assessment_current ?? 0) === (compliance?.total_children ?? 0) ? "text-[--cs-success]" : "text-[--cs-warning]")}>{compliance?.health_assessment_current ?? 0}</p>
             <p className="text-[10px] text-muted-foreground">HA Current</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", (compliance?.overall_compliance_rate ?? 0) >= 90 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", (compliance?.overall_compliance_rate ?? 0) >= 90 ? "text-green-600" : "text-amber-600")}>{compliance?.overall_compliance_rate ?? 0}%</p>
+            <p className={cn("text-lg font-bold tabular-nums", (compliance?.overall_compliance_rate ?? 0) >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{compliance?.overall_compliance_rate ?? 0}%</p>
             <p className="text-[10px] text-muted-foreground">Compliance</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", (appointments?.dna_rate ?? 0) === 0 ? "bg-green-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", (appointments?.dna_rate ?? 0) === 0 ? "text-green-600" : "text-red-600")}>{appointments?.dna_rate ?? 0}%</p>
+            <p className={cn("text-lg font-bold tabular-nums", (appointments?.dna_rate ?? 0) === 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>{appointments?.dna_rate ?? 0}%</p>
             <p className="text-[10px] text-muted-foreground">DNA Rate</p>
           </div>
           <div className="text-center rounded-lg p-2 bg-emerald-50">

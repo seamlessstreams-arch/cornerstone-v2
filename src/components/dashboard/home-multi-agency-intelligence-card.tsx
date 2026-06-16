@@ -28,15 +28,15 @@ const RATING_STYLES: Record<MultiAgencyRating, { bg: string; text: string; borde
 };
 
 const REC_STYLES: Record<string, string> = {
-  immediate: "border-red-200 bg-red-50 text-red-800",
-  soon: "border-amber-200 bg-amber-50 text-amber-800",
-  planned: "border-blue-200 bg-blue-50 text-blue-800",
+  immediate: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  soon: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  planned: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -82,7 +82,7 @@ export function HomeMultiAgencyIntelligenceCard() {
       <CardHeader className={cn("pb-3", isAlert ? "bg-red-50" : "bg-slate-50/50")}>
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm flex items-center gap-2">
-            <Handshake className={cn("h-4 w-4", isAlert ? "text-red-600" : "text-indigo-500")} />
+            <Handshake className={cn("h-4 w-4", isAlert ? "text-[--cs-risk]" : "text-indigo-500")} />
             <span className="text-slate-900">Multi-Agency Partnership</span>
             <span className={cn("text-[10px] font-bold px-2 py-0.5 rounded-full border", ratingStyle.bg, ratingStyle.text, ratingStyle.border)}>
               {ratingStyle.label}
@@ -105,8 +105,8 @@ export function HomeMultiAgencyIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Users2 className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.meetings.completed_meetings >= 5 ? "text-green-600" :
-                  d.meetings.completed_meetings >= 2 ? "text-blue-600" : "text-amber-600"
+                  d.meetings.completed_meetings >= 5 ? "text-[--cs-success]" :
+                  d.meetings.completed_meetings >= 2 ? "text-blue-600" : "text-[--cs-warning]"
                 )}>
                   {d.meetings.completed_meetings}
                 </p>
@@ -119,8 +119,8 @@ export function HomeMultiAgencyIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <CheckCircle className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.meetings.action_completion_rate >= 90 ? "text-green-600" :
-                  d.meetings.action_completion_rate >= 70 ? "text-amber-600" : "text-red-600"
+                  d.meetings.action_completion_rate >= 90 ? "text-[--cs-success]" :
+                  d.meetings.action_completion_rate >= 70 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.meetings.total_meetings_90d > 0 ? `${d.meetings.action_completion_rate}%` : "—"}
                 </p>
@@ -133,8 +133,8 @@ export function HomeMultiAgencyIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Scale className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.iro.response_compliance_rate >= 100 ? "text-green-600" :
-                  d.iro.response_compliance_rate >= 80 ? "text-amber-600" : "text-red-600"
+                  d.iro.response_compliance_rate >= 100 ? "text-[--cs-success]" :
+                  d.iro.response_compliance_rate >= 80 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.iro.total_correspondence > 0 ? `${d.iro.response_compliance_rate}%` : "—"}
                 </p>
@@ -148,8 +148,8 @@ export function HomeMultiAgencyIntelligenceCard() {
                 <ShieldCheck className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
                   d.police.total_contacts_90d === 0 ? "text-slate-600" :
-                  d.police.protocol_compliance_rate >= 100 ? "text-green-600" :
-                  d.police.protocol_compliance_rate >= 80 ? "text-amber-600" : "text-red-600"
+                  d.police.protocol_compliance_rate >= 100 ? "text-[--cs-success]" :
+                  d.police.protocol_compliance_rate >= 80 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.police.total_contacts_90d > 0 ? `${d.police.protocol_compliance_rate}%` : "—"}
                 </p>
@@ -167,7 +167,7 @@ export function HomeMultiAgencyIntelligenceCard() {
               Strengths ({d.strengths.length})
             </p>
             {d.strengths.slice(0, 3).map((s, i) => (
-              <div key={i} className="rounded border border-green-200 bg-green-50 p-2.5 text-xs text-green-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-success-soft] bg-[--cs-success-bg] p-2.5 text-xs text-[--cs-success] leading-relaxed">
                 {s}
               </div>
             ))}
@@ -182,7 +182,7 @@ export function HomeMultiAgencyIntelligenceCard() {
               Concerns ({d.concerns.length})
             </p>
             {d.concerns.slice(0, 3).map((c, i) => (
-              <div key={i} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs text-red-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs text-[--cs-risk] leading-relaxed">
                 {c}
               </div>
             ))}

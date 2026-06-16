@@ -21,10 +21,10 @@ import {
 // ── Risk flag colours ───────────────────────────────────────────────────────
 
 const RISK_FLAG_COLORS: Record<string, string> = {
-  "missing from care":    "bg-red-100 text-red-700 border-red-200",
-  "self-harm":            "bg-orange-100 text-orange-700 border-orange-200",
-  "exploitation concern": "bg-purple-100 text-purple-700 border-purple-200",
-  "medication refusal":   "bg-amber-100 text-amber-700 border-amber-200",
+  "missing from care":    "bg-[--cs-risk-bg] text-[--cs-risk] border-red-200",
+  "self-harm":            "bg-[--cs-warning-soft] text-[--cs-warning] border-orange-200",
+  "exploitation concern": "bg-[--cs-oversight-bg] text-[--cs-oversight] border-purple-200",
+  "medication refusal":   "bg-[--cs-warning-bg] text-[--cs-warning] border-amber-200",
   "sleep disturbance":    "bg-indigo-100 text-indigo-700 border-indigo-200",
 };
 
@@ -44,9 +44,9 @@ function YPCard({ yp }: { yp: YPEnriched }) {
       className={cn(
         "flex flex-col rounded-2xl border p-4 transition-all hover:shadow-md hover:-translate-y-0.5 group",
         hasMissing
-          ? "border-red-200 bg-red-50/50"
+          ? "border-[--cs-risk-soft] bg-[--cs-risk-bg]/50"
           : hasRisk
-            ? "border-amber-200 bg-amber-50/30"
+            ? "border-[--cs-warning-soft] bg-[--cs-warning-bg]/30"
             : "border-[var(--cs-border)] bg-white",
       )}
     >
@@ -99,7 +99,7 @@ function YPCard({ yp }: { yp: YPEnriched }) {
           label="Incidents"
           value={yp.open_incidents}
           alert={yp.open_incidents > 0}
-          alertColor="text-red-600"
+          alertColor="text-[--cs-risk]"
         />
         <StatusIndicator
           icon={Pill}
@@ -113,7 +113,7 @@ function YPCard({ yp }: { yp: YPEnriched }) {
           label="Last log"
           value={yp.last_log_date ? formatRelative(yp.last_log_date) : "None"}
           alert={!yp.last_log_date}
-          alertColor="text-amber-600"
+          alertColor="text-[--cs-warning]"
           isText
         />
       </div>

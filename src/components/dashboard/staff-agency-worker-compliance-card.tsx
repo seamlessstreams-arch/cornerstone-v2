@@ -13,9 +13,9 @@ import { cn } from "@/lib/utils";
 import { useWorkforceIntelligence } from "@/hooks/use-workforce-intelligence";
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 export function StaffAgencyWorkerComplianceCard() {
@@ -57,11 +57,11 @@ export function StaffAgencyWorkerComplianceCard() {
             <p className="text-[10px] text-muted-foreground">Bank/Agency</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", dbs.compliance_rate >= 95 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", dbs.compliance_rate >= 95 ? "text-green-600" : "text-amber-600")}>{dbs.compliance_rate}%</p>
+            <p className={cn("text-lg font-bold tabular-nums", dbs.compliance_rate >= 95 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{dbs.compliance_rate}%</p>
             <p className="text-[10px] text-muted-foreground">DBS %</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", staffing.coverage_rate >= 95 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", staffing.coverage_rate >= 95 ? "text-green-600" : "text-amber-600")}>{staffing.coverage_rate}%</p>
+            <p className={cn("text-lg font-bold tabular-nums", staffing.coverage_rate >= 95 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{staffing.coverage_rate}%</p>
             <p className="text-[10px] text-muted-foreground">Coverage</p>
           </div>
           <div className="text-center rounded-lg p-2 bg-emerald-50">
@@ -86,7 +86,7 @@ export function StaffAgencyWorkerComplianceCard() {
             </div>
             <div className="flex items-center justify-between text-xs">
               <span className="text-muted-foreground">Expired/Missing</span>
-              <span className={cn("font-bold tabular-nums", dbs.expired_or_missing > 0 ? "text-red-600" : "text-green-600")}>{dbs.expired_or_missing}</span>
+              <span className={cn("font-bold tabular-nums", dbs.expired_or_missing > 0 ? "text-[--cs-risk]" : "text-[--cs-success]")}>{dbs.expired_or_missing}</span>
             </div>
             <div className="flex items-center justify-between text-xs">
               <span className="text-muted-foreground">Total Staff</span>

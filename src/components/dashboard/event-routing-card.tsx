@@ -15,9 +15,9 @@ import { cn } from "@/lib/utils";
 import { useEventRouting } from "@/hooks/use-event-routing";
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 export function EventRoutingCard() {
@@ -73,22 +73,22 @@ export function EventRoutingCard() {
             <p className="text-[10px] text-muted-foreground">Auto-routed</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", o.pending_approval > 0 ? "bg-amber-50" : "bg-gray-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.pending_approval > 0 ? "text-amber-600" : "text-gray-500")}>{o.pending_approval}</p>
+            <p className={cn("text-lg font-bold tabular-nums", o.pending_approval > 0 ? "text-[--cs-warning]" : "text-gray-500")}>{o.pending_approval}</p>
             <p className="text-[10px] text-muted-foreground">Pending</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", o.external_notifications_pending > 0 ? "bg-red-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.external_notifications_pending > 0 ? "text-red-600" : "text-green-600")}>{o.external_notifications_pending}</p>
+            <p className={cn("text-lg font-bold tabular-nums", o.external_notifications_pending > 0 ? "text-[--cs-risk]" : "text-[--cs-success]")}>{o.external_notifications_pending}</p>
             <p className="text-[10px] text-muted-foreground">External</p>
           </div>
         </div>
 
         {/* ── External notification queue (gated) ──────────────────────── */}
         {externalApis.length > 0 && (
-          <div className="rounded-lg border border-red-200 bg-red-50/50 p-2.5 space-y-1">
+          <div className="rounded-lg border border-[--cs-risk-soft] bg-[--cs-risk-bg]/50 p-2.5 space-y-1">
             <p className="text-[10px] font-semibold text-red-700 flex items-center gap-1"><Send className="h-3 w-3" /> External notifications — awaiting approval (never auto-sent)</p>
             <div className="flex flex-wrap gap-1.5">
               {externalApis.map(([api, count], i) => (
-                <Badge key={i} className="text-[10px] bg-red-100 text-red-700 border-red-200">{api} ×{count}</Badge>
+                <Badge key={i} className="text-[10px] bg-[--cs-risk-bg] text-[--cs-risk] border-red-200">{api} ×{count}</Badge>
               ))}
             </div>
           </div>

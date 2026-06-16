@@ -31,15 +31,15 @@ const EVIDENCE_STYLES: Record<string, string> = {
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const ACTION_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high: "border-amber-200 bg-amber-50 text-amber-800",
-  medium: "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  medium: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
   low: "border-slate-200 bg-slate-50 text-slate-700",
 };
 
@@ -101,11 +101,11 @@ export function InspectionReadinessIntelligenceCard() {
         {/* Key Compliance KPIs */}
         <div className="grid grid-cols-4 gap-2">
           <div className={cn("text-center rounded-lg p-2", criticalGaps > 0 ? "bg-red-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", criticalGaps > 0 ? "text-red-600" : "text-green-600")}>{criticalGaps}</p>
+            <p className={cn("text-lg font-bold tabular-nums", criticalGaps > 0 ? "text-[--cs-risk]" : "text-[--cs-success]")}>{criticalGaps}</p>
             <p className="text-[10px] text-muted-foreground">Critical Gaps</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", nonCompliant > 0 ? "bg-amber-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", nonCompliant > 0 ? "text-amber-600" : "text-green-600")}>{nonCompliant}</p>
+            <p className={cn("text-lg font-bold tabular-nums", nonCompliant > 0 ? "text-[--cs-warning]" : "text-[--cs-success]")}>{nonCompliant}</p>
             <p className="text-[10px] text-muted-foreground">Non-Compliant</p>
           </div>
           <div className="text-center rounded-lg bg-slate-50 p-2">
@@ -113,7 +113,7 @@ export function InspectionReadinessIntelligenceCard() {
             <p className="text-[10px] text-muted-foreground">Evidence Strong</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", d.key_risks.length > 0 ? "bg-amber-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", d.key_risks.length > 0 ? "text-amber-600" : "text-green-600")}>{d.key_risks.length}</p>
+            <p className={cn("text-lg font-bold tabular-nums", d.key_risks.length > 0 ? "text-[--cs-warning]" : "text-[--cs-success]")}>{d.key_risks.length}</p>
             <p className="text-[10px] text-muted-foreground">Key Risks</p>
           </div>
         </div>
@@ -143,8 +143,8 @@ export function InspectionReadinessIntelligenceCard() {
             </p>
             {d.regulatory_gaps.slice(0, 3).map((gap, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed",
-                gap.severity === "critical" ? "border-red-200 bg-red-50 text-red-800" :
-                gap.severity === "significant" ? "border-amber-200 bg-amber-50 text-amber-800" :
+                gap.severity === "critical" ? "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]" :
+                gap.severity === "significant" ? "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]" :
                 "border-slate-200 bg-slate-50 text-slate-700",
               )}>
                 <div className="flex items-start justify-between gap-2">

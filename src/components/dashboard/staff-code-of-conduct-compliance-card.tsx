@@ -18,9 +18,9 @@ import { useWorkforceIntelligence } from "@/hooks/use-workforce-intelligence";
 // ── Insight styling ──────────────────────────────────────────────────────────
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ────────────────────────────────────────────────────────────────
@@ -74,19 +74,19 @@ export function StaffCodeOfConductComplianceCard() {
 
         <div className="grid grid-cols-4 gap-2">
           <div className={cn("text-center rounded-lg p-2", dbs.compliance_rate >= 95 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", dbs.compliance_rate >= 95 ? "text-green-600" : "text-amber-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", dbs.compliance_rate >= 95 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
               {dbs.compliance_rate}%
             </p>
             <p className="text-[10px] text-muted-foreground">DBS</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", avgTrainingCompliance >= 90 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", avgTrainingCompliance >= 90 ? "text-green-600" : "text-amber-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", avgTrainingCompliance >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
               {avgTrainingCompliance}%
             </p>
             <p className="text-[10px] text-muted-foreground">Training</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", supervisionRate >= 90 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", supervisionRate >= 90 ? "text-green-600" : "text-amber-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", supervisionRate >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
               {supervisionRate}%
             </p>
             <p className="text-[10px] text-muted-foreground">Supervision</p>
@@ -114,7 +114,7 @@ export function StaffCodeOfConductComplianceCard() {
               <p className="text-[10px] text-muted-foreground">Part-Time</p>
             </div>
             <div className={cn("text-center rounded-lg p-2", profile.bank_agency > 0 ? "bg-amber-50" : "bg-green-50")}>
-              <p className={cn("text-sm font-bold tabular-nums", profile.bank_agency > 0 ? "text-amber-600" : "text-green-600")}>{profile.bank_agency}</p>
+              <p className={cn("text-sm font-bold tabular-nums", profile.bank_agency > 0 ? "text-[--cs-warning]" : "text-[--cs-success]")}>{profile.bank_agency}</p>
               <p className="text-[10px] text-muted-foreground">Bank/Agency</p>
             </div>
           </div>

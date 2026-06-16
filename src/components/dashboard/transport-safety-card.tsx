@@ -19,16 +19,16 @@ import { usePremisesSafetyIntelligence } from "@/hooks/use-premises-safety-intel
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high:     "border-red-200 bg-red-50 text-red-800",
-  medium:   "border-amber-200 bg-amber-50 text-amber-800",
-  low:      "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high:     "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium:   "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low:      "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -82,15 +82,15 @@ export function TransportSafetyCard() {
             <p className="text-[10px] text-muted-foreground">Vehicles</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", intel.overview.compliance_rate >= 95 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", intel.overview.compliance_rate >= 95 ? "text-green-600" : "text-amber-600")}>{intel.overview.compliance_rate}%</p>
+            <p className={cn("text-lg font-bold tabular-nums", intel.overview.compliance_rate >= 95 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{intel.overview.compliance_rate}%</p>
             <p className="text-[10px] text-muted-foreground">Compliance</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", motExpiring === 0 ? "bg-green-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", motExpiring === 0 ? "text-green-600" : "text-red-600")}>{motExpiring}</p>
+            <p className={cn("text-lg font-bold tabular-nums", motExpiring === 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>{motExpiring}</p>
             <p className="text-[10px] text-muted-foreground">MOT Due</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", insExpiring === 0 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", insExpiring === 0 ? "text-green-600" : "text-amber-600")}>{insExpiring}</p>
+            <p className={cn("text-lg font-bold tabular-nums", insExpiring === 0 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{insExpiring}</p>
             <p className="text-[10px] text-muted-foreground">Ins Due</p>
           </div>
         </div>
@@ -107,10 +107,10 @@ export function TransportSafetyCard() {
                 </div>
                 <div className="flex items-center gap-1">
                   {v.mot_days_until_expiry !== null && v.mot_days_until_expiry <= 30 && (
-                    <Badge className="text-[9px] bg-red-100 text-red-700">MOT {v.mot_days_until_expiry}d</Badge>
+                    <Badge className="text-[9px] bg-[--cs-risk-bg] text-[--cs-risk]">MOT {v.mot_days_until_expiry}d</Badge>
                   )}
                   {v.checks_overdue > 0 && (
-                    <Badge className="text-[9px] bg-amber-100 text-amber-700">{v.checks_overdue} overdue</Badge>
+                    <Badge className="text-[9px] bg-[--cs-warning-bg] text-[--cs-warning]">{v.checks_overdue} overdue</Badge>
                   )}
                 </div>
               </div>

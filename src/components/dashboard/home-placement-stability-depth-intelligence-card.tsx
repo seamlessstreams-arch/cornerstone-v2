@@ -28,15 +28,15 @@ const RATING_STYLES: Record<PlacementStabilityDepthRating, { bg: string; text: s
 };
 
 const REC_STYLES: Record<string, string> = {
-  immediate: "border-red-200 bg-red-50 text-red-800",
-  soon: "border-amber-200 bg-amber-50 text-amber-800",
-  planned: "border-blue-200 bg-blue-50 text-blue-800",
+  immediate: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  soon: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  planned: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -82,7 +82,7 @@ export function HomePlacementStabilityDepthIntelligenceCard() {
       <CardHeader className={cn("pb-3", isAlert ? "bg-red-50" : "bg-slate-50/50")}>
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm flex items-center gap-2">
-            <Anchor className={cn("h-4 w-4", isAlert ? "text-red-600" : "text-emerald-600")} />
+            <Anchor className={cn("h-4 w-4", isAlert ? "text-[--cs-risk]" : "text-emerald-600")} />
             <span className="text-slate-900">Placement Stability Depth</span>
             <span className={cn("text-[10px] font-bold px-2 py-0.5 rounded-full border", ratingStyle.bg, ratingStyle.text, ratingStyle.border)}>
               {ratingStyle.label}
@@ -105,8 +105,8 @@ export function HomePlacementStabilityDepthIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <ShieldCheck className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.stability_risk_profile.low_risk_rate >= 80 ? "text-green-600" :
-                  d.stability_risk_profile.low_risk_rate >= 50 ? "text-blue-600" : "text-red-600"
+                  d.stability_risk_profile.low_risk_rate >= 80 ? "text-[--cs-success]" :
+                  d.stability_risk_profile.low_risk_rate >= 50 ? "text-blue-600" : "text-[--cs-risk]"
                 )}>
                   {d.stability_risk_profile.total_records > 0 ? `${d.stability_risk_profile.low_risk_rate}%` : "—"}
                 </p>
@@ -119,8 +119,8 @@ export function HomePlacementStabilityDepthIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <ClipboardCheck className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.disruption_plan_profile.child_coverage >= 80 ? "text-green-600" :
-                  d.disruption_plan_profile.child_coverage >= 50 ? "text-amber-600" : "text-red-600"
+                  d.disruption_plan_profile.child_coverage >= 80 ? "text-[--cs-success]" :
+                  d.disruption_plan_profile.child_coverage >= 50 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.disruption_plan_profile.total_plans > 0 ? `${d.disruption_plan_profile.child_coverage}%` : "—"}
                 </p>
@@ -133,8 +133,8 @@ export function HomePlacementStabilityDepthIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Users className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.meeting_profile.child_view_rate >= 80 ? "text-green-600" :
-                  d.meeting_profile.child_view_rate >= 50 ? "text-blue-600" : "text-amber-600"
+                  d.meeting_profile.child_view_rate >= 80 ? "text-[--cs-success]" :
+                  d.meeting_profile.child_view_rate >= 50 ? "text-blue-600" : "text-[--cs-warning]"
                 )}>
                   {d.meeting_profile.total_meetings > 0 ? `${d.meeting_profile.child_view_rate}%` : "—"}
                 </p>
@@ -147,8 +147,8 @@ export function HomePlacementStabilityDepthIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Anchor className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.placement_end_profile.planned_rate >= 80 ? "text-green-600" :
-                  d.placement_end_profile.planned_rate >= 50 ? "text-blue-600" : "text-red-600"
+                  d.placement_end_profile.planned_rate >= 80 ? "text-[--cs-success]" :
+                  d.placement_end_profile.planned_rate >= 50 ? "text-blue-600" : "text-[--cs-risk]"
                 )}>
                   {d.placement_end_profile.total_ends > 0 ? `${d.placement_end_profile.planned_rate}%` : "—"}
                 </p>
@@ -166,7 +166,7 @@ export function HomePlacementStabilityDepthIntelligenceCard() {
               Strengths ({d.strengths.length})
             </p>
             {d.strengths.slice(0, 3).map((s, i) => (
-              <div key={i} className="rounded border border-green-200 bg-green-50 p-2.5 text-xs text-green-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-success-soft] bg-[--cs-success-bg] p-2.5 text-xs text-[--cs-success] leading-relaxed">
                 {s}
               </div>
             ))}
@@ -181,7 +181,7 @@ export function HomePlacementStabilityDepthIntelligenceCard() {
               Concerns ({d.concerns.length})
             </p>
             {d.concerns.slice(0, 3).map((c, i) => (
-              <div key={i} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs text-red-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs text-[--cs-risk] leading-relaxed">
                 {c}
               </div>
             ))}

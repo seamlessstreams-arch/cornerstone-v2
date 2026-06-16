@@ -19,16 +19,16 @@ import { useMeetingsIntelligence } from "@/hooks/use-meetings-intelligence";
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high:     "border-red-200 bg-red-50 text-red-800",
-  medium:   "border-amber-200 bg-amber-50 text-amber-800",
-  low:      "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high:     "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium:   "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low:      "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -87,7 +87,7 @@ export function MeetingsCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.avg_attendance_rate >= 80 ? "text-green-600" : o.avg_attendance_rate >= 60 ? "text-amber-600" : "text-red-600",
+              o.avg_attendance_rate >= 80 ? "text-[--cs-success]" : o.avg_attendance_rate >= 60 ? "text-[--cs-warning]" : "text-[--cs-risk]",
             )}>
               {o.avg_attendance_rate}%
             </p>
@@ -99,7 +99,7 @@ export function MeetingsCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.action_completion_rate >= 80 ? "text-green-600" : o.action_completion_rate >= 60 ? "text-amber-600" : "text-red-600",
+              o.action_completion_rate >= 80 ? "text-[--cs-success]" : o.action_completion_rate >= 60 ? "text-[--cs-warning]" : "text-[--cs-risk]",
             )}>
               {o.action_completion_rate}%
             </p>
@@ -111,7 +111,7 @@ export function MeetingsCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.actions_overdue === 0 ? "text-green-600" : "text-red-600",
+              o.actions_overdue === 0 ? "text-[--cs-success]" : "text-[--cs-risk]",
             )}>
               {o.actions_overdue}
             </p>
@@ -156,9 +156,9 @@ export function MeetingsCard() {
                     </span>
                     <Badge className={cn(
                       "text-[10px] tabular-nums",
-                      c.attendance_rate >= 80 ? "bg-green-100 text-green-700"
-                        : c.attendance_rate >= 50 ? "bg-amber-100 text-amber-700"
-                        : "bg-red-100 text-red-700",
+                      c.attendance_rate >= 80 ? "bg-[--cs-success-bg] text-[--cs-success]"
+                        : c.attendance_rate >= 50 ? "bg-[--cs-warning-bg] text-[--cs-warning]"
+                        : "bg-[--cs-risk-bg] text-[--cs-risk]",
                     )}>
                       {c.attendance_rate}%
                     </Badge>
@@ -167,7 +167,7 @@ export function MeetingsCard() {
                 {(c.risk_flags?.length ?? 0) > 0 && (
                   <div className="flex flex-wrap gap-1 mt-1.5">
                     {(c.risk_flags ?? []).slice(0, 3).map((flag, i) => (
-                      <Badge key={i} className="text-[9px] bg-red-100 text-red-700">
+                      <Badge key={i} className="text-[9px] bg-[--cs-risk-bg] text-[--cs-risk]">
                         <FileWarning className="h-2.5 w-2.5 mr-0.5" />
                         {flag.replace(/_/g, " ")}
                       </Badge>
@@ -193,7 +193,7 @@ export function MeetingsCard() {
           <div>
             <p className={cn(
               "font-bold tabular-nums",
-              o.children_never_attended === 0 ? "text-green-600" : "text-red-600",
+              o.children_never_attended === 0 ? "text-[--cs-success]" : "text-[--cs-risk]",
             )}>
               {o.children_never_attended}
             </p>

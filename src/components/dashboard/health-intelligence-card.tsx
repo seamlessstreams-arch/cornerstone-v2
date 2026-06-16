@@ -48,7 +48,7 @@ function ComplianceBar({ label, value }: { label: string; value: number }) {
       </div>
       <span className={cn(
         "w-8 text-right tabular-nums font-medium",
-        value >= 90 ? "text-green-600" : value >= 70 ? "text-amber-600" : "text-red-600",
+        value >= 90 ? "text-[--cs-success]" : value >= 70 ? "text-[--cs-warning]" : "text-[--cs-risk]",
       )}>
         {value}%
       </span>
@@ -103,25 +103,25 @@ export function HealthIntelligenceCard() {
 
         <div className="grid grid-cols-4 gap-2">
           <div className={cn("text-center rounded-lg p-2.5", healthAssessRate >= 90 ? "bg-green-50" : healthAssessRate >= 70 ? "bg-amber-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", healthAssessRate >= 90 ? "text-green-600" : healthAssessRate >= 70 ? "text-amber-600" : "text-red-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", healthAssessRate >= 90 ? "text-[--cs-success]" : healthAssessRate >= 70 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>
               {healthAssessRate}%
             </p>
             <p className="text-[10px] text-muted-foreground">Health Assess.</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", dentalRate >= 90 ? "bg-green-50" : dentalRate >= 70 ? "bg-amber-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", dentalRate >= 90 ? "text-green-600" : dentalRate >= 70 ? "text-amber-600" : "text-red-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", dentalRate >= 90 ? "text-[--cs-success]" : dentalRate >= 70 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>
               {dentalRate}%
             </p>
             <p className="text-[10px] text-muted-foreground">Dental</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", opticalRate >= 90 ? "bg-green-50" : opticalRate >= 70 ? "bg-amber-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", opticalRate >= 90 ? "text-green-600" : opticalRate >= 70 ? "text-amber-600" : "text-red-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", opticalRate >= 90 ? "text-[--cs-success]" : opticalRate >= 70 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>
               {opticalRate}%
             </p>
             <p className="text-[10px] text-muted-foreground">Optical</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", immunRate >= 90 ? "bg-green-50" : immunRate >= 70 ? "bg-amber-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", immunRate >= 90 ? "text-green-600" : immunRate >= 70 ? "text-amber-600" : "text-red-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", immunRate >= 90 ? "text-[--cs-success]" : immunRate >= 70 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>
               {immunRate}%
             </p>
             <p className="text-[10px] text-muted-foreground">Immunisation</p>
@@ -149,7 +149,7 @@ export function HealthIntelligenceCard() {
           <div className="text-right">
             <p className={cn(
               "text-sm font-bold tabular-nums",
-              appointments.dna_rate <= 5 ? "text-green-600" : appointments.dna_rate <= 15 ? "text-amber-600" : "text-red-600",
+              appointments.dna_rate <= 5 ? "text-[--cs-success]" : appointments.dna_rate <= 15 ? "text-[--cs-warning]" : "text-[--cs-risk]",
             )}>
               {appointments.dna_rate}%
             </p>

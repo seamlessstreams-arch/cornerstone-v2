@@ -28,9 +28,9 @@ function riskTone(score: number): { bg: string; text: string } {
   return { bg: "bg-green-100", text: "text-green-700" };
 }
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 export function EventIntelligenceCard() {
@@ -83,15 +83,15 @@ export function EventIntelligenceCard() {
             <p className="text-[10px] text-muted-foreground">Events 90d</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", o.escalating_children > 0 ? "bg-red-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.escalating_children > 0 ? "text-red-600" : "text-green-600")}>{o.escalating_children}</p>
+            <p className={cn("text-lg font-bold tabular-nums", o.escalating_children > 0 ? "text-[--cs-risk]" : "text-[--cs-success]")}>{o.escalating_children}</p>
             <p className="text-[10px] text-muted-foreground">Escalating</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", o.pending_approvals > 0 ? "bg-amber-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.pending_approvals > 0 ? "text-amber-600" : "text-green-600")}>{o.pending_approvals}</p>
+            <p className={cn("text-lg font-bold tabular-nums", o.pending_approvals > 0 ? "text-[--cs-warning]" : "text-[--cs-success]")}>{o.pending_approvals}</p>
             <p className="text-[10px] text-muted-foreground">Approvals</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", o.open_compliance_flags > 0 ? "bg-amber-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.open_compliance_flags > 0 ? "text-amber-600" : "text-green-600")}>{o.open_compliance_flags}</p>
+            <p className={cn("text-lg font-bold tabular-nums", o.open_compliance_flags > 0 ? "text-[--cs-warning]" : "text-[--cs-success]")}>{o.open_compliance_flags}</p>
             <p className="text-[10px] text-muted-foreground">Flags</p>
           </div>
         </div>
