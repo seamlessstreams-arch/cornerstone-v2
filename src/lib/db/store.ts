@@ -42,6 +42,7 @@ import { seedPaceAnalyses, seedWritingReviews } from "@/lib/practice-history/see
 import type { CalendarEvent } from "@/lib/calendar/calendar-types";
 import { seedCalendarEvents } from "@/lib/calendar/calendar-seeds";
 import { seedStaffSicknessRecords } from "@/lib/workforce/absence-seeds";
+import { seedStaffCompetencyRecords, seedTrainingMatrixRows, seedCpdRecords, seedStaffHandbookAcknowledgementRecords } from "@/lib/workforce/competence-seeds";
 import type { ShiftPattern } from "@/lib/rota/shift-patterns";
 import type { StaffingPolicy } from "@/lib/rota/staffing-cover-engine";
 import { seedShiftPatterns, seedStaffingPolicy, seedShiftCoverNotes, type ShiftCoverNote } from "@/lib/rota/rota-seeds";
@@ -1807,7 +1808,7 @@ const store = {
   loneWorkingRiskAssessments: [] as LoneWorkingRiskAssessment[],
   maintenanceScheduleItems: [] as MaintenanceScheduleItem[],
   managementWalkrounds: [] as ManagementWalkround[],
-  trainingMatrixRows: [] as TrainingMatrixRow[],
+  trainingMatrixRows: seedTrainingMatrixRows() as TrainingMatrixRow[],
   marEntries: [] as MarEntry[],
   matchingReferrals: [] as MatchingReferral[],
   mediaPublicityConsents: [] as MediaPublicityConsent[],
@@ -2327,7 +2328,7 @@ const store = {
   preventRecords: [] as PreventRecord[],
   professionalConsultations: [] as ProfessionalConsultation[],
   curiosityLogEntries: [] as CuriosityLogEntry[],
-  cpdRecords: [] as CPDRecord[],
+  cpdRecords: seedCpdRecords() as CPDRecord[],
   professionalFeeRecords: [] as ProfessionalFeeRecord[],
   professionalMeetingAttendances: [] as ProfessionalMeetingAttendance[],
   professionalNetworkContacts: [
@@ -2401,7 +2402,7 @@ const store = {
   sleepInRecords: [] as SleepInRecord[],
   socialWorkerContactRecords: [] as SocialWorkerContactRecord[],
   staffCommunicationPreferenceRecords: [] as StaffCommunicationPreferenceRecord[],
-  staffCompetencyRecords: [] as StaffCompetencyRecord[],
+  staffCompetencyRecords: seedStaffCompetencyRecords() as StaffCompetencyRecord[],
   staffDebriefRecords: [] as StaffDebriefRecord[],
   staffDisciplinaryRecords: [
     {
@@ -2507,7 +2508,7 @@ const store = {
   ] as StaffDisciplinaryRecord[],
   staffExitInterviewRecords: [] as StaffExitInterviewRecord[],
   staffGrievanceRecords: [] as StaffGrievanceRecord[],
-  staffHandbookAcknowledgementRecords: [] as StaffHandbookAcknowledgementRecord[],
+  staffHandbookAcknowledgementRecords: seedStaffHandbookAcknowledgementRecords() as StaffHandbookAcknowledgementRecord[],
   staffInductionRecords: [] as StaffInductionRecord[],
   staffMeetingRecords: [] as StaffMeetingRecord[],
   staffRecognitionRecords: [] as StaffRecognitionRecord[],
