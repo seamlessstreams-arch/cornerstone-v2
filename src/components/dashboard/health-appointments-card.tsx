@@ -19,16 +19,16 @@ import { useHealthWellbeing } from "@/hooks/use-health-wellbeing";
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high:     "border-red-200 bg-red-50 text-red-800",
-  medium:   "border-amber-200 bg-amber-50 text-amber-800",
-  low:      "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high:     "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium:   "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low:      "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -80,11 +80,11 @@ export function HealthAppointmentsCard() {
             <p className="text-[10px] text-muted-foreground">Attended</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", a.missed === 0 ? "bg-green-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", a.missed === 0 ? "text-green-600" : "text-red-600")}>{a.missed}</p>
+            <p className={cn("text-lg font-bold tabular-nums", a.missed === 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>{a.missed}</p>
             <p className="text-[10px] text-muted-foreground">Missed</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", a.dna_rate === 0 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", a.dna_rate === 0 ? "text-green-600" : "text-amber-600")}>{a.dna_rate}%</p>
+            <p className={cn("text-lg font-bold tabular-nums", a.dna_rate === 0 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{a.dna_rate}%</p>
             <p className="text-[10px] text-muted-foreground">DNA Rate</p>
           </div>
           <div className="text-center rounded-lg bg-blue-50 p-2.5">
@@ -99,25 +99,25 @@ export function HealthAppointmentsCard() {
           <p className="text-xs font-semibold">Health Compliance</p>
           <div className="grid grid-cols-4 gap-2 text-center text-xs">
             <div>
-              <p className={cn("font-bold tabular-nums", intel.compliance.health_assessment_current === intel.compliance.total_children ? "text-green-600" : "text-amber-600")}>
+              <p className={cn("font-bold tabular-nums", intel.compliance.health_assessment_current === intel.compliance.total_children ? "text-[--cs-success]" : "text-[--cs-warning]")}>
                 {intel.compliance.health_assessment_current}/{intel.compliance.total_children}
               </p>
               <p className="text-[10px] text-muted-foreground">RHA</p>
             </div>
             <div>
-              <p className={cn("font-bold tabular-nums", intel.compliance.dental_up_to_date === intel.compliance.total_children ? "text-green-600" : "text-amber-600")}>
+              <p className={cn("font-bold tabular-nums", intel.compliance.dental_up_to_date === intel.compliance.total_children ? "text-[--cs-success]" : "text-[--cs-warning]")}>
                 {intel.compliance.dental_up_to_date}/{intel.compliance.total_children}
               </p>
               <p className="text-[10px] text-muted-foreground">Dental</p>
             </div>
             <div>
-              <p className={cn("font-bold tabular-nums", intel.compliance.optician_up_to_date === intel.compliance.total_children ? "text-green-600" : "text-amber-600")}>
+              <p className={cn("font-bold tabular-nums", intel.compliance.optician_up_to_date === intel.compliance.total_children ? "text-[--cs-success]" : "text-[--cs-warning]")}>
                 {intel.compliance.optician_up_to_date}/{intel.compliance.total_children}
               </p>
               <p className="text-[10px] text-muted-foreground">Optician</p>
             </div>
             <div>
-              <p className={cn("font-bold tabular-nums", intel.compliance.immunisation_up_to_date === intel.compliance.total_children ? "text-green-600" : "text-amber-600")}>
+              <p className={cn("font-bold tabular-nums", intel.compliance.immunisation_up_to_date === intel.compliance.total_children ? "text-[--cs-success]" : "text-[--cs-warning]")}>
                 {intel.compliance.immunisation_up_to_date}/{intel.compliance.total_children}
               </p>
               <p className="text-[10px] text-muted-foreground">Immuns</p>
@@ -137,8 +137,8 @@ export function HealthAppointmentsCard() {
               <div key={cp.child_id} className="flex items-center justify-between rounded border p-2.5 text-xs">
                 <span className="font-medium">{cp.child_name}</span>
                 <div className="flex items-center gap-1">
-                  {!cp.dental_up_to_date && <Badge className="text-[9px] bg-amber-100 text-amber-700">dental</Badge>}
-                  {!cp.optician_up_to_date && <Badge className="text-[9px] bg-amber-100 text-amber-700">optician</Badge>}
+                  {!cp.dental_up_to_date && <Badge className="text-[9px] bg-[--cs-warning-bg] text-[--cs-warning]">dental</Badge>}
+                  {!cp.optician_up_to_date && <Badge className="text-[9px] bg-[--cs-warning-bg] text-[--cs-warning]">optician</Badge>}
                 </div>
               </div>
             ))}

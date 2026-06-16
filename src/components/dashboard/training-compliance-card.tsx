@@ -39,12 +39,12 @@ function TrainingRow({ staff }: { staff: StaffEnriched }) {
   let StatusIcon = CheckCircle2;
 
   if (expired > 0) {
-    statusColor = "text-red-600";
+    statusColor = "text-[--cs-risk]";
     statusBg = "bg-red-50";
     statusLabel = `${expired} expired`;
     StatusIcon = AlertTriangle;
   } else if (expiring > 0) {
-    statusColor = "text-amber-600";
+    statusColor = "text-[--cs-warning]";
     statusBg = "bg-amber-50";
     statusLabel = `${expiring} expiring`;
     StatusIcon = Clock;
@@ -166,12 +166,12 @@ export function TrainingComplianceCard() {
           </CardTitle>
           <div className="flex items-center gap-2">
             {expiredCount > 0 && (
-              <Badge className="bg-red-100 text-red-700 border-0 text-[10px] rounded-full">
+              <Badge className="bg-[--cs-risk-bg] text-[--cs-risk] border-0 text-[10px] rounded-full">
                 {expiredCount} non-compliant
               </Badge>
             )}
             {expiringCount > 0 && (
-              <Badge className="bg-amber-100 text-amber-700 border-0 text-[10px] rounded-full">
+              <Badge className="bg-[--cs-warning-bg] text-[--cs-warning] border-0 text-[10px] rounded-full">
                 {expiringCount} expiring
               </Badge>
             )}
@@ -189,7 +189,7 @@ export function TrainingComplianceCard() {
             <span className={cn(
               "text-sm font-bold tabular-nums",
               teamStats.rate >= 90 ? "text-emerald-600" :
-              teamStats.rate >= 70 ? "text-amber-600" : "text-red-600",
+              teamStats.rate >= 70 ? "text-[--cs-warning]" : "text-[--cs-risk]",
             )}>
               {teamStats.rate}%
             </span>
@@ -202,10 +202,10 @@ export function TrainingComplianceCard() {
           <div className="flex items-center justify-between mt-1.5 text-[10px] text-[var(--cs-text-muted)]">
             <span>{teamStats.compliantItems} current</span>
             {teamStats.expiringItems > 0 && (
-              <span className="text-amber-600">{teamStats.expiringItems} expiring</span>
+              <span className="text-[--cs-warning]">{teamStats.expiringItems} expiring</span>
             )}
             {teamStats.expiredItems > 0 && (
-              <span className="text-red-600">{teamStats.expiredItems} expired</span>
+              <span className="text-[--cs-risk]">{teamStats.expiredItems} expired</span>
             )}
           </div>
         </div>

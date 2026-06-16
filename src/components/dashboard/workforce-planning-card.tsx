@@ -20,9 +20,9 @@ import { useWorkforceIntelligence } from "@/hooks/use-workforce-intelligence";
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ────────────────────────────────────────────────────────────────
@@ -77,19 +77,19 @@ export function WorkforcePlanningCard() {
             <p className="text-[10px] text-muted-foreground">Active Staff</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", p.training_compliance_rate >= 90 ? "bg-green-50" : p.training_compliance_rate >= 75 ? "bg-amber-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", p.training_compliance_rate >= 90 ? "text-green-600" : p.training_compliance_rate >= 75 ? "text-amber-600" : "text-red-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", p.training_compliance_rate >= 90 ? "text-[--cs-success]" : p.training_compliance_rate >= 75 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>
               {p.training_compliance_rate}%
             </p>
             <p className="text-[10px] text-muted-foreground">Training</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", d.compliance_rate >= 100 ? "bg-green-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", d.compliance_rate >= 100 ? "text-green-600" : "text-red-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", d.compliance_rate >= 100 ? "text-[--cs-success]" : "text-[--cs-risk]")}>
               {d.compliance_rate}%
             </p>
             <p className="text-[10px] text-muted-foreground">DBS</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", s.coverage_rate >= 95 ? "bg-green-50" : s.coverage_rate >= 80 ? "bg-amber-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", s.coverage_rate >= 95 ? "text-green-600" : s.coverage_rate >= 80 ? "text-amber-600" : "text-red-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", s.coverage_rate >= 95 ? "text-[--cs-success]" : s.coverage_rate >= 80 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>
               {s.coverage_rate}%
             </p>
             <p className="text-[10px] text-muted-foreground">Shifts</p>
@@ -139,7 +139,7 @@ export function WorkforcePlanningCard() {
             </div>
             <div className="flex items-center justify-between rounded border p-2">
               <span className="text-muted-foreground">Bank/Agency</span>
-              <span className={cn("font-medium", p.bank_agency > 0 ? "text-amber-600" : "")}>{p.bank_agency}</span>
+              <span className={cn("font-medium", p.bank_agency > 0 ? "text-[--cs-warning]" : "")}>{p.bank_agency}</span>
             </div>
             <div className="flex items-center justify-between rounded border p-2">
               <span className="text-muted-foreground">On Leave</span>
@@ -160,14 +160,14 @@ export function WorkforcePlanningCard() {
               <div key={t.category} className="flex items-center justify-between rounded border p-2 text-xs">
                 <span className="capitalize truncate">{t.category.replace(/_/g, " ")}</span>
                 <div className="flex items-center gap-1.5 shrink-0">
-                  <span className={cn("font-medium tabular-nums", t.compliance_rate >= 100 ? "text-green-600" : t.compliance_rate >= 75 ? "text-amber-600" : "text-red-600")}>
+                  <span className={cn("font-medium tabular-nums", t.compliance_rate >= 100 ? "text-[--cs-success]" : t.compliance_rate >= 75 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>
                     {t.compliant}/{t.total_required}
                   </span>
                   {t.expired > 0 && (
-                    <Badge className="text-[9px] bg-red-100 text-red-700">{t.expired} expired</Badge>
+                    <Badge className="text-[9px] bg-[--cs-risk-bg] text-[--cs-risk]">{t.expired} expired</Badge>
                   )}
                   {t.expiring_soon > 0 && (
-                    <Badge className="text-[9px] bg-amber-100 text-amber-700">{t.expiring_soon} due</Badge>
+                    <Badge className="text-[9px] bg-[--cs-warning-bg] text-[--cs-warning]">{t.expiring_soon} due</Badge>
                   )}
                 </div>
               </div>
@@ -184,7 +184,7 @@ export function WorkforcePlanningCard() {
               {sup.up_to_date} current · {sup.overdue} overdue · {sup.due_within_7_days} due soon
             </p>
           </div>
-          <Badge className={cn("text-[10px]", sup.overdue === 0 ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700")}>
+          <Badge className={cn("text-[10px]", sup.overdue === 0 ? "bg-[--cs-success-bg] text-[--cs-success]" : "bg-[--cs-risk-bg] text-[--cs-risk]")}>
             {sup.overdue === 0 ? "All current" : `${sup.overdue} overdue`}
           </Badge>
         </div>
@@ -197,7 +197,7 @@ export function WorkforcePlanningCard() {
               <AlertTriangle className="h-3 w-3" />
               Coverage Concerns
             </p>
-            <div className="rounded border border-amber-200 bg-amber-50 p-2.5 text-xs text-amber-800">
+            <div className="rounded border border-[--cs-warning-soft] bg-[--cs-warning-bg] p-2.5 text-xs text-[--cs-warning]">
               {s.shifts_unfilled} shift{s.shifts_unfilled > 1 ? "s" : ""} unfilled this week out of {s.shifts_this_week}. Coverage rate: {s.coverage_rate}%.
               {s.no_shows_this_month > 0 && ` ${s.no_shows_this_month} no-show(s) this month.`}
             </div>

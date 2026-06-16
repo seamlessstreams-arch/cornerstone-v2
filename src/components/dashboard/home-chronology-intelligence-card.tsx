@@ -29,15 +29,15 @@ const RATING_STYLES: Record<ChronologyRating, { bg: string; text: string; border
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const REC_STYLES: Record<string, string> = {
-  immediate: "border-red-200 bg-red-50 text-red-800",
-  soon: "border-amber-200 bg-amber-50 text-amber-800",
-  planned: "border-blue-200 bg-blue-50 text-blue-800",
+  immediate: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  soon: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  planned: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -85,7 +85,7 @@ export function HomeChronologyIntelligenceCard() {
       <CardHeader className={cn("pb-3", isAlert ? "bg-red-50" : "bg-slate-50/50")}>
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm flex items-center gap-2">
-            <BookOpen className={cn("h-4 w-4", isAlert ? "text-red-600" : "text-violet-500")} />
+            <BookOpen className={cn("h-4 w-4", isAlert ? "text-[--cs-risk]" : "text-violet-500")} />
             <span className="text-slate-900">Chronology</span>
             <span className={cn("text-[10px] font-bold px-2 py-0.5 rounded-full border", ratingStyle.bg, ratingStyle.text, ratingStyle.border)}>
               {ratingStyle.label}
@@ -119,8 +119,8 @@ export function HomeChronologyIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <FolderOpen className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.coverage_profile.coverage_rate === 100 ? "text-green-600" :
-                  d.coverage_profile.coverage_rate >= 80 ? "text-amber-600" : "text-red-600"
+                  d.coverage_profile.coverage_rate === 100 ? "text-[--cs-success]" :
+                  d.coverage_profile.coverage_rate >= 80 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.coverage_profile.coverage_rate}%
                 </p>
@@ -133,8 +133,8 @@ export function HomeChronologyIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <FileText className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.quality_profile.description_rate >= 90 ? "text-green-600" :
-                  d.quality_profile.description_rate >= 70 ? "text-amber-600" : "text-red-600"
+                  d.quality_profile.description_rate >= 90 ? "text-[--cs-success]" :
+                  d.quality_profile.description_rate >= 70 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.quality_profile.description_rate}%
                 </p>
@@ -147,8 +147,8 @@ export function HomeChronologyIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Timer className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.timeliness_profile.recording_gap_days <= 14 ? "text-green-600" :
-                  d.timeliness_profile.recording_gap_days <= 30 ? "text-amber-600" : "text-red-600"
+                  d.timeliness_profile.recording_gap_days <= 14 ? "text-[--cs-success]" :
+                  d.timeliness_profile.recording_gap_days <= 30 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.timeliness_profile.recording_gap_days}d
                 </p>
@@ -177,7 +177,7 @@ export function HomeChronologyIntelligenceCard() {
                 <p>Per month: <span className="font-medium text-slate-600">{d.timeliness_profile.entries_per_month}</span></p>
                 <p>Last 30d: <span className="font-medium text-slate-600">{d.timeliness_profile.entries_last_30_days}</span></p>
                 <p>Time recorded: <span className={cn("font-medium",
-                  d.quality_profile.time_recording_rate >= 70 ? "text-green-600" : "text-amber-600"
+                  d.quality_profile.time_recording_rate >= 70 ? "text-[--cs-success]" : "text-[--cs-warning]"
                 )}>{d.quality_profile.time_recording_rate}%</span></p>
               </div>
             </div>
@@ -192,7 +192,7 @@ export function HomeChronologyIntelligenceCard() {
               Strengths ({d.strengths.length})
             </p>
             {d.strengths.slice(0, 3).map((s, i) => (
-              <div key={i} className="rounded border border-green-200 bg-green-50 p-2.5 text-xs text-green-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-success-soft] bg-[--cs-success-bg] p-2.5 text-xs text-[--cs-success] leading-relaxed">
                 {s}
               </div>
             ))}
@@ -207,7 +207,7 @@ export function HomeChronologyIntelligenceCard() {
               Concerns ({d.concerns.length})
             </p>
             {d.concerns.slice(0, 3).map((c, i) => (
-              <div key={i} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs text-red-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs text-[--cs-risk] leading-relaxed">
                 {c}
               </div>
             ))}

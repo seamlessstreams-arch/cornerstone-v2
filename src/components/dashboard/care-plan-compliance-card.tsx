@@ -203,7 +203,7 @@ export function CarePlanComplianceCard() {
                     </span>
                     <span className={cn(
                       "text-[9px] tabular-nums shrink-0 font-medium",
-                      isOverdue ? "text-red-600" : item.days <= 14 ? "text-amber-600" : "text-[var(--cs-text-muted)]",
+                      isOverdue ? "text-[--cs-risk]" : item.days <= 14 ? "text-[--cs-warning]" : "text-[var(--cs-text-muted)]",
                     )}>
                       {isOverdue ? `${Math.abs(item.days)}d overdue` : item.days === 0 ? "today" : `in ${item.days}d`}
                     </span>

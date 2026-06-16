@@ -16,16 +16,16 @@ import { cn } from "@/lib/utils";
 import { useQualityAssuranceIntelligence } from "@/hooks/use-quality-assurance-intelligence";
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high:     "border-red-200 bg-red-50 text-red-800",
-  medium:   "border-amber-200 bg-amber-50 text-amber-800",
-  low:      "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high:     "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium:   "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low:      "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 export function BusinessContinuityCard() {
@@ -65,15 +65,15 @@ export function BusinessContinuityCard() {
             <p className="text-[10px] text-muted-foreground">Audits</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", (d?.overview?.avg_rating_score ?? 0) >= 3 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", (d?.overview?.avg_rating_score ?? 0) >= 3 ? "text-green-600" : "text-amber-600")}>{d?.overview?.avg_rating_label ?? "—"}</p>
+            <p className={cn("text-lg font-bold tabular-nums", (d?.overview?.avg_rating_score ?? 0) >= 3 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{d?.overview?.avg_rating_label ?? "—"}</p>
             <p className="text-[10px] text-muted-foreground">Rating</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", (d?.overview?.actions_overdue ?? 0) > 0 ? "bg-red-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", (d?.overview?.actions_overdue ?? 0) > 0 ? "text-red-600" : "text-green-600")}>{d?.overview?.actions_overdue ?? 0}</p>
+            <p className={cn("text-lg font-bold tabular-nums", (d?.overview?.actions_overdue ?? 0) > 0 ? "text-[--cs-risk]" : "text-[--cs-success]")}>{d?.overview?.actions_overdue ?? 0}</p>
             <p className="text-[10px] text-muted-foreground">Overdue</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", (d?.overview?.recommendation_completion_rate ?? 0) >= 80 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", (d?.overview?.recommendation_completion_rate ?? 0) >= 80 ? "text-green-600" : "text-amber-600")}>{Math.round(d?.overview?.recommendation_completion_rate ?? 0)}%</p>
+            <p className={cn("text-lg font-bold tabular-nums", (d?.overview?.recommendation_completion_rate ?? 0) >= 80 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{Math.round(d?.overview?.recommendation_completion_rate ?? 0)}%</p>
             <p className="text-[10px] text-muted-foreground">Recs Done</p>
           </div>
         </div>

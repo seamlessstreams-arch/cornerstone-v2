@@ -56,10 +56,10 @@ const RISK_CONFIG: Record<string, { label: string; colour: string; bg: string; d
 };
 
 const STATUS_CONFIG: Record<string, { label: string; icon: React.ElementType; colour: string }> = {
-  awaiting_review:     { label: "Awaiting review",   icon: Clock,        colour: "text-amber-600" },
+  awaiting_review:     { label: "Awaiting review",   icon: Clock,        colour: "text-[--cs-warning]" },
   approved:            { label: "Approved",           icon: CheckCircle2, colour: "text-emerald-600" },
   amended_and_approved:{ label: "Amended & approved", icon: CheckCircle2, colour: "text-emerald-600" },
-  rejected:            { label: "Rejected",           icon: XCircle,      colour: "text-red-600" },
+  rejected:            { label: "Rejected",           icon: XCircle,      colour: "text-[--cs-risk]" },
   no_action_required:  { label: "No action required", icon: Eye,          colour: "text-[var(--cs-text-muted)]" },
   committed:           { label: "Committed",          icon: CheckCircle2, colour: "text-blue-600" },
   draft:               { label: "Draft",              icon: Clock,        colour: "text-[var(--cs-text-muted)]" },

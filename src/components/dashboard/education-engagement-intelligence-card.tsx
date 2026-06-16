@@ -7,16 +7,16 @@ import { cn } from "@/lib/utils";
 import { useEducationIntelligence } from "@/hooks/use-education-intelligence";
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high: "border-red-200 bg-red-50 text-red-800",
-  medium: "border-amber-200 bg-amber-50 text-amber-800",
-  low: "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 export function EducationEngagementIntelligenceCard() {
@@ -82,7 +82,7 @@ export function EducationEngagementIntelligenceCard() {
             <p
               className={cn(
                 "text-lg font-bold tabular-nums",
-                overview.neet_count === 0 ? "text-green-600" : "text-red-600"
+                overview.neet_count === 0 ? "text-[--cs-success]" : "text-[--cs-risk]"
               )}
             >
               {overview.neet_count}
@@ -99,7 +99,7 @@ export function EducationEngagementIntelligenceCard() {
             <p
               className={cn(
                 "text-lg font-bold tabular-nums",
-                overview.pep_overdue_count === 0 ? "text-green-600" : "text-amber-600"
+                overview.pep_overdue_count === 0 ? "text-[--cs-success]" : "text-[--cs-warning]"
               )}
             >
               {overview.pep_current_count}

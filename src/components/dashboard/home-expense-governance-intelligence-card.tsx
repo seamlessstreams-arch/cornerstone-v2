@@ -28,15 +28,15 @@ const RATING_STYLES: Record<ExpenseGovernanceRating, { bg: string; text: string;
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const REC_STYLES: Record<string, string> = {
-  immediate: "border-red-200 bg-red-50 text-red-800",
-  soon: "border-amber-200 bg-amber-50 text-amber-800",
-  planned: "border-blue-200 bg-blue-50 text-blue-800",
+  immediate: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  soon: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  planned: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -82,7 +82,7 @@ export function HomeExpenseGovernanceIntelligenceCard() {
       <CardHeader className={cn("pb-3", isAlert ? "bg-red-50" : "bg-slate-50/50")}>
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm flex items-center gap-2">
-            <Banknote className={cn("h-4 w-4", isAlert ? "text-red-600" : "text-emerald-500")} />
+            <Banknote className={cn("h-4 w-4", isAlert ? "text-[--cs-risk]" : "text-emerald-500")} />
             <span className="text-slate-900">Expense Governance</span>
             <span className={cn("text-[10px] font-bold px-2 py-0.5 rounded-full border", ratingStyle.bg, ratingStyle.text, ratingStyle.border)}>
               {ratingStyle.label}
@@ -105,8 +105,8 @@ export function HomeExpenseGovernanceIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Receipt className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.compliance.receipt_rate >= 90 ? "text-green-600" :
-                  d.compliance.receipt_rate >= 75 ? "text-amber-600" : "text-red-600"
+                  d.compliance.receipt_rate >= 90 ? "text-[--cs-success]" :
+                  d.compliance.receipt_rate >= 75 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.compliance.receipt_rate}%
                 </p>
@@ -119,8 +119,8 @@ export function HomeExpenseGovernanceIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Clock className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.approval.avg_approval_days <= 2 ? "text-green-600" :
-                  d.approval.avg_approval_days <= 5 ? "text-amber-600" : "text-red-600"
+                  d.approval.avg_approval_days <= 2 ? "text-[--cs-success]" :
+                  d.approval.avg_approval_days <= 5 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.approval.avg_approval_days > 0 ? `${d.approval.avg_approval_days}d` : "—"}
                 </p>
@@ -133,8 +133,8 @@ export function HomeExpenseGovernanceIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <TrendingUp className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.approval.pending_count === 0 ? "text-green-600" :
-                  d.approval.pending_count <= 2 ? "text-amber-600" : "text-red-600"
+                  d.approval.pending_count === 0 ? "text-[--cs-success]" :
+                  d.approval.pending_count <= 2 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.approval.pending_count}
                 </p>
@@ -147,8 +147,8 @@ export function HomeExpenseGovernanceIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <PieChart className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.distribution.length >= 4 ? "text-green-600" :
-                  d.distribution.length >= 2 ? "text-amber-600" : "text-slate-600"
+                  d.distribution.length >= 4 ? "text-[--cs-success]" :
+                  d.distribution.length >= 2 ? "text-[--cs-warning]" : "text-slate-600"
                 )}>
                   {d.distribution.length}
                 </p>
@@ -168,7 +168,7 @@ export function HomeExpenseGovernanceIntelligenceCard() {
                 <p>Total: <span className="font-medium text-slate-600">£{d.volume.total_amount.toFixed(2)}</span></p>
                 <p>Average: <span className="font-medium text-slate-600">£{d.volume.avg_amount.toFixed(2)}</span></p>
                 <p>Drafts: <span className={cn("font-medium",
-                  d.volume.draft_count === 0 ? "text-green-600" : "text-amber-600"
+                  d.volume.draft_count === 0 ? "text-[--cs-success]" : "text-[--cs-warning]"
                 )}>{d.volume.draft_count}</span></p>
               </div>
             </div>
@@ -176,17 +176,17 @@ export function HomeExpenseGovernanceIntelligenceCard() {
               <p className="font-medium text-slate-700 mb-1">Compliance</p>
               <div className="space-y-0.5 text-[10px] text-muted-foreground">
                 <p>Child-linked: <span className={cn("font-medium",
-                  d.compliance.child_linked_rate >= 40 ? "text-green-600" :
-                  d.compliance.child_linked_rate >= 25 ? "text-amber-600" : "text-red-600"
+                  d.compliance.child_linked_rate >= 40 ? "text-[--cs-success]" :
+                  d.compliance.child_linked_rate >= 25 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>{d.compliance.child_linked_rate}%</span></p>
                 <p>Controlled pay: <span className={cn("font-medium",
-                  (d.compliance.house_card_rate + d.compliance.petty_cash_rate) >= 50 ? "text-green-600" : "text-amber-600"
+                  (d.compliance.house_card_rate + d.compliance.petty_cash_rate) >= 50 ? "text-[--cs-success]" : "text-[--cs-warning]"
                 )}>{d.compliance.house_card_rate + d.compliance.petty_cash_rate}%</span></p>
                 <p>Approvers: <span className={cn("font-medium",
-                  d.approval.unique_approvers >= 2 ? "text-green-600" : "text-amber-600"
+                  d.approval.unique_approvers >= 2 ? "text-[--cs-success]" : "text-[--cs-warning]"
                 )}>{d.approval.unique_approvers}</span></p>
                 <p>Pending £: <span className={cn("font-medium",
-                  d.approval.pending_amount === 0 ? "text-green-600" : "text-amber-600"
+                  d.approval.pending_amount === 0 ? "text-[--cs-success]" : "text-[--cs-warning]"
                 )}>£{d.approval.pending_amount.toFixed(2)}</span></p>
               </div>
             </div>
@@ -201,7 +201,7 @@ export function HomeExpenseGovernanceIntelligenceCard() {
               Strengths ({d.strengths.length})
             </p>
             {d.strengths.slice(0, 3).map((s, i) => (
-              <div key={i} className="rounded border border-green-200 bg-green-50 p-2.5 text-xs text-green-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-success-soft] bg-[--cs-success-bg] p-2.5 text-xs text-[--cs-success] leading-relaxed">
                 {s}
               </div>
             ))}
@@ -216,7 +216,7 @@ export function HomeExpenseGovernanceIntelligenceCard() {
               Concerns ({d.concerns.length})
             </p>
             {d.concerns.slice(0, 3).map((c, i) => (
-              <div key={i} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs text-red-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs text-[--cs-risk] leading-relaxed">
                 {c}
               </div>
             ))}

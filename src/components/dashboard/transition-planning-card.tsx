@@ -16,16 +16,16 @@ import { cn } from "@/lib/utils";
 import { useLeavingCareIntelligence } from "@/hooks/use-leaving-care-intelligence";
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high: "border-red-200 bg-red-50 text-red-800",
-  medium: "border-amber-200 bg-amber-50 text-amber-800",
-  low: "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 export function TransitionPlanningCard() {
@@ -74,15 +74,15 @@ export function TransitionPlanningCard() {
             <p className="text-[10px] text-muted-foreground">Eligible</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", overview.plans_overdue_review === 0 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", overview.plans_overdue_review === 0 ? "text-green-600" : "text-amber-600")}>{overview.plans_overdue_review}</p>
+            <p className={cn("text-lg font-bold tabular-nums", overview.plans_overdue_review === 0 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{overview.plans_overdue_review}</p>
             <p className="text-[10px] text-muted-foreground">Overdue</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", overview.avg_independence_score >= 70 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", overview.avg_independence_score >= 70 ? "text-green-600" : "text-amber-600")}>{overview.avg_independence_score}%</p>
+            <p className={cn("text-lg font-bold tabular-nums", overview.avg_independence_score >= 70 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{overview.avg_independence_score}%</p>
             <p className="text-[10px] text-muted-foreground">Avg Score</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", atRisk === 0 ? "bg-green-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", atRisk === 0 ? "text-green-600" : "text-red-600")}>{atRisk}</p>
+            <p className={cn("text-lg font-bold tabular-nums", atRisk === 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>{atRisk}</p>
             <p className="text-[10px] text-muted-foreground">At Risk</p>
           </div>
         </div>
@@ -95,7 +95,7 @@ export function TransitionPlanningCard() {
             {child_readiness.slice(0, 3).map((c) => (
               <div key={c.child_id} className="flex items-center justify-between rounded border p-2.5 text-xs">
                 <span className="font-medium">{c.child_name}</span>
-                <Badge className={cn("text-[9px]", c.readiness_rating === "on_track" ? "bg-green-100 text-green-700" : c.readiness_rating === "at_risk" ? "bg-red-100 text-red-700" : "bg-amber-100 text-amber-700")}>
+                <Badge className={cn("text-[9px]", c.readiness_rating === "on_track" ? "bg-[--cs-success-bg] text-[--cs-success]" : c.readiness_rating === "at_risk" ? "bg-[--cs-risk-bg] text-[--cs-risk]" : "bg-[--cs-warning-bg] text-[--cs-warning]")}>
                   {c.readiness_rating.replace(/_/g, " ")}
                 </Badge>
               </div>

@@ -464,7 +464,7 @@ function QuickActionButton({
     default:
       "border-[var(--cs-border)] bg-white text-[var(--cs-navy)] hover:bg-[var(--cs-surface)]",
     alert:
-      "border-red-200 bg-red-50/50 text-red-700 hover:bg-red-100/50",
+      "border-[--cs-risk-soft] bg-[--cs-risk-bg]/50 text-red-700 hover:bg-red-100/50",
     primary:
       "border-[var(--cs-navy)] bg-[var(--cs-navy)] text-white hover:bg-[var(--cs-navy)]/90",
   };
@@ -623,7 +623,7 @@ function SupportWorkerDashboard({ data }: { data: RoleDashboardData }) {
           icon={ClipboardList}
           title="My Tasks"
           iconBg="bg-amber-50"
-          iconColor="text-amber-600"
+          iconColor="text-[--cs-warning]"
           badge={
             data.overdueTasks > 0 ? (
               <CalmStatusBadge
@@ -768,7 +768,7 @@ function SupportWorkerDashboard({ data }: { data: RoleDashboardData }) {
           icon={AlertTriangle}
           title="Alerts"
           iconBg="bg-red-50"
-          iconColor="text-red-600"
+          iconColor="text-[--cs-risk]"
         />
         <div className="space-y-2">
           {data.missedMedsToday > 0 && (
@@ -901,7 +901,7 @@ function SeniorSupportWorkerDashboard({
           icon={AlertTriangle}
           title="Needs Attention"
           iconBg="bg-red-50"
-          iconColor="text-red-600"
+          iconColor="text-[--cs-risk]"
         />
         <div className="space-y-2">
           {data.oversightQueue.length > 0 && (
@@ -1121,7 +1121,7 @@ function RegisteredManagerDashboard({
           icon={Shield}
           title="Safeguarding Pulse"
           iconBg="bg-red-50"
-          iconColor="text-red-600"
+          iconColor="text-[--cs-risk]"
         />
         <div className="space-y-1">
           <MetricRow
@@ -1174,7 +1174,7 @@ function RegisteredManagerDashboard({
           icon={ClipboardCheck}
           title="Compliance Status"
           iconBg="bg-amber-50"
-          iconColor="text-amber-600"
+          iconColor="text-[--cs-warning]"
         />
         <div className="space-y-1">
           <MetricRow
@@ -1398,7 +1398,7 @@ function ResponsibleIndividualDashboard({
           icon={TrendingUp}
           title="Risk Trends"
           iconBg="bg-red-50"
-          iconColor="text-red-600"
+          iconColor="text-[--cs-risk]"
         />
         {data.highRiskChildren.length > 0 ? (
           <div className="space-y-2">

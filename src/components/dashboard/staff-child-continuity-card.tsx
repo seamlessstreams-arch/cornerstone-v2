@@ -17,15 +17,15 @@ import { cn } from "@/lib/utils";
 import { useStaffChildContinuity } from "@/hooks/use-staff-child-continuity";
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high: "border-red-200 bg-red-50 text-red-800",
-  medium: "border-amber-200 bg-amber-50 text-amber-800",
-  low: "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 const BAND_STYLES: Record<string, { bg: string; text: string }> = {
   strong: { bg: "bg-green-100", text: "text-green-700" },
@@ -79,19 +79,19 @@ export function StaffChildContinuityCard() {
         {/* ── Summary strip ────────────────────────────────────────────── */}
         <div className="grid grid-cols-4 gap-2">
           <div className={cn("text-center rounded-lg p-2.5", o.avg_continuity_index >= 75 ? "bg-green-50" : o.avg_continuity_index >= 55 ? "bg-blue-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.avg_continuity_index >= 75 ? "text-green-600" : o.avg_continuity_index >= 55 ? "text-blue-600" : "text-amber-600")}>{o.avg_continuity_index}</p>
+            <p className={cn("text-lg font-bold tabular-nums", o.avg_continuity_index >= 75 ? "text-[--cs-success]" : o.avg_continuity_index >= 55 ? "text-blue-600" : "text-[--cs-warning]")}>{o.avg_continuity_index}</p>
             <p className="text-[10px] text-muted-foreground">Avg index</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", o.fragmented_count > 0 ? "bg-amber-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.fragmented_count > 0 ? "text-amber-600" : "text-green-600")}>{o.fragmented_count}</p>
+            <p className={cn("text-lg font-bold tabular-nums", o.fragmented_count > 0 ? "text-[--cs-warning]" : "text-[--cs-success]")}>{o.fragmented_count}</p>
             <p className="text-[10px] text-muted-foreground">Fragmented</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", o.no_key_worker_count > 0 ? "bg-red-50" : "bg-gray-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.no_key_worker_count > 0 ? "text-red-600" : "text-gray-500")}>{o.no_key_worker_count}</p>
+            <p className={cn("text-lg font-bold tabular-nums", o.no_key_worker_count > 0 ? "text-[--cs-risk]" : "text-gray-500")}>{o.no_key_worker_count}</p>
             <p className="text-[10px] text-muted-foreground">No KW</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", o.inactive_key_worker_count > 0 ? "bg-red-50" : "bg-gray-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.inactive_key_worker_count > 0 ? "text-red-600" : "text-gray-500")}>{o.inactive_key_worker_count}</p>
+            <p className={cn("text-lg font-bold tabular-nums", o.inactive_key_worker_count > 0 ? "text-[--cs-risk]" : "text-gray-500")}>{o.inactive_key_worker_count}</p>
             <p className="text-[10px] text-muted-foreground">KW left</p>
           </div>
         </div>

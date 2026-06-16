@@ -13,15 +13,15 @@ import { cn } from "@/lib/utils";
 import { useWorkforceIntelligence } from "@/hooks/use-workforce-intelligence";
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const TREND_CONFIG = {
-  increasing: { icon: TrendingUp, color: "text-red-600", label: "Increasing" },
+  increasing: { icon: TrendingUp, color: "text-[--cs-risk]", label: "Increasing" },
   stable: { icon: Minus, color: "text-blue-600", label: "Stable" },
-  decreasing: { icon: TrendingDown, color: "text-green-600", label: "Decreasing" },
+  decreasing: { icon: TrendingDown, color: "text-[--cs-success]", label: "Decreasing" },
 };
 
 export function StaffAnnualLeaveCard() {
@@ -61,11 +61,11 @@ export function StaffAnnualLeaveCard() {
         {/* ── Summary strip ──────────────────────────────────────────── */}
         <div className="grid grid-cols-4 gap-2">
           <div className={cn("text-center rounded-lg p-2", sickness.total_sick_days_this_month > 10 ? "bg-red-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", sickness.total_sick_days_this_month > 10 ? "text-red-600" : "text-green-600")}>{sickness.total_sick_days_this_month}</p>
+            <p className={cn("text-lg font-bold tabular-nums", sickness.total_sick_days_this_month > 10 ? "text-[--cs-risk]" : "text-[--cs-success]")}>{sickness.total_sick_days_this_month}</p>
             <p className="text-[10px] text-muted-foreground">Sick Days</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", sickness.staff_with_sickness > 3 ? "bg-amber-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", sickness.staff_with_sickness > 3 ? "text-amber-600" : "text-green-600")}>{sickness.staff_with_sickness}</p>
+            <p className={cn("text-lg font-bold tabular-nums", sickness.staff_with_sickness > 3 ? "text-[--cs-warning]" : "text-[--cs-success]")}>{sickness.staff_with_sickness}</p>
             <p className="text-[10px] text-muted-foreground">Staff Sick</p>
           </div>
           <div className="text-center rounded-lg p-2 bg-sky-50">
@@ -75,7 +75,7 @@ export function StaffAnnualLeaveCard() {
             <p className="text-[10px] text-muted-foreground">{trend.label}</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", staffing.coverage_rate >= 95 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", staffing.coverage_rate >= 95 ? "text-green-600" : "text-amber-600")}>{staffing.coverage_rate}%</p>
+            <p className={cn("text-lg font-bold tabular-nums", staffing.coverage_rate >= 95 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{staffing.coverage_rate}%</p>
             <p className="text-[10px] text-muted-foreground">Coverage</p>
           </div>
         </div>
@@ -94,7 +94,7 @@ export function StaffAnnualLeaveCard() {
             </div>
             <div className="flex items-center justify-between text-xs">
               <span className="text-muted-foreground">Unfilled</span>
-              <span className={cn("font-bold tabular-nums", staffing.shifts_unfilled > 0 ? "text-red-600" : "text-green-600")}>{staffing.shifts_unfilled}</span>
+              <span className={cn("font-bold tabular-nums", staffing.shifts_unfilled > 0 ? "text-[--cs-risk]" : "text-[--cs-success]")}>{staffing.shifts_unfilled}</span>
             </div>
             <div className="flex items-center justify-between text-xs">
               <span className="text-muted-foreground">Last Month Sick</span>

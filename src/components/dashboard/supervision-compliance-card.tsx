@@ -122,7 +122,7 @@ export function SupervisionComplianceCard() {
             <span className="text-[var(--cs-text-muted)]">Compliance</span>
             <span className={cn(
               "font-bold tabular-nums",
-              compliancePct >= 90 ? "text-emerald-600" : compliancePct >= 75 ? "text-amber-600" : "text-red-600",
+              compliancePct >= 90 ? "text-emerald-600" : compliancePct >= 75 ? "text-[--cs-warning]" : "text-[--cs-risk]",
             )}>
               {compliancePct}%
             </span>
@@ -146,7 +146,7 @@ export function SupervisionComplianceCard() {
             </span>
             <span className={cn(
               "font-bold tabular-nums",
-              avgWellbeing >= 4 ? "text-emerald-600" : avgWellbeing >= 3 ? "text-amber-600" : "text-red-600",
+              avgWellbeing >= 4 ? "text-emerald-600" : avgWellbeing >= 3 ? "text-[--cs-warning]" : "text-[--cs-risk]",
             )}>
               {avgWellbeing}/5
             </span>

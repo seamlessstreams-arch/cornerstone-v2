@@ -28,21 +28,21 @@ const HEALTH_STYLES: Record<VoiceHealth, { bg: string; text: string; border: str
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const REC_STYLES: Record<string, string> = {
-  immediate: "border-red-200 bg-red-50 text-red-800",
-  soon: "border-amber-200 bg-amber-50 text-amber-800",
-  planned: "border-blue-200 bg-blue-50 text-blue-800",
+  immediate: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  soon: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  planned: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 function scoreColor(score: number): string {
-  if (score >= 70) return "text-green-600";
-  if (score >= 40) return "text-amber-600";
-  return "text-red-600";
+  if (score >= 70) return "text-[--cs-success]";
+  if (score >= 40) return "text-[--cs-warning]";
+  return "text-[--cs-risk]";
 }
 
 function scoreBg(score: number): string {
@@ -99,7 +99,7 @@ export function ChildVoiceParticipationCard() {
             <div className="min-w-0">
               <p className="font-medium text-slate-700">LAC Review Participation</p>
               <p className="text-[10px] text-muted-foreground">
-                <span className={rp.participation_rate >= 80 ? "text-green-600" : rp.participation_rate >= 50 ? "text-amber-600" : "text-red-600"}>
+                <span className={rp.participation_rate >= 80 ? "text-[--cs-success]" : rp.participation_rate >= 50 ? "text-[--cs-warning]" : "text-[--cs-risk]"}>
                   {rp.participation_rate}%
                 </span>
                 {" "}({rp.total_reviews_90d} reviews in 90d)
@@ -111,7 +111,7 @@ export function ChildVoiceParticipationCard() {
             <div className="min-w-0">
               <p className="font-medium text-slate-700">Advocacy Access</p>
               <p className="text-[10px] text-muted-foreground">
-                <span className={ao.children_with_advocacy > 0 ? "text-green-600" : "text-red-600"}>
+                <span className={ao.children_with_advocacy > 0 ? "text-[--cs-success]" : "text-[--cs-risk]"}>
                   {ao.children_with_advocacy} child{ao.children_with_advocacy !== 1 ? "ren" : ""}
                 </span>
                 {ao.active_referrals > 0 && <span> · {ao.active_referrals} active</span>}
@@ -128,7 +128,7 @@ export function ChildVoiceParticipationCard() {
             <div className="min-w-0">
               <p className="font-medium text-slate-700">Key Work Engagement</p>
               <p className="text-[10px] text-muted-foreground">
-                <span className={kw.engagement_rate >= 80 ? "text-green-600" : kw.engagement_rate >= 50 ? "text-amber-600" : "text-red-600"}>
+                <span className={kw.engagement_rate >= 80 ? "text-[--cs-success]" : kw.engagement_rate >= 50 ? "text-[--cs-warning]" : "text-[--cs-risk]"}>
                   {kw.engagement_rate}% engaged
                 </span>
                 {" "}({kw.total_sessions_30d} sessions in 30d)
@@ -142,11 +142,11 @@ export function ChildVoiceParticipationCard() {
               <p className="text-[10px] text-muted-foreground">
                 {fb.total_90d > 0 ? (
                   <>
-                    <span className={fb.response_rate >= 80 ? "text-green-600" : "text-amber-600"}>
+                    <span className={fb.response_rate >= 80 ? "text-[--cs-success]" : "text-[--cs-warning]"}>
                       {fb.response_rate}% responded
                     </span>
                     {" "}({fb.total_90d} in 90d)
-                    {fb.open_count > 0 && <span className="text-red-600"> · {fb.open_count} open</span>}
+                    {fb.open_count > 0 && <span className="text-[--cs-risk]"> · {fb.open_count} open</span>}
                   </>
                 ) : (
                   <span className="text-slate-500">No feedback recorded</span>
@@ -176,7 +176,7 @@ export function ChildVoiceParticipationCard() {
               <p className="text-[10px] text-muted-foreground">Declined</p>
             </div>
             <div className={cn("text-center rounded-lg p-2", rp.did_not_participate_count > 0 ? "bg-red-50" : "bg-slate-50")}>
-              <p className={cn("text-lg font-bold tabular-nums", rp.did_not_participate_count > 0 ? "text-red-600" : "text-slate-400")}>{rp.did_not_participate_count}</p>
+              <p className={cn("text-lg font-bold tabular-nums", rp.did_not_participate_count > 0 ? "text-[--cs-risk]" : "text-slate-400")}>{rp.did_not_participate_count}</p>
               <p className="text-[10px] text-muted-foreground">No Part.</p>
             </div>
           </div>
@@ -201,14 +201,14 @@ export function ChildVoiceParticipationCard() {
 
         {/* Top Advocacy Issues */}
         {(ao.top_issues?.length ?? 0) > 0 && (
-          <div className="rounded border border-purple-200 bg-purple-50 p-2 text-xs">
+          <div className="rounded border border-[--cs-oversight-soft] bg-[--cs-oversight-bg] p-2 text-xs">
             <p className="font-medium text-purple-700 flex items-center gap-1 mb-1">
               <Megaphone className="h-3 w-3" />
               Advocacy Issues Raised
             </p>
             <div className="flex flex-wrap gap-1">
               {(ao.top_issues ?? []).slice(0, 5).map((issue, i) => (
-                <span key={i} className="inline-flex items-center gap-1 bg-white/60 rounded px-1.5 py-0.5 text-[10px] text-purple-800 border border-purple-200">
+                <span key={i} className="inline-flex items-center gap-1 bg-white/60 rounded px-1.5 py-0.5 text-[10px] text-[--cs-oversight] border border-purple-200">
                   {issue.issue} <span className="font-bold">{issue.count}</span>
                 </span>
               ))}
@@ -230,16 +230,16 @@ export function ChildVoiceParticipationCard() {
                     <span className="font-medium text-slate-800">{cp.child_name}</span>
                     <span className={cn("text-[10px] font-bold tabular-nums", scoreColor(cp.voice_score))}>{cp.voice_score}%</span>
                     {cp.review_participated && (
-                      <span className="text-[10px] bg-green-100 text-green-700 px-1 rounded">Review</span>
+                      <span className="text-[10px] bg-[--cs-success-bg] text-[--cs-success] px-1 rounded">Review</span>
                     )}
                     {cp.has_advocacy && (
-                      <span className="text-[10px] bg-purple-100 text-purple-700 px-1 rounded">Advocacy</span>
+                      <span className="text-[10px] bg-[--cs-oversight-bg] text-[--cs-oversight] px-1 rounded">Advocacy</span>
                     )}
                     {cp.key_work_sessions_30d > 0 && (
                       <span className="text-[10px] bg-cyan-100 text-cyan-700 px-1 rounded">{cp.key_work_sessions_30d} KW</span>
                     )}
                     {cp.feedback_given && (
-                      <span className="text-[10px] bg-blue-100 text-blue-700 px-1 rounded">Feedback</span>
+                      <span className="text-[10px] bg-[--cs-info-bg] text-[--cs-info] px-1 rounded">Feedback</span>
                     )}
                   </div>
                   {(cp.flags?.length ?? 0) > 0 && (
@@ -284,7 +284,7 @@ export function ChildVoiceParticipationCard() {
               Strengths ({d.strengths.length})
             </p>
             {d.strengths.slice(0, 3).map((s, i) => (
-              <div key={i} className="rounded border border-green-200 bg-green-50 p-2.5 text-xs text-green-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-success-soft] bg-[--cs-success-bg] p-2.5 text-xs text-[--cs-success] leading-relaxed">
                 {s}
               </div>
             ))}
@@ -299,7 +299,7 @@ export function ChildVoiceParticipationCard() {
               Concerns ({d.concerns.length})
             </p>
             {d.concerns.slice(0, 3).map((c, i) => (
-              <div key={i} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs text-red-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs text-[--cs-risk] leading-relaxed">
                 {c}
               </div>
             ))}

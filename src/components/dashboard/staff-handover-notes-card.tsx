@@ -14,9 +14,9 @@ import { cn } from "@/lib/utils";
 import { useWorkforceIntelligence } from "@/hooks/use-workforce-intelligence";
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 export function StaffHandoverNotesCard() {
@@ -64,7 +64,7 @@ export function StaffHandoverNotesCard() {
             <p className="text-[10px] text-muted-foreground">Shifts/wk</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", staffing.coverage_rate >= 95 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", staffing.coverage_rate >= 95 ? "text-green-600" : "text-amber-600")}>{staffing.coverage_rate}%</p>
+            <p className={cn("text-lg font-bold tabular-nums", staffing.coverage_rate >= 95 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{staffing.coverage_rate}%</p>
             <p className="text-[10px] text-muted-foreground">Coverage</p>
           </div>
           <div className="text-center rounded-lg bg-blue-50 p-2.5">
@@ -72,7 +72,7 @@ export function StaffHandoverNotesCard() {
             <p className="text-[10px] text-muted-foreground">On Shift</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", staffing.no_shows_this_month === 0 ? "bg-green-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", staffing.no_shows_this_month === 0 ? "text-green-600" : "text-red-600")}>{staffing.no_shows_this_month}</p>
+            <p className={cn("text-lg font-bold tabular-nums", staffing.no_shows_this_month === 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>{staffing.no_shows_this_month}</p>
             <p className="text-[10px] text-muted-foreground">No Shows</p>
           </div>
         </div>

@@ -29,15 +29,15 @@ const RATING_STYLES: Record<MedicationManagementRating, { bg: string; text: stri
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const REC_STYLES: Record<string, string> = {
-  immediate: "border-red-200 bg-red-50 text-red-800",
-  soon: "border-amber-200 bg-amber-50 text-amber-800",
-  planned: "border-blue-200 bg-blue-50 text-blue-800",
+  immediate: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  soon: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  planned: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -83,7 +83,7 @@ export function HomeMedicationManagementIntelligenceCard() {
       <CardHeader className={cn("pb-3", isAlert ? "bg-red-50" : "bg-slate-50/50")}>
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm flex items-center gap-2">
-            <Pill className={cn("h-4 w-4", isAlert ? "text-red-600" : "text-emerald-500")} />
+            <Pill className={cn("h-4 w-4", isAlert ? "text-[--cs-risk]" : "text-emerald-500")} />
             <span className="text-slate-900">Medication Management</span>
             <span className={cn("text-[10px] font-bold px-2 py-0.5 rounded-full border", ratingStyle.bg, ratingStyle.text, ratingStyle.border)}>
               {ratingStyle.label}
@@ -106,8 +106,8 @@ export function HomeMedicationManagementIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <ShieldCheck className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.administration.compliance_rate >= 95 ? "text-green-600" :
-                  d.administration.compliance_rate >= 85 ? "text-amber-600" : "text-red-600"
+                  d.administration.compliance_rate >= 95 ? "text-[--cs-success]" :
+                  d.administration.compliance_rate >= 85 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.administration.compliance_rate}%
                 </p>
@@ -120,8 +120,8 @@ export function HomeMedicationManagementIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Eye className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.witnessing.witnessing_rate >= 95 ? "text-green-600" :
-                  d.witnessing.witnessing_rate >= 80 ? "text-amber-600" : "text-red-600"
+                  d.witnessing.witnessing_rate >= 95 ? "text-[--cs-success]" :
+                  d.witnessing.witnessing_rate >= 80 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.witnessing.witnessing_rate}%
                 </p>
@@ -134,8 +134,8 @@ export function HomeMedicationManagementIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Clock className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.administration.on_time_rate >= 90 ? "text-green-600" :
-                  d.administration.on_time_rate >= 75 ? "text-amber-600" : "text-red-600"
+                  d.administration.on_time_rate >= 90 ? "text-[--cs-success]" :
+                  d.administration.on_time_rate >= 75 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.administration.on_time_rate}%
                 </p>
@@ -148,8 +148,8 @@ export function HomeMedicationManagementIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Package className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.errors.total_errors_90d === 0 ? "text-green-600" :
-                  d.errors.total_errors_90d <= 2 ? "text-amber-600" : "text-red-600"
+                  d.errors.total_errors_90d === 0 ? "text-[--cs-success]" :
+                  d.errors.total_errors_90d <= 2 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.errors.total_errors_90d}
                 </p>
@@ -166,18 +166,18 @@ export function HomeMedicationManagementIntelligenceCard() {
               <p className="font-medium text-slate-700 mb-1">Administration</p>
               <div className="space-y-0.5 text-[10px] text-muted-foreground">
                 <p>Given: <span className="font-medium text-slate-600">{d.administration.total_given}</span></p>
-                <p>Late: <span className={cn("font-medium", d.administration.total_late === 0 ? "text-green-600" : "text-amber-600")}>{d.administration.total_late}</span></p>
-                <p>Refused: <span className={cn("font-medium", d.administration.total_refused === 0 ? "text-green-600" : "text-amber-600")}>{d.administration.total_refused}</span></p>
-                <p>Missed: <span className={cn("font-medium", d.administration.total_missed === 0 ? "text-green-600" : "text-red-600")}>{d.administration.total_missed}</span></p>
+                <p>Late: <span className={cn("font-medium", d.administration.total_late === 0 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{d.administration.total_late}</span></p>
+                <p>Refused: <span className={cn("font-medium", d.administration.total_refused === 0 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{d.administration.total_refused}</span></p>
+                <p>Missed: <span className={cn("font-medium", d.administration.total_missed === 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>{d.administration.total_missed}</span></p>
               </div>
             </div>
             <div className="rounded border p-2 text-xs">
               <p className="font-medium text-slate-700 mb-1">Stock & Coverage</p>
               <div className="space-y-0.5 text-[10px] text-muted-foreground">
                 <p>Active meds: <span className="font-medium text-slate-600">{d.coverage.active_medications}</span></p>
-                <p>Low stock: <span className={cn("font-medium", d.stock.low_stock_count === 0 ? "text-green-600" : "text-red-600")}>{d.stock.low_stock_count}</span></p>
+                <p>Low stock: <span className={cn("font-medium", d.stock.low_stock_count === 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>{d.stock.low_stock_count}</span></p>
                 <p>Stock checks: <span className={cn("font-medium",
-                  d.stock.stock_check_rate >= 90 ? "text-green-600" : "text-amber-600"
+                  d.stock.stock_check_rate >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]"
                 )}>{d.stock.stock_check_rate}%</span></p>
                 <p>Children on meds: <span className="font-medium text-slate-600">{d.coverage.children_on_medication}</span></p>
               </div>
@@ -193,7 +193,7 @@ export function HomeMedicationManagementIntelligenceCard() {
               Strengths ({d.strengths.length})
             </p>
             {d.strengths.slice(0, 3).map((s, i) => (
-              <div key={i} className="rounded border border-green-200 bg-green-50 p-2.5 text-xs text-green-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-success-soft] bg-[--cs-success-bg] p-2.5 text-xs text-[--cs-success] leading-relaxed">
                 {s}
               </div>
             ))}
@@ -208,7 +208,7 @@ export function HomeMedicationManagementIntelligenceCard() {
               Concerns ({d.concerns.length})
             </p>
             {d.concerns.slice(0, 3).map((c, i) => (
-              <div key={i} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs text-red-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs text-[--cs-risk] leading-relaxed">
                 {c}
               </div>
             ))}

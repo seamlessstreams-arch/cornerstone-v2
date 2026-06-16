@@ -20,9 +20,9 @@ const BAND_STYLES: Record<string, { bg: string; text: string }> = {
   poor: { bg: "bg-red-100", text: "text-red-700" },
 };
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 const DIM_HUMAN: Record<string, string> = {
   completeness: "completeness", clarity: "clarity", professionalLanguage: "professional language",
@@ -60,7 +60,7 @@ export function StaffRecordingPracticeCard() {
 
         <div className="grid grid-cols-3 gap-2">
           <div className={cn("text-center rounded-lg p-2.5", o.home_avg_overall >= 80 ? "bg-green-50" : o.home_avg_overall >= 65 ? "bg-blue-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.home_avg_overall >= 80 ? "text-green-600" : o.home_avg_overall >= 65 ? "text-blue-600" : "text-amber-600")}>{o.home_avg_overall}</p>
+            <p className={cn("text-lg font-bold tabular-nums", o.home_avg_overall >= 80 ? "text-[--cs-success]" : o.home_avg_overall >= 65 ? "text-blue-600" : "text-[--cs-warning]")}>{o.home_avg_overall}</p>
             <p className="text-[10px] text-muted-foreground">Team avg</p>
           </div>
           <div className="text-center rounded-lg bg-gray-50 p-2.5">
@@ -68,7 +68,7 @@ export function StaffRecordingPracticeCard() {
             <p className="text-[10px] text-muted-foreground">Staff</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", o.needing_support > 0 ? "bg-amber-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.needing_support > 0 ? "text-amber-600" : "text-green-600")}>{o.needing_support}</p>
+            <p className={cn("text-lg font-bold tabular-nums", o.needing_support > 0 ? "text-[--cs-warning]" : "text-[--cs-success]")}>{o.needing_support}</p>
             <p className="text-[10px] text-muted-foreground">Need support</p>
           </div>
         </div>

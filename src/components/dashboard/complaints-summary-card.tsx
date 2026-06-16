@@ -104,7 +104,7 @@ export function ComplaintsSummaryCard() {
             Complaints
           </CardTitle>
           <Link href="/complaints">
-            <Badge className="text-[9px] bg-orange-100 text-orange-700 border-0 rounded-full hover:bg-orange-200 cursor-pointer">
+            <Badge className="text-[9px] bg-[--cs-warning-soft] text-[--cs-warning] border-0 rounded-full hover:bg-orange-200 cursor-pointer">
               View all
             </Badge>
           </Link>

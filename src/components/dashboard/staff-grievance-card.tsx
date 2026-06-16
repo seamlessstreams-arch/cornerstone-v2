@@ -15,9 +15,9 @@ import { cn } from "@/lib/utils";
 import { useWorkforceIntelligence } from "@/hooks/use-workforce-intelligence";
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 export function StaffGrievanceCard() {
@@ -68,15 +68,15 @@ export function StaffGrievanceCard() {
             <p className="text-[10px] text-muted-foreground">Staff</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", sickness.staff_with_sickness === 0 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", sickness.staff_with_sickness === 0 ? "text-green-600" : "text-amber-600")}>{sickness.staff_with_sickness}</p>
+            <p className={cn("text-lg font-bold tabular-nums", sickness.staff_with_sickness === 0 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{sickness.staff_with_sickness}</p>
             <p className="text-[10px] text-muted-foreground">Sick</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", supervisionRate >= 90 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", supervisionRate >= 90 ? "text-green-600" : "text-amber-600")}>{supervisionRate}%</p>
+            <p className={cn("text-lg font-bold tabular-nums", supervisionRate >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{supervisionRate}%</p>
             <p className="text-[10px] text-muted-foreground">Supervision</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", staffing.shifts_unfilled === 0 ? "bg-green-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", staffing.shifts_unfilled === 0 ? "text-green-600" : "text-red-600")}>{staffing.shifts_unfilled}</p>
+            <p className={cn("text-lg font-bold tabular-nums", staffing.shifts_unfilled === 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>{staffing.shifts_unfilled}</p>
             <p className="text-[10px] text-muted-foreground">Unfilled</p>
           </div>
         </div>
@@ -89,7 +89,7 @@ export function StaffGrievanceCard() {
             {supervision.staff_overdue.slice(0, 3).map((s) => (
               <div key={s.staff_id} className="flex items-center justify-between rounded border p-2.5 text-xs">
                 <span className="font-medium">{s.staff_name}</span>
-                <Badge className="text-[9px] bg-red-100 text-red-700">{s.days_overdue}d overdue</Badge>
+                <Badge className="text-[9px] bg-[--cs-risk-bg] text-[--cs-risk]">{s.days_overdue}d overdue</Badge>
               </div>
             ))}
           </div>

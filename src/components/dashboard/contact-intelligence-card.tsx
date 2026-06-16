@@ -19,16 +19,16 @@ import { useContactEngagement } from "@/hooks/use-contact-engagement";
 // ── Colour maps ────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high: "border-red-200 bg-red-50 text-red-800",
-  medium: "border-amber-200 bg-amber-50 text-amber-800",
-  low: "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ────────────────────────────────────────────────────────────────
@@ -73,25 +73,25 @@ export function ContactIntelligenceCard() {
 
         <div className="grid grid-cols-4 gap-2">
           <div className="text-center rounded-lg p-2" style={{ background: c.contact_plan_rate >= 80 ? "hsl(var(--chart-2) / 0.1)" : "hsl(var(--destructive) / 0.08)" }}>
-            <p className={cn("text-lg font-bold tabular-nums", c.contact_plan_rate >= 80 ? "text-green-600" : "text-amber-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", c.contact_plan_rate >= 80 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
               {c.contact_plan_rate}%
             </p>
             <p className="text-[10px] text-muted-foreground">Plan Rate</p>
           </div>
           <div className="text-center rounded-lg p-2" style={{ background: c.frequency_met_rate >= 80 ? "hsl(var(--chart-2) / 0.1)" : "hsl(var(--destructive) / 0.08)" }}>
-            <p className={cn("text-lg font-bold tabular-nums", c.frequency_met_rate >= 80 ? "text-green-600" : "text-amber-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", c.frequency_met_rate >= 80 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
               {c.frequency_met_rate}%
             </p>
             <p className="text-[10px] text-muted-foreground">Freq Met</p>
           </div>
           <div className="text-center rounded-lg p-2" style={{ background: c.supervised_rate >= 80 ? "hsl(var(--chart-2) / 0.1)" : "hsl(var(--destructive) / 0.08)" }}>
-            <p className={cn("text-lg font-bold tabular-nums", c.supervised_rate >= 80 ? "text-green-600" : "text-amber-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", c.supervised_rate >= 80 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
               {c.supervised_rate}%
             </p>
             <p className="text-[10px] text-muted-foreground">Supervised</p>
           </div>
           <div className="text-center rounded-lg p-2" style={{ background: c.risk_assessed_rate >= 80 ? "hsl(var(--chart-2) / 0.1)" : "hsl(var(--destructive) / 0.08)" }}>
-            <p className={cn("text-lg font-bold tabular-nums", c.risk_assessed_rate >= 80 ? "text-green-600" : "text-amber-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", c.risk_assessed_rate >= 80 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
               {c.risk_assessed_rate}%
             </p>
             <p className="text-[10px] text-muted-foreground">Risk Assessed</p>
@@ -111,13 +111,13 @@ export function ContactIntelligenceCard() {
               <p className="text-[10px] text-muted-foreground">Attended</p>
             </div>
             <div className="rounded-lg border p-2">
-              <p className={cn("text-sm font-bold tabular-nums", ft.cancelled_by_family > 0 ? "text-amber-600" : "text-green-600")}>
+              <p className={cn("text-sm font-bold tabular-nums", ft.cancelled_by_family > 0 ? "text-[--cs-warning]" : "text-[--cs-success]")}>
                 {ft.cancelled_by_family}
               </p>
               <p className="text-[10px] text-muted-foreground">Cancelled (Family)</p>
             </div>
             <div className="rounded-lg border p-2">
-              <p className={cn("text-sm font-bold tabular-nums", ft.cancelled_by_la > 0 ? "text-amber-600" : "text-green-600")}>
+              <p className={cn("text-sm font-bold tabular-nums", ft.cancelled_by_la > 0 ? "text-[--cs-warning]" : "text-[--cs-success]")}>
                 {ft.cancelled_by_la}
               </p>
               <p className="text-[10px] text-muted-foreground">Cancelled (LA)</p>
@@ -148,17 +148,17 @@ export function ContactIntelligenceCard() {
               <div key={child.child_id} className="rounded-lg border p-2.5 text-xs flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <span className="font-medium">{child.child_name}</span>
-                  <Badge className={cn("text-[10px]", child.contact_plan ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-700")}>
+                  <Badge className={cn("text-[10px]", child.contact_plan ? "bg-[--cs-success-bg] text-[--cs-success]" : "bg-gray-100 text-gray-700")}>
                     {child.contact_plan ? "Plan active" : "No plan"}
                   </Badge>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-muted-foreground">{child.sessions_30d} sessions</span>
-                  <Badge className={cn("text-[10px]", child.positive_rate >= 75 ? "bg-green-100 text-green-700" : child.positive_rate >= 50 ? "bg-amber-100 text-amber-700" : "bg-red-100 text-red-700")}>
+                  <Badge className={cn("text-[10px]", child.positive_rate >= 75 ? "bg-[--cs-success-bg] text-[--cs-success]" : child.positive_rate >= 50 ? "bg-[--cs-warning-bg] text-[--cs-warning]" : "bg-[--cs-risk-bg] text-[--cs-risk]")}>
                     {child.positive_rate}% positive
                   </Badge>
                   {child.missed_rate > 20 && (
-                    <Badge className="text-[10px] bg-red-100 text-red-700">
+                    <Badge className="text-[10px] bg-[--cs-risk-bg] text-[--cs-risk]">
                       {child.missed_rate}% missed
                     </Badge>
                   )}
@@ -187,7 +187,7 @@ export function ContactIntelligenceCard() {
               </p>
             </div>
           </div>
-          <Badge className={cn("text-[10px]", mood.mood_improvement_rate >= 50 ? "bg-green-100 text-green-700" : "bg-amber-100 text-amber-700")}>
+          <Badge className={cn("text-[10px]", mood.mood_improvement_rate >= 50 ? "bg-[--cs-success-bg] text-[--cs-success]" : "bg-[--cs-warning-bg] text-[--cs-warning]")}>
             {mood.mood_improvement_rate}% improved
           </Badge>
         </div>

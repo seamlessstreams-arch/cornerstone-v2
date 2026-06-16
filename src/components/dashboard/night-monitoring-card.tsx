@@ -20,22 +20,22 @@ import { useNightMonitoring } from "@/hooks/use-night-monitoring";
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high: "border-red-200 bg-red-50 text-red-800",
-  medium: "border-amber-200 bg-amber-50 text-amber-800",
-  low: "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const PATTERN_STYLES: Record<string, string> = {
-  settled: "text-green-600",
-  variable: "text-amber-600",
-  disrupted: "text-red-600",
+  settled: "text-[--cs-success]",
+  variable: "text-[--cs-warning]",
+  disrupted: "text-[--cs-risk]",
 };
 
 // ── Component ────────────────────────────────────────────────────────────────
@@ -87,19 +87,19 @@ export function NightMonitoringCard() {
             <p className="text-[10px] text-muted-foreground">Rounds (7d)</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", o.all_children_checked_rate === 100 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.all_children_checked_rate === 100 ? "text-green-600" : "text-amber-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", o.all_children_checked_rate === 100 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
               {o.all_children_checked_rate}%
             </p>
             <p className="text-[10px] text-muted-foreground">Complete</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", o.building_secure_rate === 100 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.building_secure_rate === 100 ? "text-green-600" : "text-amber-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", o.building_secure_rate === 100 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
               {o.building_secure_rate}%
             </p>
             <p className="text-[10px] text-muted-foreground">Secure</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", o.concern_count_7d === 0 ? "bg-green-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.concern_count_7d === 0 ? "text-green-600" : "text-red-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", o.concern_count_7d === 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>
               {o.concern_count_7d}
             </p>
             <p className="text-[10px] text-muted-foreground">Concerns</p>
@@ -134,12 +134,12 @@ export function NightMonitoringCard() {
                     <span className="text-[10px]">Settles by {child.avg_settled_time}</span>
                   )}
                   {child.concern_count_7d > 0 && (
-                    <Badge className="text-[9px] bg-red-100 text-red-700">
+                    <Badge className="text-[9px] bg-[--cs-risk-bg] text-[--cs-risk]">
                       {child.concern_count_7d} concern
                     </Badge>
                   )}
                   {child.not_in_room_count_7d > 0 && (
-                    <Badge className="text-[9px] bg-red-100 text-red-700">
+                    <Badge className="text-[9px] bg-[--cs-risk-bg] text-[--cs-risk]">
                       not in room
                     </Badge>
                   )}
@@ -162,12 +162,12 @@ export function NightMonitoringCard() {
             </div>
           </div>
           {intel.security.overall_compliance_rate === 100 ? (
-            <Badge className="text-[10px] bg-green-100 text-green-700">
+            <Badge className="text-[10px] bg-[--cs-success-bg] text-[--cs-success]">
               <CheckCircle2 className="h-3 w-3 mr-1" />
               100% secure
             </Badge>
           ) : (
-            <Badge className="text-[10px] bg-amber-100 text-amber-700">
+            <Badge className="text-[10px] bg-[--cs-warning-bg] text-[--cs-warning]">
               {intel.security.overall_compliance_rate}% compliance
             </Badge>
           )}

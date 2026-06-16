@@ -94,19 +94,19 @@ export function SafeguardingIntelligenceCard() {
             <p className="text-[10px] text-muted-foreground">Incidents</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", p.open_incidents > 0 ? "bg-amber-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", p.open_incidents > 0 ? "text-amber-600" : "text-green-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", p.open_incidents > 0 ? "text-[--cs-warning]" : "text-[--cs-success]")}>
               {p.open_incidents}
             </p>
             <p className="text-[10px] text-muted-foreground">Open</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", r.total_restraints_30d > 0 ? "bg-orange-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", r.total_restraints_30d > 0 ? "text-orange-600" : "text-green-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", r.total_restraints_30d > 0 ? "text-orange-600" : "text-[--cs-success]")}>
               {r.total_restraints_90d}
             </p>
             <p className="text-[10px] text-muted-foreground">Restraints</p>
           </div>
           <div className="text-center rounded-lg p-2" style={{ background: ne.compliance_rate >= 100 ? "hsl(var(--chart-2) / 0.1)" : "hsl(var(--destructive) / 0.08)" }}>
-            <p className={cn("text-lg font-bold tabular-nums", ne.compliance_rate >= 100 ? "text-green-600" : "text-amber-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", ne.compliance_rate >= 100 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
               {ne.compliance_rate}%
             </p>
             <p className="text-[10px] text-muted-foreground">Reg 40</p>

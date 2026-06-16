@@ -105,7 +105,7 @@ export function SanctionsRewardsIntelligenceCard({ childId }: SanctionsRewardsIn
   const ratingStyle = RATING_STYLES[data.overallRating] ?? RATING_STYLES.adequate;
   const TrendIcon = TREND_ICONS[data.trend];
   const ratioColor = data.rewardToSanctionRatio >= 4 ? "text-emerald-600" :
-    data.rewardToSanctionRatio >= 2 ? "text-amber-600" : "text-red-600";
+    data.rewardToSanctionRatio >= 2 ? "text-[--cs-warning]" : "text-[--cs-risk]";
 
   return (
     <div className="rounded-xl border border-[var(--cs-border)] bg-white overflow-hidden">
@@ -177,7 +177,7 @@ export function SanctionsRewardsIntelligenceCard({ childId }: SanctionsRewardsIn
                 )}>
                   <AlertTriangle className={cn(
                     "h-3.5 w-3.5 shrink-0 mt-0.5",
-                    isHigh ? "text-red-600" : "text-amber-600",
+                    isHigh ? "text-[--cs-risk]" : "text-[--cs-warning]",
                   )} />
                   <span className={isHigh ? "text-red-700" : "text-amber-700"}>
                     {concern.description}
@@ -196,8 +196,8 @@ export function SanctionsRewardsIntelligenceCard({ childId }: SanctionsRewardsIn
                 key={i}
                 className={cn(
                   "text-[9px]",
-                  flag.status === "not_met" ? "bg-red-100 text-red-700 border-red-200" :
-                  "bg-amber-100 text-amber-700 border-amber-200",
+                  flag.status === "not_met" ? "bg-[--cs-risk-bg] text-[--cs-risk] border-red-200" :
+                  "bg-[--cs-warning-bg] text-[--cs-warning] border-amber-200",
                 )}
                 title={flag.detail}
               >
@@ -222,7 +222,7 @@ export function SanctionsRewardsIntelligenceCard({ childId }: SanctionsRewardsIn
 // ── Sub-component ───────────────────────────────────────────────────────────
 
 function MiniScore({ label, score }: { label: string; score: number }) {
-  const color = score >= 75 ? "text-emerald-600" : score >= 50 ? "text-amber-600" : "text-red-600";
+  const color = score >= 75 ? "text-emerald-600" : score >= 50 ? "text-[--cs-warning]" : "text-[--cs-risk]";
   return (
     <div className="text-center">
       <span className={cn("text-sm font-bold", color)}>{score}</span>

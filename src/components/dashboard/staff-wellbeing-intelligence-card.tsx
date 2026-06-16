@@ -42,29 +42,29 @@ const TREND_ICON = {
 };
 
 const TREND_COLOR = {
-  improving: "text-green-600",
+  improving: "text-[--cs-success]",
   stable: "text-slate-500",
-  declining: "text-red-600",
+  declining: "text-[--cs-risk]",
   no_data: "text-slate-400",
 };
 
 const WARNING_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high: "border-amber-200 bg-amber-50 text-amber-800",
-  medium: "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  medium: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const ACTION_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high: "border-amber-200 bg-amber-50 text-amber-800",
-  medium: "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  medium: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
   low: "border-slate-200 bg-slate-50 text-slate-700",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -117,11 +117,11 @@ export function StaffWellbeingIntelligenceCard() {
             <p className="text-[10px] text-muted-foreground">Active Staff</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", res.staff_at_risk_count > 0 ? "bg-red-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", res.staff_at_risk_count > 0 ? "text-red-600" : "text-green-600")}>{res.staff_at_risk_count}</p>
+            <p className={cn("text-lg font-bold tabular-nums", res.staff_at_risk_count > 0 ? "text-[--cs-risk]" : "text-[--cs-success]")}>{res.staff_at_risk_count}</p>
             <p className="text-[10px] text-muted-foreground">At Risk</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", pulse.staff_with_no_supervision_60d > 0 ? "bg-amber-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", pulse.staff_with_no_supervision_60d > 0 ? "text-amber-600" : "text-green-600")}>{pulse.staff_with_no_supervision_60d}</p>
+            <p className={cn("text-lg font-bold tabular-nums", pulse.staff_with_no_supervision_60d > 0 ? "text-[--cs-warning]" : "text-[--cs-success]")}>{pulse.staff_with_no_supervision_60d}</p>
             <p className="text-[10px] text-muted-foreground">No Supervision 60d</p>
           </div>
           <div className="text-center rounded-lg bg-slate-50 p-2">
@@ -180,11 +180,11 @@ export function StaffWellbeingIntelligenceCard() {
               <p className="text-[10px] text-muted-foreground">Avg Days/Staff</p>
             </div>
             <div className={cn("text-center rounded-lg p-2", sick.stress_related_pct > 30 ? "bg-red-50" : "bg-slate-50")}>
-              <p className={cn("text-lg font-bold tabular-nums", sick.stress_related_pct > 30 ? "text-red-600" : "text-slate-600")}>{sick.stress_related_pct}%</p>
+              <p className={cn("text-lg font-bold tabular-nums", sick.stress_related_pct > 30 ? "text-[--cs-risk]" : "text-slate-600")}>{sick.stress_related_pct}%</p>
               <p className="text-[10px] text-muted-foreground">Stress-Related</p>
             </div>
             <div className={cn("text-center rounded-lg p-2", sick.staff_with_patterns > 0 ? "bg-amber-50" : "bg-slate-50")}>
-              <p className={cn("text-lg font-bold tabular-nums", sick.staff_with_patterns > 0 ? "text-amber-600" : "text-slate-600")}>{sick.staff_with_patterns}</p>
+              <p className={cn("text-lg font-bold tabular-nums", sick.staff_with_patterns > 0 ? "text-[--cs-warning]" : "text-slate-600")}>{sick.staff_with_patterns}</p>
               <p className="text-[10px] text-muted-foreground">With Patterns</p>
             </div>
             <div className="text-center rounded-lg bg-slate-50 p-2">

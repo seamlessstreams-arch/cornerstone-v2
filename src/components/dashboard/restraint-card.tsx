@@ -20,16 +20,16 @@ import { useRestraintIntelligence } from "@/hooks/use-restraint-intelligence";
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high: "border-red-200 bg-red-50 text-red-800",
-  medium: "border-amber-200 bg-amber-50 text-amber-800",
-  low: "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Compliance bar sub-component ────────────────────────────────────────────
@@ -49,7 +49,7 @@ function ComplianceBar({ label, value }: { label: string; value: number }) {
       </div>
       <span className={cn(
         "w-8 text-right tabular-nums font-medium",
-        value >= 90 ? "text-green-600" : value >= 70 ? "text-amber-600" : "text-red-600",
+        value >= 90 ? "text-[--cs-success]" : value >= 70 ? "text-[--cs-warning]" : "text-[--cs-risk]",
       )}>
         {value}%
       </span>
@@ -102,7 +102,7 @@ export function RestraintCard() {
 
         <div className="grid grid-cols-4 gap-2">
           <div className={cn("text-center rounded-lg p-2.5", o.total_incidents_90d === 0 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.total_incidents_90d === 0 ? "text-green-600" : "text-amber-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", o.total_incidents_90d === 0 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
               {o.total_incidents_90d}
             </p>
             <p className="text-[10px] text-muted-foreground">Total (90d)</p>
@@ -114,13 +114,13 @@ export function RestraintCard() {
             <p className="text-[10px] text-muted-foreground">Avg Duration</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", o.incidents_with_injury === 0 ? "bg-green-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.incidents_with_injury === 0 ? "text-green-600" : "text-red-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", o.incidents_with_injury === 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>
               {o.incidents_with_injury}
             </p>
             <p className="text-[10px] text-muted-foreground">Injuries</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", o.total_incidents_30d === 0 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.total_incidents_30d === 0 ? "text-green-600" : "text-amber-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", o.total_incidents_30d === 0 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
               {o.total_incidents_30d}
             </p>
             <p className="text-[10px] text-muted-foreground">This Month</p>
@@ -159,9 +159,9 @@ export function RestraintCard() {
                   </div>
                   <Badge className={cn(
                     "text-[10px]",
-                    profile.total_incidents_30d >= 3 ? "bg-red-100 text-red-700" :
-                    profile.total_incidents_30d >= 1 ? "bg-amber-100 text-amber-700" :
-                    "bg-green-100 text-green-700",
+                    profile.total_incidents_30d >= 3 ? "bg-[--cs-risk-bg] text-[--cs-risk]" :
+                    profile.total_incidents_30d >= 1 ? "bg-[--cs-warning-bg] text-[--cs-warning]" :
+                    "bg-[--cs-success-bg] text-[--cs-success]",
                   )}>
                     {profile.total_incidents_30d} this month
                   </Badge>
@@ -173,15 +173,15 @@ export function RestraintCard() {
                   </span>
                   <span className="text-[10px]">{profile.total_incidents_90d} in 90d</span>
                   {profile.injuries_count > 0 && (
-                    <Badge className="text-[9px] bg-red-100 text-red-700">
+                    <Badge className="text-[9px] bg-[--cs-risk-bg] text-[--cs-risk]">
                       {profile.injuries_count} injury
                     </Badge>
                   )}
                   {profile.frequency_trend !== "insufficient_data" && (
                     <span className={cn(
                       "text-[10px] font-medium",
-                      profile.frequency_trend === "decreasing" ? "text-green-600" :
-                      profile.frequency_trend === "increasing" ? "text-red-600" :
+                      profile.frequency_trend === "decreasing" ? "text-[--cs-success]" :
+                      profile.frequency_trend === "increasing" ? "text-[--cs-risk]" :
                       "text-gray-500",
                     )}>
                       {profile.frequency_trend}

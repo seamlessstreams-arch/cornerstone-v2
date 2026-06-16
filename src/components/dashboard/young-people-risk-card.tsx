@@ -22,8 +22,8 @@ import {
 // ── Risk level colours ───────────────────────────────────────────────────────
 
 function riskBadgeColour(flagCount: number): string {
-  if (flagCount >= 3) return "bg-red-100 text-red-700 border-red-200";
-  if (flagCount >= 1) return "bg-amber-100 text-amber-700 border-amber-200";
+  if (flagCount >= 3) return "bg-[--cs-risk-bg] text-[--cs-risk] border-red-200";
+  if (flagCount >= 1) return "bg-[--cs-warning-bg] text-[--cs-warning] border-amber-200";
   return "bg-emerald-100 text-emerald-700 border-emerald-200";
 }
 

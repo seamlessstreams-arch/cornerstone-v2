@@ -20,16 +20,16 @@ import { usePremisesSafetyIntelligence } from "@/hooks/use-premises-safety-intel
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high:     "border-red-200 bg-red-50 text-red-800",
-  medium:   "border-amber-200 bg-amber-50 text-amber-800",
-  low:      "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high:     "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium:   "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low:      "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -82,7 +82,7 @@ export function EnvironmentalAuditCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.compliance_rate >= 90 ? "text-green-600" : "text-amber-600",
+              o.compliance_rate >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]",
             )}>
               {o.compliance_rate}%
             </p>
@@ -100,7 +100,7 @@ export function EnvironmentalAuditCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.checks_failed === 0 ? "text-green-600" : "text-red-600",
+              o.checks_failed === 0 ? "text-[--cs-success]" : "text-[--cs-risk]",
             )}>
               {o.checks_failed}
             </p>
@@ -112,7 +112,7 @@ export function EnvironmentalAuditCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.maintenance_open === 0 ? "text-green-600" : "text-amber-600",
+              o.maintenance_open === 0 ? "text-[--cs-success]" : "text-[--cs-warning]",
             )}>
               {o.maintenance_open}
             </p>
@@ -159,7 +159,7 @@ export function EnvironmentalAuditCard() {
                 <div className="flex items-center gap-1.5 ml-2">
                   <Badge variant="outline" className="text-[10px] tabular-nums">{m.open} open</Badge>
                   {m.urgent_count > 0 && (
-                    <Badge className="text-[10px] bg-red-100 text-red-700">{m.urgent_count} urgent</Badge>
+                    <Badge className="text-[10px] bg-[--cs-risk-bg] text-[--cs-risk]">{m.urgent_count} urgent</Badge>
                   )}
                 </div>
               </div>

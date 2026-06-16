@@ -17,16 +17,16 @@ import { useComplaintsIntelligence } from "@/hooks/use-complaints-intelligence";
 // ── Styling maps ────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high: "border-red-200 bg-red-50 text-red-800",
-  medium: "border-amber-200 bg-amber-50 text-amber-800",
-  low: "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ────────────────────────────────────────────────────────────────
@@ -73,7 +73,7 @@ export function ComplaintsIntelligenceCard() {
             <p className="text-[10px] text-muted-foreground">Total</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", o.open_count > 0 ? "bg-amber-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.open_count > 0 ? "text-amber-600" : "text-green-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", o.open_count > 0 ? "text-[--cs-warning]" : "text-[--cs-success]")}>
               {o.open_count}
             </p>
             <p className="text-[10px] text-muted-foreground">Open</p>
@@ -83,7 +83,7 @@ export function ComplaintsIntelligenceCard() {
             <p className="text-[10px] text-muted-foreground">Avg Response</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", o.satisfaction_rate >= 80 ? "bg-green-50" : o.satisfaction_rate >= 50 ? "bg-amber-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.satisfaction_rate >= 80 ? "text-green-600" : o.satisfaction_rate >= 50 ? "text-amber-600" : "text-red-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", o.satisfaction_rate >= 80 ? "text-[--cs-success]" : o.satisfaction_rate >= 50 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>
               {o.satisfaction_rate}%
             </p>
             <p className="text-[10px] text-muted-foreground">Satisfied</p>
@@ -109,7 +109,7 @@ export function ComplaintsIntelligenceCard() {
                     </p>
                   </div>
                 </div>
-                <Badge className={cn("text-[10px] shrink-0 ml-2", c.days_open > 20 ? "bg-red-100 text-red-700" : c.days_open > 10 ? "bg-amber-100 text-amber-700" : "bg-gray-100 text-gray-600")}>
+                <Badge className={cn("text-[10px] shrink-0 ml-2", c.days_open > 20 ? "bg-[--cs-risk-bg] text-[--cs-risk]" : c.days_open > 10 ? "bg-[--cs-warning-bg] text-[--cs-warning]" : "bg-[--cs-bg] text-[--cs-text-secondary]")}>
                   {c.days_open}d
                 </Badge>
               </div>

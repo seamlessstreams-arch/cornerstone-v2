@@ -20,22 +20,22 @@ import { useLeavingCareIntelligence } from "@/hooks/use-leaving-care-intelligenc
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high:     "border-red-200 bg-red-50 text-red-800",
-  medium:   "border-amber-200 bg-amber-50 text-amber-800",
-  low:      "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high:     "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium:   "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low:      "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const READINESS_STYLES: Record<string, string> = {
-  on_track: "bg-green-100 text-green-700",
-  needs_attention: "bg-amber-100 text-amber-700",
-  at_risk: "bg-red-100 text-red-700",
+  on_track: "bg-[--cs-success-bg] text-[--cs-success]",
+  needs_attention: "bg-[--cs-warning-bg] text-[--cs-warning]",
+  at_risk: "bg-[--cs-risk-bg] text-[--cs-risk]",
 };
 
 const READINESS_LABELS: Record<string, string> = {
@@ -100,7 +100,7 @@ export function LeavingCareCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.avg_independence_score >= 60 ? "text-green-600" : o.avg_independence_score >= 40 ? "text-amber-600" : "text-red-600",
+              o.avg_independence_score >= 60 ? "text-[--cs-success]" : o.avg_independence_score >= 40 ? "text-[--cs-warning]" : "text-[--cs-risk]",
             )}>
               {o.avg_independence_score}%
             </p>
@@ -112,7 +112,7 @@ export function LeavingCareCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.plans_overdue_review === 0 ? "text-green-600" : "text-red-600",
+              o.plans_overdue_review === 0 ? "text-[--cs-success]" : "text-[--cs-risk]",
             )}>
               {o.plans_overdue_review}
             </p>
@@ -138,7 +138,7 @@ export function LeavingCareCard() {
               <div key={cr.child_id} className="rounded border p-2.5 text-xs space-y-1">
                 <div className="flex items-center justify-between">
                   <span className="font-medium">{cr.child_name} ({cr.age})</span>
-                  <Badge className={cn("text-[10px]", READINESS_STYLES[cr.readiness_rating] ?? "bg-gray-100 text-gray-600")}>
+                  <Badge className={cn("text-[10px]", READINESS_STYLES[cr.readiness_rating] ?? "bg-[--cs-bg] text-[--cs-text-secondary]")}>
                     {READINESS_LABELS[cr.readiness_rating] ?? cr.readiness_rating}
                   </Badge>
                 </div>
@@ -169,9 +169,9 @@ export function LeavingCareCard() {
                   <span className="truncate flex-1 text-[11px]">{s.skill_label}</span>
                   <Badge className={cn(
                     "text-[9px] px-1",
-                    s.not_started_count > 0 ? "bg-red-100 text-red-700"
-                      : s.developing_count > s.competent_count + s.independent_count ? "bg-amber-100 text-amber-700"
-                      : "bg-green-100 text-green-700",
+                    s.not_started_count > 0 ? "bg-[--cs-risk-bg] text-[--cs-risk]"
+                      : s.developing_count > s.competent_count + s.independent_count ? "bg-[--cs-warning-bg] text-[--cs-warning]"
+                      : "bg-[--cs-success-bg] text-[--cs-success]",
                   )}>
                     {s.independent_count + s.competent_count}/{s.independent_count + s.competent_count + s.developing_count + s.not_started_count}
                   </Badge>
@@ -193,7 +193,7 @@ export function LeavingCareCard() {
             <p className="text-[10px] text-muted-foreground">Support Net</p>
           </div>
           <div>
-            <p className={cn("font-bold tabular-nums", o.avg_skills_competency_rate >= 50 ? "text-green-600" : "text-amber-600")}>
+            <p className={cn("font-bold tabular-nums", o.avg_skills_competency_rate >= 50 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
               {o.avg_skills_competency_rate}%
             </p>
             <p className="text-[10px] text-muted-foreground">Skills Rate</p>

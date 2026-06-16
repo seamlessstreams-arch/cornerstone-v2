@@ -16,9 +16,9 @@ import { cn } from "@/lib/utils";
 import { usePlacementStability } from "@/hooks/use-placement-stability";
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 export function PlacementMatchingAssessmentCard() {
@@ -67,11 +67,11 @@ export function PlacementMatchingAssessmentCard() {
             <p className="text-[10px] text-muted-foreground">Placed</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", home_metrics.average_stability_score >= 70 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", home_metrics.average_stability_score >= 70 ? "text-green-600" : "text-amber-600")}>{home_metrics.average_stability_score}%</p>
+            <p className={cn("text-lg font-bold tabular-nums", home_metrics.average_stability_score >= 70 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{home_metrics.average_stability_score}%</p>
             <p className="text-[10px] text-muted-foreground">Stability</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", highDisruption === 0 ? "bg-green-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", highDisruption === 0 ? "text-green-600" : "text-red-600")}>{highDisruption}</p>
+            <p className={cn("text-lg font-bold tabular-nums", highDisruption === 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>{highDisruption}</p>
             <p className="text-[10px] text-muted-foreground">High Risk</p>
           </div>
           <div className="text-center rounded-lg bg-blue-50 p-2.5">
@@ -88,7 +88,7 @@ export function PlacementMatchingAssessmentCard() {
             {disruption_indicators.slice(0, 3).map((d, i) => (
               <div key={i} className="flex items-center justify-between rounded border p-2.5 text-xs">
                 <span className="font-medium">{d.child_name}</span>
-                <Badge className={cn("text-[9px]", d.severity === "high" ? "bg-red-100 text-red-700" : d.severity === "medium" ? "bg-amber-100 text-amber-700" : "bg-blue-100 text-blue-700")}>
+                <Badge className={cn("text-[9px]", d.severity === "high" ? "bg-[--cs-risk-bg] text-[--cs-risk]" : d.severity === "medium" ? "bg-[--cs-warning-bg] text-[--cs-warning]" : "bg-[--cs-info-bg] text-[--cs-info]")}>
                   {d.indicator}
                 </Badge>
               </div>

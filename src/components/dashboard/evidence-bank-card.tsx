@@ -19,7 +19,7 @@ const STATUS_STYLES: Record<string, { dot: string; text: string }> = {
   gap: { dot: "bg-red-500", text: "text-red-700" },
 };
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800", warning: "border-amber-200 bg-amber-50 text-amber-800", positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]", warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]", positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 export function EvidenceBankCard() {
@@ -50,10 +50,10 @@ export function EvidenceBankCard() {
       <CardContent className="space-y-4">
 
         <div className="grid grid-cols-4 gap-2">
-          <div className={cn("text-center rounded-lg p-2.5", o.coverage_rate >= 80 ? "bg-green-50" : "bg-amber-50")}><p className={cn("text-lg font-bold tabular-nums", o.coverage_rate >= 80 ? "text-green-600" : "text-amber-600")}>{o.coverage_rate}%</p><p className="text-[10px] text-muted-foreground">Coverage</p></div>
+          <div className={cn("text-center rounded-lg p-2.5", o.coverage_rate >= 80 ? "bg-green-50" : "bg-amber-50")}><p className={cn("text-lg font-bold tabular-nums", o.coverage_rate >= 80 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{o.coverage_rate}%</p><p className="text-[10px] text-muted-foreground">Coverage</p></div>
           <div className="text-center rounded-lg bg-green-50 p-2.5"><p className="text-lg font-bold tabular-nums text-green-600">{o.well_evidenced}</p><p className="text-[10px] text-muted-foreground">Strong</p></div>
           <div className="text-center rounded-lg bg-amber-50 p-2.5"><p className="text-lg font-bold tabular-nums text-amber-600">{o.thin}</p><p className="text-[10px] text-muted-foreground">Thin</p></div>
-          <div className={cn("text-center rounded-lg p-2.5", o.gaps > 0 ? "bg-red-50" : "bg-green-50")}><p className={cn("text-lg font-bold tabular-nums", o.gaps > 0 ? "text-red-600" : "text-green-600")}>{o.gaps}</p><p className="text-[10px] text-muted-foreground">Gaps</p></div>
+          <div className={cn("text-center rounded-lg p-2.5", o.gaps > 0 ? "bg-red-50" : "bg-green-50")}><p className={cn("text-lg font-bold tabular-nums", o.gaps > 0 ? "text-[--cs-risk]" : "text-[--cs-success]")}>{o.gaps}</p><p className="text-[10px] text-muted-foreground">Gaps</p></div>
         </div>
 
         {/* Category coverage grid */}

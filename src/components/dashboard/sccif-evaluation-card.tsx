@@ -20,23 +20,23 @@ import { useSCCIFIntelligence } from "@/hooks/use-sccif-intelligence";
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high:     "border-red-200 bg-red-50 text-red-800",
-  medium:   "border-amber-200 bg-amber-50 text-amber-800",
-  low:      "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high:     "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium:   "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low:      "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const GRADE_STYLES: Record<string, string> = {
-  outstanding:          "bg-green-100 text-green-700",
-  good:                 "bg-blue-100 text-blue-700",
-  requires_improvement: "bg-amber-100 text-amber-700",
-  inadequate:           "bg-red-100 text-red-700",
+  outstanding:          "bg-[--cs-success-bg] text-[--cs-success]",
+  good:                 "bg-[--cs-info-bg] text-[--cs-info]",
+  requires_improvement: "bg-[--cs-warning-bg] text-[--cs-warning]",
+  inadequate:           "bg-[--cs-risk-bg] text-[--cs-risk]",
 };
 
 const GRADE_LABELS: Record<string, string> = {
@@ -96,7 +96,7 @@ export function SCCIFEvaluationCard() {
           )}>
             <p className={cn(
               "text-sm font-bold capitalize",
-              o.status === "final" ? "text-green-600" : o.status === "in_review" ? "text-blue-600" : "text-amber-600",
+              o.status === "final" ? "text-[--cs-success]" : o.status === "in_review" ? "text-blue-600" : "text-[--cs-warning]",
             )}>
               {o.status.replace("_", " ")}
             </p>
@@ -110,7 +110,7 @@ export function SCCIFEvaluationCard() {
             "text-center rounded-lg p-2.5",
             o.coverage_rate >= 90 ? "bg-green-50" : "bg-amber-50",
           )}>
-            <p className={cn("text-lg font-bold tabular-nums", o.coverage_rate >= 90 ? "text-green-600" : "text-amber-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", o.coverage_rate >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
               {o.coverage_rate}%
             </p>
             <p className="text-[10px] text-muted-foreground">Coverage</p>
@@ -121,9 +121,9 @@ export function SCCIFEvaluationCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.inspection_readiness_score >= 75 ? "text-green-600"
-                : o.inspection_readiness_score >= 50 ? "text-amber-600"
-                : "text-red-600",
+              o.inspection_readiness_score >= 75 ? "text-[--cs-success]"
+                : o.inspection_readiness_score >= 50 ? "text-[--cs-warning]"
+                : "text-[--cs-risk]",
             )}>
               {o.inspection_readiness_score}
             </p>
@@ -183,7 +183,7 @@ export function SCCIFEvaluationCard() {
             </p>
             <Badge className={cn(
               "text-[10px]",
-              intel.action_tracker.overdue === 0 ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700",
+              intel.action_tracker.overdue === 0 ? "bg-[--cs-success-bg] text-[--cs-success]" : "bg-[--cs-risk-bg] text-[--cs-risk]",
             )}>
               {intel.action_tracker.overdue} overdue
             </Badge>
@@ -218,8 +218,8 @@ export function SCCIFEvaluationCard() {
         {/* ── Evidence gaps ────────────────────────────────────────────── */}
 
         {intel.evidence_gaps.length > 0 && (
-          <div className="rounded-lg border border-amber-200 bg-amber-50 p-3">
-            <p className="text-xs font-medium text-amber-800 mb-1">Evidence Gaps</p>
+          <div className="rounded-lg border border-[--cs-warning-soft] bg-[--cs-warning-bg] p-3">
+            <p className="text-xs font-medium text-[--cs-warning] mb-1">Evidence Gaps</p>
             <div className="flex flex-wrap gap-1">
               {intel.evidence_gaps.map((gap) => (
                 <Badge key={gap} variant="outline" className="text-[10px] border-amber-300 text-amber-700">
@@ -248,9 +248,9 @@ export function SCCIFEvaluationCard() {
             </div>
             <span className={cn(
               "text-sm font-bold tabular-nums",
-              o.inspection_readiness_score >= 75 ? "text-green-600"
-                : o.inspection_readiness_score >= 50 ? "text-amber-600"
-                : "text-red-600",
+              o.inspection_readiness_score >= 75 ? "text-[--cs-success]"
+                : o.inspection_readiness_score >= 50 ? "text-[--cs-warning]"
+                : "text-[--cs-risk]",
             )}>
               {o.inspection_readiness_score}%
             </span>

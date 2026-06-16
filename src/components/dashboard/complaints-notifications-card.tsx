@@ -19,25 +19,25 @@ import { useComplaintsIntelligence } from "@/hooks/use-complaints-intelligence";
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high:     "border-red-200 bg-red-50 text-red-800",
-  medium:   "border-amber-200 bg-amber-50 text-amber-800",
-  low:      "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high:     "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium:   "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low:      "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const SOURCE_COLOURS: Record<string, string> = {
   child: "bg-pink-100 text-pink-700",
-  parent_carer: "bg-blue-100 text-blue-700",
-  social_worker: "bg-purple-100 text-purple-700",
+  parent_carer: "bg-[--cs-info-bg] text-[--cs-info]",
+  social_worker: "bg-[--cs-oversight-bg] text-[--cs-oversight]",
   professional: "bg-indigo-100 text-indigo-700",
-  staff: "bg-amber-100 text-amber-700",
-  anonymous: "bg-gray-100 text-gray-600",
+  staff: "bg-[--cs-warning-bg] text-[--cs-warning]",
+  anonymous: "bg-[--cs-bg] text-[--cs-text-secondary]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -90,7 +90,7 @@ export function ComplaintsNotificationsCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.open_count > 0 ? "text-amber-600" : "text-green-600",
+              o.open_count > 0 ? "text-[--cs-warning]" : "text-[--cs-success]",
             )}>
               {o.open_count}
             </p>
@@ -108,7 +108,7 @@ export function ComplaintsNotificationsCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.satisfaction_rate >= 75 ? "text-green-600" : o.satisfaction_rate >= 50 ? "text-amber-600" : "text-red-600",
+              o.satisfaction_rate >= 75 ? "text-[--cs-success]" : o.satisfaction_rate >= 50 ? "text-[--cs-warning]" : "text-[--cs-risk]",
             )}>
               {o.satisfaction_rate}%
             </p>
@@ -120,7 +120,7 @@ export function ComplaintsNotificationsCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.lessons_recorded_rate >= 90 ? "text-green-600" : o.lessons_recorded_rate >= 70 ? "text-amber-600" : "text-red-600",
+              o.lessons_recorded_rate >= 90 ? "text-[--cs-success]" : o.lessons_recorded_rate >= 70 ? "text-[--cs-warning]" : "text-[--cs-risk]",
             )}>
               {o.lessons_recorded_rate}%
             </p>
@@ -138,7 +138,7 @@ export function ComplaintsNotificationsCard() {
           <div>
             <p className={cn(
               "font-bold tabular-nums",
-              o.upheld_rate > 50 ? "text-amber-600" : "text-slate-700",
+              o.upheld_rate > 50 ? "text-[--cs-warning]" : "text-slate-700",
             )}>
               {o.upheld_rate}%
             </p>
@@ -162,14 +162,14 @@ export function ComplaintsNotificationsCard() {
               <div key={cmp.complaint_id} className="rounded-lg border p-2.5 text-xs">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Badge className={cn("text-[10px]", SOURCE_COLOURS[cmp.source] ?? "bg-gray-100 text-gray-600")}>
+                    <Badge className={cn("text-[10px]", SOURCE_COLOURS[cmp.source] ?? "bg-[--cs-bg] text-[--cs-text-secondary]")}>
                       {cmp.source.replace(/_/g, " ")}
                     </Badge>
                     <span className="font-medium capitalize">{cmp.theme.replace(/_/g, " ")}</span>
                   </div>
                   <div className="flex items-center gap-1.5">
                     {cmp.days_open > 20 && (
-                      <Badge className="text-[10px] bg-red-100 text-red-700">
+                      <Badge className="text-[10px] bg-[--cs-risk-bg] text-[--cs-risk]">
                         <Send className="h-2.5 w-2.5 mr-0.5" />
                         Overdue
                       </Badge>

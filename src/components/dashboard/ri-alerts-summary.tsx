@@ -74,7 +74,7 @@ export function RiAlertsSummary() {
             <Badge className={cn(
               "text-[9px] border-0 rounded-full cursor-pointer",
               hasCritical
-                ? "bg-red-100 text-red-700 hover:bg-red-200"
+                ? "bg-[--cs-risk-bg] text-[--cs-risk] hover:bg-red-200"
                 : "bg-indigo-100 text-indigo-700 hover:bg-indigo-200",
             )}>
               {active.length} active

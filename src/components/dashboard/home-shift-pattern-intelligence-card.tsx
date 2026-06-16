@@ -28,15 +28,15 @@ const RATING_STYLES: Record<ShiftPatternRating, { bg: string; text: string; bord
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const REC_STYLES: Record<string, string> = {
-  immediate: "border-red-200 bg-red-50 text-red-800",
-  soon: "border-amber-200 bg-amber-50 text-amber-800",
-  planned: "border-blue-200 bg-blue-50 text-blue-800",
+  immediate: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  soon: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  planned: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -82,7 +82,7 @@ export function HomeShiftPatternIntelligenceCard() {
       <CardHeader className={cn("pb-3", isAlert ? "bg-red-50" : "bg-slate-50/50")}>
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm flex items-center gap-2">
-            <CalendarClock className={cn("h-4 w-4", isAlert ? "text-red-600" : "text-indigo-500")} />
+            <CalendarClock className={cn("h-4 w-4", isAlert ? "text-[--cs-risk]" : "text-indigo-500")} />
             <span className="text-slate-900">Shift Patterns</span>
             <span className={cn("text-[10px] font-bold px-2 py-0.5 rounded-full border", ratingStyle.bg, ratingStyle.text, ratingStyle.border)}>
               {ratingStyle.label}
@@ -105,7 +105,7 @@ export function HomeShiftPatternIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Users className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.coverage.open_shifts === 0 ? "text-green-600" : "text-red-600"
+                  d.coverage.open_shifts === 0 ? "text-[--cs-success]" : "text-[--cs-risk]"
                 )}>
                   {d.coverage.open_shifts}
                 </p>
@@ -118,8 +118,8 @@ export function HomeShiftPatternIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Clock className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.punctuality.on_time_rate >= 90 ? "text-green-600" :
-                  d.punctuality.on_time_rate >= 75 ? "text-amber-600" : "text-red-600"
+                  d.punctuality.on_time_rate >= 90 ? "text-[--cs-success]" :
+                  d.punctuality.on_time_rate >= 75 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.punctuality.shifts_with_actual_start > 0 ? `${d.punctuality.on_time_rate}%` : "—"}
                 </p>
@@ -132,8 +132,8 @@ export function HomeShiftPatternIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Timer className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.overtime.total_overtime_minutes <= 30 ? "text-green-600" :
-                  d.overtime.total_overtime_minutes <= 120 ? "text-amber-600" : "text-red-600"
+                  d.overtime.total_overtime_minutes <= 30 ? "text-[--cs-success]" :
+                  d.overtime.total_overtime_minutes <= 120 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.overtime.total_overtime_minutes}m
                 </p>
@@ -146,7 +146,7 @@ export function HomeShiftPatternIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <ArrowLeftRight className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.swaps.pending_swaps === 0 ? "text-green-600" : "text-amber-600"
+                  d.swaps.pending_swaps === 0 ? "text-[--cs-success]" : "text-[--cs-warning]"
                 )}>
                   {d.swaps.pending_swaps}
                 </p>
@@ -165,7 +165,7 @@ export function HomeShiftPatternIntelligenceCard() {
                 <p>Total shifts: <span className="font-medium text-slate-600">{d.coverage.total_shifts}</span></p>
                 <p>Day / Sleep-in: <span className="font-medium text-slate-600">{d.coverage.day_shifts}/{d.coverage.sleep_in_shifts}</span></p>
                 <p>Staff rostered: <span className={cn("font-medium",
-                  d.coverage.unique_staff_working >= 6 ? "text-green-600" : "text-amber-600"
+                  d.coverage.unique_staff_working >= 6 ? "text-[--cs-success]" : "text-[--cs-warning]"
                 )}>{d.coverage.unique_staff_working}</span></p>
                 <p>Completed: <span className="font-medium text-slate-600">{d.coverage.completed_shifts}</span></p>
               </div>
@@ -174,15 +174,15 @@ export function HomeShiftPatternIntelligenceCard() {
               <p className="font-medium text-slate-700 mb-1">Punctuality</p>
               <div className="space-y-0.5 text-[10px] text-muted-foreground">
                 <p>Avg delay: <span className={cn("font-medium",
-                  d.punctuality.avg_delay_minutes <= 5 ? "text-green-600" :
-                  d.punctuality.avg_delay_minutes <= 15 ? "text-amber-600" : "text-red-600"
+                  d.punctuality.avg_delay_minutes <= 5 ? "text-[--cs-success]" :
+                  d.punctuality.avg_delay_minutes <= 15 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>{d.punctuality.avg_delay_minutes}m</span></p>
                 <p>Late starts: <span className={cn("font-medium",
-                  d.punctuality.late_count === 0 ? "text-green-600" : "text-amber-600"
+                  d.punctuality.late_count === 0 ? "text-[--cs-success]" : "text-[--cs-warning]"
                 )}>{d.punctuality.late_count}</span></p>
                 <p>Fairness: <span className={cn("font-medium",
-                  d.workload.fairness_ratio >= 0.6 ? "text-green-600" :
-                  d.workload.fairness_ratio >= 0.4 ? "text-amber-600" : "text-red-600"
+                  d.workload.fairness_ratio >= 0.6 ? "text-[--cs-success]" :
+                  d.workload.fairness_ratio >= 0.4 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>{d.workload.fairness_ratio}</span></p>
                 <p>Max delay: <span className="font-medium text-slate-600">{d.punctuality.max_delay_minutes}m</span></p>
               </div>
@@ -198,7 +198,7 @@ export function HomeShiftPatternIntelligenceCard() {
               Strengths ({d.strengths.length})
             </p>
             {d.strengths.slice(0, 3).map((s, i) => (
-              <div key={i} className="rounded border border-green-200 bg-green-50 p-2.5 text-xs text-green-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-success-soft] bg-[--cs-success-bg] p-2.5 text-xs text-[--cs-success] leading-relaxed">
                 {s}
               </div>
             ))}
@@ -213,7 +213,7 @@ export function HomeShiftPatternIntelligenceCard() {
               Concerns ({d.concerns.length})
             </p>
             {d.concerns.slice(0, 3).map((c, i) => (
-              <div key={i} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs text-red-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs text-[--cs-risk] leading-relaxed">
                 {c}
               </div>
             ))}

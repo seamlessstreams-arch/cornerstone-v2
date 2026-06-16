@@ -32,23 +32,23 @@ const RISK_LEVEL_STYLES: Record<HomeRiskLevel, { bg: string; text: string; borde
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const REC_STYLES: Record<string, string> = {
-  immediate: "border-red-200 bg-red-50 text-red-800",
-  urgent: "border-amber-200 bg-amber-50 text-amber-800",
-  planned: "border-blue-200 bg-blue-50 text-blue-800",
+  immediate: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  urgent: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  planned: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const CHILD_RISK_STYLES: Record<HomeRiskLevel, string> = {
   critical: "border-red-300 bg-red-50",
   elevated: "border-orange-300 bg-orange-50",
   moderate: "border-amber-300 bg-amber-50",
-  managed: "border-blue-200 bg-blue-50/50",
-  low: "border-green-200 bg-green-50/50",
+  managed: "border-[--cs-info-soft] bg-[--cs-info-bg]/50",
+  low: "border-[--cs-success-soft] bg-[--cs-success-bg]/50",
 };
 
 const CHILD_RISK_BADGE: Record<HomeRiskLevel, { bg: string; text: string }> = {
@@ -106,7 +106,7 @@ export function RiskIntelligenceDashboardCard() {
         {/* Risk Landscape KPIs */}
         <div className="grid grid-cols-4 gap-2">
           <div className={cn("text-center rounded-lg p-2", ls.very_high_risks > 0 ? "bg-red-50" : "bg-slate-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", ls.very_high_risks > 0 ? "text-red-600" : "text-slate-600")}>{ls.very_high_risks}</p>
+            <p className={cn("text-lg font-bold tabular-nums", ls.very_high_risks > 0 ? "text-[--cs-risk]" : "text-slate-600")}>{ls.very_high_risks}</p>
             <p className="text-[10px] text-muted-foreground">Very High</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", ls.high_risks > 0 ? "bg-orange-50" : "bg-slate-50")}>
@@ -114,11 +114,11 @@ export function RiskIntelligenceDashboardCard() {
             <p className="text-[10px] text-muted-foreground">High</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", ls.escalating_risks > 0 ? "bg-amber-50" : "bg-slate-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", ls.escalating_risks > 0 ? "text-amber-600" : "text-slate-600")}>{ls.escalating_risks}</p>
+            <p className={cn("text-lg font-bold tabular-nums", ls.escalating_risks > 0 ? "text-[--cs-warning]" : "text-slate-600")}>{ls.escalating_risks}</p>
             <p className="text-[10px] text-muted-foreground">Escalating</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", ls.overdue_reviews > 0 ? "bg-red-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", ls.overdue_reviews > 0 ? "text-red-600" : "text-green-600")}>{ls.overdue_reviews}</p>
+            <p className={cn("text-lg font-bold tabular-nums", ls.overdue_reviews > 0 ? "text-[--cs-risk]" : "text-[--cs-success]")}>{ls.overdue_reviews}</p>
             <p className="text-[10px] text-muted-foreground">Overdue Reviews</p>
           </div>
         </div>
@@ -135,7 +135,7 @@ export function RiskIntelligenceDashboardCard() {
               <p className="text-[10px] text-muted-foreground">
                 Trend: <span className={cn(
                   ia.trend === "increasing" ? "text-red-600 font-medium" :
-                  ia.trend === "decreasing" ? "text-green-600" : "text-slate-500"
+                  ia.trend === "decreasing" ? "text-[--cs-success]" : "text-slate-500"
                 )}>{ia.trend}</span>
                 {ia.open_incidents > 0 && <span className="text-amber-600 ml-1">· {ia.open_incidents} open</span>}
               </p>
@@ -152,7 +152,7 @@ export function RiskIntelligenceDashboardCard() {
                 {eo.cse_count > 0 && <span>CSE:{eo.cse_count} </span>}
                 {eo.cce_count > 0 && <span>CCE:{eo.cce_count} </span>}
                 {eo.online_count > 0 && <span>Online:{eo.online_count} </span>}
-                {eo.multi_agency_engaged && <span className="text-green-600">· Multi-agency</span>}
+                {eo.multi_agency_engaged && <span className="text-[--cs-success]">· Multi-agency</span>}
               </p>
             </div>
           </div>
@@ -168,7 +168,7 @@ export function RiskIntelligenceDashboardCard() {
                 {mo.total_90d} episode{mo.total_90d !== 1 ? "s" : ""} · {mo.unique_children_30d} child{mo.unique_children_30d !== 1 ? "ren" : ""} (30d) · avg {mo.avg_duration_hours}h
               </p>
               <p className="text-[10px] text-muted-foreground">
-                RI: <span className={cn(mo.return_interview_rate === 100 ? "text-green-600" : "text-amber-600")}>{mo.return_interview_rate}%</span>
+                RI: <span className={cn(mo.return_interview_rate === 100 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{mo.return_interview_rate}%</span>
                 {mo.cs_risk_episodes > 0 && <span className="text-red-600 ml-1">· {mo.cs_risk_episodes} CS risk</span>}
                 {mo.repeat_missing && <span className="text-amber-600 ml-1">· Repeat</span>}
               </p>
@@ -182,7 +182,7 @@ export function RiskIntelligenceDashboardCard() {
                 {ro.total_90d} episode{ro.total_90d !== 1 ? "s" : ""} · {ro.unique_children_90d} child{ro.unique_children_90d !== 1 ? "ren" : ""} · avg {ro.avg_duration_minutes}min
               </p>
               <p className="text-[10px] text-muted-foreground">
-                Debrief: <span className={cn(ro.debrief_rate === 100 ? "text-green-600" : "text-amber-600")}>{ro.debrief_rate}%</span>
+                Debrief: <span className={cn(ro.debrief_rate === 100 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{ro.debrief_rate}%</span>
                 {ro.injuries_count > 0 && <span className="text-red-600 ml-1">· {ro.injuries_count} injury</span>}
                 {ro.unreviewed_count > 0 && <span className="text-amber-600 ml-1">· {ro.unreviewed_count} pending</span>}
               </p>
@@ -218,8 +218,8 @@ export function RiskIntelligenceDashboardCard() {
                     <span className="text-[10px] text-muted-foreground ml-1">({rd.children_affected})</span>
                   </div>
                   <span className={cn("text-[10px] font-medium",
-                    rd.trend_direction === "worsening" ? "text-red-600" :
-                    rd.trend_direction === "improving" ? "text-green-600" : "text-slate-500"
+                    rd.trend_direction === "worsening" ? "text-[--cs-risk]" :
+                    rd.trend_direction === "improving" ? "text-[--cs-success]" : "text-slate-500"
                   )}>
                     {rd.trend_direction === "improving" ? "↓" : rd.trend_direction === "worsening" ? "↑" : "→"}
                   </span>
@@ -237,7 +237,7 @@ export function RiskIntelligenceDashboardCard() {
               Strengths ({d.strengths.length})
             </p>
             {d.strengths.slice(0, 3).map((s, i) => (
-              <div key={i} className="rounded border border-green-200 bg-green-50 p-2.5 text-xs text-green-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-success-soft] bg-[--cs-success-bg] p-2.5 text-xs text-[--cs-success] leading-relaxed">
                 {s}
               </div>
             ))}
@@ -252,7 +252,7 @@ export function RiskIntelligenceDashboardCard() {
               Concerns ({d.concerns.length})
             </p>
             {d.concerns.slice(0, 4).map((c, i) => (
-              <div key={i} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs text-red-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs text-[--cs-risk] leading-relaxed">
                 {c}
               </div>
             ))}
@@ -326,7 +326,7 @@ function ChildRiskRow({ profile: cp }: { profile: ChildRiskProfile }) {
         {cp.highest_risk_domain !== "none" && (
           <span>Highest: <span className="capitalize">{cp.highest_risk_domain.replace(/_/g, " ")}</span> ({cp.highest_risk_level})</span>
         )}
-        {cp.exploitation_risk && <span className="text-red-600">Exploitation: {cp.exploitation_risk}</span>}
+        {cp.exploitation_risk && <span className="text-[--cs-risk]">Exploitation: {cp.exploitation_risk}</span>}
         {cp.missing_episodes_90d > 0 && <span>{cp.missing_episodes_90d} missing</span>}
         {cp.restraints_90d > 0 && <span>{cp.restraints_90d} restraint{cp.restraints_90d !== 1 ? "s" : ""}</span>}
       </div>

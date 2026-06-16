@@ -19,16 +19,16 @@ import { useNightMonitoring } from "@/hooks/use-night-monitoring";
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high:     "border-red-200 bg-red-50 text-red-800",
-  medium:   "border-amber-200 bg-amber-50 text-amber-800",
-  low:      "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high:     "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium:   "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low:      "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -82,15 +82,15 @@ export function NightWakingMonitoringCard() {
             <p className="text-[10px] text-muted-foreground">Rounds/7d</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", disturbed === 0 ? "bg-green-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", disturbed === 0 ? "text-green-600" : "text-red-600")}>{disturbed}</p>
+            <p className={cn("text-lg font-bold tabular-nums", disturbed === 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>{disturbed}</p>
             <p className="text-[10px] text-muted-foreground">Disturbed</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", o.concern_count_7d === 0 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.concern_count_7d === 0 ? "text-green-600" : "text-amber-600")}>{o.concern_count_7d}</p>
+            <p className={cn("text-lg font-bold tabular-nums", o.concern_count_7d === 0 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{o.concern_count_7d}</p>
             <p className="text-[10px] text-muted-foreground">Concerns</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", sec.overall_compliance_rate >= 100 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", sec.overall_compliance_rate >= 100 ? "text-green-600" : "text-amber-600")}>{sec.overall_compliance_rate}%</p>
+            <p className={cn("text-lg font-bold tabular-nums", sec.overall_compliance_rate >= 100 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{sec.overall_compliance_rate}%</p>
             <p className="text-[10px] text-muted-foreground">Compliance</p>
           </div>
         </div>

@@ -29,15 +29,15 @@ const RATING_STYLES: Record<NotifiableEventsRating, { bg: string; text: string; 
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const REC_STYLES: Record<string, string> = {
-  immediate: "border-red-200 bg-red-50 text-red-800",
-  soon: "border-amber-200 bg-amber-50 text-amber-800",
-  planned: "border-blue-200 bg-blue-50 text-blue-800",
+  immediate: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  soon: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  planned: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -86,7 +86,7 @@ export function HomeNotifiableEventsIntelligenceCard() {
       <CardHeader className={cn("pb-3", isAlert ? "bg-red-50" : "bg-slate-50/50")}>
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm flex items-center gap-2">
-            <Bell className={cn("h-4 w-4", isAlert ? "text-red-600" : "text-amber-500")} />
+            <Bell className={cn("h-4 w-4", isAlert ? "text-[--cs-risk]" : "text-amber-500")} />
             <span className="text-slate-900">Notifiable Events</span>
             <span className={cn("text-[10px] font-bold px-2 py-0.5 rounded-full border", ratingStyle.bg, ratingStyle.text, ratingStyle.border)}>
               {ratingStyle.label}
@@ -109,8 +109,8 @@ export function HomeNotifiableEventsIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <FileWarning className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.events_profile.total_events_90d <= 2 ? "text-green-600" :
-                  d.events_profile.total_events_90d <= 5 ? "text-amber-600" : "text-red-600"
+                  d.events_profile.total_events_90d <= 2 ? "text-[--cs-success]" :
+                  d.events_profile.total_events_90d <= 5 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.events_profile.total_events_90d}
                 </p>
@@ -123,8 +123,8 @@ export function HomeNotifiableEventsIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Clock className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.events_profile.notification_compliance_rate === 100 ? "text-green-600" :
-                  d.events_profile.notification_compliance_rate >= 80 ? "text-amber-600" : "text-red-600"
+                  d.events_profile.notification_compliance_rate === 100 ? "text-[--cs-success]" :
+                  d.events_profile.notification_compliance_rate >= 80 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.events_profile.notification_compliance_rate}%
                 </p>
@@ -137,8 +137,8 @@ export function HomeNotifiableEventsIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <CheckCheck className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.events_profile.follow_up_rate === 100 ? "text-green-600" :
-                  d.events_profile.follow_up_rate >= 80 ? "text-amber-600" : "text-red-600"
+                  d.events_profile.follow_up_rate === 100 ? "text-[--cs-success]" :
+                  d.events_profile.follow_up_rate >= 80 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.events_profile.follow_up_rate}%
                 </p>
@@ -151,8 +151,8 @@ export function HomeNotifiableEventsIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Sparkles className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.events_profile.lesson_learned_rate === 100 ? "text-green-600" :
-                  d.events_profile.lesson_learned_rate >= 80 ? "text-amber-600" : "text-red-600"
+                  d.events_profile.lesson_learned_rate === 100 ? "text-[--cs-success]" :
+                  d.events_profile.lesson_learned_rate >= 80 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.events_profile.lesson_learned_rate}%
                 </p>
@@ -168,7 +168,7 @@ export function HomeNotifiableEventsIntelligenceCard() {
             <div className="rounded border p-2 text-xs">
               <p className="font-medium text-slate-700 mb-1">Compliance</p>
               <div className="space-y-0.5 text-[10px] text-muted-foreground">
-                <p>Multi-agency: <span className={cn("font-medium", d.events_profile.multi_agency_rate === 100 ? "text-green-600" : "text-amber-600")}>{d.events_profile.multi_agency_rate}%</span></p>
+                <p>Multi-agency: <span className={cn("font-medium", d.events_profile.multi_agency_rate === 100 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{d.events_profile.multi_agency_rate}%</span></p>
                 {d.events_profile.pending_count > 0 && <p>Pending: <span className="font-medium text-red-600">{d.events_profile.pending_count}</span></p>}
               </div>
             </div>
@@ -190,7 +190,7 @@ export function HomeNotifiableEventsIntelligenceCard() {
               Strengths ({d.strengths.length})
             </p>
             {d.strengths.slice(0, 3).map((s, i) => (
-              <div key={i} className="rounded border border-green-200 bg-green-50 p-2.5 text-xs text-green-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-success-soft] bg-[--cs-success-bg] p-2.5 text-xs text-[--cs-success] leading-relaxed">
                 {s}
               </div>
             ))}
@@ -205,7 +205,7 @@ export function HomeNotifiableEventsIntelligenceCard() {
               Concerns ({d.concerns.length})
             </p>
             {d.concerns.slice(0, 3).map((c, i) => (
-              <div key={i} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs text-red-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs text-[--cs-risk] leading-relaxed">
                 {c}
               </div>
             ))}

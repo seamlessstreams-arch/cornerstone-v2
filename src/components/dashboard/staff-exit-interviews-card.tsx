@@ -13,9 +13,9 @@ import { cn } from "@/lib/utils";
 import { useWorkforceIntelligence } from "@/hooks/use-workforce-intelligence";
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 export function StaffExitInterviewsCard() {
@@ -53,11 +53,11 @@ export function StaffExitInterviewsCard() {
         {/* ── Summary strip ──────────────────────────────────────────── */}
         <div className="grid grid-cols-4 gap-2">
           <div className={cn("text-center rounded-lg p-2", profile.average_tenure_months < 12 ? "bg-amber-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", profile.average_tenure_months < 12 ? "text-amber-600" : "text-green-600")}>{profile.average_tenure_months}m</p>
+            <p className={cn("text-lg font-bold tabular-nums", profile.average_tenure_months < 12 ? "text-[--cs-warning]" : "text-[--cs-success]")}>{profile.average_tenure_months}m</p>
             <p className="text-[10px] text-muted-foreground">Avg Tenure</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", profile.on_probation > 0 ? "bg-amber-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", profile.on_probation > 0 ? "text-amber-600" : "text-green-600")}>{profile.on_probation}</p>
+            <p className={cn("text-lg font-bold tabular-nums", profile.on_probation > 0 ? "text-[--cs-warning]" : "text-[--cs-success]")}>{profile.on_probation}</p>
             <p className="text-[10px] text-muted-foreground">Probation</p>
           </div>
           <div className="text-center rounded-lg p-2 bg-green-50">
@@ -90,7 +90,7 @@ export function StaffExitInterviewsCard() {
             </div>
             <div className="flex items-center justify-between text-xs">
               <span className="text-muted-foreground">Avg Tenure</span>
-              <span className={cn("font-bold tabular-nums", profile.average_tenure_months < 12 ? "text-amber-600" : "text-green-600")}>{profile.average_tenure_months}m</span>
+              <span className={cn("font-bold tabular-nums", profile.average_tenure_months < 12 ? "text-[--cs-warning]" : "text-[--cs-success]")}>{profile.average_tenure_months}m</span>
             </div>
           </div>
         </div>

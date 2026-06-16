@@ -87,7 +87,7 @@ export function RecruitmentPipelineCard() {
             Recruitment Pipeline
           </CardTitle>
           <Link href="/recruitment">
-            <Badge className="text-[9px] bg-blue-100 text-blue-700 border-0 rounded-full hover:bg-blue-200 cursor-pointer">
+            <Badge className="text-[9px] bg-[--cs-info-bg] text-[--cs-info] border-0 rounded-full hover:bg-blue-200 cursor-pointer">
               {activeCandidates.length} active
             </Badge>
           </Link>

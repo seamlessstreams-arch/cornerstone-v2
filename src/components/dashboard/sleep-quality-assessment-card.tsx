@@ -20,16 +20,16 @@ import { useNightMonitoring } from "@/hooks/use-night-monitoring";
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high:     "border-red-200 bg-red-50 text-red-800",
-  medium:   "border-amber-200 bg-amber-50 text-amber-800",
-  low:      "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high:     "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium:   "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low:      "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const PATTERN_BADGES: Record<string, string> = {
@@ -88,7 +88,7 @@ export function SleepQualityAssessmentCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.all_children_checked_rate === 100 ? "text-green-600" : "text-amber-600",
+              o.all_children_checked_rate === 100 ? "text-[--cs-success]" : "text-[--cs-warning]",
             )}>
               {o.all_children_checked_rate}%
             </p>
@@ -100,7 +100,7 @@ export function SleepQualityAssessmentCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.concern_count_7d === 0 ? "text-green-600" : "text-red-600",
+              o.concern_count_7d === 0 ? "text-[--cs-success]" : "text-[--cs-risk]",
             )}>
               {o.concern_count_7d}
             </p>
@@ -118,7 +118,7 @@ export function SleepQualityAssessmentCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.building_secure_rate === 100 ? "text-green-600" : "text-amber-600",
+              o.building_secure_rate === 100 ? "text-[--cs-success]" : "text-[--cs-warning]",
             )}>
               {o.building_secure_rate}%
             </p>

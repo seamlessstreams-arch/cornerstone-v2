@@ -29,15 +29,15 @@ const RATING_STYLES: Record<OnCallRating, { bg: string; text: string; border: st
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const REC_STYLES: Record<string, string> = {
-  immediate: "border-red-200 bg-red-50 text-red-800",
-  soon: "border-amber-200 bg-amber-50 text-amber-800",
-  planned: "border-blue-200 bg-blue-50 text-blue-800",
+  immediate: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  soon: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  planned: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -83,7 +83,7 @@ export function HomeOnCallGovernanceIntelligenceCard() {
       <CardHeader className={cn("pb-3", isAlert ? "bg-red-50" : "bg-slate-50/50")}>
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm flex items-center gap-2">
-            <PhoneCall className={cn("h-4 w-4", isAlert ? "text-red-600" : "text-teal-500")} />
+            <PhoneCall className={cn("h-4 w-4", isAlert ? "text-[--cs-risk]" : "text-teal-500")} />
             <span className="text-slate-900">On-Call Governance</span>
             <span className={cn("text-[10px] font-bold px-2 py-0.5 rounded-full border", ratingStyle.bg, ratingStyle.text, ratingStyle.border)}>
               {ratingStyle.label}
@@ -106,8 +106,8 @@ export function HomeOnCallGovernanceIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Clock className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.coverage.shifts_last_14_days >= 4 ? "text-green-600" :
-                  d.coverage.shifts_last_14_days >= 2 ? "text-blue-600" : "text-red-600"
+                  d.coverage.shifts_last_14_days >= 4 ? "text-[--cs-success]" :
+                  d.coverage.shifts_last_14_days >= 2 ? "text-blue-600" : "text-[--cs-risk]"
                 )}>
                   {d.coverage.shifts_last_14_days}
                 </p>
@@ -133,8 +133,8 @@ export function HomeOnCallGovernanceIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <ShieldCheck className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.coverage.has_backup_rate >= 90 ? "text-green-600" :
-                  d.coverage.has_backup_rate >= 50 ? "text-amber-600" : "text-red-600"
+                  d.coverage.has_backup_rate >= 90 ? "text-[--cs-success]" :
+                  d.coverage.has_backup_rate >= 50 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.coverage.has_backup_rate}%
                 </p>
@@ -147,8 +147,8 @@ export function HomeOnCallGovernanceIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Users className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.coverage.unique_on_call_staff >= 3 ? "text-green-600" :
-                  d.coverage.unique_on_call_staff >= 2 ? "text-blue-600" : "text-amber-600"
+                  d.coverage.unique_on_call_staff >= 3 ? "text-[--cs-success]" :
+                  d.coverage.unique_on_call_staff >= 2 ? "text-blue-600" : "text-[--cs-warning]"
                 )}>
                   {d.coverage.unique_on_call_staff}
                 </p>
@@ -165,12 +165,12 @@ export function HomeOnCallGovernanceIntelligenceCard() {
               <p className="font-medium text-slate-700 mb-1">Response</p>
               <div className="space-y-0.5 text-[10px] text-muted-foreground">
                 <p>Critical: <span className={cn("font-medium",
-                  d.response.critical_calls === 0 ? "text-green-600" : "text-red-600"
+                  d.response.critical_calls === 0 ? "text-[--cs-success]" : "text-[--cs-risk]"
                 )}>{d.response.critical_calls}</span></p>
                 <p>Routine: <span className="font-medium text-slate-600">{d.response.routine_calls}</span></p>
                 <p>Advisory: <span className="font-medium text-blue-600">{d.response.advisory_calls}</span></p>
                 <p>Escalated: <span className={cn("font-medium",
-                  d.response.escalated_calls > 0 ? "text-amber-600" : "text-slate-400"
+                  d.response.escalated_calls > 0 ? "text-[--cs-warning]" : "text-slate-400"
                 )}>{d.response.escalated_calls}</span></p>
               </div>
             </div>
@@ -178,8 +178,8 @@ export function HomeOnCallGovernanceIntelligenceCard() {
               <p className="font-medium text-slate-700 mb-1">Quality</p>
               <div className="space-y-0.5 text-[10px] text-muted-foreground">
                 <p>Feedback rate: <span className={cn("font-medium",
-                  d.quality.feedback_rate >= 80 ? "text-green-600" :
-                  d.quality.feedback_rate >= 50 ? "text-amber-600" : "text-red-600"
+                  d.quality.feedback_rate >= 80 ? "text-[--cs-success]" :
+                  d.quality.feedback_rate >= 50 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>{d.quality.feedback_rate}%</span></p>
                 <p>With notes: <span className="font-medium text-slate-600">{d.quality.shifts_with_review_notes}</span></p>
                 <p>Calls/shift: <span className="font-medium text-slate-600">{d.response.calls_per_shift}</span></p>
@@ -197,7 +197,7 @@ export function HomeOnCallGovernanceIntelligenceCard() {
               Strengths ({d.strengths.length})
             </p>
             {d.strengths.slice(0, 3).map((s, i) => (
-              <div key={i} className="rounded border border-green-200 bg-green-50 p-2.5 text-xs text-green-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-success-soft] bg-[--cs-success-bg] p-2.5 text-xs text-[--cs-success] leading-relaxed">
                 {s}
               </div>
             ))}
@@ -212,7 +212,7 @@ export function HomeOnCallGovernanceIntelligenceCard() {
               Concerns ({d.concerns.length})
             </p>
             {d.concerns.slice(0, 3).map((c, i) => (
-              <div key={i} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs text-red-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs text-[--cs-risk] leading-relaxed">
                 {c}
               </div>
             ))}

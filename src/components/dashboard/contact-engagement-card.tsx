@@ -33,11 +33,11 @@ const INSIGHT_STYLES: Record<string, string> = {
 };
 
 const PRESENTATION_COLOURS: Record<string, string> = {
-  settled: "text-green-600",
+  settled: "text-[--cs-success]",
   excited: "text-blue-600",
-  anxious: "text-amber-600",
-  withdrawn: "text-red-600",
-  resistant: "text-red-600",
+  anxious: "text-[--cs-warning]",
+  withdrawn: "text-[--cs-risk]",
+  resistant: "text-[--cs-risk]",
 };
 
 // ── Component ────────────────────────────────────────────────────────────────
@@ -93,7 +93,7 @@ export function ContactEngagementCard() {
             <p className="text-[10px] text-muted-foreground">Per Child</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", intel.family_time.safe_sessions_pct === 100 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", intel.family_time.safe_sessions_pct === 100 ? "text-green-600" : "text-amber-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", intel.family_time.safe_sessions_pct === 100 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
               {intel.family_time.safe_sessions_pct}%
             </p>
             <p className="text-[10px] text-muted-foreground">Safe</p>

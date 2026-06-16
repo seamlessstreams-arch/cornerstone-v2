@@ -71,8 +71,8 @@ export function LifecycleComplianceCard({ homeId }: { homeId?: string }) {
   }
 
   const total = compliance.totalScheduled;
-  const complianceColor = compliance.complianceRate >= 90 ? "text-green-600" :
-                          compliance.complianceRate >= 75 ? "text-amber-600" : "text-red-600";
+  const complianceColor = compliance.complianceRate >= 90 ? "text-[--cs-success]" :
+                          compliance.complianceRate >= 75 ? "text-[--cs-warning]" : "text-[--cs-risk]";
 
   return (
     <div className="rounded-xl border bg-white shadow-sm overflow-hidden">

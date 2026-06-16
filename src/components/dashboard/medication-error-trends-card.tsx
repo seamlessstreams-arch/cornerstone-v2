@@ -17,16 +17,16 @@ import { cn } from "@/lib/utils";
 import { useMedicationErrorTrends } from "@/hooks/use-medication-error-trends";
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high: "border-red-200 bg-red-50 text-red-800",
-  medium: "border-amber-200 bg-amber-50 text-amber-800",
-  low: "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const GAP_STYLES: Record<string, { bg: string; text: string }> = {
@@ -105,11 +105,11 @@ export function MedicationErrorTrendsCard() {
             <p className="text-[10px] text-muted-foreground">{intel.trend.recent_30d} vs {intel.trend.prior_30d}</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", o.repeat_pattern_count > 0 ? "bg-amber-50" : "bg-gray-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.repeat_pattern_count > 0 ? "text-amber-600" : "text-gray-500")}>{o.repeat_pattern_count}</p>
+            <p className={cn("text-lg font-bold tabular-nums", o.repeat_pattern_count > 0 ? "text-[--cs-warning]" : "text-gray-500")}>{o.repeat_pattern_count}</p>
             <p className="text-[10px] text-muted-foreground">Repeats</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", o.harm_events > 0 ? "bg-red-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.harm_events > 0 ? "text-red-600" : "text-green-600")}>{o.harm_events}</p>
+            <p className={cn("text-lg font-bold tabular-nums", o.harm_events > 0 ? "text-[--cs-risk]" : "text-[--cs-success]")}>{o.harm_events}</p>
             <p className="text-[10px] text-muted-foreground">Harm</p>
           </div>
         </div>
@@ -132,7 +132,7 @@ export function MedicationErrorTrendsCard() {
                     {p.recurred_after_lesson && (
                       <Badge className="text-[9px] bg-red-50 text-red-700 border-red-200">recurred after lesson</Badge>
                     )}
-                    <Badge className="text-[10px] bg-amber-100 text-amber-700">×{p.count}</Badge>
+                    <Badge className="text-[10px] bg-[--cs-warning-bg] text-[--cs-warning]">×{p.count}</Badge>
                   </div>
                 </div>
               </div>

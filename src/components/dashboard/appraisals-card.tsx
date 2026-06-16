@@ -21,16 +21,16 @@ import { useAppraisalIntelligence } from "@/hooks/use-appraisal-intelligence";
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high:     "border-red-200 bg-red-50 text-red-800",
-  medium:   "border-amber-200 bg-amber-50 text-amber-800",
-  low:      "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high:     "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium:   "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low:      "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const RATING_COLORS: Record<string, string> = {
@@ -48,10 +48,10 @@ const RATING_LABELS: Record<string, string> = {
 };
 
 const STATUS_BADGE: Record<string, string> = {
-  completed:   "bg-green-100 text-green-700",
-  overdue:     "bg-red-100 text-red-700",
-  scheduled:   "bg-blue-100 text-blue-700",
-  in_progress: "bg-amber-100 text-amber-700",
+  completed:   "bg-[--cs-success-bg] text-[--cs-success]",
+  overdue:     "bg-[--cs-risk-bg] text-[--cs-risk]",
+  scheduled:   "bg-[--cs-info-bg] text-[--cs-info]",
+  in_progress: "bg-[--cs-warning-bg] text-[--cs-warning]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -105,7 +105,7 @@ export function AppraisalsCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.compliance_rate >= 90 ? "text-green-600" : o.compliance_rate >= 50 ? "text-amber-600" : "text-red-600",
+              o.compliance_rate >= 90 ? "text-[--cs-success]" : o.compliance_rate >= 50 ? "text-[--cs-warning]" : "text-[--cs-risk]",
             )}>
               {o.compliance_rate}%
             </p>
@@ -123,7 +123,7 @@ export function AppraisalsCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.overdue === 0 ? "text-green-600" : "text-red-600",
+              o.overdue === 0 ? "text-[--cs-success]" : "text-[--cs-risk]",
             )}>
               {o.overdue}
             </p>
@@ -135,7 +135,7 @@ export function AppraisalsCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.fitness_confirmed_rate === 100 ? "text-green-600" : "text-amber-600",
+              o.fitness_confirmed_rate === 100 ? "text-[--cs-success]" : "text-[--cs-warning]",
             )}>
               {o.fitness_confirmed_rate}%
             </p>
@@ -195,7 +195,7 @@ export function AppraisalsCard() {
                 </div>
                 <span className={cn(
                   "font-bold tabular-nums w-8 text-right",
-                  c.avg_score >= 4 ? "text-green-600" : c.avg_score >= 3 ? "text-blue-600" : "text-amber-600",
+                  c.avg_score >= 4 ? "text-[--cs-success]" : c.avg_score >= 3 ? "text-blue-600" : "text-[--cs-warning]",
                 )}>
                   {c.avg_score}
                 </span>
@@ -244,10 +244,10 @@ export function AppraisalsCard() {
                     {sp.latest_rating && (
                       <Badge className={cn(
                         "text-[9px]",
-                        sp.latest_rating === "outstanding" ? "bg-green-100 text-green-700"
-                          : sp.latest_rating === "good" ? "bg-blue-100 text-blue-700"
-                          : sp.latest_rating === "requires_improvement" ? "bg-amber-100 text-amber-700"
-                          : "bg-red-100 text-red-700",
+                        sp.latest_rating === "outstanding" ? "bg-[--cs-success-bg] text-[--cs-success]"
+                          : sp.latest_rating === "good" ? "bg-[--cs-info-bg] text-[--cs-info]"
+                          : sp.latest_rating === "requires_improvement" ? "bg-[--cs-warning-bg] text-[--cs-warning]"
+                          : "bg-[--cs-risk-bg] text-[--cs-risk]",
                       )}>
                         {RATING_LABELS[sp.latest_rating] ?? sp.latest_rating}
                       </Badge>
@@ -257,7 +257,7 @@ export function AppraisalsCard() {
                 {(sp.risk_flags?.length ?? 0) > 0 && (
                   <div className="flex flex-wrap gap-1 mt-1.5">
                     {(sp.risk_flags ?? []).slice(0, 3).map((flag, i) => (
-                      <Badge key={i} className="text-[9px] bg-red-100 text-red-700">
+                      <Badge key={i} className="text-[9px] bg-[--cs-risk-bg] text-[--cs-risk]">
                         <FileWarning className="h-2.5 w-2.5 mr-0.5" />
                         {flag.replace(/_/g, " ")}
                       </Badge>

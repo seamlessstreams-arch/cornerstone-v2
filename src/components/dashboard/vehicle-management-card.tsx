@@ -19,23 +19,23 @@ import { usePremisesSafetyIntelligence } from "@/hooks/use-premises-safety-intel
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high:     "border-red-200 bg-red-50 text-red-800",
-  medium:   "border-amber-200 bg-amber-50 text-amber-800",
-  low:      "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high:     "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium:   "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low:      "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const STATUS_STYLES: Record<string, string> = {
-  available:  "bg-green-100 text-green-700",
-  in_use:     "bg-blue-100 text-blue-700",
-  restricted: "bg-amber-100 text-amber-700",
-  off_road:   "bg-red-100 text-red-700",
+  available:  "bg-[--cs-success-bg] text-[--cs-success]",
+  in_use:     "bg-[--cs-info-bg] text-[--cs-info]",
+  restricted: "bg-[--cs-warning-bg] text-[--cs-warning]",
+  off_road:   "bg-[--cs-risk-bg] text-[--cs-risk]",
   disposed:   "bg-gray-100 text-gray-700",
 };
 
@@ -90,15 +90,15 @@ export function VehicleManagementCard() {
             <p className="text-[10px] text-muted-foreground">Fleet</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", available === vehicles.length ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", available === vehicles.length ? "text-green-600" : "text-amber-600")}>{available}</p>
+            <p className={cn("text-lg font-bold tabular-nums", available === vehicles.length ? "text-[--cs-success]" : "text-[--cs-warning]")}>{available}</p>
             <p className="text-[10px] text-muted-foreground">Available</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", overdue === 0 ? "bg-green-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", overdue === 0 ? "text-green-600" : "text-red-600")}>{overdue}</p>
+            <p className={cn("text-lg font-bold tabular-nums", overdue === 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>{overdue}</p>
             <p className="text-[10px] text-muted-foreground">Checks Due</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", intel.overview.compliance_rate >= 95 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", intel.overview.compliance_rate >= 95 ? "text-green-600" : "text-amber-600")}>{intel.overview.compliance_rate}%</p>
+            <p className={cn("text-lg font-bold tabular-nums", intel.overview.compliance_rate >= 95 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{intel.overview.compliance_rate}%</p>
             <p className="text-[10px] text-muted-foreground">Compliance</p>
           </div>
         </div>

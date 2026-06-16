@@ -19,9 +19,9 @@ import { useWorkforceIntelligence } from "@/hooks/use-workforce-intelligence";
 // ── Insight styling ──────────────────────────────────────────────────────────
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ────────────────────────────────────────────────────────────────
@@ -80,25 +80,25 @@ export function StaffCompetencyAssessmentCard() {
 
         <div className="grid grid-cols-4 gap-2">
           <div className={cn("text-center rounded-lg p-2", avgCompliance >= 90 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", avgCompliance >= 90 ? "text-green-600" : "text-amber-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", avgCompliance >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
               {avgCompliance}%
             </p>
             <p className="text-[10px] text-muted-foreground">Training</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", categoriesWithExpired === 0 ? "bg-green-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", categoriesWithExpired === 0 ? "text-green-600" : "text-red-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", categoriesWithExpired === 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>
               {categoriesWithExpired}
             </p>
             <p className="text-[10px] text-muted-foreground">Expired Cat.</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", supRate >= 90 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", supRate >= 90 ? "text-green-600" : "text-amber-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", supRate >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
               {supRate}%
             </p>
             <p className="text-[10px] text-muted-foreground">Supervision</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", dbs.compliance_rate >= 90 ? "bg-green-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", dbs.compliance_rate >= 90 ? "text-green-600" : "text-red-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", dbs.compliance_rate >= 90 ? "text-[--cs-success]" : "text-[--cs-risk]")}>
               {dbs.compliance_rate}%
             </p>
             <p className="text-[10px] text-muted-foreground">DBS</p>
@@ -144,12 +144,12 @@ export function StaffCompetencyAssessmentCard() {
             </div>
           </div>
           {sup.overdue > 0 ? (
-            <Badge className="text-[10px] bg-amber-100 text-amber-700">
+            <Badge className="text-[10px] bg-[--cs-warning-bg] text-[--cs-warning]">
               <AlertTriangle className="h-2.5 w-2.5 mr-0.5" />
               {sup.overdue} overdue
             </Badge>
           ) : (
-            <Badge className="text-[10px] bg-green-100 text-green-700">
+            <Badge className="text-[10px] bg-[--cs-success-bg] text-[--cs-success]">
               <CheckCircle2 className="h-3 w-3 mr-1" />
               All current
             </Badge>

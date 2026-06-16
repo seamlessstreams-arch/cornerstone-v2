@@ -30,15 +30,15 @@ const RATING_STYLES: Record<VisitorRating, { bg: string; text: string; border: s
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const REC_STYLES: Record<string, string> = {
-  immediate: "border-red-200 bg-red-50 text-red-800",
-  soon: "border-amber-200 bg-amber-50 text-amber-800",
-  planned: "border-blue-200 bg-blue-50 text-blue-800",
+  immediate: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  soon: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  planned: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -85,7 +85,7 @@ export function HomeVisitorIntelligenceCard() {
       <CardHeader className={cn("pb-3", isAlert ? "bg-red-50" : "bg-slate-50/50")}>
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm flex items-center gap-2">
-            <DoorOpen className={cn("h-4 w-4", isAlert ? "text-red-600" : "text-cyan-500")} />
+            <DoorOpen className={cn("h-4 w-4", isAlert ? "text-[--cs-risk]" : "text-cyan-500")} />
             <span className="text-slate-900">Visitor & Access</span>
             <span className={cn("text-[10px] font-bold px-2 py-0.5 rounded-full border", ratingStyle.bg, ratingStyle.text, ratingStyle.border)}>
               {ratingStyle.label}
@@ -108,8 +108,8 @@ export function HomeVisitorIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <ShieldCheck className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.access_compliance.dbs_check_rate >= 90 ? "text-green-600" :
-                  d.access_compliance.dbs_check_rate >= 70 ? "text-amber-600" : "text-red-600"
+                  d.access_compliance.dbs_check_rate >= 90 ? "text-[--cs-success]" :
+                  d.access_compliance.dbs_check_rate >= 70 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.access_compliance.dbs_check_rate}%
                 </p>
@@ -122,8 +122,8 @@ export function HomeVisitorIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <UserCheck className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.access_compliance.id_verification_rate >= 90 ? "text-green-600" :
-                  d.access_compliance.id_verification_rate >= 70 ? "text-amber-600" : "text-red-600"
+                  d.access_compliance.id_verification_rate >= 90 ? "text-[--cs-success]" :
+                  d.access_compliance.id_verification_rate >= 70 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.access_compliance.id_verification_rate}%
                 </p>
@@ -136,8 +136,8 @@ export function HomeVisitorIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <LogOut className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.access_compliance.sign_out_completion_rate >= 90 ? "text-green-600" :
-                  d.access_compliance.sign_out_completion_rate >= 70 ? "text-amber-600" : "text-red-600"
+                  d.access_compliance.sign_out_completion_rate >= 90 ? "text-[--cs-success]" :
+                  d.access_compliance.sign_out_completion_rate >= 70 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.access_compliance.sign_out_completion_rate}%
                 </p>
@@ -150,8 +150,8 @@ export function HomeVisitorIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <FileText className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.access_compliance.documentation_rate >= 70 ? "text-green-600" :
-                  d.access_compliance.documentation_rate >= 50 ? "text-amber-600" : "text-red-600"
+                  d.access_compliance.documentation_rate >= 70 ? "text-[--cs-success]" :
+                  d.access_compliance.documentation_rate >= 50 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.access_compliance.documentation_rate}%
                 </p>
@@ -186,12 +186,12 @@ export function HomeVisitorIntelligenceCard() {
               <p className="font-medium text-slate-700 mb-1">Safeguarding</p>
               <div className="space-y-0.5 text-[10px] text-muted-foreground">
                 {d.safeguarding_profile.visitors_with_child_contact > 0 && (
-                  <p>Child contact DBS: <span className={cn("font-medium", d.safeguarding_profile.child_contact_dbs_rate >= 90 ? "text-green-600" : "text-red-600")}>{d.safeguarding_profile.child_contact_dbs_rate}%</span></p>
+                  <p>Child contact DBS: <span className={cn("font-medium", d.safeguarding_profile.child_contact_dbs_rate >= 90 ? "text-[--cs-success]" : "text-[--cs-risk]")}>{d.safeguarding_profile.child_contact_dbs_rate}%</span></p>
                 )}
                 {d.safeguarding_profile.tradesperson_count > 0 && (
-                  <p>Tradesperson DBS: <span className={cn("font-medium", d.safeguarding_profile.tradesperson_dbs_rate >= 80 ? "text-green-600" : "text-amber-600")}>{d.safeguarding_profile.tradesperson_dbs_rate}%</span></p>
+                  <p>Tradesperson DBS: <span className={cn("font-medium", d.safeguarding_profile.tradesperson_dbs_rate >= 80 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{d.safeguarding_profile.tradesperson_dbs_rate}%</span></p>
                 )}
-                <p>Multi-agency: <span className={cn("font-medium", d.engagement_profile.multi_agency_engagement ? "text-green-600" : "text-amber-600")}>{d.engagement_profile.multi_agency_engagement ? "Yes" : "No"}</span></p>
+                <p>Multi-agency: <span className={cn("font-medium", d.engagement_profile.multi_agency_engagement ? "text-[--cs-success]" : "text-[--cs-warning]")}>{d.engagement_profile.multi_agency_engagement ? "Yes" : "No"}</span></p>
               </div>
             </div>
           </div>
@@ -205,7 +205,7 @@ export function HomeVisitorIntelligenceCard() {
               Strengths ({d.strengths.length})
             </p>
             {d.strengths.slice(0, 3).map((s, i) => (
-              <div key={i} className="rounded border border-green-200 bg-green-50 p-2.5 text-xs text-green-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-success-soft] bg-[--cs-success-bg] p-2.5 text-xs text-[--cs-success] leading-relaxed">
                 {s}
               </div>
             ))}
@@ -220,7 +220,7 @@ export function HomeVisitorIntelligenceCard() {
               Concerns ({d.concerns.length})
             </p>
             {d.concerns.slice(0, 3).map((c, i) => (
-              <div key={i} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs text-red-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs text-[--cs-risk] leading-relaxed">
                 {c}
               </div>
             ))}

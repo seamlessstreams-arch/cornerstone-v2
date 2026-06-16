@@ -94,7 +94,7 @@ export function FormComplianceCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.completion_rate >= 80 ? "text-green-600" : o.completion_rate >= 50 ? "text-amber-600" : "text-red-600",
+              o.completion_rate >= 80 ? "text-[--cs-success]" : o.completion_rate >= 50 ? "text-[--cs-warning]" : "text-[--cs-risk]",
             )}>
               {o.completion_rate}%
             </p>
@@ -106,7 +106,7 @@ export function FormComplianceCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.overdue_count === 0 ? "text-green-600" : "text-red-600",
+              o.overdue_count === 0 ? "text-[--cs-success]" : "text-[--cs-risk]",
             )}>
               {o.overdue_count}
             </p>
@@ -118,7 +118,7 @@ export function FormComplianceCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.pending_review_count === 0 ? "text-green-600" : "text-amber-600",
+              o.pending_review_count === 0 ? "text-[--cs-success]" : "text-[--cs-warning]",
             )}>
               {o.pending_review_count + o.submitted_count}
             </p>
@@ -136,7 +136,7 @@ export function FormComplianceCard() {
           <div>
             <p className={cn(
               "font-bold tabular-nums",
-              o.avg_review_days <= 2 ? "text-green-600" : o.avg_review_days <= 5 ? "text-amber-600" : "text-red-600",
+              o.avg_review_days <= 2 ? "text-[--cs-success]" : o.avg_review_days <= 5 ? "text-[--cs-warning]" : "text-[--cs-risk]",
             )}>
               {o.avg_review_days}d
             </p>

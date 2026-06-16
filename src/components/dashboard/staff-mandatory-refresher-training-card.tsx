@@ -13,9 +13,9 @@ import { cn } from "@/lib/utils";
 import { useWorkforceIntelligence } from "@/hooks/use-workforce-intelligence";
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 export function StaffMandatoryRefresherTrainingCard() {
@@ -58,15 +58,15 @@ export function StaffMandatoryRefresherTrainingCard() {
         {/* ── Summary strip ──────────────────────────────────────────── */}
         <div className="grid grid-cols-4 gap-2">
           <div className={cn("text-center rounded-lg p-2", avgCompliance >= 90 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", avgCompliance >= 90 ? "text-green-600" : "text-amber-600")}>{avgCompliance}%</p>
+            <p className={cn("text-lg font-bold tabular-nums", avgCompliance >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{avgCompliance}%</p>
             <p className="text-[10px] text-muted-foreground">Avg Comp.</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", totalExpiring > 0 ? "bg-amber-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", totalExpiring > 0 ? "text-amber-600" : "text-green-600")}>{totalExpiring}</p>
+            <p className={cn("text-lg font-bold tabular-nums", totalExpiring > 0 ? "text-[--cs-warning]" : "text-[--cs-success]")}>{totalExpiring}</p>
             <p className="text-[10px] text-muted-foreground">Expiring</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", totalExpired > 0 ? "bg-red-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", totalExpired > 0 ? "text-red-600" : "text-green-600")}>{totalExpired}</p>
+            <p className={cn("text-lg font-bold tabular-nums", totalExpired > 0 ? "text-[--cs-risk]" : "text-[--cs-success]")}>{totalExpired}</p>
             <p className="text-[10px] text-muted-foreground">Expired</p>
           </div>
           <div className="text-center rounded-lg p-2 bg-amber-50">
@@ -85,7 +85,7 @@ export function StaffMandatoryRefresherTrainingCard() {
               <div key={i} className="space-y-0.5">
                 <div className="flex items-center justify-between text-xs">
                   <span className="text-muted-foreground truncate">{t.category}</span>
-                  <span className={cn("font-bold tabular-nums", t.compliance_rate >= 90 ? "text-green-600" : t.compliance_rate >= 70 ? "text-amber-600" : "text-red-600")}>{t.compliance_rate}%</span>
+                  <span className={cn("font-bold tabular-nums", t.compliance_rate >= 90 ? "text-[--cs-success]" : t.compliance_rate >= 70 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>{t.compliance_rate}%</span>
                 </div>
                 <div className="h-1.5 rounded-full bg-gray-100 overflow-hidden">
                   <div

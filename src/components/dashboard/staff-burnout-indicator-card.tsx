@@ -13,15 +13,15 @@ import { cn } from "@/lib/utils";
 import { useWorkforceIntelligence } from "@/hooks/use-workforce-intelligence";
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const TREND_CONFIG = {
-  increasing: { icon: TrendingUp, color: "text-red-600", label: "Increasing" },
+  increasing: { icon: TrendingUp, color: "text-[--cs-risk]", label: "Increasing" },
   stable: { icon: Minus, color: "text-blue-600", label: "Stable" },
-  decreasing: { icon: TrendingDown, color: "text-green-600", label: "Decreasing" },
+  decreasing: { icon: TrendingDown, color: "text-[--cs-success]", label: "Decreasing" },
 };
 
 export function StaffBurnoutIndicatorCard() {
@@ -62,15 +62,15 @@ export function StaffBurnoutIndicatorCard() {
         {/* ── Summary strip ──────────────────────────────────────────── */}
         <div className="grid grid-cols-4 gap-2">
           <div className={cn("text-center rounded-lg p-2", bradfordCount > 0 ? "bg-red-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", bradfordCount > 0 ? "text-red-600" : "text-green-600")}>{bradfordCount}</p>
+            <p className={cn("text-lg font-bold tabular-nums", bradfordCount > 0 ? "text-[--cs-risk]" : "text-[--cs-success]")}>{bradfordCount}</p>
             <p className="text-[10px] text-muted-foreground">Bradford</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", sickness.total_sick_days_this_month > 10 ? "bg-amber-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", sickness.total_sick_days_this_month > 10 ? "text-amber-600" : "text-green-600")}>{sickness.total_sick_days_this_month}</p>
+            <p className={cn("text-lg font-bold tabular-nums", sickness.total_sick_days_this_month > 10 ? "text-[--cs-warning]" : "text-[--cs-success]")}>{sickness.total_sick_days_this_month}</p>
             <p className="text-[10px] text-muted-foreground">Sick Days</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", staffing.overtime_hours_this_month > 20 ? "bg-amber-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", staffing.overtime_hours_this_month > 20 ? "text-amber-600" : "text-green-600")}>{staffing.overtime_hours_this_month}h</p>
+            <p className={cn("text-lg font-bold tabular-nums", staffing.overtime_hours_this_month > 20 ? "text-[--cs-warning]" : "text-[--cs-success]")}>{staffing.overtime_hours_this_month}h</p>
             <p className="text-[10px] text-muted-foreground">Overtime</p>
           </div>
           <div className="text-center rounded-lg p-2 bg-purple-50">

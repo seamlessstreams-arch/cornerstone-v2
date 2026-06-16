@@ -13,9 +13,9 @@ import { cn } from "@/lib/utils";
 import { useWorkforceIntelligence } from "@/hooks/use-workforce-intelligence";
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 export function StaffOvertimeManagementCard() {
@@ -53,19 +53,19 @@ export function StaffOvertimeManagementCard() {
         {/* ── Summary strip ──────────────────────────────────────────── */}
         <div className="grid grid-cols-4 gap-2">
           <div className={cn("text-center rounded-lg p-2", staffing.overtime_hours_this_month > 20 ? "bg-amber-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", staffing.overtime_hours_this_month > 20 ? "text-amber-600" : "text-green-600")}>{staffing.overtime_hours_this_month}h</p>
+            <p className={cn("text-lg font-bold tabular-nums", staffing.overtime_hours_this_month > 20 ? "text-[--cs-warning]" : "text-[--cs-success]")}>{staffing.overtime_hours_this_month}h</p>
             <p className="text-[10px] text-muted-foreground">Overtime</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", staffing.shifts_unfilled > 0 ? "bg-red-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", staffing.shifts_unfilled > 0 ? "text-red-600" : "text-green-600")}>{staffing.shifts_unfilled}</p>
+            <p className={cn("text-lg font-bold tabular-nums", staffing.shifts_unfilled > 0 ? "text-[--cs-risk]" : "text-[--cs-success]")}>{staffing.shifts_unfilled}</p>
             <p className="text-[10px] text-muted-foreground">Unfilled</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", staffing.no_shows_this_month > 5 ? "bg-amber-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", staffing.no_shows_this_month > 5 ? "text-amber-600" : "text-green-600")}>{staffing.no_shows_this_month}</p>
+            <p className={cn("text-lg font-bold tabular-nums", staffing.no_shows_this_month > 5 ? "text-[--cs-warning]" : "text-[--cs-success]")}>{staffing.no_shows_this_month}</p>
             <p className="text-[10px] text-muted-foreground">No Shows</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", staffing.coverage_rate >= 95 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", staffing.coverage_rate >= 95 ? "text-green-600" : "text-amber-600")}>{staffing.coverage_rate}%</p>
+            <p className={cn("text-lg font-bold tabular-nums", staffing.coverage_rate >= 95 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{staffing.coverage_rate}%</p>
             <p className="text-[10px] text-muted-foreground">Coverage</p>
           </div>
         </div>
@@ -86,7 +86,7 @@ export function StaffOvertimeManagementCard() {
             </div>
             <div className="flex items-center justify-between text-xs">
               <span className="text-muted-foreground">Shifts Unfilled</span>
-              <span className={cn("font-bold tabular-nums", staffing.shifts_unfilled > 0 ? "text-red-600" : "text-green-600")}>{staffing.shifts_unfilled}</span>
+              <span className={cn("font-bold tabular-nums", staffing.shifts_unfilled > 0 ? "text-[--cs-risk]" : "text-[--cs-success]")}>{staffing.shifts_unfilled}</span>
             </div>
             <div className="flex items-center justify-between text-xs">
               <span className="text-muted-foreground">No-Shows (Month)</span>

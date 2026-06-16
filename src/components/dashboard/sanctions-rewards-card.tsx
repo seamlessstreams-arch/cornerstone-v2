@@ -20,16 +20,16 @@ import { useSanctionsRewardsIntelligence } from "@/hooks/use-sanctions-rewards-i
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high:     "border-red-200 bg-red-50 text-red-800",
-  medium:   "border-amber-200 bg-amber-50 text-amber-800",
-  low:      "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high:     "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium:   "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low:      "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -82,7 +82,7 @@ export function SanctionsRewardsCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.reward_to_sanction_ratio >= 3 ? "text-green-600" : o.reward_to_sanction_ratio >= 2 ? "text-amber-600" : "text-red-600",
+              o.reward_to_sanction_ratio >= 3 ? "text-[--cs-success]" : o.reward_to_sanction_ratio >= 2 ? "text-[--cs-warning]" : "text-[--cs-risk]",
             )}>
               {o.reward_to_sanction_ratio}:1
             </p>
@@ -94,7 +94,7 @@ export function SanctionsRewardsCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.proportionality_rate === 100 ? "text-green-600" : o.proportionality_rate >= 80 ? "text-amber-600" : "text-red-600",
+              o.proportionality_rate === 100 ? "text-[--cs-success]" : o.proportionality_rate >= 80 ? "text-[--cs-warning]" : "text-[--cs-risk]",
             )}>
               {o.proportionality_rate}%
             </p>
@@ -112,7 +112,7 @@ export function SanctionsRewardsCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.total_sanctions === 0 ? "text-green-600" : "text-amber-600",
+              o.total_sanctions === 0 ? "text-[--cs-success]" : "text-[--cs-warning]",
             )}>
               {o.total_sanctions}
             </p>
@@ -171,9 +171,9 @@ export function SanctionsRewardsCard() {
                     {c.sanctions > 0 && (
                       <Badge className={cn(
                         "text-[10px] tabular-nums",
-                        c.ratio >= 3 ? "bg-green-100 text-green-700"
-                          : c.ratio >= 2 ? "bg-amber-100 text-amber-700"
-                          : "bg-red-100 text-red-700",
+                        c.ratio >= 3 ? "bg-[--cs-success-bg] text-[--cs-success]"
+                          : c.ratio >= 2 ? "bg-[--cs-warning-bg] text-[--cs-warning]"
+                          : "bg-[--cs-risk-bg] text-[--cs-risk]",
                       )}>
                         {c.ratio}:1
                       </Badge>
@@ -183,7 +183,7 @@ export function SanctionsRewardsCard() {
                 {(c.risk_flags?.length ?? 0) > 0 && (
                   <div className="flex flex-wrap gap-1 mt-1.5">
                     {(c.risk_flags ?? []).slice(0, 3).map((flag, i) => (
-                      <Badge key={i} className="text-[9px] bg-red-100 text-red-700">
+                      <Badge key={i} className="text-[9px] bg-[--cs-risk-bg] text-[--cs-risk]">
                         <FileWarning className="h-2.5 w-2.5 mr-0.5" />
                         {flag.replace(/_/g, " ")}
                       </Badge>

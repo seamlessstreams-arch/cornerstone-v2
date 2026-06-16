@@ -76,15 +76,15 @@ export function EventStreamCard() {
             <p className="text-[10px] text-muted-foreground">Events</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", o.pending_approvals > 0 ? "bg-amber-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.pending_approvals > 0 ? "text-amber-600" : "text-green-600")}>{o.pending_approvals}</p>
+            <p className={cn("text-lg font-bold tabular-nums", o.pending_approvals > 0 ? "text-[--cs-warning]" : "text-[--cs-success]")}>{o.pending_approvals}</p>
             <p className="text-[10px] text-muted-foreground">Approvals</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", o.high_or_critical > 0 ? "bg-red-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.high_or_critical > 0 ? "text-red-600" : "text-green-600")}>{o.high_or_critical}</p>
+            <p className={cn("text-lg font-bold tabular-nums", o.high_or_critical > 0 ? "text-[--cs-risk]" : "text-[--cs-success]")}>{o.high_or_critical}</p>
             <p className="text-[10px] text-muted-foreground">High+</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", o.compliance_flags > 0 ? "bg-amber-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.compliance_flags > 0 ? "text-amber-600" : "text-green-600")}>{o.compliance_flags}</p>
+            <p className={cn("text-lg font-bold tabular-nums", o.compliance_flags > 0 ? "text-[--cs-warning]" : "text-[--cs-success]")}>{o.compliance_flags}</p>
             <p className="text-[10px] text-muted-foreground">Flags</p>
           </div>
         </div>

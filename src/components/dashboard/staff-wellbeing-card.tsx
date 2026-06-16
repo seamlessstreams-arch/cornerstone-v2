@@ -16,9 +16,9 @@ import { cn } from "@/lib/utils";
 import { useWorkforceIntelligence } from "@/hooks/use-workforce-intelligence";
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 export function StaffWellbeingCard() {
@@ -67,15 +67,15 @@ export function StaffWellbeingCard() {
 
         <div className="grid grid-cols-4 gap-2">
           <div className={cn("text-center rounded-lg p-2.5", sickness.total_sick_days_this_month <= 3 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", sickness.total_sick_days_this_month <= 3 ? "text-green-600" : "text-amber-600")}>{sickness.total_sick_days_this_month}</p>
+            <p className={cn("text-lg font-bold tabular-nums", sickness.total_sick_days_this_month <= 3 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{sickness.total_sick_days_this_month}</p>
             <p className="text-[10px] text-muted-foreground">Sick Days</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", sickness.staff_with_sickness === 0 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", sickness.staff_with_sickness === 0 ? "text-green-600" : "text-amber-600")}>{sickness.staff_with_sickness}</p>
+            <p className={cn("text-lg font-bold tabular-nums", sickness.staff_with_sickness === 0 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{sickness.staff_with_sickness}</p>
             <p className="text-[10px] text-muted-foreground">Staff Sick</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", supervisionRate >= 90 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", supervisionRate >= 90 ? "text-green-600" : "text-amber-600")}>{supervisionRate}%</p>
+            <p className={cn("text-lg font-bold tabular-nums", supervisionRate >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{supervisionRate}%</p>
             <p className="text-[10px] text-muted-foreground">Supervision</p>
           </div>
           <div className="text-center rounded-lg bg-blue-50 p-2.5">
@@ -97,7 +97,7 @@ export function StaffWellbeingCard() {
             <span>This month: {sickness.total_sick_days_this_month}d</span>
             <span>Last month: {sickness.total_sick_days_last_month}d</span>
           </div>
-          <Badge className={cn("text-[10px]", sickness.trend === "decreasing" ? "bg-green-100 text-green-700" : sickness.trend === "increasing" ? "bg-red-100 text-red-700" : "bg-blue-100 text-blue-700")}>
+          <Badge className={cn("text-[10px]", sickness.trend === "decreasing" ? "bg-[--cs-success-bg] text-[--cs-success]" : sickness.trend === "increasing" ? "bg-[--cs-risk-bg] text-[--cs-risk]" : "bg-[--cs-info-bg] text-[--cs-info]")}>
             {sickness.trend}
           </Badge>
         </div>
@@ -110,7 +110,7 @@ export function StaffWellbeingCard() {
             {sickness.bradford_factor_alerts.slice(0, 3).map((a) => (
               <div key={a.staff_id} className="flex items-center justify-between rounded border p-2.5 text-xs">
                 <span className="font-medium">{a.staff_name}</span>
-                <Badge className="text-[9px] bg-red-100 text-red-700">BF: {a.factor}</Badge>
+                <Badge className="text-[9px] bg-[--cs-risk-bg] text-[--cs-risk]">BF: {a.factor}</Badge>
               </div>
             ))}
           </div>

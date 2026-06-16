@@ -13,8 +13,8 @@ const RATING_STYLES: Record<DampMouldRating, { bg: string; text: string; border:
   inadequate: { bg: "bg-red-100", text: "text-red-800", border: "border-red-300", label: "INADEQUATE" },
   insufficient_data: { bg: "bg-slate-100", text: "text-slate-800", border: "border-slate-300", label: "NO DATA" },
 };
-const REC_STYLES: Record<string, string> = { immediate: "border-red-200 bg-red-50 text-red-800", soon: "border-amber-200 bg-amber-50 text-amber-800", planned: "border-blue-200 bg-blue-50 text-blue-800" };
-const INSIGHT_STYLES: Record<string, string> = { critical: "border-red-200 bg-red-50 text-red-800", warning: "border-amber-200 bg-amber-50 text-amber-800", positive: "border-green-200 bg-green-50 text-green-800" };
+const REC_STYLES: Record<string, string> = { immediate: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]", soon: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]", planned: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]" };
+const INSIGHT_STYLES: Record<string, string> = { critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]", warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]", positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]" };
 
 export function HomeDampMouldManagementIntelligenceCard() {
   const { data, isLoading } = useHomeDampMouldManagementIntelligence();
@@ -46,7 +46,7 @@ export function HomeDampMouldManagementIntelligenceCard() {
       <CardHeader className={cn("pb-3", isAlert ? "bg-red-50" : "bg-amber-50/50")}>
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm flex items-center gap-2">
-            <Droplet className={cn("h-4 w-4", isAlert ? "text-red-600" : "text-amber-600")} />
+            <Droplet className={cn("h-4 w-4", isAlert ? "text-[--cs-risk]" : "text-[--cs-warning]")} />
             <span className="text-slate-900 font-bold">Damp & Mould Management</span>
             <span className={cn("text-[10px] font-bold px-2 py-0.5 rounded-full border", ratingStyle.bg, ratingStyle.text, ratingStyle.border)}>{ratingStyle.label}</span>
             {d.damp_rating !== "insufficient_data" && <span className="text-xs font-bold tabular-nums text-slate-600">{d.damp_score}%</span>}
@@ -58,33 +58,33 @@ export function HomeDampMouldManagementIntelligenceCard() {
         {d.damp_rating !== "insufficient_data" && (
           <div className="grid grid-cols-3 sm:grid-cols-6 gap-1.5">
             <div className={cn("text-center rounded-lg p-1.5", d.damp_survey_rate >= 90 ? "bg-green-50" : d.damp_survey_rate >= 70 ? "bg-amber-50" : "bg-red-50")}>
-              <p className={cn("text-sm font-bold tabular-nums", d.damp_survey_rate >= 90 ? "text-green-600" : d.damp_survey_rate >= 70 ? "text-amber-600" : "text-red-600")}>{d.damp_survey_rate}%</p>
+              <p className={cn("text-sm font-bold tabular-nums", d.damp_survey_rate >= 90 ? "text-[--cs-success]" : d.damp_survey_rate >= 70 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>{d.damp_survey_rate}%</p>
               <p className="text-[9px] text-muted-foreground">Survey</p>
             </div>
             <div className={cn("text-center rounded-lg p-1.5", d.mould_inspection_rate >= 90 ? "bg-green-50" : d.mould_inspection_rate >= 70 ? "bg-amber-50" : "bg-red-50")}>
-              <p className={cn("text-sm font-bold tabular-nums", d.mould_inspection_rate >= 90 ? "text-green-600" : d.mould_inspection_rate >= 70 ? "text-amber-600" : "text-red-600")}>{d.mould_inspection_rate}%</p>
+              <p className={cn("text-sm font-bold tabular-nums", d.mould_inspection_rate >= 90 ? "text-[--cs-success]" : d.mould_inspection_rate >= 70 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>{d.mould_inspection_rate}%</p>
               <p className="text-[9px] text-muted-foreground">Inspect</p>
             </div>
             <div className={cn("text-center rounded-lg p-1.5", d.remediation_rate >= 90 ? "bg-green-50" : d.remediation_rate >= 70 ? "bg-amber-50" : "bg-red-50")}>
-              <p className={cn("text-sm font-bold tabular-nums", d.remediation_rate >= 90 ? "text-green-600" : d.remediation_rate >= 70 ? "text-amber-600" : "text-red-600")}>{d.remediation_rate}%</p>
+              <p className={cn("text-sm font-bold tabular-nums", d.remediation_rate >= 90 ? "text-[--cs-success]" : d.remediation_rate >= 70 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>{d.remediation_rate}%</p>
               <p className="text-[9px] text-muted-foreground">Remediate</p>
             </div>
             <div className={cn("text-center rounded-lg p-1.5", d.ventilation_rate >= 90 ? "bg-green-50" : d.ventilation_rate >= 70 ? "bg-amber-50" : "bg-red-50")}>
-              <p className={cn("text-sm font-bold tabular-nums", d.ventilation_rate >= 90 ? "text-green-600" : d.ventilation_rate >= 70 ? "text-amber-600" : "text-red-600")}>{d.ventilation_rate}%</p>
+              <p className={cn("text-sm font-bold tabular-nums", d.ventilation_rate >= 90 ? "text-[--cs-success]" : d.ventilation_rate >= 70 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>{d.ventilation_rate}%</p>
               <p className="text-[9px] text-muted-foreground">Ventilate</p>
             </div>
             <div className={cn("text-center rounded-lg p-1.5", d.health_impact_rate >= 90 ? "bg-green-50" : d.health_impact_rate >= 70 ? "bg-amber-50" : "bg-red-50")}>
-              <p className={cn("text-sm font-bold tabular-nums", d.health_impact_rate >= 90 ? "text-green-600" : d.health_impact_rate >= 70 ? "text-amber-600" : "text-red-600")}>{d.health_impact_rate}%</p>
+              <p className={cn("text-sm font-bold tabular-nums", d.health_impact_rate >= 90 ? "text-[--cs-success]" : d.health_impact_rate >= 70 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>{d.health_impact_rate}%</p>
               <p className="text-[9px] text-muted-foreground">Health</p>
             </div>
             <div className={cn("text-center rounded-lg p-1.5", d.child_awareness_rate >= 90 ? "bg-green-50" : d.child_awareness_rate >= 70 ? "bg-amber-50" : "bg-red-50")}>
-              <p className={cn("text-sm font-bold tabular-nums", d.child_awareness_rate >= 90 ? "text-green-600" : d.child_awareness_rate >= 70 ? "text-amber-600" : "text-red-600")}>{d.child_awareness_rate}%</p>
+              <p className={cn("text-sm font-bold tabular-nums", d.child_awareness_rate >= 90 ? "text-[--cs-success]" : d.child_awareness_rate >= 70 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>{d.child_awareness_rate}%</p>
               <p className="text-[9px] text-muted-foreground">Awareness</p>
             </div>
           </div>
         )}
-        {d.strengths?.length > 0 && (<div className="space-y-1.5"><p className="text-xs font-semibold text-green-700 flex items-center gap-1"><Sparkles className="h-3 w-3" /> Strengths ({d.strengths.length})</p>{d.strengths.slice(0, 3).map((s: string, i: number) => (<div key={i} className="rounded border border-green-200 bg-green-50 p-2.5 text-xs text-green-800 leading-relaxed">{s}</div>))}</div>)}
-        {d.concerns?.length > 0 && (<div className="space-y-1.5"><p className="text-xs font-semibold text-red-700 flex items-center gap-1"><AlertCircle className="h-3 w-3" /> Concerns ({d.concerns.length})</p>{d.concerns.slice(0, 3).map((c: string, i: number) => (<div key={i} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs text-red-800 leading-relaxed">{c}</div>))}</div>)}
+        {d.strengths?.length > 0 && (<div className="space-y-1.5"><p className="text-xs font-semibold text-green-700 flex items-center gap-1"><Sparkles className="h-3 w-3" /> Strengths ({d.strengths.length})</p>{d.strengths.slice(0, 3).map((s: string, i: number) => (<div key={i} className="rounded border border-[--cs-success-soft] bg-[--cs-success-bg] p-2.5 text-xs text-[--cs-success] leading-relaxed">{s}</div>))}</div>)}
+        {d.concerns?.length > 0 && (<div className="space-y-1.5"><p className="text-xs font-semibold text-red-700 flex items-center gap-1"><AlertCircle className="h-3 w-3" /> Concerns ({d.concerns.length})</p>{d.concerns.slice(0, 3).map((c: string, i: number) => (<div key={i} className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs text-[--cs-risk] leading-relaxed">{c}</div>))}</div>)}
         {d.recommendations?.length > 0 && (<div className="space-y-1.5"><p className="text-xs font-semibold text-muted-foreground flex items-center gap-1"><AlertTriangle className="h-3 w-3 text-amber-600" /> Recommendations ({d.recommendations.length})</p>{d.recommendations.slice(0, 3).map((rec: any) => (<div key={rec.rank} className={cn("rounded border p-2.5 text-xs leading-relaxed", REC_STYLES[rec.urgency] ?? REC_STYLES.planned)}><div className="flex items-start justify-between gap-2"><span>{rec.recommendation}</span>{rec.regulatory_ref && <span className="text-[10px] font-mono shrink-0 opacity-60">{rec.regulatory_ref}</span>}</div></div>))}</div>)}
         {d.insights?.length > 0 && (<div className="space-y-1.5"><p className="text-xs font-semibold flex items-center gap-1 text-purple-700"><Brain className="h-3 w-3" /> Cara Damp & Mould Management Intelligence</p>{d.insights.slice(0, 3).map((insight: any, i: number) => (<div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>{insight.text}</div>))}</div>)}
       </CardContent>

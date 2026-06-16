@@ -15,9 +15,9 @@ import { cn } from "@/lib/utils";
 import { useWorkforceIntelligence } from "@/hooks/use-workforce-intelligence";
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 export function StaffPatternIntelligenceCard() {
@@ -69,11 +69,11 @@ export function StaffPatternIntelligenceCard() {
             <p className="text-[10px] text-muted-foreground">Avg/Staff</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", staffing.overtime_hours_this_month <= 20 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", staffing.overtime_hours_this_month <= 20 ? "text-green-600" : "text-amber-600")}>{staffing.overtime_hours_this_month}h</p>
+            <p className={cn("text-lg font-bold tabular-nums", staffing.overtime_hours_this_month <= 20 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{staffing.overtime_hours_this_month}h</p>
             <p className="text-[10px] text-muted-foreground">Overtime</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", sickness.trend === "decreasing" ? "bg-green-50" : sickness.trend === "increasing" ? "bg-red-50" : "bg-blue-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", sickness.trend === "decreasing" ? "text-green-600" : sickness.trend === "increasing" ? "text-red-600" : "text-blue-600")}>{sickness.total_sick_days_this_month}d</p>
+            <p className={cn("text-lg font-bold tabular-nums", sickness.trend === "decreasing" ? "text-[--cs-success]" : sickness.trend === "increasing" ? "text-[--cs-risk]" : "text-blue-600")}>{sickness.total_sick_days_this_month}d</p>
             <p className="text-[10px] text-muted-foreground">Sick Days</p>
           </div>
         </div>
@@ -85,7 +85,7 @@ export function StaffPatternIntelligenceCard() {
           <div className="grid grid-cols-2 gap-2 text-xs">
             <div className="rounded border p-2">
               <span className="text-muted-foreground">Sickness trend:</span>{" "}
-              <Badge className={cn("text-[9px]", sickness.trend === "decreasing" ? "bg-green-100 text-green-700" : sickness.trend === "increasing" ? "bg-red-100 text-red-700" : "bg-blue-100 text-blue-700")}>{sickness.trend}</Badge>
+              <Badge className={cn("text-[9px]", sickness.trend === "decreasing" ? "bg-[--cs-success-bg] text-[--cs-success]" : sickness.trend === "increasing" ? "bg-[--cs-risk-bg] text-[--cs-risk]" : "bg-[--cs-info-bg] text-[--cs-info]")}>{sickness.trend}</Badge>
             </div>
             <div className="rounded border p-2">
               <span className="text-muted-foreground">Avg tenure:</span>{" "}

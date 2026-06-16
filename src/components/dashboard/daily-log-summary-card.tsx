@@ -24,12 +24,12 @@ import {
 
 const TYPE_COLOURS: Record<string, string> = {
   general:   "bg-[var(--cs-surface)] text-[var(--cs-text-secondary)]",
-  behaviour: "bg-orange-100 text-orange-700",
+  behaviour: "bg-[--cs-warning-soft] text-[--cs-warning]",
   health:    "bg-teal-100 text-teal-700",
-  education: "bg-blue-100 text-blue-700",
+  education: "bg-[--cs-info-bg] text-[--cs-info]",
   contact:   "bg-[var(--cs-cara-gold-bg)] text-[var(--cs-cara-gold)]",
   activity:  "bg-emerald-100 text-emerald-700",
-  mood:      "bg-amber-100 text-amber-700",
+  mood:      "bg-[--cs-warning-bg] text-[--cs-warning]",
   sleep:     "bg-indigo-100 text-indigo-700",
   food:      "bg-rose-100 text-rose-700",
 };
@@ -121,7 +121,7 @@ export function DailyLogSummaryCard() {
           </div>
           <span className={cn(
             "text-[10px] font-semibold",
-            allRecorded ? "text-emerald-600" : "text-amber-600",
+            allRecorded ? "text-emerald-600" : "text-[--cs-warning]",
           )}>
             {current.length - childrenMissing.length}/{current.length}
           </span>

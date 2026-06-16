@@ -119,9 +119,9 @@ function ratingColour(
     case "good":
       return "text-blue-600";
     case "adequate":
-      return "text-amber-600";
+      return "text-[--cs-warning]";
     case "inadequate":
-      return "text-red-600";
+      return "text-[--cs-risk]";
     default:
       return "text-slate-400";
   }
@@ -205,7 +205,7 @@ function SummaryCard({
       <p
         className={cn(
           "text-2xl font-bold",
-          highlight ? "text-amber-600" : "text-slate-800",
+          highlight ? "text-[--cs-warning]" : "text-slate-800",
         )}
       >
         {value}
@@ -284,13 +284,13 @@ function HomeCard({
           icon={<AlertTriangle className="h-3 w-3" />}
           label="Incidents"
           value={stats.open_incidents}
-          className={stats.open_incidents > 2 ? "text-red-600" : undefined}
+          className={stats.open_incidents > 2 ? "text-[--cs-risk]" : undefined}
         />
         <Metric
           icon={<ClipboardList className="h-3 w-3" />}
           label="Overdue"
           value={stats.overdue_tasks}
-          className={stats.overdue_tasks > 5 ? "text-amber-600" : undefined}
+          className={stats.overdue_tasks > 5 ? "text-[--cs-warning]" : undefined}
         />
       </div>
 

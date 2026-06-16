@@ -29,15 +29,15 @@ const RATING_STYLES: Record<KeyworkerRating, { bg: string; text: string; border:
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const REC_STYLES: Record<string, string> = {
-  immediate: "border-red-200 bg-red-50 text-red-800",
-  soon: "border-amber-200 bg-amber-50 text-amber-800",
-  planned: "border-blue-200 bg-blue-50 text-blue-800",
+  immediate: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  soon: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  planned: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -85,7 +85,7 @@ export function HomeKeyworkerIntelligenceCard() {
       <CardHeader className={cn("pb-3", isAlert ? "bg-red-50" : "bg-slate-50/50")}>
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm flex items-center gap-2">
-            <Heart className={cn("h-4 w-4", isAlert ? "text-red-600" : "text-rose-500")} />
+            <Heart className={cn("h-4 w-4", isAlert ? "text-[--cs-risk]" : "text-rose-500")} />
             <span className="text-slate-900">Keyworker Practice</span>
             <span className={cn("text-[10px] font-bold px-2 py-0.5 rounded-full border", ratingStyle.bg, ratingStyle.text, ratingStyle.border)}>
               {ratingStyle.label}
@@ -108,8 +108,8 @@ export function HomeKeyworkerIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Users className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.coverage_profile.coverage_rate >= 100 ? "text-green-600" :
-                  d.coverage_profile.coverage_rate >= 80 ? "text-amber-600" : "text-red-600"
+                  d.coverage_profile.coverage_rate >= 100 ? "text-[--cs-success]" :
+                  d.coverage_profile.coverage_rate >= 80 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.coverage_profile.coverage_rate}%
                 </p>
@@ -122,8 +122,8 @@ export function HomeKeyworkerIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Smile className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.quality_profile.avg_satisfaction >= 4.0 ? "text-green-600" :
-                  d.quality_profile.avg_satisfaction >= 3.0 ? "text-amber-600" : "text-red-600"
+                  d.quality_profile.avg_satisfaction >= 4.0 ? "text-[--cs-success]" :
+                  d.quality_profile.avg_satisfaction >= 3.0 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.quality_profile.avg_satisfaction}/5
                 </p>
@@ -136,8 +136,8 @@ export function HomeKeyworkerIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <TrendingUp className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.therapeutic_profile.mood_improvement_rate >= 70 ? "text-green-600" :
-                  d.therapeutic_profile.mood_improvement_rate >= 50 ? "text-amber-600" : "text-red-600"
+                  d.therapeutic_profile.mood_improvement_rate >= 70 ? "text-[--cs-success]" :
+                  d.therapeutic_profile.mood_improvement_rate >= 50 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.therapeutic_profile.mood_improvement_rate}%
                 </p>
@@ -150,8 +150,8 @@ export function HomeKeyworkerIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Palette className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.quality_profile.avg_themes >= 3 ? "text-green-600" :
-                  d.quality_profile.avg_themes >= 2 ? "text-amber-600" : "text-red-600"
+                  d.quality_profile.avg_themes >= 3 ? "text-[--cs-success]" :
+                  d.quality_profile.avg_themes >= 2 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.quality_profile.avg_themes}
                 </p>
@@ -176,11 +176,11 @@ export function HomeKeyworkerIntelligenceCard() {
               <p className="font-medium text-slate-700 mb-1">Engagement</p>
               <div className="space-y-0.5 text-[10px] text-muted-foreground">
                 <p>Chose format: <span className={cn("font-medium",
-                  d.engagement_profile.child_chose_format_rate >= 80 ? "text-green-600" : "text-amber-600"
+                  d.engagement_profile.child_chose_format_rate >= 80 ? "text-[--cs-success]" : "text-[--cs-warning]"
                 )}>{d.engagement_profile.child_chose_format_rate}%</span></p>
                 <p>Child raised: <span className="font-medium text-slate-600">{d.engagement_profile.child_brought_up_rate}%</span></p>
                 <p>Flags raised: <span className={cn("font-medium",
-                  d.follow_up_profile.flags_raised_total > 0 ? "text-red-600" : "text-green-600"
+                  d.follow_up_profile.flags_raised_total > 0 ? "text-[--cs-risk]" : "text-[--cs-success]"
                 )}>{d.follow_up_profile.flags_raised_total}</span></p>
               </div>
             </div>
@@ -195,7 +195,7 @@ export function HomeKeyworkerIntelligenceCard() {
               Strengths ({d.strengths.length})
             </p>
             {d.strengths.slice(0, 3).map((s, i) => (
-              <div key={i} className="rounded border border-green-200 bg-green-50 p-2.5 text-xs text-green-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-success-soft] bg-[--cs-success-bg] p-2.5 text-xs text-[--cs-success] leading-relaxed">
                 {s}
               </div>
             ))}
@@ -210,7 +210,7 @@ export function HomeKeyworkerIntelligenceCard() {
               Concerns ({d.concerns.length})
             </p>
             {d.concerns.slice(0, 3).map((c, i) => (
-              <div key={i} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs text-red-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs text-[--cs-risk] leading-relaxed">
                 {c}
               </div>
             ))}
