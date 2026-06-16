@@ -52,7 +52,7 @@ Do not invent information. If you are not sure, omit it. Never include personal 
   const { text: aiText, llmUsed } = await generateText({
     systemPrompt: "You extract factual information from CVs for safer recruitment. Never invent. Return JSON only.",
     userPrompt: prompt,
-    maxTokens: 400,
+    maxOutputTokens: 400,
   });
 
   if (!llmUsed) {
