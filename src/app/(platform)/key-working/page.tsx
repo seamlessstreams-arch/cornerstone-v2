@@ -34,6 +34,7 @@ import {
 import { CaraPanel } from "@/components/cara/cara-panel";
 import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { WritingAssistantInline } from "@/components/writing-assistant/writing-assistant-inline";
 
 // ── Local view-model type (camelCase for the page) ──────────────────────────
 interface SessionView {
@@ -150,6 +151,8 @@ export default function KeyWorkingPage() {
   const [formType, setFormType] = useState("");
   const [formMoodBefore, setFormMoodBefore] = useState("");
   const [formMoodAfter, setFormMoodAfter] = useState("");
+  const [childVoiceText, setChildVoiceText] = useState("");
+  const [workerObsText, setWorkerObsText] = useState("");
 
   const toggle = (id: string) => setExpanded((p) => ({ ...p, [id]: !p[id] }));
 
@@ -239,6 +242,8 @@ export default function KeyWorkingPage() {
           setFormType("");
           setFormMoodBefore("");
           setFormMoodAfter("");
+          setChildVoiceText("");
+          setWorkerObsText("");
           formRef.current?.reset();
         },
       },
@@ -521,11 +526,17 @@ export default function KeyWorkingPage() {
             </div>
             <div>
               <label className="text-sm font-medium">Child&apos;s Voice</label>
-              <Textarea name="child_voice" placeholder="Record what the child said in their own words…" rows={3} />
+              <Textarea name="child_voice" placeholder="Record what the child said in their own words…" rows={3}
+                value={childVoiceText} onChange={(e) => setChildVoiceText(e.target.value)} />
+              <WritingAssistantInline value={childVoiceText} onApplyText={setChildVoiceText}
+                recordType="key_work" fieldName="child_voice" childId={formChildId || undefined} mode="writing-to-child" />
             </div>
             <div>
               <label className="text-sm font-medium">Worker Observations</label>
-              <Textarea name="worker_observations" placeholder="Your professional observations…" rows={3} />
+              <Textarea name="worker_observations" placeholder="Your professional observations…" rows={3}
+                value={workerObsText} onChange={(e) => setWorkerObsText(e.target.value)} />
+              <WritingAssistantInline value={workerObsText} onApplyText={setWorkerObsText}
+                recordType="key_work" fieldName="worker_observations" childId={formChildId || undefined} mode="standard" />
             </div>
             <div>
               <label className="text-sm font-medium">Actions Agreed</label>

@@ -29,6 +29,7 @@ import {
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
 import { CaraPanel } from "@/components/cara/cara-panel";
 import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
+import { WritingAssistantInline } from "@/components/writing-assistant/writing-assistant-inline";
 
 
 const DOMAIN_META: Record<RiskDomain, { label: string; color: string }> = {
@@ -88,6 +89,9 @@ export default function RiskAssessmentsPage() {
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
   const [showNew, setShowNew] = useState(false);
   const [selectedYp, setSelectedYp] = useState("");
+  const [raTriggers, setRaTriggers] = useState("");
+  const [raContingencyPlan, setRaContingencyPlan] = useState("");
+  const [raChildViews, setRaChildViews] = useState("");
 
   const toggle = (id: string) => setExpanded((p) => ({ ...p, [id]: !p[id] }));
 
@@ -344,7 +348,14 @@ export default function RiskAssessmentsPage() {
               child_views: fd.get("child_views") as string || "", history_notes: "",
               linked_incidents: [], home_id: "home_oak", created_at: new Date().toISOString(),
             }, {
-              onSuccess: () => { toast.success("Risk assessment created"); setShowNew(false); },
+              onSuccess: () => {
+                toast.success("Risk assessment created");
+                setShowNew(false);
+                setSelectedYp("");
+                setRaTriggers("");
+                setRaContingencyPlan("");
+                setRaChildViews("");
+              },
               onError: () => toast.error("Failed to create assessment"),
             });
           }} className="space-y-3">
@@ -369,10 +380,28 @@ export default function RiskAssessmentsPage() {
                 </Select>
               </div>
             </div>
-            <div><label className="text-sm font-medium">Triggers</label><Textarea name="triggers" placeholder="Known triggers (one per line)" rows={2} /></div>
+            <div>
+              <label className="text-sm font-medium">Triggers</label>
+              <Textarea name="triggers" placeholder="Known triggers (one per line)" rows={2}
+                value={raTriggers} onChange={(e) => setRaTriggers(e.target.value)} />
+              <WritingAssistantInline value={raTriggers} onApplyText={setRaTriggers}
+                recordType="risk_assessment" fieldName="triggers" childId={selectedYp || undefined} mode="standard" />
+            </div>
             <div><label className="text-sm font-medium">Mitigation Strategies</label><Textarea placeholder="Key strategies (one per line)" rows={3} /></div>
-            <div><label className="text-sm font-medium">Contingency Plan</label><Textarea name="contingency_plan" placeholder="What to do if risk escalates…" rows={3} /></div>
-            <div><label className="text-sm font-medium">Child&apos;s Views</label><Textarea name="child_views" placeholder="Child's perspective on this risk…" rows={2} /></div>
+            <div>
+              <label className="text-sm font-medium">Contingency Plan</label>
+              <Textarea name="contingency_plan" placeholder="What to do if risk escalates…" rows={3}
+                value={raContingencyPlan} onChange={(e) => setRaContingencyPlan(e.target.value)} />
+              <WritingAssistantInline value={raContingencyPlan} onApplyText={setRaContingencyPlan}
+                recordType="risk_assessment" fieldName="contingency_plan" childId={selectedYp || undefined} mode="standard" />
+            </div>
+            <div>
+              <label className="text-sm font-medium">Child&apos;s Views</label>
+              <Textarea name="child_views" placeholder="Child's perspective on this risk…" rows={2}
+                value={raChildViews} onChange={(e) => setRaChildViews(e.target.value)} />
+              <WritingAssistantInline value={raChildViews} onApplyText={setRaChildViews}
+                recordType="risk_assessment" fieldName="child_views" childId={selectedYp || undefined} mode="writing-to-child" />
+            </div>
             <div><label className="text-sm font-medium">Review Date</label><Input name="review_date" type="date" /></div>
             <DialogFooter>
               <Button type="button" variant="outline" onClick={() => setShowNew(false)}>Cancel</Button>
