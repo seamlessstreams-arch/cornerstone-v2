@@ -13,6 +13,7 @@ import React, { useCallback } from "react";
 import { cn } from "@/lib/utils";
 import { useWritingAssistant } from "@/hooks/use-writing-assistant";
 import { useWritingAssistantSettings, enabledIssueTypes } from "@/hooks/use-writing-assistant-settings";
+import { useRewrite } from "@/hooks/use-rewrite";
 import { InlineSuggestions } from "./inline-suggestions";
 import { applyAutoFixes } from "@/lib/writing-assistant/rewrite-engine";
 import type { WritingIssue, WritingMode, WritingSuggestion } from "@/lib/writing-assistant/types";
@@ -48,6 +49,7 @@ export function CaraWritingField(props: CaraWritingFieldProps) {
 
   const assistEnabled = !disabled && !readOnly;
   const { settings, toggleCategory, addToDictionary, logAudit } = useWritingAssistantSettings();
+  const { rewrite, rewriting, result: rewriteResult, discard: discardRewrite } = useRewrite(value, mode);
 
   const allKnownNames = [...(props.knownNames ?? []), ...settings.dictionary];
 
@@ -92,6 +94,12 @@ export function CaraWritingField(props: CaraWritingFieldProps) {
     });
   }, [value, issues, onChange, ignore, logAudit, props.recordType, props.fieldName, props.childId]);
 
+  const acceptRewrite = useCallback((text: string) => {
+    onChange(text);
+    discardRewrite();
+    logAudit({ action: "accepted", issue_type: "clarity", original_text: value, record_type: props.recordType, field_name: props.fieldName, child_id: props.childId });
+  }, [value, onChange, discardRewrite, logAudit, props.recordType, props.fieldName, props.childId]);
+
   return (
     <div className={className}>
       <textarea
@@ -118,6 +126,12 @@ export function CaraWritingField(props: CaraWritingFieldProps) {
           onApply={applySuggestion}
           onIgnore={ignore}
           onApplyAll={applyAll}
+          rewriteAvailable={result?.rewriteAvailable}
+          onRewrite={rewrite}
+          rewriting={rewriting}
+          rewriteResult={rewriteResult}
+          onAcceptRewrite={acceptRewrite}
+          onDiscardRewrite={discardRewrite}
           onToggleCategory={toggleCategory}
           onAddToDictionary={addToDictionary}
           onAudit={handleAudit}

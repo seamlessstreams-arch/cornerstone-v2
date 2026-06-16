@@ -164,6 +164,52 @@ describe("writing-assistant UI render smoke", () => {
     ).not.toThrow();
   });
 
+  it("InlineSuggestions renders Rewrite with Cara button when rewriteAvailable is true", () => {
+    const result = checkWriting({ text: "Child kicked off and didnt settle. Their behavior was challenging." }, "x");
+    const html = r(
+      React.createElement(InlineSuggestions, {
+        issues: result.issues,
+        score: result.score,
+        onApply: () => {},
+        onIgnore: () => {},
+        rewriteAvailable: true,
+        onRewrite: () => {},
+      }),
+    );
+    expect(html).toContain("Rewrite with Cara");
+  });
+
+  it("InlineSuggestions renders safeguarding block message when rewriteResult is blocked", () => {
+    const result = checkWriting({ text: "Child kicked off and didnt settle. Their behavior was challenging." }, "x");
+    const html = r(
+      React.createElement(InlineSuggestions, {
+        issues: result.issues,
+        onApply: () => {},
+        onIgnore: () => {},
+        rewriteResult: { available: true, blocked: true, reason: "Safeguarding content." },
+        onDiscardRewrite: () => {},
+      }),
+    );
+    expect(html).toContain("Cannot rewrite this text");
+    expect(html).toContain("Safeguarding content.");
+  });
+
+  it("InlineSuggestions renders rewritten text in result panel", () => {
+    const result = checkWriting({ text: "Child kicked off and didnt settle. Their behavior was challenging." }, "x");
+    const html = r(
+      React.createElement(InlineSuggestions, {
+        issues: result.issues,
+        onApply: () => {},
+        onIgnore: () => {},
+        rewriteResult: { available: true, blocked: false, rewrittenText: "The child became dysregulated and did not settle." },
+        onAcceptRewrite: () => {},
+        onDiscardRewrite: () => {},
+      }),
+    );
+    expect(html).toContain("The child became dysregulated");
+    expect(html).toContain("Accept rewrite");
+  });
+
   it("HighlightedTextarea renders a mark element for each issue", () => {
     const html = r(
       React.createElement(HighlightedTextarea, {

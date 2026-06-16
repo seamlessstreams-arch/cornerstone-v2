@@ -12,6 +12,11 @@ import { requirePermission } from "@/lib/auth-guard";
 import { PERMISSIONS } from "@/lib/permissions";
 import { getWritingProvider, isWritingAssistantEnabled } from "@/lib/writing-assistant/engine";
 import { MAX_CHECK_LENGTH, type WritingCheckInput, type WritingMode } from "@/lib/writing-assistant/types";
+import { getAnthropicClient } from "@/lib/anthropic-client";
+
+function isAiRewriteAvailable(): boolean {
+  try { getAnthropicClient(); return true; } catch { return false; }
+}
 
 export const dynamic = "force-dynamic";
 
@@ -50,7 +55,7 @@ export async function POST(req: NextRequest) {
       mode,
       knownNames: Array.isArray(body.knownNames) ? body.knownNames : undefined,
     });
-    return NextResponse.json({ data: { ...result, generatedAt: result.generatedAt || today } });
+    return NextResponse.json({ data: { ...result, generatedAt: result.generatedAt || today, rewriteAvailable: isAiRewriteAvailable() } });
   } catch (error) {
     // Never log record text — only a length + bounded error note.
     console.error("[writing-assistant] check failed", { length: text.length, message: String(error).slice(0, 200) });
