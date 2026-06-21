@@ -586,27 +586,39 @@ function resolveAccessor(slug: string): AsyncCollection | null {
   }
 
   // Supabase-enabled extended record type → the generic_records catch-all table.
+  // All Supabase calls fall back to the in-memory store if the table doesn't
+  // exist yet (e.g. migrations not run against this Supabase project).
+  const memFindAll = () => asList(typeof mem.findAll === "function" ? mem.findAll() : typeof mem.getAll === "function" ? mem.getAll() : []);
+  const memFindByChild = (childId: string) => asList(typeof mem.findByChild === "function" ? mem.findByChild(childId) : []);
+  const memCreate = (data: Record<string, unknown>) => typeof mem.create === "function" ? mem.create(data) as unknown : null;
   return {
-    findAll: async () => (await sq.getGenericRecords(c, homeId(), collectionName)).map(mapRow),
-    findByChild: async (childId: string) =>
-      (await sq.getGenericRecords(c, homeId(), collectionName, { child_id: childId })).map(mapRow),
+    findAll: async () => {
+      try { return (await sq.getGenericRecords(c, homeId(), collectionName)).map(mapRow); }
+      catch { return memFindAll(); }
+    },
+    findByChild: async (childId: string) => {
+      try { return (await sq.getGenericRecords(c, homeId(), collectionName, { child_id: childId })).map(mapRow); }
+      catch { return memFindByChild(childId); }
+    },
     findById: async (id: string) => {
       try { return mapRow(await sq.getGenericRecordById(c, id)); } catch { return null; }
     },
     create: async (data: Record<string, unknown>) => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { id: _id, child_id, staff_id, created_by, ...rest } = data as any;
-      void _id;
-      const row = await sq.createGenericRecord(c, {
-        home_id: homeId(),
-        record_type: collectionName,
-        data: rest,
-        child_id: child_id ?? null,
-        staff_id: staff_id ?? null,
-        created_by: created_by ?? null,
-      });
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      return { id: (row as any).id, ...rest, created_at: (row as any).created_at };
+      try {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const { id: _id, child_id, staff_id, created_by, ...rest } = data as any;
+        void _id;
+        const row = await sq.createGenericRecord(c, {
+          home_id: homeId(),
+          record_type: collectionName,
+          data: rest,
+          child_id: child_id ?? null,
+          staff_id: staff_id ?? null,
+          created_by: created_by ?? null,
+        });
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        return { id: (row as any).id, ...rest, created_at: (row as any).created_at };
+      } catch { return memCreate(data); }
     },
     update: (id: string, data: Record<string, unknown>) => updateGeneric(c, id, data),
     patch: (id: string, data: Record<string, unknown>) => updateGeneric(c, id, data),
