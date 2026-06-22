@@ -901,6 +901,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: "Recording Quality", href: "/intelligence/cara/recording-quality-intelligence", icon: "ClipboardList", module: "staff" },
       { label: "Recruitment Audit", href: "/intelligence/cara/recruitment-audit-trail-intelligence", icon: "UserCheck", module: "staff" },
       { label: "Relational Safety Map", href: "/intelligence/cara/relational-safety-map", icon: "HeartHandshake", module: "young-people" },
+      { label: "Relational Timeline", href: "/intelligence/cara/relational-timeline", icon: "Link2", module: "young-people" },
       { label: "Religious & Spiritual Wellbeing", href: "/intelligence/cara/religious-spiritual-wellbeing-intelligence", icon: "Sparkles", module: "young-people" },
       { label: "Repair Cycle",        href: "/intelligence/cara/repair-cycle",        icon: "RefreshCcw",  module: "dashboard"    },
       { label: "Repair Cycle Intelligence", href: "/intelligence/cara/repair-cycle-intelligence", icon: "RefreshCcw", module: "dashboard" },
