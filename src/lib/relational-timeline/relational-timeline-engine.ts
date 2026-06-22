@@ -91,12 +91,29 @@ export interface RelationalStability {
   connectionsLast30d: number;
 }
 
+export interface RelationalMonth {
+  month: string; // YYYY-MM
+  connection: number;
+  repair: number;
+  rupture: number;
+  achievement: number;
+}
+
+export interface RelationalTrend {
+  /** Per-month counts, oldest → newest, for a sparkline / mini-chart. */
+  monthly: RelationalMonth[];
+  /** Direction of travel of the relationship over the recent window. */
+  direction: "improving" | "stable" | "declining";
+  directionReason: string;
+}
+
 export interface RelationalTimeline {
   childId: string;
   childName: string;
   generatedAt: string;
   moments: RelationalMoment[]; // newest first
   stability: RelationalStability;
+  trend: RelationalTrend;
   insights: RelationalInsight[];
 }
 
@@ -525,6 +542,56 @@ function buildInsights(
   return out;
 }
 
+function computeTrend(moments: RelationalMoment[], now: string): RelationalTrend {
+  // Per-month buckets (oldest → newest).
+  const byMonth = new Map<string, RelationalMonth>();
+  for (const m of moments) {
+    const month = m.date.slice(0, 7);
+    if (!/^\d{4}-\d{2}$/.test(month)) continue;
+    const e =
+      byMonth.get(month) ?? { month, connection: 0, repair: 0, rupture: 0, achievement: 0 };
+    if (m.lens === "connection" || m.lens === "breakthrough") e.connection += 1;
+    if (m.repairAttempted) e.repair += 1;
+    if (m.lens === "rupture") e.rupture += 1;
+    if (m.lens === "achievement") e.achievement += 1;
+    byMonth.set(month, e);
+  }
+  const monthly = [...byMonth.values()].sort((a, b) => a.month.localeCompare(b.month)).slice(-6);
+
+  // Direction of travel: recent 60d connection+repair vs the prior 60d, tempered
+  // by rupture. A relationship is "improving" when warmth is increasing and
+  // ruptures aren't outpacing repair.
+  const within = (m: RelationalMoment, lo: number, hi: number) => {
+    const age = (Date.parse(now) - Date.parse(m.date)) / 86_400_000;
+    return age >= lo && age < hi;
+  };
+  const warmth = (lo: number, hi: number) =>
+    moments.filter((m) => within(m, lo, hi) && (m.lens === "connection" || m.lens === "breakthrough" || m.repairAttempted || m.lens === "achievement")).length;
+  const rupture = (lo: number, hi: number) => moments.filter((m) => within(m, lo, hi) && m.lens === "rupture").length;
+
+  const recentWarmth = warmth(0, 60);
+  const priorWarmth = warmth(60, 120);
+  const recentRupture = rupture(0, 60);
+
+  let direction: RelationalTrend["direction"];
+  let directionReason: string;
+  if (recentWarmth > priorWarmth && recentWarmth >= recentRupture) {
+    direction = "improving";
+    directionReason = "More connection, repair and achievement recently than before — the relationship is warming.";
+  } else if (recentWarmth < priorWarmth || (recentRupture > recentWarmth && recentRupture > 0)) {
+    direction = "declining";
+    directionReason =
+      recentRupture > recentWarmth
+        ? "Rupture is outpacing connection and repair this period — prioritise relational time."
+        : "Less connection than the previous period — protect and increase relational time.";
+  } else {
+    direction = "stable";
+    directionReason = "Connection and repair are holding steady.";
+  }
+
+  return { monthly, direction, directionReason };
+}
+
 // ── Public entry point — pure ────────────────────────────────────────────────
 
 export function buildRelationalTimeline(input: RelationalTimelineInput): RelationalTimeline {
@@ -551,6 +618,7 @@ export function buildRelationalTimeline(input: RelationalTimelineInput): Relatio
 
   const trustedAdultNames = input.trustedAdults;
   const stability = computeStability(moments, trustedAdultNames, input.now);
+  const trend = computeTrend(moments, input.now);
   const insights = buildInsights(moments, stability, input.now);
 
   return {
@@ -559,6 +627,7 @@ export function buildRelationalTimeline(input: RelationalTimelineInput): Relatio
     generatedAt: input.now,
     moments,
     stability,
+    trend,
     insights,
   };
 }
