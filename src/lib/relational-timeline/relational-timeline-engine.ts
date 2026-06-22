@@ -24,6 +24,8 @@ import type {
   MissingEpisode,
   PositiveAchievement,
   ReturnInterview,
+  EducationRecord,
+  LACReview,
 } from "@/types/extended";
 import type { Incident } from "@/types";
 
@@ -109,6 +111,8 @@ export interface RelationalTimelineInput {
   missingEpisodes: MissingEpisode[];
   returnInterviews: ReturnInterview[];
   positiveAchievements: PositiveAchievement[];
+  educationRecords: EducationRecord[];
+  lacReviews: LACReview[];
   /**
    * PACE-identified trusted adults the child turns to. These are stored as
    * display names (e.g. "Olivia (RM)"), not staff ids.
@@ -341,6 +345,53 @@ function projectAchievement(
   };
 }
 
+/** School successes (and ruptures) are part of the relational story too.
+ *  Only the meaningful record types become moments; routine ones are skipped. */
+function projectEducation(e: EducationRecord): RelationalMoment | null {
+  const isWin = e.record_type === "achievement" || e.record_type === "attainment";
+  const isRupture = e.record_type === "exclusion" || e.record_type === "concern";
+  if (!isWin && !isRupture) return null;
+  return {
+    id: `rt_edu_${e.id}`,
+    date: e.date,
+    lens: isWin ? "achievement" : "rupture",
+    tone: isWin ? "nurturing" : "concern",
+    source: "educationRecords",
+    sourceId: e.id,
+    title: isWin ? `School success — ${e.title}` : `School ${e.record_type === "exclusion" ? "exclusion" : "concern"} — ${e.title}`,
+    detail: e.details?.trim() || e.outcome?.trim() || (e.school ? `At ${e.school}.` : "Education record."),
+    staffIds: [],
+    staffNames: [],
+    childVoice: null,
+    moodShift: null,
+    trustedAdultPresent: false,
+    repairAttempted: false,
+    riskLevel: isRupture ? "medium" : null,
+  };
+}
+
+/** A LAC review is a relational "voice" moment when the child's views are on record. */
+function projectLacReview(l: LACReview): RelationalMoment | null {
+  if (!l.child_views?.trim()) return null;
+  return {
+    id: `rt_lac_${l.id}`,
+    date: l.date,
+    lens: "voice",
+    tone: "nurturing",
+    source: "lacReviews",
+    sourceId: l.id,
+    title: "LAC review — the child's views were heard",
+    detail: "The child's wishes and feelings were recorded at their statutory review.",
+    staffIds: [],
+    staffNames: [],
+    childVoice: l.child_views.trim(),
+    moodShift: null,
+    trustedAdultPresent: false,
+    repairAttempted: false,
+    riskLevel: null,
+  };
+}
+
 // ── Stability + insights (the "intelligence" layer) ──────────────────────────
 
 function computeStability(
@@ -491,7 +542,9 @@ export function buildRelationalTimeline(input: RelationalTimelineInput): Relatio
     ...forChild(input.missingEpisodes).map((m) => projectMissing(m)),
     ...forChild(input.returnInterviews).map((r) => projectReturnInterview(r, name)),
     ...forChild(input.positiveAchievements).map((a) => projectAchievement(a, name)),
-  ].filter((m) => !!m.date);
+    ...forChild(input.educationRecords).map((e) => projectEducation(e)),
+    ...forChild(input.lacReviews).map((l) => projectLacReview(l)),
+  ].filter((m): m is RelationalMoment => !!m && !!m.date);
 
   // Newest first — the team's "what's happening now" view.
   moments.sort((a, b) => b.date.localeCompare(a.date));

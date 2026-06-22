@@ -20,6 +20,8 @@ function baseInput(over: Partial<RelationalTimelineInput> = {}): RelationalTimel
     missingEpisodes: [],
     returnInterviews: [],
     positiveAchievements: [],
+    educationRecords: [],
+    lacReviews: [],
     trustedAdults: [],
     staffName: (id) => ({ "staff-emma": "Emma", "staff-tom": "Tom" }[id] ?? id),
     ...over,
@@ -130,6 +132,29 @@ describe("buildRelationalTimeline", () => {
     const gap = t.insights.find((i) => i.key === "repair-gap");
     expect(gap).toBeTruthy();
     expect(gap?.tone).toBe("gap");
+  });
+
+  it("projects school successes and LAC-review child voice; skips routine records", () => {
+    const t = buildRelationalTimeline(
+      baseInput({
+        educationRecords: [
+          { id: "e1", child_id: "child-alex", date: "2026-06-10", record_type: "achievement", title: "Star of the week", details: "Maths" } as never,
+          { id: "e2", child_id: "child-alex", date: "2026-06-09", record_type: "attendance", title: "Present" } as never, // routine → skipped
+        ],
+        lacReviews: [
+          { id: "l1", child_id: "child-alex", date: "2026-06-05", child_views: "I want to stay at this school." } as never,
+          { id: "l2", child_id: "child-alex", date: "2026-06-04", child_views: "" } as never, // no voice → skipped
+        ],
+      }),
+    );
+    const edu = t.moments.find((m) => m.source === "educationRecords");
+    expect(edu?.lens).toBe("achievement");
+    expect(edu?.title).toContain("School success");
+    const lac = t.moments.find((m) => m.source === "lacReviews");
+    expect(lac?.lens).toBe("voice");
+    expect(lac?.childVoice).toBe("I want to stay at this school.");
+    // routine attendance + voiceless review excluded
+    expect(t.moments).toHaveLength(2);
   });
 
   it("is deterministic — same input, identical output", () => {

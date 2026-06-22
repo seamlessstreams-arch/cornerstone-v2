@@ -37,6 +37,8 @@ export async function GET(req: NextRequest) {
       missingEpisodes: store.missingEpisodes ?? [],
       returnInterviews: store.returnInterviews ?? [],
       positiveAchievements: store.positiveAchievements ?? [],
+      educationRecords: store.educationRecords ?? [],
+      lacReviews: store.lacReviews ?? [],
       trustedAdults: pace?.trustedAdults ?? [],
       staffName: getStaffName,
     });
