@@ -52,6 +52,1048 @@ import { getStore } from "@/lib/db/store";
 type HomeHandler = () => Response | Promise<Response>;
 
 const HOME_HANDLERS: Record<string, HomeHandler> = {
+  // ── Transition to Adulthood (EET) ─────────────────────────────────────────
+  "transition-to-adulthood-intelligence": async () => {
+    try {
+      const store = getStore();
+      const today = new Date().toISOString().slice(0, 10);
+      const youngPeople = (store.youngPeople ?? []) as any[];
+      const afterCare = (store.afterCareRecords ?? []) as any[];
+      const aspirations = (store.aspirationRecords ?? []) as any[];
+      const education = (store.educationRecords ?? []) as any[];
+
+      // Children approaching 16+ (transition cohort)
+      const transition_cohort = youngPeople.filter((yp: any) => {
+        if (!yp.date_of_birth) return false;
+        const age = (new Date(today).getTime() - new Date(yp.date_of_birth).getTime()) / (365.25 * 24 * 3600000);
+        return age >= 15.5;
+      });
+      const total_transition = transition_cohort.length;
+      const total_children = youngPeople.length;
+
+      // Pathway plans (Leaving Care Act — must have plan from 16)
+      const pathway_plans_in_place = afterCare.filter((a: any) =>
+        a.plan_type === "pathway" || a.record_type === "pathway_plan" || a.pathway_plan_date,
+      ).length;
+      const pathway_plan_rate = total_transition > 0
+        ? Math.min(100, Math.round((pathway_plans_in_place / total_transition) * 100))
+        : 100;
+
+      // EET: Education, Employment, Training
+      const in_eet = youngPeople.filter((yp: any) =>
+        (yp.employment_status ?? "").toLowerCase().includes("employ") ||
+        (yp.employment_status ?? "").toLowerCase().includes("training") ||
+        (yp.employment_status ?? "").toLowerCase().includes("education") ||
+        (yp.in_eet === true),
+      ).length;
+      const eet_rate = total_transition > 0
+        ? Math.min(100, Math.round((in_eet / Math.max(1, total_transition)) * 100))
+        : 100;
+
+      // Aspirations documented
+      const aspirations_documented = aspirations.length;
+      const aspiration_rate = total_children > 0
+        ? Math.min(100, Math.round((aspirations_documented / total_children) * 100))
+        : 0;
+
+      // Independence skills: education records for life skills
+      const life_skills_records = education.filter((e: any) =>
+        (e.subject ?? "").toLowerCase().includes("life skill") ||
+        (e.subject ?? "").toLowerCase().includes("independence") ||
+        (e.type ?? "").toLowerCase().includes("independence"),
+      ).length;
+
+      // Care leavers (18+)
+      const care_leavers = youngPeople.filter((yp: any) => {
+        if (!yp.date_of_birth) return false;
+        const age = (new Date(today).getTime() - new Date(yp.date_of_birth).getTime()) / (365.25 * 24 * 3600000);
+        return age >= 18;
+      }).length;
+
+      const overall_rating = pathway_plan_rate >= 90 && eet_rate >= 80
+        ? "good"
+        : pathway_plan_rate >= 70
+        ? "adequate"
+        : "inadequate";
+
+      return NextResponse.json({
+        data: {
+          headline: `${total_transition} children in transition cohort (16+) — ${eet_rate}% in EET`,
+          total_transition,
+          pathway_plan_rate,
+          eet_rate,
+          aspiration_rate,
+          life_skills_records,
+          care_leavers,
+          overall_rating,
+          regulatory_ref: "Children (Leaving Care) Act 2000 — pathway plan required from 16, personal adviser to 25",
+        },
+      });
+    } catch (err: any) {
+      return NextResponse.json({ error: err.message ?? "Internal server error" }, { status: 500 });
+    }
+  },
+
+  // ── Special Educational Needs Intelligence ────────────────────────────────
+  "special-educational-needs-intelligence": async () => {
+    try {
+      const store = getStore();
+      const today = new Date().toISOString().slice(0, 10);
+      const youngPeople = (store.youngPeople ?? []) as any[];
+      const education = (store.educationRecords ?? []) as any[];
+      const schoolEvents = (store.schoolEngagementEvents ?? []) as any[];
+
+      const total_children = youngPeople.length;
+
+      // Children with SEN/EHCP
+      const with_sen = youngPeople.filter((yp: any) =>
+        yp.has_ehcp === true || yp.sen_status || yp.education_needs ||
+        (yp.sen_support_level && yp.sen_support_level !== "none"),
+      ).length;
+      const sen_prevalence_rate = total_children > 0
+        ? Math.round((with_sen / total_children) * 100)
+        : 0;
+
+      // EHCP annual reviews
+      const ehcp_reviews = education.filter((e: any) =>
+        (e.type ?? "").toLowerCase().includes("ehcp") ||
+        (e.type ?? "").toLowerCase().includes("annual review"),
+      ).length;
+      const review_currency_rate = with_sen > 0
+        ? Math.min(100, Math.round((ehcp_reviews / Math.max(1, with_sen)) * 100))
+        : 100;
+
+      // Attendance at SEN support meetings
+      const sen_meetings = schoolEvents.filter((e: any) =>
+        (e.event_type ?? "").toLowerCase().includes("sen") ||
+        (e.event_type ?? "").toLowerCase().includes("ehcp") ||
+        (e.event_type ?? "").toLowerCase().includes("annual review"),
+      ).length;
+
+      // Children with no SEN records but with known diagnoses
+      const unsupported_sen = youngPeople.filter((yp: any) => {
+        const hasDiagnosis = (yp.diagnoses ?? []).some((d: string) =>
+          d.toLowerCase().includes("adhd") || d.toLowerCase().includes("autism") ||
+          d.toLowerCase().includes("dyslexia") || d.toLowerCase().includes("spld"),
+        );
+        return hasDiagnosis && !yp.has_ehcp && !yp.sen_status;
+      }).length;
+
+      // Exclusion tracking
+      const exclusions = schoolEvents.filter((e: any) =>
+        (e.event_type ?? "").toLowerCase().includes("exclusion") ||
+        (e.event_type ?? "").toLowerCase().includes("suspend"),
+      ).length;
+
+      const overall_rating = review_currency_rate >= 90 && exclusions === 0
+        ? "good"
+        : review_currency_rate >= 70
+        ? "adequate"
+        : "inadequate";
+
+      return NextResponse.json({
+        data: {
+          headline: `${with_sen} children with SEN/EHCP (${sen_prevalence_rate}% of cohort) — ${review_currency_rate}% reviews current`,
+          with_sen,
+          sen_prevalence_rate,
+          review_currency_rate,
+          sen_meetings,
+          unsupported_sen,
+          exclusions,
+          overall_rating,
+          regulatory_ref: "SEND Code of Practice 2015 — EHCP annual review, local authority duty to support",
+        },
+      });
+    } catch (err: any) {
+      return NextResponse.json({ error: err.message ?? "Internal server error" }, { status: 500 });
+    }
+  },
+
+  // ── Healthcare Coordination Intelligence ──────────────────────────────────
+  "healthcare-coordination-intelligence": async () => {
+    try {
+      const store = getStore();
+      const today = new Date().toISOString().slice(0, 10);
+      const youngPeople = (store.youngPeople ?? []) as any[];
+      const camhsReferrals = (store.camhsReferrals ?? []) as any[];
+      const appointments = (store.appointments ?? []) as any[];
+      const medications = (store.medications ?? []) as any[];
+
+      const total_children = youngPeople.length;
+
+      // CAMHS referrals and engagement
+      const camhs_referred = camhsReferrals.length;
+      const camhs_engaged = camhsReferrals.filter((r: any) =>
+        r.status === "active" || r.status === "engaged" || r.first_appointment_date,
+      ).length;
+      const camhs_wait = camhsReferrals.filter((r: any) =>
+        r.status === "waiting" || r.status === "referred" || (!r.first_appointment_date && !r.status),
+      ).length;
+      const camhs_engagement_rate = camhs_referred > 0
+        ? Math.round((camhs_engaged / camhs_referred) * 100)
+        : 100;
+
+      // GP registration
+      const gp_registered = youngPeople.filter((yp: any) =>
+        yp.gp_name || yp.gp_surgery || yp.gp_registered === true,
+      ).length;
+      const gp_registration_rate = total_children > 0
+        ? Math.round((gp_registered / total_children) * 100)
+        : 0;
+
+      // Appointment follow-through
+      const attended = appointments.filter((a: any) => a.attended === true || a.status === "attended").length;
+      const total_appts = appointments.length;
+      const appointment_rate = total_appts > 0
+        ? Math.round((attended / total_appts) * 100)
+        : 100;
+
+      // Children on medication requiring coordination
+      const complex_medication = medications.filter((m: any) =>
+        (m.prescriber_type ?? "").toLowerCase().includes("psych") ||
+        (m.prescriber_type ?? "").toLowerCase().includes("consultant") ||
+        (m.category ?? "").toLowerCase().includes("mental health"),
+      ).length;
+
+      const overall_rating = gp_registration_rate >= 100 && appointment_rate >= 80
+        ? "good"
+        : gp_registration_rate >= 90
+        ? "adequate"
+        : "inadequate";
+
+      return NextResponse.json({
+        data: {
+          headline: `${gp_registration_rate}% GP registered — ${camhs_referred} CAMHS referrals (${camhs_wait} waiting)`,
+          gp_registration_rate,
+          camhs_referred,
+          camhs_engaged,
+          camhs_wait,
+          camhs_engagement_rate,
+          appointment_rate,
+          complex_medication,
+          overall_rating,
+          regulatory_ref: "Reg 7 SCCR 2015 — health arrangements; CAMHS access and multi-agency health coordination",
+        },
+      });
+    } catch (err: any) {
+      return NextResponse.json({ error: err.message ?? "Internal server error" }, { status: 500 });
+    }
+  },
+
+  // ── Bereavement & Grief Support Intelligence ──────────────────────────────
+  "bereavement-grief-support-intelligence": async () => {
+    try {
+      const store = getStore();
+      const today = new Date().toISOString().slice(0, 10);
+      const youngPeople = (store.youngPeople ?? []) as any[];
+      const bereavementRecords = (store.bereavementRecords ?? []) as any[];
+      const incidents = (store.incidents ?? []) as any[];
+      const dailyLog = (store.dailyLog ?? []) as any[];
+
+      const total_children = youngPeople.length;
+
+      // Children with bereavement records
+      const bereaved_children = bereavementRecords.map((b: any) => b.child_id ?? b.young_person_id).filter(Boolean);
+      const unique_bereaved = new Set(bereaved_children).size;
+      const bereavement_prevalence = total_children > 0
+        ? Math.round((unique_bereaved / total_children) * 100)
+        : 0;
+
+      // Support plans in place
+      const with_support_plan = bereavementRecords.filter((b: any) =>
+        b.support_plan || b.support_in_place === true || b.referral_made === true,
+      ).length;
+      const support_plan_rate = unique_bereaved > 0
+        ? Math.round((with_support_plan / unique_bereaved) * 100)
+        : 100;
+
+      // Grief-related incidents
+      const grief_incidents = incidents.filter((i: any) =>
+        (i.notes ?? "").toLowerCase().includes("grief") ||
+        (i.notes ?? "").toLowerCase().includes("bereavem") ||
+        (i.trigger ?? "").toLowerCase().includes("loss") ||
+        (i.trigger ?? "").toLowerCase().includes("bereavem"),
+      ).length;
+
+      // Recent grief mentions in daily log
+      const cutoff = new Date(new Date(today).getTime() - 30 * 24 * 3600000).toISOString().slice(0, 10);
+      const recent_grief_mentions = dailyLog.filter((e: any) =>
+        (e.date ?? "") >= cutoff &&
+        ((e.notes ?? "").toLowerCase().includes("grief") ||
+         (e.notes ?? "").toLowerCase().includes("loss") ||
+         (e.notes ?? "").toLowerCase().includes("bereavem")),
+      ).length;
+
+      // Therapeutic referrals for grief
+      const therapeutic_support = bereavementRecords.filter((b: any) =>
+        b.therapy_referral === true || b.counselling_referral === true || b.referral_type === "therapeutic",
+      ).length;
+
+      const overall_rating = unique_bereaved === 0
+        ? "good"
+        : support_plan_rate >= 90
+        ? "good"
+        : support_plan_rate >= 70
+        ? "adequate"
+        : "inadequate";
+
+      return NextResponse.json({
+        data: {
+          headline: `${unique_bereaved} children with bereavement history — ${support_plan_rate}% have support plan`,
+          unique_bereaved,
+          bereavement_prevalence,
+          support_plan_rate,
+          therapeutic_support,
+          grief_incidents,
+          recent_grief_mentions,
+          overall_rating,
+          regulatory_ref: "Children Act 1989 s.17 — promoting the welfare of children in need, including emotional wellbeing",
+        },
+      });
+    } catch (err: any) {
+      return NextResponse.json({ error: err.message ?? "Internal server error" }, { status: 500 });
+    }
+  },
+
+  // ── Child Participation & Voice in Decisions ──────────────────────────────
+  "child-participation-decisions-intelligence": async () => {
+    try {
+      const store = getStore();
+      const today = new Date().toISOString().slice(0, 10);
+      const youngPeople = (store.youngPeople ?? []) as any[];
+      const childLedMeetings = (store.childLedMeetings ?? []) as any[];
+      const childFeedback = (store.childFeedbackLoops ?? []) as any[];
+      const advocacyRecords = (store.advocacyRecords ?? []) as any[];
+
+      const total_children = youngPeople.length;
+
+      // Child-led meetings
+      const total_child_led = childLedMeetings.length;
+      const children_in_meetings = new Set(childLedMeetings.map((m: any) => m.child_id ?? m.young_person_id).filter(Boolean)).size;
+      const meeting_participation_rate = total_children > 0
+        ? Math.round((children_in_meetings / total_children) * 100)
+        : 0;
+
+      // Feedback loops completed
+      const feedback_completed = childFeedback.filter((f: any) =>
+        f.completed === true || f.status === "completed",
+      ).length;
+      const feedback_rate = childFeedback.length > 0
+        ? Math.round((feedback_completed / childFeedback.length) * 100)
+        : 0;
+
+      // Advocacy access
+      const advocacy_accessed = advocacyRecords.length;
+      const advocacy_rate = total_children > 0
+        ? Math.min(100, Math.round((advocacy_accessed / total_children) * 100))
+        : 0;
+
+      // Recent child-led activity (last 30 days)
+      const cutoff = new Date(new Date(today).getTime() - 30 * 24 * 3600000).toISOString().slice(0, 10);
+      const recent_participation = childLedMeetings.filter((m: any) =>
+        (m.date ?? "") >= cutoff,
+      ).length;
+
+      // Children with preference documentation
+      const preferences_documented = youngPeople.filter((yp: any) =>
+        yp.preferences || yp.likes_dislikes || yp.child_led_goals,
+      ).length;
+      const preferences_rate = total_children > 0
+        ? Math.round((preferences_documented / total_children) * 100)
+        : 0;
+
+      const overall_rating = meeting_participation_rate >= 80 && preferences_rate >= 80
+        ? "good"
+        : meeting_participation_rate >= 60
+        ? "adequate"
+        : "inadequate";
+
+      return NextResponse.json({
+        data: {
+          headline: `${meeting_participation_rate}% children participating in decisions — ${recent_participation} child-led activities this month`,
+          meeting_participation_rate,
+          total_child_led,
+          recent_participation,
+          feedback_rate,
+          advocacy_rate,
+          preferences_rate,
+          overall_rating,
+          regulatory_ref: "UN CRC Article 12 — the right to be heard; Children Act 1989 s.22(4) — ascertain wishes and feelings",
+        },
+      });
+    } catch (err: any) {
+      return NextResponse.json({ error: err.message ?? "Internal server error" }, { status: 500 });
+    }
+  },
+
+  // ── Extracurricular & Social Prescribing Intelligence ─────────────────────
+  "extracurricular-social-prescribing-intelligence": async () => {
+    try {
+      const store = getStore();
+      const today = new Date().toISOString().slice(0, 10);
+      const youngPeople = (store.youngPeople ?? []) as any[];
+      const extracurricular = (store.extracurricularClubRecords ?? []) as any[];
+      const activities = (store.activities ?? []) as any[];
+      const aspirations = (store.aspirationRecords ?? []) as any[];
+
+      const total_children = youngPeople.length;
+
+      // Children in clubs/activities
+      const children_in_activities = new Set(extracurricular.map((e: any) => e.child_id ?? e.young_person_id).filter(Boolean)).size;
+      const activity_participation_rate = total_children > 0
+        ? Math.round((children_in_activities / total_children) * 100)
+        : 0;
+
+      // Activity diversity: number of distinct types
+      const activity_types = new Set(extracurricular.map((e: any) => e.club_type ?? e.activity_type ?? "general")).size;
+      const total_sessions = extracurricular.length;
+
+      // Aspiration-aligned activities
+      const aspiration_aligned = extracurricular.filter((e: any) =>
+        e.aspiration_aligned === true || e.links_to_aspiration === true,
+      ).length;
+      const alignment_rate = total_sessions > 0
+        ? Math.round((aspiration_aligned / total_sessions) * 100)
+        : 0;
+
+      // General activities in last 30 days
+      const cutoff = new Date(new Date(today).getTime() - 30 * 24 * 3600000).toISOString().slice(0, 10);
+      const recent_activities = activities.filter((a: any) => (a.date ?? "") >= cutoff).length;
+
+      // Social connections: children with documented friendships/peer network
+      const social_documented = youngPeople.filter((yp: any) =>
+        yp.peer_network || yp.friendships || yp.social_connections,
+      ).length;
+      const social_rate = total_children > 0
+        ? Math.round((social_documented / total_children) * 100)
+        : 0;
+
+      const overall_rating = activity_participation_rate >= 80 && activity_types >= 3
+        ? "good"
+        : activity_participation_rate >= 60
+        ? "adequate"
+        : "inadequate";
+
+      return NextResponse.json({
+        data: {
+          headline: `${activity_participation_rate}% children in clubs/activities — ${activity_types} different activity types`,
+          activity_participation_rate,
+          total_sessions,
+          activity_types,
+          recent_activities,
+          alignment_rate,
+          social_rate,
+          overall_rating,
+          regulatory_ref: "Reg 5 SCCR 2015 — promoting children's development through leisure, interests and community participation",
+        },
+      });
+    } catch (err: any) {
+      return NextResponse.json({ error: err.message ?? "Internal server error" }, { status: 500 });
+    }
+  },
+
+  // ── Occupational Therapy & Physio Intelligence ────────────────────────────
+  "occupational-therapy-physio-intelligence": async () => {
+    try {
+      const store = getStore();
+      const today = new Date().toISOString().slice(0, 10);
+      const youngPeople = (store.youngPeople ?? []) as any[];
+      const physioOtPlans = (store.physioOtPlans ?? []) as any[];
+      const appointments = (store.appointments ?? []) as any[];
+
+      const total_children = youngPeople.length;
+
+      // Children with OT/physio plans
+      const with_plans = physioOtPlans.length;
+      const unique_with_plans = new Set(physioOtPlans.map((p: any) => p.child_id ?? p.young_person_id).filter(Boolean)).size;
+      const plan_prevalence = total_children > 0
+        ? Math.round((unique_with_plans / total_children) * 100)
+        : 0;
+
+      // Plan currency (reviewed in last 6 months)
+      const current_plans = physioOtPlans.filter((p: any) => {
+        const reviewed = p.last_reviewed ?? p.review_date ?? p.created_at;
+        if (!reviewed) return false;
+        const age_months = (new Date(today).getTime() - new Date(reviewed).getTime()) / (30.44 * 24 * 3600000);
+        return age_months <= 6;
+      }).length;
+      const plan_currency_rate = with_plans > 0
+        ? Math.round((current_plans / with_plans) * 100)
+        : 100;
+
+      // OT/physio appointments
+      const ot_appts = appointments.filter((a: any) =>
+        (a.type ?? "").toLowerCase().includes("occupational") ||
+        (a.type ?? "").toLowerCase().includes(" ot") ||
+        (a.type ?? "").toLowerCase().includes("physio"),
+      );
+      const ot_attended = ot_appts.filter((a: any) => a.attended === true || a.status === "attended").length;
+      const ot_attendance_rate = ot_appts.length > 0
+        ? Math.round((ot_attended / ot_appts.length) * 100)
+        : 100;
+
+      // Adaptations in place
+      const adaptations = physioOtPlans.filter((p: any) =>
+        p.adaptations_required === true || (p.adaptations && (p.adaptations as string[]).length > 0),
+      ).length;
+
+      const overall_rating = plan_currency_rate >= 90 && ot_attendance_rate >= 80
+        ? "good"
+        : plan_currency_rate >= 70
+        ? "adequate"
+        : "inadequate";
+
+      return NextResponse.json({
+        data: {
+          headline: `${unique_with_plans} children with OT/physio plans — ${plan_currency_rate}% plans current`,
+          unique_with_plans,
+          plan_prevalence,
+          plan_currency_rate,
+          ot_attendance_rate,
+          adaptations,
+          overall_rating,
+          regulatory_ref: "Reg 7 SCCR 2015 — health arrangements including therapeutic and developmental support",
+        },
+      });
+    } catch (err: any) {
+      return NextResponse.json({ error: err.message ?? "Internal server error" }, { status: 500 });
+    }
+  },
+
+  // ── Return Home Interview Quality ─────────────────────────────────────────
+  "return-home-interview-quality-intelligence": async () => {
+    try {
+      const store = getStore();
+      const today = new Date().toISOString().slice(0, 10);
+      const youngPeople = (store.youngPeople ?? []) as any[];
+      const incidents = (store.incidents ?? []) as any[];
+
+      // Missing-related incidents as proxy for RHI need
+      const missingIncidents = incidents.filter((i: any) =>
+        (i.type ?? "").toLowerCase().includes("missing") ||
+        (i.category ?? "").toLowerCase().includes("missing"),
+      );
+      const total_missing_episodes = missingIncidents.length;
+
+      // Approximate RHI completion: incidents that have a debrief or follow-up note
+      const rhi_completed = missingIncidents.filter((i: any) =>
+        (i.debrief_completed === true) ||
+        (i.return_interview_completed === true) ||
+        (i.notes && (i.notes as string).toLowerCase().includes("return home")),
+      ).length;
+
+      const rhi_completion_rate = total_missing_episodes > 0
+        ? Math.round((rhi_completed / total_missing_episodes) * 100)
+        : 100; // no episodes = compliant
+
+      // Time-to-RHI: incidents resolved within 72h are in-time
+      const in_time_count = missingIncidents.filter((i: any) => {
+        if (!i.date || !i.resolved_at) return false;
+        const diff = (new Date(i.resolved_at).getTime() - new Date(i.date).getTime()) / 3600000;
+        return diff <= 72;
+      }).length;
+      const in_time_rate = total_missing_episodes > 0
+        ? Math.round((in_time_count / total_missing_episodes) * 100)
+        : 100;
+
+      // Risk escalation: high-severity missing incidents
+      const high_risk_missing = missingIncidents.filter((i: any) =>
+        i.severity === "high" || i.severity === "critical",
+      ).length;
+
+      // Per-child profile
+      const child_profiles = youngPeople.slice(0, 6).map((yp: any) => {
+        const yp_missing = missingIncidents.filter((i: any) => i.child_id === yp.id || i.young_person_id === yp.id);
+        return {
+          name: yp.name ?? "Unknown",
+          episodes: yp_missing.length,
+          rhi_completed: yp_missing.filter((i: any) => i.debrief_completed || i.return_interview_completed).length,
+        };
+      }).filter((p: any) => p.episodes > 0);
+
+      const overall_rating = rhi_completion_rate >= 95 && in_time_rate >= 90
+        ? "outstanding"
+        : rhi_completion_rate >= 85 && in_time_rate >= 75
+        ? "good"
+        : rhi_completion_rate >= 70
+        ? "adequate"
+        : "inadequate";
+
+      return NextResponse.json({
+        data: {
+          headline: `${total_missing_episodes} missing episode${total_missing_episodes !== 1 ? "s" : ""} — ${rhi_completion_rate}% RHI completion rate`,
+          total_missing_episodes,
+          rhi_completed,
+          rhi_completion_rate,
+          in_time_rate,
+          high_risk_missing,
+          overall_rating,
+          child_profiles,
+          regulatory_ref: "Reg 34 SCCR 2015 — statutory requirement for return home interview within 72 hours",
+        },
+      });
+    } catch (err: any) {
+      return NextResponse.json({ error: err.message ?? "Internal server error" }, { status: 500 });
+    }
+  },
+
+  // ── Physical Health Milestones ────────────────────────────────────────────
+  "physical-health-milestones-intelligence": async () => {
+    try {
+      const store = getStore();
+      const today = new Date().toISOString().slice(0, 10);
+      const youngPeople = (store.youngPeople ?? []) as any[];
+      const medications = (store.medications ?? []) as any[];
+      const ahas = (store.annualHealthAssessments ?? []) as any[];
+      const appointments = (store.appointments ?? []) as any[];
+
+      const total_children = youngPeople.length;
+
+      // Annual Health Assessment currency (should be within 12 months)
+      const aha_current = ahas.filter((a: any) => {
+        if (!a.assessment_date && !a.date) return false;
+        const date = a.assessment_date ?? a.date;
+        const age_months = (new Date(today).getTime() - new Date(date).getTime()) / (30.44 * 24 * 3600000);
+        return age_months <= 12;
+      }).length;
+      const aha_completion_rate = total_children > 0 ? Math.round((aha_current / total_children) * 100) : 0;
+
+      // Dental: appointments with dentist type
+      const dental_appts = appointments.filter((a: any) =>
+        (a.type ?? "").toLowerCase().includes("dental") ||
+        (a.appointment_type ?? "").toLowerCase().includes("dental"),
+      );
+      const dental_coverage_rate = total_children > 0
+        ? Math.min(100, Math.round((dental_appts.length / total_children) * 100))
+        : 0;
+
+      // Optical
+      const optical_appts = appointments.filter((a: any) =>
+        (a.type ?? "").toLowerCase().includes("optical") ||
+        (a.type ?? "").toLowerCase().includes("eye") ||
+        (a.appointment_type ?? "").toLowerCase().includes("optician"),
+      );
+      const optical_coverage_rate = total_children > 0
+        ? Math.min(100, Math.round((optical_appts.length / total_children) * 100))
+        : 0;
+
+      // Medications under review (active medications)
+      const active_meds = medications.filter((m: any) => m.status === "active" || !m.status);
+      const medication_review_rate = active_meds.length > 0
+        ? Math.round((active_meds.filter((m: any) => m.last_reviewed || m.review_date).length / active_meds.length) * 100)
+        : 100;
+
+      // Children with health conditions
+      const children_with_conditions = youngPeople.filter((yp: any) =>
+        (yp.health_conditions && (yp.health_conditions as string[]).length > 0) ||
+        (yp.medical_conditions && (yp.medical_conditions as string[]).length > 0),
+      ).length;
+      const conditions_managed_rate = children_with_conditions > 0
+        ? Math.round((active_meds.length / Math.max(1, children_with_conditions)) * 100)
+        : 100;
+
+      const overall_rating = aha_completion_rate >= 90 && dental_coverage_rate >= 80
+        ? "good"
+        : aha_completion_rate >= 70
+        ? "adequate"
+        : "inadequate";
+
+      return NextResponse.json({
+        data: {
+          headline: `${aha_completion_rate}% Annual Health Assessments current — ${total_children} children in placement`,
+          aha_completion_rate,
+          dental_coverage_rate,
+          optical_coverage_rate,
+          medication_review_rate,
+          children_with_conditions,
+          overall_rating,
+          regulatory_ref: "Reg 7 SCCR 2015 — annual health assessments for all children in residential care",
+        },
+      });
+    } catch (err: any) {
+      return NextResponse.json({ error: err.message ?? "Internal server error" }, { status: 500 });
+    }
+  },
+
+  // ── Cultural Identity Development ─────────────────────────────────────────
+  "cultural-identity-development-intelligence": async () => {
+    try {
+      const store = getStore();
+      const youngPeople = (store.youngPeople ?? []) as any[];
+      const culturalMentors = (store.culturalReligiousMentors ?? []) as any[];
+      const heritageLanguage = (store.heritageLanguageRecords ?? []) as any[];
+      const activities = (store.activities ?? []) as any[];
+
+      const total_children = youngPeople.length;
+
+      // Cultural background documented
+      const cultural_needs_documented = youngPeople.filter((yp: any) =>
+        yp.ethnicity || yp.cultural_background || yp.religion || yp.nationality,
+      ).length;
+      const needs_documented_rate = total_children > 0
+        ? Math.round((cultural_needs_documented / total_children) * 100)
+        : 0;
+
+      // Mentor assigned
+      const mentor_assigned = culturalMentors.length;
+      const mentor_coverage_rate = total_children > 0
+        ? Math.min(100, Math.round((mentor_assigned / total_children) * 100))
+        : 0;
+
+      // Heritage language support
+      const language_supported = heritageLanguage.length;
+      const language_support_rate = total_children > 0
+        ? Math.min(100, Math.round((language_supported / total_children) * 100))
+        : 0;
+
+      // Cultural/faith activities
+      const cultural_activities = activities.filter((a: any) =>
+        (a.category ?? "").toLowerCase().includes("cultur") ||
+        (a.category ?? "").toLowerCase().includes("faith") ||
+        (a.category ?? "").toLowerCase().includes("religio") ||
+        (a.type ?? "").toLowerCase().includes("heritage"),
+      ).length;
+
+      // Children with diverse backgrounds
+      const diverse_backgrounds = youngPeople.filter((yp: any) =>
+        yp.ethnicity && yp.ethnicity.toLowerCase() !== "white british",
+      ).length;
+
+      const overall_rating = needs_documented_rate >= 90 && (mentor_coverage_rate >= 80 || diverse_backgrounds === 0)
+        ? "good"
+        : needs_documented_rate >= 70
+        ? "adequate"
+        : "inadequate";
+
+      return NextResponse.json({
+        data: {
+          headline: `${needs_documented_rate}% cultural needs documented — ${diverse_backgrounds} children with diverse backgrounds`,
+          needs_documented_rate,
+          mentor_coverage_rate,
+          language_support_rate,
+          cultural_activities,
+          diverse_backgrounds,
+          overall_rating,
+          regulatory_ref: "Reg 5 SCCR 2015 — statement of purpose must reflect cultural identity needs",
+        },
+      });
+    } catch (err: any) {
+      return NextResponse.json({ error: err.message ?? "Internal server error" }, { status: 500 });
+    }
+  },
+
+  // ── Court & Legal Proceedings Tracker ────────────────────────────────────
+  "court-proceedings-tracker-intelligence": async () => {
+    try {
+      const store = getStore();
+      const today = new Date().toISOString().slice(0, 10);
+      const youngPeople = (store.youngPeople ?? []) as any[];
+      const courtRecords = (store.courtAttendanceRecords ?? []) as any[];
+
+      const total_children = youngPeople.length;
+
+      // Children with active care orders
+      const children_with_orders = youngPeople.filter((yp: any) =>
+        yp.care_order_type || yp.legal_status || (yp.legal_orders && (yp.legal_orders as string[]).length > 0),
+      ).length;
+      const order_coverage_rate = total_children > 0
+        ? Math.round((children_with_orders / total_children) * 100)
+        : 0;
+
+      // Court attendance records
+      const total_court_dates = courtRecords.length;
+      const attended = courtRecords.filter((r: any) => r.attended === true || r.outcome === "attended").length;
+      const attendance_rate = total_court_dates > 0
+        ? Math.round((attended / total_court_dates) * 100)
+        : 100;
+
+      // Upcoming hearings (within 30 days)
+      const upcoming_hearings = courtRecords.filter((r: any) => {
+        const date = r.hearing_date ?? r.date;
+        if (!date) return false;
+        const diff = (new Date(date).getTime() - new Date(today).getTime()) / (24 * 3600000);
+        return diff >= 0 && diff <= 30;
+      }).length;
+
+      // Legal status breakdown
+      const care_orders = youngPeople.filter((yp: any) =>
+        (yp.legal_status ?? "").toLowerCase().includes("care order") ||
+        (yp.care_order_type ?? "").toLowerCase().includes("section 31"),
+      ).length;
+      const interim_orders = youngPeople.filter((yp: any) =>
+        (yp.legal_status ?? "").toLowerCase().includes("interim"),
+      ).length;
+      const remand = youngPeople.filter((yp: any) =>
+        (yp.legal_status ?? "").toLowerCase().includes("remand"),
+      ).length;
+
+      const overall_rating = attendance_rate >= 90
+        ? "good"
+        : attendance_rate >= 75
+        ? "adequate"
+        : "inadequate";
+
+      return NextResponse.json({
+        data: {
+          headline: `${children_with_orders} children with active legal orders — ${upcoming_hearings} hearings in next 30 days`,
+          children_with_orders,
+          order_coverage_rate,
+          attendance_rate,
+          upcoming_hearings,
+          care_orders,
+          interim_orders,
+          remand,
+          overall_rating,
+          regulatory_ref: "Working Together 2023 — legal framework and court proceedings for children in care",
+        },
+      });
+    } catch (err: any) {
+      return NextResponse.json({ error: err.message ?? "Internal server error" }, { status: 500 });
+    }
+  },
+
+  // ── Crisis Prevention Intelligence ───────────────────────────────────────
+  "crisis-prevention-intelligence": async () => {
+    try {
+      const store = getStore();
+      const today = new Date().toISOString().slice(0, 10);
+      const incidents = (store.incidents ?? []) as any[];
+      const behaviourLog = (store.behaviourLog ?? []) as any[];
+      const youngPeople = (store.youngPeople ?? []) as any[];
+
+      // Crisis incidents
+      const crisis_incidents = incidents.filter((i: any) =>
+        i.severity === "high" || i.severity === "critical" ||
+        (i.type ?? "").toLowerCase().includes("crisis") ||
+        (i.type ?? "").toLowerCase().includes("restraint") ||
+        (i.type ?? "").toLowerCase().includes("self-harm"),
+      );
+
+      // De-escalation entries in behaviour log
+      const deescalation_entries = behaviourLog.filter((b: any) =>
+        (b.strategy ?? "").toLowerCase().includes("de-escal") ||
+        (b.strategy ?? "").toLowerCase().includes("deescal") ||
+        (b.intervention ?? "").toLowerCase().includes("de-escal") ||
+        (b.outcome ?? "").toLowerCase().includes("de-escal"),
+      );
+
+      const total_incidents = incidents.length;
+      const crisis_count = crisis_incidents.length;
+      const deescalation_count = deescalation_entries.length;
+
+      // Ratio: de-escalation per crisis = proactive vs reactive
+      const deescalation_per_crisis = crisis_count > 0
+        ? Math.round((deescalation_count / crisis_count) * 10) / 10
+        : deescalation_count;
+
+      // Repeat crises (same child, multiple incidents within 7 days)
+      const childIncidentMap = new Map<string, string[]>();
+      incidents.forEach((i: any) => {
+        const cid = i.child_id ?? i.young_person_id ?? "unknown";
+        if (!childIncidentMap.has(cid)) childIncidentMap.set(cid, []);
+        childIncidentMap.get(cid)!.push(i.date ?? i.created_at ?? today);
+      });
+      let repeat_crisis_children = 0;
+      childIncidentMap.forEach((dates) => {
+        const sorted = dates.sort();
+        for (let i = 1; i < sorted.length; i++) {
+          const diff = (new Date(sorted[i]).getTime() - new Date(sorted[i - 1]).getTime()) / (24 * 3600000);
+          if (diff <= 7) { repeat_crisis_children++; break; }
+        }
+      });
+
+      // Prevention rate: reduction in high-severity incidents (compare last 30 vs prior 30)
+      const cutoff = new Date(new Date(today).getTime() - 30 * 24 * 3600000).toISOString().slice(0, 10);
+      const prior_cutoff = new Date(new Date(today).getTime() - 60 * 24 * 3600000).toISOString().slice(0, 10);
+      const recent_crisis = crisis_incidents.filter((i: any) => (i.date ?? today) >= cutoff).length;
+      const prior_crisis = crisis_incidents.filter((i: any) => (i.date ?? today) >= prior_cutoff && (i.date ?? today) < cutoff).length;
+      const prevention_trend = prior_crisis > 0
+        ? prior_crisis > recent_crisis ? "improving" : prior_crisis < recent_crisis ? "worsening" : "stable"
+        : "stable";
+
+      const anticipatory_ratio = total_incidents > 0
+        ? Math.round(((total_incidents - crisis_count) / total_incidents) * 100)
+        : 100;
+
+      const overall_rating = anticipatory_ratio >= 80 && prevention_trend !== "worsening"
+        ? "good"
+        : anticipatory_ratio >= 60
+        ? "adequate"
+        : "inadequate";
+
+      return NextResponse.json({
+        data: {
+          headline: `${anticipatory_ratio}% anticipatory response rate — ${deescalation_count} de-escalation entries recorded`,
+          crisis_count,
+          deescalation_count,
+          deescalation_per_crisis,
+          repeat_crisis_children,
+          anticipatory_ratio,
+          prevention_trend,
+          overall_rating,
+          regulatory_ref: "NICE NG58 — Violence and aggression: short-term management in mental health, health and community settings",
+        },
+      });
+    } catch (err: any) {
+      return NextResponse.json({ error: err.message ?? "Internal server error" }, { status: 500 });
+    }
+  },
+
+  // ── Family Time Quality Intelligence ─────────────────────────────────────
+  "family-time-quality-intelligence": async () => {
+    try {
+      const store = getStore();
+      const today = new Date().toISOString().slice(0, 10);
+      const youngPeople = (store.youngPeople ?? []) as any[];
+      const advocacyRecords = (store.advocacyRecords ?? []) as any[];
+      const incidents = (store.incidents ?? []) as any[];
+
+      const total_children = youngPeople.length;
+
+      // Contact visits from advocacy records (family contact type)
+      const family_contact_records = advocacyRecords.filter((a: any) =>
+        (a.reason ?? "").toLowerCase().includes("family") ||
+        (a.reason ?? "").toLowerCase().includes("contact") ||
+        (a.visit_type ?? "").toLowerCase().includes("family"),
+      );
+
+      // Children with contact plans
+      const children_with_contact = youngPeople.filter((yp: any) =>
+        yp.contact_arrangements || yp.family_contact_plan || yp.contact_frequency,
+      ).length;
+      const contact_plan_rate = total_children > 0
+        ? Math.round((children_with_contact / total_children) * 100)
+        : 0;
+
+      // Contact incident rate: incidents that followed contact visits
+      const post_contact_incidents = incidents.filter((i: any) =>
+        (i.notes ?? "").toLowerCase().includes("after contact") ||
+        (i.trigger ?? "").toLowerCase().includes("family") ||
+        (i.trigger ?? "").toLowerCase().includes("contact"),
+      ).length;
+
+      // Visits in last 30 days
+      const cutoff = new Date(new Date(today).getTime() - 30 * 24 * 3600000).toISOString().slice(0, 10);
+      const recent_visits = family_contact_records.filter((a: any) =>
+        (a.date ?? "2000-01-01") >= cutoff,
+      ).length;
+
+      // Missed visits (visits marked as not attended or cancelled)
+      const missed_visits = family_contact_records.filter((a: any) =>
+        a.outcome === "missed" || a.outcome === "cancelled" || a.attended === false,
+      ).length;
+      const missed_rate = family_contact_records.length > 0
+        ? Math.round((missed_visits / family_contact_records.length) * 100)
+        : 0;
+
+      // Positive contact outcomes
+      const positive_outcomes = family_contact_records.filter((a: any) =>
+        (a.outcome ?? "").toLowerCase().includes("positive") ||
+        (a.outcome ?? "").toLowerCase().includes("good") ||
+        (a.outcome ?? "").toLowerCase().includes("settled"),
+      ).length;
+      const positive_rate = family_contact_records.length > 0
+        ? Math.round((positive_outcomes / family_contact_records.length) * 100)
+        : 0;
+
+      const overall_rating = contact_plan_rate >= 90 && missed_rate <= 15 && positive_rate >= 60
+        ? "good"
+        : contact_plan_rate >= 70
+        ? "adequate"
+        : "inadequate";
+
+      return NextResponse.json({
+        data: {
+          headline: `${contact_plan_rate}% children with contact plans — ${missed_rate}% visits missed`,
+          contact_plan_rate,
+          recent_visits,
+          missed_rate,
+          positive_rate,
+          post_contact_incidents,
+          overall_rating,
+          regulatory_ref: "The Children Act 1989 s.34 — presumption of reasonable contact between a child and their family",
+        },
+      });
+    } catch (err: any) {
+      return NextResponse.json({ error: err.message ?? "Internal server error" }, { status: 500 });
+    }
+  },
+
+  // ── Complaints & Advocacy Response Intelligence ───────────────────────────
+  "complaints-advocacy-response-intelligence": async () => {
+    try {
+      const store = getStore();
+      const today = new Date().toISOString().slice(0, 10);
+      const complaints = (store.complaints ?? []) as any[];
+      const youngPeople = (store.youngPeople ?? []) as any[];
+
+      const total_complaints = complaints.length;
+
+      // Stage breakdown
+      const stage1 = complaints.filter((c: any) => c.stage === 1 || c.stage === "stage_1").length;
+      const stage2 = complaints.filter((c: any) => c.stage === 2 || c.stage === "stage_2").length;
+      const stage3 = complaints.filter((c: any) => c.stage === 3 || c.stage === "stage_3").length;
+
+      // Response timeliness (stage 1 = 5 working days, stage 2 = 25)
+      const timeliness_targets: Record<number, number> = { 1: 5, 2: 25, 3: 65 };
+      const in_time = complaints.filter((c: any) => {
+        if (!c.raised_at && !c.date) return false;
+        if (!c.responded_at && !c.acknowledged_at) return false;
+        const raised = new Date(c.raised_at ?? c.date);
+        const responded = new Date(c.responded_at ?? c.acknowledged_at);
+        const days = (responded.getTime() - raised.getTime()) / (24 * 3600000);
+        const target = timeliness_targets[c.stage as number] ?? 5;
+        return days <= target;
+      }).length;
+      const responded = complaints.filter((c: any) => c.responded_at || c.acknowledged_at).length;
+      const response_rate = total_complaints > 0 ? Math.round((responded / total_complaints) * 100) : 100;
+      const timeliness_rate = responded > 0 ? Math.round((in_time / responded) * 100) : 100;
+
+      // Upheld complaints
+      const upheld = complaints.filter((c: any) =>
+        c.outcome === "upheld" || c.outcome === "partially_upheld",
+      ).length;
+      const upheld_rate = total_complaints > 0 ? Math.round((upheld / total_complaints) * 100) : 0;
+
+      // Complaints by complainant
+      const by_child = complaints.filter((c: any) => c.complainant_type === "child" || c.raised_by_child === true).length;
+      const by_family = complaints.filter((c: any) => c.complainant_type === "family" || c.complainant_type === "parent").length;
+
+      // Open complaints
+      const open_complaints = complaints.filter((c: any) =>
+        c.status === "open" || c.status === "in_progress" || (!c.status && !c.resolved_at),
+      ).length;
+
+      const overall_rating = response_rate >= 95 && timeliness_rate >= 85
+        ? "outstanding"
+        : response_rate >= 85 && timeliness_rate >= 70
+        ? "good"
+        : response_rate >= 70
+        ? "adequate"
+        : "inadequate";
+
+      return NextResponse.json({
+        data: {
+          headline: `${total_complaints} complaints recorded — ${response_rate}% response rate, ${timeliness_rate}% in time`,
+          total_complaints,
+          open_complaints,
+          response_rate,
+          timeliness_rate,
+          upheld_rate,
+          by_child,
+          by_family,
+          stage1,
+          stage2,
+          stage3,
+          overall_rating,
+          regulatory_ref: "The Children Act 1989 (Representations Procedure) Regs 2006 — statutory complaints timescales",
+        },
+      });
+    } catch (err: any) {
+      return NextResponse.json({ error: err.message ?? "Internal server error" }, { status: 500 });
+    }
+  },
+
   "accident-injury-surveillance-intelligence": async () => {
   
     const store = getStore();
