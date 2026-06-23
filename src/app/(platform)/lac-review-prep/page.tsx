@@ -5,6 +5,7 @@ import { PageShell } from "@/components/layout/page-shell";
 import { ExportButton, type ExportColumn } from "@/components/ui/export-button";
 import { PrintButton } from "@/components/ui/print-button";
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
+import { InlineOutcomePanel } from "@/components/outcome-intelligence/inline-outcome-panel";
 import { getYPName, getStaffName } from "@/lib/seed-data";
 import { cn } from "@/lib/utils";
 import {
@@ -341,6 +342,10 @@ export default function LacReviewPrepPage() {
                     <span><Users className="h-3 w-3 inline mr-1" />Prepared by: {getStaffName(prep.prepared_by)}</span>
                     <span>Report deadline: {prep.home_report_deadline}</span>
                     <span>Review: {prep.review_scheduled_for}</span>
+                  </div>
+
+                  <div className="mt-4">
+                    <InlineOutcomePanel childId={prep.child_id} />
                   </div>
 
                   <div className="mt-4">
