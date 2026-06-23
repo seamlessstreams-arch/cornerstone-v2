@@ -5,13 +5,25 @@
 // audit events, and permission checks.
 // ══════════════════════════════════════════════════════════════════════════════
 
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 
 // Mock Supabase server client
 vi.mock("@/lib/supabase/server", () => ({
   createServerClient: () => null,
   isSupabaseEnabled: () => false,
 }));
+
+// Run the Cara pipeline hermetically — no AI key, exactly as production runs
+// (deterministic-first: prod has no ANTHROPIC_API_KEY). Without this, a developer
+// who has a key set in .env.local would make invokeCaraCommand reach the real
+// Anthropic API on its Tier-3 path, and the invoke tests would hang on the network
+// (and pass only in CI, where no key is configured).
+beforeEach(() => {
+  vi.stubEnv("ANTHROPIC_API_KEY", "");
+});
+afterEach(() => {
+  vi.unstubAllEnvs();
+});
 
 import {
   CARA_COMMANDS,
