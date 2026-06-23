@@ -19,6 +19,7 @@ import type {
   TrainingRecord, Home, CareForm, Supervision,
 } from "@/types";
 import type { CornerstoneEvent } from "@/types/cornerstone-event";
+import type { RestrictionReview } from "@/lib/rights-restriction/types";
 import type {
   CommsChannel,
   CommsChannelMember,
@@ -669,6 +670,48 @@ const WA_AUDIT_SEED: WritingAuditEvent[] = [
   { id: "waud_s035", user_id: "staff_mirela", record_type: "handover", field_name: "key_notes", child_id: "yp_alex", issue_type: "grammar", action: "accepted", original_text: "hasnt", replacement_text: "hasn't", created_at: daysFromNow(-7) },
 ];
 
+// ── Rights, Liberty & Restriction reviews (seed) ─────────────────────────────
+const RESTRICTION_REVIEWS_SEED: RestrictionReview[] = [
+  {
+    id: "rr_alex_night", child_id: "yp_alex", home_id: "home_oak",
+    review_date: daysFromNow(-3), decision_considered: "Continue overnight door sensor",
+    restriction_kind: "surveillance_monitoring", restriction_description: "Movement sensor on bedroom door, overnight only",
+    reason: "Repeated high-risk night-time absconding", immediate_safety_concern: "Left at 2am twice last week, found near a known exploitation address",
+    risk_being_managed: "Child sexual exploitation risk when missing at night",
+    child_understands: "yes", child_wishes_feelings: "Alex says it feels a bit like being watched but he gets why we worry about him at night",
+    child_objects: "no", capacity_competence_notes: "Understands the reason when it's explained calmly and one-to-one",
+    parental_social_worker_views: "Social worker agrees it is proportionate as a short-term measure",
+    best_interests_reasoning: "Keeping Alex safe at night outweighs the limited intrusion of a door-only sensor, which is time-limited and reviewed",
+    least_restrictive_alternatives: "Considered hourly checks and a waking-night member of staff sitting outside the door",
+    alternatives_outcome: "Hourly checks did not prevent absconding; a door-only sensor is less intrusive than a staff member at the door all night",
+    proportionality_reasoning: "Monitoring is limited to overnight and to the door only — proportionate to a serious, evidenced exploitation risk",
+    duration: "Overnight, until next review", next_review_date: daysFromNow(18),
+    legal_advice_required: "no", escalation_notes: "", manager_decision: "approved", manager_id: "staff_dl",
+    responsible_person: "Registered Manager", evidence_relied_upon: "Missing episodes log, return home interviews, risk assessment",
+    linked_record_ids: [], status: "active",
+    created_at: daysFromNow(-3), updated_at: daysFromNow(-3), created_by: "staff_dl", updated_by: "staff_dl",
+  },
+  {
+    id: "rr_jordan_phone", child_id: "yp_jordan", home_id: "home_oak",
+    review_date: daysFromNow(-12), decision_considered: "Restrict phone access in the evenings",
+    restriction_kind: "movement_limitation", restriction_description: "Phone handed in 8pm–8am",
+    reason: "Late-night contact with a risky peer group", immediate_safety_concern: "Online contact linked to going missing",
+    risk_being_managed: "Exploitation via online contact",
+    child_understands: "unknown", child_wishes_feelings: "",
+    child_objects: "yes", capacity_competence_notes: "",
+    parental_social_worker_views: "",
+    best_interests_reasoning: "Keeps Jordan safer at night",
+    least_restrictive_alternatives: "",
+    alternatives_outcome: "",
+    proportionality_reasoning: "",
+    duration: "Ongoing", next_review_date: null,
+    legal_advice_required: "unknown", escalation_notes: "", manager_decision: "pending", manager_id: null,
+    responsible_person: "Senior on shift", evidence_relied_upon: "",
+    linked_record_ids: [], status: "active",
+    created_at: daysFromNow(-12), updated_at: daysFromNow(-12), created_by: "staff_mirela", updated_by: "staff_mirela",
+  },
+];
+
 // ── Mutable collections ───────────────────────────────────────────────────────
 
 const store = {
@@ -688,6 +731,8 @@ const store = {
   leaveRequests: [...LEAVE_REQUESTS] as LeaveRequest[],
   trainingRecords: [...TRAINING_RECORDS] as TrainingRecord[],
   missingEpisodes: [] as MissingEpisode[],
+  // Rights, Liberty & Restriction reviews (decision-support write path).
+  restrictionReviews: [...RESTRICTION_REVIEWS_SEED] as RestrictionReview[],
   // Canonical persisted event spine (forms-as-views write path). Empty by default —
   // the read-only projection of domain collections is unchanged until events are captured here.
   cornerstoneEvents: [] as CornerstoneEvent[],
@@ -11125,6 +11170,23 @@ export const db = {
     append: (event: CornerstoneEvent): CornerstoneEvent => {
       store.cornerstoneEvents.push(event);
       return event;
+    },
+  },
+
+  // ── Rights, Liberty & Restriction reviews ─────────────────────────────
+  restrictionReviews: {
+    findAll: (): RestrictionReview[] => store.restrictionReviews,
+    findById: (id: string): RestrictionReview | undefined => store.restrictionReviews.find((r) => r.id === id),
+    findByChild: (childId: string): RestrictionReview[] => store.restrictionReviews.filter((r) => r.child_id === childId),
+    append: (rr: RestrictionReview): RestrictionReview => {
+      store.restrictionReviews.push(rr);
+      return rr;
+    },
+    update: (id: string, patch: Partial<RestrictionReview>): RestrictionReview | undefined => {
+      const i = store.restrictionReviews.findIndex((r) => r.id === id);
+      if (i === -1) return undefined;
+      store.restrictionReviews[i] = { ...store.restrictionReviews[i], ...patch, updated_at: new Date().toISOString() };
+      return store.restrictionReviews[i];
     },
   },
 
