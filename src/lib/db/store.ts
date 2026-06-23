@@ -22,6 +22,7 @@ import type { CornerstoneEvent } from "@/types/cornerstone-event";
 import type { RestrictionReview } from "@/lib/rights-restriction/types";
 import { freshStages, type PostIncidentReflection } from "@/lib/post-incident-reflection/types";
 import type { StayingSafePlan } from "@/lib/staying-safe-plan/types";
+import type { RelationshipEntry } from "@/lib/protective-relationships/types";
 import type {
   CommsChannel,
   CommsChannelMember,
@@ -770,6 +771,37 @@ const STAYING_SAFE_PLANS_SEED: StayingSafePlan[] = [
   },
 ];
 
+// ── Protective Relationships (seed) ──────────────────────────────────────────
+const RELATIONSHIP_ENTRIES_SEED: RelationshipEntry[] = [
+  {
+    id: "rel_alex_mirela", child_id: "yp_alex", home_id: "home_oak",
+    name: "Mirela", relationship_to_child: "Key worker", category: "goto_when_upset", rating: "protective",
+    child_view: "She gets me and I can talk to her", staff_view: "Strong, consistent relationship", manager_view: "Key protective relationship",
+    known_concerns: "", known_strengths: "Warm, reliable, knows Alex's history",
+    contact_arrangements: "Most shifts", restrictions: "", linked_record_ids: [],
+    review_date: daysFromNow(60), status: "active",
+    created_at: daysFromNow(-90), updated_at: daysFromNow(-10), created_by: "staff_dl", updated_by: "staff_dl",
+  },
+  {
+    id: "rel_alex_nan", child_id: "yp_alex", home_id: "home_oak",
+    name: "Pauline (Nan)", relationship_to_child: "Grandmother", category: "family_support", rating: "protective",
+    child_view: "I love calling Nan", staff_view: "Calming influence", manager_view: "",
+    known_concerns: "", known_strengths: "Unconditional support, helps Alex regulate",
+    contact_arrangements: "Weekly phone calls", restrictions: "", linked_record_ids: [],
+    review_date: daysFromNow(80), status: "active",
+    created_at: daysFromNow(-90), updated_at: daysFromNow(-30), created_by: "staff_dl", updated_by: "staff_dl",
+  },
+  {
+    id: "rel_alex_danny", child_id: "yp_alex", home_id: "home_oak",
+    name: "Danny", relationship_to_child: "Older peer from the precinct", category: "exploitation_risk", rating: "risk",
+    child_view: "He's sound, gives me stuff", staff_view: "Suspected to be exploiting Alex", manager_view: "Contextual safeguarding concern",
+    known_concerns: "Linked to two missing episodes; gives Alex money and a phone", known_strengths: "",
+    contact_arrangements: "None permitted", restrictions: "No contact; report sightings", linked_record_ids: [],
+    review_date: daysFromNow(-3), status: "active",
+    created_at: daysFromNow(-40), updated_at: daysFromNow(-3), created_by: "staff_mirela", updated_by: "staff_mirela",
+  },
+];
+
 // ── Mutable collections ───────────────────────────────────────────────────────
 
 const store = {
@@ -795,6 +827,8 @@ const store = {
   postIncidentReflections: [...POST_INCIDENT_REFLECTIONS_SEED] as PostIncidentReflection[],
   // Child-friendly Staying Safe Plans.
   stayingSafePlans: [...STAYING_SAFE_PLANS_SEED] as StayingSafePlan[],
+  // Protective Relationships Map entries.
+  relationshipEntries: [...RELATIONSHIP_ENTRIES_SEED] as RelationshipEntry[],
   // Canonical persisted event spine (forms-as-views write path). Empty by default —
   // the read-only projection of domain collections is unchanged until events are captured here.
   cornerstoneEvents: [] as CornerstoneEvent[],
@@ -11284,6 +11318,23 @@ export const db = {
       if (i === -1) return undefined;
       store.stayingSafePlans[i] = { ...store.stayingSafePlans[i], ...patch, updated_at: new Date().toISOString() };
       return store.stayingSafePlans[i];
+    },
+  },
+
+  // ── Protective Relationships Map ──────────────────────────────────────
+  relationshipEntries: {
+    findAll: (): RelationshipEntry[] => store.relationshipEntries,
+    findById: (id: string): RelationshipEntry | undefined => store.relationshipEntries.find((e) => e.id === id),
+    findByChild: (childId: string): RelationshipEntry[] => store.relationshipEntries.filter((e) => e.child_id === childId),
+    append: (e: RelationshipEntry): RelationshipEntry => {
+      store.relationshipEntries.push(e);
+      return e;
+    },
+    update: (id: string, patch: Partial<RelationshipEntry>): RelationshipEntry | undefined => {
+      const i = store.relationshipEntries.findIndex((e) => e.id === id);
+      if (i === -1) return undefined;
+      store.relationshipEntries[i] = { ...store.relationshipEntries[i], ...patch, updated_at: new Date().toISOString() };
+      return store.relationshipEntries[i];
     },
   },
 
