@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { PageShell } from "@/components/layout/page-shell";
 import { Card, CardContent } from "@/components/ui/card";
 import { useYoungPeople } from "@/hooks/use-young-people";
@@ -24,6 +24,7 @@ import {
   Quote,
   TrendingUp,
   TrendingDown,
+  Minus,
   Lightbulb,
   Link2,
 } from "lucide-react";
@@ -45,6 +46,12 @@ const STATUS_CONFIG: Record<RelationalStatus, { label: string; badge: string; ba
   secure: { label: "Secure", badge: "bg-emerald-100 text-emerald-800 border-emerald-200", bar: "bg-emerald-400" },
   developing: { label: "Developing", badge: "bg-amber-100 text-amber-800 border-amber-200", bar: "bg-amber-400" },
   fragile: { label: "Fragile", badge: "bg-red-100 text-red-800 border-red-200", bar: "bg-red-400" },
+};
+
+const TREND_COLOR: Record<string, string> = {
+  improving: "text-emerald-600",
+  stable: "text-slate-500",
+  declining: "text-red-600",
 };
 
 const INSIGHT_TONE: Record<string, { icon: React.ElementType; cls: string }> = {
@@ -121,6 +128,10 @@ export default function RelationalTimelinePage() {
   );
 
   const [selectedChildId, setSelectedChildId] = useState<string>("");
+  useEffect(() => {
+    const p = new URLSearchParams(window.location.search).get("child");
+    if (p) setSelectedChildId(p);
+  }, []);
   const childId = selectedChildId || youngPeople[0]?.id || "";
 
   const { data: timeline, isLoading } = useRelationalTimeline(childId);
@@ -205,6 +216,33 @@ export default function RelationalTimelinePage() {
                     )}
                   </div>
                 )}
+
+                {/* Direction of travel */}
+                <div className="mt-4 flex flex-wrap items-center gap-3 border-t border-[var(--cs-border,#e2e8f0)] pt-3">
+                  <span className="text-xs font-medium text-[var(--cs-text-muted,#64748b)]">Direction of travel:</span>
+                  <span className={cn("inline-flex items-center gap-1 text-sm font-semibold", TREND_COLOR[timeline.trend.direction])}>
+                    {timeline.trend.direction === "improving" ? <TrendingUp className="h-4 w-4" /> : timeline.trend.direction === "declining" ? <TrendingDown className="h-4 w-4" /> : <Minus className="h-4 w-4" />}
+                    {timeline.trend.direction[0].toUpperCase() + timeline.trend.direction.slice(1)}
+                  </span>
+                  {timeline.trend.monthly.length > 0 && (
+                    <div className="flex items-end gap-1" title="Connection + repair per month">
+                      {timeline.trend.monthly.map((m) => {
+                        const warmth = m.connection + m.repair + m.achievement;
+                        const max = Math.max(1, ...timeline.trend.monthly.map((x) => x.connection + x.repair + x.achievement + x.rupture));
+                        return (
+                          <div key={m.month} className="flex w-5 flex-col items-center gap-px" title={`${m.month}: ${warmth} warm, ${m.rupture} rupture`}>
+                            <div className="flex h-8 w-3 flex-col-reverse overflow-hidden rounded-sm bg-slate-100">
+                              <div className="w-full bg-emerald-400" style={{ height: `${(warmth / max) * 100}%` }} />
+                              <div className="w-full bg-red-300" style={{ height: `${(m.rupture / max) * 100}%` }} />
+                            </div>
+                            <span className="text-[9px] text-[var(--cs-text-muted,#64748b)]">{m.month.slice(5)}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                  <span className="text-xs text-[var(--cs-text-secondary,#475569)]">{timeline.trend.directionReason}</span>
+                </div>
               </CardContent>
             </Card>
 

@@ -157,6 +157,34 @@ describe("buildRelationalTimeline", () => {
     expect(t.moments).toHaveLength(2);
   });
 
+  it("computes a relationship direction of travel + monthly buckets", () => {
+    const t = buildRelationalTimeline(
+      baseInput({
+        // recent 60d (NOW=22 Jun): two connection moments; prior 60d: none → improving
+        keyWorkingSessions: [
+          kw({ id: "k1", child_id: "child-alex", staff_id: "staff-emma", date: "2026-06-10", mood_before: 3, mood_after: 3 }),
+          kw({ id: "k2", child_id: "child-alex", staff_id: "staff-emma", date: "2026-05-20", mood_before: 3, mood_after: 3 }),
+        ],
+      }),
+    );
+    expect(t.trend.direction).toBe("improving");
+    expect(t.trend.monthly.length).toBeGreaterThanOrEqual(2);
+    const may = t.trend.monthly.find((m) => m.month === "2026-05");
+    expect(may?.connection).toBe(1);
+  });
+
+  it("rates direction declining when rupture outpaces connection recently", () => {
+    const t = buildRelationalTimeline(
+      baseInput({
+        incidents: [
+          inc({ id: "i1", child_id: "child-alex", date: "2026-06-15", type: "behaviour", severity: "high", description: "x", reported_by: "staff-tom" }),
+          inc({ id: "i2", child_id: "child-alex", date: "2026-06-10", type: "behaviour", severity: "high", description: "x", reported_by: "staff-tom" }),
+        ],
+      }),
+    );
+    expect(t.trend.direction).toBe("declining");
+  });
+
   it("is deterministic — same input, identical output", () => {
     const input = baseInput({
       keyWorkingSessions: [kw({ id: "k1", child_id: "child-alex", staff_id: "staff-emma", date: "2026-06-18", mood_before: 2, mood_after: 5 })],
