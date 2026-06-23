@@ -22,9 +22,15 @@ describe("Cara Rules Engine", () => {
       expect(hasRuleHandler("suggest_task_owner")).toBe(true);
     });
 
-    it("returns false for LLM-only commands", () => {
-      expect(hasRuleHandler("improve_writing")).toBe(false);
-      expect(hasRuleHandler("professionalise_record")).toBe(false);
+    it("has deterministic handlers for the rewrite modes", () => {
+      expect(hasRuleHandler("improve_writing")).toBe(true);
+      expect(hasRuleHandler("professionalise_record")).toBe(true);
+      expect(hasRuleHandler("simplify_language")).toBe(true);
+      expect(hasRuleHandler("write_to_child")).toBe(true);
+    });
+
+    it("returns false for genuinely LLM-only commands", () => {
+      expect(hasRuleHandler("summarise_text")).toBe(false);
     });
 
     it("getRuleHandledCommands returns all handled IDs", () => {
@@ -266,8 +272,6 @@ describe("Cara Rules Engine", () => {
   // ── Fall-through behaviour ──────────────────────────────────────────────
   describe("LLM fall-through", () => {
     it("returns null for commands without rules", () => {
-      expect(tryRulesFirst("improve_writing", "Some text")).toBeNull();
-      expect(tryRulesFirst("professionalise_record", "Some text")).toBeNull();
       expect(tryRulesFirst("summarise_text", "Some text")).toBeNull();
     });
 
@@ -290,6 +294,16 @@ describe("Cara Rules Engine", () => {
       expect(result).not.toBeNull();
       expect(["high", "medium", "low"]).toContain(result!.confidence);
       expect(["rules", "template", "pattern", "hybrid"]).toContain(result!.method);
+    });
+
+    it("rewrite modes return clean applyable text with no rules-engine footer", () => {
+      const result = tryRulesFirst("improve_writing", "the child didnt want to talk");
+      expect(result).not.toBeNull();
+      expect(result!.output).not.toContain("Cara Rules Engine");
+      expect(result!.output).not.toContain("---");
+      expect(result!.metadata?.deterministic).toBe(true);
+      // The safe fix (missing apostrophe) was applied and the sentence capitalised.
+      expect(result!.output).toBe("The child didn't want to talk");
     });
   });
 });
