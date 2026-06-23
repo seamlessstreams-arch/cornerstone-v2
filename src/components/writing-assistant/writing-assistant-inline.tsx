@@ -15,6 +15,7 @@ import { useWritingAssistant } from "@/hooks/use-writing-assistant";
 import { useWritingAssistantSettings, enabledIssueTypes } from "@/hooks/use-writing-assistant-settings";
 import { useRewrite } from "@/hooks/use-rewrite";
 import { InlineSuggestions } from "./inline-suggestions";
+import { EntryAssist } from "@/components/forms/entry-assist";
 import { applyAutoFixes } from "@/lib/writing-assistant/rewrite-engine";
 import type { WritingIssue, WritingMode, WritingSuggestion } from "@/lib/writing-assistant/types";
 
@@ -98,7 +99,17 @@ export function WritingAssistantInline({
 
   if (!enabled) return null;
   return (
-    <InlineSuggestions
+    <div className="space-y-2">
+      {/* The five-mode rewrite toolbar — deterministic, works with no AI key. */}
+      <EntryAssist
+        value={value}
+        onChange={onApplyText}
+        sourceRecordType={recordType}
+        sourceField={fieldName}
+        childId={childId}
+        hideMic
+      />
+      <InlineSuggestions
       issues={issues}
       score={result?.score}
       loading={loading}
@@ -116,5 +127,6 @@ export function WritingAssistantInline({
       onAddToDictionary={addToDictionary}
       onAudit={handleAudit}
     />
+    </div>
   );
 }
