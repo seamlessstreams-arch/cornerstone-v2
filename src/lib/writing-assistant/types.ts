@@ -164,8 +164,12 @@ export interface WritingAuditEvent {
 
 /** Below this length the text is too short to check meaningfully. */
 export const MIN_CHECK_LENGTH = 20;
-/** Hard cap per check to protect the server. */
-export const MAX_CHECK_LENGTH = 20000;
+/**
+ * Generous per-check ceiling — a performance/abuse safeguard, NOT a recording
+ * limit. Long professional records (including dictated multi-page entries) are
+ * supported; the deterministic detectors are O(n) and the check is debounced.
+ */
+export const MAX_CHECK_LENGTH = 100000;
 
 /**
  * Record types / phrases that carry safeguarding significance — the assistant

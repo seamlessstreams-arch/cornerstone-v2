@@ -185,6 +185,12 @@ export function EntryAssist({
         )}
       </div>
 
+      {!hideMic && (
+        <p className="text-[10px] leading-snug text-[var(--cs-text-muted)]">
+          Please review dictated text before saving — you are responsible for the final record.
+        </p>
+      )}
+
       {/* Preview — rewrite modes show Apply/Discard; Check tone shows a read-only report. */}
       {preview && (
         <div

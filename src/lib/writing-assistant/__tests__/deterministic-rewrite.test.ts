@@ -1,4 +1,6 @@
 import { describe, it, expect, vi } from "vitest";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { deterministicRewrite, isRewriteMode, REWRITE_MODES } from "../deterministic-rewrite";
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -124,6 +126,14 @@ describe("determinism & robustness", () => {
     expect(r.text).toBe("");
   });
 
+  it("rewrites a very long multi-page record without truncating it", () => {
+    const para = "The young person came home from school and was in a calm and settled mood. ";
+    const long = para.repeat(800); // ~60,000 chars — far beyond any single page
+    const r = deterministicRewrite("improve_writing", long);
+    // No silent truncation — the rewrite stays the same order of magnitude.
+    expect(r.text.length).toBeGreaterThan(long.trim().length * 0.9);
+  });
+
   it("exposes the four rewrite modes", () => {
     expect(REWRITE_MODES).toHaveLength(4);
     expect(isRewriteMode("improve_writing")).toBe(true);
@@ -141,5 +151,25 @@ describe("no-AI regression (proves zero network dependency)", () => {
     deterministicRewrite("write_to_child", "Jordan was upset after a phone call.", { recordType: "daily_log" });
     expect(fetchSpy).not.toHaveBeenCalled();
     fetchSpy.mockRestore();
+  });
+
+  it("the engine source imports no AI / LLM / external client (static guardrail)", () => {
+    const src = readFileSync(
+      resolve(process.cwd(), "src/lib/writing-assistant/deterministic-rewrite.ts"),
+      "utf8",
+    );
+    const forbidden: Array<[RegExp, string]> = [
+      [/anthropic/i, "anthropic"],
+      [/openai/i, "openai"],
+      [/\bgemini\b/i, "gemini"],
+      [/cara-provider/i, "cara-provider (LLM provider)"],
+      [/generateText/, "generateText (LLM call)"],
+      [/getAnthropicClient/, "anthropic client"],
+      [/\bfetch\b/, "fetch"],
+      [/langchain/i, "langchain"],
+    ];
+    for (const [re, name] of forbidden) {
+      expect(src, `deterministic-rewrite.ts must not reference ${name}`).not.toMatch(re);
+    }
   });
 });
