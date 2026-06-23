@@ -1,13 +1,14 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // CARA WRITING ASSISTANT — AI rewrite endpoint
 //
-// POST → rewrite the provided text using Claude.
+// POST → rewrite text. Deterministic local engine by default (no AI key needed);
+// Claude is used only when a key is configured AND the text is not safeguarding-sensitive.
 //
 // Guards:
-//   1. ANTHROPIC_API_KEY must be set — returns {available:false} otherwise.
-//   2. Safeguarding-sensitive content is NEVER sent to the model — returns
-//      {available:true, blocked:true, reason:"..."} instead.
-//   3. Max 5 000 characters — care recordings are short.
+//   1. No ANTHROPIC_API_KEY → the deterministic engine handles it (prod path).
+//   2. Safeguarding-sensitive content is NEVER sent to the model.
+//   3. Max 100 000 characters — a generous abuse-safeguard ONLY, not a recording
+//      limit. Long professional records and dictated multi-page entries are supported.
 //
 // The model is instructed to preserve facts, names, concerns, and the author's
 // voice. It may only fix spelling, grammar, punctuation, and UK-vs-US spelling.
@@ -24,7 +25,9 @@ import { deterministicRewrite } from "@/lib/writing-assistant/deterministic-rewr
 
 export const dynamic = "force-dynamic";
 
-const REWRITE_MAX_LENGTH = 5_000;
+// Abuse-safeguard only (broken / oversized payloads) — NOT a recording limit.
+// Long professional records, including long dictated entries, must never be capped.
+const REWRITE_MAX_LENGTH = 100_000;
 
 const VALID_MODES: WritingMode[] = ["standard", "safeguarding", "writing-to-child", "management-oversight"];
 

@@ -100,14 +100,15 @@ export function WritingAssistantInline({
   if (!enabled) return null;
   return (
     <div className="space-y-2">
-      {/* The five-mode rewrite toolbar — deterministic, works with no AI key. */}
+      {/* Dictation mic + the five-mode rewrite toolbar — deterministic, no AI key.
+          The mic is shown so EVERY recording surface that uses this component can
+          dictate (long entries accumulate; nothing is overwritten). */}
       <EntryAssist
         value={value}
         onChange={onApplyText}
         sourceRecordType={recordType}
         sourceField={fieldName}
         childId={childId}
-        hideMic
       />
       <InlineSuggestions
       issues={issues}

@@ -260,7 +260,6 @@ export function CaraChallengeModePanel({
           onChange={(e) => setJustification(e.target.value)}
           placeholder={config.placeholder}
           rows={2}
-          maxLength={1000}
           className="w-full rounded-lg border border-[var(--cs-border)] bg-white px-3 py-2 text-xs text-[var(--cs-text-secondary)] placeholder:text-[var(--cs-text-muted)] focus:outline-none focus:ring-1 focus:ring-[var(--cs-cara-gold)] resize-none"
         />
       </div>
