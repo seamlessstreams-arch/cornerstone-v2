@@ -14,6 +14,11 @@
 // Cost: £0/call. Latency: <5ms. Reliability: 100%.
 // ══════════════════════════════════════════════════════════════════════════════
 
+import {
+  deterministicRewrite,
+  type RewriteMode,
+} from "@/lib/writing-assistant/deterministic-rewrite";
+
 // ─── Types ───────────────────────────────────────────────────────────────────
 
 export interface RuleResult {
@@ -480,11 +485,36 @@ function checkFactuality(input: string): RuleResult {
   };
 }
 
+/**
+ * Wrap the deterministic rewrite engine as a rule handler. The rewritten text
+ * is the output; `suppressFooter` keeps it clean for applying straight into the
+ * field, and any transparency notes ride along as suggestions.
+ */
+function rewriteHandler(mode: RewriteMode): RuleHandler {
+  return (input, ctx) => {
+    const result = deterministicRewrite(mode, input, { recordType: ctx?.recordType });
+    return {
+      output: result.text,
+      confidence: "high",
+      method: "rules",
+      suggestions: result.notes.length > 0 ? result.notes : undefined,
+      metadata: { suppressFooter: true, deterministic: true, mode, changed: result.changed },
+    };
+  };
+}
+
 // ─── Command → Rule Mapping ──────────────────────────────────────────────────
 // Maps Cara command IDs to deterministic rule handlers.
 // Commands NOT in this map fall through to LLM.
 
 const RULE_HANDLERS: Record<string, RuleHandler> = {
+  // Deterministic rewrite modes — work fully offline, no AI key required.
+  // The rewritten text is applied to the field, so these suppress the footer.
+  improve_writing: rewriteHandler("improve_writing"),
+  professionalise_record: rewriteHandler("professionalise_record"),
+  simplify_language: rewriteHandler("simplify_language"),
+  write_to_child: rewriteHandler("write_to_child"),
+
   // Extraction commands
   extract_actions: (input, ctx) => extractActions(input),
   create_task_list: (input, ctx) => createTaskList(input, ctx),
@@ -3635,8 +3665,11 @@ export function tryRulesFirst(commandId: string, inputText: string, context?: Ru
     const result = handler(inputText, context);
     if (!result) return null;
 
-    // Tag all rule outputs so the UI can differentiate
-    result.output = result.output + "\n\n---\n*Processed by Cara Rules Engine (no AI API call used)*";
+    // Tag rule outputs so the UI can differentiate — EXCEPT rewrite outputs that
+    // are applied straight into a field (they opt out via metadata.suppressFooter).
+    if (!result.metadata?.suppressFooter) {
+      result.output = result.output + "\n\n---\n*Processed by Cara Rules Engine (no AI API call used)*";
+    }
     return result;
   } catch (err) {
     console.warn(`[cara-rules-engine] Rule handler for ${commandId} failed:`, err);

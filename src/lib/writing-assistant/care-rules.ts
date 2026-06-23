@@ -32,7 +32,8 @@ function matchAll(text: string, phrase: string): Array<{ start: number; end: num
 // ─── Banks ──────────────────────────────────────────────────────────────────
 
 // Vague / non-observable language → prompt for observable detail (author must write it).
-const VAGUE: Array<{ phrase: string }> = [
+// Exported so the deterministic rewrite engine reuses the same banks (one voice).
+export const VAGUE: Array<{ phrase: string }> = [
   { phrase: "kicked off" },
   { phrase: "was naughty" },
   { phrase: "was aggressive" },
@@ -48,7 +49,7 @@ const VAGUE: Array<{ phrase: string }> = [
 ];
 
 // Subjective / blaming → neutral, trauma-informed reframe (offer wording).
-const BLAME: Array<{ phrase: string; replacement: string }> = [
+export const BLAME: Array<{ phrase: string; replacement: string }> = [
   { phrase: "manipulative", replacement: "communicating an unmet need" },
   { phrase: "attention seeking", replacement: "seeking connection or reassurance" },
   { phrase: "attention-seeking", replacement: "seeking connection or reassurance" },
@@ -59,7 +60,7 @@ const BLAME: Array<{ phrase: string; replacement: string }> = [
 ];
 
 // American → UK spelling (safe like-for-like).
-const US_UK: Array<{ phrase: string; replacement: string }> = [
+export const US_UK: Array<{ phrase: string; replacement: string }> = [
   { phrase: "behavior", replacement: "behaviour" },
   { phrase: "behaviors", replacement: "behaviours" },
   { phrase: "organization", replacement: "organisation" },
@@ -76,7 +77,7 @@ const US_UK: Array<{ phrase: string; replacement: string }> = [
 ];
 
 // Missing-apostrophe contractions (safe fix).
-const CONTRACTIONS: Array<{ phrase: string; replacement: string }> = [
+export const CONTRACTIONS: Array<{ phrase: string; replacement: string }> = [
   { phrase: "didnt", replacement: "didn't" },
   { phrase: "cant", replacement: "can't" },
   { phrase: "wont", replacement: "won't" },
@@ -94,7 +95,7 @@ const CONTRACTIONS: Array<{ phrase: string; replacement: string }> = [
 ];
 
 // Informal / text-speak (offer professional wording).
-const SLANG: Array<{ phrase: string; replacement: string }> = [
+export const SLANG: Array<{ phrase: string; replacement: string }> = [
   { phrase: "gonna", replacement: "going to" },
   { phrase: "wanna", replacement: "want to" },
   { phrase: "gotta", replacement: "have to" },
@@ -103,7 +104,7 @@ const SLANG: Array<{ phrase: string; replacement: string }> = [
   { phrase: "coz", replacement: "because" },
 ];
 
-const REDUNDANT_OPENERS = [
+export const REDUNDANT_OPENERS = [
   "it is important to note that",
   "it should be noted that",
   "it is worth noting that",

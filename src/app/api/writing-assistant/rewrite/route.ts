@@ -20,6 +20,7 @@ import { requirePermission } from "@/lib/auth-guard";
 import { PERMISSIONS } from "@/lib/permissions";
 import { getAnthropicClient } from "@/lib/anthropic-client";
 import { SAFEGUARDING_SENSITIVE_TERMS, type WritingMode } from "@/lib/writing-assistant/types";
+import { deterministicRewrite } from "@/lib/writing-assistant/deterministic-rewrite";
 
 export const dynamic = "force-dynamic";
 
@@ -57,14 +58,6 @@ export async function POST(req: NextRequest) {
   const auth = requirePermission(req, PERMISSIONS.USE_CARA_INTELLIGENCE);
   if (auth instanceof NextResponse) return auth;
 
-  // Gate on API key — return gracefully when not set (prod with no key).
-  let anthropicClient: ReturnType<typeof getAnthropicClient>;
-  try {
-    anthropicClient = getAnthropicClient();
-  } catch {
-    return NextResponse.json({ data: { available: false } });
-  }
-
   let body: Record<string, unknown>;
   try {
     body = (await req.json()) as Record<string, unknown>;
@@ -82,7 +75,27 @@ export async function POST(req: NextRequest) {
     ? (body.mode as WritingMode)
     : "standard";
 
-  // Safeguarding gate — never send sensitive content to the model.
+  // Deterministic floor — works everywhere, no AI key, no network. "Write to the
+  // child" context maps to the child-readable engine; everything else improves
+  // grammar/spelling/clarity while preserving meaning. The deterministic engine
+  // never softens safeguarding content, so it is safe to run on any text.
+  const deterministic = () => {
+    const result = deterministicRewrite(mode === "writing-to-child" ? "write_to_child" : "improve_writing", text);
+    return NextResponse.json({
+      data: { available: true, blocked: false, rewrittenText: result.text, deterministic: true },
+    });
+  };
+
+  // No API key (e.g. production) → deterministic local rewrite.
+  let anthropicClient: ReturnType<typeof getAnthropicClient>;
+  try {
+    anthropicClient = getAnthropicClient();
+  } catch {
+    return deterministic();
+  }
+
+  // Safeguarding gate — never send sensitive content to the model. The original
+  // wording is preserved; the author keeps full control of safeguarding records.
   const lower = text.toLowerCase();
   if (SAFEGUARDING_SENSITIVE_TERMS.some((t) => lower.includes(t))) {
     return NextResponse.json({
@@ -90,7 +103,7 @@ export async function POST(req: NextRequest) {
         available: true,
         blocked: true,
         reason:
-          "This text contains safeguarding-sensitive content. Cara cannot rewrite it — the original wording must be preserved exactly by the author.",
+          "This text contains safeguarding-sensitive content. Cara will not send it to the AI model — the original wording must be preserved exactly by the author. You can still use the deterministic 'Improve writing' rewrite from the field toolbar.",
       },
     });
   }
@@ -108,9 +121,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ data: { available: true, blocked: false, rewrittenText } });
   } catch (error) {
     const msg = String(error);
-    // Credit balance exhausted → degrade gracefully (same shape as no API key set).
+    // Credit balance exhausted → fall back to the deterministic engine, not failure.
     if (msg.includes("credit balance") || msg.includes("credit_balance_too_low")) {
-      return NextResponse.json({ data: { available: false } });
+      return deterministic();
     }
     console.error("[writing-assistant] rewrite failed", { length: text.length, message: msg.slice(0, 200) });
     return NextResponse.json({ error: "Rewrite failed" }, { status: 500 });
