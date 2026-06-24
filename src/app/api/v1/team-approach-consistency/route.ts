@@ -83,16 +83,29 @@ const BOUNDARY_PHRASES = [
 ];
 
 const PHYSICAL_PHRASES = [
+  // NB: "managed" and "supported to" removed — they are not restraint and were
+  // stealing therapeutic credit ("supported to settle", "managed calmly").
   "held", "restraint", "physical intervention", "pi", "team teach", "pbi",
-  "supported to", "mapa", "managed", "escorted", "physically",
+  "mapa", "escorted", "physically",
 ];
+
+// Whole-word-ish matching. The banks use intentional PREFIXES (e.g. "de-escalat"
+// → "de-escalated", "reassur" → "reassured"), so anchor only the LEADING word
+// boundary — except very short tokens (≤3 chars, e.g. the abbreviation "pi"/"pbi")
+// which must match as COMPLETE words, or they fire inside ordinary words ("pi" in
+// "copied", "coping", "happier") and mislabel therapeutic work as restraint.
+function phraseMatches(lower: string, phrase: string): boolean {
+  const escaped = phrase.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const anchored = phrase.length <= 3 ? `\\b${escaped}\\b` : `\\b${escaped}`;
+  return new RegExp(anchored).test(lower);
+}
 
 function classify(strategy: string): ApproachType {
   if (!strategy || strategy.trim().length < 3) return "undocumented";
   const lower = strategy.toLowerCase();
-  if (PHYSICAL_PHRASES.some((p) => lower.includes(p))) return "physical";
-  if (THERAPEUTIC_PHRASES.some((p) => lower.includes(p))) return "therapeutic";
-  if (BOUNDARY_PHRASES.some((p) => lower.includes(p))) return "boundary";
+  if (PHYSICAL_PHRASES.some((p) => phraseMatches(lower, p))) return "physical";
+  if (THERAPEUTIC_PHRASES.some((p) => phraseMatches(lower, p))) return "therapeutic";
+  if (BOUNDARY_PHRASES.some((p) => phraseMatches(lower, p))) return "boundary";
   return "undocumented";
 }
 
