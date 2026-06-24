@@ -201,6 +201,34 @@ describe("continuity stream folds into the fusion when provided", () => {
     const top = r2.children.find((c) => c.child_id === A)!;
     expect(top.domains.map((d) => d.domain)).not.toContain("continuity");
   });
+
+  it("does not rank a child with NO key-working data as #1 critical (data gap, not max risk)", () => {
+    // Regression: continuity_index 0 (no key worker + no sessions) was inverted to
+    // a 100/100 continuity risk, ranking a no-data child above one with a real
+    // incident. Absence of data is a recording gap, not maximum relational risk.
+    const r3 = computeChildPriority(run({
+      children: [
+        makeChild({ id: "noData", name: "Nadia" }),  // no key worker, no sessions
+        makeChild({ id: "real", name: "Reuben" }),
+      ],
+      incidents: [incident({ child_id: "real", date: ago(4), severity: "high" })],
+      staff: [{ id: "s1", name: "Sam", active: true }],
+      keyWorkers: [{ child_id: "real", key_worker_id: "s1", secondary_worker_id: null }],
+      keyWorkingSessions: [
+        { child_id: "real", staff_id: "s1", date: ago(3) },
+        { child_id: "real", staff_id: "s1", date: ago(18) },
+      ],
+    }));
+    // A pure data-gap child must not be folded into the acute ranking as a max
+    // relational risk: she carries no continuity domain and never outranks the
+    // child with a real incident.
+    const nadia = r3.children.find((c) => c.child_id === "noData");
+    if (nadia) {
+      expect(nadia.domains.map((d) => d.domain)).not.toContain("continuity");
+      expect(nadia.priority_band).not.toBe("critical");
+    }
+    expect(r3.overview.top_priority_child).toBe("Reuben");
+  });
 });
 
 describe("determinism", () => {
