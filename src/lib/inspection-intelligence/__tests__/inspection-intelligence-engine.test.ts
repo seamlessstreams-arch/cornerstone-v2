@@ -71,6 +71,19 @@ describe("buildInspectionReadiness", () => {
     expect(exp.gaps.some((g) => g.label.includes("no recorded voice"))).toBe(true);
   });
 
+  it("still flags 'no recent key-work' when the only session is future-dated", () => {
+    // Regression: daysSince had no lower bound, so a future-dated session
+    // (negative age) satisfied `<= recentDays` and masked a real gap.
+    const out = buildInspectionReadiness(
+      input({
+        children: [{ id: "yp_a", name: "Alex" }],
+        keyWorkingSessions: [{ id: "k1", child_id: "yp_a", date: "2026-08-01", staff_id: "s1" } as never],
+      }),
+    );
+    const exp = out.areas.find((a) => a.key === "experiences_progress")!;
+    expect(exp.gaps.some((g) => g.label.includes("no key-work"))).toBe(true);
+  });
+
   it("reads experiences as strong when key-work, voice and achievements are present", () => {
     const out = buildInspectionReadiness(
       input({

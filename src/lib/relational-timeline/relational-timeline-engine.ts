@@ -161,11 +161,21 @@ function makeTrustMatcher(
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
+// Signed age in days: positive when `iso` is in the past relative to `nowIso`,
+// negative when it is in the future. (Previously used Math.abs, which made a
+// future-dated moment read as "recent" — see recentlyWithin.)
 function daysBetween(iso: string, nowIso: string): number {
   const a = Date.parse(iso);
   const b = Date.parse(nowIso);
   if (Number.isNaN(a) || Number.isNaN(b)) return Number.POSITIVE_INFINITY;
-  return Math.abs(b - a) / 86_400_000;
+  return (b - a) / 86_400_000;
+}
+
+// True only for a moment that is in the past (or today) and within `days`. A
+// future-dated record must never count toward a "recent" window.
+function recentlyWithin(iso: string, nowIso: string, days: number): boolean {
+  const d = daysBetween(iso, nowIso);
+  return d >= 0 && d <= days;
 }
 
 const SEVERITY_RISK: Record<string, "low" | "medium" | "high" | "critical"> = {
@@ -331,7 +341,13 @@ function projectReturnInterview(
     detail: "A relational, non-judgemental conversation about what happened and what helps.",
     staffIds: r.interviewed_by ? [r.interviewed_by] : [],
     staffNames: r.interviewed_by ? [staffName(r.interviewed_by)] : [],
-    childVoice: (r as { interview_notes?: string }).interview_notes?.trim() || null,
+    childVoice:
+      [r.child_view_on_safety, r.what_would_help]
+        .map((t) => t?.trim())
+        .filter(Boolean)
+        .join(" — ") ||
+      r.notes?.trim() ||
+      null,
     moodShift: null,
     trustedAdultPresent: false,
     repairAttempted: true,
@@ -437,7 +453,7 @@ function computeStability(
 
   const moodMeasured = moments.filter((m) => m.moodShift).length;
   const moodImproved = moments.filter((m) => m.moodShift && m.moodShift.after > m.moodShift.before).length;
-  const connectionsLast30d = connection.filter((m) => daysBetween(m.date, now) <= 30).length;
+  const connectionsLast30d = connection.filter((m) => recentlyWithin(m.date, now, 30)).length;
 
   // Deterministic relational status. Trusted adults + recent connection +
   // repair keeping pace with rupture ⇒ secure. Isolation + unrepaired rupture ⇒ fragile.
@@ -515,8 +531,8 @@ function buildInsights(
   }
 
   // Repair gap: a rupture in the last 30 days with no repair recorded after it.
-  const recentRuptures = moments.filter((m) => m.lens === "rupture" && daysBetween(m.date, now) <= 30);
-  const recentRepairs = moments.filter((m) => m.repairAttempted && daysBetween(m.date, now) <= 30);
+  const recentRuptures = moments.filter((m) => m.lens === "rupture" && recentlyWithin(m.date, now, 30));
+  const recentRepairs = moments.filter((m) => m.repairAttempted && recentlyWithin(m.date, now, 30));
   if (recentRuptures.length > 0 && recentRepairs.length === 0) {
     out.push({
       key: "repair-gap",
@@ -572,6 +588,19 @@ function computeTrend(moments: RelationalMoment[], now: string): RelationalTrend
   const recentWarmth = warmth(0, 60);
   const priorWarmth = warmth(60, 120);
   const recentRupture = rupture(0, 60);
+
+  // A direction of travel needs more than a single data point: one moment has no
+  // trajectory. With fewer than two relational moments in the comparison window,
+  // report "stable" rather than manufacture an improving/declining trend from a
+  // lone event (e.g. a single incident must not read as "relationship declining").
+  const trendMoments = moments.filter((m) => within(m, 0, 120)).length;
+  if (trendMoments < 2) {
+    return {
+      monthly,
+      direction: "stable",
+      directionReason: "Not enough relational history yet to show a clear direction of travel.",
+    };
+  }
 
   let direction: RelationalTrend["direction"];
   let directionReason: string;
