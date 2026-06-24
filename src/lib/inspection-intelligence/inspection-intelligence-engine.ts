@@ -158,7 +158,13 @@ function buildExperiencesProgress(input: InspectionReadinessInput): SccifArea {
   const gaps: GapItem[] = [];
 
   const noRecentKeywork = input.children.filter(
-    (c) => !byChild(input.keyWorkingSessions, c.id).some((s) => daysSince(s.date, input.now) <= recentDays),
+    (c) =>
+      !byChild(input.keyWorkingSessions, c.id).some((s) => {
+        const d = daysSince(s.date, input.now);
+        // Must be in the past (or today) and within the window — a future-dated
+        // session must not be read as "recent contact" and mask a real gap.
+        return d >= 0 && d <= recentDays;
+      }),
   );
   if (noRecentKeywork.length > 0) {
     gaps.push({

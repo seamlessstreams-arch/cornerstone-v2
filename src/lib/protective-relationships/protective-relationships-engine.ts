@@ -50,9 +50,31 @@ function isPast(dateIso: string | null | undefined, now: string): boolean {
   return t < n;
 }
 
-/** First name token, lowercased — used to spot a person named in an incident. */
-function nameToken(name: string): string {
-  return (name || "").trim().toLowerCase().split(/\s+/)[0] ?? "";
+const NAME_TITLES = new Set([
+  "mr", "mrs", "ms", "miss", "dr", "sir", "uncle", "aunt", "auntie",
+  "nan", "nana", "gran", "grandad", "granddad", "grandma", "grandmother", "grandfather",
+]);
+
+/** Significant name tokens (≥3 chars, not a title prefix), lowercased. */
+function nameTokens(name: string): string[] {
+  return (name || "").toLowerCase().split(/[\s.]+/).filter((t) => t.length >= 3 && !NAME_TITLES.has(t));
+}
+
+/**
+ * Whether any significant token of `name` appears as a WHOLE WORD in `text`.
+ * Whole-word matching (not substring) avoids false positives like "Sam" matching
+ * "same" or "Mark" matching "market", which would wrongly flag a risk person as
+ * named in a safeguarding incident. Title prefixes ("Mr", "Uncle") are skipped so
+ * a name recorded with a title still matches on the actual name.
+ */
+function nameInText(name: string, text: string): boolean {
+  const tokens = nameTokens(name);
+  if (tokens.length === 0) return false;
+  const lower = text.toLowerCase();
+  return tokens.some((tok) => {
+    const esc = tok.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    return new RegExp(`(^|[^a-z0-9])${esc}([^a-z0-9]|$)`, "i").test(lower);
+  });
 }
 
 export function analyseChildRelationships(
@@ -69,8 +91,12 @@ export function analyseChildRelationships(
   const trustedAdultCount = active.filter((e) => e.rating === "protective" && TRUSTED_CATEGORIES.includes(e.category)).length;
 
   const childId = active[0]?.child_id ?? entries[0]?.child_id ?? "";
-  const recentIncidents = incidents.filter((i) => daysSince(i.date, now) <= recentWindowDays);
-  const recentMissing = missing.filter((m) => daysSince(m.date_missing, now) <= recentWindowDays);
+  const inWindow = (d: string) => {
+    const days = daysSince(d, now);
+    return days >= 0 && days <= recentWindowDays; // exclude future-dated records
+  };
+  const recentIncidents = incidents.filter((i) => inWindow(i.date));
+  const recentMissing = missing.filter((m) => inWindow(m.date_missing));
 
   const flags: RelationshipFlag[] = [];
 
@@ -86,8 +112,7 @@ export function analyseChildRelationships(
   // A risky person named in a recent incident description.
   const namedInIncident = active.filter((e) => {
     if (e.rating !== "risk") return false;
-    const tok = nameToken(e.name);
-    return tok.length >= 3 && recentIncidents.some((i) => (i.description ?? "").toLowerCase().includes(tok));
+    return recentIncidents.some((i) => nameInText(e.name, i.description ?? ""));
   });
   if (namedInIncident.length > 0) {
     flags.push({

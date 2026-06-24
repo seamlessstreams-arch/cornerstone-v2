@@ -250,7 +250,8 @@ export function buildRestrictionOverview(input: RestrictionOverviewInput): Restr
   // Children with a recent incident pattern (for the cross-referenced alert).
   const incidentCountByChild = new Map<string, number>();
   for (const i of input.incidents) {
-    if (daysSince(i.date, input.now) <= windowDays) {
+    const days = daysSince(i.date, input.now);
+    if (days >= 0 && days <= windowDays) { // exclude future-dated incidents
       incidentCountByChild.set(i.child_id, (incidentCountByChild.get(i.child_id) ?? 0) + 1);
     }
   }

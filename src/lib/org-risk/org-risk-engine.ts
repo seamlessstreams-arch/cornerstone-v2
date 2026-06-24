@@ -88,7 +88,9 @@ export function buildOrgRiskDashboard(input: OrgRiskInput): OrgRiskDashboard {
   const agencyBank = activeStaff.filter((s) => ["agency", "bank"].includes(String(s.employment_type)));
   const agencyPct = activeStaff.length ? Math.round((agencyBank.length / activeStaff.length) * 100) : 0;
 
-  const leavers = input.staff.filter((s) => s.employment_status !== "active" || (s.end_date && recent(s.end_date)));
+  // Only people who have actually LEFT count as turnover — not staff who are on
+  // probation, suspended, or working their notice (they are still employed).
+  const leavers = input.staff.filter((s) => s.employment_status === "left" || (s.end_date && recent(s.end_date)));
 
   const sickLeave = input.leave.filter((l) => String(l.leave_type) === "sick" && l.status === "approved" && recent(l.start_date));
   const sickDays = sickLeave.reduce((sum, l) => sum + (l.total_days ?? 0), 0);

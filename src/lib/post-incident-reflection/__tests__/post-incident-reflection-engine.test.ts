@@ -106,6 +106,20 @@ describe("buildReflectionOverview", () => {
     expect(o.alerts.some((a) => a.key === "repeated_triggers")).toBe(true);
   });
 
+  it("does NOT fabricate a repeated trigger from a single shared generic word ('phone')", () => {
+    const r1 = reflection({ id: "pir_a", incident_id: "inc_a", likely_triggers: "Phone call with mum" });
+    const r2 = reflection({ id: "pir_b", incident_id: "inc_b", incident_date: "2026-06-10", likely_triggers: "Phone taken away at bedtime" });
+    const o = buildReflectionOverview({ now: NOW, reflections: [r1, r2], incidents: [], children });
+    expect(o.repeatedTriggers.length).toBe(0);
+  });
+
+  it("DOES detect a repeated trigger when a genuine trigger word recurs ('argument')", () => {
+    const r1 = reflection({ id: "pir_a", incident_id: "inc_a", likely_triggers: "An argument with a peer at dinner" });
+    const r2 = reflection({ id: "pir_b", incident_id: "inc_b", incident_date: "2026-06-10", likely_triggers: "Argument over the TV remote" });
+    const o = buildReflectionOverview({ now: NOW, reflections: [r1, r2], incidents: [], children });
+    expect(o.repeatedTriggers[0]?.trigger).toBe("argument");
+  });
+
   it("is deterministic", () => {
     const args = { now: NOW, reflections: [reflection()], incidents: [], children };
     expect(buildReflectionOverview(args)).toEqual(buildReflectionOverview(args));

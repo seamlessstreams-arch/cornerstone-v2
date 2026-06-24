@@ -191,4 +191,59 @@ describe("buildRelationalTimeline", () => {
     });
     expect(buildRelationalTimeline(input)).toEqual(buildRelationalTimeline(input));
   });
+
+  it("captures the child's own voice from a return home interview", () => {
+    // Regression: the RHI projection read a non-existent `interview_notes` field
+    // (masked by a cast), so the child's voice was always dropped. It must read
+    // the real fields — the child's view on safety and what would help.
+    const t = buildRelationalTimeline(
+      baseInput({
+        returnInterviews: [
+          {
+            id: "rhi1",
+            child_id: "child-alex",
+            interview_date: "2026-06-18",
+            return_date: "2026-06-17",
+            interviewed_by: "staff-emma",
+            child_view_on_safety: "I felt safer at my mate's house",
+            what_would_help: "Someone to call when it gets too much",
+            notes: "Staff summary only",
+          } as never,
+        ],
+      }),
+    );
+    const voice = t.moments.find((m) => m.lens === "voice");
+    expect(voice).toBeDefined();
+    expect(voice!.childVoice).toContain("I felt safer at my mate's house");
+    expect(voice!.childVoice).toContain("Someone to call when it gets too much");
+  });
+
+  it("does not assert a 'declining' trend from a single rupture with no history", () => {
+    // Regression: one incident and nothing else yielded direction="declining"
+    // (rupture > warmth), manufacturing a downward trajectory from one data point.
+    const t = buildRelationalTimeline(
+      baseInput({
+        incidents: [
+          inc({ id: "i1", child_id: "child-alex", date: "2026-06-15", type: "behaviour", severity: "high", description: "x", reported_by: "staff-tom" }),
+        ],
+      }),
+    );
+    expect(t.trend.direction).toBe("stable");
+  });
+
+  it("does not count a future-dated key-work session as recent connection", () => {
+    // Regression: daysBetween used Math.abs, so future-dated moments read as
+    // "recent". Two future sessions with a trusted adult must NOT flip the child
+    // to 'secure' — there is no recent connection yet.
+    const t = buildRelationalTimeline(
+      baseInput({
+        keyWorkingSessions: [
+          kw({ id: "f1", child_id: "child-alex", staff_id: "staff-emma", date: "2026-08-01", mood_before: 3, mood_after: 3 }),
+          kw({ id: "f2", child_id: "child-alex", staff_id: "staff-emma", date: "2026-08-05", mood_before: 3, mood_after: 3 }),
+        ],
+        trustedAdults: ["Emma"],
+      }),
+    );
+    expect(t.status).not.toBe("secure");
+  });
 });

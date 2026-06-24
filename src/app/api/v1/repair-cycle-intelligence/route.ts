@@ -87,11 +87,14 @@ interface RepairCycleSummary {
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
+// Signed day difference (B − A). Negative means B precedes A — used to detect a
+// debrief dated before its own incident, which must not be reported as a 0-day
+// turnaround (the old Math.max(0, …) clamp hid that inconsistency).
 function daysBetween(dateA: string, dateB: string): number {
   const a = new Date(dateA);
   const b = new Date(dateB);
-  if (isNaN(a.getTime()) || isNaN(b.getTime())) return 0;
-  return Math.max(0, Math.round((b.getTime() - a.getTime()) / 86_400_000));
+  if (isNaN(a.getTime()) || isNaN(b.getTime())) return NaN;
+  return Math.round((b.getTime() - a.getTime()) / 86_400_000);
 }
 
 function cycleStatus(stepsComplete: number, total: number): "complete" | "partial" | "missing" {
@@ -177,7 +180,11 @@ export async function GET() {
     const debrief = debriefByIncident.get(inc.id) ?? null;
     const hasDebrief = !!debrief;
     const debriefDate = debrief?.date ?? null;
-    const turnaround = debriefDate ? daysBetween(inc.date, debriefDate) : null;
+    // A debrief dated on/after its incident gives a real turnaround; a debrief
+    // dated before the incident (data error / mis-linked record) is not a valid
+    // 0-day turnaround, so leave it unmeasured rather than skew the home average.
+    const rawTurnaround = debriefDate ? daysBetween(inc.date, debriefDate) : null;
+    const turnaround = rawTurnaround !== null && Number.isFinite(rawTurnaround) && rawTurnaround >= 0 ? rawTurnaround : null;
 
     const childPerspective = !!debrief?.child_perspective && debrief.child_perspective.trim().length > 5;
     const lessonsLearned = !!inc.lessons_learned && inc.lessons_learned.trim().length > 5;

@@ -208,14 +208,27 @@ export interface ReflectionOverviewInput {
   reflectionWindowDays?: number;
 }
 
-const STOP_WORDS = new Set(["the", "a", "an", "and", "of", "to", "in", "on", "at", "with", "for", "his", "her", "their", "was", "were", "by"]);
+// Generic words that co-occur in many records and are NOT meaningful triggers.
+// A single shared common word must not fabricate a "repeated trigger" pattern
+// (e.g. "phone", "staff", "family"). Genuine trigger vocabulary (contact, noise,
+// argument, rejection, transition, sensory, school, bedtime…) is deliberately
+// left in so real recurring triggers still surface.
+const STOP_WORDS = new Set([
+  "about", "after", "again", "another", "around", "asked", "because", "before",
+  "being", "child", "children", "could", "doing", "during", "every", "family",
+  "going", "happened", "phone", "really", "should", "spoke", "staff", "still",
+  "their", "there", "these", "thing", "things", "those", "through", "today",
+  "tried", "wanted", "where", "which", "while", "would", "young", "person",
+]);
 
+// Trigger tokens: ≥5 chars and not a generic word, so a coincidental shared short
+// or common word can't be reported as a recurring trigger.
 function triggerTokens(text: string): string[] {
   return (text || "")
     .toLowerCase()
     .replace(/[^a-z0-9\s]/g, " ")
     .split(/\s+/)
-    .filter((w) => w.length >= 4 && !STOP_WORDS.has(w));
+    .filter((w) => w.length >= 5 && !STOP_WORDS.has(w));
 }
 
 export function buildReflectionOverview(input: ReflectionOverviewInput): ReflectionOverview {
@@ -233,7 +246,10 @@ export function buildReflectionOverview(input: ReflectionOverviewInput): Reflect
   // Automation surfacing: incidents (recent) with no reflection started.
   const reflectedIncidentIds = new Set(input.reflections.map((r) => r.incident_id));
   const incidentsNeedingReflection: IncidentNeedingReflection[] = input.incidents
-    .filter((i) => !reflectedIncidentIds.has(i.id) && daysSince(i.date, input.now) <= windowDays)
+    .filter((i) => {
+      const days = daysSince(i.date, input.now);
+      return !reflectedIncidentIds.has(i.id) && days >= 0 && days <= windowDays;
+    })
     .map((i) => ({ incidentId: i.id, childId: i.child_id, childName: nameOf(i.child_id), date: i.date, severity: String(i.severity) }))
     .sort((a, b) => b.date.localeCompare(a.date));
 

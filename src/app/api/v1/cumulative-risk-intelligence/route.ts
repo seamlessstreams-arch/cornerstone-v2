@@ -70,7 +70,10 @@ interface SignalSummary {
 function daysBetween(dateStr: string, now: Date): number {
   const d = new Date(dateStr);
   if (isNaN(d.getTime())) return 9999;
-  return Math.max(0, Math.floor((now.getTime() - d.getTime()) / 86_400_000));
+  const days = Math.floor((now.getTime() - d.getTime()) / 86_400_000);
+  // Future-dated records (data-entry errors) are NOT recent — never let them
+  // clamp to "today" and inflate risk to urgent.
+  return days < 0 ? 9999 : days;
 }
 
 // ── Signal labels ─────────────────────────────────────────────────────────────
@@ -260,10 +263,15 @@ export async function GET() {
     const allSignals = [signal1, signal2, signal3, signal4, signal5];
     const worseningSignals = allSignals.filter((s) => s.direction === "worsening");
     const improvingSignals = allSignals.filter((s) => s.direction === "improving");
+    // A lone "relational isolation" signal (no key-work logged in 30d) is too weak
+    // on its own to mark a child concerning — absence of a logged session is not
+    // evidence of a safeguarding pattern (new admissions / logging gaps). It only
+    // contributes to "concerning" when corroborated by another worsening signal.
+    const corroboratedWorsening = worseningSignals.filter((s) => s.id !== "relational_isolation");
 
     let signal: CumulativeSignal;
     if (worseningSignals.length >= 3) signal = "escalating";
-    else if (worseningSignals.length >= 1) signal = "concerning";
+    else if (corroboratedWorsening.length >= 1) signal = "concerning";
     else if (improvingSignals.length >= 2 && worseningSignals.length === 0) signal = "improving";
     else signal = "stable";
 

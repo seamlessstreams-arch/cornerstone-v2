@@ -151,6 +151,10 @@ function directionUp(recent: number, prior: number): OutcomeDirection {
 
 /** Trend where a LOWER number is better (incidents, missing, exclusions). */
 function directionDown(recent: number, prior: number): OutcomeDirection {
+  // No prior baseline: a single recent event is not a downward trend — avoids a
+  // false "declining" for new placements or sparse data (the critical-friend rule:
+  // thin data is never a red flag). A genuine spike (≥2) still shows.
+  if (prior === 0) return recent >= 2 ? "declining" : "stable";
   if (recent < prior) return "improving";
   if (recent > prior) return "declining";
   return "stable";
