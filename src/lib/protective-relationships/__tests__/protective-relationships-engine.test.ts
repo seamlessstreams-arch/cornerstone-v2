@@ -46,6 +46,33 @@ describe("analyseChildRelationships", () => {
     expect(a.flags.some((f) => f.key === "unsafe-in-incident")).toBe(true);
   });
 
+  it("does NOT flag when the risk person's name is only a substring of a word (Sam vs 'same')", () => {
+    const incidents = [{ id: "i1", child_id: "yp_alex", date: "2026-06-15", severity: "low", type: "x", description: "Found in the same place as before; nothing of concern" }] as never[];
+    const a = analyseChildRelationships(
+      [entry(), entry({ id: "rel_2", name: "Sam", category: "risk_peer", rating: "risk" })],
+      incidents, [], NOW,
+    );
+    expect(a.flags.some((f) => f.key === "unsafe-in-incident")).toBe(false);
+  });
+
+  it("DOES flag a whole-word name match even with a title prefix ('Mr Davies')", () => {
+    const incidents = [{ id: "i1", child_id: "yp_alex", date: "2026-06-15", severity: "high", type: "x", description: "Davies was waiting outside the school gates" }] as never[];
+    const a = analyseChildRelationships(
+      [entry(), entry({ id: "rel_2", name: "Mr Davies", category: "exploitation_risk", rating: "risk" })],
+      incidents, [], NOW,
+    );
+    expect(a.flags.some((f) => f.key === "unsafe-in-incident")).toBe(true);
+  });
+
+  it("does NOT count a future-dated incident as recent", () => {
+    const incidents = [{ id: "i1", child_id: "yp_alex", date: "2026-12-15", severity: "high", type: "x", description: "Danny was there" }] as never[];
+    const a = analyseChildRelationships(
+      [entry(), entry({ id: "rel_2", name: "Danny", category: "risk_peer", rating: "risk" })],
+      incidents, [], NOW,
+    );
+    expect(a.flags.some((f) => f.key === "unsafe-in-incident")).toBe(false);
+  });
+
   it("flags a risk peer alongside a recent missing episode", () => {
     const missing = [{ id: "m1", child_id: "yp_alex", date_missing: "2026-06-18", reference: "M1" }] as never[];
     const a = analyseChildRelationships(
