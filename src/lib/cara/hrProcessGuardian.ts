@@ -23,7 +23,7 @@
 // All three share writingStyleRules.ts for the human tone.
 // ══════════════════════════════════════════════════════════════════════════════
 
-import Anthropic from "@anthropic-ai/sdk";
+import { invokeAiGateway } from "@/lib/cara/ai-gateway";
 import {
   CARA_PROFESSIONAL_IDENTITY_PROMPT,
   CARA_WRITING_STYLE_PROMPT,
@@ -799,11 +799,7 @@ async function enhanceWithLlm(
   input: GuardianInput,
   deterministic: GuardianReview,
 ): Promise<{ saferWording?: string } | null> {
-  const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) return null;
-
-  const client = new Anthropic({ apiKey });
-
+  // Config, redaction, cost limits, metering + audit are handled by the AI Gateway.
   const system = [
     `You are Cara, the intelligent professional assistant built into Cara, the operating system for UK residential children's homes. You are acting as the HR Process Guardian. You are not the decision-maker. The Registered Manager remains the author and the decision-maker. Your role is to suggest safer wording for an HR letter that has been flagged for review.`,
     ``,
@@ -845,15 +841,16 @@ async function enhanceWithLlm(
   ].join("\n");
 
   try {
-    const response = await client.messages.create({
-      model: "claude-sonnet-4-6",
-      max_tokens: 2000,
-      system,
-      messages: [{ role: "user", content: userMessage }],
+    const gw = await invokeAiGateway({
+      purpose: "hr_process_safer_wording",
+      feature: "hr_process_guardian",
+      systemPrompt: system,
+      userPrompt: userMessage,
+      maxOutputTokens: 2000,
+      expectJson: true,
     });
-    const textBlock = response.content.find((b) => b.type === "text");
-    if (!textBlock || textBlock.type !== "text") return null;
-    const cleaned = textBlock.text
+    if (!gw.llmUsed) return null;
+    const cleaned = gw.output
       .replace(/^```json\s*/i, "")
       .replace(/^```\s*/i, "")
       .replace(/\s*```$/i, "")

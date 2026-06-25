@@ -22,7 +22,7 @@
 //   - SCCIF: "Children's Experience" judgement area
 // ══════════════════════════════════════════════════════════════════════════════
 
-import Anthropic from "@anthropic-ai/sdk";
+import { invokeAiGateway } from "@/lib/cara/ai-gateway";
 import {
   CARA_PROFESSIONAL_IDENTITY_PROMPT,
   CARA_WRITING_STYLE_PROMPT,
@@ -511,11 +511,7 @@ async function enhanceWithLlm(
   input: VoiceSummaryInput,
   deterministic: VoiceSummary,
 ): Promise<{ narrativeDraft: string; ofstedSummary: string } | null> {
-  const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) return null;
-
-  const client = new Anthropic({ apiKey });
-
+  // Config, redaction, cost limits, metering + audit are handled by the AI Gateway.
   const system = [
     `You are Cara, the intelligent professional assistant built into Cara, the operating system for UK residential children's homes. You are drafting a voice-of-the-child narrative summary for a Registered Manager to review and approve.`,
     ``,
@@ -564,15 +560,17 @@ async function enhanceWithLlm(
     .join("\n");
 
   try {
-    const response = await client.messages.create({
-      model: "claude-sonnet-4-6",
-      max_tokens: 2000,
-      system,
-      messages: [{ role: "user", content: userMessage }],
+    const gw = await invokeAiGateway({
+      purpose: "voice_of_child_summary",
+      feature: "voice_of_child_summariser",
+      systemPrompt: system,
+      userPrompt: userMessage,
+      maxOutputTokens: 2000,
+      expectJson: true,
+      identity: { childId: input.childId },
     });
-    const textBlock = response.content.find((b) => b.type === "text");
-    if (!textBlock || textBlock.type !== "text") return null;
-    const cleaned = textBlock.text
+    if (!gw.llmUsed) return null;
+    const cleaned = gw.output
       .replace(/^```json\s*/i, "")
       .replace(/^```\s*/i, "")
       .replace(/\s*```$/i, "")

@@ -22,7 +22,7 @@
 //     Leadership & Management
 // ══════════════════════════════════════════════════════════════════════════════
 
-import { generateText } from "ai";
+import { invokeAiGateway } from "@/lib/cara/ai-gateway";
 import {
   CARA_PROFESSIONAL_IDENTITY_PROMPT,
   CARA_WRITING_STYLE_PROMPT,
@@ -719,12 +719,7 @@ async function enhanceWithLlm(
   input: OversightInput,
   deterministic: OversightReview,
 ): Promise<{ oversightDraft: string; ofstedSummary: string } | null> {
-  // Uses Vercel AI Gateway — routes through openai for management oversight
-  // Fallback: if no gateway is available, try direct Anthropic key
-  const hasGateway = !!process.env.VERCEL_OIDC_TOKEN;
-  const hasAnthropicKey = !!process.env.ANTHROPIC_API_KEY;
-  if (!hasGateway && !hasAnthropicKey) return null;
-
+  // Config, redaction, cost limits, metering + audit are handled by the AI Gateway.
   const system = [
     `You are Cara, the intelligent professional assistant built into Cara, the operating system for UK residential children's homes. You are drafting a management oversight comment for a Registered Manager to review and approve.`,
     ``,
@@ -769,19 +764,18 @@ async function enhanceWithLlm(
     .join("\n");
 
   try {
-    // Claude (Anthropic) only — OpenAI removed. Uses the gateway when available.
-    const model = "anthropic/claude-sonnet-4-6";
-
-    const result = await generateText({
-      model: model as any,
-      system,
-      prompt: userMessage,
+    const gw = await invokeAiGateway({
+      purpose: "management_oversight_draft",
+      feature: "management_oversight",
+      systemPrompt: system,
+      userPrompt: userMessage,
       maxOutputTokens: 1500,
       temperature: 0.3,
+      expectJson: true,
+      identity: { childId: input.childId },
     });
-
-    const raw = result.text;
-    const cleaned = raw
+    if (!gw.llmUsed) return null;
+    const cleaned = gw.output
       .replace(/^```json\s*/i, "")
       .replace(/^```\s*/i, "")
       .replace(/\s*```$/i, "")
