@@ -13,7 +13,7 @@ export const dynamic = "force-dynamic";
 
 import { NextResponse } from "next/server";
 import { getStore } from "@/lib/db/store";
-import { generateText } from "@/lib/cara/cara-provider";
+import { invokeAiGateway } from "@/lib/cara/ai-gateway";
 import { INTERVIEW_ROLES } from "@/lib/engines/interview-pack-engine";
 import type { EmployerValuesProfile, CandidateValuesProfile } from "@/lib/engines/values-match-engine";
 
@@ -49,9 +49,9 @@ export async function POST(req: Request) {
     "Return ONLY the questions, one per line, no numbering, no preamble.";
   const userPrompt = facts.join("\n");
 
-  const result = await generateText({ systemPrompt, userPrompt, temperature: 0.5, maxOutputTokens: 400 });
+  const result = await invokeAiGateway({ purpose: "interview_ai_questions", feature: "interview_ai_questions", systemPrompt, userPrompt, temperature: 0.5, maxOutputTokens: 400 });
 
-  if (!result.llmUsed || !result.text?.trim()) {
+  if (!result.llmUsed || !result.output?.trim()) {
     return NextResponse.json({
       data: {
         questions: [],
@@ -62,7 +62,7 @@ export async function POST(req: Request) {
     });
   }
 
-  const questions = result.text
+  const questions = result.output
     .split("\n")
     .map((l) => l.replace(/^\s*[-*\d.\)]+\s*/, "").trim())
     .filter((l) => l.length > 8)

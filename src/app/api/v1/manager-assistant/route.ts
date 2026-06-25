@@ -15,7 +15,7 @@ export const dynamic = "force-dynamic";
 
 import { NextResponse } from "next/server";
 import { getStore } from "@/lib/db/store";
-import { generateText } from "@/lib/cara/cara-provider";
+import { invokeAiGateway } from "@/lib/cara/ai-gateway";
 import { intelligenceDb } from "@/lib/intelligence/store";
 import {
   buildJobAdvertScaffold, buildCandidateSummaryScaffold, buildActionPlanScaffold,
@@ -87,14 +87,14 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, error: "Unknown tool." }, { status: 400 });
   }
 
-  const result = await generateText({ systemPrompt, userPrompt: scaffold, temperature: 0.4, maxOutputTokens: 900 });
-  const llmUsed = result.llmUsed && !!result.text?.trim();
+  const result = await invokeAiGateway({ purpose: "manager_assistant", feature: "manager_assistant", systemPrompt, userPrompt: scaffold, temperature: 0.4, maxOutputTokens: 900 });
+  const llmUsed = result.llmUsed && !!result.output?.trim();
   audit(user_id, `${auditNote}${llmUsed ? " + Cara polish" : " (deterministic only)"}`, child_id);
 
   return NextResponse.json({
     data: {
       scaffold,
-      ai_draft: llmUsed ? result.text.trim() : null,
+      ai_draft: llmUsed ? result.output.trim() : null,
       llmUsed,
       llm_message: llmUsed ? null : "Cara's AI polish isn't configured in this environment — the structured draft below is assembled from your recorded data and is ready to edit.",
       disclaimer: ASSISTANT_DISCLAIMER,

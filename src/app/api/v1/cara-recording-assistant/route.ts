@@ -19,7 +19,7 @@ import { persistRecordingReview } from "@/lib/supabase/incident-persist";
 import { NextResponse } from "next/server";
 import { getStore } from "@/lib/db/store";
 import { generateId } from "@/lib/utils";
-import { generateText } from "@/lib/cara/cara-provider";
+import { invokeAiGateway } from "@/lib/cara/ai-gateway";
 import { analyseRecordingQuality, RECORD_TYPES, RECORDING_DISCLAIMER } from "@/lib/cara-incident/recording-assistant-engine";
 import { CARA_INCIDENT_SYSTEM_PROMPT, type CaraRecordingReview } from "@/lib/cara-incident/cara-incident-engine";
 import { currentUserId, logIncidentAudit, childName, staffNameOf } from "@/lib/cara-incident/incident-service";
@@ -86,20 +86,20 @@ export async function POST(req: Request) {
   }
 
   // ── Analyse flow ──────────────────────────────────────────────────────────────
-  const result = await generateText({
+  const result = await invokeAiGateway({ purpose: "cara_recording_assistant", feature: "cara_recording_assistant",
     systemPrompt: CARA_INCIDENT_SYSTEM_PROMPT,
     userPrompt: `Record type: ${record_type.replace(/_/g, " ")}.\nRaw staff note (the ONLY source of facts):\n${raw_text}`,
     temperature: 0.3,
     maxOutputTokens: 700,
   });
-  const llmUsed = result.llmUsed && !!result.text?.trim();
+  const llmUsed = result.llmUsed && !!result.output?.trim();
   if (llmUsed) logIncidentAudit({ action_type: "ai_record_rewrite_generated", user_id, child_id: child_id || undefined, note: `recording-assistant type=${record_type}` });
 
   return NextResponse.json({
     data: {
       analysis,
       manager_review_required,
-      ai_draft: llmUsed ? result.text.trim() : null,
+      ai_draft: llmUsed ? result.output.trim() : null,
       llmUsed,
       llm_message: llmUsed ? null : "Cara's AI rewrite isn't configured in this environment — use the quality checks and guidance below to improve the note yourself.",
       disclaimer: RECORDING_DISCLAIMER,

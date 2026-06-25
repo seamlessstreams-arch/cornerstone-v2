@@ -19,7 +19,7 @@ import { persistRestorativeConversation, persistPostIncidentReflection } from "@
 import { NextResponse } from "next/server";
 import { getStore } from "@/lib/db/store";
 import { generateId } from "@/lib/utils";
-import { generateText } from "@/lib/cara/cara-provider";
+import { invokeAiGateway } from "@/lib/cara/ai-gateway";
 import {
   RESTORATIVE_QUESTIONS, RESTORATIVE_READINESS_CHECKS, RESTORATIVE_DISCLAIMER,
   REFLECTION_QUESTIONS, REFLECTION_FACTORS, REFLECTION_OUTCOMES, REFLECTION_DISCLAIMER,
@@ -59,13 +59,13 @@ export async function GET(_req: Request, ctx: { params: Promise<{ sessionId: str
 
 async function aiSummaryFor(kind: string, factualSummary: string): Promise<string | null> {
   if (!factualSummary.trim()) return null;
-  const result = await generateText({
+  const result = await invokeAiGateway({ purpose: "cara_incident_post_incident", feature: "cara_incident_post_incident",
     systemPrompt: POST_INCIDENT_AI_SYSTEM_PROMPT,
     userPrompt: `Kind: ${kind}.\nFacts recorded by staff:\n${factualSummary}`,
     temperature: 0.3,
     maxOutputTokens: 300,
   });
-  return result.llmUsed && result.text?.trim() ? result.text.trim() : null;
+  return result.llmUsed && result.output?.trim() ? result.output.trim() : null;
 }
 
 export async function POST(req: Request, ctx: { params: Promise<{ sessionId: string }> }) {
