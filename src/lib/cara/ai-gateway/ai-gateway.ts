@@ -80,6 +80,8 @@ export interface AiGatewayResult {
   sensitivity: CaraDataSensitivity;
   model?: string;
   costGbp?: number;
+  tokensInput?: number;
+  tokensOutput?: number;
   redactionCount?: number;
   refusedReason?: string;
 }
@@ -254,6 +256,8 @@ export async function invokeAiGateway(
     identifiableDataSent: gen.llmUsed ? identifiableDataSent : false,
     model: gen.modelId,
     costGbp: gen.llmUsed ? estGbp : 0,
+    tokensInput: gen.tokensInput,
+    tokensOutput: gen.tokensOutput,
     redactionCount,
     refusedReason: gen.llmUsed ? undefined : "AI provider unavailable; deterministic fallback returned.",
   });
