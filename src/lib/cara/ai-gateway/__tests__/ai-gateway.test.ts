@@ -16,6 +16,10 @@ function deps(genText = "AI OUTPUT", llmUsed = true): { d: AiGatewayDeps; gen: R
     aiKillSwitchOn: vi.fn(() => false),
     permitAi: vi.fn(() => true),
     generate: gen,
+    streamGenerate: vi.fn(async () => ({
+      llmUsed: true, providerId: "anthropic" as const, modelId: "claude-x",
+      tokensInput: 0, tokensOutput: 0, cacheCreationInputTokens: 0, cacheReadInputTokens: 0,
+    })),
     spentTodayGbp: vi.fn(() => 0),
     estimateRequestGbp: vi.fn(() => 0.01),
     recordDecision: vi.fn(),

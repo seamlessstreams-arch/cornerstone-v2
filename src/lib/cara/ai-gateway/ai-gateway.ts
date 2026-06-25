@@ -31,6 +31,7 @@ import { tryRulesFirst, hasRuleHandler, type RuleContext, type RuleResult } from
 import { isCacheableCommand, lookupLearnedAnswer, learnAnswer } from "../resolution/learned-cache";
 import { classifyInputSensitivity, redactSensitiveData, detectChildIdentifiers, detectNames, detectStaffIdentifiers } from "../safety/data-protection";
 import { getCaraProviderConfig, generateText, type CaraTextGenerationResult } from "../cara-provider";
+import { streamCaraText, type CaraStreamInput, type CaraStreamHandlers, type CaraStreamResult } from "../cara-provider-stream";
 import { DEFAULT_COST_LIMITS } from "../core/constants";
 import { estimateCostGbp, recordDecision } from "@/lib/hq/usage-meter";
 import { isAiKillSwitchOn, canRoleUseAi } from "../ai-availability";
@@ -70,6 +71,8 @@ export interface AiGatewayRequest {
   expectJson?: boolean;
   /** Default true. Set false to skip redaction (e.g. already-clean prompt). */
   redact?: boolean;
+  /** Streaming only: wrap the system block in cache_control for the cache discount. */
+  cacheSystem?: boolean;
 }
 
 export interface AiGatewayResult {
@@ -85,6 +88,16 @@ export interface AiGatewayResult {
   tokensOutput?: number;
   redactionCount?: number;
   refusedReason?: string;
+}
+
+export interface AiGatewayStreamHandlers {
+  onTextDelta: (text: string) => void;
+  onMessageDelta?: (stopReason: string | null) => void;
+}
+
+export interface AiGatewayStreamResult extends AiGatewayResult {
+  cacheCreationInputTokens?: number;
+  cacheReadInputTokens?: number;
 }
 
 export interface AiGatewayAuditEntry {
@@ -121,6 +134,8 @@ export interface AiGatewayDeps {
     systemPrompt: string; userPrompt: string; temperature?: number;
     maxOutputTokens?: number; expectJson?: boolean; feature?: string;
   }) => Promise<CaraTextGenerationResult>;
+  /** Streaming generate seam — yields deltas via handlers, returns final usage. */
+  streamGenerate: (input: CaraStreamInput, handlers: CaraStreamHandlers) => Promise<CaraStreamResult>;
   /** GBP already spent today across the org (for the daily cap). */
   spentTodayGbp: () => number;
   estimateRequestGbp: (model: string, promptChars: number, maxOutputTokens: number) => number;
@@ -264,6 +279,127 @@ export async function invokeAiGateway(
   });
 }
 
+// ── The streaming gateway ─────────────────────────────────────────────────────
+//
+// Same ladder as invokeAiGateway, but the model step streams. Every "no model"
+// branch (rules / cache / refuse) still works — it emits the deterministic answer
+// as a single delta so the caller's stream consumer sees one coherent output
+// either way. Demo / no-key: refuses at availability and the caller emits its own
+// fallback. Used by /api/v1/cara so streaming stops bypassing the chokepoint.
+export async function invokeAiGatewayStream(
+  req: AiGatewayRequest,
+  handlers: AiGatewayStreamHandlers,
+  overrides: Partial<AiGatewayDeps> = {},
+): Promise<AiGatewayStreamResult> {
+  const deps = { ...defaultDeps(), ...overrides };
+  const sens = req.sensitivity ?? deps.classify(req.userPrompt, req.taskType ?? "form_prompt_support", { childId: req.identity?.childId });
+
+  const finish = (
+    r: Omit<AiGatewayStreamResult, "sensitivity"> & { sensitivity?: CaraDataSensitivity },
+  ): AiGatewayStreamResult => {
+    const result = { sensitivity: sens, ...r } as AiGatewayStreamResult;
+    deps.recordAudit({
+      at: deps.now(),
+      purpose: req.purpose,
+      feature: req.feature,
+      method: result.method,
+      userId: req.identity?.userId,
+      childId: req.identity?.childId,
+      workflowId: req.identity?.workflowId,
+      sensitivity: result.sensitivity,
+      identifiableDataSent: result.identifiableDataSent,
+      model: result.model,
+      costGbp: result.costGbp,
+      redactionCount: result.redactionCount ?? 0,
+      refusedReason: result.refusedReason,
+    });
+    return result;
+  };
+
+  // 1. Rules-first — emit the deterministic answer as one delta, no model.
+  if (req.commandId && deps.hasRule(req.commandId)) {
+    const ruled = deps.rulesFirst(req.commandId, req.rulesText ?? req.userPrompt, req.rulesContext);
+    if (ruled) {
+      deps.recordDecision("deterministic", req.feature);
+      handlers.onTextDelta(ruled.output);
+      return finish({ output: ruled.output, method: "deterministic", llmUsed: false, identifiableDataSent: false });
+    }
+  }
+
+  // 2. Cache.
+  if (req.commandId && deps.isCacheable(req.commandId)) {
+    const cached = deps.cacheLookup(req.commandId, req.userPrompt);
+    if (cached) {
+      deps.recordDecision("deterministic", req.feature);
+      handlers.onTextDelta(cached.output);
+      return finish({ output: cached.output, method: "cache", llmUsed: false, identifiableDataSent: false });
+    }
+  }
+
+  const refuse = (reason: string): AiGatewayStreamResult => {
+    deps.recordDecision("deterministic", req.feature);
+    return finish({
+      output: notConfiguredText(req.expectJson === true),
+      method: "refused", llmUsed: false, identifiableDataSent: false, refusedReason: reason,
+    });
+  };
+
+  // 3-5. Availability + permission + sensitivity — never reach the model.
+  if (deps.aiKillSwitchOn()) return refuse("AI is disabled (CARA_AI_ENABLED=false).");
+  if (!deps.providerConfigured()) return refuse("No AI provider is configured (no API key).");
+  if (!deps.permitAi(req.identity)) return refuse("Caller is not permitted to use AI.");
+  if (SENSITIVITY_RANK[sens] >= SENSITIVITY_RANK[BLOCK_SENSITIVITY]) {
+    return refuse(`Data classified '${sens}' must not be sent to an external model; answered deterministically.`);
+  }
+
+  // 6. Redaction.
+  const doRedact = req.redact !== false;
+  const sentPrompt = doRedact ? deps.redact(req.userPrompt).redactedText : req.userPrompt;
+  const redactionCount = doRedact ? deps.redact(req.userPrompt).sensitiveItemsDetected : 0;
+  const identifiableDataSent = residualIdentifiable(sentPrompt);
+
+  // 7. Cost limits.
+  const model = getCaraProviderConfig().textModel;
+  const estGbp = deps.estimateRequestGbp(model, req.systemPrompt.length + sentPrompt.length, req.maxOutputTokens ?? 1500);
+  if (estGbp > deps.costLimits.perRequestMax) {
+    return refuse(`Estimated cost £${estGbp.toFixed(4)} exceeds the per-request limit £${deps.costLimits.perRequestMax}.`);
+  }
+  if (deps.spentTodayGbp() + estGbp > deps.costLimits.dailyPerOrganisation) {
+    return refuse(`Daily AI budget (£${deps.costLimits.dailyPerOrganisation}) reached for the organisation.`);
+  }
+
+  // 8. Stream from the provider (the metered streaming seam). Text reaches the
+  // caller through the handlers; only metadata is returned here.
+  const gen = await deps.streamGenerate(
+    {
+      systemPrompt: req.systemPrompt,
+      userPrompt: sentPrompt,
+      model,
+      maxOutputTokens: req.maxOutputTokens,
+      temperature: req.temperature,
+      cacheSystem: req.cacheSystem,
+      feature: req.feature,
+    },
+    handlers,
+  );
+
+  // 9. Audit + return.
+  return finish({
+    output: "",
+    method: gen.llmUsed ? "ai" : "refused",
+    llmUsed: gen.llmUsed,
+    identifiableDataSent: gen.llmUsed ? identifiableDataSent : false,
+    model: gen.modelId,
+    costGbp: gen.llmUsed ? estGbp : 0,
+    tokensInput: gen.tokensInput,
+    tokensOutput: gen.tokensOutput,
+    redactionCount,
+    refusedReason: gen.llmUsed ? undefined : "AI provider unavailable; deterministic fallback returned.",
+    cacheCreationInputTokens: gen.cacheCreationInputTokens,
+    cacheReadInputTokens: gen.cacheReadInputTokens,
+  });
+}
+
 // ── Real default deps (wire the existing modules) ─────────────────────────────
 
 let _auditRing: AiGatewayAuditEntry[] = [];
@@ -291,6 +427,7 @@ function defaultDeps(): AiGatewayDeps {
     aiKillSwitchOn: isAiKillSwitchOn,
     permitAi: (identity) => canRoleUseAi(identity?.role),
     generate: generateText,
+    streamGenerate: streamCaraText,
     spentTodayGbp: () => {
       try {
         // Sum today's metered AI cost from the in-memory ring (best-effort).

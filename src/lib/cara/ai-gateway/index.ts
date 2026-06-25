@@ -3,6 +3,7 @@
 // redaction → cost-limit → metered provider call → cache-store → audit.
 export {
   invokeAiGateway,
+  invokeAiGatewayStream,
   getAiGatewayAuditLog,
   __resetAiGatewayAuditLog,
 } from "./ai-gateway";
@@ -13,4 +14,6 @@ export type {
   AiGatewayIdentity,
   AiGatewayDeps,
   AiGatewayAuditEntry,
+  AiGatewayStreamHandlers,
+  AiGatewayStreamResult,
 } from "./ai-gateway";

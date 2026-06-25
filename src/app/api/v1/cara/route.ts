@@ -5,6 +5,7 @@ import {
 } from "@/lib/cara/writingStyleRules";
 import Anthropic from "@anthropic-ai/sdk";
 import { getAnthropicClient } from "@/lib/anthropic-client";
+import { invokeAiGatewayStream } from "@/lib/cara/ai-gateway";
 import { getStore } from "@/lib/db/store";
 import { INCIDENT_TYPE_LABELS } from "@/lib/constants";
 import type { IncidentType } from "@/lib/constants";
@@ -1262,60 +1263,58 @@ export async function POST(req: NextRequest) {
 
   if (streamMode) {
     const encoder = new TextEncoder();
+    const systemPromptText = `${CARA_SYSTEM_PROMPT}\n\n${CARA_WRITING_STYLE_PROMPT}`;
 
     const readableStream = new ReadableStream({
       async start(controller) {
+        const send = (obj: unknown) =>
+          controller.enqueue(encoder.encode(`data: ${JSON.stringify(obj)}\n\n`));
         try {
-          const stream = getClient().messages.stream({
-            model: MODEL,
-            max_tokens: typeof max_tokens === "number" ? max_tokens : DEFAULT_MAX_TOKENS,
-            system: [systemBlock] as Anthropic.TextBlockParam[],
-            messages: messagesPayload,
-          });
+          // Through the AI Gateway: kill-switch, permission, sensitivity-block,
+          // cost-limit, metering and audit all apply before any token streams,
+          // and prompt caching is preserved (cacheSystem). redact:false — these
+          // modes intentionally keep the child's own words and names
+          // (drafts/rewrites), and the sensitivity gate still blocks
+          // safeguarding-sensitive content from ever reaching the model.
+          // user_role here is a prompt/display hint, NOT an RBAC role, so it is
+          // deliberately not threaded into the permission gate (a later step).
+          const result = await invokeAiGatewayStream(
+            {
+              purpose: `cara_stream_${mode}`,
+              feature: `cara_${mode}`,
+              systemPrompt: systemPromptText,
+              userPrompt: userMessage,
+              redact: false,
+              cacheSystem: true,
+              maxOutputTokens: typeof max_tokens === "number" ? max_tokens : DEFAULT_MAX_TOKENS,
+            },
+            {
+              onTextDelta: (text) => send({ type: "text_delta", text, mode, style: resolvedStyle }),
+              onMessageDelta: (stop_reason) => send({ type: "message_delta", stop_reason }),
+            },
+          );
 
-          for await (const event of stream) {
-            if (
-              event.type === "content_block_delta" &&
-              event.delta.type === "text_delta"
-            ) {
-              const sseData = JSON.stringify({
-                type: "text_delta",
-                text: event.delta.text,
-                mode,
-                style: resolvedStyle,
-              });
-              controller.enqueue(encoder.encode(`data: ${sseData}\n\n`));
-            } else if (event.type === "message_delta") {
-              const sseData = JSON.stringify({
-                type: "message_delta",
-                stop_reason: event.delta.stop_reason,
-              });
-              controller.enqueue(encoder.encode(`data: ${sseData}\n\n`));
-            } else if (event.type === "message_stop") {
-              const finalMessage = await stream.finalMessage();
-              const sseData = JSON.stringify({
-                type: "message_stop",
-                mode,
-                style: resolvedStyle,
-                model: MODEL,
-                input_tokens: finalMessage.usage.input_tokens,
-                output_tokens: finalMessage.usage.output_tokens,
-                cache_creation_input_tokens:
-                  finalMessage.usage.cache_creation_input_tokens ?? 0,
-                cache_read_input_tokens:
-                  finalMessage.usage.cache_read_input_tokens ?? 0,
-              });
-              controller.enqueue(encoder.encode(`data: ${sseData}\n\n`));
-              controller.enqueue(encoder.encode(`data: [DONE]\n\n`));
-            }
+          // If the gateway answered without the model (kill-switch / sensitivity /
+          // cost / permission), stream its deterministic note so the client shows
+          // something coherent rather than an empty response.
+          if (result.method === "refused" && result.output) {
+            send({ type: "text_delta", text: result.output, mode, style: resolvedStyle });
           }
-        } catch (err) {
-          const errorData = JSON.stringify({
-            type: "error",
-            error:
-              err instanceof Error ? err.message : "Stream error occurred",
+
+          send({
+            type: "message_stop",
+            mode,
+            style: resolvedStyle,
+            model: result.llmUsed ? (result.model ?? MODEL) : "deterministic",
+            input_tokens: result.tokensInput ?? 0,
+            output_tokens: result.tokensOutput ?? 0,
+            cache_creation_input_tokens: result.cacheCreationInputTokens ?? 0,
+            cache_read_input_tokens: result.cacheReadInputTokens ?? 0,
+            ...(result.refusedReason ? { refused_reason: result.refusedReason } : {}),
           });
-          controller.enqueue(encoder.encode(`data: ${errorData}\n\n`));
+          controller.enqueue(encoder.encode(`data: [DONE]\n\n`));
+        } catch (err) {
+          send({ type: "error", error: err instanceof Error ? err.message : "Stream error occurred" });
         } finally {
           controller.close();
         }
