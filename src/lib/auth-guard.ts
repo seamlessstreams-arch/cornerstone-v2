@@ -121,3 +121,82 @@ export async function requirePermissionAsync(
   // Demo mode only (Supabase not configured): X-User-Id header convention.
   return requirePermission(request, permission);
 }
+
+// ── Identity + multi-tenant isolation ─────────────────────────────────────────
+
+/** Roles that legitimately see across homes (org/RI/platform oversight). */
+const CROSS_HOME_ROLES: ReadonlySet<AppRole> = new Set([
+  "super_admin",
+  "organisation_director",
+  "responsible_individual",
+]);
+
+export interface RequestIdentity {
+  userId: string;
+  role: AppRole;
+  /** Session-derived home in activated mode; null in demo mode (no tenancy). */
+  homeId: string | null;
+}
+
+/**
+ * Resolve the caller's identity for routes that need home/role context.
+ *
+ * Activated mode (Supabase configured): identity comes from the validated
+ * session — `homeId` is the server-derived staff_members.home_id, NEVER a client
+ * param. Returns a 401 NextResponse if there is no valid session (fail closed).
+ *
+ * Demo mode: identity comes from the X-User-Id header convention; `homeId` is
+ * null so `assertHomeAccess` is a no-op and the demo's cross-home views work.
+ */
+export async function getRequestIdentity(
+  request: NextRequest
+): Promise<RequestIdentity | NextResponse> {
+  const { isSupabaseEnabled } = await import("@/lib/supabase/server");
+
+  if (isSupabaseEnabled()) {
+    const { resolveStaffSession } = await import("@/lib/supabase/auth");
+    let session: Awaited<ReturnType<typeof resolveStaffSession>> | null = null;
+    try {
+      session = await resolveStaffSession(request);
+    } catch {
+      session = null;
+    }
+    if (!session) {
+      return NextResponse.json(
+        { error: "Unauthorized", detail: "A valid authenticated session is required." },
+        { status: 401 }
+      );
+    }
+    return { userId: session.userId, role: toAppRole(session.role), homeId: session.homeId };
+  }
+
+  // Demo mode: header identity, no tenant scoping.
+  return {
+    userId: getUserIdFromRequest(request),
+    role: getUserRoleFromRequest(request),
+    homeId: null,
+  };
+}
+
+/**
+ * Enforce multi-tenant isolation: the caller may only act on a resource that
+ * belongs to their own home. Cross-home roles (org director, RI, super admin)
+ * are exempt. Returns a 403 NextResponse on violation, or null to proceed.
+ *
+ * No-op in demo mode (identity.homeId is null) so the in-memory demo is
+ * unaffected — tenancy is enforced only once Supabase auth is activated.
+ */
+export function assertHomeAccess(
+  identity: RequestIdentity,
+  resourceHomeId: string | null | undefined
+): NextResponse | null {
+  if (identity.homeId == null) return null; // demo mode — no tenancy
+  if (CROSS_HOME_ROLES.has(identity.role)) return null;
+  if (resourceHomeId && resourceHomeId !== identity.homeId) {
+    return NextResponse.json(
+      { error: "Forbidden", detail: "This resource belongs to a different home." },
+      { status: 403 }
+    );
+  }
+  return null;
+}
