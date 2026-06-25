@@ -17,3 +17,10 @@ export type {
   AiGatewayStreamHandlers,
   AiGatewayStreamResult,
 } from "./ai-gateway";
+export { summariseGatewayAudit, classifyRefusal } from "./audit-summary";
+export type {
+  GatewayAuditSummary,
+  GatewayFeatureStat,
+  GatewayRefusalStat,
+  GatewayRefusalReason,
+} from "./audit-summary";
