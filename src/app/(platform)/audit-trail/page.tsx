@@ -28,6 +28,7 @@ import type { AuditAction } from "@/types/care-events";
 import { formatDate } from "@/lib/utils";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
 import { RecordActivityFeed } from "@/components/audit/record-activity-feed";
+import { ChangeHistoryFeed } from "@/components/audit/change-history-feed";
 import { CaraPanel } from "@/components/cara/cara-panel";
 import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 
@@ -203,6 +204,11 @@ export default function AuditTrailPage() {
       {/* Record Activity — universal "Enter Once" orchestrator audit stream */}
       <div className="mb-6">
         <RecordActivityFeed limit={25} />
+      </div>
+
+      {/* Field-level before→after change history (audit recorder) */}
+      <div className="mb-6">
+        <ChangeHistoryFeed limit={25} />
       </div>
 
       {/* Care Event audit trail below */}
