@@ -34,28 +34,31 @@ export async function generateCaraJson(input: GenerateJsonInput): Promise<unknow
 }
 
 async function generateViaAnthropic(input: GenerateJsonInput): Promise<unknown> {
-  const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey || apiKey.includes("placeholder")) {
-    throw new Error("ANTHROPIC_API_KEY is missing or set to placeholder.");
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { default: Anthropic } = await import("@anthropic-ai/sdk" as string) as { default: new (opts: { apiKey: string }) => any };
-  const client = new Anthropic({ apiKey });
-
-  // Extract system message and user messages
+  // Collapse the chat messages into the gateway's system + single-user-prompt shape.
   const systemMessage = input.messages.find((m) => m.role === "system")?.content ?? "";
-  const userMessages = input.messages.filter((m) => m.role !== "system");
+  const userPrompt = input.messages
+    .filter((m) => m.role !== "system")
+    .map((m) => (m.role === "assistant" ? `[assistant]\n${m.content}` : m.content))
+    .join("\n\n");
 
-  const response = await client.messages.create({
-    model: input.model ?? (process.env.CARA_MODEL ?? process.env.CARA_MODEL) ?? "claude-sonnet-4-20250514",
-    max_tokens: 4096,
+  // Through the AI Gateway: the whole intelligence engine (all 11 agents call this
+  // seam) now inherits redaction, cost limits, metering, and audit. Default
+  // redaction applies — analysis runs on de-identified records, the privacy posture
+  // the rebuild calls for. The JSON contract and the throw-on-no-AI behaviour are
+  // preserved so callers degrade exactly as before.
+  const { invokeAiGateway } = await import("@/lib/cara/ai-gateway");
+  const gw = await invokeAiGateway({
+    purpose: "intelligence_json",
+    feature: "cara_intelligence",
+    systemPrompt: systemMessage + "\n\nYou MUST respond with valid JSON only. No markdown, no explanation, just JSON.",
+    userPrompt,
     temperature: input.temperature ?? 0.2,
-    system: systemMessage + "\n\nYou MUST respond with valid JSON only. No markdown, no explanation, just JSON.",
-    messages: userMessages.map((m) => ({ role: m.role as "user" | "assistant", content: m.content })),
+    maxOutputTokens: 4096,
+    expectJson: true,
   });
+  if (!gw.llmUsed) throw new Error("AI provider is not available (no key or refused by the gateway).");
 
-  const raw = response.content?.[0]?.type === "text" ? response.content[0].text : "";
+  const raw = gw.output;
   if (!raw) throw new Error("AI provider returned an empty response.");
 
   try {

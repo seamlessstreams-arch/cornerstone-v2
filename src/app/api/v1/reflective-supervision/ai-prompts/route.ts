@@ -10,7 +10,7 @@
 export const dynamic = "force-dynamic";
 
 import { NextResponse } from "next/server";
-import { generateText } from "@/lib/cara/cara-provider";
+import { invokeAiGateway } from "@/lib/cara/ai-gateway";
 
 const AI_DISCLAIMER = "AI suggests reflective prompts only — it never writes the supervision record or its conclusions. The manager leads the conversation and records it. AI suggestions require professional judgement and manager approval.";
 
@@ -27,9 +27,9 @@ export async function POST(req: Request) {
     "Return ONLY the prompts, one per line, no numbering, no preamble.";
   const userPrompt = `Staff member: ${staffName}.${context ? `\nContext the manager noted: ${context}` : ""}`;
 
-  const result = await generateText({ systemPrompt, userPrompt, temperature: 0.5, maxOutputTokens: 400 });
+  const result = await invokeAiGateway({ purpose: "reflective_supervision", feature: "reflective_supervision", systemPrompt, userPrompt, temperature: 0.5, maxOutputTokens: 400 });
 
-  if (!result.llmUsed || !result.text?.trim()) {
+  if (!result.llmUsed || !result.output?.trim()) {
     return NextResponse.json({
       data: {
         prompts: [],
@@ -40,7 +40,7 @@ export async function POST(req: Request) {
     });
   }
 
-  const prompts = result.text
+  const prompts = result.output
     .split("\n")
     .map((l) => l.replace(/^\s*[-*\d.\)]+\s*/, "").trim())
     .filter((l) => l.length > 8)

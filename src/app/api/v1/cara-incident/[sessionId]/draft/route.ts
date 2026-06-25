@@ -18,7 +18,7 @@ import { persistRecordingReview, persistIncidentSessionUpdate } from "@/lib/supa
 import { NextResponse } from "next/server";
 import { getStore } from "@/lib/db/store";
 import { generateId } from "@/lib/utils";
-import { generateText } from "@/lib/cara/cara-provider";
+import { invokeAiGateway } from "@/lib/cara/ai-gateway";
 import {
   buildDeterministicDraft, computeIncidentQualityGate, CARA_INCIDENT_SYSTEM_PROMPT,
   INCIDENT_DISCLAIMER, INCIDENT_TYPES, type CaraRecordingReview,
@@ -87,13 +87,13 @@ export async function POST(req: Request, ctx: { params: Promise<{ sessionId: str
     ...entries.map((e) => `${String(e.timestamp).slice(11, 16)} [${e.entry_type}] ${e.raw_text}`),
   ].join("\n");
 
-  const result = await generateText({
+  const result = await invokeAiGateway({ purpose: "cara_incident_draft", feature: "cara_incident_draft",
     systemPrompt: CARA_INCIDENT_SYSTEM_PROMPT,
     userPrompt: facts,
     temperature: 0.3,
     maxOutputTokens: 900,
   });
-  const llmUsed = result.llmUsed && !!result.text?.trim();
+  const llmUsed = result.llmUsed && !!result.output?.trim();
   if (llmUsed) {
     logIncidentAudit({ action_type: "ai_record_rewrite_generated", user_id, child_id: session.child_id, source_id: session.id, note: "draft rewrite generated (server-side)" });
   }
@@ -101,7 +101,7 @@ export async function POST(req: Request, ctx: { params: Promise<{ sessionId: str
   return NextResponse.json({
     data: {
       deterministic_draft: deterministic,
-      ai_draft: llmUsed ? result.text.trim() : null,
+      ai_draft: llmUsed ? result.output.trim() : null,
       llmUsed,
       llm_message: llmUsed ? null : "Cara's AI rewrite isn't configured in this environment — the factual draft below is assembled from your timeline and is complete on its own.",
       gate,

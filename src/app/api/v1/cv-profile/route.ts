@@ -11,7 +11,7 @@ export const dynamic = "force-dynamic";
 
 import { NextResponse } from "next/server";
 import { buildCandidateProfileFromText } from "@/lib/engines/cv-profile-engine";
-import { generateText } from "@/lib/cara/cara-provider";
+import { invokeAiGateway } from "@/lib/cara/ai-gateway";
 
 const MAX_CV_LENGTH = 8000;
 
@@ -49,7 +49,7 @@ ${text.slice(0, 4000)}
 Respond in JSON: { "work_history_notes": "...", "skills": ["...", "..."], "additional_qualifications": ["..."] }
 Do not invent information. If you are not sure, omit it. Never include personal opinions.`;
 
-  const { text: aiText, llmUsed } = await generateText({
+  const { output: aiText, llmUsed } = await invokeAiGateway({ purpose: "cv_profile", feature: "cv_profile",
     systemPrompt: "You extract factual information from CVs for safer recruitment. Never invent. Return JSON only.",
     userPrompt: prompt,
     maxOutputTokens: 400,
