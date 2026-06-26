@@ -67,6 +67,8 @@ export const PERMISSIONS = {
   // Supervision
   VIEW_SUPERVISION: "view_supervision",
   MANAGE_SUPERVISION: "manage_supervision",
+  // Complaints (Reg 39) — manager-handled
+  MANAGE_COMPLAINTS: "manage_complaints",
   // Training
   VIEW_TRAINING: "view_training",
   MANAGE_TRAINING: "manage_training",
@@ -255,6 +257,7 @@ export const ROLE_PERMISSIONS: Record<AppRole, Permission[]> = {
   // ── Responsible Individual ───────────────────────────────────────────────────
   responsible_individual: [
     ...CARE_OPS_PERMISSIONS,
+    PERMISSIONS.MANAGE_COMPLAINTS,
     PERMISSIONS.EDIT_TEAM_TASKS,
     PERMISSIONS.ASSIGN_TASKS,
     PERMISSIONS.SIGN_OFF_TASKS,
@@ -326,6 +329,7 @@ export const ROLE_PERMISSIONS: Record<AppRole, Permission[]> = {
   // ── Registered Manager ───────────────────────────────────────────────────────
   registered_manager: [
     ...CARE_OPS_PERMISSIONS,
+    PERMISSIONS.MANAGE_COMPLAINTS,
     PERMISSIONS.EDIT_TEAM_TASKS,
     PERMISSIONS.ASSIGN_TASKS,
     PERMISSIONS.SIGN_OFF_TASKS,
@@ -410,6 +414,7 @@ export const ROLE_PERMISSIONS: Record<AppRole, Permission[]> = {
   // ── Deputy Manager ───────────────────────────────────────────────────────────
   deputy_manager: [
     ...CARE_OPS_PERMISSIONS,
+    PERMISSIONS.MANAGE_COMPLAINTS,
     PERMISSIONS.EDIT_TEAM_TASKS,
     PERMISSIONS.ASSIGN_TASKS,
     PERMISSIONS.SIGN_OFF_TASKS,
