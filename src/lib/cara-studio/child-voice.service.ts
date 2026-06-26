@@ -7,6 +7,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { createServerClient } from "@/lib/supabase/server";
+import { matchedKeywords } from "@/lib/keyword-match";
 
 function homeId(): string {
   return process.env.SUPABASE_HOME_ID ?? "a0000000-0000-0000-0000-000000000001";
@@ -225,7 +226,7 @@ function detectTheme(text: string): string | null {
   let bestTheme: string | null = null;
   let bestScore = 0;
   for (const { theme, keywords } of THEMES) {
-    const score = keywords.filter((kw) => lower.includes(kw)).length;
+    const score = matchedKeywords(lower, keywords).length;
     if (score > bestScore) {
       bestScore = score;
       bestTheme = theme;

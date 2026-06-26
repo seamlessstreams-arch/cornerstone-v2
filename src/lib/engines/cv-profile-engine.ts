@@ -4,6 +4,8 @@
 // draft. AI can enhance when available; deterministic layer always runs first.
 // ══════════════════════════════════════════════════════════════════════════════
 
+import { matchedKeywords, containsAnyKeyword } from "@/lib/keyword-match";
+
 export const CV_PROFILE_DISCLAIMER =
   "This is an AI-assisted draft only. All information must be verified directly with the candidate using safer recruitment standards. Never substitute automated extraction for thorough identity and employment verification.";
 
@@ -94,7 +96,7 @@ function extractQualifications(text: string): string[] {
 function extractSkills(text: string): string[] {
   const skills: string[] = [];
   const lower = text.toLowerCase();
-  const careMatches = CARE_KEYWORDS.filter(k => lower.includes(k));
+  const careMatches = matchedKeywords(lower, CARE_KEYWORDS);
   if (careMatches.length > 0) skills.push("Residential childcare experience");
   if (lower.includes("de-escalat")) skills.push("De-escalation techniques");
   if (lower.includes("risk assess")) skills.push("Risk assessment");
@@ -130,8 +132,8 @@ export function buildCandidateProfileFromText(
   const skills = extractSkills(text);
   const workNotes = buildWorkHistoryNotes(text);
   const lower = text.toLowerCase();
-  const hasSafeguarding = SAFEGUARDING_KEYWORDS.some(k => lower.includes(k));
-  const hasResidential = CARE_KEYWORDS.some(k => lower.includes(k));
+  const hasSafeguarding = containsAnyKeyword(lower, SAFEGUARDING_KEYWORDS);
+  const hasResidential = containsAnyKeyword(lower, CARE_KEYWORDS);
 
   const missing: string[] = [];
   if (!first || !last) missing.push("Full name");
