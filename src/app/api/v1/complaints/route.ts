@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { intelligenceDb } from "@/lib/intelligence/store";
+import { requirePermissionAsync } from "@/lib/auth-guard";
+import { PERMISSIONS } from "@/lib/permissions";
 import { generateId } from "@/lib/utils";
 import { runPostSaveIntelligence } from "@/lib/cara/post-save-intelligence";
 import { captureDomainEvent } from "@/lib/event-capture/capture-event-service";
@@ -35,6 +37,9 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
+  const auth = await requirePermissionAsync(req, PERMISSIONS.MANAGE_COMPLAINTS);
+  if (auth instanceof NextResponse) return auth;
+
   const body = await req.json();
   const dateReceived = body.date_received ?? new Date().toISOString().split("T")[0];
   const nextRef = `CMP-${new Date().getFullYear()}-${String(Math.floor(Math.random() * 900) + 100)}`;
