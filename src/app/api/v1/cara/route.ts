@@ -178,6 +178,32 @@ function deterministicReturnHomeInterview() {
   };
 }
 
+// Shared deterministic fallback — used when there is no AI key AND when an AI
+// call FAILS (no credits, rate limit, provider error). Keeps every feature
+// working deterministically instead of surfacing a provider error to the user.
+function caraDeterministicJson(parsed: unknown, mode: string, resolvedStyle: string) {
+  return NextResponse.json({
+    data: {
+      response: parsed, parsed, mode, style: resolvedStyle, model: "deterministic",
+      input_tokens: 0, output_tokens: 0, cache_creation_input_tokens: 0, cache_read_input_tokens: 0,
+    },
+  });
+}
+
+function deterministicCaraResponse(mode: string, resolvedStyle: string) {
+  if (mode === "pattern_scan") return caraDeterministicJson(deterministicPatternScan(), mode, resolvedStyle);
+  if (mode === "return_home_interview") return caraDeterministicJson(deterministicReturnHomeInterview(), mode, resolvedStyle);
+  if (mode === "safeguarding_scan") return caraDeterministicJson(deterministicSafeguardingScan(), mode, resolvedStyle);
+  return NextResponse.json({
+    data: {
+      response:
+        "Cara ran without AI for this feature — the AI service is unavailable in this environment. Cara's deterministic engines continue to power the rest of the platform; AI enhancement returns once the AI service is available.",
+      parsed: null, mode, style: resolvedStyle, model: "deterministic",
+      input_tokens: 0, output_tokens: 0, cache_creation_input_tokens: 0, cache_read_input_tokens: 0,
+    },
+  });
+}
+
 // ─── Constants ────────────────────────────────────────────────────────────────
 
 const MODEL = "claude-sonnet-4-6";
@@ -1282,62 +1308,7 @@ export async function POST(req: NextRequest) {
   // "ran without AI" message as a delta). Only NON-streaming callers get the
   // deterministic JSON fallbacks here.
   if (!hasAiKey && !streamMode) {
-    if (mode === "safeguarding_scan") {
-      const result = deterministicSafeguardingScan();
-      return NextResponse.json({
-        data: {
-          response: result,
-          parsed: result,
-          mode: "safeguarding_scan",
-          style: resolvedStyle,
-          model: "deterministic",
-          input_tokens: 0,
-          output_tokens: 0,
-          cache_creation_input_tokens: 0,
-          cache_read_input_tokens: 0,
-        },
-      });
-    }
-    if (mode === "pattern_scan") {
-      const parsed = deterministicPatternScan();
-      return NextResponse.json({
-        data: {
-          response: parsed, parsed, mode: "pattern_scan", style: resolvedStyle,
-          model: "deterministic", input_tokens: 0, output_tokens: 0,
-          cache_creation_input_tokens: 0, cache_read_input_tokens: 0,
-        },
-      });
-    }
-    if (mode === "return_home_interview") {
-      const parsed = deterministicReturnHomeInterview();
-      return NextResponse.json({
-        data: {
-          response: parsed, parsed, mode: "return_home_interview", style: resolvedStyle,
-          model: "deterministic", input_tokens: 0, output_tokens: 0,
-          cache_creation_input_tokens: 0, cache_read_input_tokens: 0,
-        },
-      });
-    }
-    // Modes that genuinely need a model degrade GRACEFULLY (no `error` field, so the
-    // caller shows a calm note rather than a failure state). Cara's deterministic
-    // engines power the rest of the platform; this is optional AI enhancement only.
-    return NextResponse.json(
-      {
-        data: {
-          response:
-            "Cara ran without AI in this environment. The deterministic engines power the rest of Cara; this particular feature offers optional AI enhancement, which becomes available once an AI key is configured.",
-          parsed: null,
-          mode,
-          style: resolvedStyle,
-          model: "deterministic",
-          input_tokens: 0,
-          output_tokens: 0,
-          cache_creation_input_tokens: 0,
-          cache_read_input_tokens: 0,
-        },
-      },
-      { status: 200 },
-    );
+    return deterministicCaraResponse(mode, resolvedStyle);
   }
 
   // Build the user message
@@ -1414,11 +1385,19 @@ export async function POST(req: NextRequest) {
             },
           );
 
-          // If the gateway answered without the model (kill-switch / sensitivity /
-          // cost / permission), stream its deterministic note so the client shows
-          // something coherent rather than an empty response.
-          if (result.method === "refused" && result.output) {
-            send({ type: "text_delta", text: result.output, mode, style: resolvedStyle });
+          // The gateway answered without the model (kill-switch / sensitivity /
+          // cost / permission / no key / provider failure). Always emit SOMETHING
+          // so the panel shows a calm note rather than an empty box — even when
+          // the provider call failed and left no output (e.g. exhausted credits).
+          if (result.method === "refused") {
+            send({
+              type: "text_delta",
+              text:
+                result.output ||
+                "Cara couldn't produce an AI-enhanced response just now — the AI service is unavailable in this environment. The rest of Cara continues to run on its deterministic engines.",
+              mode,
+              style: resolvedStyle,
+            });
           }
 
           send({
@@ -1519,34 +1498,15 @@ export async function POST(req: NextRequest) {
       },
     });
   } catch (err) {
-    if (err instanceof Anthropic.BadRequestError) {
-      return NextResponse.json(
-        { error: `Bad request: ${err.message}` },
-        { status: 400 }
-      );
-    }
-    if (err instanceof Anthropic.AuthenticationError) {
-      return NextResponse.json(
-        { error: "Authentication failed — check ANTHROPIC_API_KEY" },
-        { status: 401 }
-      );
-    }
-    if (err instanceof Anthropic.RateLimitError) {
-      return NextResponse.json(
-        { error: "Rate limit reached — please retry shortly" },
-        { status: 429 }
-      );
-    }
-    if (err instanceof Anthropic.APIError) {
-      return NextResponse.json(
-        { error: `API error (${err.status}): ${err.message}` },
-        { status: err.status ?? 500 }
-      );
-    }
-    console.error("[cara] Unexpected error:", err);
-    return NextResponse.json(
-      { error: "An unexpected error occurred", detail: err instanceof Error ? err.message : String(err) },
-      { status: 500 }
+    // The AI call failed (no credits / rate limit / auth / provider error).
+    // Degrade GRACEFULLY: serve the deterministic fallback so the feature still
+    // works, rather than surfacing a provider error to the user. The cause is
+    // logged for operators. (Prod currently has a key but exhausted credits, so
+    // this — not the no-key branch — is the path that keeps features alive.)
+    console.warn(
+      "[cara] AI call failed; serving deterministic fallback:",
+      err instanceof Error ? err.message : String(err),
     );
+    return deterministicCaraResponse(mode, resolvedStyle);
   }
 }
