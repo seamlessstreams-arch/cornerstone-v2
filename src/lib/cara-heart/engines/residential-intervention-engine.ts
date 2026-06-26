@@ -10,6 +10,7 @@
 // intentional care, and the home as a skilled relational intervention.
 // ══════════════════════════════════════════════════════════════════════════════
 
+import { matchedKeywords } from "@/lib/keyword-match";
 import type {
   CaraPracticeRecord,
   ResidentialInterventionInsight,
@@ -53,8 +54,8 @@ type ReactiveRisk = "low" | "medium" | "high";
 
 function assessReactiveCareRisk(record: CaraPracticeRecord): ReactiveRisk {
   const lower = [record.description, record.staffResponse ?? ""].join(" ").toLowerCase();
-  const reactiveHits = REACTIVE_CARE_INDICATORS.filter((kw) => lower.includes(kw)).length;
-  const intentionalHits = INTENTIONAL_CARE_INDICATORS.filter((kw) => lower.includes(kw)).length;
+  const reactiveHits = matchedKeywords(lower, REACTIVE_CARE_INDICATORS).length;
+  const intentionalHits = matchedKeywords(lower, INTENTIONAL_CARE_INDICATORS).length;
 
   if (reactiveHits >= 3 && intentionalHits === 0) return "high";
   if (reactiveHits >= 2 || (reactiveHits >= 1 && intentionalHits === 0)) return "medium";

@@ -11,6 +11,7 @@
 // and always advises emergency action where immediate danger is described.
 // ══════════════════════════════════════════════════════════════════════════════
 
+import { matchedKeywords } from "@/lib/keyword-match";
 import {
   CaraFlag,
   CaraPracticeInput,
@@ -121,7 +122,7 @@ function norm(text: string): string {
 /** Returns the subset of `terms` present in `text` (case-insensitive). */
 function matches(text: string, terms: string[]): string[] {
   const t = norm(text);
-  return terms.filter((term) => t.includes(term));
+  return matchedKeywords(t, terms);
 }
 
 function has(text: string, terms: string[]): boolean {

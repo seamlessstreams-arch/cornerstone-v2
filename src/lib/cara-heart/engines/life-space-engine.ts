@@ -10,6 +10,7 @@
 // conflicts and moments of repair are all therapeutic events.
 // ══════════════════════════════════════════════════════════════════════════════
 
+import { containsAnyKeyword } from "@/lib/keyword-match";
 import type {
   CaraPracticeRecord,
   LifeSpaceContext,
@@ -52,7 +53,7 @@ const CONTEXT_RULES: ContextRule[] = [
 function classifyLifeSpaceContext(record: CaraPracticeRecord): LifeSpaceContext {
   const lower = [record.description, record.staffResponse ?? ""].join(" ").toLowerCase();
   for (const rule of CONTEXT_RULES) {
-    if (rule.keywords.some((kw) => lower.includes(kw))) {
+    if (containsAnyKeyword(lower, rule.keywords)) {
       return rule.context;
     }
   }

@@ -8,6 +8,8 @@
 // and management), Reg 14 (care planning), SCCIF quality standards.
 // ══════════════════════════════════════════════════════════════════════════════
 
+import { containsAnyKeyword } from "@/lib/keyword-match";
+
 export type RecordType =
   | "daily_log"
   | "shift_debrief"
@@ -83,8 +85,7 @@ export interface ManagementOversightOutput {
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
 function includesAny(text: string, words: string[]): boolean {
-  const lower = text.toLowerCase();
-  return words.some((word) => lower.includes(word.toLowerCase()));
+  return containsAnyKeyword(text, words);
 }
 
 // ── Quality Score ────────────────────────────────────────────────────────────

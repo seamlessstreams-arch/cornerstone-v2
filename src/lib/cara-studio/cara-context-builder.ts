@@ -11,6 +11,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 
 import type { CaraChildLearningProfile, CaraLibraryResource } from "./cara-types";
+import { containsAnyKeyword } from "@/lib/keyword-match";
 
 export interface ChildContextInput {
   child: { id: string; first_name: string; preferred_name: string | null; date_of_birth: string } | null;
@@ -47,7 +48,7 @@ function overlaps(theme: string, listText: string | null | undefined): boolean {
   if (!listText) return false;
   const themeWords = theme.toLowerCase().split(/[^a-z]+/).filter((w) => w.length > 3);
   const hay = listText.toLowerCase();
-  return themeWords.some((w) => hay.includes(w));
+  return containsAnyKeyword(hay, themeWords);
 }
 
 export function buildChildContext(input: ChildContextInput): CaraChildContext {
