@@ -7,6 +7,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { createServerClient } from "@/lib/supabase/server";
+import { matchedKeywords } from "@/lib/keyword-match";
 import type {
   CaraStudioSafeguardingPattern,
   CaraStudioSafeguardingPatternType,
@@ -66,7 +67,9 @@ export async function scanSafeguardingPatterns(hId: string, childId?: string): P
     const srcChildId = src.child_id ?? childId ?? null;
 
     for (const [patternType, keywords] of Object.entries(PATTERN_KEYWORDS)) {
-      const matched = keywords.filter((kw) => text.includes(kw));
+      // Word-boundary matching — plain includes() let short keywords match inside
+      // unrelated words ("firefighter" → "fight"), raising false safeguarding flags.
+      const matched = matchedKeywords(text, keywords);
       if (matched.length > 0) {
         const key = `${patternType}:${srcChildId ?? "home"}`;
         if (!patternCounts[key]) patternCounts[key] = { count: 0, sourceIds: [], titles: [] };
