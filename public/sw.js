@@ -13,7 +13,7 @@
 // Bump VERSION to invalidate caches on a breaking change.
 // ══════════════════════════════════════════════════════════════════════════════
 
-const VERSION = "v5"; // bumped: refresh installed apps to the latest build (planning, rota patterns, safeguarding, practice frameworks, compliance docs)
+const VERSION = "v6"; // bumped: refresh installed apps to the latest build (deterministic-first AI degradation + fallbacks, Anthropic-only/OpenAI removed, dead-card & type-error repairs)
 const SHELL_CACHE = `cs-shell-${VERSION}`;
 const STATIC_CACHE = `cs-static-${VERSION}`;
 const OFFLINE_URL = "/offline.html";
