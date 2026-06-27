@@ -895,6 +895,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: "Practice Action Centre", href: "/intelligence/cara/action-centre", icon: "ListChecks", module: "dashboard" },
       { label: "Inspection Intelligence", href: "/intelligence/cara/inspection-intelligence", icon: "ClipboardCheck", module: "dashboard" },
       { label: "Burnout & Org Risk", href: "/intelligence/cara/org-risk", icon: "Activity", module: "dashboard" },
+      { label: "SOP Reality Check", href: "/intelligence/cara/sop-reality-check", icon: "FileCheck", module: "dashboard" },
       { label: "Practice Culture Scorecard", href: "/intelligence/cara/practice-culture-scorecard", icon: "BarChart3", module: "dashboard" },
       { label: "Framework Usage",     href: "/intelligence/cara/practice-framework-usage", icon: "BookOpen", module: "dashboard" },
       { label: "Practice Observation", href: "/intelligence/cara/practice-observation-competency-intelligence", icon: "Eye", module: "staff" },
