@@ -59,7 +59,7 @@ describe("assessEvidence", () => {
 
   it("scores approved sources higher than unapproved", async () => {
     const approved = makeSource({ approval_status: "approved" });
-    const draft = makeSource({ approval_status: "draft" });
+    const draft = makeSource({ approval_status: "unverified" });
     const approvedResult = await assessEvidence(approved);
     const draftResult = await assessEvidence(draft);
     expect(approvedResult.approval_score!).toBeGreaterThan(draftResult.approval_score!);
