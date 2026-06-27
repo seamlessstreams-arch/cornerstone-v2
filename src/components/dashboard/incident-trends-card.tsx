@@ -60,11 +60,11 @@ export function IncidentTrendsCard() {
       <CardContent className="space-y-4">
         <div className="grid grid-cols-4 gap-2">
           <div className="text-center rounded-lg bg-slate-50 p-2">
-            <p className="text-lg font-bold tabular-nums text-slate-600">{d?.profile?.total_incidents_30d ?? 0}</p>
-            <p className="text-[10px] text-muted-foreground">Incidents</p>
+            <p className="text-lg font-bold tabular-nums text-slate-600">{d?.profile?.total_entries ?? 0}</p>
+            <p className="text-[10px] text-muted-foreground">Entries</p>
           </div>
           <div className="text-center rounded-lg bg-blue-50 p-2">
-            <p className="text-lg font-bold tabular-nums text-blue-600">{d?.profile?.unique_children ?? 0}</p>
+            <p className="text-lg font-bold tabular-nums text-blue-600">{d?.profile?.children_with_entries ?? 0}</p>
             <p className="text-[10px] text-muted-foreground">Children</p>
           </div>
           <div className="text-center rounded-lg bg-green-50 p-2">

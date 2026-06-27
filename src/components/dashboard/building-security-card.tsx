@@ -84,13 +84,13 @@ export function BuildingSecurityCard() {
         <div className="grid grid-cols-4 gap-2">
           <div className={cn(
             "text-center rounded-lg p-2.5",
-            o.compliance_rate >= 90 ? "bg-green-50" : "bg-amber-50",
+            o.check_completion_rate >= 90 ? "bg-green-50" : "bg-amber-50",
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.compliance_rate >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]",
+              o.check_completion_rate >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]",
             )}>
-              {o.compliance_rate}%
+              {o.check_completion_rate}%
             </p>
             <p className="text-[10px] text-muted-foreground">Compliance</p>
           </div>
@@ -138,7 +138,9 @@ export function BuildingSecurityCard() {
               <div key={b.building_id} className="flex items-center justify-between rounded border p-2 text-xs">
                 <div className="flex items-center gap-2 flex-1 min-w-0">
                   <span className="font-medium truncate">{b.building_name}</span>
-                  <span className="text-muted-foreground">{b.compliance_rate}%</span>
+                  <span className="text-muted-foreground">
+                    {b.checks_total > 0 ? Math.round((b.checks_completed / b.checks_total) * 100) : 100}%
+                  </span>
                 </div>
                 <Badge variant="outline" className={cn("text-[10px] shrink-0", STATUS_STYLES[b.status] ?? STATUS_STYLES.operational)}>
                   {b.status}

@@ -60,19 +60,19 @@ export function EhcpSendMonitoringCard() {
       <CardContent className="space-y-4">
         <div className="grid grid-cols-4 gap-2">
           <div className="text-center rounded-lg bg-blue-50 p-2">
-            <p className="text-lg font-bold tabular-nums text-blue-600">{d?.overview?.ehcp_count ?? 0}</p>
-            <p className="text-[10px] text-muted-foreground">EHCP</p>
+            <p className="text-lg font-bold tabular-nums text-blue-600">{d?.overview?.sen_support_count ?? 0}</p>
+            <p className="text-[10px] text-muted-foreground">SEN/EHCP</p>
           </div>
           <div className="text-center rounded-lg bg-slate-50 p-2">
             <p className="text-lg font-bold tabular-nums text-slate-600">{d?.overview?.total_children ?? 0}</p>
             <p className="text-[10px] text-muted-foreground">Children</p>
           </div>
           <div className="text-center rounded-lg bg-green-50 p-2">
-            <p className="text-lg font-bold tabular-nums text-green-600">{d?.overview?.pep_current ?? 0}</p>
+            <p className="text-lg font-bold tabular-nums text-green-600">{d?.overview?.pep_current_count ?? 0}</p>
             <p className="text-[10px] text-muted-foreground">PEP</p>
           </div>
           <div className="text-center rounded-lg bg-green-50 p-2">
-            <p className="text-lg font-bold tabular-nums text-green-600">{Math.round(d?.overview?.pep_rate ?? 0)}%</p>
+            <p className="text-lg font-bold tabular-nums text-green-600">{(d?.overview?.total_children ?? 0) > 0 ? Math.round(((d?.overview?.pep_current_count ?? 0) / (d?.overview?.total_children ?? 1)) * 100) : 0}%</p>
             <p className="text-[10px] text-muted-foreground">PEP %</p>
           </div>
         </div>

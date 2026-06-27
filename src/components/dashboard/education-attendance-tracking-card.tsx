@@ -40,6 +40,9 @@ export function EducationAttendanceTrackingCard() {
   const attendance = intel.attendance;
   const alerts = intel.alerts ?? [];
   const insights = intel.insights ?? [];
+  const below90Names = (intel.child_profiles ?? [])
+    .filter((p) => p.attendance_pct < 90)
+    .map((p) => p.child_name);
 
   return (
     <Card className="overflow-hidden">
@@ -133,14 +136,14 @@ export function EducationAttendanceTrackingCard() {
                   variant="outline"
                   className={cn(
                     "text-[10px]",
-                    attendance.avg_pct >= 95
+                    attendance.overall_pct >= 95
                       ? "text-green-700 bg-green-50 border-green-200"
-                      : attendance.avg_pct >= 90
+                      : attendance.overall_pct >= 90
                       ? "text-amber-700 bg-amber-50 border-amber-200"
                       : "text-red-700 bg-red-50 border-red-200"
                   )}
                 >
-                  {attendance.avg_pct}%
+                  {attendance.overall_pct}%
                 </Badge>
               </div>
 
@@ -159,25 +162,13 @@ export function EducationAttendanceTrackingCard() {
                 </Badge>
               </div>
 
-              {(attendance?.below_90_children?.length ?? 0) > 0 && (
+              {below90Names.length > 0 && (
                 <div className="rounded border p-2 text-xs space-y-1">
                   <p className="text-muted-foreground font-medium">Children below 90%:</p>
-                  {(attendance?.below_90_children ?? []).map((child: string, i: number) => (
+                  {below90Names.map((child, i) => (
                     <div key={i} className="flex items-center gap-2 text-red-700">
                       <AlertTriangle className="h-3 w-3 shrink-0" />
                       <span>{child}</span>
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              {(attendance?.term_comparison?.length ?? 0) > 0 && (
-                <div className="rounded border p-2 text-xs space-y-1">
-                  <p className="text-muted-foreground font-medium">Term comparison:</p>
-                  {(attendance?.term_comparison ?? []).map((term: { term: string; pct: number }, i: number) => (
-                    <div key={i} className="flex items-center justify-between">
-                      <span>{term.term}</span>
-                      <span className="font-medium tabular-nums">{term.pct}%</span>
                     </div>
                   ))}
                 </div>

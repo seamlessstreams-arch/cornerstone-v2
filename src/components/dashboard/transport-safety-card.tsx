@@ -81,8 +81,8 @@ export function TransportSafetyCard() {
             <p className="text-lg font-bold tabular-nums text-blue-600">{vehicles.length}</p>
             <p className="text-[10px] text-muted-foreground">Vehicles</p>
           </div>
-          <div className={cn("text-center rounded-lg p-2.5", intel.overview.compliance_rate >= 95 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", intel.overview.compliance_rate >= 95 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{intel.overview.compliance_rate}%</p>
+          <div className={cn("text-center rounded-lg p-2.5", intel.overview.check_completion_rate >= 95 ? "bg-green-50" : "bg-amber-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", intel.overview.check_completion_rate >= 95 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{intel.overview.check_completion_rate}%</p>
             <p className="text-[10px] text-muted-foreground">Compliance</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", motExpiring === 0 ? "bg-green-50" : "bg-red-50")}>
@@ -109,8 +109,8 @@ export function TransportSafetyCard() {
                   {v.mot_days_until_expiry !== null && v.mot_days_until_expiry <= 30 && (
                     <Badge className="text-[9px] bg-[--cs-risk-bg] text-[--cs-risk]">MOT {v.mot_days_until_expiry}d</Badge>
                   )}
-                  {v.checks_overdue > 0 && (
-                    <Badge className="text-[9px] bg-[--cs-warning-bg] text-[--cs-warning]">{v.checks_overdue} overdue</Badge>
+                  {v.risk_flags.length > 0 && (
+                    <Badge className="text-[9px] bg-[--cs-warning-bg] text-[--cs-warning]">{v.risk_flags.length} flag{v.risk_flags.length === 1 ? "" : "s"}</Badge>
                   )}
                 </div>
               </div>

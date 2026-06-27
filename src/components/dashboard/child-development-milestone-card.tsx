@@ -68,7 +68,7 @@ export function ChildDevelopmentMilestoneCard() {
             <p className="text-[10px] text-muted-foreground">Assessed</p>
           </div>
           <div className="text-center rounded-lg bg-green-50 p-2">
-            <p className="text-lg font-bold tabular-nums text-green-600">{Math.round(d?.compliance?.health_assessment_rate ?? 0)}%</p>
+            <p className="text-lg font-bold tabular-nums text-green-600">{d?.compliance?.overall_compliance_rate ?? 0}%</p>
             <p className="text-[10px] text-muted-foreground">Rate %</p>
           </div>
           <div className="text-center rounded-lg bg-blue-50 p-2">

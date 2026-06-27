@@ -72,7 +72,7 @@ export function HomeworkAcademicSupportCard() {
             <p className="text-[10px] text-muted-foreground">Below 90%</p>
           </div>
           <div className="text-center rounded-lg bg-green-50 p-2">
-            <p className="text-lg font-bold tabular-nums text-green-600">{Math.round(d?.overview?.pep_rate ?? 0)}%</p>
+            <p className="text-lg font-bold tabular-nums text-green-600">{(d?.overview?.total_children ?? 0) > 0 ? Math.round(((d?.overview?.pep_current_count ?? 0) / (d?.overview?.total_children ?? 1)) * 100) : 0}%</p>
             <p className="text-[10px] text-muted-foreground">PEP %</p>
           </div>
         </div>

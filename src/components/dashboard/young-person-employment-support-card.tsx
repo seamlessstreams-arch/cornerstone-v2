@@ -68,11 +68,11 @@ export function YoungPersonEmploymentSupportCard() {
             <p className="text-[10px] text-muted-foreground">NEET</p>
           </div>
           <div className="text-center rounded-lg bg-green-50 p-2">
-            <p className="text-lg font-bold tabular-nums text-green-600">{Math.round(d?.overview?.school_placement_rate ?? 0)}%</p>
+            <p className="text-lg font-bold tabular-nums text-green-600">{(d?.overview?.total_children ?? 0) > 0 ? Math.round(((d?.overview?.in_education ?? 0) / (d?.overview?.total_children ?? 1)) * 100) : 0}%</p>
             <p className="text-[10px] text-muted-foreground">Placed %</p>
           </div>
-          <div className={cn("text-center rounded-lg p-2", (d?.overview?.exclusion_risk_count ?? 0) > 0 ? "bg-red-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", (d?.overview?.exclusion_risk_count ?? 0) > 0 ? "text-[--cs-risk]" : "text-[--cs-success]")}>{d?.overview?.exclusion_risk_count ?? 0}</p>
+          <div className={cn("text-center rounded-lg p-2", (d?.overview?.excluded_count ?? 0) > 0 ? "bg-red-50" : "bg-green-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", (d?.overview?.excluded_count ?? 0) > 0 ? "text-[--cs-risk]" : "text-[--cs-success]")}>{d?.overview?.excluded_count ?? 0}</p>
             <p className="text-[10px] text-muted-foreground">Exclusion</p>
           </div>
         </div>

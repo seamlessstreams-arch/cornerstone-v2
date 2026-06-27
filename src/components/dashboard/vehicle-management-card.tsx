@@ -65,7 +65,7 @@ export function VehicleManagementCard() {
 
   const vehicles = intel.vehicle_profiles;
   const available = vehicles.filter((v) => v.status === "available" || v.status === "in_use").length;
-  const overdue = vehicles.reduce((s, v) => s + v.checks_overdue, 0);
+  const flagged = vehicles.reduce((s, v) => s + v.risk_flags.length, 0);
 
   return (
     <Card className="overflow-hidden">
@@ -93,12 +93,12 @@ export function VehicleManagementCard() {
             <p className={cn("text-lg font-bold tabular-nums", available === vehicles.length ? "text-[--cs-success]" : "text-[--cs-warning]")}>{available}</p>
             <p className="text-[10px] text-muted-foreground">Available</p>
           </div>
-          <div className={cn("text-center rounded-lg p-2.5", overdue === 0 ? "bg-green-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", overdue === 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>{overdue}</p>
-            <p className="text-[10px] text-muted-foreground">Checks Due</p>
+          <div className={cn("text-center rounded-lg p-2.5", flagged === 0 ? "bg-green-50" : "bg-red-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", flagged === 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>{flagged}</p>
+            <p className="text-[10px] text-muted-foreground">Flags</p>
           </div>
-          <div className={cn("text-center rounded-lg p-2.5", intel.overview.compliance_rate >= 95 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", intel.overview.compliance_rate >= 95 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{intel.overview.compliance_rate}%</p>
+          <div className={cn("text-center rounded-lg p-2.5", intel.overview.check_completion_rate >= 95 ? "bg-green-50" : "bg-amber-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", intel.overview.check_completion_rate >= 95 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{intel.overview.check_completion_rate}%</p>
             <p className="text-[10px] text-muted-foreground">Compliance</p>
           </div>
         </div>
@@ -129,7 +129,7 @@ export function VehicleManagementCard() {
                       Ins: {v.insurance_days_until_expiry}d
                     </span>
                   )}
-                  {v.checks_overdue > 0 && <span className="text-red-600 font-medium">{v.checks_overdue} overdue</span>}
+                  {v.risk_flags.length > 0 && <span className="text-red-600 font-medium">{v.risk_flags.length} flag{v.risk_flags.length === 1 ? "" : "s"}</span>}
                 </div>
               </div>
             ))}

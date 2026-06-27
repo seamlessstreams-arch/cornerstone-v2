@@ -52,20 +52,20 @@ export function CourtProceedingsCard() {
       <CardContent className="space-y-4">
         <div className="grid grid-cols-4 gap-2">
           <div className="text-center rounded-lg bg-slate-50 p-2">
-            <p className="text-lg font-bold tabular-nums text-slate-600">{d?.profile?.total_children ?? 0}</p>
-            <p className="text-[10px] text-muted-foreground">Children</p>
+            <p className="text-lg font-bold tabular-nums text-slate-600">{d?.profile?.total_incidents_90d ?? 0}</p>
+            <p className="text-[10px] text-muted-foreground">Incidents 90d</p>
           </div>
           <div className="text-center rounded-lg bg-blue-50 p-2">
-            <p className="text-lg font-bold tabular-nums text-blue-600">{d?.profile?.strategy_meetings_30d ?? 0}</p>
-            <p className="text-[10px] text-muted-foreground">Meetings</p>
+            <p className="text-lg font-bold tabular-nums text-blue-600">{d?.profile?.safeguarding_incidents_90d ?? 0}</p>
+            <p className="text-[10px] text-muted-foreground">Safeguarding</p>
           </div>
           <div className="text-center rounded-lg bg-blue-50 p-2">
-            <p className="text-lg font-bold tabular-nums text-blue-600">{d?.profile?.referrals_30d ?? 0}</p>
-            <p className="text-[10px] text-muted-foreground">Referrals</p>
+            <p className="text-lg font-bold tabular-nums text-blue-600">{d?.profile?.incidents_needing_oversight ?? 0}</p>
+            <p className="text-[10px] text-muted-foreground">Oversight</p>
           </div>
-          <div className={cn("text-center rounded-lg p-2", (d?.profile?.active_concerns ?? 0) > 0 ? "bg-amber-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", (d?.profile?.active_concerns ?? 0) > 0 ? "text-[--cs-warning]" : "text-[--cs-success]")}>{d?.profile?.active_concerns ?? 0}</p>
-            <p className="text-[10px] text-muted-foreground">Concerns</p>
+          <div className={cn("text-center rounded-lg p-2", (d?.profile?.open_incidents ?? 0) > 0 ? "bg-amber-50" : "bg-green-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", (d?.profile?.open_incidents ?? 0) > 0 ? "text-[--cs-warning]" : "text-[--cs-success]")}>{d?.profile?.open_incidents ?? 0}</p>
+            <p className="text-[10px] text-muted-foreground">Open</p>
           </div>
         </div>
 

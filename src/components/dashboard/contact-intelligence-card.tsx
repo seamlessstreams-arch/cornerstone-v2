@@ -59,6 +59,12 @@ export function ContactIntelligenceCard() {
   const ft = intel.family_time;
   const mood = intel.mood_impact;
 
+  // Derived rates from real engine fields (no engine produces these directly).
+  const planRate = c.total_children > 0 ? Math.round((c.active_plans / c.total_children) * 100) : 0;
+  const moodImprovementRate = mood.children_with_data > 0
+    ? Math.round((mood.positive_impact_children / mood.children_with_data) * 100)
+    : 0;
+
   return (
     <Card className="overflow-hidden">
       <CardHeader className="pb-3">
@@ -72,29 +78,29 @@ export function ContactIntelligenceCard() {
         {/* ── Summary strip ────────────────────────────────────────────── */}
 
         <div className="grid grid-cols-4 gap-2">
-          <div className="text-center rounded-lg p-2" style={{ background: c.contact_plan_rate >= 80 ? "hsl(var(--chart-2) / 0.1)" : "hsl(var(--destructive) / 0.08)" }}>
-            <p className={cn("text-lg font-bold tabular-nums", c.contact_plan_rate >= 80 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
-              {c.contact_plan_rate}%
+          <div className="text-center rounded-lg p-2" style={{ background: planRate >= 80 ? "hsl(var(--chart-2) / 0.1)" : "hsl(var(--destructive) / 0.08)" }}>
+            <p className={cn("text-lg font-bold tabular-nums", planRate >= 80 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
+              {planRate}%
             </p>
             <p className="text-[10px] text-muted-foreground">Plan Rate</p>
           </div>
-          <div className="text-center rounded-lg p-2" style={{ background: c.frequency_met_rate >= 80 ? "hsl(var(--chart-2) / 0.1)" : "hsl(var(--destructive) / 0.08)" }}>
-            <p className={cn("text-lg font-bold tabular-nums", c.frequency_met_rate >= 80 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
-              {c.frequency_met_rate}%
+          <div className="text-center rounded-lg p-2" style={{ background: c.overall_completion_rate >= 80 ? "hsl(var(--chart-2) / 0.1)" : "hsl(var(--destructive) / 0.08)" }}>
+            <p className={cn("text-lg font-bold tabular-nums", c.overall_completion_rate >= 80 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
+              {c.overall_completion_rate}%
             </p>
-            <p className="text-[10px] text-muted-foreground">Freq Met</p>
+            <p className="text-[10px] text-muted-foreground">Completion</p>
           </div>
-          <div className="text-center rounded-lg p-2" style={{ background: c.supervised_rate >= 80 ? "hsl(var(--chart-2) / 0.1)" : "hsl(var(--destructive) / 0.08)" }}>
-            <p className={cn("text-lg font-bold tabular-nums", c.supervised_rate >= 80 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
-              {c.supervised_rate}%
+          <div className="text-center rounded-lg p-2 bg-[var(--cs-surface-2)]">
+            <p className="text-lg font-bold tabular-nums text-[var(--cs-navy)]">
+              {c.total_sessions_90d}
             </p>
-            <p className="text-[10px] text-muted-foreground">Supervised</p>
+            <p className="text-[10px] text-muted-foreground">Sessions 90d</p>
           </div>
-          <div className="text-center rounded-lg p-2" style={{ background: c.risk_assessed_rate >= 80 ? "hsl(var(--chart-2) / 0.1)" : "hsl(var(--destructive) / 0.08)" }}>
-            <p className={cn("text-lg font-bold tabular-nums", c.risk_assessed_rate >= 80 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
-              {c.risk_assessed_rate}%
+          <div className="text-center rounded-lg p-2" style={{ background: ft.safe_sessions_pct >= 80 ? "hsl(var(--chart-2) / 0.1)" : "hsl(var(--destructive) / 0.08)" }}>
+            <p className={cn("text-lg font-bold tabular-nums", ft.safe_sessions_pct >= 80 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
+              {ft.safe_sessions_pct}%
             </p>
-            <p className="text-[10px] text-muted-foreground">Risk Assessed</p>
+            <p className="text-[10px] text-muted-foreground">Safe</p>
           </div>
         </div>
 
@@ -107,29 +113,29 @@ export function ContactIntelligenceCard() {
           </p>
           <div className="grid grid-cols-3 gap-2 text-center">
             <div className="rounded-lg border p-2">
-              <p className="text-sm font-bold tabular-nums text-[var(--cs-navy)]">{ft.attended}/{ft.total_sessions_30d}</p>
-              <p className="text-[10px] text-muted-foreground">Attended</p>
+              <p className="text-sm font-bold tabular-nums text-[var(--cs-navy)]">{ft.total_sessions_30d}</p>
+              <p className="text-[10px] text-muted-foreground">Sessions</p>
             </div>
             <div className="rounded-lg border p-2">
-              <p className={cn("text-sm font-bold tabular-nums", ft.cancelled_by_family > 0 ? "text-[--cs-warning]" : "text-[--cs-success]")}>
-                {ft.cancelled_by_family}
+              <p className="text-sm font-bold tabular-nums text-[var(--cs-navy)]">
+                {ft.family_contact_sessions}/{ft.sibling_contact_sessions}
               </p>
-              <p className="text-[10px] text-muted-foreground">Cancelled (Family)</p>
+              <p className="text-[10px] text-muted-foreground">Family / Sibling</p>
             </div>
             <div className="rounded-lg border p-2">
-              <p className={cn("text-sm font-bold tabular-nums", ft.cancelled_by_la > 0 ? "text-[--cs-warning]" : "text-[--cs-success]")}>
-                {ft.cancelled_by_la}
+              <p className={cn("text-sm font-bold tabular-nums", ft.concern_sessions > 0 ? "text-[--cs-warning]" : "text-[--cs-success]")}>
+                {ft.concern_sessions}
               </p>
-              <p className="text-[10px] text-muted-foreground">Cancelled (LA)</p>
+              <p className="text-[10px] text-muted-foreground">With Concerns</p>
             </div>
           </div>
           <div className="flex items-center justify-between rounded-lg border p-2.5 mt-2">
             <div className="flex items-center gap-2">
-              <Smile className={cn("h-4 w-4", ft.positive_outcome_rate >= 75 ? "text-green-500" : "text-amber-500")} />
+              <Smile className={cn("h-4 w-4", ft.safe_sessions_pct >= 75 ? "text-green-500" : "text-amber-500")} />
               <div>
-                <p className="text-xs font-medium">Positive Outcomes</p>
+                <p className="text-xs font-medium">Session Safety</p>
                 <p className="text-[10px] text-muted-foreground">
-                  {ft.positive_outcome_rate}% positive · {ft.child_enjoyed_rate}% child enjoyed
+                  {ft.safe_sessions_pct}% safe · avg {ft.avg_duration_minutes} min
                 </p>
               </div>
             </div>
@@ -148,22 +154,21 @@ export function ContactIntelligenceCard() {
               <div key={child.child_id} className="rounded-lg border p-2.5 text-xs flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <span className="font-medium">{child.child_name}</span>
-                  <Badge className={cn("text-[10px]", child.contact_plan ? "bg-[--cs-success-bg] text-[--cs-success]" : "bg-gray-100 text-gray-700")}>
-                    {child.contact_plan ? "Plan active" : "No plan"}
+                  <Badge className={cn("text-[10px]", child.has_active_plan ? "bg-[--cs-success-bg] text-[--cs-success]" : "bg-gray-100 text-gray-700")}>
+                    {child.has_active_plan ? "Plan active" : "No plan"}
                   </Badge>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-muted-foreground">{child.sessions_30d} sessions</span>
-                  <Badge className={cn("text-[10px]", child.positive_rate >= 75 ? "bg-[--cs-success-bg] text-[--cs-success]" : child.positive_rate >= 50 ? "bg-[--cs-warning-bg] text-[--cs-warning]" : "bg-[--cs-risk-bg] text-[--cs-risk]")}>
-                    {child.positive_rate}% positive
-                  </Badge>
-                  {child.missed_rate > 20 && (
-                    <Badge className="text-[10px] bg-[--cs-risk-bg] text-[--cs-risk]">
-                      {child.missed_rate}% missed
+                  {child.predominant_presentation && (
+                    <Badge className="text-[10px] bg-[--cs-info-bg] text-[--cs-info]">
+                      {child.predominant_presentation}
                     </Badge>
                   )}
-                  {child.next_session && (
-                    <span className="text-[10px] text-muted-foreground">Next: {child.next_session}</span>
+                  {child.concern_sessions_90d > 0 && (
+                    <Badge className="text-[10px] bg-[--cs-risk-bg] text-[--cs-risk]">
+                      {child.concern_sessions_90d} concern{child.concern_sessions_90d !== 1 ? "s" : ""}
+                    </Badge>
                   )}
                 </div>
               </div>
@@ -175,7 +180,7 @@ export function ContactIntelligenceCard() {
 
         <div className="flex items-center justify-between rounded-lg border p-3">
           <div className="flex items-center gap-2">
-            {mood.mood_improvement_rate >= 50 ? (
+            {moodImprovementRate >= 50 ? (
               <Smile className="h-4 w-4 text-green-500" />
             ) : (
               <Frown className="h-4 w-4 text-amber-500" />
@@ -183,12 +188,12 @@ export function ContactIntelligenceCard() {
             <div>
               <p className="text-xs font-medium">Mood Impact</p>
               <p className="text-[10px] text-muted-foreground">
-                Before: {mood.avg_mood_before.toFixed(1)} · After: {mood.avg_mood_after.toFixed(1)}
+                Non-contact days: {mood.avg_mood_non_contact_days.toFixed(1)} · Contact days: {mood.avg_mood_contact_days.toFixed(1)}
               </p>
             </div>
           </div>
-          <Badge className={cn("text-[10px]", mood.mood_improvement_rate >= 50 ? "bg-[--cs-success-bg] text-[--cs-success]" : "bg-[--cs-warning-bg] text-[--cs-warning]")}>
-            {mood.mood_improvement_rate}% improved
+          <Badge className={cn("text-[10px]", moodImprovementRate >= 50 ? "bg-[--cs-success-bg] text-[--cs-success]" : "bg-[--cs-warning-bg] text-[--cs-warning]")}>
+            {moodImprovementRate}% improved
           </Badge>
         </div>
 

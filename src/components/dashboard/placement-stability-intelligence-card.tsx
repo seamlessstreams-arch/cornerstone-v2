@@ -86,8 +86,8 @@ export function PlacementStabilityIntelligenceCard() {
             <p className="text-lg font-bold tabular-nums text-blue-600">{hm.total_children}</p>
             <p className="text-[10px] text-muted-foreground">Children</p>
           </div>
-          <div className={cn("text-center rounded-lg p-2.5", hm.avg_mood_home >= 7 ? "bg-green-50" : hm.avg_mood_home >= 5 ? "bg-amber-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", hm.avg_mood_home >= 7 ? "text-[--cs-success]" : hm.avg_mood_home >= 5 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>{hm.avg_mood_home}</p>
+          <div className={cn("text-center rounded-lg p-2.5", hm.avg_mood_home == null ? "bg-slate-50" : hm.avg_mood_home >= 7 ? "bg-green-50" : hm.avg_mood_home >= 5 ? "bg-amber-50" : "bg-red-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", hm.avg_mood_home == null ? "text-slate-500" : hm.avg_mood_home >= 7 ? "text-[--cs-success]" : hm.avg_mood_home >= 5 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>{hm.avg_mood_home ?? "—"}</p>
             <p className="text-[10px] text-muted-foreground">Avg Mood</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", hm.children_at_risk === 0 ? "bg-green-50" : "bg-red-50")}>
@@ -140,7 +140,7 @@ export function PlacementStabilityIntelligenceCard() {
                 key={i}
                 className={cn(
                   "rounded border p-2.5 text-xs leading-relaxed",
-                  di.severity === "high" || di.severity === "critical" ? "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]" : "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+                  di.severity === "high" ? "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]" : "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
                 )}
               >
                 <span className="font-medium">{di.child_name}:</span> {di.detail}

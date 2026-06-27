@@ -157,7 +157,7 @@ export function FirstAidMedicalEmergencyCard() {
                   <span className="text-muted-foreground tabular-nums">{dt.drill_count} drills</span>
                 </div>
                 <div className="flex items-center gap-1.5 ml-2">
-                  {dt.is_overdue ? (
+                  {dt.status === "overdue" ? (
                     <Badge className="text-[10px] bg-[--cs-risk-bg] text-[--cs-risk]">Overdue</Badge>
                   ) : (
                     <Badge variant="outline" className="text-[10px] text-green-700 bg-green-50 border-green-200">On track</Badge>

@@ -64,6 +64,10 @@ export function EmergencyAdmissionsCard() {
 
   const o = intel.overview;
   const pc = intel.plan_coverage;
+  const coverageRate =
+    pc.plan_types_required > 0
+      ? Math.round((pc.plan_types_covered / pc.plan_types_required) * 100)
+      : 0;
 
   return (
     <Card className="overflow-hidden">
@@ -91,13 +95,13 @@ export function EmergencyAdmissionsCard() {
           </div>
           <div className={cn(
             "text-center rounded-lg p-2.5",
-            pc.coverage_rate >= 90 ? "bg-green-50" : "bg-amber-50",
+            coverageRate >= 90 ? "bg-green-50" : "bg-amber-50",
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              pc.coverage_rate >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]",
+              coverageRate >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]",
             )}>
-              {pc.coverage_rate}%
+              {coverageRate}%
             </p>
             <p className="text-[10px] text-muted-foreground">Plan Cover</p>
           </div>

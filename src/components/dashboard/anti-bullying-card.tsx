@@ -39,6 +39,10 @@ export function AntiBullyingCard() {
   const risk = d?.risk_assessments;
   const insights = d?.insights ?? [];
 
+  const reviewCurrentRate = risk && risk.total_current > 0
+    ? Math.round(((risk.total_current - risk.overdue_reviews) / risk.total_current) * 100)
+    : 100;
+
   return (
     <Card className="overflow-hidden">
       <CardHeader className="pb-3">
@@ -59,17 +63,17 @@ export function AntiBullyingCard() {
             <p className="text-lg font-bold tabular-nums text-blue-600">{profile?.total_incidents_90d ?? 0}</p>
             <p className="text-[10px] text-muted-foreground">Incidents 90d</p>
           </div>
-          <div className={cn("text-center rounded-lg p-2", (profile?.child_count_affected ?? 0) > 0 ? "bg-amber-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", (profile?.child_count_affected ?? 0) > 0 ? "text-[--cs-warning]" : "text-[--cs-success]")}>{profile?.child_count_affected ?? 0}</p>
-            <p className="text-[10px] text-muted-foreground">Children</p>
+          <div className={cn("text-center rounded-lg p-2", (profile?.safeguarding_incidents_90d ?? 0) > 0 ? "bg-amber-50" : "bg-green-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", (profile?.safeguarding_incidents_90d ?? 0) > 0 ? "text-[--cs-warning]" : "text-[--cs-success]")}>{profile?.safeguarding_incidents_90d ?? 0}</p>
+            <p className="text-[10px] text-muted-foreground">Safeguarding 90d</p>
           </div>
-          <div className={cn("text-center rounded-lg p-2", (profile?.escalation_rate ?? 0) > 20 ? "bg-red-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", (profile?.escalation_rate ?? 0) > 20 ? "text-[--cs-risk]" : "text-[--cs-success]")}>{profile?.escalation_rate ?? 0}%</p>
-            <p className="text-[10px] text-muted-foreground">Escalation</p>
+          <div className={cn("text-center rounded-lg p-2", (profile?.incidents_needing_oversight ?? 0) > 0 ? "bg-red-50" : "bg-green-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", (profile?.incidents_needing_oversight ?? 0) > 0 ? "text-[--cs-risk]" : "text-[--cs-success]")}>{profile?.incidents_needing_oversight ?? 0}</p>
+            <p className="text-[10px] text-muted-foreground">Oversight</p>
           </div>
           <div className="text-center rounded-lg bg-emerald-50 p-2">
-            <p className="text-lg font-bold tabular-nums text-emerald-600">{profile?.outcome_documented_rate ?? 0}%</p>
-            <p className="text-[10px] text-muted-foreground">Outcome</p>
+            <p className="text-lg font-bold tabular-nums text-emerald-600">{profile?.open_incidents ?? 0}</p>
+            <p className="text-[10px] text-muted-foreground">Open</p>
           </div>
         </div>
 
@@ -90,8 +94,8 @@ export function AntiBullyingCard() {
               <span className="font-semibold">{risk?.overdue_reviews ?? 0}</span>
             </div>
             <div className="rounded border p-2">
-              <span className="text-muted-foreground">Review completion:</span>{" "}
-              <span className="font-semibold">{risk?.review_completion_rate ?? 0}%</span>
+              <span className="text-muted-foreground">Reviews current:</span>{" "}
+              <span className="font-semibold">{reviewCurrentRate}%</span>
             </div>
           </div>
         </div>
