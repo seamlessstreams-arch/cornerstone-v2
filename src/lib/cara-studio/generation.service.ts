@@ -132,8 +132,8 @@ export async function generateArtifact(
       incident_id: request.incident_id ?? null,
       linked_record_id: null,
       linked_record_type: null,
-      framework: request.framework ?? null,
-      tone: (request.tone ?? "balanced") as CaraStudioArtifact["tone"],
+      framework: request.framework ?? "none",
+      tone: request.tone ?? "professional",
       creative_mode: request.creative_mode ?? "balanced",
       generated_content: aiResponse.content,
       structured_content: null,
@@ -142,6 +142,7 @@ export async function generateArtifact(
       evidence_confidence_score: null,
       safeguarding_level: "none",
       regulation_relevance: [],
+      source_ids: request.source_ids ?? [],
       created_by: actor.userId,
       reviewed_by: null,
       approved_by: null,
@@ -157,6 +158,9 @@ export async function generateArtifact(
       version_number: 1,
       filing_cabinet_path: null,
       official_record_id: null,
+      child_voice_present: false,
+      quality_checks_passed: false,
+      amendment_reason: null,
     };
   }
 

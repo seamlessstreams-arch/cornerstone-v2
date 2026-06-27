@@ -105,7 +105,7 @@ export async function resolveGap(gapId: string, resolvedBy: string): Promise<voi
 
 function createGap(
   hid: string, childId: string | null, gapType: CaraStudioGapType,
-  severity: string, title: string, description: string, recommendedAction: string,
+  severity: CaraStudioGap["severity"], title: string, description: string, recommendedAction: string,
 ): CaraStudioGap {
   return {
     id: crypto.randomUUID(),

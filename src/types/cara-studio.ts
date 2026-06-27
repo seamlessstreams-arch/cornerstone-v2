@@ -478,9 +478,12 @@ export interface CaraStudioAuditLog {
   prompt_summary: string | null;
   model_provider: string | null;
   model_name: string | null;
+  request_metadata?: Record<string, unknown> | null;
+  response_metadata?: Record<string, unknown> | null;
   before_state: Record<string, unknown> | null;
   after_state: Record<string, unknown> | null;
   ip_address: string | null;
+  user_agent?: string | null;
   created_at: string;
 }
 
@@ -1199,6 +1202,8 @@ export type CaraStudioQualityCheck = CaraQualityCheck;
 export type CaraStudioGap = CaraGap;
 /** @deprecated Use CaraSourceType */
 export type CaraStudioSourceType = CaraSourceType;
+/** @deprecated Use CaraGapType */
+export type CaraStudioGapType = CaraGapType;
 
 /** @deprecated Use CARA_ARTIFACT_TYPE_LABELS */
 export const ARTIFACT_TYPE_LABELS = CARA_ARTIFACT_TYPE_LABELS;
@@ -1227,3 +1232,312 @@ export const CARA_STUDIO_TONES = Object.keys(
 export const CARA_STUDIO_SOURCE_TYPES = Object.keys(
   CARA_SOURCE_TYPE_LABELS,
 ) as CaraSourceType[];
+
+// ── Cara Studio service-layer row types ──────────────────────────────────────
+// These mirror the `aria_studio_*` tables (see migration 019) and are the live
+// shapes produced by `src/lib/cara-studio/*.service.ts` and served by the
+// `/api/cara-studio/*` routes. They are a separate, flat DB-row family — NOT the
+// same as the structured `Cara*` intelligence-engine snapshots above (e.g.
+// `CaraEarlyWarning`, `CaraSafeguardingPattern`, `CaraHomeDynamicsSnapshot`),
+// which carry different fields. Do not collapse the two.
+
+/** Source row as stored in `aria_studio_sources` (content/created_by nullable). */
+export interface CaraStudioSource {
+  id: string;
+  home_id: string;
+  child_id: string | null;
+  staff_id: string | null;
+  linked_record_id: string | null;
+  linked_record_type: string | null;
+  source_type: CaraSourceType;
+  title: string | null;
+  summary: string | null;
+  content: string | null;
+  extracted_text: string | null;
+  source_date: string | null;
+  category: string | null;
+  tags: string[];
+  confidentiality_level: "standard" | "sensitive" | "restricted";
+  approval_status: "approved" | "pending" | "unverified";
+  is_sensitive: boolean;
+  created_by: string | null;
+  created_at: string;
+  updated_at: string;
+  archived_at: string | null;
+}
+
+/** Evidence-quality confidence band (subset of `CaraEvidenceLevel`). */
+export type CaraStudioConfidenceLevel =
+  | "high"
+  | "medium"
+  | "low"
+  | "unverified"
+  | "missing";
+
+/** Row as stored in `aria_studio_evidence_assessments`. */
+export interface CaraStudioEvidenceAssessment {
+  id: string;
+  source_id: string;
+  relevance_score: number;
+  recency_score: number;
+  reliability_score: number;
+  approval_score: number;
+  corroboration_score: number;
+  child_voice_score: number;
+  contradiction_score: number;
+  overall_confidence_score: number;
+  evidence_level: CaraStudioConfidenceLevel;
+  assessment_notes: string;
+  created_at: string;
+}
+
+/** Contradiction categories surfaced by the contradiction service. */
+export type CaraStudioContradictionType =
+  | "risk_level_mismatch"
+  | "behaviour_description_conflict"
+  | "date_inconsistency"
+  | "fact_conflict";
+
+/** Row as stored in `aria_studio_contradictions`. */
+export interface CaraStudioContradiction {
+  id: string;
+  home_id: string;
+  child_id: string | null;
+  source_a_id: string | null;
+  source_b_id: string | null;
+  contradiction_type: CaraStudioContradictionType | string;
+  description: string | null;
+  severity: CaraPatternSeverity;
+  recommended_review_action: string | null;
+  status: "open" | "resolved" | "dismissed";
+  reviewed_by: string | null;
+  reviewed_at: string | null;
+  created_at: string;
+}
+
+/** Early-warning categories produced by the early-warning service. */
+export type CaraStudioWarningType =
+  | "child_risk"
+  | "home_risk"
+  | "staffing_risk"
+  | "compliance_risk"
+  | "safeguarding_risk"
+  | "placement_stability_risk"
+  | "education_risk"
+  | "recording_quality_risk";
+
+/** Row as stored in `aria_studio_early_warnings` (distinct from `CaraEarlyWarning`). */
+export interface CaraStudioEarlyWarning {
+  id: string;
+  home_id: string;
+  child_id: string | null;
+  staff_id: string | null;
+  warning_type: CaraStudioWarningType;
+  risk_level: string;
+  title: string;
+  description: string | null;
+  indicators: unknown[];
+  confidence_score: number | null;
+  recommended_action: string | null;
+  status: string;
+  created_at: string;
+  reviewed_at: string | null;
+  resolved_at: string | null;
+}
+
+/** Safeguarding-pattern categories produced by the safeguarding-pattern service. */
+export type CaraStudioSafeguardingPatternType =
+  | "missing_episode_escalation"
+  | "exploitation_indicator"
+  | "online_safety_risk"
+  | "peer_on_peer_concern"
+  | "self_harm_escalation"
+  | "substance_misuse_pattern"
+  | "concerning_contact"
+  | "isolation_increase"
+  | "emotional_deterioration"
+  | "allegation_pattern"
+  | "staff_practice_drift"
+  | "education_refusal_escalation";
+
+/** Row as stored in `aria_studio_safeguarding_patterns` (distinct from `CaraSafeguardingPattern`). */
+export interface CaraStudioSafeguardingPattern {
+  id: string;
+  home_id: string;
+  child_id: string | null;
+  pattern_type: CaraStudioSafeguardingPatternType;
+  risk_level: string;
+  title: string;
+  description: string | null;
+  indicators: unknown[];
+  evidence_source_ids: string[];
+  recommended_actions: unknown[];
+  status: string;
+  created_at: string;
+  reviewed_at: string | null;
+  resolved_at: string | null;
+}
+
+/** Row as stored in `aria_studio_home_dynamics`. */
+export interface CaraStudioHomeDynamics {
+  id?: string;
+  home_id: string;
+  snapshot_date: string;
+  summary: string;
+  emotional_climate: string;
+  incident_count: number;
+  missing_episode_count: number;
+  restraint_count: number;
+  complaint_count: number;
+  staff_absence_count: number;
+  agency_staff_count: number;
+  education_concerns_count: number;
+  safeguarding_alerts_count: number;
+  overdue_actions_count: number;
+  risk_level: string;
+  recommended_manager_focus: string;
+  data: Record<string, unknown>;
+  created_at?: string;
+}
+
+/** Node types used by the Cara Studio care-graph service. */
+export type CaraStudioNodeType =
+  | "child"
+  | "incident"
+  | "risk"
+  | "plan"
+  | "safeguarding_concern"
+  | "training_need"
+  | "management_decision"
+  | "review"
+  | "protective_factor"
+  | "evidence";
+
+/** Edge relationship types used by the Cara Studio care-graph service. */
+export type CaraStudioEdgeRelationshipType =
+  | "relates_to"
+  | "caused_by"
+  | "reduces_risk_of"
+  | "evidenced_by"
+  | "linked_to"
+  | string;
+
+/** Node row as stored in `aria_studio_care_graph_nodes`. */
+export interface CaraStudioCareGraphNode {
+  id: string;
+  home_id: string;
+  node_type: CaraStudioNodeType;
+  linked_record_id: string | null;
+  linked_record_type: string | null;
+  label: string;
+  summary: string | null;
+  metadata: Record<string, unknown>;
+  created_at: string;
+  updated_at: string;
+}
+
+/** Edge row as stored in `aria_studio_care_graph_edges`. */
+export interface CaraStudioCareGraphEdge {
+  id: string;
+  from_node_id: string;
+  to_node_id: string;
+  relationship_type: CaraStudioEdgeRelationshipType;
+  strength: number;
+  evidence_source_id: string | null;
+  confidence_score: number;
+  created_at: string;
+  updated_at: string;
+}
+
+/** Row as stored in `aria_studio_formulations`. */
+export interface CaraStudioFormulation {
+  id: string;
+  home_id: string;
+  child_id: string;
+  title: string;
+  presenting_behaviour: string | null;
+  possible_unmet_need: string | null;
+  trauma_link: string | null;
+  attachment_considerations: string | null;
+  triggers: unknown[];
+  protective_factors: unknown[];
+  relational_strengths: unknown[];
+  staff_response_patterns: unknown[];
+  what_helps: string | null;
+  what_escalates: string | null;
+  therapeutic_hypothesis: string | null;
+  recommended_intervention: string | null;
+  review_date: string | null;
+  evidence_source_ids: string[];
+  created_by: string;
+  approved_by: string | null;
+  created_at: string;
+  approved_at: string | null;
+}
+
+/** Row as stored in `aria_studio_decision_support` (distinct from `CaraDecisionSupportSnapshot`). */
+export interface CaraStudioDecisionSupport {
+  id: string;
+  home_id: string;
+  decision_context: string;
+  child_id: string | null;
+  staff_id: string | null;
+  known_facts: unknown[];
+  unknowns: unknown[];
+  risks: unknown[];
+  options: unknown[];
+  pros_cons: unknown[];
+  child_impact: string | null;
+  staff_impact: string | null;
+  compliance_impact: string | null;
+  recommended_next_steps: unknown[];
+  evidence_needed: unknown[];
+  decision_made_by: string | null;
+  decision_recorded_at: string | null;
+  created_at: string;
+}
+
+/** Review decision applied to a Cara Studio artifact via the approval workflow. */
+export type CaraStudioReviewStatus =
+  | "approved"
+  | "rejected"
+  | "changes_requested";
+
+/** Generation request accepted by the Cara Studio generation service. */
+export interface CaraStudioGenerateRequest {
+  artifact_type: CaraArtifactType;
+  child_id?: string | null;
+  home_id?: string | null;
+  staff_id?: string | null;
+  incident_id?: string | null;
+  framework?: CaraFramework;
+  tone?: CaraTone;
+  creative_mode?: CaraCreativeMode;
+  source_ids?: string[];
+  additional_context?: string;
+}
+
+/** Artifact-to-source provenance row as stored in `aria_studio_artifact_sources`. */
+export interface CaraStudioArtifactSource {
+  id: string;
+  artifact_id: string;
+  source_id: string;
+  relevance_reason: string | null;
+  confidence_level: CaraStudioConfidenceLevel | string;
+  confidence_score: number | null;
+  source_strength: string | null;
+  is_primary_evidence: boolean;
+  is_child_voice: boolean;
+  is_contradicted: boolean;
+  created_at: string;
+}
+
+/** Response returned by the Cara Studio generation service (distinct from `CaraGenerationResult`). */
+export interface CaraStudioGenerateResponse {
+  artifact: CaraStudioArtifact;
+  sources_used: CaraStudioArtifactSource[];
+  quality_check: CaraStudioQualityCheck | null;
+  gaps_found: CaraStudioGap[];
+  contradictions_found: CaraStudioContradiction[];
+  safeguarding_alerts: CaraStudioSafeguardingPattern[];
+}
