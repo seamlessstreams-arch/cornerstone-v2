@@ -38,6 +38,10 @@ export function RestraintDebriefCard() {
   const restraints = d?.restraints;
   const insights = d?.insights ?? [];
 
+  const injuryRate = restraints && restraints.total_restraints_90d > 0
+    ? Math.round((restraints.injuries_during_restraint / restraints.total_restraints_90d) * 100)
+    : 0;
+
   return (
     <Card className="overflow-hidden">
       <CardHeader className="pb-3">
@@ -58,12 +62,12 @@ export function RestraintDebriefCard() {
             <p className="text-lg font-bold tabular-nums text-blue-600">{restraints?.total_restraints_90d ?? 0}</p>
             <p className="text-[10px] text-muted-foreground">Restraints 90d</p>
           </div>
-          <div className={cn("text-center rounded-lg p-2", (restraints?.debrief_rate ?? 0) >= 100 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", (restraints?.debrief_rate ?? 0) >= 100 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{restraints?.debrief_rate ?? 0}%</p>
+          <div className={cn("text-center rounded-lg p-2", (restraints?.debrief_completion_rate ?? 0) >= 100 ? "bg-green-50" : "bg-amber-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", (restraints?.debrief_completion_rate ?? 0) >= 100 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{restraints?.debrief_completion_rate ?? 0}%</p>
             <p className="text-[10px] text-muted-foreground">Debrief</p>
           </div>
-          <div className={cn("text-center rounded-lg p-2", (restraints?.injury_rate ?? 0) > 0 ? "bg-red-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", (restraints?.injury_rate ?? 0) > 0 ? "text-[--cs-risk]" : "text-[--cs-success]")}>{restraints?.injury_rate ?? 0}%</p>
+          <div className={cn("text-center rounded-lg p-2", injuryRate > 0 ? "bg-red-50" : "bg-green-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", injuryRate > 0 ? "text-[--cs-risk]" : "text-[--cs-success]")}>{injuryRate}%</p>
             <p className="text-[10px] text-muted-foreground">Injury</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", (restraints?.children_restrained ?? 0) > 0 ? "bg-amber-50" : "bg-green-50")}>
@@ -82,11 +86,11 @@ export function RestraintDebriefCard() {
             </div>
             <div className="rounded border p-2">
               <span className="text-muted-foreground">Avg duration:</span>{" "}
-              <span className="font-semibold">{restraints?.avg_duration_mins ?? 0} min</span>
+              <span className="font-semibold">{restraints?.average_duration_minutes ?? 0} min</span>
             </div>
             <div className="rounded border p-2">
-              <span className="text-muted-foreground">Repeat same child:</span>{" "}
-              <span className="font-semibold">{restraints?.repeat_use_same_child ?? 0}</span>
+              <span className="text-muted-foreground">Review rate:</span>{" "}
+              <span className="font-semibold">{restraints?.review_completion_rate ?? 0}%</span>
             </div>
             <div className="rounded border p-2">
               <span className="text-muted-foreground">Children restrained:</span>{" "}

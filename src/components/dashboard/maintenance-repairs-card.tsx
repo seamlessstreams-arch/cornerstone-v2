@@ -108,13 +108,13 @@ export function MaintenanceRepairsCard() {
           </div>
           <div className={cn(
             "text-center rounded-lg p-2.5",
-            o.compliance_rate >= 90 ? "bg-green-50" : "bg-amber-50",
+            o.check_completion_rate >= 90 ? "bg-green-50" : "bg-amber-50",
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.compliance_rate >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]",
+              o.check_completion_rate >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]",
             )}>
-              {o.compliance_rate}%
+              {o.check_completion_rate}%
             </p>
             <p className="text-[10px] text-muted-foreground">Compliance</p>
           </div>

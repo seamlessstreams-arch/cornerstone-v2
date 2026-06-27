@@ -58,7 +58,7 @@ export function DischargeTransitionCard() {
 
   const o = intel.overview;
   const sortedByReadiness = [...intel.child_readiness].sort(
-    (a, b) => a.readiness_score - b.readiness_score
+    (a, b) => a.independence_score - b.independence_score
   );
 
   return (
@@ -120,22 +120,17 @@ export function DischargeTransitionCard() {
                   </div>
                   <Badge className={cn(
                     "text-[10px]",
-                    child.readiness_score >= 70 ? "bg-[--cs-success-bg] text-[--cs-success]" :
-                    child.readiness_score >= 50 ? "bg-[--cs-warning-bg] text-[--cs-warning]" :
+                    child.independence_score >= 70 ? "bg-[--cs-success-bg] text-[--cs-success]" :
+                    child.independence_score >= 50 ? "bg-[--cs-warning-bg] text-[--cs-warning]" :
                     "bg-[--cs-risk-bg] text-[--cs-risk]",
                   )}>
-                    {child.readiness_score}% ready
+                    {child.independence_score}% ready
                   </Badge>
                 </div>
-                {(child.key_gaps?.length ?? 0) > 0 && (
-                  <div className="flex flex-wrap gap-1 mt-1.5">
-                    {(child.key_gaps ?? []).slice(0, 4).map((gap, i) => (
-                      <Badge key={i} className="text-[9px] bg-red-50 text-red-700 border-red-200">
-                        {gap}
-                      </Badge>
-                    ))}
-                  </div>
-                )}
+                <div className="flex items-center gap-2 mt-1 text-muted-foreground">
+                  <span className="text-[10px] capitalize">{child.readiness_rating.replace(/_/g, " ")}</span>
+                  <span className="text-[10px]">· {child.skills_competent_count}/{child.skills_total} skills competent</span>
+                </div>
               </div>
             ))}
           </div>

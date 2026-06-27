@@ -70,8 +70,8 @@ export function AllegationManagementCard() {
             <p className="text-[10px] text-muted-foreground">Oversight</p>
           </div>
           <div className="text-center rounded-lg bg-emerald-50 p-2">
-            <p className="text-lg font-bold tabular-nums text-emerald-600">{profile?.outcome_documented_rate ?? 0}%</p>
-            <p className="text-[10px] text-muted-foreground">Outcome Doc</p>
+            <p className="text-lg font-bold tabular-nums text-emerald-600">{profile?.safeguarding_incidents_90d ?? 0}</p>
+            <p className="text-[10px] text-muted-foreground">Safeguarding 90d</p>
           </div>
         </div>
 
@@ -85,7 +85,7 @@ export function AllegationManagementCard() {
             </div>
             <div className="rounded border p-2">
               <span className="text-muted-foreground">Debrief rate:</span>{" "}
-              <span className="font-semibold">{restraints?.debrief_rate ?? 0}%</span>
+              <span className="font-semibold">{restraints?.debrief_completion_rate ?? 0}%</span>
             </div>
             <div className="rounded border p-2">
               <span className="text-muted-foreground">Notifiable events:</span>{" "}

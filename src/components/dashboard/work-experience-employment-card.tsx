@@ -68,7 +68,7 @@ export function WorkExperienceEmploymentCard() {
             <p className="text-[10px] text-muted-foreground">NEET</p>
           </div>
           <div className="text-center rounded-lg bg-green-50 p-2">
-            <p className="text-lg font-bold tabular-nums text-green-600">{d?.overview?.school_placed ?? 0}</p>
+            <p className="text-lg font-bold tabular-nums text-green-600">{d?.overview?.in_education ?? 0}</p>
             <p className="text-[10px] text-muted-foreground">Placed</p>
           </div>
           <div className="text-center rounded-lg bg-green-50 p-2">

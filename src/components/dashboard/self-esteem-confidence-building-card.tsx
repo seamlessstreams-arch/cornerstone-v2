@@ -64,7 +64,7 @@ export function SelfEsteemConfidenceBuildingCard() {
             <p className="text-[10px] text-muted-foreground">Children</p>
           </div>
           <div className="text-center rounded-lg bg-blue-50 p-2">
-            <p className="text-lg font-bold tabular-nums text-blue-600">{d?.appointments?.total_30d ?? 0}</p>
+            <p className="text-lg font-bold tabular-nums text-blue-600">{d?.appointments?.total_appointments_90d ?? 0}</p>
             <p className="text-[10px] text-muted-foreground">Appts</p>
           </div>
           <div className="text-center rounded-lg bg-green-50 p-2">
@@ -72,7 +72,7 @@ export function SelfEsteemConfidenceBuildingCard() {
             <p className="text-[10px] text-muted-foreground">Attended</p>
           </div>
           <div className="text-center rounded-lg bg-green-50 p-2">
-            <p className="text-lg font-bold tabular-nums text-green-600">{Math.round(d?.appointments?.attendance_rate ?? 0)}%</p>
+            <p className="text-lg font-bold tabular-nums text-green-600">{Math.max(0, 100 - (d?.appointments?.dna_rate ?? 0)).toFixed(0)}%</p>
             <p className="text-[10px] text-muted-foreground">Rate %</p>
           </div>
         </div>

@@ -146,9 +146,9 @@ export function MedicationAdministrationCard() {
                     )}>
                       {med.adherence_rate}%
                     </Badge>
-                    {med.last_admin_date && (
-                      <span className="text-[10px] text-muted-foreground whitespace-nowrap">{med.last_admin_date}</span>
-                    )}
+                    <span className="text-[10px] text-muted-foreground whitespace-nowrap">
+                      {med.administrations_30d} dose{med.administrations_30d !== 1 ? "s" : ""}
+                    </span>
                   </div>
                 </div>
               ))}

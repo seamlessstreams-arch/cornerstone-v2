@@ -62,13 +62,13 @@ export function BoundaryManagementCard() {
             <p className={cn("text-lg font-bold tabular-nums", (profile?.open_incidents ?? 0) > 0 ? "text-[--cs-risk]" : "text-[--cs-success]")}>{profile?.open_incidents ?? 0}</p>
             <p className="text-[10px] text-muted-foreground">Open</p>
           </div>
-          <div className={cn("text-center rounded-lg p-2", (profile?.referral_rate ?? 0) < 80 ? "bg-amber-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", (profile?.referral_rate ?? 0) < 80 ? "text-[--cs-warning]" : "text-[--cs-success]")}>{profile?.referral_rate ?? 0}%</p>
-            <p className="text-[10px] text-muted-foreground">Referral</p>
+          <div className={cn("text-center rounded-lg p-2", (profile?.safeguarding_incidents_90d ?? 0) > 0 ? "bg-amber-50" : "bg-green-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", (profile?.safeguarding_incidents_90d ?? 0) > 0 ? "text-[--cs-warning]" : "text-[--cs-success]")}>{profile?.safeguarding_incidents_90d ?? 0}</p>
+            <p className="text-[10px] text-muted-foreground">Safeguarding</p>
           </div>
-          <div className={cn("text-center rounded-lg p-2", (profile?.escalation_rate ?? 0) > 20 ? "bg-red-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", (profile?.escalation_rate ?? 0) > 20 ? "text-[--cs-risk]" : "text-[--cs-success]")}>{profile?.escalation_rate ?? 0}%</p>
-            <p className="text-[10px] text-muted-foreground">Escalation</p>
+          <div className={cn("text-center rounded-lg p-2", (profile?.incidents_needing_oversight ?? 0) > 0 ? "bg-red-50" : "bg-green-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", (profile?.incidents_needing_oversight ?? 0) > 0 ? "text-[--cs-risk]" : "text-[--cs-success]")}>{profile?.incidents_needing_oversight ?? 0}</p>
+            <p className="text-[10px] text-muted-foreground">Oversight</p>
           </div>
         </div>
 
@@ -85,12 +85,12 @@ export function BoundaryManagementCard() {
               <span className="font-semibold">{profile?.incidents_needing_oversight ?? 0}</span>
             </div>
             <div className="rounded border p-2">
-              <span className="text-muted-foreground">Children affected:</span>{" "}
-              <span className="font-semibold">{profile?.child_count_affected ?? 0}</span>
+              <span className="text-muted-foreground">Safeguarding 90d:</span>{" "}
+              <span className="font-semibold">{profile?.safeguarding_incidents_90d ?? 0}</span>
             </div>
             <div className="rounded border p-2">
-              <span className="text-muted-foreground">Outcome documented:</span>{" "}
-              <span className="font-semibold">{profile?.outcome_documented_rate ?? 0}%</span>
+              <span className="text-muted-foreground">Incident trend:</span>{" "}
+              <span className="font-semibold capitalize">{profile?.incident_trend ?? "stable"}</span>
             </div>
           </div>
         </div>

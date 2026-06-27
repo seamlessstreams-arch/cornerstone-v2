@@ -38,6 +38,10 @@ export function ChildModernSlaveryRiskCard() {
   const risk = d?.risk_assessments;
   const insights = d?.insights ?? [];
 
+  const reviewCurrentRate = risk && risk.total_current > 0
+    ? Math.round(((risk.total_current - risk.overdue_reviews) / risk.total_current) * 100)
+    : 100;
+
   return (
     <Card className="overflow-hidden border-slate-200">
       <CardHeader className="pb-3 bg-slate-50/50">
@@ -66,9 +70,9 @@ export function ChildModernSlaveryRiskCard() {
             <p className={cn("text-lg font-bold tabular-nums", (risk?.overdue_reviews ?? 0) > 0 ? "text-[--cs-warning]" : "text-[--cs-success]")}>{risk?.overdue_reviews ?? 0}</p>
             <p className="text-[10px] text-muted-foreground">Overdue</p>
           </div>
-          <div className="text-center rounded-lg bg-emerald-50 p-2">
-            <p className="text-lg font-bold tabular-nums text-emerald-600">{risk?.mitigation_documented_rate ?? 0}%</p>
-            <p className="text-[10px] text-muted-foreground">Mitigation</p>
+          <div className={cn("text-center rounded-lg p-2", (risk?.worsening_trend ?? 0) > 0 ? "bg-red-50" : "bg-green-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", (risk?.worsening_trend ?? 0) > 0 ? "text-[--cs-risk]" : "text-[--cs-success]")}>{risk?.worsening_trend ?? 0}</p>
+            <p className="text-[10px] text-muted-foreground">Worsening</p>
           </div>
         </div>
 
@@ -77,8 +81,8 @@ export function ChildModernSlaveryRiskCard() {
           <p className="text-xs font-semibold text-muted-foreground">Overview</p>
           <div className="grid grid-cols-2 gap-2 text-xs">
             <div className="rounded border p-2">
-              <span className="text-muted-foreground">Review completion:</span>{" "}
-              <span className="font-semibold">{risk?.review_completion_rate ?? 0}%</span>
+              <span className="text-muted-foreground">Reviews current:</span>{" "}
+              <span className="font-semibold">{reviewCurrentRate}%</span>
             </div>
             <div className="rounded border p-2">
               <span className="text-muted-foreground">Overdue reviews:</span>{" "}
@@ -89,8 +93,8 @@ export function ChildModernSlaveryRiskCard() {
               <span className="font-semibold">{risk?.high_or_very_high ?? 0}</span>
             </div>
             <div className="rounded border p-2">
-              <span className="text-muted-foreground">Mitigation documented:</span>{" "}
-              <span className="font-semibold">{risk?.mitigation_documented_rate ?? 0}%</span>
+              <span className="text-muted-foreground">Improving trend:</span>{" "}
+              <span className="font-semibold">{risk?.improving_trend ?? 0}</span>
             </div>
           </div>
         </div>

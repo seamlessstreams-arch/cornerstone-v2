@@ -39,6 +39,10 @@ export function ChildTraffickingRiskCard() {
   const notifiable = d?.notifiable_events;
   const insights = d?.insights ?? [];
 
+  const reviewCurrentRate = risk && risk.total_current > 0
+    ? Math.round(((risk.total_current - risk.overdue_reviews) / risk.total_current) * 100)
+    : 100;
+
   return (
     <Card className="overflow-hidden border-fuchsia-200">
       <CardHeader className="pb-3 bg-fuchsia-50/50">
@@ -64,12 +68,12 @@ export function ChildTraffickingRiskCard() {
             <p className="text-[10px] text-muted-foreground">High+</p>
           </div>
           <div className="text-center rounded-lg bg-blue-50 p-2">
-            <p className="text-lg font-bold tabular-nums text-blue-600">{risk?.review_completion_rate ?? 0}%</p>
-            <p className="text-[10px] text-muted-foreground">Review</p>
+            <p className="text-lg font-bold tabular-nums text-blue-600">{reviewCurrentRate}%</p>
+            <p className="text-[10px] text-muted-foreground">Reviews</p>
           </div>
-          <div className="text-center rounded-lg bg-emerald-50 p-2">
-            <p className="text-lg font-bold tabular-nums text-emerald-600">{risk?.mitigation_documented_rate ?? 0}%</p>
-            <p className="text-[10px] text-muted-foreground">Mitigation</p>
+          <div className={cn("text-center rounded-lg p-2", (risk?.worsening_trend ?? 0) > 0 ? "bg-red-50" : "bg-green-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", (risk?.worsening_trend ?? 0) > 0 ? "text-[--cs-risk]" : "text-[--cs-success]")}>{risk?.worsening_trend ?? 0}</p>
+            <p className="text-[10px] text-muted-foreground">Worsening</p>
           </div>
         </div>
 
@@ -90,8 +94,8 @@ export function ChildTraffickingRiskCard() {
               <span className="font-semibold">{notifiable?.notified_late ?? 0}</span>
             </div>
             <div className="rounded border p-2">
-              <span className="text-muted-foreground">Not yet notified:</span>{" "}
-              <span className="font-semibold">{notifiable?.not_yet_notified ?? 0}</span>
+              <span className="text-muted-foreground">Pending notification:</span>{" "}
+              <span className="font-semibold">{notifiable?.pending_notification ?? 0}</span>
             </div>
           </div>
         </div>

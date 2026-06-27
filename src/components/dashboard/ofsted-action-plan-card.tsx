@@ -110,15 +110,15 @@ export function OfstedActionPlanCard() {
           </div>
           <div className={cn(
             "text-center rounded-lg p-2.5",
-            o.improvement_rate >= 80 ? "bg-green-50" : o.improvement_rate >= 60 ? "bg-amber-50" : "bg-red-50",
+            o.recommendation_completion_rate >= 80 ? "bg-green-50" : o.recommendation_completion_rate >= 60 ? "bg-amber-50" : "bg-red-50",
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.improvement_rate >= 80 ? "text-[--cs-success]" : o.improvement_rate >= 60 ? "text-[--cs-warning]" : "text-[--cs-risk]",
+              o.recommendation_completion_rate >= 80 ? "text-[--cs-success]" : o.recommendation_completion_rate >= 60 ? "text-[--cs-warning]" : "text-[--cs-risk]",
             )}>
-              {o.improvement_rate}%
+              {o.recommendation_completion_rate}%
             </p>
-            <p className="text-[10px] text-muted-foreground">Improved</p>
+            <p className="text-[10px] text-muted-foreground">Completion</p>
           </div>
         </div>
 

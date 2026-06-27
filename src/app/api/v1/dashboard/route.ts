@@ -16,7 +16,7 @@ export async function GET(_req: NextRequest) {
   const dueTodayTasks = activeTasks.filter((t) => t.due_date === today);
   const urgentTasks = activeTasks.filter((t) => t.priority === "urgent");
   const myTasks = activeTasks.filter((t) => t.assigned_to === "staff_darren");
-  const awaitingSignOff = activeTasks.filter((t) => t.status === "awaiting_sign_off" || (t as Record<string, unknown>).requires_sign_off === true);
+  const awaitingSignOff = activeTasks.filter((t) => t.requires_sign_off && !t.signed_off_by);
   const completedToday = allTasks.filter((t) => t.status === "completed" && t.updated_at?.startsWith(today));
 
   const priorityQueue = activeTasks
@@ -28,7 +28,7 @@ export async function GET(_req: NextRequest) {
 
   // ── Incidents ──────────────────────────────────────────────────────────────
   const allIncidents = store.incidents ?? [];
-  const openIncidents = allIncidents.filter((i) => i.status === "open" || i.status === "investigating");
+  const openIncidents = allIncidents.filter((i) => i.status === "open" || i.status === "under_review");
   const criticalIncidents = openIncidents.filter((i) => i.severity === "critical");
   const awaitingOversight = openIncidents.filter((i) => !(i as Record<string, unknown>).management_oversight_added);
   const thisWeekIncidents = allIncidents.filter((i) => {
@@ -45,7 +45,7 @@ export async function GET(_req: NextRequest) {
   const allShifts = store.shifts ?? [];
   const todayShifts = allShifts.filter((s) => s.date === today || s.start_time?.startsWith(today));
   const onShift = todayShifts.filter((s) => s.status === "in_progress" || s.status === "confirmed");
-  const openShifts = todayShifts.filter((s) => !s.staff_id || s.status === "open" || s.status === "unfilled");
+  const openShifts = todayShifts.filter((s) => !s.staff_id || s.is_open_shift);
   const leaveRecords = (store as Record<string, unknown[]>).leaveRequests ?? [];
   const onLeave = leaveRecords.filter((l: Record<string, unknown>) =>
     l.start_date && l.end_date && (l.start_date as string) <= today && (l.end_date as string) >= today && l.status === "approved"
@@ -75,9 +75,11 @@ export async function GET(_req: NextRequest) {
     const d30Str = d30.toISOString().slice(0, 10);
     return trainingRecords.filter((t) => t.expiry_date && t.expiry_date >= today && t.expiry_date <= d30Str);
   })();
-  const certWarnings = expired.slice(0, 5).map((t) =>
-    `${t.staff_name ?? t.staff_id ?? "Staff"} — ${t.course_name ?? t.training_type ?? "Training"} expired ${t.expiry_date}`
-  );
+  const staffList = store.staff ?? [];
+  const certWarnings = expired.slice(0, 5).map((t) => {
+    const staffName = staffList.find((s) => s.id === t.staff_id)?.full_name ?? t.staff_id ?? "Staff";
+    return `${staffName} — ${t.course_name ?? "Training"} expired ${t.expiry_date}`;
+  });
 
   // ── Environment ────────────────────────────────────────────────────────────
   const buildingChecks = (store as Record<string, unknown[]>).buildingChecks ?? [];

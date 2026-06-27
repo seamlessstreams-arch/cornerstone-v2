@@ -86,17 +86,17 @@ export function KeyworkerSessionsCard() {
             </p>
             <p className="text-[10px] text-muted-foreground">Avg/Child</p>
           </div>
-          <div className={cn("text-center rounded-lg p-2.5", o.child_led_rate >= 80 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.child_led_rate >= 80 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
-              {o.child_led_rate}%
+          <div className={cn("text-center rounded-lg p-2.5", o.child_voice_rate >= 80 ? "bg-green-50" : "bg-amber-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", o.child_voice_rate >= 80 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
+              {o.child_voice_rate}%
             </p>
-            <p className="text-[10px] text-muted-foreground">Child-Led</p>
+            <p className="text-[10px] text-muted-foreground">Child Voice</p>
           </div>
-          <div className={cn("text-center rounded-lg p-2.5", o.session_documented_rate >= 95 ? "bg-green-50" : o.session_documented_rate >= 80 ? "bg-amber-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.session_documented_rate >= 95 ? "text-[--cs-success]" : o.session_documented_rate >= 80 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>
-              {o.session_documented_rate}%
+          <div className={cn("text-center rounded-lg p-2.5", o.follow_up_completion_rate >= 95 ? "bg-green-50" : o.follow_up_completion_rate >= 80 ? "bg-amber-50" : "bg-red-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", o.follow_up_completion_rate >= 95 ? "text-[--cs-success]" : o.follow_up_completion_rate >= 80 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>
+              {o.follow_up_completion_rate}%
             </p>
-            <p className="text-[10px] text-muted-foreground">Documented</p>
+            <p className="text-[10px] text-muted-foreground">Follow-Up</p>
           </div>
         </div>
 
@@ -119,18 +119,18 @@ export function KeyworkerSessionsCard() {
                   </div>
                   <Badge className={cn(
                     "text-[10px]",
-                    profile.days_since_last <= 7 ? "bg-[--cs-success-bg] text-[--cs-success]" :
-                    profile.days_since_last <= 14 ? "bg-[--cs-warning-bg] text-[--cs-warning]" :
+                    profile.last_session_days_ago <= 7 ? "bg-[--cs-success-bg] text-[--cs-success]" :
+                    profile.last_session_days_ago <= 14 ? "bg-[--cs-warning-bg] text-[--cs-warning]" :
                     "bg-[--cs-risk-bg] text-[--cs-risk]",
                   )}>
-                    {profile.days_since_last}d ago
+                    {profile.last_session_days_ago}d ago
                   </Badge>
                 </div>
-                {(profile.topics_covered?.length ?? 0) > 0 && (
+                {(profile.session_types?.length ?? 0) > 0 && (
                   <div className="flex flex-wrap gap-1 mt-1.5">
-                    {(profile.topics_covered ?? []).slice(0, 4).map((topic, i) => (
-                      <Badge key={i} className="text-[9px] bg-gray-100 text-gray-700 border-gray-200">
-                        {topic}
+                    {(profile.session_types ?? []).slice(0, 4).map((type, i) => (
+                      <Badge key={i} className="text-[9px] bg-gray-100 text-gray-700 border-gray-200 capitalize">
+                        {type.replace(/_/g, " ")}
                       </Badge>
                     ))}
                   </div>
@@ -177,10 +177,10 @@ export function KeyworkerSessionsCard() {
             <div className="text-right">
               <p className={cn(
                 "text-sm font-bold tabular-nums",
-                intel.follow_up_compliance.rate >= 90 ? "text-[--cs-success]" :
-                intel.follow_up_compliance.rate >= 70 ? "text-[--cs-warning]" : "text-[--cs-risk]",
+                intel.follow_up_compliance.completion_rate >= 90 ? "text-[--cs-success]" :
+                intel.follow_up_compliance.completion_rate >= 70 ? "text-[--cs-warning]" : "text-[--cs-risk]",
               )}>
-                {intel.follow_up_compliance.rate}%
+                {intel.follow_up_compliance.completion_rate}%
               </p>
             </div>
           </div>

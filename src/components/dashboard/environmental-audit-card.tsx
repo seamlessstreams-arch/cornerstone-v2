@@ -78,13 +78,13 @@ export function EnvironmentalAuditCard() {
         <div className="grid grid-cols-4 gap-2">
           <div className={cn(
             "text-center rounded-lg p-2.5",
-            o.compliance_rate >= 90 ? "bg-green-50" : "bg-amber-50",
+            o.check_completion_rate >= 90 ? "bg-green-50" : "bg-amber-50",
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.compliance_rate >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]",
+              o.check_completion_rate >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]",
             )}>
-              {o.compliance_rate}%
+              {o.check_completion_rate}%
             </p>
             <p className="text-[10px] text-muted-foreground">Compliance</p>
           </div>
@@ -128,20 +128,23 @@ export function EnvironmentalAuditCard() {
               <ClipboardCheck className="h-3 w-3" />
               Check Analysis
             </p>
-            {intel.check_analysis.map((c) => (
-              <div key={c.check_type} className="rounded border p-2 text-xs space-y-1">
-                <div className="flex items-center justify-between">
-                  <span className="font-medium truncate">{c.check_type}</span>
-                  <span className="text-muted-foreground tabular-nums">{c.completed}/{c.total}</span>
+            {intel.check_analysis.map((c) => {
+              const completionRate = c.total > 0 ? Math.round((c.completed / c.total) * 100) : 100;
+              return (
+                <div key={c.check_type} className="rounded border p-2 text-xs space-y-1">
+                  <div className="flex items-center justify-between">
+                    <span className="font-medium truncate">{c.check_type}</span>
+                    <span className="text-muted-foreground tabular-nums">{c.completed}/{c.total}</span>
+                  </div>
+                  <div className="w-full bg-gray-100 rounded-full h-1.5">
+                    <div
+                      className={cn("h-1.5 rounded-full", completionRate >= 90 ? "bg-green-500" : completionRate >= 70 ? "bg-amber-500" : "bg-red-500")}
+                      style={{ width: `${completionRate}%` }}
+                    />
+                  </div>
                 </div>
-                <div className="w-full bg-gray-100 rounded-full h-1.5">
-                  <div
-                    className={cn("h-1.5 rounded-full", c.compliance_rate >= 90 ? "bg-green-500" : c.compliance_rate >= 70 ? "bg-amber-500" : "bg-red-500")}
-                    style={{ width: `${c.compliance_rate}%` }}
-                  />
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
 

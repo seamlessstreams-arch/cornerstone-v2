@@ -144,16 +144,16 @@ export function MedicationEffectivenessReviewCard() {
                   </Badge>
                 </div>
                 <AdherenceBar value={med.adherence_rate} />
-                {(med.refusal_count_30d > 0 || med.missed_count_30d > 0) && (
+                {(med.refusal_count > 0 || med.missed_count > 0) && (
                   <div className="flex items-center gap-2 mt-0.5">
-                    {med.refusal_count_30d > 0 && (
+                    {med.refusal_count > 0 && (
                       <Badge className="text-[9px] bg-[--cs-warning-bg] text-[--cs-warning]">
-                        {med.refusal_count_30d} refused
+                        {med.refusal_count} refused
                       </Badge>
                     )}
-                    {med.missed_count_30d > 0 && (
+                    {med.missed_count > 0 && (
                       <Badge className="text-[9px] bg-[--cs-risk-bg] text-[--cs-risk]">
-                        {med.missed_count_30d} missed
+                        {med.missed_count} missed
                       </Badge>
                     )}
                   </div>

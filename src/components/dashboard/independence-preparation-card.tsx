@@ -58,7 +58,7 @@ export function IndependencePreparationCard() {
 
   const o = intel.overview;
   const belowThresholdCount = intel.skills_summary.reduce(
-    (sum, s) => sum + s.children_below_threshold, 0
+    (sum, s) => sum + s.developing_count + s.not_started_count, 0
   );
 
   return (
@@ -113,31 +113,38 @@ export function IndependencePreparationCard() {
               <Target className="h-3 w-3" />
               Skills Assessment
             </p>
-            {intel.skills_summary.map((skill, i) => (
+            {intel.skills_summary.map((skill, i) => {
+              const assessed = skill.independent_count + skill.competent_count + skill.developing_count + skill.not_started_count;
+              const competentPct = assessed > 0
+                ? Math.round(((skill.independent_count + skill.competent_count) / assessed) * 100)
+                : 0;
+              const notCompetent = skill.developing_count + skill.not_started_count;
+              return (
               <div key={i} className="flex items-center gap-2 text-xs">
-                <span className="w-28 truncate">{skill.skill}</span>
+                <span className="w-28 truncate">{skill.skill_label}</span>
                 <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
                   <div
                     className={cn(
                       "h-full rounded-full",
-                      skill.average_score >= 70 ? "bg-green-400" : skill.average_score >= 50 ? "bg-amber-400" : "bg-red-400",
+                      competentPct >= 70 ? "bg-green-400" : competentPct >= 50 ? "bg-amber-400" : "bg-red-400",
                     )}
-                    style={{ width: `${skill.average_score}%` }}
+                    style={{ width: `${competentPct}%` }}
                   />
                 </div>
                 <span className={cn(
                   "w-8 text-right tabular-nums font-medium",
-                  skill.average_score >= 70 ? "text-[--cs-success]" : skill.average_score >= 50 ? "text-[--cs-warning]" : "text-[--cs-risk]",
+                  competentPct >= 70 ? "text-[--cs-success]" : competentPct >= 50 ? "text-[--cs-warning]" : "text-[--cs-risk]",
                 )}>
-                  {skill.average_score}%
+                  {competentPct}%
                 </span>
-                {skill.children_below_threshold > 0 && (
+                {notCompetent > 0 && (
                   <Badge className="text-[9px] bg-red-50 text-red-700 border-red-200">
-                    {skill.children_below_threshold} below
+                    {notCompetent} below
                   </Badge>
                 )}
               </div>
-            ))}
+              );
+            })}
           </div>
         )}
 

@@ -57,7 +57,7 @@ export function NightWakingMonitoringCard() {
 
   const o = intel.overview;
   const sec = intel.security;
-  const disturbed = intel.child_profiles.filter((cp) => cp.sleep_pattern === "disturbed").length;
+  const disturbed = intel.child_profiles.filter((cp) => cp.sleep_pattern === "disrupted").length;
 
   return (
     <Card className="overflow-hidden">

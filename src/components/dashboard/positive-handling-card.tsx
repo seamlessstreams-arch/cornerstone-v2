@@ -38,6 +38,10 @@ export function PositiveHandlingCard() {
   const restraints = d?.restraints;
   const insights = d?.insights ?? [];
 
+  const injuryRate = restraints && restraints.total_restraints_90d > 0
+    ? Math.round((restraints.injuries_during_restraint / restraints.total_restraints_90d) * 100)
+    : 0;
+
   return (
     <Card className="overflow-hidden">
       <CardHeader className="pb-3">
@@ -59,16 +63,16 @@ export function PositiveHandlingCard() {
             <p className="text-[10px] text-muted-foreground">Restraints 30d</p>
           </div>
           <div className="text-center rounded-lg bg-slate-50 p-2">
-            <p className="text-lg font-bold tabular-nums text-slate-600">{restraints?.avg_duration_mins ?? 0}m</p>
+            <p className="text-lg font-bold tabular-nums text-slate-600">{restraints?.average_duration_minutes ?? 0}m</p>
             <p className="text-[10px] text-muted-foreground">Avg Duration</p>
           </div>
-          <div className={cn("text-center rounded-lg p-2", (restraints?.debrief_rate ?? 0) >= 100 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", (restraints?.debrief_rate ?? 0) >= 100 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{restraints?.debrief_rate ?? 0}%</p>
+          <div className={cn("text-center rounded-lg p-2", (restraints?.debrief_completion_rate ?? 0) >= 100 ? "bg-green-50" : "bg-amber-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", (restraints?.debrief_completion_rate ?? 0) >= 100 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{restraints?.debrief_completion_rate ?? 0}%</p>
             <p className="text-[10px] text-muted-foreground">Debrief</p>
           </div>
-          <div className={cn("text-center rounded-lg p-2", (restraints?.repeat_use_same_child ?? 0) > 0 ? "bg-red-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", (restraints?.repeat_use_same_child ?? 0) > 0 ? "text-[--cs-risk]" : "text-[--cs-success]")}>{restraints?.repeat_use_same_child ?? 0}</p>
-            <p className="text-[10px] text-muted-foreground">Repeat</p>
+          <div className={cn("text-center rounded-lg p-2", (restraints?.review_completion_rate ?? 0) >= 100 ? "bg-green-50" : "bg-amber-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", (restraints?.review_completion_rate ?? 0) >= 100 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{restraints?.review_completion_rate ?? 0}%</p>
+            <p className="text-[10px] text-muted-foreground">Review</p>
           </div>
         </div>
 
@@ -86,11 +90,11 @@ export function PositiveHandlingCard() {
             </div>
             <div className="rounded border p-2">
               <span className="text-muted-foreground">Injury rate:</span>{" "}
-              <span className="font-semibold">{restraints?.injury_rate ?? 0}%</span>
+              <span className="font-semibold">{injuryRate}%</span>
             </div>
             <div className="rounded border p-2">
               <span className="text-muted-foreground">Debrief rate:</span>{" "}
-              <span className="font-semibold">{restraints?.debrief_rate ?? 0}%</span>
+              <span className="font-semibold">{restraints?.debrief_completion_rate ?? 0}%</span>
             </div>
           </div>
         </div>

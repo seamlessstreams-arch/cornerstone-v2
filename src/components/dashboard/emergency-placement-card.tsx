@@ -89,27 +89,27 @@ export function EmergencyPlacementCard() {
           </div>
           <div className={cn(
             "text-center rounded-lg p-2.5",
-            o.children_participated_rate >= 90 ? "bg-green-50" : "bg-amber-50",
+            o.protocol_followed_rate >= 90 ? "bg-green-50" : "bg-amber-50",
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.children_participated_rate >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]",
+              o.protocol_followed_rate >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]",
             )}>
-              {o.children_participated_rate}%
+              {o.protocol_followed_rate}%
             </p>
-            <p className="text-[10px] text-muted-foreground">Children</p>
+            <p className="text-[10px] text-muted-foreground">Protocol</p>
           </div>
           <div className={cn(
             "text-center rounded-lg p-2.5",
-            o.staff_participated_rate >= 90 ? "bg-green-50" : "bg-amber-50",
+            o.satisfactory_rate >= 90 ? "bg-green-50" : "bg-amber-50",
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.staff_participated_rate >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]",
+              o.satisfactory_rate >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]",
             )}>
-              {o.staff_participated_rate}%
+              {o.satisfactory_rate}%
             </p>
-            <p className="text-[10px] text-muted-foreground">Staff</p>
+            <p className="text-[10px] text-muted-foreground">Satisfactory</p>
           </div>
         </div>
 
@@ -128,7 +128,7 @@ export function EmergencyPlacementCard() {
                   <span className="text-muted-foreground tabular-nums">{dt.drill_count} drills</span>
                 </div>
                 <div className="flex items-center gap-1.5 ml-2">
-                  {dt.is_overdue ? (
+                  {dt.status === "overdue" ? (
                     <Badge className="text-[10px] bg-[--cs-risk-bg] text-[--cs-risk]">Overdue</Badge>
                   ) : (
                     <Badge variant="outline" className="text-[10px] text-green-700 bg-green-50 border-green-200">On track</Badge>

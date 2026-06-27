@@ -78,7 +78,7 @@ export function MedicationSideEffectsCard() {
 
         <div className="grid grid-cols-4 gap-2">
           <div className="text-center rounded-lg bg-blue-50 p-2.5">
-            <p className="text-lg font-bold tabular-nums text-blue-600">{o.prn_uses_30d}</p>
+            <p className="text-lg font-bold tabular-nums text-blue-600">{o.prn_administrations_30d}</p>
             <p className="text-[10px] text-muted-foreground">PRN (30d)</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", prn.effectiveness_rate >= 80 ? "bg-green-50" : "bg-amber-50")}>

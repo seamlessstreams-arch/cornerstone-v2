@@ -57,6 +57,10 @@ export function HomeFireRiskAssessmentCard() {
   }
 
   const pc = intel.plan_coverage;
+  const coverageRate =
+    pc.plan_types_required > 0
+      ? Math.round((pc.plan_types_covered / pc.plan_types_required) * 100)
+      : 0;
   const fireDrills = intel.drill_types.filter(
     (dt) => dt.scenario_type.toLowerCase().includes("fire")
   );
@@ -81,13 +85,13 @@ export function HomeFireRiskAssessmentCard() {
         <div className="grid grid-cols-4 gap-2">
           <div className={cn(
             "text-center rounded-lg p-2.5",
-            pc.coverage_rate >= 90 ? "bg-green-50" : "bg-amber-50",
+            coverageRate >= 90 ? "bg-green-50" : "bg-amber-50",
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              pc.coverage_rate >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]",
+              coverageRate >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]",
             )}>
-              {pc.coverage_rate}%
+              {coverageRate}%
             </p>
             <p className="text-[10px] text-muted-foreground">Plan Cover</p>
           </div>
@@ -151,7 +155,7 @@ export function HomeFireRiskAssessmentCard() {
                   <span className="text-muted-foreground tabular-nums">{dt.drill_count} drills</span>
                 </div>
                 <div className="flex items-center gap-1.5 ml-2">
-                  {dt.is_overdue ? (
+                  {dt.status === "overdue" ? (
                     <Badge className="text-[10px] bg-[--cs-risk-bg] text-[--cs-risk]">Overdue</Badge>
                   ) : (
                     <Badge variant="outline" className="text-[10px] text-green-700 bg-green-50 border-green-200">On track</Badge>
