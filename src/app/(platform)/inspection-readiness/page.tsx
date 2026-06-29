@@ -7,6 +7,8 @@ import { daysFromNow, todayStr } from "@/lib/utils";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
 import { CaraPanel } from "@/components/cara/cara-panel";
 import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
+import { useSopRealityCheck } from "@/hooks/use-sop-reality-check";
+import Link from "next/link";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -254,6 +256,8 @@ export default function InspectionReadinessPage() {
     filingCabinet.isLoading ||
     savedTime.isLoading;
 
+  const { data: sop } = useSopRealityCheck();
+
   return (
     <PageShell
       title="Inspection Readiness"
@@ -306,6 +310,39 @@ export default function InspectionReadinessPage() {
                 colour={reg40Data?.meta?.pending ? "bg-red-100 text-red-800" : "bg-slate-100 text-slate-600"}
               />
             </div>
+          </section>
+
+          {/* ── Statement of Purpose Reality Check ── */}
+          <section className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-4">
+              <div>
+                <h2 className="text-base font-semibold text-slate-900">Statement of Purpose — Reality Check</h2>
+                <p className="text-sm text-slate-500 mt-1">
+                  {sop?.headline ?? "Can the home prove it lives its Statement of Purpose every day?"}
+                </p>
+              </div>
+              <Link
+                href="/intelligence/cara/sop-reality-check"
+                className="text-sm font-medium text-blue-600 hover:underline whitespace-nowrap"
+              >
+                Open full check →
+              </Link>
+            </div>
+            <div className="grid grid-cols-3 gap-3">
+              <MetricCard title="Strongly evidenced" value={`${sop?.areasStrong ?? 0}/7`} colour="green" />
+              <MetricCard title="Developing" value={sop?.areasDeveloping ?? 0} colour={(sop?.areasDeveloping ?? 0) > 0 ? "yellow" : "neutral"} />
+              <MetricCard title="Inspection risks" value={sop?.inspectionRisks?.length ?? 0} colour={(sop?.inspectionRisks?.length ?? 0) > 0 ? "red" : "green"} />
+            </div>
+            {(sop?.inspectionRisks?.length ?? 0) > 0 && (
+              <ul className="mt-4 space-y-2">
+                {sop!.inspectionRisks.map((r, i) => (
+                  <li key={i} className="flex items-start gap-2 text-sm text-slate-700">
+                    <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-red-500 shrink-0" />
+                    <span><span className="font-medium">{r.label}:</span> {r.detail}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
           </section>
 
           {/* ── Four Quadrant Grid ── */}
