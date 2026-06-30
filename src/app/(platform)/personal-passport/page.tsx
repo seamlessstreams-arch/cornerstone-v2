@@ -316,7 +316,7 @@ export default function PersonalPassportPage() {
                       <p className="text-xs font-semibold text-emerald-800 uppercase tracking-wide mb-1">Helpful Phrases</p>
                       <ul className="space-y-1">
                         {p.helpful_phrases.map((ph, i) => (
-                          <li key={i} className="text-sm" dangerouslySetInnerHTML={{ __html: `&bull; ${ph}` }} />
+                          <li key={i} className="text-sm">&bull; {ph}</li>
                         ))}
                       </ul>
                     </div>
@@ -324,7 +324,7 @@ export default function PersonalPassportPage() {
                       <p className="text-xs font-semibold text-red-800 uppercase tracking-wide mb-1">Unhelpful Phrases</p>
                       <ul className="space-y-1">
                         {p.unhelpful_phrases.map((ph, i) => (
-                          <li key={i} className="text-sm" dangerouslySetInnerHTML={{ __html: `&bull; ${ph}` }} />
+                          <li key={i} className="text-sm">&bull; {ph}</li>
                         ))}
                       </ul>
                     </div>
@@ -334,7 +334,7 @@ export default function PersonalPassportPage() {
                     <p className="text-xs font-semibold text-purple-800 uppercase tracking-wide mb-1">Things To Know About Me</p>
                     <ul className="space-y-1">
                       {p.things_to_know_about_me.map((t, i) => (
-                        <li key={i} className="text-sm" dangerouslySetInnerHTML={{ __html: `&bull; ${t}` }} />
+                        <li key={i} className="text-sm">&bull; {t}</li>
                       ))}
                     </ul>
                   </div>
