@@ -59,12 +59,12 @@ const CAT_COLORS: Record<string, { bg: string; text: string; border: string }> =
   general:     { bg: "bg-slate-50",  text: "text-[var(--cs-text-secondary)]",  border: "border-[var(--cs-border)]" },
 };
 const STATUS_COLORS: Record<string, string> = {
-  open: "bg-amber-100 text-amber-700",
-  scheduled: "bg-blue-100 text-blue-700",
-  completed: "bg-emerald-100 text-emerald-700",
+  open: "bg-[--cs-warning-bg] text-[--cs-warning]",
+  scheduled: "bg-[--cs-info-bg] text-[--cs-info]",
+  completed: "bg-[--cs-success-bg] text-[--cs-success]",
 };
 const PRIO_COLORS: Record<string, string> = {
-  urgent: "text-red-600", high: "text-orange-600", medium: "text-blue-600", low: "text-[var(--cs-text-muted)]",
+  urgent: "text-[--cs-risk]", high: "text-orange-600", medium: "text-[--cs-info]", low: "text-[var(--cs-text-muted)]",
 };
 const PRIO_SORT: Record<string, number> = { urgent: 0, high: 1, medium: 2, low: 3 };
 
@@ -107,9 +107,9 @@ function MaintenanceCard({
     <div className={cn(
       "rounded-2xl border p-4 flex items-center gap-4 transition-all hover:shadow-md",
       item.priority === "urgent" && item.status !== "completed"
-        ? "border-red-200 bg-red-50"
+        ? "border-[--cs-risk-soft] bg-[--cs-risk-bg]"
         : isOverdue
-        ? "border-amber-200 bg-amber-50"
+        ? "border-[--cs-warning-soft] bg-[--cs-warning-bg]"
         : "border-[var(--cs-border)] bg-white"
     )}>
       <div className={cn("h-10 w-10 rounded-xl flex items-center justify-center shrink-0", catColors.bg)}>
@@ -124,7 +124,7 @@ function MaintenanceCard({
             </Badge>
           )}
           {isOverdue && (
-            <Badge className="text-[9px] rounded-full bg-red-100 text-red-700">Overdue</Badge>
+            <Badge className="text-[9px] rounded-full bg-[--cs-risk-bg] text-[--cs-risk]">Overdue</Badge>
           )}
         </div>
         <div className="text-xs text-[var(--cs-text-muted)] mt-0.5 line-clamp-1">
@@ -135,7 +135,7 @@ function MaintenanceCard({
       <div className="text-right shrink-0">
         <div className="text-xs text-[var(--cs-text-muted)]">{formatDate(item.due_date)}</div>
         {isOverdue && (
-          <div className="text-[10px] text-red-600 font-medium mt-0.5">
+          <div className="text-[10px] text-[--cs-risk] font-medium mt-0.5">
             {Math.ceil((new Date(today).getTime() - new Date(item.due_date).getTime()) / 86400000)}d overdue
           </div>
         )}
@@ -317,15 +317,15 @@ export default function MaintenancePage() {
           {(stats.urgent > 0 || stats.overdue > 0) && (
             <div className={cn(
               "rounded-2xl border p-4 flex items-start gap-3",
-              stats.urgent > 0 ? "bg-red-50 border-red-200" : "bg-amber-50 border-amber-200",
+              stats.urgent > 0 ? "bg-[--cs-risk-bg] border-[--cs-risk-soft]" : "bg-[--cs-warning-bg] border-[--cs-warning-soft]",
             )}>
-              <AlertTriangle className={cn("h-5 w-5 shrink-0 mt-0.5", stats.urgent > 0 ? "text-red-600" : "text-amber-600")} />
+              <AlertTriangle className={cn("h-5 w-5 shrink-0 mt-0.5", stats.urgent > 0 ? "text-[--cs-risk]" : "text-[--cs-warning]")} />
               <div className="flex-1">
-                <div className={cn("text-sm font-semibold", stats.urgent > 0 ? "text-red-800" : "text-amber-800")}>
+                <div className={cn("text-sm font-semibold", stats.urgent > 0 ? "text-[--cs-risk]" : "text-[--cs-warning]")}>
                   {stats.urgent > 0 && <>{stats.urgent} urgent issue{stats.urgent > 1 ? "s" : ""} requiring immediate attention. </>}
                   {stats.overdue > 0 && <>{stats.overdue} maintenance item{stats.overdue > 1 ? "s" : ""} overdue.</>}
                 </div>
-                <p className={cn("text-xs mt-1", stats.urgent > 0 ? "text-red-700" : "text-amber-700")}>
+                <p className={cn("text-xs mt-1", stats.urgent > 0 ? "text-[--cs-risk]" : "text-[--cs-warning]")}>
                   Overdue maintenance may impact Reg 25 (Premises) compliance during Ofsted inspections.
                 </p>
               </div>
@@ -335,11 +335,11 @@ export default function MaintenancePage() {
           {/* ── Stat cards ─────────────────────────────────────────────────────── */}
           <div className="grid grid-cols-2 lg:grid-cols-5 gap-3">
             {[
-              { label: "Open Issues", value: stats.open, icon: Wrench, color: "text-amber-600", bg: "bg-amber-50" },
-              { label: "Urgent", value: stats.urgent, icon: AlertTriangle, color: stats.urgent > 0 ? "text-red-600" : "text-emerald-600", bg: stats.urgent > 0 ? "bg-red-50" : "bg-emerald-50" },
-              { label: "Overdue", value: stats.overdue, icon: Clock, color: stats.overdue > 0 ? "text-red-600" : "text-emerald-600", bg: stats.overdue > 0 ? "bg-red-50" : "bg-emerald-50" },
-              { label: "Scheduled", value: stats.scheduled, icon: Calendar, color: "text-blue-600", bg: "bg-blue-50" },
-              { label: "Completed", value: stats.completed, icon: CheckCircle2, color: "text-emerald-600", bg: "bg-emerald-50" },
+              { label: "Open Issues", value: stats.open, icon: Wrench, color: "text-[--cs-warning]", bg: "bg-[--cs-warning-bg]" },
+              { label: "Urgent", value: stats.urgent, icon: AlertTriangle, color: stats.urgent > 0 ? "text-[--cs-risk]" : "text-[--cs-success]", bg: stats.urgent > 0 ? "bg-[--cs-risk-bg]" : "bg-[--cs-success-bg]" },
+              { label: "Overdue", value: stats.overdue, icon: Clock, color: stats.overdue > 0 ? "text-[--cs-risk]" : "text-[--cs-success]", bg: stats.overdue > 0 ? "bg-[--cs-risk-bg]" : "bg-[--cs-success-bg]" },
+              { label: "Scheduled", value: stats.scheduled, icon: Calendar, color: "text-[--cs-info]", bg: "bg-[--cs-info-bg]" },
+              { label: "Completed", value: stats.completed, icon: CheckCircle2, color: "text-[--cs-success]", bg: "bg-[--cs-success-bg]" },
             ].map(({ label, value, icon: Icon, color, bg }) => (
               <div key={label} className="rounded-2xl border border-[var(--cs-border)] bg-white p-5">
                 <div className="flex items-start justify-between gap-3">
@@ -631,7 +631,7 @@ export default function MaintenancePage() {
                 Recurring issue (e.g. scheduled annual service)
               </label>
 
-              {formError && <p className="text-xs text-red-600 font-medium">{formError}</p>}
+              {formError && <p className="text-xs text-[--cs-risk] font-medium">{formError}</p>}
             </div>
 
             <div className="mt-4 flex gap-3">
