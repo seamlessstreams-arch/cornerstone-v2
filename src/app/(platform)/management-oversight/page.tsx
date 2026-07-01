@@ -49,18 +49,18 @@ import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-acti
 // ── Status / priority colours ─────────────────────────────────────────────────
 
 const PRIORITY_CLR: Record<string, string> = {
-  urgent: "bg-red-100 text-red-800 border-red-200",
+  urgent: "bg-[--cs-risk-bg] text-[--cs-risk] border-[--cs-risk-soft]",
   high: "bg-orange-100 text-orange-800 border-orange-200",
   medium: "bg-yellow-100 text-yellow-800 border-yellow-200",
-  low: "bg-green-100 text-green-800 border-green-200",
+  low: "bg-[--cs-success-bg] text-[--cs-success] border-[--cs-success-soft]",
 };
 
 const STATUS_CLR: Record<string, string> = {
   not_started: "bg-slate-100 text-slate-700",
-  in_progress: "bg-blue-100 text-blue-700",
-  completed: "bg-emerald-100 text-emerald-700",
+  in_progress: "bg-[--cs-info-bg] text-[--cs-info]",
+  completed: "bg-[--cs-success-bg] text-[--cs-success]",
   cancelled: "bg-slate-100 text-slate-400",
-  blocked: "bg-red-100 text-red-700",
+  blocked: "bg-[--cs-risk-bg] text-[--cs-risk]",
 };
 
 const CATEGORY_CLR: Record<string, string> = {
@@ -95,9 +95,9 @@ function OversightTaskCard({
     <Card
       className={cn(
         "border transition-all",
-        isOverdue && "border-red-200 bg-red-50/30",
+        isOverdue && "border-[--cs-risk-soft] bg-[--cs-risk-bg]",
         task.status === "completed" && "opacity-60",
-        task.priority === "urgent" && task.status !== "completed" && "border-red-300 shadow-sm"
+        task.priority === "urgent" && task.status !== "completed" && "border-[--cs-risk-soft] shadow-sm"
       )}
     >
       <CardContent className="p-4">
@@ -123,7 +123,7 @@ function OversightTaskCard({
                 </Badge>
               )}
               {isOverdue && (
-                <Badge className="text-xs bg-red-100 text-red-800 border-red-200">
+                <Badge className="text-xs bg-[--cs-risk-bg] text-[--cs-risk] border-[--cs-risk-soft]">
                   OVERDUE
                 </Badge>
               )}
@@ -139,7 +139,7 @@ function OversightTaskCard({
 
             <div className="flex flex-wrap gap-3 mt-2 text-xs text-slate-500">
               {task.due_date && (
-                <span className={cn("flex items-center gap-1", isOverdue && "text-red-600 font-medium")}>
+                <span className={cn("flex items-center gap-1", isOverdue && "text-[--cs-risk] font-medium")}>
                   <Calendar className="h-3 w-3" />
                   Due {formatDate(task.due_date)}
                 </span>
@@ -198,17 +198,17 @@ function OversightTaskCard({
               </div>
             )}
             {task.care_event && (
-              <div className="bg-blue-50 rounded p-2">
-                <p className="text-xs font-medium text-blue-700 mb-0.5">Care Event flags</p>
+              <div className="bg-[--cs-info-bg] rounded p-2">
+                <p className="text-xs font-medium text-[--cs-info] mb-0.5">Care Event flags</p>
                 <div className="flex flex-wrap gap-1 mt-1">
                   {task.care_event.status === "manager_review_required" && (
-                    <Badge className="text-xs bg-amber-100 text-amber-800">Manager Review Required</Badge>
+                    <Badge className="text-xs bg-[--cs-warning-bg] text-[--cs-warning]">Manager Review Required</Badge>
                   )}
                   {task.care_event.status === "verified" && (
-                    <Badge className="text-xs bg-emerald-100 text-emerald-800">Verified</Badge>
+                    <Badge className="text-xs bg-[--cs-success-bg] text-[--cs-success]">Verified</Badge>
                   )}
                   {task.care_event.status === "returned" && (
-                    <Badge className="text-xs bg-red-100 text-red-800">Returned</Badge>
+                    <Badge className="text-xs bg-[--cs-risk-bg] text-[--cs-risk]">Returned</Badge>
                   )}
                 </div>
               </div>
@@ -343,14 +343,14 @@ export default function ManagementOversightPage() {
           {
             label: "Active",
             value: meta?.active ?? 0,
-            icon: <Clock className="h-4 w-4 text-blue-600" />,
-            colour: "bg-blue-50 border-blue-100",
+            icon: <Clock className="h-4 w-4 text-[--cs-info]" />,
+            colour: "bg-[--cs-info-bg] border-[--cs-info-soft]",
           },
           {
             label: "Urgent",
             value: meta?.urgent ?? 0,
-            icon: <AlertTriangle className="h-4 w-4 text-red-600" />,
-            colour: "bg-red-50 border-red-100",
+            icon: <AlertTriangle className="h-4 w-4 text-[--cs-risk]" />,
+            colour: "bg-[--cs-risk-bg] border-[--cs-risk-soft]",
           },
           {
             label: "Overdue",
