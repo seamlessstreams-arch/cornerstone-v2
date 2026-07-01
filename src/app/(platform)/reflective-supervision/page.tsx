@@ -13,9 +13,9 @@ import { useReflectiveSupervision, useCreateSupervision } from "@/hooks/use-refl
 import type { SupervisionStatus, ReflectiveSupervisionRecord } from "@/lib/engines/supervision-engine";
 
 const STATUS_META: Record<SupervisionStatus, { label: string; chip: string; dot: string }> = {
-  current: { label: "Current", chip: "bg-green-100 text-green-800 border-green-200", dot: "bg-green-500" },
-  due_soon: { label: "Due soon", chip: "bg-amber-100 text-amber-800 border-amber-200", dot: "bg-amber-500" },
-  overdue: { label: "Overdue", chip: "bg-red-100 text-red-800 border-red-200", dot: "bg-red-500" },
+  current: { label: "Current", chip: "bg-[--cs-success-bg] text-[--cs-success] border-[--cs-success-soft]", dot: "bg-[--cs-success]" },
+  due_soon: { label: "Due soon", chip: "bg-[--cs-warning-bg] text-[--cs-warning] border-[--cs-warning-soft]", dot: "bg-[--cs-warning]" },
+  overdue: { label: "Overdue", chip: "bg-[--cs-risk-bg] text-[--cs-risk] border-[--cs-risk-soft]", dot: "bg-[--cs-risk]" },
   never: { label: "No record", chip: "bg-slate-100 text-slate-700 border-slate-200", dot: "bg-slate-400" },
 };
 
@@ -109,9 +109,9 @@ export default function ReflectiveSupervisionPage() {
                 <div className="flex items-center gap-2 text-sm font-bold text-[var(--cs-navy)]"><MessageSquare className="h-4 w-4 text-[var(--cs-teal-strong)]" /> Supervision across the team</div>
                 <p className="mt-1 text-sm text-[var(--cs-text-secondary)]">{ov.headline}</p>
                 <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
-                  <Stat value={`${ov.summary.supervision_rate}%`} label="Current" tone="bg-green-50 border-green-200 text-green-800" />
-                  <Stat value={ov.summary.overdue} label="Overdue / none" tone="bg-red-50 border-red-200 text-red-800" />
-                  <Stat value={ov.summary.wellbeing_concerns} label="Wellbeing indicators" tone="bg-amber-50 border-amber-200 text-amber-800" />
+                  <Stat value={`${ov.summary.supervision_rate}%`} label="Current" tone="bg-[--cs-success-bg] border-[--cs-success-soft] text-[--cs-success]" />
+                  <Stat value={ov.summary.overdue} label="Overdue / none" tone="bg-[--cs-risk-bg] border-[--cs-risk-soft] text-[--cs-risk]" />
+                  <Stat value={ov.summary.wellbeing_concerns} label="Wellbeing indicators" tone="bg-[--cs-warning-bg] border-[--cs-warning-soft] text-[--cs-warning]" />
                   <Stat value={ov.summary.outstanding_actions} label="Open actions" tone="bg-[var(--cs-bg)] border-[var(--cs-border)] text-[var(--cs-navy)]" />
                 </div>
               </CardContent>
@@ -145,7 +145,7 @@ export default function ReflectiveSupervisionPage() {
                     <label className="block"><span className="text-xs font-bold uppercase tracking-wide text-[var(--cs-text-muted)]">Follow-up date</span>
                       <input type="date" className={cn(inputCls, "mt-1")} value={form.follow_up_date} onChange={(e) => set("follow_up_date", e.target.value)} /></label>
                   </div>
-                  {formError && <p className="text-sm font-medium text-red-700">{formError}</p>}
+                  {formError && <p className="text-sm font-medium text-[--cs-risk]">{formError}</p>}
                   <div className="flex justify-end gap-2">
                     <button onClick={() => setShowForm(false)} className="rounded-lg border px-3 py-2 text-sm text-slate-600 hover:bg-slate-50">Cancel</button>
                     <button onClick={submit} disabled={create.isPending} className="inline-flex items-center gap-1.5 rounded-lg bg-[var(--cs-navy)] px-4 py-2 text-sm font-semibold text-white hover:bg-[var(--cs-navy-soft)] disabled:opacity-50">{create.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />} Save</button>
@@ -165,8 +165,8 @@ export default function ReflectiveSupervisionPage() {
                       <div key={s.staff_id} className="flex flex-wrap items-center gap-x-3 gap-y-1 rounded-lg border border-[var(--cs-border)]/60 bg-white px-3 py-2 text-sm">
                         <span className={cn("h-2 w-2 shrink-0 rounded-full", m.dot)} />
                         <span className="min-w-0 flex-1 font-semibold text-[var(--cs-navy)]">{s.staff_name}</span>
-                        {s.wellbeing_flag && <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-bold text-amber-800"><HeartPulse className="h-3 w-3" /> wellbeing</span>}
-                        {s.confidence_flag && <span className="rounded-full bg-amber-50 px-2 py-0.5 text-[10px] font-bold text-amber-700">low confidence</span>}
+                        {s.wellbeing_flag && <span className="inline-flex items-center gap-1 rounded-full bg-[--cs-warning-bg] px-2 py-0.5 text-[10px] font-bold text-[--cs-warning]"><HeartPulse className="h-3 w-3" /> wellbeing</span>}
+                        {s.confidence_flag && <span className="rounded-full bg-[--cs-warning-bg] px-2 py-0.5 text-[10px] font-bold text-[--cs-warning]">low confidence</span>}
                         {s.outstanding_actions > 0 && <span className="text-[11px] text-[var(--cs-text-muted)]">{s.outstanding_actions} action{s.outstanding_actions === 1 ? "" : "s"}</span>}
                         <span className="text-[11px] tabular-nums text-[var(--cs-text-muted)]">{s.last_date ? `${s.days_since}d ago` : "—"}</span>
                         <span className={cn("rounded-full border px-2 py-0.5 text-[10px] font-bold uppercase", m.chip)}>{m.label}</span>
@@ -238,7 +238,7 @@ export default function ReflectiveSupervisionPage() {
                           {r.actions.length > 0 && (
                             <div>
                               <p className="text-[11px] font-bold uppercase tracking-wide text-[var(--cs-teal-strong)]">Actions</p>
-                              <ul className="mt-0.5 space-y-0.5">{r.actions.map((a, i) => <li key={i} className="flex items-center gap-1.5 text-sm text-[var(--cs-text-secondary)]">{a.done ? <CheckCircle2 className="h-3.5 w-3.5 text-[var(--cs-teal)]" /> : <AlertTriangle className="h-3.5 w-3.5 text-amber-600" />} {a.action}{a.due ? ` (due ${String(a.due).slice(0, 10)})` : ""}</li>)}</ul>
+                              <ul className="mt-0.5 space-y-0.5">{r.actions.map((a, i) => <li key={i} className="flex items-center gap-1.5 text-sm text-[var(--cs-text-secondary)]">{a.done ? <CheckCircle2 className="h-3.5 w-3.5 text-[var(--cs-teal)]" /> : <AlertTriangle className="h-3.5 w-3.5 text-[--cs-warning]" />} {a.action}{a.due ? ` (due ${String(a.due).slice(0, 10)})` : ""}</li>)}</ul>
                             </div>
                           )}
                           {r.follow_up_date && <p className="text-xs text-[var(--cs-text-muted)]">Follow-up: {r.follow_up_date}</p>}
