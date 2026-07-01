@@ -118,7 +118,7 @@ function DocumentCard({
       <div className="flex items-center gap-3 text-[11px] text-[var(--cs-text-muted)]">
         <span className="flex items-center gap-1"><FileText className="h-3 w-3" />{formatFileSize(doc.file_size)}</span>
         {doc.expiry_date && (
-          <span className={cn("flex items-center gap-1", isExpired ? "text-red-600 font-semibold" : isExpiringSoon ? "text-amber-600 font-medium" : "")}>
+          <span className={cn("flex items-center gap-1", isExpired ? "text-[--cs-risk] font-semibold" : isExpiringSoon ? "text-[--cs-warning] font-medium" : "")}>
             <Clock className="h-3 w-3" />{isExpired ? "Expired" : "Expires"} {formatDate(doc.expiry_date)}
           </span>
         )}
@@ -167,7 +167,7 @@ function DocumentCard({
           </Button>
         )}
         {doc.requires_read_sign && isSigned && (
-          <Badge className="flex-1 h-7 flex items-center justify-center text-[10px] rounded-lg bg-emerald-100 text-emerald-700">
+          <Badge className="flex-1 h-7 flex items-center justify-center text-[10px] rounded-lg bg-[--cs-success-bg] text-[--cs-success]">
             <CheckCircle2 className="h-3 w-3 mr-1" />Signed
           </Badge>
         )}
@@ -284,11 +284,11 @@ export default function DocumentsPage() {
         {/* Stats */}
         <div className="grid grid-cols-2 lg:grid-cols-5 gap-3">
           {[
-            { label: "Total Documents", value: stats.total, icon: FileText, color: "text-blue-600", bg: "bg-blue-50" },
+            { label: "Total Documents", value: stats.total, icon: FileText, color: "text-[--cs-info]", bg: "bg-[--cs-info-bg]" },
             { label: "Require Sign", value: stats.requireSign, icon: FileCheck, color: "text-[var(--cs-cara-gold)]", bg: "bg-[var(--cs-cara-gold-bg)]" },
-            { label: "Fully Signed", value: stats.allSigned, icon: CheckSquare, color: "text-emerald-600", bg: "bg-emerald-50" },
-            { label: "Expiring Soon", value: stats.expiring, icon: Clock, color: "text-amber-600", bg: "bg-amber-50" },
-            { label: "Expired", value: stats.expired, icon: AlertTriangle, color: "text-red-600", bg: "bg-red-50" },
+            { label: "Fully Signed", value: stats.allSigned, icon: CheckSquare, color: "text-[--cs-success]", bg: "bg-[--cs-success-bg]" },
+            { label: "Expiring Soon", value: stats.expiring, icon: Clock, color: "text-[--cs-warning]", bg: "bg-[--cs-warning-bg]" },
+            { label: "Expired", value: stats.expired, icon: AlertTriangle, color: "text-[--cs-risk]", bg: "bg-[--cs-risk-bg]" },
           ].map(({ label, value, icon: Icon, color, bg }) => (
             <div key={label} className="rounded-2xl border border-[var(--cs-border)] bg-white p-4">
               <div className="flex items-start justify-between gap-2">
@@ -306,10 +306,10 @@ export default function DocumentsPage() {
 
         {/* My outstanding sign-offs */}
         {myOutstanding.length > 0 && (
-          <div className="rounded-2xl bg-amber-50 border border-amber-200 p-4 flex items-start gap-3">
-            <FileCheck className="h-5 w-5 text-amber-600 shrink-0 mt-0.5" />
+          <div className="rounded-2xl bg-[--cs-warning-bg] border border-[--cs-warning-soft] p-4 flex items-start gap-3">
+            <FileCheck className="h-5 w-5 text-[--cs-warning] shrink-0 mt-0.5" />
             <div>
-              <div className="text-sm font-semibold text-amber-900">
+              <div className="text-sm font-semibold text-[--cs-warning]">
                 You have {myOutstanding.length} document{myOutstanding.length > 1 ? "s" : ""} to read and sign
               </div>
               <div className="flex flex-wrap gap-2 mt-2">
@@ -317,7 +317,7 @@ export default function DocumentsPage() {
                   <button
                     key={d.id}
                     onClick={() => setTab("read_sign")}
-                    className="text-xs bg-white border border-amber-200 text-amber-800 rounded-full px-3 py-1 hover:bg-amber-50"
+                    className="text-xs bg-white border border-[--cs-warning-soft] text-[--cs-warning] rounded-full px-3 py-1 hover:bg-[--cs-warning-bg]"
                   >
                     {d.title} →
                   </button>
@@ -420,7 +420,7 @@ export default function DocumentsPage() {
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-3 flex-wrap">
                           <span className="text-sm font-semibold text-[var(--cs-navy)]">{doc.title}</span>
-                          <Badge className={cn("text-[9px] rounded-full", pct === 100 ? "bg-emerald-100 text-emerald-700" : pct > 50 ? "bg-amber-100 text-amber-700" : "bg-red-100 text-red-700")}>
+                          <Badge className={cn("text-[9px] rounded-full", pct === 100 ? "bg-[--cs-success-bg] text-[--cs-success]" : pct > 50 ? "bg-[--cs-warning-bg] text-[--cs-warning]" : "bg-[--cs-risk-bg] text-[--cs-risk]")}>
                             {pct}% signed
                           </Badge>
                         </div>
@@ -433,9 +433,9 @@ export default function DocumentsPage() {
                             <div className="text-[10px] font-semibold text-[var(--cs-text-muted)] mb-1.5">Signed ({signed.length})</div>
                             <div className="flex flex-wrap gap-1.5">
                               {signed.map((s) => (
-                                <div key={s.id} className="flex items-center gap-1 rounded-full bg-emerald-50 border border-emerald-200 px-2 py-0.5">
-                                  <CheckSquare className="h-2.5 w-2.5 text-emerald-600" />
-                                  <span className="text-[10px] text-emerald-800">{s.first_name}</span>
+                                <div key={s.id} className="flex items-center gap-1 rounded-full bg-[--cs-success-bg] border border-[--cs-success-soft] px-2 py-0.5">
+                                  <CheckSquare className="h-2.5 w-2.5 text-[--cs-success]" />
+                                  <span className="text-[10px] text-[--cs-success]">{s.first_name}</span>
                                 </div>
                               ))}
                             </div>
@@ -444,9 +444,9 @@ export default function DocumentsPage() {
                             <div className="text-[10px] font-semibold text-[var(--cs-text-muted)] mb-1.5">Outstanding ({notSigned.length})</div>
                             <div className="flex flex-wrap gap-1.5">
                               {notSigned.map((s) => (
-                                <div key={s.id} className="flex items-center gap-1 rounded-full bg-red-50 border border-red-200 px-2 py-0.5">
-                                  <Clock className="h-2.5 w-2.5 text-red-500" />
-                                  <span className="text-[10px] text-red-700">{s.first_name}</span>
+                                <div key={s.id} className="flex items-center gap-1 rounded-full bg-[--cs-risk-bg] border border-[--cs-risk-soft] px-2 py-0.5">
+                                  <Clock className="h-2.5 w-2.5 text-[--cs-risk]" />
+                                  <span className="text-[10px] text-[--cs-risk]">{s.first_name}</span>
                                 </div>
                               ))}
                             </div>
@@ -463,7 +463,7 @@ export default function DocumentsPage() {
                           </Button>
                         )}
                         {signedByMe.has(doc.id) && (
-                          <div className="mt-3 flex items-center gap-1.5 text-xs text-emerald-700 font-medium">
+                          <div className="mt-3 flex items-center gap-1.5 text-xs text-[--cs-success] font-medium">
                             <CheckCircle2 className="h-3.5 w-3.5" />You signed this document
                           </div>
                         )}
@@ -502,7 +502,7 @@ export default function DocumentsPage() {
             <CardContent className="pt-6">
               <div className="max-w-lg mx-auto space-y-5">
                 {uploadSaved && (
-                  <div className="flex items-center gap-2 rounded-xl bg-emerald-50 border border-emerald-200 px-4 py-3 text-sm text-emerald-800 font-medium">
+                  <div className="flex items-center gap-2 rounded-xl bg-[--cs-success-bg] border border-[--cs-success-soft] px-4 py-3 text-sm text-[--cs-success] font-medium">
                     <CheckCircle2 className="h-4 w-4 shrink-0" />Document uploaded successfully.
                   </div>
                 )}
@@ -572,7 +572,7 @@ export default function DocumentsPage() {
                       onChange={(e) => setUploadForm((f) => ({ ...f, tags: e.target.value }))}
                     />
                   </div>
-                  {uploadError && <p className="text-xs text-red-600 font-medium">{uploadError}</p>}
+                  {uploadError && <p className="text-xs text-[--cs-risk] font-medium">{uploadError}</p>}
                   <Button className="w-full" onClick={handleUpload}>
                     <Upload className="h-4 w-4 mr-2" />Upload Document
                   </Button>
