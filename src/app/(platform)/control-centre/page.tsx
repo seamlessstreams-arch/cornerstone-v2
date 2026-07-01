@@ -134,15 +134,15 @@ function OverviewTab() {
           <PipelineArrow />
           <PipelineStage label="Assigned" count={2} color="bg-slate-200 text-slate-700" />
           <PipelineArrow />
-          <PipelineStage label="In Progress" count={3} color="bg-amber-100 text-amber-700" />
+          <PipelineStage label="In Progress" count={3} color="bg-[--cs-warning-bg] text-[--cs-warning]" />
           <PipelineArrow />
-          <PipelineStage label="Submitted" count={2} color="bg-blue-100 text-blue-700" />
+          <PipelineStage label="Submitted" count={2} color="bg-[--cs-info-bg] text-[--cs-info]" />
           <PipelineArrow />
           <PipelineStage label="Checked" count={1} color="bg-indigo-100 text-indigo-700" />
           <PipelineArrow />
-          <PipelineStage label="Approved" count={3} color="bg-green-100 text-green-700" />
+          <PipelineStage label="Approved" count={3} color="bg-[--cs-success-bg] text-[--cs-success]" />
           <PipelineArrow />
-          <PipelineStage label="Filed" count={8} color="bg-emerald-100 text-emerald-700" />
+          <PipelineStage label="Filed" count={8} color="bg-[--cs-success-bg] text-[--cs-success]" />
         </div>
       </div>
     </div>
@@ -335,7 +335,7 @@ function TabButton({
       className={cn(
         "flex items-center gap-1.5 px-3 py-3 text-sm font-medium border-b-2 transition-colors whitespace-nowrap",
         active
-          ? "border-emerald-500 text-emerald-700"
+          ? "border-[--cs-success] text-[--cs-success]"
           : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300",
       )}
     >
@@ -344,7 +344,7 @@ function TabButton({
       {badge !== undefined && badge > 0 && (
         <span className={cn(
           "ml-1 px-1.5 py-0.5 text-xs font-bold rounded-full",
-          badgeColor === "red" ? "bg-red-100 text-red-700" : "bg-blue-100 text-blue-700",
+          badgeColor === "red" ? "bg-[--cs-risk-bg] text-[--cs-risk]" : "bg-[--cs-info-bg] text-[--cs-info]",
         )}>
           {badge}
         </span>
@@ -407,7 +407,7 @@ function ApprovalItem({
   resubmissionCount?: number;
 }) {
   const statusConfig = {
-    needs_check: { label: "Needs Check", color: "bg-blue-100 text-blue-700" },
+    needs_check: { label: "Needs Check", color: "bg-[--cs-info-bg] text-[--cs-info]" },
     needs_approval: { label: "Needs Approval", color: "bg-purple-100 text-purple-700" },
     resubmitted: { label: "Resubmitted", color: "bg-orange-100 text-orange-700" },
   };
@@ -455,8 +455,8 @@ function EscalationItem({
   missed?: boolean;
 }) {
   const severityConfig = {
-    amber: { label: "AMBER", color: "bg-amber-100 text-amber-700 border-amber-300" },
-    red: { label: "RED", color: "bg-red-100 text-red-700 border-red-300" },
+    amber: { label: "AMBER", color: "bg-[--cs-warning-bg] text-[--cs-warning] border-[--cs-warning-soft]" },
+    red: { label: "RED", color: "bg-[--cs-risk-bg] text-[--cs-risk] border-[--cs-risk-soft]" },
     critical: { label: "CRITICAL", color: "bg-red-200 text-red-800 border-red-400" },
   };
   const { label: sevLabel, color: sevColor } = severityConfig[severity];
@@ -487,7 +487,7 @@ function EscalationItem({
 }
 
 function RegulationRow({ reg, label, rate }: { reg: string; label: string; rate: number }) {
-  const color = rate >= 95 ? "text-green-600" : rate >= 85 ? "text-amber-600" : "text-red-600";
+  const color = rate >= 95 ? "text-[--cs-success]" : rate >= 85 ? "text-[--cs-warning]" : "text-[--cs-risk]";
   const barColor = rate >= 95 ? "bg-green-500" : rate >= 85 ? "bg-amber-500" : "bg-red-500";
 
   return (
