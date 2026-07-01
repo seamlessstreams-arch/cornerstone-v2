@@ -17,26 +17,26 @@ import { useEventIntelligence } from "@/hooks/use-event-intelligence";
 import { eventTypeLabel } from "@/lib/event-stream/event-type-meta";
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high: "border-red-200 bg-red-50 text-red-800",
-  medium: "border-amber-200 bg-amber-50 text-amber-800",
-  low: "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 const TREND_META: Record<string, { icon: React.ReactNode; cls: string }> = {
-  escalating: { icon: <TrendingUp className="h-4 w-4" />, cls: "text-red-600" },
-  improving: { icon: <TrendingDown className="h-4 w-4" />, cls: "text-green-600" },
+  escalating: { icon: <TrendingUp className="h-4 w-4" />, cls: "text-[--cs-risk]" },
+  improving: { icon: <TrendingDown className="h-4 w-4" />, cls: "text-[--cs-success]" },
   stable: { icon: <Minus className="h-4 w-4" />, cls: "text-gray-500" },
 };
 function riskTone(score: number): { bg: string; text: string; ring: string } {
-  if (score >= 70) return { bg: "bg-red-100", text: "text-red-700", ring: "ring-red-200" };
-  if (score >= 45) return { bg: "bg-amber-100", text: "text-amber-700", ring: "ring-amber-200" };
-  if (score >= 20) return { bg: "bg-blue-100", text: "text-blue-700", ring: "ring-blue-200" };
-  return { bg: "bg-green-100", text: "text-green-700", ring: "ring-green-200" };
+  if (score >= 70) return { bg: "bg-[--cs-risk-bg]", text: "text-[--cs-risk]", ring: "ring-[--cs-risk-soft]" };
+  if (score >= 45) return { bg: "bg-[--cs-warning-bg]", text: "text-[--cs-warning]", ring: "ring-[--cs-warning-soft]" };
+  if (score >= 20) return { bg: "bg-[--cs-info-bg]", text: "text-[--cs-info]", ring: "ring-[--cs-info-soft]" };
+  return { bg: "bg-[--cs-success-bg]", text: "text-[--cs-success]", ring: "ring-[--cs-success-soft]" };
 }
 
 export default function EventIntelligencePage() {
@@ -133,12 +133,12 @@ export default function EventIntelligencePage() {
               <Card className="overflow-hidden">
                 <CardHeader className="pb-3"><CardTitle className="text-sm flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-brand" /> Approval backlog</CardTitle></CardHeader>
                 <CardContent className="space-y-2">
-                  {(intel.approval_backlog ?? []).length === 0 && <p className="text-sm text-green-700">Nothing awaiting sign-off.</p>}
+                  {(intel.approval_backlog ?? []).length === 0 && <p className="text-sm text-[--cs-success]">Nothing awaiting sign-off.</p>}
                   {(intel.approval_backlog ?? []).map((b, i) => (
                     <div key={i} className="rounded-lg border p-2.5 text-xs">
                       <div className="flex items-center justify-between">
                         <span className="font-medium capitalize">{b.approvalLevel.replace("_", " ")}</span>
-                        <Badge className="text-[10px] bg-amber-100 text-amber-700">{b.count}</Badge>
+                        <Badge className="text-[10px] bg-[--cs-warning-bg] text-[--cs-warning]">{b.count}</Badge>
                       </div>
                       {b.examples.map((ex, j) => <p key={j} className="text-[10px] text-[var(--cs-text-muted)] truncate mt-0.5">· {ex}</p>)}
                     </div>
@@ -150,11 +150,11 @@ export default function EventIntelligencePage() {
               <Card className="overflow-hidden">
                 <CardHeader className="pb-3"><CardTitle className="text-sm flex items-center gap-2"><AlertTriangle className="h-4 w-4 text-brand" /> Compliance register</CardTitle></CardHeader>
                 <CardContent className="space-y-1.5">
-                  {(intel.compliance_register ?? []).length === 0 && <p className="text-sm text-green-700">No open compliance flags.</p>}
+                  {(intel.compliance_register ?? []).length === 0 && <p className="text-sm text-[--cs-success]">No open compliance flags.</p>}
                   {(intel.compliance_register ?? []).map((f, i) => (
                     <div key={i} className="flex items-center justify-between gap-2 text-xs">
                       <span className="text-[var(--cs-text-secondary)]">{f.flag}</span>
-                      <Badge className="text-[10px] bg-amber-100 text-amber-700 shrink-0">{f.count}</Badge>
+                      <Badge className="text-[10px] bg-[--cs-warning-bg] text-[--cs-warning] shrink-0">{f.count}</Badge>
                     </div>
                   ))}
                 </CardContent>
@@ -183,7 +183,7 @@ export default function EventIntelligencePage() {
 
 function OverviewStat({ label, value, tone = "neutral" }: { label: string; value: string | number; tone?: "neutral" | "red" | "amber" | "green" | "gray" }) {
   const toneCls: Record<string, string> = {
-    neutral: "text-[var(--cs-navy)]", red: "text-red-600", amber: "text-amber-600", green: "text-green-600", gray: "text-gray-400",
+    neutral: "text-[var(--cs-navy)]", red: "text-[--cs-risk]", amber: "text-[--cs-warning]", green: "text-[--cs-success]", gray: "text-gray-400",
   };
   return (
     <div className="rounded-2xl border border-[var(--cs-border)] bg-white p-4">
