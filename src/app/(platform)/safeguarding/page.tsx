@@ -39,15 +39,15 @@ import { CareEventsPanel } from "@/components/care-events/care-events-panel";
 
 const RISK_CONFIG = {
   low: { badge: "bg-slate-100 text-slate-700", dot: "bg-slate-400", label: "Low" },
-  medium: { badge: "bg-amber-100 text-amber-800", dot: "bg-amber-500", label: "Medium" },
+  medium: { badge: "bg-[--cs-warning-bg] text-[--cs-warning]", dot: "bg-[--cs-warning]", label: "Medium" },
   high: { badge: "bg-orange-100 text-orange-800", dot: "bg-orange-500", label: "High" },
-  critical: { badge: "bg-red-100 text-red-800", dot: "bg-red-600", label: "Critical" },
+  critical: { badge: "bg-[--cs-risk-bg] text-[--cs-risk]", dot: "bg-[--cs-risk]", label: "Critical" },
 } as const;
 
 const SEV_CONFIG = {
-  critical: { badge: "bg-red-100 text-red-800", border: "border-l-red-600", dot: "bg-red-500" },
+  critical: { badge: "bg-[--cs-risk-bg] text-[--cs-risk]", border: "border-l-[--cs-risk]", dot: "bg-[--cs-risk]" },
   high: { badge: "bg-orange-100 text-orange-800", border: "border-l-orange-500", dot: "bg-orange-500" },
-  medium: { badge: "bg-amber-100 text-amber-800", border: "border-l-amber-400", dot: "bg-amber-400" },
+  medium: { badge: "bg-[--cs-warning-bg] text-[--cs-warning]", border: "border-l-[--cs-warning]", dot: "bg-[--cs-warning]" },
   low: { badge: "bg-slate-100 text-slate-700", border: "border-l-slate-300", dot: "bg-slate-400" },
 } as const;
 
@@ -66,8 +66,8 @@ const CHRONO_CATEGORY_CONFIG: Record<ChronologyCategory, { color: string; dot: s
 };
 
 const SIGNIFICANCE_CONFIG = {
-  critical: { dot: "bg-red-500 ring-2 ring-red-200", label: "Critical" },
-  significant: { dot: "bg-amber-400 ring-2 ring-amber-100", label: "Significant" },
+  critical: { dot: "bg-[--cs-risk] ring-2 ring-[--cs-risk-soft]", label: "Critical" },
+  significant: { dot: "bg-[--cs-warning] ring-2 ring-[--cs-warning-soft]", label: "Significant" },
   routine: { dot: "bg-slate-300", label: "Routine" },
 };
 
@@ -184,7 +184,7 @@ function ConcernCard({
               key={i}
               className={cn(
                 "inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium",
-                n.acknowledged ? "bg-emerald-50 text-emerald-700" : "bg-slate-100 text-slate-600"
+                n.acknowledged ? "bg-[--cs-success-bg] text-[--cs-success]" : "bg-slate-100 text-slate-600"
               )}
             >
               <Bell className="h-2.5 w-2.5" />
@@ -207,13 +207,13 @@ function ConcernCard({
         {needsOversight ? (
           <button
             onClick={() => onOversightClick(inc)}
-            className="inline-flex items-center gap-1.5 rounded-lg bg-amber-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-amber-700 transition-colors"
+            className="inline-flex items-center gap-1.5 rounded-lg bg-[--cs-warning] px-3 py-1.5 text-xs font-semibold text-white hover:opacity-90 transition-colors"
           >
             <Shield className="h-3.5 w-3.5" />
             Record Oversight
           </button>
         ) : inc.oversight_by ? (
-          <span className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-50 border border-emerald-200 px-2.5 py-1 text-xs font-medium text-emerald-700">
+          <span className="inline-flex items-center gap-1.5 rounded-lg bg-[--cs-success-bg] border border-[--cs-success-soft] px-2.5 py-1 text-xs font-medium text-[--cs-success]">
             <CheckCircle2 className="h-3.5 w-3.5" />
             Oversight by {getStaffName(inc.oversight_by)} · {formatDate(inc.oversight_at)}
           </span>
@@ -222,7 +222,7 @@ function ConcernCard({
         {needCreated ? (
           <a
             href="/learning/training-needs"
-            className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-50 border border-emerald-200 px-2.5 py-1 text-xs font-medium text-emerald-700 hover:bg-emerald-100 transition-colors"
+            className="inline-flex items-center gap-1.5 rounded-lg bg-[--cs-success-bg] border border-[--cs-success-soft] px-2.5 py-1 text-xs font-medium text-[--cs-success] hover:bg-[--cs-success-soft] transition-colors"
           >
             <Link className="h-3.5 w-3.5" />
             Training need created
@@ -374,11 +374,11 @@ function SafeguardingConcernsTab() {
     <div className="space-y-5">
       {/* Alert for critical */}
       {concerns.some((c) => c.severity === "critical") && (
-        <div className="rounded-2xl border border-red-200 bg-red-50 p-4 flex items-start gap-3">
-          <AlertTriangle className="h-5 w-5 text-red-600 shrink-0 mt-0.5" />
+        <div className="rounded-2xl border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-4 flex items-start gap-3">
+          <AlertTriangle className="h-5 w-5 text-[--cs-risk] shrink-0 mt-0.5" />
           <div>
-            <div className="text-sm font-semibold text-red-800">Critical safeguarding concerns require immediate action</div>
-            <div className="text-xs text-red-600 mt-0.5">Ensure all statutory notifications have been made. Strategy discussion to be arranged where appropriate.</div>
+            <div className="text-sm font-semibold text-[--cs-risk]">Critical safeguarding concerns require immediate action</div>
+            <div className="text-xs text-[--cs-risk] mt-0.5">Ensure all statutory notifications have been made. Strategy discussion to be arranged where appropriate.</div>
           </div>
         </div>
       )}
@@ -386,9 +386,9 @@ function SafeguardingConcernsTab() {
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         {[
-          { label: "Open Concerns", value: concerns.length, color: "text-red-600" },
-          { label: "Critical", value: concerns.filter((c) => c.severity === "critical").length, color: "text-red-700" },
-          { label: "Needs Oversight", value: concerns.filter((c) => c.requires_oversight && !c.oversight_by).length, color: "text-amber-600" },
+          { label: "Open Concerns", value: concerns.length, color: "text-[--cs-risk]" },
+          { label: "Critical", value: concerns.filter((c) => c.severity === "critical").length, color: "text-[--cs-risk]" },
+          { label: "Needs Oversight", value: concerns.filter((c) => c.requires_oversight && !c.oversight_by).length, color: "text-[--cs-warning]" },
           { label: "YP with Risk Flags", value: allYP.filter((y) => (y.risk_flags?.length ?? 0) > 0).length, color: "text-violet-600" },
         ].map((s) => (
           <div key={s.label} className="rounded-2xl border bg-white p-4 text-center">
@@ -458,7 +458,7 @@ function SafeguardingConcernsTab() {
       {/* Concern cards */}
       {concerns.length === 0 ? (
         <div className="rounded-2xl border bg-white p-12 text-center">
-          <CheckCircle2 className="h-8 w-8 text-emerald-400 mx-auto mb-3" />
+          <CheckCircle2 className="h-8 w-8 text-[--cs-success] mx-auto mb-3" />
           <div className="text-sm font-semibold text-slate-900">
             {concernSearch || filterChild !== "all" ? "No concerns match your filters" : "No open safeguarding concerns"}
           </div>
@@ -482,7 +482,7 @@ function SafeguardingConcernsTab() {
             <div className="sticky top-0 z-10 bg-white border-b px-6 py-4 flex items-center justify-between">
               <div>
                 <div className="flex items-center gap-2">
-                  <Shield className="h-4 w-4 text-amber-600" />
+                  <Shield className="h-4 w-4 text-[--cs-warning]" />
                   <span className="text-sm font-bold text-slate-900">Safeguarding Oversight</span>
                 </div>
                 <div className="text-xs text-slate-500 mt-0.5">{oversightTarget.reference} — {getYPName(oversightTarget.child_id)}</div>
@@ -501,7 +501,7 @@ function SafeguardingConcernsTab() {
                 onInsert={(text) => setOversightNote(text)}
               />
               <div>
-                <label className="text-xs font-semibold text-slate-700 block mb-2">Oversight note <span className="text-red-500">*</span></label>
+                <label className="text-xs font-semibold text-slate-700 block mb-2">Oversight note <span className="text-[--cs-risk]">*</span></label>
                 <textarea
                   value={oversightNote}
                   onChange={(e) => setOversightNote(e.target.value)}
@@ -511,7 +511,7 @@ function SafeguardingConcernsTab() {
                 />
               </div>
               <div className="flex gap-3">
-                <Button onClick={handleOversight} disabled={!oversightNote.trim() || addOversight.isPending} className="bg-amber-600 hover:bg-amber-700 flex-1">
+                <Button onClick={handleOversight} disabled={!oversightNote.trim() || addOversight.isPending} className="bg-[--cs-warning] hover:opacity-90 flex-1">
                   {addOversight.isPending ? <><Loader2 className="h-3.5 w-3.5 animate-spin" />Saving…</> : <><Shield className="h-3.5 w-3.5" />Record Oversight</>}
                 </Button>
                 <Button variant="outline" onClick={() => setOversightTarget(null)}>Cancel</Button>
@@ -543,10 +543,10 @@ function SafeguardingConcernsTab() {
                   {/* Overall Risk */}
                   <div className={cn(
                     "rounded-2xl border-l-4 p-4",
-                    scanResults.overall_risk === "critical" ? "border-l-red-500 bg-red-50 border border-red-200" :
+                    scanResults.overall_risk === "critical" ? "border-l-[--cs-risk] bg-[--cs-risk-bg] border border-[--cs-risk-soft]" :
                     scanResults.overall_risk === "high" ? "border-l-orange-500 bg-orange-50 border border-orange-200" :
-                    scanResults.overall_risk === "medium" ? "border-l-amber-500 bg-amber-50 border border-amber-200" :
-                    "border-l-emerald-500 bg-emerald-50 border border-emerald-200"
+                    scanResults.overall_risk === "medium" ? "border-l-[--cs-warning] bg-[--cs-warning-bg] border border-[--cs-warning-soft]" :
+                    "border-l-[--cs-success] bg-[--cs-success-bg] border border-[--cs-success-soft]"
                   )}>
                     <div className="text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Overall Risk</div>
                     <div className="text-lg font-bold capitalize text-slate-900">{scanResults.overall_risk}</div>
@@ -563,7 +563,7 @@ function SafeguardingConcernsTab() {
                         {scanResults.themes.map((theme, i) => (
                           <div key={i} className={cn(
                             "rounded-xl border p-3",
-                            theme.escalation_flag ? "border-red-200 bg-red-50" : "border-slate-200 bg-slate-50"
+                            theme.escalation_flag ? "border-[--cs-risk-soft] bg-[--cs-risk-bg]" : "border-slate-200 bg-slate-50"
                           )}>
                             <div className="flex items-start justify-between gap-3 mb-2">
                               <div className="flex-1">
@@ -572,8 +572,8 @@ function SafeguardingConcernsTab() {
                               </div>
                               <span className={cn(
                                 "rounded-full px-2 py-0.5 text-[10px] font-semibold capitalize shrink-0",
-                                theme.confidence === "high" ? "bg-emerald-100 text-emerald-700" :
-                                theme.confidence === "medium" ? "bg-amber-100 text-amber-700" :
+                                theme.confidence === "high" ? "bg-[--cs-success-bg] text-[--cs-success]" :
+                                theme.confidence === "medium" ? "bg-[--cs-warning-bg] text-[--cs-warning]" :
                                 "bg-slate-100 text-slate-600"
                               )}>
                                 {theme.confidence} confidence
@@ -585,7 +585,7 @@ function SafeguardingConcernsTab() {
                               </div>
                             )}
                             {theme.escalation_flag && (
-                              <div className="mt-2 inline-flex items-center gap-1 rounded-lg bg-red-100 px-2 py-1 text-[10px] font-semibold text-red-700">
+                              <div className="mt-2 inline-flex items-center gap-1 rounded-lg bg-[--cs-risk-bg] px-2 py-1 text-[10px] font-semibold text-[--cs-risk]">
                                 <AlertTriangle className="h-3 w-3" />
                                 Escalation flagged
                               </div>
@@ -623,11 +623,11 @@ function SafeguardingConcernsTab() {
                         <CheckCircle2 className="h-4 w-4" />
                         Recommended Actions
                       </div>
-                      <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-3">
+                      <div className="rounded-xl border border-[--cs-success-soft] bg-[--cs-success-bg] p-3">
                         <ul className="space-y-1.5">
                           {scanResults.recommended_actions.map((action, i) => (
-                            <li key={i} className="text-xs text-emerald-700 flex gap-2">
-                              <span className="text-emerald-400">✓</span>
+                            <li key={i} className="text-xs text-[--cs-success] flex gap-2">
+                              <span className="text-[--cs-success]">✓</span>
                               <span>{action}</span>
                             </li>
                           ))}
@@ -686,7 +686,7 @@ function MFCEpisodeCard({ ep }: { ep: MissingEpisode }) {
                   </span>
                 )}
                 {ep.status === "active" && (
-                  <span className="rounded-full bg-red-100 px-2 py-0.5 text-[10px] font-bold text-red-700 animate-pulse">
+                  <span className="rounded-full bg-[--cs-risk-bg] px-2 py-0.5 text-[10px] font-bold text-[--cs-risk] animate-pulse">
                     ACTIVE
                   </span>
                 )}
@@ -726,14 +726,14 @@ function MFCEpisodeCard({ ep }: { ep: MissingEpisode }) {
         <div className="mt-3 flex items-center gap-2 flex-wrap">
           <span className={cn(
             "inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-medium",
-            ep.reported_to_police ? "bg-blue-50 text-blue-700" : "bg-slate-100 text-slate-500"
+            ep.reported_to_police ? "bg-[--cs-info-bg] text-[--cs-info]" : "bg-slate-100 text-slate-500"
           )}>
             <Shield className="h-3 w-3" />
             Police {ep.reported_to_police ? `— ${ep.police_reference || "Reported"}` : "Not reported"}
           </span>
           <span className={cn(
             "inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-medium",
-            ep.reported_to_la ? "bg-blue-50 text-blue-700" : "bg-slate-100 text-slate-500"
+            ep.reported_to_la ? "bg-[--cs-info-bg] text-[--cs-info]" : "bg-slate-100 text-slate-500"
           )}>
             <Bell className="h-3 w-3" />
             LA {ep.reported_to_la ? "notified" : "not notified"}
@@ -741,8 +741,8 @@ function MFCEpisodeCard({ ep }: { ep: MissingEpisode }) {
           <span className={cn(
             "inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-medium",
             ep.return_interview_completed
-              ? "bg-emerald-50 text-emerald-700"
-              : "bg-amber-50 text-amber-700"
+              ? "bg-[--cs-success-bg] text-[--cs-success]"
+              : "bg-[--cs-warning-bg] text-[--cs-warning]"
           )}>
             <UserCheck className="h-3 w-3" />
             RTH {ep.return_interview_completed ? `— ${getStaffName(ep.return_interview_by ?? "")}` : "Required"}
@@ -866,7 +866,7 @@ function MFCTab() {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         {[
           { label: "Total Episodes", value: MFC_EPISODES.length, color: "text-slate-900" },
-          { label: "Active", value: MFC_EPISODES.filter((e) => e.status === "active").length, color: "text-red-600" },
+          { label: "Active", value: MFC_EPISODES.filter((e) => e.status === "active").length, color: "text-[--cs-risk]" },
           { label: "High Risk", value: highRisk.length, color: "text-orange-600" },
           { label: "CS Concerns", value: csEpisodes.length, color: "text-rose-600" },
         ].map((s) => (
@@ -935,7 +935,7 @@ function MFCTab() {
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs font-semibold text-slate-600 block mb-1.5">Date Missing <span className="text-red-500">*</span></label>
+                  <label className="text-xs font-semibold text-slate-600 block mb-1.5">Date Missing <span className="text-[--cs-risk]">*</span></label>
                   <Input
                     type="date"
                     value={logForm.date}
@@ -975,7 +975,7 @@ function MFCTab() {
                   className="text-sm"
                 />
               </div>
-              {logError && <p className="text-xs text-red-600 font-medium">{logError}</p>}
+              {logError && <p className="text-xs text-[--cs-risk] font-medium">{logError}</p>}
             </div>
             <div className="mt-4 flex gap-3">
               <Button
@@ -1090,7 +1090,7 @@ function ChronologyTab() {
           {(yp.risk_flags?.length ?? 0) > 0 && (
             <div className="flex gap-1.5 flex-wrap">
               {(yp.risk_flags ?? []).map((f) => (
-                <span key={f} className="rounded-full bg-red-50 border border-red-100 px-2 py-0.5 text-[10px] font-medium text-red-700">
+                <span key={f} className="rounded-full bg-[--cs-risk-bg] border border-[--cs-risk-soft] px-2 py-0.5 text-[10px] font-medium text-[--cs-risk]">
                   {f}
                 </span>
               ))}
@@ -1118,7 +1118,7 @@ function ChronologyTab() {
                 {/* Entry card */}
                 <div className={cn(
                   "rounded-2xl border bg-white p-4",
-                  entry.significance === "critical" && "border-red-200 ring-1 ring-red-100"
+                  entry.significance === "critical" && "border-[--cs-risk-soft] ring-1 ring-[--cs-risk-bg]"
                 )}>
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex items-start gap-2 flex-wrap flex-1">
@@ -1128,7 +1128,7 @@ function ChronologyTab() {
                       {entry.significance !== "routine" && (
                         <span className={cn(
                           "rounded-full px-2 py-0.5 text-[10px] font-semibold",
-                          entry.significance === "critical" ? "bg-red-100 text-red-700" : "bg-amber-100 text-amber-700"
+                          entry.significance === "critical" ? "bg-[--cs-risk-bg] text-[--cs-risk]" : "bg-[--cs-warning-bg] text-[--cs-warning]"
                         )}>
                           {sig.label}
                         </span>
@@ -1204,7 +1204,7 @@ function ChronologyTab() {
                 </div>
               </div>
               <div>
-                <label className="text-xs font-semibold text-slate-600 block mb-1.5">Title <span className="text-red-500">*</span></label>
+                <label className="text-xs font-semibold text-slate-600 block mb-1.5">Title <span className="text-[--cs-risk]">*</span></label>
                 <Input
                   value={entryForm.title}
                   onChange={(e) => setEntryForm((f) => ({ ...f, title: e.target.value }))}
@@ -1222,7 +1222,7 @@ function ChronologyTab() {
                   className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-3 text-sm text-slate-700 resize-none focus:outline-none focus:ring-2 focus:ring-violet-400 placeholder:text-slate-400 leading-relaxed"
                 />
               </div>
-              {entryError && <p className="text-xs text-red-600 font-medium">{entryError}</p>}
+              {entryError && <p className="text-xs text-[--cs-risk] font-medium">{entryError}</p>}
             </div>
             <div className="mt-4 flex gap-3">
               <Button className="flex-1" disabled={entryPending} onClick={handleAddEntrySubmit}>
@@ -1281,19 +1281,19 @@ function ManagerActionsTab() {
       {/* Oversight tasks */}
       <div>
         <div className="flex items-center gap-2 mb-4">
-          <Shield className="h-4 w-4 text-amber-600" />
+          <Shield className="h-4 w-4 text-[--cs-warning]" />
           <span className="text-sm font-bold text-slate-900">Oversight Queue</span>
           {oversightQueue.length > 0 && (
-            <span className="rounded-full bg-amber-500 px-2 py-0.5 text-[10px] font-bold text-white">{oversightQueue.length}</span>
+            <span className="rounded-full bg-[--cs-warning] px-2 py-0.5 text-[10px] font-bold text-white">{oversightQueue.length}</span>
           )}
         </div>
 
         {query.isPending ? (
           <div className="flex items-center gap-2 py-6 text-slate-400"><Loader2 className="h-4 w-4 animate-spin" /><span className="text-xs">Loading…</span></div>
         ) : oversightQueue.length === 0 ? (
-          <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-6 text-center">
-            <CheckCircle2 className="h-6 w-6 text-emerald-500 mx-auto mb-2" />
-            <div className="text-sm font-semibold text-emerald-800">All incidents have oversight recorded</div>
+          <div className="rounded-2xl border border-[--cs-success-soft] bg-[--cs-success-bg] p-6 text-center">
+            <CheckCircle2 className="h-6 w-6 text-[--cs-success] mx-auto mb-2" />
+            <div className="text-sm font-semibold text-[--cs-success]">All incidents have oversight recorded</div>
           </div>
         ) : (
           <div className="space-y-3">
@@ -1340,7 +1340,7 @@ function ManagerActionsTab() {
                     />
                     <Button
                       size="sm"
-                      className="bg-amber-600 hover:bg-amber-700 shrink-0"
+                      className="bg-[--cs-warning] hover:opacity-90 shrink-0"
                       disabled={!(oversightNote[inc.id] ?? "").trim() || addOversight.isPending}
                       onClick={() => handleOversight(inc)}
                     >
@@ -1358,7 +1358,7 @@ function ManagerActionsTab() {
       <div>
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <Users className="h-4 w-4 text-blue-600" />
+            <Users className="h-4 w-4 text-[--cs-info]" />
             <span className="text-sm font-bold text-slate-900">Strategy Discussions</span>
           </div>
           <Button
@@ -1374,7 +1374,7 @@ function ManagerActionsTab() {
           {STRATEGY_DISCUSSIONS.map((sd) => (
             <div key={sd.ref} className={cn(
               "rounded-2xl border bg-white p-4",
-              sd.status === "scheduled" ? "border-blue-200" : "border-slate-200"
+              sd.status === "scheduled" ? "border-[--cs-info-soft]" : "border-slate-200"
             )}>
               <div className="flex items-start justify-between gap-3">
                 <div>
@@ -1382,7 +1382,7 @@ function ManagerActionsTab() {
                     <span className="text-sm font-semibold text-slate-900">{sd.subject}</span>
                     <span className={cn(
                       "rounded-full px-2 py-0.5 text-[10px] font-semibold",
-                      sd.status === "scheduled" ? "bg-blue-100 text-blue-700" : "bg-emerald-100 text-emerald-700"
+                      sd.status === "scheduled" ? "bg-[--cs-info-bg] text-[--cs-info]" : "bg-[--cs-success-bg] text-[--cs-success]"
                     )}>
                       {sd.status === "scheduled" ? "Scheduled" : "Completed"}
                     </span>
@@ -1430,11 +1430,11 @@ function ManagerActionsTab() {
                     <td className="px-4 py-3 text-xs text-slate-500">{getStaffName(n.by)}</td>
                     <td className="px-4 py-3">
                       {n.acknowledged ? (
-                        <span className="inline-flex items-center gap-1 text-[10px] text-emerald-600">
+                        <span className="inline-flex items-center gap-1 text-[10px] text-[--cs-success]">
                           <CheckCircle2 className="h-3 w-3" /> Acknowledged
                         </span>
                       ) : (
-                        <span className="inline-flex items-center gap-1 text-[10px] text-amber-600">
+                        <span className="inline-flex items-center gap-1 text-[10px] text-[--cs-warning]">
                           <Clock className="h-3 w-3" /> Pending
                         </span>
                       )}
