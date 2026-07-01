@@ -81,14 +81,14 @@ function PeriodStat({
   href?: string;
 }) {
   const colours = {
-    ok: "border-emerald-100 bg-emerald-50/50",
-    warn: "border-amber-100 bg-amber-50/50",
-    gap: "border-red-100 bg-red-50/50",
+    ok: "border-[--cs-success-soft] bg-[--cs-success-bg]",
+    warn: "border-[--cs-warning-soft] bg-[--cs-warning-bg]",
+    gap: "border-[--cs-risk-soft] bg-[--cs-risk-bg]",
   };
   const iconColours = {
-    ok: "text-emerald-500",
-    warn: "text-amber-500",
-    gap: "text-red-500",
+    ok: "text-[--cs-success]",
+    warn: "text-[--cs-warning]",
+    gap: "text-[--cs-risk]",
   };
   const content = (
     <div className={cn("rounded-xl border p-3 flex items-center gap-3 h-full", colours[status])}>
@@ -117,12 +117,12 @@ function ReadinessCheck({
   return (
     <div className="flex items-start gap-2.5 py-1.5 border-b border-slate-100 last:border-0">
       {ok ? (
-        <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0 mt-0.5" />
+        <CheckCircle2 className="h-4 w-4 text-[--cs-success] shrink-0 mt-0.5" />
       ) : (
-        <AlertTriangle className="h-4 w-4 text-amber-500 shrink-0 mt-0.5" />
+        <AlertTriangle className="h-4 w-4 text-[--cs-warning] shrink-0 mt-0.5" />
       )}
       <div className="flex-1 min-w-0">
-        <p className={cn("text-xs font-medium", ok ? "text-slate-700" : "text-amber-800")}>{label}</p>
+        <p className={cn("text-xs font-medium", ok ? "text-slate-700" : "text-[--cs-warning]")}>{label}</p>
         {detail && <p className="text-[11px] text-slate-400 mt-0.5">{detail}</p>}
       </div>
     </div>
@@ -208,16 +208,16 @@ function SectionBar({
       className={cn(
         "w-full text-left p-3 rounded-lg border transition-all",
         isSelected ? "border-slate-400 bg-slate-50 shadow-sm" : "border-slate-100 hover:border-slate-200",
-        hasGap && "border-red-200 bg-red-50/20"
+        hasGap && "border-[--cs-risk-soft] bg-[--cs-risk-bg]"
       )}
     >
       <div className="flex items-center justify-between mb-1.5">
         <span className="text-sm font-medium text-slate-800 truncate flex-1">{label}</span>
         <div className="flex items-center gap-1.5 ml-2 shrink-0">
-          {hasGap && <Badge className="text-xs bg-red-100 text-red-700">No evidence</Badge>}
-          {staleCount > 0 && <Badge className="text-xs bg-amber-100 text-amber-700">Stale</Badge>}
+          {hasGap && <Badge className="text-xs bg-[--cs-risk-bg] text-[--cs-risk]">No evidence</Badge>}
+          {staleCount > 0 && <Badge className="text-xs bg-[--cs-warning-bg] text-[--cs-warning]">Stale</Badge>}
           {pendingCount > 0 && (
-            <Badge className="text-xs bg-amber-100 text-amber-800">{pendingCount} pending</Badge>
+            <Badge className="text-xs bg-[--cs-warning-bg] text-[--cs-warning]">{pendingCount} pending</Badge>
           )}
           <span className="text-xs text-slate-500 min-w-[2.5rem] text-right">
             {approvedCount}/{evidenceCount}
@@ -228,7 +228,7 @@ function SectionBar({
         <div
           className={cn(
             "h-full rounded-full transition-all",
-            pct >= 80 ? "bg-emerald-500" : pct >= 50 ? "bg-amber-500" : "bg-red-400"
+            pct >= 80 ? "bg-[--cs-success]" : pct >= 50 ? "bg-[--cs-warning]" : "bg-[--cs-risk]"
           )}
           style={{ width: `${pct}%` }}
         />
@@ -248,10 +248,10 @@ function EvidenceRow({
 }) {
   const [expanded, setExpanded] = useState(false);
   const DECISION_CLR: Record<ManagerDecision, string> = {
-    pending: "bg-amber-100 text-amber-800",
-    approved: "bg-emerald-100 text-emerald-800",
-    accepted: "bg-emerald-100 text-emerald-800",
-    rejected: "bg-red-100 text-red-800",
+    pending: "bg-[--cs-warning-bg] text-[--cs-warning]",
+    approved: "bg-[--cs-success-bg] text-[--cs-success]",
+    accepted: "bg-[--cs-success-bg] text-[--cs-success]",
+    rejected: "bg-[--cs-risk-bg] text-[--cs-risk]",
     deferred: "bg-slate-100 text-slate-600",
   };
 
@@ -259,8 +259,8 @@ function EvidenceRow({
     <div
       className={cn(
         "border rounded-lg p-3",
-        item.manager_decision === "pending" && "border-amber-100 bg-amber-50/10",
-        (item.manager_decision === "approved" || item.manager_decision === "accepted") && "border-emerald-100",
+        item.manager_decision === "pending" && "border-[--cs-warning-soft] bg-amber-50/10",
+        (item.manager_decision === "approved" || item.manager_decision === "accepted") && "border-[--cs-success-soft]",
         item.manager_decision === "rejected" && "opacity-50"
       )}
     >
@@ -307,8 +307,8 @@ function EvidenceRow({
         <div className="mt-2 pt-2 border-t border-slate-100">
           <p className="text-sm text-slate-700">{item.suggested_text}</p>
           {item.manager_approved_text && (
-            <div className="mt-1.5 bg-emerald-50 rounded p-2">
-              <p className="text-xs text-emerald-700 font-medium mb-0.5">Approved text</p>
+            <div className="mt-1.5 bg-[--cs-success-bg] rounded p-2">
+              <p className="text-xs text-[--cs-success] font-medium mb-0.5">Approved text</p>
               <p className="text-xs text-slate-700">{item.manager_approved_text}</p>
             </div>
           )}
@@ -400,8 +400,8 @@ function ReviewDialog({
           <div className="grid grid-cols-3 gap-2">
             {(
               [
-                { value: "approved", label: "Approve", icon: CheckCircle2, colour: "border-emerald-400 bg-emerald-50" },
-                { value: "rejected", label: "Reject", icon: XCircle, colour: "border-red-400 bg-red-50" },
+                { value: "approved", label: "Approve", icon: CheckCircle2, colour: "border-[--cs-success] bg-[--cs-success-bg]" },
+                { value: "rejected", label: "Reject", icon: XCircle, colour: "border-[--cs-risk] bg-[--cs-risk-bg]" },
                 { value: "deferred", label: "Defer", icon: Clock, colour: "border-slate-300 bg-slate-50" },
               ] as const
             ).map((opt) => {
@@ -556,32 +556,32 @@ export default function AnnexAReadinessPage() {
               <CardContent className="space-y-2">
                 {[
                   { label: "Total evidence items", value: meta?.total_evidence ?? 0, icon: <FileText className="h-3.5 w-3.5 text-slate-500" /> },
-                  { label: "Pending manager review", value: meta?.pending_decisions ?? 0, icon: <Clock className="h-3.5 w-3.5 text-amber-500" />, warn: (meta?.pending_decisions ?? 0) > 0 },
-                  { label: "Approved items", value: meta?.approved_count ?? 0, icon: <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500" /> },
+                  { label: "Pending manager review", value: meta?.pending_decisions ?? 0, icon: <Clock className="h-3.5 w-3.5 text-[--cs-warning]" />, warn: (meta?.pending_decisions ?? 0) > 0 },
+                  { label: "Approved items", value: meta?.approved_count ?? 0, icon: <CheckCircle2 className="h-3.5 w-3.5 text-[--cs-success]" /> },
                   { label: "Stale items (90+ days)", value: meta?.stale_count ?? 0, icon: <RefreshCw className="h-3.5 w-3.5 text-orange-500" />, warn: (meta?.stale_count ?? 0) > 0 },
                 ].map((stat) => (
-                  <div key={stat.label} className={cn("flex items-center justify-between rounded px-2 py-1", stat.warn ? "bg-amber-50/50" : "")}>
+                  <div key={stat.label} className={cn("flex items-center justify-between rounded px-2 py-1", stat.warn ? "bg-[--cs-warning-bg]" : "")}>
                     <span className="flex items-center gap-1.5 text-xs text-slate-600">
                       {stat.icon}
                       {stat.label}
                     </span>
-                    <span className={cn("text-sm font-semibold", stat.warn ? "text-amber-700" : "text-slate-900")}>{stat.value}</span>
+                    <span className={cn("text-sm font-semibold", stat.warn ? "text-[--cs-warning]" : "text-slate-900")}>{stat.value}</span>
                   </div>
                 ))}
               </CardContent>
             </Card>
 
             {/* Export readiness */}
-            <Card className={cn("border", exportReady ? "border-emerald-200 bg-emerald-50/30" : "border-amber-200 bg-amber-50/20")}>
+            <Card className={cn("border", exportReady ? "border-[--cs-success-soft] bg-[--cs-success-bg]" : "border-[--cs-warning-soft] bg-[--cs-warning-bg]")}>
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm flex items-center gap-1.5">
                   {exportReady ? (
-                    <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500" />
+                    <CheckCircle2 className="h-3.5 w-3.5 text-[--cs-success]" />
                   ) : (
-                    <AlertTriangle className="h-3.5 w-3.5 text-amber-500" />
+                    <AlertTriangle className="h-3.5 w-3.5 text-[--cs-warning]" />
                   )}
                   Export Readiness
-                  <Badge className={cn("ml-auto text-xs", exportReady ? "bg-emerald-100 text-emerald-700" : "bg-amber-100 text-amber-700")}>
+                  <Badge className={cn("ml-auto text-xs", exportReady ? "bg-[--cs-success-bg] text-[--cs-success]" : "bg-[--cs-warning-bg] text-[--cs-warning]")}>
                     {readyCount}/{readinessChecks.length}
                   </Badge>
                 </CardTitle>
@@ -617,9 +617,9 @@ export default function AnnexAReadinessPage() {
           {((meta?.gaps?.length ?? 0) > 0 || (meta?.stale_count ?? 0) > 0) && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {(meta?.gaps?.length ?? 0) > 0 && (
-                <Card className="border-red-200 bg-red-50/20">
+                <Card className="border-[--cs-risk-soft] bg-[--cs-risk-bg]">
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-sm flex items-center gap-1.5 text-red-800">
+                    <CardTitle className="text-sm flex items-center gap-1.5 text-[--cs-risk]">
                       <Siren className="h-3.5 w-3.5" />
                       Missing Evidence — {meta?.gaps?.length} section{(meta?.gaps?.length ?? 0) !== 1 ? "s" : ""}
                     </CardTitle>
@@ -631,11 +631,11 @@ export default function AnnexAReadinessPage() {
                         <button
                           key={gap}
                           onClick={() => setSelectedSection(gap)}
-                          className="w-full text-left flex items-center gap-2 text-xs text-red-700 bg-red-50 border border-red-100 rounded p-2 hover:bg-red-100 transition-colors"
+                          className="w-full text-left flex items-center gap-2 text-xs text-[--cs-risk] bg-[--cs-risk-bg] border border-[--cs-risk-soft] rounded p-2 hover:bg-[--cs-risk-soft] transition-colors"
                         >
                           <AlertTriangle className="h-3 w-3 shrink-0" />
                           {section?.label ?? gap}
-                          <span className="ml-auto text-red-400">→ View</span>
+                          <span className="ml-auto text-[--cs-risk]">→ View</span>
                         </button>
                       );
                     })}
@@ -644,9 +644,9 @@ export default function AnnexAReadinessPage() {
               )}
 
               {(meta?.stale_count ?? 0) > 0 && (
-                <Card className="border-amber-200 bg-amber-50/20">
+                <Card className="border-[--cs-warning-soft] bg-[--cs-warning-bg]">
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-sm flex items-center gap-1.5 text-amber-800">
+                    <CardTitle className="text-sm flex items-center gap-1.5 text-[--cs-warning]">
                       <RefreshCw className="h-3.5 w-3.5" />
                       Stale Evidence — {meta?.stale_count} item{(meta?.stale_count ?? 0) !== 1 ? "s" : ""} (90+ days old)
                     </CardTitle>
@@ -659,7 +659,7 @@ export default function AnnexAReadinessPage() {
                           <button
                             key={s.key}
                             onClick={() => setSelectedSection(s.key)}
-                            className="w-full text-left flex items-center gap-2 text-xs text-amber-700 bg-amber-50 border border-amber-100 rounded p-2 hover:bg-amber-100 transition-colors"
+                            className="w-full text-left flex items-center gap-2 text-xs text-[--cs-warning] bg-[--cs-warning-bg] border border-[--cs-warning-soft] rounded p-2 hover:bg-[--cs-warning-soft] transition-colors"
                           >
                             <Clock className="h-3 w-3 shrink-0" />
                             {s.label}
@@ -667,7 +667,7 @@ export default function AnnexAReadinessPage() {
                           </button>
                         ))}
                     </div>
-                    <p className="text-[11px] text-amber-600 mt-2">
+                    <p className="text-[11px] text-[--cs-warning] mt-2">
                       Renew evidence by submitting new verified Care Events for these sections.
                     </p>
                   </CardContent>
@@ -782,7 +782,7 @@ export default function AnnexAReadinessPage() {
                   {sections.filter((s) => s.approved_count > 0).length} of {sections.length} sections
                 </p>
                 {(meta?.gaps?.length ?? 0) > 0 && (
-                  <p className="text-xs text-red-600 mt-0.5">
+                  <p className="text-xs text-[--cs-risk] mt-0.5">
                     {meta?.gaps?.length} section{(meta?.gaps?.length ?? 0) !== 1 ? "s" : ""} without evidence
                   </p>
                 )}
@@ -790,14 +790,14 @@ export default function AnnexAReadinessPage() {
             </div>
 
             {/* Export readiness summary */}
-            <div className={cn("rounded-lg border p-3", exportReady ? "border-emerald-200 bg-emerald-50" : "border-amber-200 bg-amber-50")}>
-              <p className={cn("text-xs font-semibold mb-2", exportReady ? "text-emerald-800" : "text-amber-800")}>
+            <div className={cn("rounded-lg border p-3", exportReady ? "border-[--cs-success-soft] bg-[--cs-success-bg]" : "border-[--cs-warning-soft] bg-[--cs-warning-bg]")}>
+              <p className={cn("text-xs font-semibold mb-2", exportReady ? "text-[--cs-success]" : "text-[--cs-warning]")}>
                 {exportReady ? "✓ Ready for export / inspection" : `${readyCount}/${readinessChecks.length} readiness checks passed`}
               </p>
               {!exportReady && (
                 <ul className="space-y-1">
                   {readinessChecks.filter((c) => !c.ok).map((c) => (
-                    <li key={c.label} className="text-xs text-amber-700 flex items-center gap-1.5">
+                    <li key={c.label} className="text-xs text-[--cs-warning] flex items-center gap-1.5">
                       <AlertTriangle className="h-3 w-3 shrink-0" />
                       {c.label}
                     </li>
@@ -858,14 +858,14 @@ export default function AnnexAReadinessPage() {
                         <div
                           className={cn(
                             "h-full rounded-full",
-                            pct >= 80 ? "bg-emerald-500" : pct >= 50 ? "bg-amber-500" : s.has_gap ? "bg-red-400" : "bg-slate-300"
+                            pct >= 80 ? "bg-[--cs-success]" : pct >= 50 ? "bg-[--cs-warning]" : s.has_gap ? "bg-[--cs-risk]" : "bg-slate-300"
                           )}
                           style={{ width: `${pct}%` }}
                         />
                       </div>
                       <span className={cn(
                         "w-12 text-right font-medium",
-                        s.has_gap ? "text-red-600" : "text-slate-600"
+                        s.has_gap ? "text-[--cs-risk]" : "text-slate-600"
                       )}>
                         {s.approved_count}/{s.evidence_count}
                       </span>
