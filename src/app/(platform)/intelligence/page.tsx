@@ -76,25 +76,25 @@ function ClimateCardSkeleton() {
 // ─── Score colour helpers ──────────────────────────────────────────────────────
 
 function scoreColor(score: number): string {
-  if (score < 40) return "text-red-600";
-  if (score < 60) return "text-amber-600";
+  if (score < 40) return "text-[--cs-risk]";
+  if (score < 60) return "text-[--cs-warning]";
   if (score < 80) return "text-teal-600";
-  return "text-emerald-600";
+  return "text-[--cs-success]";
 }
 
 function scoreBarColor(score: number): string {
-  if (score < 40) return "bg-red-500";
-  if (score < 60) return "bg-amber-500";
+  if (score < 40) return "bg-[--cs-risk]";
+  if (score < 60) return "bg-[--cs-warning]";
   if (score < 80) return "bg-teal-500";
-  return "bg-emerald-500";
+  return "bg-[--cs-success]";
 }
 
 // ─── Delta arrow ──────────────────────────────────────────────────────────────
 
 function DeltaArrow({ delta }: { delta: number | null }) {
   if (delta === null || delta === 0) return <Minus className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />;
-  if (delta > 0) return <TrendingUp className="h-3.5 w-3.5 text-emerald-500" />;
-  return <TrendingDown className="h-3.5 w-3.5 text-red-500" />;
+  if (delta > 0) return <TrendingUp className="h-3.5 w-3.5 text-[--cs-success]" />;
+  return <TrendingDown className="h-3.5 w-3.5 text-[--cs-risk]" />;
 }
 
 // ─── Climate Score Card ───────────────────────────────────────────────────────
@@ -309,13 +309,13 @@ function HomeClimateSection() {
       </div>
 
       {isError && (
-        <div className="rounded-2xl border border-red-100 bg-red-50 p-4 flex items-center gap-2 text-xs text-red-600">
+        <div className="rounded-2xl border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-4 flex items-center gap-2 text-xs text-[--cs-risk]">
           <AlertCircle className="h-4 w-4 shrink-0" />Unable to load climate data
         </div>
       )}
 
       {computeState === "error" && computeError && (
-        <p className="text-[10px] text-red-600">{computeError}</p>
+        <p className="text-[10px] text-[--cs-risk]">{computeError}</p>
       )}
 
       {climate && (
@@ -353,16 +353,16 @@ function HomeClimateSection() {
 // ─── Severity badge class ────────────────────────────────────────────────────
 
 const SEV_CLASSES: Record<string, string> = {
-  critical: "bg-red-100 text-red-800",
+  critical: "bg-[--cs-risk-bg] text-[--cs-risk]",
   high:     "bg-orange-100 text-orange-800",
-  medium:   "bg-amber-100 text-amber-800",
+  medium:   "bg-[--cs-warning-bg] text-[--cs-warning]",
   low:      "bg-slate-100 text-[var(--cs-text-secondary)]",
 };
 
 const SEV_BORDER: Record<string, string> = {
-  critical: "border-l-red-400",
+  critical: "border-l-[--cs-risk]",
   high:     "border-l-orange-400",
-  medium:   "border-l-amber-400",
+  medium:   "border-l-[--cs-warning]",
   low:      "border-l-slate-300",
 };
 
@@ -408,7 +408,7 @@ function PatternAlertsSection() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="flex items-center gap-2 text-xs text-red-500 py-4">
+          <div className="flex items-center gap-2 text-xs text-[--cs-risk] py-4">
             <AlertCircle className="h-4 w-4 shrink-0" />Unable to load pattern alerts
           </div>
         </CardContent>
@@ -423,7 +423,7 @@ function PatternAlertsSection() {
           <Brain className="h-4 w-4 text-amber-500" />
           Active Pattern Alerts
           {alerts.length > 0 && (
-            <span className="ml-auto rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-bold text-amber-800">
+            <span className="ml-auto rounded-full bg-[--cs-warning-bg] px-2 py-0.5 text-[10px] font-bold text-[--cs-warning]">
               {alerts.length}
             </span>
           )}
@@ -482,7 +482,7 @@ function PatternAlertsSection() {
                     <Button
                       size="sm"
                       variant="outline"
-                      className="h-7 px-2.5 text-xs text-emerald-600 border-emerald-200 hover:bg-emerald-50"
+                      className="h-7 px-2.5 text-xs text-[--cs-success] border-[--cs-success-soft] hover:bg-[--cs-success-bg]"
                       onClick={() => setResolvingId(resolvingId === alert.id ? null : alert.id)}
                     >
                       Resolve
@@ -554,8 +554,8 @@ function RecentInterventionsSection() {
   }, [q1.data, q2.data, q3.data]);
 
   const INT_STATUS: Record<string, string> = {
-    active: "bg-emerald-100 text-emerald-800",
-    paused: "bg-amber-100 text-amber-800",
+    active: "bg-[--cs-success-bg] text-[--cs-success]",
+    paused: "bg-[--cs-warning-bg] text-[--cs-warning]",
     under_review: "bg-[var(--cs-cara-gold-bg)] text-[var(--cs-navy)]",
   };
 
@@ -741,8 +741,8 @@ function VoiceCoverageSection() {
                     <span className={cn(
                       "flex items-center gap-0.5 rounded-full px-1.5 py-0.5 text-[9px] font-semibold",
                       record.voice_heeded
-                        ? "bg-emerald-100 text-emerald-700"
-                        : "bg-red-100 text-red-600"
+                        ? "bg-[--cs-success-bg] text-[--cs-success]"
+                        : "bg-[--cs-risk-bg] text-[--cs-risk]"
                     )}>
                       {record.voice_heeded
                         ? <><CheckCircle2 className="h-2.5 w-2.5" />Heeded</>
@@ -782,11 +782,11 @@ const OWNER_NAMES: Record<string, string> = {
 };
 
 const STATUS_CLASSES: Record<string, string> = {
-  open:        "bg-blue-100 text-blue-800",
+  open:        "bg-[--cs-info-bg] text-[--cs-info]",
   in_progress: "bg-[var(--cs-cara-gold-bg)] text-[var(--cs-navy)]",
-  completed:   "bg-emerald-100 text-emerald-800",
-  overdue:     "bg-red-100 text-red-800",
-  stalled:     "bg-amber-100 text-amber-800",
+  completed:   "bg-[--cs-success-bg] text-[--cs-success]",
+  overdue:     "bg-[--cs-risk-bg] text-[--cs-risk]",
+  stalled:     "bg-[--cs-warning-bg] text-[--cs-warning]",
   cancelled:   "bg-slate-100 text-[var(--cs-text-muted)]",
 };
 
@@ -846,7 +846,7 @@ function ActionOutcomesSection() {
             <Target className="h-4 w-4 text-[var(--cs-cara-gold)]" />
             Action Outcomes
             {overdueActions.length > 0 && (
-              <span className="rounded-full bg-red-100 px-2 py-0.5 text-[10px] font-bold text-red-700">
+              <span className="rounded-full bg-[--cs-risk-bg] px-2 py-0.5 text-[10px] font-bold text-[--cs-risk]">
                 {overdueActions.length} overdue
               </span>
             )}
@@ -860,8 +860,8 @@ function ActionOutcomesSection() {
         {overdueActions.length > 0 && (
           <div className="space-y-2">
             <div className="flex items-center gap-1.5">
-              <AlertTriangle className="h-3 w-3 text-red-500" />
-              <span className="text-[10px] font-semibold uppercase tracking-wider text-red-600">
+              <AlertTriangle className="h-3 w-3 text-[--cs-risk]" />
+              <span className="text-[10px] font-semibold uppercase tracking-wider text-[--cs-risk]">
                 Overdue
               </span>
             </div>
@@ -901,9 +901,9 @@ function ActionOutcomesSection() {
 // ─── Cara Pattern Scanner ─────────────────────────────────────────────────────
 
 const SEV_CLASSES_SCAN: Record<string, string> = {
-  critical: "border-red-300 bg-red-50 text-red-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
   high:     "border-orange-300 bg-orange-50 text-orange-800",
-  medium:   "border-amber-300 bg-amber-50 text-amber-800",
+  medium:   "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
   low:      "border-slate-300 bg-slate-50 text-[var(--cs-text-secondary)]",
 };
 
@@ -1090,7 +1090,7 @@ function CaraPatternScanSection() {
         )}
 
         {scanError && (
-          <div className="flex items-center gap-2 rounded-xl border border-red-200 bg-red-50 px-3 py-2.5 text-xs text-red-700">
+          <div className="flex items-center gap-2 rounded-xl border border-[--cs-risk-soft] bg-[--cs-risk-bg] px-3 py-2.5 text-xs text-[--cs-risk]">
             <AlertTriangle className="h-4 w-4 shrink-0" />
             {scanError}
           </div>
@@ -1106,7 +1106,7 @@ function CaraPatternScanSection() {
         {patterns !== null && !scanning && (
           patterns.length === 0 ? (
             <div className="flex flex-col items-center gap-2 py-6 text-center">
-              <CheckCircle2 className="h-10 w-10 text-emerald-300" />
+              <CheckCircle2 className="h-10 w-10 text-[--cs-success]" />
               <p className="text-sm font-semibold text-[var(--cs-text-secondary)]">No significant patterns detected</p>
               <p className="text-xs text-[var(--cs-text-muted)]">Cara found no new patterns requiring attention at this time.</p>
             </div>
@@ -1131,9 +1131,9 @@ function CaraPatternScanSection() {
                         <div className="flex items-center gap-2 flex-wrap">
                           <span className={cn(
                             "rounded-full px-2 py-0.5 text-[9px] font-bold uppercase",
-                            p.severity === "critical" ? "bg-red-200 text-red-800" :
+                            p.severity === "critical" ? "bg-[--cs-risk-bg] text-[--cs-risk]" :
                             p.severity === "high"     ? "bg-orange-200 text-orange-800" :
-                            p.severity === "medium"   ? "bg-amber-200 text-amber-700" :
+                            p.severity === "medium"   ? "bg-[--cs-warning-bg] text-[--cs-warning]" :
                             "bg-slate-200 text-[var(--cs-text-secondary)]"
                           )}>
                             {p.severity}
@@ -1154,7 +1154,7 @@ function CaraPatternScanSection() {
                       </div>
                       <div className="shrink-0">
                         {saveState === "saved" ? (
-                          <span className="flex items-center gap-1 text-[10px] font-semibold text-emerald-700">
+                          <span className="flex items-center gap-1 text-[10px] font-semibold text-[--cs-success]">
                             <CheckCircle2 className="h-3.5 w-3.5" />Saved
                           </span>
                         ) : (
