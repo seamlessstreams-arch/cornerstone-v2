@@ -39,10 +39,10 @@ import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-acti
 // ── Score pill ─────────────────────────────────────────────────────────────────
 function ScorePill({ score, size = "md" }: { score: number; size?: "sm" | "md" | "lg" }) {
   const colour =
-    score >= 80 ? "bg-emerald-100 text-emerald-700 border-emerald-200"
-    : score >= 65 ? "bg-amber-100 text-amber-700 border-amber-200"
+    score >= 80 ? "bg-[--cs-success-bg] text-[--cs-success] border-[--cs-success-soft]"
+    : score >= 65 ? "bg-[--cs-warning-bg] text-[--cs-warning] border-[--cs-warning-soft]"
     : score >= 50 ? "bg-orange-100 text-orange-700 border-orange-200"
-    : "bg-red-100 text-red-700 border-red-200";
+    : "bg-[--cs-risk-bg] text-[--cs-risk] border-[--cs-risk-soft]";
   const sizes = { sm: "text-xs px-2 py-0.5", md: "text-sm px-2.5 py-1 font-semibold", lg: "text-xl px-3 py-1.5 font-bold" };
   return (
     <span className={cn("rounded-full border tabular-nums", colour, sizes[size])}>
@@ -173,9 +173,9 @@ export default function RiHubPage() {
 
         {/* Critical banner */}
         {hasCritical && (
-          <div className="flex items-center gap-3 rounded-2xl border border-red-300 bg-red-50 p-4">
-            <AlertTriangle className="h-5 w-5 text-red-600 shrink-0" />
-            <p className="text-sm font-semibold text-red-700">
+          <div className="flex items-center gap-3 rounded-2xl border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-4">
+            <AlertTriangle className="h-5 w-5 text-[--cs-risk] shrink-0" />
+            <p className="text-sm font-semibold text-[--cs-risk]">
               {criticalAlerts.length} critical RI alert{criticalAlerts.length !== 1 ? "s" : ""} require immediate attention.
             </p>
             <Link href="/ri/alerts" className="ml-auto shrink-0">
@@ -230,9 +230,9 @@ export default function RiHubPage() {
         {/* Stat row */}
         <div className="grid gap-3 sm:grid-cols-4">
           {[
-            { label: "Open Challenges", value: openChallenges.length, icon: Gavel, colour: openChallenges.length > 0 ? "text-amber-600" : "text-emerald-600", bg: openChallenges.length > 0 ? "bg-amber-50" : "bg-emerald-50", href: "/ri/challenge-log" },
-            { label: "Active Alerts", value: unresolvedAlerts.length, icon: AlertTriangle, colour: unresolvedAlerts.length > 0 ? "text-red-600" : "text-emerald-600", bg: unresolvedAlerts.length > 0 ? "bg-red-50" : "bg-emerald-50", href: "/ri/alerts" },
-            { label: "Reg 45 Status", value: latestReg45?.status ?? "None", icon: FileText, colour: "text-blue-600", bg: "bg-blue-50", href: "/ri/reg45" },
+            { label: "Open Challenges", value: openChallenges.length, icon: Gavel, colour: openChallenges.length > 0 ? "text-[--cs-warning]" : "text-[--cs-success]", bg: openChallenges.length > 0 ? "bg-[--cs-warning-bg]" : "bg-[--cs-success-bg]", href: "/ri/challenge-log" },
+            { label: "Active Alerts", value: unresolvedAlerts.length, icon: AlertTriangle, colour: unresolvedAlerts.length > 0 ? "text-[--cs-risk]" : "text-[--cs-success]", bg: unresolvedAlerts.length > 0 ? "bg-[--cs-risk-bg]" : "bg-[--cs-success-bg]", href: "/ri/alerts" },
+            { label: "Reg 45 Status", value: latestReg45?.status ?? "None", icon: FileText, colour: "text-[--cs-info]", bg: "bg-[--cs-info-bg]", href: "/ri/reg45" },
             { label: "Urgent Training", value: urgentTraining.length, icon: BookOpen, colour: urgentTraining.length > 0 ? "text-orange-600" : "text-emerald-600", bg: urgentTraining.length > 0 ? "bg-orange-50" : "bg-emerald-50", href: "/learning/training-needs" },
           ].map(({ label, value, icon: Icon, colour, bg, href }) => (
             <Link key={label} href={href} className="group">
