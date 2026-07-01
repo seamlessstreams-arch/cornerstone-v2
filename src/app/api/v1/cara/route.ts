@@ -3,9 +3,7 @@ import {
   CARA_WRITING_STYLE_PROMPT,
   applyCaraPostprocessor,
 } from "@/lib/cara/writingStyleRules";
-import Anthropic from "@anthropic-ai/sdk";
-import { getAnthropicClient } from "@/lib/anthropic-client";
-import { invokeAiGatewayStream } from "@/lib/cara/ai-gateway";
+import { invokeAiGateway, invokeAiGatewayStream } from "@/lib/cara/ai-gateway";
 import { getStore } from "@/lib/db/store";
 import { scanForPatterns, type IncidentRecord } from "@/lib/cara/cara-pattern-engine";
 import { computeStaffDevelopmentIntelligence } from "@/lib/engines/staff-development-intelligence-engine";
@@ -13,9 +11,6 @@ import { buildDeterministicLearning } from "@/lib/cara/deterministic-learning";
 import { buildDeterministicIntelligence } from "@/lib/cara/deterministic-intelligence";
 import { INCIDENT_TYPE_LABELS } from "@/lib/constants";
 import type { IncidentType } from "@/lib/constants";
-
-// Alias for backward compat — all call sites now go through the shared client
-const getClient = getAnthropicClient;
 
 // ─── Deterministic safeguarding scan (no AI key required) ────────────────────
 
@@ -1575,36 +1570,17 @@ export async function POST(req: NextRequest) {
     period_days,
   });
 
-  // Prompt-cached system block + user content
-  const messagesPayload: Anthropic.MessageParam[] = [
-    {
-      role: "user",
-      content: [
-        {
-          type: "text",
-          text: userMessage,
-        },
-      ],
-    },
-  ];
-
-  // Append the Cara writing-style rules to the system block so every mode in
-  // this route inherits the same UK English, child-centred, trauma-informed
-  // tone as the standalone Cara engines in src/lib/cara/*. The combined block
-  // is still cache-controlled, so prompt cache reads still apply.
-  const systemBlock: Anthropic.TextBlockParam & {
-    cache_control: { type: "ephemeral" };
-  } = {
-    type: "text",
-    text: `${CARA_SYSTEM_PROMPT}\n\n${CARA_WRITING_STYLE_PROMPT}`,
-    cache_control: { type: "ephemeral" },
-  };
+  // The Cara writing-style rules are appended to the system prompt so every
+  // mode in this route inherits the same UK English, child-centred,
+  // trauma-informed tone as the standalone Cara engines in src/lib/cara/*.
+  // Shared by both branches below; streaming additionally cache-controls it
+  // (cacheSystem) for the prompt-cache discount.
+  const systemPromptText = `${CARA_SYSTEM_PROMPT}\n\n${CARA_WRITING_STYLE_PROMPT}`;
 
   // ── Streaming ──────────────────────────────────────────────────────────────
 
   if (streamMode) {
     const encoder = new TextEncoder();
-    const systemPromptText = `${CARA_SYSTEM_PROMPT}\n\n${CARA_WRITING_STYLE_PROMPT}`;
 
     const readableStream = new ReadableStream({
       async start(controller) {
@@ -1689,15 +1665,30 @@ export async function POST(req: NextRequest) {
   // ── Non-streaming ──────────────────────────────────────────────────────────
 
   try {
-    const message = await getClient().messages.create({
-      model: MODEL,
-      max_tokens: typeof max_tokens === "number" ? max_tokens : DEFAULT_MAX_TOKENS,
-      system: [systemBlock] as Anthropic.TextBlockParam[],
-      messages: messagesPayload,
+    // Through the AI Gateway — same reasoning as the streaming branch above:
+    // kill-switch, permission, sensitivity-block, cost-limit, provider-risk,
+    // prompt-injection guard, response safety scan, metering and audit all
+    // apply before any request reaches the model. redact:false — these modes
+    // intentionally keep the child's own words and names (drafts/rewrites),
+    // and the sensitivity gate still blocks safeguarding-sensitive content
+    // from ever reaching the model.
+    const result = await invokeAiGateway({
+      purpose: `cara_${mode}`,
+      feature: `cara_${mode}`,
+      systemPrompt: systemPromptText,
+      userPrompt: userMessage,
+      redact: false,
+      maxOutputTokens: typeof max_tokens === "number" ? max_tokens : DEFAULT_MAX_TOKENS,
     });
 
-    const rawResponseText =
-      message.content[0]?.type === "text" ? message.content[0].text : "";
+    if (!result.llmUsed || result.method !== "ai") {
+      // Kill-switch / permission / sensitivity-block / cost-limit / provider
+      // failure / response withheld by the safety scanner — degrade to the
+      // mode-aware deterministic fallback rather than a generic refusal string.
+      return deterministicCaraResponse(mode, resolvedStyle);
+    }
+
+    const rawResponseText = result.output;
 
     // For JSON-output modes, attempt to parse and return structured data
     let parsedResponse: unknown = null;
@@ -1746,12 +1737,11 @@ export async function POST(req: NextRequest) {
         parsed: parsedResponse,
         mode,
         style: resolvedStyle,
-        model: MODEL,
-        input_tokens: message.usage.input_tokens,
-        output_tokens: message.usage.output_tokens,
-        cache_creation_input_tokens:
-          message.usage.cache_creation_input_tokens ?? 0,
-        cache_read_input_tokens: message.usage.cache_read_input_tokens ?? 0,
+        model: result.model ?? MODEL,
+        input_tokens: result.tokensInput ?? 0,
+        output_tokens: result.tokensOutput ?? 0,
+        cache_creation_input_tokens: 0,
+        cache_read_input_tokens: 0,
       },
     });
   } catch (err) {
