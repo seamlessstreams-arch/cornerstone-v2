@@ -23,9 +23,13 @@ const previewDialog = (page: import("@playwright/test").Page) =>
 
 test.describe("Cara Writing Assistant — deterministic rewrite (no AI)", () => {
   test.beforeEach(async ({ page }) => {
-    test.setTimeout(60_000); // first navigation pays the dev cold-compile cost
+    test.setTimeout(60_000);
     await page.goto("/cara/recording-assistant");
-    await expect(textarea(page)).toBeVisible();
+    // First navigation against a fresh dev server can hit a transient chunk-load
+    // mismatch (global-error.tsx's "Updating Cara…" auto-recovery boundary),
+    // which self-heals via a page reload — give it room to compile and recover
+    // rather than the default 5s assertion timeout.
+    await expect(textarea(page)).toBeVisible({ timeout: 30_000 });
   });
 
   test("the Rewrite menu opens with all five modes", async ({ page }) => {
