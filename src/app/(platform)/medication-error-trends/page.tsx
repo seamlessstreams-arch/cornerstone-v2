@@ -16,26 +16,26 @@ import { cn } from "@/lib/utils";
 import { useMedicationErrorTrends } from "@/hooks/use-medication-error-trends";
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high: "border-red-200 bg-red-50 text-red-800",
-  medium: "border-amber-200 bg-amber-50 text-amber-800",
-  low: "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 const GAP_STYLES: Record<string, { bg: string; text: string }> = {
-  critical: { bg: "bg-red-100", text: "text-red-700" },
-  high: { bg: "bg-amber-100", text: "text-amber-700" },
-  medium: { bg: "bg-blue-100", text: "text-blue-700" },
+  critical: { bg: "bg-[--cs-risk-bg]", text: "text-[--cs-risk]" },
+  high: { bg: "bg-[--cs-warning-bg]", text: "text-[--cs-warning]" },
+  medium: { bg: "bg-[--cs-info-bg]", text: "text-[--cs-info]" },
 };
 const SEVERITY_STYLES: Record<string, { bg: string; text: string }> = {
   death: { bg: "bg-red-200", text: "text-red-900" },
-  severe: { bg: "bg-red-100", text: "text-red-700" },
-  moderate: { bg: "bg-amber-100", text: "text-amber-700" },
-  low: { bg: "bg-blue-100", text: "text-blue-700" },
+  severe: { bg: "bg-[--cs-risk-bg]", text: "text-[--cs-risk]" },
+  moderate: { bg: "bg-[--cs-warning-bg]", text: "text-[--cs-warning]" },
+  low: { bg: "bg-[--cs-info-bg]", text: "text-[--cs-info]" },
   no_harm: { bg: "bg-gray-100", text: "text-gray-600" },
 };
 const DIMENSION_LABEL: Record<string, string> = {
@@ -45,8 +45,8 @@ const DIMENSION_LABEL: Record<string, string> = {
   time_of_day: "Time of day",
 };
 const TREND_META: Record<string, { icon: React.ReactNode; cls: string }> = {
-  rising: { icon: <TrendingUp className="h-4 w-4" />, cls: "text-red-600" },
-  falling: { icon: <TrendingDown className="h-4 w-4" />, cls: "text-green-600" },
+  rising: { icon: <TrendingUp className="h-4 w-4" />, cls: "text-[--cs-risk]" },
+  falling: { icon: <TrendingDown className="h-4 w-4" />, cls: "text-[--cs-success]" },
   stable: { icon: <Minus className="h-4 w-4" />, cls: "text-gray-500" },
 };
 
@@ -150,12 +150,12 @@ export default function MedicationErrorTrendsPage() {
                         </div>
                         <div className="flex items-center gap-1.5 shrink-0">
                           <Badge className={cn("text-[9px]", sev.bg, sev.text)}>{p.max_severity.replace("_", " ")}</Badge>
-                          <Badge className="text-[10px] bg-amber-100 text-amber-700">×{p.count}</Badge>
+                          <Badge className="text-[10px] bg-[--cs-warning-bg] text-[--cs-warning]">×{p.count}</Badge>
                         </div>
                       </div>
                       <p className="text-[11px] text-[var(--cs-text-muted)] mt-1">{p.detail}</p>
                       {p.recurred_after_lesson && (
-                        <Badge className="mt-1.5 text-[9px] bg-red-50 text-red-700 border-red-200">recurred after a lesson was recorded</Badge>
+                        <Badge className="mt-1.5 text-[9px] bg-[--cs-risk-bg] text-[--cs-risk] border-[--cs-risk-soft]">recurred after a lesson was recorded</Badge>
                       )}
                     </div>
                   );
@@ -197,7 +197,7 @@ export default function MedicationErrorTrendsPage() {
                 </CardHeader>
                 <CardContent className="space-y-2">
                   {(intel.learning_gaps ?? []).length === 0 && (
-                    <p className="text-sm text-green-700">Learning loop is closing — no recurrence-after-lesson, open actions, or candour gaps.</p>
+                    <p className="text-sm text-[--cs-success]">Learning loop is closing — no recurrence-after-lesson, open actions, or candour gaps.</p>
                   )}
                   {(intel.learning_gaps ?? []).map((g, i) => {
                     const s = GAP_STYLES[g.severity] ?? GAP_STYLES.medium;
@@ -229,9 +229,9 @@ function OverviewStat({
 }) {
   const toneCls: Record<string, string> = {
     neutral: "text-[var(--cs-navy)]",
-    red: "text-red-600",
-    amber: "text-amber-600",
-    green: "text-green-600",
+    red: "text-[--cs-risk]",
+    amber: "text-[--cs-warning]",
+    green: "text-[--cs-success]",
     gray: "text-gray-400",
   };
   return (
