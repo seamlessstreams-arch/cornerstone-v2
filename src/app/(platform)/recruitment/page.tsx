@@ -49,12 +49,12 @@ type MainTab = "pipeline" | "candidates" | "vacancies" | "safer_recruitment" | "
 function statusClasses(status: CheckStatus | string): string {
   switch (status) {
     case "not_started": return "bg-slate-100 text-slate-500";
-    case "in_progress": return "bg-blue-100 text-blue-700";
-    case "received": return "bg-amber-100 text-amber-700";
+    case "in_progress": return "bg-[--cs-info-bg] text-[--cs-info]";
+    case "received": return "bg-[--cs-warning-bg] text-[--cs-warning]";
     case "verified":
-    case "cleared": return "bg-emerald-100 text-emerald-700";
+    case "cleared": return "bg-[--cs-success-bg] text-[--cs-success]";
     case "concern_flagged":
-    case "concern": return "bg-red-100 text-red-700";
+    case "concern": return "bg-[--cs-risk-bg] text-[--cs-risk]";
     case "override_approved":
     case "exceptional": return "bg-purple-100 text-purple-700";
     default: return "bg-slate-100 text-slate-500";
@@ -167,9 +167,9 @@ function ComplianceRing({ score, size = "sm" }: { score: number; size?: "sm" | "
 
 function RiskBadge({ level }: { level: string }) {
   const classes: Record<string, string> = {
-    low: "bg-emerald-100 text-emerald-700",
-    medium: "bg-amber-100 text-amber-700",
-    high: "bg-red-100 text-red-700",
+    low: "bg-[--cs-success-bg] text-[--cs-success]",
+    medium: "bg-[--cs-warning-bg] text-[--cs-warning]",
+    high: "bg-[--cs-risk-bg] text-[--cs-risk]",
     critical: "bg-red-200 text-red-800 font-bold",
   };
   return (
@@ -230,7 +230,7 @@ function KanbanCard({ candidate }: { candidate: CandidateDetail }) {
           </span>
         </div>
         {candidate.blocker_summary.length > 0 && (
-          <div className="text-[9px] text-amber-700 bg-amber-50 rounded px-1.5 py-1 flex items-center gap-1">
+          <div className="text-[9px] text-[--cs-warning] bg-[--cs-warning-bg] rounded px-1.5 py-1 flex items-center gap-1">
             <AlertTriangle className="h-2.5 w-2.5 shrink-0" />
             <span className="truncate">{candidate.blocker_summary[0]}</span>
           </div>
@@ -293,9 +293,9 @@ function PipelineTab({
           {alerts.map((alert, i) => (
             <div key={i} className={cn(
               "rounded-xl border px-4 py-3 flex items-start gap-3",
-              alert.severity === "critical" ? "bg-red-50 border-red-200" : "bg-amber-50 border-amber-200"
+              alert.severity === "critical" ? "bg-[--cs-risk-bg] border-[--cs-risk-soft]" : "bg-[--cs-warning-bg] border-[--cs-warning-soft]"
             )}>
-              <AlertTriangle className={cn("h-4 w-4 shrink-0 mt-0.5", alert.severity === "critical" ? "text-red-500" : "text-amber-500")} />
+              <AlertTriangle className={cn("h-4 w-4 shrink-0 mt-0.5", alert.severity === "critical" ? "text-[--cs-risk]" : "text-[--cs-warning]")} />
               <div className="flex-1 min-w-0">
                 <span className="text-sm font-semibold text-slate-900">{alert.candidate_name}</span>
                 <span className="text-xs text-slate-600 ml-2">{alert.issue}</span>
@@ -472,8 +472,8 @@ function CandidatesTab({ candidates, loading }: { candidates: CandidateDetail[];
                 <td className="px-4 py-3 text-slate-700 text-xs">{c.role_applied}</td>
                 <td className="px-4 py-3 text-center">
                   <span className={cn("text-xs font-bold tabular-nums",
-                    c.compliance_score >= 80 ? "text-emerald-600" :
-                    c.compliance_score >= 50 ? "text-amber-600" : "text-red-600"
+                    c.compliance_score >= 80 ? "text-[--cs-success]" :
+                    c.compliance_score >= 50 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                   )}>
                     {c.compliance_score}%
                   </span>
@@ -793,7 +793,7 @@ export default function RecruitmentPage() {
       }
     >
       {isError && (
-        <div className="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 flex items-center gap-2">
+        <div className="mb-4 rounded-xl border border-[--cs-risk-soft] bg-[--cs-risk-bg] px-4 py-3 text-sm text-[--cs-risk] flex items-center gap-2">
           <AlertCircle className="h-4 w-4 shrink-0" />
           Failed to load recruitment data. Please refresh or contact support.
         </div>
@@ -938,7 +938,7 @@ export default function RecruitmentPage() {
               </select>
             </div>
             {addCandidateError && (
-              <p className="text-xs text-red-600">{addCandidateError}</p>
+              <p className="text-xs text-[--cs-risk]">{addCandidateError}</p>
             )}
             <div className="flex justify-end gap-2 pt-1">
               <Button type="button" variant="outline" size="sm" onClick={() => { setShowAddCandidate(false); setAddCandidateError(""); }}>
