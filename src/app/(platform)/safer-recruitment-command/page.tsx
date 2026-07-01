@@ -23,22 +23,22 @@ import type {
 } from "@/lib/engines/safer-recruitment-command-engine";
 
 const LIGHT_STYLES: Record<TrafficLight, string> = {
-  red: "bg-red-50 text-red-700 border-red-200",
-  amber: "bg-amber-50 text-amber-700 border-amber-200",
-  green: "bg-emerald-50 text-emerald-700 border-emerald-200",
+  red: "bg-[--cs-risk-bg] text-[--cs-risk] border-[--cs-risk-soft]",
+  amber: "bg-[--cs-warning-bg] text-[--cs-warning] border-[--cs-warning-soft]",
+  green: "bg-[--cs-success-bg] text-[--cs-success] border-[--cs-success-soft]",
 };
 
 const ELIGIBILITY_LABELS: Record<StartEligibility, { label: string; cls: string }> = {
-  not_eligible: { label: "Not eligible to start", cls: "bg-red-100 text-red-800" },
-  conditional: { label: "Conditional — checks in progress", cls: "bg-amber-100 text-amber-800" },
+  not_eligible: { label: "Not eligible to start", cls: "bg-[--cs-risk-bg] text-[--cs-risk]" },
+  conditional: { label: "Conditional — checks in progress", cls: "bg-[--cs-warning-bg] text-[--cs-warning]" },
   exceptional_supervised_only: { label: "Exceptional · supervised only", cls: "bg-orange-100 text-orange-800" },
-  cleared: { label: "Cleared to start", cls: "bg-emerald-100 text-emerald-800" },
+  cleared: { label: "Cleared to start", cls: "bg-[--cs-success-bg] text-[--cs-success]" },
 };
 
 const FILE_STATUS_ICON = {
-  on_file: <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />,
-  pending: <CircleDashed className="h-3.5 w-3.5 text-amber-500" />,
-  missing: <XCircle className="h-3.5 w-3.5 text-red-500" />,
+  on_file: <CheckCircle2 className="h-3.5 w-3.5 text-[--cs-success]" />,
+  pending: <CircleDashed className="h-3.5 w-3.5 text-[--cs-warning]" />,
+  missing: <XCircle className="h-3.5 w-3.5 text-[--cs-risk]" />,
 } as const;
 
 export default function SaferRecruitmentCommandPage() {
@@ -51,7 +51,7 @@ export default function SaferRecruitmentCommandPage() {
       quickCreateContext={{ module: "recruitment" }}
     >
       {isLoading && <p className="text-sm text-[var(--cs-text-muted)]">Building the compliance picture…</p>}
-      {error && <p className="text-sm text-red-600">Couldn&rsquo;t load the command centre. Try refreshing.</p>}
+      {error && <p className="text-sm text-[--cs-risk]">Couldn&rsquo;t load the command centre. Try refreshing.</p>}
 
       {data && (
         <div className="space-y-6">
@@ -63,10 +63,10 @@ export default function SaferRecruitmentCommandPage() {
             </div>
             <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-7">
               <SummaryStat label="Active candidates" value={data.summary.total_candidates} Icon={UserCheck} />
-              <SummaryStat label="Red" value={data.summary.red} Icon={AlertTriangle} tone="text-red-600" />
-              <SummaryStat label="Amber" value={data.summary.amber} Icon={Clock} tone="text-amber-600" />
-              <SummaryStat label="Green" value={data.summary.green} Icon={ShieldCheck} tone="text-emerald-600" />
-              <SummaryStat label="Cleared to start" value={data.summary.cleared} Icon={CheckCircle2} tone="text-emerald-700" />
+              <SummaryStat label="Red" value={data.summary.red} Icon={AlertTriangle} tone="text-[--cs-risk]" />
+              <SummaryStat label="Amber" value={data.summary.amber} Icon={Clock} tone="text-[--cs-warning]" />
+              <SummaryStat label="Green" value={data.summary.green} Icon={ShieldCheck} tone="text-[--cs-success]" />
+              <SummaryStat label="Cleared to start" value={data.summary.cleared} Icon={CheckCircle2} tone="text-[--cs-success]" />
               <SummaryStat label="Refs outstanding" value={data.summary.references_outstanding} Icon={Phone} />
               <SummaryStat label="Exceptional starts" value={data.summary.exceptional_active} Icon={Siren} tone="text-orange-600" />
             </div>
@@ -107,7 +107,7 @@ function SyncRemindersButton() {
             : `Up to date — ${sync.data.skipped_existing} reminder task${sync.data.skipped_existing === 1 ? "" : "s"} already open`}
         </span>
       )}
-      {sync.isError && <span className="text-xs text-red-600">{sync.error.message}</span>}
+      {sync.isError && <span className="text-xs text-[--cs-risk]">{sync.error.message}</span>}
       <button
         onClick={() => sync.mutate()}
         disabled={sync.isPending}
@@ -145,10 +145,10 @@ function ReferenceChases({ chases }: { chases: CommandCandidate["reference_chase
             title={r.action}
             className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-medium ${
               r.state === "escalate_manager" || r.state === "suggest_alternative"
-                ? "border-red-200 bg-red-50 text-red-700"
+                ? "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]"
                 : r.state === "awaiting"
                   ? "border-[var(--cs-border)] bg-[var(--cs-bg)] text-[var(--cs-text-secondary)]"
-                  : "border-amber-200 bg-amber-50 text-amber-700"
+                  : "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]"
             }`}
           >
             <Phone className="h-3 w-3" /> {r.referee_name} · {r.days_waiting}d · {r.state.replace(/_/g, " ")}
@@ -163,7 +163,7 @@ function ReferenceChases({ chases }: { chases: CommandCandidate["reference_chase
           </span>
         ))}
       </div>
-      {issueLink.isError && <p className="text-xs text-red-600">{issueLink.error.message}</p>}
+      {issueLink.isError && <p className="text-xs text-[--cs-risk]">{issueLink.error.message}</p>}
       {Object.entries(issued).map(([refId, link]) => (
         <div key={refId} className="rounded-lg border border-[var(--cs-teal-soft)] bg-[var(--cs-teal-bg)]/40 px-3 py-2">
           <p className="text-[11px] font-semibold text-[var(--cs-navy)]">Secure link for {link.referee_name} — share it yourself; shown once, single use, expires in 7 days:</p>
@@ -196,7 +196,7 @@ function CandidateCard({ c }: { c: CommandCandidate }) {
   const eligibility = ELIGIBILITY_LABELS[c.start_eligibility];
 
   return (
-    <div className={`rounded-2xl border bg-white p-5 shadow-[var(--cs-shadow-card)] ${c.traffic_light === "red" ? "border-red-200" : "border-[var(--cs-border)]"}`}>
+    <div className={`rounded-2xl border bg-white p-5 shadow-[var(--cs-shadow-card)] ${c.traffic_light === "red" ? "border-[--cs-risk-soft]" : "border-[var(--cs-border)]"}`}>
       {/* Header row */}
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
@@ -219,8 +219,8 @@ function CandidateCard({ c }: { c: CommandCandidate }) {
 
       {/* One-line status + next action */}
       <p className="mt-3 text-sm text-[var(--cs-text-secondary)]">{c.one_line_status}</p>
-      <div className={`mt-3 flex items-start gap-2.5 rounded-xl border px-3.5 py-2.5 ${c.next_action.urgency === "urgent" ? "border-red-200 bg-red-50" : c.next_action.urgency === "high" ? "border-amber-200 bg-amber-50" : "border-[var(--cs-border)] bg-[var(--cs-bg)]"}`}>
-        <Siren className={`mt-0.5 h-4 w-4 shrink-0 ${c.next_action.urgency === "urgent" ? "text-red-600" : c.next_action.urgency === "high" ? "text-amber-600" : "text-[var(--cs-text-muted)]"}`} />
+      <div className={`mt-3 flex items-start gap-2.5 rounded-xl border px-3.5 py-2.5 ${c.next_action.urgency === "urgent" ? "border-[--cs-risk-soft] bg-[--cs-risk-bg]" : c.next_action.urgency === "high" ? "border-[--cs-warning-soft] bg-[--cs-warning-bg]" : "border-[var(--cs-border)] bg-[var(--cs-bg)]"}`}>
+        <Siren className={`mt-0.5 h-4 w-4 shrink-0 ${c.next_action.urgency === "urgent" ? "text-[--cs-risk]" : c.next_action.urgency === "high" ? "text-[--cs-warning]" : "text-[var(--cs-text-muted)]"}`} />
         <div>
           <p className="text-sm font-semibold text-[var(--cs-navy)]">Next: {c.next_action.label}</p>
           <p className="text-xs text-[var(--cs-text-secondary)]">{c.next_action.detail}</p>
@@ -231,7 +231,7 @@ function CandidateCard({ c }: { c: CommandCandidate }) {
       {c.blockers.length > 0 && (
         <ul className="mt-3 space-y-1">
           {c.blockers.map((b) => (
-            <li key={b.code} className="flex items-start gap-2 text-xs text-red-700">
+            <li key={b.code} className="flex items-start gap-2 text-xs text-[--cs-risk]">
               <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0" /> {b.message}
             </li>
           ))}
@@ -276,7 +276,7 @@ function CandidateCard({ c }: { c: CommandCandidate }) {
           <div>
             <h4 className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-[var(--cs-text-muted)]"><FileWarning className="h-3.5 w-3.5" /> Missing evidence — why it matters</h4>
             {c.missing_evidence.length === 0 ? (
-              <p className="mt-2 text-xs text-emerald-700">Nothing missing — the file is inspection-ready.</p>
+              <p className="mt-2 text-xs text-[--cs-success]">Nothing missing — the file is inspection-ready.</p>
             ) : (
               <ul className="mt-2 space-y-2">
                 {c.missing_evidence.map((m, i) => (
