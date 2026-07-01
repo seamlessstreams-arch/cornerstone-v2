@@ -163,24 +163,24 @@ const CHECK_FREQUENCY: {
 ];
 
 const STATUS_CFG: Record<string, { color: string; bg: string; border: string; label: string; icon: React.ElementType }> = {
-  completed: { color: "text-emerald-700", bg: "bg-emerald-100", border: "border-emerald-200", label: "Completed", icon: CheckCircle2 },
-  due: { color: "text-blue-700", bg: "bg-blue-100", border: "border-blue-200", label: "Due", icon: Clock },
-  overdue: { color: "text-red-700", bg: "bg-red-100", border: "border-red-200", label: "Overdue", icon: AlertTriangle },
-  failed: { color: "text-red-700", bg: "bg-red-100", border: "border-red-200", label: "Failed", icon: XCircle },
+  completed: { color: "text-[--cs-success]", bg: "bg-[--cs-success-bg]", border: "border-[--cs-success-soft]", label: "Completed", icon: CheckCircle2 },
+  due: { color: "text-[--cs-info]", bg: "bg-[--cs-info-bg]", border: "border-[--cs-info-soft]", label: "Due", icon: Clock },
+  overdue: { color: "text-[--cs-risk]", bg: "bg-[--cs-risk-bg]", border: "border-[--cs-risk-soft]", label: "Overdue", icon: AlertTriangle },
+  failed: { color: "text-[--cs-risk]", bg: "bg-[--cs-risk-bg]", border: "border-[--cs-risk-soft]", label: "Failed", icon: XCircle },
   waived: { color: "text-slate-500", bg: "bg-slate-100", border: "border-slate-200", label: "Waived", icon: Eye },
 };
 
 const RESULT_CFG: Record<string, { color: string; bg: string; label: string }> = {
-  pass: { color: "text-emerald-700", bg: "bg-emerald-100", label: "Pass" },
-  fail: { color: "text-red-700", bg: "bg-red-100", label: "Fail" },
-  advisory: { color: "text-amber-700", bg: "bg-amber-100", label: "Advisory" },
+  pass: { color: "text-[--cs-success]", bg: "bg-[--cs-success-bg]", label: "Pass" },
+  fail: { color: "text-[--cs-risk]", bg: "bg-[--cs-risk-bg]", label: "Fail" },
+  advisory: { color: "text-[--cs-warning]", bg: "bg-[--cs-warning-bg]", label: "Advisory" },
 };
 
 const RISK_CFG: Record<string, { color: string; bg: string }> = {
   low: { color: "text-slate-600", bg: "bg-slate-100" },
-  medium: { color: "text-amber-700", bg: "bg-amber-100" },
+  medium: { color: "text-[--cs-warning]", bg: "bg-[--cs-warning-bg]" },
   high: { color: "text-orange-700", bg: "bg-orange-100" },
-  critical: { color: "text-red-700", bg: "bg-red-100" },
+  critical: { color: "text-[--cs-risk]", bg: "bg-[--cs-risk-bg]" },
 };
 
 // ── Cert expiry helpers ───────────────────────────────────────────────────────
@@ -200,9 +200,9 @@ function certStatus(date: string): "ok" | "warning" | "expired" {
 }
 
 const CERT_STATUS_CFG = {
-  ok: { color: "text-emerald-700", bg: "bg-emerald-50", border: "border-emerald-200", dot: "bg-emerald-500", label: "Valid" },
-  warning: { color: "text-amber-700", bg: "bg-amber-50", border: "border-amber-200", dot: "bg-amber-500", label: "Expiring Soon" },
-  expired: { color: "text-red-700", bg: "bg-red-50", border: "border-red-200", dot: "bg-red-500", label: "Expired / Overdue" },
+  ok: { color: "text-[--cs-success]", bg: "bg-[--cs-success-bg]", border: "border-[--cs-success-soft]", dot: "bg-[--cs-success]", label: "Valid" },
+  warning: { color: "text-[--cs-warning]", bg: "bg-[--cs-warning-bg]", border: "border-[--cs-warning-soft]", dot: "bg-[--cs-warning]", label: "Expiring Soon" },
+  expired: { color: "text-[--cs-risk]", bg: "bg-[--cs-risk-bg]", border: "border-[--cs-risk-soft]", dot: "bg-[--cs-risk]", label: "Expired / Overdue" },
 };
 
 // ── Add Check Form ────────────────────────────────────────────────────────────
@@ -267,8 +267,8 @@ function AddCheckForm({ onClose, onSubmit }: { onClose: () => void; onSubmit: (d
             </div>
           </div>
           {isNonPass && (
-            <div className="rounded-xl bg-red-50 border border-red-200 p-3 space-y-3">
-              <div className="text-xs font-semibold text-red-800 flex items-center gap-1.5"><AlertTriangle className="h-3.5 w-3.5" />Non-pass result — additional details required</div>
+            <div className="rounded-xl bg-[--cs-risk-bg] border border-[--cs-risk-soft] p-3 space-y-3">
+              <div className="text-xs font-semibold text-[--cs-risk] flex items-center gap-1.5"><AlertTriangle className="h-3.5 w-3.5" />Non-pass result — additional details required</div>
               <div>
                 <label className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide block mb-1">Risk Level</label>
                 <select value={form.risk_level} onChange={(e) => set("risk_level", e.target.value)} className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm">
@@ -287,7 +287,7 @@ function AddCheckForm({ onClose, onSubmit }: { onClose: () => void; onSubmit: (d
                 <label className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide block mb-1">Action Due By</label>
                 <input type="date" value={form.action_due} onChange={(e) => set("action_due", e.target.value)} className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm" />
               </div>
-              <div className="rounded-lg bg-amber-50 border border-amber-200 px-3 py-2 text-xs text-amber-800">
+              <div className="rounded-lg bg-[--cs-warning-bg] border border-[--cs-warning-soft] px-3 py-2 text-xs text-[--cs-warning]">
                 Submitting will automatically create a maintenance task and notify the manager.
               </div>
             </div>
@@ -354,15 +354,15 @@ function DashboardTab({ data, onAddCheck }: { data: BuildingsData; onAddCheck: (
 
       {/* Alert strip */}
       {hasAlerts && (
-        <div className="rounded-2xl bg-red-50 border border-red-200 p-4 flex items-start gap-3">
-          <AlertTriangle className="h-5 w-5 text-red-600 shrink-0 mt-0.5" />
+        <div className="rounded-2xl bg-[--cs-risk-bg] border border-[--cs-risk-soft] p-4 flex items-start gap-3">
+          <AlertTriangle className="h-5 w-5 text-[--cs-risk] shrink-0 mt-0.5" />
           <div>
-            <div className="text-sm font-semibold text-red-800">
+            <div className="text-sm font-semibold text-[--cs-risk]">
               {overdue.length > 0 && `${overdue.length} overdue check${overdue.length > 1 ? "s" : ""}`}
               {overdue.length > 0 && failed.length > 0 && " — "}
               {failed.length > 0 && `${failed.length} failed check${failed.length > 1 ? "s" : ""} requiring action`}
             </div>
-            <div className="text-xs text-red-600 mt-0.5">
+            <div className="text-xs text-[--cs-risk] mt-0.5">
               {overdue.map((c) => CHECK_TYPE_LABELS[c.check_type] || c.check_type).join(", ")} must be completed immediately.
             </div>
           </div>
@@ -374,32 +374,32 @@ function DashboardTab({ data, onAddCheck }: { data: BuildingsData; onAddCheck: (
         {/* Buildings domain */}
         <div className={cn(
           "rounded-2xl border p-5 space-y-3",
-          hasAlerts ? "border-red-200 bg-red-50" : "border-emerald-200 bg-emerald-50"
+          hasAlerts ? "border-[--cs-risk-soft] bg-[--cs-risk-bg]" : "border-[--cs-success-soft] bg-[--cs-success-bg]"
         )}>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className={cn("p-2 rounded-xl bg-white shadow-sm", hasAlerts ? "border border-red-100" : "border border-emerald-100")}>
-                <Building2 className={cn("h-4 w-4", hasAlerts ? "text-red-600" : "text-emerald-600")} />
+              <div className={cn("p-2 rounded-xl bg-white shadow-sm", hasAlerts ? "border border-[--cs-risk-soft]" : "border border-[--cs-success-soft]")}>
+                <Building2 className={cn("h-4 w-4", hasAlerts ? "text-[--cs-risk]" : "text-[--cs-success]")} />
               </div>
               <span className="text-xs font-semibold text-slate-700">Buildings</span>
             </div>
             {hasAlerts
-              ? <AlertTriangle className="h-4 w-4 text-red-500" />
-              : <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+              ? <AlertTriangle className="h-4 w-4 text-[--cs-risk]" />
+              : <CheckCircle2 className="h-4 w-4 text-[--cs-success]" />
             }
           </div>
           <div className="grid grid-cols-2 gap-2">
             <div className="text-center">
-              <div className={cn("text-2xl font-bold tabular-nums", hasAlerts ? "text-red-700" : "text-emerald-700")}>{completedToday}</div>
+              <div className={cn("text-2xl font-bold tabular-nums", hasAlerts ? "text-[--cs-risk]" : "text-[--cs-success]")}>{completedToday}</div>
               <div className="text-[10px] text-slate-500">Done today</div>
             </div>
             <div className="text-center">
-              <div className={cn("text-2xl font-bold tabular-nums", (summary?.overdue ?? 0) > 0 ? "text-red-700" : "text-slate-600")}>{summary?.overdue ?? 0}</div>
+              <div className={cn("text-2xl font-bold tabular-nums", (summary?.overdue ?? 0) > 0 ? "text-[--cs-risk]" : "text-slate-600")}>{summary?.overdue ?? 0}</div>
               <div className="text-[10px] text-slate-500">Overdue</div>
             </div>
           </div>
           {allDailyDone && (
-            <div className="rounded-xl bg-white/60 border border-emerald-200 px-3 py-1.5 text-[11px] text-emerald-700 font-medium flex items-center gap-1.5">
+            <div className="rounded-xl bg-white/60 border border-[--cs-success-soft] px-3 py-1.5 text-[11px] text-[--cs-success] font-medium flex items-center gap-1.5">
               <CheckCircle2 className="h-3.5 w-3.5" />All daily checks done
             </div>
           )}
@@ -408,17 +408,17 @@ function DashboardTab({ data, onAddCheck }: { data: BuildingsData; onAddCheck: (
         {/* Vehicles domain */}
         <div className={cn(
           "rounded-2xl border p-5 space-y-3",
-          vehicleDefects > 0 ? "border-amber-200 bg-amber-50" : "border-slate-200 bg-slate-50"
+          vehicleDefects > 0 ? "border-[--cs-warning-soft] bg-[--cs-warning-bg]" : "border-slate-200 bg-slate-50"
         )}>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <div className="p-2 rounded-xl bg-white shadow-sm border border-slate-100">
-                <Car className={cn("h-4 w-4", vehicleDefects > 0 ? "text-amber-600" : "text-slate-600")} />
+                <Car className={cn("h-4 w-4", vehicleDefects > 0 ? "text-[--cs-warning]" : "text-slate-600")} />
               </div>
               <span className="text-xs font-semibold text-slate-700">Vehicles</span>
             </div>
             {vehicleDefects > 0
-              ? <AlertTriangle className="h-4 w-4 text-amber-500" />
+              ? <AlertTriangle className="h-4 w-4 text-[--cs-warning]" />
               : <CheckCircle2 className="h-4 w-4 text-slate-400" />
             }
           </div>
@@ -428,12 +428,12 @@ function DashboardTab({ data, onAddCheck }: { data: BuildingsData; onAddCheck: (
               <div className="text-[10px] text-slate-500">Available</div>
             </div>
             <div className="text-center">
-              <div className={cn("text-2xl font-bold tabular-nums", vehicleDefects > 0 ? "text-amber-700" : "text-slate-500")}>{vehicleDefects}</div>
+              <div className={cn("text-2xl font-bold tabular-nums", vehicleDefects > 0 ? "text-[--cs-warning]" : "text-slate-500")}>{vehicleDefects}</div>
               <div className="text-[10px] text-slate-500">Defects</div>
             </div>
           </div>
           {vehiclesRestricted > 0 && (
-            <div className="rounded-xl bg-white/60 border border-amber-200 px-3 py-1.5 text-[11px] text-amber-700 font-medium flex items-center gap-1.5">
+            <div className="rounded-xl bg-white/60 border border-[--cs-warning-soft] px-3 py-1.5 text-[11px] text-[--cs-warning] font-medium flex items-center gap-1.5">
               <AlertTriangle className="h-3.5 w-3.5" />{vehiclesRestricted} vehicle{vehiclesRestricted !== 1 ? "s" : ""} restricted
             </div>
           )}
@@ -467,7 +467,7 @@ function DashboardTab({ data, onAddCheck }: { data: BuildingsData; onAddCheck: (
               <div className="text-[10px] text-slate-500">Open jobs</div>
             </div>
             <div className="text-center">
-              <div className={cn("text-2xl font-bold tabular-nums", urgentMaint.length > 0 ? "text-red-700" : "text-slate-500")}>{urgentMaint.length}</div>
+              <div className={cn("text-2xl font-bold tabular-nums", urgentMaint.length > 0 ? "text-[--cs-risk]" : "text-slate-500")}>{urgentMaint.length}</div>
               <div className="text-[10px] text-slate-500">Urgent</div>
             </div>
           </div>
@@ -496,12 +496,12 @@ function DashboardTab({ data, onAddCheck }: { data: BuildingsData; onAddCheck: (
             return (
               <div key={key} className={cn(
                 "flex items-center gap-3 px-4 py-3",
-                doneToday ? "bg-emerald-50/40" : ""
+                doneToday ? "bg-[--cs-success-bg]" : ""
               )}>
                 <div className="shrink-0">
                   {doneToday
-                    ? <CheckCircle2 className="h-4 w-4 text-emerald-500" />
-                    : <Clock className="h-4 w-4 text-amber-500" />
+                    ? <CheckCircle2 className="h-4 w-4 text-[--cs-success]" />
+                    : <Clock className="h-4 w-4 text-[--cs-warning]" />
                   }
                 </div>
                 <span className="text-sm text-slate-700 flex-1 font-medium">{label}</span>
@@ -513,10 +513,10 @@ function DashboardTab({ data, onAddCheck }: { data: BuildingsData; onAddCheck: (
                           {RESULT_CFG[result]?.label}
                         </Badge>
                       )}
-                      <span className="text-[10px] text-emerald-600 font-medium">Done</span>
+                      <span className="text-[10px] text-[--cs-success] font-medium">Done</span>
                     </>
                   ) : (
-                    <Button size="sm" variant="outline" className="h-7 text-xs border-amber-200 text-amber-700 hover:bg-amber-50" onClick={onAddCheck}>
+                    <Button size="sm" variant="outline" className="h-7 text-xs border-[--cs-warning-soft] text-[--cs-warning] hover:bg-[--cs-warning-bg]" onClick={onAddCheck}>
                       <Plus className="h-3 w-3 mr-0.5" />Record
                     </Button>
                   )}
@@ -554,12 +554,12 @@ function DashboardTab({ data, onAddCheck }: { data: BuildingsData; onAddCheck: (
                     return (
                       <div key={key} className={cn(
                         "flex items-center gap-4 py-3 px-1",
-                        (isOverdue || isFailed) && "bg-red-50/50 -mx-1 px-2 rounded-xl",
-                        isDue && "bg-blue-50/50 -mx-1 px-2 rounded-xl",
+                        (isOverdue || isFailed) && "bg-[--cs-risk-bg] -mx-1 px-2 rounded-xl",
+                        isDue && "bg-[--cs-info-bg] -mx-1 px-2 rounded-xl",
                       )}>
                         <div className={cn(
                           "h-2 w-2 rounded-full shrink-0",
-                          isOverdue || isFailed ? "bg-red-500" : isDue ? "bg-blue-400" : lastDone ? "bg-emerald-500" : "bg-slate-300"
+                          isOverdue || isFailed ? "bg-[--cs-risk]" : isDue ? "bg-[--cs-info]" : lastDone ? "bg-[--cs-success]" : "bg-slate-300"
                         )} />
                         <span className="text-sm text-slate-700 flex-1 font-medium">{label}</span>
                         <div className="flex items-center gap-2 shrink-0">
@@ -573,8 +573,8 @@ function DashboardTab({ data, onAddCheck }: { data: BuildingsData; onAddCheck: (
                               {RESULT_CFG[result]?.label}
                             </Badge>
                           )}
-                          {isOverdue && <Badge className="text-[9px] rounded-full bg-red-100 text-red-700 border-0">Overdue</Badge>}
-                          {isDue && <Badge className="text-[9px] rounded-full bg-blue-100 text-blue-700 border-0">Due</Badge>}
+                          {isOverdue && <Badge className="text-[9px] rounded-full bg-[--cs-risk-bg] text-[--cs-risk] border-0">Overdue</Badge>}
+                          {isDue && <Badge className="text-[9px] rounded-full bg-[--cs-info-bg] text-[--cs-info] border-0">Due</Badge>}
                         </div>
                         <Button size="sm" variant="outline" className="h-7 text-xs shrink-0" onClick={onAddCheck}>
                           <Plus className="h-3 w-3 mr-0.5" />Record
@@ -686,7 +686,7 @@ function CheckHistoryTab({ data, onAddCheck }: { data: BuildingsData; onAddCheck
           return (
             <div key={check.id} className={cn(
               "rounded-2xl border bg-white p-4 hover:shadow-sm transition-all",
-              isFail ? "border-l-4 border-l-red-500 border-red-200 bg-red-50/30" : "border-slate-200"
+              isFail ? "border-l-4 border-l-[--cs-risk] border-[--cs-risk-soft] bg-[--cs-risk-bg]" : "border-slate-200"
             )}>
               <div className="flex items-start gap-4">
                 <div className={cn("rounded-xl p-2 shrink-0", statusCfg.bg)}>
@@ -716,9 +716,9 @@ function CheckHistoryTab({ data, onAddCheck }: { data: BuildingsData; onAddCheck
                     <p className="text-xs text-slate-600 mt-1.5 leading-relaxed">{check.notes}</p>
                   )}
                   {check.action_required && (
-                    <div className="mt-2 rounded-xl bg-amber-50 border border-amber-200 px-3 py-2">
-                      <div className="text-xs font-medium text-amber-800">Action required: {check.action_required}</div>
-                      {check.action_due && <div className="text-[10px] text-amber-600 mt-0.5">Due: {formatDate(check.action_due)}</div>}
+                    <div className="mt-2 rounded-xl bg-[--cs-warning-bg] border border-[--cs-warning-soft] px-3 py-2">
+                      <div className="text-xs font-medium text-[--cs-warning]">Action required: {check.action_required}</div>
+                      {check.action_due && <div className="text-[10px] text-[--cs-warning] mt-0.5">Due: {formatDate(check.action_due)}</div>}
                     </div>
                   )}
                 </div>
@@ -799,11 +799,11 @@ function CertificatesTab({ data }: { data: BuildingsData }) {
   return (
     <div className="space-y-6">
       {upcoming.length > 0 && (
-        <div className="rounded-2xl bg-amber-50 border border-amber-200 p-4 flex items-start gap-3">
-          <AlertCircle className="h-5 w-5 text-amber-600 shrink-0 mt-0.5" />
+        <div className="rounded-2xl bg-[--cs-warning-bg] border border-[--cs-warning-soft] p-4 flex items-start gap-3">
+          <AlertCircle className="h-5 w-5 text-[--cs-warning] shrink-0 mt-0.5" />
           <div>
-            <div className="text-sm font-semibold text-amber-800">Upcoming renewals in the next 90 days</div>
-            <div className="text-xs text-amber-700 mt-0.5">
+            <div className="text-sm font-semibold text-[--cs-warning]">Upcoming renewals in the next 90 days</div>
+            <div className="text-xs text-[--cs-warning] mt-0.5">
               {upcoming.map((c) => `${c.label} (${formatDate(c.expiry!)})`).join(" · ")}
             </div>
           </div>
@@ -842,7 +842,7 @@ function CertificatesTab({ data }: { data: BuildingsData }) {
                         </>
                       )}
                       {lastDone && !expiry && <div className="text-xs text-slate-400">Last: {formatDate(lastDone)}</div>}
-                      {rating && <div className="text-xl font-black text-emerald-600">{rating}</div>}
+                      {rating && <div className="text-xl font-black text-[--cs-success]">{rating}</div>}
                       {note && <div className="text-xs text-slate-500 mt-0.5">{note}</div>}
                     </div>
                   </div>
@@ -889,10 +889,10 @@ function HazardsTab({ data }: { data: BuildingsData }) {
   return (
     <div className="space-y-6">
       {hazards.length === 0 ? (
-        <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-8 text-center">
-          <CheckCircle2 className="h-8 w-8 text-emerald-500 mx-auto mb-2" />
-          <div className="text-sm font-semibold text-emerald-800">No open hazards</div>
-          <div className="text-xs text-emerald-600 mt-1">All checks are up to date and no actions are outstanding.</div>
+        <div className="rounded-2xl border border-[--cs-success-soft] bg-[--cs-success-bg] p-8 text-center">
+          <CheckCircle2 className="h-8 w-8 text-[--cs-success] mx-auto mb-2" />
+          <div className="text-sm font-semibold text-[--cs-success]">No open hazards</div>
+          <div className="text-xs text-[--cs-success] mt-1">All checks are up to date and no actions are outstanding.</div>
         </div>
       ) : (
         <div className="space-y-3">
@@ -902,8 +902,8 @@ function HazardsTab({ data }: { data: BuildingsData }) {
             return (
               <div key={hazard.id} className={cn(
                 "rounded-2xl border-l-4 border p-5 bg-white",
-                isCritical ? "border-l-red-500 border-red-200" :
-                  hazard.status === "overdue" ? "border-l-amber-400 border-amber-200" :
+                isCritical ? "border-l-[--cs-risk] border-[--cs-risk-soft]" :
+                  hazard.status === "overdue" ? "border-l-[--cs-warning] border-[--cs-warning-soft]" :
                     "border-l-orange-400 border-orange-200"
               )}>
                 <div className="flex items-start gap-4">
@@ -923,10 +923,10 @@ function HazardsTab({ data }: { data: BuildingsData }) {
                             </Badge>
                           )}
                           {hazard.status === "overdue" && (
-                            <Badge className="text-[9px] rounded-full bg-amber-100 text-amber-700 border-0">Overdue</Badge>
+                            <Badge className="text-[9px] rounded-full bg-[--cs-warning-bg] text-[--cs-warning] border-0">Overdue</Badge>
                           )}
                           {hazard.result === "fail" && (
-                            <Badge className="text-[9px] rounded-full bg-red-100 text-red-700 border-0">Failed check</Badge>
+                            <Badge className="text-[9px] rounded-full bg-[--cs-risk-bg] text-[--cs-risk] border-0">Failed check</Badge>
                           )}
                         </div>
                         <div className="text-xs text-slate-500 mt-0.5 capitalize">
@@ -938,11 +938,11 @@ function HazardsTab({ data }: { data: BuildingsData }) {
                       <p className="text-xs text-slate-700 mt-2 leading-relaxed">{hazard.notes}</p>
                     )}
                     {hazard.action_required && (
-                      <div className="mt-3 rounded-xl bg-amber-50 border border-amber-200 px-3 py-2">
-                        <div className="text-xs font-semibold text-amber-800">Action required</div>
-                        <div className="text-xs text-amber-700 mt-0.5">{hazard.action_required}</div>
+                      <div className="mt-3 rounded-xl bg-[--cs-warning-bg] border border-[--cs-warning-soft] px-3 py-2">
+                        <div className="text-xs font-semibold text-[--cs-warning]">Action required</div>
+                        <div className="text-xs text-[--cs-warning] mt-0.5">{hazard.action_required}</div>
                         {hazard.action_due && (
-                          <div className="text-[10px] text-amber-600 mt-1">Due: {formatDate(hazard.action_due)}</div>
+                          <div className="text-[10px] text-[--cs-warning] mt-1">Due: {formatDate(hazard.action_due)}</div>
                         )}
                       </div>
                     )}
@@ -1090,7 +1090,7 @@ export default function BuildingsPage() {
               <Icon className="h-3.5 w-3.5" />
               {label}
               {id === "hazards" && alertCount > 0 && (
-                <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-red-500 text-white text-[9px] font-bold flex items-center justify-center">
+                <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-[--cs-risk] text-white text-[9px] font-bold flex items-center justify-center">
                   {alertCount}
                 </span>
               )}
@@ -1108,7 +1108,7 @@ export default function BuildingsPage() {
         )}
 
         {error && (
-          <div className="rounded-2xl bg-red-50 border border-red-200 p-4 text-sm text-red-700">
+          <div className="rounded-2xl bg-[--cs-risk-bg] border border-[--cs-risk-soft] p-4 text-sm text-[--cs-risk]">
             Failed to load buildings data. Please refresh.
           </div>
         )}
