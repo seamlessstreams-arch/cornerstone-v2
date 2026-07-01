@@ -309,11 +309,11 @@ export default function RotaPage() {
         {/* Today's Summary */}
         <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
           {[
-            { label: "On Shift Today",    value: meta?.on_shift_today    ?? "—", color: "text-emerald-600" },
+            { label: "On Shift Today",    value: meta?.on_shift_today    ?? "—", color: "text-[--cs-success]" },
             { label: "Sleep-ins Tonight", value: meta?.sleep_ins_tonight ?? "—", color: "text-indigo-600" },
-            { label: "Open Shifts",       value: meta?.open_shifts       ?? "—", color: meta?.open_shifts ? "text-amber-600" : "text-[var(--cs-navy)]", ring: (meta?.open_shifts ?? 0) > 0 },
+            { label: "Open Shifts",       value: meta?.open_shifts       ?? "—", color: meta?.open_shifts ? "text-[--cs-warning]" : "text-[var(--cs-navy)]", ring: (meta?.open_shifts ?? 0) > 0 },
             { label: "On Leave",          value: meta?.on_leave_today    ?? "—", color: "text-blue-600" },
-            { label: "Late Arrivals",     value: meta?.late_arrivals     ?? "—", color: meta?.late_arrivals ? "text-red-600" : "text-emerald-600" },
+            { label: "Late Arrivals",     value: meta?.late_arrivals     ?? "—", color: meta?.late_arrivals ? "text-[--cs-risk]" : "text-[--cs-success]" },
           ].map(({ label, value, color, ring }) => (
             <div key={label} className={cn("rounded-2xl border bg-white p-4 text-center", ring && "ring-1 ring-amber-200")}>
               <div className={cn("text-2xl font-bold tabular-nums", color)}>{value}</div>
@@ -324,14 +324,14 @@ export default function RotaPage() {
 
         {/* Open Shift Alerts */}
         {(meta?.open_shift_dates?.length ?? 0) > 0 && (
-          <div className="rounded-2xl bg-amber-50 border border-amber-200 p-4">
+          <div className="rounded-2xl bg-[--cs-warning-bg] border border-[--cs-warning-soft] p-4">
             <div className="flex items-center gap-2 mb-2">
-              <UserX className="h-4 w-4 text-amber-600" />
-              <span className="text-sm font-semibold text-amber-800">Open Shifts Need Covering</span>
+              <UserX className="h-4 w-4 text-[--cs-warning]" />
+              <span className="text-sm font-semibold text-[--cs-warning]">Open Shifts Need Covering</span>
             </div>
             <div className="space-y-1.5">
               {meta!.open_shift_dates.map((s, i) => (
-                <div key={i} className="flex items-center justify-between rounded-xl bg-white px-3 py-2 border border-amber-100">
+                <div key={i} className="flex items-center justify-between rounded-xl bg-white px-3 py-2 border border-[--cs-warning-soft]">
                   <div className="text-xs">
                     <span className="font-medium text-[var(--cs-navy)]">{formatDate(s.date)}</span>
                     <span className="text-[var(--cs-text-muted)] ml-2">{s.start} – {s.end}</span>
@@ -368,7 +368,7 @@ export default function RotaPage() {
                     <Button
                       size="sm"
                       variant="outline"
-                      className="text-xs h-7 text-red-600 border-red-200 hover:bg-red-50"
+                      className="text-xs h-7 text-[--cs-risk] border-[--cs-risk-soft] hover:bg-[--cs-risk-bg]"
                       onClick={() => toast.info("Swap request declined.")}
                     >
                       Decline
@@ -412,16 +412,16 @@ export default function RotaPage() {
 
         {/* Overtime Alerts */}
         {overtimeStaff.length > 0 && (
-          <div className="rounded-2xl bg-red-50 border border-red-200 p-4">
+          <div className="rounded-2xl bg-[--cs-risk-bg] border border-[--cs-risk-soft] p-4">
             <div className="flex items-center gap-2 mb-2">
-              <ShieldAlert className="h-4 w-4 text-red-600" />
-              <span className="text-sm font-semibold text-red-800">Overtime Alerts</span>
-              <Badge className="rounded-full text-[10px] bg-red-100 text-red-700 border-red-200">{overtimeStaff.length}</Badge>
+              <ShieldAlert className="h-4 w-4 text-[--cs-risk]" />
+              <span className="text-sm font-semibold text-[--cs-risk]">Overtime Alerts</span>
+              <Badge className="rounded-full text-[10px] bg-[--cs-risk-bg] text-[--cs-risk] border-[--cs-risk-soft]">{overtimeStaff.length}</Badge>
             </div>
-            <p className="text-xs text-red-600 mb-2">The following staff have exceeded their contracted weekly hours this week.</p>
+            <p className="text-xs text-[--cs-risk] mb-2">The following staff have exceeded their contracted weekly hours this week.</p>
             <div className="space-y-1.5">
               {overtimeStaff.map((s) => (
-                <div key={s.id} className="flex items-center justify-between rounded-xl bg-white px-3 py-2 border border-red-100">
+                <div key={s.id} className="flex items-center justify-between rounded-xl bg-white px-3 py-2 border border-[--cs-risk-soft]">
                   <div className="flex items-center gap-2">
                     <Avatar name={s.full_name} size="sm" />
                     <div>
@@ -430,8 +430,8 @@ export default function RotaPage() {
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className="text-xs font-semibold text-red-600 tabular-nums">{s.weekHrs}h / {s.contracted_hours}h</div>
-                    <div className="text-[10px] text-red-500">+{s.excess}h over</div>
+                    <div className="text-xs font-semibold text-[--cs-risk] tabular-nums">{s.weekHrs}h / {s.contracted_hours}h</div>
+                    <div className="text-[10px] text-[--cs-risk]">+{s.excess}h over</div>
                   </div>
                 </div>
               ))}
@@ -505,7 +505,7 @@ export default function RotaPage() {
                             <Avatar name={staff.full_name} size="sm" />
                             <div>
                               <div className="text-xs font-medium text-[var(--cs-navy)]">{staff.full_name}</div>
-                              <div className={cn("text-[10px]", overContracted ? "text-red-500 font-medium" : "text-[var(--cs-text-muted)]")}>
+                              <div className={cn("text-[10px]", overContracted ? "text-[--cs-risk] font-medium" : "text-[var(--cs-text-muted)]")}>
                                 {weekHrs > 0 ? `${weekHrs}h` : "—"} / {staff.contracted_hours}h
                               </div>
                             </div>
@@ -536,7 +536,7 @@ export default function RotaPage() {
                                   </button>
                                 </div>
                               ) : isOnLeave ? (
-                                <div className="rounded-lg bg-amber-50 border border-amber-200 px-2 py-1.5 text-[10px] font-medium text-amber-700">
+                                <div className="rounded-lg bg-[--cs-warning-bg] border border-[--cs-warning-soft] px-2 py-1.5 text-[10px] font-medium text-[--cs-warning]">
                                   Leave
                                 </div>
                               ) : (
@@ -574,12 +574,12 @@ export default function RotaPage() {
                   const staff = activeStaff.find((s) => s.id === shift.staff_id);
                   if (!staff) return null;
                   return (
-                    <div key={shift.id} className={cn("rounded-xl border p-3", shift.status === "in_progress" ? "border-emerald-200 bg-emerald-50/50" : "")}>
+                    <div key={shift.id} className={cn("rounded-xl border p-3", shift.status === "in_progress" ? "border-[--cs-success-soft] bg-[--cs-success-bg]" : "")}>
                       <div className="flex items-center gap-3">
                         <div className="relative">
                           <Avatar name={staff.full_name} size="md" />
                           {shift.status === "in_progress" && (
-                            <div className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full bg-emerald-500 border-2 border-white" />
+                            <div className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full bg-[--cs-success] border-2 border-white" />
                           )}
                         </div>
                         <div className="flex-1">
@@ -593,15 +593,15 @@ export default function RotaPage() {
                       <div className="mt-2 grid grid-cols-2 gap-2 text-[10px]">
                         <div className="text-[var(--cs-text-muted)]"><Clock className="h-3 w-3 inline mr-0.5" />{shift.start_time} – {shift.end_time}</div>
                         {shift.clock_in_at && (
-                          <div className="text-emerald-600"><CheckCircle2 className="h-3 w-3 inline mr-0.5" />Clocked in</div>
+                          <div className="text-[--cs-success]"><CheckCircle2 className="h-3 w-3 inline mr-0.5" />Clocked in</div>
                         )}
-                        {shift.notes && <div className="col-span-2 text-amber-600 font-medium">{shift.notes}</div>}
+                        {shift.notes && <div className="col-span-2 text-[--cs-warning] font-medium">{shift.notes}</div>}
                       </div>
                       <div className="mt-2 pt-2 border-t border-[var(--cs-border-subtle)]">
                         <Button
                           size="sm"
                           variant="outline"
-                          className="w-full text-[10px] h-6 text-red-600 border-red-200 hover:bg-red-50"
+                          className="w-full text-[10px] h-6 text-[--cs-risk] border-[--cs-risk-soft] hover:bg-[--cs-risk-bg]"
                           onClick={() => openAbsenceModal(shift.id, staff.full_name)}
                         >
                           <Ban className="h-3 w-3 mr-1" />Mark Absent
@@ -715,7 +715,7 @@ export default function RotaPage() {
             </div>
 
             {saveError && (
-              <div className="rounded-lg bg-red-50 border border-red-200 px-3 py-2 text-xs text-red-700">
+              <div className="rounded-lg bg-[--cs-risk-bg] border border-[--cs-risk-soft] px-3 py-2 text-xs text-[--cs-risk]">
                 {saveError}
               </div>
             )}
@@ -771,7 +771,7 @@ export default function RotaPage() {
             </select>
           </div>
 
-          {fillError && <p className="text-xs text-red-600">{fillError}</p>}
+          {fillError && <p className="text-xs text-[--cs-risk]">{fillError}</p>}
 
           <div className="flex gap-3 pt-1">
             <Button variant="outline" className="flex-1" onClick={() => setFillShift(null)}>Cancel</Button>
@@ -858,7 +858,7 @@ export default function RotaPage() {
             </div>
 
             {swapError && (
-              <div className="rounded-lg bg-red-50 border border-red-200 px-3 py-2 text-xs text-red-700">
+              <div className="rounded-lg bg-[--cs-risk-bg] border border-[--cs-risk-soft] px-3 py-2 text-xs text-[--cs-risk]">
                 {swapError}
               </div>
             )}
