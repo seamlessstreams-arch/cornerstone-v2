@@ -63,9 +63,9 @@ const LEAVE_TYPE_COLORS: Record<string, string> = {
 };
 
 const STATUS_COLORS: Record<string, string> = {
-  pending: "bg-amber-100 text-amber-700",
-  approved: "bg-emerald-100 text-emerald-700",
-  declined: "bg-red-100 text-red-700",
+  pending: "bg-[--cs-warning-bg] text-[--cs-warning]",
+  approved: "bg-[--cs-success-bg] text-[--cs-success]",
+  declined: "bg-[--cs-risk-bg] text-[--cs-risk]",
   cancelled: "bg-slate-100 text-[var(--cs-text-muted)]",
 };
 
@@ -94,10 +94,10 @@ const SICKNESS_STATS: Record<string, { episodes: number; days: number; bradford:
 };
 
 function BradfordBadge({ score }: { score: number }) {
-  if (score === 0) return <Badge className="text-[9px] rounded-full bg-emerald-100 text-emerald-700">No issues</Badge>;
+  if (score === 0) return <Badge className="text-[9px] rounded-full bg-[--cs-success-bg] text-[--cs-success]">No issues</Badge>;
   if (score < 10) return <Badge className="text-[9px] rounded-full bg-blue-100 text-blue-700">Low ({score})</Badge>;
-  if (score < 50) return <Badge className="text-[9px] rounded-full bg-amber-100 text-amber-700">Medium ({score})</Badge>;
-  return <Badge className="text-[9px] rounded-full bg-red-100 text-red-700">High ({score})</Badge>;
+  if (score < 50) return <Badge className="text-[9px] rounded-full bg-[--cs-warning-bg] text-[--cs-warning]">Medium ({score})</Badge>;
+  return <Badge className="text-[9px] rounded-full bg-[--cs-risk-bg] text-[--cs-risk]">High ({score})</Badge>;
 }
 
 function LeaveRow({ req, onClick }: { req: LeaveRequest; onClick: () => void }) {
@@ -114,8 +114,8 @@ function LeaveRow({ req, onClick }: { req: LeaveRequest; onClick: () => void }) 
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
           <span className="text-sm font-medium text-[var(--cs-navy)]">{getStaffName(req.staff_id)}</span>
-          {isOnLeave && <span className="text-[10px] bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full px-2 py-0.5 font-medium">On leave now</span>}
-          {needsRTW && <span className="text-[10px] bg-red-50 text-red-700 border border-red-200 rounded-full px-2 py-0.5 font-medium flex items-center gap-0.5"><AlertTriangle className="h-2.5 w-2.5" />RTW needed</span>}
+          {isOnLeave && <span className="text-[10px] bg-[--cs-success-bg] text-[--cs-success] border border-[--cs-success-soft] rounded-full px-2 py-0.5 font-medium">On leave now</span>}
+          {needsRTW && <span className="text-[10px] bg-[--cs-risk-bg] text-[--cs-risk] border border-[--cs-risk-soft] rounded-full px-2 py-0.5 font-medium flex items-center gap-0.5"><AlertTriangle className="h-2.5 w-2.5" />RTW needed</span>}
         </div>
         <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">
           {LEAVE_TYPE_LABELS[req.leave_type as keyof typeof LEAVE_TYPE_LABELS] || req.leave_type} · {formatDate(req.start_date)}
@@ -144,9 +144,9 @@ function RTWPanel({ req, onClose }: { req: LeaveRequest; onClose: () => void }) 
           <button onClick={onClose} className="text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] text-xl font-bold">×</button>
         </div>
         <div className="space-y-4">
-          <div className="rounded-xl bg-amber-50 border border-amber-200 p-3 text-sm text-amber-800">
+          <div className="rounded-xl bg-[--cs-warning-bg] border border-[--cs-warning-soft] p-3 text-sm text-[--cs-warning]">
             <strong>Absence summary:</strong> {req.total_days} day{req.total_days !== 1 ? "s" : ""} absence · {LEAVE_TYPE_LABELS[req.leave_type as keyof typeof LEAVE_TYPE_LABELS]}
-            {req.reason && <div className="mt-1 text-amber-700">Reason given: {req.reason}</div>}
+            {req.reason && <div className="mt-1 text-[--cs-warning]">Reason given: {req.reason}</div>}
           </div>
           <div>
             <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1">Interview notes</label>
@@ -276,16 +276,16 @@ export default function LeavePage() {
           <>
             {/* Alert: RTW needed */}
             {rtwPending.length > 0 && (
-              <div className="rounded-2xl bg-red-50 border border-red-200 p-4 flex items-start gap-3">
-                <AlertTriangle className="h-5 w-5 text-red-600 shrink-0 mt-0.5" />
+              <div className="rounded-2xl bg-[--cs-risk-bg] border border-[--cs-risk-soft] p-4 flex items-start gap-3">
+                <AlertTriangle className="h-5 w-5 text-[--cs-risk] shrink-0 mt-0.5" />
                 <div className="flex-1">
-                  <div className="text-sm font-semibold text-red-800">{rtwPending.length} return-to-work interview{rtwPending.length > 1 ? "s" : ""} outstanding</div>
+                  <div className="text-sm font-semibold text-[--cs-risk]">{rtwPending.length} return-to-work interview{rtwPending.length > 1 ? "s" : ""} outstanding</div>
                   <div className="flex flex-wrap gap-2 mt-2">
                     {rtwPending.map((r) => (
                       <button
                         key={r.id}
                         onClick={() => { setSelectedReq(r); setShowRTW(true); }}
-                        className="text-xs bg-white border border-red-200 text-red-700 rounded-full px-3 py-1 hover:bg-red-50 transition-colors"
+                        className="text-xs bg-white border border-[--cs-risk-soft] text-[--cs-risk] rounded-full px-3 py-1 hover:bg-[--cs-risk-bg] transition-colors"
                       >
                         {getStaffName(r.staff_id)} — Complete RTW
                       </button>
@@ -298,9 +298,9 @@ export default function LeavePage() {
             {/* Stat cards */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
               {[
-                { label: "Pending Approval", value: stats.pending, icon: Clock, color: "text-amber-600", bg: "bg-amber-50" },
-                { label: "On Leave Now", value: stats.onLeave, icon: SunMedium, color: "text-emerald-600", bg: "bg-emerald-50" },
-                { label: "RTW Outstanding", value: stats.needsRTW, icon: AlertTriangle, color: "text-red-600", bg: "bg-red-50" },
+                { label: "Pending Approval", value: stats.pending, icon: Clock, color: "text-[--cs-warning]", bg: "bg-[--cs-warning-bg]" },
+                { label: "On Leave Now", value: stats.onLeave, icon: SunMedium, color: "text-[--cs-success]", bg: "bg-[--cs-success-bg]" },
+                { label: "RTW Outstanding", value: stats.needsRTW, icon: AlertTriangle, color: "text-[--cs-risk]", bg: "bg-[--cs-risk-bg]" },
                 { label: "Sick This Month", value: stats.sickMonth, icon: Stethoscope, color: "text-rose-600", bg: "bg-rose-50" },
               ].map(({ label, value, icon: Icon, color, bg }) => (
                 <div key={label} className="rounded-2xl border border-[var(--cs-border)] bg-white p-5">
@@ -354,10 +354,10 @@ export default function LeavePage() {
                                 <span className="text-sm font-medium text-[var(--cs-navy)] flex-1">{staff.full_name}</span>
                                 <div className="text-xs text-[var(--cs-text-muted)] text-right">
                                   <span className="font-semibold text-[var(--cs-navy)]">{ent.taken}</span>/{ent.total} taken
-                                  {ent.pending > 0 && <span className="text-amber-600 ml-1">+{ent.pending} pending</span>}
+                                  {ent.pending > 0 && <span className="text-[--cs-warning] ml-1">+{ent.pending} pending</span>}
                                 </div>
                               </div>
-                              <Progress value={pct} color={pct > 80 ? "bg-amber-500" : "bg-blue-500"} className="h-1.5" />
+                              <Progress value={pct} color={pct > 80 ? "bg-[--cs-warning]" : "bg-blue-500"} className="h-1.5" />
                             </div>
                           );
                         })}
@@ -409,17 +409,17 @@ export default function LeavePage() {
                       ) : (
                         <div className="space-y-2">
                           {leaveRequests.filter((r) => r.status === "pending").map((r) => (
-                            <div key={r.id} className="rounded-xl border border-amber-200 bg-amber-50 p-3">
+                            <div key={r.id} className="rounded-xl border border-[--cs-warning-soft] bg-[--cs-warning-bg] p-3">
                               <div className="flex items-center justify-between">
                                 <div className="text-sm font-medium text-[var(--cs-navy)]">{getStaffName(r.staff_id)}</div>
-                                <span className="text-xs text-amber-700">{r.total_days}d</span>
+                                <span className="text-xs text-[--cs-warning]">{r.total_days}d</span>
                               </div>
                               <div className="text-xs text-[var(--cs-text-muted)] mt-0.5">{formatDate(r.start_date)} – {formatDate(r.end_date)}</div>
                               <div className="flex gap-2 mt-2">
                                 <Button size="sm" className="h-7 text-xs bg-emerald-600 hover:bg-emerald-700 flex-1" onClick={() => handleApprove(r.id)}>
                                   <CheckCircle2 className="h-3 w-3 mr-1" />Approve
                                 </Button>
-                                <Button size="sm" variant="outline" className="h-7 text-xs flex-1 border-red-200 text-red-600 hover:bg-red-50" onClick={() => handleDecline(r.id)}>
+                                <Button size="sm" variant="outline" className="h-7 text-xs flex-1 border-[--cs-risk-soft] text-[--cs-risk] hover:bg-[--cs-risk-bg]" onClick={() => handleDecline(r.id)}>
                                   <XCircle className="h-3 w-3 mr-1" />Decline
                                 </Button>
                               </div>
@@ -589,7 +589,7 @@ export default function LeavePage() {
                             {sick.lastSick ? (
                               <div className="text-right text-xs text-[var(--cs-text-muted)]">Last: {formatDate(sick.lastSick)}</div>
                             ) : (
-                              <div className="text-right text-xs text-emerald-600 font-medium">No absences</div>
+                              <div className="text-right text-xs text-[--cs-success] font-medium">No absences</div>
                             )}
                           </div>
                         );
